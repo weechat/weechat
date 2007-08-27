@@ -523,6 +523,7 @@ gui_chat_display_word (t_gui_window *window,
 {
     char *end_line, saved_char_end, saved_char;
     int pos_saved_char, chars_to_display, num_displayed;
+    int length_align;
     
     if (!data ||
         ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height)))
@@ -544,11 +545,12 @@ gui_chat_display_word (t_gui_window *window,
     while (data && data[0])
     {
         /* insert spaces for align text under time/nick */
-        if ((line->length_align > 0) &&
+        length_align = GUI_LINE_LENGTH_ALIGN(line);
+        if ((length_align > 0) &&
             (window->win_chat_cursor_x == 0) &&
             (*lines_displayed > 0) &&
             /* TODO: modify arbitraty value for non aligning messages on time/nick? */
-            (line->length_align < (window->win_chat_width - 5)))
+            (length_align < (window->win_chat_width - 5)))
         {
             if (!simulate)
             {
@@ -557,7 +559,7 @@ gui_chat_display_word (t_gui_window *window,
                        window->win_chat_cursor_x);
                 wclrtoeol (GUI_CURSES(window)->win_chat);
             }
-            window->win_chat_cursor_x += line->length_align;
+            window->win_chat_cursor_x += length_align;
         }
         
         chars_to_display = gui_word_strlen (window, data);
@@ -743,7 +745,7 @@ gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
         {
             /* spaces + word too long for current line but ok for next line */
             if ((window->win_chat_cursor_x + word_length_with_spaces > gui_chat_get_real_width (window))
-                && (word_length <= gui_chat_get_real_width (window) - line->length_align))
+                && (word_length <= gui_chat_get_real_width (window) - GUI_LINE_LENGTH_ALIGN(line)))
             {
                 gui_chat_display_new_line (window, num_lines, count,
                                            &lines_displayed, simulate);

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.6-cvs\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-08-26 22:33+0200\n"
+"POT-Creation-Date: 2007-08-27 10:19+0200\n"
 "PO-Revision-Date: 2007-08-08 15:29+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Bookmarks: -1,-1,608,-1,-1,-1,-1,-1,-1,-1\n"
 
-#: src/irc/irc-server.c:208 src/common/weeconfig.c:2357
+#: src/irc/irc-server.c:208 src/common/weeconfig.c:2365
 msgid "Unable to get user's name"
 msgstr "Не могу получить имя пользователя"
 
@@ -2243,13 +2243,13 @@ msgstr "Plugin \"%s\" выгружен.\n"
 msgid "%s plugin \"%s\" not found\n"
 msgstr "%s plugin \"%s\" не найден\n"
 
-#: src/plugins/plugins-config.c:274 src/common/weeconfig.c:1998
+#: src/plugins/plugins-config.c:274 src/common/weeconfig.c:2006
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, строка %d: некорректный синтаксис, утерян \"=\"\n"
 
-#: src/plugins/plugins-config.c:362 src/common/weeconfig.c:2209
-#: src/common/weeconfig.c:2426
+#: src/plugins/plugins-config.c:362 src/common/weeconfig.c:2217
+#: src/common/weeconfig.c:2434
 #, c-format
 msgid "%s cannot create file \"%s\"\n"
 msgstr "%s не могу создать файл \"%s\"\n"
@@ -2278,23 +2278,23 @@ msgstr ""
 msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 msgstr "%s сервер/канал (%s/%s) не найден для команды plug-inа\n"
 
-#: src/gui/curses/gui-curses-chat.c:957
+#: src/gui/curses/gui-curses-chat.c:959
 msgid "bytes"
 msgstr "байтов"
 
-#: src/gui/curses/gui-curses-chat.c:957
+#: src/gui/curses/gui-curses-chat.c:959
 msgid "KB"
 msgstr "КБ"
 
-#: src/gui/curses/gui-curses-chat.c:957
+#: src/gui/curses/gui-curses-chat.c:959
 msgid "MB"
 msgstr "МБ"
 
-#: src/gui/curses/gui-curses-chat.c:957
+#: src/gui/curses/gui-curses-chat.c:959
 msgid "GB"
 msgstr "ГБ"
 
-#: src/gui/curses/gui-curses-chat.c:1091
+#: src/gui/curses/gui-curses-chat.c:1093
 msgid "ETA"
 msgstr "осталось"
 
@@ -4522,78 +4522,78 @@ msgstr "Ошибка WeeChat:"
 msgid "WeeChat Warning:"
 msgstr "Предупреждение WeeChat:"
 
-#: src/common/weeconfig.c:121 src/common/weeconfig.c:122
+#: src/common/weeconfig.c:122 src/common/weeconfig.c:123
 msgid "save config file on exit"
 msgstr "сохранять конфигурационный файл при выходе"
 
-#: src/common/weeconfig.c:125 src/common/weeconfig.c:126
+#: src/common/weeconfig.c:126 src/common/weeconfig.c:127
 msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "устанавливать заголовок окна (терминала при интерфейсе Curses) с именем и "
 "версией"
 
-#: src/common/weeconfig.c:129 src/common/weeconfig.c:130
+#: src/common/weeconfig.c:130 src/common/weeconfig.c:131
 msgid "display WeeChat logo at startup"
 msgstr "отображать логотип WeeChat при запуске"
 
-#: src/common/weeconfig.c:133 src/common/weeconfig.c:134
+#: src/common/weeconfig.c:134 src/common/weeconfig.c:135
 msgid "display WeeChat version at startup"
 msgstr "отображать версию WeeChat при запуске"
 
-#: src/common/weeconfig.c:137
+#: src/common/weeconfig.c:138
 msgid "WeeChat slogan"
 msgstr "слоган WeeChat"
 
-#: src/common/weeconfig.c:138
+#: src/common/weeconfig.c:139
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "слоган WeeChat (если пусто - используется слоган по умолчанию)"
 
-#: src/common/weeconfig.c:141 src/common/weeconfig.c:142
+#: src/common/weeconfig.c:142 src/common/weeconfig.c:143
 msgid "use same buffer for all servers"
 msgstr "один буфер для всех серверов"
 
-#: src/common/weeconfig.c:145 src/common/weeconfig.c:146
+#: src/common/weeconfig.c:146 src/common/weeconfig.c:147
 msgid "open new channels/privates near server"
 msgstr "открывать новые каналы/приваты рядом с сервером"
 
-#: src/common/weeconfig.c:149 src/common/weeconfig.c:150
+#: src/common/weeconfig.c:150 src/common/weeconfig.c:151
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "количество проматываемых кнопками PageUp и PageDown строк"
 
-#: src/common/weeconfig.c:153 src/common/weeconfig.c:154
+#: src/common/weeconfig.c:154 src/common/weeconfig.c:155
 msgid "timestamp for buffers"
 msgstr "время в буферах"
 
-#: src/common/weeconfig.c:157 src/common/weeconfig.c:158
+#: src/common/weeconfig.c:158 src/common/weeconfig.c:159
 msgid "number of colors to use for nicks colors"
 msgstr "количество цветов для раскрашивания ников"
 
-#: src/common/weeconfig.c:161 src/common/weeconfig.c:162
+#: src/common/weeconfig.c:162 src/common/weeconfig.c:163
 msgid "display actions with different colors"
 msgstr "показывать действия другим цветом"
 
-#: src/common/weeconfig.c:165
+#: src/common/weeconfig.c:166
 msgid "display nicklist window"
 msgstr "показывать список ников"
 
-#: src/common/weeconfig.c:166
+#: src/common/weeconfig.c:167
 msgid "display nicklist window (for channel windows)"
 msgstr "показывать список ников (в окнах каналов)"
 
-#: src/common/weeconfig.c:169
+#: src/common/weeconfig.c:170
 msgid "nicklist position"
 msgstr "расположение списка ников"
 
-#: src/common/weeconfig.c:170
+#: src/common/weeconfig.c:171
 msgid "nicklist position (top, left, right (default), bottom)"
 msgstr ""
 "расположение списка пользователей (top, left, right(по умолчанию), bottom)"
 
-#: src/common/weeconfig.c:173
+#: src/common/weeconfig.c:174
 msgid "min size for nicklist"
 msgstr "минимальный размер списка пользователей"
 
-#: src/common/weeconfig.c:174
+#: src/common/weeconfig.c:175
 msgid ""
 "min size for nicklist (width or height, depending on look_nicklist_position "
 "(0 = no min size))"
@@ -4601,11 +4601,11 @@ msgstr ""
 "минимальный размер списка пользователей (высота или ширина, в зависимости от "
 "look_nicklist_position (0 = без минимального размера))"
 
-#: src/common/weeconfig.c:178
+#: src/common/weeconfig.c:179
 msgid "max size for nicklist"
 msgstr "максимальный размер списка пользователей"
 
-#: src/common/weeconfig.c:179
+#: src/common/weeconfig.c:180
 #, fuzzy
 msgid ""
 "max size for nicklist (width or height, depending on look_nicklist_position "
@@ -4614,54 +4614,54 @@ msgstr ""
 "максимальный размер списка пользователей (высота или ширина, в зависимости "
 "от look_nicklist_position (0 = без максимального размера))"
 
-#: src/common/weeconfig.c:183 src/common/weeconfig.c:184
+#: src/common/weeconfig.c:184 src/common/weeconfig.c:185
 msgid "separator between chat and nicklist"
 msgstr "разделитель чата и никлиста"
 
-#: src/common/weeconfig.c:187 src/common/weeconfig.c:188
+#: src/common/weeconfig.c:188 src/common/weeconfig.c:189
 msgid "text to display instead of nick when not connected"
 msgstr "текст, который отображать вместо ника при отсутствии соединений"
 
-#: src/common/weeconfig.c:191 src/common/weeconfig.c:192
+#: src/common/weeconfig.c:192 src/common/weeconfig.c:193
 msgid "display nick mode ((half)op/voice) before each nick"
 msgstr "отображать режим ника (op/voice) перед каждым ником"
 
-#: src/common/weeconfig.c:195 src/common/weeconfig.c:196
+#: src/common/weeconfig.c:196 src/common/weeconfig.c:197
 msgid "display space if nick mode is not (half)op/voice"
 msgstr "оставлять пробел, если ник не op/voice"
 
-#: src/common/weeconfig.c:199 src/common/weeconfig.c:200
+#: src/common/weeconfig.c:200 src/common/weeconfig.c:201
 msgid "text to display before nick in chat window"
 msgstr "текст, который отображать до ника в окне чата"
 
-#: src/common/weeconfig.c:203 src/common/weeconfig.c:204
+#: src/common/weeconfig.c:204 src/common/weeconfig.c:205
 msgid "text to display after nick in chat window"
 msgstr "текст, который отображать после ника в окне чата"
 
-#: src/common/weeconfig.c:207
+#: src/common/weeconfig.c:208
 msgid "nick alignment (fixed size for nicks in chat window)"
 msgstr "выравнивание ников в окне чата"
 
-#: src/common/weeconfig.c:208
+#: src/common/weeconfig.c:209
 msgid ""
 "nick alignment (fixed size for nicks in chat window (none, left, right))"
 msgstr ""
 "выравнивание ников (фиксированный размер ников в окне чата (none, left, "
 "right))"
 
-#: src/common/weeconfig.c:211 src/common/weeconfig.c:212
+#: src/common/weeconfig.c:212 src/common/weeconfig.c:213
 msgid "alignment for other messages (not beginning with a nick)"
 msgstr "выравнивание для других сообщений (не начинающихся с ника)"
 
-#: src/common/weeconfig.c:215 src/common/weeconfig.c:216
+#: src/common/weeconfig.c:216 src/common/weeconfig.c:217
 msgid "size for aligning nick and other messages"
 msgstr "размер выравнивания ников и других сообщений"
 
-#: src/common/weeconfig.c:219
+#: src/common/weeconfig.c:220
 msgid "max size for aligning nick and other messages"
 msgstr "максимальный размер выравнивания ников и других сообшений"
 
-#: src/common/weeconfig.c:220
+#: src/common/weeconfig.c:221
 msgid ""
 "max size for aligning nick and other messages (should be >= to "
 "look_align_size)"
@@ -4669,43 +4669,54 @@ msgstr ""
 "максимальный размер выравнивания ников и других сообшений (должен быть >= "
 "look_align_size)"
 
-#: src/common/weeconfig.c:224 src/common/weeconfig.c:225
+#: src/common/weeconfig.c:225
+msgid "offset for aligning lines of messages (except first lines)"
+msgstr ""
+
+#: src/common/weeconfig.c:227
+msgid ""
+"offset for aligning lines of messages (except first lines), default is -1 "
+"(align after nick), a null or positive value is offset after beginning of "
+"line"
+msgstr ""
+
+#: src/common/weeconfig.c:232 src/common/weeconfig.c:233
 msgid "the string inserted after nick completion"
 msgstr "строка, вставляемая после автодополнения ника"
 
-#: src/common/weeconfig.c:228 src/common/weeconfig.c:229
+#: src/common/weeconfig.c:236 src/common/weeconfig.c:237
 msgid "chars ignored for nick completion"
 msgstr "символы, игнорируемые при автодополнении ника"
 
-#: src/common/weeconfig.c:232
+#: src/common/weeconfig.c:240
 msgid "smart completion for nicks"
 msgstr "умное дополнение ников"
 
-#: src/common/weeconfig.c:233
+#: src/common/weeconfig.c:241
 msgid "smart completion for nicks (completes with last speakers first)"
 msgstr "умное дополнение ников (начинает перебор с последних собеседников)"
 
-#: src/common/weeconfig.c:236 src/common/weeconfig.c:237
+#: src/common/weeconfig.c:244 src/common/weeconfig.c:245
 msgid "complete only with first nick found"
 msgstr "дополнять только первым найденным ником"
 
-#: src/common/weeconfig.c:240 src/common/weeconfig.c:241
+#: src/common/weeconfig.c:248 src/common/weeconfig.c:249
 msgid "enable info bar"
 msgstr "включить информационную панель"
 
-#: src/common/weeconfig.c:244 src/common/weeconfig.c:245
+#: src/common/weeconfig.c:252 src/common/weeconfig.c:253
 msgid "timestamp for time in infobar"
 msgstr "время в информационной строке"
 
-#: src/common/weeconfig.c:248 src/common/weeconfig.c:249
+#: src/common/weeconfig.c:256 src/common/weeconfig.c:257
 msgid "display seconds in infobar time"
 msgstr "показывать секунды в часах информационной панели"
 
-#: src/common/weeconfig.c:252
+#: src/common/weeconfig.c:260
 msgid "delay (in seconds) for highlight messages in infobar"
 msgstr "задержка (в секундах) отображения сообщений в информационной строке"
 
-#: src/common/weeconfig.c:253
+#: src/common/weeconfig.c:261
 msgid ""
 "delay (in seconds) for highlight messages in infobar (0 = disable highlight "
 "notifications in infobar)"
@@ -4713,22 +4724,22 @@ msgstr ""
 "задержка (в секундах) отображения сообщений в информационной строке (0 = "
 "отключить уведомления в информационной строке)"
 
-#: src/common/weeconfig.c:257
+#: src/common/weeconfig.c:265
 msgid "max number of names in hotlist"
 msgstr "максимальное количество имён в хотлисте"
 
-#: src/common/weeconfig.c:258
+#: src/common/weeconfig.c:266
 msgid ""
 "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
 msgstr ""
 "максимальное количество имён в хотлисте (0 = имена не показываются, только "
 "номера буферов)"
 
-#: src/common/weeconfig.c:261
+#: src/common/weeconfig.c:269
 msgid "level for displaying names in hotlist"
 msgstr "уровень отображения имён в хотлисте"
 
-#: src/common/weeconfig.c:262
+#: src/common/weeconfig.c:270
 msgid ""
 "level for displaying names in hotlist (combination of: 1=join/part, "
 "2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
@@ -4736,41 +4747,41 @@ msgstr ""
 "уровень отображения имён в хотлисте (сочетание: 1=вход/выход, 2=сообщение, "
 "4=личное сообщение, 8=подсветка, например: 12=личные+подсветка)"
 
-#: src/common/weeconfig.c:266
+#: src/common/weeconfig.c:274
 msgid "max length of names in hotlist"
 msgstr "максимальная длина имён в хотлисте"
 
-#: src/common/weeconfig.c:267
+#: src/common/weeconfig.c:275
 msgid "max length of names in hotlist (0 = no limit)"
 msgstr "максимальная длина имён в хотлисте (0=не ограничено)"
 
-#: src/common/weeconfig.c:270
+#: src/common/weeconfig.c:278
 msgid "hotlist sort type"
 msgstr ""
 
-#: src/common/weeconfig.c:271
+#: src/common/weeconfig.c:279
 msgid ""
 "hotlist sort type (group_time_asc (default), group_time_desc, "
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 msgstr ""
 
-#: src/common/weeconfig.c:275 src/common/weeconfig.c:276
+#: src/common/weeconfig.c:283 src/common/weeconfig.c:284
 msgid "display special message when day changes"
 msgstr "отображать специальное сообщение  при смене дня"
 
-#: src/common/weeconfig.c:279 src/common/weeconfig.c:280
+#: src/common/weeconfig.c:287 src/common/weeconfig.c:288
 msgid "timestamp for date displayed when day changed"
 msgstr "отображение маркера даты при смене дня"
 
-#: src/common/weeconfig.c:283 src/common/weeconfig.c:284
+#: src/common/weeconfig.c:291 src/common/weeconfig.c:292
 msgid "use a marker on servers/channels to show first unread line"
 msgstr "использовать маркер непрочитанных сообщений в окнах серверов и каналов"
 
-#: src/common/weeconfig.c:287
+#: src/common/weeconfig.c:295
 msgid "format for input prompt"
 msgstr "формат приглашения ввода"
 
-#: src/common/weeconfig.c:288
+#: src/common/weeconfig.c:296
 #, c-format
 msgid ""
 "format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
@@ -4779,22 +4790,22 @@ msgstr ""
 "формат приглашения ввода ('%c' заменяется на сервер или канал, '%n' на ник, "
 "а '%m' - на режимы ника"
 
-#: src/common/weeconfig.c:292
+#: src/common/weeconfig.c:300
 #, fuzzy
 msgid "max number of lines for paste without asking user"
 msgstr "максимальное количество ников на канале для проверки на отсутствие"
 
-#: src/common/weeconfig.c:293
+#: src/common/weeconfig.c:301
 #, fuzzy
 msgid ""
 "max number of lines for paste without asking user (0 = disable this feature)"
 msgstr "максимальное количество ников на канале для проверки на отсутствие"
 
-#: src/common/weeconfig.c:368
+#: src/common/weeconfig.c:376
 msgid "if set, uses real white color"
 msgstr "если установлено - использовать настоящий белый цвет"
 
-#: src/common/weeconfig.c:369
+#: src/common/weeconfig.c:377
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -4805,278 +4816,276 @@ msgstr ""
 "белым фоном вам следует включить этот параметр чтобы видеть настоящий белый "
 "цвет вместо цвета терминала по умолчанию)"
 
-#: src/common/weeconfig.c:374 src/common/weeconfig.c:375
+#: src/common/weeconfig.c:382 src/common/weeconfig.c:383
 msgid "color for window separators (when splited)"
 msgstr "цвет разделителей окна (при разбитом экране)"
 
-#: src/common/weeconfig.c:379 src/common/weeconfig.c:380
+#: src/common/weeconfig.c:387 src/common/weeconfig.c:388
 msgid "color for title bar"
 msgstr "цвет заголовка"
 
-#: src/common/weeconfig.c:383 src/common/weeconfig.c:384
+#: src/common/weeconfig.c:391 src/common/weeconfig.c:392
 msgid "color for '+' when scrolling topic"
 msgstr "цвет '+' при прокрутке топика"
 
-#: src/common/weeconfig.c:387 src/common/weeconfig.c:388
+#: src/common/weeconfig.c:395 src/common/weeconfig.c:396
 msgid "background for title bar"
 msgstr "цвет фона заголовка"
 
-#: src/common/weeconfig.c:393 src/common/weeconfig.c:394
+#: src/common/weeconfig.c:401 src/common/weeconfig.c:402
 msgid "color for chat text"
 msgstr "цвет чата"
 
-#: src/common/weeconfig.c:397
+#: src/common/weeconfig.c:405
 msgid "color for time"
 msgstr "цвет времени"
 
-#: src/common/weeconfig.c:398
+#: src/common/weeconfig.c:406
 msgid "color for time in chat window"
 msgstr "цвет времени в окне чата"
 
-#: src/common/weeconfig.c:401
+#: src/common/weeconfig.c:409
 msgid "color for time separator"
 msgstr "цвет разделителя времени"
 
-#: src/common/weeconfig.c:402
+#: src/common/weeconfig.c:410
 msgid "color for time separator (chat window)"
 msgstr "цвет разделителя времени в окне чата"
 
-#: src/common/weeconfig.c:405 src/common/weeconfig.c:406
+#: src/common/weeconfig.c:413 src/common/weeconfig.c:414
 msgid "color for 1st and 3rd char of prefix"
 msgstr "цвет первого и третьего символа в префиксе"
 
-#: src/common/weeconfig.c:409 src/common/weeconfig.c:410
+#: src/common/weeconfig.c:417 src/common/weeconfig.c:418
 msgid "color for middle char of prefix"
 msgstr "цвет среднего символа в префиксе"
 
-#: src/common/weeconfig.c:413 src/common/weeconfig.c:414
+#: src/common/weeconfig.c:421 src/common/weeconfig.c:422
 msgid "color for server name"
 msgstr "цвет названия сервера"
 
-#: src/common/weeconfig.c:417 src/common/weeconfig.c:418
+#: src/common/weeconfig.c:425 src/common/weeconfig.c:426
 msgid "color for join arrow (prefix)"
 msgstr "цвет стрелки захода на канал (префикс)"
 
-#: src/common/weeconfig.c:421 src/common/weeconfig.c:422
+#: src/common/weeconfig.c:429 src/common/weeconfig.c:430
 msgid "color for part/quit arrow (prefix)"
 msgstr "цвет стрелки покидания/выхода (префикс)"
 
-#: src/common/weeconfig.c:425
+#: src/common/weeconfig.c:433
 msgid "color for nicks in actions"
 msgstr "свет ников при действии"
 
-#: src/common/weeconfig.c:426
+#: src/common/weeconfig.c:434
 msgid "color for nicks in actions (chat window)"
 msgstr "свет ников при действии (в окне чата)"
 
-#: src/common/weeconfig.c:429
+#: src/common/weeconfig.c:437
 msgid "color for hostnames"
 msgstr "цвет hostname"
 
-#: src/common/weeconfig.c:430
+#: src/common/weeconfig.c:438
 msgid "color for hostnames (chat window)"
 msgstr "цвет hostname (в окне чата)"
 
-#: src/common/weeconfig.c:433
+#: src/common/weeconfig.c:441
 msgid "color for channel names in actions"
 msgstr "цвет имён при действиях"
 
-#: src/common/weeconfig.c:434
+#: src/common/weeconfig.c:442
 msgid "color for channel names in actions (chat window)"
 msgstr "цвет имён при действиях (в окне чата)"
 
-#: src/common/weeconfig.c:437
+#: src/common/weeconfig.c:445
 msgid "color for dark separators"
 msgstr "цвет тёмных разделителей"
 
-#: src/common/weeconfig.c:438
+#: src/common/weeconfig.c:446
 msgid "color for dark separators (chat window)"
 msgstr "цвет тёмных разделителей (в окне чата)"
 
-#: src/common/weeconfig.c:441
+#: src/common/weeconfig.c:449
 msgid "color for highlighted nick"
 msgstr "цвет подсвечиваемого ника"
 
-#: src/common/weeconfig.c:442
+#: src/common/weeconfig.c:450
 msgid "color for highlighted nick (chat window)"
 msgstr "цвет подсвечиваемого ника (в окне чата)"
 
-#: src/common/weeconfig.c:445
+#: src/common/weeconfig.c:453
 msgid "background for chat"
 msgstr "фон чата"
 
-#: src/common/weeconfig.c:446
+#: src/common/weeconfig.c:454
 msgid "background for chat window"
 msgstr "фон окна чата"
 
-#: src/common/weeconfig.c:449 src/common/weeconfig.c:450
+#: src/common/weeconfig.c:457 src/common/weeconfig.c:458
 msgid "color for unread data marker"
 msgstr "цвет маркера непрочитанных сообщений"
 
-#: src/common/weeconfig.c:453 src/common/weeconfig.c:454
+#: src/common/weeconfig.c:461 src/common/weeconfig.c:462
 msgid "background for unread data marker"
 msgstr "фон маркера непрочитанных сообщений"
 
-#: src/common/weeconfig.c:459 src/common/weeconfig.c:460
+#: src/common/weeconfig.c:467 src/common/weeconfig.c:468
 msgid "color for status bar"
 msgstr "цвет строки состояния"
 
-#: src/common/weeconfig.c:463 src/common/weeconfig.c:464
+#: src/common/weeconfig.c:471 src/common/weeconfig.c:472
 msgid "color for status bar delimiters"
 msgstr "цвет разделителей строки состояния"
 
-#: src/common/weeconfig.c:467 src/common/weeconfig.c:468
+#: src/common/weeconfig.c:475 src/common/weeconfig.c:476
 msgid "color for current channel in status bar"
 msgstr "цвет текущего канала в строке состояния"
 
-#: src/common/weeconfig.c:471
+#: src/common/weeconfig.c:479
 msgid "color for window with new messages"
 msgstr "цвет  текущего окна с сообщениями"
 
-#: src/common/weeconfig.c:472
+#: src/common/weeconfig.c:480
 msgid "color for window with new messages (status bar)"
 msgstr "color for window with new messages (в строке состояния)"
 
-#: src/common/weeconfig.c:475
+#: src/common/weeconfig.c:483
 msgid "color for window with private message"
 msgstr "цвет окна с личными сообщениями"
 
-#: src/common/weeconfig.c:476
+#: src/common/weeconfig.c:484
 msgid "color for window with private message (status bar)"
 msgstr "цвет окна с личными сообщениями (в строке состояния)"
 
-#: src/common/weeconfig.c:479
+#: src/common/weeconfig.c:487
 msgid "color for window with highlight"
 msgstr "цвет окна с подсвеченным сообщением"
 
-#: src/common/weeconfig.c:480
+#: src/common/weeconfig.c:488
 msgid "color for window with highlight (status bar)"
 msgstr "цвет окна с подсвеченным сообщением (в строке состояния)"
 
-#: src/common/weeconfig.c:483
+#: src/common/weeconfig.c:491
 msgid "color for window with new data (not messages)"
 msgstr "цвет окна с новыми данными (но не сообщениями)"
 
-#: src/common/weeconfig.c:484
+#: src/common/weeconfig.c:492
 msgid "color for window with new data (not messages) (status bar)"
 msgstr "цвет окна с новыми данными (но не сообщениями) (в строке состояния)"
 
-#: src/common/weeconfig.c:487
+#: src/common/weeconfig.c:495
 msgid "color for \"-MORE-\" text"
 msgstr "цвет метки \"-ДАЛЬШЕ-\""
 
-#: src/common/weeconfig.c:488
+#: src/common/weeconfig.c:496
 msgid "color for window with new data (status bar)"
 msgstr "цвет окна с новыми данными (в строке состояния)"
 
-#: src/common/weeconfig.c:491 src/common/weeconfig.c:492
+#: src/common/weeconfig.c:499 src/common/weeconfig.c:500
 msgid "background for status window"
 msgstr "цвет окна статуса"
 
-#: src/common/weeconfig.c:497 src/common/weeconfig.c:498
+#: src/common/weeconfig.c:505 src/common/weeconfig.c:506
 msgid "color for info bar text"
 msgstr "цвет текста информационной панели"
 
-#: src/common/weeconfig.c:501 src/common/weeconfig.c:502
+#: src/common/weeconfig.c:509 src/common/weeconfig.c:510
 msgid "color for infobar delimiters"
 msgstr "цвет разделителей информационной панели"
 
-#: src/common/weeconfig.c:505 src/common/weeconfig.c:506
+#: src/common/weeconfig.c:513 src/common/weeconfig.c:514
 msgid "color for info bar highlight notification"
 msgstr "цвет оповещения в информационной панели"
 
-#: src/common/weeconfig.c:509 src/common/weeconfig.c:510
+#: src/common/weeconfig.c:517 src/common/weeconfig.c:518
 msgid "background for info bar window"
 msgstr "фон информационной панели"
 
-#: src/common/weeconfig.c:515 src/common/weeconfig.c:516
+#: src/common/weeconfig.c:523 src/common/weeconfig.c:524
 msgid "color for input text"
 msgstr "цвет вводимого текста"
 
-#: src/common/weeconfig.c:519 src/common/weeconfig.c:520
+#: src/common/weeconfig.c:527 src/common/weeconfig.c:528
 msgid "color for input text (server name)"
 msgstr "цвет вводимого текста (название сервера)"
 
-#: src/common/weeconfig.c:523 src/common/weeconfig.c:524
+#: src/common/weeconfig.c:531 src/common/weeconfig.c:532
 msgid "color for input text (channel name)"
 msgstr "цвет вводимого текста (название канала)"
 
-#: src/common/weeconfig.c:527 src/common/weeconfig.c:528
+#: src/common/weeconfig.c:535 src/common/weeconfig.c:536
 msgid "color for input text (nick name)"
 msgstr "цвет вводимого текста (ник)"
 
-#: src/common/weeconfig.c:531 src/common/weeconfig.c:532
+#: src/common/weeconfig.c:539 src/common/weeconfig.c:540
 msgid "color for input text (delimiters)"
 msgstr "цвет вводимого текста (разделители)"
 
-#: src/common/weeconfig.c:535 src/common/weeconfig.c:536
+#: src/common/weeconfig.c:543 src/common/weeconfig.c:544
 msgid "color for text not found"
 msgstr "цвет сообщения \"не найдено\""
 
-#: src/common/weeconfig.c:539 src/common/weeconfig.c:540
+#: src/common/weeconfig.c:547 src/common/weeconfig.c:548
 #, fuzzy
 msgid "color for actions in input window"
 msgstr "цвет времени в окне чата"
 
-#: src/common/weeconfig.c:543 src/common/weeconfig.c:544
+#: src/common/weeconfig.c:551 src/common/weeconfig.c:552
 msgid "background for input window"
 msgstr "фон вводимого текста"
 
-#: src/common/weeconfig.c:549 src/common/weeconfig.c:550
+#: src/common/weeconfig.c:557 src/common/weeconfig.c:558
 msgid "color for nicknames"
 msgstr "цвет ников"
 
-#: src/common/weeconfig.c:553 src/common/weeconfig.c:554
+#: src/common/weeconfig.c:561 src/common/weeconfig.c:562
 msgid "color for away nicknames"
 msgstr "цвет отошедших ников"
 
-#: src/common/weeconfig.c:557
+#: src/common/weeconfig.c:565
 msgid "color for chan owner symbol"
 msgstr "цвет символа основателя канала"
 
-#: src/common/weeconfig.c:558
+#: src/common/weeconfig.c:566
 msgid "color for chan owner symbol (specific to unrealircd)"
 msgstr "цвет символа основателя канала (на серверах unrealircd)"
 
-#: src/common/weeconfig.c:561
+#: src/common/weeconfig.c:569
 msgid "color for chan admin symbol"
 msgstr "цвет символа администратора канала"
 
-#: src/common/weeconfig.c:562
+#: src/common/weeconfig.c:570
 msgid "color for chan admin symbol (specific to unrealircd)"
 msgstr "цвет символа администратора канала (на серверах unrealircd)"
 
-#: src/common/weeconfig.c:565 src/common/weeconfig.c:566
+#: src/common/weeconfig.c:573 src/common/weeconfig.c:574
 msgid "color for operator symbol"
 msgstr "цвет символа оператора канала"
 
-#: src/common/weeconfig.c:569 src/common/weeconfig.c:570
+#: src/common/weeconfig.c:577 src/common/weeconfig.c:578
 msgid "color for half-operator symbol"
 msgstr "цвет символа полу-оператора канала"
 
-#: src/common/weeconfig.c:573 src/common/weeconfig.c:574
+#: src/common/weeconfig.c:581 src/common/weeconfig.c:582
 msgid "color for voice symbol"
 msgstr "цвет символа права голоса"
 
-#: src/common/weeconfig.c:577 src/common/weeconfig.c:578
+#: src/common/weeconfig.c:585 src/common/weeconfig.c:586
 #, fuzzy
 msgid "color for user symbol"
 msgstr "цвет символа права голоса"
 
-#: src/common/weeconfig.c:581 src/common/weeconfig.c:582
+#: src/common/weeconfig.c:589 src/common/weeconfig.c:590
 msgid "color for '+' when scrolling nicks"
 msgstr "цвет '+' при прокрутке ников"
 
-#: src/common/weeconfig.c:585 src/common/weeconfig.c:586
+#: src/common/weeconfig.c:593 src/common/weeconfig.c:594
 msgid "color for nick separator"
 msgstr "цвет разделителя ников"
 
-#: src/common/weeconfig.c:589 src/common/weeconfig.c:590
+#: src/common/weeconfig.c:597 src/common/weeconfig.c:598
 msgid "color for local nick"
 msgstr "цвет локального ника"
 
-#: src/common/weeconfig.c:593 src/common/weeconfig.c:594
-#: src/common/weeconfig.c:597 src/common/weeconfig.c:598
 #: src/common/weeconfig.c:601 src/common/weeconfig.c:602
 #: src/common/weeconfig.c:605 src/common/weeconfig.c:606
 #: src/common/weeconfig.c:609 src/common/weeconfig.c:610
@@ -5085,73 +5094,75 @@ msgstr "цвет локального ника"
 #: src/common/weeconfig.c:621 src/common/weeconfig.c:622
 #: src/common/weeconfig.c:625 src/common/weeconfig.c:626
 #: src/common/weeconfig.c:629 src/common/weeconfig.c:630
+#: src/common/weeconfig.c:633 src/common/weeconfig.c:634
+#: src/common/weeconfig.c:637 src/common/weeconfig.c:638
 msgid "color for nick"
 msgstr "цвет ника"
 
-#: src/common/weeconfig.c:633 src/common/weeconfig.c:634
+#: src/common/weeconfig.c:641 src/common/weeconfig.c:642
 msgid "color for other nick in private window"
 msgstr "цвет ника собеседника в окне привата"
 
-#: src/common/weeconfig.c:637 src/common/weeconfig.c:638
+#: src/common/weeconfig.c:645 src/common/weeconfig.c:646
 msgid "background for nicknames"
 msgstr "фон ников"
 
-#: src/common/weeconfig.c:643
+#: src/common/weeconfig.c:651
 msgid "color for selected DCC"
 msgstr "фон выбранного DCC"
 
-#: src/common/weeconfig.c:644
+#: src/common/weeconfig.c:652
 msgid "color for selected DCC (chat window)"
 msgstr "фон выбранного DCC (в окне чата)"
 
-#: src/common/weeconfig.c:647 src/common/weeconfig.c:648
+#: src/common/weeconfig.c:655 src/common/weeconfig.c:656
 msgid "color for \"waiting\" dcc status"
 msgstr "цвет \"ожидания\" в окне DCC"
 
-#: src/common/weeconfig.c:651 src/common/weeconfig.c:652
+#: src/common/weeconfig.c:659 src/common/weeconfig.c:660
 msgid "color for \"connecting\" dcc status"
 msgstr "цвет \"соединения\" в окне DCC"
 
-#: src/common/weeconfig.c:655 src/common/weeconfig.c:656
+#: src/common/weeconfig.c:663 src/common/weeconfig.c:664
 msgid "color for \"active\" dcc status"
 msgstr "цвет \"активности\" в окне DCC"
 
-#: src/common/weeconfig.c:659 src/common/weeconfig.c:660
+#: src/common/weeconfig.c:667 src/common/weeconfig.c:668
 msgid "color for \"done\" dcc status"
 msgstr "цвет \"завершённых\" в окне DCC"
 
-#: src/common/weeconfig.c:663 src/common/weeconfig.c:664
+#: src/common/weeconfig.c:671 src/common/weeconfig.c:672
 msgid "color for \"failed\" dcc status"
 msgstr "цвет \"неудачных\" в окне DCC"
 
-#: src/common/weeconfig.c:667 src/common/weeconfig.c:668
+#: src/common/weeconfig.c:675 src/common/weeconfig.c:676
 msgid "color for \"aborted\" dcc status"
 msgstr "цвет \"отменённых\" в окне DCC"
 
-#: src/common/weeconfig.c:682
+#: src/common/weeconfig.c:690
 msgid "max lines in history (per window)"
 msgstr "строк в истории (на каждое окно)"
 
-#: src/common/weeconfig.c:683
+#: src/common/weeconfig.c:691
 msgid ""
 "maximum number of lines in history for one server/channel/private window (0 "
 "= unlimited)"
 msgstr ""
 "максимальное количество строк в истории каждого окна (0 = не ограничено)"
 
-#: src/common/weeconfig.c:687
+#: src/common/weeconfig.c:695
 msgid "max user commands in history"
 msgstr "количество команд в истории"
 
-#: src/common/weeconfig.c:688
+#: src/common/weeconfig.c:696
 msgid "maximum number of user commands in history (0 = unlimited)"
 msgstr "максимальное количество команд в истории (0 = не ограничено)"
 
-#: src/common/weeconfig.c:691
+#: src/common/weeconfig.c:699
 msgid "max commands to display"
 msgstr "количество отображаемых команд"
 
-#: src/common/weeconfig.c:692
+#: src/common/weeconfig.c:700
 msgid ""
 "maximum number of commands to display by default in history listing (0 = "
 "unlimited)"
@@ -5159,27 +5170,27 @@ msgstr ""
 "максимальное количество отображаемых команд в листинге истории (0 = не "
 "ограничено)"
 
-#: src/common/weeconfig.c:709 src/common/weeconfig.c:710
+#: src/common/weeconfig.c:717 src/common/weeconfig.c:718
 msgid "automatically log server messages"
 msgstr "автоматически журналировать сообщения сервера"
 
-#: src/common/weeconfig.c:713 src/common/weeconfig.c:714
+#: src/common/weeconfig.c:721 src/common/weeconfig.c:722
 msgid "automatically log channel chats"
 msgstr "автоматически журналировать сообщения с каналов"
 
-#: src/common/weeconfig.c:717 src/common/weeconfig.c:718
+#: src/common/weeconfig.c:725 src/common/weeconfig.c:726
 msgid "automatically log private chats"
 msgstr "автоматически журналировать приваты"
 
-#: src/common/weeconfig.c:721 src/common/weeconfig.c:722
+#: src/common/weeconfig.c:729 src/common/weeconfig.c:730
 msgid "log messages from plugins (scripts)"
 msgstr "журналировать сообщения plug-in'ов и скриптов"
 
-#: src/common/weeconfig.c:725
+#: src/common/weeconfig.c:733
 msgid "path for log files"
 msgstr "путь для log-файлов"
 
-#: src/common/weeconfig.c:726
+#: src/common/weeconfig.c:734
 msgid ""
 "path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/."
 "weechat by default)"
@@ -5187,115 +5198,115 @@ msgstr ""
 "путь к журналам WeeChat ('%h' заменяется на домашний каталог WeeChat, ~/."
 "weechat по умолчанию)"
 
-#: src/common/weeconfig.c:730
+#: src/common/weeconfig.c:738
 msgid "timestamp for log"
 msgstr "время в журнале"
 
-#: src/common/weeconfig.c:731
+#: src/common/weeconfig.c:739
 msgid "timestamp for log (see man strftime for date/time specifiers)"
 msgstr "время в журнале (список переменных в man strftime)"
 
-#: src/common/weeconfig.c:734 src/common/weeconfig.c:735
+#: src/common/weeconfig.c:742 src/common/weeconfig.c:743
 msgid "hide password displayed by nickserv"
 msgstr "скрывать пароль, отображаемый nickserv'ом"
 
-#: src/common/weeconfig.c:763
+#: src/common/weeconfig.c:771
 msgid "display message for away"
 msgstr "показывать сообщение во все каналы при отсутствии"
 
-#: src/common/weeconfig.c:764
+#: src/common/weeconfig.c:772
 msgid "display message when (un)marking as away"
 msgstr "показывать сообщение во все каналы при установке/снятии отсутствия"
 
-#: src/common/weeconfig.c:767 src/common/weeconfig.c:768
+#: src/common/weeconfig.c:775 src/common/weeconfig.c:776
 msgid "show remote away message only once in private"
 msgstr "отображать уведомление об отсутствии единожды в привате"
 
-#: src/common/weeconfig.c:771
+#: src/common/weeconfig.c:779
 msgid "default part message (leaving channel)"
 msgstr "сообщение о покидании канала по-умолчанию"
 
-#: src/common/weeconfig.c:772
+#: src/common/weeconfig.c:780
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
 "version in string)"
 msgstr "сообщение покидания канала ('%v' будет заменён на версию WeeChat)"
 
-#: src/common/weeconfig.c:776
+#: src/common/weeconfig.c:784
 msgid "default quit message"
 msgstr "сообщение о выходе по-умолчанию"
 
-#: src/common/weeconfig.c:777
+#: src/common/weeconfig.c:785
 msgid ""
 "default quit message ('%v' will be replaced by WeeChat version in string)"
 msgstr "сообщение о выходе по-умолчанию ('%v' будет заменён на версию WeeChat)"
 
-#: src/common/weeconfig.c:780 src/common/weeconfig.c:781
+#: src/common/weeconfig.c:788 src/common/weeconfig.c:789
 msgid "display notices as private messages"
 msgstr "отображать notice'ы в виде личных сообщений"
 
-#: src/common/weeconfig.c:784
+#: src/common/weeconfig.c:792
 msgid "interval between two checks for away"
 msgstr "интервал между проверками на отсутствие"
 
-#: src/common/weeconfig.c:785
+#: src/common/weeconfig.c:793
 msgid "interval between two checks for away (in minutes, 0 = never check)"
 msgstr ""
 "интервал между проверками на отсутствие (в минутах, 0 = не проверять никогда)"
 
-#: src/common/weeconfig.c:788
+#: src/common/weeconfig.c:796
 msgid "max number of nicks for away check"
 msgstr "максимальное количество ников на канале для проверки на отсутствие"
 
-#: src/common/weeconfig.c:789
+#: src/common/weeconfig.c:797
 msgid ""
 "do not check away nicks on channels with high number of nicks (0 = unlimited)"
 msgstr ""
 "не проверять отсутствие на каналах с большим количеством ников (0=не "
 "ограничено)"
 
-#: src/common/weeconfig.c:792
+#: src/common/weeconfig.c:800
 msgid "interval between two checks for lag"
 msgstr "интервал между проверками задержек"
 
-#: src/common/weeconfig.c:793
+#: src/common/weeconfig.c:801
 msgid "interval between two checks for lag (in seconds)"
 msgstr "интервал между проверками задержек (в секундах)"
 
-#: src/common/weeconfig.c:796
+#: src/common/weeconfig.c:804
 msgid "minimum lag to show"
 msgstr "минимальная отображаемая задержка"
 
-#: src/common/weeconfig.c:797
+#: src/common/weeconfig.c:805
 msgid "minimum lag to show (in seconds)"
 msgstr "минимальная отображаемая задержка (в секундах)"
 
-#: src/common/weeconfig.c:800
+#: src/common/weeconfig.c:808
 msgid "disconnect after important lag"
 msgstr "отключаться при серьёзной задержке"
 
-#: src/common/weeconfig.c:801
+#: src/common/weeconfig.c:809
 msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
 msgstr ""
 "отключаться при серьёзной задержке (в минутах, 0 = не отключаться никогда)"
 
-#: src/common/weeconfig.c:804
+#: src/common/weeconfig.c:812
 msgid "anti-flood"
 msgstr "анти-флуд"
 
-#: src/common/weeconfig.c:805
+#: src/common/weeconfig.c:813
 msgid "anti-flood: # seconds between two user messages (0 = no anti-flood)"
 msgstr "анти-флуд; интервал отправки сообщений в секундах (0 = без анти-флуда)"
 
-#: src/common/weeconfig.c:808 src/common/weeconfig.c:809
+#: src/common/weeconfig.c:816 src/common/weeconfig.c:817
 msgid "create a FIFO pipe for remote control"
 msgstr "создавать FIFO pipe для удалённого управления"
 
-#: src/common/weeconfig.c:812
+#: src/common/weeconfig.c:820
 msgid "list of words to highlight"
 msgstr "список подсвечиваемых слов"
 
-#: src/common/weeconfig.c:813
+#: src/common/weeconfig.c:821
 msgid ""
 "comma separated list of words to highlight (case insensitive comparison, "
 "words may begin or end with \"*\" for partial match)"
@@ -5303,15 +5314,15 @@ msgstr ""
 "разделённый запятыми список подсвечиваемых слов (регистр учитывается, слова "
 "могут начинаться или кончаться \"*\" для неполного соответствия)"
 
-#: src/common/weeconfig.c:817 src/common/weeconfig.c:819
+#: src/common/weeconfig.c:825 src/common/weeconfig.c:827
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr "когда выключено, цвета в исходящих сообщениях игнорируются"
 
-#: src/common/weeconfig.c:822
+#: src/common/weeconfig.c:830
 msgid "allow user to send colors"
 msgstr "разрешить отправку цветов"
 
-#: src/common/weeconfig.c:823
+#: src/common/weeconfig.c:831
 #, fuzzy
 msgid ""
 "allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, ^Ccxx,"
@@ -5320,51 +5331,51 @@ msgstr ""
 "allow user to send colors специальными кодами (%B=жирный, %Cxx,yy=цветной, %"
 "U=подчёркнутый, %R=инвертированный)"
 
-#: src/common/weeconfig.c:827 src/common/weeconfig.c:828
+#: src/common/weeconfig.c:835 src/common/weeconfig.c:836
 msgid "send unknown commands to IRC server"
 msgstr "отсылать неизвестные команды IRC серверу"
 
-#: src/common/weeconfig.c:850
+#: src/common/weeconfig.c:858
 msgid "automatically accept dcc files"
 msgstr "автоматически подтверждать передачу файлов"
 
-#: src/common/weeconfig.c:851
+#: src/common/weeconfig.c:859
 msgid "automatically accept incoming dcc files"
 msgstr "автоматически подтверждать получение файлов"
 
-#: src/common/weeconfig.c:854
+#: src/common/weeconfig.c:862
 msgid "automatically accept dcc chats"
 msgstr "автоматически подтверждать dcc-чат"
 
-#: src/common/weeconfig.c:855
+#: src/common/weeconfig.c:863
 msgid "automatically accept dcc chats (use carefully!)"
 msgstr "автоматически подтверждать dcc-чат (используйте осторожно!)"
 
-#: src/common/weeconfig.c:858
+#: src/common/weeconfig.c:866
 msgid "timeout for dcc request"
 msgstr "таймаут запросов dcc-соединений"
 
-#: src/common/weeconfig.c:859
+#: src/common/weeconfig.c:867
 msgid "timeout for dcc request (in seconds)"
 msgstr "таймаут запросов dcc-соединений (в секундах)"
 
-#: src/common/weeconfig.c:862
+#: src/common/weeconfig.c:870
 msgid "block size for dcc packets"
 msgstr "размер блока dcc пакетов"
 
-#: src/common/weeconfig.c:863
+#: src/common/weeconfig.c:871
 msgid "block size for dcc packets in bytes (default: 65536)"
 msgstr "размер блока dcc пакетов в байтах (по умолчанию: 65536)"
 
-#: src/common/weeconfig.c:866 src/common/weeconfig.c:867
+#: src/common/weeconfig.c:874 src/common/weeconfig.c:875
 msgid "does not wait for ACK when sending file"
 msgstr "не ожидать ACK при отправке файла"
 
-#: src/common/weeconfig.c:870
+#: src/common/weeconfig.c:878
 msgid "allowed ports for outgoing dcc"
 msgstr "разрешённые порты для исходящих dcc-соединений"
 
-#: src/common/weeconfig.c:871
+#: src/common/weeconfig.c:879
 msgid ""
 "restricts outgoing dcc to use only ports in the given range (useful for NAT) "
 "(syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value "
@@ -5374,11 +5385,11 @@ msgstr ""
 "(полезно для NAT) (синтаксис: определённый порт, например 5000, или интервал "
 "портов, например 5000-5015, пустое значение означает любой порт)"
 
-#: src/common/weeconfig.c:876
+#: src/common/weeconfig.c:884
 msgid "IP address for outgoing dcc"
 msgstr "IP адрес для dcc-соединений"
 
-#: src/common/weeconfig.c:877
+#: src/common/weeconfig.c:885
 msgid ""
 "IP or DNS address used for outgoing dcc (if empty, local interface IP is "
 "used)"
@@ -5386,113 +5397,113 @@ msgstr ""
 "IP адрес или домен, используемый для исходящих DCC соединений (пустое "
 "значение означает текущий IP адрес)"
 
-#: src/common/weeconfig.c:881
+#: src/common/weeconfig.c:889
 msgid "path for incoming files with dcc"
 msgstr "путь для получаемых файлов"
 
-#: src/common/weeconfig.c:882
+#: src/common/weeconfig.c:890
 msgid "path for writing incoming files with dcc (default: user home)"
 msgstr ""
 "путь для сохранения получаемых файлов (по умолчанию: в домашней директории "
 "пользователя)"
 
-#: src/common/weeconfig.c:885
+#: src/common/weeconfig.c:893
 msgid "default path for sending files with dcc"
 msgstr "пусть по умолчанию для отправки файлов"
 
-#: src/common/weeconfig.c:886
+#: src/common/weeconfig.c:894
 msgid ""
 "path for reading files when sending thru dcc (when no path is specified)"
 msgstr "путь для поиска отправляемых файлов (если не задан полный путь)"
 
-#: src/common/weeconfig.c:889 src/common/weeconfig.c:890
+#: src/common/weeconfig.c:897 src/common/weeconfig.c:898
 msgid "convert spaces to underscores when sending files"
 msgstr "заменять пробелы знаками подчёркивания при отправке файлов"
 
-#: src/common/weeconfig.c:893
+#: src/common/weeconfig.c:901
 msgid "automatically rename dcc files if already exists"
 msgstr ""
 "автоматически переименовывать получаемые файлы при наличии файла с тем же "
 "названием"
 
-#: src/common/weeconfig.c:894
+#: src/common/weeconfig.c:902
 msgid "rename incoming files if already exists (add '.1', '.2', ...)"
 msgstr ""
 "переименовывать получаемые файлы при наличии файла с тем же названием "
 "(добавлять '.1', '.2' и т.д.)"
 
-#: src/common/weeconfig.c:897
+#: src/common/weeconfig.c:905
 msgid "automatically resume aborted transfers"
 msgstr "автоматически продолжать прерванные закачки"
 
-#: src/common/weeconfig.c:898
+#: src/common/weeconfig.c:906
 msgid ""
 "automatically resume dcc transfer if connection with remote host is loosed"
 msgstr ""
 "автоматически продолжать DCC передачу если соединение с удалённым хостом "
 "было утеряно"
 
-#: src/common/weeconfig.c:917
+#: src/common/weeconfig.c:925
 msgid "use proxy"
 msgstr "использовать proxy сервер"
 
-#: src/common/weeconfig.c:918
+#: src/common/weeconfig.c:926
 msgid "use a proxy server to connect to irc server"
 msgstr "испоьзовать proxy-сервер при подключении к irc-серверу"
 
-#: src/common/weeconfig.c:921
+#: src/common/weeconfig.c:929
 msgid "proxy type"
 msgstr "тип proxy сервера"
 
-#: src/common/weeconfig.c:922
+#: src/common/weeconfig.c:930
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr "тип proxy сервера (http (по-умолчанию), socks4, socks5)"
 
-#: src/common/weeconfig.c:925
+#: src/common/weeconfig.c:933
 msgid "use ipv6 proxy"
 msgstr "использовать ipv6 proxy"
 
-#: src/common/weeconfig.c:926
+#: src/common/weeconfig.c:934
 msgid "connect to proxy in ipv6"
 msgstr "подключаться к прокси используя ipv6"
 
-#: src/common/weeconfig.c:929
+#: src/common/weeconfig.c:937
 msgid "proxy address"
 msgstr "адрес proxy-сервера"
 
-#: src/common/weeconfig.c:930
+#: src/common/weeconfig.c:938
 msgid "proxy server address (IP or hostname)"
 msgstr "адрес proxy-сервера (IP или хост)"
 
-#: src/common/weeconfig.c:933
+#: src/common/weeconfig.c:941
 msgid "port for proxy"
 msgstr "порт proxy"
 
-#: src/common/weeconfig.c:934
+#: src/common/weeconfig.c:942
 msgid "port for connecting to proxy server"
 msgstr "порт, используемый при подключении к proxy-серверу"
 
-#: src/common/weeconfig.c:937
+#: src/common/weeconfig.c:945
 msgid "proxy username"
 msgstr "proxy username"
 
-#: src/common/weeconfig.c:938
+#: src/common/weeconfig.c:946
 msgid "username for proxy server"
 msgstr "имя пользователя, используемое при подключения к proxy-серверу"
 
-#: src/common/weeconfig.c:941
+#: src/common/weeconfig.c:949
 msgid "proxy password"
 msgstr "proxy password"
 
-#: src/common/weeconfig.c:942
+#: src/common/weeconfig.c:950
 msgid "password for proxy server"
 msgstr "пароль к proxy серверу"
 
-#: src/common/weeconfig.c:955
+#: src/common/weeconfig.c:963
 msgid "path for searching plugins"
 msgstr "путь для поиска plug-in'ов"
 
-#: src/common/weeconfig.c:956
+#: src/common/weeconfig.c:964
 msgid ""
 "path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
 "weechat by default)"
@@ -5500,11 +5511,11 @@ msgstr ""
 "путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
 "умолчанию - ~/.weechat)"
 
-#: src/common/weeconfig.c:960
+#: src/common/weeconfig.c:968
 msgid "list of plugins to load automatically"
 msgstr "список автоматически загружаемых plug-in'ов "
 
-#: src/common/weeconfig.c:961
+#: src/common/weeconfig.c:969
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found (names may be partial, for example \"perl\" is ok "
@@ -5514,11 +5525,11 @@ msgstr ""
 "in'ов , \"*\" означает все найденные plug-in'ы (имена могут быть не полными, "
 "например \"perl\" успешно загрузит \"libperl.so\")"
 
-#: src/common/weeconfig.c:966
+#: src/common/weeconfig.c:974
 msgid "standard plugins extension in filename"
 msgstr "стандартное расширение файлов pluginов"
 
-#: src/common/weeconfig.c:967
+#: src/common/weeconfig.c:975
 msgid ""
 "standard plugins extension in filename, used for autoload (if empty, then "
 "all files are loaded when autoload is \"*\")"
@@ -5526,128 +5537,128 @@ msgstr ""
 "стандартное расширение файлов pluginов, используется при автозагрузке (если "
 "не установлено, загружает все файлы)"
 
-#: src/common/weeconfig.c:984
+#: src/common/weeconfig.c:992
 msgid "server name"
 msgstr "название сервера"
 
-#: src/common/weeconfig.c:985
+#: src/common/weeconfig.c:993
 msgid "name associated to IRC server (for display only)"
 msgstr "имя IRC сервера (для внутреннего пользования)"
 
-#: src/common/weeconfig.c:988
+#: src/common/weeconfig.c:996
 msgid "automatically connect to server"
 msgstr "подключаться автоматически"
 
-#: src/common/weeconfig.c:989
+#: src/common/weeconfig.c:997
 msgid "automatically connect to server when WeeChat is starting"
 msgstr "подключаться к серверу автоматически при запуске WeeChat"
 
-#: src/common/weeconfig.c:992
+#: src/common/weeconfig.c:1000
 msgid "automatically reconnect to server"
 msgstr "автоматически переподключаться "
 
-#: src/common/weeconfig.c:993
+#: src/common/weeconfig.c:1001
 msgid "automatically reconnect to server when disconnected"
 msgstr "автоматически переподключаться к серверу при обрыве связи"
 
-#: src/common/weeconfig.c:996
+#: src/common/weeconfig.c:1004
 msgid "delay before trying again to reconnect"
 msgstr "задержка перед повторным соединением"
 
-#: src/common/weeconfig.c:997
+#: src/common/weeconfig.c:1005
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr "задержка (в секундах) перед повторным соединением с сервером"
 
-#: src/common/weeconfig.c:1000
+#: src/common/weeconfig.c:1008
 msgid "server address or hostname"
 msgstr "адрес или хост сервера"
 
-#: src/common/weeconfig.c:1001
+#: src/common/weeconfig.c:1009
 msgid "IP address or hostname of IRC server"
 msgstr "IP адрес или хост IRC сервера"
 
-#: src/common/weeconfig.c:1004
+#: src/common/weeconfig.c:1012
 msgid "port for IRC server"
 msgstr "порт IRC сервера"
 
-#: src/common/weeconfig.c:1005
+#: src/common/weeconfig.c:1013
 msgid "port for connecting to server"
 msgstr "порт, используемый при соединении с сервером"
 
-#: src/common/weeconfig.c:1008 src/common/weeconfig.c:1009
+#: src/common/weeconfig.c:1016 src/common/weeconfig.c:1017
 msgid "use IPv6 protocol for server communication"
 msgstr "использовать IPv6 при связи с сервером"
 
-#: src/common/weeconfig.c:1012 src/common/weeconfig.c:1013
+#: src/common/weeconfig.c:1020 src/common/weeconfig.c:1021
 msgid "use SSL for server communication"
 msgstr "использовать SSL при связи с сервером"
 
-#: src/common/weeconfig.c:1016
+#: src/common/weeconfig.c:1024
 msgid "server password"
 msgstr "пароль сервера"
 
-#: src/common/weeconfig.c:1017
+#: src/common/weeconfig.c:1025
 msgid "password for IRC server"
 msgstr "пароль, используемый при подключении к IRC серверу"
 
-#: src/common/weeconfig.c:1020
+#: src/common/weeconfig.c:1028
 msgid "nickname for server"
 msgstr "ник на сервере"
 
-#: src/common/weeconfig.c:1021
+#: src/common/weeconfig.c:1029
 msgid "nickname to use on IRC server"
 msgstr "ник, используемый на IRC сервере"
 
-#: src/common/weeconfig.c:1024
+#: src/common/weeconfig.c:1032
 msgid "alternate nickname for server"
 msgstr "альтернативный ник на сервере"
 
-#: src/common/weeconfig.c:1025
+#: src/common/weeconfig.c:1033
 msgid "alternate nickname to use on IRC server (if nickname is already used)"
 msgstr "альтернативный ник, используемый на IRC сервере"
 
-#: src/common/weeconfig.c:1028
+#: src/common/weeconfig.c:1036
 msgid "2nd alternate nickname for server"
 msgstr "второй альтернативный ник на сервере"
 
-#: src/common/weeconfig.c:1029
+#: src/common/weeconfig.c:1037
 msgid ""
 "2nd alternate nickname to use on IRC server (if alternate nickname is "
 "already used)"
 msgstr "второй альтернативный ник, используемый на IRC сервере"
 
-#: src/common/weeconfig.c:1032
+#: src/common/weeconfig.c:1040
 msgid "user name for server"
 msgstr "имя пользователя на сервере"
 
-#: src/common/weeconfig.c:1033
+#: src/common/weeconfig.c:1041
 msgid "user name to use on IRC server"
 msgstr "имя пользователя, используемое на IRC сервере"
 
-#: src/common/weeconfig.c:1036
+#: src/common/weeconfig.c:1044
 msgid "real name for server"
 msgstr "настоящее имя на сервере"
 
-#: src/common/weeconfig.c:1037
+#: src/common/weeconfig.c:1045
 msgid "real name to use on IRC server"
 msgstr "настоящее имя, используемое на IRC сервере"
 
-#: src/common/weeconfig.c:1040
+#: src/common/weeconfig.c:1048
 msgid "custom hostname/IP for server"
 msgstr "нестандартный хост/ip-адрес для сервера"
 
-#: src/common/weeconfig.c:1041
+#: src/common/weeconfig.c:1049
 msgid ""
 "custom hostname/IP for server (optional, if empty local hostname is used)"
 msgstr ""
 "другой ip/хост для сервера (опционально, если не задано - используется "
 "локальный хост)"
 
-#: src/common/weeconfig.c:1044
+#: src/common/weeconfig.c:1052
 msgid "command(s) to run when connected to server"
 msgstr "команды, выполняемые при подключении к серверу"
 
-#: src/common/weeconfig.c:1045
+#: src/common/weeconfig.c:1053
 msgid ""
 "command(s) to run when connected to server (many commands should be "
 "separated by ';', use '\\;' for a semicolon, special variables $nick, "
@@ -5658,11 +5669,11 @@ msgstr ""
 "специальные переменные $nick, $channel и $server заменяются на "
 "соответствующие значения)"
 
-#: src/common/weeconfig.c:1050
+#: src/common/weeconfig.c:1058
 msgid "delay (in seconds) after command was executed"
 msgstr "задержка (в секундах) перед выполнением команды"
 
-#: src/common/weeconfig.c:1051
+#: src/common/weeconfig.c:1059
 msgid ""
 "delay (in seconds) after command was executed (example: give some time for "
 "authentication)"
@@ -5670,11 +5681,11 @@ msgstr ""
 "задержка (в секундах) перед выполнением команды (например, нужно время для "
 "аутентификации)"
 
-#: src/common/weeconfig.c:1054
+#: src/common/weeconfig.c:1062
 msgid "list of channels to join when connected to server"
 msgstr "Список каналов, на которые заходить при соединении с сервером"
 
-#: src/common/weeconfig.c:1055
+#: src/common/weeconfig.c:1063
 msgid ""
 "comma separated list of channels to join when connected to server (example: "
 "\"#chan1,#chan2,#chan3 key1,key2\")"
@@ -5682,15 +5693,15 @@ msgstr ""
 "разделённый запятыми список каналов, на которые заходить при подключении к "
 "серверу (например, \"#chan1,#chan2,#chan3 key1,key2\")"
 
-#: src/common/weeconfig.c:1058 src/common/weeconfig.c:1059
+#: src/common/weeconfig.c:1066 src/common/weeconfig.c:1067
 msgid "automatically rejoin channels when kicked"
 msgstr "автоматически перезаходить на каналы после кика"
 
-#: src/common/weeconfig.c:1062
+#: src/common/weeconfig.c:1070
 msgid "notify levels for channels of this server"
 msgstr "уровни уведомления для каналов этого сервера"
 
-#: src/common/weeconfig.c:1063
+#: src/common/weeconfig.c:1071
 msgid ""
 "comma separated list of notify levels for channels of this server (format: "
 "#channel:1,..), a channel name '*' is reserved for server default notify "
@@ -5700,7 +5711,7 @@ msgstr ""
 "#канал:1,..), название канала '*' зарезервировано для уровня уведомления "
 "сервера"
 
-#: src/common/weeconfig.c:1149
+#: src/common/weeconfig.c:1157
 #, c-format
 msgid ""
 "%s you should now issue /save to write \"save_on_exit\" option in config "
@@ -5709,63 +5720,63 @@ msgstr ""
 "%s вам следует набрать /save чтобы записать параметр \"save_on_exit\" в "
 "конфигурационный файл.\n"
 
-#: src/common/weeconfig.c:1801
+#: src/common/weeconfig.c:1809
 #, c-format
 msgid "%s %s, line %d: new server, but previous was incomplete\n"
 msgstr "%s %s, строка %d: новый сервер, но старый описан не полностью\n"
 
-#: src/common/weeconfig.c:1810
+#: src/common/weeconfig.c:1818
 #, c-format
 msgid "%s %s, line %d: server '%s' already exists\n"
 msgstr "%s %s, строка %d: сервер '%s' уже существует\n"
 
-#: src/common/weeconfig.c:1826
+#: src/common/weeconfig.c:1834
 #, c-format
 msgid "%s %s, line %d: unable to create server\n"
 msgstr "%s %s, строка %d: не могу создать сервер\n"
 
-#: src/common/weeconfig.c:1866
+#: src/common/weeconfig.c:1874
 #, c-format
 msgid "%s unable to assign default int with string (\"%s\")\n"
 msgstr ""
 "%s не могу установить целочисленное значение по умолчанию строке (\"%s\")\n"
 
-#: src/common/weeconfig.c:1877
+#: src/common/weeconfig.c:1885
 #, c-format
 msgid "%s unable to assign default color (\"%s\")\n"
 msgstr "%s не могу установить цвет по умолчанию (\"%s\")\n"
 
-#: src/common/weeconfig.c:1915
+#: src/common/weeconfig.c:1923
 #, c-format
 msgid "%s config file \"%s\" not found.\n"
 msgstr "%s конфигурационынй файл \"%s\" не найден.\n"
 
-#: src/common/weeconfig.c:1955
+#: src/common/weeconfig.c:1963
 #, c-format
 msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr "%s %s, строка %d: некорректный синтаксис, не хватает \"]\"\n"
 
-#: src/common/weeconfig.c:1972
+#: src/common/weeconfig.c:1980
 #, c-format
 msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
 
-#: src/common/weeconfig.c:1990
+#: src/common/weeconfig.c:1998
 #, c-format
 msgid "%s %s, line %d: invalid section for option, line is ignored\n"
 msgstr "%s %s, строка %d: некорректная секция параметра, строка игнорируется\n"
 
-#: src/common/weeconfig.c:2073 src/common/weeconfig.c:2099
+#: src/common/weeconfig.c:2081 src/common/weeconfig.c:2107
 #, c-format
 msgid "%s %s, line %d: invalid option \"%s\"\n"
 msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
 
-#: src/common/weeconfig.c:2079
+#: src/common/weeconfig.c:2087
 #, c-format
 msgid "%s %s, line %d: invalid ignore options \"%s\"\n"
 msgstr "%s %s, строка %d: некорректные параметры игнорирования \"%s\"\n"
 
-#: src/common/weeconfig.c:2110
+#: src/common/weeconfig.c:2118
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -5774,7 +5785,7 @@ msgstr ""
 "%s %s, строка %d: некорректное значение параметра '%s'\n"
 "Ожидалось: булевое значение: 'off' или 'on'\n"
 
-#: src/common/weeconfig.c:2119
+#: src/common/weeconfig.c:2127
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -5783,7 +5794,7 @@ msgstr ""
 "%s %s, строка %d: некорректное значение параметра '%s'\n"
 "Ожидалось: целочисленное значение: от %d до %d\n"
 
-#: src/common/weeconfig.c:2130
+#: src/common/weeconfig.c:2138
 #, c-format
 msgid ""
 "%s %s, line %d: invalid value for option '%s'\n"
@@ -5792,21 +5803,21 @@ msgstr ""
 "%s %s, строка %d: некорректное значение параметра '%s'\n"
 "Ожидалось: одно из значений:"
 
-#: src/common/weeconfig.c:2146
+#: src/common/weeconfig.c:2154
 #, c-format
 msgid "%s %s, line %d: invalid color name for option '%s'\n"
 msgstr "%s %s, строка %d: некорректное название цвета параметра '%s'\n"
 
-#: src/common/weeconfig.c:2215
+#: src/common/weeconfig.c:2223
 #, c-format
 msgid "%s: creating default config file...\n"
 msgstr "%s: создаётся конфигурационный файл по умолчанию...\n"
 
-#: src/common/weeconfig.c:2216
+#: src/common/weeconfig.c:2224
 msgid "Creating default config file\n"
 msgstr "Создаю новый конфигурационный файл\n"
 
-#: src/common/weeconfig.c:2219 src/common/weeconfig.c:2436
+#: src/common/weeconfig.c:2227 src/common/weeconfig.c:2444
 #, c-format
 msgid ""
 "#\n"
@@ -5815,7 +5826,7 @@ msgstr ""
 "#\n"
 "# %s конфигурационный файл, созданный пользователем %s v%s, %s"
 
-#: src/common/weeconfig.c:2223 src/common/weeconfig.c:2440
+#: src/common/weeconfig.c:2231 src/common/weeconfig.c:2448
 msgid ""
 "# WARNING! Be careful when editing this file, WeeChat writes this file when "
 "exiting.\n"
@@ -5825,6 +5836,6 @@ msgstr ""
 "его при выходе.\n"
 "#\n"
 
-#: src/common/weeconfig.c:2433
+#: src/common/weeconfig.c:2441
 msgid "Saving config to disk\n"
 msgstr "Сохраняю конфигурацию\n"

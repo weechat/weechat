@@ -95,6 +95,7 @@ char *cfg_look_align_nick_values[] =
 int cfg_look_align_other;
 int cfg_look_align_size;
 int cfg_look_align_size_max;
+int cfg_look_align_text_offset;
 char *cfg_look_nick_completor;
 char *cfg_look_nick_completion_ignore;
 int cfg_look_nick_completion_smart;
@@ -221,6 +222,13 @@ t_config_option weechat_options_look[] =
        "look_align_size)"),
     OPTION_TYPE_INT, 8, 64, 20,
     NULL, NULL, &cfg_look_align_size_max, NULL, config_change_noop },
+  { "look_align_text_offset", N_("offset for aligning lines of messages "
+                                 "(except first lines)"),
+    N_("offset for aligning lines of messages (except first lines), default is "
+       "-1 (align after nick), a null or positive value is offset after "
+       "beginning of line"),
+    OPTION_TYPE_INT, -1, 64, -1,
+    NULL, NULL, &cfg_look_align_text_offset, NULL, config_change_buffers },
   { "look_nick_completor", N_("the string inserted after nick completion"),
     N_("the string inserted after nick completion"),
     OPTION_TYPE_STRING, 0, 0, 0,

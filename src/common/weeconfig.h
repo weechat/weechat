@@ -118,6 +118,7 @@ extern int cfg_look_align_nick;
 extern int cfg_look_align_other;
 extern int cfg_look_align_size;
 extern int cfg_look_align_size_max;
+extern int cfg_look_align_text_offset;
 extern char *cfg_look_nick_completor;
 extern char *cfg_look_nick_completion_ignore;
 extern int cfg_look_nick_completion_smart;

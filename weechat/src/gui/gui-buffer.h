@@ -27,16 +27,19 @@
 #define GUI_BUFFER_TYPE_DCC      1
 #define GUI_BUFFER_TYPE_RAW_DATA 2
 
-#define GUI_SERVER(buffer)  ((t_irc_server *)(buffer->server))
-#define GUI_CHANNEL(buffer) ((t_irc_channel *)(buffer->channel))
+#define GUI_SERVER(buffer)              ((t_irc_server *)(buffer->server))
+#define GUI_CHANNEL(buffer)              ((t_irc_channel *)(buffer->channel))
 
 #define GUI_BUFFER_IS_SERVER(buffer)    ((GUI_SERVER(buffer) || (buffer->all_servers)) && !GUI_CHANNEL(buffer))
 #define GUI_BUFFER_IS_CHANNEL(buffer)   (GUI_CHANNEL(buffer) && (GUI_CHANNEL(buffer)->type == IRC_CHANNEL_TYPE_CHANNEL))
-#define GUI_BUFFER_IS_PRIVATE(buffer)   (GUI_CHANNEL(buffer) && \
+#define GUI_BUFFER_IS_PRIVATE(buffer)   (GUI_CHANNEL(buffer) &&         \
                                         ((GUI_CHANNEL(buffer)->type == IRC_CHANNEL_TYPE_PRIVATE) \
                                         || (GUI_CHANNEL(buffer)->type == IRC_CHANNEL_TYPE_DCC_CHAT)))
 
 #define GUI_BUFFER_HAS_NICKLIST(buffer) (GUI_BUFFER_IS_CHANNEL(buffer))
+
+#define GUI_LINE_LENGTH_ALIGN(line)     ((cfg_look_align_text_offset >= 0) ? \
+                                        cfg_look_align_text_offset : line->length_align)
 
 #define GUI_MSG_TYPE_TIME      1
 #define GUI_MSG_TYPE_PREFIX    2
