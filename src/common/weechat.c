@@ -187,8 +187,22 @@ weechat_display_config_options ()
                                                weechat_options[i][j].default_string : _("empty"));
                         break;
                     case OPTION_TYPE_STRING:
-                        weechat_iconv_fprintf (stdout, _("  . type: string\n"));
-                        weechat_iconv_fprintf (stdout, _("  . values: any string\n"));
+                        switch (weechat_options[i][j].max)
+                        {
+                            case 0:
+                                weechat_iconv_fprintf (stdout, _("  . type: string\n"));
+                                weechat_iconv_fprintf (stdout, _("  . values: any string\n"));
+                                break;
+                            case 1:
+                                weechat_iconv_fprintf (stdout, _("  . type: char\n"));
+                                weechat_iconv_fprintf (stdout, _("  . values: any char\n"));
+                                break;
+                            default:
+                                weechat_iconv_fprintf (stdout, _("  . type: string\n"));
+                                weechat_iconv_fprintf (stdout, _("  . values: any string (limit: %d chars)\n"),
+                                                       weechat_options[i][j].max);
+                                break;
+                        }
                         weechat_iconv_fprintf (stdout, _("  . default value: '%s'\n"),
                                                (weechat_options[i][j].default_string) ?
                                                weechat_options[i][j].default_string : _("empty"));

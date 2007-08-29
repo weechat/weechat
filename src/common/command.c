@@ -3878,7 +3878,19 @@ weechat_cmd_set (t_irc_server *server, t_irc_channel *channel,
                             weechat_options[last_section][last_option].default_string : _("empty"));
                         break;
                     case OPTION_TYPE_STRING:
-                        gui_printf (NULL, _("  . type string (any string)\n"));
+                        switch (weechat_options[last_section][last_option].max)
+                        {
+                            case 0:
+                                gui_printf (NULL, _("  . type string (any string)\n"));
+                                break;
+                            case 1:
+                                gui_printf (NULL, _("  . type: char (any char)\n"));
+                                break;
+                            default:
+                                gui_printf (NULL, _("  . type string (any string, limit: %d chars)\n"),
+                                            weechat_options[last_section][last_option].max);
+                                break;
+                        }
                         gui_printf (NULL, _("  . default value: '%s'\n"),
                                     (weechat_options[last_section][last_option].default_string) ?
                                     weechat_options[last_section][last_option].default_string : _("empty"));

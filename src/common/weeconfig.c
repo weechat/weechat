@@ -290,7 +290,7 @@ t_config_option weechat_options_look[] =
     "%a, %d %b %Y", NULL, NULL, &cfg_look_day_change_timestamp, config_change_noop },
   { "look_read_marker", N_("use a marker on servers/channels to show first unread line"),
     N_("use a marker on servers/channels to show first unread line"),
-    OPTION_TYPE_STRING, 0, 0, 0,
+    OPTION_TYPE_STRING, 0, 1, 0,
     " ", NULL, NULL, &cfg_look_read_marker, config_change_read_marker },
   { "look_input_format", N_("format for input prompt"),
     N_("format for input prompt ('%c' is replaced by channel or server, "
@@ -1430,6 +1430,8 @@ config_option_set_value (t_config_option *option, char *value)
                 return -1;
             break;
         case OPTION_TYPE_STRING:
+            if ((option->max > 0) && (utf8_strlen (value) > option->max))
+                return -1;
             if (*(option->ptr_string))
                 free (*(option->ptr_string));
             *(option->ptr_string) = strdup (value);

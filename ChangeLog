@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-08-27
+ChangeLog - 2007-08-29
 
 
 Version 0.2.6 (under dev!):
+   * added string length limit for setup file options
    * fixed bug with flock() when home is on NFS filesystem (bug #20913)
    * added option to align text of messages (except first lines) (task #7246)
    * fixed user modes in nicklist when ban and nick mode are received in the

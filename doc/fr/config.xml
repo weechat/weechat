@@ -181,6 +181,13 @@
   <entry>Taille maximum pour l'alignement des pseudos et autres messages (doit être &gt;= à look_align_size)</entry>
 </row>
 <row>
+  <entry><option>look_align_text_offset</option></entry>
+  <entry>entier</entry>
+  <entry>entre -1 et 64</entry>
+  <entry>-1</entry>
+  <entry>Décalage pour aligner les lignes des messages (exceptées les premières lignes), par défaut -1 (aligner après le pseudo), une valeur nulle ou positive est le décalage après le début de la ligne</entry>
+</row>
+<row>
   <entry><option>look_nick_completor</option></entry>
   <entry>chaîne</entry>
   <entry>toute chaîne</entry>
@@ -280,8 +287,8 @@
 </row>
 <row>
   <entry><option>look_read_marker</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>caractère</entry>
+  <entry>tout caractère</entry>
   <entry>' '</entry>
   <entry>Utiliser un marqueur sur les serveurs/canaux pour montrer la première ligne non lue</entry>
 </row>

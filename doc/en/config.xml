@@ -181,6 +181,13 @@
   <entry>Max size for aligning nick and other messages (should be &gt;= to look_align_size)</entry>
 </row>
 <row>
+  <entry><option>look_align_text_offset</option></entry>
+  <entry>integer</entry>
+  <entry>between -1 and 64</entry>
+  <entry>-1</entry>
+  <entry>Offset for aligning lines of messages (except first lines), default is -1 (align after nick), a null or positive value is offset after beginning of line</entry>
+</row>
+<row>
   <entry><option>look_nick_completor</option></entry>
   <entry>string</entry>
   <entry>any string</entry>
@@ -280,8 +287,8 @@
 </row>
 <row>
   <entry><option>look_read_marker</option></entry>
-  <entry>string</entry>
-  <entry>any string</entry>
+  <entry>char</entry>
+  <entry>any char</entry>
   <entry>' '</entry>
   <entry>Use a marker on servers/channels to show first unread line</entry>
 </row>

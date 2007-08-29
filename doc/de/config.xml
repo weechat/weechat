@@ -181,6 +181,13 @@
   <entry>Maximale Größe zum Ausrichten von Nicknamen und anderen Nachrichten (sollte &gt;= look_align_size sein)</entry>
 </row>
 <row>
+  <entry><option>look_align_text_offset</option></entry>
+  <entry>Ganzzahl</entry>
+  <entry>zwischen -1 und 64</entry>
+  <entry>-1</entry>
+  <entry>Offset for aligning lines of messages (except first lines), default is -1 (align after nick), a null or positive value is offset after beginning of line</entry>
+</row>
+<row>
   <entry><option>look_nick_completor</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
