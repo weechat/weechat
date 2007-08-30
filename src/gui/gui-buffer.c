@@ -721,7 +721,6 @@ gui_buffer_line_new (t_gui_buffer *buffer, time_t date)
         buffer->lines = ptr_line;
         ptr_line->prev_line = NULL;
         buffer->num_lines--;
-        gui_chat_draw (buffer, 1);
     }
     
     return new_line;
@@ -737,7 +736,7 @@ gui_buffer_line_search (t_gui_line *line, char *text, int case_sensitive)
     char *data;
     int rc;
     
-    if (!text || !text[0])
+    if (!line || !line->data || !text || !text[0])
         return 0;
     
     rc = 0;
