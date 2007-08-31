@@ -292,6 +292,7 @@ weechat_iconv (int from_utf8, char *from_code, char *to_code, char *string)
         outbuf = strdup (string);
 #else
     /* make C compiler happy */
+    (void) from_utf8;
     (void) from_code;
     (void) to_code;
     outbuf = strdup (string);
