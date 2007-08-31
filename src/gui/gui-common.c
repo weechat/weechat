@@ -814,9 +814,9 @@ int
 gui_insert_string_input (t_gui_window *window, char *string, int pos)
 {
     int i, pos_start, size, length;
-    char *ptr_start, *string2;
+    char *ptr_start;
 #ifdef PLUGINS
-    char *buffer_before_insert;
+    char *buffer_before_insert, *string2;
 #endif
     
     if (window->buffer->has_input)
