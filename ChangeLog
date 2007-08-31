@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-08-30
+ChangeLog - 2007-08-31
 
 
 Version 0.2.6 (under dev!):
+   * fixed UTF-8 bug with color encoding/decoding
    * fixed crash when searching text in buffer with ctrl-R (bug #20938)
    * added string length limit for setup file options
    * fixed bug with flock() when home is on NFS filesystem (bug #20913)

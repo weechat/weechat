@@ -29,6 +29,7 @@
 
 #include "../../common/weechat.h"
 #include "../gui.h"
+#include "../../common/utf8.h"
 #include "../../common/util.h"
 #include "../../common/weeconfig.h"
 #include "gui-curses.h"
@@ -122,7 +123,7 @@ unsigned char *
 gui_color_decode (unsigned char *string, int keep_irc_colors, int keep_weechat_attr)
 {
     unsigned char *out;
-    int out_length, out_pos;
+    int out_length, out_pos, length;
     char str_fg[3], str_bg[3];
     int fg, bg, attr;
     
@@ -255,8 +256,12 @@ gui_color_decode (unsigned char *string, int keep_irc_colors, int keep_weechat_a
                 string++;
                 break;
             default:
-                out[out_pos++] = string[0];
-                string++;
+                length = utf8_char_size ((char *)string);
+                if (length == 0)
+                    length = 1;
+                memcpy (out + out_pos, string, length);
+                out_pos += length;
+                string += length;
         }
     }
     out[out_pos] = '\0';
@@ -273,7 +278,7 @@ unsigned char *
 gui_color_decode_for_user_entry (unsigned char *string)
 {
     unsigned char *out;
-    int out_length, out_pos;
+    int out_length, out_pos, length;
     
     out_length = (strlen ((char *)string) * 2) + 1;
     out = (unsigned char *)malloc (out_length);
@@ -313,8 +318,12 @@ gui_color_decode_for_user_entry (unsigned char *string)
                 string++;
                 break;
             default:
-                out[out_pos++] = string[0];
-                string++;
+                length = utf8_char_size ((char *)string);
+                if (length == 0)
+                    length = 1;
+                memcpy (out + out_pos, string, length);
+                out_pos += length;
+                string += length;
         }
     }
     out[out_pos] = '\0';
@@ -333,7 +342,7 @@ unsigned char *
 gui_color_encode (unsigned char *string, int keep_colors)
 {
     unsigned char *out;
-    int out_length, out_pos;
+    int out_length, out_pos, length;
     
     out_length = (strlen ((char *)string) * 2) + 1;
     out = (unsigned char *)malloc (out_length);
@@ -401,8 +410,12 @@ gui_color_encode (unsigned char *string, int keep_colors)
                 string++;
                 break;
             default:
-                out[out_pos++] = string[0];
-                string++;
+                length = utf8_char_size ((char *)string);
+                if (length == 0)
+                    length = 1;
+                memcpy (out + out_pos, string, length);
+                out_pos += length;
+                string += length;
         }
     }
     out[out_pos] = '\0';
