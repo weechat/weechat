@@ -92,11 +92,12 @@ nickname: nickname to send file or chat
     file: filename (on local host)
 
 </programlisting>
-<command>debug  dump | windows</command>
+<command>debug  dump | buffer | windows</command>
 <programlisting>
 print debug messages
 
    dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)
+ buffer: dump buffer content with hexadecimal values in log file
 windows: display windows tree
 
 </programlisting>

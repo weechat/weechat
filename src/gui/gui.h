@@ -109,6 +109,7 @@ extern void gui_buffer_search_restart (t_gui_window *);
 extern void gui_buffer_search_stop (t_gui_window *);
 extern int gui_buffer_search_text (t_gui_window *);
 extern void gui_buffer_scroll (t_gui_window *, char *);
+extern void gui_buffer_dump_hexa (t_gui_buffer *);
 extern void gui_buffer_print_log (t_gui_buffer *);
 
 /* panel */

@@ -119,10 +119,11 @@ t_weechat_command weechat_commands[] =
        "    file: filename (on local host)"),
     "chat|send|close %n %f", 1, MAX_ARGS, 0, NULL, weechat_cmd_dcc },
   { "debug", N_("print debug messages"),
-    N_("dump | windows"),
+    N_("dump | buffer | windows"),
     N_("   dump: save memory dump in WeeChat log file (same dump is written when WeeChat crashes)\n"
+       " buffer: dump buffer content with hexadecimal values in log file\n"
        "windows: display windows tree"),
-    "dump|windows", 1, 1, 0, weechat_cmd_debug, NULL },
+    "dump|buffer|windows", 1, 1, 0, weechat_cmd_debug, NULL },
   { "help", N_("display help about commands"),
     N_("[command]"),
     N_("command: name of a WeeChat or IRC command"),
@@ -1899,11 +1900,14 @@ int
 weechat_cmd_debug (t_irc_server *server, t_irc_channel *channel,
                    int argc, char **argv)
 {
+    t_gui_buffer *buffer;
     t_irc_server *ptr_server;
     
     /* make C compiler happy */
     (void) server;
     (void) channel;
+    
+    gui_buffer_find_context (server, channel, NULL, &buffer);
     
     if (argc != 1)
     {
@@ -1917,6 +1921,10 @@ weechat_cmd_debug (t_irc_server *server, t_irc_channel *channel,
     if (ascii_strcasecmp (argv[0], "dump") == 0)
     {
         weechat_dump (0);
+    }
+    else if (ascii_strcasecmp (argv[0], "buffer") == 0)
+    {
+        gui_buffer_dump_hexa (buffer);
     }
     else if (ascii_strcasecmp (argv[0], "windows") == 0)
     {

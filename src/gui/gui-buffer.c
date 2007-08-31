@@ -1410,6 +1410,68 @@ gui_buffer_scroll (t_gui_window *window, char *scroll)
 }
 
 /*
+ * gui_buffer_dump_hexa: dump content of buffer as hexa data in log file
+ */
+
+void
+gui_buffer_dump_hexa (t_gui_buffer *buffer)
+{
+    t_gui_line *ptr_line;
+    int num_line, data_pos;
+    char *data_without_colors;
+    char hexa[(16 * 3) + 1], ascii[(16 * 2) + 1];
+    int hexa_pos, ascii_pos;
+    
+    weechat_log_printf ("[buffer dump hexa (addr:0x%X)]\n", buffer);
+    num_line = 1;
+    for (ptr_line = buffer->lines; ptr_line; ptr_line = ptr_line->next_line)
+    {
+        /* display line without colors */
+        data_without_colors = (ptr_line->data) ?
+            (char *)gui_color_decode ((unsigned char *)ptr_line->data, 0, 0) : NULL;
+        weechat_log_printf ("\n");
+        weechat_log_printf ("  line %d: %s\n",
+                            num_line,
+                            (data_without_colors) ? data_without_colors : "(null)");
+        if (data_without_colors)
+            free (data_without_colors);
+
+        /* display raw data for line */
+        if (ptr_line->data)
+        {
+            weechat_log_printf ("\n");
+            weechat_log_printf ("  raw data for line %d (with color codes):\n",
+                                num_line);
+            data_pos = 0;
+            hexa_pos = 0;
+            ascii_pos = 0;
+            while (ptr_line->data[data_pos])
+            {
+                snprintf (hexa + hexa_pos, 4, "%02X ",
+                          (unsigned char)(ptr_line->data[data_pos]));
+                hexa_pos += 3;
+                snprintf (ascii + ascii_pos, 3, "%c ",
+                          ((((unsigned char)ptr_line->data[data_pos]) < 32)
+                           || (((unsigned char)ptr_line->data[data_pos]) > 127)) ?
+                          '.' : (unsigned char)(ptr_line->data[data_pos]));
+                ascii_pos += 2;
+                if (ascii_pos == 32)
+                {
+                    weechat_log_printf ("    %-48s  %s\n", hexa, ascii);
+                    hexa_pos = 0;
+                    ascii_pos = 0;
+                }
+                data_pos++;
+            }
+            if (ascii_pos > 0)
+                weechat_log_printf ("    %-48s  %s\n", hexa, ascii);
+        }
+        
+        num_line++;
+    }
+}
+
+/*
  * gui_buffer_print_log: print buffer infos in log (usually for crash dump)
  */
 

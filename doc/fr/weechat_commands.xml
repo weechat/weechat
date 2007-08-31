@@ -92,11 +92,12 @@ démarre le DCC (fichier ou discussion) ou ferme une discussion
 fichier: nom du fichier (sur la machine locale)
 
 </programlisting>
-<command>debug  dump | windows</command>
+<command>debug  dump | buffer | windows</command>
 <programlisting>
 affiche des messages de debogage
 
    dump: affiche les variables mémoire WeeChat dans le fichier log (les mêmes messages sont affichés lorsque WeeChat plante)
+ buffer: affiche le contenu du tampon en valeurs hexadécimales dans le fichier log
 windows: affiche l'arbre des fenêtres
 
 </programlisting>
