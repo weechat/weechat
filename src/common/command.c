@@ -183,13 +183,12 @@ t_weechat_command weechat_commands[] =
     N_("[file]"), N_("file: filename for writing config"),
     NULL, 0, 1, 0, weechat_cmd_save, NULL },
   { "server", N_("list, add or remove servers"),
-    N_("[list [servername]] | [listfull [servername]] | [servername] | "
-       "[add servername hostname [-port port] [-temp] [-auto | -noauto] "
-       "[-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] "
-       "[-username username] [-realname realname] [-command command] "
-       "[-autojoin channel[,channel]] ] | [copy servername newservername] | "
-       "[rename servername newservername] | [keep servername] | "
-       "[del servername]"),
+    N_("[list [servername]] | [listfull [servername]] | [add servername "
+       "hostname [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] "
+       "[-pwd password] [-nicks nick1 nick2 nick3] [-username username] "
+       "[-realname realname] [-command command] [-autojoin channel[,channel]] ] "
+       "| [copy servername newservername] | [rename servername newservername] "
+       "| [keep servername] | [del servername]"),
     N_("      list: list servers (no parameter implies this list)\n"
        "  listfull: list servers with detailed info for each server\n"
        "       add: create a new server\n"
@@ -210,8 +209,10 @@ t_weechat_command weechat_commands[] =
        "      copy: duplicate a server\n"
        "    rename: rename a server\n"
        "      keep: keep server in config file (for temporary servers only)\n"
-       "       del: delete a server"),
-    "copy|rename|del|list|listfull %S %S", 0, MAX_ARGS, 0, weechat_cmd_server, NULL },
+       "       del: delete a server\n"
+       "   deloutq: delete messages out queue for all servers (all messages "
+       "WeeChat is currently sending)"),
+    "copy|rename|del|deloutq|list|listfull %S %S", 0, MAX_ARGS, 0, weechat_cmd_server, NULL },
   { "set", N_("set config options"),
     N_("[option [ = value]]"),
     N_("option: name of an option (if name is full "
@@ -1901,7 +1902,6 @@ weechat_cmd_debug (t_irc_server *server, t_irc_channel *channel,
                    int argc, char **argv)
 {
     t_gui_buffer *buffer;
-    t_irc_server *ptr_server;
     
     /* make C compiler happy */
     (void) server;
@@ -1931,16 +1931,6 @@ weechat_cmd_debug (t_irc_server *server, t_irc_channel *channel,
         gui_printf_nolog (NULL, "\n");
         gui_printf_nolog (NULL, "DEBUG: windows tree:\n");
         weechat_cmd_debug_display_windows (gui_windows_tree, 1);
-    }
-    else if (ascii_strcasecmp (argv[0], "deloutq") == 0)
-    {
-        for (ptr_server = irc_servers; ptr_server;
-             ptr_server = ptr_server->next_server)
-        {
-            irc_server_outqueue_free_all (ptr_server);
-        }
-        gui_printf_nolog (NULL, "\n");
-        gui_printf_nolog (NULL, "DEBUG: outqueue DELETED for all servers.\n");
     }
     else
     {
@@ -3056,7 +3046,7 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
     
     gui_buffer_find_context (server, channel, &window, &buffer);
     
-    if ((argc == 0) || (argc == 1)
+    if ((argc == 0)
         || (ascii_strcasecmp (argv[0], "list") == 0)
         || (ascii_strcasecmp (argv[0], "listfull") == 0))
     {
@@ -3505,6 +3495,19 @@ weechat_cmd_server (t_irc_server *server, t_irc_channel *channel,
             
             gui_window_redraw_buffer (buffer);
             
+            return 0;
+        }
+        else if (ascii_strcasecmp (argv[0], "deloutq") == 0)
+        {
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                irc_server_outqueue_free_all (ptr_server);
+            }
+            irc_display_prefix (NULL, NULL, GUI_PREFIX_INFO);
+            gui_printf_nolog (NULL, _("Messages outqueue DELETED for all servers. "
+                                      "Some messages from you or WeeChat may "
+                                      "have been lost!\n"));
             return 0;
         }
         else

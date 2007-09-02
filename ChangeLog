@@ -5,6 +5,8 @@ ChangeLog - 2007-09-02
 
 
 Version 0.2.6 (under dev!):
+   * added new option "deloutq" to /server command to flush all servers
+     messages out queues (task #7221)
    * fixed display bug with some special chars in messages (some words were
      truncated on screen) (bug #20944)
    * fixed UTF-8 bug with color encoding/decoding

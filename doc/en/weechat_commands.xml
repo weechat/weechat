@@ -171,7 +171,7 @@ save config to disk
 file: filename for writing config
 
 </programlisting>
-<command>server  [list [servername]] | [listfull [servername]] | [servername] | [add servername hostname [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername]</command>
+<command>server  [list [servername]] | [listfull [servername]] | [add servername hostname [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername]</command>
 <programlisting>
 list, add or remove servers
 
@@ -196,6 +196,7 @@ servername: server name, for internal and display use
     rename: rename a server
       keep: keep server in config file (for temporary servers only)
        del: delete a server
+   deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
 
 </programlisting>
 <command>set  [option [ = value]]</command>
