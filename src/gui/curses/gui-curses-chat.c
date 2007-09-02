@@ -457,6 +457,8 @@ gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string,
                         memcpy (utf_char, string, char_size);
                         utf_char[char_size] = '\0';
                         *width_screen = utf8_width_screen (utf_char);
+                        if (*width_screen < 0)
+                            *width_screen = char_size;
                     }
                     return (char *)string + char_size;
                 }
@@ -494,7 +496,9 @@ gui_chat_display_word_raw (t_gui_window *window, char *string, int display)
         {
             saved_char = next_char[0];
             next_char[0] = '\0';
-            if (((unsigned char)(prev_char[0]) == 146) && (!prev_char[1]))
+            if ((((unsigned char)(prev_char[0]) == 146)
+                 || ((unsigned char)(prev_char[0]) == 0x7F))
+                && (!prev_char[1]))
                 wprintw (GUI_CURSES(window)->win_chat, ".");
             else
             {
