@@ -760,7 +760,9 @@ gui_keyboard_buffer_add (int key)
     if (gui_keyboard_buffer)
     {
         gui_keyboard_buffer[gui_keyboard_buffer_size - 1] = key;
-        if (key == 10)
+        if ((key == 10)
+            && (gui_keyboard_buffer_size > 1)
+            && (gui_keyboard_buffer[gui_keyboard_buffer_size - 2] != 10))
             gui_keyboard_paste_lines++;
     }
     else
