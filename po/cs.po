@@ -2858,15 +2858,15 @@ msgid "dump | buffer | windows"
 msgstr "dump | buffer | windows"
 
 #: src/common/command.c:123
-#, fuzzy
 msgid ""
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 " buffer: dump buffer content with hexadecimal values in log file\n"
 "windows: display windows tree"
 msgstr ""
-"   dump: uloží dump paměti ve WeeChat log souboru (stejný dump jako když "
+"   dump: uloží výpis paměti do WeeChat log souboru (stejný výpis jako když "
 "Weechat havaruje)\n"
+" buffer: vypíše obsah bufferu s hexadecimálními hodnotami do log souboru\n"
 "windows: zobrazit strom oken"
 
 #: src/common/command.c:127
@@ -3034,7 +3034,6 @@ msgid ""
 msgstr "[list [jméno_serveru]] | [listfull [jméno_serveru]] | [add jméno_serveru jméno_hosta [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd heslo] [-nick přezdívka1 přezdívka2 přezdívka3] [-username uživatelské_jméno] [-realname pravé_jméno] [-command příkaz] [-autojoin kanál[,kanál]] ] | [copy jméno_serveru nové_jméno_serveru] | [rename jméno_serveru nové_jméno_serveru] | [keep jméno_serveru] | [del jméno_serveru]"
 
 #: src/common/command.c:192
-#, fuzzy
 msgid ""
 "      list: list servers (no parameter implies this list)\n"
 "  listfull: list servers with detailed info for each server\n"
@@ -3084,7 +3083,9 @@ msgstr ""
 "           rename: přejmenovat server\n"
 "             keep: zachovat server v konfiguračním souboru (pouze pro "
 "dočasné servery)\n"
-"              del: smazat server"
+"              del: smazat server\n"
+"          deloutq: smazat zprávy v odchozích frontách všech serverů ("
+"všechny zprávy, které WeeChat právě posílá)"
 
 #: src/common/command.c:216
 msgid "set config options"
@@ -3815,6 +3816,8 @@ msgid ""
 "Messages outqueue DELETED for all servers. Some messages from you or WeeChat "
 "may have been lost!\n"
 msgstr ""
+"Fronty odchozích zpráv všech serverů byly SMAZÁNY. Některé zprávy od Vás "
+"nebo WeeChat mohou být ztraceny!\n"
 
 #: src/common/command.c:3567
 msgid "(unknown)"
