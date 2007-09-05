@@ -100,7 +100,7 @@ irc_display_prefix (t_irc_server *server, t_gui_buffer *buffer, char *prefix)
     
     type = GUI_MSG_TYPE_INFO | GUI_MSG_TYPE_PREFIX;
     
-    if (!cfg_log_plugin_msg && (prefix == GUI_PREFIX_PLUGIN))
+    if (!cfg_log_plugin_msg && (strcmp (prefix, GUI_PREFIX_PLUGIN) == 0))
         type |= GUI_MSG_TYPE_NOLOG;
     
     if (buffer)
