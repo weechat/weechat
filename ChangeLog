@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-09-02
+ChangeLog - 2007-09-05
 
 
 Version 0.2.6 (under dev!):
+   * fixed bug with log of plugin messages (option log_plugin_msg)
    * added new option "deloutq" to /server command to delete all servers
      messages out queues (task #7221)
    * fixed display bug with some special chars in messages (some words were
