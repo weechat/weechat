@@ -1,6 +1,0 @@
-weechat (0.1.6-1) unstable; urgency=low
-
- This release introduces some incompatible changes with old scripts and locale
- support, you can read the upstream NEWS file for more information.
-
- -- Julien Louis <ptitlouis@sysif.net>  Fri, 11 Nov 2005 20:45:46 +0100

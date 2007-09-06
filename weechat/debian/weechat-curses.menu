@@ -1,4 +1,0 @@
-?package(weechat-curses):needs="text" section="Apps/Net" \
-		title="weechat-curses" \
-		icon="/usr/share/pixmaps/weechat.xpm" \
-		command="/usr/bin/weechat-curses"
