@@ -28,7 +28,7 @@ WeeChat quick start guide (english version)
 3. Create a server
 
      For example irc.quakenet.org, port 6667:
-       /server quakenet irc.quakenet.org 6667
+       /server add quakenet irc.quakenet.org 6667
      (/help server for full command help)
 
 4. Set custom server options

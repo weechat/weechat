@@ -28,7 +28,7 @@ WeeChat Schnellstarter (deutsche Version)
 3. Einen Server-Eintrag anlegen
 
      Zum Beispiel für irc.quakenet.org, Port 6667:
-       /server quakenet irc.quakenet.org 6667
+       /server add quakenet irc.quakenet.org 6667
      (/help Server für volle Hilfe zu diesem Kommando)
 
 4. Eigene Server-Optionen setzen

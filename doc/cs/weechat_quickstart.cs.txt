@@ -27,7 +27,7 @@ WeeChat (česká verze)
 3. Vytvoření serveru
      
      Například irc.quakenet.org, port 6667:
-       /server quakenet irc.quakenet.org 6667
+       /server add quakenet irc.quakenet.org 6667
      (pro kompletní nápovědu použijte /help server)
 
 4. Nastavení vlastních voleb serveru

@@ -28,7 +28,7 @@
 3. Создание сервера
 
 	Например, irc.quakenet.org, порт 6667:
-	  /server quakenet irc.quakenet.org 6667
+	  /server add quakenet irc.quakenet.org 6667
 	(/help server выведет подробную справку)
 
 4. Настройка сервера

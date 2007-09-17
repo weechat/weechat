@@ -27,7 +27,7 @@ Weechat szybki start (wersja polska)
 3. Dodawanie serwerów
 
 	Dla przyk³adu irc.quakenet.org, port 6667:
-	 /server quakenet irc.quakenet.org 6667
+	 /server add quakenet irc.quakenet.org 6667
 	(wpisz /help server dla pe³nej pomocy)
 
 4. Ustawianie w³asnych ustawieñ dotycz±cych serwera
