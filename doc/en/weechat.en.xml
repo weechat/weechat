@@ -267,17 +267,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       
     </section>
     
-    <section id="secCVSSources">
-      <title>CVS sources</title>
+    <section id="secGITSources">
+      <title>GIT sources</title>
       
       <para>
-        Warning: CVS sources are for advanced users: it may not compile
+        Warning: GIT sources are for advanced users: it may not compile
         or not be stable. You're warned!
       </para>
       
       <para>
-        To get CVS sources, issue this command:
-<screen><prompt>$ </prompt><userinput>cvs -z3 -d:pserver:anonymous@cvs.savannah.nongnu.org:/sources/weechat co weechat</userinput></screen>
+        To get GIT sources, issue this command:
+<screen><prompt>$ </prompt><userinput>git-clone git://git.sv.gnu.org/weechat.git</userinput></screen>
       </para>
       
       <para>

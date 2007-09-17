@@ -271,18 +271,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       
     </section>
     
-    <section id="secSourcesCVS">
-      <title>Sources CVS</title>
+    <section id="secSourcesGIT">
+      <title>Sources GIT</title>
       
       <para>
-        Attention : les sources CVS sont réservés aux utilisateurs
+        Attention : les sources GIT sont réservés aux utilisateurs
         avancés : il se peut que WeeChat ne compile pas et qu'il soit
         très instable. Vous êtes prévenus !
       </para>
       
       <para>
-        Pour récupérer les sources CVS, tapez cette commande :
-<screen><prompt>$ </prompt><userinput>cvs -z3 -d:pserver:anonymous@cvs.savannah.nongnu.org:/sources/weechat co weechat</userinput></screen>
+        Pour récupérer les sources GIT, tapez cette commande :
+<screen><prompt>$ </prompt><userinput>git-clone git://git.sv.gnu.org/weechat.git</userinput></screen>
       </para>
       
       <para>
