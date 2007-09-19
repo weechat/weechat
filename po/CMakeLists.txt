@@ -48,7 +48,7 @@ IF(XGETTEXT_EXECUTABLE AND MSGMERGE_EXECUTABLE AND MSGFMT_EXECUTABLE)
   ADD_CUSTOM_COMMAND(
     OUTPUT ${POT_FILE}
     COMMAND ${XGETTEXT_EXECUTABLE}
-    ARGS -o ${POT_FILE} --keyword='_' --keyword='N_' --directory=${CMAKE_SOURCE_DIR} --omit-header --msgid-bugs-address=${BUGS_ADDRESS} --copyright-holder=${COPYRIGHT_HOLDER} ${SRC_FILES}
+    ARGS -o ${POT_FILE} --keyword='_' --keyword='N_' --no-location --directory=${CMAKE_SOURCE_DIR} --omit-header --msgid-bugs-address=${BUGS_ADDRESS} --copyright-holder=${COPYRIGHT_HOLDER} ${SRC_FILES}
     DEPENDS ${POT_DEPENDS}
     COMMENT "Generating PO template file"
     )
