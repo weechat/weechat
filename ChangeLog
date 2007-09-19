@@ -1,8 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-09-06
+ChangeLog - 2007-09-19
 
+
+Version 0.2.7 (under dev!):
+   * fixed nick completion bug (missing space after nick)
 
 Version 0.2.6 (2007-09-06):
    * fixed bug with log of plugin messages (option log_plugin_msg)

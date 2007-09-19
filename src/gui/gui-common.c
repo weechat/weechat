@@ -608,38 +608,34 @@ gui_input_complete (t_gui_window *window)
             window->buffer->completion.position =
                 utf8_real_pos (window->buffer->input_buffer,
                                window->buffer->input_buffer_pos);
-                        
-        /* add space or completor to the end of completion, if needed */
-        if ((window->buffer->completion.context == COMPLETION_COMMAND)
-            || (window->buffer->completion.context == COMPLETION_COMMAND_ARG))
+        
+        /* add nick completor if position 0 and completing nick */
+        if ((window->buffer->completion.base_word_pos == 0)
+            && (window->buffer->completion.context == COMPLETION_NICK))
         {
-            if (window->buffer->completion.add_space)
-            {
-                if (window->buffer->input_buffer[utf8_real_pos (window->buffer->input_buffer,
-                                                                window->buffer->input_buffer_pos)] != ' ')
-                    gui_insert_string_input (window, " ",
-                                             window->buffer->input_buffer_pos);
-                else
-                    window->buffer->input_buffer_pos++;
-                if (window->buffer->completion.position >= 0)
-                    window->buffer->completion.position++;
-            }
+            if (strncmp (utf8_add_offset (window->buffer->input_buffer,
+                                          window->buffer->input_buffer_pos),
+                         cfg_look_nick_completor, strlen (cfg_look_nick_completor)) != 0)
+                gui_insert_string_input (window, cfg_look_nick_completor,
+                                         window->buffer->input_buffer_pos);
+            else
+                window->buffer->input_buffer_pos += utf8_strlen (cfg_look_nick_completor);
+            if (window->buffer->completion.position >= 0)
+                window->buffer->completion.position += strlen (cfg_look_nick_completor);
+            if (window->buffer->input_buffer[utf8_real_pos (window->buffer->input_buffer,
+                                                            window->buffer->input_buffer_pos)] != ' ')
+                gui_insert_string_input (window, " ",
+                                         window->buffer->input_buffer_pos);
+            else
+                window->buffer->input_buffer_pos++;
+            if (window->buffer->completion.position >= 0)
+                window->buffer->completion.position++;
         }
         else
         {
-            /* add nick completor if position 0 and completing nick */
-            if ((window->buffer->completion.base_word_pos == 0)
-                && (window->buffer->completion.context == COMPLETION_NICK))
+            /* add space or completor to the end of completion, if needed */
+            if (window->buffer->completion.add_space)
             {
-                if (strncmp (utf8_add_offset (window->buffer->input_buffer,
-                                              window->buffer->input_buffer_pos),
-                             cfg_look_nick_completor, strlen (cfg_look_nick_completor)) != 0)
-                    gui_insert_string_input (window, cfg_look_nick_completor,
-                                             window->buffer->input_buffer_pos);
-                else
-                    window->buffer->input_buffer_pos += utf8_strlen (cfg_look_nick_completor);
-                if (window->buffer->completion.position >= 0)
-                    window->buffer->completion.position += strlen (cfg_look_nick_completor);
                 if (window->buffer->input_buffer[utf8_real_pos (window->buffer->input_buffer,
                                                                 window->buffer->input_buffer_pos)] != ' ')
                     gui_insert_string_input (window, " ",
