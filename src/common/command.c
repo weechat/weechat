@@ -212,7 +212,8 @@ t_weechat_command weechat_commands[] =
        "       del: delete a server\n"
        "   deloutq: delete messages out queue for all servers (all messages "
        "WeeChat is currently sending)"),
-    "copy|rename|del|deloutq|list|listfull %S %S", 0, MAX_ARGS, 0, weechat_cmd_server, NULL },
+    "add|copy|rename|keep|del|deloutq|list|listfull %S %S",
+    0, MAX_ARGS, 0, weechat_cmd_server, NULL },
   { "set", N_("set config options"),
     N_("[option [ = value]]"),
     N_("option: name of an option (if name is full "
