@@ -39,6 +39,7 @@ Makevars.template
 missing
 po/*quot*
 POTFILES
+remove-potcdate.sed
 Rules-quot
 
 *stamp
