@@ -38,7 +38,7 @@
 #include "util.h"
 #include "weelist.h"
 #include "weeconfig.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 #include "../gui/gui.h"
 
 #ifdef PLUGINS

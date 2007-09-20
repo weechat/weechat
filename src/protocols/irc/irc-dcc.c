@@ -39,13 +39,13 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-#include "../common/weechat.h"
+#include "../../common/weechat.h"
 #include "irc.h"
-#include "../common/log.h"
-#include "../common/hotlist.h"
-#include "../common/util.h"
-#include "../common/weeconfig.h"
-#include "../gui/gui.h"
+#include "../../common/log.h"
+#include "../../common/hotlist.h"
+#include "../../common/util.h"
+#include "../../common/weeconfig.h"
+#include "../../gui/gui.h"
 
 
 t_irc_dcc *irc_dcc_list = NULL; /* DCC files & chat list                    */

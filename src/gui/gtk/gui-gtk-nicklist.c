@@ -26,7 +26,7 @@
 #include "../../common/weechat.h"
 #include "../gui.h"
 #include "../../common/weeconfig.h"
-#include "../../irc/irc.h"
+#include "../../protocols/irc/irc.h"
 #include "gui-gtk.h"
 
 

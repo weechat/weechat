@@ -21,7 +21,7 @@
 #define __WEECHAT_COMMAND_H 1
 
 #include "weelist.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 #include "../gui/gui.h"
 
 #define MAX_ARGS 8192

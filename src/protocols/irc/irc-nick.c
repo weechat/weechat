@@ -27,12 +27,12 @@
 #include <string.h>
 #include <limits.h>
 
-#include "../common/weechat.h"
+#include "../../common/weechat.h"
 #include "irc.h"
-#include "../common/log.h"
-#include "../common/utf8.h"
-#include "../common/util.h"
-#include "../common/weeconfig.h"
+#include "../../common/log.h"
+#include "../../common/utf8.h"
+#include "../../common/util.h"
+#include "../../common/weeconfig.h"
 
 
 /*

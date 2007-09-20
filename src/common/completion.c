@@ -39,7 +39,7 @@
 #include "util.h"
 #include "weelist.h"
 #include "weeconfig.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 
 #ifdef PLUGINS
 #include "../plugins/plugins.h"

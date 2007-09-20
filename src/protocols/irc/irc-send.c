@@ -35,12 +35,12 @@
 #include <sys/utsname.h>
 #include <regex.h>
 
-#include "../common/weechat.h"
+#include "../../common/weechat.h"
 #include "irc.h"
-#include "../common/command.h"
-#include "../common/util.h"
-#include "../common/weeconfig.h"
-#include "../gui/gui.h"
+#include "../../common/command.h"
+#include "../../common/util.h"
+#include "../../common/weeconfig.h"
+#include "../../gui/gui.h"
 
 
 /*

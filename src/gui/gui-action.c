@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-common.c: display functions, used by all GUI */
+/* gui-action.c: GUI actions */
 
 
 #ifdef HAVE_CONFIG_H
@@ -40,7 +40,7 @@
 #include "../common/log.h"
 #include "../common/utf8.h"
 #include "../common/util.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 
 
 /*

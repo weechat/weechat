@@ -33,7 +33,7 @@
 #include <gnutls/gnutls.h>
 #endif
 
-#include "../gui/gui.h"
+#include "../../gui/gui.h"
 
 #ifndef NI_MAXHOST
 #define NI_MAXHOST 256

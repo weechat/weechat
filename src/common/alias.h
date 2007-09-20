@@ -20,7 +20,7 @@
 #ifndef __WEECHAT_ALIAS_H
 #define __WEECHAT_ALIAS_H 1
 
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 
 typedef struct t_weechat_alias t_weechat_alias;
 

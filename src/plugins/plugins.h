@@ -22,7 +22,7 @@
 
 #include "weechat-plugin.h"
 #include "plugins-config.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 #include "../gui/gui.h"
 
 typedef struct t_plugin_irc_color t_plugin_irc_color;

@@ -26,11 +26,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/weechat.h"
+#include "../../common/weechat.h"
 #include "irc.h"
-#include "../common/command.h"
-#include "../common/log.h"
-#include "../common/util.h"
+#include "../../common/command.h"
+#include "../../common/log.h"
+#include "../../common/util.h"
 
 
 t_irc_ignore *irc_ignore = NULL;

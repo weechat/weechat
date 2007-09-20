@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-window.c: window functions, used by all GUI */
+/* gui-buffer.c: buffer functions, used by all GUI */
 
 
 #ifdef HAVE_CONFIG_H
@@ -41,7 +41,7 @@
 #include "../common/log.h"
 #include "../common/utf8.h"
 #include "../common/util.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 
 #ifdef PLUGINS
 #include "../plugins/plugins.h"

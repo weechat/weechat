@@ -31,7 +31,7 @@
 #include "../gui.h"
 #include "../../common/utf8.h"
 #include "../../common/weeconfig.h"
-#include "../../irc/irc.h"
+#include "../../protocols/irc/irc.h"
 #include "gui-gtk.h"
 
 

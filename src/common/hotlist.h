@@ -20,7 +20,7 @@
 #ifndef __WEECHAT_HOTLIST_H
 #define __WEECHAT_HOTLIST_H 1
 
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 
 #define HOTLIST_LOW       0
 #define HOTLIST_MSG       1

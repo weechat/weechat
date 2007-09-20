@@ -24,9 +24,9 @@
 #include "config.h"
 #endif
 
-#include "../common/weechat.h"
+#include "../../common/weechat.h"
 #include "irc.h"
-#include "../common/command.h"
+#include "../../common/command.h"
 
 
 t_irc_command irc_commands[] =

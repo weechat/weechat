@@ -40,7 +40,7 @@
 #include "../common/log.h"
 #include "../common/util.h"
 #include "../common/weeconfig.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 #include "../gui/gui.h"
 
 

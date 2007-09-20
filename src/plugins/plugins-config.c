@@ -33,7 +33,7 @@
 #include "weechat-plugin.h"
 #include "plugins-config.h"
 #include "../common/util.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 
 
 t_plugin_option *plugin_options = NULL;

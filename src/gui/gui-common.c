@@ -41,7 +41,7 @@
 #include "../common/log.h"
 #include "../common/utf8.h"
 #include "../common/util.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 
 #ifdef PLUGINS
 #include "../plugins/plugins.h"

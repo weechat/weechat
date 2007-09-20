@@ -29,7 +29,7 @@
 #include "weechat.h"
 #include "alias.h"
 #include "util.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 
 
 t_weechat_alias *weechat_alias = NULL;

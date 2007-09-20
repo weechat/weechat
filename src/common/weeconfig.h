@@ -20,7 +20,7 @@
 #ifndef __WEECHAT_CONFIG_H
 #define __WEECHAT_CONFIG_H 1
 
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 
 #define WEECHAT_CONFIG_NAME "weechat.rc"
 

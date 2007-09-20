@@ -40,7 +40,7 @@
 #include "../common/hotlist.h"
 #include "../common/log.h"
 #include "../common/utf8.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 
 
 t_gui_window *gui_windows = NULL;           /* pointer to first window      */

@@ -21,7 +21,7 @@ bin_PROGRAMS = weechat-curses
 if PLUGINS
 weechat_curses_LDADD = ../lib_weechat_gui_common.a \
                        ../../common/lib_weechat_main.a \
-                       ../../irc/lib_weechat_irc.a \
+                       ../../protocols/irc/lib_weechat_irc.a \
                        ../../plugins/lib_weechat_plugins.a \
                        $(PLUGINS_LIBS) \
                        $(NCURSES_LIBS) \
@@ -29,7 +29,7 @@ weechat_curses_LDADD = ../lib_weechat_gui_common.a \
 else
 weechat_curses_LDADD = ../lib_weechat_gui_common.a \
                        ../../common/lib_weechat_main.a \
-                       ../../irc/lib_weechat_irc.a \
+                       ../../protocols/irc/lib_weechat_irc.a \
                        $(PLUGINS_LIBS) \
                        $(NCURSES_LIBS) \
                        $(GNUTLS_LFLAGS)

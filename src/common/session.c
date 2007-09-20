@@ -39,7 +39,7 @@
 #include "log.h"
 #include "utf8.h"
 #include "util.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 #include "../gui/gui.h"
 
 

@@ -30,7 +30,7 @@
 #include "history.h"
 #include "util.h"
 #include "weeconfig.h"
-#include "../irc/irc.h"
+#include "../protocols/irc/irc.h"
 #include "../gui/gui.h"
 
 

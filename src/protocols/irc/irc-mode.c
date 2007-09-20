@@ -26,10 +26,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/weechat.h"
+#include "../../common/weechat.h"
 #include "irc.h"
-#include "../common/util.h"
-#include "../gui/gui.h"
+#include "../../common/util.h"
+#include "../../gui/gui.h"
 
 
 /*

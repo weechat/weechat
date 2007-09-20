@@ -35,18 +35,18 @@
 #include <sys/utsname.h>
 #include <regex.h>
 
-#include "../common/weechat.h"
+#include "../../common/weechat.h"
 #include "irc.h"
-#include "../common/alias.h"
-#include "../common/command.h"
-#include "../common/hotlist.h"
-#include "../common/utf8.h"
-#include "../common/util.h"
-#include "../common/weeconfig.h"
-#include "../gui/gui.h"
+#include "../../common/alias.h"
+#include "../../common/command.h"
+#include "../../common/hotlist.h"
+#include "../../common/utf8.h"
+#include "../../common/util.h"
+#include "../../common/weeconfig.h"
+#include "../../gui/gui.h"
 
 #ifdef PLUGINS
-#include "../plugins/plugins.h"
+#include "../../plugins/plugins.h"
 #endif
 
 
