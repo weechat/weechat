@@ -14,4 +14,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SUBDIRS = irc
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
+
+noinst_LIBRARIES = lib_weechat_protocols.a
+
+lib_weechat_protocols_a_SOURCES = protocols.c \
+                                  protocols.h
+
+if PROTOCOL_IRC
+irc_dir=irc
+endif
+
+SUBDIRS = . $(irc_dir)

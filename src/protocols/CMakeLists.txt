@@ -14,4 +14,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_SUBDIRECTORY( irc )
+SET(LIB_PROTOCOLS_SRC protocols.c protocols.h)
+
+INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
+ADD_LIBRARY(weechat_protocols STATIC ${LIB_PROTOCOLS_SRC})
+
+IF(NOT DISABLE_IRC)
+  ADD_SUBDIRECTORY( irc )
+ENDIF(NOT DISABLE_IRC)

@@ -18,22 +18,10 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
 
 bin_PROGRAMS = weechat-curses
 
-if PLUGINS
-weechat_curses_LDADD = ../lib_weechat_gui_common.a \
-                       ../../common/lib_weechat_main.a \
-                       ../../protocols/irc/lib_weechat_irc.a \
-                       ../../plugins/lib_weechat_plugins.a \
+weechat_curses_LDADD = $(WEECHAT_STATIC_LIBS) \
                        $(PLUGINS_LIBS) \
                        $(NCURSES_LIBS) \
                        $(GNUTLS_LFLAGS)
-else
-weechat_curses_LDADD = ../lib_weechat_gui_common.a \
-                       ../../common/lib_weechat_main.a \
-                       ../../protocols/irc/lib_weechat_irc.a \
-                       $(PLUGINS_LIBS) \
-                       $(NCURSES_LIBS) \
-                       $(GNUTLS_LFLAGS)
-endif
 
 weechat_curses_SOURCES = gui-curses-chat.c \
                          gui-curses-color.c \
