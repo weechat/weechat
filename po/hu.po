@@ -1,8 +1,10 @@
-# Hungarian translations for WeeChat package
-# A WeeChat program magyar fordítása.
-# This file is put in the public domain.
+# WeeChat: fast and light chat environment for many operating systems.
+# Copyright (c) 2003-2007 FlashCode <flashcode@flashtux.org>
+# This file is distributed under the same license as the WeeChat package.
 #
+# Hungarian translations for WeeChat package
 # Andras Voroskoi <voroskoi@frugalware.org>, 2006-2007.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
