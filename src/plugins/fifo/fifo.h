@@ -20,10 +20,8 @@
 #ifndef __WEECHAT_FIFO_H
 #define __WEECHAT_FIFO_H 1
 
-extern int weechat_fifo;
-
-extern void fifo_create ();
-extern void fifo_read ();
-extern void fifo_remove ();
+char plugin_name[] = "fifo";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Fifo plugin for WeeChat";
 
 #endif /* fifo.h */
