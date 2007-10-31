@@ -16,6 +16,22 @@
 
 INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
 
+noinst_LIBRARIES = lib_weechat_plugins.a
+
+lib_weechat_plugins_a_SOURCES = weechat-plugin.h \
+				plugin.c \
+                                plugin.h \
+                                plugin-api.c \
+                                plugin-api.h \
+                                plugin-config.c \
+                                plugin-config.h \
+                                plugin-list.c \
+                                plugin-list.h
+
+if PLUGIN_IRC
+irc_dir = irc
+endif
+
 if PLUGIN_PERL
 script_dir = scripts
 endif
@@ -40,13 +56,12 @@ if PLUGIN_CHARSET
 charset_dir = charset
 endif
 
-SUBDIRS = $(script_dir) $(aspell_dir) $(charset_dir)
+if PLUGIN_FIFO
+fifo_dir = fifo
+endif
 
-noinst_LIBRARIES = lib_weechat_plugins.a
+if PLUGIN_TRIGGER
+trigger_dir = trigger
+endif
 
-lib_weechat_plugins_a_SOURCES = weechat-plugin.h \
-				plugins.h \
-                                plugins.c \
-                                plugins-interface.c \
-                                plugins-config.h \
-                                plugins-config.c
+SUBDIRS = . $(irc_dir) $(script_dir) $(aspell_dir) $(charset_dir) $(fifo_dir) $(trigger_dir)

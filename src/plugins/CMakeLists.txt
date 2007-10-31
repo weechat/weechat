@@ -14,8 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(LIB_PLUGINS_SRC weechat-plugin.h plugins.h plugins.c plugins-interface.c
-plugins-config.h plugins-config.c)
+SET(LIB_PLUGINS_SRC weechat-plugin.h plugin.c plugin.h plugin-api.c
+plugin-api.h plugin-config.h plugin-config.c plugin-list.c plugin-list.h)
 
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
 ADD_LIBRARY(weechat_plugins STATIC ${LIB_PLUGINS_SRC})
@@ -23,6 +23,14 @@ ADD_LIBRARY(weechat_plugins STATIC ${LIB_PLUGINS_SRC})
 INCLUDE(CheckIncludeFiles)
 INCLUDE(CheckFunctionExists)
 INCLUDE(CheckLibraryExists)
+
+IF(NOT DISABLE_IRC)
+  ADD_SUBDIRECTORY( irc )
+ENDIF(NOT DISABLE_IRC)
+
+IF(NOT DISABLE_PERL AND NOT DISABLE_PYTHON AND NOT DISABLE_RUBY AND NOT DISABLE_LUA)
+  ADD_SUBDIRECTORY( scripts )
+ENDIF(NOT DISABLE_PERL AND NOT DISABLE_PYTHON AND NOT DISABLE_RUBY AND NOT DISABLE_LUA)
 
 IF(NOT DISABLE_ASPELL)
   # Check for aspell libraries
@@ -32,11 +40,17 @@ IF(NOT DISABLE_ASPELL)
   ENDIF(ASPELL_FOUND)
 ENDIF(NOT DISABLE_ASPELL)
 
-IF (NOT DISABLE_CHARSET)
+IF(NOT DISABLE_CHARSET)
   # Check for iconv support.
   IF(ICONV_FOUND)
     ADD_SUBDIRECTORY( charset )
   ENDIF(ICONV_FOUND)
 ENDIF(NOT DISABLE_CHARSET)
 
-ADD_SUBDIRECTORY( scripts )
+IF(NOT DISABLE_FIFO)
+  ADD_SUBDIRECTORY( fifo )
+ENDIF(NOT DISABLE_FIFO)
+
+IF(NOT DISABLE_TRIGGER)
+  ADD_SUBDIRECTORY( trigger )
+ENDIF(NOT DISABLE_TRIGGER)
