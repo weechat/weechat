@@ -27,12 +27,12 @@
 #include <string.h>
 #include <limits.h>
 
-#include "../../common/weechat.h"
+#include "../../core/weechat.h"
 #include "irc.h"
-#include "../../common/log.h"
-#include "../../common/utf8.h"
-#include "../../common/util.h"
-#include "../../common/weeconfig.h"
+#include "../../core/log.h"
+#include "../../core/utf8.h"
+#include "../../core/util.h"
+#include "../../core/weechat-config.h"
 
 
 /*
@@ -51,143 +51,66 @@ irc_nick_find_color (t_irc_nick *nick)
     }
     color = (color % cfg_look_color_nicks_number);
     
-    return GUI_COLOR_WIN_NICK_1 + color;
+    return GUI_COLOR_CHAT_NICK1 + color;
 }
 
 /*
- * irc_nick_score_for_sort: return score for sorting nick, according to privileges
+ * irc_nick_get_gui_infos: get GUI infos for a nick (sort_index, prefix,
+ *                         prefix color)
  */
 
-int
-irc_nick_score_for_sort (t_irc_nick *nick)
+void
+irc_nick_get_gui_infos (t_irc_nick *nick,
+                        int *sort_index, char *prefix, int *color_prefix)
 {
     if (nick->flags & IRC_NICK_CHANOWNER)
-        return -128;
-    if (nick->flags & IRC_NICK_CHANADMIN)
-        return -64;
-    if (nick->flags & IRC_NICK_CHANADMIN2)
-        return -32;
-    if (nick->flags & IRC_NICK_OP)
-        return -16;
-    if (nick->flags & IRC_NICK_HALFOP)
-        return -8;
-    if (nick->flags & IRC_NICK_VOICE)
-        return -4;
-    if (nick->flags & IRC_NICK_CHANUSER)
-        return -2;
-    return 0;
-}
-
-/*
- * irc_nick_compare: compare two nicks
- *                   return: -1 is nick1 < nick2
- *                            0 if nick1 = nick2
- *                           +1 if nick1 > nick2
- *                   status sort: operator > voice > normal nick
- */
-
-int
-irc_nick_compare (t_irc_nick *nick1, t_irc_nick *nick2)
-{
-    int score1, score2, comp;
-    
-    score1 = irc_nick_score_for_sort (nick1);
-    score2 = irc_nick_score_for_sort (nick2);
-    
-    comp = ascii_strcasecmp (nick1->nick, nick2->nick);
-    if (comp > 0)
-        score1++;
-    if (comp < 0)
-        score2++;
-    
-    /* nick1 > nick2 */
-    if (score1 > score2)
-        return 1;
-    /* nick1 < nick2 */
-    if (score1 < score2)
-        return -1;
-    /* nick1 == nick2 */
-    return 0;
-}
-
-/*
- * irc_nick_find_pos: find position for a nick (for sorting nick list)
- */
-
-t_irc_nick *
-irc_nick_find_pos (t_irc_channel *channel, t_irc_nick *nick)
-{
-    t_irc_nick *ptr_nick;
-    
-    for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
-        if (irc_nick_compare (nick, ptr_nick) < 0)
-            return ptr_nick;
+        *sort_index = 1;
+        *prefix = '~';
+        *color_prefix = GUI_COLOR_NICKLIST_PREFIX1;
     }
-    return NULL;
-}
-
-/*
- * irc_nick_insert_sorted: insert nick into sorted list
- */
-
-void
-irc_nick_insert_sorted (t_irc_channel *channel, t_irc_nick *nick)
-{
-    t_irc_nick *pos_nick;
-    
-    if (channel->nicks)
+    else if (nick->flags & IRC_NICK_CHANADMIN)
     {
-        pos_nick = irc_nick_find_pos (channel, nick);
-        
-        if (pos_nick)
-        {
-            /* insert nick into the list (before nick found) */
-            nick->prev_nick = pos_nick->prev_nick;
-            nick->next_nick = pos_nick;
-            if (pos_nick->prev_nick)
-                pos_nick->prev_nick->next_nick = nick;
-            else
-                channel->nicks = nick;
-            pos_nick->prev_nick = nick;
-        }
-        else
-        {
-            /* add nick to the end */
-            nick->prev_nick = channel->last_nick;
-            nick->next_nick = NULL;
-            channel->last_nick->next_nick = nick;
-            channel->last_nick = nick;
-        }
+        *sort_index = 2;
+        *prefix = '&';
+        *color_prefix = GUI_COLOR_NICKLIST_PREFIX1;
+    }
+    else if (nick->flags & IRC_NICK_CHANADMIN2)
+    {
+        *sort_index = 3;
+        *prefix = '!';
+        *color_prefix = GUI_COLOR_NICKLIST_PREFIX1;
+    }
+    else if (nick->flags & IRC_NICK_OP)
+    {
+        *sort_index = 4;
+        *prefix = '@';
+        *color_prefix = GUI_COLOR_NICKLIST_PREFIX1;
+    }
+    else if (nick->flags & IRC_NICK_HALFOP)
+    {
+        *sort_index = 5;
+        *prefix = '%';
+        *color_prefix = GUI_COLOR_NICKLIST_PREFIX2;
+    }
+    else if (nick->flags & IRC_NICK_VOICE)
+    {
+        *sort_index = 6;
+        *prefix = '+';
+        *color_prefix = GUI_COLOR_NICKLIST_PREFIX3;
+    }
+    else if (nick->flags & IRC_NICK_CHANUSER)
+    {
+        *sort_index = 7;
+        *prefix = '-';
+        *color_prefix = GUI_COLOR_NICKLIST_PREFIX4;
     }
     else
     {
-        nick->prev_nick = NULL;
-        nick->next_nick = NULL;
-        channel->nicks = nick;
-        channel->last_nick = nick;
+        *sort_index = 8;
+        *prefix = ' ';
+        *color_prefix = GUI_COLOR_NICKLIST;
     }
-}
-
-/*
- * irc_nick_resort: resort nick in the list
- */
-
-void
-irc_nick_resort (t_irc_channel *channel, t_irc_nick *nick)
-{
-    /* temporarly remove nick from list */
-    if (nick == channel->nicks)
-        channel->nicks = nick->next_nick;
-    else
-        nick->prev_nick->next_nick = nick->next_nick;
-    if (nick->next_nick)
-        nick->next_nick->prev_nick = nick->prev_nick;
-    if (nick == channel->last_nick)
-        channel->last_nick = nick->prev_nick;
-    
-    /* insert again nick into sorted list */
-    irc_nick_insert_sorted (channel, nick);
 }
 
 /*
@@ -200,6 +123,9 @@ irc_nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
               int is_halfop, int has_voice, int is_chanuser)
 {
     t_irc_nick *new_nick;
+    t_gui_nick *ptr_gui_nick;
+    int sort_index, color_prefix;
+    char prefix;
     
     /* nick already exists on this channel? */
     if ((new_nick = irc_nick_search (channel, nick_name)))
@@ -212,7 +138,15 @@ irc_nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
         IRC_NICK_SET_FLAG(new_nick, is_halfop, IRC_NICK_HALFOP);
         IRC_NICK_SET_FLAG(new_nick, has_voice, IRC_NICK_VOICE);
         IRC_NICK_SET_FLAG(new_nick, is_chanuser, IRC_NICK_CHANUSER);
-        irc_nick_resort (channel, new_nick);
+        irc_nick_get_gui_infos (new_nick, &sort_index, &prefix, &color_prefix);
+        ptr_gui_nick = gui_nicklist_search (channel->buffer, new_nick->nick);
+        if (ptr_gui_nick)
+            gui_nicklist_update (channel->buffer, ptr_gui_nick, NULL,
+                                 sort_index,
+                                 ptr_gui_nick->color_nick,
+                                 prefix,
+                                 color_prefix);
+                             
         return new_nick;
     }
     
@@ -231,33 +165,56 @@ irc_nick_new (t_irc_server *server, t_irc_channel *channel, char *nick_name,
     IRC_NICK_SET_FLAG(new_nick, is_halfop, IRC_NICK_HALFOP);
     IRC_NICK_SET_FLAG(new_nick, has_voice, IRC_NICK_VOICE);
     IRC_NICK_SET_FLAG(new_nick, is_chanuser, IRC_NICK_CHANUSER);
-    if (ascii_strcasecmp (new_nick->nick, server->nick) == 0)
-        new_nick->color = GUI_COLOR_WIN_NICK_SELF;
+    if (weechat_strcasecmp (new_nick->nick, server->nick) == 0)
+        new_nick->color = GUI_COLOR_CHAT_NICK_SELF;
     else
         new_nick->color = irc_nick_find_color (new_nick);
-    
-    irc_nick_insert_sorted (channel, new_nick);
+
+    /* add nick to end of list */
+    new_nick->prev_nick = channel->last_nick;
+    if (channel->nicks)
+        channel->last_nick->next_nick = new_nick;
+    else
+        channel->nicks = new_nick;
+    channel->last_nick = new_nick;
+    new_nick->next_nick = NULL;
     
     channel->nicks_count++;
-
+    
     channel->nick_completion_reset = 1;
+    
+    /* add nick to buffer nicklist */
+    irc_nick_get_gui_infos (new_nick, &sort_index, &prefix, &color_prefix);
+    gui_nicklist_add (channel->buffer, new_nick->nick, sort_index,
+                      GUI_COLOR_NICKLIST, prefix, color_prefix);
     
     /* all is ok, return address of new nick */
     return new_nick;
 }
 
 /*
- * irc_nick_change: change nickname and move it if necessary (list is sorted)
+ * irc_nick_change: change nickname
  */
 
 void
-irc_nick_change (t_irc_channel *channel, t_irc_nick *nick, char *new_nick)
+irc_nick_change (t_irc_server *server, t_irc_channel *channel,
+                 t_irc_nick *nick, char *new_nick)
 {
     int nick_is_me;
     t_weelist *ptr_weelist;
+    t_gui_nick *ptr_nick;
     
-    nick_is_me = (strcmp (nick->nick, GUI_SERVER(channel->buffer)->nick) == 0) ? 1 : 0;
-
+    /* update buffer nick */
+    ptr_nick = gui_nicklist_search (channel->buffer, nick->nick);
+    if (ptr_nick)
+        gui_nicklist_update (channel->buffer, ptr_nick, new_nick,
+                             ptr_nick->sort_index,
+                             ptr_nick->color_nick,
+                             ptr_nick->prefix,
+                             ptr_nick->color_prefix);
+    
+    nick_is_me = (strcmp (nick->nick, server->nick) == 0) ? 1 : 0;
+    
     if (!nick_is_me && channel->nicks_speaking)
     {
         ptr_weelist = weelist_search (channel->nicks_speaking, nick->nick);
@@ -273,16 +230,13 @@ irc_nick_change (t_irc_channel *channel, t_irc_nick *nick, char *new_nick)
         free (nick->nick);
     nick->nick = strdup (new_nick);
     if (nick_is_me)
-        nick->color = GUI_COLOR_WIN_NICK_SELF;
+        nick->color = GUI_COLOR_CHAT_NICK_SELF;
     else
         nick->color = irc_nick_find_color (nick);
-    
-    /* insert again nick into sorted list */
-    irc_nick_resort (channel, nick);
 }
 
 /*
- * irc_nick_free: free a nick and remove it from nicks queue
+ * irc_nick_free: free a nick and remove it from nicks list
  */
 
 void
@@ -293,7 +247,10 @@ irc_nick_free (t_irc_channel *channel, t_irc_nick *nick)
     if (!channel || !nick)
         return;
     
-    /* remove nick from queue */
+    /* remove nick from buffer nicklist */
+    (void) gui_nicklist_remove (channel->buffer, nick->nick);
+    
+    /* remove nick from nicks list */
     if (channel->last_nick == nick)
         channel->last_nick = nick->prev_nick;
     if (nick->prev_nick)
@@ -316,7 +273,7 @@ irc_nick_free (t_irc_channel *channel, t_irc_nick *nick)
         free (nick->host);
     free (nick);
     channel->nicks = new_nicks;
-
+    
     channel->nick_completion_reset = 1;
 }
 
@@ -353,7 +310,7 @@ irc_nick_search (t_irc_channel *channel, char *nickname)
     for (ptr_nick = channel->nicks; ptr_nick;
          ptr_nick = ptr_nick->next_nick)
     {
-        if (ascii_strcasecmp (ptr_nick->nick, nickname) == 0)
+        if (weechat_strcasecmp (ptr_nick->nick, nickname) == 0)
             return ptr_nick;
     }
     return NULL;
@@ -399,40 +356,30 @@ irc_nick_count (t_irc_channel *channel, int *total, int *count_op,
 }
 
 /*
- * irc_nick_get_max_length: returns longer nickname on a channel
- */
-
-int
-irc_nick_get_max_length (t_irc_channel *channel)
-{
-    int length, max_length;
-    t_irc_nick *ptr_nick;
-    
-    max_length = 0;
-    for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
-    {
-        length = utf8_width_screen (ptr_nick->nick);
-        if (length > max_length)
-            max_length = length;
-    }
-    return max_length;
-}
-
-/*
  * irc_nick_set_away: set/unset away status for a channel
  */
 
 void
 irc_nick_set_away (t_irc_channel *channel, t_irc_nick *nick, int is_away)
 {
-    if ((cfg_irc_away_check > 0)
-        && ((cfg_irc_away_check_max_nicks == 0) ||
-            (channel->nicks_count <= cfg_irc_away_check_max_nicks)))
+    t_gui_nick *ptr_nick;
+    
+    if ((irc_cfg_irc_away_check > 0)
+        && ((irc_cfg_irc_away_check_max_nicks == 0) ||
+            (channel->nicks_count <= irc_cfg_irc_away_check_max_nicks)))
     {
         if (((is_away) && (!(nick->flags & IRC_NICK_AWAY))) ||
             ((!is_away) && (nick->flags & IRC_NICK_AWAY)))
         {
             IRC_NICK_SET_FLAG(nick, is_away, IRC_NICK_AWAY);
+            ptr_nick = gui_nicklist_search (channel->buffer, nick->nick);
+            if (ptr_nick)
+                gui_nicklist_update (channel->buffer, ptr_nick, NULL,
+                                     ptr_nick->sort_index,
+                                     (is_away) ? GUI_COLOR_NICKLIST_AWAY :
+                                     GUI_COLOR_NICKLIST,
+                                     ptr_nick->prefix,
+                                     ptr_nick->color_prefix);
             gui_nicklist_draw (channel->buffer, 0, 0);
         }
     }
@@ -445,7 +392,7 @@ irc_nick_set_away (t_irc_channel *channel, t_irc_nick *nick, int is_away)
 void
 irc_nick_print_log (t_irc_nick *nick)
 {
-    weechat_log_printf ("=> nick %s (addr:0x%X)]\n",    nick->nick, nick);
+    weechat_log_printf ("=> nick %s (addr:0x%X):\n",    nick->nick, nick);
     weechat_log_printf ("     host . . . . . : %s\n",   nick->host);
     weechat_log_printf ("     flags. . . . . : %d\n",   nick->flags);
     weechat_log_printf ("     color. . . . . : %d\n",   nick->color);

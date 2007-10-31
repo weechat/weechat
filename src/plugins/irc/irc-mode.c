@@ -26,9 +26,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../common/weechat.h"
+#include "../../core/weechat.h"
 #include "irc.h"
-#include "../../common/util.h"
+#include "../../core/util.h"
 #include "../../gui/gui.h"
 
 
@@ -41,6 +41,9 @@ irc_mode_channel_set_nick (t_irc_channel *channel, char *nick,
                            char set_flag, int flag)
 {
     t_irc_nick *ptr_nick;
+    t_gui_nick *ptr_gui_nick;
+    int sort_index, color_prefix;
+    char prefix;
     
     if (nick)
     {
@@ -48,8 +51,19 @@ irc_mode_channel_set_nick (t_irc_channel *channel, char *nick,
         if (ptr_nick)
         {
             IRC_NICK_SET_FLAG(ptr_nick, (set_flag == '+'), flag);
-            irc_nick_resort (channel, ptr_nick);
-            gui_nicklist_draw (channel->buffer, 1, 1);
+            ptr_gui_nick = gui_nicklist_search (channel->buffer,
+                                                ptr_nick->nick);
+            if (ptr_gui_nick)
+            {
+                irc_nick_get_gui_infos (ptr_nick, &sort_index, &prefix,
+                                        &color_prefix);
+                gui_nicklist_update (channel->buffer, ptr_gui_nick, NULL,
+                                     sort_index,
+                                     ptr_gui_nick->color_nick,
+                                     prefix,
+                                     color_prefix);
+                gui_nicklist_draw (channel->buffer, 1, 1);
+            }
         }
     }
 }
@@ -97,7 +111,7 @@ irc_mode_channel_set (t_irc_server *server, t_irc_channel *channel,
         pos_args++;
         while (pos_args[0] == ' ')
             pos_args++;
-        argv = explode_string (pos_args, " ", 0, &argc);
+        argv = weechat_explode_string (pos_args, " ", 0, &argc);
         if (argc > 0)
             current_arg = argc - 1;
     }
@@ -198,7 +212,7 @@ irc_mode_channel_set (t_irc_server *server, t_irc_channel *channel,
     }
     
     if (argv)
-        free_exploded_string (argv);
+        weechat_free_exploded_string (argv);
 }
 
 /*
@@ -309,7 +323,7 @@ irc_mode_nick_prefix_allowed (t_irc_server *server, char prefix)
     {
         str[0] = prefix;
         str[1] = '\0';
-        return (strpbrk (str, IRC_DEFAULT_PREFIXES_LIST)) ? 1 : 0;
+        return (strpbrk (str, IRC_NICK_DEFAULT_PREFIXES_LIST)) ? 1 : 0;
     }
     
     return (strchr (server->prefix, prefix) != NULL);

@@ -39,12 +39,11 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-#include "../../common/weechat.h"
+#include "../../core/weechat.h"
 #include "irc.h"
-#include "../../common/log.h"
-#include "../../common/hotlist.h"
-#include "../../common/util.h"
-#include "../../common/weeconfig.h"
+#include "../../core/log.h"
+#include "../../core/util.h"
+#include "../../core/weechat-config.h"
 #include "../../gui/gui.h"
 
 
@@ -68,7 +67,7 @@ irc_dcc_redraw (int highlight)
     gui_window_redraw_buffer (ptr_buffer);
     if (highlight && gui_add_hotlist && (ptr_buffer->num_displayed == 0))
     {
-        hotlist_add (highlight, NULL, NULL, ptr_buffer, 0);
+        gui_hotlist_add (highlight, NULL, ptr_buffer, 0);
         gui_status_draw (gui_current_window->buffer, 0);
     }
 }
@@ -125,7 +124,7 @@ irc_dcc_file_is_resumable (t_irc_dcc *ptr_dcc, char *filename)
 {
     struct stat st;
     
-    if (!cfg_dcc_auto_resume)
+    if (!irc_cfg_dcc_auto_resume)
         return 0;
     
     if (access (filename, W_OK) == 0)
@@ -160,7 +159,7 @@ irc_dcc_find_filename (t_irc_dcc *ptr_dcc)
     if (!IRC_DCC_IS_FILE(ptr_dcc->type))
         return;
     
-    dir1 = weechat_strreplace (cfg_dcc_download_path, "~", getenv ("HOME"));
+    dir1 = weechat_strreplace (irc_cfg_dcc_download_path, "~", getenv ("HOME"));
     if (!dir1)
         return;
     dir2 = weechat_strreplace (dir1, "%h", weechat_home);
@@ -195,10 +194,10 @@ irc_dcc_find_filename (t_irc_dcc *ptr_dcc)
             return;
         
         /* if auto rename is not set, then abort DCC */
-        if (!cfg_dcc_auto_rename)
+        if (!irc_cfg_dcc_auto_rename)
         {
             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-            irc_dcc_redraw (HOTLIST_MSG);
+            irc_dcc_redraw (GUI_HOTLIST_MSG);
             return;
         }
         
@@ -206,7 +205,7 @@ irc_dcc_find_filename (t_irc_dcc *ptr_dcc)
         if (!filename2)
         {
             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-            irc_dcc_redraw (HOTLIST_MSG);
+            irc_dcc_redraw (GUI_HOTLIST_MSG);
             return;
         }
         ptr_dcc->filename_suffix = 0;
@@ -454,32 +453,33 @@ irc_dcc_close (t_irc_dcc *ptr_dcc, int status)
     
     ptr_dcc->status = status;
     
-    if ((status == IRC_DCC_DONE) || (status == IRC_DCC_ABORTED) || (status == IRC_DCC_FAILED))
+    if ((status == IRC_DCC_DONE) || (status == IRC_DCC_ABORTED)
+        || (status == IRC_DCC_FAILED))
     {
         if (IRC_DCC_IS_FILE(ptr_dcc->type))
         {
-            irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                                GUI_PREFIX_INFO);
-            gui_printf (ptr_dcc->server->buffer,
-                        _("DCC: file %s%s%s"),
-                        GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
-                        ptr_dcc->filename,
-                        GUI_COLOR(GUI_COLOR_WIN_CHAT));
+            gui_chat_printf_info (ptr_dcc->server->buffer,
+                                  _("DCC: file %s%s%s"),
+                                  GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
+                                  ptr_dcc->filename,
+                                  GUI_COLOR(GUI_COLOR_CHAT));
             if (ptr_dcc->local_filename)
-                gui_printf (ptr_dcc->server->buffer,
-                            _(" (local filename: %s%s%s)"),
-                            GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
-                            ptr_dcc->local_filename,
-                            GUI_COLOR(GUI_COLOR_WIN_CHAT));
+                gui_chat_printf (ptr_dcc->server->buffer,
+                                 _(" (local filename: %s%s%s)"),
+                                 GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
+                                 ptr_dcc->local_filename,
+                                 GUI_COLOR(GUI_COLOR_CHAT));
             if (ptr_dcc->type == IRC_DCC_FILE_SEND)
-                gui_printf (ptr_dcc->server->buffer, _(" sent to "));
+                gui_chat_printf (ptr_dcc->server->buffer,
+                                 _(" sent to "));
             else
-                gui_printf (ptr_dcc->server->buffer, _(" received from "));
-            gui_printf (ptr_dcc->server->buffer, "%s%s%s: %s\n",
-                        GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
-                        ptr_dcc->nick,
-                        GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                        (status == IRC_DCC_DONE) ? _("OK") : _("FAILED"));
+                gui_chat_printf (ptr_dcc->server->buffer,
+                                 _(" received from "));
+            gui_chat_printf (ptr_dcc->server->buffer, "%s%s%s: %s\n",
+                             GUI_COLOR(GUI_COLOR_CHAT_NICK),
+                             ptr_dcc->nick,
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             (status == IRC_DCC_DONE) ? _("OK") : _("FAILED"));
             irc_dcc_file_child_kill (ptr_dcc);
         }
     }
@@ -491,18 +491,18 @@ irc_dcc_close (t_irc_dcc *ptr_dcc, int status)
                 ptr_buffer = ptr_dcc->channel->buffer;
             else
                 ptr_buffer = ptr_dcc->server->buffer;
-            irc_display_prefix (ptr_dcc->server, ptr_buffer, GUI_PREFIX_INFO);
-            gui_printf (ptr_buffer,
-                        _("DCC chat closed with %s%s %s(%s%d.%d.%d.%d%s)\n"),
-                        GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
-                        ptr_dcc->nick,
-                        GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                        GUI_COLOR(GUI_COLOR_WIN_CHAT_HOST),
-                        ptr_dcc->addr >> 24,
-                        (ptr_dcc->addr >> 16) & 0xff,
-                        (ptr_dcc->addr >> 8) & 0xff,
-                        ptr_dcc->addr & 0xff,
-                        GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK));
+            gui_chat_printf_info (ptr_buffer,
+                                  _("DCC chat closed with %s%s "
+                                    "%s(%s%d.%d.%d.%d%s)\n"),
+                                  GUI_COLOR(GUI_COLOR_CHAT_NICK),
+                                  ptr_dcc->nick,
+                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                  GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                  ptr_dcc->addr >> 24,
+                                  (ptr_dcc->addr >> 16) & 0xff,
+                                  (ptr_dcc->addr >> 8) & 0xff,
+                                  ptr_dcc->addr & 0xff,
+                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
         }
     }
     
@@ -545,31 +545,30 @@ irc_dcc_channel_for_chat (t_irc_dcc *ptr_dcc)
 {
     if (!irc_channel_create_dcc (ptr_dcc))
     {
-        irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                            GUI_PREFIX_ERROR);
-        gui_printf (ptr_dcc->server->buffer,
-                    _("%s can't associate DCC chat with private buffer "
-                    "(maybe private buffer has already DCC CHAT?)\n"),
-                    WEECHAT_ERROR);
+        gui_chat_printf_error (ptr_dcc->server->buffer,
+                               _("%s can't associate DCC chat with private "
+                                 "buffer (maybe private buffer has already "
+                                 "DCC CHAT?)\n"),
+                               WEECHAT_ERROR);
         irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-        irc_dcc_redraw (HOTLIST_MSG);
+        irc_dcc_redraw (GUI_HOTLIST_MSG);
         return;
     }
     
-    irc_display_prefix (ptr_dcc->server, ptr_dcc->channel->buffer,
-                        GUI_PREFIX_INFO);
-    gui_printf_type (ptr_dcc->channel->buffer, GUI_MSG_TYPE_MSG,
-                     _("Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"),
-                     GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
-                     ptr_dcc->nick,
-                     GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                     GUI_COLOR(GUI_COLOR_WIN_CHAT_HOST),
-                     ptr_dcc->addr >> 24,
-                     (ptr_dcc->addr >> 16) & 0xff,
-                     (ptr_dcc->addr >> 8) & 0xff,
-                     ptr_dcc->addr & 0xff,
-                     GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                     GUI_COLOR(GUI_COLOR_WIN_CHAT));
+    gui_chat_printf_type (ptr_dcc->channel->buffer, GUI_MSG_TYPE_MSG,
+                          cfg_look_prefix_info, cfg_col_chat_prefix_info,
+                          _("Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC "
+                            "chat\n"),
+                          GUI_COLOR(GUI_COLOR_CHAT_NICK),
+                          ptr_dcc->nick,
+                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                          GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                          ptr_dcc->addr >> 24,
+                          (ptr_dcc->addr >> 16) & 0xff,
+                          (ptr_dcc->addr >> 8) & 0xff,
+                          ptr_dcc->addr & 0xff,
+                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                          GUI_COLOR(GUI_COLOR_CHAT));
 }
 
 /*
@@ -601,7 +600,7 @@ irc_dcc_recv_connect_init (t_irc_dcc *ptr_dcc)
     if (!irc_dcc_connect (ptr_dcc))
     {
         irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-        irc_dcc_redraw (HOTLIST_MSG);
+        irc_dcc_redraw (GUI_HOTLIST_MSG);
     }
     else
     {
@@ -618,7 +617,7 @@ irc_dcc_recv_connect_init (t_irc_dcc *ptr_dcc)
             irc_dcc_channel_for_chat (ptr_dcc);
         }
     }
-    irc_dcc_redraw (HOTLIST_MSG);
+    irc_dcc_redraw (GUI_HOTLIST_MSG);
 }
 
 /*
@@ -637,7 +636,7 @@ irc_dcc_accept (t_irc_dcc *ptr_dcc)
                           "PRIVMSG %s :\01DCC RESUME %s %d %u\01",
                           ptr_dcc->nick, ptr_dcc->filename,
                           ptr_dcc->port, ptr_dcc->start_resume);
-        irc_dcc_redraw (HOTLIST_MSG);
+        irc_dcc_redraw (GUI_HOTLIST_MSG);
     }
     else
         irc_dcc_recv_connect_init (ptr_dcc);
@@ -653,7 +652,8 @@ irc_dcc_accept_resume (t_irc_server *server, char *filename, int port,
 {
     t_irc_dcc *ptr_dcc;
     
-    ptr_dcc = irc_dcc_search (server, IRC_DCC_FILE_SEND, IRC_DCC_CONNECTING, port);
+    ptr_dcc = irc_dcc_search (server, IRC_DCC_FILE_SEND, IRC_DCC_CONNECTING,
+                              port);
     if (ptr_dcc)
     {
         ptr_dcc->pos = pos_start;
@@ -667,24 +667,24 @@ irc_dcc_accept_resume (t_irc_server *server, char *filename, int port,
                           ptr_dcc->nick, ptr_dcc->filename,
                           ptr_dcc->port, ptr_dcc->start_resume);
         
-        irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                            GUI_PREFIX_INFO);
-        gui_printf (ptr_dcc->server->buffer,
-                    _("DCC: file %s%s%s resumed at position %u\n"),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
-                    ptr_dcc->filename,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    ptr_dcc->start_resume);
-        irc_dcc_redraw (HOTLIST_MSG);
+        gui_chat_printf_info (ptr_dcc->server->buffer,
+                              _("DCC: file %s%s%s resumed at position %u\n"),
+                              GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
+                              ptr_dcc->filename,
+                              GUI_COLOR(GUI_COLOR_CHAT),
+                              ptr_dcc->start_resume);
+        irc_dcc_redraw (GUI_HOTLIST_MSG);
     }
     else
-        gui_printf (server->buffer,
-                    _("%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or ended\n"),
-                    WEECHAT_ERROR, filename, port, pos_start);
+        gui_chat_printf (server->buffer,
+                         _("%s can't resume file \"%s\" (port: %d, start "
+                           "position: %u): DCC not found or ended\n"),
+                         WEECHAT_ERROR, filename, port, pos_start);
 }
 
 /*
- * irc_dcc_start_resume: called when "DCC ACCEPT" is received (resume accepted by sender)
+ * irc_dcc_start_resume: called when "DCC ACCEPT" is received
+ *                       (resume accepted by sender)
  */
 
 void
@@ -693,7 +693,8 @@ irc_dcc_start_resume (t_irc_server *server, char *filename, int port,
 {
     t_irc_dcc *ptr_dcc;
     
-    ptr_dcc = irc_dcc_search (server, IRC_DCC_FILE_RECV, IRC_DCC_CONNECTING, port);
+    ptr_dcc = irc_dcc_search (server, IRC_DCC_FILE_RECV, IRC_DCC_CONNECTING,
+                              port);
     if (ptr_dcc)
     {
         ptr_dcc->pos = pos_start;
@@ -703,9 +704,10 @@ irc_dcc_start_resume (t_irc_server *server, char *filename, int port,
         irc_dcc_recv_connect_init (ptr_dcc);
     }
     else
-        gui_printf (server->buffer,
-                    _("%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or ended\n"),
-                    WEECHAT_ERROR, filename, port, pos_start);
+        gui_chat_printf (server->buffer,
+                         _("%s can't resume file \"%s\" (port: %d, start "
+                           "position: %u): DCC not found or ended\n"),
+                         WEECHAT_ERROR, filename, port, pos_start);
 }
 
 /*
@@ -736,12 +738,12 @@ irc_dcc_alloc ()
     new_dcc->child_read = -1;
     new_dcc->child_write = -1;
     new_dcc->unterminated_message = NULL;
-    new_dcc->fast_send = cfg_dcc_fast_send;
+    new_dcc->fast_send = irc_cfg_dcc_fast_send;
     new_dcc->file = -1;
     new_dcc->filename = NULL;
     new_dcc->local_filename = NULL;
     new_dcc->filename_suffix = -1;
-    new_dcc->blocksize = cfg_dcc_blocksize;
+    new_dcc->blocksize = irc_cfg_dcc_blocksize;
     new_dcc->size = 0;
     new_dcc->pos = 0;
     new_dcc->ack = 0;
@@ -776,10 +778,9 @@ irc_dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char 
     new_dcc = irc_dcc_alloc ();
     if (!new_dcc)
     {
-        irc_display_prefix (server, server->buffer, GUI_PREFIX_ERROR);
-        gui_printf (server->buffer,
-                    _("%s not enough memory for new DCC\n"),
-                    WEECHAT_ERROR);
+        gui_chat_printf_error (server->buffer,
+                               _("%s not enough memory for new DCC\n"),
+                               WEECHAT_ERROR);
         return NULL;
     }
     
@@ -822,96 +823,92 @@ irc_dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char 
     /* write info message on server buffer */
     if (type == IRC_DCC_FILE_RECV)
     {
-        irc_display_prefix (server, server->buffer, GUI_PREFIX_INFO);
-        gui_printf (server->buffer,
-                    _("Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
-                    nick,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_HOST),
-                    addr >> 24,
-                    (addr >> 16) & 0xff,
-                    (addr >> 8) & 0xff,
-                    addr & 0xff,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
-                    filename,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
-                    size,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT));
-        irc_dcc_redraw (HOTLIST_MSG);
+        gui_chat_printf_info (server->buffer,
+                              _("Incoming DCC file from %s%s%s "
+                                "(%s%d.%d.%d.%d%s)%s: %s%s%s, "
+                                "%s%lu%s bytes\n"),
+                              GUI_COLOR(GUI_COLOR_CHAT_NICK),
+                              nick,
+                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                              GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                              addr >> 24,
+                              (addr >> 16) & 0xff,
+                              (addr >> 8) & 0xff,
+                              addr & 0xff,
+                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                              GUI_COLOR(GUI_COLOR_CHAT),
+                              GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
+                              filename,
+                              GUI_COLOR(GUI_COLOR_CHAT),
+                              GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
+                              size,
+                              GUI_COLOR(GUI_COLOR_CHAT));
+        irc_dcc_redraw (GUI_HOTLIST_MSG);
     }
     if (type == IRC_DCC_FILE_SEND)
     {
-        irc_display_prefix (server, server->buffer, GUI_PREFIX_INFO);
-        gui_printf (server->buffer,
-                    _("Sending DCC file to %s%s%s: %s%s%s "
-                      "(local filename: %s%s%s), %s%lu%s bytes\n"),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
-                    nick,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
-                    filename,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
-                    local_filename,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
-                    size,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT));
-        irc_dcc_redraw (HOTLIST_MSG);
+        gui_chat_printf_info (server->buffer,
+                              _("Sending DCC file to %s%s%s: %s%s%s "
+                                "(local filename: %s%s%s), %s%lu%s bytes\n"),
+                              GUI_COLOR(GUI_COLOR_CHAT_NICK),
+                              nick,
+                              GUI_COLOR(GUI_COLOR_CHAT),
+                              GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
+                              filename,
+                              GUI_COLOR(GUI_COLOR_CHAT),
+                              GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
+                              local_filename,
+                              GUI_COLOR(GUI_COLOR_CHAT),
+                              GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
+                              size,
+                              GUI_COLOR(GUI_COLOR_CHAT));
+        irc_dcc_redraw (GUI_HOTLIST_MSG);
     }
     if (type == IRC_DCC_CHAT_RECV)
     {
-        irc_display_prefix (server, server->buffer, GUI_PREFIX_INFO);
-        gui_printf (server->buffer,
-                    _("Incoming DCC chat request from %s%s%s "
-                      "(%s%d.%d.%d.%d%s)\n"),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
-                    nick,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_HOST),
-                    addr >> 24,
-                    (addr >> 16) & 0xff,
-                    (addr >> 8) & 0xff,
-                    addr & 0xff,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK));
-        irc_dcc_redraw (HOTLIST_MSG);
+        gui_chat_printf_info (server->buffer,
+                              _("Incoming DCC chat request from %s%s%s "
+                                "(%s%d.%d.%d.%d%s)\n"),
+                              GUI_COLOR(GUI_COLOR_CHAT_NICK),
+                              nick,
+                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                              GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                              addr >> 24,
+                              (addr >> 16) & 0xff,
+                              (addr >> 8) & 0xff,
+                              addr & 0xff,
+                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+        irc_dcc_redraw (GUI_HOTLIST_MSG);
     }
     if (type == IRC_DCC_CHAT_SEND)
     {
-        irc_display_prefix (server, server->buffer, GUI_PREFIX_INFO);
-        gui_printf (server->buffer,
-                    _("Sending DCC chat request to %s%s\n"),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
-                    nick);
-        irc_dcc_redraw (HOTLIST_MSG);
+        gui_chat_printf_info (server->buffer,
+                              _("Sending DCC chat request to %s%s\n"),
+                              GUI_COLOR(GUI_COLOR_CHAT_NICK),
+                              nick);
+        irc_dcc_redraw (GUI_HOTLIST_MSG);
     }
     
     if (IRC_DCC_IS_FILE(type) && (!new_dcc->local_filename))
     {
         irc_dcc_close (new_dcc, IRC_DCC_FAILED);
-        irc_dcc_redraw (HOTLIST_MSG);
+        irc_dcc_redraw (GUI_HOTLIST_MSG);
         return NULL;
     }
     
     if (IRC_DCC_IS_FILE(type) && (new_dcc->start_resume > 0))
     {
-        irc_display_prefix (new_dcc->server, new_dcc->server->buffer,
-                            GUI_PREFIX_INFO);
-        gui_printf (new_dcc->server->buffer,
-                    _("DCC: file %s%s%s (local filename: %s%s%s) "
-                      "will be resumed at position %u\n"),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
-                    new_dcc->filename,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
-                    new_dcc->local_filename,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    new_dcc->start_resume);
-        irc_dcc_redraw (HOTLIST_MSG);
+        gui_chat_printf_info (new_dcc->server->buffer,
+                              _("DCC: file %s%s%s (local filename: %s%s%s) "
+                                "will be resumed at position %u\n"),
+                              GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
+                              new_dcc->filename,
+                              GUI_COLOR(GUI_COLOR_CHAT),
+                              GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
+                              new_dcc->local_filename,
+                              GUI_COLOR(GUI_COLOR_CHAT),
+                              new_dcc->start_resume);
+        irc_dcc_redraw (GUI_HOTLIST_MSG);
     }
     
     /* connect if needed and redraw DCC buffer */
@@ -920,16 +917,16 @@ irc_dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char 
         if (!irc_dcc_connect (new_dcc))
         {
             irc_dcc_close (new_dcc, IRC_DCC_FAILED);
-            irc_dcc_redraw (HOTLIST_MSG);
+            irc_dcc_redraw (GUI_HOTLIST_MSG);
             return NULL;
         }
     }
     
-    if ( ( (type == IRC_DCC_CHAT_RECV) && (cfg_dcc_auto_accept_chats) )
-        || ( (type == IRC_DCC_FILE_RECV) && (cfg_dcc_auto_accept_files) ) )
+    if ( ( (type == IRC_DCC_CHAT_RECV) && (irc_cfg_dcc_auto_accept_chats) )
+        || ( (type == IRC_DCC_FILE_RECV) && (irc_cfg_dcc_auto_accept_files) ) )
         irc_dcc_accept (new_dcc);
     else
-        irc_dcc_redraw (HOTLIST_PRIVATE);
+        irc_dcc_redraw (GUI_HOTLIST_PRIVATE);
     gui_status_draw (gui_current_window->buffer, 0);
     
     return new_dcc;
@@ -969,7 +966,8 @@ irc_dcc_send_request (t_irc_server *server, int type, char *nick, char *filename
             filename2 = weechat_strreplace (filename, "~", getenv ("HOME"));
         else
         {
-            dir1 = weechat_strreplace (cfg_dcc_upload_path, "~", getenv ("HOME"));
+            dir1 = weechat_strreplace (irc_cfg_dcc_upload_path, "~",
+                                       getenv ("HOME"));
             if (!dir1)
                 return;
             dir2 = weechat_strreplace (dir1, "%h", weechat_home);
@@ -982,10 +980,9 @@ irc_dcc_send_request (t_irc_server *server, int type, char *nick, char *filename
                                          strlen (filename) + 4);
             if (!filename2)
             {
-                irc_display_prefix (server, server->buffer, GUI_PREFIX_ERROR);
-                gui_printf (server->buffer,
-                            _("%s not enough memory for DCC SEND\n"),
-                            WEECHAT_ERROR);
+                gui_chat_printf_error (server->buffer,
+                                       _("%s not enough memory for DCC SEND\n"),
+                                       WEECHAT_ERROR);
                 return;
             }
             strcpy (filename2, dir2);
@@ -1002,10 +999,9 @@ irc_dcc_send_request (t_irc_server *server, int type, char *nick, char *filename
         /* check if file exists */
         if (stat (filename2, &st) == -1)
         {
-            irc_display_prefix (server, server->buffer, GUI_PREFIX_ERROR);
-            gui_printf (server->buffer,
-                        _("%s cannot access file \"%s\"\n"),
-                        WEECHAT_ERROR, filename2);
+            gui_chat_printf_error (server->buffer,
+                                   _("%s cannot access file \"%s\"\n"),
+                                   WEECHAT_ERROR, filename2);
             if (filename2)
                 free (filename2);
             return;
@@ -1016,18 +1012,19 @@ irc_dcc_send_request (t_irc_server *server, int type, char *nick, char *filename
     
     /* look up the IP address from dcc_own_ip, if set */
     local_addr = 0;
-    if (cfg_dcc_own_ip && cfg_dcc_own_ip[0])
+    if (irc_cfg_dcc_own_ip && irc_cfg_dcc_own_ip[0])
     {
-        host = gethostbyname (cfg_dcc_own_ip);
+        host = gethostbyname (irc_cfg_dcc_own_ip);
         if (host)
         {
             memcpy (&tmpaddr, host->h_addr_list[0], sizeof(struct in_addr));
             local_addr = ntohl (tmpaddr.s_addr);
         }
         else
-            gui_printf (server->buffer,
-                        _("%s could not find address for '%s'. Falling back to local IP.\n"),
-                        WEECHAT_WARNING, cfg_dcc_own_ip);
+            gui_chat_printf (server->buffer,
+                             _("%s could not find address for '%s'. Falling "
+                               "back to local IP.\n"),
+                             WEECHAT_WARNING, irc_cfg_dcc_own_ip);
     }
     
     /* use the local interface, from the server socket */
@@ -1044,10 +1041,9 @@ irc_dcc_send_request (t_irc_server *server, int type, char *nick, char *filename
     sock = socket (AF_INET, SOCK_STREAM, 0);
     if (sock < 0)
     {
-        irc_display_prefix (server, server->buffer, GUI_PREFIX_ERROR);
-        gui_printf (server->buffer,
-                    _("%s cannot create socket for DCC\n"),
-                    WEECHAT_ERROR);
+        gui_chat_printf_error (server->buffer,
+                               _("%s cannot create socket for DCC\n"),
+                               WEECHAT_ERROR);
         if (filename2)
             free (filename2);
         return;
@@ -1057,10 +1053,10 @@ irc_dcc_send_request (t_irc_server *server, int type, char *nick, char *filename
     
     port = 0;
     
-    if (cfg_dcc_port_range && cfg_dcc_port_range[0])
+    if (irc_cfg_dcc_port_range && irc_cfg_dcc_port_range[0])
     {
         /* find a free port in the specified range */
-        args = sscanf (cfg_dcc_port_range, "%d-%d", &port_start, &port_end);
+        args = sscanf (irc_cfg_dcc_port_range, "%d-%d", &port_start, &port_end);
         if (args > 0)
         {
             port = port_start;
@@ -1102,10 +1098,9 @@ irc_dcc_send_request (t_irc_server *server, int type, char *nick, char *filename
     if (port == -1)
     {
         /* Could not find any port to bind */
-        irc_display_prefix (server, server->buffer, GUI_PREFIX_ERROR);
-        gui_printf (server->buffer,
-                    _("%s cannot find available port for DCC\n"),
-                    WEECHAT_ERROR);
+        gui_chat_printf_error (server->buffer,
+                               _("%s cannot find available port for DCC\n"),
+                               WEECHAT_ERROR);
         close (sock);
         if (filename2)
             free (filename2);
@@ -1128,7 +1123,7 @@ irc_dcc_send_request (t_irc_server *server, int type, char *nick, char *filename
         {
             if (pos[0] == ' ')
             {
-                if (cfg_dcc_convert_spaces)
+                if (irc_cfg_dcc_convert_spaces)
                     pos[0] = '_';
                 else
                     spaces = 1;
@@ -1139,17 +1134,17 @@ irc_dcc_send_request (t_irc_server *server, int type, char *nick, char *filename
     
     /* add DCC entry and listen to socket */
     if (type == IRC_DCC_CHAT_SEND)
-        ptr_dcc = irc_dcc_add (server, IRC_DCC_CHAT_SEND, local_addr, port, nick, sock,
-                               NULL, NULL, 0);
+        ptr_dcc = irc_dcc_add (server, IRC_DCC_CHAT_SEND, local_addr, port,
+                               nick, sock, NULL, NULL, 0);
     else
-        ptr_dcc = irc_dcc_add (server, IRC_DCC_FILE_SEND, local_addr, port, nick, sock,
-                               short_filename, filename2, st.st_size);
+        ptr_dcc = irc_dcc_add (server, IRC_DCC_FILE_SEND, local_addr, port,
+                               nick, sock, short_filename, filename2,
+                               st.st_size);
     if (!ptr_dcc)
     {
-        irc_display_prefix (server, server->buffer, GUI_PREFIX_ERROR);
-        gui_printf (server->buffer,
-                    _("%s cannot send DCC\n"),
-                    WEECHAT_ERROR);
+        gui_chat_printf_error (server->buffer,
+                               _("%s cannot send DCC\n"),
+                               WEECHAT_ERROR);
         close (sock);
         if (short_filename)
             free (short_filename);
@@ -1216,16 +1211,17 @@ irc_dcc_chat_sendf (t_irc_dcc *ptr_dcc, char *fmt, ...)
         size_buf = strlen (buffer);
 #ifdef DEBUG
     buffer[size_buf - 2] = '\0';
-    gui_printf (ptr_dcc->server->buffer, "[DEBUG] Sending to remote host (DCC CHAT) >>> %s\n", buffer);
+    gui_chat_printf (ptr_dcc->server->buffer,
+                     "[DEBUG] Sending to remote host (DCC CHAT) >>> %s\n",
+                     buffer);
     buffer[size_buf - 2] = '\r';
 #endif
     if (irc_dcc_chat_send (ptr_dcc, buffer, strlen (buffer)) <= 0)
     {
-        irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                            GUI_PREFIX_ERROR);
-        gui_printf (ptr_dcc->server->buffer,
-                    _("%s error sending data to \"%s\" via DCC CHAT\n"),
-                    WEECHAT_ERROR, ptr_dcc->nick);
+        gui_chat_printf_error (ptr_dcc->server->buffer,
+                               _("%s error sending data to \"%s\" via DCC "
+                                 "CHAT\n"),
+                               WEECHAT_ERROR, ptr_dcc->nick);
         irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
     }
 }
@@ -1304,27 +1300,33 @@ irc_dcc_chat_recv (t_irc_dcc *ptr_dcc)
             
             if (ptr_buf)
             {
-                if (irc_recv_is_highlight (ptr_buf, ptr_dcc->server->nick))
+                if (irc_protocol_is_highlight (ptr_buf, ptr_dcc->server->nick))
                 {
-                    irc_display_nick (ptr_dcc->channel->buffer, NULL, ptr_dcc->nick,
-                                      GUI_MSG_TYPE_NICK | GUI_MSG_TYPE_HIGHLIGHT, 1,
-                                      GUI_COLOR_WIN_CHAT_HIGHLIGHT, 0);
+                    irc_display_nick (ptr_dcc->channel->buffer, NULL,
+                                      ptr_dcc->nick,
+                                      GUI_MSG_TYPE_NICK | GUI_MSG_TYPE_HIGHLIGHT,
+                                      1,
+                                      GUI_COLOR(GUI_COLOR_CHAT_HIGHLIGHT), 0);
                     if ((cfg_look_infobar_delay_highlight > 0)
                         && (ptr_dcc->channel->buffer != gui_current_window->buffer))
                     {
                         gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                            GUI_COLOR_WIN_INFOBAR_HIGHLIGHT,
+                                            GUI_COLOR_INFOBAR_HIGHLIGHT,
                                             _("Private %s> %s"),
                                             ptr_dcc->nick, ptr_buf);
                     }
                 }
                 else
-                    irc_display_nick (ptr_dcc->channel->buffer, NULL, ptr_dcc->nick,
-                                      GUI_MSG_TYPE_NICK, 1, GUI_COLOR_WIN_NICK_PRIVATE, 0);
-                gui_printf_type (ptr_dcc->channel->buffer, GUI_MSG_TYPE_MSG,
-                                 "%s%s\n",
-                                 GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                                 ptr_buf);
+                    irc_display_nick (ptr_dcc->channel->buffer, NULL,
+                                      ptr_dcc->nick,
+                                      GUI_MSG_TYPE_NICK, 1,
+                                      GUI_COLOR(GUI_COLOR_CHAT_NICK_OTHER), 0);
+                gui_chat_printf_type (ptr_dcc->channel->buffer,
+                                      GUI_MSG_TYPE_MSG,
+                                      NULL, -1,
+                                      "%s%s\n",
+                                      GUI_COLOR(GUI_COLOR_CHAT),
+                                      ptr_buf);
             }
             
             ptr_buf = next_ptr_buf;
@@ -1336,7 +1338,7 @@ irc_dcc_chat_recv (t_irc_dcc *ptr_dcc)
     else
     {
         irc_dcc_close (ptr_dcc, IRC_DCC_ABORTED);
-        irc_dcc_redraw (HOTLIST_MSG);
+        irc_dcc_redraw (GUI_HOTLIST_MSG);
     }
 }
 
@@ -1352,13 +1354,11 @@ irc_dcc_file_create_pipe (t_irc_dcc *ptr_dcc)
     
     if (pipe (child_pipe) < 0)
     {
-        irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                            GUI_PREFIX_ERROR);
-        gui_printf (ptr_dcc->server->buffer,
-                    _("%s DCC: unable to create pipe\n"),
-                    WEECHAT_ERROR);
+        gui_chat_printf_error (ptr_dcc->server->buffer,
+                               _("%s DCC: unable to create pipe\n"),
+                               WEECHAT_ERROR);
         irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-        irc_dcc_redraw (HOTLIST_MSG);
+        irc_dcc_redraw (GUI_HOTLIST_MSG);
         return 0;
     }
     
@@ -1580,47 +1580,41 @@ irc_dcc_file_child_read (t_irc_dcc *ptr_dcc)
         {
             /* errors for sender */
             case IRC_DCC_ERROR_READ_LOCAL:
-                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                                    GUI_PREFIX_ERROR);
-                gui_printf (ptr_dcc->server->buffer,
-                            _("%s DCC: unable to read local file\n"),
-                            WEECHAT_ERROR);
+                gui_chat_printf_error (ptr_dcc->server->buffer,
+                                       _("%s DCC: unable to read local "
+                                         "file\n"),
+                                       WEECHAT_ERROR);
                 break;
             case IRC_DCC_ERROR_SEND_BLOCK:
-                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                                    GUI_PREFIX_ERROR);
-                gui_printf (ptr_dcc->server->buffer,
-                            _("%s DCC: unable to send block to receiver\n"),
-                            WEECHAT_ERROR);
+                gui_chat_printf_error (ptr_dcc->server->buffer,
+                                       _("%s DCC: unable to send block to "
+                                         "receiver\n"),
+                                       WEECHAT_ERROR);
                 break;
             case IRC_DCC_ERROR_READ_ACK:
-                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                                    GUI_PREFIX_ERROR);
-                gui_printf (ptr_dcc->server->buffer,
-                            _("%s DCC: unable to read ACK from receiver\n"),
-                            WEECHAT_ERROR);
+                gui_chat_printf_error (ptr_dcc->server->buffer,
+                                       _("%s DCC: unable to read ACK from "
+                                         "receiver\n"),
+                                       WEECHAT_ERROR);
                 break;
             /* errors for receiver */
             case IRC_DCC_ERROR_CONNECT_SENDER:
-                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                                    GUI_PREFIX_ERROR);
-                gui_printf (ptr_dcc->server->buffer,
-                            _("%s DCC: unable to connect to sender\n"),
-                            WEECHAT_ERROR);
+                gui_chat_printf_error (ptr_dcc->server->buffer,
+                                       _("%s DCC: unable to connect to "
+                                         "sender\n"),
+                                       WEECHAT_ERROR);
                 break;
             case IRC_DCC_ERROR_RECV_BLOCK:
-                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                                    GUI_PREFIX_ERROR);
-                gui_printf (ptr_dcc->server->buffer,
-                            _("%s DCC: unable to receive block from sender\n"),
-                            WEECHAT_ERROR);
+                gui_chat_printf_error (ptr_dcc->server->buffer,
+                                       _("%s DCC: unable to receive block "
+                                         "from sender\n"),
+                                       WEECHAT_ERROR);
                 break;
             case IRC_DCC_ERROR_WRITE_LOCAL:
-                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                                    GUI_PREFIX_ERROR);
-                gui_printf (ptr_dcc->server->buffer,
-                            _("%s DCC: unable to write local file\n"),
-                            WEECHAT_ERROR);
+                gui_chat_printf_error (ptr_dcc->server->buffer,
+                                       _("%s DCC: unable to write local "
+                                         "file\n"),
+                                       WEECHAT_ERROR);
                 break;
         }
         
@@ -1634,18 +1628,18 @@ irc_dcc_file_child_read (t_irc_dcc *ptr_dcc)
                     ptr_dcc->status = IRC_DCC_ACTIVE;
                     ptr_dcc->start_transfer = time (NULL);
                     ptr_dcc->last_check_time = time (NULL);
-                    irc_dcc_redraw (HOTLIST_MSG);
+                    irc_dcc_redraw (GUI_HOTLIST_MSG);
                 }
                 else
-                    irc_dcc_redraw (HOTLIST_LOW);
+                    irc_dcc_redraw (GUI_HOTLIST_LOW);
                 break;
             case IRC_DCC_DONE:
                 irc_dcc_close (ptr_dcc, IRC_DCC_DONE);
-                irc_dcc_redraw (HOTLIST_MSG);
+                irc_dcc_redraw (GUI_HOTLIST_MSG);
                 break;
             case IRC_DCC_FAILED:
                 irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-                irc_dcc_redraw (HOTLIST_MSG);
+                irc_dcc_redraw (GUI_HOTLIST_MSG);
                 break;
         }
     }
@@ -1669,13 +1663,11 @@ irc_dcc_file_send_fork (t_irc_dcc *ptr_dcc)
     {
         /* fork failed */
         case -1:
-            irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                                GUI_PREFIX_ERROR);
-            gui_printf (ptr_dcc->server->buffer,
-                        _("%s DCC: unable to fork\n"),
-                        WEECHAT_ERROR);
+            gui_chat_printf_error (ptr_dcc->server->buffer,
+                                   _("%s DCC: unable to fork\n"),
+                                   WEECHAT_ERROR);
             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-            irc_dcc_redraw (HOTLIST_MSG);
+            irc_dcc_redraw (GUI_HOTLIST_MSG);
             return;
             /* child process */
         case 0:
@@ -1712,13 +1704,11 @@ irc_dcc_file_recv_fork (t_irc_dcc *ptr_dcc)
     {
         /* fork failed */
         case -1:
-            irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                                GUI_PREFIX_ERROR);
-            gui_printf (ptr_dcc->server->buffer,
-                        _("%s DCC: unable to fork\n"),
-                        WEECHAT_ERROR);
+            gui_chat_printf_error (ptr_dcc->server->buffer,
+                                   _("%s DCC: unable to fork\n"),
+                                   WEECHAT_ERROR);
             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-            irc_dcc_redraw (HOTLIST_MSG);
+            irc_dcc_redraw (GUI_HOTLIST_MSG);
             return;
             /* child process */
         case 0:
@@ -1750,15 +1740,14 @@ irc_dcc_handle ()
         /* check DCC timeout */
         if (IRC_DCC_IS_FILE(ptr_dcc->type) && !IRC_DCC_ENDED(ptr_dcc->status))
         {
-            if ((cfg_dcc_timeout != 0) && (time (NULL) > ptr_dcc->last_activity + cfg_dcc_timeout))
+            if ((irc_cfg_dcc_timeout != 0)
+                && (time (NULL) > ptr_dcc->last_activity + irc_cfg_dcc_timeout))
             {
-                irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                                    GUI_PREFIX_ERROR);
-                gui_printf (ptr_dcc->server->buffer,
-                            _("%s DCC: timeout\n"),
-                            WEECHAT_ERROR);
+                gui_chat_printf_error (ptr_dcc->server->buffer,
+                                       _("%s DCC: timeout\n"),
+                                       WEECHAT_ERROR);
                 irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-                irc_dcc_redraw (HOTLIST_MSG);
+                irc_dcc_redraw (GUI_HOTLIST_MSG);
                 continue;
             }
         }
@@ -1779,36 +1768,37 @@ irc_dcc_handle ()
                     {
                         ptr_dcc->last_activity = time (NULL);
                         length = sizeof (addr);
-                        sock = accept (ptr_dcc->sock, (struct sockaddr *) &addr, &length);
+                        sock = accept (ptr_dcc->sock,
+                                       (struct sockaddr *) &addr, &length);
                         close (ptr_dcc->sock);
                         ptr_dcc->sock = -1;
                         if (sock < 0)
                         {
-                            irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                                                GUI_PREFIX_ERROR);
-                            gui_printf (ptr_dcc->server->buffer,
-                                        _("%s DCC: unable to create socket for sending file\n"),
-                                        WEECHAT_ERROR);
+                            gui_chat_printf_error (ptr_dcc->server->buffer,
+                                                   _("%s DCC: unable to "
+                                                     "create socket for "
+                                                     "sending file\n"),
+                                                   WEECHAT_ERROR);
                             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-                            irc_dcc_redraw (HOTLIST_MSG);
+                            irc_dcc_redraw (GUI_HOTLIST_MSG);
                             continue;
                         }
                         ptr_dcc->sock = sock;
                         if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
                         {
-                            irc_display_prefix (ptr_dcc->server, ptr_dcc->server->buffer,
-                                                GUI_PREFIX_ERROR);
-                            gui_printf (ptr_dcc->server->buffer,
-                                        _("%s DCC: unable to set 'nonblock' option for socket\n"),
-                                        WEECHAT_ERROR);
+                            gui_chat_printf_error (ptr_dcc->server->buffer,
+                                                   _("%s DCC: unable to set "
+                                                     "'nonblock' option for "
+                                                     "socket\n"),
+                                                   WEECHAT_ERROR);
                             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-                            irc_dcc_redraw (HOTLIST_MSG);
+                            irc_dcc_redraw (GUI_HOTLIST_MSG);
                             continue;
                         }
                         ptr_dcc->addr = ntohl (addr.sin_addr.s_addr);
                         ptr_dcc->status = IRC_DCC_ACTIVE;
                         ptr_dcc->start_transfer = time (NULL);
-                        irc_dcc_redraw (HOTLIST_MSG);
+                        irc_dcc_redraw (GUI_HOTLIST_MSG);
                         irc_dcc_file_send_fork (ptr_dcc);
                     }
                 }
@@ -1841,19 +1831,19 @@ irc_dcc_handle ()
                         if (sock < 0)
                         {
                             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-                            irc_dcc_redraw (HOTLIST_MSG);
+                            irc_dcc_redraw (GUI_HOTLIST_MSG);
                             continue;
                         }
                         ptr_dcc->sock = sock;
                         if (fcntl (ptr_dcc->sock, F_SETFL, O_NONBLOCK) == -1)
                         {
                             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-                            irc_dcc_redraw (HOTLIST_MSG);
+                            irc_dcc_redraw (GUI_HOTLIST_MSG);
                             continue;
                         }
                         ptr_dcc->addr = ntohl (addr.sin_addr.s_addr);
                         ptr_dcc->status = IRC_DCC_ACTIVE;
-                        irc_dcc_redraw (HOTLIST_MSG);
+                        irc_dcc_redraw (GUI_HOTLIST_MSG);
                         irc_dcc_channel_for_chat (ptr_dcc);
                     }
                 }

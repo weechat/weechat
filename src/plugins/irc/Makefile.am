@@ -16,16 +16,33 @@
 
 INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GNUTLS_CFLAGS)
 
-noinst_LIBRARIES = lib_weechat_irc.a
+libdir = ${weechat_libdir}/plugins
 
-lib_weechat_irc_a_SOURCES = irc.h \
-                            irc-commands.c \
-                            irc-send.c \
-                            irc-recv.c \
-                            irc-server.c \
-                            irc-channel.c \
-                            irc-nick.c \
-                            irc-mode.c \
-                            irc-dcc.c \
-                            irc-ignore.c \
-                            irc-display.c
+lib_LTLIBRARIES = irc.la
+
+irc_la_SOURCES = irc.h \
+                 irc-buffer.c \
+                 irc-buffer.h \
+                 irc-channel.c \
+                 irc-channel.h \
+                 irc-command.c \
+                 irc-command.h \
+                 irc-color.c \
+                 irc-color.h \
+                 irc-config.c \
+                 irc-config.h \
+                 irc-core.c \
+                 irc-dcc.c \
+                 irc-dcc.h \
+                 irc-display.c \
+                 irc-input.c \
+                 irc-log.c \
+                 irc-mode.c \
+                 irc-nick.c \
+                 irc-nick.h \
+                 irc-protocol.c \
+                 irc-protocol.h \
+                 irc-server.c \
+                 irc-server.h
+irc_la_LDFLAGS = -module
+irc_la_LIBADD  = $(GNUTLS_LFLAGS)

@@ -28,10 +28,10 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../../common/weechat.h"
+#include "../../core/weechat.h"
 #include "irc.h"
-#include "../../common/utf8.h"
-#include "../../common/weeconfig.h"
+#include "../../core/utf8.h"
+#include "../../core/weechat-config.h"
 #include "../../gui/gui.h"
 
 
@@ -88,83 +88,31 @@ irc_display_hide_password (char *string, int look_for_nickserv)
 }
 
 /*
- * irc_display_prefix: display a prefix for action/info/error msg
- *                     prefix must be 3 chars length
- */
-
-void
-irc_display_prefix (t_irc_server *server, t_gui_buffer *buffer, char *prefix)
-{
-    int type;
-    char format[32];
-    
-    type = GUI_MSG_TYPE_INFO | GUI_MSG_TYPE_PREFIX;
-    
-    if (!cfg_log_plugin_msg && (strcmp (prefix, GUI_PREFIX_PLUGIN) == 0))
-        type |= GUI_MSG_TYPE_NOLOG;
-    
-    if (buffer)
-    {
-        if (cfg_look_align_other
-            && (GUI_BUFFER_IS_CHANNEL(buffer) || GUI_BUFFER_IS_PRIVATE(buffer)))
-        {
-            snprintf (format, 32, "%%-%ds", cfg_look_align_size - 2);
-            gui_printf_type (buffer, GUI_MSG_TYPE_NICK, format, " ");
-        }
-    }
-    
-    if (prefix[0] == prefix[2])
-    {
-        gui_printf_type (buffer, type, "%s%c%s%c%s%c ",
-                         GUI_COLOR(GUI_COLOR_WIN_CHAT_PREFIX1),
-                         prefix[0],
-                         GUI_COLOR(GUI_COLOR_WIN_CHAT_PREFIX2),
-                         prefix[1],
-                         GUI_COLOR(GUI_COLOR_WIN_CHAT_PREFIX1),
-                         prefix[2]);
-    }
-    else
-    {
-        if (strcmp (prefix, GUI_PREFIX_JOIN) == 0)
-            gui_printf_type (buffer, type, "%s%s ",
-                             GUI_COLOR(GUI_COLOR_WIN_CHAT_JOIN), prefix);
-        else if (strcmp (prefix, GUI_PREFIX_PART) == 0)
-            gui_printf_type (buffer, type, "%s%s ",
-                             GUI_COLOR(GUI_COLOR_WIN_CHAT_PART), prefix);
-        else
-            gui_printf_type (buffer, type, "%s%s ",
-                             GUI_COLOR(GUI_COLOR_WIN_CHAT_PREFIX1), prefix);
-    }
-    if (server && (server->buffer == buffer) && buffer->all_servers)
-    {
-        gui_printf_type (buffer, type, "%s[%s%s%s] ",
-                         GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                         GUI_COLOR(GUI_COLOR_WIN_CHAT_SERVER), server->name,
-                         GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK));
-    }
-    gui_printf_type (buffer, type, GUI_NO_COLOR);
-}
-
-/*
  * irc_display_nick: display nick in chat window
  */
 
 void
 irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
-                  int type, int display_around, int force_color, int no_nickmode)
+                  int type, int display_around, char *force_color, int no_nickmode)
 {
     char format[32], *ptr_nickname;
-    int max_align, i, nickname_length, external_nick, length, spaces;
-    int disable_prefix_suffix;
-
+    t_irc_server *ptr_server;
+    t_irc_channel *ptr_channel;
+    int is_private, max_align, i, nickname_length, external_nick;
+    int length, spaces, disable_prefix_suffix;
+    
     max_align = (cfg_look_align_size_max >= cfg_look_align_size) ?
         cfg_look_align_size_max : cfg_look_align_size;
+
+    ptr_server = irc_server_search (buffer->category);
+    ptr_channel = irc_channel_search (ptr_server, buffer->name);
+    is_private = (ptr_channel && (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL));
     
     ptr_nickname = strdup ((nick) ? nick->nick : nickname);
     if (!ptr_nickname)
         return;
     nickname_length = utf8_width_screen (ptr_nickname); 
-    external_nick = (!nick && !GUI_BUFFER_IS_PRIVATE(buffer));
+    external_nick = (!nick && !is_private);
     disable_prefix_suffix = ((cfg_look_align_nick != CFG_LOOK_ALIGN_NICK_NONE)
                              && ((int)strlen (cfg_look_nick_prefix) +
                                  (int)strlen (cfg_look_nick_suffix) > max_align - 4));
@@ -202,9 +150,10 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
     /* display prefix */
     if (display_around && !disable_prefix_suffix
         && cfg_look_nick_prefix && cfg_look_nick_prefix[0])
-        gui_printf_type (buffer, type, "%s%s",
-                         GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                         cfg_look_nick_prefix);
+        gui_chat_printf_type (buffer, type, NULL, -1,
+                              "%s%s",
+                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                              cfg_look_nick_prefix);
     
     /* display spaces before nick, if needed */
     if (display_around
@@ -212,43 +161,43 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
         && (spaces > 0))
     {
         snprintf (format, 32, "%%-%ds", spaces);
-        gui_printf_type (buffer, type, format, " ");
+        gui_chat_printf_type (buffer, type, NULL, -1, format, " ");
     }
     
     /* display nick mode */
     if (nick && cfg_look_nickmode)
     {
         if (nick->flags & IRC_NICK_CHANOWNER)
-            gui_printf_type (buffer, type, "%s~",
-                             GUI_COLOR(GUI_COLOR_WIN_NICK_OP));
+            gui_chat_printf_type (buffer, type, NULL, -1, "%s~",
+                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX1));
         else if (nick->flags & IRC_NICK_CHANADMIN)
-            gui_printf_type (buffer, type, "%s&",
-                             GUI_COLOR(GUI_COLOR_WIN_NICK_OP));
+            gui_chat_printf_type (buffer, type, NULL, -1, "%s&",
+                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX1));
         else if (nick->flags & IRC_NICK_CHANADMIN2)
-            gui_printf_type (buffer, type, "%s!",
-                             GUI_COLOR(GUI_COLOR_WIN_NICK_OP));
+            gui_chat_printf_type (buffer, type, NULL, -1, "%s!",
+                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX1));
         else if (nick->flags & IRC_NICK_OP)
-            gui_printf_type (buffer, type, "%s@",
-                             GUI_COLOR(GUI_COLOR_WIN_NICK_OP));
+            gui_chat_printf_type (buffer, type, NULL, -1, "%s@",
+                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX1));
         else if (nick->flags & IRC_NICK_HALFOP)
-            gui_printf_type (buffer, type, "%s%%",
-                             GUI_COLOR(GUI_COLOR_WIN_NICK_HALFOP));
+            gui_chat_printf_type (buffer, type, NULL, -1, "%s%%",
+                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX2));
         else if (nick->flags & IRC_NICK_VOICE)
-            gui_printf_type (buffer, type, "%s+",
-                             GUI_COLOR(GUI_COLOR_WIN_NICK_VOICE));
+            gui_chat_printf_type (buffer, type, NULL, -1, "%s+",
+                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX3));
         else if (nick->flags & IRC_NICK_CHANUSER)
-            gui_printf_type (buffer, type, "%s-",
-                             GUI_COLOR(GUI_COLOR_WIN_NICK_CHANUSER));
+            gui_chat_printf_type (buffer, type, NULL, -1, "%s-",
+                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX4));
         else if (cfg_look_nickmode_empty && !no_nickmode)
-            gui_printf_type (buffer, type, "%s ",
-                             GUI_COLOR(GUI_COLOR_WIN_CHAT));
+            gui_chat_printf_type (buffer, type, NULL, -1, "%s ",
+                                  GUI_COLOR(GUI_COLOR_CHAT));
     }
     
     /* display nick */
     if (external_nick)
-        gui_printf_type (buffer, type, "%s%s",
-                         GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                         "(");
+        gui_chat_printf_type (buffer, type, NULL, -1, "%s%s",
+                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                              "(");
     if (display_around && (spaces < 0))
     {
         i = nickname_length + spaces - 1;
@@ -262,26 +211,26 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
         ptr_nickname[i] = '\0';
     }
     if (display_around)
-        gui_printf_type_nick (buffer, type,
-                              (nick) ? nick->nick : nickname,
-                              "%s%s",
-                              (force_color >= 0) ?
-                              GUI_COLOR(force_color) :
-                              GUI_COLOR((nick) ? nick->color : GUI_COLOR_WIN_CHAT),
-                              ptr_nickname);
+        gui_chat_printf_type_nick (buffer, type,
+                                   (nick) ? nick->nick : nickname,
+                                   NULL, -1,
+                                   "%s%s",
+                                   (force_color) ? force_color :
+                                   GUI_COLOR((nick) ?
+                                             nick->color : cfg_col_chat),
+                                   ptr_nickname);
     else
-        gui_printf_type (buffer, type,
-                         "%s%s",
-                         (force_color >= 0) ?
-                         GUI_COLOR(force_color) :
-                         GUI_COLOR((nick) ? nick->color : GUI_COLOR_WIN_CHAT),
-                         ptr_nickname);
+        gui_chat_printf_type (buffer, type, NULL, -1,
+                              "%s%s",
+                              (force_color) ? force_color :
+                              GUI_COLOR((nick) ? nick->color : cfg_col_chat),
+                              ptr_nickname);
     if (display_around && (spaces < 0))
-        gui_printf_type (buffer, type, "%s+",
-                         GUI_COLOR(GUI_COLOR_WIN_NICK_MORE));
+        gui_chat_printf_type (buffer, type, NULL, -1, "%s+",
+                              GUI_COLOR(GUI_COLOR_NICKLIST_MORE));
     if (external_nick)
-        gui_printf_type (buffer, type, "%s%s",
-                         GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
+        gui_chat_printf_type (buffer, type, NULL, -1, "%s%s",
+                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          ")");
     
     /* display spaces after nick, if needed */
@@ -290,19 +239,19 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
         && (spaces > 0))
     {
         snprintf (format, 32, "%%-%ds", spaces);
-        gui_printf_type (buffer, type, format, " ");
+        gui_chat_printf_type (buffer, type, NULL, -1, format, " ");
     }
     
     /* display suffix */
     if (display_around && !disable_prefix_suffix
         && cfg_look_nick_suffix && cfg_look_nick_suffix[0])
-        gui_printf_type (buffer, type, "%s%s",
-                         GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                         cfg_look_nick_suffix);
+        gui_chat_printf_type (buffer, type, NULL, -1, "%s%s",
+                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                              cfg_look_nick_suffix);
     
-    gui_printf_type (buffer, type, "%s%s",
-                     GUI_NO_COLOR,
-                     (display_around) ? " " : "");
+    gui_chat_printf_type (buffer, type, NULL, -1, "%s%s",
+                          GUI_NO_COLOR,
+                          (display_around) ? " " : "");
     free (ptr_nickname);
 }
 
@@ -324,18 +273,20 @@ irc_display_away (t_irc_server *server, char *string1, char *string2)
             if (cfg_look_align_other)
             {
                 snprintf (format, 32, "%%-%ds", cfg_look_align_size + 1);
-                gui_printf_type (ptr_channel->buffer, GUI_MSG_TYPE_NICK,
-                                 format, " ");
+                gui_chat_printf_type (ptr_channel->buffer, GUI_MSG_TYPE_NICK,
+                                      NULL, -1,
+                                      format, " ");
             }
-            gui_printf_nolog (ptr_channel->buffer,
-                              "%s[%s%s%s %s: %s%s]\n",
-                              GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                              GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
-                              server->nick,
-                              GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                              string1,
-                              string2,
-                              GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK));
+            gui_chat_printf_nolog (ptr_channel->buffer,
+                                   NULL, -1,
+                                   "%s[%s%s%s %s: %s%s]\n",
+                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                   GUI_COLOR(GUI_COLOR_CHAT_NICK),
+                                   server->nick,
+                                   GUI_COLOR(GUI_COLOR_CHAT),
+                                   string1,
+                                   string2,
+                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
         }
     }
 }
@@ -345,34 +296,34 @@ irc_display_away (t_irc_server *server, char *string1, char *string2)
  */
 
 void
-irc_display_mode (t_irc_server *server, t_gui_buffer *buffer,
+irc_display_mode (t_gui_buffer *buffer,
                   char *channel_name, char *nick_name, char set_flag,
                   char *symbol, char *nick_host, char *message, char *param)
 {
-    irc_display_prefix (server, buffer, GUI_PREFIX_INFO);
-    gui_printf (buffer, "%s[%s%s%s/%s%c%s%s] %s%s",
-                GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                (channel_name) ?
-                 GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL) :
-                 GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
-                (channel_name) ? channel_name : nick_name,
-                GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                GUI_COLOR(GUI_COLOR_WIN_CHAT_CHANNEL),
-                set_flag,
-                symbol,
-                GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
-                nick_host);
+    gui_chat_printf_info (buffer,
+                          "%s[%s%s%s/%s%c%s%s] %s%s",
+                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                          (channel_name) ?
+                          GUI_COLOR(GUI_COLOR_CHAT_CHANNEL) :
+                          GUI_COLOR(GUI_COLOR_CHAT_NICK),
+                          (channel_name) ? channel_name : nick_name,
+                          GUI_COLOR(GUI_COLOR_CHAT),
+                          GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
+                          set_flag,
+                          symbol,
+                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                          GUI_COLOR(GUI_COLOR_CHAT_NICK),
+                          nick_host);
     if (param)
-        gui_printf (buffer, " %s%s %s%s\n",
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    message,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_NICK),
-                    param);
+        gui_chat_printf (buffer, " %s%s %s%s\n",
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         message,
+                         GUI_COLOR(GUI_COLOR_CHAT_NICK),
+                         param);
     else
-        gui_printf (buffer, " %s%s\n",
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    message);
+        gui_chat_printf (buffer, " %s%s\n",
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         message);
 }
 
 /*
@@ -387,101 +338,104 @@ irc_display_server (t_irc_server *server, int with_detail)
     
     if (with_detail)
     {
-        gui_printf (NULL, "\n");
-        gui_printf (NULL, _("%sServer: %s%s %s[%s%s%s]\n"),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_SERVER),
-                    server->name,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    (server->is_connected) ?
-                    _("connected") : _("not connected"),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK));
+        gui_chat_printf (NULL, "\n");
+        gui_chat_printf (NULL, _("%sServer: %s%s %s[%s%s%s]\n"),
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         GUI_COLOR(GUI_COLOR_CHAT_SERVER),
+                         server->name,
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         (server->is_connected) ?
+                         _("connected") : _("not connected"),
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
         
-        gui_printf (NULL, "  server_autoconnect . . . . : %s%s\n",
-                    (server->autoconnect) ? _("on") : _("off"),
-                    (server->temp_server) ?
-                    _(" (temporary server, will not be saved)") : "");
-        gui_printf (NULL, "  server_autoreconnect . . . : %s\n",
-                    (server->autoreconnect) ? _("on") : _("off"));
-        gui_printf (NULL, "  server_autoreconnect_delay : %d %s\n",
-                    server->autoreconnect_delay,
-                    _("seconds"));
-        gui_printf (NULL, "  server_address . . . . . . : %s\n",
-                    server->address);
-        gui_printf (NULL, "  server_port  . . . . . . . : %d\n",
-                    server->port);
-        gui_printf (NULL, "  server_ipv6  . . . . . . . : %s\n",
-                    (server->ipv6) ? _("on") : _("off"));
-        gui_printf (NULL, "  server_ssl . . . . . . . . : %s\n",
-                    (server->ssl) ? _("on") : _("off"));
-        gui_printf (NULL, "  server_password  . . . . . : %s\n",
-                    (server->password && server->password[0]) ?
-                    _("(hidden)") : "");
-        gui_printf (NULL, "  server_nick1/2/3 . . . . . : %s %s/ %s%s %s/ %s%s\n",
-                    server->nick1,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    server->nick2,
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    server->nick3);
-        gui_printf (NULL, "  server_username  . . . . . : %s\n",
-                    server->username);
-        gui_printf (NULL, "  server_realname  . . . . . : %s\n",
-                    server->realname);
-        gui_printf (NULL, "  server_hostname  . . . . . : %s\n",
-                    (server->hostname) ? server->hostname : "");
+        gui_chat_printf (NULL, "  server_autoconnect . . . . : %s%s\n",
+                         (server->autoconnect) ? _("on") : _("off"),
+                         (server->temp_server) ?
+                         _(" (temporary server, will not be saved)") : "");
+        gui_chat_printf (NULL, "  server_autoreconnect . . . : %s\n",
+                         (server->autoreconnect) ? _("on") : _("off"));
+        gui_chat_printf (NULL, "  server_autoreconnect_delay : %d %s\n",
+                         server->autoreconnect_delay,
+                         _("seconds"));
+        gui_chat_printf (NULL, "  server_address . . . . . . : %s\n",
+                         server->address);
+        gui_chat_printf (NULL, "  server_port  . . . . . . . : %d\n",
+                         server->port);
+        gui_chat_printf (NULL, "  server_ipv6  . . . . . . . : %s\n",
+                         (server->ipv6) ? _("on") : _("off"));
+        gui_chat_printf (NULL, "  server_ssl . . . . . . . . : %s\n",
+                         (server->ssl) ? _("on") : _("off"));
+        gui_chat_printf (NULL, "  server_password  . . . . . : %s\n",
+                         (server->password && server->password[0]) ?
+                         _("(hidden)") : "");
+        gui_chat_printf (NULL, "  server_nick1/2/3 . . . . . : "
+                         "%s %s/ %s%s %s/ %s%s\n",
+                         server->nick1,
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         server->nick2,
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         server->nick3);
+        gui_chat_printf (NULL, "  server_username  . . . . . : %s\n",
+                         server->username);
+        gui_chat_printf (NULL, "  server_realname  . . . . . : %s\n",
+                         server->realname);
+        gui_chat_printf (NULL, "  server_hostname  . . . . . : %s\n",
+                         (server->hostname) ? server->hostname : "");
         if (server->command && server->command[0])
             string = strdup (server->command);
         else
             string = NULL;
         if (string)
         {
-            if (cfg_log_hide_nickserv_pwd)
+            if (irc_cfg_log_hide_nickserv_pwd)
                 irc_display_hide_password (string, 1);
-            gui_printf (NULL, "  server_command . . . . . . : %s\n",
-                        string);
+            gui_chat_printf (NULL, "  server_command . . . . . . : %s\n",
+                             string);
             free (string);
         }
         else
-            gui_printf (NULL, "  server_command . . . . . . : %s\n",
-                        (server->command && server->command[0]) ?
-                        server->command : "");
-        gui_printf (NULL, "  server_command_delay . . . : %d %s\n",
-                    server->command_delay,
-                    _("seconds"));
-        gui_printf (NULL, "  server_autojoin  . . . . . : %s\n",
-                    (server->autojoin && server->autojoin[0]) ?
-                    server->autojoin : "");
-        gui_printf (NULL, "  server_notify_levels . . . : %s\n",
-                    (server->notify_levels && server->notify_levels[0]) ?
-                    server->notify_levels : "");
+            gui_chat_printf (NULL, "  server_command . . . . . . : %s\n",
+                             (server->command && server->command[0]) ?
+                             server->command : "");
+        gui_chat_printf (NULL, "  server_command_delay . . . : %d %s\n",
+                         server->command_delay,
+                         _("seconds"));
+        gui_chat_printf (NULL, "  server_autojoin  . . . . . : %s\n",
+                         (server->autojoin && server->autojoin[0]) ?
+                         server->autojoin : "");
+        gui_chat_printf (NULL, "  server_notify_levels . . . : %s\n",
+                         (server->notify_levels && server->notify_levels[0]) ?
+                         server->notify_levels : "");
     }
     else
     {
-        gui_printf (NULL, " %s %s%s ",
-                    (server->is_connected) ? "*" : " ",
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_SERVER),
-                    server->name);
-        gui_printf (NULL, "%s[%s%s",
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    (server->is_connected) ?
-                    _("connected") : _("not connected"));
+        gui_chat_printf (NULL, " %s %s%s ",
+                         (server->is_connected) ? "*" : " ",
+                         GUI_COLOR(GUI_COLOR_CHAT_SERVER),
+                         server->name);
+        gui_chat_printf (NULL, "%s[%s%s",
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         (server->is_connected) ?
+                         _("connected") : _("not connected"));
         if (server->is_connected)
         {
             num_channels = irc_server_get_channel_count (server);
             num_pv = irc_server_get_pv_count (server);
-            gui_printf (NULL, ", ");
-            gui_printf (NULL, NG_("%d channel", "%d channels", num_channels),
-                        num_channels);
-            gui_printf (NULL, ", ");
-            gui_printf (NULL, _("%d pv"), num_pv);
+            gui_chat_printf (NULL, ", ");
+            gui_chat_printf (NULL,
+                             NG_("%d channel", "%d channels",
+                                 num_channels),
+                             num_channels);
+            gui_chat_printf (NULL, ", ");
+            gui_chat_printf (NULL, _("%d pv"), num_pv);
         }
-        gui_printf (NULL, "%s]%s%s\n",
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT_DARK),
-                    GUI_COLOR(GUI_COLOR_WIN_CHAT),
-                    (server->temp_server) ? _(" (temporary)") : "");
+        gui_chat_printf (NULL, "%s]%s%s\n",
+                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         (server->temp_server) ? _(" (temporary)") : "");
     }
 }

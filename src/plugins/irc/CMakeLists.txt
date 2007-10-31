@@ -14,12 +14,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(LIB_IRC_SRC irc.h irc-commands.c irc-send.c irc-recv.c irc-server.c
-irc-channel.c irc-nick.c irc-mode.c irc-dcc.c irc-ignore.c irc-display.c)
+SET(LIB_PROTOCOL_IRC_SRC irc.h irc-buffer.c irc-buffer.h irc-channel.c
+irc-channel.h irc-command.c irc-command.h irc-color.c irc-color.h irc-config.c
+irc-config.h irc-core.c irc-dcc.c irc-dcc.h irc-display.c irc-input.c irc-log.c
+irc-mode.c irc-nick.c irc-nick.h irc-protocol.c irc-protocol.h irc-server.c
+irc-server.h)
 
 CHECK_INCLUDE_FILES("regex.h" HAVE_REGEX_H)
 CHECK_FUNCTION_EXISTS(regexec HAVE_REGEXEC)
 CHECK_FUNCTION_EXISTS(uname HAVE_UNAME)
 
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
-ADD_LIBRARY(weechat_irc STATIC ${LIB_IRC_SRC})
+ADD_LIBRARY(weechat_protocol_irc STATIC ${LIB_PROTOCOL_IRC_SRC})
