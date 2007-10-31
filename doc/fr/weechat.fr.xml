@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <bookinfo>
     
     <title>WeeChat 0.2.7-dev - Guide utilisateur</title>
-    <subtitle>Client IRC rapide, léger et extensible</subtitle>
+    <subtitle>Client de messagerie instantanée, léger et extensible</subtitle>
     
     <author>
       <firstname>Sébastien</firstname>
@@ -66,13 +66,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </para>
       <para>
         You should have received a copy of the GNU General Public License
-        along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+        along with this program.  If not, see
+        &lt;http://www.gnu.org/licenses/&gt;.
       </para>
     </legalnotice>
     
     <abstract>
       <para>
-        Ce manuel documente le client IRC WeeChat, il fait partie de WeeChat.
+        Ce manuel documente le client de messagerie instantanée WeeChat, il
+        fait partie de WeeChat.
       </para>
       <para>
         La dernière version de ce document peut être téléchargée
@@ -99,8 +101,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       
       <para>
         WeeChat (Wee Enhanced Environment for Chat) est un client
-        <acronym>IRC</acronym> libre, rapide et léger, conçu pour
-        différents systèmes d'exploitation.
+        chat libre, rapide et léger, conçu pour différents systèmes
+        d'exploitation.
       </para>
       
       <para>
@@ -188,17 +190,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </listitem>
                 <listitem>
                   <para>
-                    Gtk : <emphasis>*** interface non développée ***</emphasis>
+                    Gtk :
+                    <emphasis>*** interface non développée ***</emphasis>
                   </para>
                 </listitem>
                 <listitem>
                   <para>
-                    WxWidgets : <emphasis>*** interface non développée ***</emphasis>
+                    WxWidgets :
+                    <emphasis>*** interface non développée ***</emphasis>
                   </para>
                 </listitem>
                 <listitem>
                   <para>
-                    Qt : <emphasis>*** interface non développée ***</emphasis>
+                    Qt :
+                    <emphasis>*** interface non développée ***</emphasis>
                   </para>
                 </listitem>
               </itemizedlist>
@@ -327,7 +332,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <row>
                 <entry><literal>-a, --no-connect</literal></entry>
                 <entry>
-                  Supprimer la connexion automatique aux serveurs lors du démarrage
+                  Supprimer la connexion automatique aux serveurs lors du
+                  démarrage
                 </entry>
               </row>
               <row>
@@ -349,7 +355,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <row>
                 <entry><literal>-f, --key-functions</literal></entry>
                 <entry>
-                  Afficher la liste des fonctions internes WeeChat pour les touches
+                  Afficher la liste des fonctions internes WeeChat pour les
+                  touches
                 </entry>
               </row>
               <row>
@@ -415,22 +422,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <itemizedlist>
           <listitem>
             <para>
-              pour l'interface Curses : <userinput>weechat-curses</userinput>
+              pour l'interface Curses :
+              <userinput>weechat-curses</userinput>
             </para>
           </listitem>
           <listitem>
             <para>
-              pour l'interface Gtk : <userinput>weechat-gtk</userinput>
+              pour l'interface Gtk :
+              <userinput>weechat-gtk</userinput>
             </para>
           </listitem>
           <listitem>
             <para>
-              pour l'interface wxWidgets : <userinput>weechat-wxwidgets</userinput>
+              pour l'interface wxWidgets :
+              <userinput>weechat-wxwidgets</userinput>
             </para>
           </listitem>
           <listitem>
             <para>
-              pour l'interface Qt : <userinput>weechat-qt</userinput>
+              pour l'interface Qt :
+              <userinput>weechat-qt</userinput>
             </para>
           </listitem>
         </itemizedlist>
@@ -914,8 +925,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </tbody>
           </tgroup>
         </informaltable>
-        NB: le même code (sans le numéro pour ^Cc) peut être utilisé pour stopper
-        l'attribut défini.
+        NB: le même code (sans le numéro pour ^Cc) peut être utilisé pour
+        stopper l'attribut défini.
       </para>
       
       <para>
@@ -1363,7 +1374,8 @@ fi
               </listitem>
               <listitem>
                 <para>
-                  <option>charset</option> : nouveau jeu de caractères à utiliser
+                  <option>charset</option> : nouveau jeu de caractères à
+                  utiliser
                 </para>
               </listitem>
             </itemizedlist>
@@ -1862,7 +1874,8 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
                   <row>
                     <entry>0x12</entry>
                     <entry>
-                      vidéo inverse (inversion de la couleur d'écriture et du fond)
+                      vidéo inverse (inversion de la couleur d'écriture et du
+                      fond)
                     </entry>
                   </row>
                   <row>
@@ -1874,8 +1887,8 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
                 </tbody>
               </tgroup>
             </informaltable>
-            NB: le même code (sans le numéro pour 0x03) peut être utilisé pour stopper
-            l'attribut défini.
+            NB: le même code (sans le numéro pour 0x03) peut être utilisé pour
+            stopper l'attribut défini.
           </para>
           <para>
             Valeur renvoyée : aucune.
@@ -2098,11 +2111,12 @@ plugin->log (plugin, "freenode", "#weechat", "test");
                   fonction est appelée ("*" pour tous les messages).
                   Pour connaître la liste des messages IRC disponibles, merci
                   de consulter les <acronym>RFC</acronym>s
-                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> et
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+                  et
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
                   De plus, vous pouvez utiliser un nom spécial, préfixé par
-                  "weechat_" pour capturer des évènements spéciaux, comme décrit
-                  dans le tableau ci-dessous :
+                  "weechat_" pour capturer des évènements spéciaux, comme
+                  décrit dans le tableau ci-dessous :
                   <informaltable colsep="0" frame="none">
                     <tgroup cols="2">
                       <thead>
@@ -2822,7 +2836,8 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;mon_keyb);
                     <entry><literal>buffer_move</literal></entry>
                     <entry>un tampon a été déplacé</entry>
                     <entry>
-                      argc = 2, argv = { nouveau numéro de tampon, ancien numéro }
+                      argc = 2, argv = { nouveau numéro de tampon, ancien
+                      numéro }
                     </entry>
                   </row>
                 </tbody>
@@ -3004,9 +3019,11 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
                   "irc_in" et "irc_out").
                   Pour connaître la liste des messages IRC disponibles, merci
                   de consulter les <acronym>RFC</acronym>s
-                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> et
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+                  et
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-                  La valeur spéciale "*" signifie tous les messages (pas de filtre).
+                  La valeur spéciale "*" signifie tous les messages (pas de
+                  filtre).
                 </para>
               </listitem>
               <listitem>
@@ -5324,25 +5341,29 @@ end
           <para>
             Prototype Perl :
             <command>
-              weechat::register(nom, version, fonction_de_fin, description, [charset]);
+              weechat::register(nom, version, fonction_de_fin, description,
+              [charset]);
             </command>
           </para>
           <para>
             Prototype Python :
             <command>
-              weechat.register(nom, version, fonction_de_fin, description, [charset])
+              weechat.register(nom, version, fonction_de_fin, description,
+              [charset])
             </command>
           </para>
           <para>
             Prototype Ruby :
             <command>
-              Weechat.register(nom, version, fonction_de_fin, description, [charset])
+              Weechat.register(nom, version, fonction_de_fin, description,
+              [charset])
             </command>
           </para>
           <para>
             Prototype Lua :
             <command>
-              weechat.register(nom, version, fonction_de_fin, description, [charset])
+              weechat.register(nom, version, fonction_de_fin, description,
+              [charset])
             </command>
           </para>
           <para>
@@ -5864,7 +5885,8 @@ weechat.log("message", "#weechat", "freenode")
                   fonction est appelée.
                   Pour connaître la liste des messages IRC disponibles, merci
                   de consulter les <acronym>RFC</acronym>s
-                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> et
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+                  et
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
                   De plus, vous pouvez utiliser un nom spécial, préfixé par
                   "weechat_" pour capturer des évènements spéciaux
@@ -5873,8 +5895,8 @@ weechat.log("message", "#weechat", "freenode")
               </listitem>
               <listitem>
                 <para>
-                  <option>fonction</option> : fonction appelée lorsque le message
-                  est reçu
+                  <option>fonction</option> : fonction appelée lorsque le
+                  message est reçu
                 </para>
               </listitem>
             </itemizedlist>
@@ -6728,9 +6750,11 @@ weechat.remove_event_handler("mon_evenement")
                   "irc_in" et "irc_out").
                   Pour connaître la liste des messages IRC disponibles, merci
                   de consulter les <acronym>RFC</acronym>s
-                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> et
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+                  et
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-                  La valeur spéciale "*" signifie tous les messages (pas de filtre).
+                  La valeur spéciale "*" signifie tous les messages (pas de
+                  filtre).
                 </para>
               </listitem>
               <listitem>

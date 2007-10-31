@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <bookinfo>
     
     <title>WeeChat 0.2.7-dev - User guide</title>
-    <subtitle>Fast, light and extensible IRC client</subtitle>
+    <subtitle>Fast, light and extensible chat client</subtitle>
     
     <author>
       <firstname>Sébastien</firstname>
@@ -66,13 +66,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </para>
       <para>
         You should have received a copy of the GNU General Public License
-        along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
+        along with this program.  If not, see
+        &lt;http://www.gnu.org/licenses/&gt;.
       </para>
     </legalnotice>
     
     <abstract>
       <para>
-        This manual documents WeeChat IRC client, it is part of WeeChat.
+        This manual documents WeeChat chat client, it is part of WeeChat.
       </para>
       <para>
         Latest version of this document can be found on this page:
@@ -97,9 +98,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <title>Description</title>
       
       <para>
-        WeeChat (Wee Enhanced Environment for Chat) is a free
-        <acronym>IRC</acronym> client, fast and light, designed for many
-        operating systems.
+        WeeChat (Wee Enhanced Environment for Chat) is a free chat client,
+        fast and light, designed for many operating systems.
       </para>
       
       <para>
@@ -2048,10 +2048,11 @@ plugin->log (plugin, "freenode", "#weechat", "test");
                   messages).
                   To know list of IRC messages, please consult
                   <acronym>RFC</acronym>s
-                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> and
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+                  and
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-                  Moreover you can use a special name, prefixed by "weechat_" to catch
-                  special events, as written in table below:
+                  Moreover you can use a special name, prefixed by "weechat_"
+                  to catch special events, as written in table below:
                   <informaltable colsep="0" frame="none">
                     <tgroup cols="2">
                       <thead>
@@ -2928,7 +2929,8 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
                   types "irc_in" and "irc_out").
                   To know list of IRC messages, please consult
                   <acronym>RFC</acronym>s
-                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> and
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+                  and
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
                   Moreover, special value "*" means all messages (no filter).
                 </para>
@@ -4863,8 +4865,8 @@ if (buffer_line)
         
         <para>
           Full example of plugin, which adds a /double command, which displays
-          two times arguments on current channel (ok that's not very useful, but
-          that's just an example!):
+          two times arguments on current channel (ok that's not very useful,
+          but that's just an example!):
 <screen>
 #include &lt;stdlib.h&gt;
 
@@ -5184,25 +5186,29 @@ end
           <para>
             Perl prototype:
             <command>
-              weechat::register(name, version, end_function, description, [charset]);
+              weechat::register(name, version, end_function, description,
+              [charset]);
             </command>
           </para>
           <para>
             Python prototype:
             <command>
-              weechat.register(name, version, end_function, description, [charset])
+              weechat.register(name, version, end_function, description,
+              [charset])
             </command>
           </para>
           <para>
             Ruby prototype:
             <command>
-              Weechat.register(name, version, end_function, description, [charset])
+              Weechat.register(name, version, end_function, description,
+              [charset])
             </command>
           </para>
           <para>
             Lua prototype:
             <command>
-              weechat.register(name, version, end_function, description, [charset])
+              weechat.register(name, version, end_function, description,
+              [charset])
             </command>
           </para>
           <para>
@@ -5717,10 +5723,12 @@ weechat.log("message", "#weechat", "freenode")
                 <para>
                   <option>message</option>: name of IRC message. To know list
                   of IRC messages, please consult <acronym>RFC</acronym>s
-                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> and
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+                  and
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-                  Moreover you can use a special name, prefixed by "weechat_" to catch
-                  special events (see <xref linkend="secAPI_msg_handler_add" />).
+                  Moreover you can use a special name, prefixed by "weechat_"
+                  to catch special events (see
+                  <xref linkend="secAPI_msg_handler_add" />).
                 </para>
               </listitem>
               <listitem>
@@ -6574,7 +6582,8 @@ weechat.remove_event_handler("my_event")
                   types "irc_in" and "irc_out").
                   To know list of IRC messages, please consult
                   <acronym>RFC</acronym>s
-                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> and
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+                  and
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
                   Moreover, special value "*" means all messages (no filter).
                 </para>

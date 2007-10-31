@@ -36,7 +36,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <bookinfo>
     
     <title>WeeChat 0.2.7-dev - User guide</title>
-    <subtitle>Schneller, leichter und erweiterbarer IRC Client</subtitle>
+    <subtitle>Schneller, leichter und erweiterbarer Chat Client</subtitle>
     
     <author>
       <firstname>Sébastien</firstname>
@@ -75,7 +75,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <abstract>
       <para>
-        Dieses Dokument beschreibt den WeeChat IRC client, es ist ein Teil von WeeChat.
+        Dieses Dokument beschreibt den WeeChat Chat Client, es ist ein Teil
+        von WeeChat.
       </para>
       <para>
         Deutsche version: Frank Zacharias
@@ -96,16 +97,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>Einführung</title>
     
     <para>
-      Dieses Kapitel beschreibt WeeChat und die Vorraussetzungen für die Installation.
+      Dieses Kapitel beschreibt WeeChat und die Vorraussetzungen für die
+      Installation.
     </para>
     
     <section id="secDescription">
       <title>Beschreibung</title>
       
       <para>
-        WeeChat (Wee Enhanced Environment for Chat) ist ein freier
-        <acronym>IRC</acronym> Client, schnell und klein, entwickelt für viele
-        Betriebssysteme.
+        WeeChat (Wee Enhanced Environment for Chat) ist ein freier Chat Client,
+        schnell und klein, entwickelt für viele Betriebssysteme.
       </para>
       
       <para>
@@ -118,7 +119,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </listitem>
           <listitem>
             <para>
-              viele unterschiedliche User-Interfaces: Curses, wxWidgets, Gtk und Qt
+              viele unterschiedliche User-Interfaces: Curses, wxWidgets, Gtk
+              und Qt
             </para>
           </listitem>
           <listitem>
@@ -190,17 +192,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </listitem>
                 <listitem>
                   <para>
-                    Gtk: <emphasis>*** noch nicht implementiert ***</emphasis>
+                    Gtk:
+                    <emphasis>*** noch nicht implementiert ***</emphasis>
                   </para>
                 </listitem>
                 <listitem>
                   <para>
-                    WxWidgets: <emphasis>*** noch nicht implementiert ***</emphasis>
+                    WxWidgets:
+                    <emphasis>*** noch nicht implementiert ***</emphasis>
                   </para>
                 </listitem>
                 <listitem>
                   <para>
-                    Qt: <emphasis>*** noch nicht implementiert ***</emphasis>
+                    Qt:
+                    <emphasis>*** noch nicht implementiert ***</emphasis>
                   </para>
                 </listitem>
               </itemizedlist>
@@ -258,7 +263,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <title>Quellcode-Pakete</title>
       
       <para>
-        Alles was sie tun müssen, ist in einer Konsole oder einem Terminal aufzurufen:
+        Alles was sie tun müssen, ist in einer Konsole oder einem Terminal
+        aufzurufen:
 <screen><prompt>$ </prompt><userinput>./configure</userinput>
 <prompt>$ </prompt><userinput>make</userinput></screen>
       </para>
@@ -275,8 +281,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <title>GIT Quellen</title>
       
       <para>
-        Warnung: GIT Quellen sind für fortgeschrittene Anwender, das Übersetzen könnte
-        fehlschlagen oder das Ergebnis nicht stabil sein. Sie wurden gewarnt!
+        Warnung: GIT Quellen sind für fortgeschrittene Anwender, das
+        Übersetzen könnte fehlschlagen oder das Ergebnis nicht stabil sein.
+        Sie wurden gewarnt!
       </para>
       
       <para>
@@ -332,23 +339,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <row>
                 <entry><literal>-c, --config</literal></entry>
                 <entry>
-                  Zeigt eine Hilfe zu den Konfigurationsmöglichkeiten (Liste der Optionen)
+                  Zeigt eine Hilfe zu den Konfigurationsmöglichkeiten (Liste
+                  der Optionen)
                 </entry>
               </row>
               <row>
                 <entry><literal>-d, --dir &lt;path&gt;</literal></entry>
                 <entry>
-                  Setzt den Pfad für das Verzeichnis, dass Weechat benutzen soll 
-                  (relevant für die Konfigurationsdateien, Logs, Plugins und Skripte).
-                  Der Standardwert "<literal>~/.weechat</literal>". 
-                  Bitte beachten Sie: dieses Verzeichnis wird automatisch erzeugt, wenn es noch nicht 
+                  Setzt den Pfad für das Verzeichnis, dass Weechat benutzen
+                  soll (relevant für die Konfigurationsdateien, Logs, Plugins
+                  und Skripte). Der Standardwert
+                  "<literal>~/.weechat</literal>". Bitte beachten Sie: dieses
+                  Verzeichnis wird automatisch erzeugt, wenn es noch nicht
                   exitiert.
                 </entry>
               </row>
               <row>
                 <entry><literal>-f, --key-functions</literal></entry>
                 <entry>
-                  Zeigt die intern verwendeten Funktionen von WeeChat für bestimmte Tastenkombinationen an
+                  Zeigt die intern verwendeten Funktionen von WeeChat für
+                  bestimmte Tastenkombinationen an
                 </entry>
               </row>
               <row>
@@ -399,7 +409,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </para>
       
       <para>
-        Es ist auch möglich URLs für einen oder mehrere IRC-Server anzugeben, so wie:
+        Es ist auch möglich URLs für einen oder mehrere IRC-Server anzugeben,
+        so wie:
         <screen>irc[6][s]://[nick[:passwort]@]irc.example.org[:port][/channel][,channel[...]</screen>
         Beispiel um die Channels #weechat and #toto zu betreten
         "<literal>irc.freenode.net</literal>" server, default port (6667),
@@ -621,8 +632,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <row>
                 <entry>Strg + Hoch / Strg + Runter</entry>
                 <entry>
-                  Rufe das letzte Kommando/die letzte Nachricht des globalen Buffers
-                  wieder auf (für alle Buffer)
+                  Rufe das letzte Kommando/die letzte Nachricht des globalen
+                  Buffers wieder auf (für alle Buffer)
                 </entry>
               </row>
               <row>
@@ -828,34 +839,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <title>Kommandozeile</title>
       
       <para>
-        Die WeeChat Kommandozeile (am Ende des Fensters) lässt sie Nachrichten an einen
-        Channel senden oder WeeChat- bzw. IRC-Kommandos ausführen
+        Die WeeChat Kommandozeile (am Ende des Fensters) lässt sie Nachrichten
+        an einen Channel senden oder WeeChat- bzw. IRC-Kommandos ausführen
         (siehe <xref linkend="secWeeChatIRCCommands" />).
       </para>
       
       <para>
         Kommandos beginnen mit einem "/", gefolgt vom Namen des Kommandos.
-        Um zum Beispiel einen privaten Chat mit "<literal>toto</literal>" zu beginnen:
-        <screen><userinput>/query toto</userinput></screen>
+        Um zum Beispiel einen privaten Chat mit "<literal>toto</literal>" zu
+        beginnen: <screen><userinput>/query toto</userinput></screen>
       </para>
       
       <para>
-        Nachrichten an einen Channel sind jeder Text, der nicht mit einem "/" begint.
-        Um zum Beispiel den Text "<literal>hello</literal>" an den gegenwärtigen Channel
-        zu senden:
+        Nachrichten an einen Channel sind jeder Text, der nicht mit einem "/"
+        begint. Um zum Beispiel den Text "<literal>hello</literal>" an den
+        gegenwärtigen Channel zu senden:
         <screen><userinput>hello</userinput></screen>
       </para>
       
       <para>
-        Dennoch ist es möglich, eine Nachricht auch mit einem "/" zu beginnen, einfach
-        ein weiteres "/" voranstellen. Um zum Beispiel den Text "<literal>/query toto</literal>"
-        an den gegenwärtigen Channel zu senden:
+        Dennoch ist es möglich, eine Nachricht auch mit einem "/" zu beginnen,
+        einfach ein weiteres "/" voranstellen. Um zum Beispiel den Text
+        "<literal>/query toto</literal>" an den gegenwärtigen Channel zu
+        senden:
         <screen><userinput>//query toto</userinput></screen>
       </para>
       
       <para>
-        Wenn die Option IRC-Farben ("<literal>irc_colors_send</literal>") senden 
-        angeschaltet ist, können sie Farbcodierung und Attribute wiefolgt verwenden
+        Wenn die Option IRC-Farben ("<literal>irc_colors_send</literal>")
+        senden angeschaltet ist, können sie Farbcodierung und Attribute
+        wiefolgt verwenden
         <!-- TRANSLATION NEEDED -->
         (press Ctrl-C then following letter, with optional value):
         <informaltable colsep="0" frame="none">
@@ -1166,16 +1179,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       
       <para>
         Diese pipe liegt in "<literal>~/.weechat/</literal>" und hat den Namen
-        "weechat_fifo_xxxxx" (das xxxxx ist die Prozess-ID (PID) eines laufenden WeeChat).
-        Wenn mehrere Instanzen von WeeChat laufen, sind mehrere pipes vorhanden, eine
-        für jede Instanz.
+        "weechat_fifo_xxxxx" (das xxxxx ist die Prozess-ID (PID) eines
+        laufenden WeeChat). Wenn mehrere Instanzen von WeeChat laufen, sind
+        mehrere pipes vorhanden, eine für jede Instanz.
       </para>
       
       <para>
         Der Syntax für ein pipe-Kommando ist:
         <screen>server,channel *Text oder Kommando</screen>
-        wobei Server und Channel optional sind, aber wenn der Channel angegeben ist,
-        muss der Server auch angegeben werden.
+        wobei Server und Channel optional sind, aber wenn der Channel
+        angegeben ist, muss der Server auch angegeben werden.
       </para>
       
       <para>
@@ -1195,14 +1208,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </listitem>
           <listitem>
             <para>
-              Senden einer Nachricht an den gegenwärtigen Channel (Puffer, der in WeeChat angezeigt wird):
+              Senden einer Nachricht an den gegenwärtigen Channel (Puffer, der
+              in WeeChat angezeigt wird):
               <screen><prompt>$ </prompt><userinput>echo '*hello!' >~/.weechat/weechat_fifo_12345</userinput></screen>
-              <emphasis>Warnung:</emphasis> Das ist gefährlich und sie sollten das nicht tun, ausgenommen sie wissen was sie tun!
+              <emphasis>Warnung:</emphasis> Das ist gefährlich und sie sollten
+              das nicht tun, ausgenommen sie wissen was sie tun!
             </para>
           </listitem>
           <listitem>
             <para>
-              Sende zwei Kommandos um (alle) Perl-Skripte abzuschalten/neu zu laden (getrennt durch ein "\n"):
+              Sende zwei Kommandos um (alle) Perl-Skripte abzuschalten/neu zu
+              laden (getrennt durch ein "\n"):
               <screen><prompt>$ </prompt><userinput>echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345</userinput></screen>
             </para>
           </listitem>
@@ -1221,7 +1237,8 @@ if [ $# -eq 1 ]; then
     done
 fi
 </screen>
-        Wenn das Skript "auto_weechat_command" heisst, können sie es folgendermassen aufrufen:
+        Wenn das Skript "auto_weechat_command" heisst, können sie es
+        folgendermassen aufrufen:
         <screen><prompt>$ </prompt><userinput>./auto_weechat_command "freenode,#weechat *hello"</userinput></screen>
       </para>
       
@@ -1352,7 +1369,8 @@ fi
               </listitem>
               <listitem>
                 <para>
-                  <option>charset</option>: neuer Zeichensatz, der benutzt werden soll
+                  <option>charset</option>: neuer Zeichensatz, der benutzt
+                  werden soll
                 </para>
               </listitem>
             </itemizedlist>
@@ -1374,7 +1392,8 @@ fi
             </command>
           </para>
           <para>
-            Konvertiert eine Zeichenkette in das interne Format von WeeChat (UTF-8).
+            Konvertiert eine Zeichenkette in das interne Format von WeeChat
+            (UTF-8).
           </para>
           <para>
             Argumente:
@@ -1386,7 +1405,8 @@ fi
               </listitem>
               <listitem>
                 <para>
-                  <option>charset</option>: ursprünglicher Zeichensatz, von dem konvertiert werden soll
+                  <option>charset</option>: ursprünglicher Zeichensatz, von
+                  dem konvertiert werden soll
                 </para>
               </listitem>
               <listitem>
@@ -1400,7 +1420,8 @@ fi
             Rückgabewert: konvertierte Zeichenkette
           </para>
           <para>
-            Anmerkung: der Speicher, der durch das Ergebnis belegt wird, muss mit free() wieder freigegeben werden.
+            Anmerkung: der Speicher, der durch das Ergebnis belegt wird, muss
+            mit free() wieder freigegeben werden.
           </para>
           <para>
             Beispiel:
@@ -1419,7 +1440,8 @@ fi
             </command>
           </para>
           <para>
-            Konvertiert eine Zeichenkette von dem internen WeeChat-Zeichensatz (UTF-8) in einen anderen.
+            Konvertiert eine Zeichenkette von dem internen WeeChat-Zeichensatz
+            (UTF-8) in einen anderen.
           </para>
           <para>
             Argumente:
@@ -1445,7 +1467,8 @@ fi
             Rückgabewert: konvertierte Zeichenkette
           </para>
           <para>
-            Anmerkung: der Speicher, der durch das Ergebnis belegt wird, muss mit free() wieder freigegeben werden.
+            Anmerkung: der Speicher, der durch das Ergebnis belegt wird, muss
+            mit free() wieder freigegeben werden.
           </para>
           <para>
             Beispiel:
@@ -1464,7 +1487,8 @@ fi
             </command>
           </para>
           <para>
-            Vergleich von Zeichenketten unabhängig von Sprache und Schreibweise (gross/klein).
+            Vergleich von Zeichenketten unabhängig von Sprache und
+            Schreibweise (gross/klein).
           </para>
           <para>
             Argumente:
@@ -1487,8 +1511,10 @@ fi
             </itemizedlist>
           </para>
           <para>
-            Rückgabewert: Unterschied zwischen den zwei Zeichenketten: kleiner Null wenn
-            string1 &lt; string2, Null wenn string1 == string2, grösser Null wenn string1 &gt; string2
+            Rückgabewert: Unterschied zwischen den zwei Zeichenketten: kleiner
+            Null wenn
+            string1 &lt; string2, Null wenn string1 == string2, grösser Null
+            wenn string1 &gt; string2
           </para>
           <para>
             Beispiel:
@@ -1507,7 +1533,8 @@ fi
             </command>
           </para>
           <para>
-            Vergleich von Zeichenketten unabhängig von Sprache und Schreibweise (gross/klein) für höchstens "max" Zeichen.
+            Vergleich von Zeichenketten unabhängig von Sprache und Schreibweise
+            (gross/klein) für höchstens "max" Zeichen.
           </para>
           <para>
             Argumente:
@@ -1529,14 +1556,16 @@ fi
               </listitem>
               <listitem>
                 <para>
-                  <option>max</option>: maximale Zahl an Zeichen für den Vergleich
+                  <option>max</option>: maximale Zahl an Zeichen für den
+                  Vergleich
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Rückgabewert: Unterschied zwischen den zwei Zeichenketten: kleiner Null wenn
-            string1 &lt; string2, Null wenn string1 == string2, grösser Null wenn string1 &gt; string2
+            Rückgabewert: Unterschied zwischen den zwei Zeichenketten: kleiner
+            Null wenn string1 &lt; string2, Null wenn string1 == string2,
+            grösser Null wenn string1 &gt; string2
           </para>
           <para>
             Beispiel:
@@ -1555,7 +1584,8 @@ fi
             </command>
           </para>
           <para>
-            Zerlege eine Zeichenkette entsprechend eines oder mehrerer Trennzeichen(s).
+            Zerlege eine Zeichenkette entsprechend eines oder mehrerer
+            Trennzeichen(s).
           </para>
           <para>
             Argumente:
@@ -1577,12 +1607,14 @@ fi
               </listitem>
               <listitem>
                 <para>
-                  <option>num_items_max</option>: maximale Anzahl an zu erzeugenden Teilen (0 = keine Grenze)
+                  <option>num_items_max</option>: maximale Anzahl an zu
+                  erzeugenden Teilen (0 = keine Grenze)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>num_items</option>: Zeiger auf eine int-Variable, die die Anzahl der erzeugten
+                  <option>num_items</option>: Zeiger auf eine int-Variable,
+                  die die Anzahl der erzeugten
                   Teile enthält
                 </para>
               </listitem>
@@ -1619,7 +1651,8 @@ if (argv != NULL)
             </command>
           </para>
           <para>
-            Gib ein Array frei, dass infolge der Zerlegung eines Strings reserviert wurde.
+            Gib ein Array frei, dass infolge der Zerlegung eines Strings
+            reserviert wurde.
           </para>
           <para>
             Argumente:
@@ -1674,14 +1707,15 @@ if (argv != NULL)
               </listitem>
               <listitem>
                 <para>
-                  <option>directory</option>: Verzeichnis, das erzeugt werden soll
+                  <option>directory</option>: Verzeichnis, das erzeugt werden
+                  soll
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Rückgabewert: 1 wenn das Verzeichnis erfolgreich erstellt wurde, 0 wenn ein
-            Fehler aufgetreten ist.
+            Rückgabewert: 1 wenn das Verzeichnis erfolgreich erstellt wurde, 0
+            wenn ein Fehler aufgetreten ist.
           </para>
           <para>
             Beispiel:
@@ -1715,7 +1749,8 @@ if (!plugin->mkdir_home (plugin, "temp"))
               </listitem>
               <listitem>
                 <para>
-                  <option>directory</option>: Verzeichnis der zu verwendenden Dateien
+                  <option>directory</option>: Verzeichnis der zu verwendenden
+                  Dateien
                 </para>
               </listitem>
               <listitem>
@@ -1753,8 +1788,9 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
             </command>
           </para>
           <para>
-            Sende eine Nachricht an einen WeeChat-Puffer, bezeichnet durch server
-            und channel (beide können NULL sein, dann wird der aktuelle Puffer verwendet).
+            Sende eine Nachricht an einen WeeChat-Puffer, bezeichnet durch
+            server und channel (beide können NULL sein, dann wird der aktuelle
+            Puffer verwendet).
           </para>
           <para>
             Argumente:
@@ -1766,13 +1802,15 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
               </listitem>
               <listitem>
                 <para>
-                  <option>server</option>: interner Name des Servers, zu welchem der Puffer gehört, in dem die Nachricht
-                  angezeigt werden soll (kann NULL sein)
+                  <option>server</option>: interner Name des Servers, zu
+                  welchem der Puffer gehört, in dem die Nachricht angezeigt
+                  werden soll (kann NULL sein)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>channel</option>: Name des Channels, in dem die Nachricht angezeigt werden soll (kann NULL sein)
+                  <option>channel</option>: Name des Channels, in dem die
+                  Nachricht angezeigt werden soll (kann NULL sein)
                 </para>
               </listitem>
               <listitem>
@@ -1919,7 +1957,8 @@ plugin->print (plugin, NULL, NULL,
               </listitem>
               <listitem>
                 <para>
-                  <option>time</option>: Zeitspanne für die Anzeige (in Sekunden, 0 = ständige Anzeige)
+                  <option>time</option>: Zeitspanne für die Anzeige (in
+                  Sekunden, 0 = ständige Anzeige)
                 </para>
               </listitem>
             </itemizedlist>
@@ -1957,7 +1996,9 @@ plugin->print_infobar (plugin, 5, "hello");
               </listitem>
               <listitem>
                 <para>
-                  <option>count</option>: Anzahl der Nachrichten (wenn das Argument kleiner als Null ist, werden alle Nachrichten entfernt)
+                  <option>count</option>: Anzahl der Nachrichten (wenn das
+                  Argument kleiner als Null ist, werden alle Nachrichten
+                  entfernt)
                 </para>
               </listitem>
             </itemizedlist>
@@ -1981,7 +2022,8 @@ plugin->print_infobar (plugin, 5, "hello");
             </command>
           </para>
           <para>
-            Schreibe eine Nachricht in die Log-Datei (für den entsprechenden Server/Channel).
+            Schreibe eine Nachricht in die Log-Datei (für den entsprechenden
+            Server/Channel).
           </para>
           <para>
             Argumente:
@@ -1993,12 +2035,14 @@ plugin->print_infobar (plugin, 5, "hello");
               </listitem>
               <listitem>
                 <para>
-                  <option>server</option>: interner Name des Servers, zu welchem der Log-Puffer gehört (kann NULL sein)
+                  <option>server</option>: interner Name des Servers, zu
+                  welchem der Log-Puffer gehört (kann NULL sein)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>channel</option>: Name des Channels, zu welchem der Log-Puffer gehört (kann NULL sein)
+                  <option>channel</option>: Name des Channels, zu welchem der
+                  Log-Puffer gehört (kann NULL sein)
                 </para>
               </listitem>
               <listitem>
@@ -2044,14 +2088,17 @@ plugin->log (plugin, "freenode", "#weechat", "test");
               </listitem>
               <listitem>
                 <para>
-                  <option>message</option>: Name (Typ) der IRC-Nachricht ("*" für alle
-                  Nachrichten).
+                  <option>message</option>: Name (Typ) der IRC-Nachricht ("*"
+                  für alle Nachrichten).
                   Eine Liste der bekannten IRC-Nachrichten ist in den 
                   <acronym>RFC</acronym>s
-                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> und
-                  <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink> zu finden.
-                  Weiterhin können sie einen speziellen Namen verwenden, der mit "weechat_" beginnt,
-                  um spezielle Ereignisse zu bearbeiten, wie in der folgenden Tabelle aufgeführt:
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+                  und
+                  <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>
+                  zu finden.
+                  Weiterhin können sie einen speziellen Namen verwenden, der
+                  mit "weechat_" beginnt, um spezielle Ereignisse zu
+                  bearbeiten, wie in der folgenden Tabelle aufgeführt:
                   <informaltable colsep="0" frame="none">
                     <tgroup cols="2">
                       <thead>
@@ -2090,7 +2137,8 @@ plugin->log (plugin, "freenode", "#weechat", "test");
               </listitem>
               <listitem>
                 <para>
-                  <option>function</option>: Funktion, die aufgerufen wird, wenn eine Nachricht empfangen wurde
+                  <option>function</option>: Funktion, die aufgerufen wird,
+                  wenn eine Nachricht empfangen wurde
                 </para>
                 <para>
                   Sie verwendet den folgenden Prototyp:
@@ -2101,7 +2149,8 @@ plugin->log (plugin, "freenode", "#weechat", "test");
                   </command>
                 </para>
                 <para>
-                  Argument argc ist auf 3 gesetzt, die folgenden Werte sind im argv-Array:
+                  Argument argc ist auf 3 gesetzt, die folgenden Werte sind
+                  im argv-Array:
                   <itemizedlist>
                     <listitem>
                       <para>argv[0] = Server Name</para>
@@ -2117,13 +2166,16 @@ plugin->log (plugin, "freenode", "#weechat", "test");
               </listitem>
               <listitem>
                 <para>
-                  <option>handler_args</option>: Argumente, die beim Aufruf an die Funktion übergeben werden
+                  <option>handler_args</option>: Argumente, die beim Aufruf
+                  an die Funktion übergeben werden
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>handler_pointer</option>: pointer given to function when called
-                  <option>handler_pointer</option>: Zeiger, der an die Funktion übergeben wird
+                  <option>handler_pointer</option>: pointer given to function
+                  when called
+                  <option>handler_pointer</option>: Zeiger, der an die Funktion
+                  übergeben wird
                 </para>
               </listitem>
             </itemizedlist>
@@ -2132,8 +2184,8 @@ plugin->log (plugin, "freenode", "#weechat", "test");
             Rückgabewert: Zeiger auf den neuen Handler
           </para>
           <para>
-            Hinweis: die Funktion, die aufgerufen wird wenn eine Nachricht empfangen wurde,
-            muss einen der folgenden Werte zurückgeben:
+            Hinweis: die Funktion, die aufgerufen wird wenn eine Nachricht
+            empfangen wurde, muss einen der folgenden Werte zurückgeben:
             <itemizedlist>
               <listitem>
                 <para>
@@ -2147,17 +2199,20 @@ plugin->log (plugin, "freenode", "#weechat", "test");
               </listitem>
               <listitem>
                 <para>
-                  <literal>PLUGIN_RC_OK_IGNORE_WEECHAT</literal>: Die Nachricht wird nicht an WeeChat übergeben
+                  <literal>PLUGIN_RC_OK_IGNORE_WEECHAT</literal>: Die Nachricht
+                  wird nicht an WeeChat übergeben
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <literal>PLUGIN_RC_OK_IGNORE_PLUGINS</literal>: Die Nachricht wird nicht an andere Plugins weitergegeben
+                  <literal>PLUGIN_RC_OK_IGNORE_PLUGINS</literal>: Die Nachricht
+                  wird nicht an andere Plugins weitergegeben
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <literal>PLUGIN_RC_OK_IGNORE_ALL</literal>: Die Nachricht wird weder an WeeChat noch an andere
+                  <literal>PLUGIN_RC_OK_IGNORE_ALL</literal>: Die Nachricht
+                  wird weder an WeeChat noch an andere
                   Plugins weitergegeben
                 </para>
               </listitem>
@@ -2201,8 +2256,8 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
             </command>
           </para>
           <para>
-            Erzeugt einen Handler für ein WeeChat-Kommando, der aufgerufen wird, wenn
-            der Anwender das Kommando ausführt (Beispiel: /command).
+            Erzeugt einen Handler für ein WeeChat-Kommando, der aufgerufen
+            wird, wenn der Anwender das Kommando ausführt (Beispiel: /command).
           </para>
           <para>
             Argumente:
@@ -2214,34 +2269,42 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
               </listitem>
               <listitem>
                 <para>
-                  <option>command</option>: Name des neuen Kommandos, der auch Name eines bereits existierenden Kommandos 
-                  sein kann (mit Bedacht zu verwenden, das ersetzte Kommando ist nicht verfügbar, bis das Plugin entfernt
-                  wurde)
+                  <option>command</option>: Name des neuen Kommandos, der auch
+                  Name eines bereits existierenden Kommandos sein kann (mit
+                  Bedacht zu verwenden, das ersetzte Kommando ist nicht
+                  verfügbar, bis das Plugin entfernt wurde)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>description</option>: kurze Beschreibung des Kommandos (angezeigt beim Ausführen von /help command)
+                  <option>description</option>: kurze Beschreibung des
+                  Kommandos (angezeigt beim Ausführen von /help command)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>arguments</option>: kurze Beschreibung der Argumente des Kommandos (angezeigt beim Ausführen von /help command)
+                  <option>arguments</option>: kurze Beschreibung der Argumente
+                  des Kommandos (angezeigt beim Ausführen von /help command)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>arguments_description</option>: lange Beschreibung der Argumente des Kommandos (angezeigt beim Ausführen von /help command)
+                  <option>arguments_description</option>: lange Beschreibung
+                  der Argumente des Kommandos (angezeigt beim Ausführen von
+                  /help command)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>completion_template</option>: Vorlage für die Vervollständigung; zum Beispiel
-                  bedeutet "<literal>abc|%w def|%i</literal>", dass das erste Argument "abc" oder ein 
-                  WeeChat-Kommando sein kann und das zweite Argument "def" oder ein IRC-Kommando.
-                  Eine leere Zeichenkette bedeutet, dass WeeChat für jedes Argument einen Nicknamen
-                  des gegenwärtigen Channels einsetzt, ein NULL oder "-" schaltet die Vervollständigung
-                  für alle Argumente ab.
+                  <option>completion_template</option>: Vorlage für die
+                  Vervollständigung; zum Beispiel bedeutet
+                  "<literal>abc|%w def|%i</literal>", dass das erste Argument
+                  "abc" oder ein WeeChat-Kommando sein kann und das zweite
+                  Argument "def" oder ein IRC-Kommando. Eine leere
+                  Zeichenkette bedeutet, dass WeeChat für jedes Argument
+                  einen Nicknamen des gegenwärtigen Channels einsetzt, ein
+                  NULL oder "-" schaltet die Vervollständigung für alle
+                  Argumente ab.
                 </para>
                 <para>
                   Die folgenden Ersetzungen können verwendet werden:
@@ -2312,7 +2375,8 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                         <row>
                           <entry><literal>%M</literal></entry>
                           <entry>
-                            Nicks auf dem gegenwärtigen Server (in allen offenen Channeln)
+                            Nicks auf dem gegenwärtigen Server (in allen
+                            offenen Channeln)
                           </entry>
                         </row>
                         <row>
@@ -2321,7 +2385,10 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                         </row>
                         <row>
                           <entry><literal>%N</literal></entry>
-                          <entry>Nicknamen und Hostnamen des gegenwärtigen Channels</entry>
+                          <entry>
+                            Nicknamen und Hostnamen des gegenwärtigen
+                            Channels
+                          </entry>
                         </row>
                         <row>
                           <entry><literal>%o</literal></entry>
@@ -2370,7 +2437,8 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
               </listitem>
               <listitem>
                 <para>
-                  <option>function</option>: Funktion, die aufgerufen wird, wenn das Kommando ausgeführt wird
+                  <option>function</option>: Funktion, die aufgerufen wird,
+                  wenn das Kommando ausgeführt wird
                 </para>
                 <para>
                   Sie verwendet den folgenden Prototypen:
@@ -2381,7 +2449,8 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                   </command>
                 </para>
                 <para>
-                  Das Argument argc ist auf 3 gesetzt, das Array argv enthält die folgenden Werte:
+                  Das Argument argc ist auf 3 gesetzt, das Array argv enthält
+                  die folgenden Werte:
                   <itemizedlist>
                     <listitem>
                       <para>argv[0] = Server Name</para>
@@ -2397,12 +2466,14 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
               </listitem>
               <listitem>
                 <para>
-                  <option>handler_args</option>: Argumente, die an die Funktion übergeben werden
+                  <option>handler_args</option>: Argumente, die an die Funktion
+                  übergeben werden
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>handler_pointer</option>: Zeiger, der an die Funktion übergeben wird
+                  <option>handler_pointer</option>: Zeiger, der an die Funktion
+                  übergeben wird
                 </para>
               </listitem>
             </itemizedlist>
@@ -2411,8 +2482,8 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
             Rückgabewert: Zeiger auf den neuen Kommando-Handler.
           </para>
           <para>
-            Hinweis: die Funktion, die aufgerufen wird, wenn das Kommando ausgeführt wird,
-            muss einen der folgende Werte zurückgeben:
+            Hinweis: die Funktion, die aufgerufen wird, wenn das Kommando
+            ausgeführt wird, muss einen der folgende Werte zurückgeben:
             <itemizedlist>
               <listitem>
                 <para>
@@ -2471,7 +2542,8 @@ cmd_handler = plugin->cmd_handler_add (plugin, "test", "Test command",
               </listitem>
               <listitem>
                 <para>
-                  <option>interval</option>: Intervall (in Secunden) zwischen zwei Aufrufen der Funktion
+                  <option>interval</option>: Intervall (in Secunden) zwischen
+                  zwei Aufrufen der Funktion
                 </para>
               </listitem>
               <listitem>
@@ -2487,17 +2559,20 @@ cmd_handler = plugin->cmd_handler_add (plugin, "test", "Test command",
                   </command>
                 </para>
                 <para>
-                  Das Argument argc ist auf 0 gesetzt und argv ist auf NULL gesetzt.
+                  Das Argument argc ist auf 0 gesetzt und argv ist auf NULL
+                  gesetzt.
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>handler_args</option>: Argumente der aufgerufenen Funktion
+                  <option>handler_args</option>: Argumente der aufgerufenen
+                  Funktion
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>handler_pointer</option>: Zeiger, der an die Funktion übergeben wird
+                  <option>handler_pointer</option>: Zeiger, der an die Funktion
+                  übergeben wird
                 </para>
               </listitem>
             </itemizedlist>
@@ -2506,7 +2581,8 @@ cmd_handler = plugin->cmd_handler_add (plugin, "test", "Test command",
             Rückgabewert: Zeiger auf den neuen timer-Handler.
           </para>
           <para>
-            Hinweis: die Funktion, die aufgerufen wird, muss einen der folgende Werte zurückgeben:
+            Hinweis: die Funktion, die aufgerufen wird, muss einen der folgende
+            Werte zurückgeben:
             <itemizedlist>
               <listitem>
                 <para>
@@ -2548,7 +2624,8 @@ timer_handler = plugin->timer_handler_add (plugin, 60, &amp;my_timer);
             </command>
           </para>
           <para>
-            Erzeugt einen Keyboard-Handler, der nach dem Drücken einer Taste aufgerufen wird.
+            Erzeugt einen Keyboard-Handler, der nach dem Drücken einer Taste
+            aufgerufen wird.
           </para>
           <para>
             Argumente:
@@ -2571,12 +2648,14 @@ timer_handler = plugin->timer_handler_add (plugin, 60, &amp;my_timer);
                   </command>
                 </para>
                 <para>
-                  Das Argument argc ist auf 3 gesetzt, argv enthält die folgenden Werte:
+                  Das Argument argc ist auf 3 gesetzt, argv enthält die
+                  folgenden Werte:
                   <itemizedlist>
                     <listitem>
                       <para>
                         argv[0] = Taste, die gedrückt wurde 
-                        (Name der internen Funktion oder '*' gefolgt von einem Tastaturcode)
+                        (Name der internen Funktion oder '*' gefolgt von einem
+                        Tastaturcode)
                       </para>
                     </listitem>
                     <listitem>
@@ -2594,13 +2673,15 @@ timer_handler = plugin->timer_handler_add (plugin, 60, &amp;my_timer);
               </listitem>
               <listitem>
                 <para>
-                  <option>handler_args</option>: Argumente, die bei Aufruf der Funktion übergeben
+                  <option>handler_args</option>: Argumente, die bei Aufruf der
+                  Funktion übergeben
                   werden
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>handler_pointer</option>: Zeiger auf die Funktion, der bei Aufruf übergeben
+                  <option>handler_pointer</option>: Zeiger auf die Funktion,
+                  der bei Aufruf übergeben
                   wird
                 </para>
               </listitem>
@@ -2610,7 +2691,8 @@ timer_handler = plugin->timer_handler_add (plugin, 60, &amp;my_timer);
             Rückgabewert: Zeiger auf den Handler.
           </para>
           <para>
-            Hinweis: Die aufgerufene Funktion muss einen der folgenden Werte zurückgeben:
+            Hinweis: Die aufgerufene Funktion muss einen der folgenden Werte
+            zurückgeben:
             <itemizedlist>
               <listitem>
                 <para>
@@ -2659,7 +2741,8 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
             </command>
           </para>
           <para>
-            Fügt einen Ereignishandler hinzu, der aufgerufen wird, wenn ein Ereignis eintritt.
+            Fügt einen Ereignishandler hinzu, der aufgerufen wird, wenn ein
+            Ereignis eintritt.
           </para>
           <para>
             Argumente:
@@ -2699,8 +2782,8 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
               </listitem>
               <listitem>
                 <para>
-                  <option>handler_pointer</option>: Pointer, der an die aufgerufene
-                  Funktion übergeben werden
+                  <option>handler_pointer</option>: Pointer, der an die
+                  aufgerufene Funktion übergeben werden
                 </para>
               </listitem>
             </itemizedlist>
@@ -2747,7 +2830,8 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
             Rückgabewert: Pointer auf den neuen Ereignishandler.
           </para>
           <para>
-            Anmerkung: die aufgerufene Function muss einen der folgenden Werte zurückgeben:
+            Anmerkung: die aufgerufene Function muss einen der folgenden Werte
+            zurückgeben:
             <itemizedlist>
               <listitem>
                 <para>
@@ -2887,8 +2971,8 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
                         <row>
                           <entry><literal>irc_user</literal></entry>
                           <entry>
-                            wird bei jeder Benutzernachricht (oder Befehl) aufgerufen
-                            (bevor WeeChat die Nachricht parst)
+                            wird bei jeder Benutzernachricht (oder Befehl)
+                            aufgerufen (bevor WeeChat die Nachricht parst)
                           </entry>
                         </row>
                         <row>
@@ -2907,13 +2991,15 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
               </listitem>
               <listitem>
                 <para>
-                  <option>message</option>: Name der IRC-Nachricht (wird nur bei den Arten
-                  "irc_in" and "irc_out" benutzt)
-                  Um eine Liste der IRC-Nachrichten zu erhalten, lies bitte folgende Dokumente:
-                  <acronym>RFC</acronym>s
-                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> and
+                  <option>message</option>: Name der IRC-Nachricht (wird nur
+                  bei den Arten "irc_in" and "irc_out" benutzt)
+                  Um eine Liste der IRC-Nachrichten zu erhalten, lies bitte
+                  folgende Dokumente:<acronym>RFC</acronym>s
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+                  and
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-                  Außerdem gibt es den Wert "*", der alle Nachrichten anspricht (ohne Filter).
+                  Außerdem gibt es den Wert "*", der alle Nachrichten
+                  anspricht (ohne Filter).
                 </para>
               </listitem>
               <listitem>
@@ -2943,12 +3029,14 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
               </listitem>
               <listitem>
                 <para>
-                  <option>modifier_args</option>: an die Funktion übergebene Werte
+                  <option>modifier_args</option>: an die Funktion übergebene
+                  Werte
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>modifier_pointer</option>: an die Funktion übergebener Zeiger
+                  <option>modifier_pointer</option>: an die Funktion
+                  übergebener Zeiger
                 </para>
               </listitem>
             </itemizedlist>
@@ -2961,9 +3049,10 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
             (wenn keine Änderungen erfolgten) zurückgeben.
             Wenn die Funktion eine leere Zeichenkette zurückgibt, wird die
             Nachricht komplett verworfen und nicht weiter von WeeChat
-            verarbeitet. (Seien Sie vorsichtig mit dem Verwerfen von Nachrichten!)
-            Die zurückgegebene Zeichenkette muss mit malloc() zugewiesen worden sein und
-            wird von WeeChat nach Gebrauch automatisch mit free() wieder freigegeben.
+            verarbeitet. (Seien Sie vorsichtig mit dem Verwerfen von
+            Nachrichten!) Die zurückgegebene Zeichenkette muss mit malloc()
+            zugewiesen worden sein und wird von WeeChat nach Gebrauch
+            automatisch mit free() wieder freigegeben.
           </para>
           <para>
             Beispiel:
@@ -3064,7 +3153,8 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
             </command>
           </para>
           <para>
-            Führe ein WeeChat-Kommando aus (oder sende eine Nachricht an einen Channel).
+            Führe ein WeeChat-Kommando aus (oder sende eine Nachricht an
+            einen Channel).
           </para>
           <para>
             Argumente:
@@ -3076,12 +3166,14 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
               </listitem>
               <listitem>
                 <para>
-                  <option>server</option>: interner Name des Servers, auf den das Kommando angewendet werden soll (kann NULL sein)
+                  <option>server</option>: interner Name des Servers, auf den
+                  das Kommando angewendet werden soll (kann NULL sein)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>channel</option>: Name des Channels, auf den das Kommando angewendet werden soll (kann NULL sein)
+                  <option>channel</option>: Name des Channels, auf den das
+                  Kommando angewendet werden soll (kann NULL sein)
                 </para>
               </listitem>
               <listitem>
@@ -3147,7 +3239,8 @@ plugin->exec_command (plugin, "freenode", "#weechat", "hello");
                         <row>
                           <entry><literal>channel</literal></entry>
                           <entry>
-                            Name des Channels (NULL bei einem Server oder Privatchat)
+                            Name des Channels (NULL bei einem Server oder
+                            Privatchat)
                           </entry>
                         </row>
                         <row>
@@ -3167,7 +3260,8 @@ plugin->exec_command (plugin, "freenode", "#weechat", "hello");
                         <row>
                           <entry><literal>inactivity</literal></entry>
                           <entry>
-                            Anzahl der Sekunden seit der letzten Tastenbetätigung
+                            Anzahl der Sekunden seit der letzten
+                            Tastenbetätigung
                           </entry>
                         </row>
                         <row>
@@ -3209,7 +3303,8 @@ plugin->exec_command (plugin, "freenode", "#weechat", "hello");
               </listitem>
               <listitem>
                 <para>
-                  <option>server</option>: interner Name des Servers um Informationen zu lesen (wenn benötigt)
+                  <option>server</option>: interner Name des Servers um
+                  Informationen zu lesen (wenn benötigt)
                 </para>
               </listitem>
             </itemizedlist>
@@ -3218,7 +3313,8 @@ plugin->exec_command (plugin, "freenode", "#weechat", "hello");
             Rückgabewert: angeforderte Information oder NULL
           </para>
           <para>
-            Hinweis: das Ergebnis muss nach Nutzung mit "free" wieder freigegeben werden.
+            Hinweis: das Ergebnis muss nach Nutzung mit "free" wieder
+            freigegeben werden.
           </para>
           <para>
             Beispiele:
@@ -3392,7 +3488,8 @@ if (inactivity)
             </informaltable>
           </para>
           <para>
-            Hinweis: Das Ergebnis muss nach der Benutzung mittels "free_dcc_info" wieder freigegeben werden.
+            Hinweis: Das Ergebnis muss nach der Benutzung mittels
+            "free_dcc_info" wieder freigegeben werden.
           </para>
           <para>
             Beispiele:
@@ -3432,8 +3529,8 @@ if (dcc_info)
               </listitem>
               <listitem>
                 <para>
-                  <option>dcc_info</option>: Zeiger auf eine Liste mit DCC-Infos, die 
-                  mit "get_dcc_info" angelegt wurde
+                  <option>dcc_info</option>: Zeiger auf eine Liste mit
+                  DCC-Infos, die mit "get_dcc_info" angelegt wurde
                 </para>
               </listitem>
             </itemizedlist>
@@ -3508,8 +3605,8 @@ if (dcc_info)
                     <entry>int</entry>
                     <entry><literal>command_line</literal></entry>
                     <entry>
-                      1 wenn der Servername auf der Kommandozeile angegeben wurde (ist somit temporär)
-                      0 sonst
+                      1 wenn der Servername auf der Kommandozeile angegeben
+                      wurde (ist somit temporär) 0 sonst
                     </entry>
                   </row>
                   <row>
@@ -3565,7 +3662,10 @@ if (dcc_info)
                   <row>
                     <entry>char *</entry>
                     <entry><literal>command</literal></entry>
-                    <entry>Kommando, dass bei erfolgreicher Verbindung ausgeführt wurde</entry>
+                    <entry>
+                      Kommando, dass bei erfolgreicher Verbindung
+                      ausgeführt wurde
+                    </entry>
                   </row>
                   <row>
                     <entry>int</entry>
@@ -3581,8 +3681,8 @@ if (dcc_info)
                     <entry>int</entry>
                     <entry><literal>autorejoin</literal></entry>
                     <entry>
-                      1 wenn Channels wieder betreten werden sollen, nachdem man gekickt wurde
-                      0 sonst
+                      1 wenn Channels wieder betreten werden sollen, nachdem
+                      man gekickt wurde 0 sonst
                     </entry>
                   </row>
                   <row>
@@ -3603,7 +3703,10 @@ if (dcc_info)
                   <row>
                     <entry>char *</entry>
                     <entry><literal>charset_encode</literal></entry>
-                    <entry>Zeichensatz der Channels zum Kodieren von Nachrichten</entry>
+                    <entry>
+                      Zeichensatz der Channels zum Kodieren von
+                      Nachrichten
+                    </entry>
                   </row>
                   <row>
                     <entry>int</entry>
@@ -3650,8 +3753,8 @@ if (dcc_info)
             </informaltable>
           </para>
           <para>
-            Hinweis: das Ergebnis muss nach der Benutzung mit "free_server_info" wieder
-            freigegeben werden.
+            Hinweis: das Ergebnis muss nach der Benutzung mit
+            "free_server_info" wieder freigegeben werden.
           </para>
           <para>
             Beispiel:
@@ -3699,8 +3802,8 @@ if (server_info)
               </listitem>
               <listitem>
                 <para>
-                  <option>server_info</option>: Zeiger auf eine Server-Liste, der von der Funktion "get_server_info"
-                  zurückgegeben wurde.
+                  <option>server_info</option>: Zeiger auf eine Server-Liste,
+                  der von der Funktion "get_server_info" zurückgegeben wurde.
                 </para>
               </listitem>
             </itemizedlist>
@@ -3757,7 +3860,9 @@ if (server_info)
                   <row>
                     <entry>int</entry>
                     <entry><literal>type</literal></entry>
-                    <entry>0 für einen normalen Channel, 1 für einen Privaten</entry>
+                    <entry>
+                      0 für einen normalen Channel, 1 für einen Privaten
+                    </entry>
                   </row>
                   <row>
                     <entry>char *</entry>
@@ -3804,7 +3909,8 @@ if (server_info)
             </informaltable>
           </para>
           <para>
-            Hinweis: Das Ergebnis muss nach der Benutzung mit "free_channel_info" wieder freigegeben werden.
+            Hinweis: Das Ergebnis muss nach der Benutzung mit
+            "free_channel_info" wieder freigegeben werden.
           </para>
           <para>
             Beispiel:
@@ -3850,8 +3956,9 @@ if (channel_info)
               </listitem>
               <listitem>
                 <para>
-                  <option>channel_info</option>: Zeiger auf eine Liste "channel info", der von "get_channel_info" 
-                  zurückgegeben wurde
+                  <option>channel_info</option>: Zeiger auf eine Liste
+                  "channel info", der von "get_channel_info" zurückgegeben
+                  wurde
                 </para>
               </listitem>
             </itemizedlist>
@@ -3995,8 +4102,8 @@ if (nick_info)
               </listitem>
               <listitem>
                 <para>
-                  <option>nick_info</option>: Zeiger auf eine Liste "nick info", der von "get_nick_info" 
-                  zurückgegeben wurde
+                  <option>nick_info</option>: Zeiger auf eine Liste
+                  "nick info", der von "get_nick_info" zurückgegeben wurde
                 </para>
               </listitem>
             </itemizedlist>
@@ -4041,7 +4148,8 @@ if (nick_info)
             Rückgabewert: Wert der Option, oder NULL, wenn nichts gefunden wurde.
           </para>
           <para>
-            Hinweis: Das Ergebnis muss nach der Benutzung mit "free" wieder freigegeben werden.
+            Hinweis: Das Ergebnis muss nach der Benutzung mit "free" wieder
+            freigegeben werden.
           </para>
           <para>
             Beispiel:
@@ -4086,7 +4194,8 @@ char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");
             </itemizedlist>
           </para>
           <para>
-            Rückgabewert: 1 wenn der Wert der Option gesetzt werden konnte, 0 bei Auftreten eines Fehlers.
+            Rückgabewert: 1 wenn der Wert der Option gesetzt werden konnte,
+            0 bei Auftreten eines Fehlers.
           </para>
           <para>
             Beispiel:
@@ -4107,8 +4216,8 @@ plugin->set_config (plugin, "look_nicklist", "off");
           </para>
           <para>
             Gibt den Wert einer Option eines Plugins zurück.
-            Die Option wird aus "<literal>~/.weechat/plugins.rc</literal>" gelesen
-            und sieht so aus: "<literal>plugin.option=value</literal>"
+            Die Option wird aus "<literal>~/.weechat/plugins.rc</literal>"
+            gelesen und sieht so aus: "<literal>plugin.option=value</literal>"
             (Hinweis: der Name des Plugins wird automatisch gesetzt).
             
           </para>
@@ -4131,7 +4240,8 @@ plugin->set_config (plugin, "look_nicklist", "off");
             Rückgabewert: Wert der Option, NULL wenn nichts gefunden wurde.
           </para>
           <para>
-            Hinweis: Das Ergebnis muss nach der Benutzung mit "free" wieder freigegeben werden.
+            Hinweis: Das Ergebnis muss nach der Benutzung mit "free" wieder
+            freigegeben werden.
           </para>
           <para>
             Beispiel:
@@ -4153,7 +4263,8 @@ char *value = plugin->get_plugin_config (plugin, "my_var");
           </para>
           <para>
             Setzt den Wert einer Option eines Plugins.
-            Die Option wird in die Datei "<literal>~/.weechat/plugins.rc</literal>" geschrieben
+            Die Option wird in die Datei
+            "<literal>~/.weechat/plugins.rc</literal>" geschrieben
             und sieht so aus: "<literal>plugin.option=value</literal>"
             (Hinweis: der Name des Plugins wird automatisch gesetzt)
           </para>
@@ -4178,7 +4289,8 @@ char *value = plugin->get_plugin_config (plugin, "my_var");
             </itemizedlist>
           </para>
           <para>
-            Rückgabewert: 1 wenn die Option gesetzt werden konnte, 0 wenn ein Fehler aufgetreten ist.
+            Rückgabewert: 1 wenn die Option gesetzt werden konnte, 0 wenn ein
+            Fehler aufgetreten ist.
           </para>
           <para>
             Beispiel:
@@ -4327,20 +4439,20 @@ int color_blue = plugin->get_irc_color (plugin, "blue"); /* return 2 */
               </listitem>
               <listitem>
                 <para>
-                  <option>color</option>: Textfarbe (wenn der Wert &lt; 0 ist, dann wird der
-                  Eingabepuffer aufgefrischt und nicht verändert)
+                  <option>color</option>: Textfarbe (wenn der Wert &lt; 0 ist,
+                  dann wird der Eingabepuffer aufgefrischt und nicht verändert)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>start</option>: Startposition für Einfärbung (wenn der Wert &lt; 0 ist,
-                  wird die Maske neu initialisiert)
+                  <option>start</option>: Startposition für Einfärbung (wenn
+                  der Wert &lt; 0 ist, wird die Maske neu initialisiert)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>length</option>: Länge der Einfärbung (wenn der Wert &lt;= 0 ist,
-                  wird die Maske neu initialisiert)
+                  <option>length</option>: Länge der Einfärbung (wenn der Wert
+                  &lt;= 0 ist, wird die Maske neu initialisiert)
                 </para>
               </listitem>
             </itemizedlist>
@@ -4413,12 +4525,16 @@ plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
                   <row>
                     <entry>int</entry>
                     <entry><literal>win_width_pct</literal></entry>
-                    <entry>Breite in % (im Vergleich zum übergeordneten Fenster)</entry>
+                    <entry>
+                      Breite in % (im Vergleich zum übergeordneten Fenster)
+                    </entry>
                   </row>
                   <row>
                     <entry>int</entry>
                     <entry><literal>win_height_pct</literal></entry>
-		    <entry>Höhe % (im Vergleich zum übergeordneten Fenster)</entry>
+		    <entry>
+                      Höhe % (im Vergleich zum übergeordneten Fenster)
+                    </entry>
                   </row>
                   <row>
                     <entry>int</entry>
@@ -4428,12 +4544,16 @@ plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
                   <row>
                     <entry>t_plugin_window_info *</entry>
                     <entry><literal>prev_window</literal></entry>
-                    <entry>Zeiger auf die Informationen des vorhergehenden Fensters</entry>
+                    <entry>
+                      Zeiger auf die Informationen des vorhergehenden Fensters
+                    </entry>
                   </row>
                   <row>
                     <entry>t_plugin_window_info *</entry>
                     <entry><literal>next_window</literal></entry>
-		    <entry>Zeiger auf die Informationen des nächsten Fensters</entry>
+		    <entry>
+                      Zeiger auf die Informationen des nächsten Fensters
+                    </entry>
                   </row>
                 </tbody>
               </tgroup>
@@ -4479,7 +4599,8 @@ else
             </command>
           </para>
           <para>
-            Gibt den Speicher wieder frei, der von der Fenster-Informationsliste belegt wird.
+            Gibt den Speicher wieder frei, der von der
+            Fenster-Informationsliste belegt wird.
           </para>
           <para>
             Argumente:
@@ -4491,8 +4612,9 @@ else
               </listitem>
               <listitem>
                 <para>
-                  <option>window_info</option>: Zeiger auf Fenster-Informationsliste, 
-                  der von der "get_window_info"-Funktion zurückgegeben wurde
+                  <option>window_info</option>: Zeiger auf
+                  Fenster-Informationsliste, der von der
+                  "get_window_info"-Funktion zurückgegeben wurde
                 </para>
               </listitem>
             </itemizedlist>
@@ -4573,7 +4695,10 @@ else
                   <row>
                     <entry>char *</entry>
                     <entry><literal>log_filename</literal></entry>
-                    <entry>Name der Logdatei (NULL bedeutet, dass nichts geloggt wird)</entry>
+                    <entry>
+                      Name der Logdatei (NULL bedeutet, dass nichts geloggt
+                      wird)
+                    </entry>
                   </row>
                   <row>
                     <entry>t_plugin_buffer_info *</entry>
@@ -4590,8 +4715,8 @@ else
             </informaltable>
           </para>
           <para>
-            Bemerkung: Das Ergebnis muss nach der Auswertung mit der "free_buffer_info"-Funktion 
-            wieder gelöscht werden.
+            Bemerkung: Das Ergebnis muss nach der Auswertung mit der
+            "free_buffer_info"-Funktion wieder gelöscht werden.
           </para>
           <para>
             Beispiel:
@@ -4631,7 +4756,8 @@ else
             </command>
           </para>
           <para>
-            Gibt den Speicher frei, der von der Puffer-Informationsliste belegt wird.
+            Gibt den Speicher frei, der von der Puffer-Informationsliste
+            belegt wird.
           </para>
           <para>
             Argumente:
@@ -4733,8 +4859,8 @@ else
             </informaltable>
           </para>
           <para>
-            Bemerkung: Das Ergebnis muss nach der Auswertung mit der "free_buffer_data"-Funktion
-            wieder gelöscht werden.
+            Bemerkung: Das Ergebnis muss nach der Auswertung mit der
+            "free_buffer_data"-Funktion wieder gelöscht werden.
           </para>
           <para>
             Example:
@@ -4805,7 +4931,8 @@ if (buffer_line)
         </para>
         
         <para>
-          Um ein Plugin zu übersetzen, das aus einer Datei "toto.c" besteht (unter GNU/Linux):
+          Um ein Plugin zu übersetzen, das aus einer Datei "toto.c" besteht
+          (unter GNU/Linux):
 <screen>
 <prompt>$ </prompt><userinput>gcc -fPIC -Wall -c toto.c</userinput>
 <prompt>$ </prompt><userinput>gcc -shared -fPIC -o libtoto.so toto.o</userinput>
@@ -4818,9 +4945,11 @@ if (buffer_line)
         <title>Laden des Plugins in WeeChat</title>
         
         <para>
-          Kopiere die Datei "libtoto.so" in das Plugin-Verzeichnis der systemweiten Dateien WeeChats
-          (zum Beispiel: "<literal>/usr/local/lib/weechat/plugins</literal>") oder in das Plugin-Verzeichnis
-          des Users (zum Beispiel: "<literal>/home/xxxxx/.weechat/plugins</literal>").
+          Kopiere die Datei "libtoto.so" in das Plugin-Verzeichnis der
+          systemweiten Dateien WeeChats (zum Beispiel:
+          "<literal>/usr/local/lib/weechat/plugins</literal>") oder in das
+          Plugin-Verzeichnis des Users (zum Beispiel:
+          "<literal>/home/xxxxx/.weechat/plugins</literal>").
         </para>
         
         <para>
@@ -4834,9 +4963,9 @@ if (buffer_line)
         <title>Plugin Beispiel</title>
         
         <para>
-          Vollständiges Beispiel eines Plugins, welches das Kommando /double implementiert, dass
-          seine Argumente im gegenwärtigen Channel doppelt ausgibt (ok, das ist weniger nützlich,
-          aber auch nur ein Beispiel!):
+          Vollständiges Beispiel eines Plugins, welches das Kommando /double
+          implementiert, dass seine Argumente im gegenwärtigen Channel doppelt
+          ausgibt (ok, das ist weniger nützlich, aber auch nur ein Beispiel!):
 <screen>
 #include &lt;stdlib.h&gt;
 
@@ -4888,8 +5017,8 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
       <para>
         Das Zeichensatz-Plugin ermöglicht das Ver- und Entschlüsseln von Daten
         auf 3 Ebenen: Global, pro Server oder pro Channel.
-        Das Plugin ist optional, wird jedoch empfohlen: wenn es nicht geladen ist, 
-        kann WeeChat nur UTF-8-Daten lesen und schreiben.
+        Das Plugin ist optional, wird jedoch empfohlen: wenn es nicht geladen
+        ist, kann WeeChat nur UTF-8-Daten lesen und schreiben.
       </para>
       
       <para>
@@ -4897,10 +5026,10 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
         werden.
         Um sicherzustellen, dass das Plugin geladen wurde, versuchen Sie:
         "<literal>/charset</literal>".
-        Wenn der Befehl nicht gefunden wird, laden Sie das Plugin manuell mit dem Befehl:
-        <screen>/plugin load charset</screen>
-        Wenn das Plugin nicht gefunden wird, kompilieren Sie WeeChat erneut mit Plugin-
-        und Zeichensatz-Support
+        Wenn der Befehl nicht gefunden wird, laden Sie das Plugin manuell mit
+        dem Befehl: <screen>/plugin load charset</screen>
+        Wenn das Plugin nicht gefunden wird, kompilieren Sie WeeChat erneut
+        mit Plugin- und Zeichensatz-Support
       </para>
       
       <para>
@@ -4919,19 +5048,20 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
         <itemizedlist>
           <listitem>
             <para>
-              Um den globalen Zeichensatz zum Kodieren und Dekodieren festzulegen, benutzen Sie den
-              "<literal>/setp</literal>" Befehl.
+              Um den globalen Zeichensatz zum Kodieren und Dekodieren
+              festzulegen, benutzen Sie den "<literal>/setp</literal>" Befehl.
               Zum Beispiel:
 <screen>
 /setp charset.global.decode = ISO-8859-15
 /setp charset.global.encode = ISO-8859-15
 </screen>
-              Wenn der Zeichensatz zum Dekodieren nicht gesetzt ist (z.B. beim ersten
-              Start des Plugins), wird es automatisch auf den Terminalzeichensatz
-              eingestellt (wenn es nicht UTF-8 ist) oder als Voreinstellung auf
-              "<literal>ISO-8859-1</literal>" gesetzt.
-              Der voreingestellte Enkodierungszeichensatz ist leer, so dass in der
-              Voreinstellung mit dem internen Zeichensatz (UTF-8) enkodiert wird.
+              Wenn der Zeichensatz zum Dekodieren nicht gesetzt ist (z.B. beim
+              ersten Start des Plugins), wird es automatisch auf den
+              Terminalzeichensatz eingestellt (wenn es nicht UTF-8 ist) oder
+              als Voreinstellung auf "<literal>ISO-8859-1</literal>" gesetzt.
+              Der voreingestellte Enkodierungszeichensatz ist leer, so dass in
+              der Voreinstellung mit dem internen Zeichensatz (UTF-8) enkodiert
+              wird.
             </para>
           </listitem>
           <listitem>
@@ -4951,9 +5081,9 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
           </listitem>
           <listitem>
             <para>
-              Um den zeichensatz im Channel (oder einem privatem Chat) festzulegen, 
-              müssen Sie den gleichen Befehl wie für den Server benutzen, jedoch in
-              dem Channel-Puffer (oder Query-Puffer) 
+              Um den zeichensatz im Channel (oder einem privatem Chat)
+              festzulegen, müssen Sie den gleichen Befehl wie für den Server
+              benutzen, jedoch in dem Channel-Puffer (oder Query-Puffer) 
             </para>
           </listitem>
         </itemizedlist>
@@ -4969,15 +5099,17 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
             <listitem>
               <para>
                 überprüfen Sie, ob weechat-curses zu libcursesw gelinkt ist
-                (Achtung: Wird bei den meisten, jedoch nicht bei allen Distributionen benötigt):
+                (Achtung: Wird bei den meisten, jedoch nicht bei allen
+                Distributionen benötigt):
                 <screen>ldd /pfad/zu/weechat-curses</screen>
               </para>
             </listitem>
             <listitem>
               <para>
-                überprüfen Sie die Zeichensatz-Zeile im Server-Puffer, dort sollten ISO-XXXXXX
-                oder UTF-8 für den Terminal-Zeichensatz stehen. Wenn Sie dort ANSI_X3.4-1968
-                oder andere Werte sehen, sind Ihre LOCALES eventuell falsch eingestellt.
+                überprüfen Sie die Zeichensatz-Zeile im Server-Puffer, dort
+                sollten ISO-XXXXXX oder UTF-8 für den Terminal-Zeichensatz
+                stehen. Wenn Sie dort ANSI_X3.4-1968 oder andere Werte sehen,
+                sind Ihre LOCALES eventuell falsch eingestellt.
               </para>
             </listitem>
             <listitem>
@@ -5011,8 +5143,9 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
           (type <command>/help</command> in WeeChat for help about commands).
 
           Skripte werden mit den Kommandos <command>/perl</command>, <command>/python</command>, 
-          <command>/ruby</command> und <command>/lua</command> geladen oder entfernt.
-          (Benutze <command>/help</command> in WeeChat für Hilfe zu den Kommandos).
+          <command>/ruby</command> und <command>/lua</command> geladen oder
+          entfernt. (Benutze <command>/help</command> in WeeChat für Hilfe zu
+          den Kommandos).
         </para>
         
         <para>
@@ -5078,8 +5211,8 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
           <title>Perl</title>
           
           <para>
-            In einem WeeChat-PerlSkript ist allen API-Funktionen und Variablen ein
-            "<literal>weechat::</literal>" vorangestellt.  
+            In einem WeeChat-PerlSkript ist allen API-Funktionen und Variablen
+            ein "<literal>weechat::</literal>" vorangestellt.  
             Beispiel:
 <screen>weechat::register("test", "1.0", "end_test", "WeeChat perl script");</screen>
           </para>
@@ -5090,12 +5223,14 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
           <title>Python</title>
           
           <para>
-            Ein WeeChat-Pythonskript muss mit einer Importdirektive für WeeChat beginnen:
+            Ein WeeChat-Pythonskript muss mit einer Importdirektive für WeeChat
+            beginnen:
             <screen>import weechat</screen>
           </para>
           
           <para>
-            Allen API-Funktionen und Variablen ist ein "<literal>weechat.</literal>" vorangestellt.
+            Allen API-Funktionen und Variablen ist ein
+            "<literal>weechat.</literal>" vorangestellt.
             Beispiel:
 <screen>weechat.register("test", "1.0", "end_test", "WeeChat python script")</screen>
           </para>
@@ -5107,8 +5242,9 @@ void weechat_plugin_end (t_weechat_plugin *plugin)
           
           <para>
             In einem WeeChat-Rubyskript muss der gesamte Code innerhalb von
-            Funktionen stehen. Für den Hauptteil ist die Funktion "<literal>weechat_init</literal>"
-            zu definieren, die automatisch aufgerufen wird, wenn das Skript in WeeChat geladen wird. 
+            Funktionen stehen. Für den Hauptteil ist die Funktion
+            "<literal>weechat_init</literal>" zu definieren, die automatisch
+            aufgerufen wird, wenn das Skript in WeeChat geladen wird.
             Beispiel:
 <screen>
 def weechat_init
@@ -5135,9 +5271,10 @@ end
           <title>Lua</title>
           
           <para>
-            In einem WeeChat-Luaskript ist allen Funktionen ein "<literal>weechat.</literal>"
-            vorangestellt. Variablen beginnen mit "<literal>weechat.</literal>" und
-            enden mit "<literal>()</literal>".
+            In einem WeeChat-Luaskript ist allen Funktionen ein
+            "<literal>weechat.</literal>" vorangestellt. Variablen beginnen
+            mit "<literal>weechat.</literal>" und enden mit
+            "<literal>()</literal>".
             Beispiel:
 <screen>
 function message_handler(server, args)
@@ -5160,25 +5297,29 @@ end
           <para>
             Perl-Prototyp:
             <command>
-              weechat::register(name, version, end_function, description, [charset]);
+              weechat::register(name, version, end_function, description,
+              [charset]);
             </command>
           </para>
           <para>
             Python-Prototyp:
             <command>
-              weechat.register(name, version, end_function, description, [charset])
+              weechat.register(name, version, end_function, description,
+              [charset])
             </command>
           </para>
           <para>
             Ruby-Prototyp:
             <command>
-              Weechat.register(name, version, end_function, description, [charset])
+              Weechat.register(name, version, end_function, description,
+              [charset])
             </command>
           </para>
           <para>
             Lua-Prototyp:
             <command>
-              weechat.register(name, version, end_function, description, [charset])
+              weechat.register(name, version, end_function, description,
+              [charset])
             </command>
           </para>
           <para>
@@ -5201,26 +5342,29 @@ end
               </listitem>
               <listitem>
                 <para>
-                  <option>end_function</option>: Funktion, die aufgerufen wird, wenn
-                  das Skript entfernt werden soll (optional; ein leerer String bedeutet,
-                  dass nichts aufgerufen wird)
+                  <option>end_function</option>: Funktion, die aufgerufen
+                  wird, wenn das Skript entfernt werden soll (optional; ein
+                  leerer String bedeutet, dass nichts aufgerufen wird)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>description</option>: eine kurze Beschreibung des Skripts
+                  <option>description</option>: eine kurze Beschreibung des
+                  Skripts
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>charset</option>: Zeichensatz, der von dem Script benutzt wird, sollten Sie
-                  setzen, wenn das Script nicht in UTF-8 geschrieben ist
+                  <option>charset</option>: Zeichensatz, der von dem Script
+                  benutzt wird, sollten Sie setzen, wenn das Script nicht in
+                  UTF-8 geschrieben ist
                 </para>
               </listitem>
             </itemizedlist>
           </para>
           <para>
-            Rückgabewert: 1 wenn das Skript registriert werden konnte, 0 wenn ein Fehler aufgetaucht ist.
+            Rückgabewert: 1 wenn das Skript registriert werden konnte, 0 wenn
+            ein Fehler aufgetaucht ist.
           </para>
           <para>
             Beispiele:
@@ -5281,7 +5425,8 @@ weechat.register("test", "1.0", "end_test", "Test script!", "ISO-8859-1")
             </itemizedlist>
           </para>
           <para>
-            Rückgabewert: 1, wenn der Zeichensatz erfolgreich gesetzt wurd, 0, wenn ein Fehler aufgetreten ist
+            Rückgabewert: 1, wenn der Zeichensatz erfolgreich gesetzt wurd, 0,
+            wenn ein Fehler aufgetreten ist
           </para>
           <para>
             Beispiele:
@@ -5329,8 +5474,8 @@ weechat.set_charset("ISO-8859-1")
             </command>
           </para>
           <para>
-            Sende eine Nachricht an einen WeeChat-Puffer, identifiziert durch Server
-            und Channel.
+            Sende eine Nachricht an einen WeeChat-Puffer, identifiziert durch
+            Server und Channel.
           </para>
           <para>
             Argumente:
@@ -5342,14 +5487,16 @@ weechat.set_charset("ISO-8859-1")
               </listitem>
               <listitem>
                 <para>
-                  <option>channel</option>: Name des Channels, zu welchem der Puffer gehört, in dem die
+                  <option>channel</option>: Name des Channels, zu welchem der
+                  Puffer gehört, in dem die
                   Nachricht angezeigt werden soll
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>server</option>: interner Name des Servers, zu welchem der Puffer gehört, in dem
-                  die Nachricht angezeigt werden soll
+                  <option>server</option>: interner Name des Servers, zu
+                  welchem der Puffer gehört, in dem die Nachricht angezeigt
+                  werden soll
                 </para>
               </listitem>
             </itemizedlist>
@@ -5489,7 +5636,8 @@ weechat.print_server("message")
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>time</option>: Zeit (in sekunden) der Anzeige (0 = permanent)
+                  <option>time</option>: Zeit (in sekunden) der Anzeige
+                  (0 = permanent)
                 </para>
               </listitem>
               <listitem>
@@ -5555,8 +5703,9 @@ weechat.print_infobar(5, "message")
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>count</option>: Anzahl der Nachrichten, die entfernt werden sollen
-                  (Ist kein Argument angegeben oder &lt;= 0 werden alle Nachrichten entfernt)
+                  <option>count</option>: Anzahl der Nachrichten, die entfernt
+                  werden sollen (Ist kein Argument angegeben oder &lt;= 0
+                  werden alle Nachrichten entfernt)
                 </para>
               </listitem>
             </itemizedlist>
@@ -5622,12 +5771,14 @@ weechat.remove_infobar(1)
               </listitem>
               <listitem>
                 <para>
-                  <option>channel</option>: Name des Channels, zu welchem der Puffer der Logdatei gehört
+                  <option>channel</option>: Name des Channels, zu welchem der
+                  Puffer der Logdatei gehört
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>server</option>: interner Name des Servers, zu welchem der Puffer der Logdatei gehört
+                  <option>server</option>: interner Name des Servers, zu
+                  welchem der Puffer der Logdatei gehört
                 </para>
               </listitem>
             </itemizedlist>
@@ -5681,25 +5832,32 @@ weechat.log("message", "#weechat", "freenode")
             </command>
           </para>
           <para>
-            Erzeuge einen Nachrichten-Handler, der bei Empfang einer IRC-Nachricht aufgerufen wird.
+            Erzeuge einen Nachrichten-Handler, der bei Empfang einer
+            IRC-Nachricht aufgerufen wird.
           </para>
           <para>
             Argumente:
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>message</option>: Name (Typ) der IRC-Nachricht. Für eine Liste
-                  der bekannten Typen von IRC-Nachrichten konsultieren sie bitte die 
+                  <option>message</option>: Name (Typ) der IRC-Nachricht. Für
+                  eine Liste
+                  der bekannten Typen von IRC-Nachrichten konsultieren sie
+                  bitte die 
                   <acronym>RFC</acronym>s
-                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> und
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+                  und
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-                  Mehr noch, sie können spezielle Ereignisse abfangen, indem sie einen speziellen Namen verwenden, der mit 
-                  "weechat_" beginnt (siehe <xref linkend="secAPI_msg_handler_add" />).
+                  Mehr noch, sie können spezielle Ereignisse abfangen, indem
+                  sie einen speziellen Namen verwenden, der mit 
+                  "weechat_" beginnt (siehe
+                  <xref linkend="secAPI_msg_handler_add" />).
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>function</option>: Funktion, die bei Empfang einer Nachricht aufgerufen werden soll
+                  <option>function</option>: Funktion, die bei Empfang einer
+                  Nachricht aufgerufen werden soll
                 </para>
               </listitem>
             </itemizedlist>
@@ -5761,19 +5919,21 @@ end
               </listitem>
               <listitem>
                 <para>
-                  <literal>PLUGIN_RC_OK_IGNORE_WEECHAT</literal>: Die Nachricht wird nicht an WeeChat übergeben
+                  <literal>PLUGIN_RC_OK_IGNORE_WEECHAT</literal>: Die Nachricht
+                  wird nicht an WeeChat übergeben
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <literal>PLUGIN_RC_OK_IGNORE_PLUGINS</literal>: Die Nachricht wird nicht an andere Plugins
+                  <literal>PLUGIN_RC_OK_IGNORE_PLUGINS</literal>: Die Nachricht
+                  wird nicht an andere Plugins
                   weitergegeben
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <literal>PLUGIN_RC_OK_IGNORE_ALL</literal>: Die Nachricht wird weder
-                  an WeeChat noch an andere Plugins übergeben
+                  <literal>PLUGIN_RC_OK_IGNORE_ALL</literal>: Die Nachricht
+                  wird weder an WeeChat noch an andere Plugins übergeben
                 </para>
               </listitem>
               <listitem>
@@ -5823,8 +5983,8 @@ end
             </command>
           </para>
           <para>
-            Erzeugt einen Kommando-Handler, der aufgerufen wird, wenn der Anwender
-            das Kommando benutzt (Beispiel: /command).
+            Erzeugt einen Kommando-Handler, der aufgerufen wird, wenn der
+            Anwender das Kommando benutzt (Beispiel: /command).
           </para>
           <para>
             Argumente:
@@ -5834,25 +5994,27 @@ end
                   <option>command</option>: 
                   Name des neuen Kommandos, der auch Name eines bereits 
                   existierenden Kommandos sein kann (mit Bedacht zu verwenden, 
-                  das ersetzte Kommando ist nicht verfügbar, bis das Plugin entfernt wurde)
+                  das ersetzte Kommando ist nicht verfügbar, bis das Plugin
+                  entfernt wurde)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>function</option>: Funktion, die aufgerufen wird, wenn
-                  das Kommando ausgeführt wird
+                  <option>function</option>: Funktion, die aufgerufen wird,
+                  wenn das Kommando ausgeführt wird
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>arguments</option>: eine kurze Beschreibung der Argumente des Kommandos
-                  (werden angezeigt bei /help command)
+                  <option>arguments</option>: eine kurze Beschreibung der
+                  Argumente des Kommandos (werden angezeigt bei /help command)
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>arguments_description</option>: eine ausführliche Beschreibung der Argumente
-                  des Kommandos (werden angezeigt bei /help command)
+                  <option>arguments_description</option>: eine ausführliche
+                  Beschreibung der Argumente des Kommandos (werden angezeigt
+                  bei /help command)
                 </para>
               </listitem>
               <listitem>
@@ -5949,7 +6111,8 @@ end
             </command>
           </para>
           <para>
-            Erzeugt einen zeitgesteuerten Handler, der periodisch eine Funktion aufruft.
+            Erzeugt einen zeitgesteuerten Handler, der periodisch eine Funktion
+            aufruft.
           </para>
           <para>
             Argumente:
@@ -6051,7 +6214,8 @@ end
             </command>
           </para>
           <para>
-            Erzeugt einen Keyboard-Handler, der für jeden Tastendruck aufgerufen wird.
+            Erzeugt einen Keyboard-Handler, der für jeden Tastendruck
+            aufgerufen wird.
           </para>
           <para>
             Argumente:
@@ -6110,7 +6274,8 @@ end
 </screen>
           </para>
           <para>
-            Hinweis: Die aufgerufene Funktion muss einen der folgenden Werte zurückgeben:
+            Hinweis: Die aufgerufene Funktion muss einen der folgenden Werte
+            zurückgeben:
             <itemizedlist>
               <listitem>
                 <para>
@@ -6154,7 +6319,8 @@ end
             </command>
           </para>
           <para>
-            Fügt einen Ereignis-Handler hinzu, der beim Auftreten eines Ereignisses aufgerufen wird.
+            Fügt einen Ereignis-Handler hinzu, der beim Auftreten eines
+            Ereignisses aufgerufen wird.
           </para>
           <para>
             Argumente:
@@ -6208,7 +6374,8 @@ end
 </screen>
           </para>
           <para>
-            Bemerkung: aufgerufene Funktion muss einen der folgenden Werte zurückgeben:
+            Bemerkung: aufgerufene Funktion muss einen der folgenden Werte
+            zurückgeben:
             <itemizedlist>
               <listitem>
                 <para>
@@ -6525,8 +6692,8 @@ weechat.remove_event_handler("my_event")
                         <row>
                           <entry><literal>irc_user</literal></entry>
                           <entry>
-                            wird bei jeder Benutzernachricht (oder Befehl) aufgerufen
-                            (bevor WeeChat die Nachricht parst)
+                            wird bei jeder Benutzernachricht (oder Befehl)
+                            aufgerufen (bevor WeeChat die Nachricht parst)
                           </entry>
                         </row>
                         <row>
@@ -6545,13 +6712,15 @@ weechat.remove_event_handler("my_event")
               </listitem>
               <listitem>
                 <para>
-                  <option>message</option>:Name der IRC-Nachricht (wird nur bei den Arten
-                  "irc_in" and "irc_out" benutzt)
-                  Um eine Liste der IRC-Nachrichten zu erhalten, lies bitte folgende Dokumente:
+                  <option>message</option>:Name der IRC-Nachricht (wird nur bei
+                  den Arten "irc_in" and "irc_out" benutzt) Um eine Liste der
+                  IRC-Nachrichten zu erhalten, lies bitte folgende Dokumente:
                   <acronym>RFC</acronym>s
-                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink> and
+                  <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
+                  and
                   <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-                  Außerdem gibt es den Wert "*", der alle Nachrichten anspricht (ohne Filter).
+                  Außerdem gibt es den Wert "*", der alle Nachrichten
+                  anspricht (ohne Filter).
                 </para>
               </listitem>
               <listitem>
@@ -6650,7 +6819,8 @@ end
               </listitem>
               <listitem>
                 <para>
-                  <option>message</option>: Nachrichtenart, die der Modifikator verwaltet
+                  <option>message</option>: Nachrichtenart, die der Modifikator
+                  verwaltet
                 </para>
               </listitem>
               <listitem>
@@ -6709,7 +6879,8 @@ weechat.remove_modifier("irc_in", "privmsg", "mod_in")
             </command>
           </para>
           <para>
-            Führt ein WeeChat-Kommando aus (oder sendet eine Nachricht an einen Channel).
+            Führt ein WeeChat-Kommando aus (oder sendet eine Nachricht an einen
+            Channel).
           </para>
           <para>
             Argumente:
@@ -6721,14 +6892,14 @@ weechat.remove_modifier("irc_in", "privmsg", "mod_in")
               </listitem>
               <listitem>
                 <para>
-                  <option>channel</option>: Name des Channels, für den das Kommando
-                  ausgeführt werden soll
+                  <option>channel</option>: Name des Channels, für den das
+                  Kommando ausgeführt werden soll
                 </para>
               </listitem>
               <listitem>
                 <para>
-                  <option>server</option>: interner Name des Servers, für den das
-                  Kommando ausgeführt werden soll
+                  <option>server</option>: interner Name des Servers, für den
+                  das Kommando ausgeführt werden soll
                 </para>
               </listitem>
             </itemizedlist>
@@ -6797,8 +6968,8 @@ weechat.command("/nick newnick", "", "freenode")
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>name</option>: Name (Typ) des Infos, das gelesen werden soll
-                  (siehe <xref linkend="secAPI_get_info" />)
+                  <option>name</option>: Name (Typ) des Infos, das gelesen
+                  werden soll (siehe <xref linkend="secAPI_get_info" />)
                 </para>
               </listitem>
               <listitem>
@@ -6809,7 +6980,8 @@ weechat.command("/nick newnick", "", "freenode")
             </itemizedlist>
           </para>
           <para>
-            Rückgabewert: angefragte Infos, oder leerer String, wenn ein Fehler aufgetreten ist.
+            Rückgabewert: angefragte Infos, oder leerer String, wenn ein
+            Fehler aufgetreten ist.
           </para>
           <para>
             Beispiele:
@@ -7294,7 +7466,8 @@ end
             </itemizedlist>
           </para>
           <para>
-            Rückgabewert: Wert der Option, leerer String wenn nichts gefunden wurde.
+            Rückgabewert: Wert der Option, leerer String wenn nichts gefunden
+            wurde.
           </para>
           <para>
             Beispiele:
@@ -7353,7 +7526,8 @@ value2 = weechat.get_config("freenode.server_autojoin")
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>option</option>: Name der Option, die gesetzt werden soll
+                  <option>option</option>: Name der Option, die gesetzt werden
+                  soll
                 </para>
               </listitem>
               <listitem>
@@ -7364,7 +7538,8 @@ value2 = weechat.get_config("freenode.server_autojoin")
             </itemizedlist>
           </para>
           <para>
-            Rückgabewert: 1 wenn der Wert gesetzt wurde, 0 wenn ein Fehler aufgetreten ist.
+            Rückgabewert: 1 wenn der Wert gesetzt wurde, 0 wenn ein Fehler
+            aufgetreten ist.
           </para>
           <para>
             Beispiele:
@@ -7416,9 +7591,9 @@ weechat.set_config("freenode.server_autojoin", "#weechat")
             </command>
           </para>
           <para>
-            Gibt den Wert einer Option eines Plugins zurück. Die Option wird aus
-            der Datei "<literal>~/.weechat/plugins.rc</literal>" gelesen und 
-            sieht so aus: "<literal>plugin.option=value</literal>" 
+            Gibt den Wert einer Option eines Plugins zurück. Die Option wird
+            aus der Datei "<literal>~/.weechat/plugins.rc</literal>" gelesen
+            und sieht so aus: "<literal>plugin.option=value</literal>" 
             (Hinweis: Der Name des Plugins wird automatisch gesetzt).
           </para>
           <para>
@@ -7491,7 +7666,8 @@ value = weechat.get_plugin_config("my_var")
             <itemizedlist>
               <listitem>
                 <para>
-                  <option>option</option>: Name der Option, die gesetzt werden soll
+                  <option>option</option>: Name der Option, die gesetzt werden
+                  soll
                 </para>
               </listitem>
               <listitem>
@@ -7502,7 +7678,8 @@ value = weechat.get_plugin_config("my_var")
             </itemizedlist>
           </para>
           <para>
-            Rückgabewert: 1 wenn die Option gesetzt wurde, 0 wenn ein Fehler aufgetreten ist.
+            Rückgabewert: 1 wenn die Option gesetzt wurde, 0 wenn ein Fehler
+            aufgetreten ist.
           </para>
           <para>
             Beispiele:
