@@ -20,6 +20,6 @@ libdir = ${weechat_libdir}/plugins
 
 lib_LTLIBRARIES = perl.la
 
-perl_la_SOURCES = weechat-perl.c
+perl_la_SOURCES = perl.c
 perl_la_LDFLAGS = -module
 perl_la_LIBADD = ../lib_weechat_plugins_scripts.la $(PERL_LFLAGS)

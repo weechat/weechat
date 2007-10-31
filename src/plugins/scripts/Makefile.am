@@ -18,8 +18,8 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
 
 noinst_LTLIBRARIES = lib_weechat_plugins_scripts.la
 
-lib_weechat_plugins_scripts_la_SOURCES = weechat-script.h \
-                                         weechat-script.c
+lib_weechat_plugins_scripts_la_SOURCES = script.c \
+                                         script.h
 
 if PLUGIN_PERL
 perl_dir = perl

@@ -2604,18 +2604,18 @@ weechat_python_cmd (t_weechat_plugin *plugin,
             break;
 	    
         case 1:
-            if (plugin->ascii_strcasecmp (plugin, argv[0], "autoload") == 0)
+            if (plugin->strcasecmp (plugin, argv[0], "autoload") == 0)
                 weechat_script_auto_load (plugin, "python", weechat_python_load);
-            else if (plugin->ascii_strcasecmp (plugin, argv[0], "reload") == 0)
+            else if (plugin->strcasecmp (plugin, argv[0], "reload") == 0)
             {
                 weechat_python_unload_all (plugin);
                 weechat_script_auto_load (plugin, "python", weechat_python_load);
             }
-            else if (plugin->ascii_strcasecmp (plugin, argv[0], "unload") == 0)
+            else if (plugin->strcasecmp (plugin, argv[0], "unload") == 0)
                 weechat_python_unload_all (plugin);
             break;
         case 2:
-            if (plugin->ascii_strcasecmp (plugin, argv[0], "load") == 0)
+            if (plugin->strcasecmp (plugin, argv[0], "load") == 0)
             {
                 /* load Python script */
                 path_script = weechat_script_search_full_name (plugin, "python", argv[1]);
@@ -2623,7 +2623,7 @@ weechat_python_cmd (t_weechat_plugin *plugin,
                 if (path_script)
                     free (path_script);
             }
-            else if (plugin->ascii_strcasecmp (plugin, argv[0], "unload") == 0)
+            else if (plugin->strcasecmp (plugin, argv[0], "unload") == 0)
             {
                 /* unload Python script */
                 weechat_python_unload_name (plugin, argv[1]);

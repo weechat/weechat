@@ -76,7 +76,7 @@ weechat_script_search (t_weechat_plugin *plugin,
     for (ptr_script = *list; ptr_script;
          ptr_script = ptr_script->next_script)
     {
-        if (plugin->ascii_strcasecmp (plugin, ptr_script->name, name) == 0)
+        if (plugin->strcasecmp (plugin, ptr_script->name, name) == 0)
             return ptr_script;
     }
     
@@ -447,8 +447,8 @@ weechat_script_remove_handler (t_weechat_plugin *plugin,
         
         if ((ptr_arg1)
             && ((t_plugin_script *)ptr_handler->handler_pointer == script)
-            && (plugin->ascii_strcasecmp (plugin, ptr_arg1, arg1) == 0)
-            && (plugin->ascii_strcasecmp (plugin, ptr_handler->handler_args, arg2) == 0))
+            && (plugin->strcasecmp (plugin, ptr_arg1, arg1) == 0)
+            && (plugin->strcasecmp (plugin, ptr_handler->handler_args, arg2) == 0))
         {
             next_handler = ptr_handler->next_handler;
             plugin->handler_remove (plugin, ptr_handler);
@@ -476,7 +476,7 @@ weechat_script_remove_timer_handler (t_weechat_plugin *plugin,
     {
         if ((ptr_handler->type == PLUGIN_HANDLER_TIMER)
             && ((t_plugin_script *)ptr_handler->handler_pointer == script)
-            && (plugin->ascii_strcasecmp (plugin, ptr_handler->handler_args, function) == 0))
+            && (plugin->strcasecmp (plugin, ptr_handler->handler_args, function) == 0))
         {
             next_handler = ptr_handler->next_handler;
             plugin->handler_remove (plugin, ptr_handler);
@@ -504,7 +504,7 @@ weechat_script_remove_keyboard_handler (t_weechat_plugin *plugin,
     {
         if ((ptr_handler->type == PLUGIN_HANDLER_KEYBOARD)
             && ((t_plugin_script *)ptr_handler->handler_pointer == script)
-            && (plugin->ascii_strcasecmp (plugin, ptr_handler->handler_args, function) == 0))
+            && (plugin->strcasecmp (plugin, ptr_handler->handler_args, function) == 0))
         {
             next_handler = ptr_handler->next_handler;
             plugin->handler_remove (plugin, ptr_handler);
@@ -532,7 +532,7 @@ weechat_script_remove_event_handler (t_weechat_plugin *plugin,
     {
         if ((ptr_handler->type == PLUGIN_HANDLER_EVENT)
             && ((t_plugin_script *)ptr_handler->handler_pointer == script)
-            && (plugin->ascii_strcasecmp (plugin, ptr_handler->handler_args, function) == 0))
+            && (plugin->strcasecmp (plugin, ptr_handler->handler_args, function) == 0))
         {
             next_handler = ptr_handler->next_handler;
             plugin->handler_remove (plugin, ptr_handler);
@@ -576,8 +576,8 @@ weechat_script_remove_modifier (t_weechat_plugin *plugin,
         
         if ((ptr_arg2)
             && ((t_plugin_script *)ptr_modifier->modifier_pointer == script)
-            && (plugin->ascii_strcasecmp (plugin, ptr_arg2, arg2) == 0)
-            && (plugin->ascii_strcasecmp (plugin, ptr_modifier->modifier_args, arg3) == 0))
+            && (plugin->strcasecmp (plugin, ptr_arg2, arg2) == 0)
+            && (plugin->strcasecmp (plugin, ptr_modifier->modifier_args, arg3) == 0))
         {
             next_modifier = ptr_modifier->next_modifier;
             plugin->modifier_remove (plugin, ptr_modifier);

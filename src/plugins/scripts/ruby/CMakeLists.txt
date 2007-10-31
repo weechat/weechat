@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(ruby MODULE weechat-ruby.c)
+ADD_LIBRARY(ruby MODULE ruby.c)
 
 SET_TARGET_PROPERTIES(ruby PROPERTIES PREFIX "")
 
