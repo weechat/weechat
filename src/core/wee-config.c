@@ -429,7 +429,7 @@ struct t_config_option weechat_options_colors[] =
     &cfg_col_chat_prefix_more, NULL, weechat_config_change_color },
   { "col_chat_prefix_suffix",
     N_("color for text after prefix"),
-    OPTION_TYPE_COLOR, 0, 0, GUI_COLOR_CHAT_PREFIX_SUFFIX, "blue", NULL,
+    OPTION_TYPE_COLOR, 0, 0, GUI_COLOR_CHAT_PREFIX_SUFFIX, "green", NULL,
     &cfg_col_chat_prefix_suffix, NULL, weechat_config_change_color },
   { "col_chat_buffer",
     N_("color for buffer names"),
