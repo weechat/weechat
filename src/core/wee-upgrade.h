@@ -17,8 +17,8 @@
  */
 
 
-#ifndef __WEECHAT_SESSION_H
-#define __WEECHAT_SESSION_H 1
+#ifndef __WEECHAT_UPGRADE_H
+#define __WEECHAT_UPGRADE_H 1
 
 #define WEECHAT_SESSION_NAME "weechat_session.bin"
 
@@ -202,4 +202,4 @@ enum t_session_hotlist
 int session_save (char *filename);
 int session_load (char *filename);
 
-#endif /* wee-session.h */
+#endif /* wee-upgrade.h */

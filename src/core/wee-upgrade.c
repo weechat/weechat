@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* wee-session.c: save/restore session data */
+/* wee-upgrade.c: save/restore session data */
 
 
 #ifdef HAVE_CONFIG_H
@@ -34,7 +34,7 @@
 #endif*/
 
 #include "weechat.h"
-#include "wee-session.h"
+#include "wee-upgrade.h"
 #include "wee-log.h"
 #include "wee-string.h"
 #include "wee-utf8.h"

@@ -35,7 +35,7 @@
 #include "wee-hook.h"
 #include "wee-input.h"
 #include "wee-log.h"
-#include "wee-session.h"
+#include "wee-upgrade.h"
 #include "wee-string.h"
 #include "wee-utf8.h"
 #include "wee-list.h"

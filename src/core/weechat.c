@@ -57,7 +57,7 @@
 #include "wee-config.h"
 #include "wee-hook.h"
 #include "wee-log.h"
-#include "wee-session.h"
+#include "wee-upgrade.h"
 #include "wee-string.h"
 #include "wee-utf8.h"
 #include "wee-util.h"
