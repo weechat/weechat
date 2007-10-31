@@ -18,6 +18,7 @@
 
 /* weechat-charset.c: Charset plugin for WeeChat */
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #define __USE_GNU
@@ -25,21 +26,22 @@
 #include <iconv.h>
 
 #include "../weechat-plugin.h"
-#include "weechat-charset.h"
+#include "charset.h"
 
 
-char *weechat_charset_terminal = NULL;
-char *weechat_charset_internal = NULL;
+static char *weechat_charset_terminal = NULL;
+static char *weechat_charset_internal = NULL;
 
 /* set to 1 by /charset debug (hidden option) */
-int weechat_charset_debug = 0;
+static int weechat_charset_debug = 0;
 
 
 /*
- * weechat_charset_strndup: define strndup function if not existing (FreeBSD and maybe other)
+ * weechat_charset_strndup: define strndup function if not existing
+ *                          (FreeBSD and maybe other)
  */
 
-char *
+static char *
 weechat_charset_strndup (char *string, int length)
 {
     char *result;
@@ -61,7 +63,7 @@ weechat_charset_strndup (char *string, int length)
  * weechat_charset_default_decode: set "global.decode" option if needed
  */
 
-void
+static void
 weechat_charset_default_decode (t_weechat_plugin *plugin)
 {
     char *global_decode;
@@ -69,13 +71,15 @@ weechat_charset_default_decode (t_weechat_plugin *plugin)
     
     global_decode = plugin->get_plugin_config (plugin, "global.decode");
     
-    /* if global decode is not set, we may set it, depending on terminal charset */
+    /* if global decode is not set, we may set it, depending on terminal
+       charset */
     if (!global_decode || !global_decode[0])
     {
         /* set global decode charset to terminal if different from internal */
         /* otherwise use ISO-8859-1 */
         if (weechat_charset_terminal && weechat_charset_internal
-            && (strcasecmp (weechat_charset_terminal, weechat_charset_internal) != 0))
+            && (strcasecmp (weechat_charset_terminal,
+                            weechat_charset_internal) != 0))
             rc = plugin->set_plugin_config (plugin,
                                             "global.decode",
                                             weechat_charset_terminal);
@@ -85,11 +89,13 @@ weechat_charset_default_decode (t_weechat_plugin *plugin)
                                             "ISO-8859-1");
         if (rc)
             plugin->print_server (plugin,
-                                  "Charset: setting \"charset.global.decode\" to %s",
+                                  "Charset: setting \"charset.global.decode\" "
+                                  "to %s",
                                   weechat_charset_terminal);
         else
             plugin->print_server (plugin,
-                                  "Charset: failed to set \"charset.global.decode\" option.");
+                                  "Charset: failed to set "
+                                  "\"charset.global.decode\" option.");
     }
     if (global_decode)
         free (global_decode);
@@ -100,7 +106,7 @@ weechat_charset_default_decode (t_weechat_plugin *plugin)
  *                        if a charset is NULL, internal charset is used
  */
 
-int
+static int
 weechat_charset_check (char *charset)
 {
     iconv_t cd;
@@ -121,7 +127,7 @@ weechat_charset_check (char *charset)
  *                             we first in this order: channel, server, global
  */
 
-char *
+static char *
 weechat_charset_get_config (t_weechat_plugin *plugin,
                             char *type, char *server, char *channel)
 {
@@ -131,7 +137,8 @@ weechat_charset_get_config (t_weechat_plugin *plugin,
     /* we try channel first */
     if (server && channel)
     {
-        snprintf (option, sizeof (option) - 1, "%s.%s.%s", type, server, channel);
+        snprintf (option, sizeof (option) - 1, "%s.%s.%s", type,
+                  server, channel);
         value = plugin->get_plugin_config (plugin, option);
         if (value && value[0])
             return value;
@@ -166,14 +173,16 @@ weechat_charset_get_config (t_weechat_plugin *plugin,
  * weechat_charset_set_config: set a charset in config file
  */
 
-void
+static void
 weechat_charset_set_config (t_weechat_plugin *plugin,
-                            char *type, char *server, char *channel, char *value)
+                            char *type, char *server, char *channel,
+                            char *value)
 {
     static char option[1024];
     
     if (server && channel)
-        snprintf (option, sizeof (option) - 1, "%s.%s.%s", type, server, channel);
+        snprintf (option, sizeof (option) - 1, "%s.%s.%s", type,
+                  server, channel);
     else if (server)
         snprintf (option, sizeof (option) - 1, "%s.%s", type, server);
     else
@@ -187,7 +196,7 @@ weechat_charset_set_config (t_weechat_plugin *plugin,
  *                                of arguments in IRC message
  */
 
-void
+static void
 weechat_charset_parse_irc_msg (char *message, char **nick, char **command,
                                char **channel, char **pos_args)
 {
@@ -251,7 +260,8 @@ weechat_charset_parse_irc_msg (char *message, char **nick, char **command,
                     if (!*nick)
                     {
                         if (pos3)
-                            *nick = weechat_charset_strndup (pos2, pos3 - pos2);
+                            *nick = weechat_charset_strndup (pos2,
+                                                             pos3 - pos2);
                         else
                             *nick = strdup (pos2);
                     }
@@ -265,7 +275,8 @@ weechat_charset_parse_irc_msg (char *message, char **nick, char **command,
                         {
                             pos4 = strchr (pos3, ' ');
                             if (pos4)
-                                *channel = weechat_charset_strndup (pos3, pos4 - pos3);
+                                *channel = weechat_charset_strndup (pos3,
+                                                                    pos4 - pos3);
                             else
                                 *channel = strdup (pos3);
                         }
@@ -281,7 +292,7 @@ weechat_charset_parse_irc_msg (char *message, char **nick, char **command,
  *                         convert from any charset to WeeChat internal
  */
 
-char *
+static char *
 weechat_charset_irc_in (t_weechat_plugin *plugin, int argc, char **argv,
                         char *handler_args, void *handler_pointer)
 {
@@ -295,7 +306,8 @@ weechat_charset_irc_in (t_weechat_plugin *plugin, int argc, char **argv,
     
     output = NULL;
     
-    weechat_charset_parse_irc_msg (argv[1], &nick, &command, &channel, &ptr_args);
+    weechat_charset_parse_irc_msg (argv[1], &nick, &command, &channel,
+                                   &ptr_args);
     
     charset = weechat_charset_get_config (plugin,
                                           "decode", argv[0],
@@ -329,7 +341,7 @@ weechat_charset_irc_in (t_weechat_plugin *plugin, int argc, char **argv,
  *                          convert from WeeChat internal charset to other
  */
 
-char *
+static char *
 weechat_charset_irc_out (t_weechat_plugin *plugin, int argc, char **argv,
                          char *handler_args, void *handler_pointer)
 {
@@ -343,7 +355,8 @@ weechat_charset_irc_out (t_weechat_plugin *plugin, int argc, char **argv,
     
     output = NULL;
     
-    weechat_charset_parse_irc_msg (argv[1], &nick, &command, &channel, &ptr_args);
+    weechat_charset_parse_irc_msg (argv[1], &nick, &command, &channel,
+                                   &ptr_args);
     
     charset = weechat_charset_get_config (plugin,
                                           "encode", argv[0],
@@ -376,7 +389,7 @@ weechat_charset_irc_out (t_weechat_plugin *plugin, int argc, char **argv,
  * weechat_charset_display: display charsets (global/server/channel)
  */
 
-void
+static void
 weechat_charset_display (t_weechat_plugin *plugin,
                          int display_on_server, char *server, char *channel)
 {
@@ -394,12 +407,14 @@ weechat_charset_display (t_weechat_plugin *plugin,
 
         if (display_on_server)
             plugin->print_server (plugin,
-                                  "Charset: global charsets: decode = %s, encode = %s",
+                                  "Charset: global charsets: decode = %s, "
+                                  "encode = %s",
                                   (decode) ? decode : "(none)",
                                   (encode) ? encode : "(none)");
         else
             plugin->print (plugin, NULL, NULL,
-                           "Charset: global charsets: decode = %s, encode = %s",
+                           "Charset: global charsets: decode = %s, "
+                           "encode = %s",
                            (decode) ? decode : "(none)",
                            (encode) ? encode : "(none)");
     }
@@ -414,13 +429,15 @@ weechat_charset_display (t_weechat_plugin *plugin,
 
         if (display_on_server)
             plugin->print_server (plugin,
-                                  "Charset: decode / encode charset for server %s: %s / %s",
+                                  "Charset: decode / encode charset for "
+                                  "server %s: %s / %s",
                                   server,
                                   (decode) ? decode : "(none)",
                                   (encode) ? encode : "(none)");
         else
             plugin->print (plugin, NULL, NULL,
-                           "Charset: decode / encode charset for server %s: %s / %s",
+                           "Charset: decode / encode charset for server %s: "
+                           "%s / %s",
                            server,
                            (decode) ? decode : "(none)",
                            (encode) ? encode : "(none)");
@@ -429,20 +446,24 @@ weechat_charset_display (t_weechat_plugin *plugin,
     /* display chan/nick settings */
     if (server && channel)
     {
-        snprintf (option, sizeof (option) - 1, "decode.%s.%s", server, channel);
+        snprintf (option, sizeof (option) - 1,
+                  "decode.%s.%s", server, channel);
         decode = plugin->get_plugin_config (plugin, option);
-        snprintf (option, sizeof (option) - 1, "encode.%s.%s", server, channel);
+        snprintf (option, sizeof (option) - 1,
+                  "encode.%s.%s", server, channel);
         encode = plugin->get_plugin_config (plugin, option);
 
         if (display_on_server)
             plugin->print_server (plugin,
-                                  "Charset: decode / encode charset for %s/%s: %s / %s",
+                                  "Charset: decode / encode charset for "
+                                  "%s/%s: %s / %s",
                                   server, channel,
                                   (decode) ? decode : "(none)",
                                   (encode) ? encode : "(none)");
         else
             plugin->print (plugin, NULL, NULL,
-                           "Charset: decode / encode charset for %s/%s: %s / %s",
+                           "Charset: decode / encode charset for %s/%s: "
+                           "%s / %s",
                            server, channel,
                            (decode) ? decode : "(none)",
                            (encode) ? encode : "(none)");
@@ -458,7 +479,7 @@ weechat_charset_display (t_weechat_plugin *plugin,
  * weechat_charset_cmd: /charset command
  */
 
-int
+static int
 weechat_charset_cmd (t_weechat_plugin *plugin,
                      int cmd_argc, char **cmd_argv,
                      char *handler_args, void *handler_pointer)
@@ -497,12 +518,14 @@ weechat_charset_cmd (t_weechat_plugin *plugin,
         case 1:
             if (strcasecmp (argv[0], "decode") == 0)
             {
-                weechat_charset_set_config (plugin, "decode", server, channel, NULL);
+                weechat_charset_set_config (plugin, "decode",
+                                            server, channel, NULL);
                 weechat_charset_display (plugin, 0, server, channel);
             }
             else if (strcasecmp (argv[0], "encode") == 0)
             {
-                weechat_charset_set_config (plugin, "encode", server, channel, NULL);
+                weechat_charset_set_config (plugin, "encode",
+                                            server, channel, NULL);
                 weechat_charset_display (plugin, 0, server, channel);
             }
             else if (strcasecmp (argv[0], "debug") == 0)
@@ -514,20 +537,25 @@ weechat_charset_cmd (t_weechat_plugin *plugin,
             }
             else if (strcasecmp (argv[0], "reset") == 0)
             {
-                weechat_charset_set_config (plugin, "decode", server, channel, NULL);
-                weechat_charset_set_config (plugin, "encode", server, channel, NULL);
+                weechat_charset_set_config (plugin, "decode",
+                                            server, channel, NULL);
+                weechat_charset_set_config (plugin, "encode",
+                                            server, channel, NULL);
                 weechat_charset_display (plugin, 0, server, channel);
             }
             else
             {
                 if (!weechat_charset_check (argv[0]))
                     plugin->print_server (plugin,
-                                          "Charset error: invalid charset \"%s\"",
+                                          "Charset error: invalid charset "
+                                          "\"%s\"",
                                           argv[0]);
                 else
                 {
-                    weechat_charset_set_config (plugin, "decode", server, channel, argv[0]);
-                    weechat_charset_set_config (plugin, "encode", server, channel, argv[0]);
+                    weechat_charset_set_config (plugin, "decode",
+                                                server, channel, argv[0]);
+                    weechat_charset_set_config (plugin, "encode",
+                                                server, channel, argv[0]);
                     weechat_charset_display (plugin, 0, server, channel);
                 }
             }
@@ -541,17 +569,20 @@ weechat_charset_cmd (t_weechat_plugin *plugin,
             {
                 if (strcasecmp (argv[0], "decode") == 0)
                 {
-                    weechat_charset_set_config (plugin, "decode", server, channel, argv[1]);
+                    weechat_charset_set_config (plugin, "decode",
+                                                server, channel, argv[1]);
                     weechat_charset_display (plugin, 0, server, channel);
                 }
                 else if (strcasecmp (argv[0], "encode") == 0)
                 {
-                    weechat_charset_set_config (plugin, "encode", server, channel, argv[1]);
+                    weechat_charset_set_config (plugin, "encode",
+                                                server, channel, argv[1]);
                     weechat_charset_display (plugin, 0, server, channel);
                 }
                 else
                     plugin->print_server (plugin,
-                                          "Charset error: unknown option \"%s\"",
+                                          "Charset error: unknown option "
+                                          "\"%s\"",
                                           argv[0]);
             }
             break;
@@ -571,18 +602,22 @@ weechat_charset_cmd (t_weechat_plugin *plugin,
  * weechat_plugin_init: init charset plugin
  */
 
-int
+static int
 weechat_plugin_init (t_weechat_plugin *plugin)
 {
     t_plugin_modifier *msg_irc_in, *msg_irc_out;
     t_plugin_handler *cmd_handler;
 
     /* get terminal & internal charsets */
-    weechat_charset_terminal = plugin->get_info (plugin, "charset_terminal", NULL);
-    weechat_charset_internal = plugin->get_info (plugin, "charset_internal", NULL);
+    weechat_charset_terminal = plugin->get_info (plugin, "charset_terminal",
+                                                 NULL);
+    weechat_charset_internal = plugin->get_info (plugin, "charset_internal",
+                                                 NULL);
 
     /* display message */
-    plugin->print_server (plugin, "Charset plugin starting, terminal charset: %s (WeeChat internal: %s)",
+    plugin->print_server (plugin,
+                          "Charset plugin starting, terminal charset: "
+                          "%s (WeeChat internal: %s)",
                           weechat_charset_terminal, weechat_charset_internal);
     
     /* set global default decode charset */
@@ -590,15 +625,24 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     
     /* add command handler */
     cmd_handler = plugin->cmd_handler_add (plugin, "charset",
-                                           "Charset management by server or channel",
-                                           "[[decode | encode] charset] | [reset]",
-                                           " decode: set a decoding charset for server/channel\n"
-                                           " encode: set an encofing charset for server/channel\n"
-                                           "charset: the charset for decoding or encoding messages\n"
-                                           "  reset: reset charsets for server/channel\n\n"
-                                           "To set global decode/encode charset (for all servers), use /setp charset.global.decode "
+                                           "Charset management by server or "
+                                           "channel",
+                                           "[[decode | encode] charset] | "
+                                           "[reset]",
+                                           " decode: set a decoding charset "
+                                           "for server/channel\n"
+                                           " encode: set an encofing charset "
+                                           "for server/channel\n"
+                                           "charset: the charset for decoding "
+                                           "or encoding messages\n"
+                                           "  reset: reset charsets for "
+                                           "server/channel\n\n"
+                                           "To set global decode/encode "
+                                           "charset (for all servers), use "
+                                           "/setp charset.global.decode "
                                            "or /setp charset.global.encode\n"
-                                           "To see all charsets for all servers, use /setp charset",
+                                           "To see all charsets for all "
+                                           "servers, use /setp charset",
                                            "decode|encode|reset",
                                            &weechat_charset_cmd,
                                            NULL, NULL);
@@ -618,7 +662,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
  * weechat_plugin_end: end charset plugin
  */
 
-void
+static void
 weechat_plugin_end (t_weechat_plugin *plugin)
 {
     /* make C compiler happy */

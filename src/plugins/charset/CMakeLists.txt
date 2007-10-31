@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(charset MODULE weechat-charset.h weechat-charset.c)
+ADD_LIBRARY(charset MODULE charset.c charset.h)
 SET_TARGET_PROPERTIES(charset PROPERTIES PREFIX "")
 
 IF(ICONV_FOUND)
