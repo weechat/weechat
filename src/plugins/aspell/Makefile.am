@@ -20,6 +20,6 @@ libdir = ${weechat_libdir}/plugins
 
 lib_LTLIBRARIES = aspell.la
 
-aspell_la_SOURCES = weechat-aspell.h weechat-aspell.c
+aspell_la_SOURCES = aspell.c aspell.h
 aspell_la_LDFLAGS = -module
 aspell_la_LIBADD  = $(ASPELL_LFLAGS)

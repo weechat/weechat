@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(aspell MODULE weechat-aspell.h weechat-aspell.c)
+ADD_LIBRARY(aspell MODULE aspell.c aspell.h)
 SET_TARGET_PROPERTIES(aspell PROPERTIES PREFIX "")
 
 IF(ASPELL_FOUND)
