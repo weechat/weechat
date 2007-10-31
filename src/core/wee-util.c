@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* util.c: some useful functions for WeeChat */
+/* wee-util.c: some useful functions for WeeChat */
 
 
 #ifdef HAVE_CONFIG_H
@@ -25,501 +25,24 @@
 
 #include <stdlib.h>
 #include <errno.h>
-#include <stdarg.h>
 #include <string.h>
-#include <ctype.h>
-
-#ifdef HAVE_ICONV
-#include <iconv.h>
-#endif
-
-#ifndef ICONV_CONST
-  #ifdef ICONV_2ARG_IS_CONST
-    #define ICONV_CONST const
-  #else
-    #define ICONV_CONST
-  #endif
-#endif
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <dirent.h>
 
 #include "weechat.h"
-#include "utf8.h"
-#include "weeconfig.h"
+#include "wee-util.h"
+#include "wee-config.h"
+#include "wee-string.h"
 
 
 /*
- * strndup: define strndup function if not existing (FreeBSD and maybe other)
- */
-
-#ifndef HAVE_STRNDUP
-char *
-strndup (char *string, int length)
-{
-    char *result;
-    
-    if ((int)strlen (string) < length)
-        return strdup (string);
-    
-    result = (char *)malloc (length + 1);
-    if (!result)
-        return NULL;
-    
-    memcpy (result, string, length);
-    result[length] = '\0';
-    
-    return result;
-}
-#endif
-
-/*
- * ascii_tolower: locale independant string conversion to lower case
- */
-
-void
-ascii_tolower (char *string)
-{
-    while (string && string[0])
-    {
-        if ((string[0] >= 'A') && (string[0] <= 'Z'))
-            string[0] += ('a' - 'A');
-        string++;
-    }
-}
-
-/*
- * ascii_toupper: locale independant string conversion to upper case
- */
-
-void
-ascii_toupper (char *string)
-{
-    while (string && string[0])
-    {
-        if ((string[0] >= 'a') && (string[0] <= 'z'))
-            string[0] -= ('a' - 'A');
-        string++;
-    }
-}
-
-/*
- * ascii_strcasecmp: locale and case independent string comparison
- */
-
-int
-ascii_strcasecmp (char *string1, char *string2)
-{
-    int c1, c2;
-    
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-    
-    while (string1[0] && string2[0])
-    {
-        c1 = (int)((unsigned char) string1[0]);
-        c2 = (int)((unsigned char) string2[0]);
-        
-        if ((c1 >= 'A') && (c1 <= 'Z'))
-            c1 += ('a' - 'A');
-        
-        if ((c2 >= 'A') && (c2 <= 'Z'))
-            c2 += ('a' - 'A');
-        
-        if ((c1 - c2) != 0)
-            return c1 - c2;
-        
-        string1++;
-        string2++;
-    }
-    
-    return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
-}
-
-/*
- * ascii_strncasecmp: locale and case independent string comparison
- *                    with max length
- */
-
-int
-ascii_strncasecmp (char *string1, char *string2, int max)
-{
-    int c1, c2, count;
-    
-    if (!string1 || !string2)
-        return (string1) ? 1 : ((string2) ? -1 : 0);
-    
-    count = 0;
-    while ((count < max) && string1[0] && string2[0])
-    {
-        c1 = (int)((unsigned char) string1[0]);
-        c2 = (int)((unsigned char) string2[0]);
-        
-        if ((c1 >= 'A') && (c1 <= 'Z'))
-            c1 += ('a' - 'A');
-        
-        if ((c2 >= 'A') && (c2 <= 'Z'))
-            c2 += ('a' - 'A');
-        
-        if ((c1 - c2) != 0)
-            return c1 - c2;
-        
-        string1++;
-        string2++;
-        count++;
-    }
-    
-    if (count >= max)
-        return 0;
-    else
-        return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
-}
-
-/*
- * ascii_strcasestr: locale and case independent string search
- */
-
-char *
-ascii_strcasestr (char *string, char *search)
-{
-    int length_search;
-    
-    length_search = strlen (search);
-    
-    if (!string || !search || (length_search == 0))
-        return NULL;
-    
-    while (string[0])
-    {
-        if (ascii_strncasecmp (string, search, length_search) == 0)
-            return string;
-        
-        string++;
-    }
-    
-    return NULL;
-}
-
-/*
- * weechat_iconv: convert string to another charset
- */
-
-char *
-weechat_iconv (int from_utf8, char *from_code, char *to_code, char *string)
-{
-    char *outbuf;
-    
-#ifdef HAVE_ICONV
-    iconv_t cd;
-    char *inbuf, *ptr_inbuf, *ptr_outbuf, *next_char;
-    char *ptr_inbuf_shift;
-    int done;
-    size_t err, inbytesleft, outbytesleft;
-    
-    if (from_code && from_code[0] && to_code && to_code[0]
-        && (ascii_strcasecmp(from_code, to_code) != 0))
-    {
-        cd = iconv_open (to_code, from_code);
-        if (cd == (iconv_t)(-1))
-            outbuf = strdup (string);
-        else
-        {
-            inbuf = strdup (string);
-            ptr_inbuf = inbuf;
-            inbytesleft = strlen (inbuf);
-            outbytesleft = inbytesleft * 4;
-            outbuf = (char *) malloc (outbytesleft + 2);
-            ptr_outbuf = outbuf;
-            ptr_inbuf_shift = NULL;
-            done = 0;
-            while (!done)
-            {
-                err = iconv (cd, (ICONV_CONST char **)(&ptr_inbuf), &inbytesleft,
-                             &ptr_outbuf, &outbytesleft);
-                if (err == (size_t)(-1))
-                {
-                    switch (errno)
-                    {
-                        case EINVAL:
-                            done = 1;
-                            break;
-                        case E2BIG:
-                            done = 1;
-                            break;
-                        case EILSEQ:
-                            if (from_utf8)
-                            {
-                                next_char = utf8_next_char (ptr_inbuf);
-                                if (next_char)
-                                {
-                                    inbytesleft -= next_char - ptr_inbuf;
-                                    ptr_inbuf = next_char;
-                                }
-                                else
-                                {
-                                    inbytesleft--;
-                                    ptr_inbuf++;
-                                }
-                            }
-                            else
-                            {
-                                ptr_inbuf++;
-                                inbytesleft--;
-                            }
-                            ptr_outbuf[0] = '?';
-                            ptr_outbuf++;
-                            outbytesleft--;
-                            break;
-                    }
-                }
-                else
-                {
-                    if (!ptr_inbuf_shift)
-                    {
-                        ptr_inbuf_shift = ptr_inbuf;
-                        ptr_inbuf = NULL;
-                        inbytesleft = 0;
-                    }
-                    else
-                        done = 1;
-                }
-            }
-            if (ptr_inbuf_shift)
-                ptr_inbuf = ptr_inbuf_shift;
-            ptr_outbuf[0] = '\0';
-            free (inbuf);
-            iconv_close (cd);
-        }
-    }
-    else
-        outbuf = strdup (string);
-#else
-    /* make C compiler happy */
-    (void) from_utf8;
-    (void) from_code;
-    (void) to_code;
-    outbuf = strdup (string);
-#endif /* HAVE_ICONV */
-    
-    return outbuf;
-}
-
-/*
- * weechat_iconv_to_internal: convert user string (input, script, ..) to
- *                            WeeChat internal storage charset
- */
-
-char *
-weechat_iconv_to_internal (char *charset, char *string)
-{
-    char *input, *output;
-    
-    input = strdup (string);
-    
-    /* optimize for UTF-8: if charset is NULL => we use term charset =>
-       if ths charset is already UTF-8, then no iconv needed */
-    if (local_utf8 && (!charset || !charset[0]))
-        return input;
-    
-    if (input)
-    {
-        if (utf8_has_8bits (input) && utf8_is_valid (input, NULL))
-            return input;
-        
-        output = weechat_iconv (0,
-                                (charset && charset[0]) ?
-                                charset : local_charset,
-                                WEECHAT_INTERNAL_CHARSET,
-                                input);
-        utf8_normalize (output, '?');
-        free (input);
-        return output;
-    }
-    return NULL;
-}
-
-/*
- * weechat_iconv_from_internal: convert internal string to terminal charset,
- *                              for display
- */
-
-char *
-weechat_iconv_from_internal (char *charset, char *string)
-{
-    char *input, *output;
-    
-    input = strdup (string);
-    
-    /* optimize for UTF-8: if charset is NULL => we use term charset =>
-       if ths charset is already UTF-8, then no iconv needed */
-    if (local_utf8 && (!charset || !charset[0]))
-        return input;
-    
-    if (input)
-    {
-        utf8_normalize (input, '?');
-        output = weechat_iconv (1,
-                                WEECHAT_INTERNAL_CHARSET,
-                                (charset && charset[0]) ?
-                                charset : local_charset,
-                                input);
-        free (input);
-        return output;
-    }
-    return NULL;
-}
-
-/*
- * weechat_iconv_fprintf: encode to terminal charset, then call fprintf on a file
- */
-
-void
-weechat_iconv_fprintf (FILE *file, char *data, ...)
-{
-    va_list argptr;
-    static char buf[4096];
-    char *buf2;
-    
-    va_start (argptr, data);
-    vsnprintf (buf, sizeof (buf) - 1, data, argptr);
-    va_end (argptr);
-    
-    buf2 = weechat_iconv_from_internal (NULL, buf);
-    fprintf (file, "%s", (buf2) ? buf2 : buf);
-    if (buf2)
-        free (buf2);
-}
-
-/*
- * weechat_strreplace: replace a string by new one in a string
- *                     note: returned value has to be free() after use
- */
-
-char *
-weechat_strreplace (char *string, char *search, char *replace)
-{
-    char *pos, *new_string;
-    int length1, length2, length_new, count;
-    
-    if (!string || !search || !replace)
-        return NULL;
-    
-    length1 = strlen (search);
-    length2 = strlen (replace);
-    
-    /* count number of strings to replace */
-    count = 0;
-    pos = string;
-    while (pos && pos[0] && (pos = strstr (pos, search)))
-    {
-        count++;
-        pos += length1;
-    }
-    
-    /* easy: no string to replace! */
-    if (count == 0)
-        return strdup (string);
-    
-    /* compute needed memory for new string */
-    length_new = strlen (string) - (count * length1) + (count * length2) + 1;
-    
-    /* allocate new string */
-    new_string = (char *)malloc (length_new * sizeof (char));
-    if (!new_string)
-        return strdup (string);
-    
-    /* replace all occurences */
-    new_string[0] = '\0';
-    while (string && string[0])
-    {
-        pos = strstr (string, search);
-        if (pos)
-        {
-            strncat (new_string, string, pos - string);
-            strcat (new_string, replace);
-            pos += length1;
-        }
-        else
-            strcat (new_string, string);
-        string = pos;
-    }
-    return new_string;
-}
-
-/*
- * weechat_convert_hex_chars: convert hex chars (\x??) to value
- */
-
-char *
-weechat_convert_hex_chars (char *string)
-{
-    char *output, hex_str[8], *error;
-    int pos_output;
-    long number;
-
-    output = (char *)malloc (strlen (string) + 1);
-    if (output)
-    {
-        pos_output = 0;
-        while (string && string[0])
-        {
-            if (string[0] == '\\')
-            {
-                string++;
-                switch (string[0])
-                {
-                    case '\\':
-                        output[pos_output++] = '\\';
-                        string++;
-                        break;
-                    case 'x':
-                    case 'X':
-                        if (isxdigit (string[1])
-                            && isxdigit (string[2]))
-                        {
-                            snprintf (hex_str, sizeof (hex_str),
-                                      "0x%c%c", string[1], string[2]);
-                            number = strtol (hex_str, &error, 16);
-                            if ((error) && (error[0] == '\0'))
-                            {
-                                output[pos_output++] = number;
-                                string += 3;
-                            }
-                            else
-                            {
-                                output[pos_output++] = '\\';
-                                output[pos_output++] = string[0];
-                                string++;
-                            }
-                        }
-                        else
-                        {
-                            output[pos_output++] = string[0];
-                            string++;
-                        }
-                        break;
-                    default:
-                        output[pos_output++] = '\\';
-                        output[pos_output++] = string[0];
-                        string++;
-                        break;
-                }
-            }
-            else
-            {
-                output[pos_output++] = string[0];
-                string++;
-            }
-        }
-        output[pos_output] = '\0';
-    }
-    
-    return output;
-}
-
-/*
- * get_timeval_diff: calculates difference between two times (return in milliseconds)
+ * util_get_timeval_diff: calculates difference between two times (return in
+ *                        milliseconds)
  */
 
 long
-get_timeval_diff (struct timeval *tv1, struct timeval *tv2)
+util_get_timeval_diff (struct timeval *tv1, struct timeval *tv2)
 {
     long diff_sec, diff_usec;
     
@@ -535,196 +58,150 @@ get_timeval_diff (struct timeval *tv1, struct timeval *tv2)
 }
 
 /*
- * explode_string: explode a string according to separators
+ * util_get_time_length: calculates time length with a time format
  */
 
-char **
-explode_string (char *string, char *separators, int num_items_max,
-                int *num_items)
+int
+util_get_time_length (char *time_format)
 {
-    int i, n_items;
-    char **array;
-    char *ptr, *ptr1, *ptr2;
+    time_t date;
+    struct tm *local_time;
+    char text_time[1024];
+    
+    if (!time_format || !time_format[0])
+        return 0;
+    
+    date = time (NULL);
+    local_time = localtime (&date);
+    strftime (text_time, sizeof (text_time),
+              time_format, local_time);
+    return strlen (text_time);
+}
 
-    if (num_items != NULL)
-        *num_items = 0;
-    
-    if (!string || !string[0])
-        return NULL;
-    
-    /* calculate number of items */
-    ptr = string;
-    i = 1;
-    while ((ptr = strpbrk (ptr, separators)))
-    {
-        while (strchr (separators, ptr[0]) != NULL)
-            ptr++;
-        i++;
-    }
-    n_items = i;
 
-    if ((num_items_max != 0) && (n_items > num_items_max))
-        n_items = num_items_max;
-    
-    array =
-        (char **) malloc ((n_items + 1) * sizeof (char *));
-    
-    ptr1 = string;
-    ptr2 = string;
-    
-    for (i = 0; i < n_items; i++)
+/*
+ * util_create_dir: create a directory
+ *                  return: 1 if ok (or directory already exists)
+ *                          0 if error
+ */
+
+int
+util_create_dir (char *directory, int permissions)
+{
+    if (mkdir (directory, 0755) < 0)
     {
-        while (strchr (separators, ptr1[0]) != NULL)
-            ptr1++;
-        if (i == (n_items - 1) || (ptr2 = strpbrk (ptr1, separators)) == NULL)
-            if ((ptr2 = strchr (ptr1, '\r')) == NULL)
-                if ((ptr2 = strchr (ptr1, '\n')) == NULL)
-                    ptr2 = strchr (ptr1, '\0');
-        
-        if ((ptr1 == NULL) || (ptr2 == NULL))
+        /* exit if error (except if directory already exists) */
+        if (errno != EEXIST)
         {
-            array[i] = NULL;
+            string_iconv_fprintf (stderr,
+                                  _("%s cannot create directory \"%s\"\n"),
+                                  WEECHAT_ERROR, directory);
+            return 0;
         }
-        else
-        {
-            if (ptr2 - ptr1 > 0)
-            {
-                array[i] =
-                    (char *) malloc ((ptr2 - ptr1 + 1) * sizeof (char));
-                array[i] = strncpy (array[i], ptr1, ptr2 - ptr1);
-                array[i][ptr2 - ptr1] = '\0';
-                ptr1 = ++ptr2;
-            }
-            else
-            {
-                array[i] = NULL;
-            }
-        }
+        return 1;
     }
-    
-    array[i] = NULL;
-    if (num_items != NULL)
-        *num_items = i;
-    
-    return array;
+    if ((permissions != 0) && (strcmp (directory, getenv ("HOME")) != 0))
+        chmod (directory, permissions);
+    return 1;
 }
 
 /*
- * free_exploded_string: free an exploded string
+ * util_exec_on_files: find files in a directory and execute a
+ *                     function on each file
  */
 
 void
-free_exploded_string (char **exploded_string)
+util_exec_on_files (char *directory, int (*callback)(char *))
 {
-    int i;
+    char complete_filename[1024];
+    DIR *dir;
+    struct dirent *entry;
+    struct stat statbuf;
     
-    if (exploded_string)
+    dir = opendir (directory);
+    if (dir)
     {
-        for (i = 0; exploded_string[i]; i++)
-            free (exploded_string[i]);
-        free (exploded_string);
+        while ((entry = readdir (dir)))
+        {
+            snprintf (complete_filename, sizeof (complete_filename) - 1,
+                      "%s/%s", directory, entry->d_name);
+            lstat (complete_filename, &statbuf);
+            if (!S_ISDIR(statbuf.st_mode))
+            {
+                (int) (*callback) (complete_filename);
+            }
+        }
+        closedir (dir);
     }
 }
 
 /*
- * split_multi_command: split a list of commands separated by 'sep'
- *                      and ecscaped with '\'
- *                      - empty commands are removed
- *                      - spaces on the left of each commands are stripped
- *                      Result must be freed with free_multi_command
+ * util_search_full_lib_name: search the full name of a WeeChat library
+ *                            file with a part of name
+ *                            - look in WeeChat user's dir, then WeeChat
+ *                              global lib dir
+ *                            - sys_directory is the system directory under
+ *                              WeeChat lib prefix, for example "plugins"
+ *                            - result has to be free() after use
  */
 
-char **
-split_multi_command (char *command, char sep)
+char *
+util_search_full_lib_name (char *filename, char *sys_directory)
 {
-    int nb_substr, arr_idx, str_idx, type;
-    char **array;
-    char *buffer, *ptr, *p;
-
-    if (command == NULL)
-	return NULL;
+    char *name_with_ext, *final_name;
+    int length;
+    struct stat st;
     
-    nb_substr = 1;
-    ptr = command;
-    while ( (p = strchr(ptr, sep)) != NULL)
+    /* filename is already a full path */
+    if (strchr (filename, '/') || strchr (filename, '\\'))
+        return strdup (filename);
+    
+    length = strlen (filename) + 16;
+    if (cfg_plugins_extension && cfg_plugins_extension[0])
+        length += strlen (cfg_plugins_extension);
+    name_with_ext = (char *)malloc (length);
+    if (!name_with_ext)
+        return strdup (filename);
+    strcpy (name_with_ext, filename);
+    if (!strchr (filename, '.')
+        && cfg_plugins_extension && cfg_plugins_extension[0])
+        strcat (name_with_ext, cfg_plugins_extension);
+    
+    /* try WeeChat user's dir */
+    length = strlen (weechat_home) + strlen (name_with_ext) +
+        strlen (sys_directory) + 16;
+    final_name = (char *)malloc (length);
+    if (!final_name)
     {
-	nb_substr++;
-	ptr = ++p;
+        free (name_with_ext);
+        return strdup (filename);
     }
-
-    array = (char **) malloc ((nb_substr + 1) * sizeof(char *));
-    if (!array)
-	return NULL;
-    
-    buffer = (char *) malloc ( (strlen(command) + 1) * sizeof (char));
-    if (!buffer)
+    snprintf (final_name, length,
+              "%s/%s/%s", weechat_home, sys_directory, name_with_ext);
+    if ((stat (final_name, &st) == 0) && (st.st_size > 0))
     {
-	free (array);
-	return NULL;
+        free (name_with_ext);
+        return final_name;
     }
+    free (final_name);
     
-    ptr = command;
-    str_idx = 0;
-    arr_idx = 0;
-    while(*ptr != '\0') 
-    {	
-	type = 0;
-	if (*ptr == ';')
-	{
-	    if (ptr == command)
-		type = 1;
-	    else if ( *(ptr-1) != '\\')
-		type = 1;
-	    else if ( *(ptr-1) == '\\')
-		type = 2;
-	}	
-	if (type == 1)
-	{
-	    buffer[str_idx] = '\0';
-	    str_idx = -1;
-	    p = buffer;
-	    /* strip white spaces a the begining of the line */
-	    while (*p == ' ') p++;
-	    if (p  && p[0])
-		array[arr_idx++] = strdup (p);
-	}	
-	else if (type == 2)
-	    buffer[--str_idx] = *ptr;
-	else
-	    buffer[str_idx] = *ptr;
-	str_idx++;
-	ptr++;
-    }
-    
-    buffer[str_idx] = '\0';
-    p = buffer;
-    while (*p == ' ') p++;
-    if (p  && p[0])
-	array[arr_idx++] = strdup (p);
-    
-    array[arr_idx] = NULL;
-
-    free (buffer);
-
-    array = (char **) realloc (array, (arr_idx + 1) * sizeof(char *));
-
-    return array;
-}
-
-/*
- * free_multi_command : free a list of commands splitted
- *                      with split_multi_command
- */
-
-void
-free_multi_command (char **commands)
-{
-    int i;
-
-    if (commands)
+    /* try WeeChat global lib dir */
+    length = strlen (WEECHAT_LIBDIR) + strlen (name_with_ext) +
+        strlen (sys_directory) + 16;
+    final_name = (char *)malloc (length);
+    if (!final_name)
     {
-        for (i = 0; commands[i]; i++)
-            free (commands[i]);
-        free (commands);
+        free (name_with_ext);
+        return strdup (filename);
     }
+    snprintf (final_name, length,
+              "%s/%s/%s", WEECHAT_LIBDIR, sys_directory, name_with_ext);
+    if ((stat (final_name, &st) == 0) && (st.st_size > 0))
+    {
+        free (name_with_ext);
+        return final_name;
+    }
+    free (final_name);
+
+    return name_with_ext;
 }

@@ -202,4 +202,4 @@ enum t_session_hotlist
 int session_save (char *filename);
 int session_load (char *filename);
 
-#endif /* session.h */
+#endif /* wee-session.h */

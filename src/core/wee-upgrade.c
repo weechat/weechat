@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* session.c: save/restore session data */
+/* wee-session.c: save/restore session data */
 
 
 #ifdef HAVE_CONFIG_H
@@ -29,24 +29,23 @@
 #include <stdarg.h>
 #include <string.h>
 
-#ifdef HAVE_GNUTLS
+/*#ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
-#endif
+#endif*/
 
 #include "weechat.h"
-#include "session.h"
-#include "hotlist.h"
-#include "log.h"
-#include "utf8.h"
-#include "util.h"
-#include "../protocols/irc/irc.h"
-#include "../gui/gui.h"
+#include "wee-session.h"
+#include "wee-log.h"
+#include "wee-string.h"
+#include "wee-utf8.h"
+#include "../gui/gui-chat.h"
+#include "../gui/gui-main.h"
 
 
 /* current server/channel (used when loading session) */
-t_irc_server *session_current_server = NULL;
+/*t_irc_server *session_current_server = NULL;
 t_irc_channel *session_current_channel = NULL;
-t_gui_buffer *session_current_buffer = NULL;
+t_gui_buffer *session_current_buffer = NULL;*/
 
 long session_last_read_pos = 0;
 int session_last_read_length = 0;
@@ -140,7 +139,7 @@ session_write_buf (FILE *file, int id, void *buffer, int size)
  * session_save_nick: save a nick into session file
  */
 
-int
+/*int
 session_save_nick (FILE *file, t_irc_nick *nick)
 {
     int rc;
@@ -153,13 +152,13 @@ session_save_nick (FILE *file, t_irc_nick *nick)
     rc = rc && (session_write_str (file, SESSION_NICK_HOST, nick->host));
     rc = rc && (session_write_id  (file, SESSION_NICK_END));
     return rc;
-}
+}*/
 
 /*
  * session_save_channel: save a channel into session file
  */
 
-int
+/*int
 session_save_channel (FILE *file, t_irc_channel *channel)
 {
     int rc;
@@ -192,13 +191,13 @@ session_save_channel (FILE *file, t_irc_channel *channel)
     }
     
     return 1;
-}
+}*/
 
 /*
  * session_save_servers: save all servers into session file
  */
 
-int
+/*int
 session_save_servers (FILE *file)
 {
     int rc;
@@ -281,13 +280,13 @@ session_save_servers (FILE *file)
         }
     }
     return 1;
-}
+}*/
 
 /*
  * session_save_dcc: save all DCC into session file
  */
 
-int
+/*int
 session_save_dcc (FILE *file)
 {
     int rc;
@@ -332,14 +331,14 @@ session_save_dcc (FILE *file)
             return 0;
     }
     return 1;
-}
+}*/
 
 /*
  * session_save_history: save history into session file
  *                       (from last to first, to restore it in good order)
  */
 
-int
+/*int
 session_save_history (FILE *file, t_history *last_history)
 {
     int rc;
@@ -355,13 +354,13 @@ session_save_history (FILE *file, t_history *last_history)
     }
     rc = rc && (session_write_id  (file, SESSION_HIST_END));
     return rc;
-}
+}*/
 
 /*
  * session_save_line: save a buffer line into session file
  */
 
-int
+/*int
 session_save_line (FILE *file, t_gui_line *line)
 {
     int rc;
@@ -380,13 +379,13 @@ session_save_line (FILE *file, t_gui_line *line)
     rc = rc && (session_write_buf (file, SESSION_LINE_DATE, &(line->date), sizeof (time_t)));
     rc = rc && (session_write_id  (file, SESSION_LINE_END));
     return rc;
-}
+}*/
 
 /*
  * session_save_buffers: save all buffers into session file
  */
 
-int
+/*int
 session_save_buffers (FILE *file)
 {
     int rc;
@@ -419,13 +418,13 @@ session_save_buffers (FILE *file)
             return 0;
     }
     return 1;
-}
+}*/
 
 /*
  * session_save_uptime: save uptime into session file
  */
 
-int
+/*int
 session_save_uptime (FILE *file)
 {
     int rc;
@@ -436,13 +435,13 @@ session_save_uptime (FILE *file)
     rc = rc && (session_write_buf (file, SESSION_UPT_START_TIME, &weechat_start_time, sizeof (time_t)));
     rc = rc && (session_write_id  (file, SESSION_UPT_END));
     return rc;
-}
+}*/
 
 /*
  * session_save_hotlist: save hotlist into session file
  */
 
-int
+/*int
 session_save_hotlist (FILE *file)
 {
     int rc;
@@ -464,13 +463,13 @@ session_save_hotlist (FILE *file)
             return 0;
     }
     return rc;
-}
+}*/
 
 /*
  * session_save: save current session
  */
 
-int
+/*int
 session_save (char *filename)
 {
     FILE *file;
@@ -491,7 +490,7 @@ session_save (char *filename)
     fclose (file);
     
     return rc;
-}
+}*/
 
 /* ========================================================================== */
 
@@ -511,21 +510,21 @@ session_crash (FILE *file, char *message, ...)
     
     fclose (file);
     gui_main_end ();
-    weechat_iconv_fprintf (stderr, "%s %s\n",
-                           WEECHAT_ERROR, buffer);
-    weechat_iconv_fprintf (stderr,
-                           _("Last operation with session file was at position %ld, "
-                             "read of %d bytes\n"),
-                           session_last_read_pos,
-                           session_last_read_length);
-    weechat_iconv_fprintf (stderr,
-                           _("Please send %s/%s, %s/%s and "
-                             "above messages to WeeChat developers for support.\n"
-                             "Be careful, private info may be in these files.\n"),
-                           weechat_home,
-                           WEECHAT_LOG_NAME,
-                           weechat_home,
-                           WEECHAT_SESSION_NAME);
+    string_iconv_fprintf (stderr, "%s %s\n",
+                          WEECHAT_ERROR, buffer);
+    string_iconv_fprintf (stderr,
+                          _("Last operation with session file was at position %ld, "
+                            "read of %d bytes\n"),
+                          session_last_read_pos,
+                          session_last_read_length);
+    string_iconv_fprintf (stderr,
+                          _("Please send %s/%s, %s/%s and "
+                            "above messages to WeeChat developers for support.\n"
+                            "Be careful, private info may be in these files.\n"),
+                          weechat_home,
+                          WEECHAT_LOG_NAME,
+                          weechat_home,
+                          WEECHAT_SESSION_NAME);
     exit (EXIT_FAILURE);
 }
 
@@ -818,7 +817,7 @@ session_read_ignore_object (FILE *file)
  * session_load_server: load server from file
  */
 
-int
+/*int
 session_load_server (FILE *file)
 {
     int object_id, rc;
@@ -829,7 +828,7 @@ session_load_server (FILE *file)
     int session_size_int;
 #endif
     
-    /* read server name */
+    // read server name
     server_name = NULL;
     if (!session_read_object (file, SESSION_SERV_NAME, SESSION_TYPE_STR, &server_name, 0))
     {
@@ -837,7 +836,7 @@ session_load_server (FILE *file)
         return 0;
     }
     
-    /* use or allocate server */
+    // use or allocate server
     weechat_log_printf (_("session: loading server \"%s\"\n"),
                         server_name);
     session_current_server = irc_server_search (server_name);
@@ -858,7 +857,7 @@ session_load_server (FILE *file)
     }
     free (server_name);
     
-    /* read server values */
+    // read server values
     rc = 1;
     while (rc)
     {
@@ -1036,33 +1035,33 @@ session_load_server (FILE *file)
         }
     }
     return 0;
-}
+}*/
 
 /*
  * session_load_channel: load channel from file
  */
 
-int
+/*int
 session_load_channel (FILE *file)
 {
     int object_id, rc, channel_type;
     char *channel_name;
     
-    /* check if server is allocated for this channel */
+    // check if server is allocated for this channel
     if (!session_current_server)
     {
         session_crash (file, _("channel found without server"));
         return 0;
     }
     
-    /* read channel type */
+    // read channel type
     if (!session_read_object (file, SESSION_CHAN_TYPE, SESSION_TYPE_INT, &channel_type, 0))
     {
         session_crash (file, _("channel type not found"));
         return 0;
     }
     
-    /* read channel name */
+    // read channel name
     channel_name = NULL;
     if (!session_read_object (file, SESSION_CHAN_NAME, SESSION_TYPE_STR, &channel_name, 0))
     {
@@ -1070,7 +1069,7 @@ session_load_channel (FILE *file)
         return 0;
     }
     
-    /* allocate channel */
+    // allocate channel
     weechat_log_printf (_("session: loading channel \"%s\"\n"),
                         channel_name);
     session_current_channel = irc_channel_new (session_current_server,
@@ -1083,7 +1082,7 @@ session_load_channel (FILE *file)
         return 0;
     }
     
-    /* read channel values */
+    // read channel values
     rc = 1;
     while (rc)
     {
@@ -1112,7 +1111,7 @@ session_load_channel (FILE *file)
                 break;
             case SESSION_CHAN_NICKS_COUNT:
                 rc = rc && (session_read_int (file, &(session_current_channel->nicks_count)));
-                /* will be incremented when adding nicks */
+                // will be incremented when adding nicks
                 session_current_channel->nicks_count = 0;
                 break;
             case SESSION_CHAN_CHECKING_AWAY:
@@ -1139,27 +1138,27 @@ session_load_channel (FILE *file)
         }
     }
     return 0;
-}
+}*/
 
 /*
  * session_load_nick: load nick from file
  */
 
-int
+/*int
 session_load_nick (FILE *file)
 {
     int rc, object_id;
     char *nick_name;
     t_irc_nick *nick;
     
-    /* check if channel is allocated for this nick */
+    // check if channel is allocated for this nick
     if (!session_current_channel)
     {
         session_crash (file, _("nick found without channel"));
         return 0;
     }
     
-    /* read nick name */
+    // read nick name
     nick_name = NULL;
     if (!session_read_object (file, SESSION_NICK_NICK, SESSION_TYPE_STR, &nick_name, 0))
     {
@@ -1167,7 +1166,7 @@ session_load_nick (FILE *file)
         return 0;
     }
     
-    /* allocate nick */
+    // allocate nick
     nick = irc_nick_new (session_current_server, session_current_channel,
                          nick_name, 0, 0, 0, 0, 0, 0, 0);
     free (nick_name);
@@ -1177,7 +1176,7 @@ session_load_nick (FILE *file)
         return 0;
     }
     
-    /* read nick values */
+    // read nick values
     rc = 1;
     while (rc)
     {
@@ -1210,13 +1209,13 @@ session_load_nick (FILE *file)
         }
     }
     return 0;
-}
+}*/
 
 /*
  * session_load_dcc: load DCC from file
  */
 
-int
+/*int
 session_load_dcc (FILE *file)
 {
     int object_id, rc;
@@ -1225,7 +1224,7 @@ session_load_dcc (FILE *file)
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     
-    /* allocate DCC */
+    // allocate DCC
     dcc = irc_dcc_alloc ();
     if (!dcc)
     {
@@ -1235,7 +1234,7 @@ session_load_dcc (FILE *file)
     
     weechat_log_printf (_("session: loading DCC\n"));
     
-    /* read DCC values */
+    // read DCC values
     ptr_server = NULL;
     ptr_channel = NULL;
     rc = 1;
@@ -1374,13 +1373,13 @@ session_load_dcc (FILE *file)
         }
     }
     return 0;
-}
+}*/
 
 /*
  * session_load_history: load history from file (global or for a buffer)
  */
 
-int
+/*int
 session_load_history (FILE *file)
 {
     int object_id, rc;
@@ -1391,7 +1390,7 @@ session_load_history (FILE *file)
     else
         weechat_log_printf (_("session: loading global history\n"));
     
-    /* read history values */
+    // read history values
     rc = 1;
     while (rc)
     {
@@ -1411,9 +1410,9 @@ session_load_history (FILE *file)
                 if (!session_read_str_utf8 (file, &text))
                     return 0;
                 if (session_current_buffer)
-                    history_buffer_add (session_current_buffer, text);
+                    gui_history_buffer_add (session_current_buffer, text);
                 else
-                    history_global_add (text);
+                    gui_history_global_add (text);
                 free (text);
                 break;
             default:
@@ -1425,13 +1424,13 @@ session_load_history (FILE *file)
         }
     }
     return 0;
-}
+}*/
 
 /*
  * session_load_buffer: load buffer from file
  */
 
-int
+/*int
 session_load_buffer (FILE *file)
 {
     int object_id, rc;
@@ -1440,7 +1439,7 @@ session_load_buffer (FILE *file)
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     
-    /* read server name */
+    // read server name
     server_name = NULL;
     if (!session_read_object (file, SESSION_BUFF_SERVER, SESSION_TYPE_STR, &server_name, 0))
     {
@@ -1448,7 +1447,7 @@ session_load_buffer (FILE *file)
         return 0;
     }
     
-    /* read channel name */
+    // read channel name
     channel_name = NULL;
     if (!session_read_object (file, SESSION_BUFF_CHANNEL, SESSION_TYPE_STR, &channel_name, 0))
     {
@@ -1456,14 +1455,14 @@ session_load_buffer (FILE *file)
         return 0;
     }
     
-    /* read buffer type */
+    // read buffer type
     if (!session_read_object (file, SESSION_BUFF_TYPE, SESSION_TYPE_INT, &buffer_type, 0))
     {
         session_crash (file, _("buffer type not found"));
         return 0;
     }
     
-    /* allocate buffer */
+    // allocate buffer
     weechat_log_printf (_("session: loading buffer (server: %s, channel: %s, type: %d)\n"),
                         (server_name) ? server_name : "-",
                         (channel_name) ? channel_name : "-",
@@ -1490,7 +1489,8 @@ session_load_buffer (FILE *file)
         }
     }
     
-    session_current_buffer = gui_buffer_new (gui_windows, ptr_server,
+    session_current_buffer = gui_buffer_new (gui_windows, weechat_protocols,
+                                             ptr_server,
                                              ptr_channel, buffer_type, 1);
     if (!session_current_buffer)
     {
@@ -1501,7 +1501,7 @@ session_load_buffer (FILE *file)
     free (server_name);
     free (channel_name);
     
-    /* read buffer values */
+    // read buffer values
     rc = 1;
     while (rc)
     {
@@ -1528,26 +1528,26 @@ session_load_buffer (FILE *file)
         }
     }
     return 0;
-}
+}*/
 
 /*
  * session_load_line: load buffer line from file
  */
 
-int
+/*int
 session_load_line (FILE *file)
 {
     int object_id, rc;
     t_gui_line *line;
     
-    /* check if buffer is allocated for this line */
+    // check if buffer is allocated for this line
     if (!session_current_buffer)
     {
         session_crash (file, _("line found without buffer"));
         return 0;
     }
     
-    /* allocate line */
+    // allocate line
     line = gui_buffer_line_new (session_current_buffer, time (NULL));
     if (!line)
     {
@@ -1555,7 +1555,7 @@ session_load_line (FILE *file)
         return 0;
     }
     
-    /* read line values */
+    // read line values
     rc = 1;
     while (rc)
     {
@@ -1609,18 +1609,18 @@ session_load_line (FILE *file)
         }
     }
     return 0;
-}
+}*/
 
 /*
  * session_load_uptime: load uptime from file
  */
 
-int
+/*int
 session_load_uptime (FILE *file)
 {
     int object_id, rc;
     
-    /* read uptime values */
+    // read uptime values
     rc = 1;
     while (rc)
     {
@@ -1647,13 +1647,13 @@ session_load_uptime (FILE *file)
         }
     }
     return 0;
-}
+}*/
 
 /*
  * session_load_hotlist: load hotlist from file
  */
 
-int
+/*int
 session_load_hotlist (FILE *file)
 {
     int object_id, rc;
@@ -1670,7 +1670,7 @@ session_load_hotlist (FILE *file)
     ptr_server = NULL;
     ptr_buffer = NULL;
     
-    /* read hotlist values */
+    // read hotlist values
     rc = 1;
     while (rc)
     {
@@ -1712,13 +1712,13 @@ session_load_hotlist (FILE *file)
         }
     }
     return 0;
-}
+}*/
 
 /*
  * session_load: load session from file
  */
 
-int
+/*int
 session_load (char *filename)
 {
     FILE *file;
@@ -1838,7 +1838,7 @@ session_load (char *filename)
         }
     }
     
-    /* assign a buffer to all connected servers */
+    // assign a buffer to all connected servers
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -1853,15 +1853,13 @@ session_load (char *filename)
     
     if (unlink (filename) < 0)
     {
-        irc_display_prefix (NULL, gui_current_window->buffer, GUI_PREFIX_ERROR);
-        gui_printf_nolog (gui_current_window->buffer,
-                          _("%s can't delete session file (%s)\n"),
-                          WEECHAT_ERROR, filename);
+        gui_printf_error_nolog (gui_current_window->buffer,
+                                _("%s can't delete session file (%s)\n"),
+                                WEECHAT_WARNING, filename);
     }
     
-    irc_display_prefix (NULL, gui_current_window->buffer, GUI_PREFIX_INFO);
-    gui_printf_nolog (gui_current_window->buffer,
-                      _("Upgrade completed successfully\n"));
+    gui_printf_info_nolog (gui_current_window->buffer,
+                           _("Upgrade completed successfully\n"));
     
     return 1;
-}
+}*/

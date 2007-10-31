@@ -24,20 +24,18 @@
 #define WEELIST_POS_BEGINNING 1
 #define WEELIST_POS_END       2
 
-typedef struct t_weelist t_weelist;
-
 struct t_weelist
 {
     char *data;
-    t_weelist *prev_weelist;
-    t_weelist *next_weelist;
+    struct t_weelist *prev_weelist;
+    struct t_weelist *next_weelist;
 };
 
-extern int weelist_get_size (t_weelist *);
-extern t_weelist *weelist_search (t_weelist *, char *);
-extern t_weelist *weelist_add (t_weelist **, t_weelist **, char *, int);
-extern void weelist_remove (t_weelist **, t_weelist **, t_weelist *);
-extern void weelist_remove_all (t_weelist **, t_weelist **);
-extern void weelist_print_log (t_weelist *, char *);
+extern int weelist_get_size (struct t_weelist *);
+extern struct t_weelist *weelist_search (struct t_weelist *, char *);
+extern struct t_weelist *weelist_add (struct t_weelist **, struct t_weelist **, char *, int);
+extern void weelist_remove (struct t_weelist **, struct t_weelist **, struct t_weelist *);
+extern void weelist_remove_all (struct t_weelist **, struct t_weelist **);
+extern void weelist_print_log (struct t_weelist *, char *);
 
-#endif /* weelist.h */
+#endif /* wee-list.h */

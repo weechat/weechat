@@ -66,7 +66,7 @@
 
 /* license */
 
-#define WEE_LICENSE \
+#define WEECHAT_LICENSE \
     PACKAGE_STRING " (c) Copyright 2003-2007, compiled on " __DATE__ " " __TIME__ \
     "\nDeveloped by FlashCode <flashcode@flashtux.org> - " WEECHAT_WEBSITE "\n\n" \
     "This program is free software; you can redistribute it and/or modify\n" \
@@ -110,10 +110,6 @@ extern time_t weechat_start_time;
 extern int quit_weechat;
 extern char *weechat_home;
 extern char *local_charset;
-
-#ifdef HAVE_GNUTLS
-extern gnutls_certificate_credentials gnutls_xcred;
-#endif
 
 extern void weechat_dump (int);
 extern void weechat_shutdown (int, int);

@@ -20,28 +20,26 @@
 #ifndef __WEECHAT_ALIAS_H
 #define __WEECHAT_ALIAS_H 1
 
-#include "../protocols/irc/irc.h"
+#include "../gui/gui-buffer.h"
 
-typedef struct t_weechat_alias t_weechat_alias;
-
-struct t_weechat_alias
+struct alias
 {
-    char *alias_name;
-    char *alias_command;
+    char *name;
+    char *command;
     int running;
-    t_weechat_alias *prev_alias;
-    t_weechat_alias *next_alias;
+    struct alias *prev_alias;
+    struct alias *next_alias;
 };
 
-extern t_weechat_alias *weechat_alias;
-extern t_weechat_alias *weechat_last_alias;
+extern struct alias *weechat_alias;
+extern struct alias *weechat_last_alias;
 
-extern t_weechat_alias *alias_search (char *);
-extern t_weechat_alias *alias_new (char *, char *);
-extern char *alias_get_final_command (t_weechat_alias *);
+extern struct alias *alias_search (char *);
+extern struct alias *alias_new (char *, char *);
+extern char *alias_get_final_command (struct alias *);
 extern char *alias_replace_args (char *, char *);
-extern char *alias_replace_vars (t_irc_server *, t_irc_channel *, char *);
-extern void alias_free (t_weechat_alias *);
+extern char *alias_replace_vars (struct t_gui_buffer *, char *);
+extern void alias_free (struct alias *);
 extern void alias_free_all ();
 
-#endif /* alias.h */
+#endif /* wee-alias.h */

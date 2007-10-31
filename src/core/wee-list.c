@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weelist.c: sorted lists management */
+/* wee-list.c: sorted lists management */
 
 
 #ifdef HAVE_CONFIG_H
@@ -27,9 +27,9 @@
 #include <string.h>
 
 #include "weechat.h"
-#include "weelist.h"
-#include "log.h"
-#include "util.h"
+#include "wee-list.h"
+#include "wee-log.h"
+#include "wee-string.h"
 
 
 /*
@@ -37,14 +37,15 @@
  */
 
 int
-weelist_get_size (t_weelist *weelist)
+weelist_get_size (struct t_weelist *weelist)
 {
-    t_weelist *ptr_weelist;
+    struct t_weelist *ptr_weelist;
     int count;
     
     count = 0;
     
-    for (ptr_weelist = weelist; ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
+    for (ptr_weelist = weelist; ptr_weelist;
+         ptr_weelist = ptr_weelist->next_weelist)
     {
         count++;
     }
@@ -53,17 +54,18 @@ weelist_get_size (t_weelist *weelist)
 }
 
 /*
- * weelist_search: search date in a list
+ * weelist_search: search data in a list
  */
 
-t_weelist *
-weelist_search (t_weelist *weelist, char *data)
+struct t_weelist *
+weelist_search (struct t_weelist *weelist, char *data)
 {
-    t_weelist *ptr_weelist;
+    struct t_weelist *ptr_weelist;
     
-    for (ptr_weelist = weelist; ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
+    for (ptr_weelist = weelist; ptr_weelist;
+         ptr_weelist = ptr_weelist->next_weelist)
     {
-        if (ascii_strcasecmp (data, ptr_weelist->data) == 0)
+        if (string_strcasecmp (data, ptr_weelist->data) == 0)
             return ptr_weelist;
     }
     /* word not found in list */
@@ -74,14 +76,15 @@ weelist_search (t_weelist *weelist, char *data)
  * weelist_find_pos: find position for data (keeping list sorted)
  */
 
-t_weelist *
-weelist_find_pos (t_weelist *weelist, char *data)
+struct t_weelist *
+weelist_find_pos (struct t_weelist *weelist, char *data)
 {
-    t_weelist *ptr_weelist;
+    struct t_weelist *ptr_weelist;
     
-    for (ptr_weelist = weelist; ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
+    for (ptr_weelist = weelist; ptr_weelist;
+         ptr_weelist = ptr_weelist->next_weelist)
     {
-        if (ascii_strcasecmp (data, ptr_weelist->data) < 0)
+        if (string_strcasecmp (data, ptr_weelist->data) < 0)
             return ptr_weelist;
     }
     /* position not found, best position is at the end */
@@ -93,10 +96,10 @@ weelist_find_pos (t_weelist *weelist, char *data)
  */
 
 void
-weelist_insert (t_weelist **weelist, t_weelist **last_weelist, t_weelist *element,
-                int position)
+weelist_insert (struct t_weelist **weelist, struct t_weelist **last_weelist,
+                struct t_weelist *element, int position)
 {
-    t_weelist *pos_weelist;
+    struct t_weelist *pos_weelist;
     
     if (*weelist)
     {
@@ -156,16 +159,16 @@ weelist_insert (t_weelist **weelist, t_weelist **last_weelist, t_weelist *elemen
  * weelist_add: create new data and add it to list
  */
 
-t_weelist *
-weelist_add (t_weelist **weelist, t_weelist **last_weelist, char *data,
-             int position)
+struct t_weelist *
+weelist_add (struct t_weelist **weelist, struct t_weelist **last_weelist,
+             char *data, int position)
 {
-    t_weelist *new_weelist;
+    struct t_weelist *new_weelist;
     
     if (!data || (!data[0]))
         return NULL;
     
-    if ((new_weelist = ((t_weelist *) malloc (sizeof (t_weelist)))))
+    if ((new_weelist = ((struct t_weelist *) malloc (sizeof (struct t_weelist)))))
     {
         new_weelist->data = strdup (data);
         weelist_insert (weelist, last_weelist, new_weelist, position);
@@ -180,9 +183,10 @@ weelist_add (t_weelist **weelist, t_weelist **last_weelist, char *data,
  */
 
 void
-weelist_remove (t_weelist **weelist, t_weelist **last_weelist, t_weelist *element)
+weelist_remove (struct t_weelist **weelist, struct t_weelist **last_weelist,
+                struct t_weelist *element)
 {
-    t_weelist *new_weelist;
+    struct t_weelist *new_weelist;
     
     if (!element || !(*weelist))
         return;
@@ -213,7 +217,7 @@ weelist_remove (t_weelist **weelist, t_weelist **last_weelist, t_weelist *elemen
  */
 
 void
-weelist_remove_all (t_weelist **weelist, t_weelist **last_weelist)
+weelist_remove_all (struct t_weelist **weelist, struct t_weelist **last_weelist)
 {
     while (*weelist)
     {
@@ -226,9 +230,9 @@ weelist_remove_all (t_weelist **weelist, t_weelist **last_weelist)
  */
 
 void
-weelist_print_log (t_weelist *weelist, char *name)
+weelist_print_log (struct t_weelist *weelist, char *name)
 {
-    t_weelist *ptr_weelist;
+    struct t_weelist *ptr_weelist;
     
     for (ptr_weelist = weelist; ptr_weelist;
          ptr_weelist = ptr_weelist->next_weelist)

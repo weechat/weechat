@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* utf8.c: UTF-8 string functions for WeeChat */
+/* wee-utf8.c: UTF-8 string functions for WeeChat */
 
 
 #ifdef HAVE_CONFIG_H
@@ -27,9 +27,9 @@
 #include <string.h>
 
 #include "weechat.h"
-#include "utf8.h"
-#include "util.h"
-#include "weeconfig.h"
+#include "wee-utf8.h"
+#include "wee-config.h"
+#include "wee-string.h"
 
 
 int local_utf8 = 0;
@@ -41,7 +41,7 @@ int local_utf8 = 0;
 void
 utf8_init ()
 {
-    local_utf8 = (ascii_strcasecmp (local_charset, "UTF-8") == 0);
+    local_utf8 = (string_strcasecmp (local_charset, "UTF-8") == 0);
 }
 
 /*
@@ -260,7 +260,7 @@ utf8_strlen (char *string)
 }
 
 /*
- * utf8_strnlen: return length of an UTF-8 string, for N bytes
+ * utf8_strnlen: return length of an UTF-8 string, for N bytes max in string
  */
 
 int
@@ -283,11 +283,12 @@ utf8_strnlen (char *string, int bytes)
 }
 
 /*
- * utf8_width_screen: return number of chars needed on screen to display UTF-8 string
+ * utf8_strlen_screen: return number of chars needed on screen to display
+ *                     UTF-8 string
  */
 
 int
-utf8_width_screen (char *string)
+utf8_strlen_screen (char *string)
 {
     int length, num_char;
     wchar_t *wstring;
@@ -312,6 +313,30 @@ utf8_width_screen (char *string)
     length = wcswidth (wstring, num_char);
     free (wstring);
     return length;
+}
+
+/*
+ * utf8_char_size_screen: return number of chars needed on screen to display
+ *                        UTF-8 char
+ */
+
+int
+utf8_char_size_screen (char *string)
+{
+    int char_size;
+    char utf_char[16];
+    
+    if (!string)
+        return 0;
+    
+    char_size = utf8_char_size (string);
+    if (char_size == 0)
+        return 0;
+    
+    memcpy (utf_char, string, char_size);
+    utf_char[char_size] = '\0';
+    
+    return utf8_strlen_screen (utf_char);
 }
 
 /*
@@ -386,11 +411,11 @@ utf8_pos (char *string, int real_pos)
 }
 
 /*
- * utf8_get_wc: get wide char from string (first char)
+ * utf8_get_wide_char: get wide char from string (first char)
  */
 
 wint_t
-utf8_get_wc (char *string)
+utf8_get_wide_char (char *string)
 {
     int char_size;
     wint_t result;

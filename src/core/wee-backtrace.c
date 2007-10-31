@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* backtrace.c: display backtrace after a segfault */
+/* wee-backtrace.c: display backtrace after a segfault */
 
 
 #ifdef HAVE_CONFIG_H
@@ -39,9 +39,9 @@
 #endif
 
 #include "weechat.h"
-#include "backtrace.h"
-#include "log.h"
-#include "util.h"
+#include "wee-backtrace.h"
+#include "wee-log.h"
+#include "wee-string.h"
 
 
 /*
@@ -58,7 +58,7 @@ weechat_backtrace_printf (char *message, ...)
     vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
     va_end (argptr);
 
-    weechat_iconv_fprintf (stderr, "%s", buffer);
+    string_iconv_fprintf (stderr, "%s", buffer);
     weechat_log_printf ("%s", buffer);
 }
 

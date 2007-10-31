@@ -16,33 +16,35 @@
 
 INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GNUTLS_CFLAGS)
 
-noinst_LIBRARIES = lib_weechat_main.a
+noinst_LIBRARIES = lib_weechat_core.a
 
-lib_weechat_main_a_SOURCES = weechat.c \
+lib_weechat_core_a_SOURCES = weechat.c \
                              weechat.h \
-                             alias.c \
-                             alias.h \
-                             backtrace.c \
-                             backtrace.h \
-                             command.c \
-                             command.h \
-                             completion.c \
-                             completion.h \
-                             weelist.c \
-                             weelist.h \
-                             weeconfig.c \
-                             weeconfig.h \
-                             history.c \
-                             history.h \
-                             hotlist.c \
-                             hotlist.h \
-                             log.c \
-                             log.h \
-                             fifo.c \
-                             fifo.h \
-                             session.c \
-                             session.h \
-                             utf8.c \
-                             utf8.h \
-                             util.c \
-                             util.h
+                             wee-alias.c \
+                             wee-alias.h \
+                             wee-backtrace.c \
+                             wee-backtrace.h \
+                             wee-command.c \
+                             wee-command.h \
+                             wee-config.c \
+                             wee-config.h \
+                             wee-config-file.c \
+                             wee-config-file.h \
+                             wee-config-option.c \
+                             wee-config-option.h \
+                             wee-hook.c \
+                             wee-hook.h \
+                             wee-input.c \
+                             wee-input.h \
+                             wee-list.c \
+                             wee-list.h \
+                             wee-log.c \
+                             wee-log.h \
+                             wee-upgrade.c \
+                             wee-upgrade.h \
+                             wee-string.c \
+                             wee-string.h \
+                             wee-utf8.c \
+                             wee-utf8.h \
+                             wee-util.c \
+                             wee-util.h

@@ -28,4 +28,4 @@ extern void weechat_log_close ();
 extern void weechat_log_printf (char *, ...);
 extern int weechat_log_crash_rename ();
 
-#endif /* log.h */
+#endif /* wee-log.h */

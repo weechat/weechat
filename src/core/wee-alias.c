@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* alias.c: WeeChat alias */
+/* wee-alias.c: WeeChat alias */
 
 
 #ifdef HAVE_CONFIG_H
@@ -27,27 +27,27 @@
 #include <string.h>
 
 #include "weechat.h"
-#include "alias.h"
-#include "util.h"
-#include "../protocols/irc/irc.h"
+#include "wee-alias.h"
+#include "wee-config.h"
+#include "wee-string.h"
 
 
-t_weechat_alias *weechat_alias = NULL;
-t_weechat_alias *weechat_last_alias = NULL;
+struct alias *weechat_alias = NULL;
+struct alias *weechat_last_alias = NULL;
 
 
 /*
  * alias_search: search an alias
  */
 
-t_weechat_alias *
+struct alias *
 alias_search (char *alias_name)
 {
-    t_weechat_alias *ptr_alias;
+    struct alias *ptr_alias;
     
     for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
     {
-        if (ascii_strcasecmp (alias_name, ptr_alias->alias_name) == 0)
+        if (string_strcasecmp (alias_name, ptr_alias->name) == 0)
             return ptr_alias;
     }
     return NULL;
@@ -57,14 +57,14 @@ alias_search (char *alias_name)
  * alias_find_pos: find position for an alias (for sorting aliases)
  */
 
-t_weechat_alias *
+struct alias *
 alias_find_pos (char *alias_name)
 {
-    t_weechat_alias *ptr_alias;
+    struct alias *ptr_alias;
     
     for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
     {
-        if (ascii_strcasecmp (alias_name, ptr_alias->alias_name) < 0)
+        if (string_strcasecmp (alias_name, ptr_alias->name) < 0)
             return ptr_alias;
     }
     return NULL;
@@ -75,11 +75,11 @@ alias_find_pos (char *alias_name)
  */
 
 void
-alias_insert_sorted (t_weechat_alias *alias)
+alias_insert_sorted (struct alias *alias)
 {
-    t_weechat_alias *pos_alias;
+    struct alias *pos_alias;
     
-    pos_alias = alias_find_pos (alias->alias_name);
+    pos_alias = alias_find_pos (alias->name);
     
     if (weechat_alias)
     {
@@ -116,35 +116,35 @@ alias_insert_sorted (t_weechat_alias *alias)
  * alias_new: create new alias and add it to alias list
  */
 
-t_weechat_alias *
-alias_new (char *alias_name, char *alias_command)
+struct alias *
+alias_new (char *name, char *command)
 {
-    t_weechat_alias *new_alias, *ptr_alias;
+    struct alias *new_alias, *ptr_alias;
 
-    while (alias_name[0] == '/')
+    while (name[0] == '/')
     {
-	alias_name++;
+	name++;
     }
     
-    if (ascii_strcasecmp (alias_name, "builtin") == 0)
+    if (string_strcasecmp (name, "builtin") == 0)
         return NULL;
     
-    ptr_alias = alias_search (alias_name);
+    ptr_alias = alias_search (name);
     if (ptr_alias)
     {
-	if (ptr_alias->alias_command)
-	    free (ptr_alias->alias_command);
-	ptr_alias->alias_command = strdup (alias_command);
+	if (ptr_alias->command)
+	    free (ptr_alias->command);
+	ptr_alias->command = strdup (command);
 	return ptr_alias;
     }
     
-    if ((new_alias = ((t_weechat_alias *) malloc (sizeof (t_weechat_alias)))))
+    if ((new_alias = ((struct alias *) malloc (sizeof (struct alias)))))
     {
-        new_alias->alias_name = strdup (alias_name);
-        new_alias->alias_command = (char *) malloc (strlen (alias_command) + 1);
+        new_alias->name = strdup (name);
+        new_alias->command = (char *) malloc (strlen (command) + 1);
 	new_alias->running = 0;
-        if (new_alias->alias_command)
-            strcpy (new_alias->alias_command, alias_command);
+        if (new_alias->command)
+            strcpy (new_alias->command, command);
         alias_insert_sorted (new_alias);
         return new_alias;
     }
@@ -157,22 +157,23 @@ alias_new (char *alias_name, char *alias_command)
  */
 
 char *
-alias_get_final_command (t_weechat_alias *alias)
+alias_get_final_command (struct alias *alias)
 {
-    t_weechat_alias *ptr_alias;
+    struct alias *ptr_alias;
     char *result;
     
     if (alias->running)
     {
-        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
-        gui_printf (NULL,
-                    _("%s circular reference when calling alias \"/%s\"\n"),
-                    WEECHAT_ERROR, alias->alias_name);
+        gui_chat_printf (NULL,
+                         _("%s%s circular reference when calling alias "
+                           "\"/%s\""),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         WEECHAT_ERROR, alias->name);
         return NULL;
     }
     
-    ptr_alias = alias_search ((alias->alias_command[0] == '/') ?
-                             alias->alias_command + 1 : alias->alias_command);
+    ptr_alias = alias_search ((alias->command[0] == '/') ?
+                             alias->command + 1 : alias->command);
     if (ptr_alias)
     {
         alias->running = 1;
@@ -180,8 +181,8 @@ alias_get_final_command (t_weechat_alias *alias)
         alias->running = 0;
         return result;
     }
-    return (alias->alias_command[0] == '/') ?
-        alias->alias_command + 1 : alias->alias_command;
+    return (alias->command[0] == '/') ?
+        alias->command + 1 : alias->command;
 }
 
 /*
@@ -224,7 +225,7 @@ alias_replace_args (char *alias_args, char *user_args)
     char **argv, *start, *pos, *res;
     int argc, length_res, args_count;
     
-    argv = explode_string (user_args, " ", 0, &argc);
+    argv = string_explode (user_args, " ", 0, &argc);
     
     res = NULL;
     length_res = 0;
@@ -288,19 +289,23 @@ alias_replace_args (char *alias_args, char *user_args)
     }
     
     if (argv)
-        free_exploded_string (argv);
+        string_free_exploded (argv);
     
     return res;
 }
 
 /*
  * alias_replace_vars: replace special vars ($nick, $channel, $server) in a string
+ *                     Note: result has to be free() after use
  */
 
 char *
-alias_replace_vars (t_irc_server *server, t_irc_channel *channel, char *string)
+alias_replace_vars (struct t_gui_buffer *buffer, char *string)
 {
-    char *var_nick, *var_channel, *var_server;
+    /* TODO: call protocol specific function to do this */
+    (void) buffer;
+    
+/*    char *var_nick, *var_channel, *var_server;
     char empty_string[1] = { '\0' };
     char *res, *temp;
     
@@ -308,28 +313,26 @@ alias_replace_vars (t_irc_server *server, t_irc_channel *channel, char *string)
     var_channel = (channel) ? channel->name : empty_string;
     var_server = (server) ? server->name : empty_string;
     
-    /* replace nick */
     temp = weechat_strreplace (string, "$nick", var_nick);
     if (!temp)
         return NULL;
     res = temp;
     
-    /* replace channel */
     temp = weechat_strreplace (res, "$channel", var_channel);
     free (res);
     if (!temp)
         return NULL;
     res = temp;
     
-    /* replace server */
     temp = weechat_strreplace (res, "$server", var_server);
     free (res);
     if (!temp)
         return NULL;
     res = temp;
     
-    /* return result */
-    return res;
+    return res;*/
+    
+    return strdup (string);
 }
 
 /*
@@ -337,9 +340,9 @@ alias_replace_vars (t_irc_server *server, t_irc_channel *channel, char *string)
  */
 
 void
-alias_free (t_weechat_alias *alias)
+alias_free (struct alias *alias)
 {
-    t_weechat_alias *new_weechat_alias;
+    struct alias *new_weechat_alias;
 
     /* remove alias from list */
     if (weechat_last_alias == alias)
@@ -356,10 +359,10 @@ alias_free (t_weechat_alias *alias)
         (alias->next_alias)->prev_alias = alias->prev_alias;
 
     /* free data */
-    if (alias->alias_name)
-        free (alias->alias_name);
-    if (alias->alias_command)
-        free (alias->alias_command);
+    if (alias->name)
+        free (alias->name);
+    if (alias->command)
+        free (alias->command);
     free (alias);
     weechat_alias = new_weechat_alias;
 }

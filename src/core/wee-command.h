@@ -20,67 +20,55 @@
 #ifndef __WEECHAT_COMMAND_H
 #define __WEECHAT_COMMAND_H 1
 
-#include "weelist.h"
-#include "../protocols/irc/irc.h"
-#include "../gui/gui.h"
+#include "../gui/gui-buffer.h"
 
 #define MAX_ARGS 8192
 
-typedef struct t_weechat_command t_weechat_command;
-
-struct t_weechat_command
+struct command
 {
-    char *command_name;             /* WeeChat (internal) command name        */
-    char *command_description;      /* command description (for /help)        */
-    char *arguments;                /* command arguments (for /help)          */
-    char *arguments_description;    /* arguments description (for /help)      */
-    char *completion_template;      /* template for completion                */
-                                    /* NULL=no completion, ""=default (nick)  */
-    int min_arg, max_arg;           /* min & max number of arguments          */
-    int conversion;                 /* = 1 if cmd args are converted (charset */
-                                    /* and color) before execution            */
-    int (*cmd_function_args)(t_irc_server *, t_irc_channel *, int, char **);
-                                    /* function called when user enters cmd   */
-    int (*cmd_function_1arg)(t_irc_server *, t_irc_channel *, char *);
-                                    /* function called when user enters cmd   */
+    char *name;                     /* WeeChat (internal) command name       */
+    char *description;              /* command description (for /help)       */
+    char *arguments;                /* command arguments (for /help)         */
+    char *arguments_description;    /* arguments description (for /help)     */
+    char *completion_template;      /* template for completion               */
+                                    /* NULL=no completion, ""=default (nick) */
+    int min_arg, max_arg;           /* min & max number of arguments         */
+    int conversion;                 /* = 1 if cmd args are converted (charset*/
+                                    /* and color) before execution           */
+    int (*cmd_function)(struct t_gui_buffer *, char *, int, char **);
+                                    /* function called when user enters cmd  */
 };
 
-extern t_weechat_command weechat_commands[];
+extern struct command weechat_commands[];
+struct t_weelist *weechat_index_commands;
+struct t_weelist *weechat_last_index_command;
 
-extern t_weelist *index_commands;
-extern t_weelist *last_index_command;
-
+extern int command_command_is_used (char *);
 extern void command_index_build ();
 extern void command_index_free ();
-extern int command_used_by_weechat (char *);
-extern char **split_multi_command (char *, char);
-extern void free_multi_command (char **);
-extern int exec_weechat_command (t_irc_server *, t_irc_channel *, char *, int);
-extern void user_command (t_irc_server *, t_irc_channel *, char *, int);
-extern int weechat_cmd_alias (t_irc_server *, t_irc_channel *, char *);
-extern int weechat_cmd_buffer (t_irc_server *, t_irc_channel *, char *);
-extern int weechat_cmd_builtin (t_irc_server *, t_irc_channel *, char *);
-extern int weechat_cmd_clear (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_connect (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_dcc (t_irc_server *, t_irc_channel *, char *);
-extern int weechat_cmd_debug (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_disconnect (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_help (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_history (t_irc_server *, t_irc_channel *, int, char **);
-extern void weechat_cmd_ignore_display (char *, t_irc_ignore *);
-extern int weechat_cmd_ignore (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_key (t_irc_server *, t_irc_channel *, char *);
-extern int weechat_cmd_panel (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_plugin (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_reconnect (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_save (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_server (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_set (t_irc_server *, t_irc_channel *, char *);
-extern int weechat_cmd_setp (t_irc_server *, t_irc_channel *, char *);
-extern int weechat_cmd_unalias (t_irc_server *, t_irc_channel *, char *);
-extern int weechat_cmd_unignore (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_upgrade (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_uptime (t_irc_server *, t_irc_channel *, int, char **);
-extern int weechat_cmd_window (t_irc_server *, t_irc_channel *, int, char **);
+extern void command_index_add (char *);
+extern void command_index_remove (char *);
+extern int command_is_command (char *);
+extern void command_print_stdout (struct command *);
 
-#endif /* command.h */
+extern int command_alias (struct t_gui_buffer *, char *, int, char **);
+extern int command_buffer (struct t_gui_buffer *, char *, int, char **);
+extern int command_builtin (struct t_gui_buffer *, char *, int, char **);
+extern int command_clear (struct t_gui_buffer *, char *, int, char **);
+extern int command_debug (struct t_gui_buffer *, char *, int, char **);
+extern int command_help (struct t_gui_buffer *, char *, int, char **);
+extern int command_history (struct t_gui_buffer *, char *, int, char **);
+extern int command_key (struct t_gui_buffer *, char *, int, char **);
+extern int command_panel (struct t_gui_buffer *, char *, int, char **);
+extern int command_plugin (struct t_gui_buffer *, char *, int, char **);
+extern int command_quit (struct t_gui_buffer *, char *, int, char **);
+extern int command_save (struct t_gui_buffer *, char *, int, char **);
+extern int command_set (struct t_gui_buffer *, char *, int, char **);
+extern int command_setp (struct t_gui_buffer *, char *, int, char **);
+extern int command_unalias (struct t_gui_buffer *, char *, int, char **);
+extern int command_unignore (struct t_gui_buffer *, char *, int, char **);
+extern int command_upgrade (struct t_gui_buffer *, char *, int, char **);
+extern int command_uptime (struct t_gui_buffer *, char *, int, char **);
+extern int command_window (struct t_gui_buffer *, char *, int, char **);
+
+#endif /* wee-command.h */
