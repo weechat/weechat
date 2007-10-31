@@ -30,32 +30,31 @@
 #include <dirent.h>
 #include <unistd.h>
 
-#include "weechat.h"
-#include "completion.h"
-#include "alias.h"
-#include "command.h"
-#include "log.h"
-#include "utf8.h"
-#include "util.h"
-#include "weelist.h"
-#include "weeconfig.h"
-#include "../protocols/irc/irc.h"
-
-#ifdef PLUGINS
-#include "../plugins/plugins.h"
-#endif
+#include "../core/weechat.h"
+#include "../core/wee-alias.h"
+#include "../core/wee-command.h"
+#include "../core/wee-config.h"
+#include "../core/wee-hook.h"
+#include "../core/wee-log.h"
+#include "../core/wee-string.h"
+#include "../core/wee-utf8.h"
+#include "../core/wee-list.h"
+#include "../plugins/plugin.h"
+#include "../plugins/plugin-config.h"
+#include "gui-completion.h"
+#include "gui-keyboard.h"
 
 
 /*
- * completion_init: init completion
+ * gui_completion_init: init completion
  */
 
 void
-completion_init (t_completion *completion, void *server, void *channel)
+gui_completion_init (struct t_gui_completion *completion,
+                     struct t_gui_buffer *buffer)
 {
-    completion->server = server;
-    completion->channel = channel;
-    completion->context = COMPLETION_NULL;
+    completion->buffer = buffer;
+    completion->context = GUI_COMPLETION_NULL;
     completion->base_command = NULL;
     completion->base_command_arg = 0;
     completion->arg_is_nick = 0;
@@ -68,7 +67,7 @@ completion_init (t_completion *completion, void *server, void *channel)
     
     completion->completion_list = NULL;
     completion->last_completion = NULL;
-
+    
     completion->word_found = NULL;
     completion->position_replace = 0;
     completion->diff_size = 0;
@@ -76,11 +75,11 @@ completion_init (t_completion *completion, void *server, void *channel)
 }
 
 /*
- * completion_free: free completion
+ * gui_completion_free_data: free data in completion
  */
 
 void
-completion_free (t_completion *completion)
+gui_completion_free_data (struct t_gui_completion *completion)
 {
     if (completion->base_command)
         free (completion->base_command);
@@ -105,31 +104,41 @@ completion_free (t_completion *completion)
 }
 
 /*
- * completion_stop: stop completion (for example after 1 arg of command with 1 arg)
+ * gui_completion_free: free completion
  */
 
 void
-completion_stop (t_completion *completion)
+gui_completion_free (struct t_gui_completion *completion)
 {
-    completion->context = COMPLETION_NULL;
+    gui_completion_free_data (completion);
+    free (completion);
+}
+
+/*
+ * gui_completion_stop: stop completion (for example after 1 arg of command
+ *                      with 1 arg)
+ */
+
+void
+gui_completion_stop (struct t_gui_completion *completion)
+{
+    completion->context = GUI_COMPLETION_NULL;
     completion->position = -1;
 }
 
 /*
- * completion_get_command_infos: return completion template and max arg for command
+ * gui_completion_get_command_infos: return completion template and max arg
+ *                                   for command
  */
 
 void
-completion_get_command_infos (t_completion *completion,
-                              char **template, int *max_arg)
+gui_completion_get_command_infos (struct t_gui_completion *completion,
+                                  char **template, int *max_arg)
 {
-    t_weechat_alias *ptr_alias;
+    struct alias *ptr_alias;
+    struct t_hook *ptr_hook;
     char *ptr_command, *ptr_command2, *pos;
     int i;
-#ifdef PLUGINS
-    t_weechat_plugin *ptr_plugin;
-    t_plugin_handler *ptr_handler;
-#endif
     
     *template = NULL;
     *max_arg = MAX_ARGS;
@@ -152,49 +161,29 @@ completion_get_command_infos (t_completion *completion,
     if (pos)
         pos[0] = '\0';
     
-#ifdef PLUGINS
-    /* look for plugin command handler */
-    for (ptr_plugin = weechat_plugins; ptr_plugin;
-         ptr_plugin = ptr_plugin->next_plugin)
+    /* look for command hooked */
+    for (ptr_hook = weechat_hooks; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
     {
-        for (ptr_handler = ptr_plugin->handlers;
-             ptr_handler; ptr_handler = ptr_handler->next_handler)
+        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+            && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
+                                   ptr_command2) == 0))
         {
-            if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
-                && (ascii_strcasecmp (ptr_handler->command,
-                                      ptr_command2) == 0))
-            {
-                *template = ptr_handler->completion_template;
-                *max_arg = MAX_ARGS;
-                free (ptr_command2);
-                return;
-            }
-        }
-    }
-#endif
-    
-    /* look for WeeChat internal command */
-    for (i = 0; weechat_commands[i].command_name; i++)
-    {
-        if (ascii_strcasecmp (weechat_commands[i].command_name,
-                              ptr_command2) == 0)
-        {
-            *template = weechat_commands[i].completion_template;
-            *max_arg = weechat_commands[i].max_arg;
+            *template = HOOK_COMMAND(ptr_hook, completion);
+            *max_arg = MAX_ARGS;
             free (ptr_command2);
             return;
         }
     }
     
-    /* look for IRC command */
-    for (i = 0; irc_commands[i].command_name; i++)
+    /* look for WeeChat internal command */
+    for (i = 0; weechat_commands[i].name; i++)
     {
-        if ((irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
-            && (ascii_strcasecmp (irc_commands[i].command_name,
-                                  ptr_command2) == 0))
+        if (string_strcasecmp (weechat_commands[i].name,
+                               ptr_command2) == 0)
         {
-            *template = irc_commands[i].completion_template;
-            *max_arg = irc_commands[i].max_arg;
+            *template = weechat_commands[i].completion_template;
+            *max_arg = weechat_commands[i].max_arg;
             free (ptr_command2);
             return;
         }
@@ -205,12 +194,12 @@ completion_get_command_infos (t_completion *completion,
 }
 
 /*
- * completion_is_only_alphanum: return 1 if there is only alpha/num chars
- *                              in a string
+ * gui_completion_is_only_alphanum: return 1 if there is only alpha/num chars
+ *                                  in a string
  */
 
 int
-completion_is_only_alphanum (char *string)
+gui_completion_is_only_alphanum (char *string)
 {
     while (string[0])
     {
@@ -222,11 +211,11 @@ completion_is_only_alphanum (char *string)
 }
 
 /*
- * completion_strdup_alphanum: duplicate alpha/num chars in a string
+ * gui_completion_strdup_alphanum: duplicate alpha/num chars in a string
  */
 
 char *
-completion_strdup_alphanum (char *string)
+gui_completion_strdup_alphanum (char *string)
 {
     char *result, *pos;
     
@@ -246,12 +235,12 @@ completion_strdup_alphanum (char *string)
 }
 
 /*
- * completion_nickncmp: locale and case independent string comparison
- *                      with max length for nicks (alpha or digits only)
+ * gui_completion_nickncmp: locale and case independent string comparison
+ *                          with max length for nicks (alpha or digits only)
  */
 
 int
-completion_nickncmp (char *base_word, char *nick, int max)
+gui_completion_nickncmp (char *base_word, char *nick, int max)
 {
     char *base_word2, *nick2;
     int return_cmp;
@@ -259,13 +248,13 @@ completion_nickncmp (char *base_word, char *nick, int max)
     if (!cfg_look_nick_completion_ignore
         || !cfg_look_nick_completion_ignore[0]
         || !base_word || !nick || !base_word[0] || !nick[0]
-        || (!completion_is_only_alphanum (base_word)))
-        return ascii_strncasecmp (base_word, nick, max);
+        || (!gui_completion_is_only_alphanum (base_word)))
+        return string_strncasecmp (base_word, nick, max);
     
-    base_word2 = completion_strdup_alphanum (base_word);
-    nick2 = completion_strdup_alphanum (nick);
+    base_word2 = gui_completion_strdup_alphanum (base_word);
+    nick2 = gui_completion_strdup_alphanum (nick);
     
-    return_cmp = ascii_strncasecmp (base_word2, nick2, strlen (base_word2));
+    return_cmp = string_strncasecmp (base_word2, nick2, strlen (base_word2));
     
     free (base_word2);
     free (nick2);
@@ -274,21 +263,21 @@ completion_nickncmp (char *base_word, char *nick, int max)
 }
 
 /*
- * completion_list_add: add a word to completion word list
+ * gui_completion_list_add: add a word to completion word list
  */
 
 void
-completion_list_add (t_completion *completion, char *word,
-                     int nick_completion, int position)
+gui_completion_list_add (struct t_gui_completion *completion, char *word,
+                         int nick_completion, int position)
 {
     if (!word || !word[0])
         return;
     
     if (!completion->base_word || !completion->base_word[0]
-        || (nick_completion && (completion_nickncmp (completion->base_word, word,
-                                                            strlen (completion->base_word)) == 0))
-        || (!nick_completion && (ascii_strncasecmp (completion->base_word, word,
-                                                          strlen (completion->base_word)) == 0)))
+        || (nick_completion && (gui_completion_nickncmp (completion->base_word, word,
+                                                         strlen (completion->base_word)) == 0))
+        || (!nick_completion && (string_strncasecmp (completion->base_word, word,
+                                                     strlen (completion->base_word)) == 0)))
     {
         weelist_add (&completion->completion_list,
                      &completion->last_completion,
@@ -298,57 +287,61 @@ completion_list_add (t_completion *completion, char *word,
 }
 
 /*
- * completion_list_add_alias: add alias to completion list
+ * gui_completion_list_add_alias: add alias to completion list
  */
 
 void
-completion_list_add_alias (t_completion *completion)
+gui_completion_list_add_alias (struct t_gui_completion *completion)
 {
-    t_weechat_alias *ptr_alias;
+    struct alias *ptr_alias;
     
     for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
     {
-        completion_list_add (completion, ptr_alias->alias_name,
-                             0, WEELIST_POS_SORT);
+        gui_completion_list_add (completion, ptr_alias->name,
+                                 0, WEELIST_POS_SORT);
     }
 }
 
 /*
- * completion_list_add_alias_cmd: add alias and comands to completion list
+ * gui_completion_list_add_alias_cmd: add alias and comands to completion list
  */
 
 void
-completion_list_add_alias_cmd (t_completion *completion)
+gui_completion_list_add_alias_cmd (struct t_gui_completion *completion)
 {
-    t_weelist *ptr_list;
+    struct t_weelist *ptr_list;
     
-    for (ptr_list = index_commands; ptr_list; ptr_list = ptr_list->next_weelist)
+    for (ptr_list = weechat_index_commands; ptr_list;
+         ptr_list = ptr_list->next_weelist)
     {
-        completion_list_add (completion, ptr_list->data, 0, WEELIST_POS_SORT);
+        gui_completion_list_add (completion, ptr_list->data, 0,
+                                 WEELIST_POS_SORT);
     }
 }
 
 /*
- * completion_list_add_channel: add current channel to completion list
+ * gui_completion_list_add_channel: add current channel to completion list
  */
 
 void
-completion_list_add_channel (t_completion *completion)
+gui_completion_list_add_channel (struct t_gui_completion *completion)
 {
-    if (completion->channel)
-        completion_list_add (completion,
-                             ((t_irc_channel *)(completion->channel))->name,
-                             0, WEELIST_POS_SORT);
+    (void) completion;
+    /*if (completion->channel)
+        gui_completion_list_add (completion,
+                                 ((t_irc_channel *)(completion->channel))->name,
+                                 0, WEELIST_POS_SORT);*/
 }
 
 /*
- * completion_list_add_channels: add server channels to completion list
+ * gui_completion_list_add_channels: add server channels to completion list
  */
 
 void
-completion_list_add_channels (t_completion *completion)
+gui_completion_list_add_channels (struct t_gui_completion *completion)
 {
-    t_irc_server *ptr_server;
+    (void) completion;
+    /*t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     
     if (completion->server)
@@ -359,19 +352,19 @@ completion_list_add_channels (t_completion *completion)
             for (ptr_channel = ptr_server->channels;
                  ptr_channel; ptr_channel = ptr_channel->next_channel)
             {
-                completion_list_add (completion, ptr_channel->name,
-                                     0, WEELIST_POS_SORT);
+                gui_completion_list_add (completion, ptr_channel->name,
+                                         0, WEELIST_POS_SORT);
             }
         }
-    }
+        }*/
 }
 
 /*
- * completion_list_add_filename: add filename to completion list
+ * gui_completion_list_add_filename: add filename to completion list
  */
 
 void
-completion_list_add_filename (t_completion *completion)
+gui_completion_list_add_filename (struct t_gui_completion *completion)
 {
     char *path_d, *path_b, *p, *d_name;
     char *real_prefix, *prefix;
@@ -446,8 +439,8 @@ completion_list_add_filename (t_completion *completion)
 			 entry->d_name, 
 			 S_ISDIR(statbuf.st_mode) ? DIR_SEPARATOR : "");
 		
-		completion_list_add (completion, buffer,
-                                     0, WEELIST_POS_SORT);
+		gui_completion_list_add (completion, buffer,
+                                         0, WEELIST_POS_SORT);
 	    }
 	}
     }
@@ -461,14 +454,14 @@ completion_list_add_filename (t_completion *completion)
 }
 
 /*
- * completion_list_add_plugin_cmd: add plugin command handlers to completion list
+ * gui_completion_list_add_plugin_cmd: add plugin command handlers to completion list
  */
 
 void
-completion_list_add_plugin_cmd (t_completion *completion)
+gui_completion_list_add_plugin_cmd (struct t_gui_completion *completion)
 {
-#ifdef PLUGINS
-    t_weechat_plugin *ptr_plugin;
+    (void) completion;
+    /*t_weechat_plugin *ptr_plugin;
     t_plugin_handler *ptr_handler;
     
     for (ptr_plugin = weechat_plugins; ptr_plugin;
@@ -478,87 +471,97 @@ completion_list_add_plugin_cmd (t_completion *completion)
              ptr_handler; ptr_handler = ptr_handler->next_handler)
         {
             if (ptr_handler->type == PLUGIN_HANDLER_COMMAND)
-                completion_list_add (completion, ptr_handler->command,
-                                     0, WEELIST_POS_SORT);
+                gui_completion_list_add (completion, ptr_handler->command,
+                                         0, WEELIST_POS_SORT);
         }
-    }
-#else
-    /* make C compiler happy */
+    }*/
+}
+
+/*
+ * gui_completion_list_add_protocol_commands: add protocol commands to completion list
+ */
+
+void
+gui_completion_list_add_protocol_commands (struct t_gui_completion *completion)
+{
     (void) completion;
-#endif
-}
-
-/*
- * completion_list_add_irc_cmd_sent: add IRC command (sent) to completion list
- */
-
-void
-completion_list_add_irc_cmd_sent (t_completion *completion)
-{
-    int i;
     
-    for (i = 0; irc_commands[i].command_name; i++)
+    /*int i;
+    t_weechat_protocol *ptr_protocol;
+
+    ptr_protocol = completion->buffer->protocol;
+
+    if (ptr_protocol && ptr_protocol->commands)
     {
-        if (irc_commands[i].cmd_function_args || irc_commands[i].cmd_function_1arg)
-            completion_list_add (completion, irc_commands[i].command_name,
-                                 0, WEELIST_POS_SORT);
-    }
+        i = 0;
+        while (ptr_protocol->commands[i].name)
+        {
+            gui_completion_list_add (completion,
+                                     ptr_protocol->commands[i].name,
+                                     0, WEELIST_POS_SORT);            
+            i++;
+        }
+    }*/
 }
 
 /*
- * completion_list_add_irc_cmd_recv: add IRC command (received) to completion list
+ * gui_completion_list_add_irc_cmd_recv: add IRC command (received) to
+ *                                       completion list
  */
 
 void
-completion_list_add_irc_cmd_recv (t_completion *completion)
+gui_completion_list_add_irc_cmd_recv (struct t_gui_completion *completion)
 {
-    int i;
+    (void) completion;
+    /*int i;
     
-    for (i = 0; irc_commands[i].command_name; i++)
+    for (i = 0; irc_commands[i].name; i++)
     {
         if (irc_commands[i].recv_function)
-            completion_list_add(completion, irc_commands[i].command_name,
-                                0, WEELIST_POS_SORT);
-    }
+            gui_completion_list_add(completion, irc_commands[i].name,
+                                    0, WEELIST_POS_SORT);
+                                    }*/
 }
 
 /*
- * completion_list_add_key_cmd: add key commands/functions to completion list
+ * gui_completion_list_add_key_cmd: add key commands/functions to completion
+ *                                  list
  */
 
 void
-completion_list_add_key_cmd (t_completion *completion)
+gui_completion_list_add_key_cmd (struct t_gui_completion *completion)
 {
     int i;
     
     for (i = 0; gui_key_functions[i].function_name; i++)
     {
-        completion_list_add (completion, gui_key_functions[i].function_name,
-                             0, WEELIST_POS_SORT);
+        gui_completion_list_add (completion, gui_key_functions[i].function_name,
+                                 0, WEELIST_POS_SORT);
     }
 }
 
 /*
- * completion_list_add_self_nick: add self nick on server to completion list
+ * gui_completion_list_add_self_nick: add self nick on server to completion list
  */
 
 void
-completion_list_add_self_nick (t_completion *completion)
+gui_completion_list_add_self_nick (struct t_gui_completion *completion)
 {
-    if (completion->server)
-        completion_list_add (completion,
-                             ((t_irc_server *)(completion->server))->nick,
-                             0, WEELIST_POS_SORT);
+    if (completion->buffer->input_nick)
+        gui_completion_list_add (completion,
+                                 completion->buffer->input_nick,
+                                 0, WEELIST_POS_SORT);
 }
 
 /*
- * completion_list_add_server_nicks: add server nicks to completion list
+ * gui_completion_list_add_server_nicks: add server nicks to completion list
  */
 
 void
-completion_list_add_server_nicks (t_completion *completion)
+gui_completion_list_add_server_nicks (struct t_gui_completion *completion)
 {
-    t_irc_server *ptr_server;
+    (void) completion;
+    /*t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
     t_irc_nick *ptr_nick;
     
@@ -576,57 +579,58 @@ completion_list_add_server_nicks (t_completion *completion)
                     for (ptr_nick = ptr_channel->nicks; ptr_nick;
                          ptr_nick = ptr_nick->next_nick)
                     {
-                        completion_list_add (completion, ptr_nick->nick,
-                                             1, WEELIST_POS_SORT);
+                        gui_completion_list_add (completion, ptr_nick->nick,
+                                                 1, WEELIST_POS_SORT);
                     }
                 }
             }
         }
         
-        /* add current channel nicks at beginning */
+        // add current channel nicks at beginning
         if (completion->channel && (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_CHANNEL))
         {
             for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
                  ptr_nick; ptr_nick = ptr_nick->next_nick)
             {
-                completion_list_add (completion, ptr_nick->nick,
-                                     1, WEELIST_POS_BEGINNING);
+                gui_completion_list_add (completion, ptr_nick->nick,
+                                         1, WEELIST_POS_BEGINNING);
             }
         }
         
-        /* add self nick at the end */
+        // add self nick at the end
         if (completion->server)
-            completion_list_add (completion,
+            gui_completion_list_add (completion,
                                  ((t_irc_server *)(completion->server))->nick,
                                  1, WEELIST_POS_END);
         
         completion->arg_is_nick = 1;
-    }
+    }*/
 }
 
 /*
- * completion_list_add_channel_nicks: add channel nicks to completion list
+ * gui_completion_list_add_channel_nicks: add channel nicks to completion list
  */
 
 void
-completion_list_add_channel_nicks (t_completion *completion)
+gui_completion_list_add_channel_nicks (struct t_gui_completion *completion)
 {
-    t_irc_nick *ptr_nick;
-    t_weelist *ptr_weelist;
+    (void) completion;
+    /*t_irc_nick *ptr_nick;
+    struct t_weelist *ptr_weelist;
     
     if (completion->channel)
     {
         if (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_CHANNEL)
         {
-            /* add channel nicks */
+            // add channel nicks
             for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
                  ptr_nick; ptr_nick = ptr_nick->next_nick)
             {
-                completion_list_add (completion, ptr_nick->nick,
-                                     1, WEELIST_POS_SORT);
+                gui_completion_list_add (completion, ptr_nick->nick,
+                                         1, WEELIST_POS_SORT);
             }
             
-            /* add nicks speaking recently on this channel */
+            // add nicks speaking recently on this channel
             if (cfg_look_nick_completion_smart)
             {
                 for (ptr_weelist = ((t_irc_channel *)(completion->channel))->nicks_speaking;
@@ -634,36 +638,37 @@ completion_list_add_channel_nicks (t_completion *completion)
                 {
                     if (irc_nick_search ((t_irc_channel *)(completion->channel),
                                          ptr_weelist->data))
-                        completion_list_add (completion, ptr_weelist->data,
-                                             1, WEELIST_POS_BEGINNING);
+                        gui_completion_list_add (completion, ptr_weelist->data,
+                                                 1, WEELIST_POS_BEGINNING);
                 }
             }
             
-            /* add self nick at the end */
+            // add self nick at the end
             if (completion->server)
-                completion_list_add (completion,
-                                     ((t_irc_server *)(completion->server))->nick,
-                                     1, WEELIST_POS_END);
+                gui_completion_list_add (completion,
+                                         ((t_irc_server *)(completion->server))->nick,
+                                         1, WEELIST_POS_END);
         }
         if ((((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_PRIVATE)
             || (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_DCC_CHAT))
         {
-            completion_list_add (completion,
-                                 ((t_irc_channel *)(completion->channel))->name,
-                                 1, WEELIST_POS_SORT);
+            gui_completion_list_add (completion,
+                                     ((t_irc_channel *)(completion->channel))->name,
+                                     1, WEELIST_POS_SORT);
         }
         completion->arg_is_nick = 1;
-    }
+        }*/
 }
 
 /*
- * completion_list_add_channel_nicks_hosts: add channel nicks and hosts to completion list
+ * gui_completion_list_add_channel_nicks_hosts: add channel nicks and hosts to completion list
  */
 
 void
-completion_list_add_channel_nicks_hosts (t_completion *completion)
+gui_completion_list_add_channel_nicks_hosts (struct t_gui_completion *completion)
 {
-    t_irc_nick *ptr_nick;
+    (void) completion;
+    /*t_irc_nick *ptr_nick;
     char *buf;
     int length;
     
@@ -674,8 +679,8 @@ completion_list_add_channel_nicks_hosts (t_completion *completion)
             for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
                  ptr_nick; ptr_nick = ptr_nick->next_nick)
             {
-                completion_list_add (completion, ptr_nick->nick,
-                                     1, WEELIST_POS_SORT);
+                gui_completion_list_add (completion, ptr_nick->nick,
+                                         1, WEELIST_POS_SORT);
                 if (ptr_nick->host)
                 {
                     length = strlen (ptr_nick->nick) + 1 +
@@ -685,8 +690,8 @@ completion_list_add_channel_nicks_hosts (t_completion *completion)
                     {
                         snprintf (buf, length, "%s!%s",
                                   ptr_nick->nick, ptr_nick->host);
-                        completion_list_add (completion, buf,
-                                             1, WEELIST_POS_SORT);
+                        gui_completion_list_add (completion, buf,
+                                                 1, WEELIST_POS_SORT);
                         free (buf);
                     }
                 }
@@ -695,156 +700,138 @@ completion_list_add_channel_nicks_hosts (t_completion *completion)
         if ((((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_PRIVATE)
              || (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_PRIVATE))
         {
-            completion_list_add (completion,
-                                 ((t_irc_channel *)(completion->channel))->name,
-                                 1, WEELIST_POS_SORT);
+            gui_completion_list_add (completion,
+                                     ((t_irc_channel *)(completion->channel))->name,
+                                     1, WEELIST_POS_SORT);
         }
         completion->arg_is_nick = 1;
-    }
+        }*/
 }
 
 /*
- * completion_list_add_option: add config option to completion list
+ * gui_completion_list_add_option: add config option to completion list
  */
 
 void
-completion_list_add_option (t_completion *completion)
+gui_completion_list_add_option (struct t_gui_completion *completion)
 {
     int i, j;
-    t_irc_server *ptr_server;
-    char option_name[256];
     
-    for (i = 0; i < CONFIG_NUMBER_SECTIONS; i++)
+    /* WeeChat options */
+    for (i = 0; weechat_config_sections[i]; i++)
     {
-        if ((i != CONFIG_SECTION_KEYS) && (i != CONFIG_SECTION_ALIAS)
-            && (i != CONFIG_SECTION_IGNORE) && (i != CONFIG_SECTION_SERVER))
+        if (weechat_config_options[i])
         {
-            for (j = 0; weechat_options[i][j].option_name; j++)
+            for (j = 0; weechat_config_options[i][j].name; j++)
             {
-                completion_list_add (completion,
-                                     weechat_options[i][j].option_name,
-                                     0, WEELIST_POS_SORT);
+                gui_completion_list_add (completion,
+                                         weechat_config_options[i][j].name,
+                                         0, WEELIST_POS_SORT);
             }
         }
     }
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
-    {
-        for (i = 0; weechat_options[CONFIG_SECTION_SERVER][i].option_name; i++)
-        {
-            snprintf (option_name, sizeof (option_name), "%s.%s",
-                      ptr_server->name, 
-                      weechat_options[CONFIG_SECTION_SERVER][i].option_name);
-            completion_list_add (completion, option_name, 0, WEELIST_POS_SORT);
-        }
-    }
 }
 
 /*
- * completion_list_add_plugin_option: add plugin option to completion list
+ * gui_completion_list_add_plugin_option: add plugin option to completion list
  */
 
 void
-completion_list_add_plugin_option (t_completion *completion)
+gui_completion_list_add_plugin_option (struct t_gui_completion *completion)
 {
-#ifdef PLUGINS
-    t_plugin_option *ptr_option;
+    struct t_plugin_option *ptr_option;
     
     for (ptr_option = plugin_options; ptr_option;
          ptr_option = ptr_option->next_option)
     {
-        completion_list_add (completion, ptr_option->name, 0, WEELIST_POS_SORT);
+        gui_completion_list_add (completion, ptr_option->name, 0, WEELIST_POS_SORT);
     }
-#else
-    /* make C compiler happy */
+}
+
+/*
+ * gui_completion_list_add_part: add part message to completion list
+ */
+
+void
+gui_completion_list_add_part (struct t_gui_completion *completion)
+{
     (void) completion;
-#endif
+    /*if (cfg_irc_default_msg_part && cfg_irc_default_msg_part[0])
+        gui_completion_list_add (completion, cfg_irc_default_msg_part,
+        0, WEELIST_POS_SORT);*/
 }
 
 /*
- * completion_list_add_part: add part message to completion list
+ * gui_completion_list_add_plugin: add plugin name to completion list
  */
 
 void
-completion_list_add_part (t_completion *completion)
+gui_completion_list_add_plugin (struct t_gui_completion *completion)
 {
-    if (cfg_irc_default_msg_part && cfg_irc_default_msg_part[0])
-        completion_list_add (completion, cfg_irc_default_msg_part,
-                             0, WEELIST_POS_SORT);
-}
-
-/*
- * completion_list_add_plugin: add plugin name to completion list
- */
-
-void
-completion_list_add_plugin (t_completion *completion)
-{
-#ifdef PLUGINS
-    t_weechat_plugin *ptr_plugin;
+    struct t_weechat_plugin *ptr_plugin;
     
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
-        completion_list_add (completion, ptr_plugin->name,
-                             0, WEELIST_POS_SORT);
+        gui_completion_list_add (completion, ptr_plugin->name,
+                                 0, WEELIST_POS_SORT);
     }
-#else
-    /* make C compiler happy */
+}
+
+/*
+ * gui_completion_list_add_quit: add quit message to completion list
+ */
+
+void
+gui_completion_list_add_quit (struct t_gui_completion *completion)
+{
     (void) completion;
-#endif
+    /*if (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0])
+        gui_completion_list_add (completion, cfg_irc_default_msg_quit,
+        0, WEELIST_POS_SORT);*/
 }
 
 /*
- * completion_list_add_quit: add quit message to completion list
+ * gui_completion_list_add_server: add current server to completion list
  */
 
 void
-completion_list_add_quit (t_completion *completion)
+gui_completion_list_add_server (struct t_gui_completion *completion)
 {
-    if (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0])
-        completion_list_add (completion, cfg_irc_default_msg_quit,
-                             0, WEELIST_POS_SORT);
-}
-
-/*
- * completion_list_add_server: add current server to completion list
- */
-
-void
-completion_list_add_server (t_completion *completion)
-{
-    if (completion->server)
-        completion_list_add (completion,
+    (void) completion;
+    /*if (completion->server)
+        gui_completion_list_add (completion,
                              ((t_irc_server *)(completion->server))->name,
-                             0, WEELIST_POS_SORT);
+                             0, WEELIST_POS_SORT);*/
 }
 
 /*
- * completion_list_add_servers: add all servers to completion list
+ * gui_completion_list_add_servers: add all servers to completion list
  */
 
 void
-completion_list_add_servers (t_completion *completion)
+gui_completion_list_add_servers (struct t_gui_completion *completion)
 {
-    t_irc_server *ptr_server;
+    (void) completion;
+    /*t_irc_server *ptr_server;
     
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        completion_list_add (completion, ptr_server->name,
-                             0, WEELIST_POS_SORT);
-    }
+        gui_completion_list_add (completion, ptr_server->name,
+                                 0, WEELIST_POS_SORT);
+                                 }*/
 }
 
 /*
- * completion_list_add_topic: add topic to completion list
+ * gui_completion_list_add_topic: add topic to completion list
  */
 
 void
-completion_list_add_topic (t_completion *completion)
+gui_completion_list_add_topic (struct t_gui_completion *completion)
 {
-    char *string;
+    (void) completion;
+    /*char *string;
     
     if (completion->server && completion->channel
         && ((t_irc_channel *)(completion->channel))->topic
@@ -854,24 +841,24 @@ completion_list_add_topic (t_completion *completion)
             string = (char *)gui_color_decode_for_user_entry ((unsigned char *)((t_irc_channel *)(completion->channel))->topic);
         else
             string = (char *)gui_color_decode ((unsigned char *)((t_irc_channel *)(completion->channel))->topic, 0, 0);
-        completion_list_add (completion,
-                             (string) ?
-                             string : ((t_irc_channel *)(completion->channel))->topic,
-                             0, WEELIST_POS_SORT);
+        gui_completion_list_add (completion,
+                                 (string) ?
+                                 string : ((t_irc_channel *)(completion->channel))->topic,
+                                 0, WEELIST_POS_SORT);
         if (string)
             free (string);
-    }
+            }*/
 }
 
 /*
- * completion_list_add_option_value: add option value to completion list
+ * gui_completion_list_add_option_value: add option value to completion list
  */
 
 void
-completion_list_add_option_value (t_completion *completion)
+gui_completion_list_add_option_value (struct t_gui_completion *completion)
 {
     char *pos;
-    t_config_option *option;
+    struct t_config_option *option;
     void *option_value;
     char option_string[2048];
     
@@ -882,38 +869,43 @@ completion_list_add_option_value (t_completion *completion)
             pos[0] = '\0';
         option = NULL;
         option_value = NULL;
-        config_option_search_option_value (completion->args, &option, &option_value);
+        //config_option_search_option_value (completion->args, &option, &option_value);
+        config_option_section_option_search_get_value (weechat_config_sections,
+                                                       weechat_config_options,
+                                                       completion->args,
+                                                       &option,
+                                                       &option_value);
         if (option && option_value)
         {
-            switch (option->option_type)
+            switch (option->type)
             {
                 case OPTION_TYPE_BOOLEAN:
                     if (option_value && (*((int *)(option_value))))
-                        completion_list_add (completion, "on",
-                                             0, WEELIST_POS_SORT);
+                        gui_completion_list_add (completion, "on",
+                                                 0, WEELIST_POS_SORT);
                     else
-                        completion_list_add (completion, "off",
-                                             0, WEELIST_POS_SORT);
+                        gui_completion_list_add (completion, "off",
+                                                 0, WEELIST_POS_SORT);
                     break;
                 case OPTION_TYPE_INT:
                     snprintf (option_string, sizeof (option_string) - 1,
                               "%d", (option_value) ? *((int *)(option_value)) : option->default_int);
-                    completion_list_add (completion, option_string,
-                                         0, WEELIST_POS_SORT);
+                    gui_completion_list_add (completion, option_string,
+                                             0, WEELIST_POS_SORT);
                     break;
                 case OPTION_TYPE_INT_WITH_STRING:
-                    completion_list_add (completion,
-                                         (option_value) ?
-                                         option->array_values[*((int *)(option_value))] :
-                                         option->array_values[option->default_int],
-                                         0, WEELIST_POS_SORT);
+                    gui_completion_list_add (completion,
+                                             (option_value) ?
+                                             option->array_values[*((int *)(option_value))] :
+                                             option->array_values[option->default_int],
+                                             0, WEELIST_POS_SORT);
                     break;
                 case OPTION_TYPE_COLOR:
-                    completion_list_add (completion,
-                                         (option_value) ?
-                                         gui_color_get_name (*((int *)(option_value))) :
-                                         option->default_string,
-                                         0, WEELIST_POS_SORT);
+                    gui_completion_list_add (completion,
+                                             (option_value) ?
+                                             gui_color_get_name (*((int *)(option_value))) :
+                                             option->default_string,
+                                             0, WEELIST_POS_SORT);
                     break;
                 case OPTION_TYPE_STRING:
                     snprintf (option_string, sizeof (option_string) - 1,
@@ -921,8 +913,8 @@ completion_list_add_option_value (t_completion *completion)
                               ((option_value) && (*((char **)(option_value)))) ?
                               *((char **)(option_value)) :
                               option->default_string);
-                    completion_list_add (completion, option_string,
-                                         0, WEELIST_POS_SORT);
+                    gui_completion_list_add (completion, option_string,
+                                             0, WEELIST_POS_SORT);
                     break;
             }
         }
@@ -932,15 +924,14 @@ completion_list_add_option_value (t_completion *completion)
 }
 
 /*
- * completion_list_add_plugin_option_value: add plugin option value to completion list
+ * gui_completion_list_add_plugin_option_value: add plugin option value to completion list
  */
 
 void
-completion_list_add_plugin_option_value (t_completion *completion)
+gui_completion_list_add_plugin_option_value (struct t_gui_completion *completion)
 {
-#ifdef PLUGINS
     char *pos;
-    t_plugin_option *ptr_option;
+    struct t_plugin_option *ptr_option;
     
     if (completion->args)
     {
@@ -950,40 +941,36 @@ completion_list_add_plugin_option_value (t_completion *completion)
         
         ptr_option = plugin_config_search_internal (completion->args);
         if (ptr_option)
-            completion_list_add (completion, ptr_option->value,
-                                 0, WEELIST_POS_SORT);
+            gui_completion_list_add (completion, ptr_option->value,
+                                     0, WEELIST_POS_SORT);
         
         if (pos)
             pos[0] = ' ';
     }
-#else
-    /* make C compiler happy */
-    (void) completion;
-#endif
 }
 
 /*
- * completion_list_add_weechat_cmd: add WeeChat commands to completion list
+ * gui_completion_list_add_weechat_cmd: add WeeChat commands to completion list
  */
 
 void
-completion_list_add_weechat_cmd (t_completion *completion)
+gui_completion_list_add_weechat_cmd (struct t_gui_completion *completion)
 {
     int i;
     
-    for (i = 0; weechat_commands[i].command_name; i++)
+    for (i = 0; weechat_commands[i].name; i++)
     {
-        completion_list_add (completion, weechat_commands[i].command_name,
-                             0, WEELIST_POS_SORT);
+        gui_completion_list_add (completion, weechat_commands[i].name,
+                                 0, WEELIST_POS_SORT);
     }
 }
 
 /*
- * completion_build_list_template: build data list according to a template
+ * gui_completion_build_list_template: build data list according to a template
  */
 
 void
-completion_build_list_template (t_completion *completion, char *template)
+gui_completion_build_list_template (struct t_gui_completion *completion, char *template)
 {
     char *word, *pos;
     int word_offset;
@@ -1015,84 +1002,81 @@ completion_build_list_template (t_completion *completion, char *template)
                     switch (pos[0])
                     {
                         case '-': /* stop completion */
-                            completion_stop (completion);
+                            gui_completion_stop (completion);
                             free (word);
                             return;
                             break;
                         case '*': /* repeat last completion (do nothing there) */
                             break;
                         case 'a': /* alias */
-                            completion_list_add_alias (completion);
+                            gui_completion_list_add_alias (completion);
                             break;
                         case 'A': /* alias or any command */
-                            completion_list_add_alias_cmd (completion);
+                            gui_completion_list_add_alias_cmd (completion);
                             break;
                         case 'c': /* current channel */
-                            completion_list_add_channel (completion);
+                            gui_completion_list_add_channel (completion);
                             break;
                         case 'C': /* all channels */
-                            completion_list_add_channels (completion);
+                            gui_completion_list_add_channels (completion);
                             break;
                         case 'f': /* filename */
-                            completion_list_add_filename (completion);
+                            gui_completion_list_add_filename (completion);
                             break;
                         case 'h': /* plugin command handlers */
-                            completion_list_add_plugin_cmd (completion);
+                            gui_completion_list_add_plugin_cmd (completion);
                             break;
-                        case 'i': /* IRC command (sent) */
-                            completion_list_add_irc_cmd_sent (completion);
-                            break;
-                        case 'I': /* IRC command (received) */
-                            completion_list_add_irc_cmd_recv (completion);
+                        case 'i': /* protocol commands */
+                            gui_completion_list_add_protocol_commands (completion);
                             break;
                         case 'k': /* key cmd/funtcions*/
-                            completion_list_add_key_cmd (completion);
+                            gui_completion_list_add_key_cmd (completion);
                             break;
                         case 'm': /* self nickname */
-                            completion_list_add_self_nick (completion);
+                            gui_completion_list_add_self_nick (completion);
                             break;
                         case 'M': /* nicks of current server (all open channels) */
-                            completion_list_add_server_nicks (completion);
+                            gui_completion_list_add_server_nicks (completion);
                             break;
                         case 'n': /* channel nicks */
-                            completion_list_add_channel_nicks (completion);
-                            completion->context = COMPLETION_NICK;
+                            gui_completion_list_add_channel_nicks (completion);
+                            completion->context = GUI_COMPLETION_NICK;
                             break;
                         case 'N': /* channel nicks and hosts */
-                            completion_list_add_channel_nicks_hosts (completion);
+                            gui_completion_list_add_channel_nicks_hosts (completion);
                             break;
                         case 'o': /* config option */
-                            completion_list_add_option (completion);
+                            gui_completion_list_add_option (completion);
                             break;
                         case 'O': /* plugin option */
-                            completion_list_add_plugin_option (completion);
+                            gui_completion_list_add_plugin_option (completion);
                             break;
                         case 'p': /* part message */
-                            completion_list_add_part (completion);
+                            gui_completion_list_add_part (completion);
                             break;
                         case 'P': /* plugin name */
-                            completion_list_add_plugin (completion);
+                            gui_completion_list_add_plugin (completion);
                             break;
                         case 'q': /* quit message */
-                            completion_list_add_quit (completion);
+                            gui_completion_list_add_quit (completion);
                             break;
                         case 's': /* current server */
-                            completion_list_add_server (completion);
+                            gui_completion_list_add_server (completion);
                             break;
                         case 'S': /* all servers */
-                            completion_list_add_servers (completion);
+                            gui_completion_list_add_servers (completion);
                             break;
                         case 't': /* topic */
-                            completion_list_add_topic (completion);
+                            gui_completion_list_add_topic (completion);
                             break;
                         case 'v': /* value of config option */
-                            completion_list_add_option_value (completion);
+                            gui_completion_list_add_option_value (completion);
                             break;
                         case 'V': /* value of plugin option */
-                            completion_list_add_plugin_option_value (completion);
+                            gui_completion_list_add_plugin_option_value (completion);
                             break;
                         case 'w': /* WeeChat commands */
-                            completion_list_add_weechat_cmd (completion);
+                            gui_completion_list_add_weechat_cmd (completion);
                             break;
                     }
                 }
@@ -1110,22 +1094,22 @@ completion_build_list_template (t_completion *completion, char *template)
 }
 
 /*
- * completion_build_list: build data list according to command and argument #
+ * gui_completion_build_list: build data list according to command and argument #
  */
 
 void
-completion_build_list (t_completion *completion)
+gui_completion_build_list (struct t_gui_completion *completion)
 {
     char *template, *pos_template, *pos_space;
     int repeat_last, max_arg, i, length;
 
     repeat_last = 0;
     
-    completion_get_command_infos (completion, &template, &max_arg);
+    gui_completion_get_command_infos (completion, &template, &max_arg);
     if (!template || (strcmp (template, "-") == 0) ||
         (completion->base_command_arg > max_arg))
     {
-        completion_stop (completion);
+        gui_completion_stop (completion);
         return;
     }
 
@@ -1143,7 +1127,7 @@ completion_build_list (t_completion *completion)
         pos_space = strchr (pos_template, ' ');
         if (i == completion->base_command_arg)
         {
-            completion_build_list_template (completion, pos_template);
+            gui_completion_build_list_template (completion, pos_template);
             return;
         }
         if (pos_space)
@@ -1159,35 +1143,36 @@ completion_build_list (t_completion *completion)
     if (repeat_last)
     {
         pos_space = rindex (template, ' ');
-        completion_build_list_template (completion,
-                                        (pos_space) ? pos_space + 1 : template);
+        gui_completion_build_list_template (completion,
+                                            (pos_space) ? pos_space + 1 : template);
     }
 }
 
 /*
- * completion_find_context: find context for completion
+ * gui_completion_find_context: find context for completion
  */
 
 void
-completion_find_context (t_completion *completion, char *buffer, int size, int pos)
+gui_completion_find_context (struct t_gui_completion *completion, char *data,
+                             int size, int pos)
 {
     int i, command, command_arg, pos_start, pos_end;
     
     /* look for context */
-    completion_free (completion);
-    completion_init (completion, completion->server, completion->channel);
-    command = ((buffer[0] == '/') && (buffer[1] != '/')) ? 1 : 0;
+    gui_completion_free_data (completion);
+    gui_completion_init (completion, completion->buffer);
+    command = ((data[0] == '/') && (data[1] != '/')) ? 1 : 0;
     command_arg = 0;
     i = 0;
     while (i < pos)
     {
-        if (buffer[i] == ' ')
+        if (data[i] == ' ')
         {
             command_arg++;
             i++;
-            while ((i < pos) && (buffer[i] == ' ')) i++;
+            while ((i < pos) && (data[i] == ' ')) i++;
             if (!completion->args)
-                completion->args = strdup (buffer + i);
+                completion->args = strdup (data + i);
         }
         else
             i++;
@@ -1196,17 +1181,17 @@ completion_find_context (t_completion *completion, char *buffer, int size, int p
     {
         if (command_arg > 0)
         {
-            completion->context = COMPLETION_COMMAND_ARG;
+            completion->context = GUI_COMPLETION_COMMAND_ARG;
             completion->base_command_arg = command_arg;
         }
         else
         {
-            completion->context = COMPLETION_COMMAND;
+            completion->context = GUI_COMPLETION_COMMAND;
             completion->base_command_arg = 0;
         }
     }
     else
-        completion->context = COMPLETION_AUTO;
+        completion->context = GUI_COMPLETION_AUTO;
     
     /* look for word to complete (base word) */
     completion->base_word_pos = 0;
@@ -1216,24 +1201,24 @@ completion_find_context (t_completion *completion, char *buffer, int size, int p
     {
         i = pos;
         pos_start = i;
-        if (buffer[i] == ' ')
+        if (data[i] == ' ')
         {
-            if ((i > 0) && (buffer[i-1] != ' '))
+            if ((i > 0) && (data[i-1] != ' '))
             {
                 i--;
-                while ((i >= 0) && (buffer[i] != ' '))
+                while ((i >= 0) && (data[i] != ' '))
                     i--;
                 pos_start = i + 1;
             }
         }
         else
         {
-            while ((i >= 0) && (buffer[i] != ' '))
+            while ((i >= 0) && (data[i] != ' '))
                 i--;
             pos_start = i + 1;
         }
         i = pos;
-        while ((i < size) && (buffer[i] != ' '))
+        while ((i < size) && (data[i] != ' '))
             i++;
         pos_end = i - 1;
         
@@ -1241,14 +1226,14 @@ completion_find_context (t_completion *completion, char *buffer, int size, int p
         
         if (pos_start <= pos_end)
         {
-            if (completion->context == COMPLETION_COMMAND)
+            if (completion->context == GUI_COMPLETION_COMMAND)
                 completion->position_replace = pos_start + 1;
             else
                 completion->position_replace = pos_start;
             
             completion->base_word = (char *) malloc (pos_end - pos_start + 2);
             for (i = pos_start; i <= pos_end; i++)
-                completion->base_word[i - pos_start] = buffer[i];
+                completion->base_word[i - pos_start] = data[i];
             completion->base_word[pos_end - pos_start + 1] = '\0';
         }
     }
@@ -1257,58 +1242,58 @@ completion_find_context (t_completion *completion, char *buffer, int size, int p
         completion->base_word = strdup ("");
     
     /* find command (for command argument completion only) */
-    if (completion->context == COMPLETION_COMMAND_ARG)
+    if (completion->context == GUI_COMPLETION_COMMAND_ARG)
     {
         pos_start = 0;
-        while ((pos_start < size) && (buffer[pos_start] != '/'))
+        while ((pos_start < size) && (data[pos_start] != '/'))
             pos_start++;
-        if (buffer[pos_start] == '/')
+        if (data[pos_start] == '/')
         {
             pos_start++;
             pos_end = pos_start;
-            while ((pos_end < size) && (buffer[pos_end] != ' '))
+            while ((pos_end < size) && (data[pos_end] != ' '))
                 pos_end++;
-            if (buffer[pos_end] == ' ')
+            if (data[pos_end] == ' ')
                 pos_end--;
             
             completion->base_command = (char *) malloc (pos_end - pos_start + 2);
             for (i = pos_start; i <= pos_end; i++)
-                completion->base_command[i - pos_start] = buffer[i];
+                completion->base_command[i - pos_start] = data[i];
             completion->base_command[pos_end - pos_start + 1] = '\0';
-            completion_build_list (completion);
+            gui_completion_build_list (completion);
         }
     }
     
     /* auto completion with nothing as base word is disabled,
        in order to prevent completion when pasting messages with [tab] inside */
-    if ((completion->context == COMPLETION_AUTO)
+    if ((completion->context == GUI_COMPLETION_AUTO)
         && ((!completion->base_word) || (!completion->base_word[0])))
     {
-        completion->context = COMPLETION_NULL;
+        completion->context = GUI_COMPLETION_NULL;
         return;
     }
 }
 
 /*
- * completion_command: complete a command
+ * gui_completion_command: complete a command
  */
 
 void
-completion_command (t_completion *completion)
+gui_completion_command (struct t_gui_completion *completion)
 {
     int length, word_found_seen, other_completion;
-    t_weelist *ptr_weelist, *ptr_weelist2;
+    struct t_weelist *ptr_weelist, *ptr_weelist2;
     
     length = strlen (completion->base_word) - 1;
     word_found_seen = 0;
     other_completion = 0;
     if (completion->direction < 0)
-        ptr_weelist = last_index_command;
+        ptr_weelist = weechat_last_index_command;
     else
-        ptr_weelist = index_commands;
+        ptr_weelist = weechat_index_commands;
     while (ptr_weelist)
     {
-        if (ascii_strncasecmp (ptr_weelist->data, completion->base_word + 1, length) == 0)
+        if (string_strncasecmp (ptr_weelist->data, completion->base_word + 1, length) == 0)
         {
             if ((!completion->word_found) || word_found_seen)
             {
@@ -1323,8 +1308,8 @@ completion_command (t_completion *completion)
                 
                 while (ptr_weelist2)
                 {
-                    if (ascii_strncasecmp (ptr_weelist2->data,
-                                           completion->base_word + 1, length) == 0)
+                    if (string_strncasecmp (ptr_weelist2->data,
+                                            completion->base_word + 1, length) == 0)
                         other_completion++;
                     
                     if (completion->direction < 0)
@@ -1343,7 +1328,7 @@ completion_command (t_completion *completion)
             other_completion++;
         }
         if (completion->word_found &&
-            (ascii_strcasecmp (ptr_weelist->data, completion->word_found) == 0))
+            (string_strcasecmp (ptr_weelist->data, completion->word_found) == 0))
             word_found_seen = 1;
 
         if (completion->direction < 0)
@@ -1355,19 +1340,19 @@ completion_command (t_completion *completion)
     {
         free (completion->word_found);
         completion->word_found = NULL;
-        completion_command (completion);
+        gui_completion_command (completion);
     }
 }
 
 /*
- * completion_command_arg: complete a command argument
+ * gui_completion_command_arg: complete a command argument
  */
 
 void
-completion_command_arg (t_completion *completion, int nick_completion)
+gui_completion_command_arg (struct t_gui_completion *completion, int nick_completion)
 {
     int length, word_found_seen, other_completion;
-    t_weelist *ptr_weelist, *ptr_weelist2;
+    struct t_weelist *ptr_weelist, *ptr_weelist2;
     
     length = strlen (completion->base_word);
     word_found_seen = 0;
@@ -1379,8 +1364,8 @@ completion_command_arg (t_completion *completion, int nick_completion)
     
     while (ptr_weelist)
     {
-        if ((nick_completion && (completion_nickncmp (completion->base_word, ptr_weelist->data, length) == 0))
-            || ((!nick_completion) && (ascii_strncasecmp (completion->base_word, ptr_weelist->data, length) == 0)))
+        if ((nick_completion && (gui_completion_nickncmp (completion->base_word, ptr_weelist->data, length) == 0))
+            || ((!nick_completion) && (string_strncasecmp (completion->base_word, ptr_weelist->data, length) == 0)))
         {
             if ((!completion->word_found) || word_found_seen)
             {
@@ -1396,9 +1381,9 @@ completion_command_arg (t_completion *completion, int nick_completion)
                 while (ptr_weelist2)
                 {
                     if ((nick_completion
-                         && (completion_nickncmp (completion->base_word, ptr_weelist2->data, length) == 0))
+                         && (gui_completion_nickncmp (completion->base_word, ptr_weelist2->data, length) == 0))
                         || ((!nick_completion)
-                            && (ascii_strncasecmp (completion->base_word, ptr_weelist2->data, length) == 0)))
+                            && (string_strncasecmp (completion->base_word, ptr_weelist2->data, length) == 0)))
                         other_completion++;
                     
                     if (completion->direction < 0)
@@ -1417,7 +1402,7 @@ completion_command_arg (t_completion *completion, int nick_completion)
             other_completion++;
         }
         if (completion->word_found &&
-            (ascii_strcasecmp (ptr_weelist->data, completion->word_found) == 0))
+            (string_strcasecmp (ptr_weelist->data, completion->word_found) == 0))
             word_found_seen = 1;
 
         if (completion->direction < 0)
@@ -1429,25 +1414,26 @@ completion_command_arg (t_completion *completion, int nick_completion)
     {
         free (completion->word_found);
         completion->word_found = NULL;
-        completion_command_arg (completion, nick_completion);
+        gui_completion_command_arg (completion, nick_completion);
     }
 }
 
 /*
- * completion_nick: complete a nick
+ * gui_completion_nick: complete a nick
  */
 
 void
-completion_nick (t_completion *completion)
+gui_completion_nick (struct t_gui_completion *completion)
 {
-    int length, word_found_seen, other_completion;
+    (void) completion;
+    /*int length, word_found_seen, other_completion;
     t_irc_nick *ptr_nick;
-    t_weelist *ptr_weelist, *ptr_weelist2;
+    struct t_weelist *ptr_weelist, *ptr_weelist2;
 
     if (!completion->channel)
         return;
     
-    completion->context = COMPLETION_NICK;
+    completion->context = GUI_COMPLETION_NICK;
     
     if ((((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_PRIVATE)
         || (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_DCC_CHAT))
@@ -1463,15 +1449,15 @@ completion_nick (t_completion *completion)
                          ((t_irc_server *)(completion->server))->nick,
                          WEELIST_POS_SORT);
         }
-        completion_command_arg (completion, 1);
+        gui_completion_command_arg (completion, 1);
         return;
     }
 
-    /* rebuild nick list for completion, with nicks speaking at beginning of list */
+    // rebuild nick list for completion, with nicks speaking at beginning of list
     if ((((t_irc_channel *)(completion->channel))->nick_completion_reset)
         || (!(completion->completion_list)))
     {
-        /* empty completion list */
+        // empty completion list
         if (completion->completion_list)
         {
             weelist_remove_all (&(completion->completion_list),
@@ -1480,7 +1466,7 @@ completion_nick (t_completion *completion)
             completion->last_completion = NULL;
         }
         
-        /* add channel nicks */
+        // add channel nicks
         for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
              ptr_nick; ptr_nick = ptr_nick->next_nick)
         {
@@ -1490,7 +1476,7 @@ completion_nick (t_completion *completion)
                          WEELIST_POS_SORT);
         }
         
-        /* add nicks speaking recently on this channel */
+        // add nicks speaking recently on this channel
         if (cfg_look_nick_completion_smart)
         {
             for (ptr_weelist = ((t_irc_channel *)(completion->channel))->nicks_speaking;
@@ -1505,7 +1491,7 @@ completion_nick (t_completion *completion)
             }
         }
         
-        /* add self nick at the end */
+        // add self nick at the end
         if (completion->server)
             weelist_add (&(completion->completion_list),
                          &(completion->last_completion),
@@ -1526,7 +1512,7 @@ completion_nick (t_completion *completion)
     
     while (ptr_weelist)
     {
-        if (completion_nickncmp (completion->base_word, ptr_weelist->data, length) == 0)
+        if (gui_completion_nickncmp (completion->base_word, ptr_weelist->data, length) == 0)
         {
             if ((!completion->word_found) || word_found_seen)
             {
@@ -1546,9 +1532,9 @@ completion_nick (t_completion *completion)
                 
                 while (ptr_weelist2)
                 {
-                    if (completion_nickncmp (completion->base_word,
-                                             ptr_weelist2->data,
-                                             length) == 0)
+                    if (gui_completion_nickncmp (completion->base_word,
+                                                 ptr_weelist2->data,
+                                                 length) == 0)
                         other_completion++;
                     
                     if (completion->direction < 0)
@@ -1569,7 +1555,7 @@ completion_nick (t_completion *completion)
             other_completion++;
         }
         if (completion->word_found &&
-            (ascii_strcasecmp (ptr_weelist->data, completion->word_found) == 0))
+            (string_strcasecmp (ptr_weelist->data, completion->word_found) == 0))
             word_found_seen = 1;
         
         if (completion->direction < 0)
@@ -1581,50 +1567,53 @@ completion_nick (t_completion *completion)
     {
         free (completion->word_found);
         completion->word_found = NULL;
-        completion_nick (completion);
-    }
+        gui_completion_nick (completion);
+    }*/
 }
 
 /*
- * completion_auto: auto complete: nick, filename or channel
+ * gui_completion_auto: auto complete: nick, filename or channel
  */
 
 void
-completion_auto (t_completion *completion)
+gui_completion_auto (struct t_gui_completion *completion)
 {
-    /* filename completion */
+    (void) completion;
+    /*
+    // filename completion
     if ((completion->base_word[0] == '/')
         || (completion->base_word[0] == '~'))
     {
         if (!completion->completion_list)
-            completion_list_add_filename (completion);
-        completion_command_arg (completion, 0);
+            gui_completion_list_add_filename (completion);
+        gui_completion_command_arg (completion, 0);
         return;
     }
     
-    /* channel completion */
+    // channel completion
     if (irc_channel_is_channel (completion->base_word))
     {
         if (!completion->completion_list)
-            completion_list_add_channels (completion);
-        completion_command_arg (completion, 0);
+            gui_completion_list_add_channels (completion);
+        gui_completion_command_arg (completion, 0);
         return;
     }
     
-    /* default: nick completion (if channel) */
+    // default: nick completion (if channel)
     if (completion->channel)
-        completion_nick (completion);
+        gui_completion_nick (completion);
     else
-        completion->context = COMPLETION_NULL;
+        completion->context = GUI_COMPLETION_NULL;
+    */
 }
 
 /*
- * completion_search: complete word according to context
+ * gui_completion_search: complete word according to context
  */
 
 void
-completion_search (t_completion *completion, int direction,
-                   char *buffer, int size, int pos)
+gui_completion_search (struct t_gui_completion *completion, int direction,
+                       char *data, int size, int pos)
 {
     char *old_word_found;
     
@@ -1636,7 +1625,7 @@ completion_search (t_completion *completion, int direction,
         if (completion->word_found)
             free (completion->word_found);
         completion->word_found = NULL;
-        completion_find_context (completion, buffer, size, pos);
+        gui_completion_find_context (completion, data, size, pos);
     }
     
     /* completion */
@@ -1644,26 +1633,26 @@ completion_search (t_completion *completion, int direction,
         strdup (completion->word_found) : NULL;
     switch (completion->context)
     {
-        case COMPLETION_NULL:
+        case GUI_COMPLETION_NULL:
             /* should never be executed */
             return;
-        case COMPLETION_NICK:
-            completion_nick (completion);
+        case GUI_COMPLETION_NICK:
+            gui_completion_nick (completion);
             break;
-        case COMPLETION_COMMAND:
-            completion_command (completion);
+        case GUI_COMPLETION_COMMAND:
+            gui_completion_command (completion);
             break;
-        case COMPLETION_COMMAND_ARG:
+        case GUI_COMPLETION_COMMAND_ARG:
             if (completion->completion_list)
-                completion_command_arg (completion, completion->arg_is_nick);
+                gui_completion_command_arg (completion, completion->arg_is_nick);
             else
             {
-                completion->context = COMPLETION_AUTO;
-                completion_auto (completion);
+                completion->context = GUI_COMPLETION_AUTO;
+                gui_completion_auto (completion);
             }
             break;
-        case COMPLETION_AUTO:
-            completion_auto (completion);
+        case GUI_COMPLETION_AUTO:
+            gui_completion_auto (completion);
             break;
     }
     if (completion->word_found)
@@ -1681,7 +1670,7 @@ completion_search (t_completion *completion, int direction,
                 strlen (completion->base_word);
             completion->diff_length = utf8_strlen (completion->word_found) -
                 utf8_strlen (completion->base_word);
-            if (completion->context == COMPLETION_COMMAND)
+            if (completion->context == GUI_COMPLETION_COMMAND)
             {
                 completion->diff_size++;
                 completion->diff_length++;
@@ -1693,15 +1682,14 @@ completion_search (t_completion *completion, int direction,
 }
 
 /*
- * completion_print_log: print completion list in log (usually for crash dump)
+ * gui_completion_print_log: print completion list in log (usually for crash dump)
  */
 
 void
-completion_print_log (t_completion *completion)
+gui_completion_print_log (struct t_gui_completion *completion)
 {
     weechat_log_printf ("[completion (addr:0x%X)]\n", completion);
-    weechat_log_printf ("  server . . . . . . . . : 0x%X\n", completion->server);
-    weechat_log_printf ("  channel. . . . . . . . : 0x%X\n", completion->channel);
+    weechat_log_printf ("  buffer . . . . . . . . : 0x%X\n", completion->buffer);
     weechat_log_printf ("  context. . . . . . . . : %d\n",   completion->context);
     weechat_log_printf ("  base_command . . . . . : '%s'\n", completion->base_command);
     weechat_log_printf ("  base_command_arg . . . : %d\n",   completion->base_command_arg);

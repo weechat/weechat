@@ -27,11 +27,11 @@
 #include <unistd.h>
 #include <string.h>
 
-#include "../common/weechat.h"
-#include "gui.h"
-#include "../common/log.h"
-#include "../common/util.h"
-#include "../common/weeconfig.h"
+#include "../core/weechat.h"
+#include "../core/wee-config.h"
+#include "../core/wee-log.h"
+#include "../core/wee-string.h"
+#include "gui-log.h"
 
 
 /*
@@ -39,7 +39,7 @@
  */
 
 void
-gui_log_write_date (t_gui_buffer *buffer)
+gui_log_write_date (struct t_gui_buffer *buffer)
 {
     static char buf_time[256];
     static time_t seconds;
@@ -51,7 +51,8 @@ gui_log_write_date (t_gui_buffer *buffer)
         date_tmp = localtime (&seconds);
         if (date_tmp)
         {
-            strftime (buf_time, sizeof (buf_time) - 1, cfg_log_timestamp, date_tmp);
+            strftime (buf_time, sizeof (buf_time) - 1,
+                      cfg_log_time_format, date_tmp);
             fprintf (buffer->log_file, "%s  ", buf_time);
             fflush (buffer->log_file);
         }
@@ -63,15 +64,15 @@ gui_log_write_date (t_gui_buffer *buffer)
  */
 
 void
-gui_log_write_line (t_gui_buffer *buffer, char *message)
+gui_log_write_line (struct t_gui_buffer *buffer, char *message)
 {
     char *msg_no_color;
     
     if (buffer->log_file)
     {
-        msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0, 0);
-        weechat_iconv_fprintf (buffer->log_file,
-                               "%s\n", (msg_no_color) ? msg_no_color : message);
+        msg_no_color = (char *)gui_color_decode ((unsigned char *)message);
+        string_iconv_fprintf (buffer->log_file,
+                              "%s\n", (msg_no_color) ? msg_no_color : message);
         fflush (buffer->log_file);
         if (msg_no_color)
             free (msg_no_color);
@@ -83,15 +84,15 @@ gui_log_write_line (t_gui_buffer *buffer, char *message)
  */
 
 void
-gui_log_write (t_gui_buffer *buffer, char *message)
+gui_log_write (struct t_gui_buffer *buffer, char *message)
 {
     char *msg_no_color;
     
     if (buffer->log_file)
     {
-        msg_no_color = (char *)gui_color_decode ((unsigned char *)message, 0, 0);
-        weechat_iconv_fprintf (buffer->log_file,
-                               "%s", (msg_no_color) ? msg_no_color : message);
+        msg_no_color = (char *)gui_color_decode ((unsigned char *)message);
+        string_iconv_fprintf (buffer->log_file,
+                              "%s", (msg_no_color) ? msg_no_color : message);
         fflush (buffer->log_file);
         if (msg_no_color)
             free (msg_no_color);
@@ -103,113 +104,28 @@ gui_log_write (t_gui_buffer *buffer, char *message)
  */
 
 void
-gui_log_start (t_gui_buffer *buffer)
+gui_log_start (struct t_gui_buffer *buffer)
 {
-    int length;
-    char *log_path, *log_path2;
-    char *server_name, *channel_name;
-    
-    log_path = weechat_strreplace (cfg_log_path, "~", getenv ("HOME"));
-    log_path2 = weechat_strreplace (log_path, "%h", weechat_home);
-    
-    if (GUI_SERVER(buffer))
-        server_name = weechat_strreplace (GUI_SERVER(buffer)->name, DIR_SEPARATOR, "_");
-    else
-        server_name = NULL;
-    if (GUI_CHANNEL(buffer))
-        channel_name = weechat_strreplace (GUI_CHANNEL(buffer)->name, DIR_SEPARATOR, "_");
-    else
-        channel_name = NULL;
-    
-    if (!log_path || !log_path2 || (GUI_SERVER(buffer) && !server_name) ||
-        (GUI_CHANNEL(buffer) && !channel_name))
+    if (buffer->log_filename)
     {
-        weechat_log_printf (_("Not enough memory to write log file \"%s\"\n"),
-                            (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path));
-        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
-        gui_printf_nolog (NULL, _("Not enough memory to write log file \"%s\"\n"),
-                          (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path));
-        if (log_path)
-            free (log_path);
-        if (log_path2)
-            free (log_path2);
-        if (server_name)
-            free (server_name);
-        if (channel_name)
-            free (channel_name);
-        return;
+        buffer->log_file = fopen (buffer->log_filename, "a");
+        if (!buffer->log_file)
+        {
+            weechat_log_printf (_("Unable to write log file \"%s\"\n"),
+                                buffer->log_filename);
+            gui_chat_printf (NULL,
+                             _("%s%s Unable to write log file \"%s\"\n"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             WEECHAT_ERROR,
+                             buffer->log_filename);
+            free (buffer->log_filename);
+            return;
+        }
+        
+        gui_log_write (buffer, _("****  Beginning of log  "));
+        gui_log_write_date (buffer);
+        gui_log_write (buffer, "****\n");
     }
-    
-    length = strlen (log_path2) + 128;
-    if (GUI_SERVER(buffer))
-        length += strlen (server_name);
-    if (GUI_CHANNEL(buffer))
-        length += strlen (channel_name);
-    
-    buffer->log_filename = (char *) malloc (length);
-    if (!buffer->log_filename)
-    {
-        weechat_log_printf (_("Not enough memory to write log file \"%s\"\n"),
-                            (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path));
-        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
-        gui_printf_nolog (NULL, _("Not enough memory to write log file \"%s\"\n"),
-                          (log_path2) ? log_path2 : ((log_path) ? log_path : cfg_log_path));
-        free (log_path);
-        free (log_path2);
-        if (server_name)
-            free (server_name);
-        if (channel_name)
-            free (channel_name);
-        return;
-    }
-    
-    strcpy (buffer->log_filename, log_path2);
-    
-    free (log_path);
-    free (log_path2);
-    
-    if (buffer->log_filename[strlen (buffer->log_filename) - 1] != DIR_SEPARATOR_CHAR)
-        strcat (buffer->log_filename, DIR_SEPARATOR);
-    
-    if (GUI_SERVER(buffer))
-    {
-        strcat (buffer->log_filename, server_name);
-        strcat (buffer->log_filename, ".");
-    }
-    if (GUI_CHANNEL(buffer)
-        && (GUI_CHANNEL(buffer)->type == IRC_CHANNEL_TYPE_DCC_CHAT))
-    {
-        strcat (buffer->log_filename, "dcc.");
-    }
-    if (GUI_CHANNEL(buffer))
-    {
-        strcat (buffer->log_filename, channel_name);
-        strcat (buffer->log_filename, ".");
-    }
-    strcat (buffer->log_filename, "weechatlog");
-    
-    if (server_name)
-        free (server_name);
-    if (channel_name)
-        free (channel_name);
-    
-    buffer->log_file = fopen (buffer->log_filename, "a");
-    if (!buffer->log_file)
-    {
-        weechat_log_printf (_("Unable to write log file \"%s\"\n"),
-                            buffer->log_filename);
-        irc_display_prefix (NULL, NULL, GUI_PREFIX_ERROR);
-        gui_printf (NULL, _("Unable to write log file \"%s\"\n"),
-                    buffer->log_filename);
-        free (buffer->log_filename);
-        return;
-    }
-    
-    gui_log_write (buffer, _("****  Beginning of log  "));
-    gui_log_write_date (buffer);
-    gui_log_write (buffer, "****\n");
-    
-    return;
 }
 
 /*
@@ -217,7 +133,7 @@ gui_log_start (t_gui_buffer *buffer)
  */
 
 void
-gui_log_end (t_gui_buffer *buffer)
+gui_log_end (struct t_gui_buffer *buffer)
 {
     if (buffer->log_file)
     {

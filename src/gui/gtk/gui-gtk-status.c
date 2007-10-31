@@ -26,10 +26,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../common/weechat.h"
-#include "../gui.h"
-#include "../../common/hotlist.h"
-#include "../../common/weeconfig.h"
+#include "../../core/weechat.h"
+#include "../../core/wee-config.h"
+#include "../gui-status.h"
 #include "gui-gtk.h"
 
 
@@ -38,20 +37,8 @@
  */
 
 void
-gui_status_draw (t_gui_buffer *buffer, int erase)
+gui_status_draw (struct t_gui_buffer *buffer, int erase)
 {
-    /*t_gui_window *ptr_win;
-    t_weechat_hotlist *ptr_hotlist;
-    char format[32], str_nicks[32], *more;
-    int i, first_mode, x, server_pos, server_total;
-    int display_name, names_count;*/
-    
-    /* make C compiler happy */
-    (void) buffer;
-    
-    if (!gui_ok)
-        return;
-    
     /* TODO: write this function for Gtk */
     (void) buffer;
     (void) erase;

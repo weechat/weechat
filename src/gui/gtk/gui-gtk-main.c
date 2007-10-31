@@ -29,16 +29,16 @@
 #include <string.h>
 #include <signal.h>
 
-#include "../../common/weechat.h"
-#include "../gui.h"
-#include "../../common/fifo.h"
-#include "../../common/utf8.h"
-#include "../../common/weeconfig.h"
+#include "../../core/weechat.h"
+#include "../../core/wee-config.h"
+#include "../../core/wee-utf8.h"
+#include "../../plugins/plugin.h"
+#include "../gui-main.h"
+#include "../gui-history.h"
+#include "../gui-infobar.h"
+#include "../gui-input.h"
+#include "../gui-window.h"
 #include "gui-gtk.h"
-
-#ifdef PLUGINS
-#include "../../plugins/plugins.h"
-#endif
 
 
 GtkWidget *gui_gtk_main_window;
@@ -53,17 +53,6 @@ GtkWidget *gui_gtk_scrolledwindow_nick;
 GtkWidget *gui_gtk_entry_input;
 GtkWidget *gui_gtk_label1;
 
-
-/*
- * gui_main_loop: main loop for WeeChat with Gtk GUI
- */
-
-void
-gui_main_loop ()
-{
-    /* TODO: write this function for Gtk */
-    gtk_main ();
-}
 
 /*
  * gui_main_pre_init: pre-initialize GUI (called before gui_init)
@@ -83,6 +72,7 @@ gui_main_pre_init (int *argc, char **argv[])
 void
 gui_main_init ()
 {
+    struct t_gui_buffer *ptr_buffer;
     GdkColor color_fg, color_bg;
     
     gui_color_init ();
@@ -172,13 +162,32 @@ gui_main_init ()
     if (gui_window_new (NULL, 0, 0, 0, 0, 100, 100))
     {
         gui_current_window = gui_windows;
-        gui_buffer_new (gui_windows, NULL, NULL, 0, 1);
+        ptr_buffer = gui_buffer_new (NULL, "weechat", "weechat");
+        if (ptr_buffer)
+        {
+            gui_init_ok = 1;
+            gui_buffer_set_title (ptr_buffer,
+                                  PACKAGE_STRING " " WEECHAT_COPYRIGHT_DATE
+                                  " - " WEECHAT_WEBSITE);
+            gui_window_redraw_buffer (ptr_buffer);
+        }
+        else
+            gui_init_ok = 0;
         
         if (cfg_look_set_title)
-            gui_window_set_title ();
-        
-        gui_init_ok = 1;
+            gui_window_title_set ();
     }
+}
+
+/*
+ * gui_main_loop: main loop for WeeChat with Gtk GUI
+ */
+
+void
+gui_main_loop ()
+{
+    /* TODO: write this function for Gtk */
+    gtk_main ();
 }
 
 /*
@@ -188,15 +197,11 @@ gui_main_init ()
 void
 gui_main_end ()
 {
-    t_gui_window *ptr_win;
+    struct t_gui_window *ptr_win;
     
     /* free clipboard buffer */
     if (gui_input_clipboard)
       free(gui_input_clipboard);
-
-    /* delete all panels */
-    while (gui_panels)
-        gui_panel_free (gui_panels);
     
     /* delete all windows */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
@@ -214,7 +219,7 @@ gui_main_end ()
     gui_window_tree_free (&gui_windows_tree);
     
     /* delete global history */
-    history_global_free ();
+    gui_history_global_free ();
     
     /* delete infobar messages */
     while (gui_infobar)
@@ -222,5 +227,5 @@ gui_main_end ()
 
     /* reset title */
     if (cfg_look_set_title)
-	gui_window_reset_title ();
+	gui_window_title_reset ();
 }

@@ -27,31 +27,35 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "../common/weechat.h"
-#include "gui.h"
-#include "../common/command.h"
-#include "../common/log.h"
-#include "../common/util.h"
+#include "../core/weechat.h"
+#include "../core/wee-command.h"
+#include "../core/wee-input.h"
+#include "../core/wee-log.h"
+#include "../core/wee-string.h"
+#include "../plugins/plugin.h"
+#include "gui-keyboard.h"
+#include "gui-action.h"
+#include "gui-completion.h"
+#include "gui-input.h"
+#include "gui-window.h"
 
-#ifdef PLUGINS
-#include "../plugins/plugins.h"
-#endif
 
+t_gui_key *gui_keys = NULL;         /* key bindings                         */
+t_gui_key *last_gui_key = NULL;     /* last key binding                     */
 
-t_gui_key *gui_keys = NULL;         /* key bindings                           */
-t_gui_key *last_gui_key = NULL;     /* last key binding                       */
+char gui_key_combo_buffer[128];     /* buffer used for combos               */
+int gui_key_grab = 0;               /* 1 if grab mode enabled (alt-k)       */
+int gui_key_grab_count = 0;         /* number of keys pressed in grab mode  */
 
-char gui_key_combo_buffer[128];     /* buffer used for combos                 */
-int gui_key_grab = 0;               /* 1 if grab mode enabled (alt-k pressed) */
-int gui_key_grab_count = 0;         /* number of keys pressed in grab mode    */
+int *gui_keyboard_buffer = NULL;    /* input buffer (for paste detection)   */
+int gui_keyboard_buffer_alloc = 0;  /* input buffer allocated size          */
+int gui_keyboard_buffer_size = 0;   /* input buffer size in bytes           */
 
-int *gui_keyboard_buffer = NULL;    /* input buffer (for paste detection)     */
-int gui_keyboard_buffer_alloc = 0;  /* input buffer allocated size            */
-int gui_keyboard_buffer_size = 0;   /* input buffer size in bytes             */
+int gui_keyboard_paste_pending = 0; /* 1 is big paste was detected and      */
+                                    /* WeeChat is asking user what to do    */
+int gui_keyboard_paste_lines = 0;   /* number of lines for pending paste    */
 
-int gui_keyboard_paste_pending = 0; /* 1 is big paste was detected and        */
-                                    /* WeeChat is asking user what to do      */
-int gui_keyboard_paste_lines = 0;   /* number of lines for pending paste      */
+time_t gui_keyboard_last_activity_time = 0; /* last activity time (key)     */
 
 t_gui_key_function gui_key_functions[] =
 { { "return",                    gui_action_return,
@@ -201,10 +205,11 @@ gui_keyboard_grab_end ()
     
     if (expanded_key)
     {
-        if (gui_current_window->buffer->has_input)
+        if (gui_current_window->buffer->input)
         {
-            gui_insert_string_input (gui_current_window, expanded_key, -1);
-            gui_current_window->buffer->completion.position = -1;
+            gui_input_insert_string (gui_current_window->buffer, expanded_key, -1);
+            if (gui_current_window->buffer->completion)
+                gui_current_window->buffer->completion->position = -1;
             gui_input_draw (gui_current_window->buffer, 0);
         }
         free (expanded_key);
@@ -231,17 +236,17 @@ gui_keyboard_get_internal_code (char *key)
         result[0] = '\0';
         while (key[0])
         {
-            if (ascii_strncasecmp (key, "meta2-", 6) == 0)
+            if (string_strncasecmp (key, "meta2-", 6) == 0)
             {
                 strcat (result, "^[[");
                 key += 6;
             }
-            if (ascii_strncasecmp (key, "meta-", 5) == 0)
+            if (string_strncasecmp (key, "meta-", 5) == 0)
             {
                 strcat (result, "^[");
                 key += 5;
             }
-            else if (ascii_strncasecmp (key, "ctrl-", 5) == 0)
+            else if (string_strncasecmp (key, "ctrl-", 5) == 0)
             {
                 strcat (result, "^");
                 key += 5;
@@ -274,12 +279,12 @@ gui_keyboard_get_expanded_name (char *key)
         result[0] = '\0';
         while (key[0])
         {
-            if (ascii_strncasecmp (key, "^[[", 3) == 0)
+            if (string_strncasecmp (key, "^[[", 3) == 0)
             {
                 strcat (result, "meta2-");
                 key += 3;
             }
-            if (ascii_strncasecmp (key, "^[", 2) == 0)
+            if (string_strncasecmp (key, "^[", 2) == 0)
             {
                 strcat (result, "meta-");
                 key += 2;
@@ -313,7 +318,7 @@ gui_keyboard_find_pos (t_gui_key *key)
     
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
-        if (ascii_strcasecmp (key->key, ptr_key->key) < 0)
+        if (string_strcasecmp (key->key, ptr_key->key) < 0)
             return ptr_key;
     }
     return NULL;
@@ -414,7 +419,7 @@ gui_keyboard_search (char *key)
 
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
-        if (ascii_strcasecmp (ptr_key->key, key) == 0)
+        if (string_strcasecmp (ptr_key->key, key) == 0)
             return ptr_key;
     }
     
@@ -471,7 +476,7 @@ gui_keyboard_function_search_by_name (char *name)
     i = 0;
     while (gui_key_functions[i].function_name)
     {
-        if (ascii_strcasecmp (gui_key_functions[i].function_name, name) == 0)
+        if (string_strcasecmp (gui_key_functions[i].function_name, name) == 0)
             return gui_key_functions[i].function;
         i++;
     }
@@ -615,7 +620,7 @@ gui_keyboard_pressed (char *key_str)
     ptr_key = gui_keyboard_search_part (gui_key_combo_buffer);
     if (ptr_key)
     {
-        if (ascii_strcasecmp (ptr_key->key, gui_key_combo_buffer) == 0)
+        if (string_strcasecmp (ptr_key->key, gui_key_combo_buffer) == 0)
         {
             /* exact combo found => execute function or command */
             buffer_before_key =
@@ -624,30 +629,30 @@ gui_keyboard_pressed (char *key_str)
             gui_key_combo_buffer[0] = '\0';
             if (ptr_key->command)
             {
-                commands = split_multi_command (ptr_key->command, ';');
+                commands = string_split_multi_command (ptr_key->command, ';');
                 if (commands)
                 {
                     for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
                     {
-                        user_command (GUI_SERVER(gui_current_window->buffer),
-                                      GUI_CHANNEL(gui_current_window->buffer),
-                                      *ptr_cmd, 0);
+                        input_data (gui_current_window->buffer,
+                                    *ptr_cmd, 0);
                     }
-                    free_multi_command (commands);
+                    string_free_multi_command (commands);
                 }
             }
             else
-                (void)(ptr_key->function)(gui_current_window, ptr_key->args);
-#ifdef PLUGINS
+                (void)(ptr_key->function)(ptr_key->args);
+            
             if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
             {
-                (void) plugin_keyboard_handler_exec (
+                /* TODO: execute keyboard hooks */
+                /*(void) plugin_keyboard_handler_exec (
                     (ptr_key->command) ?
                     ptr_key->command : gui_keyboard_function_search_by_ptr (ptr_key->function),
                     buffer_before_key,
-                    gui_current_window->buffer->input_buffer);
+                    gui_current_window->buffer->input_buffer);*/
             }
-#endif
+            
             if (buffer_before_key)
                 free (buffer_before_key);
         }

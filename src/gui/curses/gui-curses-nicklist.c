@@ -25,12 +25,13 @@
 
 #include <stdlib.h>
 
-#include "../../common/weechat.h"
-#include "../gui.h"
-#include "../../common/utf8.h"
-#include "../../common/util.h"
-#include "../../common/weeconfig.h"
-#include "../../protocols/irc/irc.h"
+#include "../../core/weechat.h"
+#include "../../core/wee-config.h"
+#include "../../core/wee-string.h"
+#include "../../core/wee-utf8.h"
+#include "../gui-nicklist.h"
+#include "../gui-main.h"
+#include "../gui-window.h"
 #include "gui-curses.h"
 
 
@@ -39,46 +40,52 @@
  */
 
 void
-gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
+gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
 {
-    t_gui_window *ptr_win;
-    int i, j, k, x, y, x2, max_y, column, max_length, max_chars, nicks_displayed;
+    struct t_gui_window *ptr_win;
+    struct t_gui_nick *ptr_nick;
+    int i, j, k, x, y, x2, max_y, column, max_length, max_chars;
+    int nicks_displayed;
     char format_empty[32], *buf, *ptr_buf, *ptr_next, saved_char;
-    t_irc_nick *ptr_nick;
     
-    if (!gui_ok || !GUI_BUFFER_HAS_NICKLIST(buffer))
+    if (!gui_ok || (!buffer->nicklist))
         return;
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if ((ptr_win->buffer == buffer) && (buffer->num_displayed > 0))
         {
-            max_length = irc_nick_get_max_length (GUI_CHANNEL(buffer));
-            
-            if (calculate_size && (gui_window_calculate_pos_size (ptr_win, 0)))
+            max_length = gui_nicklist_get_max_length (buffer);
+            if (max_length != buffer->nick_max_length)
             {
-                delwin (GUI_CURSES(ptr_win)->win_chat);
-                delwin (GUI_CURSES(ptr_win)->win_nick);
-                GUI_CURSES(ptr_win)->win_chat = newwin (ptr_win->win_chat_height,
-                                                        ptr_win->win_chat_width,
-                                                        ptr_win->win_chat_y,
-                                                        ptr_win->win_chat_x);
-                GUI_CURSES(ptr_win)->win_nick = newwin (ptr_win->win_nick_height,
-                                                        ptr_win->win_nick_width,
-                                                        ptr_win->win_nick_y,
-                                                        ptr_win->win_nick_x);
-                gui_chat_draw (buffer, 1);
-                erase = 1;
+                buffer->nick_max_length = max_length;
+                if (gui_window_calculate_pos_size (ptr_win, 0))
+                {
+                    delwin (GUI_CURSES(ptr_win)->win_chat);
+                    delwin (GUI_CURSES(ptr_win)->win_nick);
+                    GUI_CURSES(ptr_win)->win_chat = newwin (ptr_win->win_chat_height,
+                                                            ptr_win->win_chat_width,
+                                                            ptr_win->win_chat_y,
+                                                            ptr_win->win_chat_x);
+                    GUI_CURSES(ptr_win)->win_nick = newwin (ptr_win->win_nick_height,
+                                                            ptr_win->win_nick_width,
+                                                            ptr_win->win_nick_y,
+                                                            ptr_win->win_nick_x);
+                    gui_chat_draw (buffer, 1);
+                    erase = 1;
+                }
             }
             
             if (erase)
             {
-                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick, GUI_COLOR_WIN_NICK);
+                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
+                                              GUI_COLOR_NICKLIST);
                 
                 snprintf (format_empty, 32, "%%-%ds", ptr_win->win_nick_width);
                 for (i = 0; i < ptr_win->win_nick_height; i++)
                 {
-                    mvwprintw (GUI_CURSES(ptr_win)->win_nick, i, 0, format_empty, " ");
+                    mvwprintw (GUI_CURSES(ptr_win)->win_nick, i, 0,
+                               format_empty, " ");
                 }
             }
             
@@ -95,7 +102,8 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
             
             if (cfg_look_nicklist_separator && has_colors ())
             {
-                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick, GUI_COLOR_WIN_NICK_SEP);
+                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
+                                              GUI_COLOR_NICKLIST_SEPARATOR);
                 switch (cfg_look_nicklist_position)
                 {
                     case CFG_LOOK_NICKLIST_LEFT:
@@ -121,9 +129,12 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                 }
             }
             
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick, GUI_COLOR_WIN_NICK);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
+                                          GUI_COLOR_NICKLIST);
             x = 0;
-            y = (cfg_look_nicklist_separator && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM)) ? 1 : 0;
+            y = (cfg_look_nicklist_separator
+                 && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM)) ?
+                1 : 0;
             max_y = 0;
             switch (cfg_look_nicklist_position)
             {
@@ -132,7 +143,8 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                     max_y = 0;
                     break;
                 case CFG_LOOK_NICKLIST_TOP:
-                    max_y = ptr_win->win_nick_height - cfg_look_nicklist_separator;
+                    max_y = ptr_win->win_nick_height -
+                        cfg_look_nicklist_separator;
                     break;
                 case CFG_LOOK_NICKLIST_BOTTOM:
                     max_y = ptr_win->win_nick_height;
@@ -142,11 +154,12 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
             
             if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
                 (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
-                nicks_displayed = (ptr_win->win_width / (max_length + 2)) * (ptr_win->win_nick_height - cfg_look_nicklist_separator);
+                nicks_displayed = (ptr_win->win_width / (max_length + 2)) *
+                    (ptr_win->win_nick_height - cfg_look_nicklist_separator);
             else
                 nicks_displayed = ptr_win->win_nick_height;
             
-            ptr_nick = GUI_CHANNEL(buffer)->nicks;
+            ptr_nick = buffer->nicks;
             for (i = 0; i < ptr_win->win_nick_start; i++)
             {
                 if (!ptr_nick)
@@ -173,16 +186,25 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                     if ( ((i == 0) && (ptr_win->win_nick_start > 0))
                          || ((i == nicks_displayed - 1) && (ptr_nick->next_nick)) )
                     {
-                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick, GUI_COLOR_WIN_NICK_MORE);
+                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
+                                                      GUI_COLOR_NICKLIST_MORE);
                         j = (max_length + 1) >= 4 ? 4 : max_length + 1;
                         for (x2 = 1; x2 <= j; x2++)
-                            mvwprintw (GUI_CURSES(ptr_win)->win_nick, y, x + x2, "+");
+                            mvwprintw (GUI_CURSES(ptr_win)->win_nick,
+                                       y, x + x2, "+");
                     }
                     else
                     {
-                        if (ptr_nick->flags & IRC_NICK_CHANOWNER)
+                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
+                                                      ptr_nick->color_prefix);
+                        mvwprintw (GUI_CURSES(ptr_win)->win_nick, y, x, "%c",
+                                   ptr_nick->prefix);
+                        x++;
+                        
+                        /*if (ptr_nick->flags & IRC_NICK_CHANOWNER)
                         {
-                            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick, GUI_COLOR_WIN_NICK_CHANOWNER);
+                            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
+                                                          GUI_COLOR_WIN_NICK_CHANOWNER);
                             mvwprintw (GUI_CURSES(ptr_win)->win_nick, y, x, "~");
                             x++;
                         }
@@ -230,7 +252,10 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                         }
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
                                                       ((cfg_irc_away_check > 0) && (ptr_nick->flags & IRC_NICK_AWAY)) ?
-                                                      GUI_COLOR_WIN_NICK_AWAY : GUI_COLOR_WIN_NICK);
+                                                      GUI_COLOR_WIN_NICK_AWAY : GUI_COLOR_WIN_NICK);*/
+
+                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
+                                                      ptr_nick->color_nick);
                         wmove (GUI_CURSES(ptr_win)->win_nick, y, x);
                         ptr_buf = ptr_nick->nick;
                         saved_char = '\0';
@@ -244,8 +269,10 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                                     saved_char = ptr_next[0];
                                     ptr_next[0] = '\0';
                                 }
-                                buf = weechat_iconv_from_internal (NULL, ptr_buf);
-                                wprintw (GUI_CURSES(ptr_win)->win_nick, "%s", (buf) ? buf : "?");
+                                buf = string_iconv_from_internal (NULL,
+                                                                  ptr_buf);
+                                wprintw (GUI_CURSES(ptr_win)->win_nick, "%s",
+                                         (buf) ? buf : "?");
                                 if (buf)
                                     free (buf);
                                 if (ptr_next)
@@ -268,7 +295,8 @@ gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
                         if (y >= max_y)
                         {
                             column += max_length + 2;
-                            y = (cfg_look_nicklist_separator && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM)) ?
+                            y = (cfg_look_nicklist_separator
+                                 && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM)) ?
                                 1 : 0;
                         }
                     }

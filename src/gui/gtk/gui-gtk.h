@@ -51,15 +51,6 @@
 
 #define GUI_GTK(window) ((t_gui_gtk_objects *)(window->gui_objects))
 
-typedef struct t_gui_panel_window t_gui_panel_window;
-
-struct t_gui_panel_window
-{
-    t_gui_panel *panel;             /* pointer to panel                     */
-    int x, y;                       /* position of window                   */
-    int width, height;              /* window size                          */
-};
-
 typedef struct t_gui_gtk_objects t_gui_gtk_objects;
 
 struct t_gui_gtk_objects
@@ -69,11 +60,10 @@ struct t_gui_gtk_objects
     GtkTextTag *texttag_chat;       /* texttag widget for chat              */
     GtkWidget *textview_nicklist;   /* textview widget for nicklist         */
     GtkTextBuffer *textbuffer_nicklist; /* textbuffer widget for nicklist   */
-    t_gui_panel_window *panel_windows;  /* panel windows                    */
 };
 
-extern t_gui_color gui_weechat_colors[];
-extern int gui_irc_colors[GUI_NUM_IRC_COLORS][2];
+//extern t_gui_color gui_weechat_colors[];
+//extern int gui_irc_colors[GUI_NUM_IRC_COLORS][2];
 
 extern GtkWidget *gui_gtk_main_window;
 extern GtkWidget *gui_gtk_vbox1;
@@ -92,11 +82,13 @@ extern int gui_color_get_pair (int);
 extern void gui_color_init ();
 
 /* chat functions */
-extern void gui_chat_calculate_line_diff (t_gui_window *, t_gui_line **, int *, int);
+extern void gui_chat_calculate_line_diff (struct t_gui_window *,
+                                          struct t_gui_line **, int *, int);
 
 /* keyboard functions */
 extern void gui_keyboard_default_bindings ();
 extern void gui_keyboard_read ();
+extern void gui_keyboard_flush ();
 
 /* window functions */
 extern void gui_window_set_title ();

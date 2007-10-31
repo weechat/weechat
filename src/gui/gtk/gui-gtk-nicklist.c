@@ -23,10 +23,9 @@
 #include "config.h"
 #endif
 
-#include "../../common/weechat.h"
-#include "../gui.h"
-#include "../../common/weeconfig.h"
-#include "../../protocols/irc/irc.h"
+#include "../../core/weechat.h"
+#include "../../core/wee-config.h"
+#include "../gui-nicklist.h"
 #include "gui-gtk.h"
 
 
@@ -35,18 +34,9 @@
  */
 
 void
-gui_nicklist_draw (t_gui_buffer *buffer, int erase, int calculate_size)
+gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
 {
-    /*t_gui_window *ptr_win;
-    int i, j, x, y, column, max_length, nicks_displayed;
-    char format[32], format_empty[32];
-    t_irc_nick *ptr_nick;*/
-    
-    if (!gui_ok || !GUI_BUFFER_HAS_NICKLIST(buffer))
-        return;
-    
     /* TODO: write this function for Gtk */
     (void) buffer;
     (void) erase;
-    (void) calculate_size;
 }

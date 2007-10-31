@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* hotlist.c: WeeChat hotlist (buffers with activity) */
+/* gui-hotlist.c: hotlist management (buffers with activity) */
 
 
 #ifdef HAVE_CONFIG_H
@@ -26,30 +26,33 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "weechat.h"
-#include "hotlist.h"
-#include "log.h"
-#include "util.h"
-#include "weeconfig.h"
-#include "../protocols/irc/irc.h"
-#include "../gui/gui.h"
+#include "../core/weechat.h"
+#include "../core/wee-config.h"
+#include "../core/wee-log.h"
+#include "../core/wee-util.h"
+#include "gui-hotlist.h"
+#include "gui-window.h"
 
 
-t_weechat_hotlist *weechat_hotlist = NULL;
-t_weechat_hotlist *last_weechat_hotlist = NULL;
-t_gui_buffer *hotlist_initial_buffer = NULL;
+struct t_gui_hotlist *gui_hotlist = NULL;
+struct t_gui_hotlist *last_gui_hotlist = NULL;
+struct t_gui_buffer *gui_hotlist_initial_buffer = NULL;
+
+int gui_add_hotlist = 1;                    /* 0 is for temporarly disable  */
+                                            /* hotlist add for all buffers  */
 
 
 /*
- * hotlist_search: find hotlist with buffer pointer
+ * gui_hotlist_search: find hotlist with buffer pointer
  */
 
-t_weechat_hotlist *
-hotlist_search (t_weechat_hotlist *hotlist, t_gui_buffer *buffer)
+struct t_gui_hotlist *
+gui_hotlist_search (struct t_gui_hotlist *hotlist, struct t_gui_buffer *buffer)
 {
-    t_weechat_hotlist *ptr_hotlist;
+    struct t_gui_hotlist *ptr_hotlist;
     
-    for (ptr_hotlist = hotlist; ptr_hotlist; ptr_hotlist = ptr_hotlist->next_hotlist)
+    for (ptr_hotlist = hotlist; ptr_hotlist;
+         ptr_hotlist = ptr_hotlist->next_hotlist)
     {
         if (ptr_hotlist->buffer == buffer)
             return ptr_hotlist;
@@ -58,13 +61,14 @@ hotlist_search (t_weechat_hotlist *hotlist, t_gui_buffer *buffer)
 }
 
 /*
- * hotlist_find_pos: find position for a inserting in hotlist (for sorting hotlist)
+ * gui_hotlist_find_pos: find position for a inserting in hotlist
+ *                       (for sorting hotlist)
  */
 
-t_weechat_hotlist *
-hotlist_find_pos (t_weechat_hotlist *hotlist, t_weechat_hotlist *new_hotlist)
+struct t_gui_hotlist *
+gui_hotlist_find_pos (struct t_gui_hotlist *hotlist, struct t_gui_hotlist *new_hotlist)
 {
-    t_weechat_hotlist *ptr_hotlist;
+    struct t_gui_hotlist *ptr_hotlist;
     
     switch (cfg_look_hotlist_sort)
     {
@@ -74,8 +78,8 @@ hotlist_find_pos (t_weechat_hotlist *hotlist, t_weechat_hotlist *new_hotlist)
             {
                 if ((new_hotlist->priority > ptr_hotlist->priority)
                     || ((new_hotlist->priority == ptr_hotlist->priority)
-                        && (get_timeval_diff (&(new_hotlist->creation_time),
-                                              &(ptr_hotlist->creation_time)) > 0)))
+                        && (util_get_timeval_diff (&(new_hotlist->creation_time),
+                                                   &(ptr_hotlist->creation_time)) > 0)))
                     return ptr_hotlist;
             }
             break;
@@ -85,8 +89,8 @@ hotlist_find_pos (t_weechat_hotlist *hotlist, t_weechat_hotlist *new_hotlist)
             {
                 if ((new_hotlist->priority > ptr_hotlist->priority)
                     || ((new_hotlist->priority == ptr_hotlist->priority)
-                        && (get_timeval_diff (&(new_hotlist->creation_time),
-                                              &(ptr_hotlist->creation_time)) < 0)))
+                        && (util_get_timeval_diff (&(new_hotlist->creation_time),
+                                                   &(ptr_hotlist->creation_time)) < 0)))
                     return ptr_hotlist;
             }
             break;
@@ -131,18 +135,19 @@ hotlist_find_pos (t_weechat_hotlist *hotlist, t_weechat_hotlist *new_hotlist)
 }
 
 /*
- * hotlist_add_hotlist: add new hotlist in list
+ * gui_hotlist_add_hotlist: add new hotlist in list
  */
 
 void
-hotlist_add_hotlist (t_weechat_hotlist **hotlist, t_weechat_hotlist **last_hotlist,
-                     t_weechat_hotlist *new_hotlist)
+gui_hotlist_add_hotlist (struct t_gui_hotlist **hotlist,
+                         struct t_gui_hotlist **last_hotlist,
+                         struct t_gui_hotlist *new_hotlist)
 {
-    t_weechat_hotlist *pos_hotlist;
+    struct t_gui_hotlist *pos_hotlist;
     
     if (*hotlist)
     {
-        pos_hotlist = hotlist_find_pos (*hotlist, new_hotlist);
+        pos_hotlist = gui_hotlist_find_pos (*hotlist, new_hotlist);
         
         if (pos_hotlist)
         {
@@ -174,16 +179,15 @@ hotlist_add_hotlist (t_weechat_hotlist **hotlist, t_weechat_hotlist **last_hotli
 }
 
 /*
- * hotlist_add: add a buffer to hotlist, with priority
- *              if creation_time is NULL, current time is used
+ * gui_hotlist_add: add a buffer to hotlist, with priority
+ *                  if creation_time is NULL, current time is used
  */
 
 void
-hotlist_add (int priority, struct timeval *creation_time,
-             t_irc_server *server, t_gui_buffer *buffer,
-             int allow_current_buffer)
+gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
+                 struct timeval *creation_time, int allow_current_buffer)
 {
-    t_weechat_hotlist *new_hotlist, *ptr_hotlist;
+    struct t_gui_hotlist *new_hotlist, *ptr_hotlist;
     
     if (!buffer)
         return;
@@ -193,19 +197,21 @@ hotlist_add (int priority, struct timeval *creation_time,
         && (!allow_current_buffer) && (!gui_buffer_is_scrolled (buffer)))
         return;
     
-    if ((ptr_hotlist = hotlist_search (weechat_hotlist, buffer)))
+    if ((ptr_hotlist = gui_hotlist_search (gui_hotlist, buffer)))
     {
         /* return if priority is greater or equal than the one to add */
         if (ptr_hotlist->priority >= priority)
             return;
         /* remove buffer if present with lower priority and go on */
-        hotlist_free (&weechat_hotlist, &last_weechat_hotlist, ptr_hotlist);
+        gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);
     }
     
-    if ((new_hotlist = (t_weechat_hotlist *) malloc (sizeof (t_weechat_hotlist))) == NULL)
+    if ((new_hotlist = (struct t_gui_hotlist *) malloc (sizeof (struct t_gui_hotlist))) == NULL)
     {
-        gui_printf (NULL,
-                    _("%s cannot add a buffer to hotlist\n"), WEECHAT_ERROR);
+        weechat_log_printf (NULL,
+                            _("%s not enough memory to add a buffer to "
+                              "hotlist\n"),
+                            WEECHAT_ERROR);
         return;
     }
     
@@ -215,29 +221,27 @@ hotlist_add (int priority, struct timeval *creation_time,
                 creation_time, sizeof (creation_time));
     else
         gettimeofday (&(new_hotlist->creation_time), NULL);
-    new_hotlist->server = server;
     new_hotlist->buffer = buffer;
     new_hotlist->next_hotlist = NULL;
     new_hotlist->prev_hotlist = NULL;
     
-    hotlist_add_hotlist (&weechat_hotlist, &last_weechat_hotlist, new_hotlist);
+    gui_hotlist_add_hotlist (&gui_hotlist, &last_gui_hotlist, new_hotlist);
 }
 
 /*
- * hotlist_dup: duplicate hotlist element
+ * gui_hotlist_dup: duplicate hotlist element
  */
 
-t_weechat_hotlist *
-hotlist_dup (t_weechat_hotlist *hotlist)
+struct t_gui_hotlist *
+gui_hotlist_dup (struct t_gui_hotlist *hotlist)
 {
-    t_weechat_hotlist *new_hotlist;
+    struct t_gui_hotlist *new_hotlist;
     
-    if ((new_hotlist = (t_weechat_hotlist *) malloc (sizeof (t_weechat_hotlist))))
+    if ((new_hotlist = (struct t_gui_hotlist *) malloc (sizeof (struct t_gui_hotlist))))
     {
         new_hotlist->priority = hotlist->priority;
         memcpy (&(new_hotlist->creation_time), &(hotlist->creation_time),
                 sizeof (new_hotlist->creation_time));
-        new_hotlist->server = hotlist->server;
         new_hotlist->buffer = hotlist->buffer;
         new_hotlist->prev_hotlist = NULL;
         new_hotlist->next_hotlist = NULL;
@@ -247,40 +251,41 @@ hotlist_dup (t_weechat_hotlist *hotlist)
 }
 
 /*
- * hotlist_resort: resort hotlist with new sort type
+ * gui_hotlist_resort: resort hotlist with new sort type
  */
 
 void
-hotlist_resort ()
+gui_hotlist_resort ()
 {
-    t_weechat_hotlist *new_hotlist, *last_new_hotlist;
-    t_weechat_hotlist *ptr_hotlist, *element;
+    struct t_gui_hotlist *new_hotlist, *last_new_hotlist;
+    struct t_gui_hotlist *ptr_hotlist, *element;
     
     /* copy and resort hotlist in new linked list */
     new_hotlist = NULL;
     last_new_hotlist = NULL;
-    for (ptr_hotlist = weechat_hotlist; ptr_hotlist;
+    for (ptr_hotlist = gui_hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
     {
-        element = hotlist_dup (ptr_hotlist);
-        hotlist_add_hotlist (&new_hotlist, &last_new_hotlist, element);
+        element = gui_hotlist_dup (ptr_hotlist);
+        gui_hotlist_add_hotlist (&new_hotlist, &last_new_hotlist, element);
     }
 
-    hotlist_free_all (&weechat_hotlist, &last_weechat_hotlist);
+    gui_hotlist_free_all (&gui_hotlist, &last_gui_hotlist);
 
-    weechat_hotlist = new_hotlist;
-    last_weechat_hotlist = last_new_hotlist;
+    gui_hotlist = new_hotlist;
+    last_gui_hotlist = last_new_hotlist;
 }
 
 /*
- * hotlist_free: free a hotlist and remove it from hotlist queue
+ * gui_hotlist_free: free a hotlist and remove it from hotlist queue
  */
 
 void
-hotlist_free (t_weechat_hotlist **hotlist, t_weechat_hotlist **last_hotlist,
-              t_weechat_hotlist *ptr_hotlist)
+gui_hotlist_free (struct t_gui_hotlist **hotlist,
+                  struct t_gui_hotlist **last_hotlist,
+                  struct t_gui_hotlist *ptr_hotlist)
 {
-    t_weechat_hotlist *new_hotlist;
+    struct t_gui_hotlist *new_hotlist;
 
     /* remove hotlist from queue */
     if (*last_hotlist == ptr_hotlist)
@@ -301,41 +306,44 @@ hotlist_free (t_weechat_hotlist **hotlist, t_weechat_hotlist **last_hotlist,
 }
 
 /*
- * hotlist_free_all: free all hotlists
+ * gui_hotlist_free_all: free all hotlists
  */
 
 void
-hotlist_free_all (t_weechat_hotlist **hotlist, t_weechat_hotlist **last_hotlist)
+gui_hotlist_free_all (struct t_gui_hotlist **hotlist,
+                      struct t_gui_hotlist **last_hotlist)
 {
     /* remove all hotlists */
     while (*hotlist)
-        hotlist_free (hotlist, last_hotlist, *hotlist);
+    {
+        gui_hotlist_free (hotlist, last_hotlist, *hotlist);
+    }
 }
 
 /*
- * hotlist_remove_buffer: remove a buffer from hotlist
+ * gui_hotlist_remove_buffer: remove a buffer from hotlist
  */
 
 void
-hotlist_remove_buffer (t_gui_buffer *buffer)
+gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
 {
-    t_weechat_hotlist *pos_hotlist;
+    struct t_gui_hotlist *pos_hotlist;
 
-    pos_hotlist = hotlist_search (weechat_hotlist, buffer);
+    pos_hotlist = gui_hotlist_search (gui_hotlist, buffer);
     if (pos_hotlist)
-        hotlist_free (&weechat_hotlist, &last_weechat_hotlist, pos_hotlist);
+        gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, pos_hotlist);
 }
 
 /*
- * hotlist_print_log: print hotlist in log (usually for crash dump)
+ * gui_hotlist_print_log: print hotlist in log (usually for crash dump)
  */
 
 void
-hotlist_print_log ()
+gui_hotlist_print_log ()
 {
-    t_weechat_hotlist *ptr_hotlist;
+    struct t_gui_hotlist *ptr_hotlist;
     
-    for (ptr_hotlist = weechat_hotlist; ptr_hotlist;
+    for (ptr_hotlist = gui_hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
     {
         weechat_log_printf ("[hotlist (addr:0x%X)]\n", ptr_hotlist);
@@ -343,7 +351,6 @@ hotlist_print_log ()
         weechat_log_printf ("  creation_time. . . . . : tv_sec:%d, tv_usec:%d\n",
                             ptr_hotlist->creation_time.tv_sec,
                             ptr_hotlist->creation_time.tv_usec);
-        weechat_log_printf ("  server . . . . . . . . : 0x%X\n", ptr_hotlist->server);
         weechat_log_printf ("  buffer . . . . . . . . : 0x%X\n", ptr_hotlist->buffer);
         weechat_log_printf ("  prev_hotlist . . . . . : 0x%X\n", ptr_hotlist->prev_hotlist);
         weechat_log_printf ("  next_hotlist . . . . . : 0x%X\n", ptr_hotlist->next_hotlist);

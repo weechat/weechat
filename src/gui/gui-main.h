@@ -16,40 +16,20 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-gtk-keyboard.c: keyboard functions for Gtk GUI */
 
+#ifndef __WEECHAT_GUI_MAIN_H
+#define __WEECHAT_GUI_MAIN_H 1
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+/* main variables */
 
-#include <stdlib.h>
-#include <string.h>
+extern int gui_init_ok;
+extern int gui_ok;
 
-#include "../../core/weechat.h"
-#include "../../core/wee-utf8.h"
-#include "../../plugins/plugin.h"
-#include "../gui-keyboard.h"
-#include "../gui-buffer.h"
-#include "gui-gtk.h"
+/* main functions (GUI dependent) */
 
+extern void gui_main_loop ();
+extern void gui_main_pre_init (int *, char **[]);
+extern void gui_main_init ();
+extern void gui_main_end ();
 
-/*
- * gui_keyboard_default_bindings: create default key bindings
- */
-
-void
-gui_keyboard_default_bindings ()
-{
-    /* TODO: write this function for Gtk */
-}
-
-/*
- * gui_keyboard_read: read keyboard chars
- */
-
-void
-gui_keyboard_read ()
-{
-    /* TODO: write this function for Gtk */
-}
+#endif /* gui-main.h */

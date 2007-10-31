@@ -26,11 +26,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../common/weechat.h"
-#include "../gui.h"
-#include "../../common/utf8.h"
-#include "../../common/util.h"
-#include "../../common/weeconfig.h"
+#include "../../core/weechat.h"
+#include "../../core/wee-config.h"
+#include "../../core/wee-utf8.h"
+#include "../../core/wee-string.h"
+#include "../gui-keyboard.h"
+#include "../gui-input.h"
+#include "../gui-completion.h"
+#include "../gui-window.h"
 #include "gui-curses.h"
 
 
@@ -240,7 +243,7 @@ gui_keyboard_flush ()
     if (!gui_keyboard_paste_pending)
     {
         if (gui_keyboard_buffer_size > 0)
-            gui_last_activity_time = time (NULL);
+            gui_keyboard_last_activity_time = time (NULL);
         
         if (gui_key_grab && (gui_key_grab_count > 0))
             gui_keyboard_grab_end ();
@@ -337,7 +340,7 @@ gui_keyboard_flush ()
                     /* convert input to UTF-8 is user is not using UTF-8 as locale */
                     if (!local_utf8)
                     {
-                        key_utf = weechat_iconv_to_internal (NULL, key_str);
+                        key_utf = string_iconv_to_internal (NULL, key_str);
                         strncpy (key_str, key_utf, sizeof (key_str));
                         key_str[sizeof (key_str) - 1] = '\0';
                     }
@@ -350,7 +353,8 @@ gui_keyboard_flush ()
                 key_str[2] = '\0';
             }
             
-            /*gui_printf (gui_current_window->buffer, "gui_input_read: key = %s (%d)\n", key_str, key);*/
+            /*gui_printf (gui_current_window->buffer,
+                          "gui_input_read: key = %s (%d)\n", key_str, key);*/
             
             if (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
                 input_old = (gui_current_window->buffer->input_buffer) ?
@@ -365,20 +369,22 @@ gui_keyboard_flush ()
                 if (strcmp (key_str, "^^") == 0)
                     key_str[1] = '\0';
                 
-                switch (gui_current_window->buffer->type)
+                /*switch (gui_current_window->buffer->type)
                 {
-                    case GUI_BUFFER_TYPE_STANDARD:
-                        gui_insert_string_input (gui_current_window, key_str, -1);
-                        gui_current_window->buffer->completion.position = -1;
+                    case GUI_BUFFER_TYPE_STANDARD:*/
+                        gui_input_insert_string (gui_current_window->buffer,
+                                                 key_str, -1);
+                        if (gui_current_window->buffer->completion)
+                            gui_current_window->buffer->completion->position = -1;
                         input_draw = 1;
-                        break;
-                    case GUI_BUFFER_TYPE_DCC:
+                        //break;
+                    /*case GUI_BUFFER_TYPE_DCC:
                         gui_exec_action_dcc (gui_current_window, key_str);
                         break;
                     case GUI_BUFFER_TYPE_RAW_DATA:
                         gui_exec_action_raw_data (gui_current_window, key_str);
                         break;
-                }
+                }*/
             }
             
             /* incremental text search in buffer */
@@ -386,7 +392,7 @@ gui_keyboard_flush ()
                 && ((input_old == NULL) || (gui_current_window->buffer->input_buffer == NULL)
                     || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
             {
-                gui_buffer_search_restart (gui_current_window);
+                gui_window_search_restart (gui_current_window);
                 input_draw = 1;
             }
             

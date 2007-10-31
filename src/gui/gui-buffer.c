@@ -32,174 +32,103 @@
 #include <time.h>
 #include <ctype.h>
 
-#include "../common/weechat.h"
-#include "gui.h"
-#include "../common/command.h"
-#include "../common/weeconfig.h"
-#include "../common/history.h"
-#include "../common/hotlist.h"
-#include "../common/log.h"
-#include "../common/utf8.h"
-#include "../common/util.h"
-#include "../protocols/irc/irc.h"
-
-#ifdef PLUGINS
-#include "../plugins/plugins.h"
-#endif
-
-
-t_gui_buffer *gui_buffers = NULL;           /* pointer to first buffer      */
-t_gui_buffer *last_gui_buffer = NULL;       /* pointer to last buffer       */
-t_gui_buffer *gui_previous_buffer = NULL;   /* pointer to previous buffer   */
-t_gui_buffer *gui_buffer_before_dcc = NULL; /* buffer before dcc switch     */
-t_gui_buffer *gui_buffer_raw_data = NULL;   /* buffer with raw IRC data     */
-t_gui_buffer *gui_buffer_before_raw_data = NULL; /* buffer before raw switch*/
+#include "../core/weechat.h"
+#include "gui-completion.h"
+#include "gui-history.h"
+#include "gui-hotlist.h"
+#include "gui-main.h"
+#include "gui-log.h"
+#include "gui-status.h"
+#include "gui-window.h"
+#include "../core/wee-command.h"
+#include "../core/wee-config.h"
+#include "../core/wee-log.h"
+#include "../core/wee-utf8.h"
+#include "../plugins/plugin.h"
 
 
-/*
- * gui_buffer_servers_search: search servers buffer
- *                            (when same buffer is used for all servers)
- */
+struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
+struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
+struct t_gui_buffer *gui_previous_buffer = NULL;   /* previous buffer       */
+struct t_gui_buffer *gui_buffer_before_dcc = NULL; /* buffer before dcc     */
+struct t_gui_buffer *gui_buffer_raw_data = NULL;   /* buffer with raw data  */
+struct t_gui_buffer *gui_buffer_before_raw_data = NULL; /* buf. before raw  */
 
-t_gui_buffer *
-gui_buffer_servers_search ()
-{
-    t_gui_buffer *ptr_buffer;
-    
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->all_servers)
-            return ptr_buffer;
-    }
-    
-    /* buffer not found */
-    return NULL;
-}
 
 /*
  * gui_buffer_new: create a new buffer in current window
  */
 
-t_gui_buffer *
-gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
-                int switch_to_buffer)
+struct t_gui_buffer *
+gui_buffer_new (void *plugin, char *category, char *name)
 {
-    t_gui_buffer *new_buffer, *ptr_buffer;
-#ifdef PLUGINS
+    struct t_gui_buffer *new_buffer;
+    struct t_gui_completion *new_completion;
     char buffer_str[16], *argv[1] = { NULL };
-#endif
     
 #ifdef DEBUG
     weechat_log_printf ("Creating new buffer\n");
 #endif
     
-    /* use first buffer if no server is assigned to this buffer */
-    if ((type == GUI_BUFFER_TYPE_STANDARD) && gui_buffers
-        && (!GUI_SERVER(gui_buffers)) && (!channel))
-    {
-        if (server)
-            ((t_irc_server *)(server))->buffer = gui_buffers;
-        if (channel)
-            ((t_irc_channel *)(channel))->buffer = gui_buffers;
-        gui_buffers->server = server;
-        gui_buffers->channel = channel;
-        if (cfg_look_one_server_buffer && server && !channel)
-            gui_buffers->all_servers = 1;
-        if (cfg_log_auto_server)
-            gui_log_start (gui_buffers);
-        gui_buffers->completion.server = server;
-        return gui_buffers;
-    }
-
-    /* use "all servers" buffer if found */
-    if (cfg_look_one_server_buffer && (type == GUI_BUFFER_TYPE_STANDARD) &&
-        gui_buffers && server && !channel)
-    {
-        ptr_buffer = gui_buffer_servers_search ();
-        if (ptr_buffer)
-        {
-            ((t_irc_server *)(server))->buffer = ptr_buffer;
-            ptr_buffer->server = server;
-            if (switch_to_buffer)
-                gui_window_switch_to_buffer (window, ptr_buffer);
-            gui_window_redraw_buffer (ptr_buffer);
-            return ptr_buffer;
-        }
-    }
+    if (!name)
+        return NULL;
     
-    if ((new_buffer = (t_gui_buffer *)(malloc (sizeof (t_gui_buffer)))))
+    /* create new buffer */
+    if ((new_buffer = (struct t_gui_buffer *)(malloc (sizeof (struct t_gui_buffer)))))
     {
-        new_buffer->num_displayed = 0;
+        /* init buffer */
+        new_buffer->plugin = (struct t_weechat_plugin *)plugin;
         new_buffer->number = (last_gui_buffer) ? last_gui_buffer->number + 1 : 1;
-        
-        /* assign server and channel to buffer */
-        new_buffer->server = server;
-        new_buffer->all_servers = 0;
-        new_buffer->channel = channel;
-        new_buffer->type = type;
-        if (new_buffer->type == GUI_BUFFER_TYPE_RAW_DATA)
-            gui_buffer_raw_data = new_buffer;
-        /* assign buffer to server and channel */
-        if (server && !channel)
-        {
-            GUI_SERVER(new_buffer)->buffer = new_buffer;
-            new_buffer->all_servers = (cfg_look_one_server_buffer) ? 1 : 0;
-        }
-        if (!gui_buffers && cfg_look_one_server_buffer)
-            new_buffer->all_servers = 1;
-        if (channel)
-            GUI_CHANNEL(new_buffer)->buffer = new_buffer;
-        
-        if (!window->buffer)
-        {
-            window->buffer = new_buffer;
-            window->first_line_displayed = 1;
-            window->start_line = NULL;
-            window->start_line_pos = 0;
-            gui_window_calculate_pos_size (window, 1);
-        }
-        
-        /* init lines */
-        new_buffer->lines = NULL;
-        new_buffer->last_line = NULL;
-        new_buffer->last_read_line = NULL;
-        new_buffer->num_lines = 0;
-        new_buffer->line_complete = 1;
-        
-        /* notify level */
-        new_buffer->notify_level = irc_channel_get_notify_level (server, channel);
+        new_buffer->category = (category) ? strdup (category) : NULL;
+        new_buffer->name = strdup (name);
+        new_buffer->type = GUI_BUFFER_TYPE_FORMATED;
+        new_buffer->notify_level = GUI_BUFFER_NOTIFY_LEVEL_DEFAULT;
+        new_buffer->num_displayed = 0;
         
         /* create/append to log file */
         new_buffer->log_filename = NULL;
         new_buffer->log_file = NULL;
-        if ((cfg_log_auto_server && GUI_BUFFER_IS_SERVER(new_buffer))
-            || (cfg_log_auto_channel && GUI_BUFFER_IS_CHANNEL(new_buffer))
-            || (cfg_log_auto_private && GUI_BUFFER_IS_PRIVATE(new_buffer)))
-            gui_log_start (new_buffer);
         
-        /* init input buffer */
-        new_buffer->has_input = (new_buffer->type == GUI_BUFFER_TYPE_STANDARD) ? 1 : 0;
-        if (new_buffer->has_input)
-        {
-            new_buffer->input_buffer_alloc = GUI_INPUT_BUFFER_BLOCK_SIZE;
-            new_buffer->input_buffer = (char *) malloc (GUI_INPUT_BUFFER_BLOCK_SIZE);
-            new_buffer->input_buffer_color_mask = (char *) malloc (GUI_INPUT_BUFFER_BLOCK_SIZE);
-            new_buffer->input_buffer[0] = '\0';
-            new_buffer->input_buffer_color_mask[0] = '\0';
-        }
-        else
-        {
-            new_buffer->input_buffer = NULL;
-            new_buffer->input_buffer_color_mask = NULL;
-        }
+        /* title */
+        new_buffer->title = NULL;
+        
+        /* chat lines */
+        new_buffer->lines = NULL;
+        new_buffer->last_line = NULL;
+        new_buffer->last_read_line = NULL;
+        new_buffer->lines_count = 0;
+        new_buffer->prefix_max_length = 0;
+        new_buffer->chat_refresh_needed = 1;
+        
+        /* nicklist */
+        new_buffer->nicklist = 0;
+        new_buffer->nick_case_sensitive = 0;
+        new_buffer->nicks = NULL;
+        new_buffer->last_nick = NULL;
+        new_buffer->nick_max_length = -1;
+        new_buffer->nicks_count = 0;
+        
+        /* input */
+        new_buffer->input = 1;
+        new_buffer->input_data_cb = NULL;
+        new_buffer->input_nick = NULL;
+        new_buffer->input_buffer_alloc = GUI_BUFFER_INPUT_BLOCK_SIZE;
+        new_buffer->input_buffer = (char *) malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
+        new_buffer->input_buffer_color_mask = (char *) malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
+        new_buffer->input_buffer[0] = '\0';
+        new_buffer->input_buffer_color_mask[0] = '\0';
         new_buffer->input_buffer_size = 0;
         new_buffer->input_buffer_length = 0;
         new_buffer->input_buffer_pos = 0;
         new_buffer->input_buffer_1st_display = 0;
         
         /* init completion */
-        completion_init (&(new_buffer->completion), server, channel);
+        new_completion = (struct t_gui_completion *)malloc (sizeof (struct t_gui_completion));
+        if (new_completion)
+        {
+            new_buffer->completion = new_completion;
+            gui_completion_init (new_completion, new_buffer);
+        }
         
         /* init history */
         new_buffer->history = NULL;
@@ -213,7 +142,7 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         new_buffer->text_search_found = 0;
         new_buffer->text_search_input = NULL;
         
-        /* add buffer to buffers queue */
+        /* add buffer to buffers list */
         new_buffer->prev_buffer = last_gui_buffer;
         if (gui_buffers)
             last_gui_buffer->next_buffer = new_buffer;
@@ -222,30 +151,22 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
         last_gui_buffer = new_buffer;
         new_buffer->next_buffer = NULL;
         
-        /* move buffer next to server */
-        if (server && cfg_look_open_near_server && (!cfg_look_one_server_buffer))
+        /* first buffer creation ? */
+        if (!gui_current_window->buffer)
         {
-            ptr_buffer = GUI_SERVER(new_buffer)->buffer;
-            while (ptr_buffer && (ptr_buffer->server == server))
-            {
-                ptr_buffer = ptr_buffer->next_buffer;
-            }
-            if (ptr_buffer)
-                gui_buffer_move_to_number (new_buffer, ptr_buffer->number);
+            gui_current_window->buffer = new_buffer;
+            gui_current_window->first_line_displayed = 1;
+            gui_current_window->start_line = NULL;
+            gui_current_window->start_line_pos = 0;
+            gui_window_calculate_pos_size (gui_current_window, 1);
+            gui_window_switch_to_buffer (gui_current_window, new_buffer);
+            gui_window_redraw_buffer (new_buffer);
         }
         
-        /* switch to new buffer */
-        if (switch_to_buffer)
-            gui_window_switch_to_buffer (window, new_buffer);
-        
-        /* redraw buffer */
-        gui_window_redraw_buffer (new_buffer);
-
-#ifdef PLUGINS
         snprintf (buffer_str, sizeof (buffer_str) - 1, "%d", new_buffer->number);
         argv[0] = buffer_str;
-        (void) plugin_event_handler_exec ("buffer_open", 1, argv);
-#endif
+        /* TODO: send buffer_open event */
+        /*(void) plugin_event_handler_exec ("buffer_open", 1, argv);*/
     }
     else
         return NULL;
@@ -254,85 +175,137 @@ gui_buffer_new (t_gui_window *window, void *server, void *channel, int type,
 }
 
 /*
- * gui_buffer_search: search a buffer by server and channel name
+ * buffer_valid: check if a buffer pointer exists
+ *               return 1 if buffer exists
+ *                      0 if buffer is not found
  */
 
-t_gui_buffer *
-gui_buffer_search (char *server, char *channel)
+int
+gui_buffer_valid (struct t_gui_buffer *buffer)
 {
-    t_irc_server *ptr_server, *ptr_srv;
-    t_irc_channel *ptr_channel, *ptr_chan;
-    t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer;
     
-    ptr_server = NULL;
-    ptr_channel = NULL;
-    ptr_buffer = NULL;
-    
-    /* nothing given => print on current buffer */
-    if ((!server || !server[0]) && (!channel || !channel[0]))
-        ptr_buffer = gui_current_window->buffer;
-    else
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (server && server[0])
-        {
-            ptr_server = irc_server_search (server);
-            if (!ptr_server)
-                return NULL;
-        }
-        
-        if (channel && channel[0])
-        {
-            if (ptr_server)
-            {
-                ptr_channel = irc_channel_search_any (ptr_server, channel);
-                if (ptr_channel)
-                    ptr_buffer = ptr_channel->buffer;
-            }
-            else
-            {
-                for (ptr_srv = irc_servers; ptr_srv;
-                     ptr_srv = ptr_srv->next_server)
-                {
-                    for (ptr_chan = ptr_srv->channels; ptr_chan;
-                         ptr_chan = ptr_chan->next_channel)
-                    {
-                        if (ascii_strcasecmp (ptr_chan->name, channel) == 0)
-                        {
-                            ptr_channel = ptr_chan;
-                            break;
-                        }
-                    }
-                    if (ptr_channel)
-                        break;
-                }
-                if (ptr_channel)
-                    ptr_buffer = ptr_channel->buffer;
-            }
-        }
-        else
-        {
-            if (ptr_server)
-                ptr_buffer = ptr_server->buffer;
-            else
-                ptr_buffer = gui_current_window->buffer;
-        }
+        if (ptr_buffer == buffer)
+            return 1;
     }
     
-    if (!ptr_buffer)
-        return NULL;
+    /* buffer not found */
+    return 0;
+}
+
+/*
+ * gui_buffer_set_category: set category for a buffer
+ */
+
+void
+gui_buffer_set_category (struct t_gui_buffer *buffer, char *category)
+{
+    if (buffer->category)
+        free (buffer->category);
+    buffer->category = (category) ? strdup (category) : NULL;
+}
+
+/*
+ * gui_buffer_set_name: set name for a buffer
+ */
+
+void
+gui_buffer_set_name (struct t_gui_buffer *buffer, char *name)
+{
+    if (buffer->name)
+        free (buffer->name);
+    buffer->name = (name) ? strdup (name) : NULL;
+}
+
+/*
+ * gui_buffer_set_log: set log file for a buffer
+ */
+
+void
+gui_buffer_set_log (struct t_gui_buffer *buffer, char *log_filename)
+{
+    if (buffer->log_file)
+        gui_log_end (buffer);
+
+    if (log_filename)
+    {
+        buffer->log_filename = strdup (log_filename);
+        gui_log_start (buffer);
+    }
+}
+
+/*
+ * gui_buffer_set_title: set title for a buffer
+ */
+
+void
+gui_buffer_set_title (struct t_gui_buffer *buffer, char *new_title)
+{
+    if (buffer->title)
+        free (buffer->title);
+    buffer->title = (new_title) ? strdup (new_title) : NULL;
+}
+
+/*
+ * gui_buffer_set_nick_case_sensitive: set nick_case_sensitive flag for a buffer
+ */
+
+void
+gui_buffer_set_nick_case_sensitive (struct t_gui_buffer *buffer,
+                                    int nick_case_sensitive)
+{
+    buffer->nick_case_sensitive = (nick_case_sensitive) ? 1 : 0;
+}
+
+/*
+ * gui_buffer_set_nick: set nick for a buffer
+ */
+
+void
+gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick)
+{
+    if (buffer->input_nick)
+        free (buffer->input_nick);
+    buffer->input_nick = (new_nick) ? strdup (new_nick) : NULL;
+}
+
+/*
+ * gui_buffer_search_by_category_name: search a buffer by category and/or name
+ */
+
+struct t_gui_buffer *
+gui_buffer_search_by_category_name (char *category, char *name)
+{
+    struct t_gui_buffer *ptr_buffer;
     
-    return (ptr_buffer->type != GUI_BUFFER_TYPE_STANDARD) ?
-        gui_buffers : ptr_buffer;
+    if (!category && !name)
+        return gui_current_window->buffer;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if ((category && ptr_buffer->category
+             && strcmp (ptr_buffer->category, category) == 0)
+            || (name && ptr_buffer->name
+                && strcmp (ptr_buffer->name, name) == 0))
+            return ptr_buffer;
+    }
+    
+    /* buffer not found */
+    return NULL;
 }
 
 /*
  * gui_buffer_search_by_number: search a buffer by number
  */
 
-t_gui_buffer *
+struct t_gui_buffer *
 gui_buffer_search_by_number (int number)
 {
-    t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer;
     
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
@@ -349,10 +322,10 @@ gui_buffer_search_by_number (int number)
  * gui_buffer_find_window: find a window displaying buffer
  */
 
-t_gui_window *
-gui_buffer_find_window (t_gui_buffer *buffer)
+struct t_gui_window *
+gui_buffer_find_window (struct t_gui_buffer *buffer)
 {
-    t_gui_window *ptr_win;
+    struct t_gui_window *ptr_win;
     
     if (gui_current_window->buffer == buffer)
         return gui_current_window;
@@ -369,63 +342,15 @@ gui_buffer_find_window (t_gui_buffer *buffer)
 }
 
 /*
- * gui_buffer_find_context: find window/buffer for a server/channel
- */
-
-void
-gui_buffer_find_context (void *server, void *channel,
-                         t_gui_window **window, t_gui_buffer **buffer)
-{
-    t_gui_window *ptr_win;
-    
-    if (!buffer)
-        return;
-    
-    /* first find buffer */
-    *buffer = NULL;
-    if ((t_irc_channel *)channel && ((t_irc_channel *)channel)->buffer)
-        *buffer = ((t_irc_channel *)channel)->buffer;
-    else
-    {
-        if ((t_irc_server *)server && ((t_irc_server *)server)->buffer)
-            *buffer = ((t_irc_server *)server)->buffer;
-        else
-            *buffer = gui_current_window->buffer;
-    }
-    
-    /* then find first window displaying this buffer */
-    if (window)
-    {
-        *window = NULL;
-        if (gui_current_window->buffer == *buffer)
-            *window = gui_current_window;
-        else
-        {
-            for (ptr_win = gui_windows; ptr_win;
-                 ptr_win = ptr_win->next_window)
-            {
-                if (ptr_win->buffer == *buffer)
-                {
-                    *window = ptr_win;
-                    break;
-                }
-            }
-            if (!*window)
-                *window = gui_current_window;
-        }
-    }
-}
-
-/*
  * gui_buffer_is_scrolled: return 1 if all windows displaying buffer are scrolled
  *                         (user doesn't see end of buffer)
  *                         return 0 if at least one window is NOT scrolled
  */
 
 int
-gui_buffer_is_scrolled (t_gui_buffer *buffer)
+gui_buffer_is_scrolled (struct t_gui_buffer *buffer)
 {
-    t_gui_window *ptr_win;
+    struct t_gui_window *ptr_win;
     int buffer_found;
 
     if (!buffer)
@@ -455,13 +380,14 @@ gui_buffer_is_scrolled (t_gui_buffer *buffer)
  * gui_buffer_get_dcc: get pointer to DCC buffer (DCC buffer created if not existing)
  */
 
-t_gui_buffer *
-gui_buffer_get_dcc (t_gui_window *window)
+struct t_gui_buffer *
+gui_buffer_get_dcc (struct t_gui_window *window)
 {
-    t_gui_buffer *ptr_buffer;
-    
+    //struct t_gui_buffer *ptr_buffer;
+
+    (void) window;
     /* check if dcc buffer exists */
-    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    /*for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
         if (ptr_buffer->type == GUI_BUFFER_TYPE_DCC)
             break;
@@ -469,7 +395,9 @@ gui_buffer_get_dcc (t_gui_window *window)
     if (ptr_buffer)
         return ptr_buffer;
     else
-        return gui_buffer_new (window, NULL, NULL, GUI_BUFFER_TYPE_DCC, 0);
+        return gui_buffer_new (window, weechat_protocols,
+        NULL, NULL, GUI_BUFFER_TYPE_DCC, 0);*/
+    return NULL;
 }
 
 /*
@@ -477,35 +405,37 @@ gui_buffer_get_dcc (t_gui_window *window)
  */
 
 void
-gui_buffer_clear (t_gui_buffer *buffer)
+gui_buffer_clear (struct t_gui_buffer *buffer)
 {
-    t_gui_window *ptr_win;
-    t_gui_line *ptr_line;
+    struct t_gui_window *ptr_win;
+    struct t_gui_line *ptr_line;
 
     if (!buffer)
         return;
 
-    if (buffer->type == GUI_BUFFER_TYPE_DCC)
+    if (buffer->type == GUI_BUFFER_TYPE_FREE)
+    {
+        /* TODO: clear buffer with free content */
         return;
+    }
     
     /* remove buffer from hotlist */
-    hotlist_remove_buffer (buffer);
+    gui_hotlist_remove_buffer (buffer);
     
     /* remove lines from buffer */
     while (buffer->lines)
     {
         ptr_line = buffer->lines->next_line;
-        if (buffer->lines->data)
-            free (buffer->lines->data);
+        if (buffer->lines->message)
+            free (buffer->lines->message);
         free (buffer->lines);
         buffer->lines = ptr_line;
     }
     
     buffer->lines = NULL;
     buffer->last_line = NULL;
-    buffer->num_lines = 0;
-    buffer->line_complete = 1;
-
+    buffer->lines_count = 0;
+    
     /* remove any scroll for buffer */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -528,36 +458,10 @@ gui_buffer_clear (t_gui_buffer *buffer)
 void
 gui_buffer_clear_all ()
 {
-    t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer;
     
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
         gui_buffer_clear (ptr_buffer);
-}
-
-/*
- * gui_buffer_line_free: delete a line from a buffer
- */
-
-void
-gui_buffer_line_free (t_gui_line *line)
-{
-    t_gui_window *ptr_win;
-    
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-    {
-        if (ptr_win->start_line == line)
-        {
-            ptr_win->start_line = ptr_win->start_line->next_line;
-            ptr_win->start_line_pos = 0;
-            gui_chat_draw (ptr_win->buffer, 0);
-            gui_status_draw (ptr_win->buffer, 0);
-        }
-    }
-    if (line->nick)
-        free (line->nick);
-    if (line->data)
-        free (line->data);
-    free (line);
 }
 
 /*
@@ -565,39 +469,33 @@ gui_buffer_line_free (t_gui_line *line)
  */
 
 void
-gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
+gui_buffer_free (struct t_gui_buffer *buffer, int switch_to_another)
 {
-    t_gui_window *ptr_win;
-    t_gui_buffer *ptr_buffer;
-    t_gui_line *ptr_line;
-    t_irc_server *ptr_server;
-    int create_new;
-#ifdef PLUGINS
+    struct t_gui_window *ptr_window;
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_line *ptr_line;
     char buffer_str[16], *argv[1] = { NULL };
-#endif
     
-#ifdef PLUGINS
     snprintf (buffer_str, sizeof (buffer_str) - 1, "%d", buffer->number);
     argv[0] = buffer_str;
-    (void) plugin_event_handler_exec ("buffer_close", 1, argv);
-#endif
-    
-    create_new = (buffer->server || buffer->channel);
+    /* TODO: send buffer_close event */
+    /*(void) plugin_event_handler_exec ("buffer_close", 1, argv);*/
     
     if (switch_to_another)
     {
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        for (ptr_window = gui_windows; ptr_window;
+             ptr_window = ptr_window->next_window)
         {
-            if ((buffer == ptr_win->buffer) &&
+            if ((buffer == ptr_window->buffer) &&
                 ((buffer->next_buffer) || (buffer->prev_buffer)))
-                gui_buffer_switch_previous (ptr_win);
+                gui_buffer_switch_previous (ptr_window);
         }
     }
     
-    hotlist_remove_buffer (buffer);
-    if (hotlist_initial_buffer == buffer)
-        hotlist_initial_buffer = NULL;
-
+    gui_hotlist_remove_buffer (buffer);
+    if (gui_hotlist_initial_buffer == buffer)
+        gui_hotlist_initial_buffer = NULL;
+    
     if (gui_previous_buffer == buffer)
         gui_previous_buffer = NULL;
     
@@ -607,43 +505,41 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     if (gui_buffer_before_raw_data == buffer)
         gui_buffer_before_raw_data = NULL;
     
-    if (buffer->type == GUI_BUFFER_TYPE_RAW_DATA)
+    if (buffer->type == GUI_BUFFER_TYPE_FREE)
+    {
+        // TODO: review this
         gui_buffer_raw_data = NULL;
-    
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
-    {
-        if (ptr_server->saved_buffer == buffer)
-            ptr_server->saved_buffer = NULL;
     }
     
-    /* decrease buffer number for all next buffers */
-    for (ptr_buffer = buffer->next_buffer; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    if (buffer->type == GUI_BUFFER_TYPE_FORMATED)
     {
-        ptr_buffer->number--;
+        /* decrease buffer number for all next buffers */
+        for (ptr_buffer = buffer->next_buffer; ptr_buffer;
+             ptr_buffer = ptr_buffer->next_buffer)
+        {
+            ptr_buffer->number--;
+        }
+        
+        /* free lines and messages */
+        while (buffer->lines)
+        {
+            ptr_line = buffer->lines->next_line;
+            gui_chat_line_free (buffer->lines);
+            buffer->lines = ptr_line;
+        }
+        
+        /* close log if opened */
+        if (buffer->log_file)
+            gui_log_end (buffer);
     }
-    
-    /* free lines and messages */
-    while (buffer->lines)
-    {
-        ptr_line = buffer->lines->next_line;
-        gui_buffer_line_free (buffer->lines);
-        buffer->lines = ptr_line;
-    }
-    
-    /* close log if opened */
-    if (buffer->log_file)
-        gui_log_end (buffer);
-    
+
     if (buffer->input_buffer)
         free (buffer->input_buffer);
     if (buffer->input_buffer_color_mask)
         free (buffer->input_buffer_color_mask);
-    
-    completion_free (&(buffer->completion));
-    
-    history_buffer_free (buffer);
-    
+    if (buffer->completion)
+        gui_completion_free (buffer->completion);
+    gui_history_buffer_free (buffer);
     if (buffer->text_search_input)
         free (buffer->text_search_input);
     
@@ -657,200 +553,17 @@ gui_buffer_free (t_gui_buffer *buffer, int switch_to_another)
     if (last_gui_buffer == buffer)
         last_gui_buffer = buffer->prev_buffer;
     
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
     {
-        if (ptr_win->buffer == buffer)
-            ptr_win->buffer = NULL;
+        if (ptr_window->buffer == buffer)
+            ptr_window->buffer = NULL;
     }
     
     free (buffer);
     
-    /* always at least one buffer */
-    if (!gui_buffers && create_new && switch_to_another)
-        (void) gui_buffer_new (gui_windows, NULL, NULL,
-                               GUI_BUFFER_TYPE_STANDARD, 1);
-    
     if (gui_windows && gui_current_window && gui_current_window->buffer)
         gui_status_draw (gui_current_window->buffer, 1);
-}
-
-/*
- * gui_buffer_line_new: create new line for a buffer
- */
-
-t_gui_line *
-gui_buffer_line_new (t_gui_buffer *buffer, time_t date)
-{
-    t_gui_line *new_line, *ptr_line;
-    
-    if ((new_line = (t_gui_line *) malloc (sizeof (struct t_gui_line))))
-    {
-        new_line->length = 0;
-        new_line->length_align = 0;
-        new_line->log_write = 1;
-        new_line->line_with_message = 0;
-        new_line->line_with_highlight = 0;
-        new_line->date = date;
-        new_line->nick = NULL;
-        new_line->data = NULL;
-        new_line->ofs_after_date = -1;
-        new_line->ofs_start_message = -1;
-        if (!buffer->lines)
-            buffer->lines = new_line;
-        else
-            buffer->last_line->next_line = new_line;
-        new_line->prev_line = buffer->last_line;
-        new_line->next_line = NULL;
-        buffer->last_line = new_line;
-        buffer->num_lines++;
-    }
-    else
-    {
-        weechat_log_printf (_("Not enough memory for new line\n"));
-        return NULL;
-    }
-    
-    /* remove one line if necessary */
-    if ((cfg_history_max_lines > 0)
-        && (buffer->num_lines > cfg_history_max_lines))
-    {
-        if (buffer->last_line == buffer->lines)
-            buffer->last_line = NULL;
-        ptr_line = buffer->lines->next_line;
-        gui_buffer_line_free (buffer->lines);
-        buffer->lines = ptr_line;
-        ptr_line->prev_line = NULL;
-        buffer->num_lines--;
-    }
-    
-    return new_line;
-}
-
-/*
- * gui_buffer_line_search: search for text in a line
- */
-
-int
-gui_buffer_line_search (t_gui_line *line, char *text, int case_sensitive)
-{
-    char *data;
-    int rc;
-    
-    if (!line || !line->data || !text || !text[0])
-        return 0;
-    
-    rc = 0;
-    data = (char *)gui_color_decode ((unsigned char *)line->data, 0, 0);
-    if (data)
-    {
-        if ((case_sensitive && (strstr (data, text)))
-            || (!case_sensitive && (ascii_strcasestr (data, text))))
-            rc = 1;
-        free (data);
-    }
-    return rc;
-}
-
-/*
- * gui_buffer_merge_servers: merge server buffers in one buffer
- */
-
-void
-gui_buffer_merge_servers (t_gui_window *window)
-{
-    t_gui_buffer *ptr_buffer_server, *ptr_buffer, *new_ptr_buffer;
-    t_irc_server *ptr_server;
-    
-    /* new server buffer is the first server buffer found */
-    for (ptr_buffer_server = gui_buffers; ptr_buffer_server;
-         ptr_buffer_server = ptr_buffer_server->next_buffer)
-    {
-        if (GUI_BUFFER_IS_SERVER(ptr_buffer_server))
-            break;
-    }
-    
-    /* no server buffer found */
-    if (!ptr_buffer_server)
-        return;
-
-    ptr_buffer = gui_buffers;
-    while (ptr_buffer)
-    {
-        if ((ptr_buffer != ptr_buffer_server)
-            && (GUI_BUFFER_IS_SERVER(ptr_buffer)))
-        {
-            ptr_server = GUI_SERVER(ptr_buffer);
-            
-            /* add (by pointer artefact) lines from buffer found to server buffer */
-            if (ptr_buffer->lines)
-            {
-                if (ptr_buffer_server->lines)
-                {
-                    ptr_buffer->lines->prev_line =
-                        ptr_buffer_server->last_line;
-                    ptr_buffer_server->last_line->next_line =
-                        ptr_buffer->lines;
-                    ptr_buffer_server->last_line =
-                        ptr_buffer->last_line;
-                }
-                else
-                {
-                    ptr_buffer_server->lines = ptr_buffer->lines;
-                    ptr_buffer_server->last_line = ptr_buffer->last_line;
-                }
-            }
-            
-            /* free buffer but not lines, because they're now used by 
-               our unique server buffer */
-            new_ptr_buffer = ptr_buffer->next_buffer;
-            ptr_buffer->lines = NULL;
-            gui_buffer_free (ptr_buffer, 1);
-            ptr_buffer = new_ptr_buffer;
-            
-            /* asociate server with new server buffer */
-            ptr_server->buffer = ptr_buffer_server;
-        }
-        else
-            ptr_buffer = ptr_buffer->next_buffer;
-    }
-    
-    ptr_buffer_server->all_servers = 1;
-    gui_window_redraw_buffer (window->buffer);
-}
-
-/*
- * gui_buffer_split_server: split the server buffer into many buffers (one by server)
- */
-
-void
-gui_buffer_split_server (t_gui_window *window)
-{
-    t_gui_buffer *ptr_buffer;
-    t_irc_server *ptr_server;
-    
-    ptr_buffer = gui_buffer_servers_search ();
-    
-    if (ptr_buffer)
-    {
-        if (GUI_SERVER(ptr_buffer))
-        {
-            for (ptr_server = irc_servers; ptr_server;
-                 ptr_server = ptr_server->next_server)
-            {
-                if (ptr_server->buffer
-                    && (ptr_server != GUI_SERVER(ptr_buffer))
-                    && (ptr_server->buffer == ptr_buffer))
-                {
-                    ptr_server->buffer = NULL;
-                    gui_buffer_new (window, ptr_server, NULL,
-                                    GUI_BUFFER_TYPE_STANDARD, 0);
-                }
-            }
-        }
-        ptr_buffer->all_servers = 0;
-        gui_status_draw (window->buffer, 1);
-        gui_input_draw (window->buffer, 1);
-    }
 }
 
 /*
@@ -858,7 +571,7 @@ gui_buffer_split_server (t_gui_window *window)
  */
 
 void
-gui_buffer_switch_previous (t_gui_window *window)
+gui_buffer_switch_previous (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -880,7 +593,7 @@ gui_buffer_switch_previous (t_gui_window *window)
  */
 
 void
-gui_buffer_switch_next (t_gui_window *window)
+gui_buffer_switch_next (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -902,12 +615,13 @@ gui_buffer_switch_next (t_gui_window *window)
  */
 
 void
-gui_buffer_switch_dcc (t_gui_window *window)
+gui_buffer_switch_dcc (struct t_gui_window *window)
 {
-    t_gui_buffer *ptr_buffer;
-    
+    //struct t_gui_buffer *ptr_buffer;
+
+    (void) window;
     /* check if dcc buffer exists */
-    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    /*for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
         if (ptr_buffer->type == GUI_BUFFER_TYPE_DCC)
             break;
@@ -918,7 +632,8 @@ gui_buffer_switch_dcc (t_gui_window *window)
         gui_window_redraw_buffer (ptr_buffer);
     }
     else
-        gui_buffer_new (window, NULL, NULL, GUI_BUFFER_TYPE_DCC, 1);
+        gui_buffer_new (window, weechat_protocols,
+        NULL, NULL, GUI_BUFFER_TYPE_DCC, 1);*/
 }
 
 /*
@@ -926,12 +641,13 @@ gui_buffer_switch_dcc (t_gui_window *window)
  */
 
 void
-gui_buffer_switch_raw_data (t_gui_window *window)
+gui_buffer_switch_raw_data (struct t_gui_window *window)
 {
-    t_gui_buffer *ptr_buffer;
-    
+    //struct t_gui_buffer *ptr_buffer;
+
+    (void) window;
     /* check if raw IRC data buffer exists */
-    for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    /*for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
         if (ptr_buffer->type == GUI_BUFFER_TYPE_RAW_DATA)
             break;
@@ -942,17 +658,18 @@ gui_buffer_switch_raw_data (t_gui_window *window)
         gui_window_redraw_buffer (ptr_buffer);
     }
     else
-        gui_buffer_new (window, NULL, NULL, GUI_BUFFER_TYPE_RAW_DATA, 1);
+        gui_buffer_new (window, weechat_protocols,
+        NULL, NULL, GUI_BUFFER_TYPE_RAW_DATA, 1);*/
 }
 
 /*
  * gui_buffer_switch_by_number: switch to another buffer with number
  */
 
-t_gui_buffer *
-gui_buffer_switch_by_number (t_gui_window *window, int number)
+struct t_gui_buffer *
+gui_buffer_switch_by_number (struct t_gui_window *window, int number)
 {
-    t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer;
     
     /* invalid buffer */
     if (number < 0)
@@ -982,13 +699,11 @@ gui_buffer_switch_by_number (t_gui_window *window, int number)
  */
 
 void
-gui_buffer_move_to_number (t_gui_buffer *buffer, int number)
+gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
 {
-    t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer;
     int i;
-#ifdef PLUGINS
     char buf1_str[16], buf2_str[16], *argv[2] = { NULL, NULL };
-#endif
     
     /* if only one buffer then return */
     if (gui_buffers == last_gui_buffer)
@@ -1000,10 +715,8 @@ gui_buffer_move_to_number (t_gui_buffer *buffer, int number)
     
     if (number < 1)
         number = 1;
-
-#ifdef PLUGINS
+    
     snprintf (buf2_str, sizeof (buf2_str) - 1, "%d", buffer->number);
-#endif
     
     /* remove buffer from list */
     if (buffer == gui_buffers)
@@ -1072,341 +785,11 @@ gui_buffer_move_to_number (t_gui_buffer *buffer, int number)
     
     gui_window_redraw_buffer (buffer);
     
-#ifdef PLUGINS
     snprintf (buf1_str, sizeof (buf1_str) - 1, "%d", buffer->number);
     argv[0] = buf1_str;
     argv[1] = buf2_str;
-    (void) plugin_event_handler_exec ("buffer_move", 2, argv);
-#endif
-}
-
-/*
- * gui_buffer_search_text: search text in a buffer
- */
-
-int
-gui_buffer_search_text (t_gui_window *window)
-{
-    t_gui_line *ptr_line;
-    
-    if (window->buffer->text_search == GUI_TEXT_SEARCH_BACKWARD)
-    {
-        if (window->buffer->lines
-            && window->buffer->input_buffer && window->buffer->input_buffer[0])
-        {
-            ptr_line = (window->start_line) ?
-                window->start_line->prev_line : window->buffer->last_line;
-            while (ptr_line)
-            {
-                if (gui_buffer_line_search (ptr_line, window->buffer->input_buffer,
-                                            window->buffer->text_search_exact))
-                {
-                    window->start_line = ptr_line;
-                    window->start_line_pos = 0;
-                    window->first_line_displayed =
-                        (window->start_line == window->buffer->lines);
-                    gui_chat_draw (window->buffer, 1);
-                    gui_status_draw (window->buffer, 1);
-                    return 1;
-                }
-                ptr_line = ptr_line->prev_line;
-            }
-        }
-    }
-    else if (window->buffer->text_search == GUI_TEXT_SEARCH_FORWARD)
-    {
-        if (window->buffer->lines
-            && window->buffer->input_buffer && window->buffer->input_buffer[0])
-        {
-            ptr_line = (window->start_line) ?
-                window->start_line->next_line : window->buffer->lines->next_line;
-            while (ptr_line)
-            {
-                if (gui_buffer_line_search (ptr_line, window->buffer->input_buffer,
-                                            window->buffer->text_search_exact))
-                {
-                    window->start_line = ptr_line;
-                    window->start_line_pos = 0;
-                    window->first_line_displayed =
-                        (window->start_line == window->buffer->lines);
-                    gui_chat_draw (window->buffer, 1);
-                    gui_status_draw (window->buffer, 1);
-                    return 1;
-                }
-                ptr_line = ptr_line->next_line;
-            }
-        }
-    }
-    return 0;
-}
-
-/*
- * gui_buffer_search_start: start search in a buffer
- */
-
-void
-gui_buffer_search_start (t_gui_window *window)
-{
-    window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
-    window->buffer->text_search_exact = 0;
-    window->buffer->text_search_found = 0;
-    if (window->buffer->text_search_input)
-    {
-        free (window->buffer->text_search_input);
-        window->buffer->text_search_input = NULL;
-    }
-    if (window->buffer->input_buffer && window->buffer->input_buffer[0])
-        window->buffer->text_search_input =
-            strdup (window->buffer->input_buffer);
-    gui_action_delete_line (window, NULL);
-    gui_status_draw (window->buffer, 1);
-    gui_input_draw (window->buffer, 1);
-}
-
-/*
- * gui_buffer_search_restart: restart search (after input changes or exact
- *                            flag (un)set)
- */
-
-void
-gui_buffer_search_restart (t_gui_window *window)
-{
-    window->start_line = NULL;
-    window->start_line_pos = 0;
-    window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
-    window->buffer->text_search_found = 0;
-    if (gui_buffer_search_text (window))
-        window->buffer->text_search_found = 1;
-    else
-    {
-        gui_chat_draw (window->buffer, 1);
-        gui_status_draw (window->buffer, 1);
-    }
-}
-
-/*
- * gui_buffer_search_stop: stop search in a buffer
- */
-
-void
-gui_buffer_search_stop (t_gui_window *window)
-{
-    window->buffer->text_search = GUI_TEXT_SEARCH_DISABLED;
-    window->buffer->text_search = 0;
-    gui_action_delete_line (window, NULL);
-    if (window->buffer->text_search_input)
-    {
-        gui_insert_string_input (window, window->buffer->text_search_input, -1);
-        free (window->buffer->text_search_input);
-        window->buffer->text_search_input = NULL;
-    }
-    window->start_line = NULL;
-    window->start_line_pos = 0;
-    hotlist_remove_buffer (window->buffer);
-    gui_chat_draw (window->buffer, 0);
-    gui_status_draw (window->buffer, 1);
-    gui_input_draw (window->buffer, 1);
-}
-
-/*
- * gui_buffer_scroll: scroll buffer by # messages or time
- */
-
-void
-gui_buffer_scroll (t_gui_window *window, char *scroll)
-{
-    int direction, stop, count_msg;
-    char time_letter, saved_char;
-    time_t old_date, diff_date;
-    char *error;
-    long number;
-    t_gui_line *ptr_line;
-    struct tm *date_tmp, line_date, old_line_date;
-    
-    if (window->buffer->lines)
-    {
-        direction = -1;
-        number = 0;
-        time_letter = ' ';
-        
-        // search direction
-        if (scroll[0] == '-')
-        {
-            direction = -1;
-            scroll++;
-        }
-        else if (scroll[0] == '+')
-        {
-            direction = +1;
-            scroll++;
-        }
-        
-        // search number and letter
-        char *pos = scroll;
-        while (pos && pos[0] && isdigit (pos[0]))
-        {
-            pos++;
-        }
-        if (pos)
-        {
-            if (pos == scroll)
-            {
-                if (pos[0])
-                    time_letter = scroll[0];
-            }
-            else
-            {
-                if (pos[0])
-                    time_letter = pos[0];
-                saved_char = pos[0];
-                pos[0] = '\0';
-                error = NULL;
-                number = strtol (scroll, &error, 10);
-                if (!error || (error[0] != '\0'))
-                    number = 0;
-                pos[0] = saved_char;
-            }
-        }
-        
-        /* at least number or letter has to he given */
-        if ((number == 0) && (time_letter == ' '))
-            return;
-        
-        // do the scroll!
-        stop = 0;
-        count_msg = 0;
-        if (direction < 0)
-            ptr_line = (window->start_line) ?
-                window->start_line : window->buffer->last_line;
-        else
-            ptr_line = (window->start_line) ?
-                window->start_line : window->buffer->lines;
-        
-        old_date = ptr_line->date;
-        date_tmp = localtime (&old_date);
-        memcpy (&old_line_date, date_tmp, sizeof (struct tm));
-        
-        while (ptr_line)
-        {
-            ptr_line = (direction < 0) ? ptr_line->prev_line : ptr_line->next_line;
-            
-            if (ptr_line)
-            {
-                if (time_letter == ' ')
-                {
-                    count_msg++;
-                    if (count_msg >= number)
-                        stop = 1;
-                }
-                else
-                {
-                    date_tmp = localtime (&(ptr_line->date));
-                    memcpy (&line_date, date_tmp, sizeof (struct tm));
-                    if (old_date > ptr_line->date)
-                        diff_date = old_date - ptr_line->date;
-                    else
-                        diff_date = ptr_line->date - old_date;
-                    switch (time_letter)
-                    {
-                        case 's': /* seconds */
-                            if (number == 0)
-                            {
-                                /* stop if line has different second */
-                                if ((line_date.tm_sec != old_line_date.tm_sec)
-                                    || (line_date.tm_min != old_line_date.tm_min)
-                                    || (line_date.tm_hour != old_line_date.tm_hour)
-                                    || (line_date.tm_mday != old_line_date.tm_mday)
-                                    || (line_date.tm_mon != old_line_date.tm_mon)
-                                    || (line_date.tm_year != old_line_date.tm_year))
-                                    if (line_date.tm_sec != old_line_date.tm_sec)
-                                        stop = 1;
-                            }
-                            else if (diff_date >= number)
-                                stop = 1;
-                            break;
-                        case 'm': /* minutes */
-                            if (number == 0)
-                            {
-                                /* stop if line has different minute */
-                                if ((line_date.tm_min != old_line_date.tm_min)
-                                    || (line_date.tm_hour != old_line_date.tm_hour)
-                                    || (line_date.tm_mday != old_line_date.tm_mday)
-                                    || (line_date.tm_mon != old_line_date.tm_mon)
-                                    || (line_date.tm_year != old_line_date.tm_year))
-                                    stop = 1;
-                            }
-                            else if (diff_date >= number * 60)
-                                stop = 1;
-                            break;
-                        case 'h': /* hours */
-                            if (number == 0)
-                            {
-                                /* stop if line has different hour */
-                                if ((line_date.tm_hour != old_line_date.tm_hour)
-                                    || (line_date.tm_mday != old_line_date.tm_mday)
-                                    || (line_date.tm_mon != old_line_date.tm_mon)
-                                    || (line_date.tm_year != old_line_date.tm_year))
-                                    stop = 1;
-                            }
-                            else if (diff_date >= number * 60 * 60)
-                                stop = 1;
-                            break;
-                        case 'd': /* days */
-                            if (number == 0)
-                            {
-                                /* stop if line has different day */
-                                if ((line_date.tm_mday != old_line_date.tm_mday)
-                                    || (line_date.tm_mon != old_line_date.tm_mon)
-                                    || (line_date.tm_year != old_line_date.tm_year))
-                                    stop = 1;
-                            }
-                            else if (diff_date >= number * 60 * 60 * 24)
-                                stop = 1;
-                            break;
-                        case 'M': /* months */
-                            if (number == 0)
-                            {
-                                /* stop if line has different month */
-                                if ((line_date.tm_mon != old_line_date.tm_mon)
-                                    || (line_date.tm_year != old_line_date.tm_year))
-                                    stop = 1;
-                            }
-                            /* we consider month is 30 days, who will find I'm too
-                               lazy to code exact date diff ? ;) */
-                            else if (diff_date >= number * 60 * 60 * 24 * 30)
-                                stop = 1;
-                            break;
-                        case 'y': /* years */
-                            if (number == 0)
-                            {
-                                /* stop if line has different year */
-                                if (line_date.tm_year != old_line_date.tm_year)
-                                    stop = 1;
-                            }
-                            /* we consider year is 365 days, who will find I'm too
-                               lazy to code exact date diff ? ;) */
-                            else if (diff_date >= number * 60 * 60 * 24 * 365)
-                                stop = 1;
-                            break;
-                    }
-                }
-                if (stop)
-                {
-                    window->start_line = ptr_line;
-                    window->start_line_pos = 0;
-                    window->first_line_displayed =
-                        (window->start_line == window->buffer->lines);
-                    gui_chat_draw (window->buffer, 1);
-                    gui_status_draw (window->buffer, 0);
-                    return;
-                }
-            }
-        }
-        if (direction < 0)
-            gui_window_scroll_top (window);
-        else
-            gui_window_scroll_bottom (window);
-    }
+    /* TODO: send buffer_move event */
+    /*(void) plugin_event_handler_exec ("buffer_move", 2, argv);*/
 }
 
 /*
@@ -1414,11 +797,11 @@ gui_buffer_scroll (t_gui_window *window, char *scroll)
  */
 
 void
-gui_buffer_dump_hexa (t_gui_buffer *buffer)
+gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
 {
-    t_gui_line *ptr_line;
-    int num_line, data_pos;
-    char *data_without_colors;
+    struct t_gui_line *ptr_line;
+    int num_line, msg_pos;
+    char *message_without_colors;
     char hexa[(16 * 3) + 1], ascii[(16 * 2) + 1];
     int hexa_pos, ascii_pos;
     
@@ -1427,33 +810,34 @@ gui_buffer_dump_hexa (t_gui_buffer *buffer)
     for (ptr_line = buffer->lines; ptr_line; ptr_line = ptr_line->next_line)
     {
         /* display line without colors */
-        data_without_colors = (ptr_line->data) ?
-            (char *)gui_color_decode ((unsigned char *)ptr_line->data, 0, 0) : NULL;
+        message_without_colors = (ptr_line->message) ?
+            (char *)gui_color_decode ((unsigned char *)ptr_line->message) : NULL;
         weechat_log_printf ("\n");
         weechat_log_printf ("  line %d: %s\n",
                             num_line,
-                            (data_without_colors) ? data_without_colors : "(null)");
-        if (data_without_colors)
-            free (data_without_colors);
+                            (message_without_colors) ?
+                            message_without_colors : "(null)");
+        if (message_without_colors)
+            free (message_without_colors);
 
-        /* display raw data for line */
-        if (ptr_line->data)
+        /* display raw message for line */
+        if (ptr_line->message)
         {
             weechat_log_printf ("\n");
             weechat_log_printf ("  raw data for line %d (with color codes):\n",
                                 num_line);
-            data_pos = 0;
+            msg_pos = 0;
             hexa_pos = 0;
             ascii_pos = 0;
-            while (ptr_line->data[data_pos])
+            while (ptr_line->message[msg_pos])
             {
                 snprintf (hexa + hexa_pos, 4, "%02X ",
-                          (unsigned char)(ptr_line->data[data_pos]));
+                          (unsigned char)(ptr_line->message[msg_pos]));
                 hexa_pos += 3;
                 snprintf (ascii + ascii_pos, 3, "%c ",
-                          ((((unsigned char)ptr_line->data[data_pos]) < 32)
-                           || (((unsigned char)ptr_line->data[data_pos]) > 127)) ?
-                          '.' : (unsigned char)(ptr_line->data[data_pos]));
+                          ((((unsigned char)ptr_line->message[msg_pos]) < 32)
+                           || (((unsigned char)ptr_line->message[msg_pos]) > 127)) ?
+                          '.' : (unsigned char)(ptr_line->message[msg_pos]));
                 ascii_pos += 2;
                 if (ascii_pos == 32)
                 {
@@ -1461,7 +845,7 @@ gui_buffer_dump_hexa (t_gui_buffer *buffer)
                     hexa_pos = 0;
                     ascii_pos = 0;
                 }
-                data_pos++;
+                msg_pos++;
             }
             if (ascii_pos > 0)
                 weechat_log_printf ("    %-48s  %s\n", hexa, ascii);
@@ -1476,69 +860,103 @@ gui_buffer_dump_hexa (t_gui_buffer *buffer)
  */
 
 void
-gui_buffer_print_log (t_gui_buffer *buffer)
+gui_buffer_print_log ()
 {
-    t_gui_line *ptr_line;
+    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_nick *ptr_nick;
+    struct t_gui_line *ptr_line;
     int num;
     
-    weechat_log_printf ("[buffer (addr:0x%X)]\n", buffer);
-    weechat_log_printf ("  num_displayed. . . . . : %d\n",   buffer->num_displayed);
-    weechat_log_printf ("  number . . . . . . . . : %d\n",   buffer->number);
-    weechat_log_printf ("  server . . . . . . . . : 0x%X\n", buffer->server);
-    weechat_log_printf ("  all_servers. . . . . . : %d\n",   buffer->all_servers);
-    weechat_log_printf ("  channel. . . . . . . . : 0x%X\n", buffer->channel);
-    weechat_log_printf ("  type . . . . . . . . . : %d\n",   buffer->type);
-    weechat_log_printf ("  lines. . . . . . . . . : 0x%X\n", buffer->lines);
-    weechat_log_printf ("  last_line. . . . . . . : 0x%X\n", buffer->last_line);
-    weechat_log_printf ("  last_read_line . . . . : 0x%X\n", buffer->last_read_line);
-    weechat_log_printf ("  num_lines. . . . . . . : %d\n",   buffer->num_lines);
-    weechat_log_printf ("  line_complete. . . . . : %d\n",   buffer->line_complete);
-    weechat_log_printf ("  notify_level . . . . . : %d\n",   buffer->notify_level);
-    weechat_log_printf ("  log_filename . . . . . : '%s'\n", buffer->log_filename);
-    weechat_log_printf ("  log_file . . . . . . . : 0x%X\n", buffer->log_file);
-    weechat_log_printf ("  has_input. . . . . . . : %d\n",   buffer->has_input);
-    weechat_log_printf ("  input_buffer . . . . . : '%s'\n", buffer->input_buffer);
-    weechat_log_printf ("  input_buffer_color_mask: '%s'\n", buffer->input_buffer_color_mask);
-    weechat_log_printf ("  input_buffer_alloc . . : %d\n",   buffer->input_buffer_alloc);
-    weechat_log_printf ("  input_buffer_size. . . : %d\n",   buffer->input_buffer_size);
-    weechat_log_printf ("  input_buffer_length. . : %d\n",   buffer->input_buffer_length);
-    weechat_log_printf ("  input_buffer_pos . . . : %d\n",   buffer->input_buffer_pos);
-    weechat_log_printf ("  input_buffer_1st_disp. : %d\n",   buffer->input_buffer_1st_display);
-    weechat_log_printf ("  completion . . . . . . : 0x%X\n", &(buffer->completion));
-    weechat_log_printf ("  history. . . . . . . . : 0x%X\n", buffer->history);
-    weechat_log_printf ("  last_history . . . . . : 0x%X\n", buffer->last_history);
-    weechat_log_printf ("  ptr_history. . . . . . : 0x%X\n", buffer->ptr_history);
-    weechat_log_printf ("  num_history. . . . . . : %d\n",   buffer->num_history);
-    weechat_log_printf ("  text_search. . . . . . : %d\n",   buffer->text_search);
-    weechat_log_printf ("  text_search_exact. . . : %d\n",   buffer->text_search_exact);
-    weechat_log_printf ("  text_search_input. . . : '%s'\n", buffer->text_search_input);
-    weechat_log_printf ("  prev_buffer. . . . . . : 0x%X\n", buffer->prev_buffer);
-    weechat_log_printf ("  next_buffer. . . . . . : 0x%X\n", buffer->next_buffer);
-    weechat_log_printf ("\n");
-    weechat_log_printf ("  => last 100 lines:\n");
-    
-    num = 0;
-    ptr_line = buffer->last_line;
-    while (ptr_line && (num < 100))
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
     {
-        num++;
-        ptr_line = ptr_line->prev_line;
-    }
-    if (!ptr_line)
-        ptr_line = buffer->lines;
-    else
-        ptr_line = ptr_line->next_line;
-    
-    while (ptr_line)
-    {
-        num--;
-        weechat_log_printf ("       line N-%05d: %s\n",
-                            num,
-                            (ptr_line->data) ? ptr_line->data : "(empty)");
+        weechat_log_printf ("\n");
+        weechat_log_printf ("[buffer (addr:0x%X)]\n", ptr_buffer);
+        weechat_log_printf ("  plugin . . . . . . . . : 0x%X\n", ptr_buffer->plugin);
+        weechat_log_printf ("  number . . . . . . . . : %d\n",   ptr_buffer->number);
+        weechat_log_printf ("  category . . . . . . . : '%s'\n", ptr_buffer->category);
+        weechat_log_printf ("  name . . . . . . . . . : '%s'\n", ptr_buffer->name);
+        weechat_log_printf ("  type . . . . . . . . . : %d\n",   ptr_buffer->type);
+        weechat_log_printf ("  notify_level . . . . . : %d\n",   ptr_buffer->notify_level);
+        weechat_log_printf ("  num_displayed. . . . . : %d\n",   ptr_buffer->num_displayed);
+        weechat_log_printf ("  log_filename . . . . . : '%s'\n", ptr_buffer->log_filename);
+        weechat_log_printf ("  log_file . . . . . . . : 0x%X\n", ptr_buffer->log_file);
+        weechat_log_printf ("  title. . . . . . . . . : '%s'\n", ptr_buffer->title);
+        weechat_log_printf ("  lines. . . . . . . . . : 0x%X\n", ptr_buffer->lines);
+        weechat_log_printf ("  last_line. . . . . . . : 0x%X\n", ptr_buffer->last_line);
+        weechat_log_printf ("  last_read_line . . . . : 0x%X\n", ptr_buffer->last_read_line);
+        weechat_log_printf ("  lines_count. . . . . . : %d\n",   ptr_buffer->lines_count);
+        weechat_log_printf ("  prefix_max_length. . . : %d\n",   ptr_buffer->prefix_max_length);
+        weechat_log_printf ("  chat_refresh_needed. . : %d\n",   ptr_buffer->chat_refresh_needed);
+        weechat_log_printf ("  nicklist . . . . . . . : %d\n",   ptr_buffer->nicklist);
+        weechat_log_printf ("  nick_case_sensitive. . : %d\n",   ptr_buffer->nick_case_sensitive);
+        weechat_log_printf ("  nicks. . . . . . . . . : 0x%X\n", ptr_buffer->nicks);
+        weechat_log_printf ("  last_nick. . . . . . . : 0x%X\n", ptr_buffer->last_nick);
+        weechat_log_printf ("  nicks_count. . . . . . : %d\n",   ptr_buffer->nicks_count);
+        weechat_log_printf ("  input. . . . . . . . . : %d\n",   ptr_buffer->input);
+        weechat_log_printf ("  input_data_cb. . . . . : 0x%X\n", ptr_buffer->input_data_cb);
+        weechat_log_printf ("  input_nick . . . . . . : '%s'\n", ptr_buffer->input_nick);
+        weechat_log_printf ("  input_buffer . . . . . : '%s'\n", ptr_buffer->input_buffer);
+        weechat_log_printf ("  input_buffer_color_mask: '%s'\n", ptr_buffer->input_buffer_color_mask);
+        weechat_log_printf ("  input_buffer_alloc . . : %d\n",   ptr_buffer->input_buffer_alloc);
+        weechat_log_printf ("  input_buffer_size. . . : %d\n",   ptr_buffer->input_buffer_size);
+        weechat_log_printf ("  input_buffer_length. . : %d\n",   ptr_buffer->input_buffer_length);
+        weechat_log_printf ("  input_buffer_pos . . . : %d\n",   ptr_buffer->input_buffer_pos);
+        weechat_log_printf ("  input_buffer_1st_disp. : %d\n",   ptr_buffer->input_buffer_1st_display);
+        weechat_log_printf ("  completion . . . . . . : 0x%X\n", ptr_buffer->completion);
+        weechat_log_printf ("  history. . . . . . . . : 0x%X\n", ptr_buffer->history);
+        weechat_log_printf ("  last_history . . . . . : 0x%X\n", ptr_buffer->last_history);
+        weechat_log_printf ("  ptr_history. . . . . . : 0x%X\n", ptr_buffer->ptr_history);
+        weechat_log_printf ("  num_history. . . . . . : %d\n",   ptr_buffer->num_history);
+        weechat_log_printf ("  text_search. . . . . . : %d\n",   ptr_buffer->text_search);
+        weechat_log_printf ("  text_search_exact. . . : %d\n",   ptr_buffer->text_search_exact);
+        weechat_log_printf ("  text_search_found. . . : %d\n",   ptr_buffer->text_search_found);
+        weechat_log_printf ("  text_search_input. . . : '%s'\n", ptr_buffer->text_search_input);
+        weechat_log_printf ("  prev_buffer. . . . . . : 0x%X\n", ptr_buffer->prev_buffer);
+        weechat_log_printf ("  next_buffer. . . . . . : 0x%X\n", ptr_buffer->next_buffer);
         
-        ptr_line = ptr_line->next_line;
+        for (ptr_nick = ptr_buffer->nicks; ptr_nick;
+             ptr_nick = ptr_nick->next_nick)
+        {
+            weechat_log_printf ("\n");
+            weechat_log_printf ("  => nick %s (addr:0x%X):\n", ptr_nick->nick, ptr_nick);
+            weechat_log_printf ("       sort_index. . . . . . : %d\n",   ptr_nick->sort_index);
+            weechat_log_printf ("       color_nick. . . . . . : %d\n",   ptr_nick->color_nick);
+            weechat_log_printf ("       prefix. . . . . . . . : '%c'\n", ptr_nick->prefix);
+            weechat_log_printf ("       color_prefix. . . . . : %d\n",   ptr_nick->color_prefix);
+            weechat_log_printf ("       prev_nick . . . . . . : 0x%X\n", ptr_nick->prev_nick);
+            weechat_log_printf ("       next_nick . . . . . . : 0x%X\n", ptr_nick->next_nick);
+        }
+        
+        weechat_log_printf ("\n");
+        weechat_log_printf ("  => last 100 lines:\n");
+        num = 0;
+        ptr_line = ptr_buffer->last_line;
+        while (ptr_line && (num < 100))
+        {
+            num++;
+            ptr_line = ptr_line->prev_line;
+        }
+        if (!ptr_line)
+            ptr_line = ptr_buffer->lines;
+        else
+            ptr_line = ptr_line->next_line;
+        
+        while (ptr_line)
+        {
+            num--;
+            weechat_log_printf ("       line N-%05d: str_time:'%s', prefix:'%s'\n",
+                                num, ptr_line->str_time, ptr_line->prefix);
+            weechat_log_printf ("                     data: '%s'\n",
+                                ptr_line->message);
+            
+            ptr_line = ptr_line->next_line;
+        }
+        
+        if (ptr_buffer->completion)
+        {
+            weechat_log_printf ("\n");
+            gui_completion_print_log (ptr_buffer->completion);
+        }
     }
-    
-    weechat_log_printf ("\n");
-    completion_print_log (&(buffer->completion));
 }

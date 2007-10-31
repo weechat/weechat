@@ -32,22 +32,26 @@
 #include <time.h>
 #include <ctype.h>
 
-#include "../common/weechat.h"
-#include "gui.h"
-#include "../common/command.h"
-#include "../common/weeconfig.h"
-#include "../common/history.h"
-#include "../common/hotlist.h"
-#include "../common/log.h"
-#include "../common/utf8.h"
-#include "../protocols/irc/irc.h"
+#include "../core/weechat.h"
+#include "../core/wee-command.h"
+#include "../core/wee-config.h"
+#include "../core/wee-log.h"
+#include "../core/wee-utf8.h"
+#include "gui-window.h"
+#include "gui-input.h"
+#include "gui-hotlist.h"
+#include "gui-status.h"
 
 
-t_gui_window *gui_windows = NULL;           /* pointer to first window      */
-t_gui_window *last_gui_window = NULL;       /* pointer to last window       */
-t_gui_window *gui_current_window = NULL;    /* pointer to current window    */
+int gui_init_ok = 0;                            /* = 1 if GUI is initialized*/
+int gui_ok = 0;                                 /* = 1 if GUI is ok         */
+                                                /* (0 when size too small)  */
 
-t_gui_window_tree *gui_windows_tree = NULL; /* pointer to windows tree      */
+struct t_gui_window *gui_windows = NULL;        /* first window             */
+struct t_gui_window *last_gui_window = NULL;    /* last window              */
+struct t_gui_window *gui_current_window = NULL; /* current window           */
+
+struct t_gui_window_tree *gui_windows_tree = NULL; /* windows tree          */
 
 
 /*
@@ -55,9 +59,9 @@ t_gui_window_tree *gui_windows_tree = NULL; /* pointer to windows tree      */
  */
 
 int
-gui_window_tree_init (t_gui_window *window)
+gui_window_tree_init (struct t_gui_window *window)
 {
-    gui_windows_tree = (t_gui_window_tree *)malloc (sizeof (t_gui_window_tree));
+    gui_windows_tree = (struct t_gui_window_tree *)malloc (sizeof (struct t_gui_window_tree));
     if (!gui_windows_tree)
         return 0;
     gui_windows_tree->parent_node = NULL;
@@ -75,7 +79,8 @@ gui_window_tree_init (t_gui_window *window)
  */
 
 void
-gui_window_tree_node_to_leaf (t_gui_window_tree *node, t_gui_window *window)
+gui_window_tree_node_to_leaf (struct t_gui_window_tree *node,
+                              struct t_gui_window *window)
 {
     node->split_horiz = 0;
     node->split_pct = 0;
@@ -98,7 +103,7 @@ gui_window_tree_node_to_leaf (t_gui_window_tree *node, t_gui_window *window)
  */
 
 void
-gui_window_tree_free (t_gui_window_tree **tree)
+gui_window_tree_free (struct t_gui_window_tree **tree)
 {
     if (*tree)
     {
@@ -115,13 +120,12 @@ gui_window_tree_free (t_gui_window_tree **tree)
  * gui_window_new: create a new window
  */
 
-t_gui_window *
-gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
+struct t_gui_window *
+gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height,
                 int width_pct, int height_pct)
 {
-    t_gui_window *new_window;
-    t_gui_window_tree *ptr_tree, *child1, *child2, *ptr_leaf;
-    t_gui_panel *ptr_panel;
+    struct t_gui_window *new_window;
+    struct t_gui_window_tree *ptr_tree, *child1, *child2, *ptr_leaf;
     
 #ifdef DEBUG
     weechat_log_printf ("Creating new window (x:%d, y:%d, width:%d, height:%d)\n",
@@ -130,10 +134,10 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
     
     if (parent)
     {
-        child1 = (t_gui_window_tree *)malloc (sizeof (t_gui_window_tree));
+        child1 = (struct t_gui_window_tree *)malloc (sizeof (struct t_gui_window_tree));
         if (!child1)
             return NULL;
-        child2 = (t_gui_window_tree *)malloc (sizeof (t_gui_window_tree));
+        child2 = (struct t_gui_window_tree *)malloc (sizeof (struct t_gui_window_tree));
         if (!child2)
         {
             free (child1);
@@ -179,7 +183,7 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
         ptr_leaf = gui_windows_tree;
     }
     
-    if ((new_window = (t_gui_window *)(malloc (sizeof (t_gui_window)))))
+    if ((new_window = (struct t_gui_window *)(malloc (sizeof (struct t_gui_window)))))
     {
         if (!gui_window_objects_init (new_window))
         {
@@ -247,14 +251,6 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
         
         new_window->ptr_tree = ptr_leaf;
         ptr_leaf->window = new_window;
-
-        /* add panels to window */
-        for (ptr_panel = gui_panels; ptr_panel;
-             ptr_panel = ptr_panel->next_panel)
-        {
-            if (!ptr_panel->panel_window)
-                gui_panel_window_new (ptr_panel, new_window);
-        }
         
         /* add window to windows queue */
         new_window->prev_window = last_gui_window;
@@ -276,7 +272,7 @@ gui_window_new (t_gui_window *parent, int x, int y, int width, int height,
  */
 
 void
-gui_window_free (t_gui_window *window)
+gui_window_free (struct t_gui_window *window)
 {
     if (window->buffer && (window->buffer->num_displayed > 0))
         window->buffer->num_displayed--;
@@ -301,14 +297,39 @@ gui_window_free (t_gui_window *window)
 }
 
 /*
+ * gui_window_search_by_buffer: search a window by buffer
+ *                              (return first window displaying this buffer)
+ */
+
+struct t_gui_window *
+gui_window_search_by_buffer (struct t_gui_buffer *buffer)
+{
+    struct t_gui_window *ptr_window;
+    
+    if (!gui_ok)
+        return NULL;
+    
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
+    {
+        if (ptr_window->buffer == buffer)
+            return ptr_window;
+    }
+    
+    /* window not found */
+    return NULL;
+}
+
+/*
  * gui_window_switch_server: switch server on servers buffer
  *                           (if same buffer is used for all buffers)
  */
 
 void
-gui_window_switch_server (t_gui_window *window)
+gui_window_switch_server (struct t_gui_window *window)
 {
-    t_gui_buffer *ptr_buffer;
+    (void) window;
+    /*struct t_gui_buffer *ptr_buffer;
     t_irc_server *ptr_server;
     
     ptr_buffer = gui_buffer_servers_search ();
@@ -340,7 +361,7 @@ gui_window_switch_server (t_gui_window *window)
             gui_status_draw (window->buffer, 1);
             gui_input_draw (window->buffer, 1);
         }
-    }
+    }*/
 }
 
 /*
@@ -348,7 +369,7 @@ gui_window_switch_server (t_gui_window *window)
  */
 
 void
-gui_window_switch_previous (t_gui_window *window)
+gui_window_switch_previous (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -367,7 +388,7 @@ gui_window_switch_previous (t_gui_window *window)
  */
 
 void
-gui_window_switch_next (t_gui_window *window)
+gui_window_switch_next (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -386,9 +407,9 @@ gui_window_switch_next (t_gui_window *window)
  */
 
 void
-gui_window_switch_by_buffer (t_gui_window *window, int buffer_number)
+gui_window_switch_by_buffer (struct t_gui_window *window, int buffer_number)
 {
-    t_gui_window *ptr_win;
+    struct t_gui_window *ptr_win;
     
     if (!gui_ok)
         return;
@@ -408,56 +429,397 @@ gui_window_switch_by_buffer (t_gui_window *window, int buffer_number)
 }
 
 /*
+ * gui_window_scroll: scroll window by # messages or time
+ */
+
+void
+gui_window_scroll (struct t_gui_window *window, char *scroll)
+{
+    int direction, stop, count_msg;
+    char time_letter, saved_char;
+    time_t old_date, diff_date;
+    char *error;
+    long number;
+    struct t_gui_line *ptr_line;
+    struct tm *date_tmp, line_date, old_line_date;
+    
+    if (window->buffer->lines)
+    {
+        direction = -1;
+        number = 0;
+        time_letter = ' ';
+        
+        // search direction
+        if (scroll[0] == '-')
+        {
+            direction = -1;
+            scroll++;
+        }
+        else if (scroll[0] == '+')
+        {
+            direction = +1;
+            scroll++;
+        }
+        
+        // search number and letter
+        char *pos = scroll;
+        while (pos && pos[0] && isdigit (pos[0]))
+        {
+            pos++;
+        }
+        if (pos)
+        {
+            if (pos == scroll)
+            {
+                if (pos[0])
+                    time_letter = scroll[0];
+            }
+            else
+            {
+                if (pos[0])
+                    time_letter = pos[0];
+                saved_char = pos[0];
+                pos[0] = '\0';
+                error = NULL;
+                number = strtol (scroll, &error, 10);
+                if (!error || (error[0] != '\0'))
+                    number = 0;
+                pos[0] = saved_char;
+            }
+        }
+        
+        /* at least number or letter has to he given */
+        if ((number == 0) && (time_letter == ' '))
+            return;
+        
+        // do the scroll!
+        stop = 0;
+        count_msg = 0;
+        if (direction < 0)
+            ptr_line = (window->start_line) ?
+                window->start_line : window->buffer->last_line;
+        else
+            ptr_line = (window->start_line) ?
+                window->start_line : window->buffer->lines;
+        
+        old_date = ptr_line->date;
+        date_tmp = localtime (&old_date);
+        memcpy (&old_line_date, date_tmp, sizeof (struct tm));
+        
+        while (ptr_line)
+        {
+            ptr_line = (direction < 0) ? ptr_line->prev_line : ptr_line->next_line;
+            
+            if (ptr_line)
+            {
+                if (time_letter == ' ')
+                {
+                    count_msg++;
+                    if (count_msg >= number)
+                        stop = 1;
+                }
+                else
+                {
+                    date_tmp = localtime (&(ptr_line->date));
+                    memcpy (&line_date, date_tmp, sizeof (struct tm));
+                    if (old_date > ptr_line->date)
+                        diff_date = old_date - ptr_line->date;
+                    else
+                        diff_date = ptr_line->date - old_date;
+                    switch (time_letter)
+                    {
+                        case 's': /* seconds */
+                            if (number == 0)
+                            {
+                                /* stop if line has different second */
+                                if ((line_date.tm_sec != old_line_date.tm_sec)
+                                    || (line_date.tm_min != old_line_date.tm_min)
+                                    || (line_date.tm_hour != old_line_date.tm_hour)
+                                    || (line_date.tm_mday != old_line_date.tm_mday)
+                                    || (line_date.tm_mon != old_line_date.tm_mon)
+                                    || (line_date.tm_year != old_line_date.tm_year))
+                                    if (line_date.tm_sec != old_line_date.tm_sec)
+                                        stop = 1;
+                            }
+                            else if (diff_date >= number)
+                                stop = 1;
+                            break;
+                        case 'm': /* minutes */
+                            if (number == 0)
+                            {
+                                /* stop if line has different minute */
+                                if ((line_date.tm_min != old_line_date.tm_min)
+                                    || (line_date.tm_hour != old_line_date.tm_hour)
+                                    || (line_date.tm_mday != old_line_date.tm_mday)
+                                    || (line_date.tm_mon != old_line_date.tm_mon)
+                                    || (line_date.tm_year != old_line_date.tm_year))
+                                    stop = 1;
+                            }
+                            else if (diff_date >= number * 60)
+                                stop = 1;
+                            break;
+                        case 'h': /* hours */
+                            if (number == 0)
+                            {
+                                /* stop if line has different hour */
+                                if ((line_date.tm_hour != old_line_date.tm_hour)
+                                    || (line_date.tm_mday != old_line_date.tm_mday)
+                                    || (line_date.tm_mon != old_line_date.tm_mon)
+                                    || (line_date.tm_year != old_line_date.tm_year))
+                                    stop = 1;
+                            }
+                            else if (diff_date >= number * 60 * 60)
+                                stop = 1;
+                            break;
+                        case 'd': /* days */
+                            if (number == 0)
+                            {
+                                /* stop if line has different day */
+                                if ((line_date.tm_mday != old_line_date.tm_mday)
+                                    || (line_date.tm_mon != old_line_date.tm_mon)
+                                    || (line_date.tm_year != old_line_date.tm_year))
+                                    stop = 1;
+                            }
+                            else if (diff_date >= number * 60 * 60 * 24)
+                                stop = 1;
+                            break;
+                        case 'M': /* months */
+                            if (number == 0)
+                            {
+                                /* stop if line has different month */
+                                if ((line_date.tm_mon != old_line_date.tm_mon)
+                                    || (line_date.tm_year != old_line_date.tm_year))
+                                    stop = 1;
+                            }
+                            /* we consider month is 30 days, who will find I'm too
+                               lazy to code exact date diff ? ;) */
+                            else if (diff_date >= number * 60 * 60 * 24 * 30)
+                                stop = 1;
+                            break;
+                        case 'y': /* years */
+                            if (number == 0)
+                            {
+                                /* stop if line has different year */
+                                if (line_date.tm_year != old_line_date.tm_year)
+                                    stop = 1;
+                            }
+                            /* we consider year is 365 days, who will find I'm too
+                               lazy to code exact date diff ? ;) */
+                            else if (diff_date >= number * 60 * 60 * 24 * 365)
+                                stop = 1;
+                            break;
+                    }
+                }
+                if (stop)
+                {
+                    window->start_line = ptr_line;
+                    window->start_line_pos = 0;
+                    window->first_line_displayed =
+                        (window->start_line == window->buffer->lines);
+                    gui_chat_draw (window->buffer, 1);
+                    gui_status_draw (window->buffer, 0);
+                    return;
+                }
+            }
+        }
+        if (direction < 0)
+            gui_window_scroll_top (window);
+        else
+            gui_window_scroll_bottom (window);
+    }
+}
+
+/*
+ * gui_window_search_text: search text in a buffer
+ */
+
+int
+gui_window_search_text (struct t_gui_window *window)
+{
+    struct t_gui_line *ptr_line;
+    
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_BACKWARD)
+    {
+        if (window->buffer->lines
+            && window->buffer->input_buffer && window->buffer->input_buffer[0])
+        {
+            ptr_line = (window->start_line) ?
+                window->start_line->prev_line : window->buffer->last_line;
+            while (ptr_line)
+            {
+                if (gui_chat_line_search (ptr_line,
+                                          window->buffer->input_buffer,
+                                          window->buffer->text_search_exact))
+                {
+                    window->start_line = ptr_line;
+                    window->start_line_pos = 0;
+                    window->first_line_displayed =
+                        (window->start_line == window->buffer->lines);
+                    gui_chat_draw (window->buffer, 1);
+                    gui_status_draw (window->buffer, 1);
+                    return 1;
+                }
+                ptr_line = ptr_line->prev_line;
+            }
+        }
+    }
+    else if (window->buffer->text_search == GUI_TEXT_SEARCH_FORWARD)
+    {
+        if (window->buffer->lines
+            && window->buffer->input_buffer && window->buffer->input_buffer[0])
+        {
+            ptr_line = (window->start_line) ?
+                window->start_line->next_line : window->buffer->lines->next_line;
+            while (ptr_line)
+            {
+                if (gui_chat_line_search (ptr_line,
+                                          window->buffer->input_buffer,
+                                          window->buffer->text_search_exact))
+                {
+                    window->start_line = ptr_line;
+                    window->start_line_pos = 0;
+                    window->first_line_displayed =
+                        (window->start_line == window->buffer->lines);
+                    gui_chat_draw (window->buffer, 1);
+                    gui_status_draw (window->buffer, 1);
+                    return 1;
+                }
+                ptr_line = ptr_line->next_line;
+            }
+        }
+    }
+    return 0;
+}
+
+/*
+ * gui_window_search_start: start search in a buffer
+ */
+
+void
+gui_window_search_start (struct t_gui_window *window)
+{
+    window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
+    window->buffer->text_search_exact = 0;
+    window->buffer->text_search_found = 0;
+    if (window->buffer->text_search_input)
+    {
+        free (window->buffer->text_search_input);
+        window->buffer->text_search_input = NULL;
+    }
+    if (window->buffer->input_buffer && window->buffer->input_buffer[0])
+        window->buffer->text_search_input =
+            strdup (window->buffer->input_buffer);
+    gui_input_delete_line (window->buffer);
+    gui_status_draw (window->buffer, 1);
+    gui_input_draw (window->buffer, 1);
+}
+
+/*
+ * gui_window_search_restart: restart search (after input changes or exact
+ *                            flag (un)set)
+ */
+
+void
+gui_window_search_restart (struct t_gui_window *window)
+{
+    window->start_line = NULL;
+    window->start_line_pos = 0;
+    window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
+    window->buffer->text_search_found = 0;
+    if (gui_window_search_text (window))
+        window->buffer->text_search_found = 1;
+    else
+    {
+        gui_chat_draw (window->buffer, 1);
+        gui_status_draw (window->buffer, 1);
+    }
+}
+
+/*
+ * gui_window_search_stop: stop search in a buffer
+ */
+
+void
+gui_window_search_stop (struct t_gui_window *window)
+{
+    window->buffer->text_search = GUI_TEXT_SEARCH_DISABLED;
+    window->buffer->text_search = 0;
+    gui_input_delete_line (window->buffer);
+    if (window->buffer->text_search_input)
+    {
+        gui_input_insert_string (window->buffer,
+                                 window->buffer->text_search_input, -1);
+        free (window->buffer->text_search_input);
+        window->buffer->text_search_input = NULL;
+    }
+    window->start_line = NULL;
+    window->start_line_pos = 0;
+    gui_hotlist_remove_buffer (window->buffer);
+    gui_chat_draw (window->buffer, 0);
+    gui_status_draw (window->buffer, 1);
+    gui_input_draw (window->buffer, 1);
+}
+
+/*
  * gui_window_print_log: print window infos in log (usually for crash dump)
  */
 
 void
-gui_window_print_log (t_gui_window *window)
+gui_window_print_log ()
 {
-    weechat_log_printf ("[window (addr:0x%X)]\n", window);
-    weechat_log_printf ("  win_x . . . . . . . : %d\n",   window->win_x);
-    weechat_log_printf ("  win_y . . . . . . . : %d\n",   window->win_y);
-    weechat_log_printf ("  win_width . . . . . : %d\n",   window->win_width);
-    weechat_log_printf ("  win_height. . . . . : %d\n",   window->win_height);
-    weechat_log_printf ("  win_width_pct . . . : %d\n",   window->win_width_pct);
-    weechat_log_printf ("  win_height_pct. . . : %d\n",   window->win_height_pct);
-    weechat_log_printf ("  win_chat_x. . . . . : %d\n",   window->win_chat_x);
-    weechat_log_printf ("  win_chat_y. . . . . : %d\n",   window->win_chat_y);
-    weechat_log_printf ("  win_chat_width. . . : %d\n",   window->win_chat_width);
-    weechat_log_printf ("  win_chat_height . . : %d\n",   window->win_chat_height);
-    weechat_log_printf ("  win_chat_cursor_x . : %d\n",   window->win_chat_cursor_x);
-    weechat_log_printf ("  win_chat_cursor_y . : %d\n",   window->win_chat_cursor_y);
-    weechat_log_printf ("  win_nick_x. . . . . : %d\n",   window->win_nick_x);
-    weechat_log_printf ("  win_nick_y. . . . . : %d\n",   window->win_nick_y);
-    weechat_log_printf ("  win_nick_width. . . : %d\n",   window->win_nick_width);
-    weechat_log_printf ("  win_nick_height . . : %d\n",   window->win_nick_height);
-    weechat_log_printf ("  win_nick_start. . . : %d\n",   window->win_nick_start);
-    weechat_log_printf ("  win_title_x . . . . : %d\n",   window->win_title_x);
-    weechat_log_printf ("  win_title_y . . . . : %d\n",   window->win_title_y);
-    weechat_log_printf ("  win_title_width . . : %d\n",   window->win_title_width);
-    weechat_log_printf ("  win_title_height. . : %d\n",   window->win_title_height);
-    weechat_log_printf ("  win_title_start . . : %d\n",   window->win_title_start);
-    weechat_log_printf ("  win_status_x. . . . : %d\n",   window->win_status_x);
-    weechat_log_printf ("  win_status_y. . . . : %d\n",   window->win_status_y);
-    weechat_log_printf ("  win_status_width. . : %d\n",   window->win_status_width);
-    weechat_log_printf ("  win_status_height . : %d\n",   window->win_status_height);
-    weechat_log_printf ("  win_infobar_x . . . : %d\n",   window->win_infobar_x);
-    weechat_log_printf ("  win_infobar_y . . . : %d\n",   window->win_infobar_y);
-    weechat_log_printf ("  win_infobar_width . : %d\n",   window->win_infobar_width);
-    weechat_log_printf ("  win_infobar_height. : %d\n",   window->win_infobar_height);
-    weechat_log_printf ("  win_input_x . . . . : %d\n",   window->win_input_x);
-    weechat_log_printf ("  win_input_y . . . . : %d\n",   window->win_input_y);
-    weechat_log_printf ("  win_input_width . . : %d\n",   window->win_input_width);
-    weechat_log_printf ("  win_input_height. . : %d\n",   window->win_input_height);
-    weechat_log_printf ("  win_input_cursor_x. : %d\n",   window->win_input_cursor_x);
-    gui_window_objects_print_log (window);
-    weechat_log_printf ("  dcc_first . . . . . : 0x%X\n", window->dcc_first);
-    weechat_log_printf ("  dcc_selected. . . . : 0x%X\n", window->dcc_selected);
-    weechat_log_printf ("  dcc_last_displayed. : 0x%X\n", window->dcc_last_displayed);
-    weechat_log_printf ("  buffer. . . . . . . : 0x%X\n", window->buffer);
-    weechat_log_printf ("  first_line_displayed: %d\n",   window->first_line_displayed);
-    weechat_log_printf ("  start_line. . . . . : 0x%X\n", window->start_line);
-    weechat_log_printf ("  start_line_pos. . . : %d\n",   window->start_line_pos);
-    weechat_log_printf ("  prev_window . . . . : 0x%X\n", window->prev_window);
-    weechat_log_printf ("  next_window . . . . : 0x%X\n", window->next_window);
+    struct t_gui_window *ptr_window;
+    
+    weechat_log_printf ("\n");
+    weechat_log_printf ("current window = 0x%X\n", gui_current_window);
+    
+    for (ptr_window = gui_windows; ptr_window; ptr_window = ptr_window->next_window)
+    {
+        weechat_log_printf ("\n");
+        weechat_log_printf ("[window (addr:0x%X)]\n", ptr_window);
+        weechat_log_printf ("  win_x . . . . . . . : %d\n",   ptr_window->win_x);
+        weechat_log_printf ("  win_y . . . . . . . : %d\n",   ptr_window->win_y);
+        weechat_log_printf ("  win_width . . . . . : %d\n",   ptr_window->win_width);
+        weechat_log_printf ("  win_height. . . . . : %d\n",   ptr_window->win_height);
+        weechat_log_printf ("  win_width_pct . . . : %d\n",   ptr_window->win_width_pct);
+        weechat_log_printf ("  win_height_pct. . . : %d\n",   ptr_window->win_height_pct);
+        weechat_log_printf ("  win_chat_x. . . . . : %d\n",   ptr_window->win_chat_x);
+        weechat_log_printf ("  win_chat_y. . . . . : %d\n",   ptr_window->win_chat_y);
+        weechat_log_printf ("  win_chat_width. . . : %d\n",   ptr_window->win_chat_width);
+        weechat_log_printf ("  win_chat_height . . : %d\n",   ptr_window->win_chat_height);
+        weechat_log_printf ("  win_chat_cursor_x . : %d\n",   ptr_window->win_chat_cursor_x);
+        weechat_log_printf ("  win_chat_cursor_y . : %d\n",   ptr_window->win_chat_cursor_y);
+        weechat_log_printf ("  win_nick_x. . . . . : %d\n",   ptr_window->win_nick_x);
+        weechat_log_printf ("  win_nick_y. . . . . : %d\n",   ptr_window->win_nick_y);
+        weechat_log_printf ("  win_nick_width. . . : %d\n",   ptr_window->win_nick_width);
+        weechat_log_printf ("  win_nick_height . . : %d\n",   ptr_window->win_nick_height);
+        weechat_log_printf ("  win_nick_start. . . : %d\n",   ptr_window->win_nick_start);
+        weechat_log_printf ("  win_title_x . . . . : %d\n",   ptr_window->win_title_x);
+        weechat_log_printf ("  win_title_y . . . . : %d\n",   ptr_window->win_title_y);
+        weechat_log_printf ("  win_title_width . . : %d\n",   ptr_window->win_title_width);
+        weechat_log_printf ("  win_title_height. . : %d\n",   ptr_window->win_title_height);
+        weechat_log_printf ("  win_title_start . . : %d\n",   ptr_window->win_title_start);
+        weechat_log_printf ("  win_status_x. . . . : %d\n",   ptr_window->win_status_x);
+        weechat_log_printf ("  win_status_y. . . . : %d\n",   ptr_window->win_status_y);
+        weechat_log_printf ("  win_status_width. . : %d\n",   ptr_window->win_status_width);
+        weechat_log_printf ("  win_status_height . : %d\n",   ptr_window->win_status_height);
+        weechat_log_printf ("  win_infobar_x . . . : %d\n",   ptr_window->win_infobar_x);
+        weechat_log_printf ("  win_infobar_y . . . : %d\n",   ptr_window->win_infobar_y);
+        weechat_log_printf ("  win_infobar_width . : %d\n",   ptr_window->win_infobar_width);
+        weechat_log_printf ("  win_infobar_height. : %d\n",   ptr_window->win_infobar_height);
+        weechat_log_printf ("  win_input_x . . . . : %d\n",   ptr_window->win_input_x);
+        weechat_log_printf ("  win_input_y . . . . : %d\n",   ptr_window->win_input_y);
+        weechat_log_printf ("  win_input_width . . : %d\n",   ptr_window->win_input_width);
+        weechat_log_printf ("  win_input_height. . : %d\n",   ptr_window->win_input_height);
+        weechat_log_printf ("  win_input_cursor_x. : %d\n",   ptr_window->win_input_cursor_x);
+        gui_window_objects_print_log (ptr_window);
+        weechat_log_printf ("  dcc_first . . . . . : 0x%X\n", ptr_window->dcc_first);
+        weechat_log_printf ("  dcc_selected. . . . : 0x%X\n", ptr_window->dcc_selected);
+        weechat_log_printf ("  dcc_last_displayed. : 0x%X\n", ptr_window->dcc_last_displayed);
+        weechat_log_printf ("  buffer. . . . . . . : 0x%X\n", ptr_window->buffer);
+        weechat_log_printf ("  first_line_displayed: %d\n",   ptr_window->first_line_displayed);
+        weechat_log_printf ("  start_line. . . . . : 0x%X\n", ptr_window->start_line);
+        weechat_log_printf ("  start_line_pos. . . : %d\n",   ptr_window->start_line_pos);
+        weechat_log_printf ("  prev_window . . . . : 0x%X\n", ptr_window->prev_window);
+        weechat_log_printf ("  next_window . . . . : 0x%X\n", ptr_window->next_window);
+    }
 }

@@ -25,15 +25,13 @@
 
 #include <stdlib.h>
 
-#include "../../common/weechat.h"
-#include "../gui.h"
-#include "../../common/utf8.h"
-#include "../../common/weeconfig.h"
+#include "../../core/weechat.h"
+#include "../../core/wee-config.h"
+#include "../../core/wee-utf8.h"
+#include "../../plugins/plugin.h"
+#include "../gui-input.h"
+#include "../gui-main.h"
 #include "gui-gtk.h"
-
-#ifdef PLUGINS
-#include "../../plugins/plugins.h"
-#endif
 
 
 /*
@@ -41,7 +39,7 @@
  */
 
 void
-gui_input_set_color (t_gui_window *window, int irc_color)
+gui_input_set_color (struct t_gui_window *window, int irc_color)
 {
     /*int fg, bg;*/
 
@@ -51,87 +49,11 @@ gui_input_set_color (t_gui_window *window, int irc_color)
 }
 
 /*
- * gui_input_get_prompt_length: return input prompt length
- */
-
-int
-gui_input_get_prompt_length (t_gui_window *window, char *nick)
-{
-    char *pos, *modes;
-    int length, mode_found;
-    
-    length = 0;
-    pos = cfg_look_input_format;
-    while (pos && pos[0])
-    {
-        switch (pos[0])
-        {
-            case '%':
-                pos++;
-                switch (pos[0])
-                {
-                    case 'c':
-                        if (GUI_CHANNEL(window->buffer))
-                            length += utf8_strlen (GUI_CHANNEL(window->buffer)->name);
-                        else
-                        {
-                            if (GUI_SERVER(window->buffer))
-                                length += utf8_strlen (GUI_SERVER(window->buffer)->name);
-                        }
-                        pos++;
-                        break;
-                    case 'm':
-                        if (GUI_SERVER(window->buffer))
-                        {
-                            mode_found = 0;
-                            for (modes = GUI_SERVER(window->buffer)->nick_modes;
-                                 modes && modes[0]; modes++)
-                            {
-                                if (modes[0] != ' ')
-                                {
-                                    length++;
-                                    mode_found = 1;
-                                }
-                            }
-                            if (mode_found)
-                                length++;
-                        }
-                        pos++;
-                        break;
-                    case 'n':
-                        length += utf8_strlen (nick);
-                        pos++;
-                        break;
-                    default:
-                        length++;
-                        if (pos[0])
-                        {
-                            if (pos[0] == '%')
-                                pos++;
-                            else
-                            {
-                                length++;
-                                pos += utf8_char_size (pos);
-                            }
-                        }
-                        break;
-                }
-                break;
-            default:
-                length++;
-                pos += utf8_char_size (pos);
-                break;
-        }
-    }
-    return length;
-}
-
-/*
  * gui_input_draw_prompt: display input prompt
  */
 
 void
-gui_input_draw_prompt (t_gui_window *window, char *nick)
+gui_input_draw_prompt (struct t_gui_window *window, char *nick)
 {
     /*char *pos, saved_char, *modes;
       int char_size, mode_found;*/
@@ -146,7 +68,7 @@ gui_input_draw_prompt (t_gui_window *window, char *nick)
  */
 
 void
-gui_input_draw_text (t_gui_window *window, int input_width)
+gui_input_draw_text (struct t_gui_window *window, int input_width)
 {
     /*char *ptr_start, *ptr_next, saved_char;
       int pos_mask, size, last_color, color;*/
@@ -161,9 +83,9 @@ gui_input_draw_text (t_gui_window *window, int input_width)
  */
 
 void
-gui_input_draw (t_gui_buffer *buffer, int erase)
+gui_input_draw (struct t_gui_buffer *buffer, int erase)
 {
-    /*t_gui_window *ptr_win;
+    /*struct t_gui_window *ptr_win;
     char format[32];
     char *ptr_nickname;
     int input_width;

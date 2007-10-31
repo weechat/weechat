@@ -18,10 +18,11 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GTK_CFLAGS)
 
 bin_PROGRAMS = weechat-gtk
 
-weechat_gtk_LDADD = $(WEECHAT_STATIC_LIBS) \
-                    $(PLUGINS_LIBS) \
-                    $(GTK_LIBS) \
-                    $(GNUTLS_LFLAGS)
+weechat_gtk_LDADD = ../../core/lib_weechat_core.a \
+                    ../../plugins/lib_weechat_plugins.a \
+                    ../lib_weechat_gui_common.a \
+                    $(PLUGINS_LFLAGS) \
+                    $(GTK_LFLAGS)
 
 weechat_gtk_SOURCES = gui-gtk-chat.c \
                       gui-gtk-color.c \
@@ -32,5 +33,4 @@ weechat_gtk_SOURCES = gui-gtk-chat.c \
                       gui-gtk-nicklist.c \
                       gui-gtk-status.c \
                       gui-gtk-window.c \
-                      gui-gtk-panel.c \
                       gui-gtk.h

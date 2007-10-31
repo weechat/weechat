@@ -16,45 +16,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-gtk-panel.c: panel functions for Gtk GUI */
 
+#ifndef __WEECHAT_GUI_STATUS_H
+#define __WEECHAT_GUI_STATUS_H 1
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "gui-buffer.h"
 
-#include <stdlib.h>
+/* statusbar functions (GUI dependent) */
 
-#include "../../common/weechat.h"
-#include "../gui.h"
-#include "gui-gtk.h"
+extern void gui_status_draw (struct t_gui_buffer *, int);
 
-
-/*
- * gui_panel_window_new: create a new "window panel" for a panel, in screen or a window
- *                       if window is not NULL, panel window will be in this window
- */
-
-int
-gui_panel_window_new (t_gui_panel *panel, t_gui_window *window)
-{
-    /* TODO: write this function for Gtk */
-    (void) panel;
-    (void) window;
-    
-    return 1;
-}
-
-/*
- * gui_panel_window_free: delete a panel window
- */
-
-void
-gui_panel_window_free (void *panel_win)
-{
-    t_gui_panel_window *ptr_panel_win;
-
-    ptr_panel_win = (t_gui_panel_window *)panel_win;
-    
-    free (ptr_panel_win);
-}
+#endif /* gui-status.h */

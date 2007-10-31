@@ -27,11 +27,12 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "../../common/weechat.h"
-#include "../gui.h"
-#include "../../common/utf8.h"
-#include "../../common/weeconfig.h"
-#include "../../protocols/irc/irc.h"
+#include "../../core/weechat.h"
+#include "../../core/wee-config.h"
+#include "../../core/wee-utf8.h"
+#include "../gui-chat.h"
+#include "../gui-main.h"
+#include "../gui-window.h"
 #include "gui-gtk.h"
 
 
@@ -41,7 +42,7 @@
  */
 
 void
-gui_chat_set_style (t_gui_window *window, int style)
+gui_chat_set_style (struct t_gui_window *window, int style)
 {
     /* TODO: write this function for Gtk */
     /*wattron (window->win_chat, style);*/
@@ -55,7 +56,7 @@ gui_chat_set_style (t_gui_window *window, int style)
  */
 
 void
-gui_chat_remove_style (t_gui_window *window, int style)
+gui_chat_remove_style (struct t_gui_window *window, int style)
 {
     /* TODO: write this function for Gtk */
     /*wattroff (window->win_chat, style);*/
@@ -69,7 +70,7 @@ gui_chat_remove_style (t_gui_window *window, int style)
  */
 
 void
-gui_chat_toggle_style (t_gui_window *window, int style)
+gui_chat_toggle_style (struct t_gui_window *window, int style)
 {
     window->current_style_attr ^= style;
     if (window->current_style_attr & style)
@@ -84,7 +85,7 @@ gui_chat_toggle_style (t_gui_window *window, int style)
  */
 
 void
-gui_chat_reset_style (t_gui_window *window)
+gui_chat_reset_style (struct t_gui_window *window)
 {
     window->current_style_fg = -1;
     window->current_style_bg = -1;
@@ -102,7 +103,7 @@ gui_chat_reset_style (t_gui_window *window)
  */
 
 void
-gui_chat_set_color_style (t_gui_window *window, int style)
+gui_chat_set_color_style (struct t_gui_window *window, int style)
 {
     window->current_color_attr |= style;
     /* TODO: change following function call */
@@ -114,7 +115,7 @@ gui_chat_set_color_style (t_gui_window *window, int style)
  */
 
 void
-gui_chat_remove_color_style (t_gui_window *window, int style)
+gui_chat_remove_color_style (struct t_gui_window *window, int style)
 {
     window->current_color_attr &= !style;
     /* TODO: change following function call */
@@ -126,7 +127,7 @@ gui_chat_remove_color_style (t_gui_window *window, int style)
  */
 
 void
-gui_chat_reset_color_style (t_gui_window *window)
+gui_chat_reset_color_style (struct t_gui_window *window)
 {
     /* TODO: change following function call */
     /*wattroff (window->win_chat, window->current_color_attr);*/
@@ -138,7 +139,7 @@ gui_chat_reset_color_style (t_gui_window *window)
  */
 
 void
-gui_chat_set_color (t_gui_window *window, int fg, int bg)
+gui_chat_set_color (struct t_gui_window *window, int fg, int bg)
 {
     /* TODO: write this function for Gtk */    
     /*if (((fg == -1) || (fg == 99))
@@ -162,7 +163,7 @@ gui_chat_set_color (t_gui_window *window, int fg, int bg)
  */
 
 void
-gui_chat_set_weechat_color (t_gui_window *window, int weechat_color)
+gui_chat_set_weechat_color (struct t_gui_window *window, int weechat_color)
 {
     gui_chat_reset_style (window);
     gui_chat_set_style (window,
@@ -177,7 +178,7 @@ gui_chat_set_weechat_color (t_gui_window *window, int weechat_color)
  */
 
 void
-gui_chat_draw_title (t_gui_buffer *buffer, int erase)
+gui_chat_draw_title (struct t_gui_buffer *buffer, int erase)
 {
     /* TODO: write this function for Gtk */
     (void) buffer;
@@ -185,99 +186,28 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
 }
 
 /*
- * gui_chat_word_get_next_char: returns next char of a word
- *                              special chars like colors, bold, .. are skipped
+ * gui_chat_string_next_char: returns next char of a word (for display)
+ *                            special chars like colors, bold, .. are skipped
+ *                            and optionaly applied
  */
 
 char *
-gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string,
-                             int apply_style, int *width_screen)
+gui_chat_string_next_char (struct t_gui_window *window, unsigned char *string,
+                           int apply_style)
 {
-    char str_fg[3], str_bg[3], utf_char[16];
-    int fg, bg, weechat_color, char_size;
-
-    if (width_screen)
-        *width_screen = 0;
+    char str_fg[3];
+    int weechat_color;
     
     while (string[0])
     {
         switch (string[0])
         {
-            case GUI_ATTR_BOLD_CHAR:
-                string++;
-                if (apply_style)
-                    gui_chat_toggle_style (window, A_BOLD);
-                break;
-            case GUI_ATTR_COLOR_CHAR:
-                string++;
-                str_fg[0] = '\0';
-                str_bg[0] = '\0';
-                fg = 99;
-                bg = 99;
-                if (isdigit (string[0]))
-                {
-                    str_fg[0] = string[0];
-                    str_fg[1] = '\0';
-                    string++;
-                    if (isdigit (string[0]))
-                    {
-                        str_fg[1] = string[0];
-                        str_fg[2] = '\0';
-                        string++;
-                    }
-                }
-                if (string[0] == ',')
-                {
-                    string++;
-                    if (isdigit (string[0]))
-                    {
-                        str_bg[0] = string[0];
-                        str_bg[1] = '\0';
-                        string++;
-                        if (isdigit (string[0]))
-                        {
-                            str_bg[1] = string[0];
-                            str_bg[2] = '\0';
-                            string++;
-                        }
-                    }
-                }
-                if (apply_style)
-                {
-                    if (str_fg[0] || str_bg[0])
-                    {
-                        if (str_fg[0])
-                            sscanf (str_fg, "%d", &fg);
-                        else
-                            fg = window->current_style_fg;
-                        if (str_bg[0])
-                            sscanf (str_bg, "%d", &bg);
-                        else
-                            bg = window->current_style_bg;
-                    }
-                    if (!str_fg[0] && !str_bg[0])
-                        gui_chat_reset_color_style (window);
-                    window->current_style_fg = fg;
-                    window->current_style_bg = bg;
-                    gui_chat_set_color (window, fg, bg);
-                }
-                break;
-            case GUI_ATTR_RESET_CHAR:
-            case GUI_ATTR_WEECHAT_RESET_CHAR:
+            case GUI_COLOR_RESET_CHAR:
                 string++;
                 if (apply_style)
                     gui_chat_reset_style (window);
                 break;
-            case GUI_ATTR_FIXED_CHAR:
-                string++;
-                break;
-            case GUI_ATTR_REVERSE_CHAR:
-            case GUI_ATTR_REVERSE2_CHAR:
-                string++;
-                if (apply_style)
-                    gui_chat_toggle_style (window, A_REVERSE);
-                break;
-            case GUI_ATTR_WEECHAT_COLOR_CHAR:
+            case GUI_COLOR_COLOR_CHAR:
                 string++;
                 if (isdigit (string[0]) && isdigit (string[1]))
                 {
@@ -292,72 +222,62 @@ gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string,
                     }
                 }
                 break;
-            case GUI_ATTR_WEECHAT_SET_CHAR:
+            case GUI_COLOR_SET_CHAR:
                 string++;
                 switch (string[0])
                 {
-                    case GUI_ATTR_BOLD_CHAR:
+                    case GUI_COLOR_ATTR_BOLD_CHAR:
                         string++;
                         if (apply_style)
                             gui_chat_set_color_style (window, A_BOLD);
                         break;
-                    case GUI_ATTR_REVERSE_CHAR:
-                    case GUI_ATTR_REVERSE2_CHAR:
+                    case GUI_COLOR_ATTR_REVERSE_CHAR:
                         string++;
                         if (apply_style)
                             gui_chat_set_color_style (window, A_REVERSE);
                         break;
-                    case GUI_ATTR_UNDERLINE_CHAR:
+                    case GUI_COLOR_ATTR_ITALIC_CHAR:
+                        /* not available in Curses GUI */
+                        string++;
+                        break;
+                    case GUI_COLOR_ATTR_UNDERLINE_CHAR:
                         string++;
                         if (apply_style)
                             gui_chat_set_color_style (window, A_UNDERLINE);
                         break;
                 }
                 break;
-            case GUI_ATTR_WEECHAT_REMOVE_CHAR:
+            case GUI_COLOR_REMOVE_CHAR:
                 string++;
                 switch (string[0])
                 {
-                    case GUI_ATTR_BOLD_CHAR:
+                    case GUI_COLOR_ATTR_BOLD_CHAR:
                         string++;
                         if (apply_style)
                             gui_chat_remove_color_style (window, A_BOLD);
                         break;
-                    case GUI_ATTR_REVERSE_CHAR:
-                    case GUI_ATTR_REVERSE2_CHAR:
+                    case GUI_COLOR_ATTR_REVERSE_CHAR:
                         string++;
                         if (apply_style)
                             gui_chat_remove_color_style (window, A_REVERSE);
                         break;
-                    case GUI_ATTR_UNDERLINE_CHAR:
+                    case GUI_COLOR_ATTR_ITALIC_CHAR:
+                        /* not available in Curses GUI */
+                        string++;
+                        break;
+                    case GUI_COLOR_ATTR_UNDERLINE_CHAR:
                         string++;
                         if (apply_style)
                             gui_chat_remove_color_style (window, A_UNDERLINE);
                         break;
                 }
                 break;
-            case GUI_ATTR_ITALIC_CHAR:
-                string++;
-                break;
-            case GUI_ATTR_UNDERLINE_CHAR:
-                string++;
-                if (apply_style)
-                    gui_chat_toggle_style (window, A_UNDERLINE);
-                break;
             default:
                 if (string[0] < 32)
                     string++;
                 else
-                {
-                    char_size = utf8_char_size ((char *) string);
-                    if (width_screen)
-                    {
-                        memcpy (utf_char, string, char_size);
-                        utf_char[char_size] = '\0';
-                        *width_screen = utf8_width_screen (utf_char);
-                    }
-                    return (char *)string + char_size;
-                }
+                    return (char *)string;
+                break;
         }
             
     }
@@ -372,7 +292,7 @@ gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string,
  */
 
 void
-gui_chat_display_word_raw (t_gui_window *window, char *string)
+gui_chat_display_word_raw (struct t_gui_window *window, char *string)
 {
     /*char *prev_char, *next_char, saved_char;*/
     
@@ -386,8 +306,8 @@ gui_chat_display_word_raw (t_gui_window *window, char *string)
  */
 
 void
-gui_chat_display_word (t_gui_window *window,
-                       t_gui_line *line,
+gui_chat_display_word (struct t_gui_window *window,
+                       struct t_gui_line *line,
                        char *data,
                        char *end_offset,
                        int num_lines, int count, int *lines_displayed, int simulate)
@@ -407,68 +327,6 @@ gui_chat_display_word (t_gui_window *window,
 }
 
 /*
- * gui_chat_get_word_info: returns info about next word: beginning, end, length
- */
-
-void
-gui_chat_get_word_info (t_gui_window *window,
-                        char *data,
-                        int *word_start_offset, int *word_end_offset,
-                        int *word_length_with_spaces, int *word_length)
-{
-    char *start_data, *prev_char, *next_char;
-    int leading_spaces, char_size;
-    
-    *word_start_offset = 0;
-    *word_end_offset = 0;
-    *word_length_with_spaces = 0;
-    *word_length = 0;
-    
-    start_data = data;
-    
-    leading_spaces = 1;
-    while (data && data[0])
-    {
-        next_char = gui_chat_word_get_next_char (window,
-                                                 (unsigned char *)data,
-                                                 0, NULL);
-        if (next_char)
-        {
-            prev_char = utf8_prev_char (data, next_char);
-            if (prev_char)
-            {
-                if (prev_char[0] != ' ')
-                {
-                    if (leading_spaces)
-                        *word_start_offset = prev_char - start_data;
-                    leading_spaces = 0;
-                    char_size = next_char - prev_char;
-                    *word_end_offset = next_char - start_data - 1;
-                    (*word_length_with_spaces) += char_size;
-                    (*word_length) += char_size;
-                }
-                else
-                {
-                    if (leading_spaces)
-                        (*word_length_with_spaces)++;
-                    else
-                    {
-                        *word_end_offset = prev_char - start_data - 1;
-                        return;
-                    }
-                }
-                data = next_char;
-            }
-        }
-        else
-        {
-            *word_end_offset = data + strlen (data) - start_data - 1;
-            return;
-        }
-    }
-}
-
-/*
  * gui_chat_display_line: display a line in the chat window
  *                        if count == 0, display whole line
  *                        if count > 0, display 'count' lines (beginning from the end)
@@ -478,7 +336,7 @@ gui_chat_get_word_info (t_gui_window *window,
  */
 
 int
-gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
+gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line, int count,
                        int simulate)
 {
     /* TODO: write this function for Gtk */
@@ -495,7 +353,7 @@ gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
  */
 
 void
-gui_chat_calculate_line_diff (t_gui_window *window, t_gui_line **line,
+gui_chat_calculate_line_diff (struct t_gui_window *window, struct t_gui_line **line,
                               int *line_pos, int difference)
 {
     int backward, current_size;
@@ -593,10 +451,10 @@ gui_chat_calculate_line_diff (t_gui_window *window, t_gui_line **line,
  */
 
 void
-gui_chat_draw (t_gui_buffer *buffer, int erase)
+gui_chat_draw (struct t_gui_buffer *buffer, int erase)
 {
-    /*t_gui_window *ptr_win;
-    t_gui_line *ptr_line;
+    /*struct t_gui_window *ptr_win;
+    struct t_gui_line *ptr_line;
     t_irc_dcc *dcc_first, *dcc_selected, *ptr_dcc;
     char format_empty[32];
     int i, j, line_pos, count, num_bars;
@@ -620,27 +478,27 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
  */
 
 void
-gui_chat_draw_line (t_gui_buffer *buffer, t_gui_line *line)
+gui_chat_draw_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
-    t_gui_window *ptr_win;
-    unsigned char *text_without_color;
+    struct t_gui_window *ptr_win;
+    unsigned char *message_without_color;
     GtkTextIter start, end;
     
     ptr_win = gui_buffer_find_window (buffer);
     if (ptr_win)
     {
-        text_without_color = gui_color_decode ((unsigned char *)(line->data), 0, 0);
-        if (text_without_color)
+        message_without_color = gui_color_decode ((unsigned char *)(line->message));
+        if (message_without_color)
         {
             gtk_text_buffer_insert_at_cursor (GUI_GTK(ptr_win)->textbuffer_chat,
-                                              (char *)text_without_color, -1);
+                                              (char *)message_without_color, -1);
             gtk_text_buffer_insert_at_cursor (GUI_GTK(ptr_win)->textbuffer_chat,
                                               "\n", -1);
             gtk_text_buffer_get_bounds (GUI_GTK(ptr_win)->textbuffer_chat,
                                         &start, &end);
             /* TODO */
             /*gtk_text_buffer_apply_tag (ptr_win->textbuffer_chat, ptr_win->texttag_chat, &start, &end);*/
-            free (text_without_color);
+            free (message_without_color);
         }
     }
 }

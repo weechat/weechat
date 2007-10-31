@@ -17,25 +17,24 @@
  */
 
 
-#ifndef __WEECHAT_HISTORY_H
-#define __WEECHAT_HISTORY_H 1
+#ifndef __WEECHAT_GUI_HISTORY_H
+#define __WEECHAT_GUI_HISTORY_H 1
 
-typedef struct t_history t_history;
-
-struct t_history
+struct t_gui_history
 {
-    char *text;                 /* text or command (as entered by user)     */
-    t_history *next_history;    /* link to next text/command                */
-    t_history *prev_history;    /* link to previous text/command            */
+    char *text;                        /* text or command (entered by user) */
+    struct t_gui_history *next_history;/* link to next text/command         */
+    struct t_gui_history *prev_history;/* link to previous text/command     */
 };
 
-extern t_history *history_global;
-extern t_history *history_global_last;
-extern t_history *history_global_ptr;
+extern struct t_gui_history *history_global;
+extern struct t_gui_history *history_global_last;
+extern struct t_gui_history *history_global_ptr;
 
-extern void history_buffer_add (void *, char *);
-extern void history_global_add (char *);
-extern void history_global_free ();
-extern void history_buffer_free (void *);
+/* history functions (gui-history.c) */
+extern void gui_history_buffer_add (struct t_gui_buffer *, char *);
+extern void gui_history_global_add (char *);
+extern void gui_history_global_free ();
+extern void gui_history_buffer_free (struct t_gui_buffer *);
 
-#endif /* history.h */
+#endif /* gui-history.h */

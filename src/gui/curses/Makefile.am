@@ -14,14 +14,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
+INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(NCURSES_CFLAGS)
 
 bin_PROGRAMS = weechat-curses
 
-weechat_curses_LDADD = $(WEECHAT_STATIC_LIBS) \
-                       $(PLUGINS_LIBS) \
-                       $(NCURSES_LIBS) \
-                       $(GNUTLS_LFLAGS)
+weechat_curses_LDADD = ../../core/lib_weechat_core.a \
+                       ../../plugins/lib_weechat_plugins.a \
+                       ../lib_weechat_gui_common.a \
+                       $(PLUGINS_LFLAGS) \
+                       $(NCURSES_LFLAGS)
 
 weechat_curses_SOURCES = gui-curses-chat.c \
                          gui-curses-color.c \
@@ -32,5 +33,4 @@ weechat_curses_SOURCES = gui-curses-chat.c \
                          gui-curses-nicklist.c \
                          gui-curses-status.c \
                          gui-curses-window.c \
-                         gui-curses-panel.c \
                          gui-curses.h

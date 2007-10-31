@@ -27,12 +27,13 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "../../common/weechat.h"
-#include "../gui.h"
-#include "../../common/utf8.h"
-#include "../../common/util.h"
-#include "../../common/weeconfig.h"
-#include "../../protocols/irc/irc.h"
+#include "../../core/weechat.h"
+#include "../../core/wee-config.h"
+#include "../../core/wee-string.h"
+#include "../../core/wee-utf8.h"
+#include "../gui-chat.h"
+#include "../gui-main.h"
+#include "../gui-window.h"
 #include "gui-curses.h"
 
 
@@ -42,7 +43,7 @@
  */
 
 void
-gui_chat_set_style (t_gui_window *window, int style)
+gui_chat_set_style (struct t_gui_window *window, int style)
 {
     wattron (GUI_CURSES(window)->win_chat, style);
 }
@@ -53,7 +54,7 @@ gui_chat_set_style (t_gui_window *window, int style)
  */
 
 void
-gui_chat_remove_style (t_gui_window *window, int style)
+gui_chat_remove_style (struct t_gui_window *window, int style)
 {
     wattroff (GUI_CURSES(window)->win_chat, style);
 }
@@ -64,7 +65,7 @@ gui_chat_remove_style (t_gui_window *window, int style)
  */
 
 void
-gui_chat_toggle_style (t_gui_window *window, int style)
+gui_chat_toggle_style (struct t_gui_window *window, int style)
 {
     window->current_style_attr ^= style;
     if (window->current_style_attr & style)
@@ -79,14 +80,14 @@ gui_chat_toggle_style (t_gui_window *window, int style)
  */
 
 void
-gui_chat_reset_style (t_gui_window *window)
+gui_chat_reset_style (struct t_gui_window *window)
 {
     window->current_style_fg = -1;
     window->current_style_bg = -1;
     window->current_style_attr = 0;
     window->current_color_attr = 0;
     
-    gui_window_set_weechat_color (GUI_CURSES(window)->win_chat, GUI_COLOR_WIN_CHAT);
+    gui_window_set_weechat_color (GUI_CURSES(window)->win_chat, GUI_COLOR_CHAT);
     gui_chat_remove_style (window,
                            A_BOLD | A_UNDERLINE | A_REVERSE);
 }
@@ -96,7 +97,7 @@ gui_chat_reset_style (t_gui_window *window)
  */
 
 void
-gui_chat_set_color_style (t_gui_window *window, int style)
+gui_chat_set_color_style (struct t_gui_window *window, int style)
 {
     window->current_color_attr |= style;
     wattron (GUI_CURSES(window)->win_chat, style);
@@ -107,7 +108,7 @@ gui_chat_set_color_style (t_gui_window *window, int style)
  */
 
 void
-gui_chat_remove_color_style (t_gui_window *window, int style)
+gui_chat_remove_color_style (struct t_gui_window *window, int style)
 {
     window->current_color_attr &= !style;
     wattroff (GUI_CURSES(window)->win_chat, style);
@@ -118,7 +119,7 @@ gui_chat_remove_color_style (t_gui_window *window, int style)
  */
 
 void
-gui_chat_reset_color_style (t_gui_window *window)
+gui_chat_reset_color_style (struct t_gui_window *window)
 {
     wattroff (GUI_CURSES(window)->win_chat, window->current_color_attr);
     window->current_color_attr = 0;
@@ -129,7 +130,7 @@ gui_chat_reset_color_style (t_gui_window *window)
  */
 
 void
-gui_chat_set_color (t_gui_window *window, int fg, int bg)
+gui_chat_set_color (struct t_gui_window *window, int fg, int bg)
 {
     if (((fg == -1) || (fg == 99))
         && ((bg == -1) || (bg == 99)))
@@ -137,7 +138,7 @@ gui_chat_set_color (t_gui_window *window, int fg, int bg)
     else
     {
         if ((fg == -1) || (fg == 99))
-            fg = WEECHAT_COLOR_WHITE;
+            fg = COLOR_WHITE;
         if ((bg == -1) || (bg == 99))
             bg = 0;
         wattron (GUI_CURSES(window)->win_chat, COLOR_PAIR((bg * 8) + fg));
@@ -149,7 +150,7 @@ gui_chat_set_color (t_gui_window *window, int fg, int bg)
  */
 
 void
-gui_chat_set_weechat_color (t_gui_window *window, int weechat_color)
+gui_chat_set_weechat_color (struct t_gui_window *window, int weechat_color)
 {
     gui_chat_reset_style (window);
     gui_chat_set_style (window,
@@ -164,10 +165,10 @@ gui_chat_set_weechat_color (t_gui_window *window, int weechat_color)
  */
 
 void
-gui_chat_draw_title (t_gui_buffer *buffer, int erase)
+gui_chat_draw_title (struct t_gui_buffer *buffer, int erase)
 {
-    t_gui_window *ptr_win;
-    char format[32], *buf, *buf2, *ptr_topic;
+    struct t_gui_window *ptr_win;
+    char format[32], *buf, *buf2, *ptr_title;
     
     if (!gui_ok)
         return;
@@ -177,74 +178,64 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
         if ((ptr_win->buffer == buffer) && (buffer->num_displayed > 0))
         {
             if (erase)
-                gui_window_curses_clear (GUI_CURSES(ptr_win)->win_title, GUI_COLOR_WIN_TITLE);
+                gui_window_curses_clear (GUI_CURSES(ptr_win)->win_title, GUI_COLOR_TITLE);
             
             snprintf (format, 32, "%%-%ds", ptr_win->win_title_width);
             wmove (GUI_CURSES(ptr_win)->win_title, 0, 0);
             
-            if (GUI_CHANNEL(buffer))
+            if (buffer->title)
             {
-                if (GUI_CHANNEL(buffer)->topic)
+                buf = (char *)gui_color_decode ((unsigned char *)buffer->title);
+                ptr_title = utf8_add_offset ((buf) ? buf : buffer->title,
+                                             ptr_win->win_title_start);
+                if (!ptr_title || !ptr_title[0])
                 {
-                    buf = (char *)gui_color_decode ((unsigned char *)(GUI_CHANNEL(buffer)->topic), 0, 0);
-                    ptr_topic = utf8_add_offset ((buf) ? buf : GUI_CHANNEL(buffer)->topic,
-                                                 ptr_win->win_title_start);
-                    if (!ptr_topic || !ptr_topic[0])
-                    {
-                        ptr_win->win_title_start = 0;
-                        ptr_topic = (buf) ? buf : GUI_CHANNEL(buffer)->topic;
-                    }
-                    buf2 = weechat_iconv_from_internal (NULL,
-                                                        ptr_topic);
-                    
-                    if (ptr_win->win_title_start > 0)
-                    {
-                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
-                                                      GUI_COLOR_WIN_TITLE_MORE);
-                        wprintw (GUI_CURSES(ptr_win)->win_title, "%s", "++");
-                    }
-                    
-                    if (utf8_width_screen (ptr_topic) > ptr_win->win_width)
-                    {
-                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, GUI_COLOR_WIN_TITLE);
-                        wprintw (GUI_CURSES(ptr_win)->win_title, "%s", (buf2) ? buf2 : ptr_topic);
-                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
-                                                      GUI_COLOR_WIN_TITLE_MORE);
-                        mvwprintw (GUI_CURSES(ptr_win)->win_title, 0, ptr_win->win_width - 2,
-                                   "%s", "++");
-                    }
-                    else
-                    {
-                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, GUI_COLOR_WIN_TITLE);
-                        wprintw (GUI_CURSES(ptr_win)->win_title, "%s", (buf2) ? buf2 : ptr_topic);
-                    }
-                    if (buf)
-                        free (buf);
-                    if (buf2)
-                        free (buf2);
+                    ptr_win->win_title_start = 0;
+                    ptr_title = (buf) ? buf : buffer->title;
+                }
+                buf2 = string_iconv_from_internal (NULL,
+                                                   ptr_title);
+                
+                if (ptr_win->win_title_start > 0)
+                {
+                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
+                                                  GUI_COLOR_TITLE_MORE);
+                    wprintw (GUI_CURSES(ptr_win)->win_title, "%s", "++");
+                }
+                
+                if (utf8_strlen_screen (ptr_title) > ptr_win->win_width)
+                {
+                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
+                                                  GUI_COLOR_TITLE);
+                    wprintw (GUI_CURSES(ptr_win)->win_title, "%s",
+                             (buf2) ? buf2 : ptr_title);
+                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
+                                                  GUI_COLOR_TITLE_MORE);
+                    mvwprintw (GUI_CURSES(ptr_win)->win_title, 0,
+                               ptr_win->win_width - 2,
+                               "%s", "++");
                 }
                 else
                 {
-                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, GUI_COLOR_WIN_TITLE);
-                    wprintw (GUI_CURSES(ptr_win)->win_title, format, " ");
+                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
+                                                  GUI_COLOR_TITLE);
+                    wprintw (GUI_CURSES(ptr_win)->win_title, "%s",
+                             (buf2) ? buf2 : ptr_title);
                 }
+                if (buf)
+                    free (buf);
+                if (buf2)
+                    free (buf2);
             }
-            else
-            {
-                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title, GUI_COLOR_WIN_TITLE);
-                if (buffer->type == GUI_BUFFER_TYPE_STANDARD)
-                {
-                    wprintw (GUI_CURSES(ptr_win)->win_title,
-                             format,
-                             PACKAGE_STRING " " WEECHAT_COPYRIGHT_DATE " - "
-                             WEECHAT_WEBSITE);
-                }
-                else
-                    wprintw (GUI_CURSES(ptr_win)->win_title, format, " ");
-            }
-            wnoutrefresh (GUI_CURSES(ptr_win)->win_title);
-            refresh ();
         }
+        else
+        {
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
+                                          GUI_COLOR_TITLE);
+            wprintw (GUI_CURSES(ptr_win)->win_title, format, " ");
+        }
+        wnoutrefresh (GUI_CURSES(ptr_win)->win_title);
+        refresh ();
     }
 }
 
@@ -254,7 +245,7 @@ gui_chat_draw_title (t_gui_buffer *buffer, int erase)
  */
 
 int
-gui_chat_get_real_width (t_gui_window *window)
+gui_chat_get_real_width (struct t_gui_window *window)
 {
     if (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_RIGHT)
         return window->win_chat_width - 1;
@@ -267,7 +258,7 @@ gui_chat_get_real_width (t_gui_window *window)
  */
 
 void
-gui_chat_display_new_line (t_gui_window *window, int num_lines, int count,
+gui_chat_display_new_line (struct t_gui_window *window, int num_lines, int count,
                            int *lines_displayed, int simulate)
 {
     if ((count == 0) || (*lines_displayed >= num_lines - count))
@@ -287,99 +278,28 @@ gui_chat_display_new_line (t_gui_window *window, int num_lines, int count,
 }
 
 /*
- * gui_chat_word_get_next_char: returns next char of a word
- *                              special chars like colors, bold, .. are skipped
+ * gui_chat_string_next_char: returns next char of a word (for display)
+ *                            special chars like colors, bold, .. are skipped
+ *                            and optionaly applied
  */
 
 char *
-gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string,
-                             int apply_style, int *width_screen)
+gui_chat_string_next_char (struct t_gui_window *window, unsigned char *string,
+                           int apply_style)
 {
-    char str_fg[3], str_bg[3], utf_char[16];
-    int fg, bg, weechat_color, char_size;
-
-    if (width_screen)
-        *width_screen = 0;
+    char str_fg[3];
+    int weechat_color;
     
     while (string[0])
     {
         switch (string[0])
         {
-            case GUI_ATTR_BOLD_CHAR:
-                string++;
-                if (apply_style)
-                    gui_chat_toggle_style (window, A_BOLD);
-                break;
-            case GUI_ATTR_COLOR_CHAR:
-                string++;
-                str_fg[0] = '\0';
-                str_bg[0] = '\0';
-                fg = 99;
-                bg = 99;
-                if (isdigit (string[0]))
-                {
-                    str_fg[0] = string[0];
-                    str_fg[1] = '\0';
-                    string++;
-                    if (isdigit (string[0]))
-                    {
-                        str_fg[1] = string[0];
-                        str_fg[2] = '\0';
-                        string++;
-                    }
-                }
-                if (string[0] == ',')
-                {
-                    string++;
-                    if (isdigit (string[0]))
-                    {
-                        str_bg[0] = string[0];
-                        str_bg[1] = '\0';
-                        string++;
-                        if (isdigit (string[0]))
-                        {
-                            str_bg[1] = string[0];
-                            str_bg[2] = '\0';
-                            string++;
-                        }
-                    }
-                }
-                if (apply_style)
-                {
-                    if (str_fg[0] || str_bg[0])
-                    {
-                        if (str_fg[0])
-                            sscanf (str_fg, "%d", &fg);
-                        else
-                            fg = window->current_style_fg;
-                        if (str_bg[0])
-                            sscanf (str_bg, "%d", &bg);
-                        else
-                            bg = window->current_style_bg;
-                    }
-                    if (!str_fg[0] && !str_bg[0])
-                        gui_chat_reset_color_style (window);
-                    window->current_style_fg = fg;
-                    window->current_style_bg = bg;
-                    gui_chat_set_color (window, fg, bg);
-                }
-                break;
-            case GUI_ATTR_RESET_CHAR:
-            case GUI_ATTR_WEECHAT_RESET_CHAR:
+            case GUI_COLOR_RESET_CHAR:
                 string++;
                 if (apply_style)
                     gui_chat_reset_style (window);
                 break;
-            case GUI_ATTR_FIXED_CHAR:
-                string++;
-                break;
-            case GUI_ATTR_REVERSE_CHAR:
-            case GUI_ATTR_REVERSE2_CHAR:
-                string++;
-                if (apply_style)
-                    gui_chat_toggle_style (window, A_REVERSE);
-                break;
-            case GUI_ATTR_WEECHAT_COLOR_CHAR:
+            case GUI_COLOR_COLOR_CHAR:
                 string++;
                 if (isdigit (string[0]) && isdigit (string[1]))
                 {
@@ -394,74 +314,62 @@ gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string,
                     }
                 }
                 break;
-            case GUI_ATTR_WEECHAT_SET_CHAR:
+            case GUI_COLOR_SET_CHAR:
                 string++;
                 switch (string[0])
                 {
-                    case GUI_ATTR_BOLD_CHAR:
+                    case GUI_COLOR_ATTR_BOLD_CHAR:
                         string++;
                         if (apply_style)
                             gui_chat_set_color_style (window, A_BOLD);
                         break;
-                    case GUI_ATTR_REVERSE_CHAR:
-                    case GUI_ATTR_REVERSE2_CHAR:
+                    case GUI_COLOR_ATTR_REVERSE_CHAR:
                         string++;
                         if (apply_style)
                             gui_chat_set_color_style (window, A_REVERSE);
                         break;
-                    case GUI_ATTR_UNDERLINE_CHAR:
+                    case GUI_COLOR_ATTR_ITALIC_CHAR:
+                        /* not available in Curses GUI */
+                        string++;
+                        break;
+                    case GUI_COLOR_ATTR_UNDERLINE_CHAR:
                         string++;
                         if (apply_style)
                             gui_chat_set_color_style (window, A_UNDERLINE);
                         break;
                 }
                 break;
-            case GUI_ATTR_WEECHAT_REMOVE_CHAR:
+            case GUI_COLOR_REMOVE_CHAR:
                 string++;
                 switch (string[0])
                 {
-                    case GUI_ATTR_BOLD_CHAR:
+                    case GUI_COLOR_ATTR_BOLD_CHAR:
                         string++;
                         if (apply_style)
                             gui_chat_remove_color_style (window, A_BOLD);
                         break;
-                    case GUI_ATTR_REVERSE_CHAR:
-                    case GUI_ATTR_REVERSE2_CHAR:
+                    case GUI_COLOR_ATTR_REVERSE_CHAR:
                         string++;
                         if (apply_style)
                             gui_chat_remove_color_style (window, A_REVERSE);
                         break;
-                    case GUI_ATTR_UNDERLINE_CHAR:
+                    case GUI_COLOR_ATTR_ITALIC_CHAR:
+                        /* not available in Curses GUI */
+                        string++;
+                        break;
+                    case GUI_COLOR_ATTR_UNDERLINE_CHAR:
                         string++;
                         if (apply_style)
                             gui_chat_remove_color_style (window, A_UNDERLINE);
                         break;
                 }
                 break;
-            case GUI_ATTR_ITALIC_CHAR:
-                string++;
-                break;
-            case GUI_ATTR_UNDERLINE_CHAR:
-                string++;
-                if (apply_style)
-                    gui_chat_toggle_style (window, A_UNDERLINE);
-                break;
             default:
                 if (string[0] < 32)
                     string++;
                 else
-                {
-                    char_size = utf8_char_size ((char *) string);
-                    if (width_screen)
-                    {
-                        memcpy (utf_char, string, char_size);
-                        utf_char[char_size] = '\0';
-                        *width_screen = utf8_width_screen (utf_char);
-                        if (*width_screen < 0)
-                            *width_screen = char_size;
-                    }
-                    return (char *)string + char_size;
-                }
+                    return (char *)string;
+                break;
         }
             
     }
@@ -476,10 +384,11 @@ gui_chat_word_get_next_char (t_gui_window *window, unsigned char *string,
  */
 
 void
-gui_chat_display_word_raw (t_gui_window *window, char *string, int display)
+gui_chat_display_word_raw (struct t_gui_window *window, char *string,
+                           int display)
 {
-    char *prev_char, *next_char, saved_char, *output;
-
+    char *next_char, *output, utf_char[16];
+    
     if (display)
         wmove (GUI_CURSES(window)->win_chat,
                window->win_chat_cursor_y,
@@ -487,27 +396,30 @@ gui_chat_display_word_raw (t_gui_window *window, char *string, int display)
     
     while (string && string[0])
     {
-        next_char = gui_chat_word_get_next_char (window, (unsigned char *)string, 1, NULL);
-        if (!next_char)
+        string = gui_chat_string_next_char (window,
+                                            (unsigned char *)string, 1);
+        if (!string)
             return;
         
-        prev_char = utf8_prev_char (string, next_char);
-        if (display && prev_char)
+        next_char = utf8_next_char (string);
+        if (display && next_char)
         {
-            saved_char = next_char[0];
-            next_char[0] = '\0';
-            if ((((unsigned char)(prev_char[0]) == 146)
-                 || ((unsigned char)(prev_char[0]) == 0x7F))
-                && (!prev_char[1]))
+            memcpy (utf_char, string, next_char - string);
+            utf_char[next_char - string] = '\0';
+            if ((((unsigned char)(utf_char[0]) == 146)
+                 || ((unsigned char)(utf_char[0]) == 0x7F))
+                && (!utf_char[1]))
+            {
                 wprintw (GUI_CURSES(window)->win_chat, ".");
+            }
             else
             {
-                output = weechat_iconv_from_internal (NULL, prev_char);
-                wprintw (GUI_CURSES(window)->win_chat, "%s", (output) ? output : prev_char);
+                output = string_iconv_from_internal (NULL, utf_char);
+                wprintw (GUI_CURSES(window)->win_chat,
+                         "%s", (output) ? output : utf_char);
                 if (output)
                     free (output);
             }
-            next_char[0] = saved_char;
         }
         
         string = next_char;
@@ -519,11 +431,11 @@ gui_chat_display_word_raw (t_gui_window *window, char *string, int display)
  */
 
 void
-gui_chat_display_word (t_gui_window *window,
-                       t_gui_line *line,
-                       char *data,
-                       char *end_offset,
-                       int num_lines, int count, int *lines_displayed, int simulate)
+gui_chat_display_word (struct t_gui_window *window,
+                       struct t_gui_line *line,
+                       char *data, char *end_offset,
+                       int prefix, int num_lines, int count,
+                       int *lines_displayed, int simulate)
 {
     char *end_line, saved_char_end, saved_char;
     int pos_saved_char, chars_to_display, num_displayed;
@@ -535,7 +447,7 @@ gui_chat_display_word (t_gui_window *window,
     
     end_line = data + strlen (data);
         
-    if (end_offset[0])
+    if (end_offset && end_offset[0])
     {
         saved_char_end = end_offset[1];
         end_offset[1] = '\0';
@@ -549,7 +461,7 @@ gui_chat_display_word (t_gui_window *window,
     while (data && data[0])
     {
         /* insert spaces for align text under time/nick */
-        length_align = GUI_LINE_LENGTH_ALIGN(line);
+        length_align = gui_chat_get_line_align (window->buffer, line);
         if ((length_align > 0) &&
             (window->win_chat_cursor_x == 0) &&
             (*lines_displayed > 0) &&
@@ -566,13 +478,13 @@ gui_chat_display_word (t_gui_window *window,
             window->win_chat_cursor_x += length_align;
         }
         
-        chars_to_display = gui_word_strlen (window, data);
+        chars_to_display = gui_chat_strlen_screen (data);
 
         /* too long for current line */
         if (window->win_chat_cursor_x + chars_to_display > gui_chat_get_real_width (window))
         {
             num_displayed = gui_chat_get_real_width (window) - window->win_chat_cursor_x;
-            pos_saved_char = gui_word_real_pos (window, data, num_displayed);
+            pos_saved_char = gui_chat_string_real_pos (data, num_displayed);
             saved_char = data[pos_saved_char];
             data[pos_saved_char] = '\0';
             if (!simulate)
@@ -601,14 +513,14 @@ gui_chat_display_word (t_gui_window *window,
         window->win_chat_cursor_x += num_displayed;
         
         /* display new line? */
-        if ((data >= end_line) ||
+        if ((!prefix && (data >= end_line)) ||
             (((simulate) ||
-             (window->win_chat_cursor_y <= window->win_chat_height - 1)) &&
-            (window->win_chat_cursor_x > (gui_chat_get_real_width (window) - 1))))
+              (window->win_chat_cursor_y <= window->win_chat_height - 1)) &&
+             (window->win_chat_cursor_x > (gui_chat_get_real_width (window) - 1))))
             gui_chat_display_new_line (window, num_lines, count,
                                        lines_displayed, simulate);
         
-        if ((data >= end_line) ||
+        if ((!prefix && (data >= end_line)) ||
             ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height)))
             data = NULL;
     }
@@ -618,61 +530,117 @@ gui_chat_display_word (t_gui_window *window,
 }
 
 /*
- * gui_chat_get_word_info: returns info about next word: beginning, end, length
+ * gui_chat_display_time_and_prefix: display time and prefix for a line
  */
 
 void
-gui_chat_get_word_info (t_gui_window *window,
-                        char *data,
-                        int *word_start_offset, int *word_end_offset,
-                        int *word_length_with_spaces, int *word_length)
+gui_chat_display_time_and_prefix (struct t_gui_window *window,
+                                  struct t_gui_line *line,
+                                  int num_lines, int count,
+                                  int *lines_displayed,
+                                  int simulate)
 {
-    char *start_data, *prev_char, *next_char;
-    int leading_spaces, char_size;
+    char str_space[] = " ", str_plus[] = "+";
+    int i, length_allowed, num_spaces;
     
-    *word_start_offset = 0;
-    *word_end_offset = 0;
-    *word_length_with_spaces = 0;
-    *word_length = 0;
-    
-    start_data = data;
-    
-    leading_spaces = 1;
-    while (data && data[0])
+    /* display time */
+    if (line->str_time && line->str_time[0])
     {
-        next_char = gui_chat_word_get_next_char (window, (unsigned char *)data, 0, NULL);
-        if (next_char)
+        if (!simulate)
+            gui_chat_reset_style (window);
+        
+        gui_chat_display_word (window, line, line->str_time,
+                               NULL, 1, num_lines, count, lines_displayed,
+                               simulate);
+        gui_chat_display_word (window, line, str_space,
+                               NULL, 1, num_lines, count, lines_displayed,
+                               simulate);
+    }
+    
+    /* display prefix */
+    if (line->prefix
+        && (line->prefix[0]
+            || (cfg_look_prefix_align != CFG_LOOK_PREFIX_ALIGN_NONE)))
+    {
+        if (!simulate)
+            gui_chat_reset_style (window);
+        
+        if (cfg_look_prefix_align_max > 0)
         {
-            prev_char = utf8_prev_char (data, next_char);
-            if (prev_char)
+            length_allowed =
+                (window->buffer->prefix_max_length <= cfg_look_prefix_align_max) ?
+                window->buffer->prefix_max_length : cfg_look_prefix_align_max;
+        }
+        else
+            length_allowed = window->buffer->prefix_max_length;
+        
+        num_spaces = length_allowed - line->prefix_length;
+        
+        if (cfg_look_prefix_align == CFG_LOOK_PREFIX_ALIGN_RIGHT)
+        {
+            for (i = 0; i < num_spaces; i++)
             {
-                if (prev_char[0] != ' ')
-                {
-                    if (leading_spaces)
-                        *word_start_offset = prev_char - start_data;
-                    leading_spaces = 0;
-                    char_size = next_char - prev_char;
-                    *word_end_offset = next_char - start_data - 1;
-                    (*word_length_with_spaces) += char_size;
-                    (*word_length) += char_size;
-                }
-                else
-                {
-                    if (leading_spaces)
-                        (*word_length_with_spaces)++;
-                    else
-                    {
-                        *word_end_offset = prev_char - start_data - 1;
-                        return;
-                    }
-                }
-                data = next_char;
+                gui_chat_display_word (window, line, str_space,
+                                       NULL, 1, num_lines, count,
+                                       lines_displayed,simulate);
             }
+        }
+        /* not enough space to display full prefix ? => truncate it! */
+        if ((cfg_look_prefix_align != CFG_LOOK_PREFIX_ALIGN_NONE)
+            && (num_spaces < 0))
+        {
+            gui_chat_display_word (window, line, line->prefix,
+                                   line->prefix +
+                                   gui_chat_string_real_pos (line->prefix,
+                                                             length_allowed - 1),
+                                   1, num_lines, count, lines_displayed,
+                                   simulate);
         }
         else
         {
-            *word_end_offset = data + strlen (data) - start_data - 1;
-            return;
+            gui_chat_display_word (window, line, line->prefix,
+                                   NULL, 1, num_lines, count, lines_displayed,
+                                   simulate);
+        }
+        
+        if (!simulate)
+            gui_chat_reset_style (window);
+        
+        if (cfg_look_prefix_align == CFG_LOOK_PREFIX_ALIGN_LEFT)
+        {
+            for (i = 0; i < num_spaces; i++)
+            {
+                gui_chat_display_word (window, line, str_space,
+                                       NULL, 1, num_lines, count, lines_displayed,
+                                       simulate);
+            }
+        }
+        if ((cfg_look_prefix_align != CFG_LOOK_PREFIX_ALIGN_NONE)
+            && (num_spaces < 0))
+        {
+            if (!simulate)
+                gui_chat_set_weechat_color (window, GUI_COLOR_CHAT_PREFIX_MORE);
+            gui_chat_display_word (window, line, str_plus,
+                                   NULL, 1, num_lines, count, lines_displayed,
+                                   simulate);
+        }
+        else
+        {
+            gui_chat_display_word (window, line, str_space,
+                                   NULL, 1, num_lines, count, lines_displayed,
+                                   simulate);
+        }
+        if ((cfg_look_prefix_align != CFG_LOOK_PREFIX_ALIGN_NONE)
+            && (cfg_look_prefix_suffix && cfg_look_prefix_suffix[0]))
+        {
+            if (!simulate)
+                gui_chat_set_weechat_color (window, GUI_COLOR_CHAT_PREFIX_SUFFIX);
+            gui_chat_display_word (window, line, cfg_look_prefix_suffix,
+                                   NULL, 1, num_lines, count,
+                                   lines_displayed, simulate);
+            gui_chat_display_word (window, line, str_space,
+                                   NULL, 1, num_lines, count,
+                                   lines_displayed, simulate);
         }
     }
 }
@@ -689,14 +657,14 @@ gui_chat_get_word_info (t_gui_window *window,
  */
 
 int
-gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
-                       int simulate)
+gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
+                       int count, int simulate)
 {
-    int num_lines, x, y, lines_displayed;
+    int num_lines, x, y, lines_displayed, line_align;
     int read_marker_x, read_marker_y;
     int word_start_offset, word_end_offset;
     int word_length_with_spaces, word_length;
-    char *ptr_data, *ptr_end_offset, *next_char, *prev_char;
+    char *ptr_data, *ptr_end_offset, *next_char;
     char *ptr_style, saved_char;
     
     if (simulate)
@@ -719,95 +687,106 @@ gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
     }
     
     /* calculate marker position (maybe not used for this line!) */
-    if (line->ofs_after_date > 0)
-    {
-        saved_char = line->data[line->ofs_after_date - 1];
-        line->data[line->ofs_after_date - 1] = '\0';
-        read_marker_x = x + gui_word_strlen (NULL, line->data);
-        line->data[line->ofs_after_date - 1] = saved_char;
-    }
+    if (line->str_time)
+        read_marker_x = x + gui_chat_strlen_screen (line->str_time);
     else
         read_marker_x = x;
     read_marker_y = y;
     
-    /* reset color & style for a new line */
-    gui_chat_reset_style (window);
-    
     lines_displayed = 0;
-    ptr_data = line->data;
-    while (ptr_data && ptr_data[0])
+    
+    /* display time and prefix */
+    gui_chat_display_time_and_prefix (window, line, num_lines, count,
+                                      &lines_displayed, simulate);
+    
+    /* reset color & style for a new line */
+    if (!simulate)
+        gui_chat_reset_style (window);
+    
+    if (!line->message || !line->message[0])
+        gui_chat_display_new_line (window, num_lines, count,
+                                   &lines_displayed, simulate);
+    else
     {
-        gui_chat_get_word_info (window,
-                                ptr_data,
-                                &word_start_offset,
-                                &word_end_offset,
-                                &word_length_with_spaces, &word_length);
-        
-        ptr_end_offset = ptr_data + word_end_offset;
-        
-        if (word_length > 0)
+        ptr_data = line->message;
+        while (ptr_data && ptr_data[0])
         {
-            /* spaces + word too long for current line but ok for next line */
-            if ((window->win_chat_cursor_x + word_length_with_spaces > gui_chat_get_real_width (window))
-                && (word_length <= gui_chat_get_real_width (window) - GUI_LINE_LENGTH_ALIGN(line)))
+            gui_chat_get_word_info (window,
+                                    ptr_data,
+                                    &word_start_offset,
+                                    &word_end_offset,
+                                    &word_length_with_spaces, &word_length);
+            
+            ptr_end_offset = ptr_data + word_end_offset;
+            
+            if (word_length > 0)
+            {
+                /* spaces + word too long for current line but ok for next line */
+                line_align = gui_chat_get_line_align (window->buffer, line);
+                if ((window->win_chat_cursor_x + word_length_with_spaces > gui_chat_get_real_width (window))
+                    && (word_length <= gui_chat_get_real_width (window) - line_align))
+                {
+                    gui_chat_display_new_line (window, num_lines, count,
+                                               &lines_displayed, simulate);
+                    /* apply styles before jumping to start of word */
+                    if (!simulate && (word_start_offset > 0))
+                    {
+                        saved_char = ptr_data[word_start_offset];
+                        ptr_data[word_start_offset] = '\0';
+                        ptr_style = ptr_data;
+                        while (ptr_style)
+                        {
+                            /* loop until no style/char available */
+                            ptr_style = gui_chat_string_next_char (window,
+                                                                   (unsigned char *)ptr_style,
+                                                                   1);
+                            if (!ptr_style)
+                                break;
+                            ptr_style = utf8_next_char (ptr_style);
+                        }
+                        ptr_data[word_start_offset] = saved_char;
+                    }
+                    /* jump to start of word */
+                    ptr_data += word_start_offset;
+                }
+                
+                /* display word */
+                gui_chat_display_word (window, line, ptr_data,
+                                       ptr_end_offset,
+                                       0, num_lines, count, &lines_displayed,
+                                       simulate);
+                
+                if ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height))
+                    ptr_data = NULL;
+                else
+                {
+                    /* move pointer after end of word */
+                    ptr_data = ptr_end_offset + 1;
+                    if (*(ptr_data - 1) == '\0')
+                        ptr_data = NULL;
+                    
+                    if (window->win_chat_cursor_x == 0)
+                    {
+                        while (ptr_data && (ptr_data[0] == ' '))
+                        {
+                            next_char = utf8_next_char (ptr_data);
+                            if (!next_char)
+                                break;
+                            ptr_data = gui_chat_string_next_char (window,
+                                                                  (unsigned char *)next_char,
+                                                                  0);
+                            if (!ptr_data || (ptr_data[0] != ' '))
+                                break;
+                        }
+                    }
+                }
+            }
+            else
             {
                 gui_chat_display_new_line (window, num_lines, count,
                                            &lines_displayed, simulate);
-                /* apply styles before jumping to start of word */
-                if (!simulate && (word_start_offset > 0))
-                {
-                    saved_char = ptr_data[word_start_offset];
-                    ptr_data[word_start_offset] = '\0';
-                    ptr_style = ptr_data;
-                    while ((ptr_style = gui_chat_word_get_next_char (window,
-                                                                     (unsigned char *)ptr_style,
-                                                                     1, NULL)) != NULL)
-                    {
-                        /* loop until no style/char available */
-                    }
-                    ptr_data[word_start_offset] = saved_char;
-                }
-                /* jump to start of word */
-                ptr_data += word_start_offset;
-            }
-            
-            /* display word */
-            gui_chat_display_word (window, line, ptr_data,
-                                   ptr_end_offset,
-                                   num_lines, count, &lines_displayed, simulate);
-            
-            if ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height))
                 ptr_data = NULL;
-            else
-            {
-                /* move pointer after end of word */
-                ptr_data = ptr_end_offset + 1;
-                if (*(ptr_data - 1) == '\0')
-                    ptr_data = NULL;
-                
-                if (window->win_chat_cursor_x == 0)
-                {
-                    while (ptr_data && (ptr_data[0] == ' '))
-                    {
-                        next_char = gui_chat_word_get_next_char (window,
-                                                                 (unsigned char *)ptr_data,
-                                                                 0, NULL);
-                        if (!next_char)
-                            break;
-                        prev_char = utf8_prev_char (ptr_data, next_char);
-                        if (prev_char && (prev_char[0] == ' '))
-                            ptr_data = next_char;
-                        else
-                            break;
-                    }
-                }
             }
-        }
-        else
-        {
-            gui_chat_display_new_line (window, num_lines, count,
-                                       &lines_displayed, simulate);
-            ptr_data = NULL;
         }
     }
     
@@ -823,11 +802,13 @@ gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
             /* display marker if line is matching user search */
             if (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
             {
-                if (gui_buffer_line_search (line, window->buffer->input_buffer,
-                                            window->buffer->text_search_exact))
+                if (gui_chat_line_search (line, window->buffer->input_buffer,
+                                          window->buffer->text_search_exact))
                 {
-                    gui_chat_set_weechat_color (window, GUI_COLOR_WIN_CHAT_READ_MARKER);
-                    mvwprintw (GUI_CURSES(window)->win_chat, read_marker_y, read_marker_x,
+                    gui_chat_set_weechat_color (window,
+                                                GUI_COLOR_CHAT_READ_MARKER);
+                    mvwprintw (GUI_CURSES(window)->win_chat,
+                               read_marker_y, read_marker_x,
                                "%c", cfg_look_read_marker[0]);
                 }
             }
@@ -837,8 +818,10 @@ gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
                 if (window->buffer->last_read_line &&
                     (window->buffer->last_read_line == line->prev_line))
                 {
-                    gui_chat_set_weechat_color (window, GUI_COLOR_WIN_CHAT_READ_MARKER);
-                    mvwprintw (GUI_CURSES(window)->win_chat, read_marker_y, read_marker_x,
+                    gui_chat_set_weechat_color (window,
+                                                GUI_COLOR_CHAT_READ_MARKER);
+                    mvwprintw (GUI_CURSES(window)->win_chat,
+                               read_marker_y, read_marker_x,
                                "%c", cfg_look_read_marker[0]);
                 }
             }
@@ -854,7 +837,7 @@ gui_chat_display_line (t_gui_window *window, t_gui_line *line, int count,
  */
 
 void
-gui_chat_calculate_line_diff (t_gui_window *window, t_gui_line **line,
+gui_chat_calculate_line_diff (struct t_gui_window *window, struct t_gui_line **line,
                               int *line_pos, int difference)
 {
     int backward, current_size;
@@ -952,20 +935,21 @@ gui_chat_calculate_line_diff (t_gui_window *window, t_gui_line **line,
  */
 
 void
-gui_chat_draw (t_gui_buffer *buffer, int erase)
+gui_chat_draw (struct t_gui_buffer *buffer, int erase)
 {
-    t_gui_window *ptr_win;
-    t_gui_line *ptr_line;
-    t_irc_dcc *dcc_first, *dcc_selected, *ptr_dcc;
+    struct t_gui_window *ptr_win;
+    struct t_gui_line *ptr_line;
+    /*t_irc_dcc *dcc_first, *dcc_selected, *ptr_dcc;*/
     char format_empty[32];
-    int i, j, line_pos, count, num_bars;
+    int i, line_pos, count;
+    /*int j, num_bars;
     unsigned long pct_complete;
     char *unit_name[] = { N_("bytes"), N_("KB"), N_("MB"), N_("GB") };
     char *unit_format[] = { "%.0f", "%.1f", "%.02f", "%.02f" };
     float unit_divide[] = { 1, 1024, 1024*1024, 1024*1024*1024 };
     int num_unit;
     char format[32], date[128], *buf;
-    struct tm *date_tmp;
+    struct tm *date_tmp;*/
     
     if (!gui_ok)
         return;
@@ -976,18 +960,21 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
         {
             if (erase)
             {
-                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat, GUI_COLOR_WIN_CHAT);
+                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
+                                              GUI_COLOR_CHAT);
                 
                 snprintf (format_empty, 32, "%%-%ds", ptr_win->win_chat_width);
                 for (i = 0; i < ptr_win->win_chat_height; i++)
                 {
-                    mvwprintw (GUI_CURSES(ptr_win)->win_chat, i, 0, format_empty, " ");
+                    mvwprintw (GUI_CURSES(ptr_win)->win_chat, i, 0,
+                               format_empty, " ");
                 }
             }
             
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat, GUI_COLOR_WIN_CHAT);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
+                                          GUI_COLOR_CHAT);
             
-            if (buffer->type == GUI_BUFFER_TYPE_DCC)
+            /*if (buffer->type == GUI_BUFFER_TYPE_DCC)
             {
                 i = 0;
                 dcc_first = (ptr_win->dcc_first) ? (t_irc_dcc *) ptr_win->dcc_first : irc_dcc_list;
@@ -997,7 +984,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                     if (i >= ptr_win->win_chat_height - 1)
                         break;
                     
-                    /* nickname and filename */
+                    // nickname and filename
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
                                                   (ptr_dcc == dcc_selected) ?
                                                   GUI_COLOR_DCC_SELECTED : GUI_COLOR_WIN_CHAT);
@@ -1019,7 +1006,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                                      ptr_dcc->filename_suffix);
                     }
                     
-                    /* status */
+                    // status
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
                                                   (ptr_dcc == dcc_selected) ?
                                                   GUI_COLOR_DCC_SELECTED : GUI_COLOR_WIN_CHAT);
@@ -1034,7 +1021,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                     if (buf)
                         free (buf);
                     
-                    /* other infos */
+                    // other infos
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
                                                   (ptr_dcc == dcc_selected) ?
                                                   GUI_COLOR_DCC_SELECTED : GUI_COLOR_WIN_CHAT);
@@ -1121,7 +1108,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
                     i += 2;
                 }
             }
-            else
+            else*/
             {
                 ptr_win->win_chat_cursor_x = 0;
                 ptr_win->win_chat_cursor_y = 0;
@@ -1198,7 +1185,7 @@ gui_chat_draw (t_gui_buffer *buffer, int erase)
  */
 
 void
-gui_chat_draw_line (t_gui_buffer *buffer, t_gui_line *line)
+gui_chat_draw_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     /* This function does nothing in Curses GUI,
        line will be displayed by gui_buffer_draw_chat()  */

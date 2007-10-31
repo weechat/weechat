@@ -16,7 +16,7 @@
 
 SET(WEECHAT_GTK_SRC gui-gtk-chat.c gui-gtk-color.c gui-gtk-infobar.c
 gui-gtk-input.c gui-gtk-keyboard.c gui-gtk-main.c gui-gtk-nicklist.c
-gui-gtk-status.c gui-gtk-window.c gui-gtk-panel.c gui-gtk.h)
+gui-gtk-status.c gui-gtk-window.c gui-gtk.h)
 
 SET(EXECUTABLE weechat-gtk)
 
@@ -32,8 +32,7 @@ IF(PKG_CONFIG_FOUND)
 ENDIF(PKG_CONFIG_FOUND)
 
 ADD_EXECUTABLE(${EXECUTABLE} ${WEECHAT_GTK_SRC})
-INCLUDE_DIRECTORIES(.. ../../common ../../protocols ../../protocols/irc
-../../plugins)
+INCLUDE_DIRECTORIES(.. ../../core ../../plugins)
 TARGET_LINK_LIBRARIES(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS})
 
 INSTALL(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)

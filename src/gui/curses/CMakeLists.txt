@@ -16,7 +16,7 @@
 
 SET(WEECHAT_CURSES_SRC gui-curses-chat.c gui-curses-color.c gui-curses-infobar.c
 gui-curses-input.c gui-curses-keyboard.c gui-curses-main.c gui-curses-nicklist.c
-gui-curses-status.c gui-curses-window.c gui-curses-panel.c gui-curses.h)
+gui-curses-status.c gui-curses-window.c gui-curses.h)
 
 SET(EXECUTABLE weechat-curses)
 
@@ -40,8 +40,7 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
 
 ADD_EXECUTABLE(${EXECUTABLE} ${WEECHAT_CURSES_SRC})
-INCLUDE_DIRECTORIES(.. ../../common ../../protocols ../../protocols/irc
-../../plugins)
+INCLUDE_DIRECTORIES(.. ../../core ../../plugins)
 TARGET_LINK_LIBRARIES(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS})
 
 INSTALL(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)

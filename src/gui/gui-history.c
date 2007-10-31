@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* history.c: memorize commands or text */
+/* gui-history.c: memorize commands or text for buffers */
 
 
 #ifdef HAVE_CONFIG_H
@@ -26,65 +26,63 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "weechat.h"
-#include "history.h"
-#include "util.h"
-#include "weeconfig.h"
-#include "../protocols/irc/irc.h"
-#include "../gui/gui.h"
+#include "../core/weechat.h"
+#include "../core/wee-config.h"
+#include "../core/wee-string.h"
+#include "gui-history.h"
 
 
-t_history *history_global = NULL;
-t_history *history_global_last = NULL;
-t_history *history_global_ptr = NULL;
+struct t_gui_history *history_global = NULL;
+struct t_gui_history *history_global_last = NULL;
+struct t_gui_history *history_global_ptr = NULL;
 int num_history_global = 0;
 
 
 /*
- * history_buffer_add: add a text/command to buffer's history
+ * gui_history_buffer_add: add a text/command to buffer's history
  */
 
 void
-history_buffer_add (void *buffer, char *string)
+gui_history_buffer_add (struct t_gui_buffer *buffer, char *string)
 {
-    t_history *new_history, *ptr_history;
+    struct t_gui_history *new_history, *ptr_history;
 
     if (!string)
         return;
     
-    if ( !((t_gui_buffer *)(buffer))->history
-         || ( ((t_gui_buffer *)(buffer))->history
-              && ascii_strcasecmp (((t_gui_buffer *)(buffer))->history->text, string) != 0))
+    if (!buffer->history
+        || (buffer->history
+            && (string_strcasecmp (buffer->history->text, string) != 0)))
     {	
-	new_history = (t_history *)malloc (sizeof (t_history));
+	new_history = (struct t_gui_history *)malloc (sizeof (struct t_gui_history));
 	if (new_history)
 	{
 	    new_history->text = strdup (string);
-	    if (cfg_log_hide_nickserv_pwd)
-                irc_display_hide_password (new_history->text, 1);
+	    /*if (cfg_log_hide_nickserv_pwd)
+              irc_display_hide_password (new_history->text, 1);*/
 	    
-	    if (((t_gui_buffer *)(buffer))->history)
-		((t_gui_buffer *)(buffer))->history->prev_history = new_history;
+	    if (buffer->history)
+		buffer->history->prev_history = new_history;
 	    else
-		((t_gui_buffer *)(buffer))->last_history = new_history;
-	    new_history->next_history = ((t_gui_buffer *)(buffer))->history;
+		buffer->last_history = new_history;
+	    new_history->next_history = buffer->history;
 	    new_history->prev_history = NULL;
-	    ((t_gui_buffer *)buffer)->history = new_history;
-	    ((t_gui_buffer *)buffer)->num_history++;
+	    buffer->history = new_history;
+	    buffer->num_history++;
 	    
 	    /* remove one command if necessary */
 	    if ((cfg_history_max_commands > 0)
-		&& (((t_gui_buffer *)(buffer))->num_history > cfg_history_max_commands))
+		&& (buffer->num_history > cfg_history_max_commands))
 	    {
-		ptr_history = ((t_gui_buffer *)buffer)->last_history->prev_history;
-                if (((t_gui_buffer *)buffer)->ptr_history == ((t_gui_buffer *)buffer)->last_history)
-                    ((t_gui_buffer *)buffer)->ptr_history = ptr_history;
-		((t_gui_buffer *)buffer)->last_history->prev_history->next_history = NULL;
-		if (((t_gui_buffer *)buffer)->last_history->text)
-		    free (((t_gui_buffer *)buffer)->last_history->text);
-		free (((t_gui_buffer *)buffer)->last_history);
-		((t_gui_buffer *)buffer)->last_history = ptr_history;
-		((t_gui_buffer *)(buffer))->num_history++;
+		ptr_history = buffer->last_history->prev_history;
+                if (buffer->ptr_history == buffer->last_history)
+                    buffer->ptr_history = ptr_history;
+		buffer->last_history->prev_history->next_history = NULL;
+		if (buffer->last_history->text)
+		    free (buffer->last_history->text);
+		free (buffer->last_history);
+		buffer->last_history = ptr_history;
+		buffer->num_history++;
 	    }
 	}
     }
@@ -95,23 +93,23 @@ history_buffer_add (void *buffer, char *string)
  */
 
 void
-history_global_add (char *string)
+gui_history_global_add (char *string)
 {
-    t_history *new_history, *ptr_history;
+    struct t_gui_history *new_history, *ptr_history;
 
     if (!string)
         return;
     
     if (!history_global
         || (history_global
-            && ascii_strcasecmp (history_global->text, string) != 0))
+            && (string_strcasecmp (history_global->text, string) != 0)))
     {    
-	new_history = (t_history *)malloc (sizeof (t_history));
+	new_history = (struct t_gui_history *)malloc (sizeof (struct t_gui_history));
 	if (new_history)
 	{
 	    new_history->text = strdup (string);
-	    if (cfg_log_hide_nickserv_pwd)
-		irc_display_hide_password (new_history->text, 1);
+	    /*if (cfg_log_hide_nickserv_pwd)
+              irc_display_hide_password (new_history->text, 1);*/
 	    
 	    if (history_global)
 		history_global->prev_history = new_history;
@@ -141,13 +139,13 @@ history_global_add (char *string)
 }
 
 /*
- * history_global_free: free global history
+ * gui_history_global_free: free global history
  */
 
 void
-history_global_free ()
+gui_history_global_free ()
 {
-    t_history *ptr_history;
+    struct t_gui_history *ptr_history;
     
     while (history_global)
     {
@@ -165,24 +163,24 @@ history_global_free ()
 
 
 /*
- * history_buffer_free: free history for a buffer
+ * gui_history_buffer_free: free history for a buffer
  */
 
 void
-history_buffer_free (void *buffer)
+gui_history_buffer_free (struct t_gui_buffer *buffer)
 {
-    t_history *ptr_history;
+    struct t_gui_history *ptr_history;
     
-    while (((t_gui_buffer *)(buffer))->history)
+    while (buffer->history)
     {
-        ptr_history = ((t_gui_buffer *)(buffer))->history->next_history;
-        if (((t_gui_buffer *)(buffer))->history->text)
-            free (((t_gui_buffer *)(buffer))->history->text);
-        free (((t_gui_buffer *)(buffer))->history);
-        ((t_gui_buffer *)(buffer))->history = ptr_history;
+        ptr_history = buffer->history->next_history;
+        if (buffer->history->text)
+            free (buffer->history->text);
+        free (buffer->history);
+        buffer->history = ptr_history;
     }
-    ((t_gui_buffer *)(buffer))->history = NULL;
-    ((t_gui_buffer *)(buffer))->last_history = NULL;
-    ((t_gui_buffer *)(buffer))->ptr_history = NULL;
-    ((t_gui_buffer *)(buffer))->num_history = 0;
+    buffer->history = NULL;
+    buffer->last_history = NULL;
+    buffer->ptr_history = NULL;
+    buffer->num_history = 0;
 }

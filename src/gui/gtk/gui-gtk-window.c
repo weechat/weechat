@@ -26,11 +26,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../common/weechat.h"
-#include "../gui.h"
-#include "../../common/hotlist.h"
-#include "../../common/log.h"
-#include "../../common/weeconfig.h"
+#include "../../core/weechat.h"
+#include "../../core/wee-config.h"
+#include "../../core/wee-log.h"
+#include "../gui-window.h"
+#include "../gui-hotlist.h"
+#include "../gui-nicklist.h"
+#include "../gui-main.h"
+#include "../gui-status.h"
 #include "gui-gtk.h"
 
 
@@ -59,11 +62,11 @@ gui_window_get_height ()
  */
 
 int
-gui_window_objects_init (t_gui_window *window)
+gui_window_objects_init (struct t_gui_window *window)
 {
-    t_gui_gtk_objects *new_objects;
+    struct t_gui_gtk_objects *new_objects;
 
-    if ((new_objects = (t_gui_gtk_objects *) malloc (sizeof (t_gui_gtk_objects))))
+    if ((new_objects = (struct t_gui_gtk_objects *) malloc (sizeof (struct t_gui_gtk_objects))))
     {
         window->gui_objects = new_objects;
         GUI_GTK(window)->textview_chat = NULL;
@@ -71,7 +74,6 @@ gui_window_objects_init (t_gui_window *window)
         GUI_GTK(window)->texttag_chat = NULL;
         GUI_GTK(window)->textview_nicklist = NULL;
         GUI_GTK(window)->textbuffer_nicklist = NULL;
-        GUI_GTK(window)->panel_windows = NULL;
         return 1;
     }
     else
@@ -83,7 +85,7 @@ gui_window_objects_init (t_gui_window *window)
  */
 
 void
-gui_window_objects_free (t_gui_window *window, int free_separator)
+gui_window_objects_free (struct t_gui_window *window, int free_separator)
 {
     /* TODO: write this function for Gtk */
     (void) window;
@@ -111,7 +113,7 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
  */
 
 int
-gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
+gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
 {
     /* TODO: write this function for Gtk */
     (void) window;
@@ -125,7 +127,7 @@ gui_window_calculate_pos_size (t_gui_window *window, int force_calculate)
  */
 
 void
-gui_window_draw_separator (t_gui_window *window)
+gui_window_draw_separator (struct t_gui_window *window)
 {
     /* TODO: write this function for Gtk */
     /*if (window->win_separator)
@@ -150,7 +152,7 @@ gui_window_draw_separator (t_gui_window *window)
  */
 
 void
-gui_window_redraw_buffer (t_gui_buffer *buffer)
+gui_window_redraw_buffer (struct t_gui_buffer *buffer)
 {
     /* TODO: write this function for Gtk */
     (void) buffer;
@@ -171,7 +173,7 @@ gui_window_redraw_all_buffers ()
  */
 
 void
-gui_window_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
+gui_window_switch_to_buffer (struct t_gui_window *window, struct t_gui_buffer *buffer)
 {
     GtkTextIter start, end;
     
@@ -205,7 +207,7 @@ gui_window_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
         gtk_text_buffer_get_bounds (GUI_GTK(window)->textbuffer_chat, &start, &end);
         gtk_text_buffer_apply_tag (GUI_GTK(window)->textbuffer_chat, GUI_GTK(window)->texttag_chat, &start, &end);
     }
-    if (GUI_BUFFER_IS_CHANNEL(buffer) && !GUI_GTK(window)->textbuffer_nicklist)
+    if (buffer->nicklist && !GUI_GTK(window)->textbuffer_nicklist)
     {
         GUI_GTK(window)->textview_nicklist = gtk_text_view_new ();
         gtk_widget_show (GUI_GTK(window)->textview_nicklist);
@@ -222,7 +224,7 @@ gui_window_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
     
     buffer->num_displayed++;
     
-    hotlist_remove_buffer (buffer);
+    gui_hotlist_remove_buffer (buffer);
 }
 
 /*
@@ -230,7 +232,7 @@ gui_window_switch_to_buffer (t_gui_window *window, t_gui_buffer *buffer)
  */
 
 void
-gui_window_page_up (t_gui_window *window)
+gui_window_page_up (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -252,9 +254,9 @@ gui_window_page_up (t_gui_window *window)
  */
 
 void
-gui_window_page_down (t_gui_window *window)
+gui_window_page_down (struct t_gui_window *window)
 {
-    t_gui_line *ptr_line;
+    struct t_gui_line *ptr_line;
     int line_pos;
     
     if (!gui_ok)
@@ -288,7 +290,7 @@ gui_window_page_down (t_gui_window *window)
  */
 
 void
-gui_window_scroll_up (t_gui_window *window)
+gui_window_scroll_up (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -310,9 +312,9 @@ gui_window_scroll_up (t_gui_window *window)
  */
 
 void
-gui_window_scroll_down (t_gui_window *window)
+gui_window_scroll_down (struct t_gui_window *window)
 {
-    t_gui_line *ptr_line;
+    struct t_gui_line *ptr_line;
     int line_pos;
     
     if (!gui_ok)
@@ -347,7 +349,7 @@ gui_window_scroll_down (t_gui_window *window)
  */
 
 void
-gui_window_scroll_top (t_gui_window *window)
+gui_window_scroll_top (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -366,7 +368,7 @@ gui_window_scroll_top (t_gui_window *window)
  */
 
 void
-gui_window_scroll_bottom (t_gui_window *window)
+gui_window_scroll_bottom (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -385,7 +387,7 @@ gui_window_scroll_bottom (t_gui_window *window)
  */
 
 void
-gui_window_scroll_topic_left (t_gui_window *window)
+gui_window_scroll_topic_left (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -402,7 +404,7 @@ gui_window_scroll_topic_left (t_gui_window *window)
  */
 
 void
-gui_window_scroll_topic_right (t_gui_window *window)
+gui_window_scroll_topic_right (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -416,17 +418,17 @@ gui_window_scroll_topic_right (t_gui_window *window)
  */
 
 void
-gui_window_nick_beginning (t_gui_window *window)
+gui_window_nick_beginning (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
     
-    if (GUI_BUFFER_HAS_NICKLIST(window->buffer))
+    if (window->buffer->nicklist)
     {
         if (window->win_nick_start > 0)
         {
             window->win_nick_start = 0;
-            gui_nicklist_draw (window->buffer, 1, 0);
+            gui_nicklist_draw (window->buffer, 1);
         }
     }
 }
@@ -436,17 +438,17 @@ gui_window_nick_beginning (t_gui_window *window)
  */
 
 void
-gui_window_nick_end (t_gui_window *window)
+gui_window_nick_end (struct t_gui_window *window)
 {
     int new_start;
     
     if (!gui_ok)
         return;
     
-    if (GUI_BUFFER_HAS_NICKLIST(window->buffer))
+    if (window->buffer->nicklist)
     {
         new_start =
-            GUI_CHANNEL(window->buffer)->nicks_count - window->win_nick_height;
+            window->buffer->nicks_count - window->win_nick_height;
         if (new_start < 0)
             new_start = 0;
         else if (new_start >= 1)
@@ -455,7 +457,7 @@ gui_window_nick_end (t_gui_window *window)
         if (new_start != window->win_nick_start)
         {
             window->win_nick_start = new_start;
-            gui_nicklist_draw (window->buffer, 1, 0);
+            gui_nicklist_draw (window->buffer, 1);
         }
     }
 }
@@ -465,19 +467,19 @@ gui_window_nick_end (t_gui_window *window)
  */
 
 void
-gui_window_nick_page_up (t_gui_window *window)
+gui_window_nick_page_up (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
     
-    if (GUI_BUFFER_HAS_NICKLIST(window->buffer))
+    if (window->buffer->nicklist)
     {
         if (window->win_nick_start > 0)
         {
             window->win_nick_start -= (window->win_nick_height - 1);
             if (window->win_nick_start <= 1)
                 window->win_nick_start = 0;
-            gui_nicklist_draw (window->buffer, 1, 0);
+            gui_nicklist_draw (window->buffer, 1);
         }
     }
 }
@@ -487,22 +489,22 @@ gui_window_nick_page_up (t_gui_window *window)
  */
 
 void
-gui_window_nick_page_down (t_gui_window *window)
+gui_window_nick_page_down (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
     
-    if (GUI_BUFFER_HAS_NICKLIST(window->buffer))
+    if (window->buffer->nicklist)
     {
-        if ((GUI_CHANNEL(window->buffer)->nicks_count > window->win_nick_height)
+        if ((window->buffer->nicks_count > window->win_nick_height)
             && (window->win_nick_start + window->win_nick_height - 1
-                < GUI_CHANNEL(window->buffer)->nicks_count))
+                < window->buffer->nicks_count))
         {
             if (window->win_nick_start == 0)
                 window->win_nick_start += (window->win_nick_height - 1);
             else
                 window->win_nick_start += (window->win_nick_height - 2);
-            gui_nicklist_draw (window->buffer, 1, 0);
+            gui_nicklist_draw (window->buffer, 1);
         }
     }
 }
@@ -515,7 +517,7 @@ gui_window_nick_page_down (t_gui_window *window)
  */
 
 int
-gui_window_auto_resize (t_gui_window_tree *tree,
+gui_window_auto_resize (struct t_gui_window_tree *tree,
                         int x, int y, int width, int height,
                         int simulate)
 {
@@ -569,7 +571,7 @@ gui_window_auto_resize (t_gui_window_tree *tree,
 void
 gui_window_refresh_windows ()
 {
-    /*t_gui_window *ptr_win, *old_current_window;*/
+    /*struct t_gui_window *ptr_win, *old_current_window;*/
     
     if (gui_ok)
     {
@@ -582,9 +584,9 @@ gui_window_refresh_windows ()
  */
 
 void
-gui_window_split_horiz (t_gui_window *window, int pourcentage)
+gui_window_split_horiz (struct t_gui_window *window, int pourcentage)
 {
-    t_gui_window *new_window;
+    struct t_gui_window *new_window;
     int height1, height2;
     
     if (!gui_ok)
@@ -623,9 +625,9 @@ gui_window_split_horiz (t_gui_window *window, int pourcentage)
  */
 
 void
-gui_window_split_vertic (t_gui_window *window, int pourcentage)
+gui_window_split_vertic (struct t_gui_window *window, int pourcentage)
 {
-    t_gui_window *new_window;
+    struct t_gui_window *new_window;
     int width1, width2;
     
     if (!gui_ok)
@@ -666,7 +668,7 @@ gui_window_split_vertic (t_gui_window *window, int pourcentage)
  */
 
 void
-gui_window_resize (t_gui_window *window, int pourcentage)
+gui_window_resize (struct t_gui_window *window, int pourcentage)
 {
     /* TODO: write this function for Gtk */
     (void) window;
@@ -678,9 +680,9 @@ gui_window_resize (t_gui_window *window, int pourcentage)
  */
 
 int
-gui_window_merge (t_gui_window *window)
+gui_window_merge (struct t_gui_window *window)
 {
-    t_gui_window_tree *parent, *sister;
+    struct t_gui_window_tree *parent, *sister;
     
     parent = window->ptr_tree->parent_node;
     if (parent)
@@ -723,7 +725,7 @@ gui_window_merge (t_gui_window *window)
  */
 
 void
-gui_window_merge_all (t_gui_window *window)
+gui_window_merge_all (struct t_gui_window *window)
 {
     /* TODO: write this function for Gtk */
     (void) window;
@@ -739,7 +741,7 @@ gui_window_merge_all (t_gui_window *window)
  */
 
 int
-gui_window_side_by_side (t_gui_window *win1, t_gui_window *win2)
+gui_window_side_by_side (struct t_gui_window *win1, struct t_gui_window *win2)
 {
     /* win2 over win1 ? */
     if (win2->win_y + win2->win_height == win1->win_y)
@@ -789,9 +791,9 @@ gui_window_side_by_side (t_gui_window *win1, t_gui_window *win2)
  */
 
 void
-gui_window_switch_up (t_gui_window *window)
+gui_window_switch_up (struct t_gui_window *window)
 {
-    t_gui_window *ptr_win;
+    struct t_gui_window *ptr_win;
     
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
@@ -812,9 +814,9 @@ gui_window_switch_up (t_gui_window *window)
  */
 
 void
-gui_window_switch_down (t_gui_window *window)
+gui_window_switch_down (struct t_gui_window *window)
 {
-    t_gui_window *ptr_win;
+    struct t_gui_window *ptr_win;
     
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
@@ -835,9 +837,9 @@ gui_window_switch_down (t_gui_window *window)
  */
 
 void
-gui_window_switch_left (t_gui_window *window)
+gui_window_switch_left (struct t_gui_window *window)
 {
-    t_gui_window *ptr_win;
+    struct t_gui_window *ptr_win;
     
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
@@ -858,9 +860,9 @@ gui_window_switch_left (t_gui_window *window)
  */
 
 void
-gui_window_switch_right (t_gui_window *window)
+gui_window_switch_right (struct t_gui_window *window)
 {
-    t_gui_window *ptr_win;
+    struct t_gui_window *ptr_win;
     
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
@@ -887,21 +889,21 @@ gui_window_refresh_screen ()
 }
 
 /*
- * gui_window_set_title: set terminal title
+ * gui_window_title_set: set terminal title
  */
 
 void
-gui_window_set_title ()
+gui_window_title_set ()
 {
     /* TODO: write this function for Gtk */
 }
 
 /*
- * gui_window_reset_title: reset terminal title
+ * gui_window_title_reset: reset terminal title
  */
 
 void
-gui_window_reset_title ()
+gui_window_title_reset ()
 {
     /* This function does nothing in Gtk GUI */
 }
@@ -912,7 +914,7 @@ gui_window_reset_title ()
  */
 
 void
-gui_window_objects_print_log (t_gui_window *window)
+gui_window_objects_print_log (struct t_gui_window *window)
 {
     weechat_log_printf ("  textview_chat . . . : 0x%X\n", GUI_GTK(window)->textview_chat);
     weechat_log_printf ("  textbuffer_chat . . : 0x%X\n", GUI_GTK(window)->textbuffer_chat);

@@ -16,40 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-gtk-keyboard.c: keyboard functions for Gtk GUI */
 
+#ifndef __WEECHAT_GUI_INPUT_H
+#define __WEECHAT_GUI_INPUT_H 1
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
+#include "gui-buffer.h"
 
-#include <stdlib.h>
-#include <string.h>
+/* input variables */
 
-#include "../../core/weechat.h"
-#include "../../core/wee-utf8.h"
-#include "../../plugins/plugin.h"
-#include "../gui-keyboard.h"
-#include "../gui-buffer.h"
-#include "gui-gtk.h"
+extern char *gui_input_clipboard;
 
+/* input functions */
 
-/*
- * gui_keyboard_default_bindings: create default key bindings
- */
+extern void gui_input_optimize_size (struct t_gui_buffer *);
+extern void gui_input_init_color_mask (struct t_gui_buffer *);
+extern void gui_input_move (struct t_gui_buffer *, char *, char *, int );
+extern int gui_input_insert_string (struct t_gui_buffer *, char *, int);
+extern void gui_input_complete (struct t_gui_buffer *);
+extern void gui_input_delete_line (struct t_gui_buffer *);
+extern int gui_input_get_prompt_length (struct t_gui_buffer *);
 
-void
-gui_keyboard_default_bindings ()
-{
-    /* TODO: write this function for Gtk */
-}
+/* input functions (GUI dependent) */
 
-/*
- * gui_keyboard_read: read keyboard chars
- */
+extern void gui_input_draw (struct t_gui_buffer *, int);
 
-void
-gui_keyboard_read ()
-{
-    /* TODO: write this function for Gtk */
-}
+#endif /* gui-input.h */

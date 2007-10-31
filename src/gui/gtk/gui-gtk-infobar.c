@@ -26,10 +26,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../common/weechat.h"
-#include "../gui.h"
-#include "../../common/hotlist.h"
-#include "../../common/weeconfig.h"
+#include "../../core/weechat.h"
+#include "../../core/wee-config.h"
+#include "../gui-infobar.h"
+#include "../gui-main.h"
 #include "gui-gtk.h"
 
 
@@ -38,9 +38,9 @@
  */
 
 void
-gui_infobar_draw_time (t_gui_buffer *buffer)
+gui_infobar_draw_time (struct t_gui_buffer *buffer)
 {
-    /*t_gui_window *ptr_win;
+    /*struct t_gui_window *ptr_win;
     time_t time_seconds;
     struct tm *local_time;*/
     
@@ -59,9 +59,9 @@ gui_infobar_draw_time (t_gui_buffer *buffer)
  */
 
 void
-gui_infobar_draw (t_gui_buffer *buffer, int erase)
+gui_infobar_draw (struct t_gui_buffer *buffer, int erase)
 {
-    /*t_gui_window *ptr_win;
+    /*struct t_gui_window *ptr_win;
     time_t time_seconds;
     struct tm *local_time;
     char text_time[1024 + 1];*/

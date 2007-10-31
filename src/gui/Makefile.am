@@ -18,19 +18,34 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
 
 noinst_LIBRARIES = lib_weechat_gui_common.a
 
-lib_weechat_gui_common_a_SOURCES = gui-buffer.c \
-                                   gui-common.c \
-                                   gui-action.c \
-                                   gui-keyboard.c \
-                                   gui-log.c \
-                                   gui-window.c \
-                                   gui-panel.c \
-                                   gui.h \
+lib_weechat_gui_common_a_SOURCES = gui-action.c \
+                                   gui-action.h \
+                                   gui-buffer.c \
                                    gui-buffer.h \
+                                   gui-chat.c \
+                                   gui-chat.h \
+                                   gui-color.c \
                                    gui-color.h \
+                                   gui-completion.c \
+                                   gui-completion.h \
+                                   gui-history.c \
+                                   gui-history.h \
+                                   gui-hotlist.c \
+                                   gui-hotlist.h \
+                                   gui-infobar.c \
+                                   gui-infobar.h \
+                                   gui-input.c \
+                                   gui-input.h \
+                                   gui-keyboard.c \
                                    gui-keyboard.h \
-                                   gui-panel.h \
-                                   gui-window.h
+                                   gui-log.c \
+                                   gui-log.h \
+                                   gui-main.h \
+                                   gui-status.h \
+                                   gui-window.c \
+                                   gui-window.h \
+                                   gui-nicklist.c \
+                                   gui-nicklist.h
 
 if GUI_NCURSES
 curses_dir=curses

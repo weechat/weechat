@@ -31,16 +31,22 @@
 #include <signal.h>
 #include <time.h>
 
-#include "../common/weechat.h"
-#include "gui.h"
-#include "../common/command.h"
-#include "../common/weeconfig.h"
-#include "../common/history.h"
-#include "../common/hotlist.h"
-#include "../common/log.h"
-#include "../common/utf8.h"
-#include "../common/util.h"
-#include "../protocols/irc/irc.h"
+#include "../core/weechat.h"
+#include "../core/wee-command.h"
+#include "../core/wee-config.h"
+#include "../core/wee-input.h"
+#include "../core/wee-log.h"
+#include "../core/wee-string.h"
+#include "../core/wee-utf8.h"
+#include "gui-buffer.h"
+#include "gui-completion.h"
+#include "gui-history.h"
+#include "gui-hotlist.h"
+#include "gui-infobar.h"
+#include "gui-input.h"
+#include "gui-keyboard.h"
+#include "gui-status.h"
+#include "gui-window.h"
 
 
 /*
@@ -70,16 +76,18 @@ gui_action_clipboard_copy (char *buffer, int size)
  */
 
 void
-gui_action_clipboard_paste (t_gui_window *window, char *args)
+gui_action_clipboard_paste (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input && gui_input_clipboard) 
+    if ((gui_current_window->buffer->input)
+        && gui_input_clipboard) 
     {
-        gui_insert_string_input (window, gui_input_clipboard, -1);
-        window->buffer->completion.position = -1;
-        gui_input_draw (window->buffer, 0);
+        gui_input_insert_string (gui_current_window->buffer,
+                                 gui_input_clipboard, -1);
+        gui_current_window->buffer->completion->position = -1;
+        gui_input_draw (gui_current_window->buffer, 0);
     }
 }
 
@@ -88,38 +96,38 @@ gui_action_clipboard_paste (t_gui_window *window, char *args)
  */
 
 void
-gui_action_return (t_gui_window *window, char *args)
+gui_action_return (char *args)
 {
     char *command;
     
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        if (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
-            gui_buffer_search_stop (window);
-        else if (window->buffer->input_buffer_size > 0)
+        if (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+            gui_window_search_stop (gui_current_window);
+        else if (gui_current_window->buffer->input_buffer_size > 0)
         {
-            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
-            command = strdup (window->buffer->input_buffer);
+            gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
+            gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
+            command = strdup (gui_current_window->buffer->input_buffer);
             if (!command)
                 return;
-            history_buffer_add (window->buffer, window->buffer->input_buffer);
-            history_global_add (window->buffer->input_buffer);
-            window->buffer->input_buffer[0] = '\0';
-            window->buffer->input_buffer_color_mask[0] = '\0';
-            window->buffer->input_buffer_size = 0;
-            window->buffer->input_buffer_length = 0;
-            window->buffer->input_buffer_pos = 0;
-            window->buffer->input_buffer_1st_display = 0;
-            window->buffer->completion.position = -1;
-            window->buffer->ptr_history = NULL;
-            gui_input_optimize_size (window->buffer);
-            gui_input_draw (window->buffer, 0);
-            user_command (GUI_SERVER(window->buffer), GUI_CHANNEL(window->buffer),
-                          command, 0);
+            gui_history_buffer_add (gui_current_window->buffer,
+                                    gui_current_window->buffer->input_buffer);
+            gui_history_global_add (gui_current_window->buffer->input_buffer);
+            gui_current_window->buffer->input_buffer[0] = '\0';
+            gui_current_window->buffer->input_buffer_color_mask[0] = '\0';
+            gui_current_window->buffer->input_buffer_size = 0;
+            gui_current_window->buffer->input_buffer_length = 0;
+            gui_current_window->buffer->input_buffer_pos = 0;
+            gui_current_window->buffer->input_buffer_1st_display = 0;
+            gui_current_window->buffer->completion->position = -1;
+            gui_current_window->buffer->ptr_history = NULL;
+            gui_input_optimize_size (gui_current_window->buffer);
+            gui_input_draw (gui_current_window->buffer, 0);
+            input_data (gui_current_window->buffer, command, 0);
             free (command);
         }
     }
@@ -130,20 +138,21 @@ gui_action_return (t_gui_window *window, char *args)
  */
 
 void
-gui_action_tab (t_gui_window *window, char *args)
+gui_action_tab (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input
-        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if ((gui_current_window->buffer->input)
+        && (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
-        completion_search (&(window->buffer->completion), 1,
-                           window->buffer->input_buffer,
-                           window->buffer->input_buffer_size,
-                           utf8_real_pos (window->buffer->input_buffer,
-                                          window->buffer->input_buffer_pos));
-        gui_input_complete (window);
+        gui_completion_search (gui_current_window->buffer->completion,
+                               1,
+                               gui_current_window->buffer->input_buffer,
+                               gui_current_window->buffer->input_buffer_size,
+                               utf8_real_pos (gui_current_window->buffer->input_buffer,
+                                              gui_current_window->buffer->input_buffer_pos));
+        gui_input_complete (gui_current_window->buffer);
     }
 }
 
@@ -152,20 +161,21 @@ gui_action_tab (t_gui_window *window, char *args)
  */
 
 void
-gui_action_tab_previous (t_gui_window *window, char *args)
+gui_action_tab_previous (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input
-        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if ((gui_current_window->buffer->input)
+        && (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
-        completion_search (&(window->buffer->completion), -1,
-                           window->buffer->input_buffer,
-                           window->buffer->input_buffer_size,
-                           utf8_real_pos (window->buffer->input_buffer,
-                                          window->buffer->input_buffer_pos));
-        gui_input_complete (window);
+        gui_completion_search (gui_current_window->buffer->completion,
+                               -1,
+                               gui_current_window->buffer->input_buffer,
+                               gui_current_window->buffer->input_buffer_size,
+                               utf8_real_pos (gui_current_window->buffer->input_buffer,
+                                              gui_current_window->buffer->input_buffer_pos));
+        gui_input_complete (gui_current_window->buffer);
     }
 }
 
@@ -174,7 +184,7 @@ gui_action_tab_previous (t_gui_window *window, char *args)
  */
 
 void
-gui_action_backspace (t_gui_window *window, char *args)
+gui_action_backspace (char *args)
 {
     char *pos, *pos_last;
     int char_size, size_to_move;
@@ -182,24 +192,24 @@ gui_action_backspace (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        if (window->buffer->input_buffer_pos > 0)
+        if (gui_current_window->buffer->input_buffer_pos > 0)
         {
-            pos = utf8_add_offset (window->buffer->input_buffer,
-                                   window->buffer->input_buffer_pos);
-            pos_last = utf8_prev_char (window->buffer->input_buffer, pos);
+            pos = utf8_add_offset (gui_current_window->buffer->input_buffer,
+                                   gui_current_window->buffer->input_buffer_pos);
+            pos_last = utf8_prev_char (gui_current_window->buffer->input_buffer, pos);
             char_size = pos - pos_last;
             size_to_move = strlen (pos);
-            gui_input_move (window->buffer, pos_last, pos, size_to_move);
-            window->buffer->input_buffer_size -= char_size;
-            window->buffer->input_buffer_length--;
-            window->buffer->input_buffer_pos--;
-            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
-            gui_input_optimize_size (window->buffer);
-            gui_input_draw (window->buffer, 0);
-            window->buffer->completion.position = -1;
+            gui_input_move (gui_current_window->buffer, pos_last, pos, size_to_move);
+            gui_current_window->buffer->input_buffer_size -= char_size;
+            gui_current_window->buffer->input_buffer_length--;
+            gui_current_window->buffer->input_buffer_pos--;
+            gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
+            gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
+            gui_input_optimize_size (gui_current_window->buffer);
+            gui_input_draw (gui_current_window->buffer, 0);
+            gui_current_window->buffer->completion->position = -1;
         }
     }
 }
@@ -209,7 +219,7 @@ gui_action_backspace (t_gui_window *window, char *args)
  */
 
 void
-gui_action_delete (t_gui_window *window, char *args)
+gui_action_delete (char *args)
 {
     char *pos, *pos_next;
     int char_size, size_to_move;
@@ -217,24 +227,24 @@ gui_action_delete (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        if (window->buffer->input_buffer_pos <
-            window->buffer->input_buffer_length)
+        if (gui_current_window->buffer->input_buffer_pos <
+            gui_current_window->buffer->input_buffer_length)
         {
-            pos = utf8_add_offset (window->buffer->input_buffer,
-                                   window->buffer->input_buffer_pos);
+            pos = utf8_add_offset (gui_current_window->buffer->input_buffer,
+                                   gui_current_window->buffer->input_buffer_pos);
             pos_next = utf8_next_char (pos);
             char_size = pos_next - pos;
             size_to_move = strlen (pos_next);
-            gui_input_move (window->buffer, pos, pos_next, size_to_move);
-            window->buffer->input_buffer_size -= char_size;
-            window->buffer->input_buffer_length--;
-            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
-            gui_input_optimize_size (window->buffer);
-            gui_input_draw (window->buffer, 0);
-            window->buffer->completion.position = -1;
+            gui_input_move (gui_current_window->buffer, pos, pos_next, size_to_move);
+            gui_current_window->buffer->input_buffer_size -= char_size;
+            gui_current_window->buffer->input_buffer_length--;
+            gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
+            gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
+            gui_input_optimize_size (gui_current_window->buffer);
+            gui_input_draw (gui_current_window->buffer, 0);
+            gui_current_window->buffer->completion->position = -1;
         }
     }
 }
@@ -244,7 +254,7 @@ gui_action_delete (t_gui_window *window, char *args)
  */
 
 void
-gui_action_delete_previous_word (t_gui_window *window, char *args)
+gui_action_delete_previous_word (char *args)
 {
     int length_deleted, size_deleted;
     char *start, *string;
@@ -252,28 +262,28 @@ gui_action_delete_previous_word (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        if (window->buffer->input_buffer_pos > 0)
+        if (gui_current_window->buffer->input_buffer_pos > 0)
         {
-            start = utf8_add_offset (window->buffer->input_buffer,
-                                      window->buffer->input_buffer_pos - 1);
+            start = utf8_add_offset (gui_current_window->buffer->input_buffer,
+                                      gui_current_window->buffer->input_buffer_pos - 1);
             string = start;
             while (string && (string[0] == ' '))
             {
-                string = utf8_prev_char (window->buffer->input_buffer, string);
+                string = utf8_prev_char (gui_current_window->buffer->input_buffer, string);
             }
             if (string)
             {
                 while (string && (string[0] != ' '))
                 {
-                    string = utf8_prev_char (window->buffer->input_buffer, string);
+                    string = utf8_prev_char (gui_current_window->buffer->input_buffer, string);
                 }
                 if (string)
                 {
                     while (string && (string[0] == ' '))
                     {
-                        string = utf8_prev_char (window->buffer->input_buffer, string);
+                        string = utf8_prev_char (gui_current_window->buffer->input_buffer, string);
                     }
                 }
             }
@@ -281,23 +291,23 @@ gui_action_delete_previous_word (t_gui_window *window, char *args)
             if (string)
                 string = utf8_next_char (utf8_next_char (string));
             else
-                string = window->buffer->input_buffer;
+                string = gui_current_window->buffer->input_buffer;
             
             size_deleted = utf8_next_char (start) - string;
             length_deleted = utf8_strnlen (string, size_deleted);
             
             gui_action_clipboard_copy (string, size_deleted);
             
-            gui_input_move (window->buffer, string, string + size_deleted, strlen (string + size_deleted));
+            gui_input_move (gui_current_window->buffer, string, string + size_deleted, strlen (string + size_deleted));
             
-            window->buffer->input_buffer_size -= size_deleted;
-            window->buffer->input_buffer_length -= length_deleted;
-            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
-            window->buffer->input_buffer_pos -= length_deleted;
-            gui_input_optimize_size (window->buffer);
-            gui_input_draw (window->buffer, 0);
-            window->buffer->completion.position = -1;
+            gui_current_window->buffer->input_buffer_size -= size_deleted;
+            gui_current_window->buffer->input_buffer_length -= length_deleted;
+            gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
+            gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
+            gui_current_window->buffer->input_buffer_pos -= length_deleted;
+            gui_input_optimize_size (gui_current_window->buffer);
+            gui_input_draw (gui_current_window->buffer, 0);
+            gui_current_window->buffer->completion->position = -1;
         }
     }
 }
@@ -307,7 +317,7 @@ gui_action_delete_previous_word (t_gui_window *window, char *args)
  */
 
 void
-gui_action_delete_next_word (t_gui_window *window, char *args)
+gui_action_delete_next_word (char *args)
 {
     int size_deleted, length_deleted;
     char *start, *string;
@@ -315,10 +325,10 @@ gui_action_delete_next_word (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        start = utf8_add_offset (window->buffer->input_buffer,
-                                 window->buffer->input_buffer_pos);
+        start = utf8_add_offset (gui_current_window->buffer->input_buffer,
+                                 gui_current_window->buffer->input_buffer_pos);
         string = start;
         length_deleted = 0;
         while (string[0])
@@ -332,15 +342,15 @@ gui_action_delete_next_word (t_gui_window *window, char *args)
         
         gui_action_clipboard_copy(start, size_deleted);
         
-        gui_input_move (window->buffer, start, string, strlen (string));
+        gui_input_move (gui_current_window->buffer, start, string, strlen (string));
         
-        window->buffer->input_buffer_size -= size_deleted;
-        window->buffer->input_buffer_length -= length_deleted;
-        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-        window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
-        gui_input_optimize_size (window->buffer);
-        gui_input_draw (window->buffer, 0);
-        window->buffer->completion.position = -1;
+        gui_current_window->buffer->input_buffer_size -= size_deleted;
+        gui_current_window->buffer->input_buffer_length -= length_deleted;
+        gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
+        gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
+        gui_input_optimize_size (gui_current_window->buffer);
+        gui_input_draw (gui_current_window->buffer, 0);
+        gui_current_window->buffer->completion->position = -1;
     }
 }
 
@@ -349,7 +359,7 @@ gui_action_delete_next_word (t_gui_window *window, char *args)
  */
 
 void
-gui_action_delete_begin_of_line (t_gui_window *window, char *args)
+gui_action_delete_begin_of_line (char *args)
 {
     int length_deleted, size_deleted, pos_start;
     char *start;
@@ -357,28 +367,28 @@ gui_action_delete_begin_of_line (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        if (window->buffer->input_buffer_pos > 0)
+        if (gui_current_window->buffer->input_buffer_pos > 0)
         {
-            start = utf8_add_offset (window->buffer->input_buffer,
-                                     window->buffer->input_buffer_pos);
-            pos_start = start - window->buffer->input_buffer;
-            size_deleted = start - window->buffer->input_buffer;
-            length_deleted = utf8_strnlen (window->buffer->input_buffer, size_deleted);
-            gui_action_clipboard_copy (window->buffer->input_buffer,
-                                       start - window->buffer->input_buffer);
+            start = utf8_add_offset (gui_current_window->buffer->input_buffer,
+                                     gui_current_window->buffer->input_buffer_pos);
+            pos_start = start - gui_current_window->buffer->input_buffer;
+            size_deleted = start - gui_current_window->buffer->input_buffer;
+            length_deleted = utf8_strnlen (gui_current_window->buffer->input_buffer, size_deleted);
+            gui_action_clipboard_copy (gui_current_window->buffer->input_buffer,
+                                       start - gui_current_window->buffer->input_buffer);
             
-            gui_input_move (window->buffer, window->buffer->input_buffer, start, strlen (start));
+            gui_input_move (gui_current_window->buffer, gui_current_window->buffer->input_buffer, start, strlen (start));
             
-            window->buffer->input_buffer_size -= size_deleted;
-            window->buffer->input_buffer_length -= length_deleted;
-            window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-            window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
-            window->buffer->input_buffer_pos = 0;
-            gui_input_optimize_size (window->buffer);
-            gui_input_draw (window->buffer, 0);
-            window->buffer->completion.position = -1;
+            gui_current_window->buffer->input_buffer_size -= size_deleted;
+            gui_current_window->buffer->input_buffer_length -= length_deleted;
+            gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
+            gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
+            gui_current_window->buffer->input_buffer_pos = 0;
+            gui_input_optimize_size (gui_current_window->buffer);
+            gui_input_draw (gui_current_window->buffer, 0);
+            gui_current_window->buffer->completion->position = -1;
         }
     }
 }
@@ -388,7 +398,7 @@ gui_action_delete_begin_of_line (t_gui_window *window, char *args)
  */
 
 void
-gui_action_delete_end_of_line (t_gui_window *window, char *args)
+gui_action_delete_end_of_line (char *args)
 {
     char *start;
     int size_deleted, length_deleted, pos_start;
@@ -396,21 +406,21 @@ gui_action_delete_end_of_line (t_gui_window *window, char *args)
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        start = utf8_add_offset (window->buffer->input_buffer,
-                                 window->buffer->input_buffer_pos);
-        pos_start = start - window->buffer->input_buffer;
+        start = utf8_add_offset (gui_current_window->buffer->input_buffer,
+                                 gui_current_window->buffer->input_buffer_pos);
+        pos_start = start - gui_current_window->buffer->input_buffer;
         size_deleted = strlen (start);
         length_deleted = utf8_strlen (start);
         gui_action_clipboard_copy (start, size_deleted);
         start[0] = '\0';
-        window->buffer->input_buffer_color_mask[pos_start] = '\0';
-        window->buffer->input_buffer_size = strlen (window->buffer->input_buffer);
-        window->buffer->input_buffer_length = utf8_strlen (window->buffer->input_buffer);
-        gui_input_optimize_size (window->buffer);
-        gui_input_draw (window->buffer, 0);
-        window->buffer->completion.position = -1;
+        gui_current_window->buffer->input_buffer_color_mask[pos_start] = '\0';
+        gui_current_window->buffer->input_buffer_size = strlen (gui_current_window->buffer->input_buffer);
+        gui_current_window->buffer->input_buffer_length = utf8_strlen (gui_current_window->buffer->input_buffer);
+        gui_input_optimize_size (gui_current_window->buffer);
+        gui_input_draw (gui_current_window->buffer, 0);
+        gui_current_window->buffer->completion->position = -1;
     }
 }
 
@@ -419,22 +429,13 @@ gui_action_delete_end_of_line (t_gui_window *window, char *args)
  */
 
 void
-gui_action_delete_line (t_gui_window *window, char *args)
+gui_action_delete_line (char *args)
 {
     /* make C compiler happy */
     (void) args;
-    
-    if (window->buffer->has_input)
-    {
-        window->buffer->input_buffer[0] = '\0';
-        window->buffer->input_buffer_color_mask[0] = '\0';
-        window->buffer->input_buffer_size = 0;
-        window->buffer->input_buffer_length = 0;
-        window->buffer->input_buffer_pos = 0;
-        gui_input_optimize_size (window->buffer);
-        gui_input_draw (window->buffer, 0);
-        window->buffer->completion.position = -1;
-    }
+
+    gui_input_delete_line (gui_current_window->buffer);
+    gui_input_draw (gui_current_window->buffer, 0);
 }
 
 /*
@@ -442,7 +443,7 @@ gui_action_delete_line (t_gui_window *window, char *args)
  */
 
 void
-gui_action_transpose_chars (t_gui_window *window, char *args)
+gui_action_transpose_chars (char *args)
 {
     /* make C compiler happy */
     (void) args;
@@ -451,20 +452,20 @@ gui_action_transpose_chars (t_gui_window *window, char *args)
     int size_prev_char, size_start_char;
     int pos_prev_char, pos_start;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        if ((window->buffer->input_buffer_pos > 0)
-            && (window->buffer->input_buffer_length > 1))
+        if ((gui_current_window->buffer->input_buffer_pos > 0)
+            && (gui_current_window->buffer->input_buffer_length > 1))
         {
-            if (window->buffer->input_buffer_pos == window->buffer->input_buffer_length)
-                window->buffer->input_buffer_pos--;
+            if (gui_current_window->buffer->input_buffer_pos == gui_current_window->buffer->input_buffer_length)
+                gui_current_window->buffer->input_buffer_pos--;
             
-            start = utf8_add_offset (window->buffer->input_buffer,
-                                     window->buffer->input_buffer_pos);
-            pos_start = start - window->buffer->input_buffer;
-            prev_char = utf8_prev_char (window->buffer->input_buffer,
+            start = utf8_add_offset (gui_current_window->buffer->input_buffer,
+                                     gui_current_window->buffer->input_buffer_pos);
+            pos_start = start - gui_current_window->buffer->input_buffer;
+            prev_char = utf8_prev_char (gui_current_window->buffer->input_buffer,
                                         start);
-            pos_prev_char = prev_char - window->buffer->input_buffer;
+            pos_prev_char = prev_char - gui_current_window->buffer->input_buffer;
             size_prev_char = start - prev_char;
             size_start_char = utf8_char_size (start);
             
@@ -472,16 +473,16 @@ gui_action_transpose_chars (t_gui_window *window, char *args)
             memcpy (prev_char, start, size_start_char);
             memcpy (prev_char + size_start_char, saved_char, size_prev_char);
             
-            memcpy (saved_char, window->buffer->input_buffer_color_mask + pos_prev_char, size_prev_char);
-            memcpy (window->buffer->input_buffer_color_mask + pos_prev_char,
-                    window->buffer->input_buffer_color_mask + pos_start, size_start_char);
-            memcpy (window->buffer->input_buffer_color_mask + pos_prev_char + size_start_char,
+            memcpy (saved_char, gui_current_window->buffer->input_buffer_color_mask + pos_prev_char, size_prev_char);
+            memcpy (gui_current_window->buffer->input_buffer_color_mask + pos_prev_char,
+                    gui_current_window->buffer->input_buffer_color_mask + pos_start, size_start_char);
+            memcpy (gui_current_window->buffer->input_buffer_color_mask + pos_prev_char + size_start_char,
                     saved_char, size_prev_char);
             
-            window->buffer->input_buffer_pos++;
+            gui_current_window->buffer->input_buffer_pos++;
             
-            gui_input_draw (window->buffer, 0);	
-            window->buffer->completion.position = -1;
+            gui_input_draw (gui_current_window->buffer, 0);	
+            gui_current_window->buffer->completion->position = -1;
         }
     }
 }
@@ -491,17 +492,17 @@ gui_action_transpose_chars (t_gui_window *window, char *args)
  */
 
 void
-gui_action_home (t_gui_window *window, char *args)
+gui_action_home (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        if (window->buffer->input_buffer_pos > 0)
+        if (gui_current_window->buffer->input_buffer_pos > 0)
         {
-            window->buffer->input_buffer_pos = 0;
-            gui_input_draw (window->buffer, 0);
+            gui_current_window->buffer->input_buffer_pos = 0;
+            gui_input_draw (gui_current_window->buffer, 0);
         }
     }
 }
@@ -511,19 +512,19 @@ gui_action_home (t_gui_window *window, char *args)
  */
 
 void
-gui_action_end (t_gui_window *window, char *args)
+gui_action_end (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        if (window->buffer->input_buffer_pos <
-            window->buffer->input_buffer_length)
+        if (gui_current_window->buffer->input_buffer_pos <
+            gui_current_window->buffer->input_buffer_length)
         {
-            window->buffer->input_buffer_pos =
-                window->buffer->input_buffer_length;
-            gui_input_draw (window->buffer, 0);
+            gui_current_window->buffer->input_buffer_pos =
+                gui_current_window->buffer->input_buffer_length;
+            gui_input_draw (gui_current_window->buffer, 0);
         }
     }
 }
@@ -533,17 +534,17 @@ gui_action_end (t_gui_window *window, char *args)
  */
 
 void
-gui_action_left (t_gui_window *window, char *args)
+gui_action_left (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        if (window->buffer->input_buffer_pos > 0)
+        if (gui_current_window->buffer->input_buffer_pos > 0)
         {
-            window->buffer->input_buffer_pos--;
-            gui_input_draw (window->buffer, 0);
+            gui_current_window->buffer->input_buffer_pos--;
+            gui_input_draw (gui_current_window->buffer, 0);
         }
     }
 }
@@ -553,40 +554,40 @@ gui_action_left (t_gui_window *window, char *args)
  */
 
 void
-gui_action_previous_word (t_gui_window *window, char *args)
+gui_action_previous_word (char *args)
 {
     char *pos;
     
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        if (window->buffer->input_buffer_pos > 0)
+        if (gui_current_window->buffer->input_buffer_pos > 0)
         {
-            pos = utf8_add_offset (window->buffer->input_buffer,
-                                   window->buffer->input_buffer_pos - 1);
+            pos = utf8_add_offset (gui_current_window->buffer->input_buffer,
+                                   gui_current_window->buffer->input_buffer_pos - 1);
             while (pos && (pos[0] == ' '))
             {
-                pos = utf8_prev_char (window->buffer->input_buffer, pos);
+                pos = utf8_prev_char (gui_current_window->buffer->input_buffer, pos);
             }
             if (pos)
             {
                 while (pos && (pos[0] != ' '))
                 {
-                    pos = utf8_prev_char (window->buffer->input_buffer, pos);
+                    pos = utf8_prev_char (gui_current_window->buffer->input_buffer, pos);
                 }
                 if (pos)
                     pos = utf8_next_char (pos);
                 else
-                    pos = window->buffer->input_buffer;
-                window->buffer->input_buffer_pos = utf8_pos (window->buffer->input_buffer,
-                                                             pos - window->buffer->input_buffer);
+                    pos = gui_current_window->buffer->input_buffer;
+                gui_current_window->buffer->input_buffer_pos = utf8_pos (gui_current_window->buffer->input_buffer,
+                                                             pos - gui_current_window->buffer->input_buffer);
             }
             else
-                window->buffer->input_buffer_pos = 0;
+                gui_current_window->buffer->input_buffer_pos = 0;
             
-            gui_input_draw (window->buffer, 0);
+            gui_input_draw (gui_current_window->buffer, 0);
         }
     }
 }
@@ -596,18 +597,18 @@ gui_action_previous_word (t_gui_window *window, char *args)
  */
 
 void
-gui_action_right (t_gui_window *window, char *args)
+gui_action_right (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        if (window->buffer->input_buffer_pos <
-            window->buffer->input_buffer_length)
+        if (gui_current_window->buffer->input_buffer_pos <
+            gui_current_window->buffer->input_buffer_length)
         {
-            window->buffer->input_buffer_pos++;
-            gui_input_draw (window->buffer, 0);
+            gui_current_window->buffer->input_buffer_pos++;
+            gui_input_draw (gui_current_window->buffer, 0);
         }
     }
 }
@@ -617,20 +618,20 @@ gui_action_right (t_gui_window *window, char *args)
  */
 
 void
-gui_action_next_word (t_gui_window *window, char *args)
+gui_action_next_word (char *args)
 {
     char *pos;
     
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
     {
-        if (window->buffer->input_buffer_pos <
-            window->buffer->input_buffer_length)
+        if (gui_current_window->buffer->input_buffer_pos <
+            gui_current_window->buffer->input_buffer_length)
         {
-            pos = utf8_add_offset (window->buffer->input_buffer,
-                                   window->buffer->input_buffer_pos);
+            pos = utf8_add_offset (gui_current_window->buffer->input_buffer,
+                                   gui_current_window->buffer->input_buffer_pos);
             while (pos[0] && (pos[0] == ' '))
             {
                 pos = utf8_next_char (pos);
@@ -642,19 +643,19 @@ gui_action_next_word (t_gui_window *window, char *args)
                     pos = utf8_next_char (pos);
                 }
                 if (pos[0])
-                    window->buffer->input_buffer_pos =
-                        utf8_pos (window->buffer->input_buffer,
-                                  pos - window->buffer->input_buffer);
+                    gui_current_window->buffer->input_buffer_pos =
+                        utf8_pos (gui_current_window->buffer->input_buffer,
+                                  pos - gui_current_window->buffer->input_buffer);
                 else
-                    window->buffer->input_buffer_pos = 
-                        window->buffer->input_buffer_length;
+                    gui_current_window->buffer->input_buffer_pos = 
+                        gui_current_window->buffer->input_buffer_length;
             }
             else
-                window->buffer->input_buffer_pos =
-                    utf8_pos (window->buffer->input_buffer,
-                              utf8_prev_char (window->buffer->input_buffer, pos) - window->buffer->input_buffer);
+                gui_current_window->buffer->input_buffer_pos =
+                    utf8_pos (gui_current_window->buffer->input_buffer,
+                              utf8_prev_char (gui_current_window->buffer->input_buffer, pos) - gui_current_window->buffer->input_buffer);
             
-            gui_input_draw (window->buffer, 0);
+            gui_input_draw (gui_current_window->buffer, 0);
         }
     }
 }
@@ -664,12 +665,12 @@ gui_action_next_word (t_gui_window *window, char *args)
  */
 
 void
-gui_action_up (t_gui_window *window, char *args)
+gui_action_up (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->type == GUI_BUFFER_TYPE_DCC)
+    /*if (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FREE)
     {
         if (irc_dcc_list)
         {
@@ -682,69 +683,69 @@ gui_action_up (t_gui_window *window, char *args)
                         ((t_irc_dcc *)(window->dcc_first))->prev_dcc;
                 window->dcc_selected =
                     ((t_irc_dcc *)(window->dcc_selected))->prev_dcc;
-                gui_chat_draw (window->buffer, 1);
-                gui_input_draw (window->buffer, 1);
+                gui_chat_draw (gui_current_window->buffer, 1);
+                gui_input_draw (gui_current_window->buffer, 1);
             }
         }
     }
-    else if (window->buffer->has_input)
+    else*/ if (gui_current_window->buffer->input)
     {
-        if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+        if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
         {
-            if (window->buffer->ptr_history)
+            if (gui_current_window->buffer->ptr_history)
             {
-                window->buffer->ptr_history =
-                    window->buffer->ptr_history->next_history;
-                if (!window->buffer->ptr_history)
-                    window->buffer->ptr_history =
-                        window->buffer->history;
+                gui_current_window->buffer->ptr_history =
+                    gui_current_window->buffer->ptr_history->next_history;
+                if (!gui_current_window->buffer->ptr_history)
+                    gui_current_window->buffer->ptr_history =
+                        gui_current_window->buffer->history;
             }
             else
-                window->buffer->ptr_history =
-                    window->buffer->history;
-            if (window->buffer->ptr_history)
+                gui_current_window->buffer->ptr_history =
+                    gui_current_window->buffer->history;
+            if (gui_current_window->buffer->ptr_history)
             {
                 /* bash/readline like use of history */
-                if (window->buffer->ptr_history->prev_history == NULL)
+                if (gui_current_window->buffer->ptr_history->prev_history == NULL)
                 {
-                    if (window->buffer->input_buffer_size > 0)
+                    if (gui_current_window->buffer->input_buffer_size > 0)
                     {
-                        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-                        window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
-                        history_buffer_add (window->buffer, window->buffer->input_buffer);
-                        history_global_add (window->buffer->input_buffer);
+                        gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
+                        gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
+                        gui_history_buffer_add (gui_current_window->buffer, gui_current_window->buffer->input_buffer);
+                        gui_history_global_add (gui_current_window->buffer->input_buffer);
                     }
                 }
                 else
                 {
-                    if (window->buffer->input_buffer_size > 0)
+                    if (gui_current_window->buffer->input_buffer_size > 0)
                     {
-                        window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-                        window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
-                        if (window->buffer->ptr_history->prev_history->text)
-                            free(window->buffer->ptr_history->prev_history->text);
-                        window->buffer->ptr_history->prev_history->text = strdup (window->buffer->input_buffer);
+                        gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
+                        gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
+                        if (gui_current_window->buffer->ptr_history->prev_history->text)
+                            free(gui_current_window->buffer->ptr_history->prev_history->text);
+                        gui_current_window->buffer->ptr_history->prev_history->text = strdup (gui_current_window->buffer->input_buffer);
                     }
                 }
-                window->buffer->input_buffer_size =
-                    strlen (window->buffer->ptr_history->text);
-                window->buffer->input_buffer_length =
-                    utf8_strlen (window->buffer->ptr_history->text);
-                gui_input_optimize_size (window->buffer);
-                window->buffer->input_buffer_pos =
-                    window->buffer->input_buffer_length;
-                window->buffer->input_buffer_1st_display = 0;
-                strcpy (window->buffer->input_buffer,
-                        window->buffer->ptr_history->text);
-                gui_input_init_color_mask (window->buffer);
-                gui_input_draw (window->buffer, 0);
+                gui_current_window->buffer->input_buffer_size =
+                    strlen (gui_current_window->buffer->ptr_history->text);
+                gui_current_window->buffer->input_buffer_length =
+                    utf8_strlen (gui_current_window->buffer->ptr_history->text);
+                gui_input_optimize_size (gui_current_window->buffer);
+                gui_current_window->buffer->input_buffer_pos =
+                    gui_current_window->buffer->input_buffer_length;
+                gui_current_window->buffer->input_buffer_1st_display = 0;
+                strcpy (gui_current_window->buffer->input_buffer,
+                        gui_current_window->buffer->ptr_history->text);
+                gui_input_init_color_mask (gui_current_window->buffer);
+                gui_input_draw (gui_current_window->buffer, 0);
             }
         }
         else
         {
             /* search backward in buffer history */
-            window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
-            (void) gui_buffer_search_text (window);
+            gui_current_window->buffer->text_search = GUI_TEXT_SEARCH_BACKWARD;
+            (void) gui_window_search_text (gui_current_window);
         }
     }
 }
@@ -754,13 +755,13 @@ gui_action_up (t_gui_window *window, char *args)
  */
 
 void
-gui_action_up_global (t_gui_window *window, char *args)
+gui_action_up_global (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input
-        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if ((gui_current_window->buffer->input)
+        && (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         if (history_global_ptr)
         {
@@ -772,18 +773,18 @@ gui_action_up_global (t_gui_window *window, char *args)
             history_global_ptr = history_global;
         if (history_global_ptr)
         {
-            window->buffer->input_buffer_size =
+            gui_current_window->buffer->input_buffer_size =
                 strlen (history_global_ptr->text);
-            window->buffer->input_buffer_length =
+            gui_current_window->buffer->input_buffer_length =
                 utf8_strlen (history_global_ptr->text);
-            gui_input_optimize_size (window->buffer);
-            window->buffer->input_buffer_pos =
-                window->buffer->input_buffer_length;
-            window->buffer->input_buffer_1st_display = 0;
-            strcpy (window->buffer->input_buffer,
+            gui_input_optimize_size (gui_current_window->buffer);
+            gui_current_window->buffer->input_buffer_pos =
+                gui_current_window->buffer->input_buffer_length;
+            gui_current_window->buffer->input_buffer_1st_display = 0;
+            strcpy (gui_current_window->buffer->input_buffer,
                     history_global_ptr->text);
-            gui_input_init_color_mask (window->buffer);
-            gui_input_draw (window->buffer, 0);
+            gui_input_init_color_mask (gui_current_window->buffer);
+            gui_input_draw (gui_current_window->buffer, 0);
         }
     }
 }
@@ -793,12 +794,12 @@ gui_action_up_global (t_gui_window *window, char *args)
  */
 
 void
-gui_action_down (t_gui_window *window, char *args)
+gui_action_down (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->type == GUI_BUFFER_TYPE_DCC)
+    /*if (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FREE)
     {
         if (irc_dcc_list)
         {
@@ -822,66 +823,66 @@ gui_action_down (t_gui_window *window, char *args)
                 else
                     window->dcc_selected =
                         irc_dcc_list->next_dcc;
-                gui_chat_draw (window->buffer, 1);
-                gui_input_draw (window->buffer, 1);
+                gui_chat_draw (gui_current_window->buffer, 1);
+                gui_input_draw (gui_current_window->buffer, 1);
             }
         }
     }
-    else if (window->buffer->has_input)
+    else */if (gui_current_window->buffer->input)
     {
-        if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+        if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
         {
-            if (window->buffer->ptr_history)
+            if (gui_current_window->buffer->ptr_history)
             {
-                window->buffer->ptr_history =
-                    window->buffer->ptr_history->prev_history;
-                if (window->buffer->ptr_history)
+                gui_current_window->buffer->ptr_history =
+                    gui_current_window->buffer->ptr_history->prev_history;
+                if (gui_current_window->buffer->ptr_history)
                 {
-                    window->buffer->input_buffer_size =
-                        strlen (window->buffer->ptr_history->text);
-                    window->buffer->input_buffer_length =
-                        utf8_strlen (window->buffer->ptr_history->text);
+                    gui_current_window->buffer->input_buffer_size =
+                        strlen (gui_current_window->buffer->ptr_history->text);
+                    gui_current_window->buffer->input_buffer_length =
+                        utf8_strlen (gui_current_window->buffer->ptr_history->text);
                 }
                 else
                 {
-                    window->buffer->input_buffer_size = 0;
-                    window->buffer->input_buffer_length = 0;
+                    gui_current_window->buffer->input_buffer_size = 0;
+                    gui_current_window->buffer->input_buffer_length = 0;
                 }
-                gui_input_optimize_size (window->buffer);
-                window->buffer->input_buffer_pos =
-                    window->buffer->input_buffer_length;
-                window->buffer->input_buffer_1st_display = 0;
-                if (window->buffer->ptr_history)
+                gui_input_optimize_size (gui_current_window->buffer);
+                gui_current_window->buffer->input_buffer_pos =
+                    gui_current_window->buffer->input_buffer_length;
+                gui_current_window->buffer->input_buffer_1st_display = 0;
+                if (gui_current_window->buffer->ptr_history)
                 {
-                    strcpy (window->buffer->input_buffer,
-                            window->buffer->ptr_history->text);
-                    gui_input_init_color_mask (window->buffer);
+                    strcpy (gui_current_window->buffer->input_buffer,
+                            gui_current_window->buffer->ptr_history->text);
+                    gui_input_init_color_mask (gui_current_window->buffer);
                 }
-                gui_input_draw (window->buffer, 0);
+                gui_input_draw (gui_current_window->buffer, 0);
             }
             else
             {
                 /* add line to history then clear input */
-                if (window->buffer->input_buffer_size > 0)
+                if (gui_current_window->buffer->input_buffer_size > 0)
                 {
-                    window->buffer->input_buffer[window->buffer->input_buffer_size] = '\0';
-                    window->buffer->input_buffer_color_mask[window->buffer->input_buffer_size] = '\0';
-                    history_buffer_add (window->buffer, window->buffer->input_buffer);
-                    history_global_add (window->buffer->input_buffer);
-                    window->buffer->input_buffer_size = 0;
-                    window->buffer->input_buffer_length = 0;
-                    gui_input_optimize_size (window->buffer);
-                    window->buffer->input_buffer_pos = 0;
-                    window->buffer->input_buffer_1st_display = 0;
-                    gui_input_draw (window->buffer, 0);
+                    gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
+                    gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
+                    gui_history_buffer_add (gui_current_window->buffer, gui_current_window->buffer->input_buffer);
+                    gui_history_global_add (gui_current_window->buffer->input_buffer);
+                    gui_current_window->buffer->input_buffer_size = 0;
+                    gui_current_window->buffer->input_buffer_length = 0;
+                    gui_input_optimize_size (gui_current_window->buffer);
+                    gui_current_window->buffer->input_buffer_pos = 0;
+                    gui_current_window->buffer->input_buffer_1st_display = 0;
+                    gui_input_draw (gui_current_window->buffer, 0);
                 }
             }
         }
         else
         {
             /* search forward in buffer history */
-            window->buffer->text_search = GUI_TEXT_SEARCH_FORWARD;
-            (void) gui_buffer_search_text (window);
+            gui_current_window->buffer->text_search = GUI_TEXT_SEARCH_FORWARD;
+            (void) gui_window_search_text (gui_current_window);
         }
     }
 }
@@ -891,40 +892,40 @@ gui_action_down (t_gui_window *window, char *args)
  */
 
 void
-gui_action_down_global (t_gui_window *window, char *args)
+gui_action_down_global (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input
-        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if ((gui_current_window->buffer->input)
+        && (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
         if (history_global_ptr)
         {
             history_global_ptr = history_global_ptr->prev_history;
             if (history_global_ptr)
             {
-                window->buffer->input_buffer_size =
+                gui_current_window->buffer->input_buffer_size =
                     strlen (history_global_ptr->text);
-                window->buffer->input_buffer_length =
+                gui_current_window->buffer->input_buffer_length =
                     utf8_strlen (history_global_ptr->text);
             }
             else
             {
-                window->buffer->input_buffer_size = 0;
-                window->buffer->input_buffer_length = 0;
+                gui_current_window->buffer->input_buffer_size = 0;
+                gui_current_window->buffer->input_buffer_length = 0;
             }
-            gui_input_optimize_size (window->buffer);
-            window->buffer->input_buffer_pos =
-                window->buffer->input_buffer_length;
-            window->buffer->input_buffer_1st_display = 0;
+            gui_input_optimize_size (gui_current_window->buffer);
+            gui_current_window->buffer->input_buffer_pos =
+                gui_current_window->buffer->input_buffer_length;
+            gui_current_window->buffer->input_buffer_1st_display = 0;
             if (history_global_ptr)
             {
-                strcpy (window->buffer->input_buffer,
+                strcpy (gui_current_window->buffer->input_buffer,
                         history_global_ptr->text);
-                gui_input_init_color_mask (window->buffer);
+                gui_input_init_color_mask (gui_current_window->buffer);
             }
-            gui_input_draw (window->buffer, 0);
+            gui_input_draw (gui_current_window->buffer, 0);
         }
     }
 }
@@ -934,12 +935,12 @@ gui_action_down_global (t_gui_window *window, char *args)
  */
 
 void
-gui_action_page_up (t_gui_window *window, char *args)
+gui_action_page_up (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_page_up (window);
+    gui_window_page_up (gui_current_window);
 }
 
 /*
@@ -947,12 +948,12 @@ gui_action_page_up (t_gui_window *window, char *args)
  */
 
 void
-gui_action_page_down (t_gui_window *window, char *args)
+gui_action_page_down (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_page_down (window);
+    gui_window_page_down (gui_current_window);
 }
 
 /*
@@ -960,12 +961,12 @@ gui_action_page_down (t_gui_window *window, char *args)
  */
 
 void
-gui_action_scroll_up (t_gui_window *window, char *args)
+gui_action_scroll_up (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_scroll_up (window);
+    gui_window_scroll_up (gui_current_window);
 }
 
 /*
@@ -973,12 +974,12 @@ gui_action_scroll_up (t_gui_window *window, char *args)
  */
 
 void
-gui_action_scroll_down (t_gui_window *window, char *args)
+gui_action_scroll_down (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_scroll_down (window);
+    gui_window_scroll_down (gui_current_window);
 }
 
 /*
@@ -986,12 +987,12 @@ gui_action_scroll_down (t_gui_window *window, char *args)
  */
 
 void
-gui_action_scroll_top (t_gui_window *window, char *args)
+gui_action_scroll_top (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_scroll_top (window);
+    gui_window_scroll_top (gui_current_window);
 }
 
 /*
@@ -999,12 +1000,12 @@ gui_action_scroll_top (t_gui_window *window, char *args)
  */
 
 void
-gui_action_scroll_bottom (t_gui_window *window, char *args)
+gui_action_scroll_bottom (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_scroll_bottom (window);
+    gui_window_scroll_bottom (gui_current_window);
 }
 
 /*
@@ -1012,12 +1013,12 @@ gui_action_scroll_bottom (t_gui_window *window, char *args)
  */
 
 void
-gui_action_scroll_topic_left (t_gui_window *window, char *args)
+gui_action_scroll_topic_left (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_scroll_topic_left (window);
+    gui_window_scroll_topic_left (gui_current_window);
 }
 
 /*
@@ -1025,12 +1026,12 @@ gui_action_scroll_topic_left (t_gui_window *window, char *args)
  */
 
 void
-gui_action_scroll_topic_right (t_gui_window *window, char *args)
+gui_action_scroll_topic_right (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_scroll_topic_right (window);
+    gui_window_scroll_topic_right (gui_current_window);
 }
 
 /*
@@ -1038,12 +1039,12 @@ gui_action_scroll_topic_right (t_gui_window *window, char *args)
  */
 
 void
-gui_action_nick_beginning (t_gui_window *window, char *args)
+gui_action_nick_beginning (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_nick_beginning (window);
+    gui_window_nick_beginning (gui_current_window);
 }
 
 /*
@@ -1051,12 +1052,12 @@ gui_action_nick_beginning (t_gui_window *window, char *args)
  */
 
 void
-gui_action_nick_end (t_gui_window *window, char *args)
+gui_action_nick_end (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_nick_end (window);
+    gui_window_nick_end (gui_current_window);
 }
 
 /*
@@ -1064,12 +1065,12 @@ gui_action_nick_end (t_gui_window *window, char *args)
  */
 
 void
-gui_action_nick_page_up (t_gui_window *window, char *args)
+gui_action_nick_page_up (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_nick_page_up (window);
+    gui_window_nick_page_up (gui_current_window);
 }
 
 /*
@@ -1077,12 +1078,12 @@ gui_action_nick_page_up (t_gui_window *window, char *args)
  */
 
 void
-gui_action_nick_page_down (t_gui_window *window, char *args)
+gui_action_nick_page_down (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_nick_page_down (window);
+    gui_window_nick_page_down (gui_current_window);
 }
 
 /*
@@ -1090,27 +1091,29 @@ gui_action_nick_page_down (t_gui_window *window, char *args)
  */
 
 void
-gui_action_jump_smart (t_gui_window *window, char *args)
+gui_action_jump_smart (char *args)
 {
     /* make C compiler happy */
     (void) args;
 
-    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+    if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
-        if (weechat_hotlist)
+        if (gui_hotlist)
         {
-            if (!hotlist_initial_buffer)
-                hotlist_initial_buffer = window->buffer;
-            gui_window_switch_to_buffer (window, weechat_hotlist->buffer);
-            gui_window_redraw_buffer (window->buffer);
+            if (!gui_hotlist_initial_buffer)
+                gui_hotlist_initial_buffer = gui_current_window->buffer;
+            gui_window_switch_to_buffer (gui_current_window,
+                                         gui_hotlist->buffer);
+            gui_window_redraw_buffer (gui_current_window->buffer);
         }
         else
         {
-            if (hotlist_initial_buffer)
+            if (gui_hotlist_initial_buffer)
             {
-                gui_window_switch_to_buffer (window, hotlist_initial_buffer);
-                gui_window_redraw_buffer (window->buffer);
-                hotlist_initial_buffer = NULL;
+                gui_window_switch_to_buffer (gui_current_window,
+                                             gui_hotlist_initial_buffer);
+                gui_window_redraw_buffer (gui_current_window->buffer);
+                gui_hotlist_initial_buffer = NULL;
             }
         }
     }
@@ -1121,28 +1124,28 @@ gui_action_jump_smart (t_gui_window *window, char *args)
  */
 
 void
-gui_action_jump_dcc (t_gui_window *window, char *args)
+gui_action_jump_dcc (char *args)
 {
     /* make C compiler happy */
     (void) args;
 
-    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+    /*if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
-        if (window->buffer->type == GUI_BUFFER_TYPE_DCC)
+        if (gui_current_window->buffer->type == GUI_BUFFER_TYPE_DCC)
         {
             if (gui_buffer_before_dcc)
             {
                 gui_window_switch_to_buffer (window,
                                              gui_buffer_before_dcc);
-                gui_window_redraw_buffer (window->buffer);
+                gui_window_redraw_buffer (gui_current_window->buffer);
             }
         }
         else
         {
-            gui_buffer_before_dcc = window->buffer;
+            gui_buffer_before_dcc = buffer;
             gui_buffer_switch_dcc (window);
         }
-    }
+        }*/
 }
 
 /*
@@ -1150,28 +1153,28 @@ gui_action_jump_dcc (t_gui_window *window, char *args)
  */
 
 void
-gui_action_jump_raw_data (t_gui_window *window, char *args)
+gui_action_jump_raw_data (char *args)
 {
     /* make C compiler happy */
     (void) args;
 
-    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+    /*if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
-        if (window->buffer->type == GUI_BUFFER_TYPE_RAW_DATA)
+        if (gui_current_window->buffer->type == GUI_BUFFER_TYPE_RAW_DATA)
         {
             if (gui_buffer_before_raw_data)
             {
                 gui_window_switch_to_buffer (window,
                                              gui_buffer_before_raw_data);
-                gui_window_redraw_buffer (window->buffer);
+                gui_window_redraw_buffer (gui_current_window->buffer);
             }
         }
         else
         {
-            gui_buffer_before_raw_data = window->buffer;
+            gui_buffer_before_raw_data = buffer;
             gui_buffer_switch_raw_data (window);
         }
-    }
+        }*/
 }
 
 /*
@@ -1179,15 +1182,16 @@ gui_action_jump_raw_data (t_gui_window *window, char *args)
  */
 
 void
-gui_action_jump_last_buffer (t_gui_window *window, char *args)
+gui_action_jump_last_buffer (char *args)
 {
     /* make C compiler happy */
     (void) args;
 
-    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+    if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
         if (last_gui_buffer)
-            gui_buffer_switch_by_number (window, last_gui_buffer->number);
+            gui_buffer_switch_by_number (gui_current_window,
+                                         last_gui_buffer->number);
     }
 }
 
@@ -1197,15 +1201,16 @@ gui_action_jump_last_buffer (t_gui_window *window, char *args)
  */
 
 void
-gui_action_jump_previous_buffer (t_gui_window *window, char *args)
+gui_action_jump_previous_buffer (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+    if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
         if (gui_previous_buffer)
-            gui_buffer_switch_by_number (window, gui_previous_buffer->number);
+            gui_buffer_switch_by_number (gui_current_window,
+                                         gui_previous_buffer->number);
     }
 }
 
@@ -1214,24 +1219,24 @@ gui_action_jump_previous_buffer (t_gui_window *window, char *args)
  */
 
 void
-gui_action_jump_server (t_gui_window *window, char *args)
+gui_action_jump_server (char *args)
 {
     /* make C compiler happy */
     (void) args;
-    
-    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+
+    /*if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
-        if (GUI_SERVER(window->buffer))
+        if (GUI_SERVER(buffer))
         {
-            if (GUI_SERVER(window->buffer)->buffer !=
-                window->buffer)
+            if (GUI_SERVER(buffer)->buffer !=
+                buffer)
             {
                 gui_window_switch_to_buffer (window,
-                                             GUI_SERVER(window->buffer)->buffer);
-                gui_window_redraw_buffer (window->buffer);
+                                             GUI_SERVER(buffer)->buffer);
+                gui_window_redraw_buffer (gui_current_window->buffer);
             }
         }
-    }
+        }*/
 }
 
 /*
@@ -1239,34 +1244,34 @@ gui_action_jump_server (t_gui_window *window, char *args)
  */
 
 void
-gui_action_jump_next_server (t_gui_window *window, char *args)
+gui_action_jump_next_server (char *args)
 {
-    t_irc_server *ptr_server;
-    t_gui_buffer *ptr_buffer;
+    //t_irc_server *ptr_server;
+    //t_gui_buffer *ptr_buffer;
     
     /* make C compiler happy */
     (void) args;
-    
-    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+
+    /*if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
-        if (GUI_SERVER(window->buffer))
+        if (GUI_SERVER(buffer))
         {
-            ptr_server = GUI_SERVER(window->buffer)->next_server;
+            ptr_server = GUI_SERVER(buffer)->next_server;
             if (!ptr_server)
                 ptr_server = irc_servers;
-            while (ptr_server != GUI_SERVER(window->buffer))
+            while (ptr_server != GUI_SERVER(buffer))
             {
                 if (ptr_server->buffer)
                     break;
                 ptr_server = (ptr_server->next_server) ?
                     ptr_server->next_server : irc_servers;
             }
-            if (ptr_server != GUI_SERVER(window->buffer))
+            if (ptr_server != GUI_SERVER(buffer))
             {
-                /* save current buffer */
-                GUI_SERVER(window->buffer)->saved_buffer = window->buffer;
+                // save current buffer
+                GUI_SERVER(buffer)->saved_buffer = buffer;
                 
-                /* come back to memorized chan if found */
+                // come back to memorized chan if found
                 if (ptr_server->saved_buffer)
                     ptr_buffer = ptr_server->saved_buffer;
                 else
@@ -1276,10 +1281,10 @@ gui_action_jump_next_server (t_gui_window *window, char *args)
                     && (ptr_buffer->all_servers))
                     ptr_buffer->server = ptr_server;
                 gui_window_switch_to_buffer (window, ptr_buffer);
-                gui_window_redraw_buffer (window->buffer);
+                gui_window_redraw_buffer (gui_current_window->buffer);
             }
         }
-    }
+        }*/
 }
 
 /*
@@ -1288,12 +1293,12 @@ gui_action_jump_next_server (t_gui_window *window, char *args)
  */
 
 void
-gui_action_switch_server (t_gui_window *window, char *args)
+gui_action_switch_server (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    gui_window_switch_server (window);
+    gui_window_switch_server (gui_current_window);
 }
 
 /*
@@ -1301,20 +1306,20 @@ gui_action_switch_server (t_gui_window *window, char *args)
  */
 
 void
-gui_action_scroll_previous_highlight (t_gui_window *window, char *args)
+gui_action_scroll_previous_highlight (char *args)
 {
-    t_gui_line *ptr_line;
+    //t_gui_line *ptr_line;
     
     /* make C compiler happy */
     (void) args;
     
-    if ((window->buffer->type == GUI_BUFFER_TYPE_STANDARD)
-        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    /*if ((gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATED)
+        && (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
-        if (window->buffer->lines)
+        if (gui_current_window->buffer->lines)
         {
             ptr_line = (window->start_line) ?
-                window->start_line->prev_line : window->buffer->last_line;
+                window->start_line->prev_line : gui_current_window->buffer->last_line;
             while (ptr_line)
             {
                 if (ptr_line->line_with_highlight)
@@ -1322,15 +1327,15 @@ gui_action_scroll_previous_highlight (t_gui_window *window, char *args)
                     window->start_line = ptr_line;
                     window->start_line_pos = 0;
                     window->first_line_displayed =
-                        (window->start_line == window->buffer->lines);
-                    gui_chat_draw (window->buffer, 1);
-                    gui_status_draw (window->buffer, 0);
+                        (window->start_line == gui_current_window->buffer->lines);
+                    gui_chat_draw (gui_current_window->buffer, 1);
+                    gui_status_draw (gui_current_window->buffer, 0);
                     return;
                 }
                 ptr_line = ptr_line->prev_line;
             }
         }
-    }
+    }*/
 }
 
 /*
@@ -1338,20 +1343,20 @@ gui_action_scroll_previous_highlight (t_gui_window *window, char *args)
  */
 
 void
-gui_action_scroll_next_highlight (t_gui_window *window, char *args)
+gui_action_scroll_next_highlight (char *args)
 {
-    t_gui_line *ptr_line;
+    //t_gui_line *ptr_line;
     
     /* make C compiler happy */
     (void) args;
     
-    if ((window->buffer->type == GUI_BUFFER_TYPE_STANDARD)
-        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    /*if ((gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATED)
+        && (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
-        if (window->buffer->lines)
+        if (gui_current_window->buffer->lines)
         {
             ptr_line = (window->start_line) ?
-                window->start_line->next_line : window->buffer->lines->next_line;
+                window->start_line->next_line : gui_current_window->buffer->lines->next_line;
             while (ptr_line)
             {
                 if (ptr_line->line_with_highlight)
@@ -1359,15 +1364,15 @@ gui_action_scroll_next_highlight (t_gui_window *window, char *args)
                     window->start_line = ptr_line;
                     window->start_line_pos = 0;
                     window->first_line_displayed =
-                        (window->start_line == window->buffer->lines);
-                    gui_chat_draw (window->buffer, 1);
-                    gui_status_draw (window->buffer, 0);
+                        (window->start_line == gui_current_window->buffer->lines);
+                    gui_chat_draw (gui_current_window->buffer, 1);
+                    gui_status_draw (gui_current_window->buffer, 0);
                     return;
                 }
                 ptr_line = ptr_line->next_line;
             }
         }
-    }
+    }*/
 }
 
 /*
@@ -1375,25 +1380,26 @@ gui_action_scroll_next_highlight (t_gui_window *window, char *args)
  */
 
 void
-gui_action_scroll_unread (t_gui_window *window, char *args)
+gui_action_scroll_unread (char *args)
 {
     /* make C compiler happy */
     (void) args;
 
-    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+    if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
         if (cfg_look_read_marker &&
             cfg_look_read_marker[0] &&
-            (window->buffer->type == GUI_BUFFER_TYPE_STANDARD) &&
-            window->buffer->last_read_line &&
-            window->buffer->last_read_line != window->buffer->last_line)
+            (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATED) &&
+            gui_current_window->buffer->last_read_line &&
+            gui_current_window->buffer->last_read_line != gui_current_window->buffer->last_line)
         {
-            window->start_line = window->buffer->last_read_line->next_line;
-            window->start_line_pos = 0;
-            window->first_line_displayed =
-                (window->start_line == window->buffer->lines);
-            gui_chat_draw (window->buffer, 1);
-            gui_status_draw (window->buffer, 0);
+            gui_current_window->start_line =
+                gui_current_window->buffer->last_read_line->next_line;
+            gui_current_window->start_line_pos = 0;
+            gui_current_window->first_line_displayed =
+                (gui_current_window->start_line == gui_current_window->buffer->lines);
+            gui_chat_draw (gui_current_window->buffer, 1);
+            gui_status_draw (gui_current_window->buffer, 0);
         }
     }
 }
@@ -1403,19 +1409,18 @@ gui_action_scroll_unread (t_gui_window *window, char *args)
  */
 
 void
-gui_action_set_unread (t_gui_window *window, char *args)
+gui_action_set_unread (char *args)
 {
-    t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer;
     
     /* make C compiler happy */
-    (void) window;
     (void) args;
 
     /* set read marker for all standard buffers */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (ptr_buffer->type == GUI_BUFFER_TYPE_STANDARD)
+        if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATED)
             ptr_buffer->last_read_line = ptr_buffer->last_line;
     }
     
@@ -1428,17 +1433,17 @@ gui_action_set_unread (t_gui_window *window, char *args)
  */
 
 void
-gui_action_hotlist_clear (t_gui_window *window, char *args)
+gui_action_hotlist_clear (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (weechat_hotlist)
+    if (gui_hotlist)
     {
-        hotlist_free_all (&weechat_hotlist, &last_weechat_hotlist);
-        gui_window_redraw_buffer (window->buffer);
+        gui_hotlist_free_all (&gui_hotlist, &last_gui_hotlist);
+        gui_window_redraw_buffer (gui_current_window->buffer);
     }
-    hotlist_initial_buffer = window->buffer;
+    gui_hotlist_initial_buffer = gui_current_window->buffer;
 }
 
 /*
@@ -1446,13 +1451,13 @@ gui_action_hotlist_clear (t_gui_window *window, char *args)
  */
 
 void
-gui_action_infobar_clear (t_gui_window *window, char *args)
+gui_action_infobar_clear (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
     gui_infobar_remove ();
-    gui_infobar_draw (window->buffer, 1);
+    gui_infobar_draw (gui_current_window->buffer, 1);
 }
 
 /*
@@ -1460,10 +1465,9 @@ gui_action_infobar_clear (t_gui_window *window, char *args)
  */
 
 void
-gui_action_refresh_screen (t_gui_window *window, char *args)
+gui_action_refresh_screen (char *args)
 {
     /* make C compiler happy */
-    (void) window;
     (void) args;
     
     gui_window_refresh_screen (1);
@@ -1474,12 +1478,12 @@ gui_action_refresh_screen (t_gui_window *window, char *args)
  */
 
 void
-gui_action_grab_key (t_gui_window *window, char *args)
+gui_action_grab_key (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->has_input)
+    if (gui_current_window->buffer->input)
         gui_keyboard_grab_init ();
 }
 
@@ -1488,16 +1492,15 @@ gui_action_grab_key (t_gui_window *window, char *args)
  */
 
 void
-gui_action_insert_string (t_gui_window *window, char *args)
+gui_action_insert_string (char *args)
 {
     char *args2;
     
     if (args)
     {
-        args2 = weechat_convert_hex_chars (args);
-        gui_insert_string_input (window,
-                                 (args2) ? args2 : args, -1);
-        gui_input_draw (window->buffer, 0);
+        args2 = string_convert_hex_chars (args);
+        gui_input_insert_string (gui_current_window->buffer, (args2) ? args2 : args, -1);
+        gui_input_draw (gui_current_window->buffer, 0);
         if (args2)
             free (args2);
     }
@@ -1508,21 +1511,21 @@ gui_action_insert_string (t_gui_window *window, char *args)
  */
 
 void
-gui_action_search_text (t_gui_window *window, char *args)
+gui_action_search_text (char *args)
 {
     /* make C compiler happy */
     (void) args;
     
-    if (window->buffer->type == GUI_BUFFER_TYPE_STANDARD)
+    if (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATED)
     {
         /* toggle search */
-        if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
-            gui_buffer_search_start (window);
+        if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+            gui_window_search_start (gui_current_window);
         else
         {
-            window->buffer->text_search_exact ^= 1;
-            gui_buffer_search_restart (window);
-            gui_input_draw (window->buffer, 1);
+            gui_current_window->buffer->text_search_exact ^= 1;
+            gui_window_search_restart (gui_current_window);
+            gui_input_draw (gui_current_window->buffer, 1);
         }
     }
 }
