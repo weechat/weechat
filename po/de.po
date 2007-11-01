@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-10-31 10:58+0100\n"
+"POT-Creation-Date: 2007-11-01 11:09+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 "X-Generator: KBabel 1.11.4\n"
 
 #, fuzzy, c-format
-msgid "%s%s circular reference when calling alias \"/%s\""
+msgid "%sError: circular reference when calling alias \"/%s\""
 msgstr "%s Zirkelbezug beim Aufruf des Aliases \"/%s\"\n"
 
 #, c-format
@@ -69,10 +69,12 @@ msgstr ""
 "  -v, --version           zeigt die WeeChat-Version an\n"
 "  -w, --weechat-commands  zeigt die WeeChat-Befehle an\n"
 
+#. TRANSLATORS: %s is "WeeChat"
 #, fuzzy, c-format
 msgid "%s configuration options:\n"
 msgstr "Konfigurationsparameter setzen"
 
+#. TRANSLATORS: %s is "WeeChat"
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "%s interne Befehle:\n"
@@ -80,32 +82,33 @@ msgstr "%s interne Befehle:\n"
 msgid "Internal key functions:\n"
 msgstr "Interne Tastenfunktionen:\n"
 
+#. TRANSLATORS: %s is "WeeChat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s Standardtastenbelegungen:\n"
 
 #, fuzzy, c-format
-msgid "%s missing argument for \"%s\" option\n"
+msgid "Error: missing argument for \"%s\" option\n"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
-#, c-format
-msgid "%s unknown parameter '%s', ignored\n"
+#, fuzzy, c-format
+msgid "Warning: unknown parameter '%s', ignored\n"
 msgstr "%s unbekannter Parameter '%s', ignoriert\n"
 
-#, c-format
-msgid "%s unable to get HOME directory\n"
+#, fuzzy
+msgid "Error: unable to get HOME directory\n"
 msgstr "%s kann das HOME-Verzeichnis nicht ermitteln\n"
 
-#, c-format
-msgid "%s not enough memory for home directory\n"
+#, fuzzy
+msgid "Error: not enough memory for home directory\n"
 msgstr "%s nicht genug Speicher fürs HOME-Verzeichnis\n"
 
-#, c-format
-msgid "%s home (%s) is not a directory\n"
+#, fuzzy, c-format
+msgid "Error: home (%s) is not a directory\n"
 msgstr "%s HOME (%s) ist kein Verzeichnis\n"
 
-#, c-format
-msgid "%s unable to create \"%s\" directory\n"
+#, fuzzy, c-format
+msgid "Error: unable to create \"%s\" directory\n"
 msgstr "%s kann das Verzeichnis \"%s\" nicht anlegen\n"
 
 #, fuzzy, c-format
@@ -114,12 +117,6 @@ msgstr "%sWillkommen in %s%s%s, %s\n"
 
 msgid "compiled on"
 msgstr "kompiliert am"
-
-msgid "WeeChat Error:"
-msgstr "WeeChat-Fehler:"
-
-msgid "WeeChat Warning:"
-msgstr "WeeChat-Warnung:"
 
 msgid "create an alias for a command"
 msgstr "einen Alias für einen Befehl anlegen"
@@ -158,6 +155,7 @@ msgstr "[Aktion [Argumente] | Nummer | [[Server] [Channel]]]"
 msgid ""
 " action: action to do:\n"
 "   move: move buffer in the list (may be relative, for example -1)\n"
+"  close: close buffer\n"
 "   list: list open buffers (no parameter implies this list)\n"
 " notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2"
 "+join/part)\n"
@@ -448,7 +446,7 @@ msgstr ""
 "nur noch ein Viertel der Größe des alten Fensters hätte."
 
 #, fuzzy, c-format
-msgid "%s%s missing arguments for \"%s\" command"
+msgid "%sError: missing arguments for \"%s\" command"
 msgstr "%s fehlende Argumente für den \"%s\"-Befehl\n"
 
 #, fuzzy, c-format
@@ -456,8 +454,8 @@ msgid "%sAlias \"%s\" => \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" angelegt\n"
 
 #, fuzzy, c-format
-msgid "%sFailed to create alias \"%s\" => \"%s\" (not enough memory)"
-msgstr "Kann den Alias \"%s\" => \"%s\" nicht anlegen (Speichermangel)\n"
+msgid "%sError: not enough memory for creating alias \"%s\" => \"%s\""
+msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
 
 #, fuzzy
 msgid "Alias:"
@@ -480,14 +478,14 @@ msgid "Open buffers:"
 msgstr "Offene Puffer:\n"
 
 #, fuzzy, c-format
-msgid "%s%s incorrect buffer number"
+msgid "%sError: incorrect buffer number"
 msgstr "%s falsche Puffernummer\n"
 
 msgid "Notify levels:"
 msgstr "Notify-Ebenen:"
 
 #, fuzzy, c-format
-msgid "%s%s incorrect notify level (must be between %d and %d)"
+msgid "%sError: incorrect notify level (must be between %d and %d)"
 msgstr "%s ungültige Notify-Ebene (muss zwischen %d und %d liegen)\n"
 
 #, fuzzy, c-format
@@ -511,15 +509,15 @@ msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr "(Hotlist: Hervorhebungen, Nachrichten, Betreten und Verlassen)\n"
 
 #, fuzzy, c-format
-msgid "%s%s buffer number \"%s\" not found for \"%s\" command"
+msgid "%sError: buffer number \"%s\" not found for \"%s\" command"
 msgstr "%s Puffer nicht gefunden für den \"%s\"-Befehl\n"
 
 #, fuzzy, c-format
-msgid "%s%s unknown option for \"%s\" command"
+msgid "%sError: unknown option for \"%s\" command"
 msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
 
 #, fuzzy, c-format
-msgid "%s%s wrong argument count for \"%s\" command"
+msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
 
 #, fuzzy, c-format
@@ -555,7 +553,7 @@ msgid "%sKey \"%s\" unbound"
 msgstr "Tastenbelegung \"%s\" gelöscht\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to unbind key \"%s\""
+msgid "%sError: unable to unbind key \"%s\""
 msgstr "%s kann die Tastenbelegung \"%s\" nicht entfernen\n"
 
 #, fuzzy
@@ -563,7 +561,7 @@ msgid "Internal key functions:"
 msgstr "Interne Tastenfunktionen:\n"
 
 #, fuzzy, c-format
-msgid "%s%s unknown key function \"%s\""
+msgid "%sError: unknown key function \"%s\""
 msgstr "%s unbekannte Tasten-Funktion \"%s\"\n"
 
 #, fuzzy, c-format
@@ -571,7 +569,7 @@ msgid "%sDefault key bindings restored"
 msgstr "Standardtastenbelegungen wiederhergestellt\n"
 
 #, fuzzy, c-format
-msgid "%s%s \"-yes\" argument is required for keys reset (security reason)"
+msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
 msgstr ""
 "%s \"-yes\" Argument ist aus Sicherheitsgründen für den Tastenreset "
 "notwendig\n"
@@ -585,7 +583,7 @@ msgid "%sNo key found."
 msgstr "Keine Taste gefunden.\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to bind key \"%s\""
+msgid "%sError: unable to bind key \"%s\""
 msgstr "%s kann die Taste \"%s\" nicht zuordnen\n"
 
 #, fuzzy
@@ -655,7 +653,7 @@ msgid "%sWeeChat configuration file saved"
 msgstr "Konfigurationsdatei gesichert\n"
 
 #, fuzzy, c-format
-msgid "%s%s failed to save configuration file"
+msgid "%sError: failed to save configuration file"
 msgstr "%s konnte die Konfigurationsdatei nicht sichern\n"
 
 #, fuzzy, c-format
@@ -663,14 +661,14 @@ msgid "%sPlugins options saved"
 msgstr "Plugin-Optionen gesichert\n"
 
 #, fuzzy, c-format
-msgid "%s%s failed to save plugins options"
+msgid "%sError: failed to save plugins options"
 msgstr "%s konnte die Plugin-Konfigurationsdatei nicht sichern\n"
 
 msgid "(unknown)"
 msgstr "(unbekannt)"
 
 #, fuzzy, c-format
-msgid "%s%s option \"%s\" can not be changed while WeeChat is running"
+msgid "%sError: option \"%s\" can not be changed while WeeChat is running"
 msgstr "%s Option \"%s\" kann nicht zur Laufzeit geändert werden\n"
 
 #, fuzzy
@@ -678,11 +676,11 @@ msgid "Option changed: "
 msgstr "Sie sind nicht im Channel"
 
 #, fuzzy, c-format
-msgid "%s%s incorrect value for option \"%s\""
+msgid "%sError: incorrect value for option \"%s\""
 msgstr "%s ungültiger Wert für die Option \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s configuration option \"%s\" not found"
+msgid "%sError: configuration option \"%s\" not found"
 msgstr "%s Konfigurationsoption \"%s\" nicht gefunden\n"
 
 #, fuzzy, c-format
@@ -702,7 +700,7 @@ msgid "%s%d%s configuration option(s) found"
 msgstr "Konfigurationsoption(en) gefunden\n"
 
 #, fuzzy, c-format
-msgid "%s%s plugin \"%s\" not found"
+msgid "%sError: plugin \"%s\" not found"
 msgstr "%s Plugin \"%s\" nicht gefunden\n"
 
 #, fuzzy, c-format
@@ -710,7 +708,7 @@ msgid "Plugin option changed: %s%s = \"%s%s%s\""
 msgstr "Keine Plugin-Optionen mit \"%s\" gefunden\n"
 
 #, fuzzy, c-format
-msgid "%s%s incorrect value for plugin option \"%s\""
+msgid "%sError: incorrect value for plugin option \"%s\""
 msgstr "%s ungültiger Wert für die Plugin-Option \"%s\"\n"
 
 #, fuzzy, c-format
@@ -730,7 +728,7 @@ msgid "plugin option(s) found"
 msgstr "Plugin-Option(en) gefunden\n"
 
 #, fuzzy, c-format
-msgid "%s%s alias or command \"%s\" not found"
+msgid "%sError: alias or command \"%s\" not found"
 msgstr "%s Alias oder Befehl \"%s\" nicht gefunden\n"
 
 #, fuzzy, c-format
@@ -758,7 +756,7 @@ msgstr "Geöffnete Fenster:\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s%s can not merge windows, there's no other window with same size near "
+"%sError: can not merge windows, there's no other window with same size near "
 "current one."
 msgstr ""
 "%s kann Fenster nicht vereinigen, es ist kein Fenster mit der gleichen Größe "
@@ -1312,9 +1310,9 @@ msgstr ""
 "verwendet (wenn kein Wert angegeben ist und der Wert für das automatische "
 "Laden \"*\" ist, werden alle Dateien geladen)"
 
-#, fuzzy, c-format
+#, fuzzy
 msgid ""
-"%s you should now issue /save to write \"save_on_exit\" option in "
+"Warning: you should now issue /save to write \"save_on_exit\" option in "
 "configuration file.\n"
 msgstr ""
 "%s Sie sollten jetzt /save ausführen, um die Option \"save_on_exit\" in die "
@@ -1324,36 +1322,36 @@ msgstr ""
 msgid "Saving WeeChat configuration to disk\n"
 msgstr "Konfiguration wird gespeichert\n"
 
-#, c-format
-msgid "%s config file \"%s\" not found.\n"
+#, fuzzy, c-format
+msgid "Warning: config file \"%s\" not found.\n"
 msgstr "%s Konfigurationsdatei \"%s\" nicht gefunden.\n"
 
-#, c-format
-msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
+#, fuzzy, c-format
+msgid "Warning: %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr "%s %s, Zeile %d: Syntaxfehler, \"]\" erwartet\n"
 
-#, c-format
-msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
+#, fuzzy, c-format
+msgid "Warning: %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr "%s %s, Zeile %d: unbekannte Sektion \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s %s, line %d: error reading new section \"%s\"\n"
+msgid "Warning: %s, line %d: error reading new section \"%s\"\n"
 msgstr "%s %s, Zeile %d: ungültige /ignore-Optionen \"%s\"\n"
 
-#, c-format
-msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
+#, fuzzy, c-format
+msgid "Warning: %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, Zeile %d: Syntaxfehler, \"=\" erwartet\n"
 
 #, fuzzy, c-format
-msgid "%s %s, line %d: unknown option \"%s\" (outside a section)\n"
+msgid "Warning: %s, line %d: unknown option \"%s\" (outside a section)\n"
 msgstr "%s %s, Zeile %d: unbekannte Sektion \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s %s, line %d: option \"%s\" unknown for section \"%s\"\n"
+msgid "Warning: %s, line %d: option \"%s\" unknown for section \"%s\"\n"
 msgstr "%s %s, Zeile %d: unbekannte Sektion \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s %s, line %d: invalid value for option \"%s\"\n"
+msgid "Warning: %s, line %d: invalid value for option \"%s\"\n"
 msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
 
 #, c-format
@@ -1374,8 +1372,8 @@ msgstr ""
 "überschreibt sie beim Beenden.\n"
 "#\n"
 
-#, c-format
-msgid "%s cannot create file \"%s\"\n"
+#, fuzzy, c-format
+msgid "Error: cannot create file \"%s\"\n"
 msgstr "%s kann die Datei \"%s\" nicht anlegen\n"
 
 #, fuzzy, c-format
@@ -1386,12 +1384,12 @@ msgstr "%s: Standardkonfiguration wird geschrieben...\n"
 msgid "Creating default config file \"%s\"\n"
 msgstr "Standardkonfiguration wird geschrieben\n"
 
-#, c-format
-msgid "%s unable to assign default int with string (\"%s\")\n"
+#, fuzzy, c-format
+msgid "Warning: unable to assign default int with string (\"%s\")\n"
 msgstr "%s kann den Standard-int-Wert \"%s\" nicht setzen\n"
 
-#, c-format
-msgid "%s unable to assign default color (\"%s\")\n"
+#, fuzzy, c-format
+msgid "Warning: unable to assign default color (\"%s\")\n"
 msgstr "%s kann die Standardfarbe \"%s\" nicht setzen\n"
 
 msgid "  . type: boolean\n"
@@ -1451,11 +1449,11 @@ msgid "  . description: %s\n"
 msgstr "  . Beschreibung: %s\n"
 
 #, fuzzy, c-format
-msgid "%s%s command \"%s\" failed"
+msgid "%sError: command \"%s\" failed"
 msgstr "%s der Befehl \"%s\" schlug fehl\n"
 
 #, fuzzy, c-format
-msgid "%s%s wrong argument count for %s command \"%s\" (expected: %d arg)"
+msgid "%sError: wrong argument count for %s command \"%s\" (expected: %d arg)"
 msgid_plural ""
 "%s%s wrong argument count for %s command \"%s\" (expected: %d args)"
 msgstr[0] ""
@@ -1465,8 +1463,8 @@ msgstr[1] ""
 
 #, fuzzy, c-format
 msgid ""
-"%s%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
-"arg)"
+"%sError: wrong argument count for %s command \"%s\" (expected: between %d "
+"and %d arg)"
 msgid_plural ""
 "%s%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
 "args)"
@@ -1478,16 +1476,16 @@ msgstr[1] ""
 "und %d arg%s)\n"
 
 #, c-format
-msgid "%s%s unknown command \"%s\" (type /help for help)."
+msgid "%sError: unknown command \"%s\" (type /help for help)."
 msgstr ""
 
 #, fuzzy, c-format
 msgid "%sYou can not write text in this buffer!"
 msgstr "%s der einzige Puffer kann nicht geschlossen werden\n"
 
-#, fuzzy, c-format
+#, fuzzy
 msgid ""
-"%s unable to create/append to log file (weechat.log)\n"
+"Error: unable to create/append to log file (weechat.log)\n"
 "If another WeeChat process is using this file, try to run WeeChat\n"
 "with another home using \"--dir\" command line option.\n"
 msgstr ""
@@ -1536,8 +1534,8 @@ msgstr "Typ-Lesefehler"
 msgid "wrong type (expected: %d, read: %d)"
 msgstr "Falscher Typ (erwartet: %d, gefunden: %d)"
 
-#, c-format
-msgid "%s cannot create directory \"%s\"\n"
+#, fuzzy, c-format
+msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s kann das Verzeichnis \"%s\" nicht anlegen\n"
 
 msgid "Text search (exact): "
@@ -1566,12 +1564,12 @@ msgstr "Server"
 msgid "Not enough memory for new line\n"
 msgstr "Nicht genügend Speicher für neue Zeile\n"
 
-#, fuzzy, c-format
-msgid "%s not enough memory to add a buffer to hotlist\n"
+#, fuzzy
+msgid "Error: not enough memory to add a buffer to hotlist\n"
 msgstr "%s Puffer kann nicht zur Hotlist hinzugefügt werden\n"
 
-#, c-format
-msgid "%s not enough memory for infobar message\n"
+#, fuzzy
+msgid "Error: not enough memory for infobar message\n"
 msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
 
 msgid "terminate line"
@@ -1732,17 +1730,17 @@ msgstr "füge eine Zeichenkette in der Befehlszeile ein"
 msgid "search text in buffer history"
 msgstr "suche Text im Pufferverlauf"
 
-#, c-format
-msgid "%s unable to bind key \"%s\"\n"
+#, fuzzy, c-format
+msgid "Error: unable to bind key \"%s\"\n"
 msgstr "%s kann die Taste \"%s\" nicht zuordnen\n"
 
-#, c-format
-msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
+#, fuzzy, c-format
+msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 "%s kann die Taste \"%s\" nicht zuornen (ungültiger Funktionsname: \"%s\")\n"
 
-#, c-format
-msgid "%s not enough memory for key binding\n"
+#, fuzzy
+msgid "Error: not enough memory for key binding\n"
 msgstr "%s nicht genügend Speicher für Tastenzuordnung\n"
 
 #, fuzzy, c-format
@@ -1750,7 +1748,7 @@ msgid "Unable to write log file \"%s\"\n"
 msgstr "Kann das Logfile nicht schreiben\n"
 
 #, fuzzy, c-format
-msgid "%s%s Unable to write log file \"%s\"\n"
+msgid "%sError: Unable to write log file \"%s\"\n"
 msgstr "Kann das Logfile nicht schreiben\n"
 
 msgid "****  Beginning of log  "
@@ -1760,31 +1758,31 @@ msgid "****  End of log  "
 msgstr "****  End of log  "
 
 #, fuzzy, c-format
-msgid "%sFIFO pipe is open\n"
+msgid "%sFifo: pipe is open\n"
 msgstr "FIFO ist offen\n"
 
 #, fuzzy, c-format
-msgid "%sunable to open FIFO pipe (%s) for reading"
+msgid "%sFifo: unable to open pipe (%s) for reading"
 msgstr "%s kann FIFO (%s) nicht zum Lesen öffnen\n"
 
 #, fuzzy, c-format
-msgid "%sunable to create FIFO pipe for remote control (%s)"
+msgid "%sFifo: unable to create pipe for remote control (%s)"
 msgstr "%s kann die FIFO-Pipe zur Fernsteuerung nicht anlegen (%s)\n"
 
 #, fuzzy, c-format
-msgid "%sFIFO pipe is closed"
+msgid "%sFifo: pipe is closed"
 msgstr "FIFO geschlossen\n"
 
 #, fuzzy, c-format
-msgid "%sFifo error: invalid text received on FIFO pipe"
+msgid "%sFifo error: invalid text received on pipe"
 msgstr "%s ungültigen Text von FIFO empfangen\n"
 
 #, fuzzy, c-format
-msgid "%sFifo error: buffer not found for FIFO pipedata"
+msgid "%sFifo error: buffer not found for pipe data"
 msgstr "%s Server \"%s\" nicht gefunden (FIFO)\n"
 
 #, fuzzy, c-format
-msgid "%serror reading FIFO pipe, closing it"
+msgid "%sFifo: error reading pipe, closing it"
 msgstr "%s Fehler beim Lesen vom FIFO, FIFO wird geschlossen\n"
 
 #, c-format
@@ -2540,6 +2538,10 @@ msgstr "%s zum Server \"%s\" besteht bereits eine Verbindung!\n"
 #, c-format
 msgid "%s currently connecting to server \"%s\"!\n"
 msgstr "%s Verbindungsaufbau zum Server \"%s\" läuft bereits!\n"
+
+#, fuzzy, c-format
+msgid "%s missing argument for \"%s\" option\n"
+msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, c-format
 msgid "Server %s%s%s created (temporary server, NOT SAVED!)\n"
@@ -3925,24 +3927,25 @@ msgid "Disconnected from server!\n"
 msgstr "Vom Server getrennt!\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to load plugin \"%s\": %s\n"
+msgid "%sError: unable to load plugin \"%s\": %s\n"
 msgstr "%s kann Plugin \"%s\" nicht laden: %s\n"
 
 #, fuzzy, c-format
-msgid "%s%s symbol \"%s\" not found in plugin \"%s\", failed to load\n"
+msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 "%s Symbol \"plugin_name\" in Plugin \"%s\" nicht gefunden, Laden "
 "gescheitert\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s%s unable to load plugin \"%s\": a plugin with same name already exists\n"
+"%sError: unable to load plugin \"%s\": a plugin with same name already "
+"exists\n"
 msgstr ""
 "%s kann Plugin \"%s\" nicht laden: ein gleichnamiges Plugin existiert "
 "bereits\n"
 
 #, fuzzy, c-format
-msgid "%s%s function \"%s\" not found in plugin \"%s\", failed to load\n"
+msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 "%s Funktion \"weechat_plugin_init\" nicht in Plugin \"%s\" gefunden Laden "
 "gescheitert\n"
@@ -3952,11 +3955,11 @@ msgid "%sInitializing plugin \"%s\" %s\n"
 msgstr "Initialisiere Plugin \"%s\" %s\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to initialize plugin \"%s\"\n"
+msgid "%sError: unable to initialize plugin \"%s\"\n"
 msgstr "%s kann das Plugin \"%s\" nicht initialisieren\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to load plugin \"%s\" (not enough memory)\n"
+msgid "%sError: unable to load plugin \"%s\" (not enough memory)\n"
 msgstr "%s kann das Plugin \"%s\" nicht laden (Speichermangel)\n"
 
 #, fuzzy, c-format
@@ -3968,12 +3971,34 @@ msgid "%sPlugin \"%s\" unloaded.\n"
 msgstr "Plugin \"%s\" entladen.\n"
 
 #, fuzzy, c-format
-msgid "%s%s plugin \"%s\" not found\n"
+msgid "%sError: plugin \"%s\" not found\n"
 msgstr "%s Plugin \"%s\" nicht gefunden\n"
 
 #, fuzzy
 msgid "Saving plugins configuration to disk\n"
 msgstr "Konfiguration wird gespeichert\n"
+
+#, fuzzy
+#~ msgid "%sFailed to create alias \"%s\" => \"%s\" (not enough memory)"
+#~ msgstr "Kann den Alias \"%s\" => \"%s\" nicht anlegen (Speichermangel)\n"
+
+#~ msgid "WeeChat Error:"
+#~ msgstr "WeeChat-Fehler:"
+
+#~ msgid "WeeChat Warning:"
+#~ msgstr "WeeChat-Warnung:"
+
+#, fuzzy
+#~ msgid "%s%s unknown option for \"%s\" command"
+#~ msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
+
+#, fuzzy
+#~ msgid "%s%s wrong argument count for \"%s\" command"
+#~ msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
+
+#, fuzzy
+#~ msgid "%s%s unable to bind key \"%s\""
+#~ msgstr "%s kann die Taste \"%s\" nicht zuordnen\n"
 
 #, fuzzy
 #~ msgid "       %s"

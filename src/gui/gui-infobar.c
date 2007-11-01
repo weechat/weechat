@@ -72,8 +72,7 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
             free (buf2);
     }
     else
-        weechat_log_printf (_("%s not enough memory for infobar message\n"),
-                            WEECHAT_ERROR);
+        weechat_log_printf (_("Error: not enough memory for infobar message\n"));
 }
 
 /*

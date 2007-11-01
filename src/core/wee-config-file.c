@@ -125,8 +125,9 @@ config_file_read (char **config_sections, struct t_config_option **options,
                                    config_filename);
         if ((file = fopen (filename, "r")) == NULL)
         {
-            gui_chat_printf (NULL, _("%s config file \"%s\" not found.\n"),
-                             WEECHAT_WARNING, filename);
+            gui_chat_printf (NULL,
+                             _("Warning: config file \"%s\" not found.\n"),
+                             filename);
             free (filename);
             return -1;
         }
@@ -163,10 +164,9 @@ config_file_read (char **config_sections, struct t_config_option **options,
                     pos = strchr (line, ']');
                     if (pos == NULL)
                         gui_chat_printf (NULL,
-                                         _("%s %s, line %d: invalid syntax, "
+                                         _("Warning: %s, line %d: invalid syntax, "
                                            "missing \"]\"\n"),
-                                         WEECHAT_WARNING, filename,
-                                         line_number);
+                                         filename, line_number);
                     else
                     {
                         pos[0] = '\0';
@@ -174,20 +174,18 @@ config_file_read (char **config_sections, struct t_config_option **options,
                         section = config_option_section_get_index (config_sections, pos);
                         if (section < 0)
                             gui_chat_printf (NULL,
-                                             _("%s %s, line %d: unknown section "
+                                             _("Warning: %s, line %d: unknown section "
                                                "identifier (\"%s\")\n"),
-                                             WEECHAT_WARNING, filename,
-                                             line_number, pos);
+                                             filename, line_number, pos);
                         else
                         {
                             rc = ((int) (read_functions[section]) (options[section],
                                                                    NULL, NULL));
                             if (rc < 0)
                                 gui_chat_printf (NULL,
-                                                 _("%s %s, line %d: error "
+                                                 _("Warning: %s, line %d: error "
                                                    "reading new section \"%s\"\n"),
-                                                 WEECHAT_WARNING, filename,
-                                                 line_number, pos);
+                                                 filename, line_number, pos);
                         }
                     }
                 }
@@ -196,10 +194,9 @@ config_file_read (char **config_sections, struct t_config_option **options,
                     pos = strchr (line, '=');
                     if (pos == NULL)
                         gui_chat_printf (NULL,
-                                         _("%s %s, line %d: invalid syntax, "
+                                         _("Warning: %s, line %d: invalid syntax, "
                                            "missing \"=\"\n"),
-                                         WEECHAT_WARNING, filename,
-                                         line_number);
+                                         filename, line_number);
                     else
                     {
                         pos[0] = '\0';
@@ -260,27 +257,23 @@ config_file_read (char **config_sections, struct t_config_option **options,
                                 case -1:
                                     if (section < 0)
                                         gui_chat_printf (NULL,
-                                                         _("%s %s, line %d: unknown "
+                                                         _("Warning: %s, line %d: unknown "
                                                            "option \"%s\" "
                                                            "(outside a section)\n"),
-                                                         WEECHAT_WARNING,
-                                                         filename,
-                                                         line_number, line);
+                                                         filename, line_number, line);
                                     else
                                         gui_chat_printf (NULL,
-                                                         _("%s %s, line %d: option "
+                                                         _("Warning: %s, line %d: option "
                                                            "\"%s\" unknown for "
                                                            "section \"%s\"\n"),
-                                                         WEECHAT_WARNING, filename,
-                                                         line_number, line,
+                                                         filename, line_number, line,
                                                          config_sections[section]);
                                     break;
                                 case -2:
                                     gui_chat_printf (NULL,
-                                                     _("%s %s, line %d: invalid "
+                                                     _("Warning: %s, line %d: invalid "
                                                        "value for option \"%s\"\n"),
-                                                     WEECHAT_WARNING, filename,
-                                                     line_number, line);
+                                                     filename, line_number, line);
                                     break;
                             }
                         }
@@ -451,8 +444,9 @@ config_file_write_default (char **config_sections, struct t_config_option **opti
               weechat_home, DIR_SEPARATOR, config_filename);
     if ((file = fopen (filename, "w")) == NULL)
     {
-        gui_chat_printf (NULL, _("%s cannot create file \"%s\"\n"),
-                         WEECHAT_ERROR, filename);
+        gui_chat_printf (NULL,
+                         _("Error: cannot create file \"%s\"\n"),
+                         filename);
         free (filename);
         return -1;
     }
@@ -512,8 +506,9 @@ config_file_write (char **config_sections, struct t_config_option **options,
     
     if ((file = fopen (filename2, "w")) == NULL)
     {
-        gui_chat_printf (NULL, _("%s cannot create file \"%s\"\n"),
-                         WEECHAT_ERROR, filename2);
+        gui_chat_printf (NULL,
+                         _("Error: cannot create file \"%s\"\n"),
+                         filename2);
         free (filename);
         free (filename2);
         return -1;

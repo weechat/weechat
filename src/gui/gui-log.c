@@ -114,9 +114,8 @@ gui_log_start (struct t_gui_buffer *buffer)
             weechat_log_printf (_("Unable to write log file \"%s\"\n"),
                                 buffer->log_filename);
             gui_chat_printf (NULL,
-                             _("%s%s Unable to write log file \"%s\"\n"),
+                             _("%sError: Unable to write log file \"%s\"\n"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             WEECHAT_ERROR,
                              buffer->log_filename);
             free (buffer->log_filename);
             return;

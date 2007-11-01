@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-10-31 10:58+0100\n"
+"POT-Creation-Date: 2007-11-01 11:09+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-Bookmarks: -1,-1,608,-1,-1,-1,-1,-1,-1,-1\n"
 
 #, fuzzy, c-format
-msgid "%s%s circular reference when calling alias \"/%s\""
+msgid "%sError: circular reference when calling alias \"/%s\""
 msgstr "%s рекурсия при вызове сокращения \"/%s\"\n"
 
 #, c-format
@@ -66,10 +66,12 @@ msgstr ""
 "  -v, --version           отобразить версию WeeChat\n"
 "  -w, --weechat-commands  отобразить команды WeeChat\n"
 
+#. TRANSLATORS: %s is "WeeChat"
 #, fuzzy, c-format
 msgid "%s configuration options:\n"
 msgstr "настроить параметры конфигурации"
 
+#. TRANSLATORS: %s is "WeeChat"
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Внутренние команды %s:\n"
@@ -77,32 +79,33 @@ msgstr "Внутренние команды %s:\n"
 msgid "Internal key functions:\n"
 msgstr "Встроенные функции клавиш:\n"
 
+#. TRANSLATORS: %s is "WeeChat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s клавиши по умолчанию:\n"
 
-#, c-format
-msgid "%s missing argument for \"%s\" option\n"
+#, fuzzy, c-format
+msgid "Error: missing argument for \"%s\" option\n"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
-#, c-format
-msgid "%s unknown parameter '%s', ignored\n"
+#, fuzzy, c-format
+msgid "Warning: unknown parameter '%s', ignored\n"
 msgstr "%s неизвестный параметр '%s', игнорируется\n"
 
-#, c-format
-msgid "%s unable to get HOME directory\n"
+#, fuzzy
+msgid "Error: unable to get HOME directory\n"
 msgstr "%s не могу получить домашний каталог\n"
 
-#, c-format
-msgid "%s not enough memory for home directory\n"
+#, fuzzy
+msgid "Error: not enough memory for home directory\n"
 msgstr "%s недостаточно памяти для домашней директории\n"
 
-#, c-format
-msgid "%s home (%s) is not a directory\n"
+#, fuzzy, c-format
+msgid "Error: home (%s) is not a directory\n"
 msgstr "%s домашний каталог (%s) не является директорией\n"
 
-#, c-format
-msgid "%s unable to create \"%s\" directory\n"
+#, fuzzy, c-format
+msgid "Error: unable to create \"%s\" directory\n"
 msgstr "%s не могу создать директорию \"%s\"\n"
 
 #, fuzzy, c-format
@@ -111,12 +114,6 @@ msgstr "%sДобро пожаловать в %s%s%s, %s\n"
 
 msgid "compiled on"
 msgstr "собран:"
-
-msgid "WeeChat Error:"
-msgstr "Ошибка WeeChat:"
-
-msgid "WeeChat Warning:"
-msgstr "Предупреждение WeeChat:"
 
 msgid "create an alias for a command"
 msgstr "создать ярлык на команду"
@@ -155,6 +152,7 @@ msgstr "[действие [аргументы] | номер | [[сервер] [�
 msgid ""
 " action: action to do:\n"
 "   move: move buffer in the list (may be relative, for example -1)\n"
+"  close: close buffer\n"
 "   list: list open buffers (no parameter implies this list)\n"
 " notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2"
 "+join/part)\n"
@@ -457,7 +455,7 @@ msgstr ""
 "текущего. Например, 25 означает создать окно в 4 раза меньше текущего"
 
 #, fuzzy, c-format
-msgid "%s%s missing arguments for \"%s\" command"
+msgid "%sError: missing arguments for \"%s\" command"
 msgstr "%s нет аргументов для \"%s\" команды\n"
 
 #, fuzzy, c-format
@@ -465,8 +463,8 @@ msgid "%sAlias \"%s\" => \"%s\" created"
 msgstr "Сокращение \"%s\" => \"%s\" создано\n"
 
 #, fuzzy, c-format
-msgid "%sFailed to create alias \"%s\" => \"%s\" (not enough memory)"
-msgstr "Невозможно создать сокращение \"%s\" => \"%s\" (недостаточно памяти)\n"
+msgid "%sError: not enough memory for creating alias \"%s\" => \"%s\""
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 #, fuzzy
 msgid "Alias:"
@@ -489,14 +487,14 @@ msgid "Open buffers:"
 msgstr "Открытые буферы:\n"
 
 #, fuzzy, c-format
-msgid "%s%s incorrect buffer number"
+msgid "%sError: incorrect buffer number"
 msgstr "%s неправильный номер буфера\n"
 
 msgid "Notify levels:"
 msgstr "Уровни уведомления:"
 
 #, fuzzy, c-format
-msgid "%s%s incorrect notify level (must be between %d and %d)"
+msgid "%sError: incorrect notify level (must be between %d and %d)"
 msgstr "%s некорректный уровень уведомления (должен быть от %d до %d)\n"
 
 #, fuzzy, c-format
@@ -520,15 +518,15 @@ msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr "(хотлист: подсвечивание + сообщения + входы/выходы (всё))\n"
 
 #, fuzzy, c-format
-msgid "%s%s buffer number \"%s\" not found for \"%s\" command"
+msgid "%sError: buffer number \"%s\" not found for \"%s\" command"
 msgstr "%s буфер номер \"%s\" не найден для команды \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s unknown option for \"%s\" command"
+msgid "%sError: unknown option for \"%s\" command"
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s wrong argument count for \"%s\" command"
+msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s некорректное количество аргументов команды \"%s\"\n"
 
 #, fuzzy, c-format
@@ -564,7 +562,7 @@ msgid "%sKey \"%s\" unbound"
 msgstr "Клавиша \"%s\" не привязана\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to unbind key \"%s\""
+msgid "%sError: unable to unbind key \"%s\""
 msgstr "%s не могу отвязать клавишу \"%s\"\n"
 
 #, fuzzy
@@ -572,7 +570,7 @@ msgid "Internal key functions:"
 msgstr "Встроенные функции клавиш:\n"
 
 #, fuzzy, c-format
-msgid "%s%s unknown key function \"%s\""
+msgid "%sError: unknown key function \"%s\""
 msgstr "%s неизвестная функция клавиши \"%s\"\n"
 
 #, fuzzy, c-format
@@ -580,7 +578,7 @@ msgid "%sDefault key bindings restored"
 msgstr "Комбинации клавиш по умолчанию восстановлены\n"
 
 #, fuzzy, c-format
-msgid "%s%s \"-yes\" argument is required for keys reset (security reason)"
+msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
 msgstr ""
 "%s аргумент \"-yes\" необходим для сброса ключей (в целях безопасности)\n"
 
@@ -593,7 +591,7 @@ msgid "%sNo key found."
 msgstr "Клавиши не найдены.\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to bind key \"%s\""
+msgid "%sError: unable to bind key \"%s\""
 msgstr "%s не могу установить клавишу \"%s\"\n"
 
 #, fuzzy
@@ -663,7 +661,7 @@ msgid "%sWeeChat configuration file saved"
 msgstr "Конфигурационный файл сохранён\n"
 
 #, fuzzy, c-format
-msgid "%s%s failed to save configuration file"
+msgid "%sError: failed to save configuration file"
 msgstr "%s не могу сохранить конфигурационный файл\n"
 
 #, fuzzy, c-format
@@ -671,14 +669,14 @@ msgid "%sPlugins options saved"
 msgstr "Настройки pluginов сохранены\n"
 
 #, fuzzy, c-format
-msgid "%s%s failed to save plugins options"
+msgid "%sError: failed to save plugins options"
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
 msgid "(unknown)"
 msgstr "(неизвестен)"
 
 #, fuzzy, c-format
-msgid "%s%s option \"%s\" can not be changed while WeeChat is running"
+msgid "%sError: option \"%s\" can not be changed while WeeChat is running"
 msgstr "%s параметр \"%s\" не может быть изменена при запущеном WeeChat\n"
 
 #, fuzzy
@@ -686,11 +684,11 @@ msgid "Option changed: "
 msgstr "не на канале"
 
 #, fuzzy, c-format
-msgid "%s%s incorrect value for option \"%s\""
+msgid "%sError: incorrect value for option \"%s\""
 msgstr "%s некорректное значение параметра \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s configuration option \"%s\" not found"
+msgid "%sError: configuration option \"%s\" not found"
 msgstr "%s параметр конфигурации \"%s\" не найден\n"
 
 #, fuzzy, c-format
@@ -710,7 +708,7 @@ msgid "%s%d%s configuration option(s) found"
 msgstr "параметров найдено\n"
 
 #, fuzzy, c-format
-msgid "%s%s plugin \"%s\" not found"
+msgid "%sError: plugin \"%s\" not found"
 msgstr "%s plugin \"%s\" не найден\n"
 
 #, fuzzy, c-format
@@ -718,7 +716,7 @@ msgid "Plugin option changed: %s%s = \"%s%s%s\""
 msgstr "Не найден параметр pluginа с \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s incorrect value for plugin option \"%s\""
+msgid "%sError: incorrect value for plugin option \"%s\""
 msgstr "%s некорректное значение параметра \"%s\" pluginа\n"
 
 #, fuzzy, c-format
@@ -738,7 +736,7 @@ msgid "plugin option(s) found"
 msgstr "параметров pluginов найдено\n"
 
 #, fuzzy, c-format
-msgid "%s%s alias or command \"%s\" not found"
+msgid "%sError: alias or command \"%s\" not found"
 msgstr "%s сокращение или команда \"%s\" не найдены\n"
 
 #, fuzzy, c-format
@@ -764,7 +762,7 @@ msgstr "Открытые окна:\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s%s can not merge windows, there's no other window with same size near "
+"%sError: can not merge windows, there's no other window with same size near "
 "current one."
 msgstr ""
 "%s не могу объединить окна, есть другое окно такого-же размера рядом с "
@@ -1317,9 +1315,9 @@ msgstr ""
 "стандартное расширение файлов pluginов, используется при автозагрузке (если "
 "не установлено, загружает все файлы)"
 
-#, fuzzy, c-format
+#, fuzzy
 msgid ""
-"%s you should now issue /save to write \"save_on_exit\" option in "
+"Warning: you should now issue /save to write \"save_on_exit\" option in "
 "configuration file.\n"
 msgstr ""
 "%s вам следует набрать /save чтобы записать параметр \"save_on_exit\" в "
@@ -1329,36 +1327,36 @@ msgstr ""
 msgid "Saving WeeChat configuration to disk\n"
 msgstr "Сохраняю конфигурацию\n"
 
-#, c-format
-msgid "%s config file \"%s\" not found.\n"
+#, fuzzy, c-format
+msgid "Warning: config file \"%s\" not found.\n"
 msgstr "%s конфигурационынй файл \"%s\" не найден.\n"
 
-#, c-format
-msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
+#, fuzzy, c-format
+msgid "Warning: %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr "%s %s, строка %d: некорректный синтаксис, не хватает \"]\"\n"
 
-#, c-format
-msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
+#, fuzzy, c-format
+msgid "Warning: %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
 
 #, fuzzy, c-format
-msgid "%s %s, line %d: error reading new section \"%s\"\n"
+msgid "Warning: %s, line %d: error reading new section \"%s\"\n"
 msgstr "%s %s, строка %d: некорректные параметры игнорирования \"%s\"\n"
 
-#, c-format
-msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
+#, fuzzy, c-format
+msgid "Warning: %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, строка %d: некорректный синтаксис, утерян \"=\"\n"
 
 #, fuzzy, c-format
-msgid "%s %s, line %d: unknown option \"%s\" (outside a section)\n"
+msgid "Warning: %s, line %d: unknown option \"%s\" (outside a section)\n"
 msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
 
 #, fuzzy, c-format
-msgid "%s %s, line %d: option \"%s\" unknown for section \"%s\"\n"
+msgid "Warning: %s, line %d: option \"%s\" unknown for section \"%s\"\n"
 msgstr "%s %s, строка %d: неизвестный идентификатор секции (\"%s\")\n"
 
 #, fuzzy, c-format
-msgid "%s %s, line %d: invalid value for option \"%s\"\n"
+msgid "Warning: %s, line %d: invalid value for option \"%s\"\n"
 msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
 
 #, c-format
@@ -1379,8 +1377,8 @@ msgstr ""
 "его при выходе.\n"
 "#\n"
 
-#, c-format
-msgid "%s cannot create file \"%s\"\n"
+#, fuzzy, c-format
+msgid "Error: cannot create file \"%s\"\n"
 msgstr "%s не могу создать файл \"%s\"\n"
 
 #, fuzzy, c-format
@@ -1391,13 +1389,13 @@ msgstr "%s: создаётся конфигурационный файл по у
 msgid "Creating default config file \"%s\"\n"
 msgstr "Создаю новый конфигурационный файл\n"
 
-#, c-format
-msgid "%s unable to assign default int with string (\"%s\")\n"
+#, fuzzy, c-format
+msgid "Warning: unable to assign default int with string (\"%s\")\n"
 msgstr ""
 "%s не могу установить целочисленное значение по умолчанию строке (\"%s\")\n"
 
-#, c-format
-msgid "%s unable to assign default color (\"%s\")\n"
+#, fuzzy, c-format
+msgid "Warning: unable to assign default color (\"%s\")\n"
 msgstr "%s не могу установить цвет по умолчанию (\"%s\")\n"
 
 msgid "  . type: boolean\n"
@@ -1455,11 +1453,11 @@ msgid "  . description: %s\n"
 msgstr "  . описание: %s\n"
 
 #, fuzzy, c-format
-msgid "%s%s command \"%s\" failed"
+msgid "%sError: command \"%s\" failed"
 msgstr "%s команда \"%s\" не удалась\n"
 
 #, fuzzy, c-format
-msgid "%s%s wrong argument count for %s command \"%s\" (expected: %d arg)"
+msgid "%sError: wrong argument count for %s command \"%s\" (expected: %d arg)"
 msgid_plural ""
 "%s%s wrong argument count for %s command \"%s\" (expected: %d args)"
 msgstr[0] ""
@@ -1471,8 +1469,8 @@ msgstr[1] ""
 
 #, fuzzy, c-format
 msgid ""
-"%s%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
-"arg)"
+"%sError: wrong argument count for %s command \"%s\" (expected: between %d "
+"and %d arg)"
 msgid_plural ""
 "%s%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
 "args)"
@@ -1484,16 +1482,16 @@ msgstr[1] ""
 "%d аргументов)\n"
 
 #, c-format
-msgid "%s%s unknown command \"%s\" (type /help for help)."
+msgid "%sError: unknown command \"%s\" (type /help for help)."
 msgstr ""
 
 #, fuzzy, c-format
 msgid "%sYou can not write text in this buffer!"
 msgstr "%s невозможно закрыть единственный буфер\n"
 
-#, c-format
+#, fuzzy
 msgid ""
-"%s unable to create/append to log file (weechat.log)\n"
+"Error: unable to create/append to log file (weechat.log)\n"
 "If another WeeChat process is using this file, try to run WeeChat\n"
 "with another home using \"--dir\" command line option.\n"
 msgstr ""
@@ -1538,8 +1536,8 @@ msgstr "ошибка чтения типа"
 msgid "wrong type (expected: %d, read: %d)"
 msgstr "некорректный тип (ожидалось: %d, прочитано: %d)"
 
-#, c-format
-msgid "%s cannot create directory \"%s\"\n"
+#, fuzzy, c-format
+msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s не могу создать директорию \"%s\"\n"
 
 msgid "Text search (exact): "
@@ -1568,12 +1566,12 @@ msgstr "сервер"
 msgid "Not enough memory for new line\n"
 msgstr "Недостаточно памяти для новой строчки\n"
 
-#, fuzzy, c-format
-msgid "%s not enough memory to add a buffer to hotlist\n"
+#, fuzzy
+msgid "Error: not enough memory to add a buffer to hotlist\n"
 msgstr "%s не могу добавить буфер в хотлист\n"
 
-#, c-format
-msgid "%s not enough memory for infobar message\n"
+#, fuzzy
+msgid "Error: not enough memory for infobar message\n"
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 msgid "terminate line"
@@ -1732,18 +1730,18 @@ msgstr "вставить строку в поле ввода"
 msgid "search text in buffer history"
 msgstr "поиск текста в истории буфера"
 
-#, c-format
-msgid "%s unable to bind key \"%s\"\n"
+#, fuzzy, c-format
+msgid "Error: unable to bind key \"%s\"\n"
 msgstr "%s не могу установить клавишу \"%s\"\n"
 
-#, c-format
-msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
+#, fuzzy, c-format
+msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 "%s не могу установить клавишу \"%s\" (некорректное название функции: \"%s"
 "\")\n"
 
-#, c-format
-msgid "%s not enough memory for key binding\n"
+#, fuzzy
+msgid "Error: not enough memory for key binding\n"
 msgstr "%s недостаточно памяти для установки клавиши\n"
 
 #, c-format
@@ -1751,7 +1749,7 @@ msgid "Unable to write log file \"%s\"\n"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s Unable to write log file \"%s\"\n"
+msgid "%sError: Unable to write log file \"%s\"\n"
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 msgid "****  Beginning of log  "
@@ -1761,31 +1759,31 @@ msgid "****  End of log  "
 msgstr "**** Конец log-файла"
 
 #, fuzzy, c-format
-msgid "%sFIFO pipe is open\n"
+msgid "%sFifo: pipe is open\n"
 msgstr "FIFO pipe открыт\n"
 
 #, fuzzy, c-format
-msgid "%sunable to open FIFO pipe (%s) for reading"
+msgid "%sFifo: unable to open pipe (%s) for reading"
 msgstr "%s не могу открыть FIFO pipe (%s) для чтения\n"
 
 #, fuzzy, c-format
-msgid "%sunable to create FIFO pipe for remote control (%s)"
+msgid "%sFifo: unable to create pipe for remote control (%s)"
 msgstr "%s не могу создать FIFO pipe для удалённого управления (%s)\n"
 
 #, fuzzy, c-format
-msgid "%sFIFO pipe is closed"
+msgid "%sFifo: pipe is closed"
 msgstr "FIFO pipe закрыт\n"
 
 #, fuzzy, c-format
-msgid "%sFifo error: invalid text received on FIFO pipe"
+msgid "%sFifo error: invalid text received on pipe"
 msgstr "%s некорректный текст получен на FIFO pipe\n"
 
 #, fuzzy, c-format
-msgid "%sFifo error: buffer not found for FIFO pipedata"
+msgid "%sFifo error: buffer not found for pipe data"
 msgstr "%s сервер \"%s\" не найден (данные FIFO pipe)\n"
 
 #, fuzzy, c-format
-msgid "%serror reading FIFO pipe, closing it"
+msgid "%sFifo: error reading pipe, closing it"
 msgstr "%s ошибка чтения FIFO pipe, закрываю его\n"
 
 #, c-format
@@ -2559,6 +2557,10 @@ msgstr "%s уже подключен к серверу \"%s\"!\n"
 #, c-format
 msgid "%s currently connecting to server \"%s\"!\n"
 msgstr "%s подключается к серверу \"%s\"!\n"
+
+#, c-format
+msgid "%s missing argument for \"%s\" option\n"
+msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, c-format
 msgid "Server %s%s%s created (temporary server, NOT SAVED!)\n"
@@ -3912,22 +3914,23 @@ msgid "Disconnected from server!\n"
 msgstr "Отключен от сервера!\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to load plugin \"%s\": %s\n"
+msgid "%sError: unable to load plugin \"%s\": %s\n"
 msgstr "%s не могу загрузить plugin \"%s\": %s\n"
 
 #, fuzzy, c-format
-msgid "%s%s symbol \"%s\" not found in plugin \"%s\", failed to load\n"
+msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 "%s символ \"plugin_name\" не найден в plugin'е \"%s\", загрузка не удалась\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s%s unable to load plugin \"%s\": a plugin with same name already exists\n"
+"%sError: unable to load plugin \"%s\": a plugin with same name already "
+"exists\n"
 msgstr ""
 "%s не могу загрузить plugin \"%s\": одноимённый plugin уже существует\n"
 
 #, fuzzy, c-format
-msgid "%s%s function \"%s\" not found in plugin \"%s\", failed to load\n"
+msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 "%s функция \"weechat_plugin_init\" не найдена в plugin'е \"%s\", загрузка не "
 "удалась\n"
@@ -3937,11 +3940,11 @@ msgid "%sInitializing plugin \"%s\" %s\n"
 msgstr "Запускаю plugin \"%s\" %s\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to initialize plugin \"%s\"\n"
+msgid "%sError: unable to initialize plugin \"%s\"\n"
 msgstr "%s не могу инициализировать plugin \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to load plugin \"%s\" (not enough memory)\n"
+msgid "%sError: unable to load plugin \"%s\" (not enough memory)\n"
 msgstr "%s не могу загрузить plugin \"%s\" (недостаточно памяти)\n"
 
 #, fuzzy, c-format
@@ -3953,12 +3956,35 @@ msgid "%sPlugin \"%s\" unloaded.\n"
 msgstr "Plugin \"%s\" выгружен.\n"
 
 #, fuzzy, c-format
-msgid "%s%s plugin \"%s\" not found\n"
+msgid "%sError: plugin \"%s\" not found\n"
 msgstr "%s plugin \"%s\" не найден\n"
 
 #, fuzzy
 msgid "Saving plugins configuration to disk\n"
 msgstr "Сохраняю конфигурацию\n"
+
+#, fuzzy
+#~ msgid "%sFailed to create alias \"%s\" => \"%s\" (not enough memory)"
+#~ msgstr ""
+#~ "Невозможно создать сокращение \"%s\" => \"%s\" (недостаточно памяти)\n"
+
+#~ msgid "WeeChat Error:"
+#~ msgstr "Ошибка WeeChat:"
+
+#~ msgid "WeeChat Warning:"
+#~ msgstr "Предупреждение WeeChat:"
+
+#, fuzzy
+#~ msgid "%s%s unknown option for \"%s\" command"
+#~ msgstr "%s неизвестный параметр для команды \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s wrong argument count for \"%s\" command"
+#~ msgstr "%s некорректное количество аргументов команды \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s unable to bind key \"%s\""
+#~ msgstr "%s не могу установить клавишу \"%s\"\n"
 
 #, fuzzy
 #~ msgid "       %s"

@@ -126,6 +126,7 @@ void
 weechat_display_config_options ()
 {
     string_iconv_fprintf (stdout,
+                          /* TRANSLATORS: %s is "WeeChat" */
                           _("%s configuration options:\n"),
                           PACKAGE_NAME);
     weechat_config_print_stdout ();
@@ -139,7 +140,9 @@ void
 weechat_display_commands ()
 {
     string_iconv_fprintf (stdout,
-                           _("%s internal commands:\n"), PACKAGE_NAME);
+                          /* TRANSLATORS: %s is "WeeChat" */
+                           _("%s internal commands:\n"),
+                          PACKAGE_NAME);
     string_iconv_fprintf (stdout, "\n");
     command_print_stdout (weechat_commands);
 }
@@ -177,7 +180,9 @@ weechat_display_keys ()
     char *expanded_name;
     
     string_iconv_fprintf (stdout,
-                          _("%s default keys:\n"), PACKAGE_NAME);
+                          /* TRANSLATORS: %s is "WeeChat" */
+                          _("%s default keys:\n"),
+                          PACKAGE_NAME);
     string_iconv_fprintf (stdout, "\n");
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
@@ -224,9 +229,8 @@ weechat_parse_args (int argc, char *argv[])
             else
             {
                 string_iconv_fprintf (stderr,
-                                      _("%s missing argument for \"%s\" "
+                                      _("Error: missing argument for \"%s\" "
                                         "option\n"),
-                                      WEECHAT_ERROR,
                                       "--config");
                 weechat_shutdown (EXIT_FAILURE, 0);
             }
@@ -239,9 +243,8 @@ weechat_parse_args (int argc, char *argv[])
             else
             {
                 string_iconv_fprintf (stderr,
-                                      _("%s missing argument for \"%s\" "
+                                      _("Error: missing argument for \"%s\" "
                                         "option\n"),
-                                      WEECHAT_ERROR,
                                       "--dir");
                 weechat_shutdown (EXIT_FAILURE, 0);
             }
@@ -281,9 +284,8 @@ weechat_parse_args (int argc, char *argv[])
             else
             {
                 string_iconv_fprintf (stderr,
-                                      _("%s missing argument for \"%s\" "
+                                      _("Error: missing argument for \"%s\" "
                                         "option\n"),
-                                      WEECHAT_ERROR,
                                       "--commands");
                 weechat_shutdown (EXIT_FAILURE, 0);
             }
@@ -300,9 +302,8 @@ weechat_parse_args (int argc, char *argv[])
             else
             {
                 string_iconv_fprintf (stderr,
-                                      _("%s missing argument for \"%s\" "
+                                      _("Error: missing argument for \"%s\" "
                                         "option\n"),
-                                      WEECHAT_ERROR,
                                       "--session");
                 weechat_shutdown (EXIT_FAILURE, 0);
             }
@@ -318,9 +319,9 @@ weechat_parse_args (int argc, char *argv[])
             if (irc_server_init_with_url (argv[i], &server_tmp) < 0)
             {
                 string_iconv_fprintf (stderr,
-                                      _("%s invalid syntax for IRC server "
+                                      _("Warning: invalid syntax for IRC server "
                                         "('%s'), ignored\n"),
-                                      WEECHAT_WARNING, argv[i]);
+                                      argv[i]);
             }
             else
             {
@@ -334,9 +335,9 @@ weechat_parse_args (int argc, char *argv[])
                                      NULL, NULL, NULL, NULL, 0,
                                      server_tmp.autojoin, 1, NULL))
                     string_iconv_fprintf (stderr,
-                                          _("%s unable to create server "
+                                          _("Warning: unable to create server "
                                             "('%s'), ignored\n"),
-                                          WEECHAT_WARNING, argv[i]);
+                                          argv[i]);
                 irc_server_destroy (&server_tmp);
                 server_cmd_line = 1;
             }
@@ -344,8 +345,8 @@ weechat_parse_args (int argc, char *argv[])
         else
         {
             string_iconv_fprintf (stderr,
-                                  _("%s unknown parameter '%s', ignored\n"),
-                                  WEECHAT_WARNING, argv[i]);
+                                  _("Warning: unknown parameter '%s', ignored\n"),
+                                  argv[i]);
         }
     }
 }
@@ -367,8 +368,7 @@ weechat_create_home_dirs ()
         if (!ptr_home)
         {
             string_iconv_fprintf (stderr,
-                                  _("%s unable to get HOME directory\n"),
-                                  WEECHAT_ERROR);
+                                  _("Error: unable to get HOME directory\n"));
             weechat_shutdown (EXIT_FAILURE, 0);
         }
         dir_length = strlen (ptr_home) + 10;
@@ -377,9 +377,8 @@ weechat_create_home_dirs ()
         if (!weechat_home)
         {
             string_iconv_fprintf (stderr,
-                                  _("%s not enough memory for home "
-                                    "directory\n"),
-                                  WEECHAT_ERROR);
+                                  _("Error: not enough memory for home "
+                                    "directory\n"));
             weechat_shutdown (EXIT_FAILURE, 0);
         }
         snprintf (weechat_home, dir_length, "%s%s.weechat", ptr_home,
@@ -392,8 +391,8 @@ weechat_create_home_dirs ()
         if (!S_ISDIR (statinfo.st_mode))
         {
             string_iconv_fprintf (stderr,
-                                  _("%s home (%s) is not a directory\n"),
-                                  WEECHAT_ERROR, weechat_home);
+                                  _("Error: home (%s) is not a directory\n"),
+                                  weechat_home);
             weechat_shutdown (EXIT_FAILURE, 0);
         }
     }
@@ -402,8 +401,8 @@ weechat_create_home_dirs ()
     if (!util_create_dir (weechat_home, 0))
     {
         string_iconv_fprintf (stderr,
-                              _("%s unable to create \"%s\" directory\n"),
-                              WEECHAT_ERROR, weechat_home);
+                              _("Error: unable to create \"%s\" directory\n"),
+                              weechat_home);
         weechat_shutdown (EXIT_FAILURE, 0);
     }
 }

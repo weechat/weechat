@@ -209,9 +209,8 @@ gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
     if ((new_hotlist = (struct t_gui_hotlist *) malloc (sizeof (struct t_gui_hotlist))) == NULL)
     {
         weechat_log_printf (NULL,
-                            _("%s not enough memory to add a buffer to "
-                              "hotlist\n"),
-                            WEECHAT_ERROR);
+                            _("Error: not enough memory to add a buffer to "
+                              "hotlist\n"));
         return;
     }
     

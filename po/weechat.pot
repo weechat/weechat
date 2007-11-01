@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-09-19 11:56+0200\n"
+"POT-Creation-Date: 2007-11-01 11:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,128 +16,1484 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-msgid "Unable to get user's name"
-msgstr ""
-
 #, c-format
-msgid "%s cannot allocate new server\n"
-msgstr ""
-
-#, c-format
-msgid "%s error sending data to IRC server\n"
-msgstr ""
-
-msgid "(message dropped)"
-msgstr ""
-
-#, c-format
-msgid "%s not enough memory for received IRC message\n"
-msgstr ""
-
-#, c-format
-msgid "%s Command \"%s\" failed!\n"
-msgstr ""
-
-#, c-format
-msgid "%s No command to execute!\n"
-msgstr ""
-
-#, c-format
-msgid "%s Unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot read data from socket, disconnecting from server...\n"
-msgstr ""
-
-#, c-format
-msgid "%s: Reconnecting to server in %d seconds\n"
-msgstr ""
-
-#, c-format
-msgid "%s gnutls handshake failed\n"
-msgstr ""
-
-#, c-format
-msgid "%s proxy address \"%s\" not found\n"
-msgstr ""
-
-#, c-format
-msgid "%s address \"%s\" not found\n"
-msgstr ""
-
-#, c-format
-msgid "%s proxy IP address not found\n"
-msgstr ""
-
-#, c-format
-msgid "%s IP address not found\n"
-msgstr ""
-
-#, c-format
-msgid "%s proxy connection refused\n"
-msgstr ""
-
-#, c-format
-msgid "%s connection refused\n"
+msgid "%sError: circular reference when calling alias \"/%s\""
 msgstr ""
 
 #, c-format
 msgid ""
-"%s proxy fails to establish connection to server (check username/password if "
-"used)\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to set local hostname/IP\n"
+"%s (c) Copyright 2003-2007, compiled on %s %s\n"
+"Developed by FlashCode <flashcode@flashtux.org> - %s"
 msgstr ""
 
 #, c-format
 msgid ""
-"%s cannot connect with SSL since WeeChat was not built with GNUtls support\n"
+"Usage: %s [options ...]\n"
+"   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel]"
+"[,channel[...]]"
+msgstr ""
+
+msgid ""
+"  -a, --no-connect      disable auto-connect to servers at startup\n"
+"  -c, --config          display config file options\n"
+"  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
+"  -f, --key-functions   display WeeChat internal functions for keys\n"
+"  -h, --help            this help\n"
+"  -m, --commands        display WeeChat commands\n"
+"  -k, --keys            display WeeChat default keys\n"
+"  -l, --license         display WeeChat license\n"
+"  -p, --no-plugin       don't load any plugin at startup\n"
+"  -v, --version         display WeeChat version\n"
+"\n"
+msgstr ""
+
+#. TRANSLATORS: %s is "WeeChat"
+#, c-format
+msgid "%s configuration options:\n"
+msgstr ""
+
+#. TRANSLATORS: %s is "WeeChat"
+#, c-format
+msgid "%s internal commands:\n"
+msgstr ""
+
+msgid "Internal key functions:\n"
+msgstr ""
+
+#. TRANSLATORS: %s is "WeeChat"
+#, c-format
+msgid "%s default keys:\n"
 msgstr ""
 
 #, c-format
-msgid "%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
+msgid "Error: missing argument for \"%s\" option\n"
 msgstr ""
 
 #, c-format
-msgid "Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
+msgid "Warning: unknown parameter '%s', ignored\n"
+msgstr ""
+
+msgid "Error: unable to get HOME directory\n"
+msgstr ""
+
+msgid "Error: not enough memory for home directory\n"
 msgstr ""
 
 #, c-format
-msgid "%s: connecting to server %s:%d%s%s...\n"
+msgid "Error: home (%s) is not a directory\n"
 msgstr ""
 
 #, c-format
-msgid "Connecting to server %s:%d%s%s...\n"
+msgid "Error: unable to create \"%s\" directory\n"
 msgstr ""
 
 #, c-format
-msgid "%s gnutls init error\n"
+msgid "%sWelcome to %s%s%s, %s"
+msgstr ""
+
+msgid "compiled on"
+msgstr ""
+
+msgid "create an alias for a command"
+msgstr ""
+
+msgid "[alias_name [command [arguments]]]"
+msgstr ""
+
+msgid ""
+"alias_name: name of alias\n"
+"   command: command name (WeeChat or IRC command, many commands can be "
+"separated by semicolons)\n"
+" arguments: arguments for command\n"
+"\n"
+"Note: in command, special variables $1, $2,..,$9 are replaced by arguments "
+"given by user, and $* is replaced by all arguments.\n"
+"Variables $nick, $channel and $server are replaced by current nick/channel/"
+"server."
+msgstr ""
+
+msgid "manage buffers"
+msgstr ""
+
+msgid "[action [args] | number | [[server] [channel]]]"
+msgstr ""
+
+msgid ""
+" action: action to do:\n"
+"   move: move buffer in the list (may be relative, for example -1)\n"
+"  close: close buffer\n"
+"   list: list open buffers (no parameter implies this list)\n"
+" notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2"
+"+join/part)\n"
+"         (when executed on server buffer, this sets default notify level for "
+"whole server)\n"
+" scroll: scroll in history (may be relative, and may end by a letter: s=sec, "
+"m=min, h=hour, d=day, M=month, y=year); if there is only letter, then scroll "
+"to beginning of this item\n"
+"\n"
+" number: jump to buffer by number\n"
+"server,\n"
+"channel: jump to buffer by server and/or channel name\n"
+"\n"
+"Examples:\n"
+"        move buffer: /buffer move 5\n"
+"       close buffer: /buffer close this is part msg\n"
+"         set notify: /buffer notify 2\n"
+"    scroll 1 day up: /buffer scroll 1d  ==  /buffer scroll -1d  ==  /buffer "
+"scroll -24h\n"
+"scroll to beginning\n"
+"        of this day: /buffer scroll d\n"
+" scroll 15 min down: /buffer scroll +15m\n"
+"  scroll 20 msgs up: /buffer scroll -20\n"
+"   jump to #weechat: /buffer #weechat"
+msgstr ""
+
+msgid ""
+"launch WeeChat/IRC builtin command (do not look at plugins handlers or "
+"aliases)"
+msgstr ""
+
+msgid "command"
+msgstr ""
+
+msgid ""
+"command: command to execute (a '/' is automatically added if not found at "
+"beginning of command)\n"
+msgstr ""
+
+msgid "clear window(s)"
+msgstr ""
+
+msgid "[-all | number [number ...]]"
+msgstr ""
+
+msgid ""
+"  -all: clear all buffers\n"
+"number: clear buffer by number"
+msgstr ""
+
+msgid "print debug messages"
+msgstr ""
+
+msgid "dump | buffer | windows"
+msgstr ""
+
+msgid ""
+"   dump: save memory dump in WeeChat log file (same dump is written when "
+"WeeChat crashes)\n"
+" buffer: dump buffer content with hexadecimal values in log file\n"
+"windows: display windows tree"
+msgstr ""
+
+msgid "display help about commands"
+msgstr ""
+
+msgid "[command]"
+msgstr ""
+
+msgid "command: name of a WeeChat or IRC command"
+msgstr ""
+
+msgid "show buffer command history"
+msgstr ""
+
+msgid "[clear | value]"
+msgstr ""
+
+msgid ""
+"clear: clear history\n"
+"value: number of history entries to show"
+msgstr ""
+
+msgid "bind/unbind keys"
+msgstr ""
+
+msgid ""
+"[key [function/command]] [unbind key] [functions] [call function [\"args\"]] "
+"[reset -yes]"
+msgstr ""
+
+msgid ""
+"      key: display or bind this key to an internal function or a command "
+"(beginning by \"/\")\n"
+"   unbind: unbind a key\n"
+"functions: list internal functions for key bindings\n"
+"     call: call a function by name (with optional arguments)\n"
+"    reset: restore bindings to the default values and delete ALL personal "
+"bindings (use carefully!)"
+msgstr ""
+
+msgid "list/load/unload plugins"
+msgstr ""
+
+msgid ""
+"[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload "
+"[name]] | [unload [name]]"
+msgstr ""
+
+msgid ""
+"    list: list loaded plugins\n"
+"listfull: list loaded plugins with detailed info for each plugin\n"
+"    load: load a plugin\n"
+"autoload: autoload plugins in system or user directory\n"
+"  reload: reload one plugin (if no name given, unload all plugins, then "
+"autoload plugins)\n"
+"  unload: unload one or all plugins\n"
+"\n"
+"Without argument, /plugin command lists loaded plugins."
+msgstr ""
+
+msgid "save configuration files to disk"
+msgstr ""
+
+msgid "set config options"
+msgstr ""
+
+msgid "[option [ = value]]"
+msgstr ""
+
+msgid ""
+"option: name of an option (if name is full and no value is given, then help "
+"is displayed on option)\n"
+" value: value for option\n"
+"\n"
+"Option may be: servername.server_xxx where \"servername\" is an internal "
+"server name and \"xxx\" an option for this server."
+msgstr ""
+
+msgid "set plugin config options"
+msgstr ""
+
+msgid ""
+"option: name of a plugin option\n"
+" value: value for option\n"
+"\n"
+"Option is format: plugin.option, example: perl.myscript.item1"
+msgstr ""
+
+msgid "remove an alias"
+msgstr ""
+
+msgid "alias_name"
+msgstr ""
+
+msgid "alias_name: name of alias to remove"
+msgstr ""
+
+msgid "upgrade WeeChat without disconnecting from servers"
+msgstr ""
+
+msgid "[path_to_binary]"
+msgstr ""
+
+msgid ""
+"path_to_binary: path to WeeChat binary (default is current binary)\n"
+"\n"
+"This command run again a WeeChat binary, so it should have been compiled or "
+"installed with a package manager before running this command."
+msgstr ""
+
+msgid "show WeeChat uptime"
+msgstr ""
+
+msgid "[-o]"
+msgstr ""
+
+msgid "-o: send uptime on current channel as an IRC message"
+msgstr ""
+
+msgid "manage windows"
+msgstr ""
+
+msgid ""
+"[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
+"[pct] | resize pct | merge [all]]"
+msgstr ""
+
+msgid ""
+"  list: list open windows (no parameter implies this list)\n"
+"    -1: jump to previous window\n"
+"    +1: jump to next window\n"
+"    b#: jump to next window displaying buffer number #\n"
+"    up: switch to window above current one\n"
+"  down: switch to window below current one\n"
+"  left: switch to window on the left\n"
+" right: switch to window on the right\n"
+"splith: split current window horizontally\n"
+"splitv: split current window vertically\n"
+"resize: resize window size, new size is <pct> pourcentage of parent window\n"
+" merge: merge window with another (all = keep only one window)\n"
+"\n"
+"For splith and splitv, pct is a pourcentage which represents size of new "
+"window, computed with current window as size reference. For example 25 means "
+"create a new window with size = current_size / 4"
 msgstr ""
 
 #, c-format
-msgid "%s cannot create pipe\n"
+msgid "%sError: missing arguments for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "%s cannot create socket\n"
+msgid "%sAlias \"%s\" => \"%s\" created"
 msgstr ""
 
 #, c-format
-msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
+msgid "%sError: not enough memory for creating alias \"%s\" => \"%s\""
+msgstr ""
+
+msgid "Alias:"
 msgstr ""
 
 #, c-format
-msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
+msgid "%sNo alias found."
+msgstr ""
+
+msgid "List of aliases:"
 msgstr ""
 
 #, c-format
-msgid "%s: Reconnecting to server...\n"
+msgid "%sNo alias defined."
 msgstr ""
 
-msgid "Disconnected from server!\n"
+msgid "Open buffers:"
+msgstr ""
+
+#, c-format
+msgid "%sError: incorrect buffer number"
+msgstr ""
+
+msgid "Notify levels:"
+msgstr ""
+
+#, c-format
+msgid "%sError: incorrect notify level (must be between %d and %d)"
+msgstr ""
+
+#, c-format
+msgid "%sNew notify level for %s%s%s: %d %s"
+msgstr ""
+
+msgid "(hotlist: never)"
+msgstr ""
+
+msgid "(hotlist: highlights)"
+msgstr ""
+
+msgid "(hotlist: highlights + messages)"
+msgstr ""
+
+msgid "(hotlist: highlights + messages + join/part (all))"
+msgstr ""
+
+#, c-format
+msgid "%sError: buffer number \"%s\" not found for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown option for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong argument count for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s internal commands:"
+msgstr ""
+
+msgid "Other commands:"
+msgstr ""
+
+#, c-format
+msgid "[%s%s]  %s/%s  %s%s"
+msgstr ""
+
+msgid "plugin:"
+msgstr ""
+
+#, c-format
+msgid "%sNo help available, \"%s\" is an unknown command"
+msgstr ""
+
+#, c-format
+msgid "New key binding:  %s"
+msgstr ""
+
+msgid "Key bindings:"
+msgstr ""
+
+#, c-format
+msgid "%sKey \"%s\" unbound"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to unbind key \"%s\""
+msgstr ""
+
+msgid "Internal key functions:"
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown key function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sDefault key bindings restored"
+msgstr ""
+
+#, c-format
+msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
+msgstr ""
+
+msgid "Key:"
+msgstr ""
+
+#, c-format
+msgid "%sNo key found."
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to bind key \"%s\""
+msgstr ""
+
+msgid "Plugins loaded:"
+msgstr ""
+
+msgid "     commands hooked:"
+msgstr ""
+
+msgid "     messages hooked:"
+msgstr ""
+
+msgid "     configuration otions hooked:"
+msgstr ""
+
+msgid "     timers hooked:"
+msgstr ""
+
+#, c-format
+msgid "       %d %s (%d calls remaining)"
+msgstr ""
+
+msgid "seconds"
+msgstr ""
+
+msgid "second"
+msgstr ""
+
+msgid "milliseconds"
+msgstr ""
+
+msgid "millisecond"
+msgstr ""
+
+#, c-format
+msgid "       %d %s (no call limit)"
+msgstr ""
+
+msgid "     fd hooked:"
+msgstr ""
+
+#, c-format
+msgid "       %d (flags: %d)"
+msgstr ""
+
+#, c-format
+msgid "     %d keyboards hooked"
+msgstr ""
+
+msgid "No plugin found."
+msgstr ""
+
+msgid "  (no plugin)"
+msgstr ""
+
+#, c-format
+msgid "%sWeeChat configuration file saved"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to save configuration file"
+msgstr ""
+
+#, c-format
+msgid "%sPlugins options saved"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to save plugins options"
+msgstr ""
+
+msgid "(unknown)"
+msgstr ""
+
+#, c-format
+msgid "%sError: option \"%s\" can not be changed while WeeChat is running"
+msgstr ""
+
+msgid "Option changed: "
+msgstr ""
+
+#, c-format
+msgid "%sError: incorrect value for option \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: configuration option \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "No configuration option found with \"%s\""
+msgstr ""
+
+msgid "No configuration option found"
+msgstr ""
+
+#, c-format
+msgid "%s%d%s configuration option(s) found with \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%d%s configuration option(s) found"
+msgstr ""
+
+#, c-format
+msgid "%sError: plugin \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "Plugin option changed: %s%s = \"%s%s%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: incorrect value for plugin option \"%s\""
+msgstr ""
+
+#, c-format
+msgid "No plugin option found with \"%s\""
+msgstr ""
+
+msgid "No plugin option found"
+msgstr ""
+
+#, c-format
+msgid "plugin option(s) found with \"%s\""
+msgstr ""
+
+msgid "plugin option(s) found"
+msgstr ""
+
+#, c-format
+msgid "%sError: alias or command \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "%sAlias \"%s\" removed"
+msgstr ""
+
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr ""
+
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%sWeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
+msgstr ""
+
+msgid "Open windows:"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: can not merge windows, there's no other window with same size near "
+"current one."
+msgstr ""
+
+msgid ""
+"if set, uses real white color, disabled by default for terms with white "
+"background (if you never use white background, you should turn on this "
+"option to see real white instead of default term foreground color)"
+msgstr ""
+
+msgid "save configuration file on exit"
+msgstr ""
+
+msgid "set title for window (terminal for Curses GUI) with name and version"
+msgstr ""
+
+msgid "display WeeChat logo at startup"
+msgstr ""
+
+msgid "display WeeChat version at startup"
+msgstr ""
+
+msgid "WeeChat slogan (if empty, slogan is not used)"
+msgstr ""
+
+msgid "how many lines to scroll by with scroll_up and scroll_down"
+msgstr ""
+
+msgid "time format for buffers"
+msgstr ""
+
+msgid "number of colors to use for nicks colors"
+msgstr ""
+
+msgid "display actions with different colors"
+msgstr ""
+
+msgid "display nicklist window (for channel windows)"
+msgstr ""
+
+msgid "nicklist position (top, left, right (default), bottom)"
+msgstr ""
+
+msgid ""
+"min size for nicklist (width or height, depending on look_nicklist_position "
+"(0 = no min size))"
+msgstr ""
+
+msgid ""
+"max size for nicklist (width or height, depending on look_nicklist_position "
+"(0 = no max size; if min = max and > 0, then size is fixed))"
+msgstr ""
+
+msgid "separator between chat and nicklist"
+msgstr ""
+
+msgid "text to display instead of nick when not connected"
+msgstr ""
+
+msgid "display nick mode ((half)op/voice) before each nick"
+msgstr ""
+
+msgid "display space if nick mode is not (half)op/voice"
+msgstr ""
+
+msgid "prefix for info messages"
+msgstr ""
+
+msgid "prefix for error messages"
+msgstr ""
+
+msgid "prefix for network messages"
+msgstr ""
+
+msgid "prefix for action messages"
+msgstr ""
+
+msgid "prefix for join messages"
+msgstr ""
+
+msgid "prefix for quit messages"
+msgstr ""
+
+msgid "prefix alignment (none, left, right))"
+msgstr ""
+
+msgid "max size for prefix (0 = no max size)"
+msgstr ""
+
+msgid "string displayed after prefix"
+msgstr ""
+
+msgid ""
+"offset for aligning lines of messages (except first lines), default is -1 "
+"(align after prefix), a null or positive value is offset after beginning of "
+"line"
+msgstr ""
+
+msgid "the string inserted after nick completion"
+msgstr ""
+
+msgid "chars ignored for nick completion"
+msgstr ""
+
+msgid "smart completion for nicks (completes with last speakers first)"
+msgstr ""
+
+msgid "complete only with first nick found"
+msgstr ""
+
+msgid "enable info bar"
+msgstr ""
+
+msgid "time format for time in infobar"
+msgstr ""
+
+msgid "display seconds in infobar time"
+msgstr ""
+
+msgid ""
+"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
+"notifications in infobar)"
+msgstr ""
+
+msgid ""
+"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
+msgstr ""
+
+msgid ""
+"level for displaying names in hotlist (combination of: 1=join/part, "
+"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
+msgstr ""
+
+msgid "max length of names in hotlist (0 = no limit)"
+msgstr ""
+
+msgid ""
+"hotlist sort type (group_time_asc (default), group_time_desc, "
+"group_number_asc, group_number_desc, number_asc, number_desc)"
+msgstr ""
+
+msgid "display special message when day changes"
+msgstr ""
+
+msgid "time format for date displayed when day changed"
+msgstr ""
+
+msgid "use a marker on servers/channels to show first unread line"
+msgstr ""
+
+#, c-format
+msgid ""
+"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
+"and '%m' by nick modes)"
+msgstr ""
+
+msgid ""
+"max number of lines for paste without asking user (0 = disable this feature)"
+msgstr ""
+
+msgid "color for window separators (when splited)"
+msgstr ""
+
+msgid "color for title bar"
+msgstr ""
+
+msgid "background color for title bar"
+msgstr ""
+
+msgid "color for '+' when scrolling title"
+msgstr ""
+
+msgid "color for chat text"
+msgstr ""
+
+msgid "background for chat text"
+msgstr ""
+
+msgid "color for time in chat window"
+msgstr ""
+
+msgid "color for time delimiters)"
+msgstr ""
+
+msgid "color for info prefix"
+msgstr ""
+
+msgid "color for error prefix"
+msgstr ""
+
+msgid "color for network prefix"
+msgstr ""
+
+msgid "color for action prefix"
+msgstr ""
+
+msgid "color for join prefix"
+msgstr ""
+
+msgid "color for quit prefix"
+msgstr ""
+
+msgid "color for '+' when prefix is too long"
+msgstr ""
+
+msgid "color for text after prefix"
+msgstr ""
+
+msgid "color for buffer names"
+msgstr ""
+
+msgid "color for server names"
+msgstr ""
+
+msgid "color for channel names"
+msgstr ""
+
+msgid "color for nicks"
+msgstr ""
+
+msgid "color for local nick"
+msgstr ""
+
+msgid "color for other nick in private buffer"
+msgstr ""
+
+msgid "color #1 for nick"
+msgstr ""
+
+msgid "color #2 for nick"
+msgstr ""
+
+msgid "color #3 for nick"
+msgstr ""
+
+msgid "color #4 for nick"
+msgstr ""
+
+msgid "color #5 for nick"
+msgstr ""
+
+msgid "color #6 for nick"
+msgstr ""
+
+msgid "color #7 for nick"
+msgstr ""
+
+msgid "color #8 for nick"
+msgstr ""
+
+msgid "color #9 for nick"
+msgstr ""
+
+msgid "color #10 for nick"
+msgstr ""
+
+msgid "color for hostnames"
+msgstr ""
+
+msgid "color for delimiters"
+msgstr ""
+
+msgid "color for highlighted nick"
+msgstr ""
+
+msgid "color for unread data marker"
+msgstr ""
+
+msgid "background color for unread data marker"
+msgstr ""
+
+msgid "color for status bar"
+msgstr ""
+
+msgid "background color for status bar"
+msgstr ""
+
+msgid "color for status bar delimiters"
+msgstr ""
+
+msgid "color for current channel in status bar"
+msgstr ""
+
+msgid "color for window with new messages (status bar)"
+msgstr ""
+
+msgid "color for window with private message (status bar)"
+msgstr ""
+
+msgid "color for window with highlight (status bar)"
+msgstr ""
+
+msgid "color for window with new data (not messages) (status bar)"
+msgstr ""
+
+msgid "color for window with new data (status bar)"
+msgstr ""
+
+msgid "color for info bar text"
+msgstr ""
+
+msgid "background color for info bar text"
+msgstr ""
+
+msgid "color for infobar delimiters"
+msgstr ""
+
+msgid "color for info bar highlight notification"
+msgstr ""
+
+msgid "color for input text"
+msgstr ""
+
+msgid "background color for input text"
+msgstr ""
+
+msgid "color for input text (server name)"
+msgstr ""
+
+msgid "color for input text (channel name)"
+msgstr ""
+
+msgid "color for input text (nick name)"
+msgstr ""
+
+msgid "color for input text (delimiters)"
+msgstr ""
+
+msgid "color for text not found"
+msgstr ""
+
+msgid "color for actions in input window"
+msgstr ""
+
+msgid "color for nicklist"
+msgstr ""
+
+msgid "background color for nicklist"
+msgstr ""
+
+msgid "color for away nicknames"
+msgstr ""
+
+msgid "color for prefix 1"
+msgstr ""
+
+msgid "color for prefix 2"
+msgstr ""
+
+msgid "color for prefix 3"
+msgstr ""
+
+msgid "color for prefix 4"
+msgstr ""
+
+msgid "color for prefix 5"
+msgstr ""
+
+msgid "color for '+' when scrolling nicks (nicklist)"
+msgstr ""
+
+msgid "color for nicklist separator"
+msgstr ""
+
+msgid "color for status info"
+msgstr ""
+
+msgid "background color for status info"
+msgstr ""
+
+msgid "color for \"waiting\" status info"
+msgstr ""
+
+msgid "color for \"connecting\" status info"
+msgstr ""
+
+msgid "color for \"active\" status info"
+msgstr ""
+
+msgid "color for \"done\" status info"
+msgstr ""
+
+msgid "color for \"failed\" status info"
+msgstr ""
+
+msgid "color for \"aborted\" status info"
+msgstr ""
+
+msgid ""
+"maximum number of lines in history for one server/channel/private window (0 "
+"= unlimited)"
+msgstr ""
+
+msgid "maximum number of user commands in history (0 = unlimited)"
+msgstr ""
+
+msgid ""
+"maximum number of commands to display by default in history listing (0 = "
+"unlimited)"
+msgstr ""
+
+msgid "log messages from plugins"
+msgstr ""
+
+msgid ""
+"path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/."
+"weechat by default)"
+msgstr ""
+
+msgid "time format for log (see man strftime for date/time specifiers)"
+msgstr ""
+
+msgid "use a proxy server to connect to irc server"
+msgstr ""
+
+msgid "proxy type (http (default), socks4, socks5)"
+msgstr ""
+
+msgid "connect to proxy in ipv6"
+msgstr ""
+
+msgid "proxy server address (IP or hostname)"
+msgstr ""
+
+msgid "port for connecting to proxy server"
+msgstr ""
+
+msgid "username for proxy server"
+msgstr ""
+
+msgid "password for proxy server"
+msgstr ""
+
+msgid ""
+"path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
+"weechat by default)"
+msgstr ""
+
+msgid ""
+"comma separated list of plugins to load automatically at startup, \"*\" "
+"means all plugins found (names may be partial, for example \"perl\" is ok "
+"for \"perl.so\")"
+msgstr ""
+
+msgid ""
+"standard plugins extension in filename, used for autoload (if empty, then "
+"all files are loaded when autoload is \"*\")"
+msgstr ""
+
+msgid ""
+"Warning: you should now issue /save to write \"save_on_exit\" option in "
+"configuration file.\n"
+msgstr ""
+
+msgid "Saving WeeChat configuration to disk\n"
+msgstr ""
+
+#, c-format
+msgid "Warning: config file \"%s\" not found.\n"
+msgstr ""
+
+#, c-format
+msgid "Warning: %s, line %d: invalid syntax, missing \"]\"\n"
+msgstr ""
+
+#, c-format
+msgid "Warning: %s, line %d: unknown section identifier (\"%s\")\n"
+msgstr ""
+
+#, c-format
+msgid "Warning: %s, line %d: error reading new section \"%s\"\n"
+msgstr ""
+
+#, c-format
+msgid "Warning: %s, line %d: invalid syntax, missing \"=\"\n"
+msgstr ""
+
+#, c-format
+msgid "Warning: %s, line %d: unknown option \"%s\" (outside a section)\n"
+msgstr ""
+
+#, c-format
+msgid "Warning: %s, line %d: option \"%s\" unknown for section \"%s\"\n"
+msgstr ""
+
+#, c-format
+msgid "Warning: %s, line %d: invalid value for option \"%s\"\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"#\n"
+"# %s configuration file, created by %s v%s on %s"
+msgstr ""
+
+msgid ""
+"# WARNING! Be careful when editing this file, WeeChat may write it at any "
+"time.\n"
+"#\n"
+msgstr ""
+
+#, c-format
+msgid "Error: cannot create file \"%s\"\n"
+msgstr ""
+
+#, c-format
+msgid "%s: creating default config file \"%s\"...\n"
+msgstr ""
+
+#, c-format
+msgid "Creating default config file \"%s\"\n"
+msgstr ""
+
+#, c-format
+msgid "Warning: unable to assign default int with string (\"%s\")\n"
+msgstr ""
+
+#, c-format
+msgid "Warning: unable to assign default color (\"%s\")\n"
+msgstr ""
+
+msgid "  . type: boolean\n"
+msgstr ""
+
+msgid "  . values: 'on' or 'off'\n"
+msgstr ""
+
+#, c-format
+msgid "  . default value: '%s'\n"
+msgstr ""
+
+msgid "  . type: integer\n"
+msgstr ""
+
+#, c-format
+msgid "  . values: between %d and %d\n"
+msgstr ""
+
+#, c-format
+msgid "  . default value: %d\n"
+msgstr ""
+
+msgid "  . type: string\n"
+msgstr ""
+
+msgid "  . values: "
+msgstr ""
+
+msgid "empty"
+msgstr ""
+
+msgid "  . values: any string\n"
+msgstr ""
+
+msgid "  . type: char\n"
+msgstr ""
+
+msgid "  . values: any char\n"
+msgstr ""
+
+#, c-format
+msgid "  . values: any string (limit: %d chars)\n"
+msgstr ""
+
+msgid "  . type: color\n"
+msgstr ""
+
+msgid "  . values: color (depends on GUI used)\n"
+msgstr ""
+
+#, c-format
+msgid "  . description: %s\n"
+msgstr ""
+
+#, c-format
+msgid "%sError: command \"%s\" failed"
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong argument count for %s command \"%s\" (expected: %d arg)"
+msgid_plural ""
+"%s%s wrong argument count for %s command \"%s\" (expected: %d args)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid ""
+"%sError: wrong argument count for %s command \"%s\" (expected: between %d "
+"and %d arg)"
+msgid_plural ""
+"%s%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
+"args)"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%sError: unknown command \"%s\" (type /help for help)."
+msgstr ""
+
+#, c-format
+msgid "%sYou can not write text in this buffer!"
+msgstr ""
+
+msgid ""
+"Error: unable to create/append to log file (weechat.log)\n"
+"If another WeeChat process is using this file, try to run WeeChat\n"
+"with another home using \"--dir\" command line option.\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"Last operation with session file was at position %ld, read of %d bytes\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"Please send %s/%s, %s/%s and above messages to WeeChat developers for "
+"support.\n"
+"Be careful, private info may be in these files.\n"
+msgstr ""
+
+#, c-format
+msgid "wrong type in file (expected: %d, read: %d)"
+msgstr ""
+
+msgid "invalid length for a buffer"
+msgstr ""
+
+msgid "object read error"
+msgstr ""
+
+#, c-format
+msgid "wrong object (expected: %d, read: %d)"
+msgstr ""
+
+msgid "type read error"
+msgstr ""
+
+#, c-format
+msgid "wrong type (expected: %d, read: %d)"
+msgstr ""
+
+#, c-format
+msgid "Error: cannot create directory \"%s\"\n"
+msgstr ""
+
+msgid "Text search (exact): "
+msgstr ""
+
+msgid "Text search: "
+msgstr ""
+
+#, c-format
+msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
+msgstr ""
+
+#, c-format
+msgid "\t\tDay changed to %s"
+msgstr ""
+
+msgid "Act: "
+msgstr ""
+
+msgid "-MORE-"
+msgstr ""
+
+msgid "server"
+msgstr ""
+
+msgid "Not enough memory for new line\n"
+msgstr ""
+
+msgid "Error: not enough memory to add a buffer to hotlist\n"
+msgstr ""
+
+msgid "Error: not enough memory for infobar message\n"
+msgstr ""
+
+msgid "terminate line"
+msgstr ""
+
+msgid "complete word"
+msgstr ""
+
+msgid "find previous completion for word"
+msgstr ""
+
+msgid "delete previous char"
+msgstr ""
+
+msgid "delete next char"
+msgstr ""
+
+msgid "delete until end of line"
+msgstr ""
+
+msgid "delete until beginning of line"
+msgstr ""
+
+msgid "delete entire line"
+msgstr ""
+
+msgid "delete previous word"
+msgstr ""
+
+msgid "delete next word"
+msgstr ""
+
+msgid "paste current clipboard content"
+msgstr ""
+
+msgid "transpose chars"
+msgstr ""
+
+msgid "go to beginning of line"
+msgstr ""
+
+msgid "go to end of line"
+msgstr ""
+
+msgid "move one char left"
+msgstr ""
+
+msgid "move to previous word"
+msgstr ""
+
+msgid "move one char right"
+msgstr ""
+
+msgid "move to next word"
+msgstr ""
+
+msgid "call previous command in history"
+msgstr ""
+
+msgid "call previous command in global history"
+msgstr ""
+
+msgid "call next command in history"
+msgstr ""
+
+msgid "call next command in global history"
+msgstr ""
+
+msgid "scroll one page up"
+msgstr ""
+
+msgid "scroll one page down"
+msgstr ""
+
+msgid "scroll a few lines up"
+msgstr ""
+
+msgid "scroll a few lines down"
+msgstr ""
+
+msgid "scroll to top of buffer"
+msgstr ""
+
+msgid "scroll to bottom of buffer"
+msgstr ""
+
+msgid "scroll left topic"
+msgstr ""
+
+msgid "scroll right topic"
+msgstr ""
+
+msgid "display beginning of nicklist"
+msgstr ""
+
+msgid "display end of nicklist"
+msgstr ""
+
+msgid "scroll nicklist one page up"
+msgstr ""
+
+msgid "scroll nicklist one page down"
+msgstr ""
+
+msgid "jump to buffer with activity"
+msgstr ""
+
+msgid "jump to DCC buffer"
+msgstr ""
+
+msgid "jump to raw IRC data buffer"
+msgstr ""
+
+msgid "jump to last buffer"
+msgstr ""
+
+msgid "jump to previous buffer"
+msgstr ""
+
+msgid "jump to server buffer"
+msgstr ""
+
+msgid "jump to next server"
+msgstr ""
+
+msgid "switch active server on servers buffer"
+msgstr ""
+
+msgid "scroll to previous highlight in buffer"
+msgstr ""
+
+msgid "scroll to next highlight in buffer"
+msgstr ""
+
+msgid "scroll to first unread line in buffer"
+msgstr ""
+
+msgid "set unread marker on all buffers"
+msgstr ""
+
+msgid "clear hotlist"
+msgstr ""
+
+msgid "clear infobar"
+msgstr ""
+
+msgid "refresh screen"
+msgstr ""
+
+msgid "grab a key"
+msgstr ""
+
+msgid "insert a string in command line"
+msgstr ""
+
+msgid "search text in buffer history"
+msgstr ""
+
+#, c-format
+msgid "Error: unable to bind key \"%s\"\n"
+msgstr ""
+
+#, c-format
+msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")\n"
+msgstr ""
+
+msgid "Error: not enough memory for key binding\n"
+msgstr ""
+
+#, c-format
+msgid "Unable to write log file \"%s\"\n"
+msgstr ""
+
+#, c-format
+msgid "%sError: Unable to write log file \"%s\"\n"
+msgstr ""
+
+msgid "****  Beginning of log  "
+msgstr ""
+
+msgid "****  End of log  "
+msgstr ""
+
+#, c-format
+msgid "%sFifo: pipe is open\n"
+msgstr ""
+
+#, c-format
+msgid "%sFifo: unable to open pipe (%s) for reading"
+msgstr ""
+
+#, c-format
+msgid "%sFifo: unable to create pipe for remote control (%s)"
+msgstr ""
+
+#, c-format
+msgid "%sFifo: pipe is closed"
+msgstr ""
+
+#, c-format
+msgid "%sFifo error: invalid text received on pipe"
+msgstr ""
+
+#, c-format
+msgid "%sFifo error: buffer not found for pipe data"
+msgstr ""
+
+#, c-format
+msgid "%sFifo: error reading pipe, closing it"
 msgstr ""
 
 #, c-format
@@ -193,6 +1549,24 @@ msgid ""
 "nickname: user or host to ban"
 msgstr ""
 
+msgid "connect to server(s)"
+msgstr ""
+
+msgid ""
+"[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port "
+"port] [-ipv6] [-ssl]]"
+msgstr ""
+
+msgid ""
+"      -all: connect to all servers\n"
+"servername: internal server name to connect\n"
+"   -nojoin: do not join any channel (even if autojoin is enabled on server)\n"
+"  hostname: hostname to connect, creating temporary server\n"
+"      port: port for server (integer, default is 6667)\n"
+"      ipv6: use IPv6 protocol\n"
+"       ssl: use SSL protocol"
+msgstr ""
+
 msgid "send a CTCP message (Client-To-Client Protocol)"
 msgstr ""
 
@@ -216,6 +1590,18 @@ msgid ""
 "part_message: part message (displayed to other users)"
 msgstr ""
 
+msgid "starts DCC (file or chat) or close chat"
+msgstr ""
+
+msgid "action [nickname [file]]"
+msgstr ""
+
+msgid ""
+"  action: 'send' (file) or 'chat' or 'close' (chat)\n"
+"nickname: nickname to send file or chat\n"
+"    file: filename (on local host)"
+msgstr ""
+
 msgid "removes half channel operator status from nickname(s)"
 msgstr ""
 
@@ -231,7 +1617,15 @@ msgstr ""
 msgid "shutdown the server"
 msgstr ""
 
-msgid "error received from IRC server"
+msgid "disconnect from server(s)"
+msgstr ""
+
+msgid "[-all | servername [servername ...]]"
+msgstr ""
+
+msgid ""
+"      -all: disconnect from all servers\n"
+"servername: server name to disconnect"
 msgstr ""
 
 msgid "gives half channel operator status to nickname(s)"
@@ -463,9 +1857,6 @@ msgid ""
 "daemon2: forward message to this daemon"
 msgstr ""
 
-msgid "message received"
-msgstr ""
-
 msgid "send a private message to a nick"
 msgstr ""
 
@@ -495,6 +1886,18 @@ msgstr ""
 msgid "data: raw data to send"
 msgstr ""
 
+msgid "reconnect to server(s)"
+msgstr ""
+
+msgid "[-all [-nojoin] | servername [servername ...] [-nojoin]]"
+msgstr ""
+
+msgid ""
+"      -all: reconnect to all servers\n"
+"servername: server name to reconnect\n"
+"   -nojoin: do not join any channel (even if autojoin is enabled on server)"
+msgstr ""
+
 msgid "tell the server to reload its config file"
 msgstr ""
 
@@ -510,6 +1913,43 @@ msgstr ""
 msgid ""
 "distribution: visibility of service\n"
 "        type: reserved for future usage"
+msgstr ""
+
+msgid "list, add or remove servers"
+msgstr ""
+
+msgid ""
+"[list [servername]] | [listfull [servername]] | [add servername hostname [-"
+"port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks "
+"nick1 nick2 nick3] [-username username] [-realname realname] [-command "
+"command] [-autojoin channel[,channel]] ] | [copy servername newservername] | "
+"[rename servername newservername] | [keep servername] | [del servername]"
+msgstr ""
+
+msgid ""
+"      list: list servers (no parameter implies this list)\n"
+"  listfull: list servers with detailed info for each server\n"
+"       add: create a new server\n"
+"servername: server name, for internal and display use\n"
+"  hostname: name or IP address of server\n"
+"      port: port for server (integer, default is 6667)\n"
+"      temp: create temporary server (not saved in config file)\n"
+"      auto: automatically connect to server when WeeChat starts\n"
+"    noauto: do not connect to server when WeeChat starts (default)\n"
+"      ipv6: use IPv6 protocol\n"
+"       ssl: use SSL protocol\n"
+"  password: password for server\n"
+"     nick1: first nick for server\n"
+"     nick2: alternate nick for server\n"
+"     nick3: second alternate nick for server\n"
+"  username: user name\n"
+"  realname: real name of user\n"
+"      copy: duplicate a server\n"
+"    rename: rename a server\n"
+"      keep: keep server in config file (for temporary servers only)\n"
+"       del: delete a server\n"
+"   deloutq: delete messages out queue for all servers (all messages WeeChat "
+"is currently sending)"
 msgstr ""
 
 msgid "list services currently connected to the network"
@@ -663,6 +2103,599 @@ msgid ""
 "  target: reply should match this mask"
 msgstr ""
 
+#, c-format
+msgid "%s cannot find nick for sending message\n"
+msgstr ""
+
+#, c-format
+msgid "Future away on %s%s%s: %s\n"
+msgstr ""
+
+#, c-format
+msgid "Future away on %s%s%s removed.\n"
+msgstr ""
+
+#, c-format
+msgid "%s \"%s\" command can only be executed in a channel buffer\n"
+msgstr ""
+
+#, c-format
+msgid "%s already connected to server \"%s\"!\n"
+msgstr ""
+
+#, c-format
+msgid "%s currently connecting to server \"%s\"!\n"
+msgstr ""
+
+#, c-format
+msgid "%s missing argument for \"%s\" option\n"
+msgstr ""
+
+#, c-format
+msgid "Server %s%s%s created (temporary server, NOT SAVED!)\n"
+msgstr ""
+
+#, c-format
+msgid "%s unable to create server \"%s\"\n"
+msgstr ""
+
+#, c-format
+msgid "%s \"%s\" command can not be executed on a server buffer\n"
+msgstr ""
+
+#, c-format
+msgid "%s wrong argument count for \"%s\" command\n"
+msgstr ""
+
+#, c-format
+msgid "%s wrong arguments for \"%s\" command\n"
+msgstr ""
+
+#, c-format
+msgid "%s not connected to server \"%s\"!\n"
+msgstr ""
+
+msgid "Auto-reconnection is cancelled\n"
+msgstr ""
+
+#, c-format
+msgid "%s server \"%s\" not found\n"
+msgstr ""
+
+#, c-format
+msgid "%s \"%s\" is not a valid regular expression (%s)\n"
+msgstr ""
+
+#, c-format
+msgid "%s not enough memory for regular expression\n"
+msgstr ""
+
+#, c-format
+msgid "%s \"%s\" command can only be executed in a channel or private buffer\n"
+msgstr ""
+
+#, c-format
+msgid "%s nick \"%s\" not found for \"%s\" command\n"
+msgstr ""
+
+#, c-format
+msgid "%s cannot create new private buffer \"%s\"\n"
+msgstr ""
+
+#, c-format
+msgid "%s command \"%s\" needs a server connection!\n"
+msgstr ""
+
+msgid "All servers:\n"
+msgstr ""
+
+msgid "No server.\n"
+msgstr ""
+
+#, c-format
+msgid "Servers with '%s':\n"
+msgstr ""
+
+#, c-format
+msgid "No server with '%s' found.\n"
+msgstr ""
+
+#, c-format
+msgid "%s missing parameters for \"%s\" command\n"
+msgstr ""
+
+#, c-format
+msgid "%s server \"%s\" already exists, can't create it!\n"
+msgstr ""
+
+#, c-format
+msgid "Server %s%s%s created\n"
+msgstr ""
+
+#, c-format
+msgid "%s unable to create server\n"
+msgstr ""
+
+#, c-format
+msgid "%s missing server name for \"%s\" command\n"
+msgstr ""
+
+#, c-format
+msgid "%s server \"%s\" not found for \"%s\" command\n"
+msgstr ""
+
+#, c-format
+msgid "%s server \"%s\" already exists for \"%s\" command\n"
+msgstr ""
+
+#, c-format
+msgid "Server %s%s%s has been copied to %s%s\n"
+msgstr ""
+
+#, c-format
+msgid "Server %s%s%s has been renamed to %s%s\n"
+msgstr ""
+
+#, c-format
+msgid "%s server \"%s\" is not a temporary server\n"
+msgstr ""
+
+#, c-format
+msgid "Server %s%s%s is not temporary any more\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s you can not delete server \"%s\" because you are connected to. Try /"
+"disconnect %s before.\n"
+msgstr ""
+
+#, c-format
+msgid "Server %s%s%s has been deleted\n"
+msgstr ""
+
+msgid ""
+"Messages outqueue DELETED for all servers. Some messages from you or WeeChat "
+"may have been lost!\n"
+msgstr ""
+
+#, c-format
+msgid "%s unknown option for \"%s\" command\n"
+msgstr ""
+
+#, c-format
+msgid "%s, compiled on %s %s\n"
+msgstr ""
+
+msgid "use same buffer for all servers"
+msgstr ""
+
+msgid "open new channels/privates near server"
+msgstr ""
+
+msgid "text to display before nick in chat window"
+msgstr ""
+
+msgid "text to display after nick in chat window"
+msgstr ""
+
+msgid "display message when (un)marking as away"
+msgstr ""
+
+msgid "show remote away message only once in private"
+msgstr ""
+
+msgid ""
+"default part message (leaving channel) ('%v' will be replaced by WeeChat "
+"version in string)"
+msgstr ""
+
+msgid ""
+"default quit message ('%v' will be replaced by WeeChat version in string)"
+msgstr ""
+
+msgid "display notices as private messages"
+msgstr ""
+
+msgid "interval between two checks for away (in minutes, 0 = never check)"
+msgstr ""
+
+msgid ""
+"do not check away nicks on channels with high number of nicks (0 = unlimited)"
+msgstr ""
+
+msgid "interval between two checks for lag (in seconds)"
+msgstr ""
+
+msgid "minimum lag to show (in seconds)"
+msgstr ""
+
+msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
+msgstr ""
+
+msgid "anti-flood: # seconds between two user messages (0 = no anti-flood)"
+msgstr ""
+
+msgid ""
+"comma separated list of words to highlight (case insensitive comparison, "
+"words may begin or end with \"*\" for partial match)"
+msgstr ""
+
+msgid "when off, colors codes are ignored in incoming messages"
+msgstr ""
+
+msgid ""
+"allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, ^Ccxx,"
+"yy=color+background, ^Cu=underline, ^Cr=reverse)"
+msgstr ""
+
+msgid "send unknown commands to IRC server"
+msgstr ""
+
+msgid "automatically accept incoming dcc files"
+msgstr ""
+
+msgid "automatically accept dcc chats (use carefully!)"
+msgstr ""
+
+msgid "timeout for dcc request (in seconds)"
+msgstr ""
+
+msgid "block size for dcc packets in bytes (default: 65536)"
+msgstr ""
+
+msgid "does not wait for ACK when sending file"
+msgstr ""
+
+msgid ""
+"restricts outgoing dcc to use only ports in the given range (useful for NAT) "
+"(syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value "
+"means any port)"
+msgstr ""
+
+msgid ""
+"IP or DNS address used for outgoing dcc (if empty, local interface IP is "
+"used)"
+msgstr ""
+
+msgid "path for writing incoming files with dcc (default: user home)"
+msgstr ""
+
+msgid ""
+"path for reading files when sending thru dcc (when no path is specified)"
+msgstr ""
+
+msgid "convert spaces to underscores when sending files"
+msgstr ""
+
+msgid "rename incoming files if already exists (add '.1', '.2', ...)"
+msgstr ""
+
+msgid ""
+"automatically resume dcc transfer if connection with remote host is loosed"
+msgstr ""
+
+msgid "automatically log server messages"
+msgstr ""
+
+msgid "automatically log channel chats"
+msgstr ""
+
+msgid "automatically log private chats"
+msgstr ""
+
+msgid "hide password displayed by nickserv"
+msgstr ""
+
+msgid "name associated to IRC server (for display only)"
+msgstr ""
+
+msgid "automatically connect to server when WeeChat is starting"
+msgstr ""
+
+msgid "automatically reconnect to server when disconnected"
+msgstr ""
+
+msgid "delay (in seconds) before trying again to reconnect to server"
+msgstr ""
+
+msgid "IP address or hostname of IRC server"
+msgstr ""
+
+msgid "port for connecting to server"
+msgstr ""
+
+msgid "use IPv6 protocol for server communication"
+msgstr ""
+
+msgid "use SSL for server communication"
+msgstr ""
+
+msgid "password for IRC server"
+msgstr ""
+
+msgid "nickname to use on IRC server"
+msgstr ""
+
+msgid "alternate nickname to use on IRC server (if nickname is already used)"
+msgstr ""
+
+msgid ""
+"2nd alternate nickname to use on IRC server (if alternate nickname is "
+"already used)"
+msgstr ""
+
+msgid "user name to use on IRC server"
+msgstr ""
+
+msgid "real name to use on IRC server"
+msgstr ""
+
+msgid ""
+"custom hostname/IP for server (optional, if empty local hostname is used)"
+msgstr ""
+
+msgid ""
+"command(s) to run when connected to server (many commands should be "
+"separated by ';', use '\\;' for a semicolon, special variables $nick, "
+"$channel and $server are replaced by their value)"
+msgstr ""
+
+msgid ""
+"delay (in seconds) after command was executed (example: give some time for "
+"authentication)"
+msgstr ""
+
+msgid ""
+"comma separated list of channels to join when connected to server (example: "
+"\"#chan1,#chan2,#chan3 key1,key2\")"
+msgstr ""
+
+msgid "automatically rejoin channels when kicked"
+msgstr ""
+
+msgid ""
+"comma separated list of notify levels for channels of this server (format: "
+"#channel:1,..), a channel name '*' is reserved for server default notify "
+"level"
+msgstr ""
+
+#, c-format
+msgid "%s %s, line %d: new server, but previous was incomplete\n"
+msgstr ""
+
+#, c-format
+msgid "%s %s, line %d: server '%s' already exists\n"
+msgstr ""
+
+#, c-format
+msgid "%s %s, line %d: unable to create server\n"
+msgstr ""
+
+msgid "Waiting"
+msgstr ""
+
+msgid "Connecting"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Done"
+msgstr ""
+
+msgid "Failed"
+msgstr ""
+
+msgid "Aborted"
+msgstr ""
+
+#, c-format
+msgid "DCC: file %s%s%s"
+msgstr ""
+
+#, c-format
+msgid " (local filename: %s%s%s)"
+msgstr ""
+
+msgid " sent to "
+msgstr ""
+
+msgid " received from "
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "FAILED"
+msgstr ""
+
+#, c-format
+msgid "DCC chat closed with %s%s %s(%s%d.%d.%d.%d%s)\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s can't associate DCC chat with private buffer (maybe private buffer has "
+"already DCC CHAT?)\n"
+msgstr ""
+
+#, c-format
+msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
+msgstr ""
+
+#, c-format
+msgid "DCC: file %s%s%s resumed at position %u\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or "
+"ended\n"
+msgstr ""
+
+#, c-format
+msgid "%s not enough memory for new DCC\n"
+msgstr ""
+
+msgid "DCC chat"
+msgstr ""
+
+#, c-format
+msgid ""
+"Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"Sending DCC file to %s%s%s: %s%s%s (local filename: %s%s%s), %s%lu%s bytes\n"
+msgstr ""
+
+#, c-format
+msgid "Incoming DCC chat request from %s%s%s (%s%d.%d.%d.%d%s)\n"
+msgstr ""
+
+#, c-format
+msgid "Sending DCC chat request to %s%s\n"
+msgstr ""
+
+#, c-format
+msgid ""
+"DCC: file %s%s%s (local filename: %s%s%s) will be resumed at position %u\n"
+msgstr ""
+
+#, c-format
+msgid "%s not enough memory for DCC SEND\n"
+msgstr ""
+
+#, c-format
+msgid "%s cannot access file \"%s\"\n"
+msgstr ""
+
+#, c-format
+msgid "%s could not find address for '%s'. Falling back to local IP.\n"
+msgstr ""
+
+#, c-format
+msgid "%s cannot create socket for DCC\n"
+msgstr ""
+
+#, c-format
+msgid "%s cannot find available port for DCC\n"
+msgstr ""
+
+#, c-format
+msgid "%s cannot send DCC\n"
+msgstr ""
+
+#, c-format
+msgid "%s error sending data to \"%s\" via DCC CHAT\n"
+msgstr ""
+
+#, c-format
+msgid "Private %s> %s"
+msgstr ""
+
+#, c-format
+msgid "%s DCC: unable to create pipe\n"
+msgstr ""
+
+#, c-format
+msgid "%s DCC: unable to read local file\n"
+msgstr ""
+
+#, c-format
+msgid "%s DCC: unable to send block to receiver\n"
+msgstr ""
+
+#, c-format
+msgid "%s DCC: unable to read ACK from receiver\n"
+msgstr ""
+
+#, c-format
+msgid "%s DCC: unable to connect to sender\n"
+msgstr ""
+
+#, c-format
+msgid "%s DCC: unable to receive block from sender\n"
+msgstr ""
+
+#, c-format
+msgid "%s DCC: unable to write local file\n"
+msgstr ""
+
+#, c-format
+msgid "%s DCC: unable to fork\n"
+msgstr ""
+
+#, c-format
+msgid "%s DCC: timeout\n"
+msgstr ""
+
+#, c-format
+msgid "%s DCC: unable to create socket for sending file\n"
+msgstr ""
+
+#, c-format
+msgid "%s DCC: unable to set 'nonblock' option for socket\n"
+msgstr ""
+
+#, c-format
+msgid "Aborting active DCC: \"%s\" from %s\n"
+msgstr ""
+
+#, c-format
+msgid "%sServer: %s%s %s[%s%s%s]\n"
+msgstr ""
+
+msgid "connected"
+msgstr ""
+
+msgid "not connected"
+msgstr ""
+
+msgid "on"
+msgstr ""
+
+msgid "off"
+msgstr ""
+
+msgid " (temporary server, will not be saved)"
+msgstr ""
+
+msgid "(hidden)"
+msgstr ""
+
+#, c-format
+msgid "%d channel"
+msgid_plural "%d channels"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%d pv"
+msgstr ""
+
+msgid " (temporary)"
+msgstr ""
+
+#, c-format
+msgid "%s you are not connected to server\n"
+msgstr ""
+
+msgid "This buffer is not a channel!\n"
+msgstr ""
+
+#, c-format
+msgid "Not enough memory to write log file \"%s\"\n"
+msgstr ""
+
+msgid "error received from IRC server"
+msgstr ""
+
+msgid "message received"
+msgstr ""
+
 msgid "a server message"
 msgstr ""
 
@@ -744,14 +2777,6 @@ msgstr ""
 msgid "topic of channel"
 msgstr ""
 
-msgid "channel :topic"
-msgstr ""
-
-msgid ""
-"channel: name of channel\n"
-"  topic: topic of the channel"
-msgstr ""
-
 msgid "infos about topic (nick and date changed)"
 msgstr ""
 
@@ -777,14 +2802,6 @@ msgid "who"
 msgstr ""
 
 msgid "list of nicks on channel"
-msgstr ""
-
-msgid "channel :[[@|+]nick ...]"
-msgstr ""
-
-msgid ""
-"channel: name of channel\n"
-"   nick: nick on the channel"
 msgstr ""
 
 msgid "end of /names list"
@@ -962,100 +2979,6 @@ msgid "whois (secure connection)"
 msgstr ""
 
 #, c-format
-msgid "%sServer: %s%s %s[%s%s%s]\n"
-msgstr ""
-
-msgid "connected"
-msgstr ""
-
-msgid "not connected"
-msgstr ""
-
-msgid "on"
-msgstr ""
-
-msgid "off"
-msgstr ""
-
-msgid " (temporary server, will not be saved)"
-msgstr ""
-
-msgid "seconds"
-msgstr ""
-
-msgid "(hidden)"
-msgstr ""
-
-#, c-format
-msgid "%d channel"
-msgid_plural "%d channels"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%d pv"
-msgstr ""
-
-msgid " (temporary)"
-msgstr ""
-
-#, c-format
-msgid "%s cannot find nick for sending message\n"
-msgstr ""
-
-#, c-format
-msgid "Future away on %s%s%s: %s\n"
-msgstr ""
-
-#, c-format
-msgid "Future away on %s%s%s removed.\n"
-msgstr ""
-
-#, c-format
-msgid "%s \"%s\" command can only be executed in a channel buffer\n"
-msgstr ""
-
-#, c-format
-msgid "%s \"%s\" command can not be executed on a server buffer\n"
-msgstr ""
-
-#, c-format
-msgid "%s wrong arguments for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s \"%s\" is not a valid regular expression (%s)\n"
-msgstr ""
-
-#, c-format
-msgid "%s not enough memory for regular expression\n"
-msgstr ""
-
-#, c-format
-msgid "%s \"%s\" command can only be executed in a channel or private buffer\n"
-msgstr ""
-
-#, c-format
-msgid "%s nick \"%s\" not found for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s wrong argument count for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot create new private buffer \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s command \"%s\" needs a server connection!\n"
-msgstr ""
-
-#, c-format
-msgid "%s, compiled on %s %s\n"
-msgstr ""
-
-#, c-format
 msgid "You have been invited to %s%s%s by %s%s\n"
 msgstr ""
 
@@ -1121,10 +3044,6 @@ msgstr ""
 
 #, c-format
 msgid "%s cannot create new private window \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "Private %s> %s"
 msgstr ""
 
 #, c-format
@@ -1213,11 +3132,6 @@ msgstr ""
 msgid "days"
 msgstr ""
 
-msgid "day"
-msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
-
 #, c-format
 msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr ""
@@ -1234,7 +3148,8 @@ msgstr ""
 msgid "minute"
 msgstr ""
 
-msgid "second"
+#, c-format
+msgid "%s[%s%s%s]%s Channels: "
 msgstr ""
 
 #, c-format
@@ -1274,11 +3189,19 @@ msgid "Channel reop %s%s%s: %s%s\n"
 msgstr ""
 
 #, c-format
+msgid "%s[%s%s%s]%s exception %s%s%s"
+msgstr ""
+
+#, c-format
 msgid " by %s%s %s(%s%s%s)"
 msgstr ""
 
 #, c-format
 msgid " by %s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)\n"
 msgstr ""
 
 #, c-format
@@ -1365,2873 +3288,190 @@ msgstr ""
 msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
 msgstr ""
 
-msgid "Waiting"
-msgstr ""
-
-msgid "Connecting"
-msgstr ""
-
-msgid "Active"
-msgstr ""
-
-msgid "Done"
-msgstr ""
-
-msgid "Failed"
-msgstr ""
-
-msgid "Aborted"
+msgid "Unable to get user's name"
 msgstr ""
 
 #, c-format
-msgid "DCC: file %s%s%s"
-msgstr ""
-
-#, c-format
-msgid " (local filename: %s%s%s)"
-msgstr ""
-
-msgid " sent to "
-msgstr ""
-
-msgid " received from "
-msgstr ""
-
-msgid "OK"
-msgstr ""
-
-msgid "FAILED"
-msgstr ""
-
-#, c-format
-msgid "DCC chat closed with %s%s %s(%s%d.%d.%d.%d%s)\n"
+msgid "%s cannot allocate new server\n"
 msgstr ""
 
 #, c-format
 msgid ""
-"%s can't associate DCC chat with private buffer (maybe private buffer has "
-"already DCC CHAT?)\n"
-msgstr ""
-
-#, c-format
-msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
-msgstr ""
-
-#, c-format
-msgid "DCC: file %s%s%s resumed at position %u\n"
+"%s error sending data to IRC server: null pointer (please report problem to "
+"developers)"
 msgstr ""
 
 #, c-format
 msgid ""
-"%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or "
-"ended\n"
+"%s error sending data to IRC server: empty buffer (please report problem to "
+"developers)"
 msgstr ""
 
 #, c-format
-msgid "%s not enough memory for new DCC\n"
-msgstr ""
-
-msgid "DCC chat"
+msgid "%s error sending data to IRC server (%s)"
 msgstr ""
 
 #, c-format
-msgid ""
-"Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"
+msgid "%s error sending data to IRC server\n"
+msgstr ""
+
+msgid "(message dropped)"
 msgstr ""
 
 #, c-format
-msgid ""
-"Sending DCC file to %s%s%s: %s%s%s (local filename: %s%s%s), %s%lu%s bytes\n"
+msgid "%s not enough memory for received IRC message\n"
 msgstr ""
 
 #, c-format
-msgid "Incoming DCC chat request from %s%s%s (%s%d.%d.%d.%d%s)\n"
+msgid "%s Command \"%s\" failed!\n"
 msgstr ""
 
 #, c-format
-msgid "Sending DCC chat request to %s%s\n"
+msgid "%s No command to execute!\n"
 msgstr ""
 
 #, c-format
-msgid ""
-"DCC: file %s%s%s (local filename: %s%s%s) will be resumed at position %u\n"
+msgid "%s Unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\"\n"
 msgstr ""
 
 #, c-format
-msgid "%s not enough memory for DCC SEND\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot access file \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s could not find address for '%s'. Falling back to local IP.\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot create socket for DCC\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot find available port for DCC\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot send DCC\n"
-msgstr ""
-
-#, c-format
-msgid "%s error sending data to \"%s\" via DCC CHAT\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to create pipe\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to read local file\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to send block to receiver\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to read ACK from receiver\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to connect to sender\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to receive block from sender\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to write local file\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to fork\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: timeout\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to create socket for sending file\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to set 'nonblock' option for socket\n"
-msgstr ""
-
-#, c-format
-msgid "Aborting active DCC: \"%s\" from %s\n"
-msgstr ""
-
-#, c-format
-msgid "%s too few arguments for ignore\n"
-msgstr ""
-
-#, c-format
-msgid "%s mask or type/command should be non generic value for ignore\n"
-msgstr ""
-
-#, c-format
-msgid "%s ignore already exists\n"
-msgstr ""
-
-#, c-format
-msgid "%s not enough memory to create ignore\n"
-msgstr ""
-
-msgid "Removing ignore:"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s plugin %s: unable to add handler for IRC command \"%s\" (not enough "
-"memory)\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s plugin %s: unable to add handler for \"%s\" command (already exists)\n"
-msgstr ""
-
-#, c-format
-msgid "%s plugin %s: unable to add handler for \"%s\" command (forbidden)\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s plugin %s: unable to add handler for \"%s\" command (not enough memory)\n"
-msgstr ""
-
-#, c-format
-msgid "%s plugin %s: unable to add timer handler (not enough memory)\n"
-msgstr ""
-
-#, c-format
-msgid "%s plugin %s: unable to add keyboard handler (not enough memory)\n"
-msgstr ""
-
-#, c-format
-msgid "%s plugin %s: unable to add event handler (not enough memory)\n"
-msgstr ""
-
-#, c-format
-msgid "%s plugin %s: unable to add modifier (not enough memory)\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to load plugin \"%s\": %s\n"
-msgstr ""
-
-#, c-format
-msgid "%s symbol \"plugin_name\" not found in plugin \"%s\", failed to load\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s unable to load plugin \"%s\": a plugin with same name already exists\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s symbol \"plugin_description\" not found in plugin \"%s\", failed to load\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s symbol \"plugin_version\" not found in plugin \"%s\", failed to load\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s function \"weechat_plugin_init\" not found in plugin \"%s\", failed to "
-"load\n"
-msgstr ""
-
-#, c-format
-msgid "Initializing plugin \"%s\" %s\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to initialize plugin \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to load plugin \"%s\" (not enough memory)\n"
-msgstr ""
-
-#, c-format
-msgid "Plugin \"%s\" (%s) loaded.\n"
-msgstr ""
-
-#, c-format
-msgid "Plugin \"%s\" unloaded.\n"
-msgstr ""
-
-#, c-format
-msgid "%s plugin \"%s\" not found\n"
-msgstr ""
-
-#, c-format
-msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot create file \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"#\n"
-"# %s plugins configuration file, created by %s v%s on %s"
-msgstr ""
-
-msgid ""
-"# WARNING! Be careful when editing this file, WeeChat writes this file when "
-"options are updated.\n"
-"#\n"
-msgstr ""
-
-#, c-format
-msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
-msgstr ""
-
-msgid "bytes"
-msgstr ""
-
-msgid "KB"
-msgstr ""
-
-msgid "MB"
-msgstr ""
-
-msgid "GB"
-msgstr ""
-
-msgid "ETA"
-msgstr ""
-
-msgid "Text search (exact): "
-msgstr ""
-
-msgid "Text search: "
-msgstr ""
-
-#, c-format
-msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
-msgstr ""
-
-msgid "  [A] Accept"
-msgstr ""
-
-msgid "  [C] Cancel"
-msgstr ""
-
-msgid "  [R] Remove"
-msgstr ""
-
-msgid "  [P] Purge old DCC"
-msgstr ""
-
-msgid "  [Q] Close DCC view"
-msgstr ""
-
-msgid "  [C] Clear buffer"
-msgstr ""
-
-msgid "  [Q] Close raw data view"
-msgstr ""
-
-#, c-format
-msgid "Day changed to %s\n"
+msgid "%s cannot read data from socket, disconnecting from server...\n"
 msgstr ""
 
 #, c-format
 msgid "%s lag is high, disconnecting from server...\n"
 msgstr ""
 
-msgid "<servers>"
-msgstr ""
-
-msgid "(away)"
-msgstr ""
-
-msgid "[not connected] "
-msgstr ""
-
-msgid "<RAW_IRC> "
-msgstr ""
-
-msgid "Act: "
-msgstr ""
-
-msgid "RAW_IRC"
-msgstr ""
-
-#, c-format
-msgid "Lag: %.1f"
-msgstr ""
-
-msgid "-MORE-"
-msgstr ""
-
-msgid "server"
-msgstr ""
-
-msgid "Not enough memory for new line\n"
-msgstr ""
-
-#, c-format
-msgid "%s not enough memory for infobar message\n"
-msgstr ""
-
-msgid "terminate line"
-msgstr ""
-
-msgid "complete word"
-msgstr ""
-
-msgid "find previous completion for word"
-msgstr ""
-
-msgid "delete previous char"
-msgstr ""
-
-msgid "delete next char"
-msgstr ""
-
-msgid "delete until end of line"
-msgstr ""
-
-msgid "delete until beginning of line"
-msgstr ""
-
-msgid "delete entire line"
-msgstr ""
-
-msgid "delete previous word"
-msgstr ""
-
-msgid "delete next word"
-msgstr ""
-
-msgid "paste current clipboard content"
-msgstr ""
-
-msgid "transpose chars"
-msgstr ""
-
-msgid "go to beginning of line"
-msgstr ""
-
-msgid "go to end of line"
-msgstr ""
-
-msgid "move one char left"
-msgstr ""
-
-msgid "move to previous word"
-msgstr ""
-
-msgid "move one char right"
-msgstr ""
-
-msgid "move to next word"
-msgstr ""
-
-msgid "call previous command in history"
-msgstr ""
-
-msgid "call previous command in global history"
-msgstr ""
-
-msgid "call next command in history"
-msgstr ""
-
-msgid "call next command in global history"
-msgstr ""
-
-msgid "scroll one page up"
-msgstr ""
-
-msgid "scroll one page down"
-msgstr ""
-
-msgid "scroll a few lines up"
-msgstr ""
-
-msgid "scroll a few lines down"
-msgstr ""
-
-msgid "scroll to top of buffer"
-msgstr ""
-
-msgid "scroll to bottom of buffer"
-msgstr ""
-
-msgid "scroll left topic"
-msgstr ""
-
-msgid "scroll right topic"
-msgstr ""
-
-msgid "display beginning of nicklist"
-msgstr ""
-
-msgid "display end of nicklist"
-msgstr ""
-
-msgid "scroll nicklist one page up"
-msgstr ""
-
-msgid "scroll nicklist one page down"
-msgstr ""
-
-msgid "jump to buffer with activity"
-msgstr ""
-
-msgid "jump to DCC buffer"
-msgstr ""
-
-msgid "jump to raw IRC data buffer"
-msgstr ""
-
-msgid "jump to last buffer"
-msgstr ""
-
-msgid "jump to previous buffer"
-msgstr ""
-
-msgid "jump to server buffer"
-msgstr ""
-
-msgid "jump to next server"
-msgstr ""
-
-msgid "switch active server on servers buffer"
-msgstr ""
-
-msgid "scroll to previous highlight in buffer"
-msgstr ""
-
-msgid "scroll to next highlight in buffer"
-msgstr ""
-
-msgid "scroll to first unread line in buffer"
-msgstr ""
-
-msgid "set unread marker on all buffers"
-msgstr ""
-
-msgid "clear hotlist"
-msgstr ""
-
-msgid "clear infobar"
-msgstr ""
-
-msgid "refresh screen"
-msgstr ""
-
-msgid "grab a key"
-msgstr ""
-
-msgid "insert a string in command line"
-msgstr ""
-
-msgid "search text in buffer history"
-msgstr ""
-
-#, c-format
-msgid "%s unable to bind key \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
-msgstr ""
-
-#, c-format
-msgid "%s not enough memory for key binding\n"
-msgstr ""
-
-#, c-format
-msgid "Not enough memory to write log file \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "Unable to write log file \"%s\"\n"
-msgstr ""
-
-msgid "****  Beginning of log  "
-msgstr ""
-
-msgid "****  End of log  "
-msgstr ""
-
-#, c-format
-msgid "%s circular reference when calling alias \"/%s\"\n"
-msgstr ""
-
-msgid "create an alias for a command"
-msgstr ""
-
-msgid "[alias_name [command [arguments]]]"
-msgstr ""
-
-msgid ""
-"alias_name: name of alias\n"
-"   command: command name (WeeChat or IRC command, many commands can be "
-"separated by semicolons)\n"
-" arguments: arguments for command\n"
-"\n"
-"Note: in command, special variables $1, $2,..,$9 are replaced by arguments "
-"given by user, and $* is replaced by all arguments.\n"
-"Variables $nick, $channel and $server are replaced by current nick/channel/"
-"server."
-msgstr ""
-
-msgid "manage buffers"
-msgstr ""
-
-msgid "[action [args] | number | [[server] [channel]]]"
-msgstr ""
-
-msgid ""
-" action: action to do:\n"
-"   move: move buffer in the list (may be relative, for example -1)\n"
-"  close: close buffer (optional arg is part message, for a channel)\n"
-"   list: list open buffers (no parameter implies this list)\n"
-" notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2"
-"+join/part)\n"
-"         (when executed on server buffer, this sets default notify level for "
-"whole server)\n"
-" scroll: scroll in history (may be relative, and may end by a letter: s=sec, "
-"m=min, h=hour, d=day, M=month, y=year); if there is only letter, then scroll "
-"to beginning of this item\n"
-"\n"
-" number: jump to buffer by number\n"
-"server,\n"
-"channel: jump to buffer by server and/or channel name\n"
-"\n"
-"Examples:\n"
-"        move buffer: /buffer move 5\n"
-"       close buffer: /buffer close this is part msg\n"
-"         set notify: /buffer notify 2\n"
-"    scroll 1 day up: /buffer scroll 1d  ==  /buffer scroll -1d  ==  /buffer "
-"scroll -24h\n"
-"scroll to beginning\n"
-"        of this day: /buffer scroll d\n"
-" scroll 15 min down: /buffer scroll +15m\n"
-"  scroll 20 msgs up: /buffer scroll -20\n"
-"   jump to #weechat: /buffer #weechat"
-msgstr ""
-
-msgid ""
-"launch WeeChat/IRC builtin command (do not look at plugins handlers or "
-"aliases)"
-msgstr ""
-
-msgid "command"
-msgstr ""
-
-msgid ""
-"command: command to execute (a '/' is automatically added if not found at "
-"beginning of command)\n"
-msgstr ""
-
-msgid "clear window(s)"
-msgstr ""
-
-msgid "[-all | number [number ...]]"
-msgstr ""
-
-msgid ""
-"  -all: clear all buffers\n"
-"number: clear buffer by number"
-msgstr ""
-
-msgid "connect to server(s)"
-msgstr ""
-
-msgid ""
-"[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port "
-"port] [-ipv6] [-ssl]]"
-msgstr ""
-
-msgid ""
-"      -all: connect to all servers\n"
-"servername: internal server name to connect\n"
-"   -nojoin: do not join any channel (even if autojoin is enabled on server)\n"
-"  hostname: hostname to connect, creating temporary server\n"
-"      port: port for server (integer, default is 6667)\n"
-"      ipv6: use IPv6 protocol\n"
-"       ssl: use SSL protocol"
-msgstr ""
-
-msgid "disconnect from server(s)"
-msgstr ""
-
-msgid "[-all | servername [servername ...]]"
-msgstr ""
-
-msgid ""
-"      -all: disconnect from all servers\n"
-"servername: server name to disconnect"
-msgstr ""
-
-msgid "starts DCC (file or chat) or close chat"
-msgstr ""
-
-msgid "action [nickname [file]]"
-msgstr ""
-
-msgid ""
-"  action: 'send' (file) or 'chat' or 'close' (chat)\n"
-"nickname: nickname to send file or chat\n"
-"    file: filename (on local host)"
-msgstr ""
-
-msgid "print debug messages"
-msgstr ""
-
-msgid "dump | buffer | windows"
-msgstr ""
-
-msgid ""
-"   dump: save memory dump in WeeChat log file (same dump is written when "
-"WeeChat crashes)\n"
-" buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree"
-msgstr ""
-
-msgid "display help about commands"
-msgstr ""
-
-msgid "[command]"
-msgstr ""
-
-msgid "command: name of a WeeChat or IRC command"
-msgstr ""
-
-msgid "show buffer command history"
-msgstr ""
-
-msgid "[clear | value]"
-msgstr ""
-
-msgid ""
-"clear: clear history\n"
-"value: number of history entries to show"
-msgstr ""
-
-msgid "ignore IRC messages and/or hosts"
-msgstr ""
-
-msgid "[mask [[type | command] [channel [server]]]]"
-msgstr ""
-
-msgid ""
-"   mask: nick or host mask to ignore\n"
-"   type: type of message to ignore (action, ctcp, dcc, pv)\n"
-"command: IRC command\n"
-"channel: name of channel for ignore\n"
-" server: name of server for ignore\n"
-"\n"
-"For each argument, '*' means all.\n"
-"Without argument, /ignore command lists all defined ignore."
-msgstr ""
-
-msgid "bind/unbind keys"
-msgstr ""
-
-msgid ""
-"[key [function/command]] [unbind key] [functions] [call function [\"args\"]] "
-"[reset -yes]"
-msgstr ""
-
-msgid ""
-"      key: display or bind this key to an internal function or a command "
-"(beginning by \"/\")\n"
-"   unbind: unbind a key\n"
-"functions: list internal functions for key bindings\n"
-"     call: call a function by name (with optional arguments)\n"
-"    reset: restore bindings to the default values and delete ALL personal "
-"bindings (use carefully!)"
-msgstr ""
-
-msgid "list/load/unload plugins"
-msgstr ""
-
-msgid ""
-"[list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload "
-"[name]] | [unload [name]]"
-msgstr ""
-
-msgid ""
-"    list: list loaded plugins\n"
-"listfull: list loaded plugins with detailed info for each plugin\n"
-"    load: load a plugin\n"
-"autoload: autoload plugins in system or user directory\n"
-"  reload: reload one plugin (if no name given, unload all plugins, then "
-"autoload plugins)\n"
-"  unload: unload one or all plugins\n"
-"\n"
-"Without argument, /plugin command lists loaded plugins."
-msgstr ""
-
-msgid "reconnect to server(s)"
-msgstr ""
-
-msgid "[-all [-nojoin] | servername [servername ...] [-nojoin]]"
-msgstr ""
-
-msgid ""
-"      -all: reconnect to all servers\n"
-"servername: server name to reconnect\n"
-"   -nojoin: do not join any channel (even if autojoin is enabled on server)"
-msgstr ""
-
-msgid "save config to disk"
-msgstr ""
-
-msgid "[file]"
-msgstr ""
-
-msgid "file: filename for writing config"
-msgstr ""
-
-msgid "list, add or remove servers"
-msgstr ""
-
-msgid ""
-"[list [servername]] | [listfull [servername]] | [add servername hostname [-"
-"port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks "
-"nick1 nick2 nick3] [-username username] [-realname realname] [-command "
-"command] [-autojoin channel[,channel]] ] | [copy servername newservername] | "
-"[rename servername newservername] | [keep servername] | [del servername]"
-msgstr ""
-
-msgid ""
-"      list: list servers (no parameter implies this list)\n"
-"  listfull: list servers with detailed info for each server\n"
-"       add: create a new server\n"
-"servername: server name, for internal and display use\n"
-"  hostname: name or IP address of server\n"
-"      port: port for server (integer, default is 6667)\n"
-"      temp: create temporary server (not saved in config file)\n"
-"      auto: automatically connect to server when WeeChat starts\n"
-"    noauto: do not connect to server when WeeChat starts (default)\n"
-"      ipv6: use IPv6 protocol\n"
-"       ssl: use SSL protocol\n"
-"  password: password for server\n"
-"     nick1: first nick for server\n"
-"     nick2: alternate nick for server\n"
-"     nick3: second alternate nick for server\n"
-"  username: user name\n"
-"  realname: real name of user\n"
-"      copy: duplicate a server\n"
-"    rename: rename a server\n"
-"      keep: keep server in config file (for temporary servers only)\n"
-"       del: delete a server\n"
-"   deloutq: delete messages out queue for all servers (all messages WeeChat "
-"is currently sending)"
-msgstr ""
-
-msgid "set config options"
-msgstr ""
-
-msgid "[option [ = value]]"
-msgstr ""
-
-msgid ""
-"option: name of an option (if name is full and no value is given, then help "
-"is displayed on option)\n"
-" value: value for option\n"
-"\n"
-"Option may be: servername.server_xxx where \"servername\" is an internal "
-"server name and \"xxx\" an option for this server."
-msgstr ""
-
-msgid "set plugin config options"
-msgstr ""
-
-msgid ""
-"option: name of a plugin option\n"
-" value: value for option\n"
-"\n"
-"Option is format: plugin.option, example: perl.myscript.item1"
-msgstr ""
-
-msgid "remove an alias"
-msgstr ""
-
-msgid "alias_name"
-msgstr ""
-
-msgid "alias_name: name of alias to remove"
-msgstr ""
-
-msgid "unignore IRC messages and/or hosts"
-msgstr ""
-
-msgid "[number | [mask [[type | command] [channel [server]]]]]"
-msgstr ""
-
-msgid ""
-" number: # of ignore to unignore (number is displayed by list of ignore)\n"
-"   mask: nick or host mask to unignore\n"
-"   type: type of message to unignore (action, ctcp, dcc, pv)\n"
-"command: IRC command\n"
-"channel: name of channel for unignore\n"
-" server: name of server for unignore\n"
-"\n"
-"For each argument, '*' means all.\n"
-"Without argument, /unignore command lists all defined ignore."
-msgstr ""
-
-msgid "upgrade WeeChat without disconnecting from servers"
-msgstr ""
-
-msgid "[path_to_binary]"
-msgstr ""
-
-msgid ""
-"path_to_binary: path to WeeChat binary (default is current binary)\n"
-"\n"
-"This command run again a WeeChat binary, so it should have been compiled or "
-"installed with a package manager before running this command."
-msgstr ""
-
-msgid "show WeeChat uptime"
-msgstr ""
-
-msgid "[-o]"
-msgstr ""
-
-msgid "-o: send uptime on current channel as an IRC message"
-msgstr ""
-
-msgid "manage windows"
-msgstr ""
-
-msgid ""
-"[list | -1 | +1 | b# | up | down | left | right | splith [pct] | splitv "
-"[pct] | resize pct | merge [all]]"
-msgstr ""
-
-msgid ""
-"  list: list open windows (no parameter implies this list)\n"
-"    -1: jump to previous window\n"
-"    +1: jump to next window\n"
-"    b#: jump to next window displaying buffer number #\n"
-"    up: switch to window above current one\n"
-"  down: switch to window below current one\n"
-"  left: switch to window on the left\n"
-" right: switch to window on the right\n"
-"splith: split current window horizontally\n"
-"splitv: split current window vertically\n"
-"resize: resize window size, new size is <pct> pourcentage of parent window\n"
-" merge: merge window with another (all = keep only one window)\n"
-"\n"
-"For splith and splitv, pct is a pourcentage which represents size of new "
-"window, computed with current window as size reference. For example 25 means "
-"create a new window with size = current_size / 4"
-msgstr ""
-
-#, c-format
-msgid "%s command \"%s\" failed\n"
-msgstr ""
-
-#, c-format
-msgid "%s wrong argument count for %s command \"%s\" (expected: %d arg)\n"
-msgid_plural ""
-"%s wrong argument count for %s command \"%s\" (expected: %d args)\n"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid ""
-"%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
-"arg)\n"
-msgid_plural ""
-"%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
-"args)\n"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%s wrong argument count for IRC command \"%s\" (expected: %d arg)\n"
-msgid_plural ""
-"%s wrong argument count for IRC command \"%s\" (expected: %d args)\n"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid ""
-"%s wrong argument count for IRC command \"%s\" (expected: between %d and %d "
-"arg)\n"
-msgid_plural ""
-"%s wrong argument count for IRC command \"%s\" (expected: between %d and %d "
-"args)\n"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%s command \"%s\" can not be executed on DCC CHAT buffer\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s unknown command \"%s\" (type /help for help). To send unknown commands to "
-"IRC server, enable option irc_send_unknown_commands.\n"
-msgstr ""
-
-#, c-format
-msgid "%s you are not connected to server\n"
-msgstr ""
-
-msgid "This window is not a channel!\n"
-msgstr ""
-
-#, c-format
-msgid "%s missing arguments for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "Alias \"%s\" => \"%s\" created\n"
-msgstr ""
-
-#, c-format
-msgid "Failed to create alias \"%s\" => \"%s\" (not enough memory)\n"
-msgstr ""
-
-msgid "Alias:\n"
-msgstr ""
-
-msgid "No alias found.\n"
-msgstr ""
-
-msgid "List of aliases:\n"
-msgstr ""
-
-msgid "No alias defined.\n"
-msgstr ""
-
-#, c-format
-msgid "%sServer: %s%s\n"
-msgstr ""
-
-#, c-format
-msgid "%snot connected\n"
-msgstr ""
-
-#, c-format
-msgid "%sChannel: %s%s %s(server: %s%s%s)\n"
-msgstr ""
-
-#, c-format
-msgid "%sPrivate with: %s%s %s(server: %s%s%s)\n"
-msgstr ""
-
-#, c-format
-msgid "%sunknown\n"
-msgstr ""
-
-#, c-format
-msgid "%sraw IRC data\n"
-msgstr ""
-
-msgid "Open buffers:\n"
-msgstr ""
-
-#, c-format
-msgid "%s incorrect buffer number\n"
-msgstr ""
-
-#, c-format
-msgid "%s can not close the single buffer\n"
-msgstr ""
-
-#, c-format
-msgid "%s can not close server buffer while channels are open\n"
-msgstr ""
-
-msgid "Default notify levels for servers:"
-msgstr ""
-
-msgid "Notify levels:"
-msgstr ""
-
-msgid "Raw IRC data"
-msgstr ""
-
-#, c-format
-msgid "%s incorrect notify level (must be between %d and %d)\n"
-msgstr ""
-
-#, c-format
-msgid "%s incorrect buffer for notify (must be server, channel or private)\n"
-msgstr ""
-
-#, c-format
-msgid "New default notify level for server %s%s%s: %s%d %s"
-msgstr ""
-
-#, c-format
-msgid "New notify level for %s%s%s: %s%d %s"
-msgstr ""
-
-msgid "(hotlist: never)\n"
-msgstr ""
-
-msgid "(hotlist: highlights)\n"
-msgstr ""
-
-msgid "(hotlist: highlights + messages)\n"
-msgstr ""
-
-msgid "(hotlist: highlights + messages + join/part (all))\n"
-msgstr ""
-
-#, c-format
-msgid "%s buffer number \"%s\" not found for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s unknown option for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s already connected to server \"%s\"!\n"
-msgstr ""
-
-#, c-format
-msgid "%s currently connecting to server \"%s\"!\n"
-msgstr ""
-
-#, c-format
-msgid "%s missing argument for \"%s\" option\n"
-msgstr ""
-
-#, c-format
-msgid "Server %s%s%s created (temporary server, NOT SAVED!)\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to create server \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s not connected to server \"%s\"!\n"
-msgstr ""
-
-msgid "Auto-reconnection is cancelled\n"
-msgstr ""
-
-#, c-format
-msgid "%s server \"%s\" not found\n"
-msgstr ""
-
-#, c-format
-msgid "%s internal commands:\n"
-msgstr ""
-
-msgid "IRC commands:\n"
-msgstr ""
-
-msgid "Plugin commands:\n"
-msgstr ""
-
-#, c-format
-msgid "No help available, \"%s\" is an unknown command\n"
-msgstr ""
-
-#, c-format
-msgid "%son %s%s%s/%s%s%s:%s ignoring %s%s%s from %s%s\n"
-msgstr ""
-
-msgid "List of ignore:\n"
-msgstr ""
-
-msgid "No ignore defined.\n"
-msgstr ""
-
-msgid "New ignore:"
-msgstr ""
-
-#, c-format
-msgid "New key binding:  %s"
-msgstr ""
-
-msgid "Key bindings:\n"
-msgstr ""
-
-#, c-format
-msgid "Key \"%s\" unbound\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to unbind key \"%s\"\n"
-msgstr ""
-
-msgid "Internal key functions:\n"
-msgstr ""
-
-#, c-format
-msgid "%s unknown key function \"%s\"\n"
-msgstr ""
-
-msgid "Default key bindings restored\n"
-msgstr ""
-
-#, c-format
-msgid "%s \"-yes\" argument is required for keys reset (security reason)\n"
-msgstr ""
-
-msgid "Key:\n"
-msgstr ""
-
-msgid "No key found.\n"
-msgstr ""
-
-msgid "global"
-msgstr ""
-
-msgid "local"
-msgstr ""
-
-msgid "top"
-msgstr ""
-
-msgid "bottom"
-msgstr ""
-
-msgid "left"
-msgstr ""
-
-msgid "right"
-msgstr ""
-
-msgid "Open panels:\n"
-msgstr ""
-
-msgid "Plugins loaded:\n"
-msgstr ""
-
-msgid "     message handlers:\n"
-msgstr ""
-
-#, c-format
-msgid "       IRC(%s)\n"
-msgstr ""
-
-msgid "       (no message handler)\n"
-msgstr ""
-
-msgid "     command handlers:\n"
-msgstr ""
-
-msgid "       (no command handler)\n"
-msgstr ""
-
-msgid "     timer handlers:\n"
-msgstr ""
-
-#, c-format
-msgid "       %d seconds\n"
-msgstr ""
-
-msgid "       (no timer handler)\n"
-msgstr ""
-
-msgid "     keyboard handlers:\n"
-msgstr ""
-
-msgid "       (no keyboard handler)\n"
-msgstr ""
-
-#, c-format
-msgid "       %d defined\n"
-msgstr ""
-
-msgid "     event handlers:\n"
-msgstr ""
-
-msgid "       (no event handler)\n"
-msgstr ""
-
-msgid "     modifiers:\n"
-msgstr ""
-
-msgid "       (no modifier)\n"
-msgstr ""
-
-msgid "No plugin found.\n"
-msgstr ""
-
-msgid "  (no plugin)\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"Command \"%s\" is not available, WeeChat was built without plugins support.\n"
-msgstr ""
-
-msgid "Configuration file saved\n"
-msgstr ""
-
-#, c-format
-msgid "%s failed to save configuration file\n"
-msgstr ""
-
-msgid "Plugins options saved\n"
-msgstr ""
-
-#, c-format
-msgid "%s failed to save plugins options\n"
-msgstr ""
-
-msgid "All servers:\n"
-msgstr ""
-
-msgid "No server.\n"
-msgstr ""
-
-#, c-format
-msgid "Servers with '%s':\n"
-msgstr ""
-
-#, c-format
-msgid "No server with '%s' found.\n"
-msgstr ""
-
-#, c-format
-msgid "%s missing parameters for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s server \"%s\" already exists, can't create it!\n"
-msgstr ""
-
-#, c-format
-msgid "Server %s%s%s created\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to create server\n"
-msgstr ""
-
-#, c-format
-msgid "%s missing server name for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s server \"%s\" not found for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s server \"%s\" already exists for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "Server %s%s%s has been copied to %s%s\n"
-msgstr ""
-
-#, c-format
-msgid "Server %s%s%s has been renamed to %s%s\n"
-msgstr ""
-
-#, c-format
-msgid "%s server \"%s\" is not a temporary server\n"
-msgstr ""
-
-#, c-format
-msgid "Server %s%s%s is not temporary any more\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s you can not delete server \"%s\" because you are connected to. Try /"
-"disconnect %s before.\n"
-msgstr ""
-
-#, c-format
-msgid "Server %s%s%s has been deleted\n"
-msgstr ""
-
-msgid ""
-"Messages outqueue DELETED for all servers. Some messages from you or WeeChat "
-"may have been lost!\n"
-msgstr ""
-
-msgid "(unknown)"
-msgstr ""
-
-#, c-format
-msgid "%s(password hidden) "
-msgstr ""
-
-#, c-format
-msgid "%s config option \"%s\" not found\n"
-msgstr ""
-
-#, c-format
-msgid "%s incorrect value for option \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s option \"%s\" can not be changed while WeeChat is running\n"
-msgstr ""
-
-#, c-format
-msgid "No config option found with \"%s\"\n"
-msgstr ""
-
-msgid "No config option found\n"
-msgstr ""
-
-#, c-format
-msgid "%sDetail:\n"
-msgstr ""
-
-msgid "  . type boolean (values: 'on' or 'off')\n"
-msgstr ""
-
-#, c-format
-msgid "  . default value: '%s'\n"
-msgstr ""
-
-#, c-format
-msgid "  . type integer (values: between %d and %d)\n"
-msgstr ""
-
-#, c-format
-msgid "  . default value: %d\n"
-msgstr ""
-
-msgid "  . type string (values: "
-msgstr ""
-
-msgid "empty"
-msgstr ""
-
-msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
-msgstr ""
-
-msgid "  . type string (any string)\n"
-msgstr ""
-
-msgid "  . type: char (any char)\n"
-msgstr ""
-
-#, c-format
-msgid "  . type string (any string, limit: %d chars)\n"
-msgstr ""
-
-#, c-format
-msgid "  . description: %s\n"
-msgstr ""
-
-#, c-format
-msgid "config option(s) found with \"%s\"\n"
-msgstr ""
-
-msgid "config option(s) found\n"
-msgstr ""
-
-#, c-format
-msgid "%s incorrect value for plugin option \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "No plugin option found with \"%s\"\n"
-msgstr ""
-
-msgid "No plugin option found\n"
-msgstr ""
-
-#, c-format
-msgid "plugin option(s) found with \"%s\"\n"
-msgstr ""
-
-msgid "plugin option(s) found\n"
-msgstr ""
-
-#, c-format
-msgid "%s alias or command \"%s\" not found\n"
-msgstr ""
-
-#, c-format
-msgid "Alias \"%s\" removed\n"
-msgstr ""
-
-#, c-format
-msgid "%s%d%s ignore was removed.\n"
-msgid_plural "%s%d%s ignore were removed.\n"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%s no ignore found\n"
-msgstr ""
-
-#, c-format
-msgid "%s can't upgrade: connection to at least one server is pending\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s can't upgrade: connection to at least one SSL server is active (should be "
-"fixed in a future version)\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s can't upgrade: anti-flood is active on at least one server (sending many "
-"lines)\n"
-msgstr ""
-
-msgid "Upgrading WeeChat...\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to save session in file\n"
-msgstr ""
-
-#, c-format
-msgid "%s exec failed (program: \"%s\"), exiting WeeChat\n"
-msgstr ""
-
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr ""
-
-#, c-format
-msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
-msgstr ""
-
-msgid "Open windows:\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s can not merge windows, there's no other window with same size near "
-"current one.\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to create FIFO pipe for remote control (%s)\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to open FIFO pipe (%s) for reading\n"
-msgstr ""
-
-msgid "FIFO pipe is open\n"
-msgstr ""
-
-#, c-format
-msgid "%s invalid text received on FIFO pipe\n"
-msgstr ""
-
-#, c-format
-msgid "%s server \"%s\" not found (FIFO pipe data)\n"
-msgstr ""
-
-#, c-format
-msgid "%s channel \"%s\" not found (FIFO pipe data)\n"
-msgstr ""
-
-#, c-format
-msgid "%s error reading FIFO pipe, closing it\n"
-msgstr ""
-
-msgid "FIFO pipe is closed\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot add a buffer to hotlist\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s unable to create/append to log file (weechat.log)\n"
-"If another WeeChat process is using this file, try to run WeeChat\n"
-"with another home using \"--dir\" command line option.\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"Last operation with session file was at position %ld, read of %d bytes\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"Please send %s/%s, %s/%s and above messages to WeeChat developers for "
-"support.\n"
-"Be careful, private info may be in these files.\n"
-msgstr ""
-
-#, c-format
-msgid "wrong type in file (expected: %d, read: %d)"
-msgstr ""
-
-msgid "invalid length for a buffer"
-msgstr ""
-
-msgid "object read error"
-msgstr ""
-
-#, c-format
-msgid "wrong object (expected: %d, read: %d)"
-msgstr ""
-
-msgid "type read error"
-msgstr ""
-
-#, c-format
-msgid "wrong type (expected: %d, read: %d)"
-msgstr ""
-
-msgid "server name not found"
-msgstr ""
-
-#, c-format
-msgid "session: loading server \"%s\"\n"
-msgstr ""
-
-msgid "server found, updating values\n"
-msgstr ""
-
-msgid "server not found, creating new one\n"
-msgstr ""
-
-msgid "can't create new server"
-msgstr ""
-
-msgid "unexpected end of file (reading server)"
-msgstr ""
-
-msgid "gnutls init error"
-msgstr ""
-
-msgid "gnutls handshake failed"
-msgstr ""
-
-#, c-format
-msgid "session: warning: ignoring value from server (object id: %d)\n"
-msgstr ""
-
-msgid "channel found without server"
-msgstr ""
-
-msgid "channel type not found"
-msgstr ""
-
-msgid "channel name not found"
-msgstr ""
-
-#, c-format
-msgid "session: loading channel \"%s\"\n"
-msgstr ""
-
-msgid "can't create new channel"
-msgstr ""
-
-msgid "unexpected end of file (reading channel)"
-msgstr ""
-
-#, c-format
-msgid "session: warning: ignoring value from channel (object id: %d)\n"
-msgstr ""
-
-msgid "nick found without channel"
-msgstr ""
-
-msgid "nick name not found"
-msgstr ""
-
-msgid "can't create new nick"
-msgstr ""
-
-msgid "unexpected end of file (reading nick)"
-msgstr ""
-
-#, c-format
-msgid "session: warning: ignoring value from nick (object id: %d)\n"
-msgstr ""
-
-msgid "can't create new DCC"
-msgstr ""
-
-msgid "session: loading DCC\n"
-msgstr ""
-
-msgid "unexpected end of file (reading DCC)"
-msgstr ""
-
-msgid "server not found for DCC"
-msgstr ""
-
-msgid "DCC with channel but without server"
-msgstr ""
-
-msgid "channel not found for DCC"
-msgstr ""
-
-#, c-format
-msgid "session: warning: ignoring value from DCC (object id: %d)\n"
-msgstr ""
-
-msgid "session: loading buffer history\n"
-msgstr ""
-
-msgid "session: loading global history\n"
-msgstr ""
-
-msgid "unexpected end of file (reading history)"
-msgstr ""
-
-#, c-format
-msgid "session: warning: ignoring value from history (object id: %d)\n"
-msgstr ""
-
-msgid "server name not found for buffer"
-msgstr ""
-
-msgid "channel name not found for buffer"
-msgstr ""
-
-msgid "buffer type not found"
-msgstr ""
-
-#, c-format
-msgid "session: loading buffer (server: %s, channel: %s, type: %d)\n"
-msgstr ""
-
-msgid "server not found for buffer"
-msgstr ""
-
-msgid "channel not found for buffer"
-msgstr ""
-
-msgid "can't create new buffer"
-msgstr ""
-
-msgid "unexpected end of file (reading buffer)"
-msgstr ""
-
-#, c-format
-msgid "session: warning: ignoring value from buffer (object id: %d)\n"
-msgstr ""
-
-msgid "line found without buffer"
-msgstr ""
-
-msgid "can't create new line"
-msgstr ""
-
-msgid "unexpected end of file (reading line)"
-msgstr ""
-
-#, c-format
-msgid "session: warning: ignoring value from line (object id: %d)\n"
-msgstr ""
-
-msgid "unexpected end of file (reading uptime)"
-msgstr ""
-
-#, c-format
-msgid "session: warning: ignoring value from uptime (object id: %d)\n"
-msgstr ""
-
-msgid "unexpected end of file (reading hotlist)"
-msgstr ""
-
-msgid "session file not found"
-msgstr ""
-
-msgid "signature not found"
-msgstr ""
-
-msgid "bad session signature"
-msgstr ""
-
-msgid "object id not found"
-msgstr ""
-
-msgid "failed to load server"
-msgstr ""
-
-msgid "failed to load channel"
-msgstr ""
-
-msgid "failed to load nick"
-msgstr ""
-
-msgid "failed to load DCC"
-msgstr ""
-
-msgid "failed to load history"
-msgstr ""
-
-msgid "failed to load buffer"
-msgstr ""
-
-msgid "failed to load line"
-msgstr ""
-
-msgid "failed to load uptime"
-msgstr ""
-
-msgid "failed to load hotlist"
-msgstr ""
-
-#, c-format
-msgid "ignoring object (id: %d)\n"
-msgstr ""
-
-#, c-format
-msgid "failed to ignore object (id: %d)"
-msgstr ""
-
-#, c-format
-msgid "%s can't delete session file (%s)\n"
-msgstr ""
-
-msgid "Upgrade completed successfully\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s (c) Copyright 2003-2007, compiled on %s %s\n"
-"Developed by FlashCode <flashcode@flashtux.org> - %s"
-msgstr ""
-
-#, c-format
-msgid ""
-"Usage: %s [options ...]\n"
-"   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel]"
-"[,channel[...]]"
-msgstr ""
-
-msgid ""
-"  -a, --no-connect        disable auto-connect to servers at startup\n"
-"  -c, --config            display config file options\n"
-"  -d, --dir <path>        set WeeChat home directory (default: ~/.weechat)\n"
-"  -f, --key-functions     display WeeChat internal functions for keys\n"
-"  -h, --help              this help\n"
-"  -i, --irc-commands      display IRC commands\n"
-"  -k, --keys              display WeeChat default keys\n"
-"  -l, --license           display WeeChat license\n"
-"  -p, --no-plugin         don't load any plugin at startup\n"
-"  -v, --version           display WeeChat version\n"
-"  -w, --weechat-commands  display WeeChat commands\n"
-msgstr ""
-
-msgid ""
-"WeeChat configuration options (<weechat_home>/weechat.rc):\n"
-"\n"
-msgstr ""
-
-msgid "  . type: boolean\n"
-msgstr ""
-
-msgid "  . values: 'on' or 'off'\n"
-msgstr ""
-
-msgid "  . type: integer\n"
-msgstr ""
-
-#, c-format
-msgid "  . values: between %d and %d\n"
-msgstr ""
-
-msgid "  . type: string\n"
-msgstr ""
-
-msgid "  . values: "
-msgstr ""
-
-msgid "  . type: color\n"
-msgstr ""
-
-msgid "  . values: Curses or Gtk color\n"
-msgstr ""
-
-msgid "  . values: any string\n"
-msgstr ""
-
-msgid "  . type: char\n"
-msgstr ""
-
-msgid "  . values: any char\n"
-msgstr ""
-
-#, c-format
-msgid "  . values: any string (limit: %d chars)\n"
-msgstr ""
-
-#, c-format
-msgid "%s default keys:\n"
-msgstr ""
-
-#, c-format
-msgid "%s missing argument for --dir option\n"
-msgstr ""
-
-#, c-format
-msgid "%s missing argument for --session option\n"
-msgstr ""
-
-#, c-format
-msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to create server ('%s'), ignored\n"
-msgstr ""
-
-#, c-format
-msgid "%s unknown parameter '%s', ignored\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot create directory \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to get HOME directory\n"
-msgstr ""
-
-#, c-format
-msgid "%s not enough memory for home directory\n"
-msgstr ""
-
-#, c-format
-msgid "%s home (%s) is not a directory\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to create \"%s\" directory\n"
-msgstr ""
-
-#, c-format
-msgid "%sWelcome to %s%s%s, %s\n"
-msgstr ""
-
-msgid "compiled on"
-msgstr ""
-
-msgid "WeeChat Error:"
-msgstr ""
-
-msgid "WeeChat Warning:"
-msgstr ""
-
-msgid "save config file on exit"
-msgstr ""
-
-msgid "set title for window (terminal for Curses GUI) with name and version"
-msgstr ""
-
-msgid "display WeeChat logo at startup"
-msgstr ""
-
-msgid "display WeeChat version at startup"
-msgstr ""
-
-msgid "WeeChat slogan"
-msgstr ""
-
-msgid "WeeChat slogan (if empty, slogan is not used)"
-msgstr ""
-
-msgid "use same buffer for all servers"
-msgstr ""
-
-msgid "open new channels/privates near server"
-msgstr ""
-
-msgid "how many lines to scroll by with scroll_up and scroll_down"
-msgstr ""
-
-msgid "timestamp for buffers"
-msgstr ""
-
-msgid "number of colors to use for nicks colors"
-msgstr ""
-
-msgid "display actions with different colors"
-msgstr ""
-
-msgid "display nicklist window"
-msgstr ""
-
-msgid "display nicklist window (for channel windows)"
-msgstr ""
-
-msgid "nicklist position"
-msgstr ""
-
-msgid "nicklist position (top, left, right (default), bottom)"
-msgstr ""
-
-msgid "min size for nicklist"
-msgstr ""
-
-msgid ""
-"min size for nicklist (width or height, depending on look_nicklist_position "
-"(0 = no min size))"
-msgstr ""
-
-msgid "max size for nicklist"
-msgstr ""
-
-msgid ""
-"max size for nicklist (width or height, depending on look_nicklist_position "
-"(0 = no max size; if min = max and > 0, then size is fixed))"
-msgstr ""
-
-msgid "separator between chat and nicklist"
-msgstr ""
-
-msgid "text to display instead of nick when not connected"
-msgstr ""
-
-msgid "display nick mode ((half)op/voice) before each nick"
-msgstr ""
-
-msgid "display space if nick mode is not (half)op/voice"
-msgstr ""
-
-msgid "text to display before nick in chat window"
-msgstr ""
-
-msgid "text to display after nick in chat window"
-msgstr ""
-
-msgid "nick alignment (fixed size for nicks in chat window)"
-msgstr ""
-
-msgid ""
-"nick alignment (fixed size for nicks in chat window (none, left, right))"
-msgstr ""
-
-msgid "alignment for other messages (not beginning with a nick)"
-msgstr ""
-
-msgid "size for aligning nick and other messages"
-msgstr ""
-
-msgid "max size for aligning nick and other messages"
-msgstr ""
-
-msgid ""
-"max size for aligning nick and other messages (should be >= to "
-"look_align_size)"
-msgstr ""
-
-msgid "offset for aligning lines of messages (except first lines)"
-msgstr ""
-
-msgid ""
-"offset for aligning lines of messages (except first lines), default is -1 "
-"(align after nick), a null or positive value is offset after beginning of "
-"line"
-msgstr ""
-
-msgid "the string inserted after nick completion"
-msgstr ""
-
-msgid "chars ignored for nick completion"
-msgstr ""
-
-msgid "smart completion for nicks"
-msgstr ""
-
-msgid "smart completion for nicks (completes with last speakers first)"
-msgstr ""
-
-msgid "complete only with first nick found"
-msgstr ""
-
-msgid "enable info bar"
-msgstr ""
-
-msgid "timestamp for time in infobar"
-msgstr ""
-
-msgid "display seconds in infobar time"
-msgstr ""
-
-msgid "delay (in seconds) for highlight messages in infobar"
-msgstr ""
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-
-msgid "max number of names in hotlist"
-msgstr ""
-
-msgid ""
-"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
-msgstr ""
-
-msgid "level for displaying names in hotlist"
-msgstr ""
-
-msgid ""
-"level for displaying names in hotlist (combination of: 1=join/part, "
-"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
-msgstr ""
-
-msgid "max length of names in hotlist"
-msgstr ""
-
-msgid "max length of names in hotlist (0 = no limit)"
-msgstr ""
-
-msgid "hotlist sort type"
-msgstr ""
-
-msgid ""
-"hotlist sort type (group_time_asc (default), group_time_desc, "
-"group_number_asc, group_number_desc, number_asc, number_desc)"
-msgstr ""
-
-msgid "display special message when day changes"
-msgstr ""
-
-msgid "timestamp for date displayed when day changed"
-msgstr ""
-
-msgid "use a marker on servers/channels to show first unread line"
-msgstr ""
-
-msgid "format for input prompt"
-msgstr ""
-
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
-msgstr ""
-
-msgid "max number of lines for paste without asking user"
-msgstr ""
-
-msgid ""
-"max number of lines for paste without asking user (0 = disable this feature)"
-msgstr ""
-
-msgid "if set, uses real white color"
-msgstr ""
-
-msgid ""
-"if set, uses real white color, disabled by default for terms with white "
-"background (if you never use white background, you should turn on this "
-"option to see real white instead of default term foreground color)"
-msgstr ""
-
-msgid "color for window separators (when splited)"
-msgstr ""
-
-msgid "color for title bar"
-msgstr ""
-
-msgid "color for '+' when scrolling topic"
-msgstr ""
-
-msgid "background for title bar"
-msgstr ""
-
-msgid "color for chat text"
-msgstr ""
-
-msgid "color for time"
-msgstr ""
-
-msgid "color for time in chat window"
-msgstr ""
-
-msgid "color for time separator"
-msgstr ""
-
-msgid "color for time separator (chat window)"
-msgstr ""
-
-msgid "color for 1st and 3rd char of prefix"
-msgstr ""
-
-msgid "color for middle char of prefix"
-msgstr ""
-
-msgid "color for server name"
-msgstr ""
-
-msgid "color for join arrow (prefix)"
-msgstr ""
-
-msgid "color for part/quit arrow (prefix)"
-msgstr ""
-
-msgid "color for nicks in actions"
-msgstr ""
-
-msgid "color for nicks in actions (chat window)"
-msgstr ""
-
-msgid "color for hostnames"
-msgstr ""
-
-msgid "color for hostnames (chat window)"
-msgstr ""
-
-msgid "color for channel names in actions"
-msgstr ""
-
-msgid "color for channel names in actions (chat window)"
-msgstr ""
-
-msgid "color for dark separators"
-msgstr ""
-
-msgid "color for dark separators (chat window)"
-msgstr ""
-
-msgid "color for highlighted nick"
-msgstr ""
-
-msgid "color for highlighted nick (chat window)"
-msgstr ""
-
-msgid "background for chat"
-msgstr ""
-
-msgid "background for chat window"
-msgstr ""
-
-msgid "color for unread data marker"
-msgstr ""
-
-msgid "background for unread data marker"
-msgstr ""
-
-msgid "color for status bar"
-msgstr ""
-
-msgid "color for status bar delimiters"
-msgstr ""
-
-msgid "color for current channel in status bar"
-msgstr ""
-
-msgid "color for window with new messages"
-msgstr ""
-
-msgid "color for window with new messages (status bar)"
-msgstr ""
-
-msgid "color for window with private message"
-msgstr ""
-
-msgid "color for window with private message (status bar)"
-msgstr ""
-
-msgid "color for window with highlight"
-msgstr ""
-
-msgid "color for window with highlight (status bar)"
-msgstr ""
-
-msgid "color for window with new data (not messages)"
-msgstr ""
-
-msgid "color for window with new data (not messages) (status bar)"
-msgstr ""
-
-msgid "color for \"-MORE-\" text"
-msgstr ""
-
-msgid "color for window with new data (status bar)"
-msgstr ""
-
-msgid "background for status window"
-msgstr ""
-
-msgid "color for info bar text"
-msgstr ""
-
-msgid "color for infobar delimiters"
-msgstr ""
-
-msgid "color for info bar highlight notification"
-msgstr ""
-
-msgid "background for info bar window"
-msgstr ""
-
-msgid "color for input text"
-msgstr ""
-
-msgid "color for input text (server name)"
-msgstr ""
-
-msgid "color for input text (channel name)"
-msgstr ""
-
-msgid "color for input text (nick name)"
-msgstr ""
-
-msgid "color for input text (delimiters)"
-msgstr ""
-
-msgid "color for text not found"
-msgstr ""
-
-msgid "color for actions in input window"
-msgstr ""
-
-msgid "background for input window"
-msgstr ""
-
-msgid "color for nicknames"
-msgstr ""
-
-msgid "color for away nicknames"
-msgstr ""
-
-msgid "color for chan owner symbol"
-msgstr ""
-
-msgid "color for chan owner symbol (specific to unrealircd)"
-msgstr ""
-
-msgid "color for chan admin symbol"
-msgstr ""
-
-msgid "color for chan admin symbol (specific to unrealircd)"
-msgstr ""
-
-msgid "color for operator symbol"
-msgstr ""
-
-msgid "color for half-operator symbol"
-msgstr ""
-
-msgid "color for voice symbol"
-msgstr ""
-
-msgid "color for user symbol"
-msgstr ""
-
-msgid "color for '+' when scrolling nicks"
-msgstr ""
-
-msgid "color for nick separator"
-msgstr ""
-
-msgid "color for local nick"
-msgstr ""
-
-msgid "color for nick"
-msgstr ""
-
-msgid "color for other nick in private window"
-msgstr ""
-
-msgid "background for nicknames"
-msgstr ""
-
-msgid "color for selected DCC"
-msgstr ""
-
-msgid "color for selected DCC (chat window)"
-msgstr ""
-
-msgid "color for \"waiting\" dcc status"
-msgstr ""
-
-msgid "color for \"connecting\" dcc status"
-msgstr ""
-
-msgid "color for \"active\" dcc status"
-msgstr ""
-
-msgid "color for \"done\" dcc status"
-msgstr ""
-
-msgid "color for \"failed\" dcc status"
-msgstr ""
-
-msgid "color for \"aborted\" dcc status"
-msgstr ""
-
-msgid "max lines in history (per window)"
-msgstr ""
-
-msgid ""
-"maximum number of lines in history for one server/channel/private window (0 "
-"= unlimited)"
-msgstr ""
-
-msgid "max user commands in history"
-msgstr ""
-
-msgid "maximum number of user commands in history (0 = unlimited)"
-msgstr ""
-
-msgid "max commands to display"
-msgstr ""
-
-msgid ""
-"maximum number of commands to display by default in history listing (0 = "
-"unlimited)"
-msgstr ""
-
-msgid "automatically log server messages"
-msgstr ""
-
-msgid "automatically log channel chats"
-msgstr ""
-
-msgid "automatically log private chats"
-msgstr ""
-
-msgid "log messages from plugins (scripts)"
-msgstr ""
-
-msgid "path for log files"
-msgstr ""
-
-msgid ""
-"path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/."
-"weechat by default)"
-msgstr ""
-
-msgid "timestamp for log"
-msgstr ""
-
-msgid "timestamp for log (see man strftime for date/time specifiers)"
-msgstr ""
-
-msgid "hide password displayed by nickserv"
-msgstr ""
-
-msgid "display message for away"
-msgstr ""
-
-msgid "display message when (un)marking as away"
-msgstr ""
-
-msgid "show remote away message only once in private"
-msgstr ""
-
-msgid "default part message (leaving channel)"
-msgstr ""
-
-msgid ""
-"default part message (leaving channel) ('%v' will be replaced by WeeChat "
-"version in string)"
-msgstr ""
-
-msgid "default quit message"
-msgstr ""
-
-msgid ""
-"default quit message ('%v' will be replaced by WeeChat version in string)"
-msgstr ""
-
-msgid "display notices as private messages"
-msgstr ""
-
-msgid "interval between two checks for away"
-msgstr ""
-
-msgid "interval between two checks for away (in minutes, 0 = never check)"
-msgstr ""
-
-msgid "max number of nicks for away check"
-msgstr ""
-
-msgid ""
-"do not check away nicks on channels with high number of nicks (0 = unlimited)"
-msgstr ""
-
-msgid "interval between two checks for lag"
-msgstr ""
-
-msgid "interval between two checks for lag (in seconds)"
-msgstr ""
-
-msgid "minimum lag to show"
-msgstr ""
-
-msgid "minimum lag to show (in seconds)"
-msgstr ""
-
-msgid "disconnect after important lag"
-msgstr ""
-
-msgid "disconnect after important lag (in minutes, 0 = never disconnect)"
-msgstr ""
-
-msgid "anti-flood"
-msgstr ""
-
-msgid "anti-flood: # seconds between two user messages (0 = no anti-flood)"
-msgstr ""
-
-msgid "create a FIFO pipe for remote control"
-msgstr ""
-
-msgid "list of words to highlight"
-msgstr ""
-
-msgid ""
-"comma separated list of words to highlight (case insensitive comparison, "
-"words may begin or end with \"*\" for partial match)"
-msgstr ""
-
-msgid "when off, colors codes are ignored in incoming messages"
-msgstr ""
-
-msgid "allow user to send colors"
-msgstr ""
-
-msgid ""
-"allow user to send colors with special codes (^Cb=bold, ^Ccxx=color, ^Ccxx,"
-"yy=color+background, ^Cu=underline, ^Cr=reverse)"
-msgstr ""
-
-msgid "send unknown commands to IRC server"
-msgstr ""
-
-msgid "automatically accept dcc files"
-msgstr ""
-
-msgid "automatically accept incoming dcc files"
-msgstr ""
-
-msgid "automatically accept dcc chats"
-msgstr ""
-
-msgid "automatically accept dcc chats (use carefully!)"
-msgstr ""
-
-msgid "timeout for dcc request"
-msgstr ""
-
-msgid "timeout for dcc request (in seconds)"
-msgstr ""
-
-msgid "block size for dcc packets"
-msgstr ""
-
-msgid "block size for dcc packets in bytes (default: 65536)"
-msgstr ""
-
-msgid "does not wait for ACK when sending file"
-msgstr ""
-
-msgid "allowed ports for outgoing dcc"
-msgstr ""
-
-msgid ""
-"restricts outgoing dcc to use only ports in the given range (useful for NAT) "
-"(syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value "
-"means any port)"
-msgstr ""
-
-msgid "IP address for outgoing dcc"
-msgstr ""
-
-msgid ""
-"IP or DNS address used for outgoing dcc (if empty, local interface IP is "
-"used)"
-msgstr ""
-
-msgid "path for incoming files with dcc"
-msgstr ""
-
-msgid "path for writing incoming files with dcc (default: user home)"
-msgstr ""
-
-msgid "default path for sending files with dcc"
-msgstr ""
-
-msgid ""
-"path for reading files when sending thru dcc (when no path is specified)"
-msgstr ""
-
-msgid "convert spaces to underscores when sending files"
-msgstr ""
-
-msgid "automatically rename dcc files if already exists"
-msgstr ""
-
-msgid "rename incoming files if already exists (add '.1', '.2', ...)"
-msgstr ""
-
-msgid "automatically resume aborted transfers"
-msgstr ""
-
-msgid ""
-"automatically resume dcc transfer if connection with remote host is loosed"
-msgstr ""
-
-msgid "use proxy"
-msgstr ""
-
-msgid "use a proxy server to connect to irc server"
-msgstr ""
-
-msgid "proxy type"
-msgstr ""
-
-msgid "proxy type (http (default), socks4, socks5)"
-msgstr ""
-
-msgid "use ipv6 proxy"
-msgstr ""
-
-msgid "connect to proxy in ipv6"
-msgstr ""
-
-msgid "proxy address"
-msgstr ""
-
-msgid "proxy server address (IP or hostname)"
-msgstr ""
-
-msgid "port for proxy"
-msgstr ""
-
-msgid "port for connecting to proxy server"
-msgstr ""
-
-msgid "proxy username"
-msgstr ""
-
-msgid "username for proxy server"
-msgstr ""
-
-msgid "proxy password"
-msgstr ""
-
-msgid "password for proxy server"
-msgstr ""
-
-msgid "path for searching plugins"
-msgstr ""
-
-msgid ""
-"path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
-"weechat by default)"
-msgstr ""
-
-msgid "list of plugins to load automatically"
-msgstr ""
-
-msgid ""
-"comma separated list of plugins to load automatically at startup, \"*\" "
-"means all plugins found (names may be partial, for example \"perl\" is ok "
-"for \"libperl.so\")"
-msgstr ""
-
-msgid "standard plugins extension in filename"
-msgstr ""
-
-msgid ""
-"standard plugins extension in filename, used for autoload (if empty, then "
-"all files are loaded when autoload is \"*\")"
-msgstr ""
-
-msgid "server name"
-msgstr ""
-
-msgid "name associated to IRC server (for display only)"
-msgstr ""
-
-msgid "automatically connect to server"
-msgstr ""
-
-msgid "automatically connect to server when WeeChat is starting"
-msgstr ""
-
-msgid "automatically reconnect to server"
-msgstr ""
-
-msgid "automatically reconnect to server when disconnected"
-msgstr ""
-
-msgid "delay before trying again to reconnect"
-msgstr ""
-
-msgid "delay (in seconds) before trying again to reconnect to server"
-msgstr ""
-
-msgid "server address or hostname"
-msgstr ""
-
-msgid "IP address or hostname of IRC server"
-msgstr ""
-
-msgid "port for IRC server"
-msgstr ""
-
-msgid "port for connecting to server"
-msgstr ""
-
-msgid "use IPv6 protocol for server communication"
-msgstr ""
-
-msgid "use SSL for server communication"
-msgstr ""
-
-msgid "server password"
-msgstr ""
-
-msgid "password for IRC server"
-msgstr ""
-
-msgid "nickname for server"
-msgstr ""
-
-msgid "nickname to use on IRC server"
-msgstr ""
-
-msgid "alternate nickname for server"
-msgstr ""
-
-msgid "alternate nickname to use on IRC server (if nickname is already used)"
-msgstr ""
-
-msgid "2nd alternate nickname for server"
-msgstr ""
-
-msgid ""
-"2nd alternate nickname to use on IRC server (if alternate nickname is "
-"already used)"
-msgstr ""
-
-msgid "user name for server"
-msgstr ""
-
-msgid "user name to use on IRC server"
+#, c-format
+msgid "%s: Reconnecting to server in %d seconds\n"
 msgstr ""
 
-msgid "real name for server"
+#, c-format
+msgid "%s GnuTLS handshake failed\n"
 msgstr ""
 
-msgid "real name to use on IRC server"
+#, c-format
+msgid "%s proxy address \"%s\" not found\n"
 msgstr ""
 
-msgid "custom hostname/IP for server"
+#, c-format
+msgid "%s address \"%s\" not found\n"
 msgstr ""
 
-msgid ""
-"custom hostname/IP for server (optional, if empty local hostname is used)"
+#, c-format
+msgid "%s proxy IP address not found\n"
 msgstr ""
 
-msgid "command(s) to run when connected to server"
+#, c-format
+msgid "%s IP address not found\n"
 msgstr ""
 
-msgid ""
-"command(s) to run when connected to server (many commands should be "
-"separated by ';', use '\\;' for a semicolon, special variables $nick, "
-"$channel and $server are replaced by their value)"
+#, c-format
+msgid "%s proxy connection refused\n"
 msgstr ""
 
-msgid "delay (in seconds) after command was executed"
+#, c-format
+msgid "%s connection refused\n"
 msgstr ""
 
+#, c-format
 msgid ""
-"delay (in seconds) after command was executed (example: give some time for "
-"authentication)"
+"%s proxy fails to establish connection to server (check username/password if "
+"used)\n"
 msgstr ""
 
-msgid "list of channels to join when connected to server"
+#, c-format
+msgid "%s unable to set local hostname/IP\n"
 msgstr ""
 
+#, c-format
 msgid ""
-"comma separated list of channels to join when connected to server (example: "
-"\"#chan1,#chan2,#chan3 key1,key2\")"
-msgstr ""
-
-msgid "automatically rejoin channels when kicked"
+"%s cannot connect with SSL since WeeChat was not built with GnuTLS support\n"
 msgstr ""
 
-msgid "notify levels for channels of this server"
-msgstr ""
-
-msgid ""
-"comma separated list of notify levels for channels of this server (format: "
-"#channel:1,..), a channel name '*' is reserved for server default notify "
-"level"
+#, c-format
+msgid "%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr ""
 
 #, c-format
-msgid ""
-"%s you should now issue /save to write \"save_on_exit\" option in config "
-"file.\n"
+msgid "Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
 msgstr ""
 
 #, c-format
-msgid "%s %s, line %d: new server, but previous was incomplete\n"
+msgid "%s: connecting to server %s:%d%s%s...\n"
 msgstr ""
 
 #, c-format
-msgid "%s %s, line %d: server '%s' already exists\n"
+msgid "Connecting to server %s:%d%s%s...\n"
 msgstr ""
 
 #, c-format
-msgid "%s %s, line %d: unable to create server\n"
+msgid "%s GnuTLS init error\n"
 msgstr ""
 
 #, c-format
-msgid "%s unable to assign default int with string (\"%s\")\n"
+msgid "%s cannot create pipe\n"
 msgstr ""
 
 #, c-format
-msgid "%s unable to assign default color (\"%s\")\n"
+msgid "%s cannot create socket\n"
 msgstr ""
 
 #, c-format
-msgid "%s config file \"%s\" not found.\n"
+msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
 msgstr ""
 
 #, c-format
-msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
+msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
 msgstr ""
 
-#, c-format
-msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
+msgid "Reconnecting to server...\n"
 msgstr ""
 
-#, c-format
-msgid "%s %s, line %d: invalid section for option, line is ignored\n"
+msgid "Disconnected from server!\n"
 msgstr ""
 
 #, c-format
-msgid "%s %s, line %d: invalid option \"%s\"\n"
+msgid "%sError: unable to load plugin \"%s\": %s\n"
 msgstr ""
 
 #, c-format
-msgid "%s %s, line %d: invalid ignore options \"%s\"\n"
+msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 
 #, c-format
 msgid ""
-"%s %s, line %d: invalid value for option '%s'\n"
-"Expected: boolean value: 'off' or 'on'\n"
+"%sError: unable to load plugin \"%s\": a plugin with same name already "
+"exists\n"
 msgstr ""
 
 #, c-format
-msgid ""
-"%s %s, line %d: invalid value for option '%s'\n"
-"Expected: integer between %d and %d\n"
+msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 
 #, c-format
-msgid ""
-"%s %s, line %d: invalid value for option '%s'\n"
-"Expected: one of these strings: "
+msgid "%sInitializing plugin \"%s\" %s\n"
 msgstr ""
 
 #, c-format
-msgid "%s %s, line %d: invalid color name for option '%s'\n"
+msgid "%sError: unable to initialize plugin \"%s\"\n"
 msgstr ""
 
 #, c-format
-msgid "%s: creating default config file...\n"
+msgid "%sError: unable to load plugin \"%s\" (not enough memory)\n"
 msgstr ""
 
-msgid "Creating default config file\n"
+#, c-format
+msgid "%sPlugin \"%s\" (%s) loaded.\n"
 msgstr ""
 
 #, c-format
-msgid ""
-"#\n"
-"# %s configuration file, created by %s v%s on %s"
+msgid "%sPlugin \"%s\" unloaded.\n"
 msgstr ""
 
-msgid ""
-"# WARNING! Be careful when editing this file, WeeChat writes this file when "
-"exiting.\n"
-"#\n"
+#, c-format
+msgid "%sError: plugin \"%s\" not found\n"
 msgstr ""
 
-msgid "Saving config to disk\n"
+msgid "Saving plugins configuration to disk\n"
 msgstr ""

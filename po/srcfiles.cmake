@@ -21,8 +21,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-list.h
 ./src/core/wee-log.c
 ./src/core/wee-log.h
-./src/core/wee-session.c
-./src/core/wee-session.h
+./src/core/wee-upgrade.c
+./src/core/wee-upgrade.h
 ./src/core/wee-string.c
 ./src/core/wee-string.h
 ./src/core/wee-utf8.c

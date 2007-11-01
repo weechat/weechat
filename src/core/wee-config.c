@@ -871,9 +871,8 @@ weechat_config_change_save_on_exit ()
     {
         gui_chat_printf (NULL, "\n");
         gui_chat_printf (NULL,
-                         _("%s you should now issue /save to write "
-                           "\"save_on_exit\" option in configuration file.\n"),
-                         WEECHAT_WARNING);
+                         _("Warning: you should now issue /save to write "
+                           "\"save_on_exit\" option in configuration file.\n"));
     }
 }
 

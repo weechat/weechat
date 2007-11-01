@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-10-31 10:58+0100\n"
+"POT-Creation-Date: 2007-11-01 11:09+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #, fuzzy, c-format
-msgid "%s%s circular reference when calling alias \"/%s\""
+msgid "%sError: circular reference when calling alias \"/%s\""
 msgstr "%s körreferencia a \"/%s\" aliasz hívásakor\n"
 
 #, c-format
@@ -65,10 +65,12 @@ msgstr ""
 "  -v, --version           WeeChat verziójának mutatása\n"
 "  -w, --weechat-commands  WeeChat parancsok mutatása\n"
 
+#. TRANSLATORS: %s is "WeeChat"
 #, fuzzy, c-format
 msgid "%s configuration options:\n"
 msgstr "konfigurációs paraméterek beállítása"
 
+#. TRANSLATORS: %s is "WeeChat"
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "%s belső parancsok:\n"
@@ -76,32 +78,33 @@ msgstr "%s belső parancsok:\n"
 msgid "Internal key functions:\n"
 msgstr "Belső billentyűfunkciók:\n"
 
+#. TRANSLATORS: %s is "WeeChat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s alapértelmezett billentyűk:\n"
 
-#, c-format
-msgid "%s missing argument for \"%s\" option\n"
+#, fuzzy, c-format
+msgid "Error: missing argument for \"%s\" option\n"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
-#, c-format
-msgid "%s unknown parameter '%s', ignored\n"
+#, fuzzy, c-format
+msgid "Warning: unknown parameter '%s', ignored\n"
 msgstr "%s ismeretlen paraméter: '%s', mellőzve\n"
 
-#, c-format
-msgid "%s unable to get HOME directory\n"
+#, fuzzy
+msgid "Error: unable to get HOME directory\n"
 msgstr "%s nem sikerült a HOME könyvtárat beállítani\n"
 
-#, c-format
-msgid "%s not enough memory for home directory\n"
+#, fuzzy
+msgid "Error: not enough memory for home directory\n"
 msgstr "%s nincs elég memória a HOME könyvtárhoz\n"
 
 #, c-format
-msgid "%s home (%s) is not a directory\n"
+msgid "Error: home (%s) is not a directory\n"
 msgstr ""
 
-#, c-format
-msgid "%s unable to create \"%s\" directory\n"
+#, fuzzy, c-format
+msgid "Error: unable to create \"%s\" directory\n"
 msgstr "%s nem sikerült a \"%s\" könyvtárat létrehozni\n"
 
 #, fuzzy, c-format
@@ -110,12 +113,6 @@ msgstr "%sÜdvözöli a %s%s%s, %s\n"
 
 msgid "compiled on"
 msgstr "lefordítva:"
-
-msgid "WeeChat Error:"
-msgstr "WeeChat Hiba:"
-
-msgid "WeeChat Warning:"
-msgstr "WeeChat Figyelmeztetés:"
 
 msgid "create an alias for a command"
 msgstr "alias készítése egy parancshoz"
@@ -155,6 +152,7 @@ msgstr "[utasítás[argumentumok] | szám | [[szerver] [szoba]]]"
 msgid ""
 " action: action to do:\n"
 "   move: move buffer in the list (may be relative, for example -1)\n"
+"  close: close buffer\n"
 "   list: list open buffers (no parameter implies this list)\n"
 " notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2"
 "+join/part)\n"
@@ -456,7 +454,7 @@ msgstr ""
 "szülőablak negyedét kapjuk."
 
 #, fuzzy, c-format
-msgid "%s%s missing arguments for \"%s\" command"
+msgid "%sError: missing arguments for \"%s\" command"
 msgstr "%s hiányzó argumentum a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
@@ -464,9 +462,8 @@ msgid "%sAlias \"%s\" => \"%s\" created"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
 #, fuzzy, c-format
-msgid "%sFailed to create alias \"%s\" => \"%s\" (not enough memory)"
-msgstr ""
-"A \"%s\" => \"%s\" aliasz elkészítése sikertelen (nincs elég memória)\n"
+msgid "%sError: not enough memory for creating alias \"%s\" => \"%s\""
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 #, fuzzy
 msgid "Alias:"
@@ -489,14 +486,14 @@ msgid "Open buffers:"
 msgstr "Nyitott pufferek:\n"
 
 #, fuzzy, c-format
-msgid "%s%s incorrect buffer number"
+msgid "%sError: incorrect buffer number"
 msgstr "%s helytelen pufferszám\n"
 
 msgid "Notify levels:"
 msgstr "Értesítési szintek:"
 
 #, fuzzy, c-format
-msgid "%s%s incorrect notify level (must be between %d and %d)"
+msgid "%sError: incorrect notify level (must be between %d and %d)"
 msgstr ""
 "%s helytelen értesítési szint (az értéknek %d és %d között kell lennie)\n"
 
@@ -518,15 +515,15 @@ msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s buffer number \"%s\" not found for \"%s\" command"
+msgid "%sError: buffer number \"%s\" not found for \"%s\" command"
 msgstr "%s a(z) \"%s\". puffer nem található a(z) \"%s\" parancshoz\n"
 
 #, fuzzy, c-format
-msgid "%s%s unknown option for \"%s\" command"
+msgid "%sError: unknown option for \"%s\" command"
 msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
-msgid "%s%s wrong argument count for \"%s\" command"
+msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
@@ -562,7 +559,7 @@ msgid "%sKey \"%s\" unbound"
 msgstr "A(z) \"%s\" billentyűparancs visszavonva\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to unbind key \"%s\""
+msgid "%sError: unable to unbind key \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
 
 #, fuzzy
@@ -570,7 +567,7 @@ msgid "Internal key functions:"
 msgstr "Belső billentyűfunkciók:\n"
 
 #, fuzzy, c-format
-msgid "%s%s unknown key function \"%s\""
+msgid "%sError: unknown key function \"%s\""
 msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
 
 #, fuzzy, c-format
@@ -578,7 +575,7 @@ msgid "%sDefault key bindings restored"
 msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
 
 #, fuzzy, c-format
-msgid "%s%s \"-yes\" argument is required for keys reset (security reason)"
+msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
 msgstr ""
 "%s \"-yes\" paraméter megadása kötelező a billentyűparancsok "
 "visszaállításához (biztonsági okokból)\n"
@@ -592,7 +589,7 @@ msgid "%sNo key found."
 msgstr "Nem találtam billentyűt.\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to bind key \"%s\""
+msgid "%sError: unable to bind key \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
 
 #, fuzzy
@@ -662,7 +659,7 @@ msgid "%sWeeChat configuration file saved"
 msgstr "Konfigurációs fájl elmentve\n"
 
 #, fuzzy, c-format
-msgid "%s%s failed to save configuration file"
+msgid "%sError: failed to save configuration file"
 msgstr "%s nem sikerült a konfigurációs fájlt elmenteni\n"
 
 #, fuzzy, c-format
@@ -670,14 +667,14 @@ msgid "%sPlugins options saved"
 msgstr "Modul beállítások elmentve\n"
 
 #, fuzzy, c-format
-msgid "%s%s failed to save plugins options"
+msgid "%sError: failed to save plugins options"
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 msgid "(unknown)"
 msgstr "(ismeretlen)"
 
 #, fuzzy, c-format
-msgid "%s%s option \"%s\" can not be changed while WeeChat is running"
+msgid "%sError: option \"%s\" can not be changed while WeeChat is running"
 msgstr "%s a \"%s\" opció nem módosítható a WeeChat futása közben\n"
 
 #, fuzzy
@@ -685,11 +682,11 @@ msgid "Option changed: "
 msgstr "nincs a szobában"
 
 #, fuzzy, c-format
-msgid "%s%s incorrect value for option \"%s\""
+msgid "%sError: incorrect value for option \"%s\""
 msgstr "%s helytelen érték a \"%s\" paraméternek\n"
 
 #, fuzzy, c-format
-msgid "%s%s configuration option \"%s\" not found"
+msgid "%sError: configuration option \"%s\" not found"
 msgstr "%s a \"%s\" opció nem található\n"
 
 #, fuzzy, c-format
@@ -709,7 +706,7 @@ msgid "%s%d%s configuration option(s) found"
 msgstr "megtalált opciók\n"
 
 #, fuzzy, c-format
-msgid "%s%s plugin \"%s\" not found"
+msgid "%sError: plugin \"%s\" not found"
 msgstr "%s a \"%s\" modul nem található\n"
 
 #, fuzzy, c-format
@@ -717,7 +714,7 @@ msgid "Plugin option changed: %s%s = \"%s%s%s\""
 msgstr "A(z) \"%s\" kifejezéshez nem található modul opció\n"
 
 #, fuzzy, c-format
-msgid "%s%s incorrect value for plugin option \"%s\""
+msgid "%sError: incorrect value for plugin option \"%s\""
 msgstr "%s helytelen érték a(z) \"%s\" modul paraméternek\n"
 
 #, fuzzy, c-format
@@ -737,7 +734,7 @@ msgid "plugin option(s) found"
 msgstr "megtalált modul opciók\n"
 
 #, fuzzy, c-format
-msgid "%s%s alias or command \"%s\" not found"
+msgid "%sError: alias or command \"%s\" not found"
 msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
 
 #, fuzzy, c-format
@@ -764,7 +761,7 @@ msgstr "Nyitott ablakok:\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s%s can not merge windows, there's no other window with same size near "
+"%sError: can not merge windows, there's no other window with same size near "
 "current one."
 msgstr ""
 "%s nem sikerült az ablakokat összefésülni: nincs a közelben azonos méretű "
@@ -1310,9 +1307,9 @@ msgstr ""
 "modulfájlok alapértelmezett kiterjesztése automatikus modulbetöltéshez (ha "
 "üres, minden fájl betöltődik ha az automata betöltés \"*\"-ra van állítva)"
 
-#, fuzzy, c-format
+#, fuzzy
 msgid ""
-"%s you should now issue /save to write \"save_on_exit\" option in "
+"Warning: you should now issue /save to write \"save_on_exit\" option in "
 "configuration file.\n"
 msgstr ""
 "%s most javasolt a /save parancs futtatása, hogy a \"save_on_exit\" (mentés "
@@ -1322,36 +1319,36 @@ msgstr ""
 msgid "Saving WeeChat configuration to disk\n"
 msgstr "Beállítások mentése a lemezre\n"
 
-#, c-format
-msgid "%s config file \"%s\" not found.\n"
+#, fuzzy, c-format
+msgid "Warning: config file \"%s\" not found.\n"
 msgstr "%s a \"%s\" beállítófájl nem található.\n"
 
-#, c-format
-msgid "%s %s, line %d: invalid syntax, missing \"]\"\n"
+#, fuzzy, c-format
+msgid "Warning: %s, line %d: invalid syntax, missing \"]\"\n"
 msgstr "%s %s, %d. sor: érvénytelen szintaxis, hiányzó \"]\"\n"
 
-#, c-format
-msgid "%s %s, line %d: unknown section identifier (\"%s\")\n"
+#, fuzzy, c-format
+msgid "Warning: %s, line %d: unknown section identifier (\"%s\")\n"
 msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
 
 #, fuzzy, c-format
-msgid "%s %s, line %d: error reading new section \"%s\"\n"
+msgid "Warning: %s, line %d: error reading new section \"%s\"\n"
 msgstr "%s %s, %d. sor: érvénytelen mellőzési opciók: \"%s\"\n"
 
-#, c-format
-msgid "%s %s, line %d: invalid syntax, missing \"=\"\n"
+#, fuzzy, c-format
+msgid "Warning: %s, line %d: invalid syntax, missing \"=\"\n"
 msgstr "%s %s, %d. sor: érvénytelen szintaxis, hiányzó \"=\"\n"
 
 #, fuzzy, c-format
-msgid "%s %s, line %d: unknown option \"%s\" (outside a section)\n"
+msgid "Warning: %s, line %d: unknown option \"%s\" (outside a section)\n"
 msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
 
 #, fuzzy, c-format
-msgid "%s %s, line %d: option \"%s\" unknown for section \"%s\"\n"
+msgid "Warning: %s, line %d: option \"%s\" unknown for section \"%s\"\n"
 msgstr "%s %s, %d. sor: ismeretlen csoportazonosító (\"%s\")\n"
 
 #, fuzzy, c-format
-msgid "%s %s, line %d: invalid value for option \"%s\"\n"
+msgid "Warning: %s, line %d: invalid value for option \"%s\"\n"
 msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
 
 #, c-format
@@ -1372,8 +1369,8 @@ msgstr ""
 "írja.\n"
 "#\n"
 
-#, c-format
-msgid "%s cannot create file \"%s\"\n"
+#, fuzzy, c-format
+msgid "Error: cannot create file \"%s\"\n"
 msgstr "%s nem sikerült a \"%s\" fájlt létrehozni\n"
 
 #, fuzzy, c-format
@@ -1384,13 +1381,13 @@ msgstr "%s: alapértelmezett konfigurációs fájl elkészítése\n"
 msgid "Creating default config file \"%s\"\n"
 msgstr "Alapértelmezett konfigurációs fájl elkészítése\n"
 
-#, c-format
-msgid "%s unable to assign default int with string (\"%s\")\n"
+#, fuzzy, c-format
+msgid "Warning: unable to assign default int with string (\"%s\")\n"
 msgstr ""
 "%s nem sikerült az alapértelmezett számot meghatározni a \"%s\" szöveghez\n"
 
-#, c-format
-msgid "%s unable to assign default color (\"%s\")\n"
+#, fuzzy, c-format
+msgid "Warning: unable to assign default color (\"%s\")\n"
 msgstr "%s nem sikerült az alapértelmezett színt meghatározni (\"%s\")\n"
 
 msgid "  . type: boolean\n"
@@ -1448,11 +1445,11 @@ msgid "  . description: %s\n"
 msgstr "  . leírás : %s\n"
 
 #, fuzzy, c-format
-msgid "%s%s command \"%s\" failed"
+msgid "%sError: command \"%s\" failed"
 msgstr "%s a \"%s\" parancs végrehajtása sikertelen\n"
 
 #, fuzzy, c-format
-msgid "%s%s wrong argument count for %s command \"%s\" (expected: %d arg)"
+msgid "%sError: wrong argument count for %s command \"%s\" (expected: %d arg)"
 msgid_plural ""
 "%s%s wrong argument count for %s command \"%s\" (expected: %d args)"
 msgstr[0] ""
@@ -1464,8 +1461,8 @@ msgstr[1] ""
 
 #, fuzzy, c-format
 msgid ""
-"%s%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
-"arg)"
+"%sError: wrong argument count for %s command \"%s\" (expected: between %d "
+"and %d arg)"
 msgid_plural ""
 "%s%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
 "args)"
@@ -1477,16 +1474,16 @@ msgstr[1] ""
 "d paraméter között)\n"
 
 #, c-format
-msgid "%s%s unknown command \"%s\" (type /help for help)."
+msgid "%sError: unknown command \"%s\" (type /help for help)."
 msgstr ""
 
 #, fuzzy, c-format
 msgid "%sYou can not write text in this buffer!"
 msgstr "%s az utolsó puffert nem lehet bezárni\n"
 
-#, c-format
+#, fuzzy
 msgid ""
-"%s unable to create/append to log file (weechat.log)\n"
+"Error: unable to create/append to log file (weechat.log)\n"
 "If another WeeChat process is using this file, try to run WeeChat\n"
 "with another home using \"--dir\" command line option.\n"
 msgstr ""
@@ -1530,8 +1527,8 @@ msgstr "típus olvasási hiba"
 msgid "wrong type (expected: %d, read: %d)"
 msgstr "rossz típus (várt: %d, beolvasott: %d)"
 
-#, c-format
-msgid "%s cannot create directory \"%s\"\n"
+#, fuzzy, c-format
+msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s nem sikerült a \"%s\" könyvtárat létrehozni\n"
 
 msgid "Text search (exact): "
@@ -1560,12 +1557,12 @@ msgstr "szerver"
 msgid "Not enough memory for new line\n"
 msgstr "Nincs elég memória az új sorhoz\n"
 
-#, fuzzy, c-format
-msgid "%s not enough memory to add a buffer to hotlist\n"
+#, fuzzy
+msgid "Error: not enough memory to add a buffer to hotlist\n"
 msgstr "%s nincs elég memória az ignore elkészítéséhez\n"
 
-#, c-format
-msgid "%s not enough memory for infobar message\n"
+#, fuzzy
+msgid "Error: not enough memory for infobar message\n"
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 msgid "terminate line"
@@ -1724,18 +1721,18 @@ msgstr "szöveg beillesztése a parancssorba"
 msgid "search text in buffer history"
 msgstr "szöveg keresése a puffertörténetben"
 
-#, c-format
-msgid "%s unable to bind key \"%s\"\n"
+#, fuzzy, c-format
+msgid "Error: unable to bind key \"%s\"\n"
 msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
 
-#, c-format
-msgid "%s unable to bind key \"%s\" (invalid function name: \"%s\")\n"
+#, fuzzy, c-format
+msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")\n"
 msgstr ""
 "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni (érvénytelen "
 "funkciónév: \"%s\")\n"
 
-#, c-format
-msgid "%s not enough memory for key binding\n"
+#, fuzzy
+msgid "Error: not enough memory for key binding\n"
 msgstr "%s nincs elég memória a billentyűhozzárendeléshez\n"
 
 #, c-format
@@ -1743,7 +1740,7 @@ msgid "Unable to write log file \"%s\"\n"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
-msgid "%s%s Unable to write log file \"%s\"\n"
+msgid "%sError: Unable to write log file \"%s\"\n"
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 msgid "****  Beginning of log  "
@@ -1753,31 +1750,31 @@ msgid "****  End of log  "
 msgstr "****  Naplófájl vége  "
 
 #, fuzzy, c-format
-msgid "%sFIFO pipe is open\n"
+msgid "%sFifo: pipe is open\n"
 msgstr "FIFO cső nyitva\n"
 
 #, fuzzy, c-format
-msgid "%sunable to open FIFO pipe (%s) for reading"
+msgid "%sFifo: unable to open pipe (%s) for reading"
 msgstr "%s nem sikerült a FIFO csövet (%s) olvasásra megnyitni\n"
 
 #, fuzzy, c-format
-msgid "%sunable to create FIFO pipe for remote control (%s)"
+msgid "%sFifo: unable to create pipe for remote control (%s)"
 msgstr "%s nem sikerült a FIFO csövet létrehozni a távoli felügyelethez (%s)\n"
 
 #, fuzzy, c-format
-msgid "%sFIFO pipe is closed"
+msgid "%sFifo: pipe is closed"
 msgstr "FIFO cső bezárva\n"
 
 #, fuzzy, c-format
-msgid "%sFifo error: invalid text received on FIFO pipe"
+msgid "%sFifo error: invalid text received on pipe"
 msgstr "%s érvénytelen üzenet érkezett a FIFO csőben\n"
 
 #, fuzzy, c-format
-msgid "%sFifo error: buffer not found for FIFO pipedata"
+msgid "%sFifo error: buffer not found for pipe data"
 msgstr "%s a \"%s\" szerver nem található (FIFO cső adat)\n"
 
 #, fuzzy, c-format
-msgid "%serror reading FIFO pipe, closing it"
+msgid "%sFifo: error reading pipe, closing it"
 msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
 
 #, c-format
@@ -2563,6 +2560,10 @@ msgstr "%s már csatlakozott a \"%s\" szerverhez!\n"
 #, c-format
 msgid "%s currently connecting to server \"%s\"!\n"
 msgstr "%s éppen kapcsolódik a(z) \"%s\" szerverhez!\n"
+
+#, c-format
+msgid "%s missing argument for \"%s\" option\n"
+msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, c-format
 msgid "Server %s%s%s created (temporary server, NOT SAVED!)\n"
@@ -3927,22 +3928,23 @@ msgid "Disconnected from server!\n"
 msgstr "Lekapcsolódott a szerverről!\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to load plugin \"%s\": %s\n"
+msgid "%sError: unable to load plugin \"%s\": %s\n"
 msgstr "%s nem sikerült a modult betölteni \"%s\": %s\n"
 
 #, fuzzy, c-format
-msgid "%s%s symbol \"%s\" not found in plugin \"%s\", failed to load\n"
+msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 "%s a \"plugin_name\" szimbólum nem található a \"%s\" modulban, betöltés "
 "sikertelen\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s%s unable to load plugin \"%s\": a plugin with same name already exists\n"
+"%sError: unable to load plugin \"%s\": a plugin with same name already "
+"exists\n"
 msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\n"
 
 #, fuzzy, c-format
-msgid "%s%s function \"%s\" not found in plugin \"%s\", failed to load\n"
+msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load\n"
 msgstr ""
 "%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
 "betöltés sikertelen\n"
@@ -3952,11 +3954,11 @@ msgid "%sInitializing plugin \"%s\" %s\n"
 msgstr "Modul betöltése: \"%s\" %s\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to initialize plugin \"%s\"\n"
+msgid "%sError: unable to initialize plugin \"%s\"\n"
 msgstr "%s nem sikerült a modult betölteni \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s unable to load plugin \"%s\" (not enough memory)\n"
+msgid "%sError: unable to load plugin \"%s\" (not enough memory)\n"
 msgstr "%s nem sikerült a modult betölteni \"%s\" (nincs elég memória)\n"
 
 #, fuzzy, c-format
@@ -3968,12 +3970,35 @@ msgid "%sPlugin \"%s\" unloaded.\n"
 msgstr "A \"%s\" modul eltávolítva.\n"
 
 #, fuzzy, c-format
-msgid "%s%s plugin \"%s\" not found\n"
+msgid "%sError: plugin \"%s\" not found\n"
 msgstr "%s a \"%s\" modul nem található\n"
 
 #, fuzzy
 msgid "Saving plugins configuration to disk\n"
 msgstr "Beállítások mentése a lemezre\n"
+
+#, fuzzy
+#~ msgid "%sFailed to create alias \"%s\" => \"%s\" (not enough memory)"
+#~ msgstr ""
+#~ "A \"%s\" => \"%s\" aliasz elkészítése sikertelen (nincs elég memória)\n"
+
+#~ msgid "WeeChat Error:"
+#~ msgstr "WeeChat Hiba:"
+
+#~ msgid "WeeChat Warning:"
+#~ msgstr "WeeChat Figyelmeztetés:"
+
+#, fuzzy
+#~ msgid "%s%s unknown option for \"%s\" command"
+#~ msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
+
+#, fuzzy
+#~ msgid "%s%s wrong argument count for \"%s\" command"
+#~ msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
+
+#, fuzzy
+#~ msgid "%s%s unable to bind key \"%s\""
+#~ msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
 
 #, fuzzy
 #~ msgid "       %s"

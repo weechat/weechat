@@ -67,6 +67,7 @@ struct command weechat_commands[] =
     N_("[action [args] | number | [[server] [channel]]]"),
     N_(" action: action to do:\n"
        "   move: move buffer in the list (may be relative, for example -1)\n"
+       "  close: close buffer\n"
        "   list: list open buffers (no parameter implies this list)\n"
        " notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, "
        "3=2+join/part)\n"
@@ -386,10 +387,10 @@ command_alias (struct t_gui_buffer *buffer,
             if (!pos[0])
             {	
                 gui_chat_printf (NULL,
-                                 _("%s%s missing arguments for \"%s\" "
+                                 _("%sError: missing arguments for \"%s\" "
                                    "command"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 WEECHAT_ERROR, "alias");
+                                 "alias");
                 return -1;
             }            
 	    if (!alias_new (arguments, pos))
@@ -407,8 +408,8 @@ command_alias (struct t_gui_buffer *buffer,
             else
             {
                 gui_chat_printf (NULL,
-                                 _("%sFailed to create alias \"%s\" => "
-                                   "\"%s\" (not enough memory)"),
+                                 _("%sError: not enough memory for creating "
+                                   "alias \"%s\" => \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  arguments, pos);
                 return -1;
@@ -563,10 +564,10 @@ command_buffer (struct t_gui_buffer *buffer,
             if (argc < 2)
             {
                 gui_chat_printf (NULL,
-                                 _("%s%s missing arguments for \"%s\" "
+                                 _("%sError: missing arguments for \"%s\" "
                                    "command"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 WEECHAT_ERROR, "buffer");
+                                 "buffer");
                 return -1;
             }
             
@@ -589,9 +590,8 @@ command_buffer (struct t_gui_buffer *buffer,
             {
                 /* invalid number */
                 gui_chat_printf (NULL,
-                                 _("%s%s incorrect buffer number"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 WEECHAT_ERROR);
+                                 _("%sError: incorrect buffer number"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                 return -1;
             }
         }
@@ -625,10 +625,9 @@ command_buffer (struct t_gui_buffer *buffer,
                     {
                         /* invalid highlight level */
                         gui_chat_printf (NULL,
-                                         _("%s%s incorrect notify level "
+                                         _("%sError: incorrect notify level "
                                            "(must be between %d and %d)"),
                                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         WEECHAT_ERROR,
                                          GUI_BUFFER_NOTIFY_LEVEL_MIN,
                                          GUI_BUFFER_NOTIFY_LEVEL_MAX);
                         return -1;
@@ -672,10 +671,9 @@ command_buffer (struct t_gui_buffer *buffer,
                 {
                     /* invalid number */
                     gui_chat_printf (NULL,
-                                     _("%s%s incorrect notify level (must "
+                                     _("%sError: incorrect notify level (must "
                                        "be between %d and %d)"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     WEECHAT_ERROR,
                                      GUI_BUFFER_NOTIFY_LEVEL_MIN,
                                      GUI_BUFFER_NOTIFY_LEVEL_MAX);
                     return -1;
@@ -817,11 +815,10 @@ command_clear (struct t_gui_buffer *buffer,
                     if (!ptr_buffer)
                     {
                         gui_chat_printf (NULL,
-                                         _("%s%s buffer number \"%s\" not "
+                                         _("%sError: buffer number \"%s\" not "
                                            "found for \"%s\" command"),
                                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         WEECHAT_ERROR, argv[i],
-                                         "clear");
+                                         argv[i], "clear");
                         return -1;
                     }
                     gui_buffer_clear (ptr_buffer);
@@ -829,10 +826,10 @@ command_clear (struct t_gui_buffer *buffer,
                 else
                 {
                     gui_chat_printf (NULL,
-                                     _("%s%s unknown option for \"%s\" "
+                                     _("%sError: unknown option for \"%s\" "
                                        "command"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     WEECHAT_ERROR, "clear");
+                                     "clear");
                     return -1;
                 }
             }
@@ -898,10 +895,10 @@ command_debug (struct t_gui_buffer *buffer,
     if (argc != 1)
     {
         gui_chat_printf (NULL,
-                         _("%s%s wrong argument count for \"%s\" "
+                         _("%sError: wrong argument count for \"%s\" "
                            "command"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         WEECHAT_ERROR, "debug");
+                         "debug");
         return -1;
     }
     
@@ -922,9 +919,9 @@ command_debug (struct t_gui_buffer *buffer,
     else
     {
         gui_chat_printf (NULL,
-                         _("%s%s unknown option for \"%s\" command"),
+                         _("%sError: unknown option for \"%s\" command"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         WEECHAT_ERROR, "debug");
+                         "debug");
         return -1;
     }
     
@@ -1199,9 +1196,9 @@ command_key (struct t_gui_buffer *buffer,
         else
         {
             gui_chat_printf (NULL,
-                             _("%s%s unable to unbind key \"%s\""),
+                             _("%sError: unable to unbind key \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             WEECHAT_ERROR, arguments);
+                             arguments);
             return -1;
         }
     }
@@ -1257,9 +1254,9 @@ command_key (struct t_gui_buffer *buffer,
         else
         {
             gui_chat_printf (NULL,
-                             _("%s%s unknown key function \"%s\""),
+                             _("%sError: unknown key function \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             WEECHAT_ERROR, arguments);
+                             arguments);
             return -1;
         }
     }
@@ -1279,10 +1276,9 @@ command_key (struct t_gui_buffer *buffer,
         else
         {
             gui_chat_printf (NULL,
-                             _("%s%s \"-yes\" argument is required for "
+                             _("%sError: \"-yes\" argument is required for "
                                "keys reset (security reason)"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             WEECHAT_ERROR);
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return -1;
         }
     }
@@ -1323,9 +1319,9 @@ command_key (struct t_gui_buffer *buffer,
         else
         {
             gui_chat_printf (NULL,
-                             _("%s%s unable to bind key \"%s\""),
+                             _("%sError: unable to bind key \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             WEECHAT_ERROR, arguments);
+                             arguments);
             return -1;
         }
     }
@@ -1563,18 +1559,18 @@ command_plugin (struct t_gui_buffer *buffer,
             else
             {
                 gui_chat_printf (NULL,
-                                 _("%s%s unknown option for \"%s\" "
+                                 _("%sError: unknown option for \"%s\" "
                                    "command"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 WEECHAT_ERROR, "plugin");
+                                 "plugin");
             }
             break;
         default:
             gui_chat_printf (NULL,
-                             _("%s%s wrong argument count for \"%s\" "
+                             _("%sError: wrong argument count for \"%s\" "
                                "command"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             WEECHAT_ERROR, "plugin");
+                             "plugin");
     }
     
     return 0;
@@ -1619,9 +1615,8 @@ command_save (struct t_gui_buffer *buffer,
                          gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
     else
         gui_chat_printf (NULL,
-                         _("%s%s failed to save configuration file"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         WEECHAT_ERROR);
+                         _("%sError: failed to save configuration file"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
     
     /* save plugins configuration */
     if (plugin_config_write () == 0)
@@ -1629,9 +1624,8 @@ command_save (struct t_gui_buffer *buffer,
                          gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
     else
         gui_chat_printf (NULL,
-                         _("%s%s failed to save plugins options"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         WEECHAT_ERROR);
+                         _("%sError: failed to save plugins options"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
     
     return 0;
 }
@@ -1823,9 +1817,8 @@ command_set (struct t_gui_buffer *buffer,
             if (!ptr_protocol)
             {
                 gui_chat_printf (NULL,
-                                 _("%s%s protocol \"%s\" not found"),
+                                 _("%sError: protocol \"%s\" not found"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 WEECHAT_ERROR,
                                  option);
             }
             else
@@ -1843,18 +1836,18 @@ command_set (struct t_gui_buffer *buffer,
                             break;
                         default:
                             gui_chat_printf (NULL,
-                                             _("%s%s incorrect value for "
+                                             _("%sError: incorrect value for "
                                                "option \"%s\""),
                                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             WEECHAT_ERROR, pos + 1);
+                                             pos + 1);
                             break;
                     }
                 }
                 else
                     gui_chat_printf (NULL,
-                                     _("%s%s config option \"%s\" not found"),
+                                     _("%sError: config option \"%s\" not found"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     WEECHAT_ERROR, pos + 1);
+                                     pos + 1);
             }
             pos[0] = '.';
         }
@@ -1868,11 +1861,11 @@ command_set (struct t_gui_buffer *buffer,
                 if (ptr_option->handler_change == NULL)
                 {
                     gui_chat_printf (NULL,
-                                     _("%s%s option \"%s\" can not be "
+                                     _("%sError: option \"%s\" can not be "
                                        "changed while WeeChat is "
                                        "running"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     WEECHAT_ERROR, option);
+                                     option);
                 }
                 else
                 {
@@ -1885,20 +1878,20 @@ command_set (struct t_gui_buffer *buffer,
                     else
                     {
                         gui_chat_printf (NULL,
-                                         _("%s%s incorrect value for "
+                                         _("%sError: incorrect value for "
                                            "option \"%s\""),
                                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         WEECHAT_ERROR, option);
+                                         option);
                     }
                 }
             }
             else
             {
                 gui_chat_printf (NULL,
-                                 _("%s%s configuration option \"%s\" not "
+                                 _("%sError: configuration option \"%s\" not "
                                    "found"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 WEECHAT_ERROR, option);
+                                 option);
             }
         }
     }
@@ -2023,9 +2016,9 @@ command_setp (struct t_gui_buffer *buffer,
             if (!pos || !pos[1] || (!plugin_search (option)))
             {
                 gui_chat_printf (NULL,
-                                 _("%s%s plugin \"%s\" not found"),
+                                 _("%sError: plugin \"%s\" not found"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 WEECHAT_ERROR, option);
+                                 option);
             }
             else
                 ptr_name = option;
@@ -2047,10 +2040,10 @@ command_setp (struct t_gui_buffer *buffer,
             else
             {
                 gui_chat_printf (NULL,
-                                 _("%s%s incorrect value for plugin "
+                                 _("%sError: incorrect value for plugin "
                                    "option \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 WEECHAT_ERROR, ptr_name);
+                                 ptr_name);
             }
         }
     }
@@ -2105,7 +2098,7 @@ command_setp (struct t_gui_buffer *buffer,
 }
 
 /*
- * cmd_unalias: remove an alias
+ * command_unalias: remove an alias
  */
 
 int
@@ -2127,9 +2120,9 @@ command_unalias (struct t_gui_buffer *buffer,
     if (!ptr_weelist)
     {
         gui_chat_printf (NULL,
-                         _("%s%s alias or command \"%s\" not found"),
+                         _("%sError: alias or command \"%s\" not found"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         WEECHAT_ERROR, arguments);
+                         arguments);
         return -1;
     }
     
@@ -2172,27 +2165,24 @@ command_upgrade (struct t_gui_buffer *buffer,
         if (ptr_server->child_pid != 0)
         {
             gui_chat_printf_error (NULL,
-                              _("%s can't upgrade: connection to at least "
-                                "one server is pending"),
-                              WEECHAT_ERROR);
+                              _("Error: can't upgrade: connection to at least "
+                                "one server is pending"));
             return -1;
             }*/
         /* TODO: remove this test, and fix gnutls save/load in session */
     /*if (ptr_server->is_connected && ptr_server->ssl_connected)
         {
             gui_chat_printf_error_nolog (NULL,
-                                    _("%s can't upgrade: connection to at least "
+                                    _("Error: can't upgrade: connection to at least "
                                       "one SSL server is active "
-                                      "(should be fixed in a future version)"),
-                                    WEECHAT_ERROR);
+                                      "(should be fixed in a future version)"));
             return -1;
         }
         if (ptr_server->outqueue)
         {
             gui_chat_printf_error_nolog (NULL,
-                                    _("%s can't upgrade: anti-flood is active on "
-                                      "at least one server (sending many lines)"),
-                                    WEECHAT_ERROR);
+                                    _("Error: can't upgrade: anti-flood is active on "
+                                      "at least one server (sending many lines)"));
             return -1;
         }
     }
@@ -2211,8 +2201,7 @@ command_upgrade (struct t_gui_buffer *buffer,
     {
         free (filename);
         gui_chat_printf_error_nolog (NULL,
-                                _("%s unable to save session in file"),
-                                WEECHAT_ERROR);
+                                _("Error: unable to save session in file"));
         return -1;
     }
     
@@ -2234,8 +2223,7 @@ command_upgrade (struct t_gui_buffer *buffer,
     plugin_init (1);
     
     /*string_iconv_fprintf (stderr,
-                            _("%s exec failed (program: \"%s\"), exiting WeeChat"),
-                            WEECHAT_ERROR,
+                            _("Error: exec failed (program: \"%s\"), exiting WeeChat"),
                             exec_args[0]);
     
     free (exec_args[0]);
@@ -2406,10 +2394,10 @@ command_window (struct t_gui_buffer *buffer,
                 else
                 {
                     gui_chat_printf (NULL,
-                                     _("%s%s unknown option for \"%s\" "
+                                     _("%sError: unknown option for \"%s\" "
                                        "command"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     WEECHAT_ERROR, "window merge");
+                                     "window merge");
                     return -1;
                 }
             }
@@ -2418,11 +2406,10 @@ command_window (struct t_gui_buffer *buffer,
                 if (!gui_window_merge (gui_current_window))
                 {
                     gui_chat_printf (NULL,
-                                     _("%s%s can not merge windows, "
+                                     _("%sError: can not merge windows, "
                                        "there's no other window with same "
                                        "size near current one."),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     WEECHAT_ERROR);
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                     return -1;
                 }
             }
@@ -2455,9 +2442,9 @@ command_window (struct t_gui_buffer *buffer,
         else
         {
             gui_chat_printf (NULL,
-                             _("%s%s unknown option for \"%s\" command"),
+                             _("%sError: unknown option for \"%s\" command"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             WEECHAT_ERROR, "window");
+                             "window");
             return -1;
         }
     }

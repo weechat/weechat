@@ -449,9 +449,8 @@ config_option_section_option_set_default_values (char **config_sections,
                             config_options[i][j].default_string);
                         if (int_value < 0)
                             gui_chat_printf (NULL,
-                                             _("%s unable to assign default int with "
+                                             _("Warning: unable to assign default int with "
                                                "string (\"%s\")\n"),
-                                             WEECHAT_WARNING,
                                              config_options[i][j].default_string);
                         else
                             *config_options[i][j].ptr_int = int_value;
@@ -464,9 +463,8 @@ config_option_section_option_set_default_values (char **config_sections,
                         if (!gui_color_assign (config_options[i][j].ptr_int,
                                                config_options[i][j].default_string))
                             gui_chat_printf (NULL,
-                                             _("%s unable to assign default color "
+                                             _("Warning: unable to assign default color "
                                                "(\"%s\")\n"),
-                                             WEECHAT_WARNING,
                                              config_options[i][j].default_string);
                         break;
                 }

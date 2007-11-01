@@ -501,17 +501,16 @@ session_save (char *filename)
 void
 session_crash (FILE *file, char *message, ...)
 {
-    char buffer[4096];
+    char buf[4096];
     va_list argptr;
     
     va_start (argptr, message);
-    vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
+    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
     
     fclose (file);
     gui_main_end ();
-    string_iconv_fprintf (stderr, "%s %s\n",
-                          WEECHAT_ERROR, buffer);
+    string_iconv_fprintf (stderr, "Error: %s\n", buf);
     string_iconv_fprintf (stderr,
                           _("Last operation with session file was at position %ld, "
                             "read of %d bytes\n"),
@@ -1854,8 +1853,8 @@ session_load (char *filename)
     if (unlink (filename) < 0)
     {
         gui_printf_error_nolog (gui_current_window->buffer,
-                                _("%s can't delete session file (%s)\n"),
-                                WEECHAT_WARNING, filename);
+                                _("Warning: can't delete session file (%s)\n"),
+                                filename);
     }
     
     gui_printf_info_nolog (gui_current_window->buffer,

@@ -94,8 +94,8 @@ util_create_dir (char *directory, int permissions)
         if (errno != EEXIST)
         {
             string_iconv_fprintf (stderr,
-                                  _("%s cannot create directory \"%s\"\n"),
-                                  WEECHAT_ERROR, directory);
+                                  _("Error: cannot create directory \"%s\"\n"),
+                                  directory);
             return 0;
         }
         return 1;

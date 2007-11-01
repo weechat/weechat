@@ -165,10 +165,10 @@ alias_get_final_command (struct alias *alias)
     if (alias->running)
     {
         gui_chat_printf (NULL,
-                         _("%s%s circular reference when calling alias "
+                         _("%sError: circular reference when calling alias "
                            "\"/%s\""),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         WEECHAT_ERROR, alias->name);
+                         alias->name);
         return NULL;
     }
     

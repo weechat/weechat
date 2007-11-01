@@ -100,9 +100,9 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
     {
         case 0: /* plugin handler KO */
             gui_chat_printf (NULL,
-                             _("%s%s command \"%s\" failed"),
+                             _("%sError: command \"%s\" failed"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             WEECHAT_ERROR, command + 1);
+                             command + 1);
             break;
         case 1: /* plugin handler OK, executed */
             break;
@@ -120,10 +120,10 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
                         if (ptr_alias->running == 1)
                         {
                             gui_chat_printf (NULL,
-                                             _("%s%s circular reference when "
+                                             _("%sError: circular reference when "
                                                "calling alias \"/%s\""),
                                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             WEECHAT_ERROR, ptr_alias->name);
+                                             ptr_alias->name);
                         }
                         else
                         {		
@@ -240,7 +240,7 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
                             weechat_commands[i].max_arg)
                         {
                             gui_chat_printf (NULL,
-                                             NG_("%s%s wrong argument count "
+                                             NG_("%sError: wrong argument count "
                                                  "for %s command \"%s\" "
                                                  "(expected: %d arg)",
                                                  "%s%s wrong argument count "
@@ -248,14 +248,14 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
                                                  "(expected: %d args)",
                                                  weechat_commands[i].max_arg),
                                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             WEECHAT_ERROR, PACKAGE_NAME,
+                                             PACKAGE_NAME,
                                              command + 1,
                                              weechat_commands[i].max_arg);
                         }
                         else
                         {
                             gui_chat_printf (NULL,
-                                             NG_("%s%s wrong argument count "
+                                             NG_("%sError: wrong argument count "
                                                  "for %s command \"%s\" "
                                                  "(expected: between %d and "
                                                  "%d arg)",
@@ -265,7 +265,7 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
                                                  "%d args)",
                                                  weechat_commands[i].max_arg),
                                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             WEECHAT_ERROR, PACKAGE_NAME,
+                                             PACKAGE_NAME,
                                              command + 1,
                                              weechat_commands[i].min_arg,
                                              weechat_commands[i].max_arg);
@@ -281,9 +281,9 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
                         if (return_code < 0)
                         {
                             gui_chat_printf (NULL,
-                                             _("%s%s command \"%s\" failed"),
+                                             _("%sError: command \"%s\" failed"),
                                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             WEECHAT_ERROR, command + 1);
+                                             command + 1);
                         }
                     }
                     string_free_exploded (argv);
@@ -315,18 +315,16 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
             else
             {
                 gui_chat_printf_error (NULL,
-                                       _("%s unknown command \"%s\" (type /help for help). "
+                                       _("Error: unknown command \"%s\" (type /help for help). "
                                          "To send unknown commands to IRC server, enable option "
                                          "irc_send_unknown_commands."),
-                                       WEECHAT_ERROR,
                                        command + 1);
             }*/
 
             gui_chat_printf (NULL,
-                             _("%s%s unknown command \"%s\" (type /help "
+                             _("%sError: unknown command \"%s\" (type /help "
                                "for help)."),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             WEECHAT_ERROR,
                              command + 1);
             
             string_free_exploded (argv);
