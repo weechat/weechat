@@ -22,14 +22,20 @@
 
 /* strings */
 extern void plugin_api_charset_set (struct t_weechat_plugin *, char *);
-extern char *plugin_api_iconv_to_internal (struct t_weechat_plugin *, char *, char *);
-extern char *plugin_api_iconv_from_internal (struct t_weechat_plugin *, char *, char *);
+extern char *plugin_api_iconv_to_internal (struct t_weechat_plugin *, char *,
+                                           char *);
+extern char *plugin_api_iconv_from_internal (struct t_weechat_plugin *, char *,
+                                             char *);
 extern char *plugin_api_gettext (struct t_weechat_plugin *, char *);
-extern char *plugin_api_ngettext (struct t_weechat_plugin *, char *, char *, int);
+extern char *plugin_api_ngettext (struct t_weechat_plugin *, char *, char *,
+                                  int);
 extern int plugin_api_strcasecmp (struct t_weechat_plugin *,char *, char *);
-extern int plugin_api_strncasecmp (struct t_weechat_plugin *,char *, char *, int);
-extern char **plugin_api_explode_string (struct t_weechat_plugin *, char *, char *, int, int *);
-extern void plugin_api_free_exploded_string (struct t_weechat_plugin *, char **);
+extern int plugin_api_strncasecmp (struct t_weechat_plugin *,char *, char *,
+                                   int);
+extern char **plugin_api_explode_string (struct t_weechat_plugin *, char *,
+                                         char *, int, int *);
+extern void plugin_api_free_exploded_string (struct t_weechat_plugin *,
+                                             char **);
 
 /* directories */
 extern int plugin_api_mkdir_home (struct t_weechat_plugin *, char *);
@@ -84,13 +90,28 @@ extern void plugin_api_command (struct t_weechat_plugin *, void *, char *);
 /* infos */
 extern char *plugin_api_info_get (struct t_weechat_plugin *, char *);
 
+/* lists */
+extern struct t_plugin_list *(*list_get) (struct t_weechat_plugin *, char *,
+                                          void *);
+extern struct t_plugin_list_item *list_next (struct t_weechat_plugin *,
+                                             void *);
+extern struct t_plugin_list_item *list_prev (struct t_weechat_plugin *,
+                                             void *);
+extern int *list_int (struct t_weechat_plugin *, void *, char *);
+extern char *list_str (struct t_weechat_plugin *, void *, char *);
+extern void *list_pointer (struct t_weechat_plugin *, void *, char *);
+extern time_t list_time (struct t_weechat_plugin *, void *, char *);
+extern void list_free (struct t_weechat_plugin *, void *);
+
 /* config */
 extern char *plugin_api_config_get (struct t_weechat_plugin *, char *);
 extern int plugin_api_config_set (struct t_weechat_plugin *, char *, char *);
 extern char *plugin_api_plugin_config_get (struct t_weechat_plugin *, char *);
-extern int plugin_api_plugin_config_set (struct t_weechat_plugin *, char *, char *);
+extern int plugin_api_plugin_config_set (struct t_weechat_plugin *, char *,
+                                         char *);
 
 /* log */
-extern void plugin_api_log (struct t_weechat_plugin *, char *, char *, char *, ...);
+extern void plugin_api_log (struct t_weechat_plugin *, char *, char *,
+                            char *, ...);
 
 #endif /* plugin-api.h */

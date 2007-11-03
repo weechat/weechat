@@ -28,6 +28,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-log.h"
+#include "../core/wee-string.h"
 #include "plugin-list.h"
 
 
@@ -211,6 +212,150 @@ plugin_list_new_var_time (struct t_plugin_list_item *item,
     }
     
     return new_var;
+}
+
+/*
+ * plugin_list_next_item: return next item for a list
+ *                        if current item pointer is NULL,
+ *                        then return first item of list
+ */
+
+struct t_plugin_list_item *
+plugin_list_next_item (struct t_plugin_list *list)
+{
+    if (!list->ptr_item)
+    {
+        list->ptr_item = list->items;
+        return list->ptr_item;
+    }
+    list->ptr_item = list->ptr_item->next_item;
+    return list->ptr_item;
+}
+
+/*
+ * plugin_list_prev_item: return previous item for a list
+ *                        if current item pointer is NULL,
+ *                        then return last item of list
+ */
+
+struct t_plugin_list_item *
+plugin_list_prev_item (struct t_plugin_list *list)
+{
+    if (!list->ptr_item)
+    {
+        list->ptr_item = list->last_item;
+        return list->ptr_item;
+    }
+    list->ptr_item = list->ptr_item->prev_item;
+    return list->ptr_item;
+}
+
+/*
+ * plugin_list_get_int: get an integer variable value in an item
+ */
+
+int
+plugin_list_get_int (struct t_plugin_list_item *item, char *var)
+{
+    struct t_plugin_list_var *ptr_var;
+    
+    if (!item || !var || !var[0])
+        return 0;
+    
+    for (ptr_var = item->vars; ptr_var; ptr_var = ptr_var->next_var)
+    {
+        if (string_strcasecmp (ptr_var->name, var) == 0)
+        {
+            if (ptr_var->type == PLUGIN_LIST_VAR_INTEGER)
+                return ptr_var->value_int;
+            else
+                return 0;
+        }
+    }
+    
+    /* variable not found */
+    return 0;
+}
+
+/*
+ * plugin_list_get_string: get a string variable value in an item
+ */
+
+char *
+plugin_list_get_string (struct t_plugin_list_item *item, char *var)
+{
+    struct t_plugin_list_var *ptr_var;
+    
+    if (!item || !var || !var[0])
+        return NULL;
+    
+    for (ptr_var = item->vars; ptr_var; ptr_var = ptr_var->next_var)
+    {
+        if (string_strcasecmp (ptr_var->name, var) == 0)
+        {
+            if (ptr_var->type == PLUGIN_LIST_VAR_STRING)
+                return ptr_var->value_string;
+            else
+                return NULL;
+        }
+    }
+    
+    /* variable not found */
+    return NULL;
+}
+
+/*
+ * plugin_list_get_pointer: get a pointer variable value in an item
+ */
+
+void *
+plugin_list_get_pointer (struct t_plugin_list_item *item, char *var)
+{
+    struct t_plugin_list_var *ptr_var;
+    
+    if (!item || !var || !var[0])
+        return NULL;
+    
+    for (ptr_var = item->vars; ptr_var; ptr_var = ptr_var->next_var)
+    {
+        if (string_strcasecmp (ptr_var->name, var) == 0)
+        {
+            if (ptr_var->type == PLUGIN_LIST_VAR_POINTER)
+                return ptr_var->value_pointer;
+            else
+                return NULL;
+        }
+    }
+    
+    /* variable not found */
+    return NULL;
+}
+
+/*
+ * plugin_list_get_time: get a time variable value in an item
+ */
+
+time_t
+plugin_list_get_time (struct t_plugin_list_item *item, char *var)
+{
+    struct t_plugin_list_var *ptr_var;
+    
+    if (!item || !var || !var[0])
+        return 0;
+    
+    for (ptr_var = item->vars; ptr_var; ptr_var = ptr_var->next_var)
+    {
+        if (string_strcasecmp (ptr_var->name, var) == 0)
+        {
+            if (ptr_var->type == PLUGIN_LIST_VAR_TIME)
+                return ptr_var->value_time;
+            else
+                return 0;
+        }
+    }
+    
+    /* variable not found */
+    return 0;
 }
 
 /*

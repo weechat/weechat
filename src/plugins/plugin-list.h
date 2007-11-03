@@ -76,6 +76,12 @@ extern struct t_plugin_list_var *plugin_list_new_var_pointer (struct t_plugin_li
                                                               char *, void *);
 extern struct t_plugin_list_var *plugin_list_new_var_time (struct t_plugin_list_item *,
                                                            char *, time_t);
+extern struct t_plugin_list_item *plugin_list_next_item (struct t_plugin_list *);
+extern struct t_plugin_list_item *plugin_list_prev_item (struct t_plugin_list *);
+extern int plugin_list_get_int (struct t_plugin_list_item *, char *);
+extern char *plugin_list_get_string (struct t_plugin_list_item *, char *);
+extern void *plugin_list_get_pointer (struct t_plugin_list_item *, char *);
+extern time_t plugin_list_get_time (struct t_plugin_list_item *, char *);
 extern void plugin_list_free (struct t_plugin_list *);
 extern void plugin_list_print_log ();
 

@@ -49,12 +49,12 @@ struct t_weechat_plugin
     struct t_weechat_plugin *prev_plugin; /* link to previous plugin        */
     struct t_weechat_plugin *next_plugin; /* link to next plugin            */
     
-    /* plugin functions (interface) */
+    /* plugin functions (API) */
     
-    /* IMPORTANT NOTE for WeeChat developers: always add new interface functions
+    /* IMPORTANT NOTE for WeeChat developers: always add new API functions
        at the END of functions, for keeping backward compatibility with
        existing plugins */
-
+    
     /* strings */
     void (*charset_set) (struct t_weechat_plugin *, char *);
     char *(*iconv_to_internal) (struct t_weechat_plugin *, char *, char *);
@@ -66,19 +66,19 @@ struct t_weechat_plugin
     char **(*explode_string) (struct t_weechat_plugin *, char *, char *, int,
                               int *);
     void (*free_exploded_string) (struct t_weechat_plugin *, char **);
-
+    
     /* directories */
     int (*mkdir_home) (struct t_weechat_plugin *, char *);
     void (*exec_on_files) (struct t_weechat_plugin *, char *,
                            int (*)(char *));
-
+    
     /* display */
     void (*printf) (struct t_weechat_plugin *, void *, char *, ...);
     char *(*prefix) (struct t_weechat_plugin *, char *);
     char *(*color) (struct t_weechat_plugin *, char *);
     void (*print_infobar) (struct t_weechat_plugin *, int, char *, ...);
     void (*infobar_remove) (struct t_weechat_plugin *, int);
-
+    
     /* hooks */
     struct t_hook *(*hook_command) (struct t_weechat_plugin *, char *, char *,
                                     char *, char *, char *,
@@ -108,15 +108,20 @@ struct t_weechat_plugin
     
     /* command */
     void (*command) (struct t_weechat_plugin *, void *, char *);
-
+    
     /* infos */
     char *(*info_get) (struct t_weechat_plugin *, char *);
-
+    
     /* lists */
     struct t_plugin_list *(*list_get) (struct t_weechat_plugin *, char *,
                                        void *);
+    struct t_plugin_list *(*list_next) (struct t_weechat_plugin *, void *);
+    struct t_plugin_list *(*list_prev) (struct t_weechat_plugin *, void *);
+    int (*list_int) (struct t_weechat_plugin *, void *, char *);
+    char *(*list_string) (struct t_weechat_plugin *, void *, char *);
+    void *(*list_pointer) (struct t_weechat_plugin *, void *, char *);
+    time_t (*list_time) (struct t_weechat_plugin *, void *, char *);
     void (*list_free) (struct t_weechat_plugin *, void *);
-    
     
     /* config */
     char *(*config_get) (struct t_weechat_plugin *, char *);
@@ -187,6 +192,23 @@ struct t_weechat_plugin
 
 #define weechat_info_get(infoname)                      \
     weechat_plugin->info_get(weechat_plugin, infoname)
+
+#define weechat_list_get(name, pointer)                                 \
+    weechat_plugin->list_get(weechat_plugin, name, pointer)
+#define weechat_list_next(ptrlist)                      \
+    weechat_plugin->list_next(weechat_plugin, ptrlist)
+#define weechat_list_prev(ptrlist)                      \
+    weechat_plugin->list_prev(weechat_plugin, ptrlist)
+#define weechat_list_int(ptritem, var)                          \
+    weechat_plugin->list_int(weechat_plugin, ptritem, var)
+#define weechat_list_string(ptritem, var)                       \
+    weechat_plugin->list_string(weechat_plugin, ptritem, var)
+#define weechat_list_pointer(ptritem, var)                      \
+    weechat_plugin->list_pointer(weechat_plugin, ptritem, var)
+#define weechat_list_time(ptritem, var)                         \
+    weechat_plugin->list_time(weechat_plugin, ptritem, var)
+#define weechat_list_free(ptrlist)                      \
+    weechat_plugin->list_free(weechat_plugin, ptrlist)
 
 #define weechat_config_get(option)                      \
     weechat_plugin->config_get(weechat_plugin, option)
