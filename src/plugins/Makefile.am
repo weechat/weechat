@@ -64,4 +64,8 @@ if PLUGIN_TRIGGER
 trigger_dir = trigger
 endif
 
-SUBDIRS = . $(irc_dir) $(script_dir) $(aspell_dir) $(charset_dir) $(fifo_dir) $(trigger_dir)
+if PLUGIN_DEMO
+demo_dir = demo
+endif
+
+SUBDIRS = . $(irc_dir) $(script_dir) $(aspell_dir) $(charset_dir) $(fifo_dir) $(trigger_dir) $(demo_dir)

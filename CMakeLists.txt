@@ -45,6 +45,7 @@ OPTION(DISABLE_ASPELL  "Disable Aspell plugin")
 OPTION(DISABLE_CHARSET "Disable Charset plugin")
 OPTION(DISABLE_FIFO    "Disable FIFO plugin")
 OPTION(DISABLE_TRIGGER "Disable Trigger plugin")
+OPTION(ENABLE_DEMO     "Enable Demo plugin")
 OPTION(DISABLE_DOC     "Disable Doc")
 
 ADD_SUBDIRECTORY( po ) 
