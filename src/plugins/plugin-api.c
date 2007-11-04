@@ -252,7 +252,8 @@ plugin_api_printf (struct t_weechat_plugin *plugin,
     va_list argptr;
     char buf[8192];
     
-    if (!plugin || !format)
+    if (!plugin || !format
+        || !gui_buffer_valid ((struct t_gui_buffer *)buffer))
         return;
     
     va_start (argptr, format);
