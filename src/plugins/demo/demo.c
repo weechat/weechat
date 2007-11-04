@@ -39,6 +39,108 @@ static struct t_weechat_plugin *weechat_plugin = NULL;
 
 
 /*
+ * demo_print_list: display a list
+ */
+
+static void
+demo_print_list (void *list, char *item_name)
+{
+    char *fields, **argv;
+    int i, j, argc;
+    
+    i = 1;
+    while (weechat_list_next (list))
+    {
+        weechat_printf (NULL, "--- %s #%d ---", item_name, i);
+        fields = weechat_list_fields (list);
+        if (fields)
+        {
+            argv = weechat_string_explode (fields, ",", 0, &argc);
+            if (argv && (argc > 0))
+            {
+                for (j = 0; j < argc; j++)
+                {
+                    switch (argv[j][0])
+                    {
+                        case 'i':
+                            weechat_printf (NULL, "  %s: %d",
+                                            argv[j] + 2,
+                                            weechat_list_int (list,
+                                                              argv[j] + 2));
+                            break;
+                        case 's':
+                            weechat_printf (NULL, "  %s: %s",
+                                            argv[j] + 2,
+                                            weechat_list_string (list,
+                                                                 argv[j] + 2));
+                            break;
+                        case 'p':
+                            weechat_printf (NULL, "  %s: %X",
+                                            argv[j] + 2,
+                                            weechat_list_pointer (list,
+                                                                  argv[j] + 2));
+                            break;
+                        case 't':
+                            weechat_printf (NULL, "  %s: %ld",
+                                            argv[j] + 2,
+                                            weechat_list_time (list,
+                                                               argv[j] + 2));
+                            break;
+                    }
+                }
+
+            }
+            if (argv)
+                weechat_string_free_exploded (argv);
+        }
+        i++;
+    }
+}
+
+/*
+ * demo_buffer_infos: display buffer infos
+ */
+
+static void
+demo_buffer_infos ()
+{
+    struct t_plugin_list *list;
+    
+    list = weechat_list_get ("buffer", NULL);
+    if (list)
+    {
+        demo_print_list (list, "buffer");
+        weechat_list_free (list);
+    }
+}
+
+/*
+ * demo_command: demo command 
+ */
+
+static int
+demo_command (void *data, char *args)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    if (args)
+    {
+        if (weechat_strcasecmp (args, "buffer") == 0)
+        {
+            demo_buffer_infos ();
+            return PLUGIN_RC_SUCCESS;
+        }
+    }
+    
+    weechat_printf (NULL,
+                    "Demo: missing argument for /demo command "
+                    "(try /help demo)");
+    
+    return PLUGIN_RC_SUCCESS;
+}
+
+/*
  * weechat_plugin_init: init demo plugin
  */
 
@@ -46,6 +148,11 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin)
 {
     weechat_plugin = plugin;
+
+    weechat_hook_command ("demo", "demo command", "[action]",
+                          "action: one of following actions:\n"
+                          "  buffer  display infos about buffers",
+                          "buffer", demo_command, NULL);
     
     return PLUGIN_RC_SUCCESS;
 }

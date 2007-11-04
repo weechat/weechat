@@ -78,6 +78,7 @@ plugin_list_new_item (struct t_plugin_list *list)
     {
         new_item->vars = NULL;
         new_item->last_var = NULL;
+        new_item->fields = NULL;
         
         new_item->prev_item = list->last_item;
         new_item->next_item = NULL;
@@ -100,11 +101,15 @@ plugin_list_new_var_int (struct t_plugin_list_item *item,
                          char *name, int value)
 {
     struct t_plugin_list_var *new_var;
-
+    
+    if (!item || !name || !name[0])
+        return NULL;
+    
     new_var = (struct t_plugin_list_var *)malloc (sizeof (struct t_plugin_list_var));
     if (new_var)
     {
         new_var->name = strdup (name);
+        new_var->type = PLUGIN_LIST_VAR_INTEGER;
         new_var->value_int = value;
         new_var->value_string = NULL;
         new_var->value_pointer = NULL;
@@ -132,12 +137,16 @@ plugin_list_new_var_string (struct t_plugin_list_item *item,
 {
     struct t_plugin_list_var *new_var;
     
+    if (!item || !name || !name[0])
+        return NULL;
+    
     new_var = (struct t_plugin_list_var *)malloc (sizeof (struct t_plugin_list_var));
     if (new_var)
     {
         new_var->name = strdup (name);
+        new_var->type = PLUGIN_LIST_VAR_STRING;
         new_var->value_int = 0;
-        new_var->value_string = strdup (value);
+        new_var->value_string = (value) ? strdup (value) : NULL;
         new_var->value_time = 0;
         
         new_var->prev_var = item->last_var;
@@ -162,10 +171,14 @@ plugin_list_new_var_pointer (struct t_plugin_list_item *item,
 {
     struct t_plugin_list_var *new_var;
     
+    if (!item || !name || !name[0])
+        return NULL;
+    
     new_var = (struct t_plugin_list_var *)malloc (sizeof (struct t_plugin_list_var));
     if (new_var)
     {
         new_var->name = strdup (name);
+        new_var->type = PLUGIN_LIST_VAR_POINTER;
         new_var->value_int = 0;
         new_var->value_string = NULL;
         new_var->value_pointer = pointer;
@@ -193,10 +206,14 @@ plugin_list_new_var_time (struct t_plugin_list_item *item,
 {
     struct t_plugin_list_var *new_var;
     
+    if (!item || !name || !name[0])
+        return NULL;
+    
     new_var = (struct t_plugin_list_var *)malloc (sizeof (struct t_plugin_list_var));
     if (new_var)
     {
         new_var->name = strdup (name);
+        new_var->type = PLUGIN_LIST_VAR_TIME;
         new_var->value_int = 0;
         new_var->value_string = NULL;
         new_var->value_pointer = NULL;
@@ -212,6 +229,28 @@ plugin_list_new_var_time (struct t_plugin_list_item *item,
     }
     
     return new_var;
+}
+
+/*
+ * plugin_list_valid: check if a list pointer exists
+ *                    return 1 if list exists
+ *                           0 if list is not found
+ */
+
+int
+plugin_list_valid (struct t_plugin_list *list)
+{
+    struct t_plugin_list *ptr_list;
+    
+    for (ptr_list = plugin_lists; ptr_list;
+         ptr_list = ptr_list->next_list)
+    {
+        if (ptr_list == list)
+            return 1;
+    }
+    
+    /* list not found */
+    return 0;
 }
 
 /*
@@ -251,18 +290,71 @@ plugin_list_prev_item (struct t_plugin_list *list)
 }
 
 /*
- * plugin_list_get_int: get an integer variable value in an item
+ * plugin_list_get_fields: get list of fields for current list item
+ */
+
+char *
+plugin_list_get_fields (struct t_plugin_list *list)
+{
+    struct t_plugin_list_var *ptr_var;
+    int length;
+    
+    if (!list || !list->ptr_item)
+        return NULL;
+
+    /* list of fields already asked ? if yes, just return string */
+    if (list->ptr_item->fields)
+        return list->ptr_item->fields;
+    
+    length = 0;
+    for (ptr_var = list->ptr_item->vars; ptr_var; ptr_var = ptr_var->next_var)
+    {
+        length += strlen (ptr_var->name) + 3;
+    }
+    
+    list->ptr_item->fields = (char *)malloc (length + 1);
+    if (!list->ptr_item->fields)
+        return NULL;
+    
+    list->ptr_item->fields[0] = '\0';
+    for (ptr_var = list->ptr_item->vars; ptr_var; ptr_var = ptr_var->next_var)
+    {
+        switch (ptr_var->type)
+        {
+            case PLUGIN_LIST_VAR_INTEGER:
+                strcat (list->ptr_item->fields, "i:");
+                break;
+            case PLUGIN_LIST_VAR_STRING:
+                strcat (list->ptr_item->fields, "s:");
+                break;
+            case PLUGIN_LIST_VAR_POINTER:
+                strcat (list->ptr_item->fields, "p:");
+                break;
+            case PLUGIN_LIST_VAR_TIME:
+                strcat (list->ptr_item->fields, "t:");
+                break;
+        }
+        strcat (list->ptr_item->fields, ptr_var->name);
+        if (ptr_var->next_var)
+            strcat (list->ptr_item->fields, ",");
+    }
+    
+    return list->ptr_item->fields;
+}
+
+/*
+ * plugin_list_get_int: get an integer variable value in current list item
  */
 
 int
-plugin_list_get_int (struct t_plugin_list_item *item, char *var)
+plugin_list_get_int (struct t_plugin_list *list, char *var)
 {
     struct t_plugin_list_var *ptr_var;
     
-    if (!item || !var || !var[0])
+    if (!list || !list->ptr_item || !var || !var[0])
         return 0;
     
-    for (ptr_var = item->vars; ptr_var; ptr_var = ptr_var->next_var)
+    for (ptr_var = list->ptr_item->vars; ptr_var; ptr_var = ptr_var->next_var)
     {
         if (string_strcasecmp (ptr_var->name, var) == 0)
         {
@@ -278,18 +370,18 @@ plugin_list_get_int (struct t_plugin_list_item *item, char *var)
 }
 
 /*
- * plugin_list_get_string: get a string variable value in an item
+ * plugin_list_get_string: get a string variable value in current list item
  */
 
 char *
-plugin_list_get_string (struct t_plugin_list_item *item, char *var)
+plugin_list_get_string (struct t_plugin_list *list, char *var)
 {
     struct t_plugin_list_var *ptr_var;
     
-    if (!item || !var || !var[0])
+    if (!list || !list->ptr_item || !var || !var[0])
         return NULL;
     
-    for (ptr_var = item->vars; ptr_var; ptr_var = ptr_var->next_var)
+    for (ptr_var = list->ptr_item->vars; ptr_var; ptr_var = ptr_var->next_var)
     {
         if (string_strcasecmp (ptr_var->name, var) == 0)
         {
@@ -305,18 +397,18 @@ plugin_list_get_string (struct t_plugin_list_item *item, char *var)
 }
 
 /*
- * plugin_list_get_pointer: get a pointer variable value in an item
+ * plugin_list_get_pointer: get a pointer variable value in current list item
  */
 
 void *
-plugin_list_get_pointer (struct t_plugin_list_item *item, char *var)
+plugin_list_get_pointer (struct t_plugin_list *list, char *var)
 {
     struct t_plugin_list_var *ptr_var;
     
-    if (!item || !var || !var[0])
+    if (!list || !list->ptr_item || !var || !var[0])
         return NULL;
     
-    for (ptr_var = item->vars; ptr_var; ptr_var = ptr_var->next_var)
+    for (ptr_var = list->ptr_item->vars; ptr_var; ptr_var = ptr_var->next_var)
     {
         if (string_strcasecmp (ptr_var->name, var) == 0)
         {
@@ -332,18 +424,18 @@ plugin_list_get_pointer (struct t_plugin_list_item *item, char *var)
 }
 
 /*
- * plugin_list_get_time: get a time variable value in an item
+ * plugin_list_get_time: get a time variable value in current list item
  */
 
 time_t
-plugin_list_get_time (struct t_plugin_list_item *item, char *var)
+plugin_list_get_time (struct t_plugin_list *list, char *var)
 {
     struct t_plugin_list_var *ptr_var;
     
-    if (!item || !var || !var[0])
+    if (!list || !list->ptr_item || !var || !var[0])
         return 0;
     
-    for (ptr_var = item->vars; ptr_var; ptr_var = ptr_var->next_var)
+    for (ptr_var = list->ptr_item->vars; ptr_var; ptr_var = ptr_var->next_var)
     {
         if (string_strcasecmp (ptr_var->name, var) == 0)
         {
@@ -420,6 +512,8 @@ plugin_list_item_free (struct t_plugin_list *list,
     {
         plugin_list_var_free (item, item->vars);
     }
+    if (item->fields)
+        free (item->fields);
     
     list->items = new_items;
 }

@@ -63,9 +63,9 @@ struct t_weechat_plugin
     char *(*ngettext) (struct t_weechat_plugin *, char *, char *, int);
     int (*strcasecmp) (struct t_weechat_plugin *, char *, char *);
     int (*strncasecmp) (struct t_weechat_plugin *, char *, char *, int);
-    char **(*explode_string) (struct t_weechat_plugin *, char *, char *, int,
+    char **(*string_explode) (struct t_weechat_plugin *, char *, char *, int,
                               int *);
-    void (*free_exploded_string) (struct t_weechat_plugin *, char **);
+    void (*string_free_exploded) (struct t_weechat_plugin *, char **);
     
     /* directories */
     int (*mkdir_home) (struct t_weechat_plugin *, char *);
@@ -115,8 +115,9 @@ struct t_weechat_plugin
     /* lists */
     struct t_plugin_list *(*list_get) (struct t_weechat_plugin *, char *,
                                        void *);
-    struct t_plugin_list *(*list_next) (struct t_weechat_plugin *, void *);
-    struct t_plugin_list *(*list_prev) (struct t_weechat_plugin *, void *);
+    int (*list_next) (struct t_weechat_plugin *, void *);
+    int (*list_prev) (struct t_weechat_plugin *, void *);
+    char *(*list_fields) (struct t_weechat_plugin *, void *);
     int (*list_int) (struct t_weechat_plugin *, void *, char *);
     char *(*list_string) (struct t_weechat_plugin *, void *, char *);
     void *(*list_pointer) (struct t_weechat_plugin *, void *, char *);
@@ -147,6 +148,11 @@ struct t_weechat_plugin
     weechat_plugin->strcasecmp(weechat_plugin, string1, string2)
 #define weechat_strncasecmp(string1, string2, max)                      \
     weechat_plugin->strncasecmp(weechat_plugin, string1, string2, max)
+#define weechat_string_explode(string1, separator, max, num_items)      \
+    weechat_plugin->string_explode(weechat_plugin, string1, separator,  \
+                                   max, num_items)
+#define weechat_string_free_exploded(array_str)                         \
+    weechat_plugin->string_free_exploded(weechat_plugin, array_str)
 
 #define weechat_printf(buffer, argz...)                         \
     weechat_plugin->printf(weechat_plugin, buffer, ##argz)
@@ -199,6 +205,8 @@ struct t_weechat_plugin
     weechat_plugin->list_next(weechat_plugin, ptrlist)
 #define weechat_list_prev(ptrlist)                      \
     weechat_plugin->list_prev(weechat_plugin, ptrlist)
+#define weechat_list_fields(ptrlist)                            \
+    weechat_plugin->list_fields(weechat_plugin, ptrlist)
 #define weechat_list_int(ptritem, var)                          \
     weechat_plugin->list_int(weechat_plugin, ptritem, var)
 #define weechat_list_string(ptritem, var)                       \

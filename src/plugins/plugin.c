@@ -231,8 +231,8 @@ plugin_load (char *filename)
         new_plugin->ngettext = &plugin_api_ngettext;
         new_plugin->strcasecmp = &plugin_api_strcasecmp;
         new_plugin->strncasecmp = &plugin_api_strncasecmp;
-        new_plugin->explode_string = &plugin_api_explode_string;
-        new_plugin->free_exploded_string = &plugin_api_free_exploded_string;
+        new_plugin->string_explode = &plugin_api_string_explode;
+        new_plugin->string_free_exploded = &plugin_api_string_free_exploded;
         
         new_plugin->mkdir_home = &plugin_api_mkdir_home;
         new_plugin->exec_on_files = &plugin_api_exec_on_files;
@@ -261,6 +261,16 @@ plugin_load (char *filename)
         new_plugin->command = &plugin_api_command;
         
         new_plugin->info_get = &plugin_api_info_get;
+        
+        new_plugin->list_get = &plugin_api_list_get;
+        new_plugin->list_next = &plugin_api_list_next;
+        new_plugin->list_prev = &plugin_api_list_prev;
+        new_plugin->list_fields = &plugin_api_list_fields;
+        new_plugin->list_int = &plugin_api_list_int;
+        new_plugin->list_string = &plugin_api_list_string;
+        new_plugin->list_pointer = &plugin_api_list_pointer;
+        new_plugin->list_time = &plugin_api_list_time;
+        new_plugin->list_free = &plugin_api_list_free;
         
         new_plugin->config_get = &plugin_api_config_get;
         new_plugin->config_set = &plugin_api_config_set;

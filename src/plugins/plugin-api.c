@@ -155,11 +155,11 @@ plugin_api_strncasecmp (struct t_weechat_plugin *plugin,
 }
 
 /*
- * plugin_api_explode_string: explode a string
+ * plugin_api_string_explode: explode a string
  */
 
 char **
-plugin_api_explode_string (struct t_weechat_plugin *plugin, char *string,
+plugin_api_string_explode (struct t_weechat_plugin *plugin, char *string,
                            char *separators, int num_items_max,
                            int *num_items)
 {
@@ -174,11 +174,11 @@ plugin_api_explode_string (struct t_weechat_plugin *plugin, char *string,
 }
 
 /*
- * plugin_api_free_exploded_string: free exploded string
+ * plugin_api_string_free_exploded: free exploded string
  */
 
 void
-plugin_api_free_exploded_string (struct t_weechat_plugin *plugin,
+plugin_api_string_free_exploded (struct t_weechat_plugin *plugin,
                                  char **exploded_string)
 {
     /* make C compiler happy */
@@ -932,93 +932,124 @@ plugin_api_list_get (struct t_weechat_plugin *plugin, char *name,
 }
 
 /*
- * plugin_api_list_next: get next item in a list
- *                       if current item pointer is NULL,
- *                       then return first item of list
- */
-
-struct t_plugin_list_item *
-plugin_api_list_next (struct t_weechat_plugin *plugin, void *list)
-{
-    if (!plugin || !list)
-        return NULL;
-
-    return plugin_list_next_item ((struct t_plugin_list *)list);
-}
-
-/*
- * plugin_api_list_prev: get previousi item in a list
- *                       if current item pointer is NULL,
- *                       then return last item of list
- */
-
-struct t_plugin_list_item *
-plugin_api_list_prev (struct t_weechat_plugin *plugin, void *list)
-{
-    if (!plugin || !list)
-        return NULL;
-
-    return plugin_list_prev_item ((struct t_plugin_list *)list);
-}
-
-/*
- * plugin_api_list_int: get an integer variable value in an item
+ * plugin_api_list_next: move item pointer to next item in a list
+ *                       return 1 if pointer is still ok
+ *                              0 if end of list was reached
  */
 
 int
-plugin_api_list_int (struct t_weechat_plugin *plugin, void *list_item,
-                     char *var)
+plugin_api_list_next (struct t_weechat_plugin *plugin, void *list)
 {
-    if (!plugin || !list_item)
+    if (!plugin || !list
+        || !plugin_list_valid ((struct t_plugin_list *)list))
         return 0;
     
-    return plugin_list_get_int ((struct t_plugin_list_item *)list_item,
-                                var);
+    return (plugin_list_next_item ((struct t_plugin_list *)list)) ? 1 : 0;
 }
 
 /*
- * plugin_api_list_string: get a string variable value in an item
+ * plugin_api_list_prev: move item pointer to previous item in a list
+ *                       return 1 if pointer is still ok
+ *                              0 if beginning of list was reached
+ */
+
+int
+plugin_api_list_prev (struct t_weechat_plugin *plugin, void *list)
+{
+    if (!plugin || !list
+        || !plugin_list_valid ((struct t_plugin_list *)list))
+        return 0;
+
+    return (plugin_list_prev_item ((struct t_plugin_list *)list)) ? 1 : 0;
+}
+
+/*
+ * plugin_api_list_fields: get list of fields for current list item
  */
 
 char *
-plugin_api_list_string (struct t_weechat_plugin *plugin, void *list_item,
-                        char *var)
+plugin_api_list_fields (struct t_weechat_plugin *plugin, void *list)
 {
-    if (!plugin || !list_item)
+    if (!plugin || !list
+        || !plugin_list_valid ((struct t_plugin_list *)list))
         return NULL;
     
-    return plugin_list_get_string ((struct t_plugin_list_item *)list_item,
-                                   var);
+    return plugin_list_get_fields ((struct t_plugin_list *)list);
 }
 
 /*
- * plugin_api_list_pointer: get a pointer variable value in an item
+ * plugin_api_list_int: get an integer variable value in current list item
+ */
+
+int
+plugin_api_list_int (struct t_weechat_plugin *plugin, void *list,
+                     char *var)
+{
+    if (!plugin || !list
+        || !plugin_list_valid ((struct t_plugin_list *)list)
+        || !((struct t_plugin_list *)list)->ptr_item)
+        return 0;
+    
+    return plugin_list_get_int ((struct t_plugin_list *)list, var);
+}
+
+/*
+ * plugin_api_list_string: get a string variable value in current list item
+ */
+
+char *
+plugin_api_list_string (struct t_weechat_plugin *plugin, void *list,
+                        char *var)
+{
+    if (!plugin || !list
+        || !plugin_list_valid ((struct t_plugin_list *)list)
+        || !((struct t_plugin_list *)list)->ptr_item)
+        return NULL;
+    
+    return plugin_list_get_string ((struct t_plugin_list *)list, var);
+}
+
+/*
+ * plugin_api_list_pointer: get a pointer variable value in current list item
  */
 
 void *
-plugin_api_list_pointer (struct t_weechat_plugin *plugin, void *list_item,
+plugin_api_list_pointer (struct t_weechat_plugin *plugin, void *list,
                          char *var)
 {
-    if (!plugin || !list_item)
+    if (!plugin || !list
+        || !plugin_list_valid ((struct t_plugin_list *)list)
+        || !((struct t_plugin_list *)list)->ptr_item)
         return NULL;
     
-    return plugin_list_get_pointer ((struct t_plugin_list_item *)list_item,
-                                    var);
+    return plugin_list_get_pointer ((struct t_plugin_list *)list, var);
 }
 
 /*
- * plugin_api_list_time: get a time variable value in an item
+ * plugin_api_list_time: get a time variable value in current list item
  */
 
 time_t
-plugin_api_list_time (struct t_weechat_plugin *plugin, void *list_item,
+plugin_api_list_time (struct t_weechat_plugin *plugin, void *list,
                       char *var)
 {
-    if (!plugin || !list_item)
+    if (!plugin || !list
+        || !plugin_list_valid ((struct t_plugin_list *)list)
+        || !((struct t_plugin_list *)list)->ptr_item)
         return 0;
     
-    return plugin_list_get_time ((struct t_plugin_list_item *)list_item,
-                                 var);
+    return plugin_list_get_time ((struct t_plugin_list *)list, var);
+}
+
+/*
+ * plugin_api_list_free: free a list
+ */
+
+void
+plugin_api_list_free (struct t_weechat_plugin *plugin, void *list)
+{
+    if (plugin && list && plugin_list_valid ((struct t_plugin_list *)list))
+        plugin_list_free ((struct t_plugin_list *)list);
 }
 
 /*
