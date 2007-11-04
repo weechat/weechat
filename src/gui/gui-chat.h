@@ -46,7 +46,7 @@ extern void gui_chat_get_word_info (struct t_gui_window *,
                                     char *, int *, int *, int *, int *);
 extern void gui_chat_change_time_format ();
 extern int gui_chat_get_line_align (struct t_gui_buffer *,
-                                    struct t_gui_line *);
+                                    struct t_gui_line *, int);
 extern int gui_chat_line_search (struct t_gui_line *, char *, int);
 extern void gui_chat_line_free (struct t_gui_line *);
 extern void gui_chat_printf (struct t_gui_buffer *, char *, ...);

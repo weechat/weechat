@@ -438,7 +438,7 @@ gui_chat_display_word (struct t_gui_window *window,
                        int prefix, int num_lines, int count,
                        int *lines_displayed, int simulate)
 {
-    char *end_line, saved_char_end, saved_char;
+    char *end_line, saved_char_end, saved_char, str_space[] = " ";
     int pos_saved_char, chars_to_display, num_displayed;
     int length_align;
     
@@ -462,7 +462,7 @@ gui_chat_display_word (struct t_gui_window *window,
     while (data && data[0])
     {
         /* insert spaces for align text under time/nick */
-        length_align = gui_chat_get_line_align (window->buffer, line);
+        length_align = gui_chat_get_line_align (window->buffer, line, 0);
         if ((length_align > 0) &&
             (window->win_chat_cursor_x == 0) &&
             (*lines_displayed > 0) &&
@@ -477,6 +477,17 @@ gui_chat_display_word (struct t_gui_window *window,
                 wclrtoeol (GUI_CURSES(window)->win_chat);
             }
             window->win_chat_cursor_x += length_align;
+            if (!simulate
+                && (cfg_look_prefix_align != CFG_LOOK_PREFIX_ALIGN_NONE)
+                && (cfg_look_prefix_suffix && cfg_look_prefix_suffix[0]))
+            {
+                gui_chat_set_weechat_color (window, GUI_COLOR_CHAT_PREFIX_SUFFIX);
+                gui_chat_display_word_raw (window, cfg_look_prefix_suffix, 1);
+                window->win_chat_cursor_x += gui_chat_strlen_screen (cfg_look_prefix_suffix);
+                gui_chat_display_word_raw (window, str_space, 1);
+                window->win_chat_cursor_x += gui_chat_strlen_screen (str_space);
+                gui_chat_set_weechat_color (window, GUI_COLOR_CHAT);
+            }
         }
         
         chars_to_display = gui_chat_strlen_screen (data);
@@ -723,7 +734,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
             if (word_length > 0)
             {
                 /* spaces + word too long for current line but ok for next line */
-                line_align = gui_chat_get_line_align (window->buffer, line);
+                line_align = gui_chat_get_line_align (window->buffer, line, 1);
                 if ((window->win_chat_cursor_x + word_length_with_spaces > gui_chat_get_real_width (window))
                     && (word_length <= gui_chat_get_real_width (window) - line_align))
                 {

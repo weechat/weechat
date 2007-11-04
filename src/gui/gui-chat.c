@@ -122,7 +122,7 @@ gui_chat_string_real_pos (char *string, int pos)
     
     real_pos = string;
     ptr_string = string;
-    while (ptr_string && ptr_string[0] && (pos >= 0))
+    while (ptr_string && ptr_string[0] && (pos > 0))
     {
         ptr_string = gui_chat_string_next_char (NULL,
                                                 (unsigned char *)ptr_string,
@@ -319,15 +319,26 @@ gui_chat_change_time_format ()
  */
 
 int
-gui_chat_get_line_align (struct t_gui_buffer *buffer, struct t_gui_line *line)
+gui_chat_get_line_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
+                         int with_suffix)
 {
+    int length_suffix;
+    
     if (cfg_look_prefix_align == CFG_LOOK_PREFIX_ALIGN_NONE)
         return gui_chat_time_length + 1 + line->prefix_length + 2;
-    
+
+    length_suffix = 0;
+    if (with_suffix)
+    {
+        if (cfg_look_prefix_suffix && cfg_look_prefix_suffix[0])
+            length_suffix = gui_chat_strlen_screen (cfg_look_prefix_suffix) + 1;
+    }
     if (cfg_look_prefix_align_max > 0)
-        return gui_chat_time_length + 1 + cfg_look_prefix_align_max + 2 + 1;
+        return gui_chat_time_length + 1 + cfg_look_prefix_align_max +
+            length_suffix + 1;
     else
-        return gui_chat_time_length + 1 + buffer->prefix_max_length + 2 + 1;
+        return gui_chat_time_length + 1 + buffer->prefix_max_length +
+            length_suffix + 1;
 }
 
 /*
