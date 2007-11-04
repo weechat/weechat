@@ -247,7 +247,8 @@ gui_chat_draw_title (struct t_gui_buffer *buffer, int erase)
 int
 gui_chat_get_real_width (struct t_gui_window *window)
 {
-    if (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_RIGHT)
+    if (window->buffer->nicklist
+        && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_RIGHT))
         return window->win_chat_width - 1;
     else
         return window->win_chat_width;
@@ -485,16 +486,16 @@ gui_chat_display_word (struct t_gui_window *window,
         {
             num_displayed = gui_chat_get_real_width (window) - window->win_chat_cursor_x;
             pos_saved_char = gui_chat_string_real_pos (data, num_displayed);
-            saved_char = data[pos_saved_char];
-            data[pos_saved_char] = '\0';
             if (!simulate)
             {
+                saved_char = data[pos_saved_char];
+                data[pos_saved_char] = '\0';
                 if ((count == 0) || (*lines_displayed >= num_lines - count))
                     gui_chat_display_word_raw (window, data, 1);
                 else
                     gui_chat_display_word_raw (window, data, 0);
+                data[pos_saved_char] = saved_char;
             }
-            data[pos_saved_char] = saved_char;
             data += pos_saved_char;
         }
         else

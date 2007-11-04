@@ -115,20 +115,23 @@ gui_chat_strlen_screen (char *string)
 int
 gui_chat_string_real_pos (char *string, int pos)
 {
-    char *real_pos;
+    char *ptr_string, *real_pos;
     
     if (pos <= 0)
         return 0;
     
     real_pos = string;
-    while (string && string[0] && (pos > 0))
+    ptr_string = string;
+    while (ptr_string && ptr_string[0] && (pos >= 0))
     {
-        string = gui_chat_string_next_char (NULL, (unsigned char *)string, 0);
-        if (string)
+        ptr_string = gui_chat_string_next_char (NULL,
+                                                (unsigned char *)ptr_string,
+                                                0);
+        if (ptr_string)
         {
-            pos -= utf8_char_size_screen (string);
-            string = utf8_next_char (string);
-            real_pos = string;
+            pos -= utf8_char_size_screen (ptr_string);
+            ptr_string = utf8_next_char (ptr_string);
+            real_pos = ptr_string;
         }
     }
     return 0 + (real_pos - string);
