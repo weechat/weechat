@@ -33,7 +33,7 @@ extern int plugin_api_strcasecmp (struct t_weechat_plugin *,char *, char *);
 extern int plugin_api_strncasecmp (struct t_weechat_plugin *,char *, char *,
                                    int);
 extern char **plugin_api_string_explode (struct t_weechat_plugin *, char *,
-                                         char *, int, int *);
+                                         char *, int, int, int *);
 extern void plugin_api_string_free_exploded (struct t_weechat_plugin *,
                                              char **);
 
@@ -54,7 +54,8 @@ extern void plugin_api_infobar_remove (struct t_weechat_plugin *, int);
 /* hooks */
 extern struct t_hook *plugin_api_hook_command (struct t_weechat_plugin *,
                                                char *, char *, char *, char *,
-                                               char *, int (*)(void *, char *),
+                                               char *,
+                                               int (*)(void *, int, char **, char **),
                                                void *);
 extern struct t_hook *plugin_api_hook_message (struct t_weechat_plugin *,
                                                char *, int (*)(void *, char *),

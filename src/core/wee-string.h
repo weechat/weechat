@@ -30,7 +30,7 @@ extern int string_strncasecmp (char *, char *, int);
 extern char *string_strcasestr (char *, char *);
 extern char *string_replace (char *, char *, char *);
 extern char *string_convert_hex_chars (char *);
-extern char **string_explode (char *, char *, int, int *);
+extern char **string_explode (char *, char *, int, int, int *);
 extern void string_free_exploded (char **);
 extern char **string_split_multi_command (char *, char);
 extern void string_free_multi_command (char **);

@@ -326,11 +326,22 @@ string_convert_hex_chars (char *string)
 
 /*
  * string_explode: explode a string according to separators
+ *                 examples:
+ *                   string_explode ("abc de  fghi", " ", 0, 0, NULL)
+ *                     ==> array[0] = "abc"
+ *                         array[1] = "de"
+ *                         array[2] = "fghi"
+ *                         array[3] = NULL
+ *                   string_explode ("abc de  fghi", " ", 1, 0, NULL)
+ *                     ==> array[0] = "abc de  fghi"
+ *                         array[1] = "de  fghi"
+ *                         array[2] = "fghi"
+ *                         array[3] = NULL
  */
 
 char **
-string_explode (char *string, char *separators, int num_items_max,
-                int *num_items)
+string_explode (char *string, char *separators, int keep_eol,
+                int num_items_max, int *num_items)
 {
     int i, n_items;
     char **array;
@@ -379,10 +390,15 @@ string_explode (char *string, char *separators, int num_items_max,
         {
             if (ptr2 - ptr1 > 0)
             {
-                array[i] =
-                    (char *) malloc ((ptr2 - ptr1 + 1) * sizeof (char));
-                array[i] = strncpy (array[i], ptr1, ptr2 - ptr1);
-                array[i][ptr2 - ptr1] = '\0';
+                if (keep_eol)
+                    array[i] = strdup (ptr1);
+                else
+                {
+                    array[i] =
+                        (char *) malloc ((ptr2 - ptr1 + 1) * sizeof (char));
+                    array[i] = strncpy (array[i], ptr1, ptr2 - ptr1);
+                    array[i][ptr2 - ptr1] = '\0';
+                }
                 ptr1 = ++ptr2;
             }
             else

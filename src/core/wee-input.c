@@ -73,6 +73,17 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
         pos[1] = '\0';
     }
     
+    rc = -1;
+    if (!only_builtin)
+    {
+        rc = hook_command_exec (buffer->plugin, command);
+        /*vars_replaced = alias_replace_vars (window, ptr_args);
+        rc = plugin_cmd_handler_exec (window->buffer->protocol, command + 1,
+                                      (vars_replaced) ? vars_replaced : ptr_args);
+        if (vars_replaced)
+            free (vars_replaced);*/
+    }
+    
     pos = strchr (command, ' ');
     if (pos)
     {
@@ -83,17 +94,6 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
         ptr_args = pos;
         if (!ptr_args[0])
             ptr_args = NULL;
-    }
-
-    rc = -1;
-    if (!only_builtin)
-    {
-        rc = hook_command_exec (buffer->plugin, command + 1, ptr_args);
-        /*vars_replaced = alias_replace_vars (window, ptr_args);
-        rc = plugin_cmd_handler_exec (window->buffer->protocol, command + 1,
-                                      (vars_replaced) ? vars_replaced : ptr_args);
-        if (vars_replaced)
-            free (vars_replaced);*/
     }
     
     switch (rc)
@@ -107,7 +107,7 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
         case 1: /* plugin handler OK, executed */
             break;
         default: /* plugin handler not found */
-            argv = string_explode (ptr_args, " ", 0, &argc);
+            argv = string_explode (ptr_args, " ", 0, 0, &argc);
             
             /* look for alias */
             if (!only_builtin)
@@ -380,7 +380,7 @@ input_data (struct t_gui_buffer *buffer, char *data, int only_builtin)
                 if ((ptr_data[0] == '/') && (ptr_data[1] == '/'))
                     ptr_data++;
 
-                hook_command_exec (buffer->plugin, "", ptr_data);
+                hook_command_exec (buffer->plugin, ptr_data);
                 
                 if (buffer->input_data_cb)
                 {

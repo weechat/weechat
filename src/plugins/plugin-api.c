@@ -160,17 +160,14 @@ plugin_api_strncasecmp (struct t_weechat_plugin *plugin,
 
 char **
 plugin_api_string_explode (struct t_weechat_plugin *plugin, char *string,
-                           char *separators, int num_items_max,
-                           int *num_items)
+                           char *separators, int keep_eol,
+                           int num_items_max, int *num_items)
 {
-    /* make C compiler happy */
-    (void) plugin;
-    
     if (!plugin || !string || !separators || !num_items)
         return NULL;
     
-    return string_explode (string, separators, num_items_max,
-                           num_items);
+    return string_explode (string, separators, keep_eol,
+                           num_items_max, num_items);
 }
 
 /*
@@ -371,7 +368,8 @@ struct t_hook *
 plugin_api_hook_command (struct t_weechat_plugin *plugin, char *command,
                          char *description, char *args,
                          char *args_desc, char *completion,
-                         int (*callback)(void *, char *), void *data)
+                         int (*callback)(void *, int, char **, char **),
+                         void *data)
 {
     if (plugin && callback)
         return hook_command (plugin, command, description, args,

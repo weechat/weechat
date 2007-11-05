@@ -55,7 +55,7 @@ demo_print_list (void *list, char *item_name)
         fields = weechat_list_fields (list);
         if (fields)
         {
-            argv = weechat_string_explode (fields, ",", 0, &argc);
+            argv = weechat_string_explode (fields, ",", 0, 0, &argc);
             if (argv && (argc > 0))
             {
                 for (j = 0; j < argc; j++)
@@ -119,14 +119,15 @@ demo_buffer_infos ()
  */
 
 static int
-demo_command (void *data, char *args)
+demo_command (void *data, int argc, char **argv, char **argv_eol)
 {
     /* make C compiler happy */
     (void) data;
-
-    if (args)
+    (void) argv_eol;
+    
+    if (argc > 1)
     {
-        if (weechat_strcasecmp (args, "buffer") == 0)
+        if (weechat_strcasecmp (argv[1], "buffer") == 0)
         {
             demo_buffer_infos ();
             return PLUGIN_RC_SUCCESS;

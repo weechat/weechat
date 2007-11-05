@@ -43,8 +43,6 @@ enum t_hook_type
 #define HOOK_TIMER(hook, var) (((struct t_hook_timer *)hook->hook_data)->var)
 #define HOOK_FD(hook, var) (((struct t_hook_fd *)hook->hook_data)->var)
 
-typedef int (t_hook_callback) (void *);
-
 struct t_hook
 {
     /* data common to all hooks */
@@ -61,7 +59,7 @@ struct t_hook
     struct t_hook *next_hook;          /* pointer to next hook              */
 };
 
-typedef int (t_hook_callback_command)(void *, char *);
+typedef int (t_hook_callback_command)(void *, int, char **, char **);
 
 struct t_hook_command
 {
@@ -120,7 +118,7 @@ extern struct t_hook *last_weechat_hook;
 extern int hook_valid_for_plugin (void *, struct t_hook *);
 extern struct t_hook *hook_command (void *, char *, char *, char *, char *,
                                     char *, t_hook_callback_command *, void *);
-extern int hook_command_exec (void *, char *, char *);
+extern int hook_command_exec (void *, char *);
 extern struct t_hook *hook_message (void *, char *, t_hook_callback_message *,
                                     void *);
 extern struct t_hook *hook_config (void *, char *, char *,

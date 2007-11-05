@@ -64,7 +64,7 @@ struct t_weechat_plugin
     int (*strcasecmp) (struct t_weechat_plugin *, char *, char *);
     int (*strncasecmp) (struct t_weechat_plugin *, char *, char *, int);
     char **(*string_explode) (struct t_weechat_plugin *, char *, char *, int,
-                              int *);
+                              int, int *);
     void (*string_free_exploded) (struct t_weechat_plugin *, char **);
     
     /* directories */
@@ -82,7 +82,8 @@ struct t_weechat_plugin
     /* hooks */
     struct t_hook *(*hook_command) (struct t_weechat_plugin *, char *, char *,
                                     char *, char *, char *,
-                                    int (*)(void *, char *),void *);
+                                    int (*)(void *, int, char **, char **),
+                                    void *);
     struct t_hook *(*hook_message) (struct t_weechat_plugin *, char *,
                                     int (*)(void *, char *), void *);
     struct t_hook *(*hook_config) (struct t_weechat_plugin *, char *, char *,
@@ -148,9 +149,10 @@ struct t_weechat_plugin
     weechat_plugin->strcasecmp(weechat_plugin, string1, string2)
 #define weechat_strncasecmp(string1, string2, max)                      \
     weechat_plugin->strncasecmp(weechat_plugin, string1, string2, max)
-#define weechat_string_explode(string1, separator, max, num_items)      \
+#define weechat_string_explode(string1, separator, eol, max,            \
+                               num_items)                               \
     weechat_plugin->string_explode(weechat_plugin, string1, separator,  \
-                                   max, num_items)
+                                   eol, max, num_items)
 #define weechat_string_free_exploded(array_str)                         \
     weechat_plugin->string_free_exploded(weechat_plugin, array_str)
 

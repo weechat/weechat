@@ -150,25 +150,44 @@ hook_command (void *plugin, char *command, char *description,
  */
 
 int
-hook_command_exec (void *plugin, char *command, char *args)
+hook_command_exec (void *plugin, char *string)
 {
     struct t_hook *ptr_hook;
+    char **argv, **argv_eol;
+    int argc;
+
+    if (!string || !string[0])
+        return -1;
+    
+    argv = string_explode (string, " ", 0, 0, &argc);
+    if (argc == 0)
+    {
+        if (argv)
+            string_free_exploded (argv);
+        return -1;
+    }
+    argv_eol = string_explode (string, " ", 1, 0, NULL);
     
     for (ptr_hook = weechat_hooks; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
         if ((ptr_hook->type == HOOK_TYPE_COMMAND)
             && (!plugin || (plugin == ptr_hook->plugin))
-            && (string_strcasecmp (command,
+            && (string_strcasecmp (argv[0] + 1,
                                    HOOK_COMMAND(ptr_hook, command)) == 0))
         {
             if ((int) (HOOK_COMMAND(ptr_hook, callback))
-                (ptr_hook->callback_data, args) == PLUGIN_RC_FAILED)
+                (ptr_hook->callback_data, argc, argv, argv_eol) == PLUGIN_RC_FAILED)
                 return 0;
             else
                 return 1;
         }
     }
+    
+    if (argv)
+        string_free_exploded (argv);
+    if (argv_eol)
+        string_free_exploded (argv_eol);
     
     /* no hook found */
     return -1;

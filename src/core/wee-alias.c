@@ -225,7 +225,7 @@ alias_replace_args (char *alias_args, char *user_args)
     char **argv, *start, *pos, *res;
     int argc, length_res, args_count;
     
-    argv = string_explode (user_args, " ", 0, &argc);
+    argv = string_explode (user_args, " ", 0, 0, &argc);
     
     res = NULL;
     length_res = 0;
