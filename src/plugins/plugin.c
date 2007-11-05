@@ -238,6 +238,7 @@ plugin_load (char *filename)
         new_plugin->exec_on_files = &plugin_api_exec_on_files;
         
         new_plugin->printf = &plugin_api_printf;
+        new_plugin->printf_date = &plugin_api_printf_date;
         new_plugin->prefix = &plugin_api_prefix;
         new_plugin->color = &plugin_api_color;
         new_plugin->print_infobar = &plugin_api_print_infobar;

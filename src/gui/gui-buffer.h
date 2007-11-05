@@ -40,7 +40,8 @@ enum t_gui_buffer_type
 
 struct t_gui_line
 {
-    time_t date;                       /* date/time of line                 */
+    time_t date;                       /* date/time of line (may be past)   */
+    time_t date_printed;               /* date/time when weechat print it   */
     char *str_time;                    /* time string (for display)         */
     char *prefix;                      /* prefix for line (may be NULL)     */
     int prefix_length;                 /* prefix length (on screen)         */

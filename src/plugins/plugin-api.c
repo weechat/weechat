@@ -261,6 +261,28 @@ plugin_api_printf (struct t_weechat_plugin *plugin,
 }
 
 /*
+ * plugin_api_printf_date: print a message on a buffer with a specific date
+ */
+
+void
+plugin_api_printf_date (struct t_weechat_plugin *plugin,
+                        void *buffer, time_t date, char *format, ...)
+{
+    va_list argptr;
+    char buf[8192];
+    
+    if (!plugin || !format
+        || !gui_buffer_valid ((struct t_gui_buffer *)buffer))
+        return;
+    
+    va_start (argptr, format);
+    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
+    va_end (argptr);
+    
+    gui_chat_printf_date ((struct t_gui_buffer *)buffer, date, buf);
+}
+
+/*
  * plugin_api_prefix: return a prefix for display with printf
  */
 
@@ -835,6 +857,8 @@ plugin_api_list_get_add_buffer_line (struct t_plugin_list *list,
     
     if (!plugin_list_new_var_time (ptr_item, "date", line->date))
         return 0;
+    if (!plugin_list_new_var_time (ptr_item, "date_printed", line->date))
+        return 0;
     if (!plugin_list_new_var_string (ptr_item, "str_time", line->str_time))
         return 0;
     if (!plugin_list_new_var_string (ptr_item, "prefix", line->prefix))
@@ -901,13 +925,14 @@ plugin_api_list_get (struct t_weechat_plugin *plugin, char *name,
     }
     else if (string_strcasecmp (name, "buffer_lines") == 0)
     {
-        /* buffer pointer is mandatory for this list */
         if (!pointer)
-            return NULL;
-
-        /* invalid buffer pointer ? */
-        if (!gui_buffer_valid ((struct t_gui_buffer *)pointer))
-            return NULL;
+            pointer = gui_buffers;
+        else
+        {
+            /* invalid buffer pointer ? */
+            if (!gui_buffer_valid ((struct t_gui_buffer *)pointer))
+                return NULL;
+        }
         
         ptr_list = plugin_list_new ();
         if (ptr_list)

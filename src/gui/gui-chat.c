@@ -399,8 +399,8 @@ gui_chat_line_free (struct t_gui_line *line)
  */
 
 void
-gui_chat_line_add (struct t_gui_buffer *buffer, time_t date, char *prefix,
-                   char *message)
+gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
+                   time_t date_printed, char *prefix, char *message)
 {
     struct t_gui_line *new_line, *ptr_line;
     
@@ -413,6 +413,7 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date, char *prefix,
     
     /* add new line */
     new_line->date = date;
+    new_line->date_printed = date_printed;
     new_line->str_time = (date == 0) ?
         NULL : gui_chat_get_time_string (date);
     new_line->prefix = (prefix) ?
@@ -446,14 +447,15 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date, char *prefix,
 }
 
 /*
- * gui_chat_printf: display a message in a buffer
+ * gui_chat_printf_date: display a message in a buffer
  */
 
 void
-gui_chat_printf (struct t_gui_buffer *buffer, char *message, ...)
+gui_chat_printf_date (struct t_gui_buffer *buffer, time_t date,
+                      char *message, ...)
 {
     static char buf[8192];
-    time_t date;
+    time_t date_printed;
     int display_time;
     char *pos, *pos_prefix, *pos_tab, *pos_end;
     va_list argptr;
@@ -476,7 +478,9 @@ gui_chat_printf (struct t_gui_buffer *buffer, char *message, ...)
     
     utf8_normalize (buf, '?');
     
-    date = time (NULL);
+    date_printed = time (NULL);
+    if (date <= 0)
+        date = date_printed;
     
     pos = buf;
     while (pos)
@@ -509,6 +513,7 @@ gui_chat_printf (struct t_gui_buffer *buffer, char *message, ...)
 
         if (gui_init_ok)
             gui_chat_line_add (buffer, (display_time) ? date : 0,
+                               (display_time) ? date_printed : 0,
                                pos_prefix, pos);
         else
         {

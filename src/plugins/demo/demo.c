@@ -30,6 +30,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <time.h>
 
 #include "../weechat-plugin.h"
 #include "demo.h"
@@ -47,6 +48,7 @@ demo_print_list (void *list, char *item_name)
 {
     char *fields, **argv;
     int i, j, argc;
+    time_t date;
     
     i = 1;
     while (weechat_list_next (list))
@@ -81,10 +83,10 @@ demo_print_list (void *list, char *item_name)
                                                                   argv[j] + 2));
                             break;
                         case 't':
-                            weechat_printf (NULL, "  %s: %ld",
+                            date = weechat_list_time (list, argv[j] + 2);
+                            weechat_printf (NULL, "  %s: (%ld) %s",
                                             argv[j] + 2,
-                                            weechat_list_time (list,
-                                                               argv[j] + 2));
+                                            date, ctime (&date));
                             break;
                     }
                 }
@@ -115,6 +117,23 @@ demo_buffer_infos ()
 }
 
 /*
+ * demo_buffer_lines: display buffer lines
+ */
+
+static void
+demo_buffer_lines ()
+{
+    struct t_plugin_list *list;
+    
+    list = weechat_list_get ("buffer_lines", NULL);
+    if (list)
+    {
+        demo_print_list (list, "buffer_line");
+        weechat_list_free (list);
+    }
+}
+
+/*
  * demo_command: demo command 
  */
 
@@ -130,6 +149,11 @@ demo_command (void *data, int argc, char **argv, char **argv_eol)
         if (weechat_strcasecmp (argv[1], "buffer") == 0)
         {
             demo_buffer_infos ();
+            return PLUGIN_RC_SUCCESS;
+        }
+        if (weechat_strcasecmp (argv[1], "buffer_lines") == 0)
+        {
+            demo_buffer_lines ();
             return PLUGIN_RC_SUCCESS;
         }
     }
@@ -153,7 +177,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_hook_command ("demo", "demo command", "[action]",
                           "action: one of following actions:\n"
                           "  buffer  display infos about buffers",
-                          "buffer", demo_command, NULL);
+                          "buffer|buffer_lines", demo_command, NULL);
     
     return PLUGIN_RC_SUCCESS;
 }

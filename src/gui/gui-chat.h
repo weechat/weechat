@@ -22,6 +22,9 @@
 
 #include "gui-buffer.h"
 
+#define gui_chat_printf(buffer, argz...)    \
+    gui_chat_printf_date(buffer, 0, ##argz) \
+
 enum t_gui_prefix
 {
     GUI_CHAT_PREFIX_INFO = 0,
@@ -49,7 +52,7 @@ extern int gui_chat_get_line_align (struct t_gui_buffer *,
                                     struct t_gui_line *, int);
 extern int gui_chat_line_search (struct t_gui_line *, char *, int);
 extern void gui_chat_line_free (struct t_gui_line *);
-extern void gui_chat_printf (struct t_gui_buffer *, char *, ...);
+extern void gui_chat_printf_date (struct t_gui_buffer *, time_t, char *, ...);
 extern void gui_chat_printf_raw_data (void *, int, int, char *);
 
 /* chat functions (GUI dependent) */

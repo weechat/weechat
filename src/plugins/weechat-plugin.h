@@ -74,6 +74,8 @@ struct t_weechat_plugin
     
     /* display */
     void (*printf) (struct t_weechat_plugin *, void *, char *, ...);
+    void (*printf_date) (struct t_weechat_plugin *, void *, time_t,
+                         char *, ...);
     char *(*prefix) (struct t_weechat_plugin *, char *);
     char *(*color) (struct t_weechat_plugin *, char *);
     void (*print_infobar) (struct t_weechat_plugin *, int, char *, ...);
@@ -158,6 +160,9 @@ struct t_weechat_plugin
 
 #define weechat_printf(buffer, argz...)                         \
     weechat_plugin->printf(weechat_plugin, buffer, ##argz)
+#define weechat_printf_date(buffer, datetime, argz...)                  \
+    weechat_plugin->printf_date(weechat_plugin, buffer, datetime,       \
+                                ##argz)
 #define weechat_prefix(prefix_name)                     \
     weechat_plugin->prefix(weechat_plugin, prefix_name)
 #define weechat_color(color_name)                       \
