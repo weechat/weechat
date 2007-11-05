@@ -100,46 +100,14 @@ demo_print_list (void *list, char *item_name)
 }
 
 /*
- * demo_buffer_infos: display buffer infos
- */
-
-static void
-demo_buffer_infos ()
-{
-    struct t_plugin_list *list;
-    
-    list = weechat_list_get ("buffer", NULL);
-    if (list)
-    {
-        demo_print_list (list, "buffer");
-        weechat_list_free (list);
-    }
-}
-
-/*
- * demo_buffer_lines: display buffer lines
- */
-
-static void
-demo_buffer_lines ()
-{
-    struct t_plugin_list *list;
-    
-    list = weechat_list_get ("buffer_lines", NULL);
-    if (list)
-    {
-        demo_print_list (list, "buffer_line");
-        weechat_list_free (list);
-    }
-}
-
-/*
- * demo_command: demo command 
+ * demo_list_command: demo command for list
  */
 
 static int
-demo_command (void *data, int argc, char **argv, char **argv_eol)
+demo_list_command (void *data, int argc, char **argv, char **argv_eol)
 {
+    struct t_plugin_list *list;
+    
     /* make C compiler happy */
     (void) data;
     (void) argv_eol;
@@ -148,20 +116,82 @@ demo_command (void *data, int argc, char **argv, char **argv_eol)
     {
         if (weechat_strcasecmp (argv[1], "buffer") == 0)
         {
-            demo_buffer_infos ();
+            list = weechat_list_get ("buffer", NULL);
+            if (list)
+            {
+                demo_print_list (list, "buffer");
+                weechat_list_free (list);
+            }
             return PLUGIN_RC_SUCCESS;
         }
         if (weechat_strcasecmp (argv[1], "buffer_lines") == 0)
         {
-            demo_buffer_lines ();
+            list = weechat_list_get ("buffer_lines", NULL);
+            if (list)
+            {
+                demo_print_list (list, "buffer_line");
+                weechat_list_free (list);
+            }
             return PLUGIN_RC_SUCCESS;
         }
     }
     
     weechat_printf (NULL,
-                    "Demo: missing argument for /demo command "
-                    "(try /help demo)");
+                    "Demo: missing argument for /demo_list command "
+                    "(try /help demo_list)");
     
+    return PLUGIN_RC_SUCCESS;
+}
+
+/*
+ * demo_printf_command: demo command for printf
+ */
+
+static int
+demo_printf_command (void *data, int argc, char **argv, char **argv_eol)
+{
+    (void) data;
+    (void) argc;
+    (void) argv;
+    (void) argv_eol;
+    
+    weechat_printf (NULL, "demo message without prefix");
+    weechat_printf (NULL, "%sdemo message with info prefix",
+                    weechat_prefix ("info"));
+    weechat_printf (NULL, "%sdemo message with error prefix",
+                    weechat_prefix ("error"));
+    weechat_printf (NULL,
+                    "colors: %s buffer %s server %s nick1 %s nick2 %s nick3",
+                    weechat_color ("col_chat_buffer"),
+                    weechat_color ("col_chat_server"),
+                    weechat_color ("col_chat_nick_color1"),
+                    weechat_color ("col_chat_nick_color2"),
+                    weechat_color ("col_chat_nick_color3"));
+
+    return PLUGIN_RC_SUCCESS;
+}
+
+/*
+ * demo_info_command: demo command for info_get
+ */
+
+static int
+demo_info_command (void *data, int argc, char **argv, char **argv_eol)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) argv_eol;
+    
+    if (argc > 1)
+        weechat_printf (NULL, "%sinfo \"%s\" = \"%s\"",
+                        weechat_prefix ("info"),
+                        argv[1],
+                        weechat_info_get (argv[1]));
+    else
+        weechat_printf (NULL,
+                        "Demo: missing argument for /demo_info command "
+                        "(try /help demo_info)");
+
     return PLUGIN_RC_SUCCESS;
 }
 
@@ -174,12 +204,27 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 {
     weechat_plugin = plugin;
 
-    weechat_hook_command ("demo", "demo command", "[action]",
-                          "action: one of following actions:\n"
-                          "  buffer  display infos about buffers",
-                          "buffer|buffer_lines", demo_command, NULL);
+    weechat_hook_command ("demo_list", "demo command: get and display list",
+                          "list",
+                          "list: list to display (values: buffer, "
+                          "buffer_lines)",
+                          "buffer|buffer_lines",
+                          demo_list_command, NULL);
 
-    weechat_buffer_new ("categ", "nam");
+    weechat_hook_command ("demo_printf", "demo command: print some messages",
+                          "", "", "",
+                          demo_printf_command, NULL);
+
+    weechat_hook_command ("demo_info", "demo command: get and display info",
+                          "info",
+                          "info: info to display (values: version, "
+                          "weechat_dir, weechat_libdir, weechar_sharedir, "
+                          "charset_terminal, charset_internal, inactivity, "
+                          "input, input_mask, input_pos)",
+                          "version|weechat_dir|weechat_libdir|"
+                          "weechar_sharedir|charset_terminal|charset_internal|"
+                          "inactivity|input|input_mask|input_pos",
+                          demo_info_command, NULL);
     
     return PLUGIN_RC_SUCCESS;
 }
