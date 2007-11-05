@@ -162,8 +162,7 @@ hook_command_exec (void *plugin, char *string)
     argv = string_explode (string, " ", 0, 0, &argc);
     if (argc == 0)
     {
-        if (argv)
-            string_free_exploded (argv);
+        string_free_exploded (argv);
         return -1;
     }
     argv_eol = string_explode (string, " ", 1, 0, NULL);
@@ -184,10 +183,8 @@ hook_command_exec (void *plugin, char *string)
         }
     }
     
-    if (argv)
-        string_free_exploded (argv);
-    if (argv_eol)
-        string_free_exploded (argv_eol);
+    string_free_exploded (argv);
+    string_free_exploded (argv_eol);
     
     /* no hook found */
     return -1;

@@ -70,7 +70,7 @@ gui_buffer_new (void *plugin, char *category, char *name)
     weechat_log_printf ("Creating new buffer\n");
 #endif
     
-    if (!name)
+    if (!category || !name)
         return NULL;
     
     /* create new buffer */
@@ -274,6 +274,27 @@ gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick)
     if (buffer->input_nick)
         free (buffer->input_nick);
     buffer->input_nick = (new_nick) ? strdup (new_nick) : NULL;
+}
+
+/*
+ * gui_buffer_search_main: get main buffer (weechat one, created at startup)
+ *                         return first buffer if not found
+ */
+
+struct t_gui_buffer *
+gui_buffer_search_main ()
+{
+    struct t_gui_buffer *ptr_buffer;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (!ptr_buffer->plugin)
+            return ptr_buffer;
+    }
+    
+    /* buffer not found, return first buffer by default */
+    return gui_buffers;
 }
 
 /*

@@ -29,6 +29,7 @@ extern int string_strcasecmp (char *, char *);
 extern int string_strncasecmp (char *, char *, int);
 extern char *string_strcasestr (char *, char *);
 extern char *string_replace (char *, char *, char *);
+extern char *string_remove_quotes (char *, char *);
 extern char *string_convert_hex_chars (char *);
 extern char **string_explode (char *, char *, int, int, int *);
 extern void string_free_exploded (char **);

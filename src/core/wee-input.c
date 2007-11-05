@@ -51,7 +51,7 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
 {
     int i, rc, argc, return_code, length1, length2;
     char *command, *pos, *ptr_args;
-    char **argv, *alias_command;
+    char **argv, **argv_eol, *alias_command;
     char **commands, **ptr_cmd, **ptr_next_cmd;
     char *args_replaced, *vars_replaced, *new_ptr_cmd;
     int some_args_replaced;
@@ -98,16 +98,17 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
     
     switch (rc)
     {
-        case 0: /* plugin handler KO */
+        case 0: /* command hooked, KO */
             gui_chat_printf (NULL,
                              _("%sError: command \"%s\" failed"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              command + 1);
             break;
-        case 1: /* plugin handler OK, executed */
+        case 1: /* command hooked, OK (executed) */
             break;
-        default: /* plugin handler not found */
+        default: /* no command hooked */
             argv = string_explode (ptr_args, " ", 0, 0, &argc);
+            argv_eol = string_explode (ptr_args, " ", 1, 0, NULL);
             
             /* look for alias */
             if (!only_builtin)
@@ -222,6 +223,7 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
                             }
                         }
                         string_free_exploded (argv);
+                        string_free_exploded (argv_eol);
                         free (command);
                         return 1;
                     }
@@ -277,7 +279,7 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
                                                                            (weechat_commands[i].conversion
                                                                            && cfg_irc_colors_send)) : NULL;*/
                         return_code = (int) (weechat_commands[i].cmd_function)
-                            (buffer, ptr_args, argc, argv);
+                            (buffer, argc, argv, argv_eol);
                         if (return_code < 0)
                         {
                             gui_chat_printf (NULL,
@@ -287,6 +289,7 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
                         }
                     }
                     string_free_exploded (argv);
+                    string_free_exploded (argv_eol);
                     free (command);
                     return 1;
                 }
@@ -328,6 +331,7 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
                              command + 1);
             
             string_free_exploded (argv);
+            string_free_exploded (argv_eol);
     }
     free (command);
     return 0;

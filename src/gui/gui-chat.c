@@ -463,7 +463,7 @@ gui_chat_printf_date (struct t_gui_buffer *buffer, time_t date,
     if (gui_init_ok)
     {
         if (buffer == NULL)
-            buffer = gui_buffers;
+            buffer = gui_buffer_search_main ();
         
         if (buffer->type == GUI_BUFFER_TYPE_FREE)
             buffer = gui_buffers;

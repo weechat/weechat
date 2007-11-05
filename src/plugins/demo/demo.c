@@ -178,6 +178,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           "action: one of following actions:\n"
                           "  buffer  display infos about buffers",
                           "buffer|buffer_lines", demo_command, NULL);
+
+    weechat_buffer_new ("categ", "nam");
     
     return PLUGIN_RC_SUCCESS;
 }

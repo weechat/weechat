@@ -298,10 +298,13 @@ config_option_section_option_search (char **config_sections,
     
     for (i = 0; config_sections[i]; i++)
     {
-        ptr_option = config_option_search (config_options[i],
-                                           option_name);
-        if (ptr_option)
-            return ptr_option;
+        if (config_options[i])
+        {
+            ptr_option = config_option_search (config_options[i],
+                                               option_name);
+            if (ptr_option)
+                return ptr_option;
+        }
     }
     
     /* option not found */

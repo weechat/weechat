@@ -151,6 +151,7 @@ extern void gui_buffer_set_log (struct t_gui_buffer *, char *);
 extern void gui_buffer_set_title (struct t_gui_buffer *, char *);
 extern void gui_buffer_set_nick_case_sensitive (struct t_gui_buffer *, int);
 extern void gui_buffer_set_nick (struct t_gui_buffer *, char *);
+extern struct t_gui_buffer *gui_buffer_search_main ();
 extern struct t_gui_buffer *gui_buffer_search_by_category_name (char *,
                                                                 char *);
 extern struct t_gui_buffer *gui_buffer_search_by_number (int);

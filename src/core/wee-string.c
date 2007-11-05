@@ -199,7 +199,7 @@ string_strcasestr (char *string, char *search)
 
 /*
  * string_replace: replace a string by new one in a string
- *                    note: returned value has to be free() after use
+ *                 note: returned value has to be free() after use
  */
 
 char *
@@ -251,6 +251,49 @@ string_replace (char *string, char *search, char *replace)
         string = pos;
     }
     return new_string;
+}
+
+/*
+ * string_remove_quotes: remove quotes at beginning/end of string
+ *                       (ignore spaces if there are before first quote or
+ *                        after last quote)
+ *                       note: returned value has to be free() after use
+ */
+
+char *
+string_remove_quotes (char *string, char *quotes)
+{
+    int length;
+    char *pos_start, *pos_end;
+    
+    if (!string || !quotes)
+        return NULL;
+
+    if (!string[0])
+        return strdup (string);
+
+    pos_start = string;
+    while (pos_start[0] == ' ')
+    {
+        pos_start++;
+    }
+    length = strlen (string);
+    pos_end = string + length - 1;
+    while ((pos_end[0] == ' ') && (pos_end > pos_start))
+    {
+        pos_end--;
+    }
+    if (!pos_start[0] || !pos_end[0] || (pos_end <= pos_start))
+        return strdup (string);
+    
+    if (strchr (quotes, pos_start[0]) && (pos_end[0] == pos_start[0]))
+    {
+        if (pos_end == (pos_start + 1))
+            return strdup ("");
+        return strndup (pos_start + 1, pos_end - pos_start - 1);
+    }
+    
+    return strdup (string);
 }
 
 /*
