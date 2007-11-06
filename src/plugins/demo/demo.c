@@ -218,11 +218,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_hook_command ("demo_info", "demo command: get and display info",
                           "info",
                           "info: info to display (values: version, "
-                          "weechat_dir, weechat_libdir, weechar_sharedir, "
+                          "weechat_dir, weechat_libdir, weechat_sharedir, "
                           "charset_terminal, charset_internal, inactivity, "
                           "input, input_mask, input_pos)",
                           "version|weechat_dir|weechat_libdir|"
-                          "weechar_sharedir|charset_terminal|charset_internal|"
+                          "weechat_sharedir|charset_terminal|charset_internal|"
                           "inactivity|input|input_mask|input_pos",
                           demo_info_command, NULL);
     
