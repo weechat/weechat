@@ -543,50 +543,8 @@ void
 plugin_api_buffer_set (struct t_weechat_plugin *plugin, void *buffer,
                        char *property, char *value)
 {
-    long number;
-    char *error;
-    
     if (plugin && buffer && property && property[0])
-    {
-        if (string_strcasecmp (property, "display") == 0)
-        {
-            gui_window_switch_to_buffer (gui_current_window,
-                                         (struct t_gui_buffer *)buffer);
-            gui_window_redraw_buffer ((struct t_gui_buffer *)buffer);
-        }
-        else if (string_strcasecmp (property, "category") == 0)
-        {
-            gui_buffer_set_category ((struct t_gui_buffer *)buffer, value);
-            gui_status_draw ((struct t_gui_buffer *)buffer, 0);
-        }
-        else if (string_strcasecmp (property, "name") == 0)
-        {
-            gui_buffer_set_name ((struct t_gui_buffer *)buffer, value);
-            gui_status_draw ((struct t_gui_buffer *)buffer, 0);
-        }
-        else if (string_strcasecmp (property, "log") == 0)
-        {
-            gui_buffer_set_log ((struct t_gui_buffer *)buffer, value);
-        }
-        else if (string_strcasecmp (property, "title") == 0)
-        {
-            gui_buffer_set_title ((struct t_gui_buffer *)buffer, value);
-            gui_chat_draw_title ((struct t_gui_buffer *)buffer, 0);
-        }
-        else if (string_strcasecmp (property, "nick_case_sensitive") == 0)
-        {
-            error = NULL;
-            number = strtol (value, &error, 10);
-            if (error && (error[0] == '\0'))
-                gui_buffer_set_nick_case_sensitive ((struct t_gui_buffer *)buffer,
-                                                    number);
-        }
-        else if (string_strcasecmp (property, "nick") == 0)
-        {
-            gui_buffer_set_nick ((struct t_gui_buffer *)buffer, value);
-            gui_input_draw ((struct t_gui_buffer *)buffer, 0);
-        }
-    }
+        gui_buffer_set ((struct t_gui_buffer *)buffer, property, value);
 }
 
 /*

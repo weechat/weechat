@@ -36,13 +36,16 @@
 #include "gui-completion.h"
 #include "gui-history.h"
 #include "gui-hotlist.h"
+#include "gui-input.h"
 #include "gui-main.h"
+#include "gui-nicklist.h"
 #include "gui-log.h"
 #include "gui-status.h"
 #include "gui-window.h"
 #include "../core/wee-command.h"
 #include "../core/wee-config.h"
 #include "../core/wee-log.h"
+#include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
 
@@ -207,9 +210,12 @@ gui_buffer_valid (struct t_gui_buffer *buffer)
 void
 gui_buffer_set_category (struct t_gui_buffer *buffer, char *category)
 {
-    if (buffer->category)
-        free (buffer->category);
-    buffer->category = (category) ? strdup (category) : NULL;
+    if (category && category[0])
+    {
+        if (buffer->category)
+            free (buffer->category);
+        buffer->category = strdup (category);
+    }
 }
 
 /*
@@ -219,9 +225,12 @@ gui_buffer_set_category (struct t_gui_buffer *buffer, char *category)
 void
 gui_buffer_set_name (struct t_gui_buffer *buffer, char *name)
 {
-    if (buffer->name)
-        free (buffer->name);
-    buffer->name = (name) ? strdup (name) : NULL;
+    if (name && name[0])
+    {
+        if (buffer->name)
+            free (buffer->name);
+        buffer->name = strdup (name);
+    }
 }
 
 /*
@@ -250,7 +259,17 @@ gui_buffer_set_title (struct t_gui_buffer *buffer, char *new_title)
 {
     if (buffer->title)
         free (buffer->title);
-    buffer->title = (new_title) ? strdup (new_title) : NULL;
+    buffer->title = (new_title && new_title[0]) ? strdup (new_title) : NULL;
+}
+
+/*
+ * gui_buffer_set_nicklist: set nicklist for a buffer
+ */
+
+void
+gui_buffer_set_nicklist (struct t_gui_buffer *buffer, int nicklist)
+{
+    buffer->nicklist = (nicklist) ? 1 : 0;
 }
 
 /*
@@ -273,7 +292,65 @@ gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick)
 {
     if (buffer->input_nick)
         free (buffer->input_nick);
-    buffer->input_nick = (new_nick) ? strdup (new_nick) : NULL;
+    buffer->input_nick = (new_nick && new_nick[0]) ? strdup (new_nick) : NULL;
+}
+
+/*
+ * gui_buffer_set: set a property for a buffer
+ */
+
+void
+gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
+{
+    long number;
+    char *error;
+    
+    if (string_strcasecmp (property, "display") == 0)
+    {
+        gui_window_switch_to_buffer (gui_current_window, buffer);
+        gui_window_redraw_buffer (buffer);
+    }
+    else if (string_strcasecmp (property, "category") == 0)
+    {
+        gui_buffer_set_category (buffer, value);
+        gui_status_draw (buffer, 1);
+    }
+    else if (string_strcasecmp (property, "name") == 0)
+    {
+        gui_buffer_set_name (buffer, value);
+        gui_status_draw (buffer, 1);
+    }
+    else if (string_strcasecmp (property, "log") == 0)
+    {
+        gui_buffer_set_log (buffer, value);
+    }
+    else if (string_strcasecmp (property, "title") == 0)
+    {
+        gui_buffer_set_title (buffer, value);
+        gui_chat_draw_title (buffer, 1);
+    }
+    else if (string_strcasecmp (property, "nicklist") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && (error[0] == '\0'))
+        {
+            gui_buffer_set_nicklist (buffer, number);
+            gui_window_refresh_windows ();
+        }
+    }
+    else if (string_strcasecmp (property, "nick_case_sensitive") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && (error[0] == '\0'))
+            gui_buffer_set_nick_case_sensitive (buffer, number);
+    }
+    else if (string_strcasecmp (property, "nick") == 0)
+    {
+        gui_buffer_set_nick (buffer, value);
+        gui_input_draw (buffer, 1);
+    }
 }
 
 /*

@@ -56,7 +56,9 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
         if ((ptr_win->buffer == buffer) && (buffer->num_displayed > 0))
         {
             max_length = gui_nicklist_get_max_length (buffer);
-            if (max_length != buffer->nick_max_length)
+            if ((max_length != buffer->nick_max_length)
+                || (buffer->nicklist && !GUI_CURSES(ptr_win)->win_nick)
+                || (!buffer->nicklist && GUI_CURSES(ptr_win)->win_nick))
             {
                 buffer->nick_max_length = max_length;
                 if (gui_window_calculate_pos_size (ptr_win, 0))

@@ -200,7 +200,7 @@ gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
         return 0;
     
     /* init chat & nicklist settings */
-    if (cfg_look_nicklist && window->buffer->nicklist)
+    if (window->buffer->nicklist)
     {
         max_length = gui_nicklist_get_max_length (window->buffer);
         

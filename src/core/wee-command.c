@@ -90,7 +90,7 @@ struct command weechat_commands[] =
        " scroll 15 min down: /buffer scroll +15m\n"
        "  scroll 20 msgs up: /buffer scroll -20\n"
        "   jump to #weechat: /buffer #weechat"),
-    "move|close|list|notify|scroll|%S|%C %S|%C",
+    "move|close|list|notify|scroll|set|%S|%C %S|%C",
     0, MAX_ARGS, 0, command_buffer },
   { "builtin",
     N_("launch WeeChat builtin command (do not look at commands hooked or "
@@ -443,66 +443,6 @@ command_alias (struct t_gui_buffer *buffer,
 }
 
 /*
- * command_buffer_display_info: display info about a buffer
- */
-
-void
-command_buffer_display_info (struct t_gui_buffer *buffer)
-{
-    /* TODO: write again this function */
-    (void) buffer;
-/*    switch (buffer->type)
-    {
-        case GUI_BUFFER_TYPE_STANDARD:
-            if (GUI_BUFFER_IS_SERVER(buffer))
-            {
-                if (GUI_SERVER(buffer))
-                    gui_chat_printf (NULL, _("%sServer: %s%s"),
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     GUI_COLOR(GUI_COLOR_WIN_CHAT_SERVER),
-                                     GUI_SERVER(buffer)->name);
-                else
-                    gui_chat_printf (NULL, _("%snot connected"),
-                                     GUI_COLOR(GUI_COLOR_CHAT));
-            }
-            else if (GUI_BUFFER_IS_CHANNEL (buffer))
-                gui_chat_printf (NULL, _("%sChannel: %s%s %s(server: %s%s%s)"),
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                 GUI_CHANNEL(buffer)->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 GUI_COLOR(GUI_COLOR_WIN_CHAT_SERVER),
-                                 GUI_SERVER(buffer)->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT));
-            else if (GUI_BUFFER_IS_PRIVATE (buffer))
-                gui_chat_printf (NULL, _("%sPrivate with: %s%s %s(server: %s%s%s)"),
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                 GUI_CHANNEL(buffer)->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 GUI_COLOR(GUI_COLOR_WIN_CHAT_SERVER),
-                                 GUI_SERVER(buffer)->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT));
-            else
-                gui_chat_printf (NULL, _("%sunknown"),
-                                 GUI_COLOR(GUI_COLOR_CHAT));
-            break;
-        case GUI_BUFFER_TYPE_DCC:
-            gui_chat_printf (NULL, "%sDCC",
-                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER));
-            break;
-        case GUI_BUFFER_TYPE_RAW_DATA:
-            gui_chat_printf (NULL, _("%sraw IRC data"),
-                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER));
-            break;
-        default:
-            gui_chat_printf (NULL, _("%sunknown"),
-                             GUI_COLOR(GUI_COLOR_CHAT));
-            break;
-    }*/
-}
-
-/*
  * command_buffer: manage buffers
  */
 
@@ -512,11 +452,8 @@ command_buffer (struct t_gui_buffer *buffer,
 {
     struct t_gui_buffer *ptr_buffer;
     long number;
-    char *error;
+    char *error ,*value;
     int target_buffer;
-
-    /* make C compiler happy */
-    (void) argv_eol;
     
     if ((argc == 0)
         || ((argc == 1) && (string_strcasecmp (argv[0], "list") == 0)))
@@ -541,7 +478,6 @@ command_buffer (struct t_gui_buffer *buffer,
                              "weechat",
                              ptr_buffer->category,
                              ptr_buffer->name);
-            command_buffer_display_info (ptr_buffer);
         }
     }
     else
@@ -668,6 +604,24 @@ command_buffer (struct t_gui_buffer *buffer,
                     return -1;
                 }
             }
+        }
+        else if (string_strcasecmp (argv[0], "set") == 0)
+        {
+            /* set a property on buffer */
+            
+            if (argc < 3)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: missing arguments for \"%s\" "
+                                   "command"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 "buffer");
+                return -1;
+            }
+            value = string_remove_quotes (argv_eol[2], "'\"");
+            gui_buffer_set (buffer, argv[1], (value) ? value : argv_eol[2]);
+            if (value)
+                free (value);
         }
         else
         {
@@ -2149,9 +2103,6 @@ command_window (struct t_gui_buffer *buffer,
                              ptr_win->win_width,
                              ptr_win->win_height,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-            
-            command_buffer_display_info (ptr_win->buffer);
-            
             i++;
         }
     }
