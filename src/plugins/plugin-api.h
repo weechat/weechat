@@ -59,9 +59,10 @@ extern struct t_hook *plugin_api_hook_command (struct t_weechat_plugin *,
                                                char *,
                                                int (*)(void *, int, char **, char **),
                                                void *);
-extern struct t_hook *plugin_api_hook_message (struct t_weechat_plugin *,
-                                               char *, int (*)(void *, char *),
-                                               void *);
+extern struct t_hook *plugin_api_hook_print (struct t_weechat_plugin *,
+                                             void *, char *,
+                                             int (*)(void *, void *, time_t, char *, char *),
+                                             void *);
 extern struct t_hook *plugin_api_hook_config (struct t_weechat_plugin *,
                                               char *, char *,
                                               int (*)(void *, char *, char *, char *),

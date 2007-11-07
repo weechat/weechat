@@ -74,6 +74,28 @@ hook_init (struct t_hook *hook, void *plugin, int type, void *callback_data)
 }
 
 /*
+ * hook_valid: check if a hook pointer exists
+ *                   return 1 if hook exists
+ *                          0 if hook is not found
+ */
+
+int
+hook_valid (struct t_hook *hook)
+{
+    struct t_hook *ptr_hook;
+    
+    for (ptr_hook = weechat_hooks; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
+    {
+        if (ptr_hook == hook)
+            return 1;
+    }
+    
+    /* hook not found */
+    return 0;
+}
+
+/*
  * hook_valid_for_plugin: check if a hook pointer exists for a plugin
  *                        return 1 if hook exists for plugin
  *                               0 if hook is not found for plugin
@@ -152,9 +174,9 @@ hook_command (void *plugin, char *command, char *description,
 int
 hook_command_exec (void *plugin, char *string)
 {
-    struct t_hook *ptr_hook;
+    struct t_hook *ptr_hook, *next_hook;
     char **argv, **argv_eol;
-    int argc;
+    int argc, rc;
 
     if (!string || !string[0])
         return -1;
@@ -166,21 +188,30 @@ hook_command_exec (void *plugin, char *string)
         return -1;
     }
     argv_eol = string_explode (string, " ", 1, 0, NULL);
-    
-    for (ptr_hook = weechat_hooks; ptr_hook;
-         ptr_hook = ptr_hook->next_hook)
+
+    ptr_hook = weechat_hooks;
+    while (ptr_hook)
     {
+        next_hook = ptr_hook->next_hook;
+        
         if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+            && (!ptr_hook->running)
             && (!plugin || (plugin == ptr_hook->plugin))
             && (string_strcasecmp (argv[0] + 1,
                                    HOOK_COMMAND(ptr_hook, command)) == 0))
         {
-            if ((int) (HOOK_COMMAND(ptr_hook, callback))
-                (ptr_hook->callback_data, argc, argv, argv_eol) == PLUGIN_RC_FAILED)
+            ptr_hook->running = 1;
+            rc = (int) (HOOK_COMMAND(ptr_hook, callback))
+                (ptr_hook->callback_data, argc, argv, argv_eol);
+            if (hook_valid (ptr_hook))
+                ptr_hook->running = 0;
+            if (rc == PLUGIN_RC_FAILED)
                 return 0;
             else
                 return 1;
         }
+        
+        ptr_hook = next_hook;
     }
     
     string_free_exploded (argv);
@@ -191,35 +222,70 @@ hook_command_exec (void *plugin, char *string)
 }
 
 /*
- * hook_message: hook a message
+ * hook_print: hook a message printed by WeeChat
  */
 
 struct t_hook *
-hook_message (void *plugin, char *message,
-              t_hook_callback_message *callback, void *callback_data)
+hook_print (void *plugin, void *buffer, char *message,
+            t_hook_callback_print *callback, void *callback_data)
 {
     struct t_hook *new_hook;
-    struct t_hook_message *new_hook_message;
+    struct t_hook_print *new_hook_print;
     
     new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
     if (!new_hook)
         return NULL;
-    new_hook_message = (struct t_hook_message *)malloc (sizeof (struct t_hook_message));
-    if (!new_hook_message)
+    new_hook_print = (struct t_hook_print *)malloc (sizeof (struct t_hook_print));
+    if (!new_hook_print)
     {
         free (new_hook);
         return NULL;
     }
     
-    hook_init (new_hook, plugin, HOOK_TYPE_MESSAGE, callback_data);
-
-    new_hook->hook_data = new_hook_message;
-    new_hook_message->callback = callback;
-    new_hook_message->message = (message) ? strdup (message) : strdup ("");
+    hook_init (new_hook, plugin, HOOK_TYPE_PRINT, callback_data);
+    
+    new_hook->hook_data = new_hook_print;
+    new_hook_print->callback = callback;
+    new_hook_print->buffer = (struct t_gui_buffer *)buffer;
+    new_hook_print->message = (message) ? strdup (message) : NULL;
     
     hook_add_to_list (new_hook);
     
     return new_hook;
+}
+
+/*
+ * hook_print_exec: execute print hook
+ */
+
+void
+hook_print_exec (void *buffer, time_t date, char *prefix, char *message)
+{
+    struct t_hook *ptr_hook, *next_hook;
+    
+    if (!message || !message[0])
+        return;
+    
+    ptr_hook = weechat_hooks;
+    while (ptr_hook)
+    {
+        next_hook = ptr_hook->next_hook;
+        
+        if ((ptr_hook->type == HOOK_TYPE_PRINT)
+            && (!ptr_hook->running)
+            && (!HOOK_PRINT(ptr_hook, buffer)
+                || ((struct t_gui_buffer *)buffer == HOOK_PRINT(ptr_hook, buffer)))
+            && (string_strcasestr (message, HOOK_PRINT(ptr_hook, message))))
+        {
+            ptr_hook->running = 1;
+            (void) (HOOK_PRINT(ptr_hook, callback))
+                (ptr_hook->callback_data, buffer, date, prefix, message);
+            if (hook_valid (ptr_hook))
+                ptr_hook->running = 0;
+        }
+        
+        ptr_hook = next_hook;
+    }
 }
 
 /*
@@ -270,6 +336,7 @@ hook_config_exec (char *type, char *option, char *value)
         next_hook = ptr_hook->next_hook;
         
         if ((ptr_hook->type == HOOK_TYPE_CONFIG)
+            && (!ptr_hook->running)
             && (!HOOK_CONFIG(ptr_hook, type)
                 || (string_strcasecmp (HOOK_CONFIG(ptr_hook, type),
                                        type) == 0))
@@ -277,8 +344,11 @@ hook_config_exec (char *type, char *option, char *value)
                 || (string_strcasecmp (HOOK_CONFIG(ptr_hook, option),
                                        option) == 0)))
         {
+            ptr_hook->running = 1;
             (void) (HOOK_CONFIG(ptr_hook, callback))
                 (ptr_hook->callback_data, type, option, value);
+            if (hook_valid (ptr_hook))
+                ptr_hook->running = 0;
         }
         
         ptr_hook = next_hook;
@@ -334,14 +404,18 @@ hook_timer_exec (struct timeval *tv_time)
     {
         next_hook = ptr_hook->next_hook;
         
-        if (ptr_hook->type == HOOK_TYPE_TIMER)
+        if ((ptr_hook->type == HOOK_TYPE_TIMER)
+            && (!ptr_hook->running))
         {
             time_diff = util_get_timeval_diff (&HOOK_TIMER(ptr_hook, last_exec),
                                                tv_time);
             if (time_diff >= HOOK_TIMER(ptr_hook, interval))
             {
+                ptr_hook->running = 1;
                 (void) (HOOK_TIMER(ptr_hook, callback))
                     (ptr_hook->callback_data);
+                if (hook_valid (ptr_hook))
+                    ptr_hook->running = 0;
                 HOOK_TIMER(ptr_hook, last_exec).tv_sec = tv_time->tv_sec;
                 HOOK_TIMER(ptr_hook, last_exec).tv_usec = tv_time->tv_usec;
                 if (HOOK_TIMER(ptr_hook, remaining_calls) > 0)
@@ -457,13 +531,19 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *except_fds)
         next_hook = ptr_hook->next_hook;
         
         if ((ptr_hook->type == HOOK_TYPE_FD)
+            && (!ptr_hook->running)
             && (((HOOK_FD(ptr_hook, flags)& HOOK_FD_FLAG_READ)
                  && (FD_ISSET(HOOK_FD(ptr_hook, fd), read_fds)))
                 || ((HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_WRITE)
                     && (FD_ISSET(HOOK_FD(ptr_hook, fd), write_fds)))
                 || ((HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_EXCEPTION)
                     && (FD_ISSET(HOOK_FD(ptr_hook, fd), except_fds)))))
+        {
+            ptr_hook->running = 1;
             (HOOK_FD(ptr_hook, callback)) (ptr_hook->callback_data);
+            if (hook_valid (ptr_hook))
+                ptr_hook->running = 0;
+        }
         
         ptr_hook = next_hook;
     }
@@ -499,10 +579,10 @@ unhook (struct t_hook *hook)
                     free (HOOK_COMMAND(hook, completion));
                 free ((struct t_hook_command *)hook->hook_data);
                 break;
-            case HOOK_TYPE_MESSAGE:
-                if (HOOK_MESSAGE(hook, message))
-                    free (HOOK_MESSAGE(hook, message));
-                free ((struct t_hook_message *)hook->hook_data);
+            case HOOK_TYPE_PRINT:
+                if (HOOK_PRINT(hook, message))
+                    free (HOOK_PRINT(hook, message));
+                free ((struct t_hook_print *)hook->hook_data);
                 break;
             case HOOK_TYPE_CONFIG:
                 if (HOOK_CONFIG(hook, type))
@@ -601,9 +681,10 @@ hook_print_log ()
                 weechat_log_printf ("    command_args_desc. . : '%s'\n", HOOK_COMMAND(ptr_hook, args_description));
                 weechat_log_printf ("    command_completion . : '%s'\n", HOOK_COMMAND(ptr_hook, completion));
                 break;
-            case HOOK_TYPE_MESSAGE:
-                weechat_log_printf ("  message data:\n");
-                weechat_log_printf ("    message. . . . . . . : '%s'\n", HOOK_MESSAGE(ptr_hook, message));
+            case HOOK_TYPE_PRINT:
+                weechat_log_printf ("  print data:\n");
+                weechat_log_printf ("    buffer . . . . . . . : 0x%X\n", HOOK_PRINT(ptr_hook, buffer));
+                weechat_log_printf ("    message. . . . . . . : '%s'\n", HOOK_PRINT(ptr_hook, message));
                 break;
             case HOOK_TYPE_CONFIG:
                 weechat_log_printf ("  config data:\n");

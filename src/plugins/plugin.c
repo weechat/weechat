@@ -245,7 +245,7 @@ plugin_load (char *filename)
         new_plugin->infobar_remove = &plugin_api_infobar_remove;
         
         new_plugin->hook_command = &plugin_api_hook_command;
-        new_plugin->hook_message = &plugin_api_hook_message;
+        new_plugin->hook_print = &plugin_api_hook_print;
         new_plugin->hook_config = &plugin_api_hook_config;
         new_plugin->hook_timer = &plugin_api_hook_timer;
         new_plugin->hook_fd = &plugin_api_hook_fd;

@@ -30,6 +30,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hook.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
@@ -454,11 +455,12 @@ void
 gui_chat_printf_date (struct t_gui_buffer *buffer, time_t date,
                       char *message, ...)
 {
-    static char buf[8192];
+    char buf[8192];
     time_t date_printed;
     int display_time;
     char *pos, *pos_prefix, *pos_tab, *pos_end;
     va_list argptr;
+    struct t_gui_line *ptr_line;
     
     if (gui_init_ok)
     {
@@ -481,6 +483,8 @@ gui_chat_printf_date (struct t_gui_buffer *buffer, time_t date,
     date_printed = time (NULL);
     if (date <= 0)
         date = date_printed;
+
+    ptr_line = buffer->last_line;
     
     pos = buf;
     while (pos)
@@ -512,9 +516,15 @@ gui_chat_printf_date (struct t_gui_buffer *buffer, time_t date,
             pos_end[0] = '\0';
 
         if (gui_init_ok)
+        {
             gui_chat_line_add (buffer, (display_time) ? date : 0,
                                (display_time) ? date_printed : 0,
                                pos_prefix, pos);
+            if (buffer->last_line)
+                hook_print_exec (buffer, buffer->last_line->date,
+                                 buffer->last_line->prefix,
+                                 buffer->last_line->message);
+        }
         else
         {
             if (pos_prefix)

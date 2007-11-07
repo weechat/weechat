@@ -40,6 +40,44 @@ static struct t_weechat_plugin *weechat_plugin = NULL;
 
 
 /*
+ * demo_printf_command: demo command for printf
+ */
+
+static int
+demo_printf_command (void *data, int argc, char **argv, char **argv_eol)
+{
+    (void) data;
+    (void) argc;
+    (void) argv;
+    (void) argv_eol;
+
+    if (argc > 1)
+        weechat_printf (weechat_current_buffer,
+                        "demo_printf: %s", argv_eol[1]);
+    else
+    {
+        weechat_printf (weechat_current_buffer,
+                        "demo message without prefix");
+        weechat_printf (weechat_current_buffer,
+                        "%sdemo message with info prefix",
+                        weechat_prefix ("info"));
+        weechat_printf (weechat_current_buffer,
+                        "%sdemo message with error prefix",
+                        weechat_prefix ("error"));
+        weechat_printf (weechat_current_buffer,
+                        "colors: %s buffer %s nick1 %s nick2 %s nick3 "
+                        "%s nick4",
+                        weechat_color ("col_chat_buffer"),
+                        weechat_color ("col_chat_nick_color1"),
+                        weechat_color ("col_chat_nick_color2"),
+                        weechat_color ("col_chat_nick_color3"),
+                        weechat_color ("col_chat_nick_color4"));
+    }
+    
+    return PLUGIN_RC_SUCCESS;
+}
+
+/*
  * demo_print_list: display a list
  */
 
@@ -144,34 +182,6 @@ demo_list_command (void *data, int argc, char **argv, char **argv_eol)
 }
 
 /*
- * demo_printf_command: demo command for printf
- */
-
-static int
-demo_printf_command (void *data, int argc, char **argv, char **argv_eol)
-{
-    (void) data;
-    (void) argc;
-    (void) argv;
-    (void) argv_eol;
-    
-    weechat_printf (NULL, "demo message without prefix");
-    weechat_printf (NULL, "%sdemo message with info prefix",
-                    weechat_prefix ("info"));
-    weechat_printf (NULL, "%sdemo message with error prefix",
-                    weechat_prefix ("error"));
-    weechat_printf (NULL,
-                    "colors: %s buffer %s server %s nick1 %s nick2 %s nick3",
-                    weechat_color ("col_chat_buffer"),
-                    weechat_color ("col_chat_server"),
-                    weechat_color ("col_chat_nick_color1"),
-                    weechat_color ("col_chat_nick_color2"),
-                    weechat_color ("col_chat_nick_color3"));
-
-    return PLUGIN_RC_SUCCESS;
-}
-
-/*
  * demo_info_command: demo command for info_get
  */
 
@@ -203,18 +213,19 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin)
 {
     weechat_plugin = plugin;
-
+    
+    weechat_hook_command ("demo_printf", "demo command: print some messages",
+                          "[text]", "text: write some text on current buffer",
+                          "",
+                          demo_printf_command, NULL);
+    
     weechat_hook_command ("demo_list", "demo command: get and display list",
                           "list",
                           "list: list to display (values: buffer, "
                           "buffer_lines)",
                           "buffer|buffer_lines",
                           demo_list_command, NULL);
-
-    weechat_hook_command ("demo_printf", "demo command: print some messages",
-                          "", "", "",
-                          demo_printf_command, NULL);
-
+    
     weechat_hook_command ("demo_info", "demo command: get and display info",
                           "info",
                           "info: info to display (values: version, "

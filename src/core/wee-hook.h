@@ -25,10 +25,9 @@
 enum t_hook_type
 {
     HOOK_TYPE_COMMAND = 0,             /* new command                       */
-    HOOK_TYPE_MESSAGE,                 /* message                           */
+    HOOK_TYPE_PRINT,                   /* printed messages                  */
     HOOK_TYPE_CONFIG,                  /* config option                     */
-    HOOK_TYPE_TIMER,                   /* timer (called each N milliseconds)*/
-                                       /* (precision is about 20 msec)      */
+    HOOK_TYPE_TIMER,                   /* timer                             */
     HOOK_TYPE_FD,                      /* socket of file descriptor         */
     HOOK_TYPE_KEYBOARD,                /* keyboard handler                  */
 };
@@ -38,7 +37,7 @@ enum t_hook_type
 #define HOOK_FD_FLAG_EXCEPTION  4
 
 #define HOOK_COMMAND(hook, var) (((struct t_hook_command *)hook->hook_data)->var)
-#define HOOK_MESSAGE(hook, var) (((struct t_hook_message *)hook->hook_data)->var)
+#define HOOK_PRINT(hook, var) (((struct t_hook_print *)hook->hook_data)->var)
 #define HOOK_CONFIG(hook, var) (((struct t_hook_config *)hook->hook_data)->var)
 #define HOOK_TIMER(hook, var) (((struct t_hook_timer *)hook->hook_data)->var)
 #define HOOK_FD(hook, var) (((struct t_hook_fd *)hook->hook_data)->var)
@@ -71,19 +70,20 @@ struct t_hook_command
     char *completion;                  /* template for completion           */
 };
 
-typedef int (t_hook_callback_message)(void *, char *);
+typedef int (t_hook_callback_print)(void *, void *, time_t, char *, char *);
 
-struct t_hook_message
+struct t_hook_print
 {
-    t_hook_callback_message *callback; /* message callback                  */
-    char *message;                     /* message for hook                  */
+    t_hook_callback_print *callback;   /* print callback                    */
+    struct t_gui_buffer *buffer;       /* buffer selected (NULL = all)      */
+    char *message;                     /* part of message (NULL/empty = all)*/
 };
 
 typedef int (t_hook_callback_config)(void *, char *, char *, char *);
 
 struct t_hook_config
 {
-    t_hook_callback_config *callback;  /* message callback                  */
+    t_hook_callback_config *callback;  /* config callback                   */
     char *type;                        /* "weechat" or "plugin"             */
     char *option;                      /* config option for hook            */
                                        /* (NULL = hook for all options)     */
@@ -115,12 +115,14 @@ extern struct t_hook *last_weechat_hook;
 
 /* hook functions */
 
+extern int hook_valid (struct t_hook *);
 extern int hook_valid_for_plugin (void *, struct t_hook *);
 extern struct t_hook *hook_command (void *, char *, char *, char *, char *,
                                     char *, t_hook_callback_command *, void *);
 extern int hook_command_exec (void *, char *);
-extern struct t_hook *hook_message (void *, char *, t_hook_callback_message *,
-                                    void *);
+extern struct t_hook *hook_print (void *, void *, char *,
+                                  t_hook_callback_print *, void *);
+extern void hook_print_exec (void *, time_t, char *, char *);
 extern struct t_hook *hook_config (void *, char *, char *,
                                    t_hook_callback_config *, void *);
 extern void hook_config_exec (char *, char *, char *);

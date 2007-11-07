@@ -86,8 +86,9 @@ struct t_weechat_plugin
                                     char *, char *, char *,
                                     int (*)(void *, int, char **, char **),
                                     void *);
-    struct t_hook *(*hook_message) (struct t_weechat_plugin *, char *,
-                                    int (*)(void *, char *), void *);
+    struct t_hook *(*hook_print) (struct t_weechat_plugin *, void *, char *,
+                                  int (*)(void *, void *, time_t, char *, char *),
+                                  void *);
     struct t_hook *(*hook_config) (struct t_weechat_plugin *, char *, char *,
                                    int (*)(void *, char *, char *, char *),
                                    void *);
@@ -173,8 +174,9 @@ struct t_weechat_plugin
     weechat_plugin->hook_command(weechat_plugin, command, description,  \
                                  args, args_desc, completion, callback, \
                                  data)
-#define weechat_hook_message(msg, callback, data)                       \
-    weechat_plugin->hook_message(weechat_plugin, msg, callback, data)
+#define weechat_hook_print(buffer, msg, callback, data)                 \
+    weechat_plugin->hook_print(weechat_plugin, buffer, msg,             \
+                               callback, data)
 #define weechat_hook_config(type, option, callback, data)               \
     weechat_plugin->hook_config(weechat_plugin, type, option,           \
                                 callback, data)
@@ -194,6 +196,8 @@ struct t_weechat_plugin
     weechat_plugin->buffer_new(weechat_plugin, category, name)
 #define weechat_buffer_search(category, name)                           \
     weechat_plugin->buffer_search(weechat_plugin, category, name)
+#define weechat_current_buffer                                  \
+    weechat_plugin->buffer_search(weechat_plugin, NULL, NULL)
 #define weechat_buffer_close(ptr_buffer)                        \
     weechat_plugin->buffer_close(weechat_plugin, ptr_buffer)
 #define weechat_buffer_set(ptr_buffer, property, value)                 \

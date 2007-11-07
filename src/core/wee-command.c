@@ -1268,28 +1268,37 @@ command_plugin_list (char *name, int full)
                         hook_found = 1;
                         gui_chat_printf (NULL,
                                          "       /%s %s%s%s",
-                                         ((struct t_hook_command *)ptr_hook->hook_data)->command,
-                                         (((struct t_hook_command *)ptr_hook->hook_data)->description) ? "(" : "",
-                                         (((struct t_hook_command *)ptr_hook->hook_data)->description) ?
-                                         ((struct t_hook_command *)ptr_hook->hook_data)->description : "",
-                                         (((struct t_hook_command *)ptr_hook->hook_data)->description) ? ")" : "");
+                                         HOOK_COMMAND(ptr_hook, command),
+                                         HOOK_COMMAND(ptr_hook, description) ? "(" : "",
+                                         HOOK_COMMAND(ptr_hook, description) ?
+                                         HOOK_COMMAND(ptr_hook, description) : "",
+                                         HOOK_COMMAND(ptr_hook, description) ? ")" : "");
                     }
                 }
                 
-                /* messages hooked */
+                /* prints hooked */
                 hook_found = 0;
                 for (ptr_hook = weechat_hooks; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
                 {
                     if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_MESSAGE))
+                        && (ptr_hook->type == HOOK_TYPE_PRINT))
                     {
                         if (!hook_found)
-                            gui_chat_printf (NULL, _("     messages hooked:"));
+                            gui_chat_printf (NULL, _("     prints hooked:"));
                         hook_found = 1;
-                        gui_chat_printf (NULL,
-                                         "       %s",
-                                         ((struct t_hook_message *)ptr_hook->hook_data)->message);
+                        if (HOOK_PRINT(ptr_hook, buffer))
+                            gui_chat_printf (NULL,
+                                             _("       buffer: %s / %s, message: \"%s\""),
+                                             HOOK_PRINT(ptr_hook, buffer)->category,
+                                             HOOK_PRINT(ptr_hook, buffer)->name,
+                                             HOOK_PRINT(ptr_hook, message) ?
+                                             HOOK_PRINT(ptr_hook, message) : _("(none)"));
+                        else
+                            gui_chat_printf (NULL,
+                                             _("       message: \"%s\""),
+                                             HOOK_PRINT(ptr_hook, message) ?
+                                             HOOK_PRINT(ptr_hook, message) : _("(none)"));
                     }
                 }
                 
@@ -1299,7 +1308,7 @@ command_plugin_list (char *name, int full)
                      ptr_hook = ptr_hook->next_hook)
                 {
                     if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_MESSAGE))
+                        && (ptr_hook->type == HOOK_TYPE_CONFIG))
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL,
@@ -1308,11 +1317,10 @@ command_plugin_list (char *name, int full)
                         hook_found = 1;
                         gui_chat_printf (NULL,
                                          "       (%s) %s",
-                                         ((struct t_hook_config *)ptr_hook->hook_data)->type ?
-                                         ((struct t_hook_config *)ptr_hook->hook_data)->type : "*",
-                                         ((struct t_hook_config *)ptr_hook->hook_data)->option ?
-                                         ((struct t_hook_config *)ptr_hook->hook_data)->option : "*");
-
+                                         HOOK_CONFIG(ptr_hook, type) ?
+                                         HOOK_CONFIG(ptr_hook, type) : "*",
+                                         HOOK_CONFIG(ptr_hook, option) ?
+                                         HOOK_CONFIG(ptr_hook, option) : "*");
                     }
                 }
                 
@@ -1327,28 +1335,28 @@ command_plugin_list (char *name, int full)
                         if (!hook_found)
                             gui_chat_printf (NULL, _("     timers hooked:"));
                         hook_found = 1;
-                        interval = (((struct t_hook_timer *)ptr_hook->hook_data)->interval % 1000 == 0) ?
-                            ((struct t_hook_timer *)ptr_hook->hook_data)->interval / 1000 :
-                            ((struct t_hook_timer *)ptr_hook->hook_data)->interval;
-                        if (((struct t_hook_timer *)ptr_hook->hook_data)->remaining_calls > 0)
+                        interval = (HOOK_TIMER(ptr_hook, interval) % 1000 == 0) ?
+                            HOOK_TIMER(ptr_hook, interval) / 1000 :
+                            HOOK_TIMER(ptr_hook, interval);
+                        if (HOOK_TIMER(ptr_hook, remaining_calls) > 0)
                             gui_chat_printf (NULL,
                                              _("       %d %s "
                                                "(%d calls remaining)"),
                                              interval,
-                                             (((struct t_hook_timer *)ptr_hook->hook_data)->interval % 1000 == 0) ?
+                                             (HOOK_TIMER(ptr_hook, interval) % 1000 == 0) ?
                                              ((interval > 1) ?
                                               _("seconds") :
                                               _("second")) :
                                              ((interval > 1) ?
                                               _("milliseconds") :
                                               _("millisecond")),
-                                             ((struct t_hook_timer *)ptr_hook->hook_data)->remaining_calls);
+                                             HOOK_TIMER(ptr_hook, remaining_calls));
                         else
                             gui_chat_printf (NULL,
                                              _("       %d %s "
                                                "(no call limit)"),
                                              interval,
-                                             (((struct t_hook_timer *)ptr_hook->hook_data)->interval % 1000 == 0) ?
+                                             (HOOK_TIMER(ptr_hook, interval) % 1000 == 0) ?
                                              ((interval > 1) ?
                                               _("seconds") :
                                               _("second")) :
@@ -1357,14 +1365,14 @@ command_plugin_list (char *name, int full)
                                               _("millisecond")));
                     }
                 }
-
+                
                 /* fd hooked */
                 hook_found = 0;
                 for (ptr_hook = weechat_hooks; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
                 {
                     if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_MESSAGE))
+                        && (ptr_hook->type == HOOK_TYPE_FD))
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL,
@@ -1372,8 +1380,8 @@ command_plugin_list (char *name, int full)
                         hook_found = 1;
                         gui_chat_printf (NULL,
                                          _("       %d (flags: %d)"),
-                                         ((struct t_hook_fd *)ptr_hook->hook_data)->fd,
-                                         ((struct t_hook_fd *)ptr_hook->hook_data)->flags);
+                                         HOOK_FD(ptr_hook, fd),
+                                         HOOK_FD(ptr_hook, flags));
                     }
                 }
                 

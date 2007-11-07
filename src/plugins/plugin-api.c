@@ -402,15 +402,18 @@ plugin_api_hook_command (struct t_weechat_plugin *plugin, char *command,
 }
 
 /*
- * plugin_api_hook_message: hook a message
+ * plugin_api_hook_print: hook a printed message
  */
 
 struct t_hook *
-plugin_api_hook_message (struct t_weechat_plugin *plugin, char *message,
-                         int (*callback)(void *, char *), void *data)
+plugin_api_hook_print (struct t_weechat_plugin *plugin, void *buffer,
+                       char *message,
+                       int (*callback)(void *, void *, time_t, char *, char *),
+                       void *data)
 {
-    if (plugin && callback)
-        return hook_message (plugin, message, callback, data);
+    if (plugin && gui_buffer_valid ((struct t_gui_buffer *)buffer)
+        && callback)
+        return hook_print (plugin, buffer, message, callback, data);
     
     return NULL;
 }
