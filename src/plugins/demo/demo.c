@@ -40,17 +40,15 @@ static struct t_weechat_plugin *weechat_plugin = NULL;
 
 
 /*
- * demo_printf_command: demo command for printf
+ * demo_printf_command_cb: demo command for printf
  */
 
 static int
-demo_printf_command (void *data, int argc, char **argv, char **argv_eol)
+demo_printf_command_cb (void *data, int argc, char **argv, char **argv_eol)
 {
     (void) data;
-    (void) argc;
     (void) argv;
-    (void) argv_eol;
-
+    
     if (argc > 1)
         weechat_printf (weechat_current_buffer,
                         "demo_printf: %s", argv_eol[1]);
@@ -72,6 +70,28 @@ demo_printf_command (void *data, int argc, char **argv, char **argv_eol)
                         weechat_color ("col_chat_nick_color2"),
                         weechat_color ("col_chat_nick_color3"),
                         weechat_color ("col_chat_nick_color4"));
+    }
+    
+    return PLUGIN_RC_SUCCESS;
+}
+
+/*
+ * demo_buffer_command_cb: demo command for creatig new buffer
+ */
+
+static int
+demo_buffer_command_cb (void *data, int argc, char **argv, char **argv_eol)
+{
+    struct t_gui_buffer *buffer;
+    
+    (void) data;
+    (void) argv_eol;
+    
+    if (argc > 2)
+    {
+        buffer = weechat_buffer_new (argv[1], argv[2]);
+        if (buffer)
+            weechat_buffer_set (buffer, "display", "1");
     }
     
     return PLUGIN_RC_SUCCESS;
@@ -138,11 +158,11 @@ demo_print_list (void *list, char *item_name)
 }
 
 /*
- * demo_list_command: demo command for list
+ * demo_list_command_cb: demo command for list
  */
 
 static int
-demo_list_command (void *data, int argc, char **argv, char **argv_eol)
+demo_list_command_cb (void *data, int argc, char **argv, char **argv_eol)
 {
     struct t_plugin_list *list;
     
@@ -182,11 +202,11 @@ demo_list_command (void *data, int argc, char **argv, char **argv_eol)
 }
 
 /*
- * demo_info_command: demo command for info_get
+ * demo_info_command_cb: demo command for info_get
  */
 
 static int
-demo_info_command (void *data, int argc, char **argv, char **argv_eol)
+demo_info_command_cb (void *data, int argc, char **argv, char **argv_eol)
 {
     /* make C compiler happy */
     (void) data;
@@ -206,6 +226,21 @@ demo_info_command (void *data, int argc, char **argv, char **argv_eol)
 }
 
 /*
+ * demo_event_cb: callback for event hook
+ */
+
+static int
+demo_event_cb (void *data, char *event, void *pointer)
+{
+    (void) data;
+    
+    weechat_printf (NULL, "demo_event: event: %s, pointer: %X",
+                    event, pointer);
+    
+    return PLUGIN_RC_SUCCESS;
+}
+
+/*
  * weechat_plugin_init: init demo plugin
  */
 
@@ -217,14 +252,19 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_hook_command ("demo_printf", "demo command: print some messages",
                           "[text]", "text: write some text on current buffer",
                           "",
-                          demo_printf_command, NULL);
+                          demo_printf_command_cb, NULL);
+
+    weechat_hook_command ("demo_buffer", "open a new buffer",
+                          "category name", "",
+                          "",
+                          demo_buffer_command_cb, NULL);
     
     weechat_hook_command ("demo_list", "demo command: get and display list",
                           "list",
                           "list: list to display (values: buffer, "
                           "buffer_lines)",
                           "buffer|buffer_lines",
-                          demo_list_command, NULL);
+                          demo_list_command_cb, NULL);
     
     weechat_hook_command ("demo_info", "demo command: get and display info",
                           "info",
@@ -235,7 +275,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           "version|weechat_dir|weechat_libdir|"
                           "weechat_sharedir|charset_terminal|charset_internal|"
                           "inactivity|input|input_mask|input_pos",
-                          demo_info_command, NULL);
+                          demo_info_command_cb, NULL);
+
+    weechat_hook_event ("*", demo_event_cb, NULL);
     
     return PLUGIN_RC_SUCCESS;
 }

@@ -295,11 +295,11 @@ fifo_read ()
 }
 
 /*
- * fifo_config: fifo config callback (called when fifo option is changed)
+ * fifo_config_cb: fifo config callback (called when fifo option is changed)
  */
 
 static int
-fifo_config (void *data, char *type, char *option, char *value)
+fifo_config_cb (void *data, char *type, char *option, char *value)
 {
     /* make C compiler happy */
     (void) data;
@@ -333,7 +333,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0, fifo_read, NULL);
     
-    weechat_hook_config ("plugin", "fifo.fifo", fifo_config, NULL);
+    weechat_hook_config ("plugin", "fifo.fifo", fifo_config_cb, NULL);
     
     return PLUGIN_RC_SUCCESS;
 }

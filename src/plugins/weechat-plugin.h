@@ -63,6 +63,7 @@ struct t_weechat_plugin
     char *(*ngettext) (struct t_weechat_plugin *, char *, char *, int);
     int (*strcasecmp) (struct t_weechat_plugin *, char *, char *);
     int (*strncasecmp) (struct t_weechat_plugin *, char *, char *, int);
+    char *(*string_replace) (struct t_weechat_plugin *, char *, char *, char *);
     char **(*string_explode) (struct t_weechat_plugin *, char *, char *, int,
                               int, int *);
     void (*string_free_exploded) (struct t_weechat_plugin *, char **);
@@ -86,16 +87,19 @@ struct t_weechat_plugin
                                     char *, char *, char *,
                                     int (*)(void *, int, char **, char **),
                                     void *);
-    struct t_hook *(*hook_print) (struct t_weechat_plugin *, void *, char *,
-                                  int (*)(void *, void *, time_t, char *, char *),
-                                  void *);
-    struct t_hook *(*hook_config) (struct t_weechat_plugin *, char *, char *,
-                                   int (*)(void *, char *, char *, char *),
-                                   void *);
     struct t_hook *(*hook_timer) (struct t_weechat_plugin *, long, int,
                                   int (*)(void *), void *);
     struct t_hook *(*hook_fd) (struct t_weechat_plugin *, int, int, int, int,
                                int (*)(void *), void *);
+    struct t_hook *(*hook_print) (struct t_weechat_plugin *, void *, char *,
+                                  int,
+                                  int (*)(void *, void *, time_t, char *, char *),
+                                  void *);
+    struct t_hook *(*hook_event) (struct t_weechat_plugin *, char *,
+                                  int (*)(void *, char *, void *), void *);
+    struct t_hook *(*hook_config) (struct t_weechat_plugin *, char *, char *,
+                                   int (*)(void *, char *, char *, char *),
+                                   void *);
     void (*unhook) (struct t_weechat_plugin *, void *);
     void (*unhook_all) (struct t_weechat_plugin *);
     
@@ -142,6 +146,12 @@ struct t_weechat_plugin
 
 /* macros for easy call to plugin API */
 
+#define weechat_charset_set(chset, string)              \
+    weechat_plugin->charset_set(weechat_plugin, string)
+#define weechat_iconv_to_internal(chset, string)                        \
+    weechat_plugin->iconv_to_internal(weechat_plugin, chset, string)
+#define weechat_iconv_from_internal(chset, string)                      \
+    weechat_plugin->iconv_from_internal(weechat_plugin, chset, string)
 #ifndef __WEECHAT_H
 #define _(string) weechat_plugin->gettext(weechat_plugin, string)
 #define N_(string) (string)
@@ -152,6 +162,9 @@ struct t_weechat_plugin
     weechat_plugin->strcasecmp(weechat_plugin, string1, string2)
 #define weechat_strncasecmp(string1, string2, max)                      \
     weechat_plugin->strncasecmp(weechat_plugin, string1, string2, max)
+#define weechat_string_replace(string1, search1, replace1)              \
+    weechat_plugin->string_replace(weechat_plugin, string1, search1,    \
+                                  replace1)
 #define weechat_string_explode(string1, separator, eol, max,            \
                                num_items)                               \
     weechat_plugin->string_explode(weechat_plugin, string1, separator,  \
@@ -174,12 +187,6 @@ struct t_weechat_plugin
     weechat_plugin->hook_command(weechat_plugin, command, description,  \
                                  args, args_desc, completion, callback, \
                                  data)
-#define weechat_hook_print(buffer, msg, callback, data)                 \
-    weechat_plugin->hook_print(weechat_plugin, buffer, msg,             \
-                               callback, data)
-#define weechat_hook_config(type, option, callback, data)               \
-    weechat_plugin->hook_config(weechat_plugin, type, option,           \
-                                callback, data)
 #define weechat_hook_timer(interval, max_calls, callback, data)         \
     weechat_plugin->hook_timer(weechat_plugin, interval, max_calls,     \
                                callback, data)
@@ -187,6 +194,14 @@ struct t_weechat_plugin
                         callback, data)                                 \
     weechat_plugin->hook_fd(weechat_plugin, fd, flag_read, flag_write,  \
                             flag_exception, callback, data)
+#define weechat_hook_print(buffer, msg, strip_colors, callback, data)   \
+    weechat_plugin->hook_print(weechat_plugin, buffer, msg,             \
+                               strip_colors, callback, data)
+#define weechat_hook_event(evnt, callback, data)                        \
+    weechat_plugin->hook_event(weechat_plugin, evnt, callback, data)
+#define weechat_hook_config(type, option, callback, data)               \
+    weechat_plugin->hook_config(weechat_plugin, type, option,           \
+                                callback, data)
 #define weechat_unhook(hook)                            \
     weechat_plugin->unhook(weechat_plugin, hook)
 #define weechat_unhook_all()                    \

@@ -41,7 +41,9 @@
 #include "wee-list.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-history.h"
+#include "../gui/gui-input.h"
 #include "../gui/gui-keyboard.h"
+#include "../gui/gui-status.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
 #include "../plugins/plugin-config.h"
@@ -519,6 +521,20 @@ command_buffer (struct t_gui_buffer *buffer,
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                 return -1;
             }
+        }
+        else if (string_strcasecmp (argv[0], "close") == 0)
+        {
+            if (!buffer->plugin)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: WeeChat main buffer can't be "
+                                   "closed"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                return -1;
+            }
+            gui_buffer_free (buffer, 1);
+            gui_status_draw (gui_current_window->buffer, 1);
+            gui_input_draw (gui_current_window->buffer, 1);
         }
         else if (string_strcasecmp (argv[0], "notify") == 0)
         {
@@ -1276,54 +1292,6 @@ command_plugin_list (char *name, int full)
                     }
                 }
                 
-                /* prints hooked */
-                hook_found = 0;
-                for (ptr_hook = weechat_hooks; ptr_hook;
-                     ptr_hook = ptr_hook->next_hook)
-                {
-                    if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_PRINT))
-                    {
-                        if (!hook_found)
-                            gui_chat_printf (NULL, _("     prints hooked:"));
-                        hook_found = 1;
-                        if (HOOK_PRINT(ptr_hook, buffer))
-                            gui_chat_printf (NULL,
-                                             _("       buffer: %s / %s, message: \"%s\""),
-                                             HOOK_PRINT(ptr_hook, buffer)->category,
-                                             HOOK_PRINT(ptr_hook, buffer)->name,
-                                             HOOK_PRINT(ptr_hook, message) ?
-                                             HOOK_PRINT(ptr_hook, message) : _("(none)"));
-                        else
-                            gui_chat_printf (NULL,
-                                             _("       message: \"%s\""),
-                                             HOOK_PRINT(ptr_hook, message) ?
-                                             HOOK_PRINT(ptr_hook, message) : _("(none)"));
-                    }
-                }
-                
-                /* config options hooked */
-                hook_found = 0;
-                for (ptr_hook = weechat_hooks; ptr_hook;
-                     ptr_hook = ptr_hook->next_hook)
-                {
-                    if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_CONFIG))
-                    {
-                        if (!hook_found)
-                            gui_chat_printf (NULL,
-                                             _("     configuration otions "
-                                               "hooked:"));
-                        hook_found = 1;
-                        gui_chat_printf (NULL,
-                                         "       (%s) %s",
-                                         HOOK_CONFIG(ptr_hook, type) ?
-                                         HOOK_CONFIG(ptr_hook, type) : "*",
-                                         HOOK_CONFIG(ptr_hook, option) ?
-                                         HOOK_CONFIG(ptr_hook, option) : "*");
-                    }
-                }
-                
                 /* timers hooked */
                 hook_found = 0;
                 for (ptr_hook = weechat_hooks; ptr_hook;
@@ -1385,18 +1353,71 @@ command_plugin_list (char *name, int full)
                     }
                 }
                 
-                /* keyboards hooked */
+                /* prints hooked */
                 hook_found = 0;
                 for (ptr_hook = weechat_hooks; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
                 {
                     if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_KEYBOARD))
-                        hook_found++;
+                        && (ptr_hook->type == HOOK_TYPE_PRINT))
+                    {
+                        if (!hook_found)
+                            gui_chat_printf (NULL, _("     prints hooked:"));
+                        hook_found = 1;
+                        if (HOOK_PRINT(ptr_hook, buffer))
+                            gui_chat_printf (NULL,
+                                             _("       buffer: %s / %s, message: \"%s\""),
+                                             HOOK_PRINT(ptr_hook, buffer)->category,
+                                             HOOK_PRINT(ptr_hook, buffer)->name,
+                                             HOOK_PRINT(ptr_hook, message) ?
+                                             HOOK_PRINT(ptr_hook, message) : _("(none)"));
+                        else
+                            gui_chat_printf (NULL,
+                                             _("       message: \"%s\""),
+                                             HOOK_PRINT(ptr_hook, message) ?
+                                             HOOK_PRINT(ptr_hook, message) : _("(none)"));
+                    }
                 }
-                if (hook_found)
-                    gui_chat_printf (NULL, _("     %d keyboards hooked"),
-                                     hook_found);
+                
+                /* events hooked */
+                hook_found = 0;
+                for (ptr_hook = weechat_hooks; ptr_hook;
+                     ptr_hook = ptr_hook->next_hook)
+                {
+                    if ((ptr_hook->plugin == ptr_plugin)
+                        && (ptr_hook->type == HOOK_TYPE_EVENT))
+                    {
+                        if (!hook_found)
+                            gui_chat_printf (NULL, _("     events hooked:"));
+                        hook_found = 1;
+                        gui_chat_printf (NULL,
+                                         _("       event: %s"),
+                                         HOOK_EVENT(ptr_hook, event) ?
+                                         HOOK_EVENT(ptr_hook, event) : _("(all)"));
+                    }
+                }
+                
+                /* config options hooked */
+                hook_found = 0;
+                for (ptr_hook = weechat_hooks; ptr_hook;
+                     ptr_hook = ptr_hook->next_hook)
+                {
+                    if ((ptr_hook->plugin == ptr_plugin)
+                        && (ptr_hook->type == HOOK_TYPE_CONFIG))
+                    {
+                        if (!hook_found)
+                            gui_chat_printf (NULL,
+                                             _("     configuration otions "
+                                               "hooked:"));
+                        hook_found = 1;
+                        gui_chat_printf (NULL,
+                                         "       (%s) %s",
+                                         HOOK_CONFIG(ptr_hook, type) ?
+                                         HOOK_CONFIG(ptr_hook, type) : "*",
+                                         HOOK_CONFIG(ptr_hook, option) ?
+                                         HOOK_CONFIG(ptr_hook, option) : "*");
+                    }
+                }
             }
         }
     }

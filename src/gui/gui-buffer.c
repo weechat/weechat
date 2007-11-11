@@ -44,6 +44,7 @@
 #include "gui-window.h"
 #include "../core/wee-command.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hook.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
@@ -67,7 +68,6 @@ gui_buffer_new (void *plugin, char *category, char *name)
 {
     struct t_gui_buffer *new_buffer;
     struct t_gui_completion *new_completion;
-    char buffer_str[16], *argv[1] = { NULL };
     
 #ifdef DEBUG
     weechat_log_printf ("Creating new buffer\n");
@@ -75,6 +75,16 @@ gui_buffer_new (void *plugin, char *category, char *name)
     
     if (!category || !name)
         return NULL;
+    
+    if (gui_buffer_search_by_category_name (category, name))
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: a buffer with same name already exists "
+                           "(%s / %s)"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         category, name);
+        return NULL;
+    }
     
     /* create new buffer */
     if ((new_buffer = (struct t_gui_buffer *)(malloc (sizeof (struct t_gui_buffer)))))
@@ -166,10 +176,7 @@ gui_buffer_new (void *plugin, char *category, char *name)
             gui_window_redraw_buffer (new_buffer);
         }
         
-        snprintf (buffer_str, sizeof (buffer_str) - 1, "%d", new_buffer->number);
-        argv[0] = buffer_str;
-        /* TODO: send buffer_open event */
-        /*(void) plugin_event_handler_exec ("buffer_open", 1, argv);*/
+        (void) hook_event_exec ("buffer_open", new_buffer);
     }
     else
         return NULL;
@@ -384,15 +391,15 @@ gui_buffer_search_by_category_name (char *category, char *name)
     struct t_gui_buffer *ptr_buffer;
     
     if (!category && !name)
-        return gui_current_window->buffer;
+        return NULL;
     
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        if ((category && ptr_buffer->category
-             && strcmp (ptr_buffer->category, category) == 0)
-            || (name && ptr_buffer->name
-                && strcmp (ptr_buffer->name, name) == 0))
+        if ((!category || (ptr_buffer->category
+                           && (strcmp (ptr_buffer->category, category) == 0)))
+            && (!name || (ptr_buffer->name
+                          && (strcmp (ptr_buffer->name, name) == 0))))
             return ptr_buffer;
     }
     
@@ -576,12 +583,8 @@ gui_buffer_free (struct t_gui_buffer *buffer, int switch_to_another)
     struct t_gui_window *ptr_window;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
-    char buffer_str[16], *argv[1] = { NULL };
     
-    snprintf (buffer_str, sizeof (buffer_str) - 1, "%d", buffer->number);
-    argv[0] = buffer_str;
-    /* TODO: send buffer_close event */
-    /*(void) plugin_event_handler_exec ("buffer_close", 1, argv);*/
+    (void) hook_event_exec ("buffer_close", buffer);
     
     if (switch_to_another)
     {

@@ -231,6 +231,7 @@ plugin_load (char *filename)
         new_plugin->ngettext = &plugin_api_ngettext;
         new_plugin->strcasecmp = &plugin_api_strcasecmp;
         new_plugin->strncasecmp = &plugin_api_strncasecmp;
+        new_plugin->string_replace = &plugin_api_string_replace;
         new_plugin->string_explode = &plugin_api_string_explode;
         new_plugin->string_free_exploded = &plugin_api_string_free_exploded;
         
@@ -245,10 +246,11 @@ plugin_load (char *filename)
         new_plugin->infobar_remove = &plugin_api_infobar_remove;
         
         new_plugin->hook_command = &plugin_api_hook_command;
-        new_plugin->hook_print = &plugin_api_hook_print;
-        new_plugin->hook_config = &plugin_api_hook_config;
         new_plugin->hook_timer = &plugin_api_hook_timer;
         new_plugin->hook_fd = &plugin_api_hook_fd;
+        new_plugin->hook_print = &plugin_api_hook_print;
+        new_plugin->hook_event = &plugin_api_hook_event;
+        new_plugin->hook_config = &plugin_api_hook_config;
         new_plugin->unhook = &plugin_api_unhook;
         new_plugin->unhook_all = &plugin_api_unhook_all;
         
@@ -289,11 +291,6 @@ plugin_load (char *filename)
             weechat_plugins = new_plugin;
         last_weechat_plugin = new_plugin;
         
-        gui_chat_printf (NULL,
-                         _("%sInitializing plugin \"%s\" %s\n"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
-                         new_plugin->name, new_plugin->version);
-        
         /* init plugin */
         if (((t_weechat_init_func *)init_func) (new_plugin) < 0)
         {
@@ -319,9 +316,9 @@ plugin_load (char *filename)
     }
     
     gui_chat_printf (NULL,
-                     _("%sPlugin \"%s\" (%s) loaded.\n"),
+                     _("%sPlugin \"%s\" %s loaded.\n"),
                      gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
-                     name, full_name);
+                     name, new_plugin->version);
     
     free (full_name);
     

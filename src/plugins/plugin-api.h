@@ -32,6 +32,8 @@ extern char *plugin_api_ngettext (struct t_weechat_plugin *, char *, char *,
 extern int plugin_api_strcasecmp (struct t_weechat_plugin *,char *, char *);
 extern int plugin_api_strncasecmp (struct t_weechat_plugin *,char *, char *,
                                    int);
+extern char *plugin_api_string_replace (struct t_weechat_plugin *,char *,
+                                        char *, char *);
 extern char **plugin_api_string_explode (struct t_weechat_plugin *, char *,
                                          char *, int, int, int *);
 extern void plugin_api_string_free_exploded (struct t_weechat_plugin *,
@@ -59,20 +61,23 @@ extern struct t_hook *plugin_api_hook_command (struct t_weechat_plugin *,
                                                char *,
                                                int (*)(void *, int, char **, char **),
                                                void *);
-extern struct t_hook *plugin_api_hook_print (struct t_weechat_plugin *,
-                                             void *, char *,
-                                             int (*)(void *, void *, time_t, char *, char *),
-                                             void *);
-extern struct t_hook *plugin_api_hook_config (struct t_weechat_plugin *,
-                                              char *, char *,
-                                              int (*)(void *, char *, char *, char *),
-                                              void *);
 extern struct t_hook *plugin_api_hook_timer (struct t_weechat_plugin *,
                                              long, int,
                                              int (*)(void *), void *);
 extern struct t_hook *plugin_api_hook_fd (struct t_weechat_plugin *,
                                           int, int, int, int,
                                           int (*)(void *), void *);
+extern struct t_hook *plugin_api_hook_print (struct t_weechat_plugin *,
+                                             void *, char *, int,
+                                             int (*)(void *, void *, time_t, char *, char *),
+                                             void *);
+extern struct t_hook *plugin_api_hook_event (struct t_weechat_plugin *, char *,
+                                             int (*)(void *, char *, void *),
+                                             void *);
+extern struct t_hook *plugin_api_hook_config (struct t_weechat_plugin *,
+                                              char *, char *,
+                                              int (*)(void *, char *, char *, char *),
+                                              void *);
 extern void plugin_api_unhook (struct t_weechat_plugin *, void *);
 extern void plugin_api_unhook_all (struct t_weechat_plugin *);
 

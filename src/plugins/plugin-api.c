@@ -155,6 +155,20 @@ plugin_api_strncasecmp (struct t_weechat_plugin *plugin,
 }
 
 /*
+ * plugin_api_string_replace: replace a string by new one in a string
+ */
+
+char *
+plugin_api_string_replace (struct t_weechat_plugin *plugin,
+                           char *string, char *search, char *replace)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return string_replace (string, search, replace);
+}
+
+/*
  * plugin_api_string_explode: explode a string
  */
 
@@ -402,40 +416,6 @@ plugin_api_hook_command (struct t_weechat_plugin *plugin, char *command,
 }
 
 /*
- * plugin_api_hook_print: hook a printed message
- */
-
-struct t_hook *
-plugin_api_hook_print (struct t_weechat_plugin *plugin, void *buffer,
-                       char *message,
-                       int (*callback)(void *, void *, time_t, char *, char *),
-                       void *data)
-{
-    if (plugin && gui_buffer_valid ((struct t_gui_buffer *)buffer)
-        && callback)
-        return hook_print (plugin, buffer, message, callback, data);
-    
-    return NULL;
-}
-
-/*
- * plugin_api_hook_config: hook a config option
- */
-
-struct t_hook *
-plugin_api_hook_config (struct t_weechat_plugin *plugin, char *config_type,
-                        char *config_option,
-                        int (*callback)(void *, char *, char *, char *),
-                        void *data)
-{
-    if (plugin && callback)
-        return hook_config (plugin, config_type, config_option,
-                            callback, data);
-    
-    return NULL;
-}
-
-/*
  * plugin_api_hook_timer: hook a timer
  */
 
@@ -471,6 +451,56 @@ plugin_api_hook_fd (struct t_weechat_plugin *plugin, int fd,
             flags |= HOOK_FD_FLAG_EXCEPTION;
         return hook_fd (plugin, fd, flags, callback, data);
     }
+    
+    return NULL;
+}
+
+/*
+ * plugin_api_hook_print: hook a printed message
+ */
+
+struct t_hook *
+plugin_api_hook_print (struct t_weechat_plugin *plugin, void *buffer,
+                       char *message, int strip_colors,
+                       int (*callback)(void *, void *, time_t, char *, char *),
+                       void *data)
+{
+    if (plugin && gui_buffer_valid ((struct t_gui_buffer *)buffer)
+        && callback)
+        return hook_print (plugin, buffer, message, strip_colors,
+                           callback, data);
+    
+    return NULL;
+}
+
+/*
+ * plugin_api_hook_event: hook an event
+ */
+
+struct t_hook *
+plugin_api_hook_event (struct t_weechat_plugin *plugin, char *event,
+                       int (*callback)(void *, char *, void *),
+                       void *data)
+{
+    if (plugin && event && event[0] && callback)
+        return hook_event (plugin, event, callback, data);
+    
+    return NULL;
+}
+
+/*
+ * plugin_api_hook_config: hook a config option
+ */
+
+struct t_hook *
+plugin_api_hook_config (struct t_weechat_plugin *plugin, char *config_type,
+                        char *config_option,
+                        int (*callback)(void *, char *, char *, char *),
+                        void *data)
+{
+    if (plugin && callback)
+        return hook_config (plugin, config_type, config_option,
+                            callback, data);
     
     return NULL;
 }
@@ -520,8 +550,15 @@ struct t_gui_buffer *
 plugin_api_buffer_search (struct t_weechat_plugin *plugin, char *category,
                           char *name)
 {
+    struct t_gui_buffer *ptr_buffer;
+    
     if (plugin)
-        return gui_buffer_search_by_category_name (category, name);
+    {
+        ptr_buffer = gui_buffer_search_by_category_name (category, name);
+        if (ptr_buffer)
+            return ptr_buffer;
+        return gui_current_window->buffer;
+    }
     
     return NULL;
 }
@@ -645,6 +682,10 @@ plugin_api_info_get (struct t_weechat_plugin *plugin, char *info)
     if (string_strcasecmp (info, "version") == 0)
     {
         return strdup (PACKAGE_VERSION);
+    }
+    else if (string_strcasecmp (info, "dir_separator") == 0)
+    {
+        return strdup (DIR_SEPARATOR);
     }
     else if (string_strcasecmp (info, "weechat_dir") == 0)
     {
