@@ -408,29 +408,6 @@ weechat_create_home_dirs ()
 }
 
 /*
- * weechat_create_config_dirs: create config directories (read from config file)
- */
-
-void
-weechat_create_config_dirs ()
-{
-    char *dir1, *dir2;
-    
-    /* create logs directory" */
-    dir1 = string_replace (cfg_log_path, "~", getenv ("HOME"));
-    if (dir1)
-    {
-        dir2 = string_replace (dir1, "%h", weechat_home);
-        if (dir2)
-        {
-            (void) util_create_dir (dir2, 0700);
-            free (dir2);
-        }
-        free (dir1);
-    }
-}
-
-/*
  * weechat_init_vars: initialize some variables
  */
 
@@ -620,7 +597,6 @@ main (int argc, char *argv[])
     weechat_log_init ();                /* init log file                    */
     if (weechat_config_read () < 0)     /* read WeeChat configuration       */
         exit (EXIT_FAILURE);
-    weechat_create_config_dirs ();      /* create config directories        */
     command_index_build ();             /* build cmd index for completion   */
     gui_main_init ();                   /* init WeeChat interface           */
     //if (weechat_session)

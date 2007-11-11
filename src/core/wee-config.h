@@ -157,11 +157,6 @@ extern int cfg_history_max_lines;
 extern int cfg_history_max_commands;
 extern int cfg_history_display_default;
 
-extern struct t_config_option weechat_options_log[];
-extern int cfg_log_plugin_msg;
-extern char *cfg_log_path;
-extern char *cfg_log_time_format;
-
 extern struct t_config_option weechat_options_proxy[];
 extern int cfg_proxy_use;
 extern int cfg_proxy_type;
@@ -189,22 +184,18 @@ extern void weechat_config_change_buffer_time_format ();
 extern void weechat_config_change_hotlist ();
 extern void weechat_config_change_read_marker ();
 extern void weechat_config_change_prefix ();
-extern void weechat_config_change_charset ();
 extern void weechat_config_change_color ();
 extern void weechat_config_change_nicks_colors ();
-extern void weechat_config_change_away_check ();
-extern void weechat_config_change_fifo_pipe ();
-extern void weechat_config_change_log ();
 
 extern int weechat_config_read_alias (struct t_config_option *, char *, char *);
 extern int weechat_config_read_key (struct t_config_option *, char *, char *);
+extern int weechat_config_read ();
 extern int weechat_config_write_alias (FILE *, char *, struct t_config_option *);
 extern int weechat_config_write_keys (FILE *, char *, struct t_config_option *);
 extern int weechat_config_write_alias_default_values (FILE *, char *,
                                                       struct t_config_option *);
 extern int weechat_config_write_keys_default_values (FILE *, char *,
                                                      struct t_config_option *);
-extern int weechat_config_read ();
 extern int weechat_config_write ();
 extern void weechat_config_print_stdout ();
 

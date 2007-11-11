@@ -709,29 +709,6 @@ struct t_config_option weechat_options_history[] =
   { NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
 };
 
-/* config, log section */
-
-int cfg_log_plugin_msg;
-char *cfg_log_path;
-char *cfg_log_time_format;
-
-struct t_config_option weechat_options_log[] =
-{ { "log_plugin_msg",
-    N_("log messages from plugins"),
-    OPTION_TYPE_BOOLEAN, BOOL_FALSE, BOOL_TRUE, BOOL_FALSE, NULL, NULL,
-    &cfg_log_plugin_msg, NULL, weechat_config_change_noop },
-  { "log_path",
-    N_("path for WeeChat log files ('%h' will be replaced by WeeChat home, "
-       "~/.weechat by default)"),
-    OPTION_TYPE_STRING, 0, 0, 0, "%h/logs/", NULL,
-    NULL, &cfg_log_path, weechat_config_change_noop },
-  { "log_time_format",
-    N_("time format for log (see man strftime for date/time specifiers)"),
-    OPTION_TYPE_STRING, 0, 0, 0, "%Y %b %d %H:%M:%S", NULL,
-    NULL, &cfg_log_time_format, weechat_config_change_noop },
-  { NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL }
-};
-
 /* config, proxy section */
 
 int cfg_proxy_use;
@@ -810,41 +787,41 @@ struct t_config_option weechat_options_plugins[] =
 
 char *weechat_config_sections[] =
 { "look", "colors",
-  "history", "log",
-  "proxy", "plugins",
-  "alias", "keys",
+  "history", "proxy",
+  "plugins", "alias",
+  "keys",
   NULL
 };
 
 struct t_config_option *weechat_config_options[] =
 { weechat_options_look, weechat_options_colors,
-  weechat_options_history, weechat_options_log,
-  weechat_options_proxy, weechat_options_plugins,
-  NULL, NULL,
+  weechat_options_history, weechat_options_proxy,
+  weechat_options_plugins, NULL,
+  NULL,
   NULL
 };
 
 t_config_func_read_option *weechat_config_read_functions[] =
 { config_file_read_option, config_file_read_option,
   config_file_read_option, config_file_read_option,
-  config_file_read_option, config_file_read_option,
-  weechat_config_read_alias, weechat_config_read_key,
+  config_file_read_option, weechat_config_read_alias,
+  weechat_config_read_key,
   NULL
 };
 
 t_config_func_write_options *weechat_config_write_functions[] =
 { config_file_write_options, config_file_write_options,
   config_file_write_options, config_file_write_options,
-  config_file_write_options, config_file_write_options,
-  weechat_config_write_alias, weechat_config_write_keys,
+  config_file_write_options, weechat_config_write_alias,
+  weechat_config_write_keys,
   NULL
 };
 
 t_config_func_write_options *weechat_config_write_default_functions[] =
 { config_file_write_options_default_values, config_file_write_options_default_values,
   config_file_write_options_default_values, config_file_write_options_default_values,
-  config_file_write_options_default_values, config_file_write_options_default_values,
-  weechat_config_write_alias_default_values, weechat_config_write_keys_default_values,
+  config_file_write_options_default_values, weechat_config_write_alias_default_values,
+  weechat_config_write_keys_default_values,
   NULL
 };
 

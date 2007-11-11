@@ -25,6 +25,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <errno.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
@@ -67,6 +68,51 @@ logger_config_read ()
         weechat_plugin_config_set ("time_format", "%Y %b %d %H:%M:%S");
         logger_time_format = weechat_plugin_config_get ("time_format");
     }
+}
+
+/*
+ * logger_create_directory: create logger directory
+ *                          return 1 if success, 0 if failed
+ */
+
+int
+logger_create_directory ()
+{
+    int rc;
+    char *dir1, *dir2, *weechat_dir;
+    
+    rc = 1;
+    
+    dir1 = weechat_string_replace (logger_path, "~", getenv ("HOME"));
+    if (dir1)
+    {
+        weechat_dir = weechat_info_get ("weechat_dir");
+        if (weechat_dir)
+        {
+            dir2 = weechat_string_replace (dir1, "%h", weechat_dir);
+            if (dir2)
+            {
+                if (mkdir (dir2, 0755) < 0)
+                {
+                    if (errno != EEXIST)
+                        rc = 0;
+                }
+                else
+                    chmod (dir2, 0700);
+                free (dir2);
+            }
+            else
+                rc = 0;
+            free (weechat_dir);
+        }
+        else
+            rc = 0;
+        free (dir1);
+    }
+    else
+        rc = 0;
+    
+    return rc;
 }
 
 /*
@@ -367,6 +413,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     logger_config_read ();
     if (!logger_path || !logger_time_format)
+        return PLUGIN_RC_FAILED;
+    if (!logger_create_directory ())
         return PLUGIN_RC_FAILED;
     
     logger_start_buffer_all ();

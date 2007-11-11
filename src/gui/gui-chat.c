@@ -483,8 +483,9 @@ gui_chat_printf_date (struct t_gui_buffer *buffer, time_t date,
     date_printed = time (NULL);
     if (date <= 0)
         date = date_printed;
-
-    ptr_line = buffer->last_line;
+    
+    if (gui_init_ok)
+        ptr_line = buffer->last_line;
     
     pos = buf;
     while (pos)
