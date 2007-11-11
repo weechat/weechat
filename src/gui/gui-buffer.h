@@ -75,10 +75,6 @@ struct t_gui_buffer
                                        /* 3 = highlight + msg + join/part   */
     int num_displayed;                 /* number of windows displaying buf. */
     
-    /* logging */
-    char *log_filename;                /* filename for saving content       */
-    FILE *log_file;                    /* file descriptor for log           */
-    
     /* buffer title */
     char *title;                       /* buffer title                      */
     

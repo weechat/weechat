@@ -38,8 +38,6 @@ lib_weechat_gui_common_a_SOURCES = gui-action.c \
                                    gui-input.h \
                                    gui-keyboard.c \
                                    gui-keyboard.h \
-                                   gui-log.c \
-                                   gui-log.h \
                                    gui-main.h \
                                    gui-status.h \
                                    gui-window.c \

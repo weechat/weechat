@@ -17,15 +17,11 @@
  */
 
 
-#ifndef __WEECHAT_GUI_LOG_H
-#define __WEECHAT_GUI_LOG_H 1
+#ifndef __WEECHAT_LOGGER_H
+#define __WEECHAT_LOGGER_H 1
 
-/* log functions */
+char plugin_name[] = "logger";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Logger plugin for WeeChat";
 
-extern void gui_log_write_date (struct t_gui_buffer *);
-extern void gui_log_write_line (struct t_gui_buffer *, char *);
-extern void gui_log_write (struct t_gui_buffer *, char *);
-extern void gui_log_start (struct t_gui_buffer *);
-extern void gui_log_end (struct t_gui_buffer *);
-
-#endif /* gui-log.h */
+#endif /* logger.h */

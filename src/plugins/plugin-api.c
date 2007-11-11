@@ -825,8 +825,6 @@ plugin_api_list_get_add_buffer (struct t_plugin_list *list,
         return 0;
     if (!plugin_list_new_var_int (ptr_item, "num_displayed", buffer->num_displayed))
         return 0;
-    if (!plugin_list_new_var_string (ptr_item, "log_filename", buffer->log_filename))
-        return 0;
     if (!plugin_list_new_var_string (ptr_item, "title", buffer->title))
         return 0;
     if (!plugin_list_new_var_int (ptr_item, "input", buffer->input))

@@ -39,7 +39,6 @@
 #include "gui-input.h"
 #include "gui-main.h"
 #include "gui-nicklist.h"
-#include "gui-log.h"
 #include "gui-status.h"
 #include "gui-window.h"
 #include "../core/wee-command.h"
@@ -97,10 +96,6 @@ gui_buffer_new (void *plugin, char *category, char *name)
         new_buffer->type = GUI_BUFFER_TYPE_FORMATED;
         new_buffer->notify_level = GUI_BUFFER_NOTIFY_LEVEL_DEFAULT;
         new_buffer->num_displayed = 0;
-        
-        /* create/append to log file */
-        new_buffer->log_filename = NULL;
-        new_buffer->log_file = NULL;
         
         /* title */
         new_buffer->title = NULL;
@@ -241,23 +236,6 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, char *name)
 }
 
 /*
- * gui_buffer_set_log: set log file for a buffer
- */
-
-void
-gui_buffer_set_log (struct t_gui_buffer *buffer, char *log_filename)
-{
-    if (buffer->log_file)
-        gui_log_end (buffer);
-
-    if (log_filename)
-    {
-        buffer->log_filename = strdup (log_filename);
-        gui_log_start (buffer);
-    }
-}
-
-/*
  * gui_buffer_set_title: set title for a buffer
  */
 
@@ -326,10 +304,6 @@ gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
     {
         gui_buffer_set_name (buffer, value);
         gui_status_draw (buffer, 1);
-    }
-    else if (string_strcasecmp (property, "log") == 0)
-    {
-        gui_buffer_set_log (buffer, value);
     }
     else if (string_strcasecmp (property, "title") == 0)
     {
@@ -632,10 +606,6 @@ gui_buffer_free (struct t_gui_buffer *buffer, int switch_to_another)
             gui_chat_line_free (buffer->lines);
             buffer->lines = ptr_line;
         }
-        
-        /* close log if opened */
-        if (buffer->log_file)
-            gui_log_end (buffer);
     }
 
     if (buffer->input_buffer)
@@ -984,8 +954,6 @@ gui_buffer_print_log ()
         weechat_log_printf ("  type . . . . . . . . . : %d\n",   ptr_buffer->type);
         weechat_log_printf ("  notify_level . . . . . : %d\n",   ptr_buffer->notify_level);
         weechat_log_printf ("  num_displayed. . . . . : %d\n",   ptr_buffer->num_displayed);
-        weechat_log_printf ("  log_filename . . . . . : '%s'\n", ptr_buffer->log_filename);
-        weechat_log_printf ("  log_file . . . . . . . : 0x%X\n", ptr_buffer->log_file);
         weechat_log_printf ("  title. . . . . . . . . : '%s'\n", ptr_buffer->title);
         weechat_log_printf ("  lines. . . . . . . . . : 0x%X\n", ptr_buffer->lines);
         weechat_log_printf ("  last_line. . . . . . . : 0x%X\n", ptr_buffer->last_line);
