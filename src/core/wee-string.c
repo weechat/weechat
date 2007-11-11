@@ -81,7 +81,7 @@ string_tolower (char *string)
     {
         if ((string[0] >= 'A') && (string[0] <= 'Z'))
             string[0] += ('a' - 'A');
-        string++;
+        string = utf8_next_char (string);
     }
 }
 
@@ -96,7 +96,7 @@ string_toupper (char *string)
     {
         if ((string[0] >= 'a') && (string[0] <= 'z'))
             string[0] -= ('a' - 'A');
-        string++;
+        string = utf8_next_char (string);
     }
 }
 
@@ -107,27 +107,19 @@ string_toupper (char *string)
 int
 string_strcasecmp (char *string1, char *string2)
 {
-    int c1, c2;
+    int diff;
     
     if (!string1 || !string2)
         return (string1) ? 1 : ((string2) ? -1 : 0);
     
     while (string1[0] && string2[0])
     {
-        c1 = (int)((unsigned char) string1[0]);
-        c2 = (int)((unsigned char) string2[0]);
-        
-        if ((c1 >= 'A') && (c1 <= 'Z'))
-            c1 += ('a' - 'A');
-        
-        if ((c2 >= 'A') && (c2 <= 'Z'))
-            c2 += ('a' - 'A');
-        
-        if ((c1 - c2) != 0)
-            return c1 - c2;
-        
-        string1++;
-        string2++;
+        diff = utf8_charcasecmp (string1, string2);
+        if (diff != 0)
+            return diff;
+
+        string1 = utf8_next_char (string1);
+        string2 = utf8_next_char (string2);
     }
     
     return (string1[0]) ? 1 : ((string2[0]) ? -1 : 0);
@@ -141,7 +133,7 @@ string_strcasecmp (char *string1, char *string2)
 int
 string_strncasecmp (char *string1, char *string2, int max)
 {
-    int c1, c2, count;
+    int count, diff;
     
     if (!string1 || !string2)
         return (string1) ? 1 : ((string2) ? -1 : 0);
@@ -149,20 +141,12 @@ string_strncasecmp (char *string1, char *string2, int max)
     count = 0;
     while ((count < max) && string1[0] && string2[0])
     {
-        c1 = (int)((unsigned char) string1[0]);
-        c2 = (int)((unsigned char) string2[0]);
+        diff = utf8_charcasecmp (string1, string2);
+        if (diff != 0)
+            return diff;
         
-        if ((c1 >= 'A') && (c1 <= 'Z'))
-            c1 += ('a' - 'A');
-        
-        if ((c2 >= 'A') && (c2 <= 'Z'))
-            c2 += ('a' - 'A');
-        
-        if ((c1 - c2) != 0)
-            return c1 - c2;
-        
-        string1++;
-        string2++;
+        string1 = utf8_next_char (string1);
+        string2 = utf8_next_char (string2);
         count++;
     }
     

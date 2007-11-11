@@ -316,6 +316,52 @@ utf8_strlen_screen (char *string)
 }
 
 /*
+ * utf8_charcasecmp: compare two utf8 chars (case is ignored)
+ */
+
+int
+utf8_charcasecmp (char *string1, char *string2)
+{
+    int length1, length2, i, char1, char2, diff;
+    
+    if (!string1 || !string2)
+        return (string1) ? 1 : ((string2) ? -1 : 0);
+    
+    length1 = utf8_char_size (string1);
+    length2 = utf8_char_size (string2);
+    
+    char1 = (int)((unsigned char) string1[0]);
+    char2 = (int)((unsigned char) string2[0]);
+    
+    if ((char1 >= 'A') && (char1 <= 'Z'))
+        char1 += ('a' - 'A');
+    
+    if ((char2 >= 'A') && (char2 <= 'Z'))
+        char2 += ('a' - 'A');
+    
+    diff = char1 - char2;
+    if (diff != 0)
+        return diff;
+    
+    i = 1;
+    while ((i < length1) && (i < length2))
+    {
+        diff = (int)((unsigned char) string1[0]) - (int)((unsigned char) string2[0]);
+        if (diff != 0)
+            return diff;
+        i++;
+    }
+    // string1 == string2 ?
+    if ((i == length1) && (i == length2))
+        return 0;
+    // string1 < string2 ?
+    if (i == length1)
+        return 1;
+    // string1 > string2
+    return -1;
+}
+
+/*
  * utf8_char_size_screen: return number of chars needed on screen to display
  *                        UTF-8 char
  */

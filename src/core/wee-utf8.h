@@ -42,6 +42,7 @@ extern int utf8_char_size (char *);
 extern int utf8_strlen (char *);
 extern int utf8_strnlen (char *, int);
 extern int utf8_strlen_screen (char *);
+extern int utf8_charcasecmp (char *, char *);
 extern int utf8_char_size_screen (char *);
 extern char *utf8_add_offset (char *, int);
 extern int utf8_real_pos (char *, int);
