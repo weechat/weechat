@@ -202,25 +202,62 @@ logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
 {
     va_list argptr;
     char buf[4096], *charset, *message;
+    time_t seconds;
+    struct tm *date_tmp;
+    char buf_time[256];
     
-    if (logger_buffer->log_file)
+    if (logger_buffer->log_filename)
     {
+        charset = weechat_info_get ("charset_terminal");
+        
+        if (!logger_buffer->log_file)
+        {
+            logger_buffer->log_file =
+                fopen (logger_buffer->log_filename, "a");
+            if (!logger_buffer->log_file)
+            {
+                weechat_printf (NULL,
+                                _("%sLogger: unable to write log file \"%s\"\n"),
+                                weechat_prefix ("error"),
+                                logger_buffer->log_filename);
+                free (logger_buffer->log_filename);
+                logger_buffer->log_filename = NULL;
+                if (charset)
+                    free (charset);
+                return;
+            }
+            
+            seconds = time (NULL);
+            date_tmp = localtime (&seconds);
+            buf_time[0] = '\0';
+            if (date_tmp)
+                strftime (buf_time, sizeof (buf_time) - 1,
+                          logger_time_format, date_tmp);
+            snprintf (buf, sizeof (buf) - 1,
+                      _("****  Beginning of log  %s  ****"),
+                      buf_time);
+            message = (charset) ?
+                weechat_iconv_from_internal (charset, buf) : NULL;
+            fprintf (logger_buffer->log_file,
+                     "%s\n", (message) ? message : buf);
+            if (message)
+                free (message);
+        }
+        
         va_start (argptr, format);
         vsnprintf (buf, sizeof (buf) - 1, format, argptr);
         va_end (argptr);
         
-        charset = weechat_info_get ("charset_terminal");
         message = (charset) ?
             weechat_iconv_from_internal (charset, buf) : NULL;
         
         fprintf (logger_buffer->log_file,
                  "%s\n", (message) ? message : buf);
         fflush (logger_buffer->log_file);
-        
-        if (charset)
-            free (charset);
         if (message)
             free (message);
+        if (charset)
+            free (charset);
     }
 }
 
@@ -233,9 +270,6 @@ logger_start_buffer (void *buffer)
 {
     struct t_logger_buffer *ptr_logger_buffer;
     char *log_filename;
-    time_t seconds;
-    struct tm *date_tmp;
-    char buf_time[256];
     
     if (!buffer)
         return;
@@ -254,28 +288,10 @@ logger_start_buffer (void *buffer)
         if (ptr_logger_buffer->log_filename)
         {
             if (ptr_logger_buffer->log_file)
-                fclose (ptr_logger_buffer->log_file);
-            ptr_logger_buffer->log_file =
-                fopen (ptr_logger_buffer->log_filename, "a");
-            if (!ptr_logger_buffer->log_file)
             {
-                weechat_printf (NULL,
-                                _("%sLogger: unable to write log file \"%s\"\n"),
-                                weechat_prefix ("error"),
-                                ptr_logger_buffer->log_filename);
-                free (ptr_logger_buffer->log_filename);
-                return;
+                fclose (ptr_logger_buffer->log_file);
+                ptr_logger_buffer->log_file = NULL;
             }
-            
-            seconds = time (NULL);
-            date_tmp = localtime (&seconds);
-            buf_time[0] = '\0';
-            if (date_tmp)
-                strftime (buf_time, sizeof (buf_time) - 1,
-                          logger_time_format, date_tmp);
-            logger_write_line (ptr_logger_buffer,
-                               _("****  Beginning of log  %s  ****"),
-                               buf_time);
         }
     }
 }
@@ -382,7 +398,7 @@ logger_print_cb (void *data, void *buffer, time_t date, char *prefix,
     (void) data;
 
     ptr_logger_buffer = logger_buffer_search (buffer);
-    if (ptr_logger_buffer && ptr_logger_buffer->log_file)
+    if (ptr_logger_buffer && ptr_logger_buffer->log_filename)
     {
         date_tmp = localtime (&date);
         buf_time[0] = '\0';
