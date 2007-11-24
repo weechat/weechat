@@ -752,49 +752,49 @@ hook_print_log ()
     for (ptr_hook = weechat_hooks; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
-        weechat_log_printf ("\n");
-        weechat_log_printf ("[hook (addr:0x%X)]\n", ptr_hook);
-        weechat_log_printf ("  type . . . . . . . . . : %d\n",   ptr_hook->type);
-        weechat_log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
+        log_printf ("\n");
+        log_printf ("[hook (addr:0x%X)]\n", ptr_hook);
+        log_printf ("  type . . . . . . . . . : %d\n",   ptr_hook->type);
+        log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
         switch (ptr_hook->type)
         {
             case HOOK_TYPE_COMMAND:
-                weechat_log_printf ("  command data:\n");
-                weechat_log_printf ("    callback . . . . . . : 0x%X\n", HOOK_COMMAND(ptr_hook, callback));
-                weechat_log_printf ("    command. . . . . . . : '%s'\n", HOOK_COMMAND(ptr_hook, command));
-                weechat_log_printf ("    command_desc . . . . : '%s'\n", HOOK_COMMAND(ptr_hook, description));
-                weechat_log_printf ("    command_args . . . . : '%s'\n", HOOK_COMMAND(ptr_hook, args));
-                weechat_log_printf ("    command_args_desc. . : '%s'\n", HOOK_COMMAND(ptr_hook, args_description));
-                weechat_log_printf ("    command_completion . : '%s'\n", HOOK_COMMAND(ptr_hook, completion));
+                log_printf ("  command data:\n");
+                log_printf ("    callback . . . . . . : 0x%X\n", HOOK_COMMAND(ptr_hook, callback));
+                log_printf ("    command. . . . . . . : '%s'\n", HOOK_COMMAND(ptr_hook, command));
+                log_printf ("    command_desc . . . . : '%s'\n", HOOK_COMMAND(ptr_hook, description));
+                log_printf ("    command_args . . . . : '%s'\n", HOOK_COMMAND(ptr_hook, args));
+                log_printf ("    command_args_desc. . : '%s'\n", HOOK_COMMAND(ptr_hook, args_description));
+                log_printf ("    command_completion . : '%s'\n", HOOK_COMMAND(ptr_hook, completion));
                 break;
             case HOOK_TYPE_TIMER:
-                weechat_log_printf ("  timer data:\n");
-                weechat_log_printf ("    interval . . . . . . : %ld\n",  HOOK_TIMER(ptr_hook, interval));
-                weechat_log_printf ("    last_exec.tv_sec . . : %ld\n",  HOOK_TIMER(ptr_hook, last_exec.tv_sec));
-                weechat_log_printf ("    last_exec.tv_usec. . : %ld\n",  HOOK_TIMER(ptr_hook, last_exec.tv_usec));
+                log_printf ("  timer data:\n");
+                log_printf ("    interval . . . . . . : %ld\n",  HOOK_TIMER(ptr_hook, interval));
+                log_printf ("    last_exec.tv_sec . . : %ld\n",  HOOK_TIMER(ptr_hook, last_exec.tv_sec));
+                log_printf ("    last_exec.tv_usec. . : %ld\n",  HOOK_TIMER(ptr_hook, last_exec.tv_usec));
                 break;
             case HOOK_TYPE_FD:
-                weechat_log_printf ("  fd data:\n");
-                weechat_log_printf ("    fd . . . . . . . . . : %ld\n",  HOOK_FD(ptr_hook, fd));
-                weechat_log_printf ("    flags. . . . . . . . : %ld\n",  HOOK_FD(ptr_hook, flags));
+                log_printf ("  fd data:\n");
+                log_printf ("    fd . . . . . . . . . : %ld\n",  HOOK_FD(ptr_hook, fd));
+                log_printf ("    flags. . . . . . . . : %ld\n",  HOOK_FD(ptr_hook, flags));
                 break;
             case HOOK_TYPE_PRINT:
-                weechat_log_printf ("  print data:\n");
-                weechat_log_printf ("    buffer . . . . . . . : 0x%X\n", HOOK_PRINT(ptr_hook, buffer));
-                weechat_log_printf ("    message. . . . . . . : '%s'\n", HOOK_PRINT(ptr_hook, message));
+                log_printf ("  print data:\n");
+                log_printf ("    buffer . . . . . . . : 0x%X\n", HOOK_PRINT(ptr_hook, buffer));
+                log_printf ("    message. . . . . . . : '%s'\n", HOOK_PRINT(ptr_hook, message));
                 break;
             case HOOK_TYPE_EVENT:
-                weechat_log_printf ("  event data:\n");
-                weechat_log_printf ("    event. . . . . . . . : '%s'\n", HOOK_EVENT(ptr_hook, event));
+                log_printf ("  event data:\n");
+                log_printf ("    event. . . . . . . . : '%s'\n", HOOK_EVENT(ptr_hook, event));
                 break;
             case HOOK_TYPE_CONFIG:
-                weechat_log_printf ("  config data:\n");
-                weechat_log_printf ("    type . . . . . . . . : '%s'\n", HOOK_CONFIG(ptr_hook, type));
-                weechat_log_printf ("    option . . . . . . . : '%s'\n", HOOK_CONFIG(ptr_hook, option));
+                log_printf ("  config data:\n");
+                log_printf ("    type . . . . . . . . : '%s'\n", HOOK_CONFIG(ptr_hook, type));
+                log_printf ("    option . . . . . . . : '%s'\n", HOOK_CONFIG(ptr_hook, option));
                 break;
         }        
-        weechat_log_printf ("  running. . . . . . . . : %d\n",   ptr_hook->running);
-        weechat_log_printf ("  prev_hook. . . . . . . : 0x%X\n", ptr_hook->prev_hook);
-        weechat_log_printf ("  next_hook. . . . . . . : 0x%X\n", ptr_hook->next_hook);
+        log_printf ("  running. . . . . . . . : %d\n",   ptr_hook->running);
+        log_printf ("  prev_hook. . . . . . . : 0x%X\n", ptr_hook->prev_hook);
+        log_printf ("  next_hook. . . . . . . : 0x%X\n", ptr_hook->next_hook);
     }
 }

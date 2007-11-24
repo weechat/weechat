@@ -564,36 +564,36 @@ plugin_list_print_log ()
     for (ptr_list = plugin_lists; ptr_list;
          ptr_list = ptr_list->next_list)
     {
-        weechat_log_printf ("\n");
-        weechat_log_printf ("[plugin list (addr:0x%X)]\n", ptr_list);
-        weechat_log_printf ("  items. . . . . . . . . : 0x%X\n", ptr_list->items);
-        weechat_log_printf ("  last_item. . . . . . . : 0x%X\n", ptr_list->last_item);
-        weechat_log_printf ("  ptr_item . . . . . . . : 0x%X\n", ptr_list->ptr_item);
-        weechat_log_printf ("  prev_list. . . . . . . : 0x%X\n", ptr_list->prev_list);
-        weechat_log_printf ("  next_list. . . . . . . : 0x%X\n", ptr_list->next_list);
+        log_printf ("\n");
+        log_printf ("[plugin list (addr:0x%X)]\n", ptr_list);
+        log_printf ("  items. . . . . . . . . : 0x%X\n", ptr_list->items);
+        log_printf ("  last_item. . . . . . . : 0x%X\n", ptr_list->last_item);
+        log_printf ("  ptr_item . . . . . . . : 0x%X\n", ptr_list->ptr_item);
+        log_printf ("  prev_list. . . . . . . : 0x%X\n", ptr_list->prev_list);
+        log_printf ("  next_list. . . . . . . : 0x%X\n", ptr_list->next_list);
         
         for (ptr_item = ptr_list->items; ptr_item;
              ptr_item = ptr_item->next_item)
         {
-            weechat_log_printf ("\n");
-            weechat_log_printf ("    [item (addr:0x%X)]\n", ptr_item);
-            weechat_log_printf ("      vars . . . . . . . . . : 0x%X\n", ptr_item->vars);
-            weechat_log_printf ("      last_var . . . . . . . : 0x%X\n", ptr_item->last_var);
-            weechat_log_printf ("      prev_item. . . . . . . : 0x%X\n", ptr_item->prev_item);
-            weechat_log_printf ("      next_item. . . . . . . : 0x%X\n", ptr_item->next_item);
+            log_printf ("\n");
+            log_printf ("    [item (addr:0x%X)]\n", ptr_item);
+            log_printf ("      vars . . . . . . . . . : 0x%X\n", ptr_item->vars);
+            log_printf ("      last_var . . . . . . . : 0x%X\n", ptr_item->last_var);
+            log_printf ("      prev_item. . . . . . . : 0x%X\n", ptr_item->prev_item);
+            log_printf ("      next_item. . . . . . . : 0x%X\n", ptr_item->next_item);
             
             for (ptr_var = ptr_item->vars; ptr_var;
                  ptr_var = ptr_var->next_var)
             {
-                weechat_log_printf ("\n");
-                weechat_log_printf ("      [var (addr:0x%X)]\n", ptr_var);
-                weechat_log_printf ("        name . . . . . . . . : '%s'\n", ptr_var->name);
-                weechat_log_printf ("        type . . . . . . . . : %d\n",   ptr_var->type);
-                weechat_log_printf ("        value_int. . . . . . : %d\n",   ptr_var->value_int);
-                weechat_log_printf ("        value_string . . . . : '%s'\n", ptr_var->value_string);
-                weechat_log_printf ("        value_time . . . . . : %ld\n",  ptr_var->value_time);
-                weechat_log_printf ("        prev_var . . . . . . : 0x%X\n", ptr_var->prev_var);
-                weechat_log_printf ("        next_var . . . . . . : 0x%X\n", ptr_var->next_var);
+                log_printf ("\n");
+                log_printf ("      [var (addr:0x%X)]\n", ptr_var);
+                log_printf ("        name . . . . . . . . : '%s'\n", ptr_var->name);
+                log_printf ("        type . . . . . . . . : %d\n",   ptr_var->type);
+                log_printf ("        value_int. . . . . . : %d\n",   ptr_var->value_int);
+                log_printf ("        value_string . . . . : '%s'\n", ptr_var->value_string);
+                log_printf ("        value_time . . . . . : %ld\n",  ptr_var->value_time);
+                log_printf ("        prev_var . . . . . . : 0x%X\n", ptr_var->prev_var);
+                log_printf ("        next_var . . . . . . : 0x%X\n", ptr_var->next_var);
             }
         }
     }

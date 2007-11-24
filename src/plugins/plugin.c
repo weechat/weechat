@@ -593,16 +593,16 @@ plugin_print_log ()
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
-        weechat_log_printf ("\n");
-        weechat_log_printf ("[plugin (addr:0x%X)]\n", ptr_plugin);
-        weechat_log_printf ("  filename . . . . . . . : '%s'\n", ptr_plugin->filename);
-        weechat_log_printf ("  handle . . . . . . . . : 0x%X\n", ptr_plugin->handle);
-        weechat_log_printf ("  name . . . . . . . . . : '%s'\n", ptr_plugin->name);
-        weechat_log_printf ("  description. . . . . . : '%s'\n", ptr_plugin->description);
-        weechat_log_printf ("  version. . . . . . . . : '%s'\n", ptr_plugin->version);
-        weechat_log_printf ("  charset. . . . . . . . : '%s'\n", ptr_plugin->charset);
-        weechat_log_printf ("  prev_plugin. . . . . . : 0x%X\n", ptr_plugin->prev_plugin);
-        weechat_log_printf ("  next_plugin. . . . . . : 0x%X\n", ptr_plugin->next_plugin);
+        log_printf ("\n");
+        log_printf ("[plugin (addr:0x%X)]\n", ptr_plugin);
+        log_printf ("  filename . . . . . . . : '%s'\n", ptr_plugin->filename);
+        log_printf ("  handle . . . . . . . . : 0x%X\n", ptr_plugin->handle);
+        log_printf ("  name . . . . . . . . . : '%s'\n", ptr_plugin->name);
+        log_printf ("  description. . . . . . : '%s'\n", ptr_plugin->description);
+        log_printf ("  version. . . . . . . . : '%s'\n", ptr_plugin->version);
+        log_printf ("  charset. . . . . . . . : '%s'\n", ptr_plugin->charset);
+        log_printf ("  prev_plugin. . . . . . : 0x%X\n", ptr_plugin->prev_plugin);
+        log_printf ("  next_plugin. . . . . . : 0x%X\n", ptr_plugin->next_plugin);
     }
 
     plugin_list_print_log ();

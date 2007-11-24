@@ -519,8 +519,7 @@ gui_keyboard_bind (char *key, char *command)
     
     if (!key || !command)
     {
-        weechat_log_printf (_("Error: unable to bind key \"%s\"\n"),
-                            key);
+        log_printf (_("Error: unable to bind key \"%s\"\n"), key);
         return NULL;
     }
     
@@ -547,8 +546,9 @@ gui_keyboard_bind (char *key, char *command)
         }
         if (!ptr_function)
         {
-            weechat_log_printf (_("Error: unable to bind key \"%s\" (invalid function name: \"%s\")\n"),
-                                key, command);
+            log_printf (_("Error: unable to bind key \"%s\" "
+                          "(invalid function name: \"%s\")\n"),
+                        key, command);
             return NULL;
         }
     }
@@ -561,7 +561,7 @@ gui_keyboard_bind (char *key, char *command)
                                 ptr_args);
     if (!new_key)
     {
-        weechat_log_printf (_("Error: not enough memory for key binding\n"));
+        log_printf (_("Error: not enough memory for key binding\n"));
         return NULL;
     }
     

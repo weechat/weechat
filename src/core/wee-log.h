@@ -23,9 +23,9 @@
 extern char *weechat_log_filename;
 extern FILE *weechat_log_file;
 
-extern void weechat_log_init ();
-extern void weechat_log_close ();
-extern void weechat_log_printf (char *, ...);
-extern int weechat_log_crash_rename ();
+extern void log_init ();
+extern void log_close ();
+extern void log_printf (char *, ...);
+extern int log_crash_rename ();
 
 #endif /* wee-log.h */

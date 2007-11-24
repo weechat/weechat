@@ -237,9 +237,9 @@ weelist_print_log (struct t_weelist *weelist, char *name)
     for (ptr_weelist = weelist; ptr_weelist;
          ptr_weelist = ptr_weelist->next_weelist)
     {
-        weechat_log_printf ("[%s (addr:0x%X)]\n", name, ptr_weelist);
-        weechat_log_printf ("  data . . . . . . . . . : '%s'\n", ptr_weelist->data);
-        weechat_log_printf ("  prev_weelist . . . . . : 0x%X\n", ptr_weelist->prev_weelist);
-        weechat_log_printf ("  next_weelist . . . . . : 0x%X\n", ptr_weelist->next_weelist);
+        log_printf ("[%s (addr:0x%X)]\n", name, ptr_weelist);
+        log_printf ("  data . . . . . . . . . : '%s'\n", ptr_weelist->data);
+        log_printf ("  prev_weelist . . . . . : 0x%X\n", ptr_weelist->prev_weelist);
+        log_printf ("  next_weelist . . . . . : 0x%X\n", ptr_weelist->next_weelist);
     }
 }

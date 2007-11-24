@@ -455,8 +455,8 @@ config_file_write_default (char **config_sections, struct t_config_option **opti
                           _("%s: creating default config file \"%s\"...\n"),
                           PACKAGE_NAME,
                           config_filename);
-    weechat_log_printf (_("Creating default config file \"%s\"\n"),
-                        config_filename);
+    log_printf (_("Creating default config file \"%s\"\n"),
+                config_filename);
     
     config_file_write_header (file);
     

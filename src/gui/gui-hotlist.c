@@ -208,9 +208,9 @@ gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
     
     if ((new_hotlist = (struct t_gui_hotlist *) malloc (sizeof (struct t_gui_hotlist))) == NULL)
     {
-        weechat_log_printf (NULL,
-                            _("Error: not enough memory to add a buffer to "
-                              "hotlist\n"));
+        log_printf (NULL,
+                    _("Error: not enough memory to add a buffer to "
+                      "hotlist\n"));
         return;
     }
     
@@ -345,13 +345,13 @@ gui_hotlist_print_log ()
     for (ptr_hotlist = gui_hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
     {
-        weechat_log_printf ("[hotlist (addr:0x%X)]\n", ptr_hotlist);
-        weechat_log_printf ("  priority . . . . . . . : %d\n",   ptr_hotlist->priority);
-        weechat_log_printf ("  creation_time. . . . . : tv_sec:%d, tv_usec:%d\n",
-                            ptr_hotlist->creation_time.tv_sec,
-                            ptr_hotlist->creation_time.tv_usec);
-        weechat_log_printf ("  buffer . . . . . . . . : 0x%X\n", ptr_hotlist->buffer);
-        weechat_log_printf ("  prev_hotlist . . . . . : 0x%X\n", ptr_hotlist->prev_hotlist);
-        weechat_log_printf ("  next_hotlist . . . . . : 0x%X\n", ptr_hotlist->next_hotlist);
+        log_printf ("[hotlist (addr:0x%X)]\n", ptr_hotlist);
+        log_printf ("  priority . . . . . . . : %d\n",   ptr_hotlist->priority);
+        log_printf ("  creation_time. . . . . : tv_sec:%d, tv_usec:%d\n",
+                    ptr_hotlist->creation_time.tv_sec,
+                    ptr_hotlist->creation_time.tv_usec);
+        log_printf ("  buffer . . . . . . . . : 0x%X\n", ptr_hotlist->buffer);
+        log_printf ("  prev_hotlist . . . . . : 0x%X\n", ptr_hotlist->prev_hotlist);
+        log_printf ("  next_hotlist . . . . . : 0x%X\n", ptr_hotlist->next_hotlist);
     }
 }

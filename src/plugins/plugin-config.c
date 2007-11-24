@@ -328,7 +328,7 @@ plugin_config_write_options (FILE *file, char *section_name,
 int
 plugin_config_write ()
 {
-    weechat_log_printf (_("Saving plugins configuration to disk\n"));
+    log_printf (_("Saving plugins configuration to disk\n"));
     return config_file_write (plugin_config_sections, plugin_config_options,
                               plugin_config_write_functions,
                               WEECHAT_PLUGIN_CONFIG_NAME);

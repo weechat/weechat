@@ -59,7 +59,7 @@ weechat_backtrace_printf (char *message, ...)
     va_end (argptr);
 
     string_iconv_fprintf (stderr, "%s", buffer);
-    weechat_log_printf ("%s", buffer);
+    log_printf ("%s", buffer);
 }
 
 /*

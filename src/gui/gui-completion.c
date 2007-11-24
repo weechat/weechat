@@ -1688,27 +1688,27 @@ gui_completion_search (struct t_gui_completion *completion, int direction,
 void
 gui_completion_print_log (struct t_gui_completion *completion)
 {
-    weechat_log_printf ("[completion (addr:0x%X)]\n", completion);
-    weechat_log_printf ("  buffer . . . . . . . . : 0x%X\n", completion->buffer);
-    weechat_log_printf ("  context. . . . . . . . : %d\n",   completion->context);
-    weechat_log_printf ("  base_command . . . . . : '%s'\n", completion->base_command);
-    weechat_log_printf ("  base_command_arg . . . : %d\n",   completion->base_command_arg);
-    weechat_log_printf ("  arg_is_nick. . . . . . : %d\n",   completion->arg_is_nick);
-    weechat_log_printf ("  base_word. . . . . . . : '%s'\n", completion->base_word);
-    weechat_log_printf ("  base_word_pos. . . . . : %d\n",   completion->base_word_pos);
-    weechat_log_printf ("  position . . . . . . . : %d\n",   completion->position);
-    weechat_log_printf ("  args . . . . . . . . . : '%s'\n", completion->args);
-    weechat_log_printf ("  direction. . . . . . . : %d\n",   completion->direction);
-    weechat_log_printf ("  add_space. . . . . . . : %d\n",   completion->add_space);
-    weechat_log_printf ("  completion_list. . . . : 0x%X\n", completion->completion_list);
-    weechat_log_printf ("  last_completion. . . . : 0x%X\n", completion->last_completion);
-    weechat_log_printf ("  word_found . . . . . . : '%s'\n", completion->word_found);
-    weechat_log_printf ("  position_replace . . . : %d\n",   completion->position_replace);
-    weechat_log_printf ("  diff_size. . . . . . . : %d\n",   completion->diff_size);
-    weechat_log_printf ("  diff_length. . . . . . : %d\n",   completion->diff_length);
+    log_printf ("[completion (addr:0x%X)]\n", completion);
+    log_printf ("  buffer . . . . . . . . : 0x%X\n", completion->buffer);
+    log_printf ("  context. . . . . . . . : %d\n",   completion->context);
+    log_printf ("  base_command . . . . . : '%s'\n", completion->base_command);
+    log_printf ("  base_command_arg . . . : %d\n",   completion->base_command_arg);
+    log_printf ("  arg_is_nick. . . . . . : %d\n",   completion->arg_is_nick);
+    log_printf ("  base_word. . . . . . . : '%s'\n", completion->base_word);
+    log_printf ("  base_word_pos. . . . . : %d\n",   completion->base_word_pos);
+    log_printf ("  position . . . . . . . : %d\n",   completion->position);
+    log_printf ("  args . . . . . . . . . : '%s'\n", completion->args);
+    log_printf ("  direction. . . . . . . : %d\n",   completion->direction);
+    log_printf ("  add_space. . . . . . . : %d\n",   completion->add_space);
+    log_printf ("  completion_list. . . . : 0x%X\n", completion->completion_list);
+    log_printf ("  last_completion. . . . : 0x%X\n", completion->last_completion);
+    log_printf ("  word_found . . . . . . : '%s'\n", completion->word_found);
+    log_printf ("  position_replace . . . : %d\n",   completion->position_replace);
+    log_printf ("  diff_size. . . . . . . : %d\n",   completion->diff_size);
+    log_printf ("  diff_length. . . . . . : %d\n",   completion->diff_length);
     if (completion->completion_list)
     {
-        weechat_log_printf ("\n");
+        log_printf ("\n");
         weelist_print_log (completion->completion_list,
                            "completion list element");
     }

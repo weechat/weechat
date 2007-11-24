@@ -46,11 +46,11 @@ FILE *weechat_log_file = NULL;     /* WeeChat log file                      */
 
 
 /*
- * weechat_log_open: initialize log file
+ * log_open: initialize log file
  */
 
 int
-weechat_log_open (char *filename, char *mode)
+log_open (char *filename, char *mode)
 {
     int filename_length;
 
@@ -95,13 +95,13 @@ weechat_log_open (char *filename, char *mode)
 }
 
 /*
- * weechat_log_init: initialize log file
+ * log_init: initialize log file
  */
 
 void
-weechat_log_init ()
+log_init ()
 {
-    if (!weechat_log_open (NULL, "w"))
+    if (!log_open (NULL, "w"))
     {
         string_iconv_fprintf (stderr,
                               _("Error: unable to create/append to log file (weechat.log)\n"
@@ -112,11 +112,11 @@ weechat_log_init ()
 }
 
 /*
- * weechat_log_printf: write a message in WeeChat log (<weechat_home>/weechat.log)
+ * log_printf: write a message in WeeChat log (<weechat_home>/weechat.log)
  */
 
 void
-weechat_log_printf (char *message, ...)
+log_printf (char *message, ...)
 {
     static char buffer[4096];
     char *ptr_buffer;
@@ -156,11 +156,11 @@ weechat_log_printf (char *message, ...)
 }
 
 /*
- * weechat_log_close: close log file
+ * log_close: close log file
  */
 
 void
-weechat_log_close ()
+log_close ()
 {
     /* close log file */
     if (weechat_log_file)
@@ -181,11 +181,11 @@ weechat_log_close ()
 }
 
 /*
- * weechat_log_crash_rename: rename log file when crashing
+ * log_crash_rename: rename log file when crashing
  */
 
 int
-weechat_log_crash_rename ()
+log_crash_rename ()
 {
     char *old_name, *new_name;
     int length;
@@ -199,7 +199,7 @@ weechat_log_crash_rename ()
     if (!old_name)
         return 0;
 
-    weechat_log_close ();
+    log_close ();
     
     length = strlen (weechat_home) + 128;
     new_name = (char *) malloc (length);
@@ -218,7 +218,7 @@ weechat_log_crash_rename ()
         {
             string_iconv_fprintf (stderr, "*** Full crash dump was saved to %s file.\n",
                                   new_name);
-            weechat_log_open (new_name, "a");
+            log_open (new_name, "a");
             free (old_name);
             free (new_name);
             return 1;
@@ -227,6 +227,6 @@ weechat_log_crash_rename ()
     }
 
     free (old_name);
-    weechat_log_open (NULL, "a");
+    log_open (NULL, "a");
     return 0;
 }

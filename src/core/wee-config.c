@@ -1228,7 +1228,7 @@ weechat_config_write_keys_default_values (FILE *file, char *section_name,
 int
 weechat_config_write ()
 {
-    weechat_log_printf (_("Saving WeeChat configuration to disk\n"));
+    log_printf (_("Saving WeeChat configuration to disk\n"));
     return config_file_write (weechat_config_sections, weechat_config_options,
                               weechat_config_write_functions,
                               WEECHAT_CONFIG_NAME);
