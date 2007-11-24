@@ -76,7 +76,7 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
     rc = -1;
     if (!only_builtin)
     {
-        rc = hook_command_exec (buffer->plugin, command);
+        rc = hook_command_exec (buffer, command);
         /*vars_replaced = alias_replace_vars (window, ptr_args);
         rc = plugin_cmd_handler_exec (window->buffer->protocol, command + 1,
                                       (vars_replaced) ? vars_replaced : ptr_args);
@@ -375,7 +375,7 @@ input_data (struct t_gui_buffer *buffer, char *data, int only_builtin)
             
             if (command_is_command (ptr_data))
             {
-                /* WeeChat or protocol command */
+                /* WeeChat or plugin command */
                 (void) input_exec_command (buffer, ptr_data,
                                            only_builtin);
             }
@@ -384,7 +384,7 @@ input_data (struct t_gui_buffer *buffer, char *data, int only_builtin)
                 if ((ptr_data[0] == '/') && (ptr_data[1] == '/'))
                     ptr_data++;
 
-                hook_command_exec (buffer->plugin, ptr_data);
+                hook_command_exec (buffer, ptr_data);
                 
                 if (buffer->input_data_cb)
                 {

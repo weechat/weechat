@@ -37,12 +37,10 @@
 
 /* protocol data for GUI buffers */
 
-typedef struct t_irc_buffer_data t_irc_buffer_data;
-
 struct t_irc_buffer_data
 {
-    t_irc_server *server;
-    t_irc_channel *channel;
+    struct t_irc_server *server;
+    struct t_irc_channel *channel;
     int all_servers;
 };
 

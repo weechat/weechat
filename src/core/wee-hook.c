@@ -173,13 +173,13 @@ hook_command (void *plugin, char *command, char *description,
  */
 
 int
-hook_command_exec (void *plugin, char *string)
+hook_command_exec (void *buffer, char *string)
 {
     struct t_hook *ptr_hook, *next_hook;
     char **argv, **argv_eol;
     int argc, rc;
-
-    if (!string || !string[0])
+    
+    if (!buffer || !string || !string[0])
         return -1;
     
     argv = string_explode (string, " ", 0, 0, &argc);
@@ -197,13 +197,14 @@ hook_command_exec (void *plugin, char *string)
         
         if ((ptr_hook->type == HOOK_TYPE_COMMAND)
             && (!ptr_hook->running)
-            && (!plugin || (plugin == ptr_hook->plugin))
+            && (!((struct t_gui_buffer *)buffer)->plugin
+                || (((struct t_gui_buffer *)buffer)->plugin == ptr_hook->plugin))
             && (string_strcasecmp (argv[0] + 1,
                                    HOOK_COMMAND(ptr_hook, command)) == 0))
         {
             ptr_hook->running = 1;
             rc = (int) (HOOK_COMMAND(ptr_hook, callback))
-                (ptr_hook->callback_data, argc, argv, argv_eol);
+                (ptr_hook->callback_data, buffer, argc, argv, argv_eol);
             if (hook_valid (ptr_hook))
                 ptr_hook->running = 0;
             if (rc == PLUGIN_RC_FAILED)

@@ -36,8 +36,6 @@
     else \
         nick->flags &= 0xFFFF - flag;
 
-typedef struct t_irc_nick t_irc_nick;
-
 struct t_irc_nick
 {
     char *nick;                     /* nickname                              */
@@ -45,8 +43,8 @@ struct t_irc_nick
     int flags;                      /* chanowner/chanadmin (unrealircd),     */
                                     /* op, halfop, voice, away               */
     int color;                      /* color for nickname in chat window     */
-    t_irc_nick *prev_nick;          /* link to previous nick on the channel  */
-    t_irc_nick *next_nick;          /* link to next nick on the channel      */
+    struct t_irc_nick *prev_nick;   /* link to previous nick on channel      */
+    struct t_irc_nick *next_nick;   /* link to next nick on channel          */
 };
 
 #endif /* irc-nick.h */

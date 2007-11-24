@@ -20,9 +20,6 @@
 #ifndef __WEECHAT_IRC_CHANNEL_H
 #define __WEECHAT_IRC_CHANNEL_H 1
 
-#include "irc-nick.h"
-#include "../../gui/gui.h"
-
 #define IRC_CHANNEL_PREFIX "#&+!"
 
 /* channel types */
@@ -32,8 +29,6 @@
 #define IRC_CHANNEL_TYPE_DCC_CHAT 2
 
 #define IRC_CHANNEL_NICKS_SPEAKING_LIMIT 32
-
-typedef struct t_irc_channel t_irc_channel;
 
 struct t_irc_channel
 {
@@ -52,13 +47,13 @@ struct t_irc_channel
     int display_creation_date;      /* 1 if creation date should be displayed*/
     int nick_completion_reset;      /* 1 if nick completion should be rebuilt*/
                                     /* there was some join/part on channel   */
-    t_irc_nick *nicks;              /* nicks on the channel                  */
-    t_irc_nick *last_nick;          /* last nick on the channel              */
-    t_weelist *nicks_speaking;      /* nicks speaking (for smart completion) */
-    t_weelist *last_nick_speaking;  /* last nick speaking                    */
-    t_gui_buffer *buffer;           /* GUI buffer allocated for channel      */
-    t_irc_channel *prev_channel;    /* link to previous channel              */
-    t_irc_channel *next_channel;    /* link to next channel                  */
+    struct t_irc_nick *nicks;             /* nicks on the channel            */
+    struct t_irc_nick *last_nick;         /* last nick on the channel        */
+    struct t_weelist *nicks_speaking;     /* for smart completion            */
+    struct t_weelist *last_nick_speaking; /* last nick speaking              */
+    struct t_gui_buffer *buffer;          /* buffer allocated for channel    */
+    struct t_irc_channel *prev_channel;   /* link to previous channel        */
+    struct t_irc_channel *next_channel;   /* link to next channel            */
 };
 
 #endif /* irc-channel.h */

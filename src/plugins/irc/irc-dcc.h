@@ -68,12 +68,10 @@
                                (status == IRC_DCC_FAILED) || \
                                (status == IRC_DCC_ABORTED))
 
-typedef struct t_irc_dcc t_irc_dcc;
-
 struct t_irc_dcc
 {
-    t_irc_server *server;           /* irc server                            */
-    t_irc_channel *channel;         /* irc channel (for DCC chat only)       */
+    struct t_irc_server *server;    /* irc server                            */
+    struct t_irc_channel *channel;  /* irc channel (for DCC chat only)       */
     int type;                       /* DCC type (file/chat, send/receive)    */
     int status;                     /* DCC status (waiting, sending, ..)     */
     time_t start_time;              /* the time when DCC started             */
@@ -101,12 +99,12 @@ struct t_irc_dcc
     time_t last_activity;           /* time of last byte received/sent       */
     unsigned long bytes_per_sec;    /* bytes per second                      */
     unsigned long eta;              /* estimated time of arrival             */
-    t_irc_dcc *prev_dcc;            /* link to previous dcc file/chat        */
-    t_irc_dcc *next_dcc;            /* link to next dcc file/chat            */
+    struct t_irc_dcc *prev_dcc;     /* link to previous dcc file/chat        */
+    struct t_irc_dcc *next_dcc;     /* link to next dcc file/chat            */
 };
 
-extern t_irc_dcc *irc_dcc_list;
-extern t_irc_dcc *irc_last_dcc;
+extern struct t_irc_dcc *irc_dcc_list;
+extern struct t_irc_dcc *irc_last_dcc;
 extern char *irc_dcc_status_string[6];
 
 #endif /* irc-dcc.h */

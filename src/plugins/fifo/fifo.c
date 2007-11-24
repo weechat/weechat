@@ -321,7 +321,7 @@ fifo_config_cb (void *data, char *type, char *option, char *value)
 }
 
 /*
- * weechat_plugin_init: init fifo plugin
+ * weechat_plugin_init: initialize fifo plugin
  */
 
 int

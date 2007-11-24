@@ -20,7 +20,8 @@ libdir = ${weechat_libdir}/plugins
 
 lib_LTLIBRARIES = irc.la
 
-irc_la_SOURCES = irc.h \
+irc_la_SOURCES = irc.c \
+                 irc.h \
                  irc-buffer.c \
                  irc-buffer.h \
                  irc-channel.c \
@@ -31,7 +32,6 @@ irc_la_SOURCES = irc.h \
                  irc-color.h \
                  irc-config.c \
                  irc-config.h \
-                 irc-core.c \
                  irc-dcc.c \
                  irc-dcc.h \
                  irc-display.c \

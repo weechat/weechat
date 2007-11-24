@@ -32,12 +32,12 @@
 
 #include "../protocol.h"
 
-#define _PROTOCOL_NAME    "irc"
-#define _PROTOCOL_VERSION "0.1"
-#define _PROTOCOL_DESC    "IRC (Internet Relay Chat)"
+char plugin_name[] = "irc";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "IRC (Internet Relay Chat)";
 
-extern t_weechat_protocol *irc_protocol;
-extern t_weechat_hook *irc_hook_timer, *irc_hook_timer_check_away;
+extern struct t_weechat_plugin *weechat_plugin;
+extern struct t_hook *irc_hook_timer, *irc_hook_timer_check_away;
 
 /* buffer functions (irc-buffer.c) */
 

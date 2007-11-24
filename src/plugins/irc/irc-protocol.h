@@ -23,8 +23,6 @@
 typedef int (t_irc_recv_func)(t_irc_server *, char *, char *, char *, char *,
                               int, int);
 
-typedef struct t_irc_protocol_msg t_irc_protocol_msg;
-
 struct t_irc_protocol_msg
 {
     char *name;                     /* IRC message name                      */

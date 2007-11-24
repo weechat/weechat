@@ -44,9 +44,12 @@ static struct t_weechat_plugin *weechat_plugin = NULL;
  */
 
 static int
-demo_printf_command_cb (void *data, int argc, char **argv, char **argv_eol)
+demo_printf_command_cb (void *data, void *buffer, int argc, char **argv,
+                        char **argv_eol)
 {
+    /* make C compiler happy */
     (void) data;
+    (void) buffer;
     (void) argv;
     
     if (argc > 1)
@@ -80,18 +83,21 @@ demo_printf_command_cb (void *data, int argc, char **argv, char **argv_eol)
  */
 
 static int
-demo_buffer_command_cb (void *data, int argc, char **argv, char **argv_eol)
+demo_buffer_command_cb (void *data, void *buffer, int argc, char **argv,
+                        char **argv_eol)
 {
-    struct t_gui_buffer *buffer;
-    
+    struct t_gui_buffer *new_buffer;
+
+    /* make C compiler happy */
     (void) data;
+    (void) buffer;
     (void) argv_eol;
     
     if (argc > 2)
     {
-        buffer = weechat_buffer_new (argv[1], argv[2]);
-        if (buffer)
-            weechat_buffer_set (buffer, "display", "1");
+        new_buffer = weechat_buffer_new (argv[1], argv[2]);
+        if (new_buffer)
+            weechat_buffer_set (new_buffer, "display", "1");
     }
     
     return PLUGIN_RC_SUCCESS;
@@ -162,12 +168,14 @@ demo_print_list (void *list, char *item_name)
  */
 
 static int
-demo_list_command_cb (void *data, int argc, char **argv, char **argv_eol)
+demo_list_command_cb (void *data, void *buffer, int argc, char **argv,
+                      char **argv_eol)
 {
     struct t_plugin_list *list;
     
     /* make C compiler happy */
     (void) data;
+    (void) buffer;
     (void) argv_eol;
     
     if (argc > 1)
@@ -206,10 +214,12 @@ demo_list_command_cb (void *data, int argc, char **argv, char **argv_eol)
  */
 
 static int
-demo_info_command_cb (void *data, int argc, char **argv, char **argv_eol)
+demo_info_command_cb (void *data, void *buffer, int argc, char **argv,
+                      char **argv_eol)
 {
     /* make C compiler happy */
     (void) data;
+    (void) buffer;
     (void) argv_eol;
     
     if (argc > 1)
@@ -232,6 +242,7 @@ demo_info_command_cb (void *data, int argc, char **argv, char **argv_eol)
 static int
 demo_event_cb (void *data, char *event, void *pointer)
 {
+    /* make C compiler happy */
     (void) data;
     
     weechat_printf (NULL, "demo_event: event: %s, pointer: %X",
@@ -241,7 +252,7 @@ demo_event_cb (void *data, char *event, void *pointer)
 }
 
 /*
- * weechat_plugin_init: init demo plugin
+ * weechat_plugin_init: initialize demo plugin
  */
 
 int

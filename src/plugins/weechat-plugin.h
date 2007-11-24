@@ -74,18 +74,19 @@ struct t_weechat_plugin
                            int (*)(char *));
     
     /* display */
+    char *(*prefix) (struct t_weechat_plugin *, char *);
+    char *(*color) (struct t_weechat_plugin *, char *);
     void (*printf) (struct t_weechat_plugin *, void *, char *, ...);
     void (*printf_date) (struct t_weechat_plugin *, void *, time_t,
                          char *, ...);
-    char *(*prefix) (struct t_weechat_plugin *, char *);
-    char *(*color) (struct t_weechat_plugin *, char *);
+    void (*log_printf) (struct t_weechat_plugin *, char *, ...);
     void (*print_infobar) (struct t_weechat_plugin *, int, char *, ...);
     void (*infobar_remove) (struct t_weechat_plugin *, int);
     
     /* hooks */
     struct t_hook *(*hook_command) (struct t_weechat_plugin *, char *, char *,
                                     char *, char *, char *,
-                                    int (*)(void *, int, char **, char **),
+                                    int (*)(void *, void *, int, char **, char **),
                                     void *);
     struct t_hook *(*hook_timer) (struct t_weechat_plugin *, long, int,
                                   int (*)(void *), void *);
@@ -172,15 +173,17 @@ struct t_weechat_plugin
 #define weechat_string_free_exploded(array_str)                         \
     weechat_plugin->string_free_exploded(weechat_plugin, array_str)
 
+#define weechat_prefix(prefix_name)                     \
+    weechat_plugin->prefix(weechat_plugin, prefix_name)
+#define weechat_color(color_name)                       \
+    weechat_plugin->color(weechat_plugin, color_name)
 #define weechat_printf(buffer, argz...)                         \
     weechat_plugin->printf(weechat_plugin, buffer, ##argz)
 #define weechat_printf_date(buffer, datetime, argz...)                  \
     weechat_plugin->printf_date(weechat_plugin, buffer, datetime,       \
                                 ##argz)
-#define weechat_prefix(prefix_name)                     \
-    weechat_plugin->prefix(weechat_plugin, prefix_name)
-#define weechat_color(color_name)                       \
-    weechat_plugin->color(weechat_plugin, color_name)
+#define weechat2_log_printf(argz...)                     \
+    weechat_plugin->log_printf(weechat_plugin, ##argz)
 
 #define weechat_hook_command(command, description, args, args_desc,     \
                              completion, callback, data)                \

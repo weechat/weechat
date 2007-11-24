@@ -20,8 +20,6 @@
 #ifndef __WEECHAT_IRC_COMMAND_H
 #define __WEECHAT_IRC_COMMAND_H 1
 
-#include "../../core/command.h"
-
 extern t_weechat_command irc_commands[];
 
 extern int irc_cmd_admin (t_gui_window *, char *, int, char **);

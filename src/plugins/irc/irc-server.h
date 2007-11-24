@@ -26,10 +26,6 @@
 #include <gnutls/gnutls.h>
 #endif
 
-#include "irc-channel.h"
-#include "../../core/hook.h"
-#include "../../gui/gui.h"
-
 #ifndef NI_MAXHOST
 #define NI_MAXHOST 256
 #endif
@@ -47,18 +43,14 @@
 
 /* output queue of messages to server (for sending slowly to server) */
 
-typedef struct t_irc_outqueue t_irc_outqueue;
-
 struct t_irc_outqueue
 {
-    char *message_before_mod;       /* message before any modifier           */
-    char *message_after_mod;        /* message after modifier(s)             */
-    int modified;                   /* message was modified by modifier(s)   */
-    t_irc_outqueue *next_outqueue;  /* pointer to next message in queue      */
-    t_irc_outqueue *prev_outqueue;  /* pointer to previous message in queue  */
+    char *message_before_mod;             /* msg before any modifier         */
+    char *message_after_mod;              /* msg after modifier(s)           */
+    int modified;                         /* msg was modified by modifier(s) */
+    struct t_irc_outqueue *next_outqueue; /* link to next msg in queue       */
+    struct t_irc_outqueue *prev_outqueue; /* link to prev msg in queue       */
 };
-
-typedef struct t_irc_server t_irc_server;
 
 struct t_irc_server
 {
@@ -90,7 +82,7 @@ struct t_irc_server
     int child_read;                 /* to read into child pipe               */
     int child_write;                /* to write into child pipe              */
     int sock;                       /* socket for server (IPv4 or IPv6)      */
-    t_weechat_hook *hook_fd;        /* hook for server socket or child pipe  */
+    struct t_hook *hook_fd;         /* hook for server socket or child pipe  */
     int is_connected;               /* 1 if WeeChat is connected to server   */
     int ssl_connected;              /* = 1 if connected with SSL             */
 #ifdef HAVE_GNUTLS
@@ -114,31 +106,29 @@ struct t_irc_server
     regex_t *cmd_list_regexp;       /* compiled Regular Expression for /list */
     int queue_msg;                  /* set to 1 when queue (out) is required */
     time_t last_user_message;       /* time of last user message (anti flood)*/
-    t_irc_outqueue *outqueue;       /* queue for outgoing user messages      */
-    t_irc_outqueue *last_outqueue;  /* last outgoing user message            */
-    t_gui_buffer *buffer;           /* GUI buffer allocated for server       */
-    t_irc_channel *channels;        /* opened channels on server             */
-    t_irc_channel *last_channel;    /* last opened channal on server         */
-    t_irc_server *prev_server;      /* link to previous server               */
-    t_irc_server *next_server;      /* link to next server                   */
+    struct t_irc_outqueue *outqueue;      /* queue for outgoing user msgs    */
+    struct t_irc_outqueue *last_outqueue; /* last outgoing user message      */
+    struct t_gui_buffer *buffer;          /* GUI buffer allocated for server */
+    struct t_irc_channel *channels;       /* opened channels on server       */
+    struct t_irc_channel *last_channel;   /* last opened channal on server   */
+    struct t_irc_server *prev_server;     /* link to previous server         */
+    struct t_irc_server *next_server;     /* link to next server             */
 };
 
 /* IRC messages */
 
-typedef struct t_irc_message t_irc_message;
-
 struct t_irc_message
 {
-    t_irc_server *server;           /* server pointer for received msg       */
-    char *data;                     /* message content                       */
-    t_irc_message *next_message;    /* link to next message                  */
+    struct t_irc_server *server;        /* server pointer for received msg   */
+    char *data;                         /* message content                   */
+    struct t_irc_message *next_message; /* link to next message              */
 };
 
-extern t_irc_server *irc_servers;
+extern struct t_irc_server *irc_servers;
 #ifdef HAVE_GNUTLS
 extern const int gnutls_cert_type_prio[];
 extern const int gnutls_prot_prio[];
 #endif
-extern t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
+extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
 
 #endif /* irc-server.h */

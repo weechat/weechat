@@ -253,50 +253,6 @@ plugin_api_exec_on_files (struct t_weechat_plugin *plugin, char *directory,
 }
 
 /*
- * plugin_api_printf: print a message on a buffer
- */
-
-void
-plugin_api_printf (struct t_weechat_plugin *plugin,
-                   void *buffer, char *format, ...)
-{
-    va_list argptr;
-    char buf[8192];
-    
-    if (!plugin || !format
-        || !gui_buffer_valid ((struct t_gui_buffer *)buffer))
-        return;
-    
-    va_start (argptr, format);
-    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
-    va_end (argptr);
-    
-    gui_chat_printf ((struct t_gui_buffer *)buffer, buf);
-}
-
-/*
- * plugin_api_printf_date: print a message on a buffer with a specific date
- */
-
-void
-plugin_api_printf_date (struct t_weechat_plugin *plugin,
-                        void *buffer, time_t date, char *format, ...)
-{
-    va_list argptr;
-    char buf[8192];
-    
-    if (!plugin || !format
-        || !gui_buffer_valid ((struct t_gui_buffer *)buffer))
-        return;
-    
-    va_start (argptr, format);
-    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
-    va_end (argptr);
-    
-    gui_chat_printf_date ((struct t_gui_buffer *)buffer, date, buf);
-}
-
-/*
  * plugin_api_prefix: return a prefix for display with printf
  */
 
@@ -341,6 +297,70 @@ plugin_api_color (struct t_weechat_plugin *plugin, char *color_name)
         return GUI_COLOR(num_color);
     
     return GUI_NO_COLOR;
+}
+
+/*
+ * plugin_api_printf: print a message on a buffer
+ */
+
+void
+plugin_api_printf (struct t_weechat_plugin *plugin,
+                   void *buffer, char *format, ...)
+{
+    va_list argptr;
+    char buf[8192];
+    
+    if (!plugin || !format
+        || !gui_buffer_valid ((struct t_gui_buffer *)buffer))
+        return;
+    
+    va_start (argptr, format);
+    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
+    va_end (argptr);
+    
+    gui_chat_printf ((struct t_gui_buffer *)buffer, "%s", buf);
+}
+
+/*
+ * plugin_api_printf_date: print a message on a buffer with a specific date
+ */
+
+void
+plugin_api_printf_date (struct t_weechat_plugin *plugin,
+                        void *buffer, time_t date, char *format, ...)
+{
+    va_list argptr;
+    char buf[8192];
+    
+    if (!plugin || !format
+        || !gui_buffer_valid ((struct t_gui_buffer *)buffer))
+        return;
+    
+    va_start (argptr, format);
+    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
+    va_end (argptr);
+    
+    gui_chat_printf_date ((struct t_gui_buffer *)buffer, date, buf);
+}
+
+/*
+ * plugin_api_log_printf: print a message in WeeChat log file
+ */
+
+void
+plugin_api_log_printf (struct t_weechat_plugin *plugin, char *format, ...)
+{
+    va_list argptr;
+    char buf[8192];
+    
+    if (!plugin || !format)
+        return;
+    
+    va_start (argptr, format);
+    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
+    va_end (argptr);
+    
+    log_printf ("%s", buf);
 }
 
 /*
@@ -404,7 +424,7 @@ struct t_hook *
 plugin_api_hook_command (struct t_weechat_plugin *plugin, char *command,
                          char *description, char *args,
                          char *args_desc, char *completion,
-                         int (*callback)(void *, int, char **, char **),
+                         int (*callback)(void *, void *, int, char **, char **),
                          void *data)
 {
     if (plugin && callback)

@@ -419,7 +419,7 @@ logger_print_cb (void *data, void *buffer, time_t date, char *prefix,
 }
 
 /*
- * weechat_plugin_init: init logger plugin
+ * weechat_plugin_init: initialize logger plugin
  */
 
 int

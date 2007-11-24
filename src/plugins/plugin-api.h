@@ -45,12 +45,13 @@ extern void plugin_api_exec_on_files (struct t_weechat_plugin *, char *,
                                           int (*)(char *));
 
 /* display */
+extern char *plugin_api_prefix (struct t_weechat_plugin *, char *);
+extern char *plugin_api_color (struct t_weechat_plugin *, char *);
 extern void plugin_api_printf (struct t_weechat_plugin *, void *,
                                char *, ...);
 extern void plugin_api_printf_date (struct t_weechat_plugin *, void *,
                                     time_t, char *, ...);
-extern char *plugin_api_prefix (struct t_weechat_plugin *, char *);
-extern char *plugin_api_color (struct t_weechat_plugin *, char *);
+extern void plugin_api_log_printf (struct t_weechat_plugin *, char *, ...);
 extern void plugin_api_print_infobar (struct t_weechat_plugin *, int,
                                       char *, ...);
 extern void plugin_api_infobar_remove (struct t_weechat_plugin *, int);
@@ -59,7 +60,7 @@ extern void plugin_api_infobar_remove (struct t_weechat_plugin *, int);
 extern struct t_hook *plugin_api_hook_command (struct t_weechat_plugin *,
                                                char *, char *, char *, char *,
                                                char *,
-                                               int (*)(void *, int, char **, char **),
+                                               int (*)(void *, void *, int, char **, char **),
                                                void *);
 extern struct t_hook *plugin_api_hook_timer (struct t_weechat_plugin *,
                                              long, int,
