@@ -106,7 +106,8 @@ struct t_weechat_plugin
     
     /* buffers */
     struct t_gui_buffer *(*buffer_new) (struct t_weechat_plugin *,
-                                        char *, char *);
+                                        char *, char *,
+                                        void (*)(struct t_gui_buffer *, char *));
     struct t_gui_buffer *(*buffer_search) (struct t_weechat_plugin *,
                                            char *, char *);
     void (*buffer_close) (struct t_weechat_plugin *, void *);
@@ -210,8 +211,9 @@ struct t_weechat_plugin
 #define weechat_unhook_all()                    \
     weechat_plugin->unhook(weechat_plugin)
 
-#define weechat_buffer_new(category, name)                      \
-    weechat_plugin->buffer_new(weechat_plugin, category, name)
+#define weechat_buffer_new(category, name, input_data_cb)               \
+    weechat_plugin->buffer_new(weechat_plugin, category, name,          \
+                               input_data_cb)
 #define weechat_buffer_search(category, name)                           \
     weechat_plugin->buffer_search(weechat_plugin, category, name)
 #define weechat_current_buffer                                  \

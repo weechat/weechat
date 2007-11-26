@@ -49,23 +49,22 @@ demo_printf_command_cb (void *data, void *buffer, int argc, char **argv,
 {
     /* make C compiler happy */
     (void) data;
-    (void) buffer;
     (void) argv;
     
     if (argc > 1)
-        weechat_printf (weechat_current_buffer,
-                        "demo_printf: %s", argv_eol[1]);
+        weechat_printf (buffer,
+                        "demo_printf: '%s'", argv_eol[1]);
     else
     {
-        weechat_printf (weechat_current_buffer,
+        weechat_printf (buffer,
                         "demo message without prefix");
-        weechat_printf (weechat_current_buffer,
+        weechat_printf (buffer,
                         "%sdemo message with info prefix",
                         weechat_prefix ("info"));
-        weechat_printf (weechat_current_buffer,
+        weechat_printf (buffer,
                         "%sdemo message with error prefix",
                         weechat_prefix ("error"));
-        weechat_printf (weechat_current_buffer,
+        weechat_printf (buffer,
                         "colors: %s buffer %s nick1 %s nick2 %s nick3 "
                         "%s nick4",
                         weechat_color ("col_chat_buffer"),
@@ -76,6 +75,16 @@ demo_printf_command_cb (void *data, void *buffer, int argc, char **argv,
     }
     
     return PLUGIN_RC_SUCCESS;
+}
+
+/*
+ * demo_buffer_input_data_cb: callback for input data on buffer
+ */
+
+static void
+demo_buffer_input_data_cb (struct t_gui_buffer *buffer, char *data)
+{
+    weechat_printf (buffer, "buffer input_data_cb: data = '%s'", data);
 }
 
 /*
@@ -95,7 +104,8 @@ demo_buffer_command_cb (void *data, void *buffer, int argc, char **argv,
     
     if (argc > 2)
     {
-        new_buffer = weechat_buffer_new (argv[1], argv[2]);
+        new_buffer = weechat_buffer_new (argv[1], argv[2],
+                                         demo_buffer_input_data_cb);
         if (new_buffer)
             weechat_buffer_set (new_buffer, "display", "1");
     }

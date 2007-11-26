@@ -63,7 +63,8 @@ struct t_gui_buffer *gui_buffer_before_raw_data = NULL; /* buf. before raw  */
  */
 
 struct t_gui_buffer *
-gui_buffer_new (void *plugin, char *category, char *name)
+gui_buffer_new (void *plugin, char *category, char *name,
+                void (*input_data_cb)(struct t_gui_buffer *, char *))
 {
     struct t_gui_buffer *new_buffer;
     struct t_gui_completion *new_completion;
@@ -118,7 +119,7 @@ gui_buffer_new (void *plugin, char *category, char *name)
         
         /* input */
         new_buffer->input = 1;
-        new_buffer->input_data_cb = NULL;
+        new_buffer->input_data_cb = input_data_cb;
         new_buffer->input_nick = NULL;
         new_buffer->input_buffer_alloc = GUI_BUFFER_INPUT_BLOCK_SIZE;
         new_buffer->input_buffer = (char *) malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);

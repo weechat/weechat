@@ -84,7 +84,8 @@ extern void plugin_api_unhook_all (struct t_weechat_plugin *);
 
 /* buffers */
 extern struct t_gui_buffer *plugin_api_buffer_new (struct t_weechat_plugin *,
-                                                   char *, char *);
+                                                   char *, char *,
+                                                   void (*)(struct t_gui_buffer *, char *));
 extern struct t_gui_buffer *plugin_api_buffer_search (struct t_weechat_plugin *,
                                                       char *, char *);
 extern void plugin_api_buffer_close (struct t_weechat_plugin *, void *);

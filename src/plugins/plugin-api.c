@@ -554,10 +554,11 @@ plugin_api_unhook_all (struct t_weechat_plugin *plugin)
 
 struct t_gui_buffer *
 plugin_api_buffer_new (struct t_weechat_plugin *plugin, char *category,
-                       char *name)
+                       char *name,
+                       void (*input_data_cb)(struct t_gui_buffer *, char *))
 {
     if (plugin && name && name[0])
-        return gui_buffer_new (plugin, category, name);
+        return gui_buffer_new (plugin, category, name, input_data_cb);
     
     return NULL;
 }
