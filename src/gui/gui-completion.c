@@ -454,54 +454,23 @@ gui_completion_list_add_filename (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_list_add_plugin_cmd: add plugin command handlers to completion list
+ * gui_completion_list_add_command_hooks: add command hooks to completion list
  */
 
 void
-gui_completion_list_add_plugin_cmd (struct t_gui_completion *completion)
+gui_completion_list_add_command_hooks (struct t_gui_completion *completion)
 {
-    (void) completion;
-    /*t_weechat_plugin *ptr_plugin;
-    t_plugin_handler *ptr_handler;
+    struct t_hook *ptr_hook;
     
-    for (ptr_plugin = weechat_plugins; ptr_plugin;
-         ptr_plugin = ptr_plugin->next_plugin)
+    for (ptr_hook = weechat_hooks; ptr_hook; ptr_hook = ptr_hook->next_hook)
     {
-        for (ptr_handler = ptr_plugin->handlers;
-             ptr_handler; ptr_handler = ptr_handler->next_handler)
-        {
-            if (ptr_handler->type == PLUGIN_HANDLER_COMMAND)
-                gui_completion_list_add (completion, ptr_handler->command,
-                                         0, WEELIST_POS_SORT);
-        }
-    }*/
-}
-
-/*
- * gui_completion_list_add_protocol_commands: add protocol commands to completion list
- */
-
-void
-gui_completion_list_add_protocol_commands (struct t_gui_completion *completion)
-{
-    (void) completion;
-    
-    /*int i;
-    t_weechat_protocol *ptr_protocol;
-
-    ptr_protocol = completion->buffer->protocol;
-
-    if (ptr_protocol && ptr_protocol->commands)
-    {
-        i = 0;
-        while (ptr_protocol->commands[i].name)
-        {
+        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+            && (HOOK_COMMAND(ptr_hook, command))
+            && (HOOK_COMMAND(ptr_hook, command)[0]))
             gui_completion_list_add (completion,
-                                     ptr_protocol->commands[i].name,
-                                     0, WEELIST_POS_SORT);            
-            i++;
-        }
-    }*/
+                                     HOOK_COMMAND(ptr_hook, command),
+                                     0, WEELIST_POS_SORT);
+    }
 }
 
 /*
@@ -1023,11 +992,8 @@ gui_completion_build_list_template (struct t_gui_completion *completion, char *t
                         case 'f': /* filename */
                             gui_completion_list_add_filename (completion);
                             break;
-                        case 'h': /* plugin command handlers */
-                            gui_completion_list_add_plugin_cmd (completion);
-                            break;
-                        case 'i': /* protocol commands */
-                            gui_completion_list_add_protocol_commands (completion);
+                        case 'h': /* commands hooks */
+                            gui_completion_list_add_command_hooks (completion);
                             break;
                         case 'k': /* key cmd/funtcions*/
                             gui_completion_list_add_key_cmd (completion);

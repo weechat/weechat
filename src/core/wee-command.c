@@ -100,7 +100,7 @@ struct command weechat_commands[] =
     N_("command"),
     N_("command: command to execute (a '/' is automatically added if not "
        "found at beginning of command)\n"),
-    "%w|%i", 0, MAX_ARGS, 1, command_builtin },
+    "%w", 0, MAX_ARGS, 1, command_builtin },
   { "clear",
     N_("clear window(s)"),
     N_("[-all | number [number ...]]"),
@@ -119,7 +119,7 @@ struct command weechat_commands[] =
     N_("display help about commands"),
     N_("[command]"),
     N_("command: name of a WeeChat or IRC command"),
-    "%w|%i|%h", 0, 1, 0, command_help },
+    "%w|%h", 0, 1, 0, command_help },
   { "history",
     N_("show buffer command history"),
     N_("[clear | value]"),
