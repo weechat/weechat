@@ -110,10 +110,8 @@ plugin_list_new_var_int (struct t_plugin_list_item *item,
     {
         new_var->name = strdup (name);
         new_var->type = PLUGIN_LIST_VAR_INTEGER;
-        new_var->value_int = value;
-        new_var->value_string = NULL;
-        new_var->value_pointer = NULL;
-        new_var->value_time = 0;
+        new_var->value = malloc (sizeof (int));
+        *((int *)new_var->value) = value;
         
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
@@ -145,9 +143,7 @@ plugin_list_new_var_string (struct t_plugin_list_item *item,
     {
         new_var->name = strdup (name);
         new_var->type = PLUGIN_LIST_VAR_STRING;
-        new_var->value_int = 0;
-        new_var->value_string = (value) ? strdup (value) : NULL;
-        new_var->value_time = 0;
+        new_var->value = (value) ? strdup (value) : NULL;
         
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
@@ -179,10 +175,7 @@ plugin_list_new_var_pointer (struct t_plugin_list_item *item,
     {
         new_var->name = strdup (name);
         new_var->type = PLUGIN_LIST_VAR_POINTER;
-        new_var->value_int = 0;
-        new_var->value_string = NULL;
-        new_var->value_pointer = pointer;
-        new_var->value_time = 0;
+        new_var->value = pointer;
         
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
@@ -214,10 +207,8 @@ plugin_list_new_var_time (struct t_plugin_list_item *item,
     {
         new_var->name = strdup (name);
         new_var->type = PLUGIN_LIST_VAR_TIME;
-        new_var->value_int = 0;
-        new_var->value_string = NULL;
-        new_var->value_pointer = NULL;
-        new_var->value_time = time;
+        new_var->value = malloc (sizeof (time_t));
+        *((time_t *)new_var->value) = time;
         
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
@@ -359,7 +350,7 @@ plugin_list_get_int (struct t_plugin_list *list, char *var)
         if (string_strcasecmp (ptr_var->name, var) == 0)
         {
             if (ptr_var->type == PLUGIN_LIST_VAR_INTEGER)
-                return ptr_var->value_int;
+                return *((int *)ptr_var->value);
             else
                 return 0;
         }
@@ -386,7 +377,7 @@ plugin_list_get_string (struct t_plugin_list *list, char *var)
         if (string_strcasecmp (ptr_var->name, var) == 0)
         {
             if (ptr_var->type == PLUGIN_LIST_VAR_STRING)
-                return ptr_var->value_string;
+                return (char *)ptr_var->value;
             else
                 return NULL;
         }
@@ -413,7 +404,7 @@ plugin_list_get_pointer (struct t_plugin_list *list, char *var)
         if (string_strcasecmp (ptr_var->name, var) == 0)
         {
             if (ptr_var->type == PLUGIN_LIST_VAR_POINTER)
-                return ptr_var->value_pointer;
+                return ptr_var->value;
             else
                 return NULL;
         }
@@ -440,7 +431,7 @@ plugin_list_get_time (struct t_plugin_list *list, char *var)
         if (string_strcasecmp (ptr_var->name, var) == 0)
         {
             if (ptr_var->type == PLUGIN_LIST_VAR_TIME)
-                return ptr_var->value_time;
+                return *((time_t *)ptr_var->value);
             else
                 return 0;
         }
@@ -477,8 +468,13 @@ plugin_list_var_free (struct t_plugin_list_item *item,
     /* free data */
     if (var->name)
         free (var->name);
-    if (var->value_string)
-        free (var->value_string);
+    if (((var->type == PLUGIN_LIST_VAR_INTEGER)
+         || (var->type == PLUGIN_LIST_VAR_STRING)
+         || (var->type == PLUGIN_LIST_VAR_TIME))
+        && var->value)
+    {
+        free (var->value);
+    }
     
     item->vars = new_vars;
 }
@@ -589,9 +585,21 @@ plugin_list_print_log ()
                 log_printf ("      [var (addr:0x%X)]\n", ptr_var);
                 log_printf ("        name . . . . . . . . : '%s'\n", ptr_var->name);
                 log_printf ("        type . . . . . . . . : %d\n",   ptr_var->type);
-                log_printf ("        value_int. . . . . . : %d\n",   ptr_var->value_int);
-                log_printf ("        value_string . . . . : '%s'\n", ptr_var->value_string);
-                log_printf ("        value_time . . . . . : %ld\n",  ptr_var->value_time);
+                switch (ptr_var->type)
+                {
+                    case PLUGIN_LIST_VAR_INTEGER:
+                        log_printf ("        value (int). . . . . : %d\n", *((int *)ptr_var->value));
+                        break;
+                    case PLUGIN_LIST_VAR_STRING:
+                        log_printf ("        value (string) . . . : '%s'\n", (char *)ptr_var->value);
+                        break;
+                    case PLUGIN_LIST_VAR_POINTER:
+                        log_printf ("        value (pointer). . . : 0x%X\n", ptr_var->value);
+                        break;
+                    case PLUGIN_LIST_VAR_TIME:
+                        log_printf ("        value (time) . . . . : %ld\n", *((time_t *)ptr_var->value));
+                        break;
+                }
                 log_printf ("        prev_var . . . . . . : 0x%X\n", ptr_var->prev_var);
                 log_printf ("        next_var . . . . . . : 0x%X\n", ptr_var->next_var);
             }

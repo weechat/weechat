@@ -34,10 +34,7 @@ struct t_plugin_list_var
 {
     char *name;                           /* variable name                  */
     enum t_plugin_var_type type;          /* type: integer, string, time    */
-    int value_int;                        /* integer value                  */
-    char *value_string;                   /* string value                   */
-    void *value_pointer;                  /* pointer value                  */
-    time_t value_time;                    /* time value                     */
+    void *value;                          /* pointer to value               */
     struct t_plugin_list_var *prev_var;   /* link to previous variable      */
     struct t_plugin_list_var *next_var;   /* link to next variable          */
 };
