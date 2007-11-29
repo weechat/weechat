@@ -838,6 +838,9 @@ command_debug (struct t_gui_buffer *buffer,
         else if (string_strcasecmp (argv[0], "buffer") == 0)
         {
             gui_buffer_dump_hexa (buffer);
+            gui_chat_printf (NULL,
+                             "DEBUG: buffer content written in WeeChat "
+                             "log file");
         }
         else if (string_strcasecmp (argv[0], "windows") == 0)
         {
