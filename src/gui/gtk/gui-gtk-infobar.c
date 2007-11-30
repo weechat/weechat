@@ -29,7 +29,7 @@
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
 #include "../gui-infobar.h"
-#include "../gui-main.h"
+#include "../gui-window.h"
 #include "gui-gtk.h"
 
 

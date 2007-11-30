@@ -30,6 +30,7 @@
 #include "../../core/wee-config.h"
 #include "../../core/wee-string.h"
 #include "../gui-infobar.h"
+#include "../gui-color.h"
 #include "../gui-main.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
@@ -64,7 +65,7 @@ gui_infobar_draw_time (struct t_gui_buffer *buffer)
                        0, 1,
                        "%02d:%02d",
                        local_time->tm_hour, local_time->tm_min);
-            if (cfg_look_infobar_seconds)
+            if (CONFIG_BOOLEAN(config_look_infobar_seconds))
                 wprintw (GUI_CURSES(ptr_win)->win_infobar,
                          ":%02d",
                          local_time->tm_sec);
@@ -105,7 +106,8 @@ gui_infobar_draw (struct t_gui_buffer *buffer, int erase)
         if (local_time)
         {
             strftime (text_time, sizeof (text_time),
-                      cfg_look_infobar_time_format, local_time);
+                      CONFIG_STRING(config_look_infobar_time_format),
+                      local_time);
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar,
                                           GUI_COLOR_INFOBAR_DELIMITERS);
             wprintw (GUI_CURSES(ptr_win)->win_infobar, "[");
@@ -114,7 +116,7 @@ gui_infobar_draw (struct t_gui_buffer *buffer, int erase)
             wprintw (GUI_CURSES(ptr_win)->win_infobar,
                      "%02d:%02d",
                      local_time->tm_hour, local_time->tm_min);
-            if (cfg_look_infobar_seconds)
+            if (CONFIG_BOOLEAN(config_look_infobar_seconds))
                 wprintw (GUI_CURSES(ptr_win)->win_infobar,
                          ":%02d",
                          local_time->tm_sec);

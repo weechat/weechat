@@ -242,13 +242,15 @@ gui_input_complete (struct t_gui_buffer *buffer)
         {
             if (strncmp (utf8_add_offset (buffer->input_buffer,
                                           buffer->input_buffer_pos),
-                         cfg_look_nick_completor, strlen (cfg_look_nick_completor)) != 0)
-                gui_input_insert_string (buffer, cfg_look_nick_completor,
+                         CONFIG_STRING(config_look_nick_completor),
+                         strlen (CONFIG_STRING(config_look_nick_completor))) != 0)
+                gui_input_insert_string (buffer,
+                                         CONFIG_STRING(config_look_nick_completor),
                                          buffer->input_buffer_pos);
             else
-                buffer->input_buffer_pos += utf8_strlen (cfg_look_nick_completor);
+                buffer->input_buffer_pos += utf8_strlen (CONFIG_STRING(config_look_nick_completor));
             if (buffer->completion->position >= 0)
-                buffer->completion->position += strlen (cfg_look_nick_completor);
+                buffer->completion->position += strlen (CONFIG_STRING(config_look_nick_completor));
             if (buffer->input_buffer[utf8_real_pos (buffer->input_buffer,
                                                     buffer->input_buffer_pos)] != ' ')
                 gui_input_insert_string (buffer, " ",
@@ -315,7 +317,7 @@ gui_input_get_prompt_length (struct t_gui_buffer *buffer)
     }
     
     length = 0;
-    pos = cfg_look_input_format;
+    pos = CONFIG_STRING(config_look_input_format);
     while (pos && pos[0])
     {
         switch (pos[0])

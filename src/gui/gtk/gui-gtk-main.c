@@ -174,7 +174,7 @@ gui_main_init ()
         else
             gui_init_ok = 0;
         
-        if (cfg_look_set_title)
+        if (CONFIG_BOOLEAN(config_look_set_title))
             gui_window_title_set ();
     }
 }
@@ -226,6 +226,6 @@ gui_main_end ()
         gui_infobar_remove ();
 
     /* reset title */
-    if (cfg_look_set_title)
+    if (CONFIG_BOOLEAN(config_look_set_title))
 	gui_window_title_reset ();
 }

@@ -30,6 +30,7 @@
 #include "../../core/wee-config.h"
 #include "../../core/wee-utf8.h"
 #include "../gui-status.h"
+#include "../gui-color.h"
 #include "../gui-main.h"
 #include "../gui-hotlist.h"
 #include "../gui-window.h"
@@ -121,22 +122,22 @@ gui_status_draw (struct t_gui_buffer *buffer, int erase)
                     case GUI_HOTLIST_LOW:
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                                       GUI_COLOR_STATUS_DATA_OTHER);
-                        display_name = ((cfg_look_hotlist_names_level & 1) != 0);
+                        display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 1) != 0);
                         break;
                     case GUI_HOTLIST_MSG:
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                                       GUI_COLOR_STATUS_DATA_MSG);
-                        display_name = ((cfg_look_hotlist_names_level & 2) != 0);
+                        display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 2) != 0);
                         break;
                     case GUI_HOTLIST_PRIVATE:
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                                       GUI_COLOR_STATUS_DATA_PRIVATE);
-                        display_name = ((cfg_look_hotlist_names_level & 4) != 0);
+                        display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 4) != 0);
                         break;
                     case GUI_HOTLIST_HIGHLIGHT:
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                                       GUI_COLOR_STATUS_DATA_HIGHLIGHT);
-                        display_name = ((cfg_look_hotlist_names_level & 8) != 0);
+                        display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 8) != 0);
                         break;
                     default:
                         display_name = 0;
@@ -146,8 +147,9 @@ gui_status_draw (struct t_gui_buffer *buffer, int erase)
                 wprintw (GUI_CURSES(ptr_win)->win_status, "%d",
                          ptr_hotlist->buffer->number);
                 
-                if (display_name && (cfg_look_hotlist_names_count != 0)
-                    && (names_count < cfg_look_hotlist_names_count))
+                if (display_name
+                    && (CONFIG_INTEGER(config_look_hotlist_names_count) != 0)
+                    && (names_count < CONFIG_INTEGER(config_look_hotlist_names_count)))
                 {
                     names_count++;
                     
@@ -157,12 +159,12 @@ gui_status_draw (struct t_gui_buffer *buffer, int erase)
                     
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                                   GUI_COLOR_STATUS);
-                    if (cfg_look_hotlist_names_length == 0)
+                    if (CONFIG_INTEGER(config_look_hotlist_names_length) == 0)
                         snprintf (format, sizeof (format) - 1, "%%s");
                     else
                         snprintf (format, sizeof (format) - 1,
                                   "%%.%ds",
-                                  cfg_look_hotlist_names_length);
+                                  CONFIG_INTEGER(config_look_hotlist_names_length));
                     gui_window_wprintw (GUI_CURSES(ptr_win)->win_status,
                                         format,
                                         ptr_hotlist->buffer->name);
@@ -179,7 +181,7 @@ gui_status_draw (struct t_gui_buffer *buffer, int erase)
         /* display lag */
         /*if (GUI_SERVER(ptr_win->buffer))
         {
-            if (GUI_SERVER(ptr_win->buffer)->lag / 1000 >= cfg_irc_lag_min_show)
+            if (GUI_SERVER(ptr_win->buffer)->lag / 1000 >= config_irc_lag_min_show)
             {
                 gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                               GUI_COLOR_STATUS_DELIMITERS);

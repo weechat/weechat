@@ -39,6 +39,7 @@
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "gui-buffer.h"
+#include "gui-chat.h"
 #include "gui-completion.h"
 #include "gui-history.h"
 #include "gui-hotlist.h"
@@ -1387,8 +1388,8 @@ gui_action_scroll_unread (char *args)
 
     if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
     {
-        if (cfg_look_read_marker &&
-            cfg_look_read_marker[0] &&
+        if (CONFIG_STRING(config_look_read_marker) &&
+            CONFIG_STRING(config_look_read_marker)[0] &&
             (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATED) &&
             gui_current_window->buffer->last_read_line &&
             gui_current_window->buffer->last_read_line != gui_current_window->buffer->last_line)

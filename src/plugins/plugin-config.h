@@ -20,28 +20,16 @@
 #ifndef __WEECHAT_PLUGIN_CONFIG_H
 #define __WEECHAT_PLUGIN_CONFIG_H 1
 
-#include "../core/wee-config-option.h"
+#define PLUGIN_CONFIG_FILENAME "plugins.rc"
 
-#define WEECHAT_PLUGIN_CONFIG_NAME "plugins.rc"
+extern struct t_config_file *plugin_config;
+extern struct t_config_option *plugin_options;
 
-struct t_plugin_option
-{
-    char *name;                          /* option name in config file      */
-    char *value;                         /* value of option                 */
-    struct t_plugin_option *prev_option; /* link to previous option         */
-    struct t_plugin_option *next_option; /* link to next option             */
-};
-
-extern struct t_plugin_option *plugin_options;
-
-extern struct t_plugin_option *plugin_config_search_internal (char *);
-extern struct t_plugin_option *plugin_config_search (char *, char *);
+extern struct t_config_option *plugin_config_search_internal (char *);
+extern struct t_config_option *plugin_config_search (char *, char *);
 extern int plugin_config_set_internal (char *, char *);
 extern int plugin_config_set (char *, char *, char *);
-extern int plugin_config_read_option (struct t_config_option *, char *, char *);
 extern int plugin_config_read ();
-extern int plugin_config_write_options (FILE *, char *,
-                                        struct t_config_option *);
 extern int plugin_config_write ();
 
 #endif /* plugin-config.h */

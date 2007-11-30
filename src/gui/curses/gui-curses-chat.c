@@ -32,6 +32,7 @@
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
 #include "../gui-chat.h"
+#include "../gui-color.h"
 #include "../gui-main.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
@@ -248,7 +249,7 @@ int
 gui_chat_get_real_width (struct t_gui_window *window)
 {
     if (window->buffer->nicklist
-        && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_RIGHT))
+        && (CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_RIGHT))
         return window->win_chat_width - 1;
     else
         return window->win_chat_width;
@@ -478,12 +479,13 @@ gui_chat_display_word (struct t_gui_window *window,
             }
             window->win_chat_cursor_x += length_align;
             if (!simulate
-                && (cfg_look_prefix_align != CFG_LOOK_PREFIX_ALIGN_NONE)
-                && (cfg_look_prefix_suffix && cfg_look_prefix_suffix[0]))
+                && (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
+                && (CONFIG_STRING(config_look_prefix_suffix)
+                    && CONFIG_STRING(config_look_prefix_suffix)[0]))
             {
                 gui_chat_set_weechat_color (window, GUI_COLOR_CHAT_PREFIX_SUFFIX);
-                gui_chat_display_word_raw (window, cfg_look_prefix_suffix, 1);
-                window->win_chat_cursor_x += gui_chat_strlen_screen (cfg_look_prefix_suffix);
+                gui_chat_display_word_raw (window, CONFIG_STRING(config_look_prefix_suffix), 1);
+                window->win_chat_cursor_x += gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_suffix));
                 gui_chat_display_word_raw (window, str_space, 1);
                 window->win_chat_cursor_x += gui_chat_strlen_screen (str_space);
                 gui_chat_set_weechat_color (window, GUI_COLOR_CHAT);
@@ -572,23 +574,23 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
     /* display prefix */
     if (line->prefix
         && (line->prefix[0]
-            || (cfg_look_prefix_align != CFG_LOOK_PREFIX_ALIGN_NONE)))
+            || (CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)))
     {
         if (!simulate)
             gui_chat_reset_style (window);
         
-        if (cfg_look_prefix_align_max > 0)
+        if (CONFIG_INTEGER(config_look_prefix_align_max) > 0)
         {
             length_allowed =
-                (window->buffer->prefix_max_length <= cfg_look_prefix_align_max) ?
-                window->buffer->prefix_max_length : cfg_look_prefix_align_max;
+                (window->buffer->prefix_max_length <= CONFIG_INTEGER(config_look_prefix_align_max)) ?
+                window->buffer->prefix_max_length : CONFIG_INTEGER(config_look_prefix_align_max);
         }
         else
             length_allowed = window->buffer->prefix_max_length;
         
         num_spaces = length_allowed - line->prefix_length;
         
-        if (cfg_look_prefix_align == CFG_LOOK_PREFIX_ALIGN_RIGHT)
+        if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_RIGHT)
         {
             for (i = 0; i < num_spaces; i++)
             {
@@ -598,7 +600,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
             }
         }
         /* not enough space to display full prefix ? => truncate it! */
-        if ((cfg_look_prefix_align != CFG_LOOK_PREFIX_ALIGN_NONE)
+        if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
             && (num_spaces < 0))
         {
             gui_chat_display_word (window, line, line->prefix,
@@ -618,7 +620,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
         if (!simulate)
             gui_chat_reset_style (window);
         
-        if (cfg_look_prefix_align == CFG_LOOK_PREFIX_ALIGN_LEFT)
+        if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_LEFT)
         {
             for (i = 0; i < num_spaces; i++)
             {
@@ -627,7 +629,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
                                        simulate);
             }
         }
-        if ((cfg_look_prefix_align != CFG_LOOK_PREFIX_ALIGN_NONE)
+        if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
             && (num_spaces < 0))
         {
             if (!simulate)
@@ -642,12 +644,14 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
                                    NULL, 1, num_lines, count, lines_displayed,
                                    simulate);
         }
-        if ((cfg_look_prefix_align != CFG_LOOK_PREFIX_ALIGN_NONE)
-            && (cfg_look_prefix_suffix && cfg_look_prefix_suffix[0]))
+        if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
+            && (CONFIG_STRING(config_look_prefix_suffix)
+                && CONFIG_STRING(config_look_prefix_suffix)[0]))
         {
             if (!simulate)
                 gui_chat_set_weechat_color (window, GUI_COLOR_CHAT_PREFIX_SUFFIX);
-            gui_chat_display_word (window, line, cfg_look_prefix_suffix,
+            gui_chat_display_word (window, line,
+                                   CONFIG_STRING(config_look_prefix_suffix),
                                    NULL, 1, num_lines, count,
                                    lines_displayed, simulate);
             gui_chat_display_word (window, line, str_space,
@@ -809,7 +813,8 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     }
     else
     {
-        if (cfg_look_read_marker && cfg_look_read_marker[0])
+        if (CONFIG_STRING(config_look_read_marker)
+            && CONFIG_STRING(config_look_read_marker)[0])
         {
             /* display marker if line is matching user search */
             if (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
@@ -821,7 +826,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                                                 GUI_COLOR_CHAT_READ_MARKER);
                     mvwprintw (GUI_CURSES(window)->win_chat,
                                read_marker_y, read_marker_x,
-                               "%c", cfg_look_read_marker[0]);
+                               "%c", CONFIG_STRING(config_look_read_marker)[0]);
                 }
             }
             else
@@ -834,7 +839,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                                                 GUI_COLOR_CHAT_READ_MARKER);
                     mvwprintw (GUI_CURSES(window)->win_chat,
                                read_marker_y, read_marker_x,
-                               "%c", cfg_look_read_marker[0]);
+                               "%c", CONFIG_STRING(config_look_read_marker)[0]);
                 }
             }
         }

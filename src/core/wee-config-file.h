@@ -20,24 +20,108 @@
 #ifndef __WEECHAT_CONFIG_FILE_H
 #define __WEECHAT_CONFIG_FILE_H 1
 
-#include "wee-config-option.h"
+#define CONFIG_BOOLEAN(option) (*((char *)((option)->value)))
+#define CONFIG_BOOLEAN_DEFAULT(option) (*((char *)((option)->default_value)))
 
-typedef int (t_config_func_read_option) (struct t_config_option *, char *, char *);
-typedef int (t_config_func_write_options) (FILE *, char *, struct t_config_option *);
+#define CONFIG_INTEGER(option) (*((int *)((option)->value)))
+#define CONFIG_INTEGER_DEFAULT(option) (*((int *)((option)->default_value)))
 
-extern int config_file_read_option (struct t_config_option *, char *, char *);
-extern int config_file_read (char **, struct t_config_option **,
-                             t_config_func_read_option **,
-                             t_config_func_read_option *,
-                             t_config_func_write_options **,
-                             char *);
+#define CONFIG_STRING(option) ((char *)((option)->value))
+#define CONFIG_STRING_DEFAULT(option) ((char *)((option)->default_value))
 
-extern int config_file_write_options (FILE *, char *, struct t_config_option *);
-extern int config_file_write_options_default_values (FILE *, char *,
-                                                     struct t_config_option *);
-extern int config_file_write_default (char **, struct t_config_option **,
-                                      t_config_func_write_options **, char *);
-extern int config_file_write (char **, struct t_config_option **,
-                              t_config_func_write_options **, char *);
+#define CONFIG_COLOR(option) (*((int *)((option)->value)))
+#define CONFIG_COLOR_DEFAULT(option) (*((int *)((option)->default_value)))
+
+#define CONFIG_BOOLEAN_FALSE  0
+#define CONFIG_BOOLEAN_TRUE   1
+
+struct t_config_file
+{
+    char *filename;                        /* config filename (without path)*/
+    FILE *file;                            /* file pointer                  */
+    struct t_config_section *sections;     /* config sections               */
+    struct t_config_section *last_section; /* last config section           */
+    struct t_config_file *prev_config;     /* link to previous config file  */
+    struct t_config_file *next_config;     /* link to next config file      */
+};
+
+struct t_config_section
+{
+    char *name;                            /* section name                  */
+    void (*callback_read)                  /* called when unknown option    */
+    (struct t_config_file *,               /* is read from config file      */
+     char *, char *);                         
+    void (*callback_write)                 /* called to write special       */
+    (struct t_config_file *);              /* options in config file        */
+    void (*callback_write_default)         /* called to write default       */
+    (struct t_config_file *);              /* options in config file        */
+    struct t_config_option *options;       /* options in section            */
+    struct t_config_option *last_option;   /* last option in section        */
+    struct t_config_section *prev_section; /* link to previous section      */
+    struct t_config_section *next_section; /* link to next section          */
+};
+
+enum t_config_option_type
+{
+    CONFIG_OPTION_BOOLEAN = 0,
+    CONFIG_OPTION_INTEGER,
+    CONFIG_OPTION_STRING,
+    CONFIG_OPTION_COLOR,
+};
+
+struct t_config_option
+{
+    char *name;                            /* name                          */
+    enum t_config_option_type type;        /* type                          */
+    char *description;                     /* description                   */
+    char **string_values;                  /* allowed string values         */
+    int min, max;                          /* min and max for value         */
+    void *default_value;                   /* default value                 */
+    void *value;                           /* value                         */
+    void (*callback_change)();             /* called when value is changed  */
+    struct t_config_option *prev_option;   /* link to previous option       */
+    struct t_config_option *next_option;   /* link to next option           */
+};
+
+extern struct t_config_file *config_file_new (char *);
+extern struct t_config_section *config_file_new_section (struct t_config_file *,
+                                                         char *,
+                                                         void (*)(struct t_config_file *, char *, char *),
+                                                         void (*)(struct t_config_file *),
+                                                         void (*)(struct t_config_file *));
+extern struct t_config_section *config_file_search_section (struct t_config_file *,
+                                                            char *);
+extern struct t_config_option *config_file_new_option_boolean (struct t_config_section *,
+                                                               char *, char *,
+                                                               int,
+                                                               void (*)());
+extern struct t_config_option *config_file_new_option_integer (struct t_config_section *,
+                                                               char *, char *,
+                                                               int, int, int,
+                                                               void (*)());
+extern struct t_config_option *config_file_new_option_integer_with_string (struct t_config_section *,
+                                                                           char *,
+                                                                           char *,
+                                                                           char *,
+                                                                           int,
+                                                                           void (*)());
+extern struct t_config_option *config_file_new_option_string (struct t_config_section *,
+                                                              char *, char *,
+                                                              int, int,
+                                                              char *, void (*)());
+extern struct t_config_option *config_file_new_option_color (struct t_config_section *,
+                                                             char *, char *,
+                                                             int, char *,
+                                                             void (*)());
+extern struct t_config_option *config_file_search_option (struct t_config_file *,
+                                                          struct t_config_section *,
+                                                          char *);
+extern int config_file_option_set (struct t_config_option *, char *);
+
+extern int config_file_read (struct t_config_file *);
+extern void config_file_write_line (struct t_config_file *, char *, char *);
+extern int config_file_write (struct t_config_file *, int);
+extern void config_file_print_stdout (struct t_config_file *);
+extern void config_file_print_log ();
 
 #endif /* wee-config-file.h */

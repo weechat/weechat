@@ -35,6 +35,7 @@
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "gui-chat.h"
+#include "gui-color.h"
 #include "gui-hotlist.h"
 #include "gui-main.h"
 #include "gui-status.h"
@@ -56,32 +57,32 @@ gui_chat_prefix_build ()
     
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_INFO),
-              cfg_look_prefix[GUI_CHAT_PREFIX_INFO]);
+              CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_INFO]));
     gui_chat_prefix[GUI_CHAT_PREFIX_INFO] = strdup (prefix);
     
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_ERROR),
-              cfg_look_prefix[GUI_CHAT_PREFIX_ERROR]);
+              CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_ERROR]));
     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR] = strdup (prefix);
     
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_NETWORK),
-              cfg_look_prefix[GUI_CHAT_PREFIX_NETWORK]);
+              CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_NETWORK]));
     gui_chat_prefix[GUI_CHAT_PREFIX_NETWORK] = strdup (prefix);
     
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_ACTION),
-              cfg_look_prefix[GUI_CHAT_PREFIX_ACTION]);
+              CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_ACTION]));
     gui_chat_prefix[GUI_CHAT_PREFIX_ACTION] = strdup (prefix);
     
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_JOIN),
-              cfg_look_prefix[GUI_CHAT_PREFIX_JOIN]);
+              CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_JOIN]));
     gui_chat_prefix[GUI_CHAT_PREFIX_JOIN] = strdup (prefix);
     
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_QUIT),
-              cfg_look_prefix[GUI_CHAT_PREFIX_QUIT]);
+              CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_QUIT]));
     gui_chat_prefix[GUI_CHAT_PREFIX_QUIT] = strdup (prefix);
 }
 
@@ -210,13 +211,14 @@ gui_chat_get_time_string (time_t date)
     int i, time_first_digit, time_last_digit, last_color;
     struct tm *local_time;
     
-    if (!cfg_look_buffer_time_format
-        || !cfg_look_buffer_time_format[0])
+    if (!CONFIG_STRING(config_look_buffer_time_format)
+        || !CONFIG_STRING(config_look_buffer_time_format)[0])
         return NULL;
     
     local_time = localtime (&date);
     if (strftime (text_time, sizeof (text_time),
-                  cfg_look_buffer_time_format, local_time) == 0)
+                  CONFIG_STRING(config_look_buffer_time_format),
+                  local_time) == 0)
         return NULL;
     
     time_first_digit = -1;
@@ -325,17 +327,18 @@ gui_chat_get_line_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 {
     int length_suffix;
     
-    if (cfg_look_prefix_align == CFG_LOOK_PREFIX_ALIGN_NONE)
+    if (CONFIG_INTEGER(config_look_prefix_align) == CONFIG_LOOK_PREFIX_ALIGN_NONE)
         return gui_chat_time_length + 1 + line->prefix_length + 2;
 
     length_suffix = 0;
     if (with_suffix)
     {
-        if (cfg_look_prefix_suffix && cfg_look_prefix_suffix[0])
-            length_suffix = gui_chat_strlen_screen (cfg_look_prefix_suffix) + 1;
+        if (CONFIG_STRING(config_look_prefix_suffix)
+            && CONFIG_STRING(config_look_prefix_suffix)[0])
+            length_suffix = gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_suffix)) + 1;
     }
-    if (cfg_look_prefix_align_max > 0)
-        return gui_chat_time_length + 1 + cfg_look_prefix_align_max +
+    if (CONFIG_INTEGER(config_look_prefix_align_max) > 0)
+        return gui_chat_time_length + 1 + CONFIG_INTEGER(config_look_prefix_align_max) +
             length_suffix + 1;
     else
         return gui_chat_time_length + 1 + buffer->prefix_max_length +
@@ -434,8 +437,8 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
     buffer->lines_count++;
     
     /* remove one line if necessary */
-    if ((cfg_history_max_lines > 0)
-        && (buffer->lines_count > cfg_history_max_lines))
+    if ((CONFIG_INTEGER(config_history_max_lines) > 0)
+        && (buffer->lines_count > CONFIG_INTEGER(config_history_max_lines)))
     {
         if (buffer->last_line == buffer->lines)
             buffer->last_line = NULL;

@@ -63,6 +63,7 @@
 #include "wee-util.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
+#include "../gui/gui-color.h"
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-main.h"
 #include "../gui/gui-keyboard.h"
@@ -129,7 +130,7 @@ weechat_display_config_options ()
                           /* TRANSLATORS: %s is "WeeChat" */
                           _("%s configuration options:\n"),
                           PACKAGE_NAME);
-    weechat_config_print_stdout ();
+    config_file_print_stdout (weechat_config);
 }
 
 /*
@@ -425,7 +426,7 @@ weechat_init_vars ()
 void
 weechat_welcome_message ()
 {
-    if (cfg_look_startup_logo)
+    if (CONFIG_BOOLEAN(config_look_startup_logo))
     {
         gui_chat_printf (NULL,
                          "%s   ___       __         ______________        _____ \n"
@@ -439,27 +440,31 @@ weechat_welcome_message ()
                          GUI_COLOR(GUI_COLOR_CHAT_NICK),
                          GUI_COLOR(GUI_COLOR_CHAT_NICK));
     }
-    if (cfg_look_weechat_slogan && cfg_look_weechat_slogan[0])
+    if (CONFIG_STRING(config_look_weechat_slogan)
+        && CONFIG_STRING(config_look_weechat_slogan)[0])
     {
         gui_chat_printf (NULL, _("%sWelcome to %s%s%s, %s"),
-                         (cfg_look_startup_logo) ? "      " : "",
+                         (CONFIG_BOOLEAN(config_look_startup_logo)) ?
+                         "      " : "",
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                          PACKAGE_NAME,
                          GUI_NO_COLOR,
-                         cfg_look_weechat_slogan);
+                         CONFIG_STRING(config_look_weechat_slogan));
     }
-    if (cfg_look_startup_version)
+    if (CONFIG_BOOLEAN(config_look_startup_version))
     {
         gui_chat_printf (NULL, "%s%s%s%s, %s %s %s",
-                         (cfg_look_startup_logo) ? "    " : "",
+                         (CONFIG_BOOLEAN(config_look_startup_logo)) ?
+                         "    " : "",
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                          PACKAGE_STRING,
                          GUI_NO_COLOR,
                          _("compiled on"), __DATE__, __TIME__);
     }
-    if (cfg_look_startup_logo ||
-        (cfg_look_weechat_slogan && cfg_look_weechat_slogan[0]) ||
-        cfg_look_startup_version)
+    if (CONFIG_BOOLEAN(config_look_startup_logo) ||
+        (CONFIG_STRING(config_look_weechat_slogan)
+         && CONFIG_STRING(config_look_weechat_slogan)[0]) ||
+        CONFIG_BOOLEAN(config_look_startup_version))
         gui_chat_printf (NULL,
                          "%s-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-",
                          GUI_COLOR(GUI_COLOR_CHAT_NICK));
@@ -592,10 +597,11 @@ main (int argc, char *argv[])
     gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
     weechat_init_vars ();               /* initialize some variables        */
     gui_keyboard_init ();               /* init keyb. (default key bindings)*/
+    config_weechat_init ();             /* init options with default values */
     weechat_parse_args (argc, argv);    /* parse command line args          */
     weechat_create_home_dirs ();        /* create WeeChat directories       */
     log_init ();                        /* init log file                    */
-    if (weechat_config_read () < 0)     /* read WeeChat configuration       */
+    if (config_weechat_read () < 0)     /* read WeeChat configuration       */
         exit (EXIT_FAILURE);
     command_index_build ();             /* build cmd index for completion   */
     gui_main_init ();                   /* init WeeChat interface           */
@@ -605,8 +611,8 @@ main (int argc, char *argv[])
     plugin_init (auto_load_plugins);    /* init plugin interface(s)         */
     gui_main_loop ();                   /* WeeChat main loop                */
     plugin_end ();                      /* end plugin interface(s)          */
-    if (cfg_look_save_on_exit)
-        (void) weechat_config_write (NULL); /* save WeeChat config file     */
+    if (CONFIG_BOOLEAN(config_look_save_on_exit))
+        (void) config_weechat_write (NULL); /* save WeeChat config file     */
     command_index_free ();              /* free commands index              */
     gui_main_end ();                    /* shut down WeeChat GUI            */
     weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */

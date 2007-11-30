@@ -40,6 +40,7 @@
 #include "wee-utf8.h"
 #include "wee-list.h"
 #include "../gui/gui-chat.h"
+#include "../gui/gui-color.h"
 #include "../gui/gui-history.h"
 #include "../gui/gui-input.h"
 #include "../gui/gui-keyboard.h"
@@ -1011,7 +1012,7 @@ command_history (struct t_gui_buffer *buffer,
     /* make C compiler happy */
     (void) argv_eol;
     
-    n_user = cfg_history_display_default;
+    n_user = CONFIG_INTEGER(config_history_display_default);
     
     if (argc == 1)
     {
@@ -1529,7 +1530,7 @@ command_save (struct t_gui_buffer *buffer,
     (void) argv_eol;
 
     /* save WeeChat configuration */
-    if (weechat_config_write () == 0)
+    if (config_weechat_write () == 0)
         gui_chat_printf (NULL,
                          _("%sWeeChat configuration file saved"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
@@ -1562,35 +1563,46 @@ command_set_display_option (struct t_config_option *option, char *prefix,
     
     switch (option->type)
     {
-        case OPTION_TYPE_BOOLEAN:
+        case CONFIG_OPTION_BOOLEAN:
             gui_chat_printf (NULL, "%s%s%s%s = %s%s",
                              prefix,
                              (message) ? message : "  ",
                              option->name,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                             (*((int *)(option->ptr_int))) ? "ON" : "OFF");
+                             (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
+                             "ON" : "OFF");
             break;
-        case OPTION_TYPE_INT:
-            gui_chat_printf (NULL, "%s%s%s%s = %s%d",
+        case CONFIG_OPTION_INTEGER:
+            if (option->string_values)
+                gui_chat_printf (NULL, "%s%s%s%s = %s%s",
+                                 prefix,
+                                 (message) ? message : "  ",
+                                 option->name,
+                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                 option->string_values[CONFIG_INTEGER(option)]);
+            else
+                gui_chat_printf (NULL, "%s%s%s%s = %s%d",
+                                 prefix,
+                                 (message) ? message : "  ",
+                                 option->name,
+                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                 CONFIG_INTEGER(option));
+            break;
+        case CONFIG_OPTION_STRING:
+            gui_chat_printf (NULL, "%s%s%s%s = \"%s%s%s\"",
                              prefix,
                              (message) ? message : "  ",
                              option->name,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                             *((int *)(option->ptr_int)));
+                             (option->value) ? CONFIG_STRING(option) : "",
+                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
             break;
-        case OPTION_TYPE_INT_WITH_STRING:
-            gui_chat_printf (NULL, "%s%s%s%s = %s%s",
-                             prefix,
-                             (message) ? message : "  ",
-                             option->name,
-                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                             GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                             option->array_values[*((int *)(option->ptr_int))]);
-            break;
-        case OPTION_TYPE_COLOR:
-            color_name = gui_color_get_name (*((int *)(option->ptr_int)));
+        case CONFIG_OPTION_COLOR:
+            color_name = gui_color_get_name (CONFIG_COLOR(option));
             gui_chat_printf (NULL, "%s%s%s%s = %s%s",
                              prefix,
                              (message) ? message : "  ",
@@ -1599,53 +1611,39 @@ command_set_display_option (struct t_config_option *option, char *prefix,
                              GUI_COLOR(GUI_COLOR_CHAT_HOST),
                              (color_name) ? color_name : _("(unknown)"));
             break;
-        case OPTION_TYPE_STRING:
-            if (*((char **)(option->ptr_string)))
-                gui_chat_printf (NULL, "%s%s%s%s = \"%s%s%s\"",
-                                 prefix,
-                                 (message) ? message : "  ",
-                                 option->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                 *(option->ptr_string),
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-            else
-                gui_chat_printf (NULL, "%s%s%s%s = \"\"",
-                                 prefix,
-                                 (message) ? message : "  ",
-                                 option->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-            break;
     }
 }
 
 /*
  * command_set_display_option_list: display list of options
- *                                      Return: number of options displayed
+ *                                  return: number of options displayed
  */
 
 int
-command_set_display_option_list (char **config_sections,
-                                 struct t_config_option **config_options,
+command_set_display_option_list (struct t_config_file *config_file,
                                  char *message, char *search)
 {
-    int i, j, number_found, section_displayed;
+    int number_found, section_displayed;
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
     
-    if (!config_sections || !config_options)
+    if (!config_file)
         return 0;
     
     number_found = 0;
     
-    for (i = 0; config_sections[i]; i++)
+    for (ptr_section = config_file->sections; ptr_section;
+         ptr_section = ptr_section->next_section)
     {
-        if (config_options[i])
+        if (ptr_section->options)
         {
             section_displayed = 0;
-            for (j = 0; config_options[i][j].name; j++)
+            for (ptr_option = ptr_section->options; ptr_option;
+                 ptr_option = ptr_option->next_option)
             {
                 if ((!search) ||
                     ((search) && (search[0])
-                     && (string_strcasestr (config_options[i][j].name, search))))
+                     && (string_strcasestr (ptr_option->name, search))))
                 {
                     if (!section_displayed)
                     {
@@ -1653,12 +1651,11 @@ command_set_display_option_list (char **config_sections,
                         gui_chat_printf (NULL, "%s[%s%s%s]",
                                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                         config_sections[i],
+                                         ptr_section->name,
                                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
                         section_displayed = 1;
                     }
-                    command_set_display_option (&config_options[i][j],
-                                                "", message);
+                    command_set_display_option (ptr_option, "", message);
                     number_found++;
                 }
             }
@@ -1688,10 +1685,10 @@ command_set (struct t_gui_buffer *buffer,
     {
         number_found = 0;
         
-        number_found += command_set_display_option_list (weechat_config_sections,
-                                                         weechat_config_options,
+        number_found += command_set_display_option_list (weechat_config,
                                                          NULL,
-                                                         (argc == 1) ? argv[0] : NULL);
+                                                         (argc == 1) ?
+                                                         argv[0] : NULL);
         
         if (number_found == 0)
         {
@@ -1728,9 +1725,7 @@ command_set (struct t_gui_buffer *buffer,
     /* set option value */
     if ((argc >= 3) && (string_strcasecmp (argv[1], "=") == 0))
     {
-        ptr_option = config_option_section_option_search (weechat_config_sections,
-                                                          weechat_config_options,
-                                                          argv[0]);
+        ptr_option = config_file_search_option (weechat_config, NULL, argv[0]);
         if (!ptr_option)
         {
             gui_chat_printf (NULL,
@@ -1740,27 +1735,18 @@ command_set (struct t_gui_buffer *buffer,
                              argv[0]);
             return -1;
         }
-        if (!ptr_option->handler_change)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: option \"%s\" can not be "
-                               "changed while WeeChat is "
-                               "running"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[0]);
-            return -1;
-        }
         value = string_remove_quotes (argv_eol[2], "'\"");
-        rc = config_option_set (ptr_option,
-                                (value) ? value : argv_eol[2]);
+        rc = config_file_option_set (ptr_option,
+                                     (value) ? value : argv_eol[2]);
         if (value)
             free (value);
-        if (rc == 0)
+        if (rc > 0)
         {
             command_set_display_option (ptr_option,
                                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
                                         _("Option changed: "));
-            (void) (ptr_option->handler_change());
+            if ((rc == 2) && (ptr_option->callback_change))
+                (void) (ptr_option->callback_change) ();
         }
         else
         {
@@ -1785,7 +1771,7 @@ command_setp (struct t_gui_buffer *buffer,
               int argc, char **argv, char **argv_eol)
 {
     char *pos, *ptr_name, *value;
-    struct t_plugin_option *ptr_option;
+    struct t_config_option *ptr_option;
     int number_found;
     
     /* make C compiler happy */
@@ -1808,7 +1794,7 @@ command_setp (struct t_gui_buffer *buffer,
                                  ptr_option->name,
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                  GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                 ptr_option->value,
+                                 (char *)ptr_option->value,
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
                 number_found++;
             }
@@ -2009,7 +1995,7 @@ command_upgrade (struct t_gui_buffer *buffer,
     
     /* unload plugins, save config, then upgrade */
     plugin_end ();
-    /*if (cfg_look_save_on_exit)
+    /*if (CONFIG_BOOLEAN(config_look_save_on_exit))
         (void) config_write (NULL);
     gui_main_end ();
     fifo_remove ();

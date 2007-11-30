@@ -32,6 +32,7 @@
 #include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
 #include "../gui-input.h"
+#include "../gui-color.h"
 #include "../gui-keyboard.h"
 #include "../gui-main.h"
 #include "../gui-window.h"
@@ -90,7 +91,7 @@ gui_input_draw_prompt (struct t_gui_window *window)
         return;
     }
     
-    pos = cfg_look_input_format;
+    pos = CONFIG_STRING(config_look_input_format);
     while (pos && pos[0])
     {
         switch (pos[0])

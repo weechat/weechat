@@ -36,12 +36,14 @@
 #include "../../core/wee-utf8.h"
 #include "../../core/wee-util.h"
 #include "../../plugins/plugin.h"
+#include "../gui-main.h"
+#include "../gui-chat.h"
+#include "../gui-color.h"
 #include "../gui-infobar.h"
 #include "../gui-input.h"
 #include "../gui-history.h"
 #include "../gui-hotlist.h"
 #include "../gui-keyboard.h"
-#include "../gui-main.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
 
@@ -87,7 +89,7 @@ gui_main_init ()
     gui_input_clipboard = NULL;
     
     /* get time length */
-    gui_chat_time_length = util_get_time_length (cfg_look_buffer_time_format);
+    gui_chat_time_length = util_get_time_length (CONFIG_STRING(config_look_buffer_time_format));
 
     /* create new window/buffer */
     if (gui_window_new (NULL, 0, 0, COLS, LINES, 100, 100))
@@ -105,7 +107,7 @@ gui_main_init ()
         else
             gui_init_ok = 0;
         
-        if (cfg_look_set_title)
+        if (CONFIG_BOOLEAN(config_look_set_title))
             gui_window_title_set ();
         
         signal (SIGWINCH, gui_window_refresh_screen_sigwinch);
@@ -179,11 +181,12 @@ gui_main_loop ()
             old_min = local_time->tm_min;
             gui_infobar_draw (gui_current_window->buffer, 1);
             
-            if (cfg_look_day_change
+            if (CONFIG_BOOLEAN(config_look_day_change)
                 && (local_time->tm_mday != old_day))
             {
                 strftime (text_time, sizeof (text_time),
-                          cfg_look_day_change_time_format, local_time);
+                          CONFIG_STRING(config_look_day_change_time_format),
+                          local_time);
                 text_time2 = string_iconv_to_internal (NULL, text_time);
                 gui_add_hotlist = 0;
                 for (ptr_buffer = gui_buffers; ptr_buffer;
@@ -208,7 +211,7 @@ gui_main_loop ()
             old_sec = local_time->tm_sec;
             
             /* display time in infobar (if seconds displayed) */
-            if (cfg_look_infobar_seconds)
+            if (CONFIG_BOOLEAN(config_look_infobar_seconds))
             {
                 gui_infobar_draw_time (gui_current_window->buffer);
                 wmove (GUI_CURSES(gui_current_window)->win_input,
@@ -305,7 +308,7 @@ gui_main_end ()
         gui_infobar_remove ();
 
     /* reset title */
-    if (cfg_look_set_title)
+    if (CONFIG_BOOLEAN(config_look_set_title))
 	gui_window_title_reset ();
     
     /* end of Curses output */

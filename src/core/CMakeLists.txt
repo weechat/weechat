@@ -16,10 +16,9 @@
 
 SET(LIB_CORE_SRC weechat.c weechat.h wee-alias.c wee-alias.h wee-backtrace.c
 wee-backtrace.h wee-command.c wee-command.h wee-config.c wee-config.h
-wee-config-file.c wee-config-file.h wee-config-option.c wee-config-option.h
-wee-hook.c wee-hook.h wee-input.c wee-input.h wee-list.c wee-list.h wee-log.c
-wee-log.h wee-string.c wee-string.h wee-upgrade.c wee-upgrade.h wee-utf8.c
-wee-utf8.h wee-util.c wee-util.h)
+wee-config-file.c wee-config-file.h wee-hook.c wee-hook.h wee-input.c
+wee-input.h wee-list.c wee-list.h wee-log.c wee-log.h wee-string.c wee-string.h
+wee-upgrade.c wee-upgrade.h wee-utf8.c wee-utf8.h wee-util.c wee-util.h)
 
 # Check for flock support
 INCLUDE(CheckSymbolExists)

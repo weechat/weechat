@@ -30,6 +30,7 @@
 #include "wee-alias.h"
 #include "wee-config.h"
 #include "wee-string.h"
+#include "../gui/gui-chat.h"
 
 
 struct alias *weechat_alias = NULL;

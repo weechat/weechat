@@ -20,11 +20,6 @@
 #ifndef __WEECHAT_GUI_MAIN_H
 #define __WEECHAT_GUI_MAIN_H 1
 
-/* main variables */
-
-extern int gui_init_ok;
-extern int gui_ok;
-
 /* main functions (GUI dependent) */
 
 extern void gui_main_loop ();

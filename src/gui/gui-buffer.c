@@ -33,6 +33,9 @@
 #include <ctype.h>
 
 #include "../core/weechat.h"
+#include "gui-buffer.h"
+#include "gui-chat.h"
+#include "gui-color.h"
 #include "gui-completion.h"
 #include "gui-history.h"
 #include "gui-hotlist.h"

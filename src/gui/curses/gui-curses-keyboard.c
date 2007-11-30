@@ -31,6 +31,7 @@
 #include "../../core/wee-utf8.h"
 #include "../../core/wee-string.h"
 #include "../gui-keyboard.h"
+#include "../gui-color.h"
 #include "../gui-input.h"
 #include "../gui-completion.h"
 #include "../gui-window.h"
@@ -218,10 +219,10 @@ gui_keyboard_read ()
     {
         /* detect user paste or large amount of text
            if so, ask user what to do */
-        if (cfg_look_paste_max_lines > 0)
+        if (CONFIG_INTEGER(config_look_paste_max_lines) > 0)
         {
             paste_lines = gui_keyboard_get_paste_lines ();
-            if (paste_lines > cfg_look_paste_max_lines)
+            if (paste_lines > CONFIG_INTEGER(config_look_paste_max_lines))
             {
                 gui_keyboard_paste_pending = 1;
                 gui_input_draw (gui_current_window->buffer, 1);

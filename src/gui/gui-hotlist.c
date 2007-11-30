@@ -31,6 +31,7 @@
 #include "../core/wee-log.h"
 #include "../core/wee-util.h"
 #include "gui-hotlist.h"
+#include "gui-buffer.h"
 #include "gui-window.h"
 
 
@@ -70,9 +71,9 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist, struct t_gui_hotlist *new_h
 {
     struct t_gui_hotlist *ptr_hotlist;
     
-    switch (cfg_look_hotlist_sort)
+    switch (CONFIG_INTEGER(config_look_hotlist_sort))
     {
-        case CFG_LOOK_HOTLIST_SORT_GROUP_TIME_ASC:
+        case CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_ASC:
             for (ptr_hotlist = hotlist; ptr_hotlist;
                  ptr_hotlist = ptr_hotlist->next_hotlist)
             {
@@ -83,7 +84,7 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist, struct t_gui_hotlist *new_h
                     return ptr_hotlist;
             }
             break;
-        case CFG_LOOK_HOTLIST_SORT_GROUP_TIME_DESC:
+        case CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_DESC:
             for (ptr_hotlist = hotlist; ptr_hotlist;
                  ptr_hotlist = ptr_hotlist->next_hotlist)
             {
@@ -94,7 +95,7 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist, struct t_gui_hotlist *new_h
                     return ptr_hotlist;
             }
             break;
-        case CFG_LOOK_HOTLIST_SORT_GROUP_NUMBER_ASC:
+        case CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_ASC:
             for (ptr_hotlist = hotlist; ptr_hotlist;
                  ptr_hotlist = ptr_hotlist->next_hotlist)
             {
@@ -104,7 +105,7 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist, struct t_gui_hotlist *new_h
                     return ptr_hotlist;
             }
             break;
-        case CFG_LOOK_HOTLIST_SORT_GROUP_NUMBER_DESC:
+        case CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_DESC:
             for (ptr_hotlist = hotlist; ptr_hotlist;
                  ptr_hotlist = ptr_hotlist->next_hotlist)
             {
@@ -114,7 +115,7 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist, struct t_gui_hotlist *new_h
                     return ptr_hotlist;
             }
             break;
-        case CFG_LOOK_HOTLIST_SORT_NUMBER_ASC:
+        case CONFIG_LOOK_HOTLIST_SORT_NUMBER_ASC:
             for (ptr_hotlist = hotlist; ptr_hotlist;
                  ptr_hotlist = ptr_hotlist->next_hotlist)
             {
@@ -122,7 +123,7 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist, struct t_gui_hotlist *new_h
                     return ptr_hotlist;
             }
             break;
-        case CFG_LOOK_HOTLIST_SORT_NUMBER_DESC:
+        case CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC:
             for (ptr_hotlist = hotlist; ptr_hotlist;
                  ptr_hotlist = ptr_hotlist->next_hotlist)
             {

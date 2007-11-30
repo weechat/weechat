@@ -20,6 +20,9 @@
 #ifndef __WEECHAT_GUI_WINDOW_H
 #define __WEECHAT_GUI_WINDOW_H 1
 
+extern int gui_init_ok;
+extern int gui_ok;
+
 /* window structures */
 
 struct t_gui_window

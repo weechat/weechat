@@ -30,7 +30,7 @@
 #include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
 #include "../gui-input.h"
-#include "../gui-main.h"
+#include "../gui-window.h"
 #include "gui-gtk.h"
 
 

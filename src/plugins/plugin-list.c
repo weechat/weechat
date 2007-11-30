@@ -588,7 +588,7 @@ plugin_list_print_log ()
                 switch (ptr_var->type)
                 {
                     case PLUGIN_LIST_VAR_INTEGER:
-                        log_printf ("        value (int). . . . . : %d\n", *((int *)ptr_var->value));
+                        log_printf ("        value (integer). . . : %d\n", *((int *)ptr_var->value));
                         break;
                     case PLUGIN_LIST_VAR_STRING:
                         log_printf ("        value (string) . . . : '%s'\n", (char *)ptr_var->value);

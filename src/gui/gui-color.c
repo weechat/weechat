@@ -47,16 +47,20 @@
 int
 gui_color_search_config (char *color_name)
 {
-    int i;
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
 
     if (color_name)
     {
-        i = 0;
-        while (weechat_options_colors[i].name)
+        ptr_section = config_file_search_section (weechat_config, "colors");
+        if (ptr_section)
         {
-            if (string_strcasecmp (weechat_options_colors[i].name, color_name) == 0)
-                return weechat_options_colors[i].default_int;
-            i++;
+            for (ptr_option = ptr_section->options; ptr_option;
+                 ptr_option = ptr_option->next_option)
+            {
+                if (string_strcasecmp (ptr_option->name, color_name) == 0)
+                    return ptr_option->min;
+            }
         }
     }
     

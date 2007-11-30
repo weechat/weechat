@@ -31,6 +31,7 @@
 #include "../../core/wee-config.h"
 #include "../../core/wee-string.h"
 #include "../gui-color.h"
+#include "../gui-chat.h"
 #include "gui-gtk.h"
 
 

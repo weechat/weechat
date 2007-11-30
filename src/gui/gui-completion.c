@@ -42,6 +42,7 @@
 #include "../plugins/plugin.h"
 #include "../plugins/plugin-config.h"
 #include "gui-completion.h"
+#include "gui-color.h"
 #include "gui-keyboard.h"
 
 
@@ -203,7 +204,8 @@ gui_completion_is_only_alphanum (char *string)
 {
     while (string[0])
     {
-        if (strchr (cfg_look_nick_completion_ignore, string[0]))
+        if (strchr (CONFIG_STRING(config_look_nick_completion_ignore),
+                    string[0]))
             return 0;
         string++;
     }
@@ -223,7 +225,8 @@ gui_completion_strdup_alphanum (char *string)
     pos = result;
     while (string[0])
     {
-        if (!strchr (cfg_look_nick_completion_ignore, string[0]))
+        if (!strchr (CONFIG_STRING(config_look_nick_completion_ignore),
+                     string[0]))
         {
             pos[0] = string[0];
             pos++;
@@ -245,8 +248,8 @@ gui_completion_nickncmp (char *base_word, char *nick, int max)
     char *base_word2, *nick2;
     int return_cmp;
     
-    if (!cfg_look_nick_completion_ignore
-        || !cfg_look_nick_completion_ignore[0]
+    if (!CONFIG_STRING(config_look_nick_completion_ignore)
+        || !CONFIG_STRING(config_look_nick_completion_ignore)[0]
         || !base_word || !nick || !base_word[0] || !nick[0]
         || (!gui_completion_is_only_alphanum (base_word)))
         return string_strncasecmp (base_word, nick, max);
@@ -600,7 +603,7 @@ gui_completion_list_add_channel_nicks (struct t_gui_completion *completion)
             }
             
             // add nicks speaking recently on this channel
-            if (cfg_look_nick_completion_smart)
+            if (CONFIG_BOOLEAN(config_look_nick_completion_smart))
             {
                 for (ptr_weelist = ((t_irc_channel *)(completion->channel))->nicks_speaking;
                      ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
@@ -684,19 +687,18 @@ gui_completion_list_add_channel_nicks_hosts (struct t_gui_completion *completion
 void
 gui_completion_list_add_option (struct t_gui_completion *completion)
 {
-    int i, j;
-    
-    /* WeeChat options */
-    for (i = 0; weechat_config_sections[i]; i++)
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
+
+    for (ptr_section = weechat_config->sections; ptr_section;
+         ptr_section = ptr_section->next_section)
     {
-        if (weechat_config_options[i])
+        for (ptr_option = ptr_section->options; ptr_option;
+             ptr_option = ptr_option->next_option)
         {
-            for (j = 0; weechat_config_options[i][j].name; j++)
-            {
-                gui_completion_list_add (completion,
-                                         weechat_config_options[i][j].name,
-                                         0, WEELIST_POS_SORT);
-            }
+            gui_completion_list_add (completion,
+                                     ptr_option->name,
+                                     0, WEELIST_POS_SORT);
         }
     }
 }
@@ -708,12 +710,13 @@ gui_completion_list_add_option (struct t_gui_completion *completion)
 void
 gui_completion_list_add_plugin_option (struct t_gui_completion *completion)
 {
-    struct t_plugin_option *ptr_option;
+    struct t_config_option *ptr_option;
     
     for (ptr_option = plugin_options; ptr_option;
          ptr_option = ptr_option->next_option)
     {
-        gui_completion_list_add (completion, ptr_option->name, 0, WEELIST_POS_SORT);
+        gui_completion_list_add (completion, ptr_option->name,
+                                 0, WEELIST_POS_SORT);
     }
 }
 
@@ -725,8 +728,8 @@ void
 gui_completion_list_add_part (struct t_gui_completion *completion)
 {
     (void) completion;
-    /*if (cfg_irc_default_msg_part && cfg_irc_default_msg_part[0])
-        gui_completion_list_add (completion, cfg_irc_default_msg_part,
+    /*if (config_irc_default_msg_part && config_irc_default_msg_part[0])
+        gui_completion_list_add (completion, config_irc_default_msg_part,
         0, WEELIST_POS_SORT);*/
 }
 
@@ -755,8 +758,8 @@ void
 gui_completion_list_add_quit (struct t_gui_completion *completion)
 {
     (void) completion;
-    /*if (cfg_irc_default_msg_quit && cfg_irc_default_msg_quit[0])
-        gui_completion_list_add (completion, cfg_irc_default_msg_quit,
+    /*if (config_irc_default_msg_quit && config_irc_default_msg_quit[0])
+        gui_completion_list_add (completion, config_irc_default_msg_quit,
         0, WEELIST_POS_SORT);*/
 }
 
@@ -806,7 +809,7 @@ gui_completion_list_add_topic (struct t_gui_completion *completion)
         && ((t_irc_channel *)(completion->channel))->topic
         && ((t_irc_channel *)(completion->channel))->topic[0])
     {
-        if (cfg_irc_colors_send)
+        if (config_irc_colors_send)
             string = (char *)gui_color_decode_for_user_entry ((unsigned char *)((t_irc_channel *)(completion->channel))->topic);
         else
             string = (char *)gui_color_decode ((unsigned char *)((t_irc_channel *)(completion->channel))->topic, 0, 0);
@@ -826,64 +829,53 @@ gui_completion_list_add_topic (struct t_gui_completion *completion)
 void
 gui_completion_list_add_option_value (struct t_gui_completion *completion)
 {
-    char *pos;
-    struct t_config_option *option;
-    void *option_value;
-    char option_string[2048];
+    char *pos, *color_name, option_string[2048];
+    struct t_config_option *ptr_option;
     
     if (completion->args)
     {
         pos = strchr (completion->args, ' ');
         if (pos)
             pos[0] = '\0';
-        option = NULL;
-        option_value = NULL;
-        //config_option_search_option_value (completion->args, &option, &option_value);
-        config_option_section_option_search_get_value (weechat_config_sections,
-                                                       weechat_config_options,
-                                                       completion->args,
-                                                       &option,
-                                                       &option_value);
-        if (option && option_value)
+        ptr_option = config_file_search_option (weechat_config,
+                                                NULL,
+                                                completion->args);
+        if (ptr_option)
         {
-            switch (option->type)
+            switch (ptr_option->type)
             {
-                case OPTION_TYPE_BOOLEAN:
-                    if (option_value && (*((int *)(option_value))))
+                case CONFIG_OPTION_BOOLEAN:
+                    if (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE)
                         gui_completion_list_add (completion, "on",
                                                  0, WEELIST_POS_SORT);
                     else
                         gui_completion_list_add (completion, "off",
                                                  0, WEELIST_POS_SORT);
                     break;
-                case OPTION_TYPE_INT:
-                    snprintf (option_string, sizeof (option_string) - 1,
-                              "%d", (option_value) ? *((int *)(option_value)) : option->default_int);
+                case CONFIG_OPTION_INTEGER:
+                    if (ptr_option->string_values)
+                        snprintf (option_string, sizeof (option_string) - 1,
+                                  "%s",
+                                  ptr_option->string_values[CONFIG_INTEGER(ptr_option)]);
+                    else
+                        snprintf (option_string, sizeof (option_string) - 1,
+                                  "%d", CONFIG_INTEGER(ptr_option));
                     gui_completion_list_add (completion, option_string,
                                              0, WEELIST_POS_SORT);
                     break;
-                case OPTION_TYPE_INT_WITH_STRING:
-                    gui_completion_list_add (completion,
-                                             (option_value) ?
-                                             option->array_values[*((int *)(option_value))] :
-                                             option->array_values[option->default_int],
-                                             0, WEELIST_POS_SORT);
-                    break;
-                case OPTION_TYPE_COLOR:
-                    gui_completion_list_add (completion,
-                                             (option_value) ?
-                                             gui_color_get_name (*((int *)(option_value))) :
-                                             option->default_string,
-                                             0, WEELIST_POS_SORT);
-                    break;
-                case OPTION_TYPE_STRING:
+                case CONFIG_OPTION_STRING:
                     snprintf (option_string, sizeof (option_string) - 1,
                               "\"%s\"",
-                              ((option_value) && (*((char **)(option_value)))) ?
-                              *((char **)(option_value)) :
-                              option->default_string);
+                              CONFIG_STRING(ptr_option));
                     gui_completion_list_add (completion, option_string,
                                              0, WEELIST_POS_SORT);
+                    break;
+                case CONFIG_OPTION_COLOR:
+                    color_name = gui_color_get_name (CONFIG_INTEGER(ptr_option));
+                    if (color_name)
+                        gui_completion_list_add (completion,
+                                                 color_name,
+                                                 0, WEELIST_POS_SORT);
                     break;
             }
         }
@@ -900,7 +892,7 @@ void
 gui_completion_list_add_plugin_option_value (struct t_gui_completion *completion)
 {
     char *pos;
-    struct t_plugin_option *ptr_option;
+    struct t_config_option *ptr_option;
     
     if (completion->args)
     {
@@ -1443,7 +1435,7 @@ gui_completion_nick (struct t_gui_completion *completion)
         }
         
         // add nicks speaking recently on this channel
-        if (cfg_look_nick_completion_smart)
+        if (CONFIG_BOOLEAN(config_look_nick_completion_smart))
         {
             for (ptr_weelist = ((t_irc_channel *)(completion->channel))->nicks_speaking;
                  ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
@@ -1485,7 +1477,7 @@ gui_completion_nick (struct t_gui_completion *completion)
                 if (completion->word_found)
                     free (completion->word_found);
                 completion->word_found = strdup (ptr_weelist->data);
-                if (cfg_look_nick_complete_first)
+                if (CONFIG_BOOLEAN(config_look_nick_complete_first))
                 {
                     completion->position = -1;
                     return;

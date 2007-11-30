@@ -338,12 +338,14 @@ plugin_auto_load_file (struct t_weechat_plugin *plugin, char *filename)
     /* make C compiler happy */
     (void) plugin;
     
-    if (cfg_plugins_extension && cfg_plugins_extension[0])
+    if (CONFIG_STRING(config_plugins_extension)
+        && CONFIG_STRING(config_plugins_extension)[0])
     {
-        pos = strstr (filename, cfg_plugins_extension);
+        pos = strstr (filename, CONFIG_STRING(config_plugins_extension));
         if (pos)
         {
-            if (string_strcasecmp (pos, cfg_plugins_extension) == 0)
+            if (string_strcasecmp (pos,
+                                   CONFIG_STRING(config_plugins_extension)) == 0)
                 plugin_load (filename);
         }
     }
@@ -362,22 +364,26 @@ plugin_auto_load ()
     char *ptr_home, *dir_name, *plugins_path, *plugins_path2;
     char *list_plugins, *pos, *pos2;
     
-    if (cfg_plugins_autoload && cfg_plugins_autoload[0])
+    if (CONFIG_STRING(config_plugins_autoload)
+        && CONFIG_STRING(config_plugins_autoload)[0])
     {
-        if (string_strcasecmp (cfg_plugins_autoload, "*") == 0)
+        if (string_strcasecmp (CONFIG_STRING(config_plugins_autoload),
+                               "*") == 0)
         {
             /* auto-load plugins in WeeChat home dir */
-            if (cfg_plugins_path && cfg_plugins_path[0])
+            if (CONFIG_STRING(config_plugins_path)
+                && CONFIG_STRING(config_plugins_path)[0])
             {
                 ptr_home = getenv ("HOME");
-                plugins_path = string_replace (cfg_plugins_path, "~", ptr_home);
+                plugins_path = string_replace (CONFIG_STRING(config_plugins_path),
+                                               "~", ptr_home);
                 plugins_path2 = string_replace ((plugins_path) ?
-                                                plugins_path : cfg_plugins_path,
+                                                plugins_path : CONFIG_STRING(config_plugins_path),
                                                 "%h", weechat_home);
                 plugin_exec_on_files (NULL,
                                       (plugins_path2) ?
                                       plugins_path2 : ((plugins_path) ?
-                                                       plugins_path : cfg_plugins_path),
+                                                       plugins_path : CONFIG_STRING(config_plugins_path)),
                                       &plugin_auto_load_file);
                 if (plugins_path)
                     free (plugins_path);
@@ -397,7 +403,7 @@ plugin_auto_load ()
         }
         else
         {
-            list_plugins = strdup (cfg_plugins_autoload);
+            list_plugins = strdup (CONFIG_STRING(config_plugins_autoload));
             if (list_plugins)
             {
                 pos = list_plugins;

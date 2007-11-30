@@ -30,6 +30,7 @@
 #include "../../core/wee-config.h"
 #include "../../core/wee-log.h"
 #include "../gui-window.h"
+#include "../gui-chat.h"
 #include "../gui-hotlist.h"
 #include "../gui-nicklist.h"
 #include "../gui-main.h"
@@ -300,8 +301,9 @@ gui_window_scroll_up (struct t_gui_window *window)
         gui_chat_calculate_line_diff (window, &window->start_line,
                                       &window->start_line_pos,
                                       (window->start_line) ?
-                                      (-1) * cfg_look_scroll_amount :
-                                      (-1) * ( (window->win_chat_height - 1) + cfg_look_scroll_amount));
+                                      (-1) * CONFIG_INTEGER(config_look_scroll_amount) :
+                                      (-1) * ( (window->win_chat_height - 1) +
+                                               CONFIG_INTEGER(config_look_scroll_amount)));
         gui_chat_draw (window->buffer, 0);
         gui_status_draw (window->buffer, 0);
     }
@@ -324,7 +326,7 @@ gui_window_scroll_down (struct t_gui_window *window)
     {
         gui_chat_calculate_line_diff (window, &window->start_line,
                                       &window->start_line_pos,
-                                      cfg_look_scroll_amount);
+                                      CONFIG_INTEGER(config_look_scroll_amount));
         
         /* check if we can display all */
         ptr_line = window->start_line;

@@ -30,6 +30,8 @@
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
 #include "../gui-nicklist.h"
+#include "../gui-chat.h"
+#include "../gui-color.h"
 #include "../gui-main.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
@@ -91,39 +93,39 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                 }
             }
             
-            if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
-                (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
+            if ((CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_TOP) ||
+                (CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_BOTTOM))
                 max_chars = max_length;
             else
-                max_chars = ((cfg_look_nicklist_min_size > 0)
-                             && (max_length < cfg_look_nicklist_min_size)) ?
-                    cfg_look_nicklist_min_size :
-                    (((cfg_look_nicklist_max_size > 0)
-                      && (max_length > cfg_look_nicklist_max_size)) ?
-                     cfg_look_nicklist_max_size : max_length);
+                max_chars = ((CONFIG_INTEGER(config_look_nicklist_min_size) > 0)
+                             && (max_length < CONFIG_INTEGER(config_look_nicklist_min_size))) ?
+                    CONFIG_INTEGER(config_look_nicklist_min_size) :
+                    (((CONFIG_INTEGER(config_look_nicklist_max_size) > 0)
+                      && (max_length > CONFIG_INTEGER(config_look_nicklist_max_size))) ?
+                     CONFIG_INTEGER(config_look_nicklist_max_size) : max_length);
             
-            if (cfg_look_nicklist_separator && has_colors ())
+            if (CONFIG_BOOLEAN(config_look_nicklist_separator) && has_colors ())
             {
                 gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
                                               GUI_COLOR_NICKLIST_SEPARATOR);
-                switch (cfg_look_nicklist_position)
+                switch (CONFIG_INTEGER(config_look_nicklist_position))
                 {
-                    case CFG_LOOK_NICKLIST_LEFT:
+                    case CONFIG_LOOK_NICKLIST_LEFT:
                         mvwvline (GUI_CURSES(ptr_win)->win_nick,
                                   0, ptr_win->win_nick_width - 1, ACS_VLINE,
                                   ptr_win->win_chat_height);
                         break;
-                    case CFG_LOOK_NICKLIST_RIGHT:
+                    case CONFIG_LOOK_NICKLIST_RIGHT:
                         mvwvline (GUI_CURSES(ptr_win)->win_nick,
                                   0, 0, ACS_VLINE,
                                   ptr_win->win_chat_height);
                         break;
-                    case CFG_LOOK_NICKLIST_TOP:
+                    case CONFIG_LOOK_NICKLIST_TOP:
                         mvwhline (GUI_CURSES(ptr_win)->win_nick,
                                   ptr_win->win_nick_height - 1, 0, ACS_HLINE,
                                   ptr_win->win_chat_width);
                         break;
-                    case CFG_LOOK_NICKLIST_BOTTOM:
+                    case CONFIG_LOOK_NICKLIST_BOTTOM:
                         mvwhline (GUI_CURSES(ptr_win)->win_nick,
                                   0, 0, ACS_HLINE,
                                   ptr_win->win_chat_width);
@@ -134,30 +136,31 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
                                           GUI_COLOR_NICKLIST);
             x = 0;
-            y = (cfg_look_nicklist_separator
-                 && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM)) ?
+            y = (CONFIG_BOOLEAN(config_look_nicklist_separator)
+                 && (CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_BOTTOM)) ?
                 1 : 0;
             max_y = 0;
-            switch (cfg_look_nicklist_position)
+            switch (CONFIG_INTEGER(config_look_nicklist_position))
             {
-                case CFG_LOOK_NICKLIST_LEFT:
-                case CFG_LOOK_NICKLIST_RIGHT:
+                case CONFIG_LOOK_NICKLIST_LEFT:
+                case CONFIG_LOOK_NICKLIST_RIGHT:
                     max_y = 0;
                     break;
-                case CFG_LOOK_NICKLIST_TOP:
+                case CONFIG_LOOK_NICKLIST_TOP:
                     max_y = ptr_win->win_nick_height -
-                        cfg_look_nicklist_separator;
+                        ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
                     break;
-                case CFG_LOOK_NICKLIST_BOTTOM:
+                case CONFIG_LOOK_NICKLIST_BOTTOM:
                     max_y = ptr_win->win_nick_height;
                     break;
             }
             column = 0;
             
-            if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
-                (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
+            if ((CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_TOP) ||
+                (CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_BOTTOM))
                 nicks_displayed = (ptr_win->win_width / (max_length + 2)) *
-                    (ptr_win->win_nick_height - cfg_look_nicklist_separator);
+                    (ptr_win->win_nick_height -
+                     ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0));
             else
                 nicks_displayed = ptr_win->win_nick_height;
             
@@ -172,16 +175,16 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
             {
                 for (i = 0; i < nicks_displayed; i++)
                 {
-                    switch (cfg_look_nicklist_position)
+                    switch (CONFIG_INTEGER(config_look_nicklist_position))
                     {
-                        case CFG_LOOK_NICKLIST_LEFT:
+                        case CONFIG_LOOK_NICKLIST_LEFT:
                             x = 0;
                             break;
-                        case CFG_LOOK_NICKLIST_RIGHT:
-                            x = cfg_look_nicklist_separator;
+                        case CONFIG_LOOK_NICKLIST_RIGHT:
+                            x = (CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0;
                             break;
-                        case CFG_LOOK_NICKLIST_TOP:
-                        case CFG_LOOK_NICKLIST_BOTTOM:
+                        case CONFIG_LOOK_NICKLIST_TOP:
+                        case CONFIG_LOOK_NICKLIST_BOTTOM:
                             x = column;
                             break;
                     }
@@ -253,7 +256,7 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                             x++;
                         }
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
-                                                      ((cfg_irc_away_check > 0) && (ptr_nick->flags & IRC_NICK_AWAY)) ?
+                                                      ((config_irc_away_check > 0) && (ptr_nick->flags & IRC_NICK_AWAY)) ?
                                                       GUI_COLOR_WIN_NICK_AWAY : GUI_COLOR_WIN_NICK);*/
 
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
@@ -291,14 +294,14 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                             break;
                     }
                     y++;
-                    if ((cfg_look_nicklist_position == CFG_LOOK_NICKLIST_TOP) ||
-                        (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM))
+                    if ((CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_TOP) ||
+                        (CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_BOTTOM))
                     {
                         if (y >= max_y)
                         {
                             column += max_length + 2;
-                            y = (cfg_look_nicklist_separator
-                                 && (cfg_look_nicklist_position == CFG_LOOK_NICKLIST_BOTTOM)) ?
+                            y = (CONFIG_BOOLEAN(config_look_nicklist_separator)
+                                 && (CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_BOTTOM)) ?
                                 1 : 0;
                         }
                     }
