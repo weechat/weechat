@@ -239,6 +239,49 @@ plugin_config_set (char *plugin_name, char *option_name, char *value)
 }
 
 /*
+ * plugin_config_free: free a plugin option and remove it from list
+ */
+
+void
+plugin_config_free (struct t_config_option *option)
+{
+    struct t_config_option *new_plugin_options;
+    
+    /* remove option from list */
+    if (last_plugin_option == option)
+        last_plugin_option = option->prev_option;
+    if (option->prev_option)
+    {
+        (option->prev_option)->next_option = option->next_option;
+        new_plugin_options = plugin_options;
+    }
+    else
+        new_plugin_options = option->next_option;
+    
+    if (option->next_option)
+        (option->next_option)->prev_option = option->prev_option;
+    
+    /* free data */
+    if (option->name)
+        free (option->name);
+    if (option->value)
+        free (option->value);
+    free (option);
+    plugin_options = new_plugin_options;
+}
+
+/*
+ * plugin_config_free_all: free all plugin options
+ */
+
+void
+plugin_config_free_all ()
+{
+    while (plugin_options)
+        plugin_config_free (plugin_options);
+}
+
+/*
  * plugin_config_read_option: read an option in config file
  *                            Return:  0 = successful
  *                                    -1 = option not found
@@ -319,6 +362,10 @@ plugin_config_read ()
 int
 plugin_config_reload ()
 {
+    /* remove all plugin options */
+    plugin_config_free_all ();
+    
+    /* reload plugins config file */
     return config_file_reload (plugin_config);
 }
 
