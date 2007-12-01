@@ -485,7 +485,7 @@ config_weechat_write_keys (struct t_config_file *config_file)
 }
 
 /*
- * config_weechat_init: init options with default values
+ * config_weechat_init: init WeeChat config structure
  */
 
 void
@@ -1125,6 +1125,26 @@ int
 config_weechat_read ()
 {
     return config_file_read (weechat_config);
+}
+
+/*
+ * config_weechat_reload: reload WeeChat configuration file
+ *                        return:  0 = successful
+ *                                -1 = configuration file file not found
+ *                                -2 = error in configuration file
+ */
+
+int
+config_weechat_reload ()
+{
+    /* remove all alias */
+    alias_free_all ();
+    
+    /* remove all keys */
+    gui_keyboard_free_all ();
+    
+    /* reload configuration file */
+    return config_file_reload (weechat_config);
 }
 
 /*

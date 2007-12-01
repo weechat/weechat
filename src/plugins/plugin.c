@@ -566,6 +566,7 @@ void
 plugin_init (int auto_load)
 {
     /* read plugins options on disk */
+    plugin_config_init ();
     plugin_config_read ();
     
     /* auto-load plugins if asked */

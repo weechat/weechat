@@ -1219,10 +1219,8 @@ plugin_api_plugin_config_set (struct t_weechat_plugin *plugin,
         return 0;
     
     if (plugin_config_set (plugin->name, option_name, value))
-    {
-        plugin_config_write ();
         return 1;
-    }
+    
     return 0;
 }
 

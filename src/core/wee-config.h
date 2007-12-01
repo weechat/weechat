@@ -178,6 +178,7 @@ extern void config_change_nicks_colors ();
 
 extern void config_weechat_init ();
 extern int config_weechat_read ();
+extern int config_weechat_reload ();
 extern int config_weechat_write ();
 extern void config_weechat_print_stdout ();
 

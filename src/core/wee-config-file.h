@@ -79,6 +79,7 @@ struct t_config_option
     void *default_value;                   /* default value                 */
     void *value;                           /* value                         */
     void (*callback_change)();             /* called when value is changed  */
+    int loaded;                            /* 1 if opt was found in config  */
     struct t_config_option *prev_option;   /* link to previous option       */
     struct t_config_option *next_option;   /* link to next option           */
 };
@@ -117,8 +118,10 @@ extern struct t_config_option *config_file_search_option (struct t_config_file *
                                                           struct t_config_section *,
                                                           char *);
 extern int config_file_option_set (struct t_config_option *, char *);
+extern int config_file_option_reset (struct t_config_option *);
 
 extern int config_file_read (struct t_config_file *);
+extern int config_file_reload (struct t_config_file *);
 extern void config_file_write_line (struct t_config_file *, char *, char *);
 extern int config_file_write (struct t_config_file *, int);
 extern void config_file_print_stdout (struct t_config_file *);

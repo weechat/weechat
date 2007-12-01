@@ -153,12 +153,16 @@ struct command weechat_commands[] =
        "Without argument, /plugin command lists loaded plugins."),
     "list|listfull|load|autoload|reload|unload %P", 0, 2, 0, command_plugin },
   { "quit",
-    "", "", "",
+    N_("quit WeeChat"), "", "",
     NULL, 0, 0, 0, command_quit },
-  { "save",
-    N_("save configuration files to disk"),
+  { "reload",
+    N_("reload WeeChat and plugins configuration files from disk"),
     "", "",
-    NULL, 0, 1, 0, command_save },
+    NULL, 0, 0, 0, command_reload },
+  { "save",
+    N_("save WeeChat and plugins configuration files to disk"),
+    "", "",
+    NULL, 0, 0, 0, command_save },
   { "set", N_("set config options"),
     N_("[option [ = value]]"),
     N_("option: name of an option (if name is full "
@@ -1516,6 +1520,43 @@ command_quit (struct t_gui_buffer *buffer,
 }
 
 /*
+ * command_reload: reload WeeChat and plugins options from disk
+ */
+
+int
+command_reload (struct t_gui_buffer *buffer,
+                int argc, char **argv, char **argv_eol)
+{
+    /* make C compiler happy */
+    (void) buffer;
+    (void) argc;
+    (void) argv;
+    (void) argv_eol;
+    
+    /* reload WeeChat configuration */
+    if (config_weechat_reload () == 0)
+        gui_chat_printf (NULL,
+                         _("%sWeeChat configuration file reloaded"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
+    else
+        gui_chat_printf (NULL,
+                         _("%sError: failed to read WeeChat configuration "
+                           "file"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+    
+    /* reload plugins configuration */
+    if (plugin_config_reload () == 0)
+        gui_chat_printf (NULL, _("%sPlugins options reloaded"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
+    else
+        gui_chat_printf (NULL,
+                         _("%sError: failed to read plugins options"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+    
+    return 0;
+}
+
+/*
  * command_save: save WeeChat and plugins options to disk
  */
 
@@ -1536,7 +1577,8 @@ command_save (struct t_gui_buffer *buffer,
                          gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
     else
         gui_chat_printf (NULL,
-                         _("%sError: failed to save configuration file"),
+                         _("%sError: failed to save WeeChat configuration "
+                           "file"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
     
     /* save plugins configuration */

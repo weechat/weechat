@@ -29,7 +29,9 @@ extern struct t_config_option *plugin_config_search_internal (char *);
 extern struct t_config_option *plugin_config_search (char *, char *);
 extern int plugin_config_set_internal (char *, char *);
 extern int plugin_config_set (char *, char *, char *);
+extern void plugin_config_init ();
 extern int plugin_config_read ();
+extern int plugin_config_reload ();
 extern int plugin_config_write ();
 
 #endif /* plugin-config.h */

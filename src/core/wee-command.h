@@ -61,6 +61,7 @@ extern int command_history (struct t_gui_buffer *, int, char **, char **);
 extern int command_key (struct t_gui_buffer *, int, char **, char **);
 extern int command_plugin (struct t_gui_buffer *, int, char **, char **);
 extern int command_quit (struct t_gui_buffer *, int, char **, char **);
+extern int command_reload (struct t_gui_buffer *, int, char **, char **);
 extern int command_save (struct t_gui_buffer *, int, char **, char **);
 extern int command_set (struct t_gui_buffer *, int, char **, char **);
 extern int command_setp (struct t_gui_buffer *, int, char **, char **);
