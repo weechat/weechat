@@ -67,11 +67,11 @@ demo_printf_command_cb (void *data, void *buffer, int argc, char **argv,
         weechat_printf (buffer,
                         "colors: %s buffer %s nick1 %s nick2 %s nick3 "
                         "%s nick4",
-                        weechat_color ("col_chat_buffer"),
-                        weechat_color ("col_chat_nick_color1"),
-                        weechat_color ("col_chat_nick_color2"),
-                        weechat_color ("col_chat_nick_color3"),
-                        weechat_color ("col_chat_nick_color4"));
+                        weechat_color ("color_chat_buffer"),
+                        weechat_color ("color_chat_nick_color1"),
+                        weechat_color ("color_chat_nick_color2"),
+                        weechat_color ("color_chat_nick_color3"),
+                        weechat_color ("color_chat_nick_color4"));
     }
     
     return PLUGIN_RC_SUCCESS;
