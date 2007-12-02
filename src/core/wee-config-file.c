@@ -45,7 +45,7 @@ struct t_config_file *last_config_file = NULL;
  */
 
 struct t_config_file *
-config_file_new (char *filename)
+config_file_new (void *plugin, char *filename)
 {
     struct t_config_file *new_config_file;
     
@@ -55,6 +55,7 @@ config_file_new (char *filename)
     new_config_file = (struct t_config_file *)malloc (sizeof (struct t_config_file));
     if (new_config_file)
     {
+        new_config_file->plugin = plugin;
         new_config_file->filename = strdup (filename);
         new_config_file->file = NULL;
         new_config_file->sections = NULL;
@@ -78,9 +79,9 @@ config_file_new (char *filename)
 
 struct t_config_section *
 config_file_new_section (struct t_config_file *config_file, char *name,
-                         void (*callback_read)(struct t_config_file *, char *, char *),
-                         void (*callback_write)(struct t_config_file *),
-                         void (*callback_write_default)(struct t_config_file *))
+                         void (*callback_read)(void *, char *, char *),
+                         void (*callback_write)(void *),
+                         void (*callback_write_default)(void *))
 {
     struct t_config_section *new_section;
     
@@ -390,6 +391,42 @@ config_file_search_option (struct t_config_file *config_file,
     
     /* option not found */
     return NULL;
+}
+
+/*
+ * config_file_option_valid_for_plugin: check if an option pointer exists for a plugin
+ *                                      return 1 if option exists for plugin
+ *                                             0 if option is not found for plugin
+ */
+
+int
+config_file_option_valid_for_plugin (void *plugin,
+                                     struct t_config_option *option)
+{
+    struct t_config_file *ptr_config;
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
+
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        if (ptr_config->plugin == (struct t_weechat_plugin *)plugin)
+        {
+            for (ptr_section = ptr_config->sections; ptr_section;
+                 ptr_section = ptr_section->next_section)
+            {
+                for (ptr_option = ptr_section->options; ptr_option;
+                     ptr_option = ptr_option->next_option)
+                {
+                    if (ptr_option == option)
+                        return 1;
+                }
+            }
+        }
+    }
+    
+    /* option not found */
+    return 0;
 }
 
 /*

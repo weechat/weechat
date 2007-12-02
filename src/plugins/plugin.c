@@ -269,7 +269,7 @@ plugin_load (char *filename)
         new_plugin->list_next = &plugin_api_list_next;
         new_plugin->list_prev = &plugin_api_list_prev;
         new_plugin->list_fields = &plugin_api_list_fields;
-        new_plugin->list_int = &plugin_api_list_int;
+        new_plugin->list_integer = &plugin_api_list_integer;
         new_plugin->list_string = &plugin_api_list_string;
         new_plugin->list_pointer = &plugin_api_list_pointer;
         new_plugin->list_time = &plugin_api_list_time;

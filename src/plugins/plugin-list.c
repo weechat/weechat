@@ -93,12 +93,12 @@ plugin_list_new_item (struct t_plugin_list *list)
 }
 
 /*
- * plugin_list_new_var_int: create a new integer variable in an item
+ * plugin_list_new_var_integer: create a new integer variable in an item
  */
 
 struct t_plugin_list_var *
-plugin_list_new_var_int (struct t_plugin_list_item *item,
-                         char *name, int value)
+plugin_list_new_var_integer (struct t_plugin_list_item *item,
+                             char *name, int value)
 {
     struct t_plugin_list_var *new_var;
     
@@ -334,11 +334,11 @@ plugin_list_get_fields (struct t_plugin_list *list)
 }
 
 /*
- * plugin_list_get_int: get an integer variable value in current list item
+ * plugin_list_get_integer: get an integer variable value in current list item
  */
 
 int
-plugin_list_get_int (struct t_plugin_list *list, char *var)
+plugin_list_get_integer (struct t_plugin_list *list, char *var)
 {
     struct t_plugin_list_var *ptr_var;
     

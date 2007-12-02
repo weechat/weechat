@@ -324,7 +324,7 @@ config_change_nicks_colors ()
  */
 
 void
-config_weechat_read_alias (struct t_config_file *config_file,
+config_weechat_read_alias (void *config_file,
                            char *option_name, char *value)
 {
     /* make C compiler happy */
@@ -343,7 +343,7 @@ config_weechat_read_alias (struct t_config_file *config_file,
  */
 
 void
-config_weechat_read_key (struct t_config_file *config_file,
+config_weechat_read_key (void *config_file,
                          char *option_name, char *value)
 {
     /* make C compiler happy */
@@ -368,7 +368,7 @@ config_weechat_read_key (struct t_config_file *config_file,
  */
 
 void
-config_weechat_write_alias (struct t_config_file *config_file)
+config_weechat_write_alias (void *config_file)
 {
     struct alias *ptr_alias;
     char *string;
@@ -396,7 +396,7 @@ config_weechat_write_alias (struct t_config_file *config_file)
  */
 
 void
-config_weechat_write_alias_default_values (struct t_config_file *config_file)
+config_weechat_write_alias_default_values (void *config_file)
 {
     config_file_write_line (config_file, "SAY", "\"msg *\"");
     config_file_write_line (config_file, "BYE", "\"quit\"");
@@ -431,7 +431,7 @@ config_weechat_write_alias_default_values (struct t_config_file *config_file)
  */
 
 void
-config_weechat_write_keys (struct t_config_file *config_file)
+config_weechat_write_keys (void *config_file)
 {
     t_gui_key *ptr_key;
     char *expanded_name, *function_name, *string;
@@ -493,7 +493,7 @@ config_weechat_init ()
 {
     struct t_config_section *section;
     
-    weechat_config = config_file_new (WEECHAT_CONFIG_FILENAME);
+    weechat_config = config_file_new (NULL, WEECHAT_CONFIG_FILENAME);
     if (weechat_config)
     {
         /* look */

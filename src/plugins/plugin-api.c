@@ -254,6 +254,276 @@ plugin_api_exec_on_files (struct t_weechat_plugin *plugin, char *directory,
 }
 
 /*
+ * plugin_api_config_new: create new config file structure
+ */
+
+struct t_config_file *
+plugin_api_config_new (struct t_weechat_plugin *plugin, char *filename)
+{
+    return config_file_new (plugin, filename);
+}
+
+/*
+ * plugin_api_config_new_section: create new section in a config
+ */
+
+struct t_config_section *
+plugin_api_config_new_section (struct t_weechat_plugin *plugin,
+                               void *config_file, char *name,
+                               void (*callback_read)(void *, char *, char *),
+                               void (*callback_write)(void *),
+                               void (*callback_write_default)(void *))
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return config_file_new_section (config_file, name, callback_read,
+                                    callback_write, callback_write_default);
+}
+
+/*
+ * plugin_api_config_new_option: create new option in a config section
+ */
+
+struct t_config_option *
+plugin_api_config_new_option (struct t_weechat_plugin *plugin,
+                              void *section, char *name, char *type,
+                              char *description, char *string_values,
+                              int min, int max, char *default_value,
+                              void (*callback_change)())
+                              
+{
+    long number;
+    char *error;
+    
+    /* make C compiler happy */
+    (void) plugin;
+    
+    if (string_strcasecmp (type, "boolean") == 0)
+    {
+        return config_file_new_option_boolean (
+            section, name, description,
+            (config_file_string_boolean_value (default_value) == CONFIG_BOOLEAN_TRUE) ?
+            CONFIG_BOOLEAN_TRUE : CONFIG_BOOLEAN_FALSE,
+            callback_change);
+    }
+    if (string_strcasecmp (type, "integer") == 0)
+    {
+        error = NULL;
+        number = strtol (default_value, &error, 10);
+        if (error && (error[0] == '\0'))
+        {
+            if (string_values && string_values[0])
+                return config_file_new_option_integer_with_string (
+                    section, name, description, string_values, number,
+                    callback_change);
+                return config_file_new_option_integer (
+                    section, name, description, min, max, number,
+                    callback_change);
+        }
+        else
+            return NULL;
+    }
+    if (string_strcasecmp (type, "string") == 0)
+    {
+        return config_file_new_option_string (
+            section, name, description, min, max, default_value,
+            callback_change);
+    }
+    if (string_strcasecmp (type, "color") == 0)
+    {
+        return config_file_new_option_color (
+            section, name, description, min, default_value,
+            callback_change);
+    }
+    
+    /* unknown option type */
+    return NULL;
+}
+
+/*
+ * plugin_api_config_boolean: return boolean value of an option
+ */
+
+char
+plugin_api_config_boolean (struct t_weechat_plugin *plugin, void *option)
+{
+    if (plugin && config_file_option_valid_for_plugin (plugin, option)
+        && (((struct t_config_option *)option)->type == CONFIG_OPTION_BOOLEAN))
+        return CONFIG_BOOLEAN((struct t_config_option *)option);
+    else
+        return 0;
+}
+
+/*
+ * plugin_api_config_integer: return integer value of an option
+ */
+
+int
+plugin_api_config_integer (struct t_weechat_plugin *plugin, void *option)
+{
+    if (plugin && config_file_option_valid_for_plugin (plugin, option)
+        && (((struct t_config_option *)option)->type == CONFIG_OPTION_INTEGER))
+        return CONFIG_INTEGER((struct t_config_option *)option);
+    else
+        return 0;
+}
+
+/*
+ * plugin_api_config_string: return string value of an option
+ */
+
+char *
+plugin_api_config_string (struct t_weechat_plugin *plugin, void *option)
+{
+    if (plugin && config_file_option_valid_for_plugin (plugin, option)
+        && (((struct t_config_option *)option)->type == CONFIG_OPTION_STRING))
+        return CONFIG_STRING((struct t_config_option *)option);
+    else
+        return NULL;
+}
+
+/*
+ * plugin_api_config_color: return color value of an option
+ */
+
+int
+plugin_api_config_color (struct t_weechat_plugin *plugin, void *option)
+{
+    if (plugin && config_file_option_valid_for_plugin (plugin, option)
+        && (((struct t_config_option *)option)->type == CONFIG_OPTION_COLOR))
+        return CONFIG_COLOR((struct t_config_option *)option);
+    else
+        return 0;
+}
+
+/*
+ * plugin_api_get_config_str_value: return string value for any option
+ *                                  This function should never be called directly
+ *                                  (only used by weechat_get_config)
+ */
+
+char *
+plugin_api_get_config_str_value (struct t_config_option *option)
+{
+    char buf_temp[1024], *color_name;
+    
+    switch (option->type)
+    {
+        case CONFIG_OPTION_BOOLEAN:
+            return (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
+                strdup ("on") : strdup ("off");
+        case CONFIG_OPTION_INTEGER:
+            if (option->string_values)
+                snprintf (buf_temp, sizeof (buf_temp), "%s",
+                          option->string_values[CONFIG_INTEGER(option)]);
+            else
+                snprintf (buf_temp, sizeof (buf_temp), "%d",
+                          CONFIG_INTEGER(option));
+            return strdup (buf_temp);
+        case CONFIG_OPTION_STRING:
+            return strdup (CONFIG_STRING(option));
+        case CONFIG_OPTION_COLOR:
+            color_name = gui_color_get_name (CONFIG_INTEGER(option));
+            return (color_name) ? strdup (color_name) : strdup ("");
+    }
+    
+    /* should never be executed! */
+    return NULL;
+}
+
+/*
+ * plugin_api_config_get: get value of a WeeChat config option
+ */
+
+char *
+plugin_api_config_get (struct t_weechat_plugin *plugin, char *option_name)
+{
+    struct t_config_option *ptr_option;
+    
+    /* make C compiler happy */
+    (void) plugin;
+
+    /* search WeeChat config option */
+    ptr_option = config_file_search_option (weechat_config, NULL, option_name);
+    if (ptr_option)
+        return plugin_api_get_config_str_value (ptr_option);
+    
+    /* option not found */
+    return NULL;
+}
+
+/*
+ * plugin_api_config_set: set value of a config option
+ */
+
+int
+plugin_api_config_set (struct t_weechat_plugin *plugin, char *option_name,
+                       char *value)
+{
+    struct t_config_option *ptr_option;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) plugin;
+    
+    if (!option_name || !value)
+        return 0;
+    
+    /* search and set WeeChat config option if found */
+    ptr_option = config_file_search_option (weechat_config, NULL, option_name);
+    if (ptr_option)
+    {
+        rc = config_file_option_set (ptr_option, value);
+        if ((rc == 2) && (ptr_option->callback_change))
+            (void) (ptr_option->callback_change) ();
+        if (rc == 0)
+            return 0;
+        return 1;
+    }
+    
+    /* failed to set config option */
+    return 0;
+}
+
+/*
+ * plugin_api_plugin_config_get: get value of a plugin config option
+ */
+
+char *
+plugin_api_plugin_config_get (struct t_weechat_plugin *plugin, char *option_name)
+{
+    struct t_config_option *ptr_option;
+    
+    if (!option_name)
+        return NULL;
+    
+    ptr_option = plugin_config_search (plugin->name, option_name);
+    if (ptr_option)
+        return (ptr_option->value) ? strdup (ptr_option->value) : NULL;
+    
+    /* option not found */
+    return NULL;
+}
+
+/*
+ * plugin_api_plugin_config_set: set value of a plugin config option
+ */
+
+int
+plugin_api_plugin_config_set (struct t_weechat_plugin *plugin,
+                              char *option_name, char *value)
+{
+    if (!option_name)
+        return 0;
+    
+    if (plugin_config_set (plugin->name, option_name, value))
+        return 1;
+    
+    return 0;
+}
+
+/*
  * plugin_api_prefix: return a prefix for display with printf
  */
 
@@ -835,21 +1105,21 @@ plugin_api_list_get_add_buffer (struct t_plugin_list *list,
 
     if (!plugin_list_new_var_pointer (ptr_item, "pointer", buffer))
         return 0;
-    if (!plugin_list_new_var_int (ptr_item, "number", buffer->number))
+    if (!plugin_list_new_var_integer (ptr_item, "number", buffer->number))
         return 0;
     if (!plugin_list_new_var_string (ptr_item, "category", buffer->category))
         return 0;
     if (!plugin_list_new_var_string (ptr_item, "name", buffer->name))
         return 0;
-    if (!plugin_list_new_var_int (ptr_item, "type", buffer->type))
+    if (!plugin_list_new_var_integer (ptr_item, "type", buffer->type))
         return 0;
-    if (!plugin_list_new_var_int (ptr_item, "notify_level", buffer->notify_level))
+    if (!plugin_list_new_var_integer (ptr_item, "notify_level", buffer->notify_level))
         return 0;
-    if (!plugin_list_new_var_int (ptr_item, "num_displayed", buffer->num_displayed))
+    if (!plugin_list_new_var_integer (ptr_item, "num_displayed", buffer->num_displayed))
         return 0;
     if (!plugin_list_new_var_string (ptr_item, "title", buffer->title))
         return 0;
-    if (!plugin_list_new_var_int (ptr_item, "input", buffer->input))
+    if (!plugin_list_new_var_integer (ptr_item, "input", buffer->input))
         return 0;
     if (!plugin_list_new_var_string (ptr_item, "input_nick", buffer->input_nick))
         return 0;
@@ -1024,19 +1294,19 @@ plugin_api_list_fields (struct t_weechat_plugin *plugin, void *list)
 }
 
 /*
- * plugin_api_list_int: get an integer variable value in current list item
+ * plugin_api_list_integer: get an integer variable value in current list item
  */
 
 int
-plugin_api_list_int (struct t_weechat_plugin *plugin, void *list,
-                     char *var)
+plugin_api_list_integer (struct t_weechat_plugin *plugin, void *list,
+                         char *var)
 {
     if (!plugin || !list
         || !plugin_list_valid ((struct t_plugin_list *)list)
         || !((struct t_plugin_list *)list)->ptr_item)
         return 0;
     
-    return plugin_list_get_int ((struct t_plugin_list *)list, var);
+    return plugin_list_get_integer ((struct t_plugin_list *)list, var);
 }
 
 /*
@@ -1099,132 +1369,6 @@ plugin_api_list_free (struct t_weechat_plugin *plugin, void *list)
 }
 
 /*
- * plugin_api_get_config_str_value: return string value for any option
- *                                  This function should never be called directly
- *                                  (only used by weechat_get_config)
- */
-
-char *
-plugin_api_get_config_str_value (struct t_config_option *option)
-{
-    char buf_temp[1024], *color_name;
-    
-    switch (option->type)
-    {
-        case CONFIG_OPTION_BOOLEAN:
-            return (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
-                strdup ("on") : strdup ("off");
-        case CONFIG_OPTION_INTEGER:
-            if (option->string_values)
-                snprintf (buf_temp, sizeof (buf_temp), "%s",
-                          option->string_values[CONFIG_INTEGER(option)]);
-            else
-                snprintf (buf_temp, sizeof (buf_temp), "%d",
-                          CONFIG_INTEGER(option));
-            return strdup (buf_temp);
-        case CONFIG_OPTION_STRING:
-            return strdup (CONFIG_STRING(option));
-        case CONFIG_OPTION_COLOR:
-            color_name = gui_color_get_name (CONFIG_INTEGER(option));
-            return (color_name) ? strdup (color_name) : strdup ("");
-    }
-    
-    /* should never be executed! */
-    return NULL;
-}
-
-/*
- * plugin_api_config_get: get value of a WeeChat config option
- */
-
-char *
-plugin_api_config_get (struct t_weechat_plugin *plugin, char *option_name)
-{
-    struct t_config_option *ptr_option;
-    
-    /* make C compiler happy */
-    (void) plugin;
-
-    /* search WeeChat config option */
-    ptr_option = config_file_search_option (weechat_config, NULL, option_name);
-    if (ptr_option)
-        return plugin_api_get_config_str_value (ptr_option);
-    
-    /* option not found */
-    return NULL;
-}
-
-/*
- * plugin_api_config_set: set value of a config option
- */
-
-int
-plugin_api_config_set (struct t_weechat_plugin *plugin, char *option_name,
-                       char *value)
-{
-    struct t_config_option *ptr_option;
-    int rc;
-    
-    /* make C compiler happy */
-    (void) plugin;
-    
-    if (!option_name || !value)
-        return 0;
-    
-    /* search and set WeeChat config option if found */
-    ptr_option = config_file_search_option (weechat_config, NULL, option_name);
-    if (ptr_option)
-    {
-        rc = config_file_option_set (ptr_option, value);
-        if ((rc == 2) && (ptr_option->callback_change))
-            (void) (ptr_option->callback_change) ();
-        if (rc == 0)
-            return 0;
-        return 1;
-    }
-    
-    /* failed to set config option */
-    return 0;
-}
-
-/*
- * plugin_api_plugin_config_get: get value of a plugin config option
- */
-
-char *
-plugin_api_plugin_config_get (struct t_weechat_plugin *plugin, char *option_name)
-{
-    struct t_config_option *ptr_option;
-    
-    if (!option_name)
-        return NULL;
-    
-    ptr_option = plugin_config_search (plugin->name, option_name);
-    if (ptr_option)
-        return (ptr_option->value) ? strdup (ptr_option->value) : NULL;
-    
-    /* option not found */
-    return NULL;
-}
-
-/*
- * plugin_api_plugin_config_set: set value of a plugin config option
- */
-
-int
-plugin_api_plugin_config_set (struct t_weechat_plugin *plugin,
-                              char *option_name, char *value)
-{
-    if (!option_name)
-        return 0;
-    
-    if (plugin_config_set (plugin->name, option_name, value))
-        return 1;
-    
-    return 0;
-}
-
-/*
  * plugin_api_log: add a message in buffer log file
  */
 
@@ -1256,5 +1400,5 @@ plugin_api_log (struct t_weechat_plugin *plugin,
 	gui_log_write_line (ptr_buffer, (buf2) ? buf2 : buf);
         if (buf2)
             free (buf2);
-            }*/
+    }*/
 }

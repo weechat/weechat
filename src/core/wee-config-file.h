@@ -37,6 +37,7 @@
 
 struct t_config_file
 {
+    struct t_weechat_plugin *plugin;       /* plugin which created this cfg */
     char *filename;                        /* config filename (without path)*/
     FILE *file;                            /* file pointer                  */
     struct t_config_section *sections;     /* config sections               */
@@ -49,12 +50,11 @@ struct t_config_section
 {
     char *name;                            /* section name                  */
     void (*callback_read)                  /* called when unknown option    */
-    (struct t_config_file *,               /* is read from config file      */
-     char *, char *);                         
+    (void *, char *, char *);              /* is read from config file      */
     void (*callback_write)                 /* called to write special       */
-    (struct t_config_file *);              /* options in config file        */
+    (void *);                              /* options in config file        */
     void (*callback_write_default)         /* called to write default       */
-    (struct t_config_file *);              /* options in config file        */
+    (void *);                              /* options in config file        */
     struct t_config_option *options;       /* options in section            */
     struct t_config_option *last_option;   /* last option in section        */
     struct t_config_section *prev_section; /* link to previous section      */
@@ -84,12 +84,12 @@ struct t_config_option
     struct t_config_option *next_option;   /* link to next option           */
 };
 
-extern struct t_config_file *config_file_new (char *);
+extern struct t_config_file *config_file_new (void *, char *);
 extern struct t_config_section *config_file_new_section (struct t_config_file *,
                                                          char *,
-                                                         void (*)(struct t_config_file *, char *, char *),
-                                                         void (*)(struct t_config_file *),
-                                                         void (*)(struct t_config_file *));
+                                                         void (*)(void *, char *, char *),
+                                                         void (*)(void *),
+                                                         void (*)(void *));
 extern struct t_config_section *config_file_search_section (struct t_config_file *,
                                                             char *);
 extern struct t_config_option *config_file_new_option_boolean (struct t_config_section *,
@@ -117,6 +117,8 @@ extern struct t_config_option *config_file_new_option_color (struct t_config_sec
 extern struct t_config_option *config_file_search_option (struct t_config_file *,
                                                           struct t_config_section *,
                                                           char *);
+extern int config_file_option_valid_for_plugin (void *, struct t_config_option *);
+extern int config_file_string_boolean_value (char *);
 extern int config_file_option_set (struct t_config_option *, char *);
 extern int config_file_option_reset (struct t_config_option *);
 

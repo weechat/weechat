@@ -141,8 +141,8 @@ demo_print_list (void *list, char *item_name)
                         case 'i':
                             weechat_printf (NULL, "  %s: %d",
                                             argv[j] + 2,
-                                            weechat_list_int (list,
-                                                              argv[j] + 2));
+                                            weechat_list_integer (list,
+                                                                  argv[j] + 2));
                             break;
                         case 's':
                             weechat_printf (NULL, "  %s: %s",

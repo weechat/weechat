@@ -289,8 +289,7 @@ plugin_config_free_all ()
  */
 
 void
-plugin_config_read_option (struct t_config_file *config_file,
-                           char *option_name, char *value)
+plugin_config_read_option (void *config_file, char *option_name, char *value)
 {
     char *value2;
     
@@ -309,7 +308,7 @@ plugin_config_read_option (struct t_config_file *config_file,
  */
 
 void
-plugin_config_write_options (struct t_config_file *config_file)
+plugin_config_write_options (void *config_file)
 {
     struct t_config_option *ptr_option;
     
@@ -329,7 +328,7 @@ plugin_config_write_options (struct t_config_file *config_file)
 void
 plugin_config_init ()
 {
-    plugin_config = config_file_new (PLUGIN_CONFIG_FILENAME);
+    plugin_config = config_file_new (NULL, PLUGIN_CONFIG_FILENAME);
     if (plugin_config)
     {
         config_file_new_section (plugin_config, "plugin",
