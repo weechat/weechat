@@ -28,7 +28,6 @@
 
 #include "weechat.h"
 #include "wee-input.h"
-#include "wee-alias.h"
 #include "wee-command.h"
 #include "wee-config.h"
 #include "wee-hook.h"
@@ -50,13 +49,9 @@ int
 input_exec_command (struct t_gui_buffer *buffer, char *string,
                     int only_builtin)
 {
-    int i, rc, argc, return_code, length1, length2;
+    int i, rc, argc, return_code;
     char *command, *pos, *ptr_args;
-    char **argv, **argv_eol, *alias_command;
-    char **commands, **ptr_cmd, **ptr_next_cmd;
-    char *args_replaced, *vars_replaced, *new_ptr_cmd;
-    int some_args_replaced;
-    struct alias *ptr_alias;
+    char **argv, **argv_eol;
     
     if ((!string) || (!string[0]) || (string[0] != '/'))
         return 0;
@@ -110,126 +105,6 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
         default: /* no command hooked */
             argv = string_explode (ptr_args, " ", 0, 0, &argc);
             argv_eol = string_explode (ptr_args, " ", 1, 0, NULL);
-            
-            /* look for alias */
-            if (!only_builtin)
-            {
-                for (ptr_alias = weechat_alias; ptr_alias;
-                     ptr_alias = ptr_alias->next_alias)
-                {
-                    if (string_strcasecmp (ptr_alias->name, command + 1) == 0)
-                    {
-                        if (ptr_alias->running == 1)
-                        {
-                            gui_chat_printf (NULL,
-                                             _("%sError: circular reference when "
-                                               "calling alias \"/%s\""),
-                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             ptr_alias->name);
-                        }
-                        else
-                        {		
-                            /* an alias can contain many commands separated by ';' */
-                            commands = string_split_multi_command (ptr_alias->command,
-                                                                   ';');
-                            if (commands)
-                            {
-                                some_args_replaced = 0;
-                                ptr_alias->running = 1;
-                                for (ptr_cmd=commands; *ptr_cmd; ptr_cmd++)
-                                {
-                                    ptr_next_cmd = ptr_cmd;
-                                    ptr_next_cmd++;
-                                    
-                                    vars_replaced = alias_replace_vars (buffer,
-                                                                        *ptr_cmd);
-                                    new_ptr_cmd = (vars_replaced) ? vars_replaced : *ptr_cmd;
-                                    args_replaced = alias_replace_args (new_ptr_cmd,
-                                                                        ptr_args);
-                                    if (args_replaced)
-                                    {
-                                        some_args_replaced = 1;
-                                        if (*ptr_cmd[0] == '/')
-                                            (void) input_exec_command (buffer,
-                                                                       args_replaced,
-                                                                       only_builtin);
-                                        else
-                                        {
-                                            alias_command = (char *) malloc (1 + strlen(args_replaced) + 1);
-                                            if (alias_command)
-                                            {
-                                                strcpy (alias_command, "/");
-                                                strcat (alias_command, args_replaced);
-                                                (void) input_exec_command (buffer,
-                                                                           alias_command,
-                                                                           only_builtin);
-                                                free (alias_command);
-                                            }
-                                        }
-                                        free (args_replaced);
-                                    }
-                                    else
-                                    {
-                                        /* if alias has arguments, they are now
-                                           arguments of the last command in the list (if no $1,$2,..$*) was found */
-                                        if ((*ptr_next_cmd == NULL) && ptr_args && (!some_args_replaced))
-                                        {
-                                            length1 = strlen (new_ptr_cmd);
-                                            length2 = strlen (ptr_args);
-                                            
-                                            alias_command = (char *) malloc ( 1 + length1 + 1 + length2 + 1);
-                                            if (alias_command)
-                                            {
-                                                if (*ptr_cmd[0] != '/')
-                                                    strcpy (alias_command, "/");
-                                                else
-                                                    strcpy (alias_command, "");
-                                                
-                                                strcat (alias_command, new_ptr_cmd);
-                                                strcat (alias_command, " ");
-                                                strcat (alias_command, ptr_args);
-                                                
-                                                (void) input_exec_command (buffer,
-                                                                           alias_command,
-                                                                           only_builtin);
-                                                free (alias_command);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            if (*ptr_cmd[0] == '/')
-                                                (void) input_exec_command (buffer,
-                                                                           new_ptr_cmd,
-                                                                           only_builtin);
-                                            else
-                                            {
-                                                alias_command = (char *) malloc (1 + strlen (new_ptr_cmd) + 1);
-                                                if (alias_command)
-                                                {
-                                                    strcpy (alias_command, "/");
-                                                    strcat (alias_command, new_ptr_cmd);
-                                                    (void) input_exec_command (buffer,
-                                                                               alias_command,
-                                                                               only_builtin);
-                                                    free (alias_command);
-                                                }
-                                            }
-                                        }
-                                    }
-                                    if (vars_replaced)
-                                        free (vars_replaced);
-                                }
-                                ptr_alias->running = 0;
-                                string_free_multi_command (commands);
-                            }
-                        }
-                        string_free_exploded (argv);
-                        string_free_exploded (argv_eol);
-                        free (command);
-                        return 1;
-                    }
-                }
-            }
             
             /* look for WeeChat command */
             for (i = 0; weechat_commands[i].name; i++)

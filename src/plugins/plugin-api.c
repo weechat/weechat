@@ -200,6 +200,34 @@ plugin_api_string_free_exploded (struct t_weechat_plugin *plugin,
 }
 
 /*
+ * plugin_api_string_split_command: split a ocmmanc
+ */
+
+char **
+plugin_api_string_split_command (struct t_weechat_plugin *plugin, char *string,
+                                 char separator)
+{
+    if (!plugin || !string)
+        return NULL;
+    
+    return string_split_command (string, separator);
+}
+
+/*
+ * plugin_api_string_free_splitted_command: free splitted command
+ */
+
+void
+plugin_api_string_free_splitted_command (struct t_weechat_plugin *plugin,
+                                         char **splitted_command)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    string_free_splitted_command (splitted_command);
+}
+
+/*
  * plugin_api_mkdir_home: create a directory in WeeChat home
  */
 
@@ -395,6 +423,70 @@ plugin_api_config_color (struct t_weechat_plugin *plugin, void *option)
         return CONFIG_COLOR((struct t_config_option *)option);
     else
         return 0;
+}
+
+/*
+ * plugin_api_config_read: read a configuration file
+ */
+
+int
+plugin_api_config_read (struct t_weechat_plugin *plugin, void *config_file)
+{
+    if (plugin && config_file_valid_for_plugin (plugin, config_file))
+        return config_file_read ((struct t_config_file *)config_file);
+    else
+        return -1;
+}
+
+/*
+ * plugin_api_config_reload: reload a configuration file
+ */
+
+int
+plugin_api_config_reload (struct t_weechat_plugin *plugin, void *config_file)
+{
+    if (plugin && config_file_valid_for_plugin (plugin, config_file))
+        return config_file_reload ((struct t_config_file *)config_file);
+    else
+        return -1;
+}
+
+/*
+ * plugin_api_config_write: write a configuration file
+ */
+
+int
+plugin_api_config_write (struct t_weechat_plugin *plugin, void *config_file)
+{
+    if (plugin && config_file_valid_for_plugin (plugin, config_file))
+        return config_file_write ((struct t_config_file *)config_file, 0);
+    else
+        return -1;
+}
+
+/*
+ * plugin_api_config_write_line: write a line in configuration file
+ */
+
+void
+plugin_api_config_write_line (struct t_weechat_plugin *plugin,
+                              void *config_file, char *option_name,
+                              char *value)
+{
+    if (plugin && config_file_valid_for_plugin (plugin, config_file))
+        config_file_write_line ((struct t_config_file *)config_file,
+                                option_name, value);
+}
+
+/*
+ * plugin_api_config_free: free a configuration file
+ */
+
+void
+plugin_api_config_free (struct t_weechat_plugin *plugin, void *config_file)
+{
+    if (plugin && config_file_valid_for_plugin (plugin, config_file))
+        config_file_free ((struct t_config_file *)config_file);
 }
 
 /*

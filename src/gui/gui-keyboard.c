@@ -628,7 +628,7 @@ gui_keyboard_pressed (char *key_str)
             gui_key_combo_buffer[0] = '\0';
             if (ptr_key->command)
             {
-                commands = string_split_multi_command (ptr_key->command, ';');
+                commands = string_split_command (ptr_key->command, ';');
                 if (commands)
                 {
                     for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
@@ -636,7 +636,7 @@ gui_keyboard_pressed (char *key_str)
                         input_data (gui_current_window->buffer,
                                     *ptr_cmd, 0);
                     }
-                    string_free_multi_command (commands);
+                    string_free_splitted_command (commands);
                 }
             }
             else

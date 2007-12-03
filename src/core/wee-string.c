@@ -460,15 +460,15 @@ string_free_exploded (char **exploded_string)
 }
 
 /*
- * string_split_multi_command: split a list of commands separated by 'sep'
- *                             and ecscaped with '\'
- *                             - empty commands are removed
- *                             - spaces on the left of each commands are stripped
- *                             Result must be freed with free_multi_command
+ * string_split_command: split a list of commands separated by 'sep'
+ *                       and ecscaped with '\'
+ *                       - empty commands are removed
+ *                       - spaces on the left of each commands are stripped
+ *                       Result must be freed with free_multi_command
  */
 
 char **
-string_split_multi_command (char *command, char sep)
+string_split_command (char *command, char sep)
 {
     int nb_substr, arr_idx, str_idx, type;
     char **array;
@@ -545,12 +545,12 @@ string_split_multi_command (char *command, char sep)
 }
 
 /*
- * string_free_multi_command : free a list of commands splitted
- *                             with split_multi_command
+ * string_free_splitted_command : free a list of commands splitted
+ *                                with string_split_command
  */
 
 void
-string_free_multi_command (char **commands)
+string_free_splitted_command (char **commands)
 {
     int i;
 

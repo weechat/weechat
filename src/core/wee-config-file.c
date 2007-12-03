@@ -41,6 +41,26 @@ struct t_config_file *last_config_file = NULL;
 
 
 /*
+ * config_file_search: search a configuration file
+ */
+
+struct t_config_file *
+config_file_search (char *filename)
+{
+    struct t_config_file *ptr_config;
+
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        if (strcmp (ptr_config->filename, filename) == 0)
+            return ptr_config;
+    }
+    
+    /* configuration file not found */
+    return NULL;
+}
+
+/*
  * config_file_new: create new config options structure
  */
 
@@ -50,6 +70,10 @@ config_file_new (void *plugin, char *filename)
     struct t_config_file *new_config_file;
     
     if (!filename)
+        return NULL;
+    
+    /* it's NOT authorized to create two config files with same filename */
+    if (config_file_search (filename))
         return NULL;
     
     new_config_file = (struct t_config_file *)malloc (sizeof (struct t_config_file));
@@ -71,6 +95,29 @@ config_file_new (void *plugin, char *filename)
     }
     
     return new_config_file;
+}
+
+/*
+ * config_file_valid_for_plugin: check if a configuration file pointer exists for a plugin
+ *                               return 1 if configuration file exists for plugin
+ *                                      0 if configuration file is not found for plugin
+ */
+
+int
+config_file_valid_for_plugin (void *plugin, struct t_config_file *config_file)
+{
+    struct t_config_file *ptr_config;
+    
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        if ((ptr_config == config_file)
+            && (ptr_config->plugin == (struct t_weechat_plugin *)plugin))
+            return 1;
+    }
+    
+    /* configuration file not found */
+    return 0;
 }
 
 /*
@@ -1012,6 +1059,127 @@ config_file_write (struct t_config_file *config_file, int default_options)
     if (rc != 0)
         return -1;
     return 0;
+}
+
+/*
+ * config_file_option_free: free an option
+ */
+
+void
+config_file_option_free (struct t_config_section *section,
+                         struct t_config_option *option)
+{
+    struct t_config_option *new_options;
+    
+    /* remove option */
+    if (section->last_option == option)
+        section->last_option = option->prev_option;
+    if (option->prev_option)
+    {
+        (option->prev_option)->next_option = option->next_option;
+        new_options = section->options;
+    }
+    else
+        new_options = option->next_option;
+    
+    if (option->next_option)
+        (option->next_option)->prev_option = option->prev_option;
+    
+    /* free data */
+    if (option->name)
+        free (option->name);
+    if (option->description)
+        free (option->description);
+    if (option->string_values)
+        string_free_exploded (option->string_values);
+    if (option->default_value)
+        free (option->default_value);
+    if (option->value)
+        free (option->value);
+    
+    section->options = new_options;
+}
+
+/*
+ * config_file_section_free: free a section
+ */
+
+void
+config_file_section_free (struct t_config_file *config_file,
+                          struct t_config_section *section)
+{
+    struct t_config_section *new_sections;
+    
+    /* remove section */
+    if (config_file->last_section == section)
+        config_file->last_section = section->prev_section;
+    if (section->prev_section)
+    {
+        (section->prev_section)->next_section = section->next_section;
+        new_sections = config_file->sections;
+    }
+    else
+        new_sections = section->next_section;
+    
+    if (section->next_section)
+        (section->next_section)->prev_section = section->prev_section;
+    
+    /* free data */
+    while (section->options)
+    {
+        config_file_option_free (section, section->options);
+    }
+    if (section->name)
+        free (section->name);
+    
+    config_file->sections = new_sections;
+}
+
+/*
+ * config_file_free: free a configuration file
+ */
+
+void
+config_file_free (struct t_config_file *config_file)
+{
+    struct t_config_file *new_config_files;
+    
+    /* remove config file */
+    if (last_config_file == config_file)
+        last_config_file = config_file->prev_config;
+    if (config_file->prev_config)
+    {
+        (config_file->prev_config)->next_config = config_file->next_config;
+        new_config_files = config_files;
+    }
+    else
+        new_config_files = config_file->next_config;
+    
+    if (config_file->next_config)
+        (config_file->next_config)->prev_config = config_file->prev_config;
+    
+    /* free data */
+    while (config_file->sections)
+    {
+        config_file_section_free (config_file, config_file->sections);
+    }
+    if (config_file->filename)
+        free (config_file->filename);
+    
+    config_files = new_config_files;
+}
+
+/*
+ * config_file_free_all: free all configuration files
+ */
+
+void
+config_file_free_all ()
+{
+    while (config_files)
+    {
+        config_file_free (config_files);
+    }
 }
 
 /*

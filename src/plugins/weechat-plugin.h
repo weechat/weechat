@@ -67,6 +67,8 @@ struct t_weechat_plugin
     char **(*string_explode) (struct t_weechat_plugin *, char *, char *, int,
                               int, int *);
     void (*string_free_exploded) (struct t_weechat_plugin *, char **);
+    char **(*string_split_command) (struct t_weechat_plugin *, char *, char);
+    void (*string_free_splitted_command) (struct t_weechat_plugin *, char **);
     
     /* directories */
     int (*mkdir_home) (struct t_weechat_plugin *, char *);
@@ -88,11 +90,16 @@ struct t_weechat_plugin
     int (*config_integer) (struct t_weechat_plugin *, void *);
     char *(*config_string) (struct t_weechat_plugin *, void *);
     int (*config_color) (struct t_weechat_plugin *, void *);
+    int (*config_read) (struct t_weechat_plugin *, void *);
+    int (*config_reload) (struct t_weechat_plugin *, void *);
+    int (*config_write) (struct t_weechat_plugin *, void *);
+    void (*config_write_line) (struct t_weechat_plugin *, void *,
+                               char *, char *);
+    void (*config_free) (struct t_weechat_plugin *, void *);
     char *(*config_get) (struct t_weechat_plugin *, char *);
     int (*config_set) (struct t_weechat_plugin *, char *, char *);
     char *(*plugin_config_get) (struct t_weechat_plugin *, char *);
     int (*plugin_config_set) (struct t_weechat_plugin *, char *, char *);
-
     
     /* display */
     char *(*prefix) (struct t_weechat_plugin *, char *);
@@ -193,6 +200,12 @@ struct t_weechat_plugin
                                    __num_items)
 #define weechat_string_free_exploded(__array_str)                       \
     weechat_plugin->string_free_exploded(weechat_plugin, __array_str)
+#define weechat_string_split_command(__string1, __separator)            \
+    weechat_plugin->string_split_command(weechat_plugin, __string1,     \
+                                         __separator)
+#define weechat_string_free_splitted_command(__array_str)               \
+    weechat_plugin->string_free_splitted_command(weechat_plugin,        \
+                                                 __array_str)
 
 /* directories */
 #define weechat_mkdir_home(__directory)                         \
@@ -224,6 +237,18 @@ struct t_weechat_plugin
     weechat_plugin->config_string(weechat_plugin, __option)
 #define weechat_config_color(__option)                          \
     weechat_plugin->config_color(weechat_plugin, __option)
+#define weechat_config_read(__config)                           \
+    weechat_plugin->config_read(weechat_plugin, __config)
+#define weechat_config_reload(__config)                         \
+    weechat_plugin->config_reload(weechat_plugin, __config)
+#define weechat_config_write(__config)                          \
+    weechat_plugin->config_write(weechat_plugin, __config)
+#define weechat_config_write_line(__config, __option, __value)  \
+    weechat_plugin->config_write_line(weechat_plugin,           \
+                                      __config, __option,       \
+                                      __value)
+#define weechat_config_free(__config)                           \
+    weechat_plugin->config_free(weechat_plugin, __config)
 #define weechat_config_get(__option)                            \
     weechat_plugin->config_get(weechat_plugin, __option)
 #define weechat_config_set(__option, __value)                           \

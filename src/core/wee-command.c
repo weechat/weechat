@@ -30,7 +30,6 @@
 
 #include "weechat.h"
 #include "wee-command.h"
-#include "wee-alias.h"
 #include "wee-config.h"
 #include "wee-hook.h"
 #include "wee-input.h"
@@ -53,19 +52,7 @@
 /* WeeChat internal commands */
 
 struct command weechat_commands[] =
-{ { "alias",
-    N_("create an alias for a command"),
-    N_("[alias_name [command [arguments]]]"),
-    N_("alias_name: name of alias\n"
-       "   command: command name (WeeChat or IRC command, many commands "
-       "can be separated by semicolons)\n"
-       " arguments: arguments for command\n\n"
-        "Note: in command, special variables $1, $2,..,$9 are replaced by "
-       "arguments given by user, and $* is replaced by all arguments.\n"
-       "Variables $nick, $channel and $server are replaced by current "
-       "nick/channel/server."),
-    "%- %A", 0, MAX_ARGS, 1, command_alias },
-  { "buffer",
+{ { "buffer",
     N_("manage buffers"),
     N_("[action [args] | number | [[server] [channel]]]"),
     N_(" action: action to do:\n"
@@ -178,10 +165,6 @@ struct command weechat_commands[] =
        " value: value for option\n\n"
        "Option is format: plugin.option, example: perl.myscript.item1"),
     "%O = %V", 0, MAX_ARGS, 0, command_setp },
-  { "unalias",
-    N_("remove an alias"),
-    N_("alias_name"), N_("alias_name: name of alias to remove"),
-    "%a", 1, 1, 0, command_unalias },
   { "upgrade",
     N_("upgrade WeeChat without disconnecting from servers"),
     N_("[path_to_binary]"),
@@ -226,22 +209,13 @@ struct t_weelist *weechat_last_index_command;
 
 /*
  * command_is_used: return 1 if command is used by weechat
- *                  (WeeChat/alias command)
+ *                  (WeeChat command)
  */
 
 int
 command_is_used (char *command)
 {
-    struct alias *ptr_alias;
     int i;
-    
-    /* look for alias */
-    for (ptr_alias = weechat_alias; ptr_alias;
-         ptr_alias = ptr_alias->next_alias)
-    {
-        if (string_strcasecmp (ptr_alias->name, command) == 0)
-            return 1;
-    }
     
     /* look for WeeChat command */
     for (i = 0; weechat_commands[i].name; i++)
@@ -250,7 +224,7 @@ command_is_used (char *command)
             return 1;
     }
     
-    /* no command/alias found */
+    /* no command found */
     return 0;
 }
 
@@ -358,95 +332,6 @@ command_print_stdout (struct command *commands)
             string_iconv_fprintf (stdout, "%s\n\n",
                                   _(commands[i].arguments_description));
     }
-}
-
-/*
- * command_alias: display or create alias
- */
-
-int
-command_alias (struct t_gui_buffer *buffer,
-               int argc, char **argv, char **argv_eol)
-{
-    char *alias_name;
-    struct alias *ptr_alias;
-    
-    /* make C compiler happy */
-    (void) buffer;
-    
-    if (argc > 0)
-    {
-        alias_name = (argv[0][0] == '/') ? argv[0] + 1 : argv[0];
-        if (argc > 1)
-        {
-            /* Define new alias */
-            if (!alias_new (alias_name, argv_eol[1]))
-                return -1;
-            
-            if (weelist_add (&weechat_index_commands,
-                             &weechat_last_index_command,
-                             alias_name,
-                             WEELIST_POS_SORT))
-            {
-                gui_chat_printf (NULL,
-                                 _("%sAlias \"%s\" => \"%s\" created"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
-                                 alias_name, argv_eol[1]);
-            }
-            else
-            {
-                gui_chat_printf (NULL,
-                                 _("%sError: not enough memory for creating "
-                                   "alias \"%s\" => \"%s\""),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 alias_name, argv_eol[1]);
-                return -1;
-            }
-        }
-        else
-        {
-            /* Display one alias */
-            ptr_alias = alias_search (alias_name);
-	    if (ptr_alias)
-	    {
-		gui_chat_printf (NULL, "");
-		gui_chat_printf (NULL, _("Alias:"));
-		gui_chat_printf (NULL, "  %s %s=>%s %s",
-                                 ptr_alias->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 ptr_alias->command);
-	    }
-            else
-                gui_chat_printf (NULL,
-                                 _("%sNo alias found."),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
-        }
-    }
-    else
-    {
-        /* List all aliases */
-        if (weechat_alias)
-        {
-            gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL, _("List of aliases:"));
-            for (ptr_alias = weechat_alias; ptr_alias;
-                 ptr_alias = ptr_alias->next_alias)
-            {
-                gui_chat_printf (NULL,
-                                 "  %s %s=>%s %s",
-                                 ptr_alias->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 ptr_alias->command);
-            }
-        }
-        else
-            gui_chat_printf (NULL,
-                             _("%sNo alias defined."),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
-    }
-    return 0;
 }
 
 /*
@@ -1920,48 +1805,6 @@ command_setp (struct t_gui_buffer *buffer,
         }
     }
     
-    return 0;
-}
-
-/*
- * command_unalias: remove an alias
- */
-
-int
-command_unalias (struct t_gui_buffer *buffer,
-                 int argc, char **argv, char **argv_eol)
-{
-    char *alias_name;
-    struct t_weelist *ptr_weelist;
-    struct alias *ptr_alias;
-    
-    /* make C compiler happy */
-    (void) buffer;
-    (void) argv_eol;
-
-    if (argc > 0)
-    {
-        alias_name = (argv[0][0] == '/') ? argv[0] + 1 : argv[0];
-        ptr_alias = alias_search (alias_name);
-        if (!ptr_alias)
-        {
-            gui_chat_printf (NULL,
-                             _("%sAlias \"%s\" not found"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             alias_name);
-            return -1;
-        }
-        alias_free (ptr_alias);
-        ptr_weelist = weelist_search (weechat_index_commands, alias_name);
-        if (ptr_weelist)
-            weelist_remove (&weechat_index_commands,
-                            &weechat_last_index_command,
-                            ptr_weelist);
-        gui_chat_printf (NULL,
-                         _("%sAlias \"%s\" removed"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
-                         alias_name);
-    }
     return 0;
 }
 

@@ -51,7 +51,6 @@
 #endif
 
 #include "weechat.h"
-#include "wee-alias.h"
 #include "wee-backtrace.h"
 #include "wee-command.h"
 #include "wee-config.h"
@@ -487,7 +486,6 @@ weechat_shutdown (int return_code, int crash)
     log_close ();
     if (local_charset)
         free (local_charset);
-    alias_free_all ();
     
     if (crash)
         abort();

@@ -36,7 +36,6 @@
 #include "weechat.h"
 #include "wee-config.h"
 #include "wee-config-file.h"
-#include "wee-alias.h"
 #include "wee-command.h"
 #include "wee-log.h"
 #include "wee-util.h"
@@ -320,25 +319,6 @@ config_change_nicks_colors ()
 }
 
 /*
- * config_weechat_read_alias: read an alias in configuration file
- */
-
-void
-config_weechat_read_alias (void *config_file,
-                           char *option_name, char *value)
-{
-    /* make C compiler happy */
-    (void) config_file;
-    
-    /* create new alias */
-    if (alias_new (option_name, value))
-        weelist_add (&weechat_index_commands,
-                     &weechat_last_index_command,
-                     option_name,
-                     WEELIST_POS_SORT);
-}
-
-/*
  * config_weechat_read_key: read a key in configuration file
  */
 
@@ -359,69 +339,6 @@ config_weechat_read_key (void *config_file,
         /* unbin key if no value given */
         gui_keyboard_unbind (option_name);
     }
-}
-
-/*
- * config_weechat_write_alias: write alias section in configuration file
- *                             Return:  0 = successful
- *                                     -1 = write error
- */
-
-void
-config_weechat_write_alias (void *config_file)
-{
-    struct alias *ptr_alias;
-    char *string;
-    
-    for (ptr_alias = weechat_alias; ptr_alias;
-         ptr_alias = ptr_alias->next_alias)
-    {
-        string = (char *)malloc (strlen (ptr_alias->command) + 4);
-        if (string)
-        {
-            strcpy (string, "\"");
-            strcat (string, ptr_alias->command);
-            strcat (string, "\"");
-            config_file_write_line (config_file,
-                                    ptr_alias->name,
-                                    string);
-            free (string);
-        }
-    }
-}
-
-/*
- * config_weechat_write_alias_default_values: write alias section with default values
- *                                            in configuration file
- */
-
-void
-config_weechat_write_alias_default_values (void *config_file)
-{
-    config_file_write_line (config_file, "SAY", "\"msg *\"");
-    config_file_write_line (config_file, "BYE", "\"quit\"");
-    config_file_write_line (config_file, "EXIT", "\"quit\"");
-    config_file_write_line (config_file, "SIGNOFF", "\"quit\"");
-    config_file_write_line (config_file, "C", "\"clear\"");
-    config_file_write_line (config_file, "CL", "\"clear\"");
-    config_file_write_line (config_file, "CLOSE", "\"buffer close\"");
-    config_file_write_line (config_file, "CHAT", "\"dcc chat\"");
-    config_file_write_line (config_file, "IG", "\"ignore\"");
-    config_file_write_line (config_file, "J", "\"join\"");
-    config_file_write_line (config_file, "K", "\"kick\"");
-    config_file_write_line (config_file, "KB", "\"kickban\"");
-    config_file_write_line (config_file, "LEAVE", "\"part\"");
-    config_file_write_line (config_file, "M", "\"msg\"");
-    config_file_write_line (config_file, "MUB", "\"unban *\"");
-    config_file_write_line (config_file, "N", "\"names\"");
-    config_file_write_line (config_file, "Q", "\"query\"");
-    config_file_write_line (config_file, "T", "\"topic\"");
-    config_file_write_line (config_file, "UB", "\"unban\"");
-    config_file_write_line (config_file, "UNIG", "\"unignore\"");
-    config_file_write_line (config_file, "W", "\"who\"");
-    config_file_write_line (config_file, "WC", "\"window merge\"");
-    config_file_write_line (config_file, "WI", "\"whois\"");
-    config_file_write_line (config_file, "WW", "\"whowas\"");
 }
 
 /*
@@ -1099,13 +1016,7 @@ config_weechat_init ()
 #endif              
                 NULL);
         }
-
-        /* alias */
-        section = config_file_new_section (weechat_config, "alias",
-                                           &config_weechat_read_alias,
-                                           &config_weechat_write_alias,
-                                           &config_weechat_write_alias_default_values);
-            
+        
         /* keys */
         section = config_file_new_section (weechat_config, "keys",
                                            &config_weechat_read_key,
@@ -1137,9 +1048,6 @@ config_weechat_read ()
 int
 config_weechat_reload ()
 {
-    /* remove all alias */
-    alias_free_all ();
-    
     /* remove all keys */
     gui_keyboard_free_all ();
     

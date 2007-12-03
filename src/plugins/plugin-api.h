@@ -38,6 +38,10 @@ extern char **plugin_api_string_explode (struct t_weechat_plugin *, char *,
                                          char *, int, int, int *);
 extern void plugin_api_string_free_exploded (struct t_weechat_plugin *,
                                              char **);
+extern char **plugin_api_string_split_command (struct t_weechat_plugin *,
+                                               char *, char);
+extern void plugin_api_string_free_splitted_command (struct t_weechat_plugin *,
+                                                     char **);
 
 /* directories */
 extern int plugin_api_mkdir_home (struct t_weechat_plugin *, char *);
@@ -45,20 +49,29 @@ extern void plugin_api_exec_on_files (struct t_weechat_plugin *, char *,
                                           int (*)(char *));
 
 /* config */
-extern struct t_config_file *config_new (struct t_weechat_plugin *, char *);
-extern struct t_config_section *config_new_section (struct t_weechat_plugin *,
-                                                    void *, char *,
-                                                    void (*)(void *, char *, char *),
-                                                    void (*)(void *),
-                                                    void (*)(void *));
-extern struct t_config_option *config_new_option (struct t_weechat_plugin *,
-                                                  void *, char *, char *,
-                                                  char *, char *, int, int,
-                                                  char *, void (*)());
-extern char config_boolean (struct t_weechat_plugin *, void *);
-extern int config_integer (struct t_weechat_plugin *, void *);
-extern char *config_string (struct t_weechat_plugin *, void *);
-extern int config_color (struct t_weechat_plugin *, void *);
+extern struct t_config_file *plugin_api_config_new (struct t_weechat_plugin *,
+                                                    char *);
+extern struct t_config_section *plugin_api_config_new_section (struct t_weechat_plugin *,
+                                                               void *, char *,
+                                                               void (*)(void *, char *, char *),
+                                                               void (*)(void *),
+                                                               void (*)(void *));
+extern struct t_config_option *plugin_api_config_new_option (struct t_weechat_plugin *,
+                                                             void *, char *,
+                                                             char *, char *,
+                                                             char *, int, int,
+                                                             char *,
+                                                             void (*)());
+extern char plugin_api_config_boolean (struct t_weechat_plugin *, void *);
+extern int plugin_api_config_integer (struct t_weechat_plugin *, void *);
+extern char *plugin_api_config_string (struct t_weechat_plugin *, void *);
+extern int plugin_api_config_color (struct t_weechat_plugin *, void *);
+extern int plugin_api_config_read (struct t_weechat_plugin *, void *);
+extern int plugin_api_config_reload (struct t_weechat_plugin *, void *);
+extern int plugin_api_config_write (struct t_weechat_plugin *, void *);
+extern void plugin_api_config_write_line (struct t_weechat_plugin *, void *,
+                                          char *, char *);
+extern void plugin_api_config_free (struct t_weechat_plugin *, void *);
 extern char *plugin_api_config_get (struct t_weechat_plugin *, char *);
 extern int plugin_api_config_set (struct t_weechat_plugin *, char *, char *);
 extern char *plugin_api_plugin_config_get (struct t_weechat_plugin *, char *);

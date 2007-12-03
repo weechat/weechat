@@ -120,6 +120,27 @@ hook_valid_for_plugin (void *plugin, struct t_hook *hook)
 }
 
 /*
+ * hook_search_command: search command hook in list
+ */
+
+struct t_hook *
+hook_search_command (char *command)
+{
+    struct t_hook *ptr_hook;
+    
+    for (ptr_hook = weechat_hooks; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
+    {
+        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+            && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command), command) == 0))
+            return ptr_hook;
+    }
+    
+    /* command hook not found */
+    return NULL;
+}
+
+/*
  * hook_command: hook a command
  */
 
@@ -131,6 +152,10 @@ hook_command (void *plugin, char *command, char *description,
 {
     struct t_hook *new_hook;
     struct t_hook_command *new_hook_command;
+
+    if ((string_strcasecmp (command, "builtin") == 0)
+        && hook_search_command (command))
+        return NULL;
     
     new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
     if (!new_hook)

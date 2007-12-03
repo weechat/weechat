@@ -32,6 +32,10 @@ if PLUGIN_IRC
 irc_dir = irc
 endif
 
+if PLUGIN_ALIAS
+alias_dir = alias
+endif
+
 if PLUGIN_ASPELL
 aspell_dir = aspell
 endif
@@ -72,4 +76,5 @@ if PLUGIN_DEMO
 demo_dir = demo
 endif
 
-SUBDIRS = . $(irc_dir) $(aspell_dir) $(charset_dir) $(fifo_dir) $(logger_dir) $(trigger_dir) $(demo_dir) $(script_dir)
+SUBDIRS = . $(irc_dir) $(alias_dir) $(aspell_dir) $(charset_dir) $(fifo_dir) \
+            $(logger_dir) $(trigger_dir) $(demo_dir) $(script_dir)

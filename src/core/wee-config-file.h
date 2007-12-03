@@ -85,6 +85,7 @@ struct t_config_option
 };
 
 extern struct t_config_file *config_file_new (void *, char *);
+extern int config_file_valid_for_plugin (void *, struct t_config_file *);
 extern struct t_config_section *config_file_new_section (struct t_config_file *,
                                                          char *,
                                                          void (*)(void *, char *, char *),
@@ -126,6 +127,12 @@ extern int config_file_read (struct t_config_file *);
 extern int config_file_reload (struct t_config_file *);
 extern void config_file_write_line (struct t_config_file *, char *, char *);
 extern int config_file_write (struct t_config_file *, int);
+extern void config_file_option_free (struct t_config_section *,
+                                     struct t_config_option *);
+extern void config_file_section_free (struct t_config_file *,
+                                      struct t_config_section *);
+extern void config_file_free (struct t_config_file *);
+extern void config_file_free_all ();
 extern void config_file_print_stdout (struct t_config_file *);
 extern void config_file_print_log ();
 

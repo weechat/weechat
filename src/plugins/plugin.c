@@ -234,14 +234,32 @@ plugin_load (char *filename)
         new_plugin->string_replace = &plugin_api_string_replace;
         new_plugin->string_explode = &plugin_api_string_explode;
         new_plugin->string_free_exploded = &plugin_api_string_free_exploded;
+        new_plugin->string_split_command = &plugin_api_string_split_command;
+        new_plugin->string_free_splitted_command = &plugin_api_string_free_splitted_command;
         
         new_plugin->mkdir_home = &plugin_api_mkdir_home;
         new_plugin->exec_on_files = &plugin_api_exec_on_files;
-        
-        new_plugin->printf = &plugin_api_printf;
-        new_plugin->printf_date = &plugin_api_printf_date;
+
+        new_plugin->config_new = &plugin_api_config_new;
+        new_plugin->config_new_section = &plugin_api_config_new_section;
+        new_plugin->config_new_option = &plugin_api_config_new_option;
+        new_plugin->config_boolean = &plugin_api_config_boolean;
+        new_plugin->config_integer = &plugin_api_config_integer;
+        new_plugin->config_string = &plugin_api_config_string;
+        new_plugin->config_color = &plugin_api_config_color;
+        new_plugin->config_read = &plugin_api_config_read;
+        new_plugin->config_reload = &plugin_api_config_reload;
+        new_plugin->config_write = &plugin_api_config_write;
+        new_plugin->config_write_line = &plugin_api_config_write_line;
+        new_plugin->config_get = &plugin_api_config_get;
+        new_plugin->config_set = &plugin_api_config_set;
+        new_plugin->plugin_config_get = &plugin_api_plugin_config_get;
+        new_plugin->plugin_config_set = &plugin_api_plugin_config_set;
+
         new_plugin->prefix = &plugin_api_prefix;
         new_plugin->color = &plugin_api_color;
+        new_plugin->printf = &plugin_api_printf;
+        new_plugin->printf_date = &plugin_api_printf_date;
         new_plugin->print_infobar = &plugin_api_print_infobar;
         new_plugin->infobar_remove = &plugin_api_infobar_remove;
         
@@ -274,11 +292,6 @@ plugin_load (char *filename)
         new_plugin->list_pointer = &plugin_api_list_pointer;
         new_plugin->list_time = &plugin_api_list_time;
         new_plugin->list_free = &plugin_api_list_free;
-        
-        new_plugin->config_get = &plugin_api_config_get;
-        new_plugin->config_set = &plugin_api_config_set;
-        new_plugin->plugin_config_get = &plugin_api_plugin_config_get;
-        new_plugin->plugin_config_set = &plugin_api_plugin_config_set;
         
         new_plugin->log = &plugin_api_log;
         

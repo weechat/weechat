@@ -2597,7 +2597,7 @@ irc_protocol_cmd_001 (t_irc_server *server, char *irc_message, char *host,
     if (server->command && server->command[0])
     {	
 	/* splitting command on ';' which can be escaped with '\;' */ 
-	commands = weechat_split_multi_command (server->command, ';');
+	commands = weechat_split_command (server->command, ';');
 	if (commands)
 	{
 	    for (ptr = commands; *ptr; ptr++)
@@ -2608,7 +2608,7 @@ irc_protocol_cmd_001 (t_irc_server *server, char *irc_message, char *host,
                 if (vars_replaced)
                     free (vars_replaced);
             }
-	    weechat_free_multi_command (commands);
+	    weechat_free_splitted_command (commands);
 	}
 	
 	if (server->command_delay > 0)

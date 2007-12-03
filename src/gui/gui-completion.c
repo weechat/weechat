@@ -31,7 +31,6 @@
 #include <unistd.h>
 
 #include "../core/weechat.h"
-#include "../core/wee-alias.h"
 #include "../core/wee-command.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
@@ -136,31 +135,11 @@ void
 gui_completion_get_command_infos (struct t_gui_completion *completion,
                                   char **template, int *max_arg)
 {
-    struct alias *ptr_alias;
     struct t_hook *ptr_hook;
-    char *ptr_command, *ptr_command2, *pos;
     int i;
     
     *template = NULL;
     *max_arg = MAX_ARGS;
-    
-    ptr_alias = alias_search (completion->base_command);
-    if (ptr_alias)
-    {
-        ptr_command = alias_get_final_command (ptr_alias);
-        if (!ptr_command)
-            return;
-    }
-    else
-        ptr_command = completion->base_command;
-
-    ptr_command2 = strdup (ptr_command);
-    if (!ptr_command2)
-        return;
-    
-    pos = strchr (ptr_command2, ' ');
-    if (pos)
-        pos[0] = '\0';
     
     /* look for command hooked */
     for (ptr_hook = weechat_hooks; ptr_hook;
@@ -168,11 +147,10 @@ gui_completion_get_command_infos (struct t_gui_completion *completion,
     {
         if ((ptr_hook->type == HOOK_TYPE_COMMAND)
             && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
-                                   ptr_command2) == 0))
+                                   completion->base_command) == 0))
         {
             *template = HOOK_COMMAND(ptr_hook, completion);
             *max_arg = MAX_ARGS;
-            free (ptr_command2);
             return;
         }
     }
@@ -181,17 +159,13 @@ gui_completion_get_command_infos (struct t_gui_completion *completion,
     for (i = 0; weechat_commands[i].name; i++)
     {
         if (string_strcasecmp (weechat_commands[i].name,
-                               ptr_command2) == 0)
+                               completion->base_command) == 0)
         {
             *template = weechat_commands[i].completion_template;
             *max_arg = weechat_commands[i].max_arg;
-            free (ptr_command2);
             return;
         }
     }
-    
-    free (ptr_command2);
-    return;
 }
 
 /*
@@ -286,39 +260,6 @@ gui_completion_list_add (struct t_gui_completion *completion, char *word,
                      &completion->last_completion,
                      word,
                      position);
-    }
-}
-
-/*
- * gui_completion_list_add_alias: add alias to completion list
- */
-
-void
-gui_completion_list_add_alias (struct t_gui_completion *completion)
-{
-    struct alias *ptr_alias;
-    
-    for (ptr_alias = weechat_alias; ptr_alias; ptr_alias = ptr_alias->next_alias)
-    {
-        gui_completion_list_add (completion, ptr_alias->name,
-                                 0, WEELIST_POS_SORT);
-    }
-}
-
-/*
- * gui_completion_list_add_alias_cmd: add alias and comands to completion list
- */
-
-void
-gui_completion_list_add_alias_cmd (struct t_gui_completion *completion)
-{
-    struct t_weelist *ptr_list;
-    
-    for (ptr_list = weechat_index_commands; ptr_list;
-         ptr_list = ptr_list->next_weelist)
-    {
-        gui_completion_list_add (completion, ptr_list->data, 0,
-                                 WEELIST_POS_SORT);
     }
 }
 
@@ -969,12 +910,6 @@ gui_completion_build_list_template (struct t_gui_completion *completion, char *t
                             break;
                         case '*': /* repeat last completion (do nothing there) */
                             break;
-                        case 'a': /* alias */
-                            gui_completion_list_add_alias (completion);
-                            break;
-                        case 'A': /* alias or any command */
-                            gui_completion_list_add_alias_cmd (completion);
-                            break;
                         case 'c': /* current channel */
                             gui_completion_list_add_channel (completion);
                             break;
@@ -984,7 +919,7 @@ gui_completion_build_list_template (struct t_gui_completion *completion, char *t
                         case 'f': /* filename */
                             gui_completion_list_add_filename (completion);
                             break;
-                        case 'h': /* commands hooks */
+                        case 'h': /* command hooks */
                             gui_completion_list_add_command_hooks (completion);
                             break;
                         case 'k': /* key cmd/funtcions*/

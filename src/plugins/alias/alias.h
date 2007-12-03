@@ -20,26 +20,20 @@
 #ifndef __WEECHAT_ALIAS_H
 #define __WEECHAT_ALIAS_H 1
 
-#include "../gui/gui-buffer.h"
+char plugin_name[] = "alias";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Alias plugin for WeeChat";
 
-struct alias
+#define ALIAS_CONFIG_FILENAME "alias.rc"
+
+struct t_alias
 {
-    char *name;
-    char *command;
-    int running;
-    struct alias *prev_alias;
-    struct alias *next_alias;
+    struct t_hook *hook;               /* command hook                      */
+    char *name;                        /* alias name                        */
+    char *command;                     /* alias command                     */
+    int running;                       /* 1 if alias is running             */
+    struct t_alias *prev_alias;        /* link to previous alias            */
+    struct t_alias *next_alias;        /* link to next alias                */
 };
 
-extern struct alias *weechat_alias;
-extern struct alias *weechat_last_alias;
-
-extern struct alias *alias_search (char *);
-extern struct alias *alias_new (char *, char *);
-extern char *alias_get_final_command (struct alias *);
-extern char *alias_replace_args (char *, char *);
-extern char *alias_replace_vars (struct t_gui_buffer *, char *);
-extern void alias_free (struct alias *);
-extern void alias_free_all ();
-
-#endif /* wee-alias.h */
+#endif /* alias.h */
