@@ -1,12 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-12-01
+ChangeLog - 2007-12-03
 
 
 Version 0.2.7 (under dev!):
    * added /reload command to reload WeeChat and plugins config files
-   * new plugins: IRC, fifo, logger, trigger, demo
+   * new plugins: IRC, alias, demo, fifo, logger, trigger
    * new plugin API with many new functions: hooks, buffer management,
      config files, lists
    * new display engine, with prefix and message for each line
