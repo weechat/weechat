@@ -30,10 +30,10 @@
 
 #include "weechat.h"
 #include "wee-hook.h"
-#include "wee-command.h"
 #include "wee-log.h"
 #include "wee-string.h"
 #include "wee-util.h"
+#include "../gui/gui-buffer.h"
 #include "../gui/gui-color.h"
 #include "../plugins/plugin.h"
 
@@ -43,19 +43,71 @@ struct t_hook *last_weechat_hook = NULL;
 
 
 /*
+ * hook_find_pos: find position for new hook (keeping command list sorted)
+ */
+
+struct t_hook *
+hook_find_pos (struct t_hook *hook)
+{
+    struct t_hook *ptr_hook;
+    
+    /* if it's not command hook, then add to the end of list */
+    if (hook->type != HOOK_TYPE_COMMAND)
+        return NULL;
+    
+    /* for command hook, keep list sorted */
+    for (ptr_hook = weechat_hooks; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
+    {
+        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+            && (string_strcasecmp (HOOK_COMMAND(hook, command),
+                                   HOOK_COMMAND(ptr_hook, command)) <= 0))
+            return ptr_hook;
+    }
+    
+    /* position not found, best position is at the end */
+    return NULL;
+}
+
+/*
  * hook_add_to_list: add a hook to list
  */
 
 void
 hook_add_to_list (struct t_hook *new_hook)
 {
-    new_hook->prev_hook = last_weechat_hook;
+    struct t_hook *pos_hook;
+
     if (weechat_hooks)
-        last_weechat_hook->next_hook = new_hook;
+    {
+        pos_hook = hook_find_pos (new_hook);
+        if (pos_hook)
+        {
+            /* add hook somewhere in the list */
+            new_hook->prev_hook = pos_hook->prev_hook;
+            new_hook->next_hook = pos_hook;
+            if (pos_hook->prev_hook)
+                (pos_hook->prev_hook)->next_hook = new_hook;
+            else
+                weechat_hooks = new_hook;
+            pos_hook->prev_hook = new_hook;
+        }
+        else
+        {
+            /* add hook to end of list */
+            new_hook->prev_hook = last_weechat_hook;
+            new_hook->next_hook = NULL;
+            last_weechat_hook->next_hook = new_hook;
+            last_weechat_hook = new_hook;
+        }
+    }
     else
+    {
+        new_hook->prev_hook = NULL;
+        new_hook->next_hook = NULL;
         weechat_hooks = new_hook;
-    last_weechat_hook = new_hook;
-    new_hook->next_hook = NULL;
+        last_weechat_hook = new_hook;
+    }
 }
 
 /*
@@ -150,12 +202,25 @@ hook_command (void *plugin, char *command, char *description,
               t_hook_callback_command *callback,
               void *callback_data)
 {
-    struct t_hook *new_hook;
+    struct t_hook *ptr_hook,*new_hook;
     struct t_hook_command *new_hook_command;
 
     if ((string_strcasecmp (command, "builtin") == 0)
         && hook_search_command (command))
         return NULL;
+
+    /* increase level for command hooks with same command name
+       so that these commands will not be used any more, until this
+       one is removed */
+    for (ptr_hook = weechat_hooks; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
+    {
+        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+            && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command), command) == 0))
+        {
+            HOOK_COMMAND(ptr_hook, level)++;
+        }
+    }
     
     new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
     if (!new_hook)
@@ -168,11 +233,12 @@ hook_command (void *plugin, char *command, char *description,
     }
     
     hook_init (new_hook, plugin, HOOK_TYPE_COMMAND, callback_data);
-
+    
     new_hook->hook_data = new_hook_command;
     new_hook_command->callback = callback;
     new_hook_command->command = (command) ?
         strdup (command) : strdup ("");
+    new_hook_command->level = 0;
     new_hook_command->description = (description) ?
         strdup (description) : strdup ("");
     new_hook_command->args = (args) ?
@@ -183,9 +249,6 @@ hook_command (void *plugin, char *command, char *description,
         strdup (completion) : strdup ("");
     
     hook_add_to_list (new_hook);
-    
-    if (command && command[0])
-        command_index_add (command);
     
     return new_hook;
 }
@@ -198,7 +261,7 @@ hook_command (void *plugin, char *command, char *description,
  */
 
 int
-hook_command_exec (void *buffer, char *string)
+hook_command_exec (void *buffer, char *string, int only_builtin)
 {
     struct t_hook *ptr_hook, *next_hook;
     char **argv, **argv_eol;
@@ -221,8 +284,11 @@ hook_command_exec (void *buffer, char *string)
         next_hook = ptr_hook->next_hook;
         
         if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+            && (HOOK_COMMAND(ptr_hook, level) == 0)
             && (!ptr_hook->running)
-            && (!((struct t_gui_buffer *)buffer)->plugin
+            && (!only_builtin || !ptr_hook->plugin)
+            && (!ptr_hook->plugin
+                || !((struct t_gui_buffer *)buffer)->plugin
                 || (((struct t_gui_buffer *)buffer)->plugin == ptr_hook->plugin))
             && (string_strcasecmp (argv[0] + 1,
                                    HOOK_COMMAND(ptr_hook, command)) == 0))
@@ -665,7 +731,7 @@ hook_config_exec (char *type, char *option, char *value)
 void
 unhook (struct t_hook *hook)
 {
-    struct t_hook *new_hooks;
+    struct t_hook *new_hooks, *ptr_hook;
     
     /* free data */
     if (hook->hook_data)
@@ -673,9 +739,20 @@ unhook (struct t_hook *hook)
         switch (hook->type)
         {
             case HOOK_TYPE_COMMAND:
-                if (HOOK_COMMAND(hook, command)
-                    && HOOK_COMMAND(hook, command)[0])
-                    command_index_remove (HOOK_COMMAND(hook, command));
+                /* decrease level for command hooks with same command name
+                   and level higher than this one */
+                for (ptr_hook = weechat_hooks; ptr_hook;
+                     ptr_hook = ptr_hook->next_hook)
+                {
+                    if ((ptr_hook != hook)
+                        && (ptr_hook->type == HOOK_TYPE_COMMAND)
+                        && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
+                                               HOOK_COMMAND(hook, command)) == 0)
+                        && (HOOK_COMMAND(ptr_hook, level) > HOOK_COMMAND(hook, level)))
+                    {
+                        HOOK_COMMAND(ptr_hook, level)--;
+                    }
+                }
                 if (HOOK_COMMAND(hook, command))
                     free (HOOK_COMMAND(hook, command));
                 if (HOOK_COMMAND(hook, description))
@@ -780,41 +857,57 @@ hook_print_log ()
     {
         log_printf ("\n");
         log_printf ("[hook (addr:0x%X)]\n", ptr_hook);
-        log_printf ("  type . . . . . . . . . : %d\n",   ptr_hook->type);
-        log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
         switch (ptr_hook->type)
         {
             case HOOK_TYPE_COMMAND:
+                log_printf ("  type . . . . . . . . . : %d (command)\n", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
                 log_printf ("  command data:\n");
                 log_printf ("    callback . . . . . . : 0x%X\n", HOOK_COMMAND(ptr_hook, callback));
                 log_printf ("    command. . . . . . . : '%s'\n", HOOK_COMMAND(ptr_hook, command));
+                log_printf ("    level. . . . . . . . : %d\n",   HOOK_COMMAND(ptr_hook, level));
                 log_printf ("    command_desc . . . . : '%s'\n", HOOK_COMMAND(ptr_hook, description));
                 log_printf ("    command_args . . . . : '%s'\n", HOOK_COMMAND(ptr_hook, args));
                 log_printf ("    command_args_desc. . : '%s'\n", HOOK_COMMAND(ptr_hook, args_description));
                 log_printf ("    command_completion . : '%s'\n", HOOK_COMMAND(ptr_hook, completion));
                 break;
             case HOOK_TYPE_TIMER:
+                log_printf ("  type . . . . . . . . . : %d (timer)\n", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
                 log_printf ("  timer data:\n");
+                log_printf ("    callback . . . . . . : 0x%X\n", HOOK_TIMER(ptr_hook, callback));
                 log_printf ("    interval . . . . . . : %ld\n",  HOOK_TIMER(ptr_hook, interval));
                 log_printf ("    last_exec.tv_sec . . : %ld\n",  HOOK_TIMER(ptr_hook, last_exec.tv_sec));
                 log_printf ("    last_exec.tv_usec. . : %ld\n",  HOOK_TIMER(ptr_hook, last_exec.tv_usec));
                 break;
             case HOOK_TYPE_FD:
+                log_printf ("  type . . . . . . . . . : %d (fd)\n", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
                 log_printf ("  fd data:\n");
+                log_printf ("    callback . . . . . . : 0x%X\n", HOOK_FD(ptr_hook, callback));
                 log_printf ("    fd . . . . . . . . . : %ld\n",  HOOK_FD(ptr_hook, fd));
                 log_printf ("    flags. . . . . . . . : %ld\n",  HOOK_FD(ptr_hook, flags));
                 break;
             case HOOK_TYPE_PRINT:
+                log_printf ("  type . . . . . . . . . : %d (print)\n", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
                 log_printf ("  print data:\n");
+                log_printf ("    callback . . . . . . : 0x%X\n", HOOK_PRINT(ptr_hook, callback));
                 log_printf ("    buffer . . . . . . . : 0x%X\n", HOOK_PRINT(ptr_hook, buffer));
                 log_printf ("    message. . . . . . . : '%s'\n", HOOK_PRINT(ptr_hook, message));
                 break;
             case HOOK_TYPE_EVENT:
+                log_printf ("  type . . . . . . . . . : %d (event)\n", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
                 log_printf ("  event data:\n");
+                log_printf ("    callback . . . . . . : 0x%X\n", HOOK_EVENT(ptr_hook, callback));
                 log_printf ("    event. . . . . . . . : '%s'\n", HOOK_EVENT(ptr_hook, event));
                 break;
             case HOOK_TYPE_CONFIG:
+                log_printf ("  type . . . . . . . . . : %d (config)\n", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
                 log_printf ("  config data:\n");
+                log_printf ("    callback . . . . . . : 0x%X\n", HOOK_CONFIG(ptr_hook, callback));
                 log_printf ("    type . . . . . . . . : '%s'\n", HOOK_CONFIG(ptr_hook, type));
                 log_printf ("    option . . . . . . . : '%s'\n", HOOK_CONFIG(ptr_hook, option));
                 break;

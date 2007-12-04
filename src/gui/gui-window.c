@@ -33,7 +33,6 @@
 #include <ctype.h>
 
 #include "../core/weechat.h"
-#include "../core/wee-command.h"
 #include "../core/wee-config.h"
 #include "../core/wee-log.h"
 #include "../core/wee-utf8.h"

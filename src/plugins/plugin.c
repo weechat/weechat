@@ -34,7 +34,6 @@
 #include <dlfcn.h>
 
 #include "../core/weechat.h"
-#include "../core/wee-command.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-log.h"
@@ -251,6 +250,7 @@ plugin_load (char *filename)
         new_plugin->config_reload = &plugin_api_config_reload;
         new_plugin->config_write = &plugin_api_config_write;
         new_plugin->config_write_line = &plugin_api_config_write_line;
+        new_plugin->config_free = &plugin_api_config_free;
         new_plugin->config_get = &plugin_api_config_get;
         new_plugin->config_set = &plugin_api_config_set;
         new_plugin->plugin_config_get = &plugin_api_plugin_config_get;
@@ -459,6 +459,9 @@ plugin_remove (struct t_weechat_plugin *plugin)
     
     if (plugin->next_plugin)
         (plugin->next_plugin)->prev_plugin = plugin->prev_plugin;
+    
+    /* remove all config files */
+    config_file_free_all_plugin (plugin);
     
     /* remove all hooks */
     unhook_all_plugin (plugin);

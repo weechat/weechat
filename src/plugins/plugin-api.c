@@ -32,7 +32,6 @@
 #include <sys/stat.h>
 
 #include "../core/weechat.h"
-#include "../core/wee-command.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-input.h"

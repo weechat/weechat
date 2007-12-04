@@ -31,7 +31,6 @@
 #include <unistd.h>
 
 #include "../core/weechat.h"
-#include "../core/wee-command.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-log.h"
@@ -41,6 +40,7 @@
 #include "../plugins/plugin.h"
 #include "../plugins/plugin-config.h"
 #include "gui-completion.h"
+#include "gui-buffer.h"
 #include "gui-color.h"
 #include "gui-keyboard.h"
 
@@ -133,36 +133,23 @@ gui_completion_stop (struct t_gui_completion *completion)
 
 void
 gui_completion_get_command_infos (struct t_gui_completion *completion,
-                                  char **template, int *max_arg)
+                                  char **template)
 {
     struct t_hook *ptr_hook;
-    int i;
     
     *template = NULL;
-    *max_arg = MAX_ARGS;
     
-    /* look for command hooked */
     for (ptr_hook = weechat_hooks; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
         if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+            && HOOK_COMMAND(ptr_hook, command)
+            && HOOK_COMMAND(ptr_hook, command)[0]
+            && (HOOK_COMMAND(ptr_hook, level) == 0)
             && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
                                    completion->base_command) == 0))
         {
             *template = HOOK_COMMAND(ptr_hook, completion);
-            *max_arg = MAX_ARGS;
-            return;
-        }
-    }
-    
-    /* look for WeeChat internal command */
-    for (i = 0; weechat_commands[i].name; i++)
-    {
-        if (string_strcasecmp (weechat_commands[i].name,
-                               completion->base_command) == 0)
-        {
-            *template = weechat_commands[i].completion_template;
-            *max_arg = weechat_commands[i].max_arg;
             return;
         }
     }
@@ -406,7 +393,8 @@ gui_completion_list_add_command_hooks (struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook;
     
-    for (ptr_hook = weechat_hooks; ptr_hook; ptr_hook = ptr_hook->next_hook)
+    for (ptr_hook = weechat_hooks; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
     {
         if ((ptr_hook->type == HOOK_TYPE_COMMAND)
             && (HOOK_COMMAND(ptr_hook, command))
@@ -858,12 +846,20 @@ gui_completion_list_add_plugin_option_value (struct t_gui_completion *completion
 void
 gui_completion_list_add_weechat_cmd (struct t_gui_completion *completion)
 {
-    int i;
+    struct t_hook *ptr_hook;
     
-    for (i = 0; weechat_commands[i].name; i++)
+    for (ptr_hook = weechat_hooks; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
     {
-        gui_completion_list_add (completion, weechat_commands[i].name,
-                                 0, WEELIST_POS_SORT);
+        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+            && !ptr_hook->plugin
+            && HOOK_COMMAND(ptr_hook, command)
+            && HOOK_COMMAND(ptr_hook, command)[0])
+        {
+            gui_completion_list_add (completion,
+                                     HOOK_COMMAND(ptr_hook, command),
+                                     0, WEELIST_POS_SORT);
+        }
     }
 }
 
@@ -994,13 +990,12 @@ void
 gui_completion_build_list (struct t_gui_completion *completion)
 {
     char *template, *pos_template, *pos_space;
-    int repeat_last, max_arg, i, length;
+    int repeat_last, i, length;
 
     repeat_last = 0;
     
-    gui_completion_get_command_infos (completion, &template, &max_arg);
-    if (!template || (strcmp (template, "-") == 0) ||
-        (completion->base_command_arg > max_arg))
+    gui_completion_get_command_infos (completion, &template);
+    if (!template || (strcmp (template, "-") == 0))
     {
         gui_completion_stop (completion);
         return;
@@ -1114,16 +1109,15 @@ gui_completion_find_context (struct t_gui_completion *completion, char *data,
         while ((i < size) && (data[i] != ' '))
             i++;
         pos_end = i - 1;
+
+        if (completion->context == GUI_COMPLETION_COMMAND)
+            pos_start++;
         
         completion->base_word_pos = pos_start;
         
         if (pos_start <= pos_end)
         {
-            if (completion->context == GUI_COMPLETION_COMMAND)
-                completion->position_replace = pos_start + 1;
-            else
-                completion->position_replace = pos_start;
-            
+            completion->position_replace = pos_start;
             completion->base_word = (char *) malloc (pos_end - pos_start + 2);
             for (i = pos_start; i <= pos_end; i++)
                 completion->base_word[i - pos_start] = data[i];
@@ -1175,18 +1169,35 @@ void
 gui_completion_command (struct t_gui_completion *completion)
 {
     int length, word_found_seen, other_completion;
+    struct t_hook *ptr_hook;
     struct t_weelist *ptr_weelist, *ptr_weelist2;
     
-    length = strlen (completion->base_word) - 1;
+    length = strlen (completion->base_word);
     word_found_seen = 0;
     other_completion = 0;
+    if (!completion->completion_list)
+    {
+        for (ptr_hook = weechat_hooks; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+                && HOOK_COMMAND(ptr_hook, command)
+                && HOOK_COMMAND(ptr_hook, command)[0]
+                && (HOOK_COMMAND(ptr_hook, level) == 0))
+            {
+                gui_completion_list_add (completion,
+                                         HOOK_COMMAND(ptr_hook, command),
+                                         0, WEELIST_POS_SORT);
+            }
+        }
+    }
     if (completion->direction < 0)
-        ptr_weelist = weechat_last_index_command;
+        ptr_weelist = completion->last_completion;
     else
-        ptr_weelist = weechat_index_commands;
+        ptr_weelist = completion->completion_list;
     while (ptr_weelist)
     {
-        if (string_strncasecmp (ptr_weelist->data, completion->base_word + 1, length) == 0)
+        if (string_strncasecmp (ptr_weelist->data, completion->base_word, length) == 0)
         {
             if ((!completion->word_found) || word_found_seen)
             {
@@ -1202,7 +1213,7 @@ gui_completion_command (struct t_gui_completion *completion)
                 while (ptr_weelist2)
                 {
                     if (string_strncasecmp (ptr_weelist2->data,
-                                            completion->base_word + 1, length) == 0)
+                                            completion->base_word, length) == 0)
                         other_completion++;
                     
                     if (completion->direction < 0)
@@ -1563,11 +1574,6 @@ gui_completion_search (struct t_gui_completion *completion, int direction,
                 strlen (completion->base_word);
             completion->diff_length = utf8_strlen (completion->word_found) -
                 utf8_strlen (completion->base_word);
-            if (completion->context == GUI_COMPLETION_COMMAND)
-            {
-                completion->diff_size++;
-                completion->diff_length++;
-            }
         }
     }
     if (old_word_found)

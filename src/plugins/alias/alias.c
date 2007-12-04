@@ -306,7 +306,7 @@ alias_new (char *name, char *command)
     
     if ((new_alias = ((struct t_alias *) malloc (sizeof (struct t_alias)))))
     {
-        new_hook = weechat_hook_command (name, NULL, NULL, NULL, NULL,
+        new_hook = weechat_hook_command (name, "[alias]", NULL, NULL, NULL,
                                          alias_cb, new_alias);
         if (!new_hook)
         {
@@ -724,6 +724,7 @@ weechat_plugin_end ()
 {
     alias_config_write ();
     alias_free_all ();
+    weechat_config_free (alias_config_file);
     weechat_unhook (alias_command);
     weechat_unhook (unalias_command);
     return PLUGIN_RC_SUCCESS;

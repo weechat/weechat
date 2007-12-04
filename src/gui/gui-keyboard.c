@@ -28,7 +28,6 @@
 #include <ctype.h>
 
 #include "../core/weechat.h"
-#include "../core/wee-command.h"
 #include "../core/wee-input.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"

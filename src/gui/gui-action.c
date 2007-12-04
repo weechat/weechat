@@ -32,7 +32,6 @@
 #include <time.h>
 
 #include "../core/weechat.h"
-#include "../core/wee-command.h"
 #include "../core/wee-config.h"
 #include "../core/wee-input.h"
 #include "../core/wee-log.h"

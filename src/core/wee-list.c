@@ -132,7 +132,7 @@ weelist_insert (struct t_weelist **weelist, struct t_weelist **last_weelist,
             element->prev_weelist = pos_weelist->prev_weelist;
             element->next_weelist = pos_weelist;
             if (pos_weelist->prev_weelist)
-                pos_weelist->prev_weelist->next_weelist = element;
+                (pos_weelist->prev_weelist)->next_weelist = element;
             else
                 *weelist = element;
             pos_weelist->prev_weelist = element;

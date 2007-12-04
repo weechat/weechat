@@ -33,6 +33,11 @@
 #include <ctype.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-config.h"
+#include "../core/wee-hook.h"
+#include "../core/wee-log.h"
+#include "../core/wee-string.h"
+#include "../core/wee-utf8.h"
 #include "gui-buffer.h"
 #include "gui-chat.h"
 #include "gui-color.h"
@@ -44,12 +49,6 @@
 #include "gui-nicklist.h"
 #include "gui-status.h"
 #include "gui-window.h"
-#include "../core/wee-command.h"
-#include "../core/wee-config.h"
-#include "../core/wee-hook.h"
-#include "../core/wee-log.h"
-#include "../core/wee-string.h"
-#include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
 
 

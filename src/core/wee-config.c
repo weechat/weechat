@@ -36,7 +36,6 @@
 #include "weechat.h"
 #include "wee-config.h"
 #include "wee-config-file.h"
-#include "wee-command.h"
 #include "wee-log.h"
 #include "wee-util.h"
 #include "wee-list.h"

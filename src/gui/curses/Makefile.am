@@ -18,7 +18,19 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(NCURSES_CFLAGS)
 
 bin_PROGRAMS = weechat-curses
 
-weechat_curses_LDADD = ../../core/lib_weechat_core.a \
+weechat_curses_LDADD = ../../core/weechat.o \
+                       ../../core/wee-backtrace.o \
+                       ../../core/wee-command.o \
+                       ../../core/wee-config.o \
+                       ../../core/wee-config-file.o \
+                       ../../core/wee-hook.o \
+                       ../../core/wee-input.o \
+                       ../../core/wee-list.o \
+                       ../../core/wee-log.o \
+                       ../../core/wee-upgrade.o \
+                       ../../core/wee-string.o \
+                       ../../core/wee-utf8.o \
+                       ../../core/wee-util.o \
                        ../../plugins/lib_weechat_plugins.a \
                        ../lib_weechat_gui_common.a \
                        $(PLUGINS_LFLAGS) \

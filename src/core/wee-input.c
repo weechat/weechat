@@ -28,13 +28,32 @@
 
 #include "weechat.h"
 #include "wee-input.h"
-#include "wee-command.h"
 #include "wee-config.h"
 #include "wee-hook.h"
 #include "wee-string.h"
 #include "../gui/gui-chat.h"
 #include "../plugins/plugin.h"
 
+
+
+/*
+ * input_is_command: return 1 if line is a command, 0 otherwise
+ */
+
+int
+input_is_command (char *line)
+{
+    char *pos_slash, *pos_space;
+
+    if (strncmp (line, "/*", 2) == 0)
+        return 0;
+    
+    pos_slash = strchr (line + 1, '/');
+    pos_space = strchr (line + 1, ' ');
+    
+    return (line[0] == '/')
+        && (!pos_slash || (pos_space && pos_slash > pos_space));
+}
 
 /*
  * input_exec_command: executes a command (WeeChat internal or a
@@ -49,7 +68,7 @@ int
 input_exec_command (struct t_gui_buffer *buffer, char *string,
                     int only_builtin)
 {
-    int i, rc, argc, return_code;
+    int rc, argc;
     char *command, *pos, *ptr_args;
     char **argv, **argv_eol;
     
@@ -69,16 +88,12 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
         pos[1] = '\0';
     }
     
-    rc = -1;
-    if (!only_builtin)
-    {
-        rc = hook_command_exec (buffer, command);
-        /*vars_replaced = alias_replace_vars (window, ptr_args);
-        rc = plugin_cmd_handler_exec (window->buffer->protocol, command + 1,
-                                      (vars_replaced) ? vars_replaced : ptr_args);
-        if (vars_replaced)
-            free (vars_replaced);*/
-    }
+    rc = hook_command_exec (buffer, command, only_builtin);
+    /*vars_replaced = alias_replace_vars (window, ptr_args);
+      rc = plugin_cmd_handler_exec (window->buffer->protocol, command + 1,
+      (vars_replaced) ? vars_replaced : ptr_args);
+      if (vars_replaced)
+      free (vars_replaced);*/
     
     pos = strchr (command, ' ');
     if (pos)
@@ -105,71 +120,6 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
         default: /* no command hooked */
             argv = string_explode (ptr_args, " ", 0, 0, &argc);
             argv_eol = string_explode (ptr_args, " ", 1, 0, NULL);
-            
-            /* look for WeeChat command */
-            for (i = 0; weechat_commands[i].name; i++)
-            {
-                if (string_strcasecmp (weechat_commands[i].name, command + 1) == 0)
-                {
-                    if ((argc < weechat_commands[i].min_arg)
-                        || (argc > weechat_commands[i].max_arg))
-                    {
-                        if (weechat_commands[i].min_arg ==
-                            weechat_commands[i].max_arg)
-                        {
-                            gui_chat_printf (NULL,
-                                             NG_("%sError: wrong argument count "
-                                                 "for %s command \"%s\" "
-                                                 "(expected: %d arg)",
-                                                 "%s%s wrong argument count "
-                                                 "for %s command \"%s\" "
-                                                 "(expected: %d args)",
-                                                 weechat_commands[i].max_arg),
-                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             PACKAGE_NAME,
-                                             command + 1,
-                                             weechat_commands[i].max_arg);
-                        }
-                        else
-                        {
-                            gui_chat_printf (NULL,
-                                             NG_("%sError: wrong argument count "
-                                                 "for %s command \"%s\" "
-                                                 "(expected: between %d and "
-                                                 "%d arg)",
-                                                 "%s%s wrong argument count "
-                                                 "for %s command \"%s\" "
-                                                 "(expected: between %d and "
-                                                 "%d args)",
-                                                 weechat_commands[i].max_arg),
-                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             PACKAGE_NAME,
-                                             command + 1,
-                                             weechat_commands[i].min_arg,
-                                             weechat_commands[i].max_arg);
-                        }
-                    }
-                    else
-                    {
-                        /*ptr_args2 = (ptr_args) ? (char *)gui_color_encode ((unsigned char *)ptr_args,
-                                                                           (weechat_commands[i].conversion
-                                                                           && cfg_irc_colors_send)) : NULL;*/
-                        return_code = (int) (weechat_commands[i].cmd_function)
-                            (buffer, argc, argv, argv_eol);
-                        if (return_code < 0)
-                        {
-                            gui_chat_printf (NULL,
-                                             _("%sError: command \"%s\" failed"),
-                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                             command + 1);
-                        }
-                    }
-                    string_free_exploded (argv);
-                    string_free_exploded (argv_eol);
-                    free (command);
-                    return 1;
-                }
-            }
             
             /* should we send unknown command to IRC server? */
             /*if (cfg_irc_send_unknown_commands)
@@ -249,7 +199,7 @@ input_data (struct t_gui_buffer *buffer, char *data, int only_builtin)
             if (pos)
                 pos[0] = '\0';
             
-            if (command_is_command (ptr_data))
+            if (input_is_command (ptr_data))
             {
                 /* WeeChat or plugin command */
                 (void) input_exec_command (buffer, ptr_data,
@@ -260,7 +210,7 @@ input_data (struct t_gui_buffer *buffer, char *data, int only_builtin)
                 if ((ptr_data[0] == '/') && (ptr_data[1] == '/'))
                     ptr_data++;
 
-                hook_command_exec (buffer, ptr_data);
+                hook_command_exec (buffer, ptr_data, 0);
                 
                 if (buffer->input_data_cb)
                 {

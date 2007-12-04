@@ -20,54 +20,7 @@
 #ifndef __WEECHAT_COMMAND_H
 #define __WEECHAT_COMMAND_H 1
 
-#include "../gui/gui-buffer.h"
-
-#define MAX_ARGS 8192
-
-struct command
-{
-    char *name;                     /* WeeChat (internal) command name       */
-    char *description;              /* command description (for /help)       */
-    char *arguments;                /* command arguments (for /help)         */
-    char *arguments_description;    /* arguments description (for /help)     */
-    char *completion_template;      /* template for completion               */
-                                    /* NULL=no completion, ""=default (nick) */
-    int min_arg, max_arg;           /* min & max number of arguments         */
-    int conversion;                 /* = 1 if cmd args are converted (charset*/
-                                    /* and color) before execution           */
-    int (*cmd_function)(struct t_gui_buffer *, int, char **, char **);
-                                    /* function called when user enters cmd  */
-};
-
-extern struct command weechat_commands[];
-struct t_weelist *weechat_index_commands;
-struct t_weelist *weechat_last_index_command;
-
-extern int command_command_is_used (char *);
-extern void command_index_build ();
-extern void command_index_free ();
-extern void command_index_add (char *);
-extern void command_index_remove (char *);
-extern int command_is_command (char *);
-extern void command_print_stdout (struct command *);
-
-extern int command_alias (struct t_gui_buffer *, int, char **, char **);
-extern int command_buffer (struct t_gui_buffer *, int, char **, char **);
-extern int command_builtin (struct t_gui_buffer *, int, char **, char **);
-extern int command_clear (struct t_gui_buffer *, int, char **, char **);
-extern int command_debug (struct t_gui_buffer *, int, char **, char **);
-extern int command_help (struct t_gui_buffer *, int, char **, char **);
-extern int command_history (struct t_gui_buffer *, int, char **, char **);
-extern int command_key (struct t_gui_buffer *, int, char **, char **);
-extern int command_plugin (struct t_gui_buffer *, int, char **, char **);
-extern int command_quit (struct t_gui_buffer *, int, char **, char **);
-extern int command_reload (struct t_gui_buffer *, int, char **, char **);
-extern int command_save (struct t_gui_buffer *, int, char **, char **);
-extern int command_set (struct t_gui_buffer *, int, char **, char **);
-extern int command_setp (struct t_gui_buffer *, int, char **, char **);
-extern int command_unalias (struct t_gui_buffer *, int, char **, char **);
-extern int command_upgrade (struct t_gui_buffer *, int, char **, char **);
-extern int command_uptime (struct t_gui_buffer *, int, char **, char **);
-extern int command_window (struct t_gui_buffer *, int, char **, char **);
+extern void command_init ();
+extern void command_print_stdout ();
 
 #endif /* wee-command.h */

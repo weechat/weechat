@@ -65,6 +65,8 @@ struct t_hook_command
 {
     t_hook_callback_command *callback; /* command callback                  */
     char *command;                     /* name of command (without '/')     */
+    int level;                         /* when many commands with same name */
+                                       /* exist: lower level= high priority */
     char *description;                 /* (for /help) short cmd description */
     char *args;                        /* (for /help) command arguments     */
     char *args_description;            /* (for /help) args long description */
@@ -130,7 +132,7 @@ extern int hook_valid_for_plugin (void *, struct t_hook *);
 
 extern struct t_hook *hook_command (void *, char *, char *, char *, char *,
                                     char *, t_hook_callback_command *, void *);
-extern int hook_command_exec (void *, char *);
+extern int hook_command_exec (void *, char *, int);
 extern struct t_hook *hook_timer (void *, long, int, t_hook_callback_timer *,
                                   void *);
 extern void hook_timer_exec (struct timeval *);

@@ -144,7 +144,7 @@ weechat_display_commands ()
                            _("%s internal commands:\n"),
                           PACKAGE_NAME);
     string_iconv_fprintf (stdout, "\n");
-    command_print_stdout (weechat_commands);
+    command_print_stdout ();
 }
 
 /*
@@ -276,19 +276,8 @@ weechat_parse_args (int argc, char *argv[])
         else if ((strcmp (argv[i], "-m") == 0)
                  || (strcmp (argv[i], "--commands") == 0))
         {
-            if (i + 1 < argc)
-            {
-                weechat_display_commands (argv[i+1]);
-                weechat_shutdown (EXIT_SUCCESS, 0);
-            }
-            else
-            {
-                string_iconv_fprintf (stderr,
-                                      _("Error: missing argument for \"%s\" "
-                                        "option\n"),
-                                      "--commands");
-                weechat_shutdown (EXIT_FAILURE, 0);
-            }
+            weechat_display_commands ();
+            weechat_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-p") == 0)
                  || (strcmp (argv[i], "--no-plugin") == 0))
@@ -594,6 +583,7 @@ main (int argc, char *argv[])
     signal (SIGSEGV, weechat_sigsegv);  /* crash dump when SIGSEGV received */
     gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
     weechat_init_vars ();               /* initialize some variables        */
+    command_init ();                    /* initialize WeeChat commands      */
     gui_keyboard_init ();               /* init keyb. (default key bindings)*/
     config_weechat_init ();             /* init options with default values */
     weechat_parse_args (argc, argv);    /* parse command line args          */
@@ -601,7 +591,6 @@ main (int argc, char *argv[])
     log_init ();                        /* init log file                    */
     if (config_weechat_read () < 0)     /* read WeeChat configuration       */
         exit (EXIT_FAILURE);
-    command_index_build ();             /* build cmd index for completion   */
     gui_main_init ();                   /* init WeeChat interface           */
     //if (weechat_session)
         //session_load (weechat_session); /* load previous session if asked   */
@@ -611,8 +600,8 @@ main (int argc, char *argv[])
     plugin_end ();                      /* end plugin interface(s)          */
     if (CONFIG_BOOLEAN(config_look_save_on_exit))
         (void) config_weechat_write (NULL); /* save WeeChat config file     */
-    command_index_free ();              /* free commands index              */
     gui_main_end ();                    /* shut down WeeChat GUI            */
+    unhook_all ();                      /* remove all hooks                 */
     weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */
     
     return EXIT_SUCCESS;                /* make C compiler happy            */

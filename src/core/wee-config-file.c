@@ -1183,6 +1183,27 @@ config_file_free_all ()
 }
 
 /*
+ * config_file_free_all: free all configuration files for a plugin
+ */
+
+void
+config_file_free_all_plugin (void *plugin)
+{
+    struct t_config_file *ptr_config, *next_config;
+    
+    ptr_config = config_files;
+    while (ptr_config)
+    {
+        next_config = ptr_config->next_config;
+        
+        if (ptr_config->plugin == plugin)
+            config_file_free (ptr_config);
+        
+        ptr_config = next_config;
+    }
+}
+
+/*
  * config_file_print_stdout: print options on standard output
  */
 

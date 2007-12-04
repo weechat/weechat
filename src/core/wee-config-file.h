@@ -133,6 +133,7 @@ extern void config_file_section_free (struct t_config_file *,
                                       struct t_config_section *);
 extern void config_file_free (struct t_config_file *);
 extern void config_file_free_all ();
+extern void config_file_free_all_plugin (void *);
 extern void config_file_print_stdout (struct t_config_file *);
 extern void config_file_print_log ();
 
