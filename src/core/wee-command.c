@@ -1149,7 +1149,7 @@ command_reload (void *data, void *buffer,
                          gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
     else
         gui_chat_printf (NULL,
-                         _("%sError: failed to read WeeChat configuration "
+                         _("%sError: failed to reload WeeChat configuration "
                            "file"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
     
@@ -1159,8 +1159,11 @@ command_reload (void *data, void *buffer,
                          gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
     else
         gui_chat_printf (NULL,
-                         _("%sError: failed to read plugins options"),
+                         _("%sError: failed to reload plugins options"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+
+    /* tell to plugins to reload their configuration */
+    (void) hook_event_exec ("config_reload", NULL);
     
     return 0;
 }

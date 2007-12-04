@@ -24,7 +24,8 @@
 
 enum t_hook_type
 {
-    HOOK_TYPE_COMMAND = 0,             /* new command                       */
+    HOOK_TYPE_DELETED = 0,             /* used when hook is deleted         */
+    HOOK_TYPE_COMMAND,                 /* new command                       */
     HOOK_TYPE_TIMER,                   /* timer                             */
     HOOK_TYPE_FD,                      /* socket of file descriptor         */
     HOOK_TYPE_PRINT,                   /* printed message                   */
