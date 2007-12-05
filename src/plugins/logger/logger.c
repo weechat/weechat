@@ -35,20 +35,23 @@
 #include <time.h>
 
 #include "../weechat-plugin.h"
-#include "logger.h"
 #include "logger-buffer.h"
 
 
-static struct t_weechat_plugin *weechat_plugin = NULL;
-static char *logger_path = NULL;
-static char *logger_time_format = NULL;
+char plugin_name[] = "logger";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Logger plugin for WeeChat";
+
+struct t_weechat_plugin *weechat_plugin = NULL;
+char *logger_path = NULL;
+char *logger_time_format = NULL;
 
 
 /*
  * logger_config_read: read config options for logger plugin
  */
 
-static void
+void
 logger_config_read ()
 {
     if (logger_path)
@@ -363,7 +366,7 @@ logger_end_all ()
  * logger_event_cb: callback for event hook
  */
 
-static int
+int
 logger_event_cb (void *data, char *event, void *pointer)
 {
     /* make C compiler happy */
@@ -386,7 +389,7 @@ logger_event_cb (void *data, char *event, void *pointer)
  * logger_print_cb: callback for print hook
  */
 
-static int
+int
 logger_print_cb (void *data, void *buffer, time_t date, char *prefix,
                  char *message)
 {
