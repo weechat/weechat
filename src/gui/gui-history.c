@@ -56,8 +56,7 @@ gui_history_buffer_add (void *buffer, char *string)
     
     if (!ptr_buffer->history
         || (ptr_buffer->history
-            && (string_strcasecmp (ptr_buffer->history->text,
-                                   string) != 0)))
+            && (strcmp (ptr_buffer->history->text, string) != 0)))
     {	
 	new_history = (struct t_gui_history *)malloc (sizeof (struct t_gui_history));
 	if (new_history)
@@ -107,8 +106,8 @@ gui_history_global_add (char *string)
     
     if (!history_global
         || (history_global
-            && (string_strcasecmp (history_global->text, string) != 0)))
-    {    
+            && (strcmp (history_global->text, string) != 0)))
+    {
 	new_history = (struct t_gui_history *)malloc (sizeof (struct t_gui_history));
 	if (new_history)
 	{
