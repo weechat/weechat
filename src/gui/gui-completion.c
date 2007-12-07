@@ -127,17 +127,13 @@ gui_completion_stop (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_get_command_infos: return completion template and max arg
- *                                   for command
+ * gui_completion_search_command: search command hook
  */
 
-void
-gui_completion_get_command_infos (struct t_gui_completion *completion,
-                                  char **template)
+struct t_hook *
+gui_completion_search_command (struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook;
-    
-    *template = NULL;
     
     for (ptr_hook = weechat_hooks; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
@@ -148,11 +144,11 @@ gui_completion_get_command_infos (struct t_gui_completion *completion,
             && (HOOK_COMMAND(ptr_hook, level) == 0)
             && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
                                    completion->base_command) == 0))
-        {
-            *template = HOOK_COMMAND(ptr_hook, completion);
-            return;
-        }
+            return ptr_hook;
     }
+    
+    /* command not found */
+    return NULL;
 }
 
 /*
@@ -862,13 +858,29 @@ gui_completion_list_add_weechat_cmd (struct t_gui_completion *completion)
 }
 
 /*
+ * gui_completion_custom: custom completion by a plugin
+ */
+
+void
+gui_completion_custom (struct t_gui_completion *completion,
+                       char *custom_completion,
+                       struct t_weechat_plugin *plugin)
+{
+    hook_completion_exec (plugin,
+                          custom_completion,
+                          completion->completion_list);
+}
+
+/*
  * gui_completion_build_list_template: build data list according to a template
  */
 
 void
-gui_completion_build_list_template (struct t_gui_completion *completion, char *template)
+gui_completion_build_list_template (struct t_gui_completion *completion,
+                                    char *template,
+                                    struct t_weechat_plugin *plugin)
 {
-    char *word, *pos;
+    char *word, *pos, *pos_end, *custom_completion;
     int word_offset;
     
     word = strdup (template);
@@ -963,6 +975,25 @@ gui_completion_build_list_template (struct t_gui_completion *completion, char *t
                         case 'w': /* WeeChat commands */
                             gui_completion_list_add_weechat_cmd (completion);
                             break;
+                        case '(': /* custom completion by a plugin */
+                            pos++;
+                            pos_end = strchr (pos, ')');
+                            if (pos_end)
+                            {
+                                if (pos_end > pos)
+                                {
+                                    custom_completion = strndup (pos,
+                                                                 pos_end - pos);
+                                    if (custom_completion)
+                                    {
+                                        gui_completion_custom (completion,
+                                                               custom_completion,
+                                                               plugin);
+                                        free (custom_completion);
+                                    }
+                                }
+                                pos = pos_end + 1;
+                            }
                     }
                 }
                 break;
@@ -985,33 +1016,37 @@ gui_completion_build_list_template (struct t_gui_completion *completion, char *t
 void
 gui_completion_build_list (struct t_gui_completion *completion)
 {
+    struct t_hook *ptr_hook;
     char *template, *pos_template, *pos_space;
     int repeat_last, i, length;
 
     repeat_last = 0;
     
-    gui_completion_get_command_infos (completion, &template);
-    if (!template || (strcmp (template, "-") == 0))
+    ptr_hook = gui_completion_search_command (completion);
+    if (!ptr_hook || !HOOK_COMMAND(ptr_hook, completion)
+        || (strcmp (HOOK_COMMAND(ptr_hook, completion), "-") == 0))
     {
         gui_completion_stop (completion);
         return;
     }
-
-    length = strlen (template);
+    
+    length = strlen (HOOK_COMMAND(ptr_hook, completion));
     if (length >= 2)
     {
-        if (strcmp (template + length - 2, "%*") == 0)
+        if (strcmp (HOOK_COMMAND(ptr_hook, completion) + length - 2,
+                    "%*") == 0)
             repeat_last = 1;
     }
     
     i = 1;
-    pos_template = template;
+    pos_template = HOOK_COMMAND(ptr_hook, completion);
     while (pos_template && pos_template[0])
     {
         pos_space = strchr (pos_template, ' ');
         if (i == completion->base_command_arg)
         {
-            gui_completion_build_list_template (completion, pos_template);
+            gui_completion_build_list_template (completion, pos_template,
+                                                ptr_hook->plugin);
             return;
         }
         if (pos_space)
@@ -1028,7 +1063,9 @@ gui_completion_build_list (struct t_gui_completion *completion)
     {
         pos_space = rindex (template, ' ');
         gui_completion_build_list_template (completion,
-                                            (pos_space) ? pos_space + 1 : template);
+                                            (pos_space) ?
+                                            pos_space + 1 : template,
+                                            ptr_hook->plugin);
     }
 }
 

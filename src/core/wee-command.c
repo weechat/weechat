@@ -1020,7 +1020,7 @@ command_plugin_list (char *name, int full)
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL,
-                                             _("     configuration otions "
+                                             _("     configuration options "
                                                "hooked:"));
                         hook_found = 1;
                         gui_chat_printf (NULL,
@@ -1029,6 +1029,24 @@ command_plugin_list (char *name, int full)
                                          HOOK_CONFIG(ptr_hook, type) : "*",
                                          HOOK_CONFIG(ptr_hook, option) ?
                                          HOOK_CONFIG(ptr_hook, option) : "*");
+                    }
+                }
+
+                /* completion hooked */
+                hook_found = 0;
+                for (ptr_hook = weechat_hooks; ptr_hook;
+                     ptr_hook = ptr_hook->next_hook)
+                {
+                    if ((ptr_hook->plugin == ptr_plugin)
+                        && (ptr_hook->type == HOOK_TYPE_COMPLETION))
+                    {
+                        if (!hook_found)
+                            gui_chat_printf (NULL,
+                                             _("     completion hooked:"));
+                        hook_found = 1;
+                        gui_chat_printf (NULL,
+                                         "       %s",
+                                         HOOK_COMPLETION(ptr_hook, completion));
                     }
                 }
             }

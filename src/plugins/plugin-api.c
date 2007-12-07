@@ -1186,6 +1186,21 @@ plugin_api_hook_config (struct t_weechat_plugin *plugin, char *config_type,
 }
 
 /*
+ * plugin_api_hook_completion: hook a completion
+ */
+
+struct t_hook *
+plugin_api_hook_completion (struct t_weechat_plugin *plugin, char *completion,
+                            int (*callback)(void *, char *, void *),
+                            void *data)
+{
+    if (plugin && callback)
+        return hook_completion (plugin, completion, callback, data);
+    
+    return NULL;
+}
+
+/*
  * plugin_api_unhook: unhook something
  */
 

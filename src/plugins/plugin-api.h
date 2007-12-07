@@ -146,6 +146,10 @@ extern struct t_hook *plugin_api_hook_config (struct t_weechat_plugin *,
                                               char *, char *,
                                               int (*)(void *, char *, char *, char *),
                                               void *);
+extern struct t_hook *plugin_api_hook_completion (struct t_weechat_plugin *,
+                                                  char *,
+                                                  int (*)(void *, char *, void *),
+                                                  void *);
 extern void plugin_api_unhook (struct t_weechat_plugin *, void *);
 extern void plugin_api_unhook_all (struct t_weechat_plugin *);
 

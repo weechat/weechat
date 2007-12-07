@@ -31,6 +31,7 @@ enum t_hook_type
     HOOK_TYPE_PRINT,                   /* printed message                   */
     HOOK_TYPE_EVENT,                   /* event                             */
     HOOK_TYPE_CONFIG,                  /* config option                     */
+    HOOK_TYPE_COMPLETION,              /* custom completions                */
 };
 
 #define HOOK_FD_FLAG_READ       1
@@ -43,6 +44,7 @@ enum t_hook_type
 #define HOOK_PRINT(hook, var) (((struct t_hook_print *)hook->hook_data)->var)
 #define HOOK_EVENT(hook, var) (((struct t_hook_event *)hook->hook_data)->var)
 #define HOOK_CONFIG(hook, var) (((struct t_hook_config *)hook->hook_data)->var)
+#define HOOK_COMPLETION(hook, var) (((struct t_hook_completion *)hook->hook_data)->var)
 
 struct t_hook
 {
@@ -121,6 +123,14 @@ struct t_hook_config
                                        /* (NULL = hook for all options)     */
 };
 
+typedef int (t_hook_callback_completion)(void *, char *, void *);
+
+struct t_hook_completion
+{
+    t_hook_callback_completion *callback; /* completion callback            */
+    char *completion;                  /* name of completion                */
+};
+
 /* hook variables */
 
 extern struct t_hook *weechat_hooks;
@@ -149,6 +159,9 @@ extern void hook_event_exec (char *, void *);
 extern struct t_hook *hook_config (void *, char *, char *,
                                    t_hook_callback_config *, void *);
 extern void hook_config_exec (char *, char *, char *);
+extern struct t_hook *hook_completion (void *, char *,
+                                       t_hook_callback_completion *, void *);
+extern void hook_completion_exec (void *, char *, void *);
 
 extern void unhook (struct t_hook *);
 extern void unhook_all_plugin (void *);

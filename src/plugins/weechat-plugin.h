@@ -155,6 +155,9 @@ struct t_weechat_plugin
     struct t_hook *(*hook_config) (struct t_weechat_plugin *, char *, char *,
                                    int (*)(void *, char *, char *, char *),
                                    void *);
+    struct t_hook *(*hook_completion) (struct t_weechat_plugin *, char *,
+                                       int (*)(void *, char *, void *),
+                                       void *);
     void (*unhook) (struct t_weechat_plugin *, void *);
     void (*unhook_all) (struct t_weechat_plugin *);
     
@@ -364,6 +367,9 @@ struct t_weechat_plugin
 #define weechat_hook_config(__type, __option, __callback, __data)       \
     weechat_plugin->hook_config(weechat_plugin, __type, __option,       \
                                 __callback, __data)
+#define weechat_hook_completion(__completion, __callback, __data)       \
+    weechat_plugin->hook_completion(weechat_plugin, __completion,       \
+                                    __callback, __data)
 #define weechat_unhook(__hook)                          \
     weechat_plugin->unhook(weechat_plugin, __hook)
 #define weechat_unhook_all()                    \

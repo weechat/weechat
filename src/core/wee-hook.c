@@ -827,6 +827,80 @@ hook_config_exec (char *type, char *option, char *value)
 }
 
 /*
+ * hook_completion: hook a completion
+ */
+
+struct t_hook *
+hook_completion (void *plugin, char *completion,
+                 t_hook_callback_completion *callback, void *callback_data)
+{
+    struct t_hook *new_hook;
+    struct t_hook_completion *new_hook_completion;
+    
+    if (!completion || !completion[0] || strchr (completion, ' '))
+        return NULL;
+    
+    new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
+    if (!new_hook)
+        return NULL;
+    new_hook_completion = (struct t_hook_completion *)malloc (sizeof (struct t_hook_completion));
+    if (!new_hook_completion)
+    {
+        free (new_hook);
+        return NULL;
+    }
+    
+    hook_init (new_hook, plugin, HOOK_TYPE_COMPLETION, callback_data);
+    
+    new_hook->hook_data = new_hook_completion;
+    new_hook_completion->callback = callback;
+    new_hook_completion->completion = strdup (completion);
+    
+    hook_add_to_list (new_hook);
+    
+    return new_hook;
+}
+
+/*
+ * hook_completion_exec: execute completion hook
+ */
+
+void
+hook_completion_exec (void *plugin, char *completion, void *list)
+{
+    struct t_hook *ptr_hook, *next_hook;
+    
+    hook_exec_recursion++;
+    
+    ptr_hook = weechat_hooks;
+    while (ptr_hook)
+    {
+        next_hook = ptr_hook->next_hook;
+        
+        if ((ptr_hook->type == HOOK_TYPE_COMPLETION)
+            && (!ptr_hook->running)
+            && (ptr_hook->plugin == plugin)
+            && (string_strcasecmp (HOOK_COMPLETION(ptr_hook, completion),
+                                   completion) == 0))
+        {
+            ptr_hook->running = 1;
+            (void) (HOOK_COMPLETION(ptr_hook, callback))
+                (ptr_hook->callback_data, completion, list);
+            if (ptr_hook->type == HOOK_TYPE_COMPLETION)
+                ptr_hook->running = 0;
+        }
+        
+        ptr_hook = next_hook;
+    }
+    
+    if (hook_exec_recursion > 0)
+        hook_exec_recursion--;
+
+    if (hook_exec_recursion == 0)
+        hook_remove_deleted ();
+}
+
+/*
  * unhook: unhook something
  */
 
@@ -893,6 +967,11 @@ unhook (struct t_hook *hook)
                 if (HOOK_CONFIG(hook, option))
                     free (HOOK_CONFIG(hook, option));
                 free ((struct t_hook_config *)hook->hook_data);
+                break;
+            case HOOK_TYPE_COMPLETION:
+                if (HOOK_COMPLETION(hook, completion))
+                    free (HOOK_COMPLETION(hook, completion));
+                free ((struct t_hook_completion *)hook->hook_data);
                 break;
         }
         hook->hook_data = NULL;
@@ -1020,6 +1099,13 @@ hook_print_log ()
                 log_printf ("    callback . . . . . . : 0x%X", HOOK_CONFIG(ptr_hook, callback));
                 log_printf ("    type . . . . . . . . : '%s'", HOOK_CONFIG(ptr_hook, type));
                 log_printf ("    option . . . . . . . : '%s'", HOOK_CONFIG(ptr_hook, option));
+                break;
+            case HOOK_TYPE_COMPLETION:
+                log_printf ("  type . . . . . . . . . : %d (completion)", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                log_printf ("  completion data:");
+                log_printf ("    callback . . . . . . : 0x%X", HOOK_COMPLETION(ptr_hook, callback));
+                log_printf ("    completion . . . . . : '%s'", HOOK_COMPLETION(ptr_hook, completion));
                 break;
         }        
         log_printf ("  running. . . . . . . . : %d",   ptr_hook->running);

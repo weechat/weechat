@@ -43,6 +43,7 @@ struct t_alias *last_alias = NULL;
 struct t_hook *alias_command = NULL;
 struct t_hook *unalias_command = NULL;
 struct t_hook *config_reload = NULL;
+struct t_hook *completion = NULL;
 
 
 /*
@@ -691,6 +692,28 @@ unalias_command_cb (void *data, void *buffer, int argc, char **argv,
 }
 
 /*
+ * alias_completion_cb: callback for completion
+ */
+
+int
+alias_completion_cb (void *data, char *completion, void *list)
+{
+    struct t_alias *ptr_alias;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion;
+
+    for (ptr_alias = alias_list; ptr_alias;
+         ptr_alias = ptr_alias->next_alias)
+    {
+        weechat_list_add (list, ptr_alias->name, "sort");
+    }
+    
+    return PLUGIN_RC_SUCCESS;
+}
+
+/*
  * weechat_plugin_init: initialize alias plugin
  */
 
@@ -734,11 +757,14 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                                             N_("alias_name"),
                                             N_("alias_name: name of alias to "
                                                "remove"),
-                                            "%h",
+                                            "%(alias)",
                                             unalias_command_cb, NULL);
 
     config_reload = weechat_hook_event ("config_reload",
                                         alias_config_reload_event_cb, NULL);
+    
+    completion = weechat_hook_completion ("alias",
+                                          alias_completion_cb, NULL);
     
     return PLUGIN_RC_SUCCESS;
 }
@@ -756,6 +782,7 @@ weechat_plugin_end ()
     weechat_unhook (alias_command);
     weechat_unhook (unalias_command);
     weechat_unhook (config_reload);
+    weechat_unhook (completion);
     
     return PLUGIN_RC_SUCCESS;
 }
