@@ -35,351 +35,6 @@
 #include "../../gui/gui.h"
 
 
-t_weechat_command irc_commands[] =
-{ { "admin", N_("find information about the administrator of the server"),
-    N_("[target]"),
-    N_("target: server"),
-    NULL, 0, 1, 0, irc_command_admin },
-  { "ame", N_("send a CTCP action to all channels of all connected servers"),
-    N_("message"),
-    N_("message: message to send"),
-    "", 1, MAX_ARGS, 1, irc_command_ame },
-  { "amsg", N_("send message to all channels of all connected servers"),
-    N_("text"),
-    N_("text: text to send"),
-    "", 1, MAX_ARGS, 1, irc_command_amsg },
-  { "away", N_("toggle away status"),
-    N_("[-all] [message]"),
-    N_("   -all: toggle away status on all connected servers\n"
-       "message: message for away (if no message is given, away status is "
-       "removed)"),
-    "-all", 0, MAX_ARGS, 1, irc_command_away },
-  { "ban", N_("bans nicks or hosts"),
-    N_("[channel] [nickname [nickname ...]]"),
-    N_(" channel: channel for ban\n"
-       "nickname: user or host to ban"),
-    "%N", 0, MAX_ARGS, 0, irc_command_ban },
-  { "connect", N_("connect to server(s)"),
-    N_("[-all [-nojoin] | servername [servername ...] [-nojoin] | hostname "
-       "[-port port] [-ipv6] [-ssl]]"),
-    N_("      -all: connect to all servers\n"
-       "servername: internal server name to connect\n"
-       "   -nojoin: do not join any channel (even if autojoin is enabled on "
-       "server)\n"
-       "  hostname: hostname to connect, creating temporary server\n"
-       "      port: port for server (integer, default is 6667)\n"
-       "      ipv6: use IPv6 protocol\n"
-       "       ssl: use SSL protocol"),
-    "%S|-all|-nojoin|%*", 0, MAX_ARGS, 0, irc_command_connect },
-  { "ctcp", N_("send a CTCP message (Client-To-Client Protocol)"),
-    N_("receiver type [arguments]"),
-    N_(" receiver: nick or channel to send CTCP to\n"
-       "     type: CTCP type (examples: \"version\", \"ping\", ..)\n"
-       "arguments: arguments for CTCP"),
-    "%c|%n action|ping|version", 2, MAX_ARGS, 1, irc_command_ctcp },
-  { "cycle", N_("leave and rejoin a channel"),
-    N_("[channel[,channel]] [part_message]"),
-    N_("     channel: channel name for cycle\n"
-       "part_message: part message (displayed to other users)"),
-    "%p", 0, MAX_ARGS, 0, irc_command_cycle },
-  { "dcc", N_("starts DCC (file or chat) or close chat"),
-    N_("action [nickname [file]]"),
-    N_("  action: 'send' (file) or 'chat' or 'close' (chat)\n"
-       "nickname: nickname to send file or chat\n"
-       "    file: filename (on local host)"),
-    "chat|send|close %n %f", 1, MAX_ARGS, 0, irc_command_dcc },
-  { "dehalfop", N_("removes half channel operator status from nickname(s)"),
-    N_("[nickname [nickname]]"), "",
-    "", 0, MAX_ARGS, 0, irc_command_dehalfop },
-  { "deop", N_("removes channel operator status from nickname(s)"),
-    N_("[nickname [nickname]]"), "",
-    "", 0, MAX_ARGS, 0, irc_command_deop },
-  { "devoice", N_("removes voice from nickname(s)"),
-    N_("[nickname [nickname]]"), "",
-    "", 0, MAX_ARGS, 0, irc_command_devoice },
-  { "die", N_("shutdown the server"), "", "",
-    NULL, 0, 0, 0, irc_command_die },
-  { "disconnect", N_("disconnect from server(s)"),
-    N_("[-all | servername [servername ...]]"),
-    N_("      -all: disconnect from all servers\n"
-       "servername: server name to disconnect"),
-    "%S|-all", 0, MAX_ARGS, 0, irc_command_disconnect },
-  { "halfop", N_("gives half channel operator status to nickname(s)"),
-    N_("[nickname [nickname]]"), "",
-    "", 0, MAX_ARGS, 0, irc_command_halfop },
-  { "info", N_("get information describing the server"),
-    N_("[target]"),
-    N_("target: server name"),
-    NULL, 0, 1, 0, irc_command_info },
-  { "invite", N_("invite a nick on a channel"),
-    N_("nickname channel"),
-    N_("nickname: nick to invite\n"
-       " channel: channel to invite"),
-    "%n %c", 1, 2, 0, irc_command_invite },
-  { "ison", N_("check if a nickname is currently on IRC"),
-    N_("nickname [nickname ...]"),
-    N_("nickname: nickname"),
-    "", 1, MAX_ARGS, 0, irc_command_ison },
-  { "join", N_("join a channel"),
-    N_("channel[,channel] [key[,key]]"),
-    N_("channel: channel name to join\n"
-       "    key: key to join the channel"),
-    "%C", 1, MAX_ARGS, 0, irc_command_join },
-  { "kick", N_("forcibly remove a user from a channel"),
-    N_("[channel] nickname [comment]"),
-    N_(" channel: channel where user is\n"
-       "nickname: nickname to kick\n"
-       " comment: comment for kick"),
-    "%n %-", 1, MAX_ARGS, 0, irc_command_kick },
-  { "kickban", N_("kicks and bans a nick from a channel"),
-    N_("[channel] nickname [comment]"),
-    N_(" channel: channel where user is\n"
-       "nickname: nickname to kick and ban\n"
-       " comment: comment for kick"),
-    "%n %-", 1, MAX_ARGS, 0, irc_command_kickban },
-  { "kill", N_("close client-server connection"),
-    N_("nickname comment"),
-    N_("nickname: nickname\n"
-       " comment: comment for kill"),
-    "%n %-", 2, MAX_ARGS, 0, irc_command_kill },
-  { "links",
-    N_("list all servernames which are known by the server answering "
-       "the query"),
-    N_("[[server] server_mask]"),
-    N_("     server: this server should answer the query\n"
-       "server_mask: list of servers must match this mask"),
-    NULL, 0, 2, 0, irc_command_links },
-  { "list", N_("list channels and their topic"),
-    N_("[channel[,channel] [server]]"),
-    N_("channel: channel to list (a regexp is allowed)\nserver: server name"),
-    NULL, 0, MAX_ARGS, 0, irc_command_list },
-  { "lusers", N_("get statistics about the size of the IRC network"),
-    N_("[mask [target]]"),
-    N_("  mask: servers matching the mask only\n"
-       "target: server for forwarding request"),
-    NULL, 0, 2, 0, irc_command_lusers },
-  { "me", N_("send a CTCP action to the current channel"),
-    N_("message"),
-    N_("message: message to send"),
-    "", 0, MAX_ARGS, 1, irc_command_me },
-  { "mode", N_("change channel or user mode"),
-    N_("{ channel {[+|-]|o|p|s|i|t|n|b|v} [limit] [user] [ban mask] } | "
-       "{ nickname {[+|-]|i|w|s|o} }"),
-    N_("channel modes:\n"
-       "  channel: channel name to modify\n"
-       "  o: give/take channel operator privileges\n"
-       "  p: private channel flag\n"
-       "  s: secret channel flag\n"
-       "  i: invite-only channel flag\n"
-       "  t: topic settable by channel operator only flag\n"
-       "  n: no messages to channel from clients on the outside\n"
-       "  m: moderated channel\n"
-       "  l: set the user limit to channel\n"
-       "  b: set a ban mask to keep users out\n"
-       "  e: set exception mask\n"
-       "  v: give/take the ability to speak on a moderated channel\n"
-       "  k: set a channel key (password)\n"
-       "user modes:\n"
-       "  nickname: nickname to modify\n"
-       "  i: mark a user as invisible\n"
-       "  s: mark a user for receive server notices\n"
-       "  w: user receives wallops\n"
-       "  o: operator flag"),
-    "%c|%m", 1, MAX_ARGS, 0, irc_command_mode },
-  { "motd", N_("get the \"Message Of The Day\""),
-    N_("[target]"),
-    N_("target: server name"),
-    NULL, 0, 1, 0, irc_command_motd },
-  { "msg", N_("send message to a nick or channel"),
-    N_("receiver[,receiver] text"),
-    N_("receiver: nick or channel (may be mask, '*' = current channel)\n"
-       "text: text to send"),
-    "", 2, MAX_ARGS, 1, irc_command_msg },
-  { "names", N_("list nicknames on channels"),
-    N_("[channel[,channel]]"),
-    N_("channel: channel name"),
-    NULL, 0, 1, 0, irc_command_names },
-  { "nick", N_("change current nickname"),
-    N_("[-all] nickname"),
-    N_("    -all: set new nickname for all connected servers\n"
-       "nickname: new nickname"),
-    "-all", 1, 2, 0, irc_command_nick },
-  { "notice", N_("send notice message to user"),
-    N_("nickname text"),
-    N_("nickname: user to send notice to\n"
-       "    text: text to send"),
-    "%n %-", 2, MAX_ARGS, 1, irc_command_notice },
-  { "op", N_("gives channel operator status to nickname(s)"),
-    N_("nickname [nickname]"), "",
-    "", 1, MAX_ARGS, 0, irc_command_op },
-  { "oper", N_("get operator privileges"),
-    N_("user password"),
-    N_("user/password: used to get privileges on current IRC server"),
-    NULL, 2, 2, 0, irc_command_oper },
-  { "part", N_("leave a channel"),
-    N_("[channel[,channel]] [part_message]"),
-    N_("     channel: channel name to leave\n"
-       "part_message: part message (displayed to other users)"),
-    "%p", 0, MAX_ARGS, 0, irc_command_part },
-  { "ping", N_("ping server"),
-    N_("server1 [server2]"),
-    N_("server1: server to ping\nserver2: forward ping to this server"),
-    NULL, 1, 2, 0, irc_command_ping },
-  { "pong", N_("answer to a ping message"),
-    N_("daemon [daemon2]"),
-    N_(" daemon: daemon who has responded to Ping message\n"
-       "daemon2: forward message to this daemon"),
-    NULL, 1, 2, 0, irc_command_pong },
-  { "query", N_("send a private message to a nick"),
-    N_("nickname [text]"),
-    N_("nickname: nickname for private conversation\n"
-       "    text: text to send"),
-    "%n %-", 1, MAX_ARGS, 1, irc_command_query },
-  { "quit", N_("close all connections and quit"),
-    N_("[quit_message]"),
-    N_("quit_message: quit message (displayed to other users)"),
-    "%q", 0, MAX_ARGS, 1, irc_command_quit },
-  { "quote", N_("send raw data to server without parsing"),
-    N_("data"),
-    N_("data: raw data to send"),
-    "", 1, MAX_ARGS, 1, irc_command_quote },
-  { "reconnect", N_("reconnect to server(s)"),
-    N_("[-all [-nojoin] | servername [servername ...] [-nojoin]]"),
-    N_("      -all: reconnect to all servers\n"
-       "servername: server name to reconnect\n"
-       "   -nojoin: do not join any channel (even if autojoin is enabled on "
-       "server)"),
-    "%S|-all|-nojoin|%*", 0, MAX_ARGS, 0, irc_command_reconnect },
-  { "rehash", N_("tell the server to reload its config file"), "", "",
-    NULL, 0, 0, 0, irc_command_rehash },
-  { "restart", N_("tell the server to restart itself"), "", "",
-    NULL, 0, 0, 0, irc_command_restart },
-  { "service", N_("register a new service"),
-    N_("nickname reserved distribution type reserved info"),
-    N_("distribution: visibility of service\n"
-       "        type: reserved for future usage"),
-    NULL, 6, 6, 0, irc_command_service },
-  { "server", N_("list, add or remove servers"),
-    N_("[list [servername]] | [listfull [servername]] | [add servername "
-       "hostname [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] "
-       "[-pwd password] [-nicks nick1 nick2 nick3] [-username username] "
-       "[-realname realname] [-command command] "
-       "[-autojoin channel[,channel]] ] | [copy servername newservername] | "
-       "[rename servername newservername] | [keep servername] | "
-       "[del servername]"),
-    N_("      list: list servers (no parameter implies this list)\n"
-       "  listfull: list servers with detailed info for each server\n"
-       "       add: create a new server\n"
-       "servername: server name, for internal and display use\n"
-       "  hostname: name or IP address of server\n"
-       "      port: port for server (integer, default is 6667)\n"
-       "      temp: create temporary server (not saved in config file)\n"
-       "      auto: automatically connect to server when WeeChat starts\n"
-       "    noauto: do not connect to server when WeeChat starts (default)\n"
-       "      ipv6: use IPv6 protocol\n"
-       "       ssl: use SSL protocol\n"
-       "  password: password for server\n"
-       "     nick1: first nick for server\n"
-       "     nick2: alternate nick for server\n"
-       "     nick3: second alternate nick for server\n"
-       "  username: user name\n"
-       "  realname: real name of user\n"
-       "      copy: duplicate a server\n"
-       "    rename: rename a server\n"
-       "      keep: keep server in config file (for temporary servers only)\n"
-       "       del: delete a server\n"
-       "   deloutq: delete messages out queue for all servers (all messages "
-       "WeeChat is currently sending)"),
-    "add|copy|rename|keep|del|deloutq|list|listfull %S %S",
-    0, MAX_ARGS, 0, irc_command_server },
-  { "servlist", N_("list services currently connected to the network"),
-    N_("[mask [type]]"),
-    N_("mask: list only services matching this mask\n"
-       "type: list only services of this type"),
-    NULL, 0, 2, 0, irc_command_servlist },
-  { "squery", N_("deliver a message to a service"),
-    N_("service text"),
-    N_("service: name of service\ntext: text to send"),
-    NULL, 2, MAX_ARGS, 1, irc_command_squery },
-  { "squit", N_("disconnect server links"),
-    N_("server comment"),
-    N_( "server: server name\n"
-       "comment: comment for quit"),
-    NULL, 2, 2, 1, irc_command_squit },
-  { "stats", N_("query statistics about server"),
-    N_("[query [server]]"),
-    N_(" query: c/h/i/k/l/m/o/y/u (see RFC1459)\n"
-       "server: server name"),
-    NULL, 0, 2, 0, irc_command_stats },
-  { "summon",
-    N_("give users who are on a host running an IRC server a message "
-       "asking them to please join IRC"),
-    N_("user [target [channel]]"),
-    N_("   user: username\ntarget: server name\n"
-       "channel: channel name"),
-    NULL, 1, 3, 0, irc_command_summon },
-  { "time", N_("query local time from server"),
-    N_("[target]"),
-    N_("target: query time from specified server"),
-    NULL, 0, 1, 0, irc_command_time },
-  { "topic", N_("get/set channel topic"),
-    N_("[channel] [topic]"),
-    N_("channel: channel name\ntopic: new topic for channel "
-       "(if topic is \"-delete\" then topic is deleted)"),
-    "%t|-delete %-", 0, MAX_ARGS, 1, irc_command_topic },
-  { "trace", N_("find the route to specific server"),
-    N_("[target]"),
-    N_("target: server"),
-    NULL, 0, 1, 0, irc_command_trace },
-  { "unban", N_("unbans nicks or hosts"),
-    N_("[channel] nickname [nickname ...]"),
-    N_(" channel: channel for unban\n"
-       "nickname: user or host to unban"),
-    "", 1, MAX_ARGS, 0, irc_command_unban },
-  { "userhost", N_("return a list of information about nicknames"),
-    N_("nickname [nickname ...]"),
-    N_("nickname: nickname"),
-    "%n", 1, MAX_ARGS, 0, irc_command_userhost },
-  { "users", N_("list of users logged into the server"),
-    N_("[target]"),
-    N_("target: server"),
-    NULL, 0, 1, 0, irc_command_users },
-  { "version",
-    N_("gives the version info of nick or server (current or specified)"),
-    N_("[server | nickname]"),
-    N_("  server: server name\n"
-       "nickname: nickname"),
-    "%n", 0, 1, 0, irc_command_version },
-  { "voice", N_("gives voice to nickname(s)"),
-    N_("[nickname [nickname]]"), "",
-    "", 0, MAX_ARGS, 0, irc_command_voice },
-  { "wallops", N_("send a message to all currently connected users who have "
-    "set the 'w' user mode for themselves"),
-    N_("text"),
-    N_("text to send"),
-    NULL, 1, MAX_ARGS, 1, irc_command_wallops },
-  { "who", N_("generate a query which returns a list of information"),
-    N_("[mask [\"o\"]]"),
-    N_("mask: only information which match this mask\n"
-       "   o: only operators are returned according to the mask supplied"),
-    "%C", 0, 2, 0, irc_command_who },
-  { "whois", N_("query information about user(s)"),
-    N_("[server] nickname[,nickname]"),
-    N_("  server: server name\n"
-       "nickname: nickname (may be a mask)"),
-    "", 1, MAX_ARGS, 0, irc_command_whois },
-  { "whowas",
-    N_("ask for information about a nickname which no longer exists"),
-    N_("nickname [,nickname [,nickname ...]] [count [target]]"),
-    N_("nickname: nickname to search\n"
-       "   count: number of replies to return "
-       "(full search if negative number)\n"
-       "  target: reply should match this mask"),
-    "", 1, MAX_ARGS, 0, irc_command_whowas },
-  { NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL }
-};
-
-
 /*
  * irc_command_admin: find information about the administrator of the server
  */
@@ -2992,7 +2647,7 @@ irc_command_server (t_gui_window *window,
                                                    _("%s missing argument for "
                                                      "\"%s\" option\n"),
                                                    WEECHAT_ERROR, "-port");
-                            irc_server_destroy (&server_tmp);
+                            irc_server_free_data (&server_tmp);
                             return -1;
                         }
                         error = NULL;
@@ -3008,7 +2663,7 @@ irc_command_server (t_gui_window *window,
                                                    _("%s missing argument for "
                                                      "\"%s\" option\n"),
                                                    WEECHAT_ERROR, "-pwd");
-                            irc_server_destroy (&server_tmp);
+                            irc_server_free_data (&server_tmp);
                             return -1;
                         }
                         server_tmp.password = strdup (argv[++i]);
@@ -3021,7 +2676,7 @@ irc_command_server (t_gui_window *window,
                                                    _("%s missing argument for "
                                                      "\"%s\" option\n"),
                                                    WEECHAT_ERROR, "-nicks");
-                            irc_server_destroy (&server_tmp);
+                            irc_server_free_data (&server_tmp);
                             return -1;
                         }
                         server_tmp.nick1 = strdup (argv[++i]);
@@ -3036,7 +2691,7 @@ irc_command_server (t_gui_window *window,
                                               _("%s missing argument for "
                                                 "\"%s\" option\n"),
                                               WEECHAT_ERROR, "-username");
-                            irc_server_destroy (&server_tmp);
+                            irc_server_free_data (&server_tmp);
                             return -1;
                         }
                         server_tmp.username = strdup (argv[++i]);
@@ -3049,7 +2704,7 @@ irc_command_server (t_gui_window *window,
                                                    _("%s missing argument for "
                                                      "\"%s\" option\n"),
                                                    WEECHAT_ERROR, "-realname");
-                            irc_server_destroy (&server_tmp);
+                            irc_server_free_data (&server_tmp);
                             return -1;
                         }
                         server_tmp.realname = strdup (argv[++i]);
@@ -3062,7 +2717,7 @@ irc_command_server (t_gui_window *window,
                                                    _("%s missing argument for "
                                                      "\"%s\" option\n"),
                                                    WEECHAT_ERROR, "-command");
-                            irc_server_destroy (&server_tmp);
+                            irc_server_free_data (&server_tmp);
                             return -1;
                         }
                         server_tmp.command = strdup (argv[++i]);
@@ -3075,7 +2730,7 @@ irc_command_server (t_gui_window *window,
                                                    _("%s missing argument for "
                                                      "\"%s\" option\n"),
                                                    WEECHAT_ERROR, "-autojoin");
-                            irc_server_destroy (&server_tmp);
+                            irc_server_free_data (&server_tmp);
                             return -1;
                         }
                         server_tmp.autojoin = strdup (argv[++i]);
@@ -3117,14 +2772,14 @@ irc_command_server (t_gui_window *window,
                 gui_chat_printf_error (NULL,
                                        _("%s unable to create server\n"),
                                        WEECHAT_ERROR);
-                irc_server_destroy (&server_tmp);
+                irc_server_free_data (&server_tmp);
                 return -1;
             }
             
             if (new_server->autoconnect)
                 irc_server_connect (new_server, 0);
             
-            irc_server_destroy (&server_tmp);
+            irc_server_free_data (&server_tmp);
         }
         else if (weechat_strcasecmp (argv[0], "copy") == 0)
         {
