@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-aspell.c: Aspell plugin support for WeeChat */
+/* aspell.c: Aspell plugin support for WeeChat */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,17 +25,24 @@
 #include <ctype.h>
 
 #include "../weechat-plugin.h"
-#include "weechat-aspell.h"
+#include "aspell.h"
+
+char plugin_name[] = "aspell";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Aspell plugin for WeeChat";
+
+struct t_weechat_plugin *weechat_aspell_plugin = NULL;
+#define weechat_plugin weechat_aspell_plugin
 
 aspell_speller_t *aspell_plugin_speller = NULL;
 aspell_config_t *aspell_plugin_config = NULL;
 aspell_options_t aspell_plugin_options;
 
-t_weechat_plugin *weechat_aspell_plugin = NULL;
 
 /*
  * weechat_aspell_new_speller : create a new speller cell
  */
+
 aspell_speller_t *
 weechat_aspell_new_speller (void)
 {
@@ -61,6 +68,7 @@ weechat_aspell_new_speller (void)
 /*
  * weechat_aspell_free_speller : free a speller cell 
  */
+
 void
 weechat_aspell_free_speller (aspell_speller_t *s)
 {
@@ -80,6 +88,7 @@ weechat_aspell_free_speller (aspell_speller_t *s)
 /*
  * weechat_aspell_speller_list_search : search a speller cell
  */
+
 aspell_speller_t *
 weechat_aspell_speller_list_search (char *lang)
 {
@@ -100,6 +109,7 @@ weechat_aspell_speller_list_search (char *lang)
 /*
  * weechat_aspell_speller_list_add : create and add a new speller instance
  */
+
 int 
 weechat_aspell_speller_list_add (char *lang)
 {
@@ -145,6 +155,7 @@ weechat_aspell_speller_list_add (char *lang)
 /*
  * weechat_aspell_speller_list_remove : remove a speller instance
  */
+
 int
 weechat_aspell_speller_list_remove(char *lang)
 {
@@ -186,6 +197,7 @@ weechat_aspell_speller_list_remove(char *lang)
 /*
  * weechat_aspell_new_config : create a new config cell
  */
+
 aspell_config_t *
 weechat_aspell_new_config (void)
 {
@@ -211,6 +223,7 @@ weechat_aspell_new_config (void)
 /*
  * weechat_aspell_free_config : free a config cell
  */
+
 void 
 weechat_aspell_free_config (aspell_config_t *c)
 {
@@ -228,6 +241,7 @@ weechat_aspell_free_config (aspell_config_t *c)
 /*
  * weechat_aspell_config_list_search : search a config cell
  */
+
 aspell_config_t *
 weechat_aspell_config_list_search (char *server, char *channel)
 {
@@ -252,7 +266,8 @@ weechat_aspell_config_list_search (char *server, char *channel)
 /*
  * weechat_aspell_config_list_add : create and add a new config
  */
-int 
+
+int
 weechat_aspell_config_list_add (char *server, char *channel)
 {
     aspell_config_t *c;
@@ -275,6 +290,7 @@ weechat_aspell_config_list_add (char *server, char *channel)
 /*
  * weechat_aspell_config_list_remove : remove a speller config
  */
+
 int
 weechat_aspell_config_list_remove(char *server, char *channel)
 {
@@ -319,6 +335,7 @@ weechat_aspell_config_list_remove(char *server, char *channel)
  *               in its english full name
  *
  */
+
 char *
 weechat_aspell_iso_to_lang (char *code)
 {
@@ -348,6 +365,7 @@ weechat_aspell_iso_to_lang (char *code)
  *                  convert an aspell iso country
  *                  code in its english full name
  */
+
 char *
 weechat_aspell_iso_to_country (char *code)
 {
@@ -376,6 +394,7 @@ weechat_aspell_iso_to_country (char *code)
  *                  return 1 if an aspell dict exists 
  *                  for a lang, 0 otherwise
  */
+
 int
 weechat_aspell_speller_exists (char *lang) 
 {
@@ -410,6 +429,7 @@ weechat_aspell_speller_exists (char *lang)
  * weechat_aspell_speller_list_dicts : 
  *      list all aspell dict installed on system and display them
  */
+
 void
 weechat_aspell_speller_list_dicts (void) 
 {
@@ -472,6 +492,7 @@ weechat_aspell_speller_list_dicts (void)
 /*
  * weechat_aspell_config_show : display plugin settings
  */
+
 void
 weechat_aspell_config_show (void) 
 {
@@ -510,6 +531,7 @@ weechat_aspell_config_show (void)
 /*
  * weechat_aspell_config_addword : adding a word in personnal dictionaries
  */
+
 int
 weechat_aspell_config_addword(char *word)
 {
@@ -551,6 +573,7 @@ weechat_aspell_config_addword(char *word)
 /*
  * weechat_aspell_config_dump : display debug infos
  */
+
 void
 weechat_aspell_config_dump (void) 
 {
@@ -581,6 +604,7 @@ weechat_aspell_config_dump (void)
 /*
  * weechat_aspell_config_enable_for : internal subroutine
  */
+
 void
 weechat_aspell_config_enable_for (char *server, char *channel, char *lang)
 {
@@ -629,6 +653,7 @@ weechat_aspell_config_enable_for (char *server, char *channel, char *lang)
  * weechat_aspell_config_enable : 
  *        enabling given lang spell checking on current server/channel
  */
+
 void
 weechat_aspell_config_enable (char *lang) 
 {
@@ -661,6 +686,7 @@ weechat_aspell_config_enable (char *lang)
  * weechat_aspell_config_disable : 
  *        disabling spell checking on current server/channel
  */
+
 void
 weechat_aspell_config_disable (void) 
 {
@@ -710,6 +736,7 @@ weechat_aspell_config_disable (void)
 /*
  * weechat_aspell_config_set : setting options values
  */
+
 int
 weechat_aspell_config_set(char *option, char *value)
 {
@@ -760,6 +787,7 @@ weechat_aspell_config_set(char *option, char *value)
 /*
  * weechat_aspell_config_save : saving plugin config
  */
+
 int 
 weechat_aspell_config_save (void) 
 {
@@ -851,6 +879,7 @@ weechat_aspell_config_save (void)
 /*
  * weechat_aspell_config_load : loading plugin config
  */
+
 int 
 weechat_aspell_config_load(void)
 {
@@ -910,6 +939,7 @@ weechat_aspell_config_load(void)
 /*
  * weechat_aspell_options_save : saving plugin options
  */
+
 int
 weechat_aspell_options_save(void)
 {
@@ -930,6 +960,7 @@ weechat_aspell_options_save(void)
 /*
  * weechat_aspell_options_load : loading plugin options
  */
+
 int
 weechat_aspell_options_load(void)
 {
@@ -985,6 +1016,7 @@ weechat_aspell_options_load(void)
 /*
  * weechat_aspell_speller_command : manage "/aspell" uses
  */
+
 int
 weechat_aspell_speller_command (t_weechat_plugin *p, 
 				int argc, char **argv, 
@@ -1072,6 +1104,7 @@ weechat_aspell_speller_command (t_weechat_plugin *p,
  * weechat_aspell_nick_in_server_channel : 
  *    check presence of a nick in a server/channel
  */
+
 int
 weechat_aspell_nick_in_channel (char *nick, char *server, char *channel)
 {
@@ -1104,6 +1137,7 @@ weechat_aspell_nick_in_channel (char *nick, char *server, char *channel)
  * weechat_aspell_clean_word : 
  *    strip punct chars at the begining and at the end of a word
  */
+
 char *
 weechat_aspell_clean_word (char *word, int *offset)
 {
@@ -1156,6 +1190,7 @@ weechat_aspell_clean_word (char *word, int *offset)
  * weechat_aspell_is_simili_number : 
  *    detect if a word is made of chars and punctation
  */
+
 int
 weechat_aspell_is_simili_number (char *word)
 {
@@ -1183,6 +1218,7 @@ weechat_aspell_is_simili_number (char *word)
  * weechat_aspell_is_url : 
  *    detect if a word is an url
  */
+
 int
 weechat_aspell_is_url (char *word)
 {
@@ -1215,6 +1251,7 @@ weechat_aspell_is_url (char *word)
 /*
  * weechat_aspell_keyb_check : handler to check spelling on input line
  */
+
 int
 weechat_aspell_keyb_check (t_weechat_plugin *p, int argc, char **argv,
 			       char *handler_args, void *handler_pointer)
@@ -1332,7 +1369,9 @@ weechat_aspell_keyb_check (t_weechat_plugin *p, int argc, char **argv,
 /* 
  * weechat_plugin_init : init function, called when plugin is loaded
  */
-int weechat_plugin_init (t_weechat_plugin *plugin)
+
+int
+weechat_plugin_init (t_weechat_plugin *plugin)
 {
     char help[1024];
     aspell_plugin_speller = NULL; 
@@ -1375,7 +1414,9 @@ int weechat_plugin_init (t_weechat_plugin *plugin)
 /* 
  * weechat_plugin_end : end function, called when plugin is unloaded
  */
-void weechat_plugin_end (t_weechat_plugin *p)
+
+void
+weechat_plugin_end (t_weechat_plugin *p)
 {
     aspell_speller_t *s, *t;
     aspell_config_t *c, *d;

@@ -145,12 +145,14 @@ log_printf (char *message, ...)
     seconds = time (NULL);
     date_tmp = localtime (&seconds);
     if (date_tmp)
-        string_iconv_fprintf (weechat_log_file, "[%04d-%02d-%02d %02d:%02d:%02d] %s",
-                              date_tmp->tm_year + 1900, date_tmp->tm_mon + 1, date_tmp->tm_mday,
-                              date_tmp->tm_hour, date_tmp->tm_min, date_tmp->tm_sec,
+        string_iconv_fprintf (weechat_log_file,
+                              "[%04d-%02d-%02d %02d:%02d:%02d] %s\n",
+                              date_tmp->tm_year + 1900, date_tmp->tm_mon + 1,
+                              date_tmp->tm_mday, date_tmp->tm_hour,
+                              date_tmp->tm_min, date_tmp->tm_sec,
                               buffer);
     else
-        string_iconv_fprintf (weechat_log_file, "%s", buffer);
+        string_iconv_fprintf (weechat_log_file, "%s\n", buffer);
     
     fflush (weechat_log_file);
 }

@@ -518,7 +518,7 @@ gui_keyboard_bind (char *key, char *command)
     
     if (!key || !command)
     {
-        log_printf (_("Error: unable to bind key \"%s\"\n"), key);
+        log_printf (_("Error: unable to bind key \"%s\""), key);
         return NULL;
     }
     
@@ -546,7 +546,7 @@ gui_keyboard_bind (char *key, char *command)
         if (!ptr_function)
         {
             log_printf (_("Error: unable to bind key \"%s\" "
-                          "(invalid function name: \"%s\")\n"),
+                          "(invalid function name: \"%s\")"),
                         key, command);
             return NULL;
         }
@@ -560,7 +560,7 @@ gui_keyboard_bind (char *key, char *command)
                                 ptr_args);
     if (!new_key)
     {
-        log_printf (_("Error: not enough memory for key binding\n"));
+        log_printf (_("Error: not enough memory for key binding"));
         return NULL;
     }
     

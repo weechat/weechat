@@ -42,16 +42,18 @@ char plugin_name[] = "logger";
 char plugin_version[]     = "0.1";
 char plugin_description[] = "Logger plugin for WeeChat";
 
-struct t_weechat_plugin *weechat_plugin = NULL;
-char *logger_path = NULL;
-char *logger_time_format = NULL;
+struct t_weechat_plugin *weechat_logger_plugin = NULL;
+#define weechat_plugin weechat_logger_plugin
+
+static char *logger_path = NULL;
+static char *logger_time_format = NULL;
 
 
 /*
  * logger_config_read: read config options for logger plugin
  */
 
-void
+static void
 logger_config_read ()
 {
     if (logger_path)
@@ -78,7 +80,7 @@ logger_config_read ()
  *                          return 1 if success, 0 if failed
  */
 
-int
+static int
 logger_create_directory ()
 {
     int rc;
@@ -122,10 +124,10 @@ logger_create_directory ()
  * logger_get_filename: build log filename for a buffer
  */
 
-char *
+static char *
 logger_get_filename (void *buffer)
 {
-    struct t_plugin_list *ptr_list;
+    struct t_plugin_infolist *ptr_infolist;
     char *res;
     char *dir_separator, *weechat_dir, *log_path, *log_path2;
     char *category, *category2, *name, *name2;
@@ -140,17 +142,17 @@ logger_get_filename (void *buffer)
     
     if (dir_separator && weechat_dir && log_path && log_path2)
     {
-        ptr_list = weechat_list_get ("buffer", buffer);
-        if (ptr_list)
+        ptr_infolist = weechat_infolist_get ("buffer", buffer);
+        if (ptr_infolist)
         {
             category2 = NULL;
             name2 = NULL;
-            if (weechat_list_next (ptr_list))
+            if (weechat_infolist_next (ptr_infolist))
             {
-                category = weechat_list_string (ptr_list, "category");
+                category = weechat_infolist_string (ptr_infolist, "category");
                 category2 = (category) ?
                     weechat_string_replace (category, dir_separator, "_") : NULL;
-                name = weechat_list_string (ptr_list, "name");
+                name = weechat_infolist_string (ptr_infolist, "name");
                 name2 = (name) ?
                     weechat_string_replace (name, dir_separator, "_") : NULL;
             }
@@ -180,7 +182,7 @@ logger_get_filename (void *buffer)
                 free (category2);
             if (name2)
                 free (name2);
-            weechat_list_free (ptr_list);
+            weechat_infolist_free (ptr_infolist);
         }
     }
     
@@ -200,7 +202,7 @@ logger_get_filename (void *buffer)
  * logger_write_line: write a line to log file
  */
 
-void
+static void
 logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
 {
     va_list argptr;
@@ -268,7 +270,7 @@ logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
  * logger_start_buffer: start a log for a buffer
  */
 
-void
+static void
 logger_start_buffer (void *buffer)
 {
     struct t_logger_buffer *ptr_logger_buffer;
@@ -303,15 +305,16 @@ logger_start_buffer (void *buffer)
  * logger_start_buffer_all: start log buffer for all buffers
  */
 
-void
+static void
 logger_start_buffer_all ()
 {
-    struct t_plugin_list *ptr_list;
+    struct t_plugin_infolist *ptr_infolist;
     
-    ptr_list = weechat_list_get ("buffer", NULL);
-    while (weechat_list_next (ptr_list))
+    ptr_infolist = weechat_infolist_get ("buffer", NULL);
+    while (weechat_infolist_next (ptr_infolist))
     {
-        logger_start_buffer (weechat_list_pointer (ptr_list, "pointer"));
+        logger_start_buffer (weechat_infolist_pointer (ptr_infolist,
+                                                       "pointer"));
     }
 }
 
@@ -319,7 +322,7 @@ logger_start_buffer_all ()
  * logger_end: end log for a logger buffer
  */
 
-void
+static void
 logger_end (struct t_logger_buffer *logger_buffer)
 {
     time_t seconds;
@@ -350,7 +353,7 @@ logger_end (struct t_logger_buffer *logger_buffer)
  * logger_end_all: end log for all buffers
  */
 
-void
+static void
 logger_end_all ()
 {
     struct t_logger_buffer *ptr_logger_buffer;
@@ -366,7 +369,7 @@ logger_end_all ()
  * logger_event_cb: callback for event hook
  */
 
-int
+static int
 logger_event_cb (void *data, char *event, void *pointer)
 {
     /* make C compiler happy */
@@ -389,7 +392,7 @@ logger_event_cb (void *data, char *event, void *pointer)
  * logger_print_cb: callback for print hook
  */
 
-int
+static int
 logger_print_cb (void *data, void *buffer, time_t date, char *prefix,
                  char *message)
 {

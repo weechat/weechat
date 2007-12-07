@@ -1341,7 +1341,7 @@ command_set (void *data, void *buffer,
     {
         number_found = 0;
         
-        number_found += command_set_display_option_list (weechat_config,
+        number_found += command_set_display_option_list (weechat_config_file,
                                                          NULL,
                                                          (argc == 2) ?
                                                          argv[1] : NULL);
@@ -1381,7 +1381,7 @@ command_set (void *data, void *buffer,
     /* set option value */
     if ((argc >= 4) && (string_strcasecmp (argv[2], "=") == 0))
     {
-        ptr_option = config_file_search_option (weechat_config, NULL, argv[1]);
+        ptr_option = config_file_search_option (weechat_config_file, NULL, argv[1]);
         if (!ptr_option)
         {
             gui_chat_printf (NULL,

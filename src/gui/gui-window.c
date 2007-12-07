@@ -128,8 +128,8 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
     struct t_gui_window_tree *ptr_tree, *child1, *child2, *ptr_leaf;
     
 #ifdef DEBUG
-    weechat_log_printf ("Creating new window (x:%d, y:%d, width:%d, height:%d)\n",
-                        x, y, width, height);
+    log_printf ("Creating new window (x:%d, y:%d, width:%d, height:%d)",
+                x, y, width, height);
 #endif
     
     if (parent)
@@ -769,57 +769,57 @@ gui_window_print_log ()
 {
     struct t_gui_window *ptr_window;
     
-    log_printf ("\n");
-    log_printf ("current window = 0x%X\n", gui_current_window);
+    log_printf ("");
+    log_printf ("current window = 0x%X", gui_current_window);
     
     for (ptr_window = gui_windows; ptr_window; ptr_window = ptr_window->next_window)
     {
-        log_printf ("\n");
-        log_printf ("[window (addr:0x%X)]\n", ptr_window);
-        log_printf ("  win_x . . . . . . . : %d\n",   ptr_window->win_x);
-        log_printf ("  win_y . . . . . . . : %d\n",   ptr_window->win_y);
-        log_printf ("  win_width . . . . . : %d\n",   ptr_window->win_width);
-        log_printf ("  win_height. . . . . : %d\n",   ptr_window->win_height);
-        log_printf ("  win_width_pct . . . : %d\n",   ptr_window->win_width_pct);
-        log_printf ("  win_height_pct. . . : %d\n",   ptr_window->win_height_pct);
-        log_printf ("  win_chat_x. . . . . : %d\n",   ptr_window->win_chat_x);
-        log_printf ("  win_chat_y. . . . . : %d\n",   ptr_window->win_chat_y);
-        log_printf ("  win_chat_width. . . : %d\n",   ptr_window->win_chat_width);
-        log_printf ("  win_chat_height . . : %d\n",   ptr_window->win_chat_height);
-        log_printf ("  win_chat_cursor_x . : %d\n",   ptr_window->win_chat_cursor_x);
-        log_printf ("  win_chat_cursor_y . : %d\n",   ptr_window->win_chat_cursor_y);
-        log_printf ("  win_nick_x. . . . . : %d\n",   ptr_window->win_nick_x);
-        log_printf ("  win_nick_y. . . . . : %d\n",   ptr_window->win_nick_y);
-        log_printf ("  win_nick_width. . . : %d\n",   ptr_window->win_nick_width);
-        log_printf ("  win_nick_height . . : %d\n",   ptr_window->win_nick_height);
-        log_printf ("  win_nick_start. . . : %d\n",   ptr_window->win_nick_start);
-        log_printf ("  win_title_x . . . . : %d\n",   ptr_window->win_title_x);
-        log_printf ("  win_title_y . . . . : %d\n",   ptr_window->win_title_y);
-        log_printf ("  win_title_width . . : %d\n",   ptr_window->win_title_width);
-        log_printf ("  win_title_height. . : %d\n",   ptr_window->win_title_height);
-        log_printf ("  win_title_start . . : %d\n",   ptr_window->win_title_start);
-        log_printf ("  win_status_x. . . . : %d\n",   ptr_window->win_status_x);
-        log_printf ("  win_status_y. . . . : %d\n",   ptr_window->win_status_y);
-        log_printf ("  win_status_width. . : %d\n",   ptr_window->win_status_width);
-        log_printf ("  win_status_height . : %d\n",   ptr_window->win_status_height);
-        log_printf ("  win_infobar_x . . . : %d\n",   ptr_window->win_infobar_x);
-        log_printf ("  win_infobar_y . . . : %d\n",   ptr_window->win_infobar_y);
-        log_printf ("  win_infobar_width . : %d\n",   ptr_window->win_infobar_width);
-        log_printf ("  win_infobar_height. : %d\n",   ptr_window->win_infobar_height);
-        log_printf ("  win_input_x . . . . : %d\n",   ptr_window->win_input_x);
-        log_printf ("  win_input_y . . . . : %d\n",   ptr_window->win_input_y);
-        log_printf ("  win_input_width . . : %d\n",   ptr_window->win_input_width);
-        log_printf ("  win_input_height. . : %d\n",   ptr_window->win_input_height);
-        log_printf ("  win_input_cursor_x. : %d\n",   ptr_window->win_input_cursor_x);
+        log_printf ("");
+        log_printf ("[window (addr:0x%X)]", ptr_window);
+        log_printf ("  win_x . . . . . . . : %d",   ptr_window->win_x);
+        log_printf ("  win_y . . . . . . . : %d",   ptr_window->win_y);
+        log_printf ("  win_width . . . . . : %d",   ptr_window->win_width);
+        log_printf ("  win_height. . . . . : %d",   ptr_window->win_height);
+        log_printf ("  win_width_pct . . . : %d",   ptr_window->win_width_pct);
+        log_printf ("  win_height_pct. . . : %d",   ptr_window->win_height_pct);
+        log_printf ("  win_chat_x. . . . . : %d",   ptr_window->win_chat_x);
+        log_printf ("  win_chat_y. . . . . : %d",   ptr_window->win_chat_y);
+        log_printf ("  win_chat_width. . . : %d",   ptr_window->win_chat_width);
+        log_printf ("  win_chat_height . . : %d",   ptr_window->win_chat_height);
+        log_printf ("  win_chat_cursor_x . : %d",   ptr_window->win_chat_cursor_x);
+        log_printf ("  win_chat_cursor_y . : %d",   ptr_window->win_chat_cursor_y);
+        log_printf ("  win_nick_x. . . . . : %d",   ptr_window->win_nick_x);
+        log_printf ("  win_nick_y. . . . . : %d",   ptr_window->win_nick_y);
+        log_printf ("  win_nick_width. . . : %d",   ptr_window->win_nick_width);
+        log_printf ("  win_nick_height . . : %d",   ptr_window->win_nick_height);
+        log_printf ("  win_nick_start. . . : %d",   ptr_window->win_nick_start);
+        log_printf ("  win_title_x . . . . : %d",   ptr_window->win_title_x);
+        log_printf ("  win_title_y . . . . : %d",   ptr_window->win_title_y);
+        log_printf ("  win_title_width . . : %d",   ptr_window->win_title_width);
+        log_printf ("  win_title_height. . : %d",   ptr_window->win_title_height);
+        log_printf ("  win_title_start . . : %d",   ptr_window->win_title_start);
+        log_printf ("  win_status_x. . . . : %d",   ptr_window->win_status_x);
+        log_printf ("  win_status_y. . . . : %d",   ptr_window->win_status_y);
+        log_printf ("  win_status_width. . : %d",   ptr_window->win_status_width);
+        log_printf ("  win_status_height . : %d",   ptr_window->win_status_height);
+        log_printf ("  win_infobar_x . . . : %d",   ptr_window->win_infobar_x);
+        log_printf ("  win_infobar_y . . . : %d",   ptr_window->win_infobar_y);
+        log_printf ("  win_infobar_width . : %d",   ptr_window->win_infobar_width);
+        log_printf ("  win_infobar_height. : %d",   ptr_window->win_infobar_height);
+        log_printf ("  win_input_x . . . . : %d",   ptr_window->win_input_x);
+        log_printf ("  win_input_y . . . . : %d",   ptr_window->win_input_y);
+        log_printf ("  win_input_width . . : %d",   ptr_window->win_input_width);
+        log_printf ("  win_input_height. . : %d",   ptr_window->win_input_height);
+        log_printf ("  win_input_cursor_x. : %d",   ptr_window->win_input_cursor_x);
         gui_window_objects_print_log (ptr_window);
-        log_printf ("  dcc_first . . . . . : 0x%X\n", ptr_window->dcc_first);
-        log_printf ("  dcc_selected. . . . : 0x%X\n", ptr_window->dcc_selected);
-        log_printf ("  dcc_last_displayed. : 0x%X\n", ptr_window->dcc_last_displayed);
-        log_printf ("  buffer. . . . . . . : 0x%X\n", ptr_window->buffer);
-        log_printf ("  first_line_displayed: %d\n",   ptr_window->first_line_displayed);
-        log_printf ("  start_line. . . . . : 0x%X\n", ptr_window->start_line);
-        log_printf ("  start_line_pos. . . : %d\n",   ptr_window->start_line_pos);
-        log_printf ("  prev_window . . . . : 0x%X\n", ptr_window->prev_window);
-        log_printf ("  next_window . . . . : 0x%X\n", ptr_window->next_window);
+        log_printf ("  dcc_first . . . . . : 0x%X", ptr_window->dcc_first);
+        log_printf ("  dcc_selected. . . . : 0x%X", ptr_window->dcc_selected);
+        log_printf ("  dcc_last_displayed. : 0x%X", ptr_window->dcc_last_displayed);
+        log_printf ("  buffer. . . . . . . : 0x%X", ptr_window->buffer);
+        log_printf ("  first_line_displayed: %d",   ptr_window->first_line_displayed);
+        log_printf ("  start_line. . . . . : 0x%X", ptr_window->start_line);
+        log_printf ("  start_line_pos. . . : %d",   ptr_window->start_line_pos);
+        log_printf ("  prev_window . . . . : 0x%X", ptr_window->prev_window);
+        log_printf ("  next_window . . . . : 0x%X", ptr_window->next_window);
     }
 }

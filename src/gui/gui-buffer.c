@@ -72,7 +72,7 @@ gui_buffer_new (void *plugin, char *category, char *name,
     struct t_gui_completion *new_completion;
     
 #ifdef DEBUG
-    weechat_log_printf ("Creating new buffer\n");
+    log_printf ("Creating new buffer");
 #endif
     
     if (!category || !name)
@@ -284,7 +284,7 @@ gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick)
 }
 
 /*
- * gui_buffer_set: set a property for a buffer
+ * gui_buffer_set: set a buffer property
  */
 
 void
@@ -883,15 +883,15 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
     char hexa[(16 * 3) + 1], ascii[(16 * 2) + 1];
     int hexa_pos, ascii_pos;
     
-    log_printf ("[buffer dump hexa (addr:0x%X)]\n", buffer);
+    log_printf ("[buffer dump hexa (addr:0x%X)]", buffer);
     num_line = 1;
     for (ptr_line = buffer->lines; ptr_line; ptr_line = ptr_line->next_line)
     {
         /* display line without colors */
         message_without_colors = (ptr_line->message) ?
             (char *)gui_color_decode ((unsigned char *)ptr_line->message) : NULL;
-        log_printf ("\n");
-        log_printf ("  line %d: %s\n",
+        log_printf ("");
+        log_printf ("  line %d: %s",
                     num_line,
                     (message_without_colors) ?
                     message_without_colors : "(null)");
@@ -901,8 +901,8 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
         /* display raw message for line */
         if (ptr_line->message)
         {
-            log_printf ("\n");
-            log_printf ("  raw data for line %d (with color codes):\n",
+            log_printf ("");
+            log_printf ("  raw data for line %d (with color codes):",
                         num_line);
             msg_pos = 0;
             hexa_pos = 0;
@@ -919,14 +919,14 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
                 ascii_pos += 2;
                 if (ascii_pos == 32)
                 {
-                    log_printf ("    %-48s  %s\n", hexa, ascii);
+                    log_printf ("    %-48s  %s", hexa, ascii);
                     hexa_pos = 0;
                     ascii_pos = 0;
                 }
                 msg_pos++;
             }
             if (ascii_pos > 0)
-                log_printf ("    %-48s  %s\n", hexa, ascii);
+                log_printf ("    %-48s  %s", hexa, ascii);
         }
         
         num_line++;
@@ -948,64 +948,64 @@ gui_buffer_print_log ()
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        log_printf ("\n");
-        log_printf ("[buffer (addr:0x%X)]\n", ptr_buffer);
-        log_printf ("  plugin . . . . . . . . : 0x%X\n", ptr_buffer->plugin);
-        log_printf ("  number . . . . . . . . : %d\n",   ptr_buffer->number);
-        log_printf ("  category . . . . . . . : '%s'\n", ptr_buffer->category);
-        log_printf ("  name . . . . . . . . . : '%s'\n", ptr_buffer->name);
-        log_printf ("  type . . . . . . . . . : %d\n",   ptr_buffer->type);
-        log_printf ("  notify_level . . . . . : %d\n",   ptr_buffer->notify_level);
-        log_printf ("  num_displayed. . . . . : %d\n",   ptr_buffer->num_displayed);
-        log_printf ("  title. . . . . . . . . : '%s'\n", ptr_buffer->title);
-        log_printf ("  lines. . . . . . . . . : 0x%X\n", ptr_buffer->lines);
-        log_printf ("  last_line. . . . . . . : 0x%X\n", ptr_buffer->last_line);
-        log_printf ("  last_read_line . . . . : 0x%X\n", ptr_buffer->last_read_line);
-        log_printf ("  lines_count. . . . . . : %d\n",   ptr_buffer->lines_count);
-        log_printf ("  prefix_max_length. . . : %d\n",   ptr_buffer->prefix_max_length);
-        log_printf ("  chat_refresh_needed. . : %d\n",   ptr_buffer->chat_refresh_needed);
-        log_printf ("  nicklist . . . . . . . : %d\n",   ptr_buffer->nicklist);
-        log_printf ("  nick_case_sensitive. . : %d\n",   ptr_buffer->nick_case_sensitive);
-        log_printf ("  nicks. . . . . . . . . : 0x%X\n", ptr_buffer->nicks);
-        log_printf ("  last_nick. . . . . . . : 0x%X\n", ptr_buffer->last_nick);
-        log_printf ("  nicks_count. . . . . . : %d\n",   ptr_buffer->nicks_count);
-        log_printf ("  input. . . . . . . . . : %d\n",   ptr_buffer->input);
-        log_printf ("  input_data_cb. . . . . : 0x%X\n", ptr_buffer->input_data_cb);
-        log_printf ("  input_nick . . . . . . : '%s'\n", ptr_buffer->input_nick);
-        log_printf ("  input_buffer . . . . . : '%s'\n", ptr_buffer->input_buffer);
-        log_printf ("  input_buffer_color_mask: '%s'\n", ptr_buffer->input_buffer_color_mask);
-        log_printf ("  input_buffer_alloc . . : %d\n",   ptr_buffer->input_buffer_alloc);
-        log_printf ("  input_buffer_size. . . : %d\n",   ptr_buffer->input_buffer_size);
-        log_printf ("  input_buffer_length. . : %d\n",   ptr_buffer->input_buffer_length);
-        log_printf ("  input_buffer_pos . . . : %d\n",   ptr_buffer->input_buffer_pos);
-        log_printf ("  input_buffer_1st_disp. : %d\n",   ptr_buffer->input_buffer_1st_display);
-        log_printf ("  completion . . . . . . : 0x%X\n", ptr_buffer->completion);
-        log_printf ("  history. . . . . . . . : 0x%X\n", ptr_buffer->history);
-        log_printf ("  last_history . . . . . : 0x%X\n", ptr_buffer->last_history);
-        log_printf ("  ptr_history. . . . . . : 0x%X\n", ptr_buffer->ptr_history);
-        log_printf ("  num_history. . . . . . : %d\n",   ptr_buffer->num_history);
-        log_printf ("  text_search. . . . . . : %d\n",   ptr_buffer->text_search);
-        log_printf ("  text_search_exact. . . : %d\n",   ptr_buffer->text_search_exact);
-        log_printf ("  text_search_found. . . : %d\n",   ptr_buffer->text_search_found);
-        log_printf ("  text_search_input. . . : '%s'\n", ptr_buffer->text_search_input);
-        log_printf ("  prev_buffer. . . . . . : 0x%X\n", ptr_buffer->prev_buffer);
-        log_printf ("  next_buffer. . . . . . : 0x%X\n", ptr_buffer->next_buffer);
+        log_printf ("");
+        log_printf ("[buffer (addr:0x%X)]", ptr_buffer);
+        log_printf ("  plugin . . . . . . . . : 0x%X", ptr_buffer->plugin);
+        log_printf ("  number . . . . . . . . : %d",   ptr_buffer->number);
+        log_printf ("  category . . . . . . . : '%s'", ptr_buffer->category);
+        log_printf ("  name . . . . . . . . . : '%s'", ptr_buffer->name);
+        log_printf ("  type . . . . . . . . . : %d",   ptr_buffer->type);
+        log_printf ("  notify_level . . . . . : %d",   ptr_buffer->notify_level);
+        log_printf ("  num_displayed. . . . . : %d",   ptr_buffer->num_displayed);
+        log_printf ("  title. . . . . . . . . : '%s'", ptr_buffer->title);
+        log_printf ("  lines. . . . . . . . . : 0x%X", ptr_buffer->lines);
+        log_printf ("  last_line. . . . . . . : 0x%X", ptr_buffer->last_line);
+        log_printf ("  last_read_line . . . . : 0x%X", ptr_buffer->last_read_line);
+        log_printf ("  lines_count. . . . . . : %d",   ptr_buffer->lines_count);
+        log_printf ("  prefix_max_length. . . : %d",   ptr_buffer->prefix_max_length);
+        log_printf ("  chat_refresh_needed. . : %d",   ptr_buffer->chat_refresh_needed);
+        log_printf ("  nicklist . . . . . . . : %d",   ptr_buffer->nicklist);
+        log_printf ("  nick_case_sensitive. . : %d",   ptr_buffer->nick_case_sensitive);
+        log_printf ("  nicks. . . . . . . . . : 0x%X", ptr_buffer->nicks);
+        log_printf ("  last_nick. . . . . . . : 0x%X", ptr_buffer->last_nick);
+        log_printf ("  nicks_count. . . . . . : %d",   ptr_buffer->nicks_count);
+        log_printf ("  input. . . . . . . . . : %d",   ptr_buffer->input);
+        log_printf ("  input_data_cb. . . . . : 0x%X", ptr_buffer->input_data_cb);
+        log_printf ("  input_nick . . . . . . : '%s'", ptr_buffer->input_nick);
+        log_printf ("  input_buffer . . . . . : '%s'", ptr_buffer->input_buffer);
+        log_printf ("  input_buffer_color_mask: '%s'", ptr_buffer->input_buffer_color_mask);
+        log_printf ("  input_buffer_alloc . . : %d",   ptr_buffer->input_buffer_alloc);
+        log_printf ("  input_buffer_size. . . : %d",   ptr_buffer->input_buffer_size);
+        log_printf ("  input_buffer_length. . : %d",   ptr_buffer->input_buffer_length);
+        log_printf ("  input_buffer_pos . . . : %d",   ptr_buffer->input_buffer_pos);
+        log_printf ("  input_buffer_1st_disp. : %d",   ptr_buffer->input_buffer_1st_display);
+        log_printf ("  completion . . . . . . : 0x%X", ptr_buffer->completion);
+        log_printf ("  history. . . . . . . . : 0x%X", ptr_buffer->history);
+        log_printf ("  last_history . . . . . : 0x%X", ptr_buffer->last_history);
+        log_printf ("  ptr_history. . . . . . : 0x%X", ptr_buffer->ptr_history);
+        log_printf ("  num_history. . . . . . : %d",   ptr_buffer->num_history);
+        log_printf ("  text_search. . . . . . : %d",   ptr_buffer->text_search);
+        log_printf ("  text_search_exact. . . : %d",   ptr_buffer->text_search_exact);
+        log_printf ("  text_search_found. . . : %d",   ptr_buffer->text_search_found);
+        log_printf ("  text_search_input. . . : '%s'", ptr_buffer->text_search_input);
+        log_printf ("  prev_buffer. . . . . . : 0x%X", ptr_buffer->prev_buffer);
+        log_printf ("  next_buffer. . . . . . : 0x%X", ptr_buffer->next_buffer);
         
         for (ptr_nick = ptr_buffer->nicks; ptr_nick;
              ptr_nick = ptr_nick->next_nick)
         {
-            log_printf ("\n");
-            log_printf ("  => nick %s (addr:0x%X):\n", ptr_nick->nick, ptr_nick);
-            log_printf ("       sort_index. . . . . . : %d\n",   ptr_nick->sort_index);
-            log_printf ("       color_nick. . . . . . : %d\n",   ptr_nick->color_nick);
-            log_printf ("       prefix. . . . . . . . : '%c'\n", ptr_nick->prefix);
-            log_printf ("       color_prefix. . . . . : %d\n",   ptr_nick->color_prefix);
-            log_printf ("       prev_nick . . . . . . : 0x%X\n", ptr_nick->prev_nick);
-            log_printf ("       next_nick . . . . . . : 0x%X\n", ptr_nick->next_nick);
+            log_printf ("");
+            log_printf ("  => nick %s (addr:0x%X):", ptr_nick->nick, ptr_nick);
+            log_printf ("       sort_index. . . . . . : %d",   ptr_nick->sort_index);
+            log_printf ("       color_nick. . . . . . : %d",   ptr_nick->color_nick);
+            log_printf ("       prefix. . . . . . . . : '%c'", ptr_nick->prefix);
+            log_printf ("       color_prefix. . . . . : %d",   ptr_nick->color_prefix);
+            log_printf ("       prev_nick . . . . . . : 0x%X", ptr_nick->prev_nick);
+            log_printf ("       next_nick . . . . . . : 0x%X", ptr_nick->next_nick);
         }
         
-        log_printf ("\n");
-        log_printf ("  => last 100 lines:\n");
+        log_printf ("");
+        log_printf ("  => last 100 lines:");
         num = 0;
         ptr_line = ptr_buffer->last_line;
         while (ptr_line && (num < 100))
@@ -1021,9 +1021,9 @@ gui_buffer_print_log ()
         while (ptr_line)
         {
             num--;
-            log_printf ("       line N-%05d: str_time:'%s', prefix:'%s'\n",
+            log_printf ("       line N-%05d: str_time:'%s', prefix:'%s'",
                                 num, ptr_line->str_time, ptr_line->prefix);
-            log_printf ("                     data: '%s'\n",
+            log_printf ("                     data: '%s'",
                                 ptr_line->message);
             
             ptr_line = ptr_line->next_line;
@@ -1031,7 +1031,7 @@ gui_buffer_print_log ()
         
         if (ptr_buffer->completion)
         {
-            log_printf ("\n");
+            log_printf ("");
             gui_completion_print_log (ptr_buffer->completion);
         }
     }

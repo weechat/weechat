@@ -131,4 +131,51 @@ extern const int gnutls_prot_prio[];
 #endif
 extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
 
+extern void irc_server_init (struct t_irc_server *);
+extern int irc_server_init_with_url (struct t_irc_server *, char *);
+extern void irc_server_init_with_config_options (struct t_irc_server *, void *);
+extern struct t_irc_server *irc_server_alloc ();
+extern void irc_server_outqueue_free_all (struct t_irc_server *);
+extern void irc_server_destroy (struct t_irc_server *);
+extern void irc_server_free (struct t_irc_server *);
+extern void irc_server_free_all ();
+extern struct t_irc_server *irc_server_new (char *, int, int, int, int, char *, int, int, int,
+                                     char *, char *, char *, char *, char *, char *,
+                                     char *, char *, int, char *, int, char *);
+extern struct t_irc_server *irc_server_duplicate (struct t_irc_server *, char *);
+extern int irc_server_rename (struct t_irc_server *, char *);
+extern int irc_server_send (struct t_irc_server *, char *, int);
+extern void irc_server_outqueue_send (struct t_irc_server *);
+extern void irc_server_sendf (struct t_irc_server *, char *, ...);
+extern void irc_server_parse_message (char *, char **, char **, char **);
+extern int irc_server_recv (void *);
+extern void irc_server_timer (void *);
+extern void irc_server_timer_check_away (void *);
+extern int irc_server_child_read (void *);
+extern void irc_server_convbase64_8x3_to_6x4 (char *, char*);
+extern void irc_server_base64encode (char *, char *);
+extern int irc_server_pass_httpproxy (int, char*, int);
+extern int irc_server_resolve (char *, char *, int *);
+extern int irc_server_pass_socks4proxy (int, char*, int, char*);
+extern int irc_server_pass_socks5proxy (int, char*, int);
+extern int irc_server_pass_proxy (int, char*, int, char*);
+extern int irc_server_connect (struct t_irc_server *, int);
+extern void irc_server_reconnect (struct t_irc_server *);
+extern void irc_server_auto_connect (int, int);
+extern void irc_server_disconnect (struct t_irc_server *, int);
+extern void irc_server_disconnect_all ();
+extern void irc_server_autojoin_channels ();
+extern struct t_irc_server *irc_server_search (char *);
+extern int irc_server_get_number_connected ();
+extern void irc_server_get_number_buffer (struct t_irc_server *, int *, int *);
+extern int irc_server_name_already_exists (char *);
+extern int irc_server_get_channel_count (struct t_irc_server *);
+extern int irc_server_get_pv_count (struct t_irc_server *);
+extern void irc_server_remove_away ();
+extern void irc_server_check_away ();
+extern void irc_server_set_away (struct t_irc_server *, char *, int);
+extern int irc_server_get_default_notify_level (struct t_irc_server *);
+extern void irc_server_set_default_notify_level (struct t_irc_server *, int);
+extern void irc_server_print_log ();
+
 #endif /* irc-server.h */

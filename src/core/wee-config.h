@@ -40,7 +40,7 @@
 #define CONFIG_LOOK_HOTLIST_SORT_NUMBER_ASC        4
 #define CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC       5
 
-extern struct t_config_file *weechat_config;
+extern struct t_config_file *weechat_config_file;
 
 extern struct t_config_option *config_look_color_real_white;
 extern struct t_config_option *config_look_save_on_exit;
@@ -176,7 +176,7 @@ extern void config_change_prefix ();
 extern void config_change_color ();
 extern void config_change_nicks_colors ();
 
-extern void config_weechat_init ();
+extern int config_weechat_init ();
 extern int config_weechat_read ();
 extern int config_weechat_reload ();
 extern int config_weechat_write ();

@@ -16,17 +16,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-charset.h: Charset plugin support for WeeChat */
 
-#ifndef WEECHAT_CHARSET__H
-#define WEECHAT_CHARSET__H 1
+#ifndef __WEECHAT_IRC_MODE_H
+#define __WEECHAT_IRC_MODE_H 1
 
-#define _PLUGIN_NAME    "charset"
-#define _PLUGIN_VERSION "0.1"
-#define _PLUGIN_DESC    "Charset plugin for WeeChat"
+extern void irc_mode_channel_set (struct t_irc_server *, struct t_irc_channel *,
+                                  char *);
+extern void irc_mode_user_set (struct t_irc_server *, char *);
+extern int irc_mode_nick_prefix_allowed (struct t_irc_server *, char);
 
-char plugin_name[]        = _PLUGIN_NAME;
-char plugin_version[]     = _PLUGIN_VERSION;
-char plugin_description[] = _PLUGIN_DESC;
-
-#endif /* WEECHAT_CHARSET__H */
+#endif /* irc-mode.h */

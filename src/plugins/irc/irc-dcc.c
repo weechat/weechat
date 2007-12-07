@@ -39,17 +39,15 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-#include "../../core/weechat.h"
 #include "irc.h"
-#include "../../core/log.h"
-#include "../../core/util.h"
-#include "../../core/weechat-config.h"
-#include "../../gui/gui.h"
+#include "irc-dcc.h"
+#include "irc-config.h"
 
 
-t_irc_dcc *irc_dcc_list = NULL; /* DCC files & chat list                    */
-t_irc_dcc *irc_last_dcc = NULL; /* last DCC in list                         */
-char *irc_dcc_status_string[] = /* strings for DCC status                   */
+struct t_irc_dcc *irc_dcc_list = NULL; /* DCC files & chat list             */
+struct t_irc_dcc *irc_last_dcc = NULL; /* last DCC in list                  */
+
+char *irc_dcc_status_string[] =        /* strings for DCC status            */
 { N_("Waiting"), N_("Connecting"), N_("Active"), N_("Done"), N_("Failed"),
   N_("Aborted") };
 
@@ -61,7 +59,8 @@ char *irc_dcc_status_string[] = /* strings for DCC status                   */
 void
 irc_dcc_redraw (int highlight)
 {
-    t_gui_buffer *ptr_buffer;
+    (void) highlight;
+    /*struct t_gui_buffer *ptr_buffer;
 
     ptr_buffer = gui_buffer_get_dcc (gui_current_window);
     gui_window_redraw_buffer (ptr_buffer);
@@ -70,16 +69,17 @@ irc_dcc_redraw (int highlight)
         gui_hotlist_add (highlight, NULL, ptr_buffer, 0);
         gui_status_draw (gui_current_window->buffer, 0);
     }
+    */
 }
 
 /*
  * irc_dcc_search: search a DCC
  */
 
-t_irc_dcc *
-irc_dcc_search (t_irc_server *server, int type, int status, int port)
+struct t_irc_dcc *
+irc_dcc_search (struct t_irc_server *server, int type, int status, int port)
 {
-    t_irc_dcc *ptr_dcc;
+    struct t_irc_dcc *ptr_dcc;
     
     for (ptr_dcc = irc_dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
@@ -102,7 +102,7 @@ irc_dcc_search (t_irc_server *server, int type, int status, int port)
 int
 irc_dcc_port_in_use (int port)
 {
-    t_irc_dcc *ptr_dcc;
+    struct t_irc_dcc *ptr_dcc;
     
     /* skip any currently used ports */
     for (ptr_dcc = irc_dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
@@ -120,7 +120,7 @@ irc_dcc_port_in_use (int port)
  */
 
 int
-irc_dcc_file_is_resumable (t_irc_dcc *ptr_dcc, char *filename)
+irc_dcc_file_is_resumable (struct t_irc_dcc *ptr_dcc, char *filename)
 {
     struct stat st;
     
@@ -152,7 +152,7 @@ irc_dcc_file_is_resumable (t_irc_dcc *ptr_dcc, char *filename)
  */
 
 void
-irc_dcc_find_filename (t_irc_dcc *ptr_dcc)
+irc_dcc_find_filename (struct t_irc_dcc *ptr_dcc)
 {
     char *dir1, *dir2, *filename2;
     
@@ -236,7 +236,7 @@ irc_dcc_find_filename (t_irc_dcc *ptr_dcc)
  */
 
 void
-irc_dcc_calculate_speed (t_irc_dcc *ptr_dcc, int ended)
+irc_dcc_calculate_speed (struct t_irc_dcc *ptr_dcc, int ended)
 {
     time_t local_time, elapsed;
     unsigned long bytes_per_sec_total;
@@ -280,7 +280,7 @@ irc_dcc_calculate_speed (t_irc_dcc *ptr_dcc, int ended)
  */
 
 int
-irc_dcc_connect_to_sender (t_irc_dcc *ptr_dcc)
+irc_dcc_connect_to_sender (struct t_irc_dcc *ptr_dcc)
 {
     struct sockaddr_in addr;
     struct hostent *hostent;
@@ -324,7 +324,7 @@ irc_dcc_connect_to_sender (t_irc_dcc *ptr_dcc)
  */
 
 int
-irc_dcc_connect (t_irc_dcc *ptr_dcc)
+irc_dcc_connect (struct t_irc_dcc *ptr_dcc)
 {
     if (ptr_dcc->type == IRC_DCC_CHAT_SEND)
         ptr_dcc->status = IRC_DCC_WAITING;
@@ -367,9 +367,9 @@ irc_dcc_connect (t_irc_dcc *ptr_dcc)
  */
 
 void
-irc_dcc_free (t_irc_dcc *ptr_dcc)
+irc_dcc_free (struct t_irc_dcc *ptr_dcc)
 {
-    t_irc_dcc *new_dcc_list;
+    struct t_irc_dcc *new_dcc_list;
     
     if (!ptr_dcc)
         return;
@@ -380,7 +380,7 @@ irc_dcc_free (t_irc_dcc *ptr_dcc)
     {
         /* check if channel is used for another active DCC CHAT */
         if (!ptr_dcc->channel->dcc_chat
-            || (IRC_DCC_ENDED(((t_irc_dcc *)(ptr_dcc->channel->dcc_chat))->status)))
+            || (IRC_DCC_ENDED(((struct t_irc_dcc *)(ptr_dcc->channel->dcc_chat))->status)))
         {
             gui_buffer_free (ptr_dcc->channel->buffer, 1);
             if (ptr_dcc->channel)
@@ -418,7 +418,7 @@ irc_dcc_free (t_irc_dcc *ptr_dcc)
  */
 
 void
-irc_dcc_file_child_kill (t_irc_dcc *ptr_dcc)
+irc_dcc_file_child_kill (struct t_irc_dcc *ptr_dcc)
 {
     /* kill process */
     if (ptr_dcc->child_pid > 0)
@@ -446,7 +446,7 @@ irc_dcc_file_child_kill (t_irc_dcc *ptr_dcc)
  */
 
 void
-irc_dcc_close (t_irc_dcc *ptr_dcc, int status)
+irc_dcc_close (struct t_irc_dcc *ptr_dcc, int status)
 {
     t_gui_buffer *ptr_buffer;
     struct stat st;
@@ -541,7 +541,7 @@ irc_dcc_close (t_irc_dcc *ptr_dcc, int status)
  */
 
 void
-irc_dcc_channel_for_chat (t_irc_dcc *ptr_dcc)
+irc_dcc_channel_for_chat (struct t_irc_dcc *ptr_dcc)
 {
     if (!irc_channel_create_dcc (ptr_dcc))
     {
@@ -576,9 +576,9 @@ irc_dcc_channel_for_chat (t_irc_dcc *ptr_dcc)
  */
 
 void
-irc_dcc_chat_remove_channel (t_irc_channel *channel)
+irc_dcc_chat_remove_channel (struct t_irc_channel *channel)
 {
-    t_irc_dcc *ptr_dcc;
+    struct t_irc_dcc *ptr_dcc;
     
     if (!channel)
         return;
@@ -595,7 +595,7 @@ irc_dcc_chat_remove_channel (t_irc_channel *channel)
  */
 
 void
-irc_dcc_recv_connect_init (t_irc_dcc *ptr_dcc)
+irc_dcc_recv_connect_init (struct t_irc_dcc *ptr_dcc)
 {
     if (!irc_dcc_connect (ptr_dcc))
     {
@@ -625,7 +625,7 @@ irc_dcc_recv_connect_init (t_irc_dcc *ptr_dcc)
  */
 
 void
-irc_dcc_accept (t_irc_dcc *ptr_dcc)
+irc_dcc_accept (struct t_irc_dcc *ptr_dcc)
 {
     if (IRC_DCC_IS_FILE(ptr_dcc->type) && (ptr_dcc->start_resume > 0))
     {
@@ -647,10 +647,10 @@ irc_dcc_accept (t_irc_dcc *ptr_dcc)
  */
 
 void
-irc_dcc_accept_resume (t_irc_server *server, char *filename, int port,
+irc_dcc_accept_resume (struct t_irc_server *server, char *filename, int port,
                        unsigned long pos_start)
 {
-    t_irc_dcc *ptr_dcc;
+    struct t_irc_dcc *ptr_dcc;
     
     ptr_dcc = irc_dcc_search (server, IRC_DCC_FILE_SEND, IRC_DCC_CONNECTING,
                               port);
@@ -688,10 +688,10 @@ irc_dcc_accept_resume (t_irc_server *server, char *filename, int port,
  */
 
 void
-irc_dcc_start_resume (t_irc_server *server, char *filename, int port,
+irc_dcc_start_resume (struct t_irc_server *server, char *filename, int port,
                       unsigned long pos_start)
 {
-    t_irc_dcc *ptr_dcc;
+    struct t_irc_dcc *ptr_dcc;
     
     ptr_dcc = irc_dcc_search (server, IRC_DCC_FILE_RECV, IRC_DCC_CONNECTING,
                               port);
@@ -714,13 +714,13 @@ irc_dcc_start_resume (t_irc_server *server, char *filename, int port,
  * irc_dcc_alloc: allocate a new DCC file
  */
 
-t_irc_dcc *
+struct t_irc_dcc *
 irc_dcc_alloc ()
 {
-    t_irc_dcc *new_dcc;
+    struct t_irc_dcc *new_dcc;
     
     /* create new DCC struct */
-    if ((new_dcc = (t_irc_dcc *) malloc (sizeof (t_irc_dcc))) == NULL)
+    if ((new_dcc = (struct t_irc_dcc *) malloc (sizeof (struct t_irc_dcc))) == NULL)
         return NULL;
     
     /* default values */
@@ -769,11 +769,11 @@ irc_dcc_alloc ()
  * irc_dcc_add: add a DCC file to queue
  */
 
-t_irc_dcc *
-irc_dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char *nick,
+struct t_irc_dcc *
+irc_dcc_add (struct t_irc_server *server, int type, unsigned long addr, int port, char *nick,
              int sock, char *filename, char *local_filename, unsigned long size)
 {
-    t_irc_dcc *new_dcc;
+    struct t_irc_dcc *new_dcc;
     
     new_dcc = irc_dcc_alloc ();
     if (!new_dcc)
@@ -937,7 +937,7 @@ irc_dcc_add (t_irc_server *server, int type, unsigned long addr, int port, char 
  */
 
 void
-irc_dcc_send_request (t_irc_server *server, int type, char *nick, char *filename)
+irc_dcc_send_request (struct t_irc_server *server, int type, char *nick, char *filename)
 {
     char *dir1, *dir2, *filename2, *short_filename, *pos;
     int spaces, args, port_start, port_end;
@@ -948,7 +948,7 @@ irc_dcc_send_request (t_irc_server *server, int type, char *nick, char *filename
     struct sockaddr_in addr;
     socklen_t length;
     unsigned long local_addr;
-    t_irc_dcc *ptr_dcc;
+    struct t_irc_dcc *ptr_dcc;
     
     filename2 = NULL;
     short_filename = NULL;
@@ -1177,7 +1177,7 @@ irc_dcc_send_request (t_irc_server *server, int type, char *nick, char *filename
  */
 
 int
-irc_dcc_chat_send (t_irc_dcc *ptr_dcc, char *buffer, int size_buf)
+irc_dcc_chat_send (struct t_irc_dcc *ptr_dcc, char *buffer, int size_buf)
 {
     if (!ptr_dcc)
         return -1;
@@ -1190,7 +1190,7 @@ irc_dcc_chat_send (t_irc_dcc *ptr_dcc, char *buffer, int size_buf)
  */
 
 void
-irc_dcc_chat_sendf (t_irc_dcc *ptr_dcc, char *fmt, ...)
+irc_dcc_chat_sendf (struct t_irc_dcc *ptr_dcc, char *fmt, ...)
 {
     va_list args;
     static char buffer[4096];
@@ -1231,7 +1231,7 @@ irc_dcc_chat_sendf (t_irc_dcc *ptr_dcc, char *fmt, ...)
  */
 
 void
-irc_dcc_chat_recv (t_irc_dcc *ptr_dcc)
+irc_dcc_chat_recv (struct t_irc_dcc *ptr_dcc)
 {
     fd_set read_fd;
     static struct timeval timeout;
@@ -1348,7 +1348,7 @@ irc_dcc_chat_recv (t_irc_dcc *ptr_dcc)
  */
 
 int
-irc_dcc_file_create_pipe (t_irc_dcc *ptr_dcc)
+irc_dcc_file_create_pipe (struct t_irc_dcc *ptr_dcc)
 {
     int child_pipe[2];
     
@@ -1372,7 +1372,7 @@ irc_dcc_file_create_pipe (t_irc_dcc *ptr_dcc)
  */
 
 void
-irc_dcc_file_write_pipe (t_irc_dcc *ptr_dcc, int status, int error)
+irc_dcc_file_write_pipe (struct t_irc_dcc *ptr_dcc, int status, int error)
 {
     char buffer[1 + 1 + 12 + 1];   /* status + error + pos + \0 */
 
@@ -1386,7 +1386,7 @@ irc_dcc_file_write_pipe (t_irc_dcc *ptr_dcc, int status, int error)
  */
 
 void
-irc_dcc_file_send_child (t_irc_dcc *ptr_dcc)
+irc_dcc_file_send_child (struct t_irc_dcc *ptr_dcc)
 {
     int num_read, num_sent;
     static char buffer[IRC_DCC_MAX_BLOCKSIZE];
@@ -1472,7 +1472,7 @@ irc_dcc_file_send_child (t_irc_dcc *ptr_dcc)
  */
 
 void
-irc_dcc_file_recv_child (t_irc_dcc *ptr_dcc)
+irc_dcc_file_recv_child (struct t_irc_dcc *ptr_dcc)
 {
     int num_read;
     static char buffer[IRC_DCC_MAX_BLOCKSIZE];
@@ -1546,7 +1546,7 @@ irc_dcc_file_recv_child (t_irc_dcc *ptr_dcc)
  */
 
 void
-irc_dcc_file_child_read (t_irc_dcc *ptr_dcc)
+irc_dcc_file_child_read (struct t_irc_dcc *ptr_dcc)
 {
     fd_set read_fd;
     static struct timeval timeout;
@@ -1650,7 +1650,7 @@ irc_dcc_file_child_read (t_irc_dcc *ptr_dcc)
  */
 
 void
-irc_dcc_file_send_fork (t_irc_dcc *ptr_dcc)
+irc_dcc_file_send_fork (struct t_irc_dcc *ptr_dcc)
 {
     pid_t pid;
     
@@ -1685,7 +1685,7 @@ irc_dcc_file_send_fork (t_irc_dcc *ptr_dcc)
  */
 
 void
-irc_dcc_file_recv_fork (t_irc_dcc *ptr_dcc)
+irc_dcc_file_recv_fork (struct t_irc_dcc *ptr_dcc)
 {
     pid_t pid;
     
@@ -1728,7 +1728,7 @@ irc_dcc_file_recv_fork (t_irc_dcc *ptr_dcc)
 void
 irc_dcc_handle ()
 {
-    t_irc_dcc *ptr_dcc;
+    struct t_irc_dcc *ptr_dcc;
     fd_set read_fd;
     static struct timeval timeout;
     int sock;
@@ -1867,14 +1867,14 @@ irc_dcc_handle ()
 void
 irc_dcc_end ()
 {
-    t_irc_dcc *ptr_dcc;
+    struct t_irc_dcc *ptr_dcc;
     
     for (ptr_dcc = irc_dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
         if (ptr_dcc->sock >= 0)
         {
             if (ptr_dcc->status == IRC_DCC_ACTIVE)
-                weechat_log_printf (_("Aborting active DCC: \"%s\" from %s\n"),
+                weechat_log_printf (_("Aborting active DCC: \"%s\" from %s"),
                                     ptr_dcc->filename, ptr_dcc->nick);
             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
         }
@@ -1888,42 +1888,42 @@ irc_dcc_end ()
 void
 irc_dcc_print_log ()
 {
-    t_irc_dcc *ptr_dcc;
+    struct t_irc_dcc *ptr_dcc;
     
     for (ptr_dcc = irc_dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
-        weechat_log_printf ("\n");
-        weechat_log_printf ("[DCC (addr:0x%X)]\n", ptr_dcc);
-        weechat_log_printf ("  server. . . . . . . : 0x%X\n", ptr_dcc->server);
-        weechat_log_printf ("  channel . . . . . . : 0x%X\n", ptr_dcc->channel);
-        weechat_log_printf ("  type. . . . . . . . : %d\n",   ptr_dcc->type);
-        weechat_log_printf ("  status. . . . . . . : %d\n",   ptr_dcc->status);
-        weechat_log_printf ("  start_time. . . . . : %ld\n",  ptr_dcc->start_time);
-        weechat_log_printf ("  start_transfer. . . : %ld\n",  ptr_dcc->start_transfer);
-        weechat_log_printf ("  addr. . . . . . . . : %lu\n",  ptr_dcc->addr);
-        weechat_log_printf ("  port. . . . . . . . : %d\n",   ptr_dcc->port);
-        weechat_log_printf ("  nick. . . . . . . . : '%s'\n", ptr_dcc->nick);
-        weechat_log_printf ("  sock. . . . . . . . : %d\n",   ptr_dcc->sock);
-        weechat_log_printf ("  child_pid . . . . . : %d\n",   ptr_dcc->child_pid);
-        weechat_log_printf ("  child_read. . . . . : %d\n",   ptr_dcc->child_read);
-        weechat_log_printf ("  child_write . . . . : %d\n",   ptr_dcc->child_write);
-        weechat_log_printf ("  unterminated_message: '%s'\n", ptr_dcc->unterminated_message);
-        weechat_log_printf ("  fast_send . . . . . : %d\n",   ptr_dcc->fast_send);
-        weechat_log_printf ("  file. . . . . . . . : %d\n",   ptr_dcc->file);
-        weechat_log_printf ("  filename. . . . . . : '%s'\n", ptr_dcc->filename);
-        weechat_log_printf ("  local_filename. . . : '%s'\n", ptr_dcc->local_filename);
-        weechat_log_printf ("  filename_suffix . . : %d\n",   ptr_dcc->filename_suffix);
-        weechat_log_printf ("  blocksize . . . . . : %d\n",   ptr_dcc->blocksize);
-        weechat_log_printf ("  size. . . . . . . . : %lu\n",  ptr_dcc->size);
-        weechat_log_printf ("  pos . . . . . . . . : %lu\n",  ptr_dcc->pos);
-        weechat_log_printf ("  ack . . . . . . . . : %lu\n",  ptr_dcc->ack);
-        weechat_log_printf ("  start_resume. . . . : %lu\n",  ptr_dcc->start_resume);
-        weechat_log_printf ("  last_check_time . . : %ld\n",  ptr_dcc->last_check_time);
-        weechat_log_printf ("  last_check_pos. . . : %lu\n",  ptr_dcc->last_check_pos);
-        weechat_log_printf ("  last_activity . . . : %ld\n",  ptr_dcc->last_activity);
-        weechat_log_printf ("  bytes_per_sec . . . : %lu\n",  ptr_dcc->bytes_per_sec);
-        weechat_log_printf ("  eta . . . . . . . . : %lu\n",  ptr_dcc->eta);
-        weechat_log_printf ("  prev_dcc. . . . . . : 0x%X\n", ptr_dcc->prev_dcc);
-        weechat_log_printf ("  next_dcc. . . . . . : 0x%X\n", ptr_dcc->next_dcc);
+        weechat_log_printf ("");
+        weechat_log_printf ("[DCC (addr:0x%X)]", ptr_dcc);
+        weechat_log_printf ("  server. . . . . . . : 0x%X", ptr_dcc->server);
+        weechat_log_printf ("  channel . . . . . . : 0x%X", ptr_dcc->channel);
+        weechat_log_printf ("  type. . . . . . . . : %d",   ptr_dcc->type);
+        weechat_log_printf ("  status. . . . . . . : %d",   ptr_dcc->status);
+        weechat_log_printf ("  start_time. . . . . : %ld",  ptr_dcc->start_time);
+        weechat_log_printf ("  start_transfer. . . : %ld",  ptr_dcc->start_transfer);
+        weechat_log_printf ("  addr. . . . . . . . : %lu",  ptr_dcc->addr);
+        weechat_log_printf ("  port. . . . . . . . : %d",   ptr_dcc->port);
+        weechat_log_printf ("  nick. . . . . . . . : '%s'", ptr_dcc->nick);
+        weechat_log_printf ("  sock. . . . . . . . : %d",   ptr_dcc->sock);
+        weechat_log_printf ("  child_pid . . . . . : %d",   ptr_dcc->child_pid);
+        weechat_log_printf ("  child_read. . . . . : %d",   ptr_dcc->child_read);
+        weechat_log_printf ("  child_write . . . . : %d",   ptr_dcc->child_write);
+        weechat_log_printf ("  unterminated_message: '%s'", ptr_dcc->unterminated_message);
+        weechat_log_printf ("  fast_send . . . . . : %d",   ptr_dcc->fast_send);
+        weechat_log_printf ("  file. . . . . . . . : %d",   ptr_dcc->file);
+        weechat_log_printf ("  filename. . . . . . : '%s'", ptr_dcc->filename);
+        weechat_log_printf ("  local_filename. . . : '%s'", ptr_dcc->local_filename);
+        weechat_log_printf ("  filename_suffix . . : %d",   ptr_dcc->filename_suffix);
+        weechat_log_printf ("  blocksize . . . . . : %d",   ptr_dcc->blocksize);
+        weechat_log_printf ("  size. . . . . . . . : %lu",  ptr_dcc->size);
+        weechat_log_printf ("  pos . . . . . . . . : %lu",  ptr_dcc->pos);
+        weechat_log_printf ("  ack . . . . . . . . : %lu",  ptr_dcc->ack);
+        weechat_log_printf ("  start_resume. . . . : %lu",  ptr_dcc->start_resume);
+        weechat_log_printf ("  last_check_time . . : %ld",  ptr_dcc->last_check_time);
+        weechat_log_printf ("  last_check_pos. . . : %lu",  ptr_dcc->last_check_pos);
+        weechat_log_printf ("  last_activity . . . : %ld",  ptr_dcc->last_activity);
+        weechat_log_printf ("  bytes_per_sec . . . : %lu",  ptr_dcc->bytes_per_sec);
+        weechat_log_printf ("  eta . . . . . . . . : %lu",  ptr_dcc->eta);
+        weechat_log_printf ("  prev_dcc. . . . . . : 0x%X", ptr_dcc->prev_dcc);
+        weechat_log_printf ("  next_dcc. . . . . . : 0x%X", ptr_dcc->next_dcc);
     }
 }

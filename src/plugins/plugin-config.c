@@ -295,12 +295,15 @@ plugin_config_read_option (void *config_file, char *option_name, char *value)
     
     /* make C compiler happy */
     (void) config_file;
-    
-    value2 = string_iconv_to_internal (NULL, value);
-    plugin_config_set_internal (option_name,
-                                (value2) ? value2 : value);
-    if (value2)
-        free (value2);
+
+    if (option_name && value)
+    {
+        value2 = string_iconv_to_internal (NULL, value);
+        plugin_config_set_internal (option_name,
+                                    (value2) ? value2 : value);
+        if (value2)
+            free (value2);
+    }
 }
 
 /*
@@ -308,16 +311,18 @@ plugin_config_read_option (void *config_file, char *option_name, char *value)
  */
 
 void
-plugin_config_write_options (void *config_file)
+plugin_config_write_options (void *config_file, char *section_name)
 {
     struct t_config_option *ptr_option;
+    
+    config_file_write_line (config_file, section_name, NULL);
     
     for (ptr_option = plugin_options; ptr_option;
          ptr_option = ptr_option->next_option)
     {
         config_file_write_line (config_file,
                                 ptr_option->name,
-                                ptr_option->value);
+                                "%s", ptr_option->value);
     }
 }
 
@@ -331,7 +336,7 @@ plugin_config_init ()
     plugin_config = config_file_new (NULL, PLUGIN_CONFIG_FILENAME);
     if (plugin_config)
     {
-        config_file_new_section (plugin_config, "plugin",
+        config_file_new_section (plugin_config, "plugins",
                                  &plugin_config_read_option,
                                  &plugin_config_write_options,
                                  NULL);
@@ -377,6 +382,6 @@ plugin_config_reload ()
 int
 plugin_config_write ()
 {
-    log_printf (_("Saving plugins configuration to disk\n"));
+    log_printf (_("Saving plugins configuration to disk"));
     return config_file_write (plugin_config, 0);
 }

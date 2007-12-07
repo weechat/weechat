@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(demo MODULE demo.c demo.h)
+ADD_LIBRARY(demo MODULE demo.c)
 SET_TARGET_PROPERTIES(demo PROPERTIES PREFIX "")
 
 TARGET_LINK_LIBRARIES(demo)

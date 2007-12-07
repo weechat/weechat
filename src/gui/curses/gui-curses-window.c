@@ -1428,11 +1428,11 @@ gui_window_title_reset ()
 void
 gui_window_objects_print_log (struct t_gui_window *window)
 {
-    log_printf ("  win_title . . . . . : 0x%X\n", GUI_CURSES(window)->win_title);
-    log_printf ("  win_chat. . . . . . : 0x%X\n", GUI_CURSES(window)->win_chat);
-    log_printf ("  win_nick. . . . . . : 0x%X\n", GUI_CURSES(window)->win_nick);
-    log_printf ("  win_status. . . . . : 0x%X\n", GUI_CURSES(window)->win_status);
-    log_printf ("  win_infobar . . . . : 0x%X\n", GUI_CURSES(window)->win_infobar);
-    log_printf ("  win_input . . . . . : 0x%X\n", GUI_CURSES(window)->win_input);
-    log_printf ("  win_separator . . . : 0x%X\n", GUI_CURSES(window)->win_separator);
+    log_printf ("  win_title . . . . . : 0x%X", GUI_CURSES(window)->win_title);
+    log_printf ("  win_chat. . . . . . : 0x%X", GUI_CURSES(window)->win_chat);
+    log_printf ("  win_nick. . . . . . : 0x%X", GUI_CURSES(window)->win_nick);
+    log_printf ("  win_status. . . . . : 0x%X", GUI_CURSES(window)->win_status);
+    log_printf ("  win_infobar . . . . : 0x%X", GUI_CURSES(window)->win_infobar);
+    log_printf ("  win_input . . . . . : 0x%X", GUI_CURSES(window)->win_input);
+    log_printf ("  win_separator . . . : 0x%X", GUI_CURSES(window)->win_separator);
 }

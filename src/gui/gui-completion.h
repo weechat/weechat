@@ -43,7 +43,6 @@ struct t_gui_completion
     
     /* for command argument completion */
     struct t_weelist *completion_list; /* data list for completion           */
-    struct t_weelist *last_completion; /* last data element for completion   */
     
     /* completion found */
     char *word_found;           /* word found (to replace base word)         */

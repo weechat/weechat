@@ -20,7 +20,7 @@
 #ifndef __WEECHAT_UTIL_H
 #define __WEECHAT_UTIL_H 1
 
-extern long util_get_timeval_diff (struct timeval *, struct timeval *);
+extern long util_timeval_diff (struct timeval *, struct timeval *);
 extern int util_get_time_length (char *);
 extern int util_create_dir (char *, int);
 extern void util_exec_on_files (char *, int (*)(char *));

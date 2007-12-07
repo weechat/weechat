@@ -35,6 +35,7 @@
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
 #include "../core/wee-input.h"
+#include "../core/wee-list.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
@@ -49,7 +50,7 @@
 #include "../gui/gui-window.h"
 #include "plugin.h"
 #include "plugin-config.h"
-#include "plugin-list.h"
+#include "plugin-infolist.h"
 
 
 /*
@@ -77,7 +78,10 @@ char *
 plugin_api_iconv_to_internal (struct t_weechat_plugin *plugin,
                               char *charset, char *string)
 {
-    if (!plugin || !string)
+    /* make C compiler happy */
+    (void) plugin;
+    
+    if (!string)
         return NULL;
     
     return string_iconv_to_internal (charset, string);
@@ -92,7 +96,10 @@ char *
 plugin_api_iconv_from_internal (struct t_weechat_plugin *plugin,
                                 char *charset, char *string)
 {
-    if (!plugin || !string)
+    /* make C compiler happy */
+    (void) plugin;
+    
+    if (!string)
         return NULL;
     
     return string_iconv_from_internal (charset, string);
@@ -177,7 +184,10 @@ plugin_api_string_explode (struct t_weechat_plugin *plugin, char *string,
                            char *separators, int keep_eol,
                            int num_items_max, int *num_items)
 {
-    if (!plugin || !string || !separators || !num_items)
+    /* make C compiler happy */
+    (void) plugin;
+    
+    if (!string || !separators || !num_items)
         return NULL;
     
     return string_explode (string, separators, keep_eol,
@@ -231,7 +241,8 @@ plugin_api_string_free_splitted_command (struct t_weechat_plugin *plugin,
  */
 
 int
-plugin_api_mkdir_home (struct t_weechat_plugin *plugin, char *directory)
+plugin_api_mkdir_home (struct t_weechat_plugin *plugin, char *directory,
+                       int mode)
 {
     char *dir_name;
     int dir_length;
@@ -251,7 +262,7 @@ plugin_api_mkdir_home (struct t_weechat_plugin *plugin, char *directory)
     
     snprintf (dir_name, dir_length, "%s/%s", weechat_home, directory);
     
-    if (mkdir (dir_name, 0755) < 0)
+    if (mkdir (dir_name, mode) < 0)
     {
         if (errno != EEXIST)
         {
@@ -261,6 +272,29 @@ plugin_api_mkdir_home (struct t_weechat_plugin *plugin, char *directory)
     }
     
     free (dir_name);
+    return 1;
+}
+
+/*
+ * plugin_api_mkdir: create a directory
+ */
+
+int
+plugin_api_mkdir (struct t_weechat_plugin *plugin, char *directory,
+                  int mode)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    if (!directory)
+        return 0;
+    
+    if (mkdir (directory, mode) < 0)
+    {
+        if (errno != EEXIST)
+            return 0;
+    }
+    
     return 1;
 }
 
@@ -281,6 +315,219 @@ plugin_api_exec_on_files (struct t_weechat_plugin *plugin, char *directory,
 }
 
 /*
+ * plugin_api_timeval_diff: calculates difference between two times (return in
+ *                          milliseconds)
+ */
+
+long
+plugin_api_timeval_diff (struct t_weechat_plugin *plugin,
+                         void *timeval1, void *timeval2)
+{
+    /* make C compiler happy */
+    (void) plugin;
+
+    return util_timeval_diff (timeval1, timeval2);
+}
+
+/*
+ * plugin_api_list_new: create a new list
+ */
+
+struct t_weelist *
+plugin_api_list_new (struct t_weechat_plugin *plugin)
+{
+    /* make C compiler happy */
+    (void) plugin;
+
+    return weelist_new ();
+}
+
+/*
+ * plugin_api_list_add: add a new item in a list
+ */
+
+struct t_weelist_item *
+plugin_api_list_add (struct t_weechat_plugin *plugin, void *list, char *data,
+                     char *where)
+{
+    int position;
+    
+    /* make C compiler happy */
+    (void) plugin;
+
+    if (list && data && where)
+    {
+        position = WEELIST_POS_SORT;
+        if (string_strcasecmp (where, "sort") == 0)
+            position = WEELIST_POS_SORT;
+        else if (string_strcasecmp (where, "beginning") == 0)
+            position = WEELIST_POS_BEGINNING;
+        else if (string_strcasecmp (where, "end") == 0)
+            position = WEELIST_POS_END;
+        
+        return weelist_add (list, data, position);
+    }
+    return NULL;
+}
+
+/*
+ * plugin_api_list_search: search an item in a list (case sensitive)
+ */
+
+struct t_weelist_item *
+plugin_api_list_search (struct t_weechat_plugin *plugin, void *list,
+                        char *data)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    if (list && data)
+        return weelist_search (list, data);
+    else
+        return NULL;
+}
+
+/*
+ * plugin_api_list_casesearch: search an item in a list (case unsensitive)
+ */
+
+struct t_weelist_item *
+plugin_api_list_casesearch (struct t_weechat_plugin *plugin, void *list,
+                            char *data)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    if (list && data)
+        return weelist_casesearch (list, data);
+    else
+        return NULL;
+}
+
+/*
+ * plugin_api_list_get: get an item with position in list
+ */
+
+struct t_weelist_item *
+plugin_api_list_get (struct t_weechat_plugin *plugin, void *list, int position)
+{
+    /* make C compiler happy */
+    (void) plugin;
+
+    if (list)
+        return weelist_get (list, position);
+    else
+        return NULL;
+}
+
+/*
+ * plugin_api_list_next: get next item
+ */
+
+struct t_weelist_item *
+plugin_api_list_next (struct t_weechat_plugin *plugin, void *item)
+{
+    /* make C compiler happy */
+    (void) plugin;
+
+    if (item)
+        return ((struct t_weelist_item *)item)->next_item;
+    else
+        return NULL;
+}
+
+/*
+ * plugin_api_list_prev: get previous item
+ */
+
+struct t_weelist_item *
+plugin_api_list_prev (struct t_weechat_plugin *plugin, void *item)
+{
+    /* make C compiler happy */
+    (void) plugin;
+
+    if (item)
+        return ((struct t_weelist_item *)item)->prev_item;
+    else
+        return NULL;
+}
+
+/*
+ * plugin_api_list_string: get string value of an item
+ */
+
+char *
+plugin_api_list_string (struct t_weechat_plugin *plugin, void *item)
+{
+    /* make C compiler happy */
+    (void) plugin;
+
+    if (item)
+        return (char *)(((struct t_weelist_item *)item)->data);
+    else
+        return NULL;
+}
+
+/*
+ * plugin_api_list_size: get size of a list (number of items)
+ */
+
+int
+plugin_api_list_size (struct t_weechat_plugin *plugin, void *list)
+{
+    /* make C compiler happy */
+    (void) plugin;
+
+    if (list)
+        return ((struct t_weelist *)list)->size;
+    else
+        return 0;
+}
+
+/*
+ * plugin_api_list_remove: remove an item from a list
+ */
+
+void
+plugin_api_list_remove (struct t_weechat_plugin *plugin, void *list,
+                        void *item)
+{
+    /* make C compiler happy */
+    (void) plugin;
+
+    if (list && item)
+        weelist_remove (list, item);
+}
+
+/*
+ * plugin_api_list_remove_all: remove all item from a list
+ */
+
+void
+plugin_api_list_remove_all (struct t_weechat_plugin *plugin, void *list)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    if (list)
+        weelist_remove_all (list);
+}
+
+/*
+ * plugin_api_list_free: get size of a list (number of items)
+ */
+
+void
+plugin_api_list_free (struct t_weechat_plugin *plugin, void *list)
+{
+    /* make C compiler happy */
+    (void) plugin;
+
+    if (list)
+        weelist_free (list);
+}
+
+/*
  * plugin_api_config_new: create new config file structure
  */
 
@@ -298,14 +545,28 @@ struct t_config_section *
 plugin_api_config_new_section (struct t_weechat_plugin *plugin,
                                void *config_file, char *name,
                                void (*callback_read)(void *, char *, char *),
-                               void (*callback_write)(void *),
-                               void (*callback_write_default)(void *))
+                               void (*callback_write)(void *, char *),
+                               void (*callback_write_default)(void *, char *))
 {
-    /* make C compiler happy */
-    (void) plugin;
-    
-    return config_file_new_section (config_file, name, callback_read,
-                                    callback_write, callback_write_default);
+    if (plugin && config_file_valid_for_plugin (plugin, config_file))
+        return config_file_new_section (config_file, name, callback_read,
+                                        callback_write, callback_write_default);
+    else
+        return NULL;
+}
+
+/*
+ * plugin_api_config_search_section: search a section in a config
+ */
+
+struct t_config_section *
+plugin_api_config_search_section (struct t_weechat_plugin *plugin,
+                                  void *config_file, char *name)
+{
+    if (plugin && config_file_valid_for_plugin (plugin, config_file))
+        return config_file_search_section (config_file, name);
+    else
+        return NULL;
 }
 
 /*
@@ -320,52 +581,70 @@ plugin_api_config_new_option (struct t_weechat_plugin *plugin,
                               void (*callback_change)())
                               
 {
-    long number;
-    char *error;
+    if (plugin && config_file_section_valid_for_plugin (plugin, section))
+        return config_file_new_option (section, name, type, description,
+                                       string_values, min, max, default_value,
+                                       callback_change);
+    else
+        return NULL;
+}
+
+/*
+ * plugin_api_config_search_option: search an option in a config or section
+ */
+
+struct t_config_option *
+plugin_api_config_search_option (struct t_weechat_plugin *plugin,
+                                 void *config_file, void *section, char *name)
+{
+    if (plugin
+        && (!config_file || config_file_valid_for_plugin (plugin, config_file))
+        && (!section || config_file_section_valid_for_plugin (plugin, section)))
+        return config_file_search_option (config_file, section, name);
+    else
+        return NULL;
+}
+
+/*
+ * plugin_api_config_option_set: set new value for an option
+ *                               return: 2 if ok (value changed)
+ *                                       1 if ok (value is the same)
+ *                                       0 if failed
+ */
+
+int
+plugin_api_config_option_set (struct t_weechat_plugin *plugin,
+                              void *option, char *new_value)
+{
+    int rc;
     
+    if (plugin && config_file_option_valid_for_plugin (plugin, option))
+    {
+        rc = config_file_option_set (option, new_value);
+        if ((rc == 2) && (((struct t_config_option *)option)->callback_change))
+            (void) (((struct t_config_option *)option)->callback_change) ();
+        if (rc == 0)
+            return 0;
+        return 1;
+    }
+    return 0;
+}
+
+/*
+ * plugin_api_config_string_to_boolean: return boolean value of a string
+ */
+
+char
+plugin_api_config_string_to_boolean (struct t_weechat_plugin *plugin,
+                                     char *string)
+{
     /* make C compiler happy */
     (void) plugin;
     
-    if (string_strcasecmp (type, "boolean") == 0)
-    {
-        return config_file_new_option_boolean (
-            section, name, description,
-            (config_file_string_boolean_value (default_value) == CONFIG_BOOLEAN_TRUE) ?
-            CONFIG_BOOLEAN_TRUE : CONFIG_BOOLEAN_FALSE,
-            callback_change);
-    }
-    if (string_strcasecmp (type, "integer") == 0)
-    {
-        error = NULL;
-        number = strtol (default_value, &error, 10);
-        if (error && (error[0] == '\0'))
-        {
-            if (string_values && string_values[0])
-                return config_file_new_option_integer_with_string (
-                    section, name, description, string_values, number,
-                    callback_change);
-                return config_file_new_option_integer (
-                    section, name, description, min, max, number,
-                    callback_change);
-        }
-        else
-            return NULL;
-    }
-    if (string_strcasecmp (type, "string") == 0)
-    {
-        return config_file_new_option_string (
-            section, name, description, min, max, default_value,
-            callback_change);
-    }
-    if (string_strcasecmp (type, "color") == 0)
-    {
-        return config_file_new_option_color (
-            section, name, description, min, default_value,
-            callback_change);
-    }
-    
-    /* unknown option type */
-    return NULL;
+    if (config_file_string_to_boolean (string) == CONFIG_OPTION_BOOLEAN)
+        return CONFIG_BOOLEAN_TRUE;
+    else
+        return CONFIG_BOOLEAN_FALSE;
 }
 
 /*
@@ -389,11 +668,23 @@ plugin_api_config_boolean (struct t_weechat_plugin *plugin, void *option)
 int
 plugin_api_config_integer (struct t_weechat_plugin *plugin, void *option)
 {
-    if (plugin && config_file_option_valid_for_plugin (plugin, option)
-        && (((struct t_config_option *)option)->type == CONFIG_OPTION_INTEGER))
-        return CONFIG_INTEGER((struct t_config_option *)option);
-    else
-        return 0;
+    if (plugin && config_file_option_valid_for_plugin (plugin, option))
+    {
+        switch (((struct t_config_option *)option)->type)
+        {
+            case CONFIG_OPTION_BOOLEAN:
+                if (CONFIG_BOOLEAN((struct t_config_option *)option) == CONFIG_BOOLEAN_TRUE)
+                    return 1;
+                else
+                    return 0;
+            case CONFIG_OPTION_INTEGER:
+            case CONFIG_OPTION_COLOR:
+                return CONFIG_INTEGER((struct t_config_option *)option);
+            case CONFIG_OPTION_STRING:
+                return 0;
+        }
+    }
+    return 0;
 }
 
 /*
@@ -403,11 +694,16 @@ plugin_api_config_integer (struct t_weechat_plugin *plugin, void *option)
 char *
 plugin_api_config_string (struct t_weechat_plugin *plugin, void *option)
 {
-    if (plugin && config_file_option_valid_for_plugin (plugin, option)
-        && (((struct t_config_option *)option)->type == CONFIG_OPTION_STRING))
-        return CONFIG_STRING((struct t_config_option *)option);
-    else
-        return NULL;
+    if (plugin && config_file_option_valid_for_plugin (plugin, option))
+    {
+        if (((struct t_config_option *)option)->type == CONFIG_OPTION_STRING)
+            return CONFIG_STRING((struct t_config_option *)option);
+        if ((((struct t_config_option *)option)->type == CONFIG_OPTION_INTEGER)
+            && (((struct t_config_option *)option)->string_values))
+            return ((struct t_config_option *)option)->
+                string_values[CONFIG_INTEGER(((struct t_config_option *)option))];
+    }
+    return NULL;
 }
 
 /*
@@ -470,11 +766,19 @@ plugin_api_config_write (struct t_weechat_plugin *plugin, void *config_file)
 void
 plugin_api_config_write_line (struct t_weechat_plugin *plugin,
                               void *config_file, char *option_name,
-                              char *value)
+                              char *value, ...)
 {
+    char buf[4096];
+    va_list argptr;
+    
     if (plugin && config_file_valid_for_plugin (plugin, config_file))
+    {
+        va_start (argptr, value);
+        vsnprintf (buf, sizeof (buf) - 1, value, argptr);
+        va_end (argptr);
         config_file_write_line ((struct t_config_file *)config_file,
-                                option_name, value);
+                                option_name, buf);
+    }
 }
 
 /*
@@ -527,21 +831,14 @@ plugin_api_get_config_str_value (struct t_config_option *option)
  * plugin_api_config_get: get value of a WeeChat config option
  */
 
-char *
+struct t_config_option *
 plugin_api_config_get (struct t_weechat_plugin *plugin, char *option_name)
 {
-    struct t_config_option *ptr_option;
-    
     /* make C compiler happy */
     (void) plugin;
-
-    /* search WeeChat config option */
-    ptr_option = config_file_search_option (weechat_config, NULL, option_name);
-    if (ptr_option)
-        return plugin_api_get_config_str_value (ptr_option);
     
-    /* option not found */
-    return NULL;
+    return config_file_search_option (weechat_config_file, NULL,
+                                      option_name);
 }
 
 /*
@@ -562,7 +859,8 @@ plugin_api_config_set (struct t_weechat_plugin *plugin, char *option_name,
         return 0;
     
     /* search and set WeeChat config option if found */
-    ptr_option = config_file_search_option (weechat_config, NULL, option_name);
+    ptr_option = config_file_search_option (weechat_config_file, NULL,
+                                            option_name);
     if (ptr_option)
     {
         rc = config_file_option_set (ptr_option, value);
@@ -1177,92 +1475,92 @@ plugin_api_info_get (struct t_weechat_plugin *plugin, char *info)
 }
 
 /*
- * plugin_api_list_get_add_buffer: add a buffer in a list
- *                                 return 1 if ok, 0 if error
+ * plugin_api_infolist_get_add_buffer: add a buffer in a list
+ *                                     return 1 if ok, 0 if error
  */
 
 int
-plugin_api_list_get_add_buffer (struct t_plugin_list *list,
-                                struct t_gui_buffer *buffer)
+plugin_api_infolist_get_add_buffer (struct t_plugin_infolist *infolist,
+                                    struct t_gui_buffer *buffer)
 {
-    struct t_plugin_list_item *ptr_item;
+    struct t_plugin_infolist_item *ptr_item;
     
-    if (!list || !buffer)
+    if (!infolist || !buffer)
         return 0;
     
-    ptr_item = plugin_list_new_item (list);
+    ptr_item = plugin_infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
 
-    if (!plugin_list_new_var_pointer (ptr_item, "pointer", buffer))
+    if (!plugin_infolist_new_var_pointer (ptr_item, "pointer", buffer))
         return 0;
-    if (!plugin_list_new_var_integer (ptr_item, "number", buffer->number))
+    if (!plugin_infolist_new_var_integer (ptr_item, "number", buffer->number))
         return 0;
-    if (!plugin_list_new_var_string (ptr_item, "category", buffer->category))
+    if (!plugin_infolist_new_var_string (ptr_item, "category", buffer->category))
         return 0;
-    if (!plugin_list_new_var_string (ptr_item, "name", buffer->name))
+    if (!plugin_infolist_new_var_string (ptr_item, "name", buffer->name))
         return 0;
-    if (!plugin_list_new_var_integer (ptr_item, "type", buffer->type))
+    if (!plugin_infolist_new_var_integer (ptr_item, "type", buffer->type))
         return 0;
-    if (!plugin_list_new_var_integer (ptr_item, "notify_level", buffer->notify_level))
+    if (!plugin_infolist_new_var_integer (ptr_item, "notify_level", buffer->notify_level))
         return 0;
-    if (!plugin_list_new_var_integer (ptr_item, "num_displayed", buffer->num_displayed))
+    if (!plugin_infolist_new_var_integer (ptr_item, "num_displayed", buffer->num_displayed))
         return 0;
-    if (!plugin_list_new_var_string (ptr_item, "title", buffer->title))
+    if (!plugin_infolist_new_var_string (ptr_item, "title", buffer->title))
         return 0;
-    if (!plugin_list_new_var_integer (ptr_item, "input", buffer->input))
+    if (!plugin_infolist_new_var_integer (ptr_item, "input", buffer->input))
         return 0;
-    if (!plugin_list_new_var_string (ptr_item, "input_nick", buffer->input_nick))
+    if (!plugin_infolist_new_var_string (ptr_item, "input_nick", buffer->input_nick))
         return 0;
-    if (!plugin_list_new_var_string (ptr_item, "input_string", buffer->input_buffer))
+    if (!plugin_infolist_new_var_string (ptr_item, "input_string", buffer->input_buffer))
         return 0;
     
     return 1;
 }
 
 /*
- * plugin_api_list_get_add_buffer_line: add a buffer line in a list
- *                                      return 1 if ok, 0 if error
+ * plugin_api_infolist_get_add_buffer_line: add a buffer line in a list
+ *                                          return 1 if ok, 0 if error
  */
 
 int
-plugin_api_list_get_add_buffer_line (struct t_plugin_list *list,
-                                     struct t_gui_line *line)
+plugin_api_infolist_get_add_buffer_line (struct t_plugin_infolist *infolist,
+                                         struct t_gui_line *line)
 {
-    struct t_plugin_list_item *ptr_item;
+    struct t_plugin_infolist_item *ptr_item;
     
-    if (!list || !line)
+    if (!infolist || !line)
         return 0;
     
-    ptr_item = plugin_list_new_item (list);
+    ptr_item = plugin_infolist_new_item (infolist);
     if (!ptr_item)
         return 0;
     
-    if (!plugin_list_new_var_time (ptr_item, "date", line->date))
+    if (!plugin_infolist_new_var_time (ptr_item, "date", line->date))
         return 0;
-    if (!plugin_list_new_var_time (ptr_item, "date_printed", line->date))
+    if (!plugin_infolist_new_var_time (ptr_item, "date_printed", line->date))
         return 0;
-    if (!plugin_list_new_var_string (ptr_item, "str_time", line->str_time))
+    if (!plugin_infolist_new_var_string (ptr_item, "str_time", line->str_time))
         return 0;
-    if (!plugin_list_new_var_string (ptr_item, "prefix", line->prefix))
+    if (!plugin_infolist_new_var_string (ptr_item, "prefix", line->prefix))
         return 0;
-    if (!plugin_list_new_var_string (ptr_item, "message", line->message))
+    if (!plugin_infolist_new_var_string (ptr_item, "message", line->message))
         return 0;
     
     return 1;
 }
 
 /*
- * plugin_api_list_get: get list with infos about WeeChat structures
- *                      WARNING: caller has to free string returned
- *                      by this function after use, with weechat_list_free()
+ * plugin_api_infolist_get: get list with infos about WeeChat structures
+ *                          WARNING: caller has to free string returned
+ *                          by this function after use, with weechat_list_free()
  */
 
-struct t_plugin_list *
-plugin_api_list_get (struct t_weechat_plugin *plugin, char *name,
-                     void *pointer)
+struct t_plugin_infolist *
+plugin_api_infolist_get (struct t_weechat_plugin *plugin, char *name,
+                         void *pointer)
 {
-    struct t_plugin_list *ptr_list;
+    struct t_plugin_infolist *ptr_infolist;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
     
@@ -1272,22 +1570,21 @@ plugin_api_list_get (struct t_weechat_plugin *plugin, char *name,
     if (string_strcasecmp (name, "buffer") == 0)
     {
         /* invalid buffer pointer ? */
-        if (pointer && (!gui_buffer_valid ((struct t_gui_buffer *)pointer)))
+        if (pointer && (!gui_buffer_valid (pointer)))
             return NULL;
         
-        ptr_list = plugin_list_new ();
-        if (ptr_list)
+        ptr_infolist = plugin_infolist_new ();
+        if (ptr_infolist)
         {
             if (pointer)
             {
                 /* build list with only one buffer */
-                if (!plugin_api_list_get_add_buffer (ptr_list,
-                                                     (struct t_gui_buffer *)pointer))
+                if (!plugin_api_infolist_get_add_buffer (ptr_infolist, pointer))
                 {
-                    plugin_list_free (ptr_list);
+                    plugin_infolist_free (ptr_infolist);
                     return NULL;
                 }
-                return ptr_list;
+                return ptr_infolist;
             }
             else
             {
@@ -1295,14 +1592,14 @@ plugin_api_list_get (struct t_weechat_plugin *plugin, char *name,
                 for (ptr_buffer = gui_buffers; ptr_buffer;
                      ptr_buffer = ptr_buffer->next_buffer)
                 {
-                    if (!plugin_api_list_get_add_buffer (ptr_list,
-                                                         ptr_buffer))
+                    if (!plugin_api_infolist_get_add_buffer (ptr_infolist,
+                                                             ptr_buffer))
                     {
-                        plugin_list_free (ptr_list);
+                        plugin_infolist_free (ptr_infolist);
                         return NULL;
                     }
                 }
-                return ptr_list;
+                return ptr_infolist;
             }
         }
     }
@@ -1313,24 +1610,24 @@ plugin_api_list_get (struct t_weechat_plugin *plugin, char *name,
         else
         {
             /* invalid buffer pointer ? */
-            if (!gui_buffer_valid ((struct t_gui_buffer *)pointer))
+            if (!gui_buffer_valid (pointer))
                 return NULL;
         }
         
-        ptr_list = plugin_list_new ();
-        if (ptr_list)
+        ptr_infolist = plugin_infolist_new ();
+        if (ptr_infolist)
         {
             for (ptr_line = ((struct t_gui_buffer *)pointer)->lines; ptr_line;
                  ptr_line = ptr_line->next_line)
             {
-                if (!plugin_api_list_get_add_buffer_line (ptr_list,
-                                                          ptr_line))
+                if (!plugin_api_infolist_get_add_buffer_line (ptr_infolist,
+                                                              ptr_line))
                 {
-                    plugin_list_free (ptr_list);
+                    plugin_infolist_free (ptr_infolist);
                     return NULL;
                 }
             }
-            return ptr_list;
+            return ptr_infolist;
         }
     }
     
@@ -1339,124 +1636,117 @@ plugin_api_list_get (struct t_weechat_plugin *plugin, char *name,
 }
 
 /*
- * plugin_api_list_next: move item pointer to next item in a list
- *                       return 1 if pointer is still ok
- *                              0 if end of list was reached
+ * plugin_api_infolist_next: move item pointer to next item in a list
+ *                           return 1 if pointer is still ok
+ *                                  0 if end of list was reached
  */
 
 int
-plugin_api_list_next (struct t_weechat_plugin *plugin, void *list)
+plugin_api_infolist_next (struct t_weechat_plugin *plugin, void *infolist)
 {
-    if (!plugin || !list
-        || !plugin_list_valid ((struct t_plugin_list *)list))
+    if (!plugin || !infolist || !plugin_infolist_valid (infolist))
         return 0;
     
-    return (plugin_list_next_item ((struct t_plugin_list *)list)) ? 1 : 0;
+    return (plugin_infolist_next_item (infolist)) ? 1 : 0;
 }
 
 /*
- * plugin_api_list_prev: move item pointer to previous item in a list
- *                       return 1 if pointer is still ok
- *                              0 if beginning of list was reached
+ * plugin_api_infolist_prev: move item pointer to previous item in a list
+ *                           return 1 if pointer is still ok
+ *                                  0 if beginning of list was reached
  */
 
 int
-plugin_api_list_prev (struct t_weechat_plugin *plugin, void *list)
+plugin_api_infolist_prev (struct t_weechat_plugin *plugin, void *infolist)
 {
-    if (!plugin || !list
-        || !plugin_list_valid ((struct t_plugin_list *)list))
+    if (!plugin || !infolist || !plugin_infolist_valid (infolist))
         return 0;
 
-    return (plugin_list_prev_item ((struct t_plugin_list *)list)) ? 1 : 0;
+    return (plugin_infolist_prev_item (infolist)) ? 1 : 0;
 }
 
 /*
- * plugin_api_list_fields: get list of fields for current list item
+ * plugin_api_infolist_fields: get list of fields for current list item
  */
 
 char *
-plugin_api_list_fields (struct t_weechat_plugin *plugin, void *list)
+plugin_api_infolist_fields (struct t_weechat_plugin *plugin, void *infolist)
 {
-    if (!plugin || !list
-        || !plugin_list_valid ((struct t_plugin_list *)list))
+    if (!plugin || !infolist || !plugin_infolist_valid (infolist))
         return NULL;
     
-    return plugin_list_get_fields ((struct t_plugin_list *)list);
+    return plugin_infolist_get_fields (infolist);
 }
 
 /*
- * plugin_api_list_integer: get an integer variable value in current list item
+ * plugin_api_infolist_integer: get an integer variable value in current list item
  */
 
 int
-plugin_api_list_integer (struct t_weechat_plugin *plugin, void *list,
-                         char *var)
+plugin_api_infolist_integer (struct t_weechat_plugin *plugin, void *infolist,
+                             char *var)
 {
-    if (!plugin || !list
-        || !plugin_list_valid ((struct t_plugin_list *)list)
-        || !((struct t_plugin_list *)list)->ptr_item)
+    if (!plugin || !infolist || !plugin_infolist_valid (infolist)
+        || !((struct t_plugin_infolist *)infolist)->ptr_item)
         return 0;
     
-    return plugin_list_get_integer ((struct t_plugin_list *)list, var);
+    return plugin_infolist_get_integer (infolist, var);
 }
 
 /*
- * plugin_api_list_string: get a string variable value in current list item
+ * plugin_api_infolist_string: get a string variable value in current list item
  */
 
 char *
-plugin_api_list_string (struct t_weechat_plugin *plugin, void *list,
-                        char *var)
+plugin_api_infolist_string (struct t_weechat_plugin *plugin, void *infolist,
+                            char *var)
 {
-    if (!plugin || !list
-        || !plugin_list_valid ((struct t_plugin_list *)list)
-        || !((struct t_plugin_list *)list)->ptr_item)
+    if (!plugin || !infolist || !plugin_infolist_valid (infolist)
+        || !((struct t_plugin_infolist *)infolist)->ptr_item)
         return NULL;
     
-    return plugin_list_get_string ((struct t_plugin_list *)list, var);
+    return plugin_infolist_get_string (infolist, var);
 }
 
 /*
- * plugin_api_list_pointer: get a pointer variable value in current list item
+ * plugin_api_infolist_pointer: get a pointer variable value in current list item
  */
 
 void *
-plugin_api_list_pointer (struct t_weechat_plugin *plugin, void *list,
-                         char *var)
+plugin_api_infolist_pointer (struct t_weechat_plugin *plugin, void *infolist,
+                             char *var)
 {
-    if (!plugin || !list
-        || !plugin_list_valid ((struct t_plugin_list *)list)
-        || !((struct t_plugin_list *)list)->ptr_item)
+    if (!plugin || !infolist || !plugin_infolist_valid (infolist)
+        || !((struct t_plugin_infolist *)infolist)->ptr_item)
         return NULL;
     
-    return plugin_list_get_pointer ((struct t_plugin_list *)list, var);
+    return plugin_infolist_get_pointer (infolist, var);
 }
 
 /*
- * plugin_api_list_time: get a time variable value in current list item
+ * plugin_api_infolist_time: get a time variable value in current list item
  */
 
 time_t
-plugin_api_list_time (struct t_weechat_plugin *plugin, void *list,
-                      char *var)
+plugin_api_infolist_time (struct t_weechat_plugin *plugin, void *infolist,
+                          char *var)
 {
-    if (!plugin || !list
-        || !plugin_list_valid ((struct t_plugin_list *)list)
-        || !((struct t_plugin_list *)list)->ptr_item)
+    if (!plugin || !infolist || !plugin_infolist_valid (infolist)
+        || !((struct t_plugin_infolist *)infolist)->ptr_item)
         return 0;
     
-    return plugin_list_get_time ((struct t_plugin_list *)list, var);
+    return plugin_infolist_get_time (infolist, var);
 }
 
 /*
- * plugin_api_list_free: free a list
+ * plugin_api_infolist_free: free an infolist
  */
 
 void
-plugin_api_list_free (struct t_weechat_plugin *plugin, void *list)
+plugin_api_infolist_free (struct t_weechat_plugin *plugin, void *infolist)
 {
-    if (plugin && list && plugin_list_valid ((struct t_plugin_list *)list))
-        plugin_list_free ((struct t_plugin_list *)list);
+    if (plugin && infolist && plugin_infolist_valid (infolist))
+        plugin_infolist_free (infolist);
 }
 
 /*

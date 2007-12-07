@@ -20,6 +20,9 @@
 #ifndef __WEECHAT_IRC_DCC_H
 #define __WEECHAT_IRC_DCC_H 1
 
+#include "irc-server.h"
+#include "irc-channel.h"
+
 /* DCC types */
 
 #define IRC_DCC_CHAT_RECV        0  /* receiving DCC chat                    */
@@ -106,5 +109,23 @@ struct t_irc_dcc
 extern struct t_irc_dcc *irc_dcc_list;
 extern struct t_irc_dcc *irc_last_dcc;
 extern char *irc_dcc_status_string[6];
+
+extern void irc_dcc_redraw (int);
+extern void irc_dcc_free (struct t_irc_dcc *);
+extern void irc_dcc_close (struct t_irc_dcc *, int);
+extern void irc_dcc_chat_remove_channel (struct t_irc_channel *);
+extern void irc_dcc_accept (struct t_irc_dcc *);
+extern void irc_dcc_accept_resume (struct t_irc_server *, char *, int, unsigned long);
+extern void irc_dcc_start_resume (struct t_irc_server *, char *, int, unsigned long);
+extern struct t_irc_dcc *irc_dcc_alloc ();
+extern struct t_irc_dcc *irc_dcc_add (struct t_irc_server *, int, unsigned long, int, char *, int,
+                                      char *, char *, unsigned long);
+extern void irc_dcc_send_request (struct t_irc_server *, int, char *, char *);
+extern void irc_dcc_chat_sendf (struct t_irc_dcc *, char *, ...);
+extern void irc_dcc_file_send_fork (struct t_irc_dcc *);
+extern void irc_dcc_file_recv_fork (struct t_irc_dcc *);
+extern void irc_dcc_handle ();
+extern void irc_dcc_end ();
+extern void irc_dcc_print_log ();
 
 #endif /* irc-dcc.h */

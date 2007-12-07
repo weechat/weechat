@@ -428,8 +428,8 @@ hook_timer_exec (struct timeval *tv_time)
         if ((ptr_hook->type == HOOK_TYPE_TIMER)
             && (!ptr_hook->running))
         {
-            time_diff = util_get_timeval_diff (&HOOK_TIMER(ptr_hook, last_exec),
-                                               tv_time);
+            time_diff = util_timeval_diff (&HOOK_TIMER(ptr_hook, last_exec),
+                                           tv_time);
             if (time_diff >= HOOK_TIMER(ptr_hook, interval))
             {
                 ptr_hook->running = 1;
@@ -923,10 +923,8 @@ unhook_all_plugin (void *plugin)
     while (ptr_hook)
     {
         next_hook = ptr_hook->next_hook;
-        
         if (ptr_hook->plugin == plugin)
             unhook (ptr_hook);
-        
         ptr_hook = next_hook;
     }
 }
@@ -938,9 +936,14 @@ unhook_all_plugin (void *plugin)
 void
 unhook_all ()
 {
-    while (weechat_hooks)
+    struct t_hook *ptr_hook, *next_hook;
+    
+    ptr_hook = weechat_hooks;
+    while (ptr_hook)
     {
-        unhook (weechat_hooks);
+        next_hook = ptr_hook->next_hook;
+        unhook (ptr_hook);
+        ptr_hook = next_hook;
     }
 }
 
@@ -956,71 +959,71 @@ hook_print_log ()
     for (ptr_hook = weechat_hooks; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
-        log_printf ("\n");
-        log_printf ("[hook (addr:0x%X)]\n", ptr_hook);
-        log_printf ("  plugin . . . . . . . . : 0x%X\n", ptr_hook->plugin);
+        log_printf ("");
+        log_printf ("[hook (addr:0x%X)]", ptr_hook);
+        log_printf ("  plugin . . . . . . . . : 0x%X", ptr_hook->plugin);
         switch (ptr_hook->type)
         {
             case HOOK_TYPE_DELETED:
-                log_printf ("  type . . . . . . . . . : %d (hook deleted)\n", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
-                log_printf ("  hook_data. . . . . . . : 0x%X\n", ptr_hook->hook_data);
+                log_printf ("  type . . . . . . . . . : %d (hook deleted)", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                log_printf ("  hook_data. . . . . . . : 0x%X", ptr_hook->hook_data);
                 break;
             case HOOK_TYPE_COMMAND:
-                log_printf ("  type . . . . . . . . . : %d (command)\n", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
-                log_printf ("  command data:\n");
-                log_printf ("    callback . . . . . . : 0x%X\n", HOOK_COMMAND(ptr_hook, callback));
-                log_printf ("    command. . . . . . . : '%s'\n", HOOK_COMMAND(ptr_hook, command));
-                log_printf ("    level. . . . . . . . : %d\n",   HOOK_COMMAND(ptr_hook, level));
-                log_printf ("    command_desc . . . . : '%s'\n", HOOK_COMMAND(ptr_hook, description));
-                log_printf ("    command_args . . . . : '%s'\n", HOOK_COMMAND(ptr_hook, args));
-                log_printf ("    command_args_desc. . : '%s'\n", HOOK_COMMAND(ptr_hook, args_description));
-                log_printf ("    command_completion . : '%s'\n", HOOK_COMMAND(ptr_hook, completion));
+                log_printf ("  type . . . . . . . . . : %d (command)", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                log_printf ("  command data:");
+                log_printf ("    callback . . . . . . : 0x%X", HOOK_COMMAND(ptr_hook, callback));
+                log_printf ("    command. . . . . . . : '%s'", HOOK_COMMAND(ptr_hook, command));
+                log_printf ("    level. . . . . . . . : %d",   HOOK_COMMAND(ptr_hook, level));
+                log_printf ("    command_desc . . . . : '%s'", HOOK_COMMAND(ptr_hook, description));
+                log_printf ("    command_args . . . . : '%s'", HOOK_COMMAND(ptr_hook, args));
+                log_printf ("    command_args_desc. . : '%s'", HOOK_COMMAND(ptr_hook, args_description));
+                log_printf ("    command_completion . : '%s'", HOOK_COMMAND(ptr_hook, completion));
                 break;
             case HOOK_TYPE_TIMER:
-                log_printf ("  type . . . . . . . . . : %d (timer)\n", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
-                log_printf ("  timer data:\n");
-                log_printf ("    callback . . . . . . : 0x%X\n", HOOK_TIMER(ptr_hook, callback));
-                log_printf ("    interval . . . . . . : %ld\n",  HOOK_TIMER(ptr_hook, interval));
-                log_printf ("    last_exec.tv_sec . . : %ld\n",  HOOK_TIMER(ptr_hook, last_exec.tv_sec));
-                log_printf ("    last_exec.tv_usec. . : %ld\n",  HOOK_TIMER(ptr_hook, last_exec.tv_usec));
+                log_printf ("  type . . . . . . . . . : %d (timer)", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                log_printf ("  timer data:");
+                log_printf ("    callback . . . . . . : 0x%X", HOOK_TIMER(ptr_hook, callback));
+                log_printf ("    interval . . . . . . : %ld",  HOOK_TIMER(ptr_hook, interval));
+                log_printf ("    last_exec.tv_sec . . : %ld",  HOOK_TIMER(ptr_hook, last_exec.tv_sec));
+                log_printf ("    last_exec.tv_usec. . : %ld",  HOOK_TIMER(ptr_hook, last_exec.tv_usec));
                 break;
             case HOOK_TYPE_FD:
-                log_printf ("  type . . . . . . . . . : %d (fd)\n", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
-                log_printf ("  fd data:\n");
-                log_printf ("    callback . . . . . . : 0x%X\n", HOOK_FD(ptr_hook, callback));
-                log_printf ("    fd . . . . . . . . . : %ld\n",  HOOK_FD(ptr_hook, fd));
-                log_printf ("    flags. . . . . . . . : %ld\n",  HOOK_FD(ptr_hook, flags));
+                log_printf ("  type . . . . . . . . . : %d (fd)", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                log_printf ("  fd data:");
+                log_printf ("    callback . . . . . . : 0x%X", HOOK_FD(ptr_hook, callback));
+                log_printf ("    fd . . . . . . . . . : %ld",  HOOK_FD(ptr_hook, fd));
+                log_printf ("    flags. . . . . . . . : %ld",  HOOK_FD(ptr_hook, flags));
                 break;
             case HOOK_TYPE_PRINT:
-                log_printf ("  type . . . . . . . . . : %d (print)\n", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
-                log_printf ("  print data:\n");
-                log_printf ("    callback . . . . . . : 0x%X\n", HOOK_PRINT(ptr_hook, callback));
-                log_printf ("    buffer . . . . . . . : 0x%X\n", HOOK_PRINT(ptr_hook, buffer));
-                log_printf ("    message. . . . . . . : '%s'\n", HOOK_PRINT(ptr_hook, message));
+                log_printf ("  type . . . . . . . . . : %d (print)", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                log_printf ("  print data:");
+                log_printf ("    callback . . . . . . : 0x%X", HOOK_PRINT(ptr_hook, callback));
+                log_printf ("    buffer . . . . . . . : 0x%X", HOOK_PRINT(ptr_hook, buffer));
+                log_printf ("    message. . . . . . . : '%s'", HOOK_PRINT(ptr_hook, message));
                 break;
             case HOOK_TYPE_EVENT:
-                log_printf ("  type . . . . . . . . . : %d (event)\n", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
-                log_printf ("  event data:\n");
-                log_printf ("    callback . . . . . . : 0x%X\n", HOOK_EVENT(ptr_hook, callback));
-                log_printf ("    event. . . . . . . . : '%s'\n", HOOK_EVENT(ptr_hook, event));
+                log_printf ("  type . . . . . . . . . : %d (event)", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                log_printf ("  event data:");
+                log_printf ("    callback . . . . . . : 0x%X", HOOK_EVENT(ptr_hook, callback));
+                log_printf ("    event. . . . . . . . : '%s'", HOOK_EVENT(ptr_hook, event));
                 break;
             case HOOK_TYPE_CONFIG:
-                log_printf ("  type . . . . . . . . . : %d (config)\n", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X\n", ptr_hook->callback_data);
-                log_printf ("  config data:\n");
-                log_printf ("    callback . . . . . . : 0x%X\n", HOOK_CONFIG(ptr_hook, callback));
-                log_printf ("    type . . . . . . . . : '%s'\n", HOOK_CONFIG(ptr_hook, type));
-                log_printf ("    option . . . . . . . : '%s'\n", HOOK_CONFIG(ptr_hook, option));
+                log_printf ("  type . . . . . . . . . : %d (config)", ptr_hook->type);
+                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                log_printf ("  config data:");
+                log_printf ("    callback . . . . . . : 0x%X", HOOK_CONFIG(ptr_hook, callback));
+                log_printf ("    type . . . . . . . . : '%s'", HOOK_CONFIG(ptr_hook, type));
+                log_printf ("    option . . . . . . . : '%s'", HOOK_CONFIG(ptr_hook, option));
                 break;
         }        
-        log_printf ("  running. . . . . . . . : %d\n",   ptr_hook->running);
-        log_printf ("  prev_hook. . . . . . . : 0x%X\n", ptr_hook->prev_hook);
-        log_printf ("  next_hook. . . . . . . : 0x%X\n", ptr_hook->next_hook);
+        log_printf ("  running. . . . . . . . : %d",   ptr_hook->running);
+        log_printf ("  prev_hook. . . . . . . : 0x%X", ptr_hook->prev_hook);
+        log_printf ("  next_hook. . . . . . . : 0x%X", ptr_hook->next_hook);
     }
 }

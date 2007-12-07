@@ -14,7 +14,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(charset MODULE charset.c charset.h)
+ADD_LIBRARY(charset MODULE charset.c)
 SET_TARGET_PROPERTIES(charset PROPERTIES PREFIX "")
 
 IF(ICONV_FOUND)

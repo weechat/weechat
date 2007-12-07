@@ -24,18 +24,28 @@
 #define WEELIST_POS_BEGINNING 1
 #define WEELIST_POS_END       2
 
-struct t_weelist
+struct t_weelist_item
 {
-    char *data;
-    struct t_weelist *prev_weelist;
-    struct t_weelist *next_weelist;
+    char *data;                        /* item data                         */
+    struct t_weelist_item *prev_item;  /* link to previous item             */
+    struct t_weelist_item *next_item;  /* link to next item                 */
 };
 
-extern int weelist_get_size (struct t_weelist *);
-extern struct t_weelist *weelist_search (struct t_weelist *, char *);
-extern struct t_weelist *weelist_add (struct t_weelist **, struct t_weelist **, char *, int);
-extern void weelist_remove (struct t_weelist **, struct t_weelist **, struct t_weelist *);
-extern void weelist_remove_all (struct t_weelist **, struct t_weelist **);
+struct t_weelist
+{
+    struct t_weelist_item *items;      /* items in list                     */
+    struct t_weelist_item *last_item;  /* last item in list                 */
+    int size;                          /* number of items in list           */
+};
+
+extern struct t_weelist *weelist_new ();
+extern struct t_weelist_item *weelist_add (struct t_weelist *, char *, int);
+extern struct t_weelist_item *weelist_search (struct t_weelist *, char *);
+extern struct t_weelist_item *weelist_casesearch (struct t_weelist *, char *);
+extern struct t_weelist_item *weelist_get (struct t_weelist *, int);
+extern void weelist_remove (struct t_weelist *, struct t_weelist_item *);
+extern void weelist_remove_all (struct t_weelist *);
+extern void weelist_free (struct t_weelist *);
 extern void weelist_print_log (struct t_weelist *, char *);
 
 #endif /* wee-list.h */

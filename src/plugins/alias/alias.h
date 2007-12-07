@@ -20,10 +20,6 @@
 #ifndef __WEECHAT_ALIAS_H
 #define __WEECHAT_ALIAS_H 1
 
-char plugin_name[] = "alias";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Alias plugin for WeeChat";
-
 #define ALIAS_CONFIG_FILENAME "alias.rc"
 
 struct t_alias

@@ -20,6 +20,9 @@
 #ifndef __WEECHAT_IRC_NICK_H
 #define __WEECHAT_IRC_NICK_H 1
 
+#include "irc-server.h"
+#include "irc-channel.h"
+
 #define IRC_NICK_DEFAULT_PREFIXES_LIST "@%+~&!-"
 
 #define IRC_NICK_CHANOWNER  1
@@ -46,5 +49,19 @@ struct t_irc_nick
     struct t_irc_nick *prev_nick;   /* link to previous nick on channel      */
     struct t_irc_nick *next_nick;   /* link to next nick on channel          */
 };
+
+extern int irc_nick_find_color (struct t_irc_nick *);
+extern void irc_nick_get_gui_infos (struct t_irc_nick *, int *, char *, int *);
+extern struct t_irc_nick *irc_nick_new (struct t_irc_server *,
+                                        struct t_irc_channel *, char *,
+                                        int, int, int, int, int, int, int);
+extern void irc_nick_change (struct t_irc_server *, struct t_irc_channel *,
+                             struct t_irc_nick *, char *);
+extern void irc_nick_free (struct t_irc_channel *, struct t_irc_nick *);
+extern void irc_nick_free_all (struct t_irc_channel *);
+extern struct t_irc_nick *irc_nick_search (struct t_irc_channel *, char *);
+extern void irc_nick_count (struct t_irc_channel *, int *, int *, int *, int *, int *);
+extern void irc_nick_set_away (struct t_irc_channel *, struct t_irc_nick *, int);
+extern void irc_nick_print_log (struct t_irc_nick *);
 
 #endif /* irc-nick.h */

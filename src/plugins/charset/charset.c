@@ -26,14 +26,20 @@
 #include <iconv.h>
 
 #include "../weechat-plugin.h"
-#include "charset.h"
 
 
-static char *weechat_charset_terminal = NULL;
-static char *weechat_charset_internal = NULL;
+char plugin_name[] = "charset";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Charset plugin for WeeChat";
+
+struct t_weechat_plugin *weechat_charset_plugin = NULL;
+#define weechat_plugin weechat_charset_plugin
+
+char *weechat_charset_terminal = NULL;
+char *weechat_charset_internal = NULL;
 
 /* set to 1 by /charset debug (hidden option) */
-static int weechat_charset_debug = 0;
+int weechat_charset_debug = 0;
 
 
 /*
@@ -41,7 +47,7 @@ static int weechat_charset_debug = 0;
  *                          (FreeBSD and maybe other)
  */
 
-static char *
+char *
 weechat_charset_strndup (char *string, int length)
 {
     char *result;
@@ -63,7 +69,7 @@ weechat_charset_strndup (char *string, int length)
  * weechat_charset_default_decode: set "global.decode" option if needed
  */
 
-static void
+void
 weechat_charset_default_decode (t_weechat_plugin *plugin)
 {
     char *global_decode;
@@ -106,7 +112,7 @@ weechat_charset_default_decode (t_weechat_plugin *plugin)
  *                        if a charset is NULL, internal charset is used
  */
 
-static int
+int
 weechat_charset_check (char *charset)
 {
     iconv_t cd;
@@ -127,7 +133,7 @@ weechat_charset_check (char *charset)
  *                             we first in this order: channel, server, global
  */
 
-static char *
+char *
 weechat_charset_get_config (t_weechat_plugin *plugin,
                             char *type, char *server, char *channel)
 {
@@ -173,7 +179,7 @@ weechat_charset_get_config (t_weechat_plugin *plugin,
  * weechat_charset_set_config: set a charset in config file
  */
 
-static void
+void
 weechat_charset_set_config (t_weechat_plugin *plugin,
                             char *type, char *server, char *channel,
                             char *value)
@@ -196,7 +202,7 @@ weechat_charset_set_config (t_weechat_plugin *plugin,
  *                                of arguments in IRC message
  */
 
-static void
+void
 weechat_charset_parse_irc_msg (char *message, char **nick, char **command,
                                char **channel, char **pos_args)
 {
@@ -292,7 +298,7 @@ weechat_charset_parse_irc_msg (char *message, char **nick, char **command,
  *                         convert from any charset to WeeChat internal
  */
 
-static char *
+char *
 weechat_charset_irc_in (t_weechat_plugin *plugin, int argc, char **argv,
                         char *handler_args, void *handler_pointer)
 {
@@ -341,7 +347,7 @@ weechat_charset_irc_in (t_weechat_plugin *plugin, int argc, char **argv,
  *                          convert from WeeChat internal charset to other
  */
 
-static char *
+char *
 weechat_charset_irc_out (t_weechat_plugin *plugin, int argc, char **argv,
                          char *handler_args, void *handler_pointer)
 {
@@ -389,7 +395,7 @@ weechat_charset_irc_out (t_weechat_plugin *plugin, int argc, char **argv,
  * weechat_charset_display: display charsets (global/server/channel)
  */
 
-static void
+void
 weechat_charset_display (t_weechat_plugin *plugin,
                          int display_on_server, char *server, char *channel)
 {
@@ -479,7 +485,7 @@ weechat_charset_display (t_weechat_plugin *plugin,
  * weechat_charset_cmd: /charset command
  */
 
-static int
+int
 weechat_charset_cmd (t_weechat_plugin *plugin,
                      int cmd_argc, char **cmd_argv,
                      char *handler_args, void *handler_pointer)
@@ -602,11 +608,13 @@ weechat_charset_cmd (t_weechat_plugin *plugin,
  * weechat_plugin_init: init charset plugin
  */
 
-static int
+int
 weechat_plugin_init (t_weechat_plugin *plugin)
 {
     t_plugin_modifier *msg_irc_in, *msg_irc_out;
     t_plugin_handler *cmd_handler;
+
+    weechat_plugin = plugin;
 
     /* get terminal & internal charsets */
     weechat_charset_terminal = plugin->get_info (plugin, "charset_terminal",
@@ -662,7 +670,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
  * weechat_plugin_end: end charset plugin
  */
 
-static void
+void
 weechat_plugin_end (t_weechat_plugin *plugin)
 {
     /* make C compiler happy */

@@ -20,8 +20,10 @@
 #ifndef __WEECHAT_IRC_PROTOCOL_H
 #define __WEECHAT_IRC_PROTOCOL_H 1
 
-typedef int (t_irc_recv_func)(t_irc_server *, char *, char *, char *, char *,
-                              int, int);
+#include "irc-server.h"
+
+typedef int (t_irc_recv_func)(struct t_irc_server *, char *, char *, char *,
+                              char *, int, int);
 
 struct t_irc_protocol_msg
 {
@@ -29,5 +31,68 @@ struct t_irc_protocol_msg
     char *description;              /* message description                   */
     t_irc_recv_func *recv_function; /* function called when msg is received  */
 };
+
+extern int irc_protocol_is_highlight (char *, char *);
+extern int irc_protocol_recv_command (struct t_irc_server *, char *, char *, char *, char *);
+extern int irc_protocol_cmd_error (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_invite (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_join (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_kick (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_kill (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_mode (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_nick (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_notice (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_part (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_ping (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_pong (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_privmsg (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_quit (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_server_mode_reason (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_server_msg (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_server_reply (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_topic (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_wallops (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_001 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_005 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_221 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_301 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_302 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_303 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_305 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_306 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_whois_nick_msg (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_310 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_311 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_312 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_314 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_315 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_317 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_319 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_321 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_322 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_323 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_324 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_327 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_329 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_331 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_332 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_333 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_338 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_341 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_344 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_345 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_348 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_349 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_351 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_352 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_353 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_365 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_366 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_367 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_368 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_432 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_433 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_438 (struct t_irc_server *, char *, char *, char *, char *, int, int);
+extern int irc_protocol_cmd_671 (struct t_irc_server *, char *, char *, char *, char *, int, int);
 
 #endif /* irc-protocol.h */

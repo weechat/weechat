@@ -918,9 +918,9 @@ gui_window_title_reset ()
 void
 gui_window_objects_print_log (struct t_gui_window *window)
 {
-    log_printf ("  textview_chat . . . : 0x%X\n", GUI_GTK(window)->textview_chat);
-    log_printf ("  textbuffer_chat . . : 0x%X\n", GUI_GTK(window)->textbuffer_chat);
-    log_printf ("  texttag_chat. . . . : 0x%X\n", GUI_GTK(window)->texttag_chat);
-    log_printf ("  textview_nicklist . : 0x%X\n", GUI_GTK(window)->textview_nicklist);
-    log_printf ("  textbuffer_nicklist : 0x%X\n", GUI_GTK(window)->textbuffer_nicklist);
+    log_printf ("  textview_chat . . . : 0x%X", GUI_GTK(window)->textview_chat);
+    log_printf ("  textbuffer_chat . . : 0x%X", GUI_GTK(window)->textbuffer_chat);
+    log_printf ("  texttag_chat. . . . : 0x%X", GUI_GTK(window)->texttag_chat);
+    log_printf ("  textview_nicklist . : 0x%X", GUI_GTK(window)->textview_nicklist);
+    log_printf ("  textbuffer_nicklist : 0x%X", GUI_GTK(window)->textbuffer_nicklist);
 }

@@ -33,17 +33,21 @@
 #include <time.h>
 
 #include "../weechat-plugin.h"
-#include "demo.h"
 
 
-static struct t_weechat_plugin *weechat_plugin = NULL;
+char plugin_name[] = "demo";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Demo plugin for WeeChat";
+
+struct t_weechat_plugin *weechat_demo_plugin = NULL;
+#define weechat_plugin weechat_demo_plugin
 
 
 /*
  * demo_printf_command_cb: demo command for printf
  */
 
-static int
+int
 demo_printf_command_cb (void *data, void *buffer, int argc, char **argv,
                         char **argv_eol)
 {
@@ -81,7 +85,7 @@ demo_printf_command_cb (void *data, void *buffer, int argc, char **argv,
  * demo_buffer_input_data_cb: callback for input data on buffer
  */
 
-static void
+void
 demo_buffer_input_data_cb (struct t_gui_buffer *buffer, char *data)
 {
     weechat_printf (buffer, "buffer input_data_cb: data = '%s'", data);
@@ -91,7 +95,7 @@ demo_buffer_input_data_cb (struct t_gui_buffer *buffer, char *data)
  * demo_buffer_command_cb: demo command for creatig new buffer
  */
 
-static int
+int
 demo_buffer_command_cb (void *data, void *buffer, int argc, char **argv,
                         char **argv_eol)
 {
@@ -114,21 +118,21 @@ demo_buffer_command_cb (void *data, void *buffer, int argc, char **argv,
 }
 
 /*
- * demo_print_list: display a list
+ * demo_infolist_print: display an infolist
  */
 
-static void
-demo_print_list (void *list, char *item_name)
+void
+demo_infolist_print (void *infolist, char *item_name)
 {
     char *fields, **argv;
     int i, j, argc;
     time_t date;
     
     i = 1;
-    while (weechat_list_next (list))
+    while (weechat_infolist_next (infolist))
     {
         weechat_printf (NULL, "--- %s #%d ---", item_name, i);
-        fields = weechat_list_fields (list);
+        fields = weechat_infolist_fields (infolist);
         if (fields)
         {
             argv = weechat_string_explode (fields, ",", 0, 0, &argc);
@@ -141,23 +145,23 @@ demo_print_list (void *list, char *item_name)
                         case 'i':
                             weechat_printf (NULL, "  %s: %d",
                                             argv[j] + 2,
-                                            weechat_list_integer (list,
-                                                                  argv[j] + 2));
+                                            weechat_infolist_integer (infolist,
+                                                                      argv[j] + 2));
                             break;
                         case 's':
                             weechat_printf (NULL, "  %s: %s",
                                             argv[j] + 2,
-                                            weechat_list_string (list,
-                                                                 argv[j] + 2));
+                                            weechat_infolist_string (infolist,
+                                                                     argv[j] + 2));
                             break;
                         case 'p':
                             weechat_printf (NULL, "  %s: %X",
                                             argv[j] + 2,
-                                            weechat_list_pointer (list,
-                                                                  argv[j] + 2));
+                                            weechat_infolist_pointer (infolist,
+                                                                      argv[j] + 2));
                             break;
                         case 't':
-                            date = weechat_list_time (list, argv[j] + 2);
+                            date = weechat_infolist_time (infolist, argv[j] + 2);
                             weechat_printf (NULL, "  %s: (%ld) %s",
                                             argv[j] + 2,
                                             date, ctime (&date));
@@ -174,14 +178,14 @@ demo_print_list (void *list, char *item_name)
 }
 
 /*
- * demo_list_command_cb: demo command for list
+ * demo_infolist_command_cb: demo command for list
  */
 
-static int
-demo_list_command_cb (void *data, void *buffer, int argc, char **argv,
-                      char **argv_eol)
+int
+demo_infolist_command_cb (void *data, void *buffer, int argc, char **argv,
+                          char **argv_eol)
 {
-    struct t_plugin_list *list;
+    struct t_plugin_infolist *infolist;
     
     /* make C compiler happy */
     (void) data;
@@ -192,29 +196,29 @@ demo_list_command_cb (void *data, void *buffer, int argc, char **argv,
     {
         if (weechat_strcasecmp (argv[1], "buffer") == 0)
         {
-            list = weechat_list_get ("buffer", NULL);
-            if (list)
+            infolist = weechat_infolist_get ("buffer", NULL);
+            if (infolist)
             {
-                demo_print_list (list, "buffer");
-                weechat_list_free (list);
+                demo_infolist_print (infolist, "buffer");
+                weechat_infolist_free (infolist);
             }
             return PLUGIN_RC_SUCCESS;
         }
         if (weechat_strcasecmp (argv[1], "buffer_lines") == 0)
         {
-            list = weechat_list_get ("buffer_lines", NULL);
-            if (list)
+            infolist = weechat_infolist_get ("buffer_lines", NULL);
+            if (infolist)
             {
-                demo_print_list (list, "buffer_line");
-                weechat_list_free (list);
+                demo_infolist_print (infolist, "buffer_line");
+                weechat_infolist_free (infolist);
             }
             return PLUGIN_RC_SUCCESS;
         }
     }
     
     weechat_printf (NULL,
-                    "Demo: missing argument for /demo_list command "
-                    "(try /help demo_list)");
+                    "Demo: missing argument for /demo_infolist command "
+                    "(try /help demo_infolist)");
     
     return PLUGIN_RC_SUCCESS;
 }
@@ -223,7 +227,7 @@ demo_list_command_cb (void *data, void *buffer, int argc, char **argv,
  * demo_info_command_cb: demo command for info_get
  */
 
-static int
+int
 demo_info_command_cb (void *data, void *buffer, int argc, char **argv,
                       char **argv_eol)
 {
@@ -249,7 +253,7 @@ demo_info_command_cb (void *data, void *buffer, int argc, char **argv,
  * demo_event_cb: callback for event hook
  */
 
-static int
+int
 demo_event_cb (void *data, char *event, void *pointer)
 {
     /* make C compiler happy */
@@ -280,12 +284,12 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           "",
                           demo_buffer_command_cb, NULL);
     
-    weechat_hook_command ("demo_list", "demo command: get and display list",
-                          "list",
-                          "list: list to display (values: buffer, "
+    weechat_hook_command ("demo_infolist", "demo command: get and display list",
+                          "infolist",
+                          "infolist: infolist to display (values: buffer, "
                           "buffer_lines)",
                           "buffer|buffer_lines",
-                          demo_list_command_cb, NULL);
+                          demo_infolist_command_cb, NULL);
     
     weechat_hook_command ("demo_info", "demo command: get and display info",
                           "info",

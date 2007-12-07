@@ -17,11 +17,15 @@
  */
 
 
-#ifndef __WEECHAT_FIFO_H
-#define __WEECHAT_FIFO_H 1
+#ifndef __WEECHAT_IRC_DISPLAY_H
+#define __WEECHAT_IRC_DISPLAY_H 1
 
-char plugin_name[] = "fifo";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Fifo plugin for WeeChat";
+extern void irc_display_hide_password (char *, int);
+extern void irc_display_nick (struct t_gui_buffer *, struct t_irc_nick *,
+                              char *, int, int, char *, int);
+extern void irc_display_away (struct t_irc_server *, char *, char *);
+extern void irc_display_mode (struct t_gui_buffer *, char *, char *,
+                              char, char *, char *, char *, char *);
+extern void irc_display_server (struct t_irc_server *, int);
 
-#endif /* fifo.h */
+#endif /* irc-display.h */

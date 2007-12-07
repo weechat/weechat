@@ -32,21 +32,26 @@
 #include <fcntl.h>
 
 #include "../weechat-plugin.h"
-#include "fifo.h"
 
 
-static struct t_weechat_plugin *weechat_plugin = NULL;
-static int fifo_fd = -1;
-static struct t_hook *fifo_fd_hook = NULL;
-static char *fifo_filename;
-static char *fifo_unterminated = NULL;
+char plugin_name[] = "fifo";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Fifo plugin for WeeChat";
+
+struct t_weechat_plugin *weechat_fifo_plugin = NULL;
+#define weechat_plugin weechat_fifo_plugin
+
+int fifo_fd = -1;
+struct t_hook *fifo_fd_hook = NULL;
+char *fifo_filename;
+char *fifo_unterminated = NULL;
 
 
 /*
  * fifo_create: create FIFO pipe for remote control
  */
 
-static void
+void
 fifo_create ()
 {
     int filename_length;
@@ -113,7 +118,7 @@ fifo_create ()
  * fifo_remove: remove FIFO pipe
  */
 
-static void
+void
 fifo_remove ()
 {
     if (fifo_fd != -1)
@@ -148,7 +153,7 @@ fifo_remove ()
  * fifo_exec: execute a command/text received by FIFO pipe
  */
 
-static void
+void
 fifo_exec (char *text)
 {
     char *pos_msg, *pos;
@@ -211,7 +216,7 @@ fifo_exec (char *text)
  * fifo_read: read data in FIFO pipe
  */
 
-static int
+int
 fifo_read ()
 {
     static char buffer[4096 + 2];
@@ -298,7 +303,7 @@ fifo_read ()
  * fifo_config_cb: fifo config callback (called when fifo option is changed)
  */
 
-static int
+int
 fifo_config_cb (void *data, char *type, char *option, char *value)
 {
     /* make C compiler happy */

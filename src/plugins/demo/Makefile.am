@@ -20,6 +20,6 @@ libdir = ${weechat_libdir}/plugins
 
 lib_LTLIBRARIES = demo.la
 
-demo_la_SOURCES = demo.c demo.h
+demo_la_SOURCES = demo.c
 demo_la_LDFLAGS = -module
 demo_la_LIBADD  = $(DEMO_LFLAGS)

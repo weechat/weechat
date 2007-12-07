@@ -43,7 +43,7 @@
 #include "plugin.h"
 #include "plugin-api.h"
 #include "plugin-config.h"
-#include "plugin-list.h"
+#include "plugin-infolist.h"
 
 
 struct t_weechat_plugin *weechat_plugins = NULL;
@@ -237,11 +237,31 @@ plugin_load (char *filename)
         new_plugin->string_free_splitted_command = &plugin_api_string_free_splitted_command;
         
         new_plugin->mkdir_home = &plugin_api_mkdir_home;
+        new_plugin->mkdir = &plugin_api_mkdir;
         new_plugin->exec_on_files = &plugin_api_exec_on_files;
-
+        
+        new_plugin->timeval_diff = &plugin_api_timeval_diff;
+        
+        new_plugin->list_new = &plugin_api_list_new;
+        new_plugin->list_add = &plugin_api_list_add;
+        new_plugin->list_search = &plugin_api_list_search;
+        new_plugin->list_casesearch = &plugin_api_list_casesearch;
+        new_plugin->list_get = &plugin_api_list_get;
+        new_plugin->list_next = &plugin_api_list_next;
+        new_plugin->list_prev = &plugin_api_list_prev;
+        new_plugin->list_string = &plugin_api_list_string;
+        new_plugin->list_size = &plugin_api_list_size;
+        new_plugin->list_remove = &plugin_api_list_remove;
+        new_plugin->list_remove_all = &plugin_api_list_remove_all;
+        new_plugin->list_free = &plugin_api_list_free;
+        
         new_plugin->config_new = &plugin_api_config_new;
         new_plugin->config_new_section = &plugin_api_config_new_section;
+        new_plugin->config_search_section = &plugin_api_config_search_section;
         new_plugin->config_new_option = &plugin_api_config_new_option;
+        new_plugin->config_search_option = &plugin_api_config_search_option;
+        new_plugin->config_option_set = &plugin_api_config_option_set;
+        new_plugin->config_string_to_boolean = &plugin_api_config_string_to_boolean;
         new_plugin->config_boolean = &plugin_api_config_boolean;
         new_plugin->config_integer = &plugin_api_config_integer;
         new_plugin->config_string = &plugin_api_config_string;
@@ -252,7 +272,6 @@ plugin_load (char *filename)
         new_plugin->config_write_line = &plugin_api_config_write_line;
         new_plugin->config_free = &plugin_api_config_free;
         new_plugin->config_get = &plugin_api_config_get;
-        new_plugin->config_set = &plugin_api_config_set;
         new_plugin->plugin_config_get = &plugin_api_plugin_config_get;
         new_plugin->plugin_config_set = &plugin_api_plugin_config_set;
 
@@ -260,6 +279,7 @@ plugin_load (char *filename)
         new_plugin->color = &plugin_api_color;
         new_plugin->printf = &plugin_api_printf;
         new_plugin->printf_date = &plugin_api_printf_date;
+        new_plugin->log_printf = &plugin_api_log_printf;
         new_plugin->print_infobar = &plugin_api_print_infobar;
         new_plugin->infobar_remove = &plugin_api_infobar_remove;
         
@@ -283,15 +303,15 @@ plugin_load (char *filename)
         
         new_plugin->info_get = &plugin_api_info_get;
         
-        new_plugin->list_get = &plugin_api_list_get;
-        new_plugin->list_next = &plugin_api_list_next;
-        new_plugin->list_prev = &plugin_api_list_prev;
-        new_plugin->list_fields = &plugin_api_list_fields;
-        new_plugin->list_integer = &plugin_api_list_integer;
-        new_plugin->list_string = &plugin_api_list_string;
-        new_plugin->list_pointer = &plugin_api_list_pointer;
-        new_plugin->list_time = &plugin_api_list_time;
-        new_plugin->list_free = &plugin_api_list_free;
+        new_plugin->infolist_get = &plugin_api_infolist_get;
+        new_plugin->infolist_next = &plugin_api_infolist_next;
+        new_plugin->infolist_prev = &plugin_api_infolist_prev;
+        new_plugin->infolist_fields = &plugin_api_infolist_fields;
+        new_plugin->infolist_integer = &plugin_api_infolist_integer;
+        new_plugin->infolist_string = &plugin_api_infolist_string;
+        new_plugin->infolist_pointer = &plugin_api_infolist_pointer;
+        new_plugin->infolist_time = &plugin_api_infolist_time;
+        new_plugin->infolist_free = &plugin_api_infolist_free;
         
         new_plugin->log = &plugin_api_log;
         
@@ -616,17 +636,17 @@ plugin_print_log ()
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
     {
-        log_printf ("\n");
-        log_printf ("[plugin (addr:0x%X)]\n", ptr_plugin);
-        log_printf ("  filename . . . . . . . : '%s'\n", ptr_plugin->filename);
-        log_printf ("  handle . . . . . . . . : 0x%X\n", ptr_plugin->handle);
-        log_printf ("  name . . . . . . . . . : '%s'\n", ptr_plugin->name);
-        log_printf ("  description. . . . . . : '%s'\n", ptr_plugin->description);
-        log_printf ("  version. . . . . . . . : '%s'\n", ptr_plugin->version);
-        log_printf ("  charset. . . . . . . . : '%s'\n", ptr_plugin->charset);
-        log_printf ("  prev_plugin. . . . . . : 0x%X\n", ptr_plugin->prev_plugin);
-        log_printf ("  next_plugin. . . . . . : 0x%X\n", ptr_plugin->next_plugin);
+        log_printf ("");
+        log_printf ("[plugin (addr:0x%X)]", ptr_plugin);
+        log_printf ("  filename . . . . . . . : '%s'", ptr_plugin->filename);
+        log_printf ("  handle . . . . . . . . : 0x%X", ptr_plugin->handle);
+        log_printf ("  name . . . . . . . . . : '%s'", ptr_plugin->name);
+        log_printf ("  description. . . . . . : '%s'", ptr_plugin->description);
+        log_printf ("  version. . . . . . . . : '%s'", ptr_plugin->version);
+        log_printf ("  charset. . . . . . . . : '%s'", ptr_plugin->charset);
+        log_printf ("  prev_plugin. . . . . . : 0x%X", ptr_plugin->prev_plugin);
+        log_printf ("  next_plugin. . . . . . : 0x%X", ptr_plugin->next_plugin);
     }
 
-    plugin_list_print_log ();
+    plugin_infolist_print_log ();
 }

@@ -129,7 +129,7 @@ weechat_display_config_options ()
                           /* TRANSLATORS: %s is "WeeChat" */
                           _("%s configuration options:\n"),
                           PACKAGE_NAME);
-    config_file_print_stdout (weechat_config);
+    config_file_print_stdout (weechat_config_file);
 }
 
 /*
@@ -457,7 +457,7 @@ weechat_welcome_message ()
                          "%s-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-",
                          GUI_COLOR(GUI_COLOR_CHAT_NICK));
     
-    log_printf ("%s (%s %s %s)\n",
+    log_printf ("%s (%s %s %s)",
                 PACKAGE_STRING, _("compiled on"), __DATE__, __TIME__);
 }
 
@@ -496,19 +496,19 @@ weechat_dump (int crash)
     if (crash)
     {
         sigsegv = 1;
-        log_printf ("Very bad, WeeChat is crashing (SIGSEGV received)...\n");
+        log_printf ("Very bad, WeeChat is crashing (SIGSEGV received)...");
     }
     
-    log_printf ("\n");
+    log_printf ("");
     if (crash)
     {
-        log_printf ("******             WeeChat CRASH DUMP              ******\n");
-        log_printf ("****** Please send this file to WeeChat developers ******\n");
-        log_printf ("******    and explain when this crash happened     ******\n");
+        log_printf ("******             WeeChat CRASH DUMP              ******");
+        log_printf ("****** Please send this file to WeeChat developers ******");
+        log_printf ("******    and explain when this crash happened     ******");
     }
     else
     {
-        log_printf ("******            WeeChat dump request             ******\n");
+        log_printf ("******            WeeChat dump request             ******");
     }
 
     gui_window_print_log ();
@@ -517,11 +517,13 @@ weechat_dump (int crash)
     
     hook_print_log ();
     
+    config_file_print_log ();
+    
     plugin_print_log ();
     
-    log_printf ("\n");
-    log_printf ("******                 End of dump                 ******\n");
-    log_printf ("\n");
+    log_printf ("");
+    log_printf ("******                 End of dump                 ******");
+    log_printf ("");
 }
 
 /*
@@ -533,6 +535,7 @@ void
 weechat_sigsegv ()
 {
     weechat_dump (1);
+    unhook_all ();
     gui_main_end ();
 
     string_iconv_fprintf (stderr, "\n");
@@ -585,7 +588,8 @@ main (int argc, char *argv[])
     weechat_init_vars ();               /* initialize some variables        */
     command_init ();                    /* initialize WeeChat commands      */
     gui_keyboard_init ();               /* init keyb. (default key bindings)*/
-    config_weechat_init ();             /* init options with default values */
+    if (!config_weechat_init ())        /* init options with default values */
+        exit (EXIT_FAILURE);
     weechat_parse_args (argc, argv);    /* parse command line args          */
     weechat_create_home_dirs ();        /* create WeeChat directories       */
     log_init ();                        /* init log file                    */

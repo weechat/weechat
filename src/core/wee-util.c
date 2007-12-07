@@ -37,12 +37,12 @@
 
 
 /*
- * util_get_timeval_diff: calculates difference between two times (return in
- *                        milliseconds)
+ * util_timeval_diff: calculates difference between two times (return in
+ *                    milliseconds)
  */
 
 long
-util_get_timeval_diff (struct timeval *tv1, struct timeval *tv2)
+util_timeval_diff (struct timeval *tv1, struct timeval *tv2)
 {
     long diff_sec, diff_usec;
     

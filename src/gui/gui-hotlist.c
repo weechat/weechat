@@ -79,8 +79,8 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist, struct t_gui_hotlist *new_h
             {
                 if ((new_hotlist->priority > ptr_hotlist->priority)
                     || ((new_hotlist->priority == ptr_hotlist->priority)
-                        && (util_get_timeval_diff (&(new_hotlist->creation_time),
-                                                   &(ptr_hotlist->creation_time)) > 0)))
+                        && (util_timeval_diff (&(new_hotlist->creation_time),
+                                               &(ptr_hotlist->creation_time)) > 0)))
                     return ptr_hotlist;
             }
             break;
@@ -90,7 +90,7 @@ gui_hotlist_find_pos (struct t_gui_hotlist *hotlist, struct t_gui_hotlist *new_h
             {
                 if ((new_hotlist->priority > ptr_hotlist->priority)
                     || ((new_hotlist->priority == ptr_hotlist->priority)
-                        && (util_get_timeval_diff (&(new_hotlist->creation_time),
+                        && (util_timeval_diff (&(new_hotlist->creation_time),
                                                    &(ptr_hotlist->creation_time)) < 0)))
                     return ptr_hotlist;
             }
@@ -209,9 +209,8 @@ gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
     
     if ((new_hotlist = (struct t_gui_hotlist *) malloc (sizeof (struct t_gui_hotlist))) == NULL)
     {
-        log_printf (NULL,
-                    _("Error: not enough memory to add a buffer to "
-                      "hotlist\n"));
+        log_printf (_("Error: not enough memory to add a buffer to "
+                      "hotlist"));
         return;
     }
     
@@ -346,13 +345,13 @@ gui_hotlist_print_log ()
     for (ptr_hotlist = gui_hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
     {
-        log_printf ("[hotlist (addr:0x%X)]\n", ptr_hotlist);
-        log_printf ("  priority . . . . . . . : %d\n",   ptr_hotlist->priority);
-        log_printf ("  creation_time. . . . . : tv_sec:%d, tv_usec:%d\n",
+        log_printf ("[hotlist (addr:0x%X)]", ptr_hotlist);
+        log_printf ("  priority . . . . . . . : %d",   ptr_hotlist->priority);
+        log_printf ("  creation_time. . . . . : tv_sec:%d, tv_usec:%d",
                     ptr_hotlist->creation_time.tv_sec,
                     ptr_hotlist->creation_time.tv_usec);
-        log_printf ("  buffer . . . . . . . . : 0x%X\n", ptr_hotlist->buffer);
-        log_printf ("  prev_hotlist . . . . . : 0x%X\n", ptr_hotlist->prev_hotlist);
-        log_printf ("  next_hotlist . . . . . : 0x%X\n", ptr_hotlist->next_hotlist);
+        log_printf ("  buffer . . . . . . . . : 0x%X", ptr_hotlist->buffer);
+        log_printf ("  prev_hotlist . . . . . : 0x%X", ptr_hotlist->prev_hotlist);
+        log_printf ("  next_hotlist . . . . . : 0x%X", ptr_hotlist->next_hotlist);
     }
 }

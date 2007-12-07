@@ -52,7 +52,8 @@ gui_color_search_config (char *color_name)
 
     if (color_name)
     {
-        ptr_section = config_file_search_section (weechat_config, "colors");
+        ptr_section = config_file_search_section (weechat_config_file,
+                                                  "colors");
         if (ptr_section)
         {
             for (ptr_option = ptr_section->options; ptr_option;

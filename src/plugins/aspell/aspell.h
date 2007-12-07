@@ -23,16 +23,6 @@
 
 #include <aspell.h>
 
-#define _PLUGIN_NAME    "Aspell"
-#define _PLUGIN_VERSION "0.1"
-#define _PLUGIN_DESC    "Aspell plugin for WeeChat"
-#define _PLUGIN_COMMAND "aspell"
-
-char plugin_name[]        = _PLUGIN_NAME;
-char plugin_version[]     = _PLUGIN_VERSION;
-char plugin_description[] = _PLUGIN_DESC;
-char plugin_command[]     = _PLUGIN_COMMAND;
-
 #define _PLUGIN_OPTION_WORD_SIZE 2
 #define _PLUGIN_OPTION_CHECK_SYNC 0
 #define _PLUGIN_OPTION_COLOR "red"

@@ -836,14 +836,14 @@ session_load_server (FILE *file)
     }
     
     // use or allocate server
-    weechat_log_printf (_("session: loading server \"%s\"\n"),
-                        server_name);
+    log_printf (_("session: loading server \"%s\""),
+                server_name);
     session_current_server = irc_server_search (server_name);
     if (session_current_server)
-        weechat_log_printf (_("server found, updating values\n"));
+        log_printf (_("server found, updating values"));
     else
     {
-        weechat_log_printf (_("server not found, creating new one\n"));
+        log_printf (_("server not found, creating new one"));
         session_current_server = irc_server_alloc ();
         if (!session_current_server)
         {
@@ -1026,9 +1026,9 @@ session_load_server (FILE *file)
                 rc = rc && (session_read_ignore_value (file));
                 break;
             default:
-                weechat_log_printf (_("session: warning: ignoring value from "
-                                      "server (object id: %d)\n"),
-                                    object_id);
+                log_printf (_("session: warning: ignoring value from "
+                            "server (object id: %d)"),
+                            object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1069,8 +1069,8 @@ session_load_channel (FILE *file)
     }
     
     // allocate channel
-    weechat_log_printf (_("session: loading channel \"%s\"\n"),
-                        channel_name);
+    log_printf (_("session: loading channel \"%s\""),
+                channel_name);
     session_current_channel = irc_channel_new (session_current_server,
                                                channel_type,
                                                channel_name);
@@ -1129,9 +1129,9 @@ session_load_channel (FILE *file)
                 rc = rc && (session_read_int (file, &(session_current_channel->display_creation_date)));
                 break;
             default:
-                weechat_log_printf (_("session: warning: ignoring value from "
-                                      "channel (object id: %d)\n"),
-                                    object_id);
+                log_printf (_("session: warning: ignoring value from "
+                            "channel (object id: %d)"),
+                            object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1200,9 +1200,9 @@ session_load_nick (FILE *file)
                 rc = rc && (session_read_str (file, &(nick->host)));
                 break;
             default:
-                weechat_log_printf (_("session: warning: ignoring value from "
-                                      "nick (object id: %d)\n"),
-                                    object_id);
+                log_printf (_("session: warning: ignoring value from "
+                            "nick (object id: %d)"),
+                            object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1231,7 +1231,7 @@ session_load_dcc (FILE *file)
         return 0;
     }
     
-    weechat_log_printf (_("session: loading DCC\n"));
+    log_printf (_("session: loading DCC"));
     
     // read DCC values
     ptr_server = NULL;
@@ -1364,9 +1364,9 @@ session_load_dcc (FILE *file)
                 rc = rc && (session_read_int (file, &(dcc->child_write)));
                 break;
             default:
-                weechat_log_printf (_("session: warning: ignoring value from "
-                                      "DCC (object id: %d)\n"),
-                                    object_id);
+                log_printf (_("session: warning: ignoring value from "
+                            "DCC (object id: %d)"),
+                            object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1385,9 +1385,9 @@ session_load_history (FILE *file)
     char *text;
     
     if (session_current_buffer)
-        weechat_log_printf (_("session: loading buffer history\n"));
+        log_printf (_("session: loading buffer history"));
     else
-        weechat_log_printf (_("session: loading global history\n"));
+        log_printf (_("session: loading global history"));
     
     // read history values
     rc = 1;
@@ -1415,9 +1415,9 @@ session_load_history (FILE *file)
                 free (text);
                 break;
             default:
-                weechat_log_printf (_("session: warning: ignoring value from "
-                                      "history (object id: %d)\n"),
-                                    object_id);
+                log_printf (_("session: warning: ignoring value from "
+                            "history (object id: %d)"),
+                            object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1462,10 +1462,10 @@ session_load_buffer (FILE *file)
     }
     
     // allocate buffer
-    weechat_log_printf (_("session: loading buffer (server: %s, channel: %s, type: %d)\n"),
-                        (server_name) ? server_name : "-",
-                        (channel_name) ? channel_name : "-",
-                        buffer_type);
+    log_printf (_("session: loading buffer (server: %s, channel: %s, type: %d)"),
+                (server_name) ? server_name : "-",
+                (channel_name) ? channel_name : "-",
+                buffer_type);
     ptr_server = NULL;
     ptr_channel = NULL;
     if (server_name)
@@ -1519,9 +1519,9 @@ session_load_buffer (FILE *file)
                 rc = rc && (session_read_int (file, &(session_current_buffer->all_servers)));
                 break;
             default:
-                weechat_log_printf (_("session: warning: ignoring value from "
-                                      "buffer (object id: %d)\n"),
-                                    object_id);
+                log_printf (_("session: warning: ignoring value from "
+                            "buffer (object id: %d)"),
+                            object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1600,9 +1600,9 @@ session_load_line (FILE *file)
                 rc = rc && (session_read_buf (file, &(line->date), sizeof (time_t)));
                 break;
             default:
-                weechat_log_printf (_("session: warning: ignoring value from "
-                                      "line (object id: %d)\n"),
-                                    object_id);
+                log_printf (_("session: warning: ignoring value from "
+                            "line (object id: %d)"),
+                            object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1638,9 +1638,9 @@ session_load_uptime (FILE *file)
                 rc = rc && (session_read_buf (file, &weechat_start_time, sizeof (time_t)));
                 break;
             default:
-                weechat_log_printf (_("session: warning: ignoring value from "
-                                      "uptime (object id: %d)\n"),
-                                    object_id);
+                log_printf (_("session: warning: ignoring value from "
+                            "uptime (object id: %d)"),
+                            object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1703,9 +1703,9 @@ session_load_hotlist (FILE *file)
                 rc = rc && (session_read_buf (file, &creation_time, sizeof (struct timeval)));
                 break;
             default:
-                weechat_log_printf (_("session: warning: ignoring value from "
-                                      "history (object id: %d)\n"),
-                                    object_id);
+                log_printf (_("session: warning: ignoring value from "
+                            "history (object id: %d)"),
+                            object_id);
                 rc = rc && (session_read_ignore_value (file));
                 break;
         }
@@ -1826,8 +1826,8 @@ session_load (char *filename)
                 }
                 break;
             default:
-                weechat_log_printf (_("ignoring object (id: %d)\n"),
-                                    object_id);
+                log_printf (_("ignoring object (id: %d)"),
+                            object_id);
                 if (!session_read_ignore_object (file))
                 {
                     session_crash (file, _("failed to ignore object (id: %d)"),

@@ -23,22 +23,28 @@
 #include "config.h"
 #endif
 
+#include <stdlib.h>
+
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
 #endif
 
-#include "../../core/weechat.h"
 #include "irc.h"
-#include "../../core/log.h"
-#include "../../gui/gui.h"
+#include "irc-config.h"
+#include "irc-server.h"
 
 
-static struct t_weechat_plugin *weechat_plugin = NULL;
-static struct t_hook *irc_hook_timer = NULL;
-static struct t_hook *irc_hook_timer_check_away = NULL;
+char plugin_name[] = "irc";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "IRC (Internet Relay Chat)";
+
+struct t_weechat_plugin *weechat_irc_plugin = NULL;
+
+struct t_hook *irc_timer = NULL;
+struct t_hook *irc_timer_check_away = NULL;
 
 #ifdef HAVE_GNUTLS
-gnutls_certificate_credentials gnutls_xcred;   /* gnutls client credentials */
+gnutls_certificate_credentials gnutls_xcred; /* gnutls client credentials */
 #endif
 
 
@@ -46,7 +52,7 @@ gnutls_certificate_credentials gnutls_xcred;   /* gnutls client credentials */
  * irc_dump: dump IRC data in WeeChat log file
  */
 
-static int
+/*int
 irc_dump ()
 {
     struct t_irc_server *ptr_server;
@@ -56,19 +62,19 @@ irc_dump ()
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        weechat_log_printf ("\n");
+        weechat_log_printf ("");
         irc_server_print_log (ptr_server);
         
         for (ptr_channel = ptr_server->channels; ptr_channel;
             ptr_channel = ptr_channel->next_channel)
         {
-            weechat_log_printf ("\n");
+            weechat_log_printf ("");
             irc_channel_print_log (ptr_channel);
             
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                 ptr_nick = ptr_nick->next_nick)
             {
-                weechat_log_printf ("\n");
+                weechat_log_printf ("");
                 irc_nick_print_log (ptr_nick);
             }
         }
@@ -78,7 +84,34 @@ irc_dump ()
     
     return PLUGIN_RC_SUCCESS;
 }
- 
+*/
+
+/*
+ * irc_create_directories: create directories for IRC plugin
+ */
+
+void
+irc_create_directories ()
+{
+    char *weechat_dir, *dir1, *dir2;
+    
+    /* create DCC download directory */
+    weechat_dir = weechat_info_get ("weechat_dir");
+    if (weechat_dir)
+    {
+        dir1 = weechat_string_replace (weechat_config_string (irc_config_dcc_download_path),
+                                       "~", getenv ("HOME"));
+        dir2 = weechat_string_replace (dir1, "%h", weechat_dir);
+        if (dir2)
+            (void) weechat_mkdir (dir2, 0700);
+        if (dir1)
+            free (dir1);
+        if (dir2)
+            free (dir2);
+        free (weechat_dir);
+    }
+}
+
 /*
  * weechat_plugin_init: initialize IRC plugin
  */
@@ -95,17 +128,24 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     gnutls_certificate_set_x509_trust_file (gnutls_xcred, "ca.pem", GNUTLS_X509_FMT_PEM);
 #endif
     
-    irc_config_read ();
+    if (!irc_config_init ())
+        return PLUGIN_RC_FAILED;
+
+    if (irc_config_read () < 0)
+        return PLUGIN_RC_FAILED;
+
+    irc_create_directories ();
     
-    irc_server_auto_connect (1, 0);
+    //irc_server_auto_connect (1, 0);
     
-    irc_hook_timer = weechat_hook_add_timer (1 * 1000,
-                                             irc_server_timer,
-                                             NULL);
+    /*irc_timer = weechat_hook_timer (1 * 1000, 0,
+                                    irc_server_timer,
+                                    NULL);
     if (irc_cfg_irc_away_check != 0)
-        weechat_hook_timer (irc_cfg_irc_away_check * 60 * 1000,
-                            irc_server_timer_check_away,
-                            NULL);
+        irc_timer_check_away = weechat_hook_timer (irc_cfg_irc_away_check * 60 * 1000,
+                                                   0,
+                                                   irc_server_timer_check_away,
+                                                   NULL);*/
     
     return PLUGIN_RC_SUCCESS;
 }
@@ -117,20 +157,20 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 int
 weechat_plugin_end ()
 {
-    if (irc_hook_timer)
+    if (irc_timer)
     {
-        weechat_unhook (irc_hook_timer);
-        irc_hook_timer = NULL;
+        weechat_unhook (irc_timer);
+        irc_timer = NULL;
     }
-    if (irc_hook_timer_check_away)
+    if (irc_timer_check_away)
     {
-        weechat_unhook (irc_hook_timer_check_away);
-        irc_hook_timer_check_away = NULL;
+        weechat_unhook (irc_timer_check_away);
+        irc_timer_check_away = NULL;
     }
     
-    irc_server_disconnect_all ();
-    irc_dcc_end ();
-    irc_server_free_all ();
+    //irc_server_disconnect_all ();
+    //irc_dcc_end ();
+    //irc_server_free_all ();
     
     irc_config_write ();
 

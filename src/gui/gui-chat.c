@@ -411,7 +411,7 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
     new_line = (struct t_gui_line *) malloc (sizeof (struct t_gui_line));
     if (!new_line)
     {
-        log_printf (_("Not enough memory for new line\n"));
+        log_printf (_("Not enough memory for new line"));
         return;
     }
     

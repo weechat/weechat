@@ -72,7 +72,7 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
             free (buf2);
     }
     else
-        log_printf (_("Error: not enough memory for infobar message\n"));
+        log_printf (_("Error: not enough memory for infobar message"));
 }
 
 /*

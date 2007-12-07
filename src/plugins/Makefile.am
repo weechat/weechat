@@ -25,8 +25,8 @@ lib_weechat_plugins_a_SOURCES = weechat-plugin.h \
                                 plugin-api.h \
                                 plugin-config.c \
                                 plugin-config.h \
-                                plugin-list.c \
-                                plugin-list.h
+                                plugin-infolist.c \
+                                plugin-infolist.h
 
 if PLUGIN_IRC
 irc_dir = irc

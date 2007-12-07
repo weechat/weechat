@@ -39,7 +39,7 @@
 #include "../../core/weechat-config.h"
 
 
-t_irc_protocol_msg irc_protocol_messages[] =
+struct t_irc_protocol_msg irc_protocol_messages[] =
 { { "error", N_("error received from IRC server"), irc_protocol_cmd_error },
   { "invite", N_("invite a nick on a channel"), irc_protocol_cmd_invite },
   { "join", N_("join a channel"), irc_protocol_cmd_join },
@@ -338,7 +338,7 @@ irc_protocol_is_highlight (char *message, char *nick)
  */ 
 
 char *
-irc_protocol_replace_vars (t_irc_server *server, t_irc_channel *channel, char *string)
+irc_protocol_replace_vars (struct t_irc_server *server, struct t_irc_channel *channel, char *string)
 {
     char *var_nick, *var_channel, *var_server;
     char empty_string[1] = { '\0' };
@@ -381,13 +381,13 @@ irc_protocol_replace_vars (t_irc_server *server, t_irc_channel *channel, char *s
  */
 
 int
-irc_protocol_recv_command (t_irc_server *server, char *entire_line,
+irc_protocol_recv_command (struct t_irc_server *server, char *entire_line,
                            char *host, char *command, char *arguments)
 {
     int i, cmd_found, return_code, ignore, highlight;
     char *pos, *nick;
     char *dup_entire_line, *dup_host, *dup_arguments, *irc_message;
-    t_irc_recv_func *cmd_recv_func;
+    struct t_irc_recv_func *cmd_recv_func;
     char *cmd_name;
     
     if (!command)
@@ -474,13 +474,13 @@ irc_protocol_recv_command (t_irc_server *server, char *entire_line,
  */
 
 int
-irc_protocol_cmd_error (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_error (struct t_irc_server *server, char *irc_message, char *host,
                         char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos;
     int first;
-    t_gui_buffer *ptr_buffer;
-    t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
+    struct t_irc_channel *ptr_channel;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -557,7 +557,7 @@ irc_protocol_cmd_error (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_invite (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_invite (struct t_irc_server *server, char *irc_message, char *host,
                          char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_channel;
@@ -614,11 +614,11 @@ irc_protocol_cmd_invite (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_join (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_join (struct t_irc_server *server, char *irc_message, char *host,
                        char *nick, char *arguments, int ignore, int highlight)
 {
-    t_irc_channel *ptr_channel;
-    t_irc_nick *ptr_nick;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     char *pos;
 
     /* make C compiler happy */
@@ -697,12 +697,12 @@ irc_protocol_cmd_join (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_kick (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_kick (struct t_irc_server *server, char *irc_message, char *host,
                        char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick, *pos_comment;
-    t_irc_channel *ptr_channel;
-    t_irc_nick *ptr_nick;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -795,11 +795,11 @@ irc_protocol_cmd_kick (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_kill (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_kill (struct t_irc_server *server, char *irc_message, char *host,
                        char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_host2, *pos_comment;
-    t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -871,11 +871,11 @@ irc_protocol_cmd_kill (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_mode (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_mode (struct t_irc_server *server, char *irc_message, char *host,
                        char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_modes, *pos;
-    t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -970,13 +970,13 @@ irc_protocol_cmd_mode (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_nick (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_nick (struct t_irc_server *server, char *irc_message, char *host,
                        char *nick, char *arguments, int ignore, int highlight)
 {
-    t_irc_channel *ptr_channel;
-    t_irc_nick *ptr_nick;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     int nick_is_me;
-    t_gui_window *ptr_window;
+    struct t_gui_window *ptr_window;
 
     /* make C compiler happy */
     (void) irc_message;
@@ -1070,13 +1070,13 @@ irc_protocol_cmd_nick (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_notice (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_notice (struct t_irc_server *server, char *irc_message, char *host,
                          char *nick, char *arguments, int ignore, int highlight)
 {
     char *host2, *pos, *pos2, *pos_usec;
     struct timeval tv;
     long sec1, usec1, sec2, usec2, difftime;
-    t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel;
     int highlight_displayed;
     
     /* make C compiler happy */
@@ -1282,13 +1282,13 @@ irc_protocol_cmd_notice (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_part (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_part (struct t_irc_server *server, char *irc_message, char *host,
                        char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos, *pos_args, *join_string;
     int join_length;
-    t_irc_channel *ptr_channel;
-    t_irc_nick *ptr_nick;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -1412,7 +1412,7 @@ irc_protocol_cmd_part (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_ping (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_ping (struct t_irc_server *server, char *irc_message, char *host,
                        char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos;
@@ -1441,7 +1441,7 @@ irc_protocol_cmd_ping (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_pong (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_pong (struct t_irc_server *server, char *irc_message, char *host,
                        char *nick, char *arguments, int ignore, int highlight)
 {
     struct timeval tv;
@@ -1477,12 +1477,12 @@ irc_protocol_cmd_pong (t_irc_server *server, char *irc_message, char *host,
  */
 
 void
-irc_cmd_reply_version (t_irc_server *server, t_irc_channel *channel,
+irc_cmd_reply_version (struct t_irc_server *server, struct t_irc_channel *channel,
                        char *nick, char *message, int ignore)
 {
     char *pos;
     struct utsname *buf;
-    t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer;
     
     ptr_buffer = (channel) ? channel->buffer : server->buffer;
     
@@ -1540,13 +1540,13 @@ irc_cmd_reply_version (t_irc_server *server, t_irc_channel *channel,
  */
 
 int
-irc_protocol_cmd_privmsg (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *host,
                           char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos, *pos2, *host2;
     char *pos_file, *pos_addr, *pos_port, *pos_size, *pos_start_resume;  /* for DCC */
-    t_irc_channel *ptr_channel;
-    t_irc_nick *ptr_nick;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     int highlight_displayed;
     
     /* make C compiler happy */
@@ -2302,12 +2302,12 @@ irc_protocol_cmd_privmsg (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_quit (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_quit (struct t_irc_server *server, char *irc_message, char *host,
                        char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos;
-    t_irc_channel *ptr_channel;
-    t_irc_nick *ptr_nick;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -2372,7 +2372,7 @@ irc_protocol_cmd_quit (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_server_mode_reason (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_server_mode_reason (struct t_irc_server *server, char *irc_message, char *host,
                                      char *nick, char *arguments, int ignore, int highlight)
 {
     char *ptr_msg;
@@ -2416,7 +2416,7 @@ irc_protocol_cmd_server_mode_reason (t_irc_server *server, char *irc_message, ch
  */
 
 int
-irc_protocol_cmd_server_msg (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_server_msg (struct t_irc_server *server, char *irc_message, char *host,
                              char *nick, char *arguments, int ignore, int highlight)
 {
     /* make C compiler happy */
@@ -2452,12 +2452,12 @@ irc_protocol_cmd_server_msg (t_irc_server *server, char *irc_message, char *host
  */
 
 int
-irc_protocol_cmd_topic (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_topic (struct t_irc_server *server, char *irc_message, char *host,
                         char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos;
-    t_irc_channel *ptr_channel;
-    t_gui_buffer *buffer;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *buffer;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -2531,7 +2531,7 @@ irc_protocol_cmd_topic (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_wallops (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_wallops (struct t_irc_server *server, char *irc_message, char *host,
                           char *nick, char *arguments, int ignore, int highlight)
 {
     /* make C compiler happy */
@@ -2559,7 +2559,7 @@ irc_protocol_cmd_wallops (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_001 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_001 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos;
@@ -2630,7 +2630,7 @@ irc_protocol_cmd_001 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_005 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_005 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos, *pos2;
@@ -2667,7 +2667,7 @@ irc_protocol_cmd_005 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_221 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_221 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_mode;
@@ -2716,12 +2716,12 @@ irc_protocol_cmd_221 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_301 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_301 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick, *pos_message;
-    t_irc_channel *ptr_channel;
-    t_gui_buffer *ptr_buffer;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
     
     /* make C compiler happy */
     (void) server;
@@ -2778,7 +2778,7 @@ irc_protocol_cmd_301 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_302 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_302 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_host, *ptr_next;
@@ -2839,7 +2839,7 @@ irc_protocol_cmd_302 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_303 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_303 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *ptr_next;
@@ -2889,10 +2889,10 @@ irc_protocol_cmd_303 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_305 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_305 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
-    t_gui_window *ptr_window;
+    struct t_gui_window *ptr_window;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -2929,10 +2929,10 @@ irc_protocol_cmd_305 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_306 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_306 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
-    t_gui_window *ptr_window;
+    struct t_gui_window *ptr_window;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -2975,7 +2975,7 @@ irc_protocol_cmd_306 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_whois_nick_msg (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_whois_nick_msg (struct t_irc_server *server, char *irc_message, char *host,
                                  char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick, *pos_msg;
@@ -3021,7 +3021,7 @@ irc_protocol_cmd_whois_nick_msg (t_irc_server *server, char *irc_message, char *
  */
 
 int
-irc_protocol_cmd_310 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_310 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick;
@@ -3057,7 +3057,7 @@ irc_protocol_cmd_310 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_311 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_311 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick, *pos_user, *pos_host, *pos_realname;
@@ -3128,7 +3128,7 @@ irc_protocol_cmd_311 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_312 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_312 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick, *pos_server, *pos_serverinfo;
@@ -3187,7 +3187,7 @@ irc_protocol_cmd_312 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_314 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_314 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick, *pos_user, *pos_host, *pos_realname;
@@ -3261,11 +3261,11 @@ irc_protocol_cmd_314 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_315 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_315 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos;
-    t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -3315,7 +3315,7 @@ irc_protocol_cmd_315 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_317 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_317 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick, *pos_idle, *pos_signon, *pos_message;
@@ -3405,7 +3405,7 @@ irc_protocol_cmd_317 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_319 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_319 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick, *pos_channel, *pos;
@@ -3502,7 +3502,7 @@ irc_protocol_cmd_319 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_321 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_321 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos;
@@ -3536,7 +3536,7 @@ irc_protocol_cmd_321 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_322 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_322 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos;
@@ -3576,7 +3576,7 @@ irc_protocol_cmd_322 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_323 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_323 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos;
@@ -3610,11 +3610,11 @@ irc_protocol_cmd_323 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_324 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_324 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_channel, *pos_modes, *pos;
-    t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -3681,7 +3681,7 @@ irc_protocol_cmd_324 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_327 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_327 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick, *pos_host1, *pos_host2, *pos_other;
@@ -3750,11 +3750,11 @@ irc_protocol_cmd_327 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_329 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_329 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_channel, *pos_date;
-    t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel;
     time_t datetime;
     
     /* make C compiler happy */
@@ -3820,11 +3820,11 @@ irc_protocol_cmd_329 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_331 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_331 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_channel, *pos;
-    t_irc_channel *ptr_channel;
+    struct t_irc_channel *ptr_channel;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -3869,12 +3869,12 @@ irc_protocol_cmd_331 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_332 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_332 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos, *pos2;
-    t_irc_channel *ptr_channel;
-    t_gui_buffer *ptr_buffer;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -3935,12 +3935,12 @@ irc_protocol_cmd_332 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_333 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_333 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_channel, *pos_nick, *pos_date;
-    t_irc_channel *ptr_channel;
-    t_gui_buffer *ptr_buffer;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
     time_t datetime;
     
     /* make C compiler happy */
@@ -4006,7 +4006,7 @@ irc_protocol_cmd_333 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_338 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_338 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick, *pos_host, *pos_message;
@@ -4065,7 +4065,7 @@ irc_protocol_cmd_338 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_341 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_341 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick, *pos_channel;
@@ -4134,7 +4134,7 @@ irc_protocol_cmd_341 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_344 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_344 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_channel, *pos_host;
@@ -4178,7 +4178,7 @@ irc_protocol_cmd_344 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_345 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_345 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos;
@@ -4223,12 +4223,12 @@ irc_protocol_cmd_345 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_348 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_348 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_channel, *pos_exception, *pos_user, *pos_date, *pos;
-    t_irc_channel *ptr_channel;
-    t_gui_buffer *buffer;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *buffer;
     time_t datetime;
     
     /* make C compiler happy */
@@ -4342,12 +4342,12 @@ irc_protocol_cmd_348 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_349 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_349 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_channel, *pos_msg;
-    t_irc_channel *ptr_channel;
-    t_gui_buffer *buffer;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *buffer;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -4405,7 +4405,7 @@ irc_protocol_cmd_349 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_351 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_351 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos, *pos2;
@@ -4448,14 +4448,14 @@ irc_protocol_cmd_351 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_352 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_352 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_channel, *pos_user, *pos_host, *pos_server, *pos_nick;
     char *pos_attr, *pos_hopcount, *pos_realname;
     int length;
-    t_irc_channel *ptr_channel;
-    t_irc_nick *ptr_nick;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -4576,15 +4576,15 @@ irc_protocol_cmd_352 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_353 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_353 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos, *pos_nick;
     int is_chanowner, is_chanadmin, is_chanadmin2, is_op, is_halfop;
     int has_voice, is_chanuser;
     int prefix_found, color;
-    t_irc_channel *ptr_channel;
-    t_gui_buffer *ptr_buffer;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *ptr_buffer;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -4762,12 +4762,12 @@ irc_protocol_cmd_353 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_366 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_366 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos, *pos2;
-    t_irc_channel *ptr_channel;
-    t_irc_nick *ptr_nick;
+    struct t_irc_channel *ptr_channel;
+    struct t_irc_nick *ptr_nick;
     int num_nicks, num_op, num_halfop, num_voice, num_normal;
     
     /* make C compiler happy */
@@ -4873,12 +4873,12 @@ irc_protocol_cmd_366 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_367 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_367 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_channel, *pos_ban, *pos_user, *pos_date, *pos;
-    t_irc_channel *ptr_channel;
-    t_gui_buffer *buffer;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *buffer;
     time_t datetime;
     
     /* make C compiler happy */
@@ -5000,12 +5000,12 @@ irc_protocol_cmd_367 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_368 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_368 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_channel, *pos_msg;
-    t_irc_channel *ptr_channel;
-    t_gui_buffer *buffer;
+    struct t_irc_channel *ptr_channel;
+    struct t_gui_buffer *buffer;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -5063,7 +5063,7 @@ irc_protocol_cmd_368 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_432 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_432 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     /* Note: this IRC command can not be ignored */
@@ -5123,7 +5123,7 @@ irc_protocol_cmd_432 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_433 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_433 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     /* Note: this IRC command can not be ignored */
@@ -5186,7 +5186,7 @@ irc_protocol_cmd_433 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_438 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_438 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos, *pos2;
@@ -5231,7 +5231,7 @@ irc_protocol_cmd_438 (t_irc_server *server, char *irc_message, char *host,
  */
 
 int
-irc_protocol_cmd_671 (t_irc_server *server, char *irc_message, char *host,
+irc_protocol_cmd_671 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
     char *pos_nick, *pos_message;

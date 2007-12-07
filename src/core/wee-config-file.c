@@ -25,6 +25,7 @@
 
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdarg.h>
 #include <string.h>
 #include <sys/stat.h>
 
@@ -127,8 +128,8 @@ config_file_valid_for_plugin (void *plugin, struct t_config_file *config_file)
 struct t_config_section *
 config_file_new_section (struct t_config_file *config_file, char *name,
                          void (*callback_read)(void *, char *, char *),
-                         void (*callback_write)(void *),
-                         void (*callback_write_default)(void *))
+                         void (*callback_write)(void *, char *),
+                         void (*callback_write_default)(void *, char *))
 {
     struct t_config_section *new_section;
     
@@ -179,213 +180,151 @@ config_file_search_section (struct t_config_file *config_file,
 }
 
 /*
- * config_file_new_option_boolean: create a new option, type "boolean"
- *                                 in a config section
+ * config_file_section_valid_for_plugin: check if a section pointer exists for a plugin
+ *                                       return 1 if section exists for plugin
+ *                                              0 if section is not found for plugin
+ */
+
+int
+config_file_section_valid_for_plugin (void *plugin,
+                                      struct t_config_section *section)
+{
+    struct t_config_file *ptr_config;
+    struct t_config_section *ptr_section;
+    
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        if (ptr_config->plugin == (struct t_weechat_plugin *)plugin)
+        {
+            for (ptr_section = ptr_config->sections; ptr_section;
+                 ptr_section = ptr_section->next_section)
+            {
+                if (ptr_section == section)
+                    return 1;
+            }
+        }
+    }
+    
+    /* section not found */
+    return 0;
+}
+
+/*
+ * config_file_new_option: create a new option in a config section
  */
 
 struct t_config_option *
-config_file_new_option_boolean (struct t_config_section *section, char *name,
-                                char *description, int default_value,
-                                void (*callback_change)())
+config_file_new_option (struct t_config_section *section, char *name,
+                        char *type, char *description, char *string_values,
+                        int min, int max, char *default_value,
+                        void (*callback_change)())
 {
     struct t_config_option *new_option;
+    int var_type, int_value, argc, i, index_value;
+    long number;
+    char *error;
     
     if (!section || !name)
         return NULL;
     
-    new_option = (struct t_config_option *)malloc (sizeof (struct t_config_option));
-    if (new_option)
+    var_type = -1;
+    if (string_strcasecmp (type, "boolean") == 0)
+        var_type = CONFIG_OPTION_BOOLEAN;
+    if (string_strcasecmp (type, "integer") == 0)
+        var_type = CONFIG_OPTION_INTEGER;
+    if (string_strcasecmp (type, "string") == 0)
+        var_type = CONFIG_OPTION_STRING;
+    if (string_strcasecmp (type, "color") == 0)
+        var_type = CONFIG_OPTION_COLOR;
+    
+    if (var_type < 0)
     {
-        new_option->name = strdup (name);
-        new_option->type = CONFIG_OPTION_BOOLEAN;
-        new_option->description = (description) ? strdup (description) : NULL;
-        new_option->string_values = NULL;
-        new_option->min = CONFIG_BOOLEAN_FALSE;
-        new_option->max = CONFIG_BOOLEAN_TRUE;
-        default_value = (default_value) ?
-            CONFIG_BOOLEAN_TRUE : CONFIG_BOOLEAN_FALSE;
-        new_option->default_value = malloc (sizeof (char));
-        *((char *)new_option->default_value) = default_value;
-        new_option->value = malloc (sizeof (char));
-        *((char *)new_option->value) = default_value;
-        new_option->callback_change = callback_change;
-        new_option->loaded = 0;
-        
-        new_option->prev_option = section->last_option;
-        new_option->next_option = NULL;
-        if (section->options)
-            section->last_option->next_option = new_option;
-        else
-            section->options = new_option;
-        section->last_option = new_option;
+        gui_chat_printf (NULL, "%sError: unknown option type \"%s\"",
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         type);
+        return NULL;
     }
     
-    return new_option;
-}
-
-/*
- * config_file_new_option_integer: create a new option, type "integer"
- *                                 in a config section
- */
-
-struct t_config_option *
-config_file_new_option_integer (struct t_config_section *section, char *name,
-                                char *description, int min, int max,
-                                int default_value, void (*callback_change)())
-{
-    struct t_config_option *new_option;
-    
-    if (!section || !name)
-        return NULL;
-    
     new_option = (struct t_config_option *)malloc (sizeof (struct t_config_option));
     if (new_option)
     {
         new_option->name = strdup (name);
-        new_option->type = CONFIG_OPTION_INTEGER;
+        new_option->type = var_type;
         new_option->description = (description) ? strdup (description) : NULL;
-        new_option->string_values = NULL;
-        new_option->min = min;
-        new_option->max = max;
-        new_option->default_value = malloc (sizeof (int));
-        *((int *)new_option->default_value) = default_value;
-        new_option->value = malloc (sizeof (int));
-        *((int *)new_option->value) = default_value;
-        new_option->callback_change = callback_change;
-        new_option->loaded = 0;
-        
-        new_option->prev_option = section->last_option;
-        new_option->next_option = NULL;
-        if (section->options)
-            section->last_option->next_option = new_option;
-        else
-            section->options = new_option;
-        section->last_option = new_option;
-    }
-    
-    return new_option;
-}
-
-/*
- * config_file_new_option_integer_with_string: create a new option, type "integer"
- *                                             (with string) in a config section
- */
-
-struct t_config_option *
-config_file_new_option_integer_with_string (struct t_config_section *section,
-                                            char *name, char *description,
-                                            char *string_values,
-                                            int default_value,
-                                            void (*callback_change)())
-{
-    struct t_config_option *new_option;
-    int argc;
-    
-    if (!section || !name || !string_values)
-        return NULL;
-    
-    new_option = (struct t_config_option *)malloc (sizeof (struct t_config_option));
-    if (new_option)
-    {
-        new_option->name = strdup (name);
-        new_option->type = CONFIG_OPTION_INTEGER;
-        new_option->description = (description) ? strdup (description) : NULL;
-        new_option->string_values = string_explode (string_values, "|", 0, 0,
-                                                    &argc);
-        new_option->min = 0;
-        new_option->max = (argc == 0) ? 0 : argc - 1;
-        new_option->default_value = malloc (sizeof (int));
-        *((int *)new_option->default_value) = default_value;
-        new_option->value = malloc (sizeof (int));
-        *((int *)new_option->value) = default_value;
-        new_option->callback_change = callback_change;
-        new_option->loaded = 0;
-        
-        new_option->prev_option = section->last_option;
-        new_option->next_option = NULL;
-        if (section->options)
-            section->last_option->next_option = new_option;
-        else
-            section->options = new_option;
-        section->last_option = new_option;
-    }
-    
-    return new_option;
-}
-
-/*
- * config_file_new_option_string: create a new option, type "string"
- *                                in a config section
- */
-
-struct t_config_option *
-config_file_new_option_string (struct t_config_section *section,
-                               char *name, char *description,
-                               int min_length, int max_length,
-                               char *default_value, void (*callback_change)())
-{
-    struct t_config_option *new_option;
-    
-    if (!section || !name)
-        return NULL;
-    
-    new_option = (struct t_config_option *)malloc (sizeof (struct t_config_option));
-    if (new_option)
-    {
-        new_option->name = strdup (name);
-        new_option->type = CONFIG_OPTION_STRING;
-        new_option->description = (description) ? strdup (description) : NULL;
-        new_option->string_values = NULL;
-        new_option->min = min_length;
-        new_option->max = max_length;
-        new_option->default_value = (default_value) ?
-            strdup (default_value) : NULL;
-        new_option->value = strdup (default_value) ?
-            strdup (default_value) : NULL;
-        new_option->callback_change = callback_change;
-        new_option->loaded = 0;
-        
-        new_option->prev_option = section->last_option;
-        new_option->next_option = NULL;
-        if (section->options)
-            section->last_option->next_option = new_option;
-        else
-            section->options = new_option;
-        section->last_option = new_option;
-    }
-    
-    return new_option;
-}
-
-/*
- * config_file_new_option_color: create a new option, type "color"
- *                               in a config section
- */
-
-struct t_config_option *
-config_file_new_option_color (struct t_config_section *section,
-                              char *name, char *description, int color_index,
-                              char *default_value, void (*callback_change)())
-{
-    struct t_config_option *new_option;
-    
-    if (!section || !name || !default_value)
-        return NULL;
-    
-    new_option = (struct t_config_option *)malloc (sizeof (struct t_config_option));
-    if (new_option)
-    {
-        new_option->name = strdup (name);
-        new_option->type = CONFIG_OPTION_COLOR;
-        new_option->description = (description) ? strdup (description) : NULL;
-        new_option->string_values = NULL;
-        new_option->min = color_index;
-        new_option->max = color_index;
-        new_option->default_value = malloc (sizeof (int));
-        if (!gui_color_assign (new_option->default_value, default_value))
-            new_option->default_value = 0;
-        new_option->value = malloc (sizeof (int));
-        *((int *)new_option->value) = *((int *)new_option->default_value);
+        argc = 0;
+        switch (var_type)
+        {
+            case CONFIG_OPTION_BOOLEAN:
+                new_option->string_values = NULL;
+                new_option->min = CONFIG_BOOLEAN_FALSE;
+                new_option->max = CONFIG_BOOLEAN_TRUE;
+                int_value = (config_file_string_to_boolean (default_value) == CONFIG_BOOLEAN_TRUE) ?
+                    CONFIG_BOOLEAN_TRUE : CONFIG_BOOLEAN_FALSE;
+                new_option->default_value = malloc (sizeof (int));
+                *((int *)new_option->default_value) = int_value;
+                new_option->value = malloc (sizeof (int));
+                *((int *)new_option->value) = int_value;
+                break;
+            case CONFIG_OPTION_INTEGER:
+                if (string_values)
+                    new_option->string_values = string_explode (string_values,
+                                                                "|", 0, 0,
+                                                                &argc);
+                if (new_option->string_values)
+                {
+                    new_option->min = 0;
+                    new_option->max = (argc == 0) ? 0 : argc - 1;
+                    index_value = 0;
+                    for (i = 0; i < argc; i++)
+                    {
+                        if (string_strcasecmp (new_option->string_values[i],
+                                               default_value) == 0)
+                        {
+                            index_value = i;
+                            break;
+                        }
+                    }
+                    new_option->default_value = malloc (sizeof (int));
+                    *((int *)new_option->default_value) = index_value;
+                    new_option->value = malloc (sizeof (int));
+                    *((int *)new_option->value) = index_value;
+                }
+                else
+                {
+                    new_option->string_values = NULL;
+                    new_option->min = min;
+                    new_option->max = max;
+                    error = NULL;
+                    number = strtol (default_value, &error, 10);
+                    if (!error || (error[0] != '\0'))
+                        number = 0;
+                    new_option->default_value = malloc (sizeof (int));
+                    *((int *)new_option->default_value) = number;
+                    new_option->value = malloc (sizeof (int));
+                    *((int *)new_option->value) = number;
+                }
+                break;
+            case CONFIG_OPTION_STRING:
+                new_option->string_values = NULL;
+                new_option->min = min;
+                new_option->max = max;
+                new_option->default_value = (default_value) ?
+                    strdup (default_value) : NULL;
+                new_option->value = strdup (default_value) ?
+                    strdup (default_value) : NULL;
+                break;
+            case CONFIG_OPTION_COLOR:
+                new_option->string_values = NULL;
+                new_option->min = min;
+                new_option->max = min;
+                new_option->default_value = malloc (sizeof (int));
+                if (!gui_color_assign (new_option->default_value, default_value))
+                    new_option->default_value = 0;
+                new_option->value = malloc (sizeof (int));
+                *((int *)new_option->value) = *((int *)new_option->default_value);
+                break;
+        }
         new_option->callback_change = callback_change;
         new_option->loaded = 0;
         
@@ -477,12 +416,12 @@ config_file_option_valid_for_plugin (void *plugin,
 }
 
 /*
- * config_file_string_boolean_value: return boolean value of string
- *                                   return -1 if error
+ * config_file_string_to_boolean: return boolean value of string
+ *                                return -1 if error
  */
 
 int
-config_file_string_boolean_value (char *text)
+config_file_string_to_boolean (char *text)
 {
     if ((string_strcasecmp (text, "on") == 0)
         || (string_strcasecmp (text, "yes") == 0)
@@ -526,12 +465,12 @@ config_file_option_set (struct t_config_option *option, char *new_value)
         case CONFIG_OPTION_BOOLEAN:
             if (!new_value)
                 return 0;
-            new_value_int = config_file_string_boolean_value (new_value);
+            new_value_int = config_file_string_to_boolean (new_value);
             if (new_value_int < 0)
                 return 0;
-            if (new_value_int == *((char *)option->value))
+            if (new_value_int == *((int *)option->value))
                 return 1;
-            *((char *)option->value) = new_value_int;
+            *((int *)option->value) = new_value_int;
             return 2;
         case CONFIG_OPTION_INTEGER:
             if (!new_value)
@@ -718,32 +657,46 @@ config_file_read (struct t_config_file *config_file)
                 {
                     pos = strchr (line, ']');
                     if (pos == NULL)
+                    {
                         gui_chat_printf (NULL,
                                          _("Warning: %s, line %d: invalid "
                                            "syntax, missing \"]\"\n"),
                                          filename, line_number);
+                    }
                     else
                     {
                         pos[0] = '\0';
                         pos = ptr_line + 1;
                         ptr_section = config_file_search_section (config_file,
                                                                   pos);
-                        if (!ptr_section)
+                        if (ptr_section)
+                        {
+                            if (ptr_section->callback_read)
+                            {
+                                (void) (ptr_section->callback_read) (config_file,
+                                                                     NULL, NULL);
+                            }
+                        }
+                        else
+                        {
                             gui_chat_printf (NULL,
                                              _("Warning: %s, line %d: unknown "
                                                "section identifier "
                                                "(\"%s\")\n"),
                                              filename, line_number, pos);
+                        }
                     }
                 }
                 else
                 {
                     pos = strchr (line, '=');
                     if (pos == NULL)
+                    {
                         gui_chat_printf (NULL,
                                          _("Warning: %s, line %d: invalid "
                                            "syntax, missing \"=\"\n"),
                                          filename, line_number);
+                    }
                     else
                     {
                         pos[0] = '\0';
@@ -791,26 +744,25 @@ config_file_read (struct t_config_file *config_file)
                                 pos++;
                             }
                         }
-                        
-                        ptr_option = config_file_search_option (config_file,
-                                                                ptr_section,
-                                                                line);
-                        if (ptr_option)
+
+                        if (ptr_section && ptr_section->callback_read)
                         {
-                            rc = config_file_option_set (ptr_option, pos);
-                            ptr_option->loaded = 1;
+                            ptr_option = NULL;
+                            (void) (ptr_section->callback_read) (config_file,
+                                                                 line, pos);
+                            rc = 1;
                         }
                         else
                         {
-                            /* option not found: use read callback */
-                            if (ptr_section && ptr_section->callback_read)
+                            rc = -1;
+                            ptr_option = config_file_search_option (config_file,
+                                                                    ptr_section,
+                                                                    line);
+                            if (ptr_option)
                             {
-                                (void) (ptr_section->callback_read) (config_file,
-                                                                     line, pos);
-                                rc = 1;
+                                rc = config_file_option_set (ptr_option, pos);
+                                ptr_option->loaded = 1;
                             }
-                            else
-                                rc = -1;
                         }
                         
                         switch (rc)
@@ -955,14 +907,28 @@ config_file_write_option (struct t_config_file *config_file,
 
 /*
  * config_file_write_line: write a line in a config file
+ *                         if value is NULL, then write a section with [ ] around
  */
 
 void
 config_file_write_line (struct t_config_file *config_file,
-                        char *option_name, char *value)
+                        char *option_name, char *value, ...)
 {
-    string_iconv_fprintf (config_file->file, "%s = %s\n",
-                          option_name, value);
+    char buf[4096];
+    va_list argptr;
+
+    va_start (argptr, value);
+    vsnprintf (buf, sizeof (buf) - 1, value, argptr);
+    va_end (argptr);
+    
+    if (!buf[0])
+        string_iconv_fprintf (config_file->file, "\n[%s]\n",
+                              option_name);
+    else
+    {
+        string_iconv_fprintf (config_file->file, "%s = %s\n",
+                              option_name, buf);
+    }
 }
 
 /*
@@ -1024,28 +990,28 @@ config_file_write (struct t_config_file *config_file, int default_options)
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
-        /* write section name in file */
-        string_iconv_fprintf (config_file->file,
-                              "\n[%s]\n", ptr_section->name);
-        
         /* call write callback if defined for section */
-        if (default_options)
+        if (default_options && ptr_section->callback_write_default)
         {
-            if (ptr_section->callback_write_default)
-                (void) (ptr_section->callback_write_default) (config_file);
+            (void) (ptr_section->callback_write_default) (config_file,
+                                                          ptr_section->name);
+        }
+        else if (!default_options && ptr_section->callback_write)
+        {
+            (void) (ptr_section->callback_write) (config_file,
+                                                  ptr_section->name);
         }
         else
         {
-            if (ptr_section->callback_write)
-                (void) (ptr_section->callback_write) (config_file);
-        }
-        
-        /* write all options for section */
-        for (ptr_option = ptr_section->options; ptr_option;
-             ptr_option = ptr_option->next_option)
-        {
-            config_file_write_option (config_file, ptr_option,
-                                      default_options);
+            /* write all options for section */
+            string_iconv_fprintf (config_file->file,
+                                  "\n[%s]\n", ptr_section->name);
+            for (ptr_option = ptr_section->options; ptr_option;
+                 ptr_option = ptr_option->next_option)
+            {
+                config_file_write_option (config_file, ptr_option,
+                                          default_options);
+            }
         }
     }
     
@@ -1310,78 +1276,82 @@ config_file_print_log ()
     for (ptr_config_file = config_files; ptr_config_file;
          ptr_config_file = ptr_config_file->next_config)
     {
-        log_printf ("\n");
-        log_printf ("[config (addr:0x%X)]\n", ptr_config_file);
-        log_printf ("  filename . . . . . . . : '%s'\n", ptr_config_file->filename);
-        log_printf ("  sections . . . . . . . : 0x%X\n", ptr_config_file->sections);
-        log_printf ("  last_section . . . . . : 0x%X\n", ptr_config_file->last_section);
-        log_printf ("  prev_config. . . . . . : 0x%X\n", ptr_config_file->prev_config);
-        log_printf ("  next_config. . . . . . : 0x%X\n", ptr_config_file->next_config);
+        log_printf ("");
+        log_printf ("[config (addr:0x%X)]", ptr_config_file);
+        log_printf ("  plugin . . . . . . . . : 0x%X", ptr_config_file->plugin);
+        log_printf ("  filename . . . . . . . : '%s'", ptr_config_file->filename);
+        log_printf ("  file . . . . . . . . . : 0x%X", ptr_config_file->file);
+        log_printf ("  sections . . . . . . . : 0x%X", ptr_config_file->sections);
+        log_printf ("  last_section . . . . . : 0x%X", ptr_config_file->last_section);
+        log_printf ("  prev_config. . . . . . : 0x%X", ptr_config_file->prev_config);
+        log_printf ("  next_config. . . . . . : 0x%X", ptr_config_file->next_config);
         
         for (ptr_section = ptr_config_file->sections; ptr_section;
              ptr_section = ptr_section->next_section)
         {
-            log_printf ("\n");
-            log_printf ("    [section (addr:0x%X)]\n", ptr_section);
-            log_printf ("      name . . . . . . . . . : '%s'\n", ptr_section->name);
-            log_printf ("      callback_read. . . . . : 0x%X\n", ptr_section->callback_read);
-            log_printf ("      callback_write . . . . : 0x%X\n", ptr_section->callback_write);
-            log_printf ("      options. . . . . . . . : 0x%X\n", ptr_section->options);
-            log_printf ("      last_option. . . . . . : 0x%X\n", ptr_section->last_option);
-            log_printf ("      prev_item. . . . . . . : 0x%X\n", ptr_section->prev_section);
-            log_printf ("      next_item. . . . . . . : 0x%X\n", ptr_section->next_section);
+            log_printf ("");
+            log_printf ("    [section (addr:0x%X)]", ptr_section);
+            log_printf ("      name . . . . . . . . . : '%s'", ptr_section->name);
+            log_printf ("      callback_read. . . . . : 0x%X", ptr_section->callback_read);
+            log_printf ("      callback_write . . . . : 0x%X", ptr_section->callback_write);
+            log_printf ("      callback_write_default : 0x%X", ptr_section->callback_write_default);
+            log_printf ("      options. . . . . . . . : 0x%X", ptr_section->options);
+            log_printf ("      last_option. . . . . . : 0x%X", ptr_section->last_option);
+            log_printf ("      prev_section . . . . . : 0x%X", ptr_section->prev_section);
+            log_printf ("      next_section . . . . . : 0x%X", ptr_section->next_section);
             
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {
-                log_printf ("\n");
-                log_printf ("      [option (addr:0x%X)]\n", ptr_option);
-                log_printf ("        name . . . . . . . . : '%s'\n", ptr_option->name);
-                log_printf ("        type . . . . . . . . : %d\n",   ptr_option->type);
-                log_printf ("        string_values. . . . : 0x%X\n", ptr_option->string_values);
-                log_printf ("        min. . . . . . . . . : %d\n",   ptr_option->min);
-                log_printf ("        max. . . . . . . . . : %d\n",   ptr_option->max);
+                log_printf ("");
+                log_printf ("      [option (addr:0x%X)]", ptr_option);
+                log_printf ("        name . . . . . . . . : '%s'", ptr_option->name);
+                log_printf ("        type . . . . . . . . : %d",   ptr_option->type);
+                log_printf ("        description. . . . . : '%s'", ptr_option->description);
+                log_printf ("        string_values. . . . : 0x%X", ptr_option->string_values);
+                log_printf ("        min. . . . . . . . . : %d",   ptr_option->min);
+                log_printf ("        max. . . . . . . . . : %d",   ptr_option->max);
                 switch (ptr_option->type)
                 {
                     case CONFIG_OPTION_BOOLEAN:
-                        log_printf ("        value (boolean). . . : %s\n",
-                                    (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
-                                    "true" : "false");
-                        log_printf ("        default value. . . . : %s\n",
+                        log_printf ("        default value. . . . : %s",
                                     (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
+                                    "true" : "false");
+                        log_printf ("        value (boolean). . . : %s",
+                                    (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
                                     "true" : "false");
                         break;
                     case CONFIG_OPTION_INTEGER:
                         if (ptr_option->string_values)
                         {
-                            log_printf ("        value (integer/str). : '%s'\n",
-                                        ptr_option->string_values[CONFIG_INTEGER(ptr_option)]);
-                            log_printf ("        default value. . . . : '%s'\n",
+                            log_printf ("        default value. . . . : '%s'",
                                         ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]);
+                            log_printf ("        value (integer/str). : '%s'",
+                                        ptr_option->string_values[CONFIG_INTEGER(ptr_option)]);
                         }
                         else
                         {
-                            log_printf ("        value (integer). . . : %d\n", CONFIG_INTEGER(ptr_option));
-                            log_printf ("        default value. . . . : %d\n", CONFIG_INTEGER_DEFAULT(ptr_option));
+                            log_printf ("        default value. . . . : %d", CONFIG_INTEGER_DEFAULT(ptr_option));
+                            log_printf ("        value (integer). . . : %d", CONFIG_INTEGER(ptr_option));
                         }
                         break;
                     case CONFIG_OPTION_STRING:
-                        log_printf ("        value (string) . . . : '%s'\n", CONFIG_STRING(ptr_option));
-                        log_printf ("        default value. . . . : '%s'\n", CONFIG_STRING_DEFAULT(ptr_option));
+                        log_printf ("        default value. . . . : '%s'", CONFIG_STRING_DEFAULT(ptr_option));
+                        log_printf ("        value (string) . . . : '%s'", CONFIG_STRING(ptr_option));
                         break;
                     case CONFIG_OPTION_COLOR:
-                        log_printf ("        value (color). . . . : %d ('%s')\n",
-                                    CONFIG_COLOR(ptr_option),
-                                    gui_color_get_name (CONFIG_COLOR(ptr_option)));
-                        log_printf ("        default value. . . . : %d ('%s')\n",
+                        log_printf ("        default value. . . . : %d ('%s')",
                                     CONFIG_COLOR_DEFAULT(ptr_option),
                                     gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option)));
+                        log_printf ("        value (color). . . . : %d ('%s')",
+                                    CONFIG_COLOR(ptr_option),
+                                    gui_color_get_name (CONFIG_COLOR(ptr_option)));
                         break;
                 }
-                log_printf ("        callback_change. . . : 0x%X\n", ptr_option->callback_change);
-                log_printf ("        loaded . . . . . . . : %d\n",   ptr_option->loaded);
-                log_printf ("        prev_option. . . . . : 0x%X\n", ptr_option->prev_option);
-                log_printf ("        next_option. . . . . : 0x%X\n", ptr_option->next_option);
+                log_printf ("        callback_change. . . : 0x%X", ptr_option->callback_change);
+                log_printf ("        loaded . . . . . . . : %d",   ptr_option->loaded);
+                log_printf ("        prev_option. . . . . : 0x%X", ptr_option->prev_option);
+                log_printf ("        next_option. . . . . : 0x%X", ptr_option->next_option);
             }
         }
     }

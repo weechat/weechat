@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* plugin-list.c: manages plugin info lists */
+/* plugin-infolist.c: manages plugin info lists */
 
 
 #ifdef HAVE_CONFIG_H
@@ -29,51 +29,51 @@
 #include "../core/weechat.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
-#include "plugin-list.h"
+#include "plugin-infolist.h"
 
 
-struct t_plugin_list *plugin_lists = NULL;
-struct t_plugin_list *last_plugin_list = NULL;
+struct t_plugin_infolist *plugin_infolists = NULL;
+struct t_plugin_infolist *last_plugin_infolist = NULL;
 
 
 /*
  * plugin_list_new: create a new plugin list
  */
 
-struct t_plugin_list *
-plugin_list_new ()
+struct t_plugin_infolist *
+plugin_infolist_new ()
 {
-    struct t_plugin_list *new_list;
+    struct t_plugin_infolist *new_infolist;
 
-    new_list = (struct t_plugin_list *)malloc (sizeof (struct t_plugin_list));
-    if (new_list)
+    new_infolist = (struct t_plugin_infolist *)malloc (sizeof (struct t_plugin_infolist));
+    if (new_infolist)
     {
-        new_list->items = NULL;
-        new_list->last_item = NULL;
-        new_list->ptr_item = NULL;
+        new_infolist->items = NULL;
+        new_infolist->last_item = NULL;
+        new_infolist->ptr_item = NULL;
         
-        new_list->prev_list = last_plugin_list;
-        new_list->next_list = NULL;
-        if (plugin_lists)
-            last_plugin_list->next_list = new_list;
+        new_infolist->prev_infolist = last_plugin_infolist;
+        new_infolist->next_infolist = NULL;
+        if (plugin_infolists)
+            last_plugin_infolist->next_infolist = new_infolist;
         else
-            plugin_lists = new_list;
-        last_plugin_list = new_list;
+            plugin_infolists = new_infolist;
+        last_plugin_infolist = new_infolist;
     }
     
-    return new_list;
+    return new_infolist;
 }
 
 /*
- * plugin_list_new_item: create a new item in a plugin list
+ * plugin_infolist_new_item: create a new item in a plugin list
  */
 
-struct t_plugin_list_item *
-plugin_list_new_item (struct t_plugin_list *list)
+struct t_plugin_infolist_item *
+plugin_infolist_new_item (struct t_plugin_infolist *list)
 {
-    struct t_plugin_list_item *new_item;
+    struct t_plugin_infolist_item *new_item;
 
-    new_item = (struct t_plugin_list_item *)malloc (sizeof (struct t_plugin_list_item));
+    new_item = (struct t_plugin_infolist_item *)malloc (sizeof (struct t_plugin_infolist_item));
     if (new_item)
     {
         new_item->vars = NULL;
@@ -93,23 +93,23 @@ plugin_list_new_item (struct t_plugin_list *list)
 }
 
 /*
- * plugin_list_new_var_integer: create a new integer variable in an item
+ * plugin_infolist_new_var_integer: create a new integer variable in an item
  */
 
-struct t_plugin_list_var *
-plugin_list_new_var_integer (struct t_plugin_list_item *item,
+struct t_plugin_infolist_var *
+plugin_infolist_new_var_integer (struct t_plugin_infolist_item *item,
                              char *name, int value)
 {
-    struct t_plugin_list_var *new_var;
+    struct t_plugin_infolist_var *new_var;
     
     if (!item || !name || !name[0])
         return NULL;
     
-    new_var = (struct t_plugin_list_var *)malloc (sizeof (struct t_plugin_list_var));
+    new_var = (struct t_plugin_infolist_var *)malloc (sizeof (struct t_plugin_infolist_var));
     if (new_var)
     {
         new_var->name = strdup (name);
-        new_var->type = PLUGIN_LIST_VAR_INTEGER;
+        new_var->type = PLUGIN_INFOLIST_INTEGER;
         new_var->value = malloc (sizeof (int));
         *((int *)new_var->value) = value;
         
@@ -126,23 +126,23 @@ plugin_list_new_var_integer (struct t_plugin_list_item *item,
 }
 
 /*
- * plugin_list_new_var_string: create a new string variable in an item
+ * plugin_infolist_new_var_string: create a new string variable in an item
  */
 
-struct t_plugin_list_var *
-plugin_list_new_var_string (struct t_plugin_list_item *item,
+struct t_plugin_infolist_var *
+plugin_infolist_new_var_string (struct t_plugin_infolist_item *item,
                             char *name, char *value)
 {
-    struct t_plugin_list_var *new_var;
+    struct t_plugin_infolist_var *new_var;
     
     if (!item || !name || !name[0])
         return NULL;
     
-    new_var = (struct t_plugin_list_var *)malloc (sizeof (struct t_plugin_list_var));
+    new_var = (struct t_plugin_infolist_var *)malloc (sizeof (struct t_plugin_infolist_var));
     if (new_var)
     {
         new_var->name = strdup (name);
-        new_var->type = PLUGIN_LIST_VAR_STRING;
+        new_var->type = PLUGIN_INFOLIST_STRING;
         new_var->value = (value) ? strdup (value) : NULL;
         
         new_var->prev_var = item->last_var;
@@ -158,23 +158,23 @@ plugin_list_new_var_string (struct t_plugin_list_item *item,
 }
 
 /*
- * plugin_list_new_var_pointer: create a new pointer variable in an item
+ * plugin_infolist_new_var_pointer: create a new pointer variable in an item
  */
 
-struct t_plugin_list_var *
-plugin_list_new_var_pointer (struct t_plugin_list_item *item,
+struct t_plugin_infolist_var *
+plugin_infolist_new_var_pointer (struct t_plugin_infolist_item *item,
                              char *name, void *pointer)
 {
-    struct t_plugin_list_var *new_var;
+    struct t_plugin_infolist_var *new_var;
     
     if (!item || !name || !name[0])
         return NULL;
     
-    new_var = (struct t_plugin_list_var *)malloc (sizeof (struct t_plugin_list_var));
+    new_var = (struct t_plugin_infolist_var *)malloc (sizeof (struct t_plugin_infolist_var));
     if (new_var)
     {
         new_var->name = strdup (name);
-        new_var->type = PLUGIN_LIST_VAR_POINTER;
+        new_var->type = PLUGIN_INFOLIST_POINTER;
         new_var->value = pointer;
         
         new_var->prev_var = item->last_var;
@@ -190,23 +190,23 @@ plugin_list_new_var_pointer (struct t_plugin_list_item *item,
 }
 
 /*
- * plugin_list_new_var_time: create a new time variable in an item
+ * plugin_infolist_new_var_time: create a new time variable in an item
  */
 
-struct t_plugin_list_var *
-plugin_list_new_var_time (struct t_plugin_list_item *item,
+struct t_plugin_infolist_var *
+plugin_infolist_new_var_time (struct t_plugin_infolist_item *item,
                           char *name, time_t time)
 {
-    struct t_plugin_list_var *new_var;
+    struct t_plugin_infolist_var *new_var;
     
     if (!item || !name || !name[0])
         return NULL;
     
-    new_var = (struct t_plugin_list_var *)malloc (sizeof (struct t_plugin_list_var));
+    new_var = (struct t_plugin_infolist_var *)malloc (sizeof (struct t_plugin_infolist_var));
     if (new_var)
     {
         new_var->name = strdup (name);
-        new_var->type = PLUGIN_LIST_VAR_TIME;
+        new_var->type = PLUGIN_INFOLIST_TIME;
         new_var->value = malloc (sizeof (time_t));
         *((time_t *)new_var->value) = time;
         
@@ -223,20 +223,20 @@ plugin_list_new_var_time (struct t_plugin_list_item *item,
 }
 
 /*
- * plugin_list_valid: check if a list pointer exists
- *                    return 1 if list exists
- *                           0 if list is not found
+ * plugin_infolist_valid: check if a list pointer exists
+ *                        return 1 if list exists
+ *                               0 if list is not found
  */
 
 int
-plugin_list_valid (struct t_plugin_list *list)
+plugin_infolist_valid (struct t_plugin_infolist *list)
 {
-    struct t_plugin_list *ptr_list;
+    struct t_plugin_infolist *ptr_infolist;
     
-    for (ptr_list = plugin_lists; ptr_list;
-         ptr_list = ptr_list->next_list)
+    for (ptr_infolist = plugin_infolists; ptr_infolist;
+         ptr_infolist = ptr_infolist->next_infolist)
     {
-        if (ptr_list == list)
+        if (ptr_infolist == list)
             return 1;
     }
     
@@ -245,13 +245,13 @@ plugin_list_valid (struct t_plugin_list *list)
 }
 
 /*
- * plugin_list_next_item: return next item for a list
- *                        if current item pointer is NULL,
- *                        then return first item of list
+ * plugin_infolist_next_item: return next item for a list
+ *                            if current item pointer is NULL,
+ *                            then return first item of list
  */
 
-struct t_plugin_list_item *
-plugin_list_next_item (struct t_plugin_list *list)
+struct t_plugin_infolist_item *
+plugin_infolist_next_item (struct t_plugin_infolist *list)
 {
     if (!list->ptr_item)
     {
@@ -263,13 +263,13 @@ plugin_list_next_item (struct t_plugin_list *list)
 }
 
 /*
- * plugin_list_prev_item: return previous item for a list
- *                        if current item pointer is NULL,
- *                        then return last item of list
+ * plugin_infolist_prev_item: return previous item for a list
+ *                            if current item pointer is NULL,
+ *                            then return last item of list
  */
 
-struct t_plugin_list_item *
-plugin_list_prev_item (struct t_plugin_list *list)
+struct t_plugin_infolist_item *
+plugin_infolist_prev_item (struct t_plugin_infolist *list)
 {
     if (!list->ptr_item)
     {
@@ -281,13 +281,13 @@ plugin_list_prev_item (struct t_plugin_list *list)
 }
 
 /*
- * plugin_list_get_fields: get list of fields for current list item
+ * plugin_infolist_get_fields: get list of fields for current list item
  */
 
 char *
-plugin_list_get_fields (struct t_plugin_list *list)
+plugin_infolist_get_fields (struct t_plugin_infolist *list)
 {
-    struct t_plugin_list_var *ptr_var;
+    struct t_plugin_infolist_var *ptr_var;
     int length;
     
     if (!list || !list->ptr_item)
@@ -312,16 +312,16 @@ plugin_list_get_fields (struct t_plugin_list *list)
     {
         switch (ptr_var->type)
         {
-            case PLUGIN_LIST_VAR_INTEGER:
+            case PLUGIN_INFOLIST_INTEGER:
                 strcat (list->ptr_item->fields, "i:");
                 break;
-            case PLUGIN_LIST_VAR_STRING:
+            case PLUGIN_INFOLIST_STRING:
                 strcat (list->ptr_item->fields, "s:");
                 break;
-            case PLUGIN_LIST_VAR_POINTER:
+            case PLUGIN_INFOLIST_POINTER:
                 strcat (list->ptr_item->fields, "p:");
                 break;
-            case PLUGIN_LIST_VAR_TIME:
+            case PLUGIN_INFOLIST_TIME:
                 strcat (list->ptr_item->fields, "t:");
                 break;
         }
@@ -334,13 +334,13 @@ plugin_list_get_fields (struct t_plugin_list *list)
 }
 
 /*
- * plugin_list_get_integer: get an integer variable value in current list item
+ * plugin_infolist_get_integer: get an integer variable value in current list item
  */
 
 int
-plugin_list_get_integer (struct t_plugin_list *list, char *var)
+plugin_infolist_get_integer (struct t_plugin_infolist *list, char *var)
 {
-    struct t_plugin_list_var *ptr_var;
+    struct t_plugin_infolist_var *ptr_var;
     
     if (!list || !list->ptr_item || !var || !var[0])
         return 0;
@@ -349,7 +349,7 @@ plugin_list_get_integer (struct t_plugin_list *list, char *var)
     {
         if (string_strcasecmp (ptr_var->name, var) == 0)
         {
-            if (ptr_var->type == PLUGIN_LIST_VAR_INTEGER)
+            if (ptr_var->type == PLUGIN_INFOLIST_INTEGER)
                 return *((int *)ptr_var->value);
             else
                 return 0;
@@ -361,13 +361,13 @@ plugin_list_get_integer (struct t_plugin_list *list, char *var)
 }
 
 /*
- * plugin_list_get_string: get a string variable value in current list item
+ * plugin_infolist_get_string: get a string variable value in current list item
  */
 
 char *
-plugin_list_get_string (struct t_plugin_list *list, char *var)
+plugin_infolist_get_string (struct t_plugin_infolist *list, char *var)
 {
-    struct t_plugin_list_var *ptr_var;
+    struct t_plugin_infolist_var *ptr_var;
     
     if (!list || !list->ptr_item || !var || !var[0])
         return NULL;
@@ -376,7 +376,7 @@ plugin_list_get_string (struct t_plugin_list *list, char *var)
     {
         if (string_strcasecmp (ptr_var->name, var) == 0)
         {
-            if (ptr_var->type == PLUGIN_LIST_VAR_STRING)
+            if (ptr_var->type == PLUGIN_INFOLIST_STRING)
                 return (char *)ptr_var->value;
             else
                 return NULL;
@@ -388,13 +388,13 @@ plugin_list_get_string (struct t_plugin_list *list, char *var)
 }
 
 /*
- * plugin_list_get_pointer: get a pointer variable value in current list item
+ * plugin_infolist_get_pointer: get a pointer variable value in current list item
  */
 
 void *
-plugin_list_get_pointer (struct t_plugin_list *list, char *var)
+plugin_infolist_get_pointer (struct t_plugin_infolist *list, char *var)
 {
-    struct t_plugin_list_var *ptr_var;
+    struct t_plugin_infolist_var *ptr_var;
     
     if (!list || !list->ptr_item || !var || !var[0])
         return NULL;
@@ -403,7 +403,7 @@ plugin_list_get_pointer (struct t_plugin_list *list, char *var)
     {
         if (string_strcasecmp (ptr_var->name, var) == 0)
         {
-            if (ptr_var->type == PLUGIN_LIST_VAR_POINTER)
+            if (ptr_var->type == PLUGIN_INFOLIST_POINTER)
                 return ptr_var->value;
             else
                 return NULL;
@@ -415,13 +415,13 @@ plugin_list_get_pointer (struct t_plugin_list *list, char *var)
 }
 
 /*
- * plugin_list_get_time: get a time variable value in current list item
+ * plugin_infolist_get_time: get a time variable value in current list item
  */
 
 time_t
-plugin_list_get_time (struct t_plugin_list *list, char *var)
+plugin_infolist_get_time (struct t_plugin_infolist *list, char *var)
 {
-    struct t_plugin_list_var *ptr_var;
+    struct t_plugin_infolist_var *ptr_var;
     
     if (!list || !list->ptr_item || !var || !var[0])
         return 0;
@@ -430,7 +430,7 @@ plugin_list_get_time (struct t_plugin_list *list, char *var)
     {
         if (string_strcasecmp (ptr_var->name, var) == 0)
         {
-            if (ptr_var->type == PLUGIN_LIST_VAR_TIME)
+            if (ptr_var->type == PLUGIN_INFOLIST_TIME)
                 return *((time_t *)ptr_var->value);
             else
                 return 0;
@@ -442,14 +442,14 @@ plugin_list_get_time (struct t_plugin_list *list, char *var)
 }
 
 /*
- * plugin_list_var_free: free a plugin list variable
+ * plugin_infolist_var_free: free a plugin list variable
  */
 
 void
-plugin_list_var_free (struct t_plugin_list_item *item,
-                      struct t_plugin_list_var *var)
+plugin_infolist_var_free (struct t_plugin_infolist_item *item,
+                      struct t_plugin_infolist_var *var)
 {
-    struct t_plugin_list_var *new_vars;
+    struct t_plugin_infolist_var *new_vars;
     
     /* remove var */
     if (item->last_var == var)
@@ -468,9 +468,9 @@ plugin_list_var_free (struct t_plugin_list_item *item,
     /* free data */
     if (var->name)
         free (var->name);
-    if (((var->type == PLUGIN_LIST_VAR_INTEGER)
-         || (var->type == PLUGIN_LIST_VAR_STRING)
-         || (var->type == PLUGIN_LIST_VAR_TIME))
+    if (((var->type == PLUGIN_INFOLIST_INTEGER)
+         || (var->type == PLUGIN_INFOLIST_STRING)
+         || (var->type == PLUGIN_INFOLIST_TIME))
         && var->value)
     {
         free (var->value);
@@ -480,14 +480,14 @@ plugin_list_var_free (struct t_plugin_list_item *item,
 }
 
 /*
- * plugin_list_item_free: free a plugin list item
+ * plugin_infolist_item_free: free a plugin list item
  */
 
 void
-plugin_list_item_free (struct t_plugin_list *list,
-                       struct t_plugin_list_item *item)
+plugin_infolist_item_free (struct t_plugin_infolist *list,
+                       struct t_plugin_infolist_item *item)
 {
-    struct t_plugin_list_item *new_items;
+    struct t_plugin_infolist_item *new_items;
     
     /* remove var */
     if (list->last_item == item)
@@ -506,7 +506,7 @@ plugin_list_item_free (struct t_plugin_list *list,
     /* free data */
     while (item->vars)
     {
-        plugin_list_var_free (item, item->vars);
+        plugin_infolist_var_free (item, item->vars);
     }
     if (item->fields)
         free (item->fields);
@@ -515,93 +515,93 @@ plugin_list_item_free (struct t_plugin_list *list,
 }
 
 /*
- * plugin_list_free: free a plugin list
+ * plugin_infolist_free: free a plugin list
  */
 
 void
-plugin_list_free (struct t_plugin_list *list)
+plugin_infolist_free (struct t_plugin_infolist *list)
 {
-    struct t_plugin_list *new_plugin_lists;
+    struct t_plugin_infolist *new_plugin_infolists;
     
     /* remove list */
-    if (last_plugin_list == list)
-        last_plugin_list = list->prev_list;
-    if (list->prev_list)
+    if (last_plugin_infolist == list)
+        last_plugin_infolist = list->prev_infolist;
+    if (list->prev_infolist)
     {
-        (list->prev_list)->next_list = list->next_list;
-        new_plugin_lists = plugin_lists;
+        (list->prev_infolist)->next_infolist = list->next_infolist;
+        new_plugin_infolists = plugin_infolists;
     }
     else
-        new_plugin_lists = list->next_list;
+        new_plugin_infolists = list->next_infolist;
     
-    if (list->next_list)
-        (list->next_list)->prev_list = list->prev_list;
+    if (list->next_infolist)
+        (list->next_infolist)->prev_infolist = list->prev_infolist;
     
     /* free data */
     while (list->items)
     {
-        plugin_list_item_free (list, list->items);
+        plugin_infolist_item_free (list, list->items);
     }
     
-    plugin_lists = new_plugin_lists;
+    plugin_infolists = new_plugin_infolists;
 }
 
 /*
- * plugin_list_print_log: print plugin lists infos in log (usually for crash dump)
+ * plugin_infolist_print_log: print plugin lists infos in log (usually for crash dump)
  */
 
 void
-plugin_list_print_log ()
+plugin_infolist_print_log ()
 {
-    struct t_plugin_list *ptr_list;
-    struct t_plugin_list_item *ptr_item;
-    struct t_plugin_list_var *ptr_var;
+    struct t_plugin_infolist *ptr_infolist;
+    struct t_plugin_infolist_item *ptr_item;
+    struct t_plugin_infolist_var *ptr_var;
     
-    for (ptr_list = plugin_lists; ptr_list;
-         ptr_list = ptr_list->next_list)
+    for (ptr_infolist = plugin_infolists; ptr_infolist;
+         ptr_infolist = ptr_infolist->next_infolist)
     {
-        log_printf ("\n");
-        log_printf ("[plugin list (addr:0x%X)]\n", ptr_list);
-        log_printf ("  items. . . . . . . . . : 0x%X\n", ptr_list->items);
-        log_printf ("  last_item. . . . . . . : 0x%X\n", ptr_list->last_item);
-        log_printf ("  ptr_item . . . . . . . : 0x%X\n", ptr_list->ptr_item);
-        log_printf ("  prev_list. . . . . . . : 0x%X\n", ptr_list->prev_list);
-        log_printf ("  next_list. . . . . . . : 0x%X\n", ptr_list->next_list);
+        log_printf ("");
+        log_printf ("[plugin infolist (addr:0x%X)]", ptr_infolist);
+        log_printf ("  items. . . . . . . . . : 0x%X", ptr_infolist->items);
+        log_printf ("  last_item. . . . . . . : 0x%X", ptr_infolist->last_item);
+        log_printf ("  ptr_item . . . . . . . : 0x%X", ptr_infolist->ptr_item);
+        log_printf ("  prev_infolist. . . . . : 0x%X", ptr_infolist->prev_infolist);
+        log_printf ("  next_infolist. . . . . : 0x%X", ptr_infolist->next_infolist);
         
-        for (ptr_item = ptr_list->items; ptr_item;
+        for (ptr_item = ptr_infolist->items; ptr_item;
              ptr_item = ptr_item->next_item)
         {
-            log_printf ("\n");
-            log_printf ("    [item (addr:0x%X)]\n", ptr_item);
-            log_printf ("      vars . . . . . . . . . : 0x%X\n", ptr_item->vars);
-            log_printf ("      last_var . . . . . . . : 0x%X\n", ptr_item->last_var);
-            log_printf ("      prev_item. . . . . . . : 0x%X\n", ptr_item->prev_item);
-            log_printf ("      next_item. . . . . . . : 0x%X\n", ptr_item->next_item);
+            log_printf ("");
+            log_printf ("    [item (addr:0x%X)]", ptr_item);
+            log_printf ("      vars . . . . . . . . . : 0x%X", ptr_item->vars);
+            log_printf ("      last_var . . . . . . . : 0x%X", ptr_item->last_var);
+            log_printf ("      prev_item. . . . . . . : 0x%X", ptr_item->prev_item);
+            log_printf ("      next_item. . . . . . . : 0x%X", ptr_item->next_item);
             
             for (ptr_var = ptr_item->vars; ptr_var;
                  ptr_var = ptr_var->next_var)
             {
-                log_printf ("\n");
-                log_printf ("      [var (addr:0x%X)]\n", ptr_var);
-                log_printf ("        name . . . . . . . . : '%s'\n", ptr_var->name);
-                log_printf ("        type . . . . . . . . : %d\n",   ptr_var->type);
+                log_printf ("");
+                log_printf ("      [var (addr:0x%X)]", ptr_var);
+                log_printf ("        name . . . . . . . . : '%s'", ptr_var->name);
+                log_printf ("        type . . . . . . . . : %d",   ptr_var->type);
                 switch (ptr_var->type)
                 {
-                    case PLUGIN_LIST_VAR_INTEGER:
-                        log_printf ("        value (integer). . . : %d\n", *((int *)ptr_var->value));
+                    case PLUGIN_INFOLIST_INTEGER:
+                        log_printf ("        value (integer). . . : %d", *((int *)ptr_var->value));
                         break;
-                    case PLUGIN_LIST_VAR_STRING:
-                        log_printf ("        value (string) . . . : '%s'\n", (char *)ptr_var->value);
+                    case PLUGIN_INFOLIST_STRING:
+                        log_printf ("        value (string) . . . : '%s'", (char *)ptr_var->value);
                         break;
-                    case PLUGIN_LIST_VAR_POINTER:
-                        log_printf ("        value (pointer). . . : 0x%X\n", ptr_var->value);
+                    case PLUGIN_INFOLIST_POINTER:
+                        log_printf ("        value (pointer). . . : 0x%X", ptr_var->value);
                         break;
-                    case PLUGIN_LIST_VAR_TIME:
-                        log_printf ("        value (time) . . . . : %ld\n", *((time_t *)ptr_var->value));
+                    case PLUGIN_INFOLIST_TIME:
+                        log_printf ("        value (time) . . . . : %ld", *((time_t *)ptr_var->value));
                         break;
                 }
-                log_printf ("        prev_var . . . . . . : 0x%X\n", ptr_var->prev_var);
-                log_printf ("        next_var . . . . . . : 0x%X\n", ptr_var->next_var);
+                log_printf ("        prev_var . . . . . . : 0x%X", ptr_var->prev_var);
+                log_printf ("        next_var . . . . . . : 0x%X", ptr_var->next_var);
             }
         }
     }

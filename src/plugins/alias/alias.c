@@ -30,21 +30,26 @@
 #include "alias.h"
 
 
-static struct t_weechat_plugin *weechat_plugin = NULL;
+char plugin_name[] = "alias";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Alias plugin for WeeChat";
 
-static struct t_config_file *alias_config_file = NULL;
-static struct t_alias *alias_list = NULL;
-static struct t_alias *last_alias = NULL;
-static struct t_hook *alias_command = NULL;
-static struct t_hook *unalias_command = NULL;
-static struct t_hook *config_reload = NULL;
+struct t_weechat_plugin *weechat_alias_plugin = NULL;
+#define weechat_plugin weechat_alias_plugin
+
+struct t_config_file *alias_config_file = NULL;
+struct t_alias *alias_list = NULL;
+struct t_alias *last_alias = NULL;
+struct t_hook *alias_command = NULL;
+struct t_hook *unalias_command = NULL;
+struct t_hook *config_reload = NULL;
 
 
 /*
  * alias_search: search an alias
  */
 
-static struct t_alias *
+struct t_alias *
 alias_search (char *alias_name)
 {
     struct t_alias *ptr_alias;
@@ -63,7 +68,7 @@ alias_search (char *alias_name)
  *                 This function should NOT be called directly.
  */
 
-static void
+void
 alias_add_word (char **alias, int *length, char *word)
 {
     int length_word;
@@ -92,7 +97,7 @@ alias_add_word (char **alias, int *length, char *word)
  * alias_replace_args: replace arguments ($1, $2, .. or $*) in alias arguments
  */
 
-static char *
+char *
 alias_replace_args (char *alias_args, char *user_args)
 {
     char **argv, *start, *pos, *res;
@@ -171,7 +176,7 @@ alias_replace_args (char *alias_args, char *user_args)
  * alias_cb: callback for alias (called when user uses an alias)
  */
 
-static int
+int
 alias_cb (void *data, void *buffer, int argc, char **argv,
           char **argv_eol)
 {
@@ -282,7 +287,7 @@ alias_cb (void *data, void *buffer, int argc, char **argv,
  * alias_new: create new alias and add it to alias list
  */
 
-static struct t_alias *
+struct t_alias *
 alias_new (char *name, char *command)
 {
     struct t_alias *new_alias, *ptr_alias;
@@ -338,7 +343,7 @@ alias_new (char *name, char *command)
  * alias_get_final_command: get final command pointed by an alias
  */
 
-static char *
+char *
 alias_get_final_command (struct t_alias *alias)
 {
     struct t_alias *ptr_alias;
@@ -371,7 +376,7 @@ alias_get_final_command (struct t_alias *alias)
  * alias_free: free an alias and reomve it from list
  */
 
-static void
+void
 alias_free (struct t_alias *alias)
 {
     struct t_alias *new_alias_list;
@@ -405,7 +410,7 @@ alias_free (struct t_alias *alias)
  * alias_free_all: free all alias
  */
 
-static void
+void
 alias_free_all ()
 {
     while (alias_list)
@@ -421,14 +426,17 @@ alias_config_read_line (void *config_file, char *option_name, char *value)
 {
     /* make C compiler happy */
     (void) config_file;
-    
-    /* create new alias */
-    if (!alias_new (option_name, value))
+
+    if (option_name && value)
     {
-        weechat_printf (NULL,
-                        "%sAlias: error creating alias \"%s\" => \"%s\"",
-                        weechat_prefix ("error"),
-                        option_name, value);
+        /* create new alias */
+        if (!alias_new (option_name, value))
+        {
+            weechat_printf (NULL,
+                            "%sAlias: error creating alias \"%s\" => \"%s\"",
+                            weechat_prefix ("error"),
+                            option_name, value);
+        }
     }
 }
 
@@ -439,25 +447,19 @@ alias_config_read_line (void *config_file, char *option_name, char *value)
  */
 
 void
-alias_config_write_section (void *config_file)
+alias_config_write_section (void *config_file, char *section_name)
 {
     struct t_alias *ptr_alias;
-    char *string;
+    
+    weechat_config_write_line (config_file, section_name, NULL);
     
     for (ptr_alias = alias_list; ptr_alias;
          ptr_alias = ptr_alias->next_alias)
     {
-        string = (char *)malloc (strlen (ptr_alias->command) + 4);
-        if (string)
-        {
-            strcpy (string, "\"");
-            strcat (string, ptr_alias->command);
-            strcat (string, "\"");
-            weechat_config_write_line (config_file,
-                                       ptr_alias->name,
-                                       string);
-            free (string);
-        }
+        weechat_config_write_line (config_file,
+                                   ptr_alias->name,
+                                   "\"%s\"",
+                                   ptr_alias->command);
     }
 }
 
@@ -466,62 +468,68 @@ alias_config_write_section (void *config_file)
  */
 
 void
-alias_config_write_default_aliases (void *config_file)
+alias_config_write_default_aliases (void *config_file, char *section_name)
 {
-    weechat_config_write_line (config_file, "SAY", "\"msg *\"");
-    weechat_config_write_line (config_file, "BYE", "\"quit\"");
-    weechat_config_write_line (config_file, "EXIT", "\"quit\"");
-    weechat_config_write_line (config_file, "SIGNOFF", "\"quit\"");
-    weechat_config_write_line (config_file, "C", "\"clear\"");
-    weechat_config_write_line (config_file, "CL", "\"clear\"");
-    weechat_config_write_line (config_file, "CLOSE", "\"buffer close\"");
-    weechat_config_write_line (config_file, "CHAT", "\"dcc chat\"");
-    weechat_config_write_line (config_file, "IG", "\"ignore\"");
-    weechat_config_write_line (config_file, "J", "\"join\"");
-    weechat_config_write_line (config_file, "K", "\"kick\"");
-    weechat_config_write_line (config_file, "KB", "\"kickban\"");
-    weechat_config_write_line (config_file, "LEAVE", "\"part\"");
-    weechat_config_write_line (config_file, "M", "\"msg\"");
-    weechat_config_write_line (config_file, "MUB", "\"unban *\"");
-    weechat_config_write_line (config_file, "N", "\"names\"");
-    weechat_config_write_line (config_file, "Q", "\"query\"");
-    weechat_config_write_line (config_file, "T", "\"topic\"");
-    weechat_config_write_line (config_file, "UB", "\"unban\"");
-    weechat_config_write_line (config_file, "UNIG", "\"unignore\"");
-    weechat_config_write_line (config_file, "W", "\"who\"");
-    weechat_config_write_line (config_file, "WC", "\"window merge\"");
-    weechat_config_write_line (config_file, "WI", "\"whois\"");
-    weechat_config_write_line (config_file, "WW", "\"whowas\"");
+    weechat_config_write_line (config_file, section_name, NULL);
+    
+    weechat_config_write_line (config_file, "SAY", "%s", "\"msg *\"");
+    weechat_config_write_line (config_file, "BYE", "%s", "\"quit\"");
+    weechat_config_write_line (config_file, "EXIT", "%s", "\"quit\"");
+    weechat_config_write_line (config_file, "SIGNOFF", "%s", "\"quit\"");
+    weechat_config_write_line (config_file, "C", "%s", "\"clear\"");
+    weechat_config_write_line (config_file, "CL", "%s", "\"clear\"");
+    weechat_config_write_line (config_file, "CLOSE", "%s", "\"buffer close\"");
+    weechat_config_write_line (config_file, "CHAT", "%s", "\"dcc chat\"");
+    weechat_config_write_line (config_file, "IG", "%s", "\"ignore\"");
+    weechat_config_write_line (config_file, "J", "%s", "\"join\"");
+    weechat_config_write_line (config_file, "K", "%s", "\"kick\"");
+    weechat_config_write_line (config_file, "KB", "%s", "\"kickban\"");
+    weechat_config_write_line (config_file, "LEAVE", "%s", "\"part\"");
+    weechat_config_write_line (config_file, "M", "%s", "\"msg\"");
+    weechat_config_write_line (config_file, "MUB", "%s", "\"unban *\"");
+    weechat_config_write_line (config_file, "N", "%s", "\"names\"");
+    weechat_config_write_line (config_file, "Q", "%s", "\"query\"");
+    weechat_config_write_line (config_file, "T", "%s", "\"topic\"");
+    weechat_config_write_line (config_file, "UB", "%s", "\"unban\"");
+    weechat_config_write_line (config_file, "UNIG", "%s", "\"unignore\"");
+    weechat_config_write_line (config_file, "W", "%s", "\"who\"");
+    weechat_config_write_line (config_file, "WC", "%s", "\"window merge\"");
+    weechat_config_write_line (config_file, "WI", "%s", "\"whois\"");
+    weechat_config_write_line (config_file, "WW", "%s", "\"whowas\"");
 }
 
 /*
  * alias_config_init: init alias configuration file
+ *                    return: 1 if ok, 0 if error
  */
 
-static int
+int
 alias_config_init ()
 {
     struct t_config_section *ptr_section;
     
     alias_config_file = weechat_config_new (ALIAS_CONFIG_FILENAME);
-    if (alias_config_file)
+    if (!alias_config_file)
+        return 0;
+    
+    ptr_section = weechat_config_new_section (alias_config_file, "alias",
+                                              alias_config_read_line,
+                                              alias_config_write_section,
+                                              alias_config_write_default_aliases);
+    if (!ptr_section)
     {
-        ptr_section = weechat_config_new_section (alias_config_file, "alias",
-                                                  alias_config_read_line,
-                                                  alias_config_write_section,
-                                                  alias_config_write_default_aliases);
-        if (ptr_section)
-            return 1;
         weechat_config_free (alias_config_file);
+        return 0;
     }
-    return 0;
+    
+    return 1;
 }
 
 /*
  * alias_config_read: read alias configuration file
  */
 
-static int
+int
 alias_config_read ()
 {
     return weechat_config_read (alias_config_file);
@@ -531,7 +539,7 @@ alias_config_read ()
  * alias_config_reaload_event_cb: reload alias configuration file
  */
 
-static int
+int
 alias_config_reload_event_cb (void *data, char *event, void *pointer)
 {
     /* make C compiler happy */
@@ -558,7 +566,7 @@ alias_config_reload_event_cb (void *data, char *event, void *pointer)
  * alias_config_write: write alias configuration file
  */
 
-static int
+int
 alias_config_write ()
 {
     return weechat_config_write (alias_config_file);
@@ -568,7 +576,7 @@ alias_config_write ()
  * alias_command_cb: display or create alias
  */
 
-static int
+int
 alias_command_cb (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
