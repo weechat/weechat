@@ -327,7 +327,7 @@ weechat_parse_args (int argc, char *argv[])
                                           _("Warning: unable to create server "
                                             "('%s'), ignored\n"),
                                           argv[i]);
-                irc_server_destroy (&server_tmp);
+                irc_server_free_data (&server_tmp);
                 server_cmd_line = 1;
             }
             }*/

@@ -827,10 +827,13 @@ config_file_reload (struct t_config_file *config_file)
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
-        for (ptr_option = ptr_section->options; ptr_option;
-             ptr_option = ptr_option->next_option)
+        if (!ptr_section->callback_read)
         {
-            ptr_option->loaded = 0;
+            for (ptr_option = ptr_section->options; ptr_option;
+                 ptr_option = ptr_option->next_option)
+            {
+                ptr_option->loaded = 0;
+            }
         }
     }
     
@@ -841,15 +844,18 @@ config_file_reload (struct t_config_file *config_file)
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
-        for (ptr_option = ptr_section->options; ptr_option;
-             ptr_option = ptr_option->next_option)
+        if (!ptr_section->callback_read)
         {
-            if (!ptr_option->loaded)
+            for (ptr_option = ptr_section->options; ptr_option;
+                 ptr_option = ptr_option->next_option)
             {
-                if (config_file_option_reset (ptr_option) == 2)
+                if (!ptr_option->loaded)
                 {
-                    if (ptr_option->callback_change)
-                        (void) (ptr_option->callback_change) ();
+                    if (config_file_option_reset (ptr_option) == 2)
+                    {
+                        if (ptr_option->callback_change)
+                            (void) (ptr_option->callback_change) ();
+                    }
                 }
             }
         }

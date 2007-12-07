@@ -100,6 +100,7 @@ irc_server_init (struct t_irc_server *server)
     server->notify_levels = NULL;
     
     /* internal vars */
+    server->reloaded_from_config = 0;
     server->child_pid = 0;
     server->child_read = -1;
     server->child_write = -1;
@@ -264,89 +265,151 @@ irc_server_init_with_url (struct t_irc_server *server, char *irc_url)
 
 void
 irc_server_init_with_config_options (struct t_irc_server *server,
-                                     void *section)
+                                     void *section,
+                                     int config_reload)
 {
     struct t_config_option *ptr_option;
+    struct t_irc_server *ptr_server;
     
     ptr_option = weechat_config_search_option (NULL, section, "server_name");
-    if (ptr_option)
-        server->name = strdup (weechat_config_string (ptr_option));
-
+    if (!ptr_option)
+    {
+        irc_server_free (server);
+        return;
+    }
+    
+    if (config_reload)
+    {
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            if ((ptr_server != server)
+                && (strcmp (ptr_server->name,
+                            weechat_config_string (ptr_option)) == 0))
+                break;
+        }
+        if (ptr_server)
+            irc_server_free (server);
+        else
+            ptr_server = server;
+    }
+    else
+        ptr_server = server;
+    
+    if (ptr_server->name)
+        free (ptr_server->name);
+    ptr_server->name = strdup (weechat_config_string (ptr_option));
+    
     ptr_option = weechat_config_search_option (NULL, section, "server_autoconnect");
     if (ptr_option)
-        server->autoconnect = weechat_config_integer (ptr_option);
+        ptr_server->autoconnect = weechat_config_integer (ptr_option);
 
     ptr_option = weechat_config_search_option (NULL, section, "server_autoreconnect");
     if (ptr_option)
-        server->autoreconnect = weechat_config_integer (ptr_option);
+        ptr_server->autoreconnect = weechat_config_integer (ptr_option);
 
     ptr_option = weechat_config_search_option (NULL, section, "server_autoreconnect_delay");
     if (ptr_option)
-        server->autoreconnect_delay = weechat_config_integer (ptr_option);
+        ptr_server->autoreconnect_delay = weechat_config_integer (ptr_option);
 
+    if (ptr_server->address)
+        free (ptr_server->address);
+    ptr_server->address = NULL;
     ptr_option = weechat_config_search_option (NULL, section, "server_address");
     if (ptr_option)
-        server->address = strdup (weechat_config_string (ptr_option));
+        ptr_server->address = strdup (weechat_config_string (ptr_option));
 
     ptr_option = weechat_config_search_option (NULL, section, "server_port");
     if (ptr_option)
-        server->port = weechat_config_integer (ptr_option);
+        ptr_server->port = weechat_config_integer (ptr_option);
 
     ptr_option = weechat_config_search_option (NULL, section, "server_ipv6");
     if (ptr_option)
-        server->ipv6 = weechat_config_integer (ptr_option);
+        ptr_server->ipv6 = weechat_config_integer (ptr_option);
 
     ptr_option = weechat_config_search_option (NULL, section, "server_ssl");
     if (ptr_option)
-        server->ssl = weechat_config_integer (ptr_option);
+        ptr_server->ssl = weechat_config_integer (ptr_option);
 
+    if (ptr_server->password)
+        free (ptr_server->password);
+    ptr_server->password = NULL;
     ptr_option = weechat_config_search_option (NULL, section, "server_password");
     if (ptr_option)
-        server->password = strdup (weechat_config_string (ptr_option));
-
+        ptr_server->password = strdup (weechat_config_string (ptr_option));
+    
+    if (ptr_server->nick1)
+        free (ptr_server->nick1);
+    ptr_server->nick1 = NULL;
     ptr_option = weechat_config_search_option (NULL, section, "server_nick1");
     if (ptr_option)
-        server->nick1 = strdup (weechat_config_string (ptr_option));
-    
+        ptr_server->nick1 = strdup (weechat_config_string (ptr_option));
+
+    if (ptr_server->nick2)
+        free (ptr_server->nick2);
+    ptr_server->nick2 = NULL;
     ptr_option = weechat_config_search_option (NULL, section, "server_nick2");
     if (ptr_option)
-        server->nick2 = strdup (weechat_config_string (ptr_option));
+        ptr_server->nick2 = strdup (weechat_config_string (ptr_option));
     
+    if (ptr_server->nick3)
+        free (ptr_server->nick3);
+    ptr_server->nick3 = NULL;
     ptr_option = weechat_config_search_option (NULL, section, "server_nick3");
     if (ptr_option)
-        server->nick3 = strdup (weechat_config_string (ptr_option));
+        ptr_server->nick3 = strdup (weechat_config_string (ptr_option));
 
+    if (ptr_server->username)
+        free (ptr_server->username);
+    ptr_server->username = NULL;
     ptr_option = weechat_config_search_option (NULL, section, "server_username");
     if (ptr_option)
-        server->username = strdup (weechat_config_string (ptr_option));
-
+        ptr_server->username = strdup (weechat_config_string (ptr_option));
+    
+    if (ptr_server->realname)
+        free (ptr_server->realname);
+    ptr_server->realname = NULL;
     ptr_option = weechat_config_search_option (NULL, section, "server_realname");
     if (ptr_option)
-        server->realname = strdup (weechat_config_string (ptr_option));
-
+        ptr_server->realname = strdup (weechat_config_string (ptr_option));
+    
+    if (ptr_server->hostname)
+        free (ptr_server->hostname);
+    ptr_server->hostname = NULL;
     ptr_option = weechat_config_search_option (NULL, section, "server_hostname");
     if (ptr_option)
-        server->hostname = strdup (weechat_config_string (ptr_option));
-
+        ptr_server->hostname = strdup (weechat_config_string (ptr_option));
+    
+    if (ptr_server->command)
+        free (ptr_server->command);
+    ptr_server->command = NULL;
     ptr_option = weechat_config_search_option (NULL, section, "server_command");
     if (ptr_option)
-        server->command = strdup (weechat_config_string (ptr_option));
+        ptr_server->command = strdup (weechat_config_string (ptr_option));
 
     ptr_option = weechat_config_search_option (NULL, section, "server_command_delay");
     if (ptr_option)
-        server->command_delay = weechat_config_integer (ptr_option);
+        ptr_server->command_delay = weechat_config_integer (ptr_option);
 
+    if (ptr_server->autojoin)
+        free (ptr_server->autojoin);
+    ptr_server->autojoin = NULL;
     ptr_option = weechat_config_search_option (NULL, section, "server_autojoin");
     if (ptr_option)
-        server->autojoin = strdup (weechat_config_string (ptr_option));
+        ptr_server->autojoin = strdup (weechat_config_string (ptr_option));
 
     ptr_option = weechat_config_search_option (NULL, section, "server_autorejoin");
     if (ptr_option)
-        server->autorejoin = weechat_config_integer (ptr_option);
+        ptr_server->autorejoin = weechat_config_integer (ptr_option);
 
+    if (ptr_server->notify_levels)
+        free (ptr_server->notify_levels);
+    ptr_server->notify_levels = NULL;
     ptr_option = weechat_config_search_option (NULL, section, "server_notify_levels");
     if (ptr_option)
-        server->notify_levels = strdup (weechat_config_string (ptr_option));
+        ptr_server->notify_levels = strdup (weechat_config_string (ptr_option));
+    
+    ptr_server->reloaded_from_config = 1;
 }
 
 /*
@@ -454,11 +517,11 @@ irc_server_outqueue_free_all (struct t_irc_server *server)
 }
 
 /*
- * irc_server_destroy: free server data (not struct himself)
+ * irc_server_free_data: free server data
  */
 
 void
-irc_server_destroy (struct t_irc_server *server)
+irc_server_free_data (struct t_irc_server *server)
 {
     if (!server)
         return;
@@ -534,7 +597,7 @@ irc_server_free (struct t_irc_server *server)
     if (server->next_server)
         (server->next_server)->prev_server = server->prev_server;
     
-    irc_server_destroy (server);
+    irc_server_free_data (server);
     free (server);
     irc_servers = new_irc_servers;
 }
@@ -2686,6 +2749,7 @@ irc_server_print_log ()
         weechat_log_printf ("  autojoin. . . . . . : '%s'", ptr_server->autojoin);
         weechat_log_printf ("  autorejoin. . . . . : %d",   ptr_server->autorejoin);
         weechat_log_printf ("  notify_levels . . . : %s",   ptr_server->notify_levels);
+        weechat_log_printf ("  reloaded_from_config: %d",   ptr_server->reloaded_from_config);
         weechat_log_printf ("  child_pid . . . . . : %d",   ptr_server->child_pid);
         weechat_log_printf ("  child_read  . . . . : %d",   ptr_server->child_read);
         weechat_log_printf ("  child_write . . . . : %d",   ptr_server->child_write);

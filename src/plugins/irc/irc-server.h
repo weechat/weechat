@@ -78,6 +78,7 @@ struct t_irc_server
     char *notify_levels;            /* channels notify levels                */
     
     /* internal vars */
+    int reloaded_from_config;       /* 1 if reloaded from config file        */
     pid_t child_pid;                /* pid of child process (connecting)     */
     int child_read;                 /* to read into child pipe               */
     int child_write;                /* to write into child pipe              */
@@ -133,15 +134,18 @@ extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
 
 extern void irc_server_init (struct t_irc_server *);
 extern int irc_server_init_with_url (struct t_irc_server *, char *);
-extern void irc_server_init_with_config_options (struct t_irc_server *, void *);
+extern void irc_server_init_with_config_options (struct t_irc_server *, void *,
+                                                 int);
 extern struct t_irc_server *irc_server_alloc ();
 extern void irc_server_outqueue_free_all (struct t_irc_server *);
-extern void irc_server_destroy (struct t_irc_server *);
+extern void irc_server_free_data (struct t_irc_server *);
 extern void irc_server_free (struct t_irc_server *);
 extern void irc_server_free_all ();
-extern struct t_irc_server *irc_server_new (char *, int, int, int, int, char *, int, int, int,
-                                     char *, char *, char *, char *, char *, char *,
-                                     char *, char *, int, char *, int, char *);
+extern struct t_irc_server *irc_server_new (char *, int, int, int, int, char *,
+                                            int, int, int, char *, char *,
+                                            char *, char *, char *, char *,
+                                            char *, char *, int, char *, int,
+                                            char *);
 extern struct t_irc_server *irc_server_duplicate (struct t_irc_server *, char *);
 extern int irc_server_rename (struct t_irc_server *, char *);
 extern int irc_server_send (struct t_irc_server *, char *, int);

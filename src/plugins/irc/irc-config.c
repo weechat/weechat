@@ -106,6 +106,7 @@ struct t_config_option *irc_config_server_autorejoin;
 struct t_config_option *irc_config_server_notify_levels;
 
 struct t_irc_server *irc_config_server = NULL;
+int irc_config_reload_flag;
 
 
 /*
@@ -260,7 +261,8 @@ irc_config_read_server_line (void *config_file, char *option_name, char *value)
         if (irc_config_server)
         {
             irc_server_init_with_config_options (irc_config_server,
-                                                 irc_config_section_server);
+                                                 irc_config_section_server,
+                                                 irc_config_reload_flag);
         }
         irc_config_server = irc_server_alloc ();
         if (!irc_config_server)
@@ -710,27 +712,80 @@ irc_config_read ()
     int rc;
     
     irc_config_server = NULL;
-
+    irc_config_reload_flag = 0;
+    
     rc = weechat_config_read (irc_config_file);
 
     if (irc_config_server)
         irc_server_init_with_config_options (irc_config_server,
-                                             irc_config_section_server);
+                                             irc_config_section_server,
+                                             irc_config_reload_flag);
     
     return rc;
 }
 
 /*
  * irc_config_reload: read IRC configuration file
- *                    return:  0 = successful
- *                            -1 = configuration file file not found
- *                            -2 = error in configuration file
  */
 
 int
 irc_config_reload ()
 {
-    return weechat_config_reload (irc_config_file);
+    struct t_irc_server *ptr_server, *next_server;
+    int rc;
+
+    irc_config_server = NULL;
+    irc_config_reload_flag = 1;
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        ptr_server->reloaded_from_config = 0;
+    }
+    
+    rc = weechat_config_reload (irc_config_file);
+
+    if (rc == 0)
+    {
+        
+        if (irc_config_server)
+            irc_server_init_with_config_options (irc_config_server,
+                                                 irc_config_section_server,
+                                                 irc_config_reload_flag);
+        
+        ptr_server = irc_servers;
+        while (ptr_server)
+        {
+            next_server = ptr_server->next_server;
+            
+            if (!ptr_server->reloaded_from_config)
+            {
+                if (ptr_server->is_connected)
+                {
+                    weechat_printf (NULL,
+                                    _("%sIrc: warning: server \"%s\" not found in "
+                                      "configuration file, but was not deleted "
+                                      "(currently used)"),
+                                    weechat_prefix ("info"),
+                                    ptr_server->name);
+                }
+                else
+                    irc_server_free (ptr_server);
+            }
+            
+            ptr_server = next_server;
+        }
+
+        weechat_printf (NULL,
+                        _("%sIrc configuration file reloaded"),
+                        weechat_prefix ("info"));
+        return PLUGIN_RC_SUCCESS;
+    }
+    
+    weechat_printf (NULL,
+                    _("%sIrc: failed to reload alias configuration "
+                      "file"),
+                    weechat_prefix ("error"));
+    return PLUGIN_RC_FAILED;
 }
 
 /*

@@ -135,6 +135,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
         return PLUGIN_RC_FAILED;
 
     irc_create_directories ();
+
+    weechat_hook_event ("config_reload", irc_config_reload, NULL);
     
     //irc_server_auto_connect (1, 0);
     
