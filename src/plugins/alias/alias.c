@@ -195,8 +195,8 @@ alias_cb (void *data, void *buffer, int argc, char **argv,
     if (ptr_alias->running)
     {
         weechat_printf (NULL,
-                        _("%sError: circular reference when "
-                          "calling alias \"/%s\""),
+                        _("%sAlias: error, circular reference when calling "
+                          "alias \"/%s\""),
                         weechat_prefix ("error"),
                         ptr_alias->name);
         return PLUGIN_RC_FAILED;
@@ -353,8 +353,8 @@ alias_get_final_command (struct t_alias *alias)
     if (alias->running)
     {
         weechat_printf (NULL,
-                        _("%sError: circular reference when calling alias "
-                          "\"/%s\""),
+                        _("%sAlias: error, circular reference when calling "
+                          "alias \"/%s\""),
                         weechat_prefix ("error"),
                         alias->name);
         return NULL;

@@ -61,16 +61,16 @@ demo_printf_command_cb (void *data, void *buffer, int argc, char **argv,
     else
     {
         weechat_printf (buffer,
-                        "demo message without prefix");
+                        _("demo message without prefix"));
         weechat_printf (buffer,
-                        "%sdemo message with info prefix",
+                        _("%sdemo message with info prefix"),
                         weechat_prefix ("info"));
         weechat_printf (buffer,
-                        "%sdemo message with error prefix",
+                        _("%sdemo message with error prefix"),
                         weechat_prefix ("error"));
         weechat_printf (buffer,
-                        "colors: %s buffer %s nick1 %s nick2 %s nick3 "
-                        "%s nick4",
+                        _("colors: %s buffer %s nick1 %s nick2 %s nick3 "
+                          "%s nick4"),
                         weechat_color ("color_chat_buffer"),
                         weechat_color ("color_chat_nick_color1"),
                         weechat_color ("color_chat_nick_color2"),
@@ -217,8 +217,10 @@ demo_infolist_command_cb (void *data, void *buffer, int argc, char **argv,
     }
     
     weechat_printf (NULL,
-                    "Demo: missing argument for /demo_infolist command "
-                    "(try /help demo_infolist)");
+                    _("%sDemo: missing argument for /%s command "
+                      "(try /help %s)"),
+                    weechat_prefix ("error"),
+                    "demo_infolist", "demo_infolist");
     
     return PLUGIN_RC_SUCCESS;
 }
@@ -243,9 +245,11 @@ demo_info_command_cb (void *data, void *buffer, int argc, char **argv,
                         weechat_info_get (argv[1]));
     else
         weechat_printf (NULL,
-                        "Demo: missing argument for /demo_info command "
-                        "(try /help demo_info)");
-
+                        _("%sDemo: missing argument for /%s command "
+                          "(try /help %s)"),
+                        weechat_prefix ("error"),
+                        "demo_info", "demo_info");
+    
     return PLUGIN_RC_SUCCESS;
 }
 
@@ -259,7 +263,8 @@ demo_event_cb (void *data, char *event, void *pointer)
     /* make C compiler happy */
     (void) data;
     
-    weechat_printf (NULL, "demo_event: event: %s, pointer: %X",
+    weechat_printf (NULL,
+                    _("demo_event: event: %s, pointer: %X"),
                     event, pointer);
     
     return PLUGIN_RC_SUCCESS;
@@ -274,29 +279,35 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 {
     weechat_plugin = plugin;
     
-    weechat_hook_command ("demo_printf", "demo command: print some messages",
-                          "[text]", "text: write some text on current buffer",
+    weechat_hook_command ("demo_printf",
+                          _("demo command: print some messages"),
+                          _("[text]"),
+                          _("text: write some text on current buffer"),
                           "",
                           demo_printf_command_cb, NULL);
 
-    weechat_hook_command ("demo_buffer", "open a new buffer",
-                          "category name", "",
+    weechat_hook_command ("demo_buffer",
+                          _("open a new buffer"),
+                          _("category name"),
+                          "",
                           "",
                           demo_buffer_command_cb, NULL);
     
-    weechat_hook_command ("demo_infolist", "demo command: get and display list",
-                          "infolist",
-                          "infolist: infolist to display (values: buffer, "
-                          "buffer_lines)",
+    weechat_hook_command ("demo_infolist",
+                          _("demo command: get and display list"),
+                          _("infolist"),
+                          _("infolist: infolist to display (values: buffer, "
+                            "buffer_lines)"),
                           "buffer|buffer_lines",
                           demo_infolist_command_cb, NULL);
     
-    weechat_hook_command ("demo_info", "demo command: get and display info",
-                          "info",
-                          "info: info to display (values: version, "
-                          "weechat_dir, weechat_libdir, weechat_sharedir, "
-                          "charset_terminal, charset_internal, inactivity, "
-                          "input, input_mask, input_pos)",
+    weechat_hook_command ("demo_info",
+                          _("demo command: get and display info"),
+                          _("info"),
+                          _("info: info to display (values: version, "
+                            "weechat_dir, weechat_libdir, weechat_sharedir, "
+                            "charset_terminal, charset_internal, inactivity, "
+                            "input, input_mask, input_pos)"),
                           "version|weechat_dir|weechat_libdir|"
                           "weechat_sharedir|charset_terminal|charset_internal|"
                           "inactivity|input|input_mask|input_pos",
