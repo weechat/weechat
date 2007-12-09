@@ -385,6 +385,19 @@ irc_nick_set_away (struct t_irc_channel *channel, struct t_irc_nick *nick, int i
 }
 
 /*
+ * irc_nick_as_prefix: return string with nick to display as prefix on buffer
+ *                     (string will end by a tab)
+ */
+
+char *
+irc_nick_as_prefix (struct t_irc_nick *nick)
+{
+    static char result[10] = "";
+    
+    return result;
+}
+
+/*
  * irc_nick_print_log: print nick infos in log (usually for crash dump)
  */
 

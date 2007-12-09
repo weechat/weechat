@@ -209,6 +209,26 @@ gui_buffer_valid (struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_buffer_get: get a buffer property
+ */
+
+char *
+gui_buffer_get (struct t_gui_buffer *buffer, char *property)
+{
+    long number;
+    char *error;
+    
+    if (string_strcasecmp (property, "category") == 0)
+        return buffer->category;
+    else if (string_strcasecmp (property, "name") == 0)
+        return buffer->name;
+    else if (string_strcasecmp (property, "title") == 0)
+        return buffer->title;
+    else if (string_strcasecmp (property, "nick") == 0)
+        return buffer->nick;
+}
+
+/*
  * gui_buffer_set_category: set category for a buffer
  */
 

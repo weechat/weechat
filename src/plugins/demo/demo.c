@@ -284,14 +284,14 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           _("[text]"),
                           _("text: write some text on current buffer"),
                           "",
-                          demo_printf_command_cb, NULL);
+                          &demo_printf_command_cb, NULL);
 
     weechat_hook_command ("demo_buffer",
                           _("open a new buffer"),
                           _("category name"),
                           "",
                           "",
-                          demo_buffer_command_cb, NULL);
+                          &demo_buffer_command_cb, NULL);
     
     weechat_hook_command ("demo_infolist",
                           _("demo command: get and display list"),
@@ -299,7 +299,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           _("infolist: infolist to display (values: buffer, "
                             "buffer_lines)"),
                           "buffer|buffer_lines",
-                          demo_infolist_command_cb, NULL);
+                          &demo_infolist_command_cb, NULL);
     
     weechat_hook_command ("demo_info",
                           _("demo command: get and display info"),
@@ -311,9 +311,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           "version|weechat_dir|weechat_libdir|"
                           "weechat_sharedir|charset_terminal|charset_internal|"
                           "inactivity|input|input_mask|input_pos",
-                          demo_info_command_cb, NULL);
+                          &demo_info_command_cb, NULL);
 
-    weechat_hook_event ("*", demo_event_cb, NULL);
+    weechat_hook_event ("*", &demo_event_cb, NULL);
     
     return PLUGIN_RC_SUCCESS;
 }

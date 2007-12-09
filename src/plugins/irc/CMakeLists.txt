@@ -14,8 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(LIB_PROTOCOL_IRC_SRC irc.c irc.h irc-channel.c irc-channel.h irc-config.c
-irc-config.h irc-server.c irc-server.h)
+SET(LIB_PROTOCOL_IRC_SRC irc.c irc.h irc-channel.c irc-channel.h irc-command.c
+irc-command.h irc-config.c irc-config.h irc-server.c irc-server.h)
 
 #SET(LIB_PROTOCOL_IRC_SRC irc.c irc.h irc-buffer.c irc-buffer.h irc-channel.c
 #irc-channel.h irc-command.c irc-command.h irc-color.c irc-color.h irc-config.c

@@ -160,6 +160,7 @@ extern struct t_gui_buffer *plugin_api_buffer_new (struct t_weechat_plugin *,
 extern struct t_gui_buffer *plugin_api_buffer_search (struct t_weechat_plugin *,
                                                       char *, char *);
 extern void plugin_api_buffer_close (struct t_weechat_plugin *, void *);
+extern char *plugin_api_buffer_get (struct t_weechat_plugin *, void *, char *);
 extern void plugin_api_buffer_set (struct t_weechat_plugin *, void *, char *,
                                    char *);
 extern void plugin_api_buffer_nick_add (struct t_weechat_plugin *, void *,

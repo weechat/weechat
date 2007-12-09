@@ -441,10 +441,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     logger_start_buffer_all ();
     
-    weechat_hook_event ("buffer_open", logger_event_cb, NULL);
-    weechat_hook_event ("buffer_close", logger_event_cb, NULL);
+    weechat_hook_event ("buffer_open", &logger_event_cb, NULL);
+    weechat_hook_event ("buffer_close", &logger_event_cb, NULL);
     
-    weechat_hook_print (NULL, NULL, 1, logger_print_cb, NULL);
+    weechat_hook_print (NULL, NULL, 1, &logger_print_cb, NULL);
     
     return PLUGIN_RC_SUCCESS;
 }

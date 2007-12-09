@@ -1272,6 +1272,20 @@ plugin_api_buffer_close (struct t_weechat_plugin *plugin, void *buffer)
 }
 
 /*
+ * plugin_api_buffer_get: get a buffer property
+ */
+
+char *
+plugin_api_buffer_get (struct t_weechat_plugin *plugin, void *buffer,
+                       char *property)
+{
+    if (plugin && buffer && property && property[0])
+        return gui_buffer_get ((struct t_gui_buffer *)buffer, property);
+    
+    return NULL;
+}
+
+/*
  * plugin_api_buffer_set: set a buffer property
  */
 

@@ -336,9 +336,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     fifo_create ();
     
-    fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0, fifo_read, NULL);
+    fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0, &fifo_read, NULL);
     
-    weechat_hook_config ("plugin", "fifo.fifo", fifo_config_cb, NULL);
+    weechat_hook_config ("plugin", "fifo.fifo", &fifo_config_cb, NULL);
     
     return PLUGIN_RC_SUCCESS;
 }

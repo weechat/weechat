@@ -168,6 +168,7 @@ struct t_weechat_plugin
     struct t_gui_buffer *(*buffer_search) (struct t_weechat_plugin *,
                                            char *, char *);
     void (*buffer_close) (struct t_weechat_plugin *, void *);
+    char *(*buffer_get) (struct t_weechat_plugin *, void *, char *);
     void (*buffer_set) (struct t_weechat_plugin *, void *, char *, char *);
     void (*buffer_nick_add) (struct t_weechat_plugin *, void *, char *, int,
                              char *, char, char *);
@@ -385,9 +386,11 @@ struct t_weechat_plugin
     weechat_plugin->buffer_search(weechat_plugin, NULL, NULL)
 #define weechat_buffer_close(__buffer)                          \
     weechat_plugin->buffer_close(weechat_plugin, __buffer)
+#define weechat_buffer_get(__buffer, __property)                        \
+    weechat_plugin->buffer_get(weechat_plugin, __buffer, __property)
 #define weechat_buffer_set(__buffer, __property, __value)             \
-    weechat_plugin->buffer_set(weechat_plugin, __buffer,              \
-                               __property, __value)
+    weechat_plugin->buffer_set(weechat_plugin, __buffer, __property,  \
+                               __value)
 
 /* command */
 #define weechat_command(__buffer, __command)                            \

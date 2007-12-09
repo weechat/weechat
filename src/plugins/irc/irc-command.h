@@ -20,6 +20,18 @@
 #ifndef __WEECHAT_IRC_COMMAND_H
 #define __WEECHAT_IRC_COMMAND_H 1
 
+#define IRC_COMMAND_GET_SERVER(buffer)                          \
+    struct t_irc_server *ptr_server = irc_server_search (       \
+        weechat_buffer_get (buffer, "category"))
+
+#define IRC_COMMAND_GET_SERVER_CHANNEL(buffer)                     \
+    struct t_irc_server *ptr_server = irc_server_search (               \
+        weechat_buffer_get (buffer, "category"));                       \
+    struct t_irc_channel *ptr_channel = irc_channel_search (            \
+        ptr_server,                                                     \
+        weechat_buffer_get (buffer, "name"))
+
+
 extern void irc_command_init ();
 
 #endif /* irc-command.h */

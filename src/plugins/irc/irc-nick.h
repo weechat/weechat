@@ -62,6 +62,7 @@ extern void irc_nick_free_all (struct t_irc_channel *);
 extern struct t_irc_nick *irc_nick_search (struct t_irc_channel *, char *);
 extern void irc_nick_count (struct t_irc_channel *, int *, int *, int *, int *, int *);
 extern void irc_nick_set_away (struct t_irc_channel *, struct t_irc_nick *, int);
+extern char *irc_nick_as_prefix (struct t_irc_nick *);
 extern void irc_nick_print_log (struct t_irc_nick *);
 
 #endif /* irc-nick.h */

@@ -142,6 +142,7 @@ extern struct t_gui_buffer *gui_buffer_before_raw_data;
 extern struct t_gui_buffer *gui_buffer_new (void *, char *, char *,
                                             void (*)(struct t_gui_buffer *, char *));
 extern int gui_buffer_valid (struct t_gui_buffer *);
+extern char *gui_buffer_get (struct t_gui_buffer *, char *);
 extern void gui_buffer_set_category (struct t_gui_buffer *, char *);
 extern void gui_buffer_set_name (struct t_gui_buffer *, char *);
 extern void gui_buffer_set_log (struct t_gui_buffer *, char *);

@@ -751,20 +751,20 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                                              "replaced by current nick/channel"
                                              "/server."),
                                           "%- %h",
-                                          alias_command_cb, NULL);
+                                          &alias_command_cb, NULL);
     
     unalias_command = weechat_hook_command ("unalias", N_("remove an alias"),
                                             N_("alias_name"),
                                             N_("alias_name: name of alias to "
                                                "remove"),
                                             "%(alias)",
-                                            unalias_command_cb, NULL);
+                                            &unalias_command_cb, NULL);
 
     config_reload = weechat_hook_event ("config_reload",
-                                        alias_config_reload_event_cb, NULL);
+                                        &alias_config_reload_event_cb, NULL);
     
     completion = weechat_hook_completion ("alias",
-                                          alias_completion_cb, NULL);
+                                          &alias_completion_cb, NULL);
     
     return PLUGIN_RC_SUCCESS;
 }

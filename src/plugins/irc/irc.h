@@ -28,6 +28,12 @@
 
 #define weechat_plugin weechat_irc_plugin
 
+#define IRC_COLOR_CHAT weechat_color("color_chat")
+#define IRC_COLOR_CHAT_CHANNEL weechat_color("color_chat_channel")
+#define IRC_COLOR_CHAT_DELIMITERS weechat_color("color_chat_delimiters")
+#define IRC_COLOR_CHAT_NICK weechat_color("color_chat_nick")
+#define IRC_COLOR_CHAT_SERVER weechat_color("color_chat_server")
+
 extern struct t_weechat_plugin *weechat_plugin;
 extern struct t_weechat_plugin *weechat_plugin;
 extern struct t_hook *irc_timer_check_away;

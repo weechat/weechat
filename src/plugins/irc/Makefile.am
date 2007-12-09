@@ -24,27 +24,26 @@ irc_la_SOURCES = irc.c \
                  irc.h \
                  irc-channel.c \
                  irc-channel.h \
+                 irc-color.c \
+                 irc-color.h \
+                 irc-command.c \
+                 irc-command.h \
                  irc-config.c \
                  irc-config.h \
+                 irc-display.c \
+                 irc-display.h \
+                 irc-nick.c \
+                 irc-nick.h \
                  irc-server.c \
                  irc-server.h
 
-#                 irc.c \
-#                 irc.h \
 #                 irc-buffer.c \
 #                 irc-buffer.h \
-#                 irc-command.c \
-#                 irc-command.h \
-#                 irc-color.c \
-#                 irc-color.h \
 #                 irc-dcc.c \
 #                 irc-dcc.h \
-#                 irc-display.c \
 #                 irc-input.c \
 #                 irc-log.c \
 #                 irc-mode.c \
-#                 irc-nick.c \
-#                 irc-nick.h \
 #                 irc-protocol.c \
 #                 irc-protocol.h
 
