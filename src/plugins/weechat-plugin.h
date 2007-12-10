@@ -261,10 +261,10 @@ struct t_weechat_plugin
     weechat_plugin->utf8_has_8bits(weechat_plugin, __string)
 #define weechat_utf8_is_valid(__string, __error)                        \
     weechat_plugin->utf8_is_valid(weechat_plugin, __string, __error)
-#define weechat_utf8_normalise(__string, __char)                        \
+#define weechat_utf8_normalize(__string, __char)                        \
     weechat_plugin->utf8_normalize(weechat_plugin, __string, __char)
 #define weechat_utf8_prev_char(__start, __string)                       \
-    weechat_plugin->utf8_has_8bits(weechat_plugin, __start, __string)
+    weechat_plugin->utf8_prev_char(weechat_plugin, __start, __string)
 #define weechat_utf8_next_char(__string)                        \
     weechat_plugin->utf8_next_char(weechat_plugin, __string)
 #define weechat_utf8_char_size(__string)                        \
