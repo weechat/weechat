@@ -26,10 +26,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../core/weechat.h"
 #include "irc.h"
-#include "../../core/util.h"
-#include "../../gui/gui.h"
+#include "irc-mode.h"
+#include "irc-server.h"
+#include "irc-channel.h"
+#include "irc-nick.h"
 
 
 /*
@@ -37,11 +38,17 @@
  */
 
 void
-irc_mode_channel_set_nick (t_irc_channel *channel, char *nick,
+irc_mode_channel_set_nick (struct t_irc_channel *channel, char *nick,
                            char set_flag, int flag)
 {
-    t_irc_nick *ptr_nick;
-    t_gui_nick *ptr_gui_nick;
+    (void) channel;
+    (void) nick;
+    (void) set_flag;
+    (void) flag;
+    
+    /*
+    struct t_irc_nick *ptr_nick;
+    struct t_gui_nick *ptr_gui_nick;
     int sort_index, color_prefix;
     char prefix;
     
@@ -66,6 +73,7 @@ irc_mode_channel_set_nick (t_irc_channel *channel, char *nick,
             }
         }
     }
+    */
 }
 
 /*
@@ -95,8 +103,8 @@ irc_mode_channel_get_flag (char *str, char *pos)
  */
 
 void
-irc_mode_channel_set (t_irc_server *server, t_irc_channel *channel,
-                      char *modes)
+irc_mode_channel_set (struct t_irc_server *server,
+                      struct t_irc_channel *channel, char *modes)
 {
     char *pos_args, set_flag, **argv, *pos, *ptr_arg;
     int argc, current_arg;
@@ -111,7 +119,7 @@ irc_mode_channel_set (t_irc_server *server, t_irc_channel *channel,
         pos_args++;
         while (pos_args[0] == ' ')
             pos_args++;
-        argv = weechat_explode_string (pos_args, " ", 0, &argc);
+        argv = weechat_string_explode (pos_args, " ", 0, 0, &argc);
         if (argc > 0)
             current_arg = argc - 1;
     }
@@ -212,7 +220,7 @@ irc_mode_channel_set (t_irc_server *server, t_irc_channel *channel,
     }
     
     if (argv)
-        weechat_free_exploded_string (argv);
+        weechat_string_free_exploded (argv);
 }
 
 /*
@@ -220,7 +228,7 @@ irc_mode_channel_set (t_irc_server *server, t_irc_channel *channel,
  */
 
 void
-irc_mode_user_add (t_irc_server *server, char mode)
+irc_mode_user_add (struct t_irc_server *server, char mode)
 {
     char str_mode[2];
 
@@ -234,16 +242,16 @@ irc_mode_user_add (t_irc_server *server, char mode)
             server->nick_modes = (char *) realloc (server->nick_modes,
                                                    strlen (server->nick_modes) + 1 + 1);
             strcat (server->nick_modes, str_mode);
-            gui_status_draw (gui_current_window->buffer, 1);
-            gui_input_draw (gui_current_window->buffer, 1);
+            //gui_status_draw (gui_current_window->buffer, 1);
+            //gui_input_draw (gui_current_window->buffer, 1);
         }
     }
     else
     {
         server->nick_modes = (char *) malloc (2);
         strcpy (server->nick_modes, str_mode);
-        gui_status_draw (gui_current_window->buffer, 1);
-        gui_input_draw (gui_current_window->buffer, 1);
+        //gui_status_draw (gui_current_window->buffer, 1);
+        //gui_input_draw (gui_current_window->buffer, 1);
     }
 }
 
@@ -252,7 +260,7 @@ irc_mode_user_add (t_irc_server *server, char mode)
  */
 
 void
-irc_mode_user_remove (t_irc_server *server, char mode)
+irc_mode_user_remove (struct t_irc_server *server, char mode)
 {
     char *pos;
     int new_size;
@@ -266,8 +274,8 @@ irc_mode_user_remove (t_irc_server *server, char mode)
             memmove (pos, pos + 1, strlen (pos + 1) + 1);
             server->nick_modes = (char *) realloc (server->nick_modes,
                                                    new_size);
-            gui_status_draw (gui_current_window->buffer, 1);
-            gui_input_draw (gui_current_window->buffer, 1);
+            //gui_status_draw (gui_current_window->buffer, 1);
+            //gui_input_draw (gui_current_window->buffer, 1);
         }
     }
 }
@@ -277,7 +285,7 @@ irc_mode_user_remove (t_irc_server *server, char mode)
  */
 
 void
-irc_mode_user_set (t_irc_server *server, char *modes)
+irc_mode_user_set (struct t_irc_server *server, char *modes)
 {
     char set_flag;
     
@@ -314,7 +322,7 @@ irc_mode_user_set (t_irc_server *server, char *modes)
  */
 
 int
-irc_mode_nick_prefix_allowed (t_irc_server *server, char prefix)
+irc_mode_nick_prefix_allowed (struct t_irc_server *server, char prefix)
 {
     char str[2];
     

@@ -50,6 +50,7 @@
     return WEECHAT_RC_ERROR;
 
 
+extern void irc_command_join_server (struct t_irc_server *, char *);
 extern void irc_command_quit_server (struct t_irc_server *, char *);
 extern void irc_command_init ();
 

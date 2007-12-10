@@ -31,6 +31,7 @@
 #define IRC_COLOR_CHAT weechat_color("color_chat")
 #define IRC_COLOR_CHAT_CHANNEL weechat_color("color_chat_channel")
 #define IRC_COLOR_CHAT_DELIMITERS weechat_color("color_chat_delimiters")
+#define IRC_COLOR_CHAT_HOST weechat_color("color_chat_host")
 #define IRC_COLOR_CHAT_NICK weechat_color("color_chat_nick")
 #define IRC_COLOR_CHAT_SERVER weechat_color("color_chat_server")
 
