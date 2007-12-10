@@ -296,7 +296,7 @@ fifo_read ()
         }
     }
 
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -322,7 +322,7 @@ fifo_config_cb (void *data, char *type, char *option, char *value)
             fifo_remove ();
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -340,7 +340,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     weechat_hook_config ("plugin", "fifo.fifo", &fifo_config_cb, NULL);
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -352,5 +352,5 @@ weechat_plugin_end ()
 {
     fifo_remove ();
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }

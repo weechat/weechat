@@ -47,7 +47,7 @@
     weechat_printf (__buffer,                                           \
                     _("%sirc: too few arguments for \"%s\" command"),   \
                     weechat_prefix ("error"), __command);               \
-    return PLUGIN_RC_FAILED;
+    return WEECHAT_RC_ERROR;
 
 
 extern void irc_command_quit_server (struct t_irc_server *, char *);

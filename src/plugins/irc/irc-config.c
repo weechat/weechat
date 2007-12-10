@@ -777,14 +777,14 @@ irc_config_reload_cb (void *data, char *event, void *pointer)
         weechat_printf (NULL,
                         _("%sirc: configuration file reloaded"),
                         weechat_prefix ("info"));
-        return PLUGIN_RC_SUCCESS;
+        return WEECHAT_RC_OK;
     }
     
     weechat_printf (NULL,
                     _("%sirc: failed to reload alias configuration "
                       "file"),
                     weechat_prefix ("error"));
-    return PLUGIN_RC_FAILED;
+    return WEECHAT_RC_ERROR;
 }
 
 /*

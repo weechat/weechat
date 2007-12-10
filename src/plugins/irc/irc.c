@@ -83,7 +83,7 @@ irc_dump ()
     
     irc_dcc_print_log ();
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 */
 
@@ -133,7 +133,7 @@ irc_quit_cb (void *data, char *event, void *pointer)
         irc_command_quit_server (ptr_server, (char *)pointer);
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 
@@ -154,10 +154,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 #endif
     
     if (!irc_config_init ())
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
 
     if (irc_config_read () < 0)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
 
     irc_create_directories ();
 
@@ -180,7 +180,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                                                    NULL);
     */
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -213,5 +213,5 @@ weechat_plugin_end ()
     gnutls_global_deinit();
 #endif
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }

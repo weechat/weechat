@@ -1303,7 +1303,7 @@ irc_server_recv (void *arg_server)
     int num_read;
 
     if (!server)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
 #ifdef HAVE_GNUTLS
     if (server->ssl_connected)
@@ -1328,7 +1328,7 @@ irc_server_recv (void *arg_server)
         irc_server_disconnect (server, 1);
     }
 
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1555,7 +1555,7 @@ irc_server_child_read (void *arg_server)
                                         weechat_prefix ("error"));
                         irc_server_close_connection (server);
                         irc_server_reconnect_schedule (server);
-                        return PLUGIN_RC_SUCCESS;
+                        return WEECHAT_RC_OK;
                     }
                 }
 #endif
@@ -1619,7 +1619,7 @@ irc_server_child_read (void *arg_server)
                 break;
         }
     }
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*

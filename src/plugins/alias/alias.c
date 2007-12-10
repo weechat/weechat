@@ -199,7 +199,7 @@ alias_cb (void *data, void *buffer, int argc, char **argv,
                           "alias \"/%s\""),
                         weechat_prefix ("error"),
                         ptr_alias->name);
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     }
     else
     {		
@@ -281,7 +281,7 @@ alias_cb (void *data, void *buffer, int argc, char **argv,
             weechat_string_free_splitted_command (commands);
         }
     }
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -554,13 +554,13 @@ alias_config_reload_event_cb (void *data, char *event, void *pointer)
         weechat_printf (NULL,
                         _("%sAlias: configuration file reloaded"),
                         weechat_prefix ("info"));
-        return PLUGIN_RC_SUCCESS;
+        return WEECHAT_RC_OK;
     }
     weechat_printf (NULL,
                     _("%sAlias: failed to reload alias configuration "
                       "file"),
                     weechat_prefix ("error"));
-    return PLUGIN_RC_FAILED;
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -601,7 +601,7 @@ alias_command_cb (void *data, void *buffer, int argc, char **argv,
                                   "=> \"%\""),
                                 weechat_prefix ("error"),
                                 alias_name, argv_eol[2]);
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             weechat_printf (NULL,
                             _("%sAlias \"%s\" => \"%s\" created"),
@@ -710,7 +710,7 @@ alias_completion_cb (void *data, char *completion, void *list)
         weechat_list_add (list, ptr_alias->name, "sort");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -728,7 +728,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                         "%sAlias: error creating configuration file \"%s\"",
                         weechat_prefix("error"),
                         ALIAS_CONFIG_FILENAME);
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     }
     alias_config_read ();
     
@@ -766,7 +766,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     completion = weechat_hook_completion ("alias",
                                           &alias_completion_cb, NULL);
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -784,5 +784,5 @@ weechat_plugin_end ()
     weechat_unhook (config_reload);
     weechat_unhook (completion);
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }

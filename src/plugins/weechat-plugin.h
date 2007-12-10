@@ -23,19 +23,19 @@
 
 #include <sys/types.h>
 
-/* return codes for init function and handlers */
-#define PLUGIN_RC_FAILED             -1  /* function/handler failed         */
-#define PLUGIN_RC_SUCCESS             0  /* function/handler ok             */
+/* return codes for plugin functions */
+#define WEECHAT_RC_ERROR           -1  /* function failed with an error     */
+#define WEECHAT_RC_OK               0  /* function ok                       */
 
 /* return codes specific to message handlers: messages can be discarded for
    WeeChat, for plugins, or both */
-#define PLUGIN_RC_IGNORE_WEECHAT      1  /* ignore WeeChat for this message */
-#define PLUGIN_RC_IGNORE_PLUGINS      2  /* ignore other plugins for msg    */
-#define PLUGIN_RC_IGNORE_ALL          (PLUGIN_RC_OK_IGNORE_WEECHAT      \
-                                       | PLUGIN_RC_OK_IGNORE_PLUGINS)
-                                         /* ignore WeeChat and other plugins*/
-#define PLUGIN_RC_WITH_HIGHLIGHT      4  /* ok and ask for highlight        */
-                                         /* (for message handler only)      */
+#define WEECHAT_RC_IGNORE_WEECHAT   1  /* ignore WeeChat for this message   */
+#define WEECHAT_RC_IGNORE_PLUGINS   2  /* ignore other plugins for msg      */
+#define WEECHAT_RC_IGNORE_ALL       (PLUGIN_RC_OK_IGNORE_WEECHAT      \
+                                    | PLUGIN_RC_OK_IGNORE_PLUGINS)
+                                       /* ignore WeeChat and other plugins  */
+#define WEECHAT_RC_WITH_HIGHLIGHT   4  /* ok and ask for highlight          */
+                                       /* (for message handler only)        */
 
 struct t_weechat_plugin
 {

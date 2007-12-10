@@ -352,7 +352,7 @@ hook_command_exec (void *buffer, char *string, int only_builtin)
                 hook_exec_recursion--;
             if (hook_exec_recursion == 0)
                 hook_remove_deleted ();
-            if (rc == PLUGIN_RC_FAILED)
+            if (rc == WEECHAT_RC_ERROR)
                 return 0;
             else
                 return 1;

@@ -385,7 +385,7 @@ logger_event_cb (void *data, char *event, void *pointer)
         logger_end (logger_buffer_search (pointer));
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -421,7 +421,7 @@ logger_print_cb (void *data, void *buffer, time_t date, char *prefix,
                            message);
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -435,9 +435,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     logger_config_read ();
     if (!logger_path || !logger_time_format)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     if (!logger_create_directory ())
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     logger_start_buffer_all ();
     
@@ -446,7 +446,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     weechat_hook_print (NULL, NULL, 1, &logger_print_cb, NULL);
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -458,5 +458,5 @@ weechat_plugin_end ()
 {
     logger_end_all ();
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }

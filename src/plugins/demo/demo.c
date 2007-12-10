@@ -78,7 +78,7 @@ demo_printf_command_cb (void *data, void *buffer, int argc, char **argv,
                         weechat_color ("color_chat_nick_color4"));
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -114,7 +114,7 @@ demo_buffer_command_cb (void *data, void *buffer, int argc, char **argv,
             weechat_buffer_set (new_buffer, "display", "1");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -202,7 +202,7 @@ demo_infolist_command_cb (void *data, void *buffer, int argc, char **argv,
                 demo_infolist_print (infolist, "buffer");
                 weechat_infolist_free (infolist);
             }
-            return PLUGIN_RC_SUCCESS;
+            return WEECHAT_RC_OK;
         }
         if (weechat_strcasecmp (argv[1], "buffer_lines") == 0)
         {
@@ -212,7 +212,7 @@ demo_infolist_command_cb (void *data, void *buffer, int argc, char **argv,
                 demo_infolist_print (infolist, "buffer_line");
                 weechat_infolist_free (infolist);
             }
-            return PLUGIN_RC_SUCCESS;
+            return WEECHAT_RC_OK;
         }
     }
     
@@ -222,7 +222,7 @@ demo_infolist_command_cb (void *data, void *buffer, int argc, char **argv,
                     weechat_prefix ("error"),
                     "demo_infolist", "demo_infolist");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -250,7 +250,7 @@ demo_info_command_cb (void *data, void *buffer, int argc, char **argv,
                         weechat_prefix ("error"),
                         "demo_info", "demo_info");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -267,7 +267,7 @@ demo_event_cb (void *data, char *event, void *pointer)
                     _("demo_event: event: %s, pointer: %X"),
                     event, pointer);
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -315,7 +315,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 
     weechat_hook_event ("*", &demo_event_cb, NULL);
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -325,5 +325,5 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 int
 weechat_plugin_end ()
 {
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }

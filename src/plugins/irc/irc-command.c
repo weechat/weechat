@@ -50,7 +50,7 @@ irc_command_admin (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
 
     /* make C compiler happy */
     (void) data;
@@ -61,7 +61,7 @@ irc_command_admin (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "ADMIN");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -173,7 +173,7 @@ irc_command_ame (void *data, void *buffer, int argc, char **argv,
         }
         //gui_add_hotlist = 1;
     }
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -238,9 +238,9 @@ irc_command_amsg (void *data, void *buffer, int argc, char **argv,
         //gui_add_hotlist = 1;
     }
     else
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -380,7 +380,7 @@ irc_command_away (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -401,7 +401,7 @@ irc_command_away (void *data, void *buffer, int argc, char **argv,
     
     //gui_status_draw (window->buffer, 1);
     //gui_add_hotlist = 1;
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -417,7 +417,7 @@ irc_command_ban (void *data, void *buffer, int argc, char **argv,
     
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -447,7 +447,7 @@ irc_command_ban (void *data, void *buffer, int argc, char **argv,
                                 _("%sirc: \"%s\" command can only be "
                                   "executed in a channel buffer"),
                                 weechat_prefix ("error"), "ban");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
         }
         
@@ -468,12 +468,12 @@ irc_command_ban (void *data, void *buffer, int argc, char **argv,
                               "executed in a channel buffer"),
                             weechat_prefix ("error"),
                             "ban");
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         }
         irc_server_sendf (ptr_server, "MODE %s +b", ptr_channel->name);
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -562,7 +562,7 @@ irc_command_connect (void *data, void *buffer, int argc, char **argv,
                                   "option"),
                                 weechat_prefix ("error"),
                                 "-port");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             error = NULL;
             number = strtol (argv[++i], &error, 10);
@@ -661,9 +661,9 @@ irc_command_connect (void *data, void *buffer, int argc, char **argv,
         connect_ok = irc_command_connect_one_server (ptr_server, no_join);
     
     if (!connect_ok)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -679,7 +679,7 @@ irc_command_ctcp (void *data, void *buffer, int argc, char **argv,
     
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -688,7 +688,7 @@ irc_command_ctcp (void *data, void *buffer, int argc, char **argv,
     {
         irc_cmd = strdup (argv[2]);
         if (!irc_cmd)
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         
         pos = irc_cmd;
         while (pos[0])
@@ -751,7 +751,7 @@ irc_command_ctcp (void *data, void *buffer, int argc, char **argv,
         free (irc_cmd);
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
     
 /*
@@ -768,7 +768,7 @@ irc_command_cycle (void *data, void *buffer, int argc, char **argv,
     
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -803,12 +803,12 @@ irc_command_cycle (void *data, void *buffer, int argc, char **argv,
                                 _("%sirc: \"%s\" command can not be executed "
                                   "on a server buffer"),
                                 weechat_prefix ("error"), "cycle");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             
             /* does nothing on private buffer (cycle has no sense!) */
             if (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)
-                return PLUGIN_RC_SUCCESS;
+                return WEECHAT_RC_OK;
             
             channel_name = ptr_channel->name;
             pos_args = argv_eol[1];
@@ -823,12 +823,12 @@ irc_command_cycle (void *data, void *buffer, int argc, char **argv,
                             _("%sirc: \"%s\" command can not be executed on "
                               "a server buffer"),
                             weechat_prefix ("error"), "part");
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         }
         
         /* does nothing on private buffer (cycle has no sense!) */
         if (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL)
-            return PLUGIN_RC_SUCCESS;
+            return WEECHAT_RC_OK;
         
         channel_name = ptr_channel->name;
         pos_args = NULL;
@@ -854,7 +854,7 @@ irc_command_cycle (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "PART %s", channel_name);
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -867,7 +867,7 @@ irc_command_dcc (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make compiler happy */
     (void) data;
@@ -911,7 +911,7 @@ irc_command_dcc (void *data, void *buffer, int argc, char **argv,
             weechat_printf (ptr_server->buffer,
                             _("%sirc: wrong arguments for \"%s\" command"),
                             weechat_prefix ("error"), "dcc");
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         }
     }
     else
@@ -919,7 +919,7 @@ irc_command_dcc (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "dcc");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -932,7 +932,7 @@ irc_command_dehalfop (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -954,9 +954,9 @@ irc_command_dehalfop (void *data, void *buffer, int argc, char **argv,
                         _("%sirc: \"%s\" command can only be executed in "
                           "a channel buffer"),
                         weechat_prefix ("error"), "dehalfop");
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     }
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -969,7 +969,7 @@ irc_command_deop (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -991,9 +991,9 @@ irc_command_deop (void *data, void *buffer, int argc, char **argv,
                         _("%sirc: \"%s\" command can only be executed in "
                           "a channel buffer"),
                         weechat_prefix ("error"), "deop");
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     }
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1006,7 +1006,7 @@ irc_command_devoice (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1028,9 +1028,9 @@ irc_command_devoice (void *data, void *buffer, int argc, char **argv,
                         _("%sirc: \"%s\" command can only be "
                           "executed in a channel buffer"),
                         weechat_prefix ("error"), "devoice");
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     }
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1043,7 +1043,7 @@ irc_command_die (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1052,7 +1052,7 @@ irc_command_die (void *data, void *buffer, int argc, char **argv,
     (void) argv_eol;
     
     irc_server_sendf (ptr_server, "DIE");
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1180,9 +1180,9 @@ irc_command_disconnect (void *data, void *buffer, int argc, char **argv,
     }
     
     if (!disconnect_ok)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1195,7 +1195,7 @@ irc_command_halfop (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1217,9 +1217,9 @@ irc_command_halfop (void *data, void *buffer, int argc, char **argv,
                         _("%sirc: \"%s\" command can only be "
                           "executed in a channel buffer"),
                         weechat_prefix ("error"), "halfop");
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     }
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1232,7 +1232,7 @@ irc_command_info (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1242,7 +1242,7 @@ irc_command_info (void *data, void *buffer, int argc, char **argv,
         irc_server_sendf (ptr_server, "INFO %s", argv_eol[1]);
     else
         irc_server_sendf (ptr_server, "INFO");
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1255,7 +1255,7 @@ irc_command_invite (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1274,11 +1274,11 @@ irc_command_invite (void *data, void *buffer, int argc, char **argv,
                             _("%sirc: \"%s\" command can only be "
                               "executed in a channel buffer"),
                             weechat_prefix ("error"), "invite");
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         }
 
     }
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1291,7 +1291,7 @@ irc_command_ison (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1304,7 +1304,7 @@ irc_command_ison (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "ison");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1330,7 +1330,7 @@ irc_command_join (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1343,7 +1343,7 @@ irc_command_join (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "join");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1358,7 +1358,7 @@ irc_command_kick (void *data, void *buffer, int argc, char **argv,
     
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1373,7 +1373,7 @@ irc_command_kick (void *data, void *buffer, int argc, char **argv,
                                 _("%sirc: wrong arguments for \"%s\" "
                                   "command"),
                                 weechat_prefix ("error"), "kick");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             pos_channel = argv[1];
             pos_nick = argv[2];
@@ -1393,7 +1393,7 @@ irc_command_kick (void *data, void *buffer, int argc, char **argv,
                                 _("%sirc: \"%s\" command can only be "
                                   "executed in a channel buffer"),
                                 weechat_prefix ("error"), "kick");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
         }
         
@@ -1409,7 +1409,7 @@ irc_command_kick (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "kick");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1424,7 +1424,7 @@ irc_command_kickban (void *data, void *buffer, int argc, char **argv,
     
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1439,7 +1439,7 @@ irc_command_kickban (void *data, void *buffer, int argc, char **argv,
                                 _("%sirc: wrong arguments for \"%s\" "
                                   "command"),
                                 weechat_prefix ("error"), "kickban");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             pos_channel = argv[1];
             pos_nick = argv[2];
@@ -1459,7 +1459,7 @@ irc_command_kickban (void *data, void *buffer, int argc, char **argv,
                                 _("%sirc: \"%s\" command can only be "
                                   "executed in a channel buffer"),
                                 weechat_prefix ("error"), "kickban");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
         }
         
@@ -1477,7 +1477,7 @@ irc_command_kickban (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "kickban");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1490,7 +1490,7 @@ irc_command_kill (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1505,7 +1505,7 @@ irc_command_kill (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "kill");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1519,7 +1519,7 @@ irc_command_links (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1530,7 +1530,7 @@ irc_command_links (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "LINKS");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1546,7 +1546,7 @@ irc_command_list (void *data, void *buffer, int argc, char **argv,
     
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1574,7 +1574,7 @@ irc_command_list (void *data, void *buffer, int argc, char **argv,
                                 _("%sirc: \"%s\" is not a valid regular "
                                   "expression (%s)"),
                                 weechat_prefix ("error"), argv_eol, buf);
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
 	    }
 	    else
 		irc_server_sendf (ptr_server, "LIST");
@@ -1585,13 +1585,13 @@ irc_command_list (void *data, void *buffer, int argc, char **argv,
                             _("%sirc: not enough memory for regular "
                               "expression"),
                             weechat_prefix ("error"));
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
 	}
     }
     else
 	irc_server_sendf (ptr_server, "LIST");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1604,7 +1604,7 @@ irc_command_lusers (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1615,7 +1615,7 @@ irc_command_lusers (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "LUSERS");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1628,7 +1628,7 @@ irc_command_me (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1642,7 +1642,7 @@ irc_command_me (void *data, void *buffer, int argc, char **argv,
                             _("%sirc: \"%s\" command can not be executed "
                               "on a server buffer"),
                             weechat_prefix ("error"), "me");
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         }
         irc_command_me_channel (ptr_server, ptr_channel, argv_eol[1]);
     }
@@ -1651,7 +1651,7 @@ irc_command_me (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "me");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1674,7 +1674,7 @@ irc_command_mode (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1687,7 +1687,7 @@ irc_command_mode (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "mode");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1700,7 +1700,7 @@ irc_command_motd (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1711,7 +1711,7 @@ irc_command_motd (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "MOTD");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1730,7 +1730,7 @@ irc_command_msg (void *data, void *buffer, int argc, char **argv,
     
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1886,7 +1886,7 @@ irc_command_msg (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "msg");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1899,7 +1899,7 @@ irc_command_names (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1918,11 +1918,11 @@ irc_command_names (void *data, void *buffer, int argc, char **argv,
                             _("%sirc: \"%s\" command can only be "
                               "executed in a channel buffer"),
                             weechat_prefix ("error"), "names");
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         }
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -1963,7 +1963,7 @@ irc_command_nick (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -1976,7 +1976,7 @@ irc_command_nick (void *data, void *buffer, int argc, char **argv,
             weechat_printf (ptr_server->buffer,
                             _("%sirc: wrong arguments for \"%s\" command"),
                             weechat_prefix ("error"), "nick");
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         }
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
@@ -1994,7 +1994,7 @@ irc_command_nick (void *data, void *buffer, int argc, char **argv,
         }
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2009,7 +2009,7 @@ irc_command_notice (void *data, void *buffer, int argc, char **argv,
     
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -2036,7 +2036,7 @@ irc_command_notice (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "notice");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2049,7 +2049,7 @@ irc_command_op (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -2071,9 +2071,9 @@ irc_command_op (void *data, void *buffer, int argc, char **argv,
                         _("%sirc: \"%s\" command can only be "
                           "executed in a channel buffer"),
                         weechat_prefix ("error"), "op");
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     }
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2086,7 +2086,7 @@ irc_command_oper (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -2099,7 +2099,7 @@ irc_command_oper (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "oper");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2114,7 +2114,7 @@ irc_command_part (void *data, void *buffer, int argc, char **argv,
 
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -2135,7 +2135,7 @@ irc_command_part (void *data, void *buffer, int argc, char **argv,
                                   "executed in a channel or "
                                   "private buffer"),
                                 weechat_prefix ("error"), "part");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             channel_name = ptr_channel->name;
             pos_args = argv_eol[1];
@@ -2150,7 +2150,7 @@ irc_command_part (void *data, void *buffer, int argc, char **argv,
                               "executed in a channel or private "
                               "buffer"),
                             weechat_prefix ("error"), "part");
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         }
         if (!ptr_channel->nicks)
         {
@@ -2159,7 +2159,7 @@ irc_command_part (void *data, void *buffer, int argc, char **argv,
             irc_channel_free (ptr_server, ptr_channel);
             //gui_status_draw (gui_current_window->buffer, 1);
             //gui_input_draw (gui_current_window->buffer, 1);
-            return PLUGIN_RC_SUCCESS;
+            return WEECHAT_RC_OK;
         }
         channel_name = ptr_channel->name;
         pos_args = NULL;
@@ -2185,7 +2185,7 @@ irc_command_part (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "PART %s", channel_name);
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2198,7 +2198,7 @@ irc_command_ping (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -2211,7 +2211,7 @@ irc_command_ping (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "ping");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2224,7 +2224,7 @@ irc_command_pong (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -2237,7 +2237,7 @@ irc_command_pong (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "pong");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2252,7 +2252,7 @@ irc_command_query (void *data, void *buffer, int argc, char **argv,
     
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -2273,7 +2273,7 @@ irc_command_query (void *data, void *buffer, int argc, char **argv,
                                 _("%sirc: cannot create new private "
                                   "buffer \"%s\""),
                                 weechat_prefix ("error"), argv[1]);
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
         }
         weechat_buffer_set (ptr_channel->buffer, "display", "1");
@@ -2301,7 +2301,7 @@ irc_command_query (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "query");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2314,7 +2314,7 @@ irc_command_quote (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server)// || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -2327,7 +2327,7 @@ irc_command_quote (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "quote");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2431,9 +2431,9 @@ irc_command_reconnect (void *data, void *buffer, int argc, char **argv,
         reconnect_ok = irc_command_reconnect_one_server (ptr_server, no_join);
     
     if (!reconnect_ok)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2446,7 +2446,7 @@ irc_command_rehash (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -2456,7 +2456,7 @@ irc_command_rehash (void *data, void *buffer, int argc, char **argv,
     
     irc_server_sendf (ptr_server, "REHASH");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2469,7 +2469,7 @@ irc_command_restart (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -2479,7 +2479,7 @@ irc_command_restart (void *data, void *buffer, int argc, char **argv,
     
     irc_server_sendf (ptr_server, "RESTART");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2573,7 +2573,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                 _("%sirc: server \"%s\" already exists, "
                                   "can't create it!"),
                                 weechat_prefix ("error"), argv[2]);
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             
             /* init server struct */
@@ -2607,7 +2607,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                               "\"%s\" option"),
                                             weechat_prefix ("error"), "-port");
                             irc_server_free_data (&server_tmp);
-                            return PLUGIN_RC_FAILED;
+                            return WEECHAT_RC_ERROR;
                         }
                         error = NULL;
                         number = strtol (argv[++i], &error, 10);
@@ -2623,7 +2623,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                               "\"%s\" option"),
                                             weechat_prefix ("error"), "-pwd");
                             irc_server_free_data (&server_tmp);
-                            return PLUGIN_RC_FAILED;
+                            return WEECHAT_RC_ERROR;
                         }
                         server_tmp.password = strdup (argv[++i]);
                     }
@@ -2637,7 +2637,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                             weechat_prefix ("error"),
                                             "-nicks");
                             irc_server_free_data (&server_tmp);
-                            return PLUGIN_RC_FAILED;
+                            return WEECHAT_RC_ERROR;
                         }
                         server_tmp.nick1 = strdup (argv[++i]);
                         server_tmp.nick2 = strdup (argv[++i]);
@@ -2653,7 +2653,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                             weechat_prefix ("error"),
                                             "-username");
                             irc_server_free_data (&server_tmp);
-                            return PLUGIN_RC_FAILED;
+                            return WEECHAT_RC_ERROR;
                         }
                         server_tmp.username = strdup (argv[++i]);
                     }
@@ -2667,7 +2667,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                             weechat_prefix ("error"),
                                             "-realname");
                             irc_server_free_data (&server_tmp);
-                            return PLUGIN_RC_FAILED;
+                            return WEECHAT_RC_ERROR;
                         }
                         server_tmp.realname = strdup (argv[++i]);
                     }
@@ -2681,7 +2681,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                             weechat_prefix ("error"),
                                             "-command");
                             irc_server_free_data (&server_tmp);
-                            return PLUGIN_RC_FAILED;
+                            return WEECHAT_RC_ERROR;
                         }
                         server_tmp.command = strdup (argv[++i]);
                     }
@@ -2695,7 +2695,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                             weechat_prefix ("error"),
                                             "-autojoin");
                             irc_server_free_data (&server_tmp);
-                            return PLUGIN_RC_FAILED;
+                            return WEECHAT_RC_ERROR;
                         }
                         server_tmp.autojoin = strdup (argv[++i]);
                     }
@@ -2739,7 +2739,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                 _("%sirc: unable to create server"),
                                 weechat_prefix ("error"));
                 irc_server_free_data (&server_tmp);
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             
             if (new_server->autoconnect)
@@ -2763,7 +2763,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                   "\"%s\" command"),
                                 weechat_prefix ("error"),
                                 argv[2], "server copy");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             
             /* check if target name already exists */
@@ -2774,7 +2774,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                   "\"%s\" command"),
                                 weechat_prefix ("error"),
                                 argv[3], "server copy");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             
             /* duplicate server */
@@ -2790,10 +2790,10 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                 IRC_COLOR_CHAT_SERVER,
                                 argv[3]);
                 //gui_window_redraw_all_buffers ();
-                return PLUGIN_RC_SUCCESS;
+                return WEECHAT_RC_OK;
             }
             
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         }
         else if (weechat_strcasecmp (argv[1], "rename") == 0)
         {
@@ -2811,7 +2811,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                   "\"%s\" command"),
                                 weechat_prefix ("error"),
                                 argv[2], "server rename");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             
             /* check if target name already exists */
@@ -2822,7 +2822,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                   "\"%s\" command"),
                                 weechat_prefix ("error"),
                                 argv[3], "server rename");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
 
             /* rename server */
@@ -2838,10 +2838,10 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                 IRC_COLOR_CHAT_SERVER,
                                 argv[3]);
                 //gui_window_redraw_all_buffers ();
-                return PLUGIN_RC_SUCCESS;
+                return WEECHAT_RC_OK;
             }
             
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         }
         else if (weechat_strcasecmp (argv[1], "keep") == 0)
         {
@@ -2859,7 +2859,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                   "\"%s\" command"),
                                 weechat_prefix ("error"),
                                 argv[2], "server keep");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
 
             /* check that it is temporary server */
@@ -2869,7 +2869,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                 _("%sirc: server \"%s\" is not a temporary "
                                   "server"),
                                 weechat_prefix ("error"), argv[2]);
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             
             /* remove temporary flag on server */
@@ -2883,7 +2883,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                             argv[2],
                             IRC_COLOR_CHAT);
             
-            return PLUGIN_RC_SUCCESS;
+            return WEECHAT_RC_OK;
         }
         else if (weechat_strcasecmp (argv[1], "del") == 0)
         {
@@ -2901,7 +2901,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                   "\"%s\" command"),
                                 weechat_prefix ("error"),
                                 argv[2], "server del");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
             if (server_found->is_connected)
             {
@@ -2910,7 +2910,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                                   "because you are connected to. "
                                   "Try \"/disconnect %s\" before."),
                                 weechat_prefix ("error"), argv[2], argv[2]);
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
 
             /*
@@ -2941,7 +2941,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
             
             //gui_window_redraw_buffer (window->buffer);
             
-            return PLUGIN_RC_SUCCESS;
+            return WEECHAT_RC_OK;
         }
         else if (weechat_strcasecmp (argv[1], "deloutq") == 0)
         {
@@ -2954,18 +2954,18 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
                             _("irc: messages outqueue DELETED for all "
                               "servers. Some messages from you or "
                               "WeeChat may have been lost!"));
-            return PLUGIN_RC_SUCCESS;
+            return WEECHAT_RC_OK;
         }
         else
         {
             weechat_printf (NULL,
                             _("%sirc: unknown option for \"%s\" command"),
                             weechat_prefix ("error"), "server");
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         }
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -2978,7 +2978,7 @@ irc_command_service (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -2991,7 +2991,7 @@ irc_command_service (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "service");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3004,7 +3004,7 @@ irc_command_servlist (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3015,7 +3015,7 @@ irc_command_servlist (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "SERVLIST");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3028,7 +3028,7 @@ irc_command_squery (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3046,7 +3046,7 @@ irc_command_squery (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "squery");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3059,7 +3059,7 @@ irc_command_squit (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3072,7 +3072,7 @@ irc_command_squit (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "squit");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3085,7 +3085,7 @@ irc_command_stats (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3096,7 +3096,7 @@ irc_command_stats (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "STATS");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3110,7 +3110,7 @@ irc_command_summon (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3123,7 +3123,7 @@ irc_command_summon (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "summon");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3136,7 +3136,7 @@ irc_command_time (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3147,7 +3147,7 @@ irc_command_time (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "TIME");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3162,7 +3162,7 @@ irc_command_topic (void *data, void *buffer, int argc, char **argv,
     
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3193,7 +3193,7 @@ irc_command_topic (void *data, void *buffer, int argc, char **argv,
                             _("%sirc: \"%s\" command can only be "
                               "executed in a channel buffer"),
                             weechat_prefix ("error"), "topic");
-            return PLUGIN_RC_FAILED;
+            return WEECHAT_RC_ERROR;
         }
     }
     
@@ -3210,7 +3210,7 @@ irc_command_topic (void *data, void *buffer, int argc, char **argv,
         irc_server_sendf (ptr_server, "TOPIC %s",
                           channel_name);
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3223,7 +3223,7 @@ irc_command_trace (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3234,7 +3234,7 @@ irc_command_trace (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "TRACE");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3250,7 +3250,7 @@ irc_command_unban (void *data, void *buffer, int argc, char **argv,
     
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3280,7 +3280,7 @@ irc_command_unban (void *data, void *buffer, int argc, char **argv,
                                 _("%sirc: \"%s\" command can only be "
                                   "executed in a channel buffer"),
                                 weechat_prefix ("error"), "unban");
-                return PLUGIN_RC_FAILED;
+                return WEECHAT_RC_ERROR;
             }
         }
         
@@ -3297,10 +3297,10 @@ irc_command_unban (void *data, void *buffer, int argc, char **argv,
         weechat_printf (ptr_server->buffer,
                         _("%sirc: wrong argument count for \"%s\" command"),
                         weechat_prefix ("error"), "unban");
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3313,7 +3313,7 @@ irc_command_userhost (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3326,7 +3326,7 @@ irc_command_userhost (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "userhost");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3339,7 +3339,7 @@ irc_command_users (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3350,7 +3350,7 @@ irc_command_users (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "USERS");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3363,7 +3363,7 @@ irc_command_version (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3382,7 +3382,7 @@ irc_command_version (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "VERSION");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3395,7 +3395,7 @@ irc_command_voice (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3417,9 +3417,9 @@ irc_command_voice (void *data, void *buffer, int argc, char **argv,
                         _("%sirc: \"%s\" command can only be "
                           "executed in a channel buffer"),
                         weechat_prefix ("error"), "voice");
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     }
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3433,7 +3433,7 @@ irc_command_wallops (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3446,7 +3446,7 @@ irc_command_wallops (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "wallops");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3459,7 +3459,7 @@ irc_command_who (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3470,7 +3470,7 @@ irc_command_who (void *data, void *buffer, int argc, char **argv,
     else
         irc_server_sendf (ptr_server, "WHO");
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3483,7 +3483,7 @@ irc_command_whois (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3496,7 +3496,7 @@ irc_command_whois (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "whois");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -3509,7 +3509,7 @@ irc_command_whowas (void *data, void *buffer, int argc, char **argv,
 {
     IRC_COMMAND_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
-        return PLUGIN_RC_FAILED;
+        return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
@@ -3522,7 +3522,7 @@ irc_command_whowas (void *data, void *buffer, int argc, char **argv,
         IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "whowas");
     }
     
-    return PLUGIN_RC_SUCCESS;
+    return WEECHAT_RC_OK;
 }
 
 /*
