@@ -38,6 +38,7 @@ enum t_gui_prefix
 };
 
 extern char *gui_chat_prefix[GUI_CHAT_PREFIX_NUMBER];
+extern char gui_chat_prefix_empty[];
 extern int gui_chat_time_length;
 
 /* chat functions */

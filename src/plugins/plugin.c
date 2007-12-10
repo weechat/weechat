@@ -230,6 +230,7 @@ plugin_load (char *filename)
         new_plugin->ngettext = &plugin_api_ngettext;
         new_plugin->strcasecmp = &plugin_api_strcasecmp;
         new_plugin->strncasecmp = &plugin_api_strncasecmp;
+        new_plugin->strcasestr = &plugin_api_strcasestr;
         new_plugin->string_replace = &plugin_api_string_replace;
         new_plugin->string_explode = &plugin_api_string_explode;
         new_plugin->string_free_exploded = &plugin_api_string_free_exploded;
@@ -296,6 +297,7 @@ plugin_load (char *filename)
         new_plugin->buffer_new = &plugin_api_buffer_new;
         new_plugin->buffer_search = &plugin_api_buffer_search;
         new_plugin->buffer_close = &plugin_api_buffer_close;
+        new_plugin->buffer_get = &plugin_api_buffer_get;
         new_plugin->buffer_set = &plugin_api_buffer_set;
         new_plugin->buffer_nick_add = &plugin_api_buffer_nick_add;
         new_plugin->buffer_nick_remove = &plugin_api_buffer_nick_remove;

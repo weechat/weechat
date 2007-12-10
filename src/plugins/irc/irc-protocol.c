@@ -30,13 +30,10 @@
 #include <wctype.h>
 #include <sys/utsname.h>
 
-#include "../../core/weechat.h"
 #include "irc.h"
-#include "../../core/alias.h"
-#include "../../core/command.h"
-#include "../../core/utf8.h"
-#include "../../core/util.h"
-#include "../../core/weechat-config.h"
+#include "irc-protocol.h"
+#include "irc-server.h"
+#include "irc-channel.h"
 
 
 struct t_irc_protocol_msg irc_protocol_messages[] =

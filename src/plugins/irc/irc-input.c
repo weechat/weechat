@@ -166,7 +166,7 @@ irc_input_data (t_gui_window *window, char *data)
         
         if (ptr_channel->dcc_chat)
         {
-            if (((t_irc_dcc *)(ptr_channel->dcc_chat))->sock < 0)
+            if (ptr_channel->dcc_chat->sock < 0)
             {
                 gui_chat_printf_error_nolog (window->buffer,
                                              "%s DCC CHAT is closed\n",
@@ -174,7 +174,7 @@ irc_input_data (t_gui_window *window, char *data)
             }
             else
             {
-                irc_dcc_chat_sendf ((t_irc_dcc *)(ptr_channel->dcc_chat),
+                irc_dcc_chat_sendf (ptr_channel->dcc_chat,
                                     "%s\r\n",
                                     (data_with_colors) ? data_with_colors : data);
                 irc_input_user_message_display (window,

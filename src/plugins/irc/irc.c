@@ -30,6 +30,7 @@
 #endif
 
 #include "irc.h"
+#include "irc-command.h"
 #include "irc-config.h"
 #include "irc-server.h"
 
@@ -113,6 +114,30 @@ irc_create_directories ()
 }
 
 /*
+ * irc_quit_cb: callback for event "quit"
+ */
+
+int
+irc_quit_cb (void *data, char *event, void *pointer)
+{
+    struct t_irc_server *ptr_server;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) event;
+    (void) pointer;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        irc_command_quit_server (ptr_server, (char *)pointer);
+    }
+    
+    return PLUGIN_RC_SUCCESS;
+}
+
+
+/*
  * weechat_plugin_init: initialize IRC plugin
  */
 
@@ -136,18 +161,24 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 
     irc_create_directories ();
 
-    weechat_hook_event ("config_reload", irc_config_reload, NULL);
+    irc_command_init ();
+
+    weechat_hook_event ("config_reload", &irc_config_reload_cb, NULL);
+
+    weechat_hook_event ("quit", &irc_quit_cb, NULL);
     
     //irc_server_auto_connect (1, 0);
-    
-    /*irc_timer = weechat_hook_timer (1 * 1000, 0,
-                                    irc_server_timer,
+
+    /*
+    irc_timer = weechat_hook_timer (1 * 1000, 0,
+                                    &irc_server_timer,
                                     NULL);
     if (irc_cfg_irc_away_check != 0)
         irc_timer_check_away = weechat_hook_timer (irc_cfg_irc_away_check * 60 * 1000,
                                                    0,
-                                                   irc_server_timer_check_away,
-                                                   NULL);*/
+                                                   &irc_server_timer_check_away,
+                                                   NULL);
+    */
     
     return PLUGIN_RC_SUCCESS;
 }

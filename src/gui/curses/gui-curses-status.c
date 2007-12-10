@@ -29,6 +29,7 @@
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
 #include "../../core/wee-utf8.h"
+#include "../../plugins/plugin.h"
 #include "../gui-status.h"
 #include "../gui-color.h"
 #include "../gui-main.h"
@@ -76,6 +77,19 @@ gui_status_draw (struct t_gui_buffer *buffer, int erase)
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                       GUI_COLOR_STATUS_DELIMITERS);
         wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
+        
+        /* display buffer plugin */
+        if (ptr_win->buffer->plugin)
+        {
+            wprintw (GUI_CURSES(ptr_win)->win_status, "[");
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                          GUI_COLOR_STATUS);
+            wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
+                     ptr_win->buffer->plugin->name);
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                          GUI_COLOR_STATUS_DELIMITERS);
+            wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
+        }
         
         /* display buffer category */
         if (ptr_win->buffer->category)

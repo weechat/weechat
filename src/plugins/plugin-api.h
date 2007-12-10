@@ -32,6 +32,7 @@ extern char *plugin_api_ngettext (struct t_weechat_plugin *, char *, char *,
 extern int plugin_api_strcasecmp (struct t_weechat_plugin *,char *, char *);
 extern int plugin_api_strncasecmp (struct t_weechat_plugin *,char *, char *,
                                    int);
+extern char *plugin_api_strcasestr (struct t_weechat_plugin *,char *, char *);
 extern char *plugin_api_string_replace (struct t_weechat_plugin *,char *,
                                         char *, char *);
 extern char **plugin_api_string_explode (struct t_weechat_plugin *, char *,
@@ -160,7 +161,7 @@ extern struct t_gui_buffer *plugin_api_buffer_new (struct t_weechat_plugin *,
 extern struct t_gui_buffer *plugin_api_buffer_search (struct t_weechat_plugin *,
                                                       char *, char *);
 extern void plugin_api_buffer_close (struct t_weechat_plugin *, void *);
-extern char *plugin_api_buffer_get (struct t_weechat_plugin *, void *, char *);
+extern void *plugin_api_buffer_get (struct t_weechat_plugin *, void *, char *);
 extern void plugin_api_buffer_set (struct t_weechat_plugin *, void *, char *,
                                    char *);
 extern void plugin_api_buffer_nick_add (struct t_weechat_plugin *, void *,

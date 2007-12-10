@@ -103,7 +103,7 @@ command_buffer (void *data, void *buffer,
                                    "command"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  "buffer");
-                return -1;
+                return PLUGIN_RC_FAILED;
             }
             
             error = NULL;
@@ -127,7 +127,7 @@ command_buffer (void *data, void *buffer,
                 gui_chat_printf (NULL,
                                  _("%sError: incorrect buffer number"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                return -1;
+                return PLUGIN_RC_FAILED;
             }
         }
         else if (string_strcasecmp (argv[1], "close") == 0)
@@ -138,7 +138,7 @@ command_buffer (void *data, void *buffer,
                                  _("%sError: WeeChat main buffer can't be "
                                    "closed"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                return -1;
+                return PLUGIN_RC_FAILED;
             }
             gui_buffer_free (buffer, 1);
             gui_status_draw (gui_current_window->buffer, 1);
@@ -179,7 +179,7 @@ command_buffer (void *data, void *buffer,
                                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                          GUI_BUFFER_NOTIFY_LEVEL_MIN,
                                          GUI_BUFFER_NOTIFY_LEVEL_MAX);
-                        return -1;
+                        return PLUGIN_RC_FAILED;
                     }
                     gui_chat_printf (NULL,
                                      _("%sNew notify level for %s%s%s: "
@@ -225,7 +225,7 @@ command_buffer (void *data, void *buffer,
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                      GUI_BUFFER_NOTIFY_LEVEL_MIN,
                                      GUI_BUFFER_NOTIFY_LEVEL_MAX);
-                    return -1;
+                    return PLUGIN_RC_FAILED;
                 }
             }
         }
@@ -240,7 +240,7 @@ command_buffer (void *data, void *buffer,
                                    "command"),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  "buffer");
-                return -1;
+                return PLUGIN_RC_FAILED;
             }
             value = string_remove_quotes (argv_eol[3], "'\"");
             gui_buffer_set (buffer, argv[2], (value) ? value : argv_eol[3]);
@@ -313,7 +313,7 @@ command_buffer (void *data, void *buffer,
             
         }
     }
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -346,7 +346,7 @@ command_builtin (void *data, void *buffer,
             }
         }
     }
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -388,7 +388,7 @@ command_clear (void *data, void *buffer,
     else
         gui_buffer_clear (buffer);
     
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -467,11 +467,11 @@ command_debug (void *data, void *buffer,
                              _("%sError: unknown option for \"%s\" command"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              "debug");
-            return -1;
+            return PLUGIN_RC_FAILED;
         }
     }
     
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -587,7 +587,7 @@ command_help (void *data, void *buffer,
                         gui_chat_printf (NULL, "%s",
                                          HOOK_COMMAND(ptr_hook, args_description));
                     }
-                    return 0;
+                    return PLUGIN_RC_SUCCESS;
                 }
             }
             gui_chat_printf (NULL,
@@ -597,7 +597,7 @@ command_help (void *data, void *buffer,
                              argv[1]);
             break;
     }
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -622,7 +622,7 @@ command_history (void *data, void *buffer,
         if (string_strcasecmp (argv[1], "clear") == 0)
         {
             gui_history_buffer_free (buffer);
-            return 0;
+            return PLUGIN_RC_SUCCESS;
         }
         else
             n_user = atoi (argv[1]);
@@ -652,7 +652,7 @@ command_history (void *data, void *buffer,
         }
     }
     
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -716,7 +716,7 @@ command_key (void *data, void *buffer,
         {
             command_key_display (ptr_key, 0);
         }
-        return 0;
+        return PLUGIN_RC_SUCCESS;
     }
 
     if (string_strcasecmp (argv[1], "functions") == 0)
@@ -732,7 +732,7 @@ command_key (void *data, void *buffer,
                              _(gui_key_functions[i].description));
             i++;
         }
-        return 0;
+        return PLUGIN_RC_SUCCESS;
     }
 
     if (string_strcasecmp (argv[1], "reset") == 0)
@@ -751,9 +751,9 @@ command_key (void *data, void *buffer,
                              _("%sError: \"-yes\" argument is required for "
                                "keys reset (security reason)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return -1;
+            return PLUGIN_RC_FAILED;
         }
-        return 0;
+        return PLUGIN_RC_SUCCESS;
     }
 
     if (string_strcasecmp (argv[1], "unbind") == 0)
@@ -773,10 +773,10 @@ command_key (void *data, void *buffer,
                                  _("%sError: unable to unbind key \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2]);
-                return -1;
+                return PLUGIN_RC_FAILED;
             }
         }
-        return 0;
+        return PLUGIN_RC_SUCCESS;
     }
     
     if (string_strcasecmp (argv[1], "call") == 0)
@@ -802,10 +802,10 @@ command_key (void *data, void *buffer,
                                  _("%sError: unknown key function \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2]);
-                return -1;
+                return PLUGIN_RC_FAILED;
             }
         }
-        return 0;
+        return PLUGIN_RC_SUCCESS;
     }
     
     /* display a key */
@@ -828,7 +828,7 @@ command_key (void *data, void *buffer,
         }
         if (internal_code)
             free (internal_code);
-        return 0;
+        return PLUGIN_RC_SUCCESS;
     }
 
     /* bind new key */
@@ -841,9 +841,9 @@ command_key (void *data, void *buffer,
                          _("%sError: unable to bind key \"%s\""),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          argv[1]);
-        return -1;
+        return PLUGIN_RC_FAILED;
     }
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -1122,7 +1122,7 @@ command_plugin (void *data, void *buffer,
                              "plugin");
     }
     
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -1138,11 +1138,14 @@ command_quit (void *data, void *buffer,
     (void) buffer;
     (void) argc;
     (void) argv;
-    (void) argv_eol;
+    
+    hook_event_exec ("quit",
+                     (argc > 1) ?
+                     argv_eol[1] : CONFIG_STRING(config_look_default_msg_quit));
     
     quit_weechat = 1;
     
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -1183,7 +1186,7 @@ command_reload (void *data, void *buffer,
     /* tell to plugins to reload their configuration */
     (void) hook_event_exec ("config_reload", NULL);
     
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -1221,7 +1224,7 @@ command_save (void *data, void *buffer,
                          _("%sError: failed to save plugins options"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
     
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -1393,7 +1396,7 @@ command_set (void *data, void *buffer,
                                  number_found,
                                  GUI_COLOR(GUI_COLOR_CHAT));
         }
-        return 0;
+        return PLUGIN_RC_SUCCESS;
     }
     
     /* set option value */
@@ -1407,7 +1410,7 @@ command_set (void *data, void *buffer,
                                "found"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[1]);
-            return -1;
+            return PLUGIN_RC_FAILED;
         }
         value = string_remove_quotes (argv_eol[3], "'\"");
         rc = config_file_option_set (ptr_option,
@@ -1429,11 +1432,11 @@ command_set (void *data, void *buffer,
                                "option \"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[1]);
-            return -1;
+            return PLUGIN_RC_FAILED;
         }
     }
     
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -1519,7 +1522,7 @@ command_setp (void *data, void *buffer,
                                  argv[1]);
                 if (pos)
                     pos[0] = '.';
-                return -1;
+                return PLUGIN_RC_FAILED;
             }
             else
                 ptr_name = argv[1];
@@ -1546,14 +1549,14 @@ command_setp (void *data, void *buffer,
                                  ptr_name);
                 if (value)
                     free (value);
-                return -1;
+                return PLUGIN_RC_FAILED;
             }
             if (value)
                 free (value);
         }
     }
     
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -1585,7 +1588,7 @@ command_upgrade (void *data, void *buffer,
             gui_chat_printf_error (NULL,
                               _("Error: can't upgrade: connection to at least "
                                 "one server is pending"));
-            return -1;
+            return PLUGIN_RC_FAILED;
             }*/
         /* TODO: remove this test, and fix gnutls save/load in session */
     /*if (ptr_server->is_connected && ptr_server->ssl_connected)
@@ -1594,14 +1597,14 @@ command_upgrade (void *data, void *buffer,
                                     _("Error: can't upgrade: connection to at least "
                                       "one SSL server is active "
                                       "(should be fixed in a future version)"));
-            return -1;
+            return PLUGIN_RC_FAILED;
         }
         if (ptr_server->outqueue)
         {
             gui_chat_printf_error_nolog (NULL,
                                     _("Error: can't upgrade: anti-flood is active on "
                                       "at least one server (sending many lines)"));
-            return -1;
+            return PLUGIN_RC_FAILED;
         }
     }
     
@@ -1620,7 +1623,7 @@ command_upgrade (void *data, void *buffer,
         free (filename);
         gui_chat_printf_error_nolog (NULL,
                                 _("Error: unable to save session in file"));
-        return -1;
+        return PLUGIN_RC_FAILED;
     }
     
     exec_args[0] = strdup (ptr_binary);
@@ -1651,7 +1654,7 @@ command_upgrade (void *data, void *buffer,
     exit (EXIT_FAILURE);*/
     
     /* never executed */
-    return -1;
+    return PLUGIN_RC_FAILED;
 }
 
 /*
@@ -1712,7 +1715,7 @@ command_uptime (void *data, void *buffer,
                          ctime (&weechat_start_time));
     }
     
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*
@@ -1815,7 +1818,7 @@ command_window (void *data, void *buffer,
                                        "command"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                      "window merge");
-                    return -1;
+                    return PLUGIN_RC_FAILED;
                 }
             }
             else
@@ -1827,7 +1830,7 @@ command_window (void *data, void *buffer,
                                        "there's no other window with same "
                                        "size near current one."),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                    return -1;
+                    return PLUGIN_RC_FAILED;
                 }
             }
         }
@@ -1862,10 +1865,10 @@ command_window (void *data, void *buffer,
                              _("%sError: unknown option for \"%s\" command"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              "window");
-            return -1;
+            return PLUGIN_RC_FAILED;
         }
     }
-    return 0;
+    return PLUGIN_RC_SUCCESS;
 }
 
 /*

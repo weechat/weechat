@@ -43,6 +43,7 @@
 
 
 char *gui_chat_prefix[GUI_CHAT_PREFIX_NUMBER]; /* prefixes                  */
+char gui_chat_prefix_empty[] = "";             /* empty prefix              */
 int gui_chat_time_length = 0;    /* length of time for each line (in chars) */
 
 

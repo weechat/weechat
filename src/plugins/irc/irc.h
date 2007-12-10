@@ -34,8 +34,7 @@
 #define IRC_COLOR_CHAT_NICK weechat_color("color_chat_nick")
 #define IRC_COLOR_CHAT_SERVER weechat_color("color_chat_server")
 
-extern struct t_weechat_plugin *weechat_plugin;
-extern struct t_weechat_plugin *weechat_plugin;
+extern struct t_weechat_plugin *weechat_irc_plugin;
 extern struct t_hook *irc_timer_check_away;
 
 extern gnutls_certificate_credentials gnutls_xcred;

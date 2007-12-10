@@ -63,7 +63,7 @@ struct t_gui_nick
 
 struct t_gui_buffer
 {
-    void *plugin;                      /* plugin which created this buffer  */
+    struct t_weechat_plugin *plugin;   /* plugin which created this buffer  */
                                        /* (NULL for a WeeChat buffer)       */
     int number;                        /* buffer number (for jump/switch)   */
     char *category;                    /* category name                     */
@@ -142,7 +142,7 @@ extern struct t_gui_buffer *gui_buffer_before_raw_data;
 extern struct t_gui_buffer *gui_buffer_new (void *, char *, char *,
                                             void (*)(struct t_gui_buffer *, char *));
 extern int gui_buffer_valid (struct t_gui_buffer *);
-extern char *gui_buffer_get (struct t_gui_buffer *, char *);
+extern void *gui_buffer_get (struct t_gui_buffer *, char *);
 extern void gui_buffer_set_category (struct t_gui_buffer *, char *);
 extern void gui_buffer_set_name (struct t_gui_buffer *, char *);
 extern void gui_buffer_set_log (struct t_gui_buffer *, char *);

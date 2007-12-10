@@ -83,6 +83,7 @@ extern struct t_config_option *config_look_day_change_time_format;
 extern struct t_config_option *config_look_read_marker;
 extern struct t_config_option *config_look_input_format;
 extern struct t_config_option *config_look_paste_max_lines;
+extern struct t_config_option *config_look_default_msg_quit;
 
 extern struct t_config_option *config_color_separator;
 extern struct t_config_option *config_color_title;

@@ -552,7 +552,7 @@ alias_config_reload_event_cb (void *data, char *event, void *pointer)
     if (weechat_config_reload (alias_config_file) == 0)
     {
         weechat_printf (NULL,
-                        _("%sAlias configuration file reloaded"),
+                        _("%sAlias: configuration file reloaded"),
                         weechat_prefix ("info"));
         return PLUGIN_RC_SUCCESS;
     }

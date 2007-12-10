@@ -20,18 +20,37 @@
 #ifndef __WEECHAT_IRC_COMMAND_H
 #define __WEECHAT_IRC_COMMAND_H 1
 
-#define IRC_COMMAND_GET_SERVER(buffer)                          \
-    struct t_irc_server *ptr_server = irc_server_search (       \
-        weechat_buffer_get (buffer, "category"))
+#include "irc-server.h"
 
-#define IRC_COMMAND_GET_SERVER_CHANNEL(buffer)                     \
-    struct t_irc_server *ptr_server = irc_server_search (               \
-        weechat_buffer_get (buffer, "category"));                       \
-    struct t_irc_channel *ptr_channel = irc_channel_search (            \
-        ptr_server,                                                     \
-        weechat_buffer_get (buffer, "name"))
+#define IRC_COMMAND_GET_SERVER(__buffer)                                \
+    struct t_weechat_plugin *buffer_plugin = NULL;                      \
+    struct t_irc_server *ptr_server = NULL;                             \
+    buffer_plugin = weechat_buffer_get (__buffer, "plugin");            \
+    if (buffer_plugin == weechat_irc_plugin)                            \
+        ptr_server = irc_server_search (                                \
+            weechat_buffer_get (__buffer, "category"));
+
+#define IRC_COMMAND_GET_SERVER_CHANNEL(__buffer)                        \
+    struct t_weechat_plugin *buffer_plugin = NULL;                      \
+    struct t_irc_server *ptr_server = NULL;                             \
+    struct t_irc_channel *ptr_channel = NULL;                           \
+    buffer_plugin = weechat_buffer_get (__buffer, "plugin");            \
+    if (buffer_plugin == weechat_irc_plugin)                            \
+    {                                                                   \
+        ptr_server = irc_server_search (                                \
+            weechat_buffer_get (__buffer, "category"));                 \
+        ptr_channel = irc_channel_search (                              \
+            ptr_server, weechat_buffer_get (__buffer, "name"));         \
+    }
+
+#define IRC_COMMAND_TOO_FEW_ARGUMENTS(__buffer, __command)              \
+    weechat_printf (__buffer,                                           \
+                    _("%sirc: too few arguments for \"%s\" command"),   \
+                    weechat_prefix ("error"), __command);               \
+    return PLUGIN_RC_FAILED;
 
 
+extern void irc_command_quit_server (struct t_irc_server *, char *);
 extern void irc_command_init ();
 
 #endif /* irc-command.h */

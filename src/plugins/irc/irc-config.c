@@ -47,7 +47,6 @@ struct t_config_option *irc_config_irc_nick_suffix;
 struct t_config_option *irc_config_irc_display_away;
 struct t_config_option *irc_config_irc_show_away_once;
 struct t_config_option *irc_config_irc_default_msg_part;
-struct t_config_option *irc_config_irc_default_msg_quit;
 struct t_config_option *irc_config_irc_notice_as_pv;
 struct t_config_option *irc_config_irc_away_check;
 struct t_config_option *irc_config_irc_away_check_max_nicks;
@@ -237,7 +236,7 @@ irc_config_read_server_line (void *config_file, char *option_name, char *value)
                         break;
                     case 0:
                         weechat_printf (NULL,
-                                        _("%sIrc: warning, failed to set option "
+                                        _("%sirc: warning, failed to set option "
                                           "\"%s\" with value \"%s\""),
                                         weechat_prefix ("error"),
                                         option_name, value);
@@ -247,7 +246,7 @@ irc_config_read_server_line (void *config_file, char *option_name, char *value)
             else
             {
                 weechat_printf (NULL,
-                                _("%sIrc: warning, option not found in config "
+                                _("%sirc: warning, option not found in config "
                                   "file: \"%s\""),
                                 weechat_prefix ("error"),
                                 option_name);
@@ -268,7 +267,7 @@ irc_config_read_server_line (void *config_file, char *option_name, char *value)
         if (!irc_config_server)
         {
             weechat_printf (NULL,
-                            _("%sIrc: error creating server for reading "
+                            _("%sirc: error creating server for reading "
                               "config file"),
                             weechat_prefix ("error"));
         }
@@ -447,11 +446,6 @@ irc_config_init ()
         ptr_section, "irc_default_msg_part", "string",
         N_("default part message (leaving channel) ('%v' will be replaced by "
            "WeeChat version in string)"),
-        NULL, 0, 0, "WeeChat %v", NULL);
-    irc_config_irc_default_msg_quit = weechat_config_new_option (
-        ptr_section, "irc_default_msg_quit", "string",
-        N_("default quit message ('%v' will be replaced by WeeChat version in "
-           "string)"),
         NULL, 0, 0, "WeeChat %v", NULL);
     irc_config_irc_notice_as_pv = weechat_config_new_option (
         ptr_section, "irc_notice_as_pv", "boolean",
@@ -725,15 +719,20 @@ irc_config_read ()
 }
 
 /*
- * irc_config_reload: read IRC configuration file
+ * irc_config_reload_cb: read IRC configuration file
  */
 
 int
-irc_config_reload ()
+irc_config_reload_cb (void *data, char *event, void *pointer)
 {
     struct t_irc_server *ptr_server, *next_server;
     int rc;
-
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) event;
+    (void) pointer;
+    
     irc_config_server = NULL;
     irc_config_reload_flag = 1;
     for (ptr_server = irc_servers; ptr_server;
@@ -762,7 +761,7 @@ irc_config_reload ()
                 if (ptr_server->is_connected)
                 {
                     weechat_printf (NULL,
-                                    _("%sIrc: warning: server \"%s\" not found in "
+                                    _("%sirc: warning: server \"%s\" not found in "
                                       "configuration file, but was not deleted "
                                       "(currently used)"),
                                     weechat_prefix ("info"),
@@ -776,13 +775,13 @@ irc_config_reload ()
         }
 
         weechat_printf (NULL,
-                        _("%sIrc configuration file reloaded"),
+                        _("%sirc: configuration file reloaded"),
                         weechat_prefix ("info"));
         return PLUGIN_RC_SUCCESS;
     }
     
     weechat_printf (NULL,
-                    _("%sIrc: failed to reload alias configuration "
+                    _("%sirc: failed to reload alias configuration "
                       "file"),
                     weechat_prefix ("error"));
     return PLUGIN_RC_FAILED;

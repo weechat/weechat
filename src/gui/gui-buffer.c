@@ -38,6 +38,7 @@
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
+#include "../plugins/plugin.h"
 #include "gui-buffer.h"
 #include "gui-chat.h"
 #include "gui-color.h"
@@ -49,7 +50,6 @@
 #include "gui-nicklist.h"
 #include "gui-status.h"
 #include "gui-window.h"
-#include "../plugins/plugin.h"
 
 
 struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
@@ -92,7 +92,7 @@ gui_buffer_new (void *plugin, char *category, char *name,
     if ((new_buffer = (struct t_gui_buffer *)(malloc (sizeof (struct t_gui_buffer)))))
     {
         /* init buffer */
-        new_buffer->plugin = (struct t_weechat_plugin *)plugin;
+        new_buffer->plugin = plugin;
         new_buffer->number = (last_gui_buffer) ? last_gui_buffer->number + 1 : 1;
         new_buffer->category = (category) ? strdup (category) : NULL;
         new_buffer->name = strdup (name);
@@ -212,12 +212,11 @@ gui_buffer_valid (struct t_gui_buffer *buffer)
  * gui_buffer_get: get a buffer property
  */
 
-char *
+void *
 gui_buffer_get (struct t_gui_buffer *buffer, char *property)
 {
-    long number;
-    char *error;
-    
+    if (string_strcasecmp (property, "plugin") == 0)
+        return buffer->plugin;
     if (string_strcasecmp (property, "category") == 0)
         return buffer->category;
     else if (string_strcasecmp (property, "name") == 0)
@@ -225,7 +224,9 @@ gui_buffer_get (struct t_gui_buffer *buffer, char *property)
     else if (string_strcasecmp (property, "title") == 0)
         return buffer->title;
     else if (string_strcasecmp (property, "nick") == 0)
-        return buffer->nick;
+        return buffer->input_nick;
+    
+    return NULL;
 }
 
 /*

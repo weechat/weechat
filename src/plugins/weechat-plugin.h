@@ -63,6 +63,7 @@ struct t_weechat_plugin
     char *(*ngettext) (struct t_weechat_plugin *, char *, char *, int);
     int (*strcasecmp) (struct t_weechat_plugin *, char *, char *);
     int (*strncasecmp) (struct t_weechat_plugin *, char *, char *, int);
+    char *(*strcasestr) (struct t_weechat_plugin *, char *, char *);
     char *(*string_replace) (struct t_weechat_plugin *, char *, char *, char *);
     char **(*string_explode) (struct t_weechat_plugin *, char *, char *, int,
                               int, int *);
@@ -168,7 +169,7 @@ struct t_weechat_plugin
     struct t_gui_buffer *(*buffer_search) (struct t_weechat_plugin *,
                                            char *, char *);
     void (*buffer_close) (struct t_weechat_plugin *, void *);
-    char *(*buffer_get) (struct t_weechat_plugin *, void *, char *);
+    void *(*buffer_get) (struct t_weechat_plugin *, void *, char *);
     void (*buffer_set) (struct t_weechat_plugin *, void *, char *, char *);
     void (*buffer_nick_add) (struct t_weechat_plugin *, void *, char *, int,
                              char *, char, char *);
@@ -220,6 +221,8 @@ struct t_weechat_plugin
 #define weechat_strncasecmp(__string1, __string2, __max)                \
     weechat_plugin->strncasecmp(weechat_plugin, __string1,              \
                                 __string2, __max)
+#define weechat_strcasestr(__string1, __string2)                        \
+    weechat_plugin->strcasestr(weechat_plugin, __string1, __string2)
 #define weechat_string_replace(__string1, __search1, __replace1)        \
     weechat_plugin->string_replace(weechat_plugin, __string1,           \
                                    __search1, __replace1)

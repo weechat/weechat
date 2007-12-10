@@ -162,6 +162,20 @@ plugin_api_strncasecmp (struct t_weechat_plugin *plugin,
 }
 
 /*
+ * plugin_api_strcasestr: locale and case independent string search
+ */
+
+char *
+plugin_api_strcasestr (struct t_weechat_plugin *plugin,
+                       char *string1, char *string2)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return string_strcasestr (string1, string2);
+}
+
+/*
  * plugin_api_string_replace: replace a string by new one in a string
  */
 
@@ -919,10 +933,8 @@ plugin_api_plugin_config_set (struct t_weechat_plugin *plugin,
 char *
 plugin_api_prefix (struct t_weechat_plugin *plugin, char *prefix)
 {
-    static char empty_prefix[] = "";
-    
     if (!plugin || !prefix)
-        return empty_prefix;
+        return gui_chat_prefix_empty;
     
     if (string_strcasecmp (prefix, "info") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_INFO];
@@ -937,7 +949,7 @@ plugin_api_prefix (struct t_weechat_plugin *plugin, char *prefix)
     if (string_strcasecmp (prefix, "quit") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_QUIT];
     
-    return empty_prefix;
+    return gui_chat_prefix_empty;
 }
 
 /*
@@ -1275,7 +1287,7 @@ plugin_api_buffer_close (struct t_weechat_plugin *plugin, void *buffer)
  * plugin_api_buffer_get: get a buffer property
  */
 
-char *
+void *
 plugin_api_buffer_get (struct t_weechat_plugin *plugin, void *buffer,
                        char *property)
 {

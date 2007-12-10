@@ -89,6 +89,7 @@ struct t_config_option *config_look_day_change_time_format;
 struct t_config_option *config_look_read_marker;
 struct t_config_option *config_look_input_format;
 struct t_config_option *config_look_paste_max_lines;
+struct t_config_option *config_look_default_msg_quit;
 
 /* config, colors section */
 
@@ -600,7 +601,12 @@ config_weechat_init ()
         N_("max number of lines for paste without asking user "
            "(0 = disable this feature)"),
         NULL, 0, INT_MAX, "3", NULL);
-            
+    config_look_default_msg_quit = config_file_new_option (
+        ptr_section, "look_default_msg_quit", "string",
+        N_("default quit message ('%v' will be replaced by WeeChat version in "
+           "string)"),
+        NULL, 0, 0, "WeeChat %v", NULL);
+    
     /* colors */
     ptr_section = config_file_new_section (weechat_config_file, "colors",
                                            NULL, NULL, NULL);

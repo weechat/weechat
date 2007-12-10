@@ -380,7 +380,7 @@ irc_dcc_free (struct t_irc_dcc *ptr_dcc)
     {
         /* check if channel is used for another active DCC CHAT */
         if (!ptr_dcc->channel->dcc_chat
-            || (IRC_DCC_ENDED(((struct t_irc_dcc *)(ptr_dcc->channel->dcc_chat))->status)))
+            || (IRC_DCC_ENDED(ptr_dcc->channel->dcc_chat->status)))
         {
             gui_buffer_free (ptr_dcc->channel->buffer, 1);
             if (ptr_dcc->channel)

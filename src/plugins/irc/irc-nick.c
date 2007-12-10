@@ -121,15 +121,27 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
               int is_chanadmin2, int is_op, int is_halfop, int has_voice,
               int is_chanuser)
 {
+    (void) server;
+    (void) channel;
+    (void) nick_name;
+    (void) is_chanowner;
+    (void) is_chanadmin;
+    (void) is_chanadmin2;
+    (void) is_op;
+    (void) is_halfop;
+    (void) has_voice;
+    (void) is_chanuser;
+    
+    /*
     struct t_irc_nick *new_nick;
     struct t_gui_nick *ptr_gui_nick;
     int sort_index, color_prefix;
     char prefix;
     
-    /* nick already exists on this channel? */
+    // nick already exists on this channel?
     if ((new_nick = irc_nick_search (channel, nick_name)))
     {
-        /* update nick */
+        // update nick
         IRC_NICK_SET_FLAG(new_nick, is_chanowner, IRC_NICK_CHANOWNER);
         IRC_NICK_SET_FLAG(new_nick, is_chanadmin, IRC_NICK_CHANADMIN);
         IRC_NICK_SET_FLAG(new_nick, is_chanadmin2, IRC_NICK_CHANADMIN2);
@@ -149,11 +161,11 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         return new_nick;
     }
     
-    /* alloc memory for new nick */
+    // alloc memory for new nick
     if ((new_nick = (struct t_irc_nick *) malloc (sizeof (struct t_irc_nick))) == NULL)
         return NULL;
     
-    /* initialize new nick */
+    // initialize new nick
     new_nick->nick = strdup (nick_name);
     new_nick->host = NULL;
     new_nick->flags = 0;
@@ -169,7 +181,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     else
         new_nick->color = irc_nick_find_color (new_nick);
 
-    /* add nick to end of list */
+    // add nick to end of list
     new_nick->prev_nick = channel->last_nick;
     if (channel->nicks)
         channel->last_nick->next_nick = new_nick;
@@ -182,13 +194,15 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     
     channel->nick_completion_reset = 1;
     
-    /* add nick to buffer nicklist */
+    // add nick to buffer nicklist
     irc_nick_get_gui_infos (new_nick, &sort_index, &prefix, &color_prefix);
     gui_nicklist_add (channel->buffer, new_nick->nick, sort_index,
                       GUI_COLOR_NICKLIST, prefix, color_prefix);
     
-    /* all is ok, return address of new nick */
+    // all is ok, return address of new nick
     return new_nick;
+    */
+    return NULL;
 }
 
 /*
@@ -199,11 +213,17 @@ void
 irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
                  struct t_irc_nick *nick, char *new_nick)
 {
-    int nick_is_me;
-    t_weelist *ptr_weelist;
-    t_gui_nick *ptr_nick;
+    (void) server;
+    (void) channel;
+    (void) nick;
+    (void) new_nick;
     
-    /* update buffer nick */
+    /*
+    int nick_is_me;
+    struct t_weelist *ptr_weelist;
+    struct t_gui_nick *ptr_nick;
+    
+    // update buffer nick
     ptr_nick = gui_nicklist_search (channel->buffer, nick->nick);
     if (ptr_nick)
         gui_nicklist_update (channel->buffer, ptr_nick, new_nick,
@@ -224,7 +244,7 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
         }
     }
     
-    /* change nickname */
+    // change nickname
     if (nick->nick)
         free (nick->nick);
     nick->nick = strdup (new_nick);
@@ -232,6 +252,7 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
         nick->color = GUI_COLOR_CHAT_NICK_SELF;
     else
         nick->color = irc_nick_find_color (nick);
+    */
 }
 
 /*
@@ -241,15 +262,19 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
 void
 irc_nick_free (struct t_irc_channel *channel, struct t_irc_nick *nick)
 {
+    (void) channel;
+    (void) nick;
+    
+    /*
     struct t_irc_nick *new_nicks;
     
     if (!channel || !nick)
         return;
     
-    /* remove nick from buffer nicklist */
+    // remove nick from buffer nicklist
     (void) gui_nicklist_remove (channel->buffer, nick->nick);
     
-    /* remove nick from nicks list */
+    // remove nick from nicks list
     if (channel->last_nick == nick)
         channel->last_nick = nick->prev_nick;
     if (nick->prev_nick)
@@ -265,7 +290,7 @@ irc_nick_free (struct t_irc_channel *channel, struct t_irc_nick *nick)
     
     channel->nicks_count--;
     
-    /* free data */
+    // free data
     if (nick->nick)
         free (nick->nick);
     if (nick->host)
@@ -274,6 +299,7 @@ irc_nick_free (struct t_irc_channel *channel, struct t_irc_nick *nick)
     channel->nicks = new_nicks;
     
     channel->nick_completion_reset = 1;
+    */
 }
 
 /*
@@ -359,8 +385,14 @@ irc_nick_count (struct t_irc_channel *channel, int *total, int *count_op,
  */
 
 void
-irc_nick_set_away (struct t_irc_channel *channel, struct t_irc_nick *nick, int is_away)
+irc_nick_set_away (struct t_irc_channel *channel, struct t_irc_nick *nick,
+                   int is_away)
 {
+    (void) channel;
+    (void) nick;
+    (void) is_away;
+    
+    /*
     t_gui_nick *ptr_nick;
     
     if ((irc_cfg_irc_away_check > 0)
@@ -382,6 +414,7 @@ irc_nick_set_away (struct t_irc_channel *channel, struct t_irc_nick *nick, int i
             gui_nicklist_draw (channel->buffer, 0, 0);
         }
     }
+    */
 }
 
 /*

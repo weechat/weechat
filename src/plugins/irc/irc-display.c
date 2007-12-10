@@ -28,11 +28,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../../core/weechat.h"
 #include "irc.h"
-#include "../../core/utf8.h"
-#include "../../core/weechat-config.h"
-#include "../../gui/gui.h"
+#include "irc-command.h"
+#include "irc-config.h"
+#include "irc-server.h"
+#include "irc-nick.h"
 
 
 /*
@@ -92,9 +92,19 @@ irc_display_hide_password (char *string, int look_for_nickserv)
  */
 
 void
-irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
-                  int type, int display_around, char *force_color, int no_nickmode)
+irc_display_nick (struct t_gui_buffer *buffer, struct t_irc_nick *nick,
+                  char *nickname, int type, int display_around,
+                  char *force_color, int no_nickmode)
 {
+    (void) buffer;
+    (void) nick;
+    (void) nickname;
+    (void) type;
+    (void) display_around;
+    (void) force_color;
+    (void) no_nickmode;
+    
+    /*
     char format[32], *ptr_nickname;
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
@@ -117,7 +127,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
                              && ((int)strlen (cfg_look_nick_prefix) +
                                  (int)strlen (cfg_look_nick_suffix) > max_align - 4));
     
-    /* calculate length to display, to truncate it if too long */
+    // calculate length to display, to truncate it if too long
     length = nickname_length;
     if (!disable_prefix_suffix && cfg_look_nick_prefix)
         length += strlen (cfg_look_nick_prefix);
@@ -135,7 +145,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
     if (!disable_prefix_suffix && cfg_look_nick_suffix)
         length += strlen (cfg_look_nick_suffix);
     
-    /* calculate number of spaces to insert before or after nick */
+    // calculate number of spaces to insert before or after nick
     spaces = 0;
     if (cfg_look_align_nick != CFG_LOOK_ALIGN_NICK_NONE)
     {
@@ -147,7 +157,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
             spaces = cfg_look_align_size - length;
     }
     
-    /* display prefix */
+    // display prefix
     if (display_around && !disable_prefix_suffix
         && cfg_look_nick_prefix && cfg_look_nick_prefix[0])
         gui_chat_printf_type (buffer, type, NULL, -1,
@@ -155,7 +165,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                               cfg_look_nick_prefix);
     
-    /* display spaces before nick, if needed */
+    // display spaces before nick, if needed
     if (display_around
         && (cfg_look_align_nick == CFG_LOOK_ALIGN_NICK_RIGHT)
         && (spaces > 0))
@@ -164,7 +174,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
         gui_chat_printf_type (buffer, type, NULL, -1, format, " ");
     }
     
-    /* display nick mode */
+    // display nick mode
     if (nick && cfg_look_nickmode)
     {
         if (nick->flags & IRC_NICK_CHANOWNER)
@@ -193,7 +203,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
                                   GUI_COLOR(GUI_COLOR_CHAT));
     }
     
-    /* display nick */
+    // display nick
     if (external_nick)
         gui_chat_printf_type (buffer, type, NULL, -1, "%s%s",
                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
@@ -233,7 +243,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          ")");
     
-    /* display spaces after nick, if needed */
+    // display spaces after nick, if needed
     if (display_around
         && (cfg_look_align_nick == CFG_LOOK_ALIGN_NICK_LEFT)
         && (spaces > 0))
@@ -242,7 +252,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
         gui_chat_printf_type (buffer, type, NULL, -1, format, " ");
     }
     
-    /* display suffix */
+    // display suffix
     if (display_around && !disable_prefix_suffix
         && cfg_look_nick_suffix && cfg_look_nick_suffix[0])
         gui_chat_printf_type (buffer, type, NULL, -1, "%s%s",
@@ -253,6 +263,7 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
                           GUI_NO_COLOR,
                           (display_around) ? " " : "");
     free (ptr_nickname);
+    */
 }
 
 /*
@@ -260,33 +271,24 @@ irc_display_nick (t_gui_buffer *buffer, t_irc_nick *nick, char *nickname,
  */
 
 void
-irc_display_away (t_irc_server *server, char *string1, char *string2)
+irc_display_away (struct t_irc_server *server, char *string1, char *string2)
 {
-    t_irc_channel *ptr_channel;
-    char format[32];
+    struct t_irc_channel *ptr_channel;
     
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
         if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
         {
-            if (cfg_look_align_other)
-            {
-                snprintf (format, 32, "%%-%ds", cfg_look_align_size + 1);
-                gui_chat_printf_type (ptr_channel->buffer, GUI_MSG_TYPE_NICK,
-                                      NULL, -1,
-                                      format, " ");
-            }
-            gui_chat_printf_nolog (ptr_channel->buffer,
-                                   NULL, -1,
-                                   "%s[%s%s%s %s: %s%s]\n",
-                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                   GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                   server->nick,
-                                   GUI_COLOR(GUI_COLOR_CHAT),
-                                   string1,
-                                   string2,
-                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+            weechat_printf (ptr_channel->buffer,
+                            "%s[%s%s%s %s: %s%s]",
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_CHAT_NICK,
+                            server->nick,
+                            IRC_COLOR_CHAT,
+                            string1,
+                            string2,
+                            IRC_COLOR_CHAT_DELIMITERS);
         }
     }
 }
@@ -296,34 +298,29 @@ irc_display_away (t_irc_server *server, char *string1, char *string2)
  */
 
 void
-irc_display_mode (t_gui_buffer *buffer,
+irc_display_mode (struct t_gui_buffer *buffer,
                   char *channel_name, char *nick_name, char set_flag,
                   char *symbol, char *nick_host, char *message, char *param)
 {
-    gui_chat_printf_info (buffer,
-                          "%s[%s%s%s/%s%c%s%s] %s%s",
-                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                          (channel_name) ?
-                          GUI_COLOR(GUI_COLOR_CHAT_CHANNEL) :
-                          GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                          (channel_name) ? channel_name : nick_name,
-                          GUI_COLOR(GUI_COLOR_CHAT),
-                          GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                          set_flag,
-                          symbol,
-                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                          GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                          nick_host);
-    if (param)
-        gui_chat_printf (buffer, " %s%s %s%s\n",
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         message,
-                         GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                         param);
-    else
-        gui_chat_printf (buffer, " %s%s\n",
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         message);
+    weechat_printf (buffer,
+                    "%s[%s%s%s/%s%c%s%s] %s%s %s%s%s%s%s",
+                    IRC_COLOR_CHAT_DELIMITERS,
+                    (channel_name) ?
+                    IRC_COLOR_CHAT_CHANNEL :
+                    IRC_COLOR_CHAT_NICK,
+                    (channel_name) ? channel_name : nick_name,
+                    IRC_COLOR_CHAT,
+                    IRC_COLOR_CHAT_CHANNEL,
+                    set_flag,
+                    symbol,
+                    IRC_COLOR_CHAT_DELIMITERS,
+                    IRC_COLOR_CHAT_NICK,
+                    nick_host,
+                    IRC_COLOR_CHAT,
+                    message,
+                    (param) ? " " : "",
+                    (param) ? IRC_COLOR_CHAT_NICK : "",
+                    (param) ? param : "");
 }
 
 /*
@@ -331,111 +328,115 @@ irc_display_mode (t_gui_buffer *buffer,
  */
 
 void
-irc_display_server (t_irc_server *server, int with_detail)
+irc_display_server (struct t_irc_server *server, int with_detail)
 {
     char *string;
     int num_channels, num_pv;
     
     if (with_detail)
     {
-        gui_chat_printf (NULL, "\n");
-        gui_chat_printf (NULL, _("%sServer: %s%s %s[%s%s%s]\n"),
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         GUI_COLOR(GUI_COLOR_CHAT_SERVER),
-                         server->name,
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         (server->is_connected) ?
-                         _("connected") : _("not connected"),
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+        weechat_printf (NULL, "");
+        weechat_printf (NULL, _("%sServer: %s%s %s[%s%s%s]"),
+                        IRC_COLOR_CHAT,
+                        IRC_COLOR_CHAT_SERVER,
+                        server->name,
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_CHAT,
+                        (server->is_connected) ?
+                        _("connected") : _("not connected"),
+                        IRC_COLOR_CHAT_DELIMITERS);
         
-        gui_chat_printf (NULL, "  server_autoconnect . . . . : %s%s\n",
-                         (server->autoconnect) ? _("on") : _("off"),
-                         (server->temp_server) ?
-                         _(" (temporary server, will not be saved)") : "");
-        gui_chat_printf (NULL, "  server_autoreconnect . . . : %s\n",
-                         (server->autoreconnect) ? _("on") : _("off"));
-        gui_chat_printf (NULL, "  server_autoreconnect_delay : %d %s\n",
-                         server->autoreconnect_delay,
-                         _("seconds"));
-        gui_chat_printf (NULL, "  server_address . . . . . . : %s\n",
-                         server->address);
-        gui_chat_printf (NULL, "  server_port  . . . . . . . : %d\n",
-                         server->port);
-        gui_chat_printf (NULL, "  server_ipv6  . . . . . . . : %s\n",
-                         (server->ipv6) ? _("on") : _("off"));
-        gui_chat_printf (NULL, "  server_ssl . . . . . . . . : %s\n",
-                         (server->ssl) ? _("on") : _("off"));
-        gui_chat_printf (NULL, "  server_password  . . . . . : %s\n",
-                         (server->password && server->password[0]) ?
-                         _("(hidden)") : "");
-        gui_chat_printf (NULL, "  server_nick1/2/3 . . . . . : "
-                         "%s %s/ %s%s %s/ %s%s\n",
-                         server->nick1,
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         server->nick2,
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         server->nick3);
-        gui_chat_printf (NULL, "  server_username  . . . . . : %s\n",
-                         server->username);
-        gui_chat_printf (NULL, "  server_realname  . . . . . : %s\n",
-                         server->realname);
-        gui_chat_printf (NULL, "  server_hostname  . . . . . : %s\n",
-                         (server->hostname) ? server->hostname : "");
+        weechat_printf (NULL, "  server_autoconnect . . . . : %s%s",
+                        (server->autoconnect) ? _("on") : _("off"),
+                        (server->temp_server) ?
+                        _(" (temporary server, will not be saved)") : "");
+        weechat_printf (NULL, "  server_autoreconnect . . . : %s",
+                        (server->autoreconnect) ? _("on") : _("off"));
+        weechat_printf (NULL, "  server_autoreconnect_delay : %d %s",
+                        server->autoreconnect_delay,
+                        _("seconds"));
+        weechat_printf (NULL, "  server_address . . . . . . : %s",
+                        server->address);
+        weechat_printf (NULL, "  server_port  . . . . . . . : %d",
+                        server->port);
+        weechat_printf (NULL, "  server_ipv6  . . . . . . . : %s",
+                        (server->ipv6) ? _("on") : _("off"));
+        weechat_printf (NULL, "  server_ssl . . . . . . . . : %s",
+                        (server->ssl) ? _("on") : _("off"));
+        weechat_printf (NULL, "  server_password  . . . . . : %s",
+                        (server->password && server->password[0]) ?
+                        _("(hidden)") : "");
+        weechat_printf (NULL,
+                        "  server_nick1/2/3 . . . . . : %s %s/ %s%s %s/ %s%s",
+                        server->nick1,
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_CHAT,
+                        server->nick2,
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_CHAT,
+                        server->nick3);
+        weechat_printf (NULL, "  server_username  . . . . . : %s",
+                        server->username);
+        weechat_printf (NULL, "  server_realname  . . . . . : %s",
+                        server->realname);
+        weechat_printf (NULL, "  server_hostname  . . . . . : %s",
+                        (server->hostname) ? server->hostname : "");
         if (server->command && server->command[0])
             string = strdup (server->command);
         else
             string = NULL;
         if (string)
         {
-            if (irc_cfg_log_hide_nickserv_pwd)
+            if (weechat_config_boolean (irc_config_log_hide_nickserv_pwd))
                 irc_display_hide_password (string, 1);
-            gui_chat_printf (NULL, "  server_command . . . . . . : %s\n",
-                             string);
+            weechat_printf (NULL, "  server_command . . . . . . : %s",
+                            string);
             free (string);
         }
         else
-            gui_chat_printf (NULL, "  server_command . . . . . . : %s\n",
-                             (server->command && server->command[0]) ?
-                             server->command : "");
-        gui_chat_printf (NULL, "  server_command_delay . . . : %d %s\n",
-                         server->command_delay,
-                         _("seconds"));
-        gui_chat_printf (NULL, "  server_autojoin  . . . . . : %s\n",
-                         (server->autojoin && server->autojoin[0]) ?
-                         server->autojoin : "");
-        gui_chat_printf (NULL, "  server_notify_levels . . . : %s\n",
-                         (server->notify_levels && server->notify_levels[0]) ?
-                         server->notify_levels : "");
+            weechat_printf (NULL, "  server_command . . . . . . : %s",
+                            (server->command && server->command[0]) ?
+                            server->command : "");
+        weechat_printf (NULL, "  server_command_delay . . . : %d %s",
+                        server->command_delay,
+                        _("seconds"));
+        weechat_printf (NULL, "  server_autojoin  . . . . . : %s",
+                        (server->autojoin && server->autojoin[0]) ?
+                        server->autojoin : "");
+        weechat_printf (NULL, "  server_notify_levels . . . : %s",
+                        (server->notify_levels && server->notify_levels[0]) ?
+                        server->notify_levels : "");
     }
     else
     {
-        gui_chat_printf (NULL, " %s %s%s ",
-                         (server->is_connected) ? "*" : " ",
-                         GUI_COLOR(GUI_COLOR_CHAT_SERVER),
-                         server->name);
-        gui_chat_printf (NULL, "%s[%s%s",
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         (server->is_connected) ?
-                         _("connected") : _("not connected"));
         if (server->is_connected)
         {
             num_channels = irc_server_get_channel_count (server);
             num_pv = irc_server_get_pv_count (server);
-            gui_chat_printf (NULL, ", ");
-            gui_chat_printf (NULL,
-                             NG_("%d channel", "%d channels",
-                                 num_channels),
-                             num_channels);
-            gui_chat_printf (NULL, ", ");
-            gui_chat_printf (NULL, _("%d pv"), num_pv);
+            weechat_printf (NULL, " %s %s%s %s[%s%s%s]%s%s, %d %s, %d pv",
+                            (server->is_connected) ? "*" : " ",
+                            IRC_COLOR_CHAT_SERVER,
+                            server->name,
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_CHAT,
+                            (server->is_connected) ?
+                            _("connected") : _("not connected"),
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_CHAT,
+                            (server->temp_server) ? _(" (temporary)") : "",
+                            num_channels,
+                            NG_("channel", "channels",
+                                num_channels),
+                            num_pv);
         }
-        gui_chat_printf (NULL, "%s]%s%s\n",
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         (server->temp_server) ? _(" (temporary)") : "");
+        else
+        {
+            weechat_printf (NULL, " %s %s%s%s%s",
+                            (server->is_connected) ? "*" : " ",
+                            IRC_COLOR_CHAT_SERVER,
+                            server->name,
+                            IRC_COLOR_CHAT,
+                            (server->temp_server) ? _(" (temporary)") : "");
+        }
     }
 }
