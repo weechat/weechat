@@ -44,6 +44,22 @@ extern char **plugin_api_string_split_command (struct t_weechat_plugin *,
 extern void plugin_api_string_free_splitted_command (struct t_weechat_plugin *,
                                                      char **);
 
+/* UTF-8 strings */
+extern int plugin_api_utf8_has_8bits (struct t_weechat_plugin *, char *);
+extern int plugin_api_utf8_is_valid (struct t_weechat_plugin *, char *, char **);
+extern void plugin_api_utf8_normalize (struct t_weechat_plugin *, char *, char);
+extern char *plugin_api_utf8_prev_char (struct t_weechat_plugin *, char *, char *);
+extern char *plugin_api_utf8_next_char (struct t_weechat_plugin *, char *);
+extern int plugin_api_utf8_char_size (struct t_weechat_plugin *, char *);
+extern int plugin_api_utf8_strlen (struct t_weechat_plugin *, char *);
+extern int plugin_api_utf8_strnlen (struct t_weechat_plugin *, char *, int);
+extern int plugin_api_utf8_strlen_screen (struct t_weechat_plugin *, char *);
+extern int plugin_api_utf8_charcasecmp (struct t_weechat_plugin *, char *, char *);
+extern int plugin_api_utf8_char_size_screen (struct t_weechat_plugin *, char *);
+extern char *plugin_api_utf8_add_offset (struct t_weechat_plugin *, char *, int);
+extern int plugin_api_utf8_real_pos (struct t_weechat_plugin *, char *, int);
+extern int plugin_api_utf8_pos (struct t_weechat_plugin *, char *, int);
+
 /* directories */
 extern int plugin_api_mkdir_home (struct t_weechat_plugin *, char *, int);
 extern int plugin_api_mkdir (struct t_weechat_plugin *, char *, int);

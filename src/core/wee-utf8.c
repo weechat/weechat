@@ -226,7 +226,7 @@ utf8_next_char (char *string)
 }
 
 /*
- * utf8_char_size: return UTF-8 char size
+ * utf8_char_size: return UTF-8 char size (in bytes)
  */
 
 int
@@ -454,44 +454,4 @@ utf8_pos (char *string, int real_pos)
         count++;
     }
     return count;
-}
-
-/*
- * utf8_get_wide_char: get wide char from string (first char)
- */
-
-wint_t
-utf8_get_wide_char (char *string)
-{
-    int char_size;
-    wint_t result;
-    
-    if (!string || !string[0])
-        return WEOF;
-    
-    char_size = utf8_char_size (string);
-    switch (char_size)
-    {
-        case 1:
-            result = (wint_t)string[0];
-            break;
-        case 2:
-            result = ((wint_t)((unsigned char)string[0])) << 8
-                |  ((wint_t)((unsigned char)string[1]));
-            break;
-        case 3:
-            result = ((wint_t)((unsigned char)string[0])) << 16
-                |  ((wint_t)((unsigned char)string[1])) << 8
-                |  ((wint_t)((unsigned char)string[2]));
-            break;
-        case 4:
-            result = ((wint_t)((unsigned char)string[0])) << 24
-                |  ((wint_t)((unsigned char)string[1])) << 16
-                |  ((wint_t)((unsigned char)string[2])) << 8
-                |  ((wint_t)((unsigned char)string[3]));
-            break;
-        default:
-            result = WEOF;
-    }
-    return result;
 }

@@ -236,6 +236,21 @@ plugin_load (char *filename)
         new_plugin->string_free_exploded = &plugin_api_string_free_exploded;
         new_plugin->string_split_command = &plugin_api_string_split_command;
         new_plugin->string_free_splitted_command = &plugin_api_string_free_splitted_command;
+
+        new_plugin->utf8_has_8bits = &plugin_api_utf8_has_8bits;
+        new_plugin->utf8_is_valid = &plugin_api_utf8_is_valid;
+        new_plugin->utf8_normalize = &plugin_api_utf8_normalize;
+        new_plugin->utf8_prev_char = &plugin_api_utf8_prev_char;
+        new_plugin->utf8_next_char = &plugin_api_utf8_next_char;
+        new_plugin->utf8_char_size = &plugin_api_utf8_char_size;
+        new_plugin->utf8_strlen = &plugin_api_utf8_strlen;
+        new_plugin->utf8_strnlen = &plugin_api_utf8_strnlen;
+        new_plugin->utf8_strlen_screen = &plugin_api_utf8_strlen_screen;
+        new_plugin->utf8_charcasecmp = &plugin_api_utf8_charcasecmp;
+        new_plugin->utf8_char_size_screen = &plugin_api_utf8_char_size_screen;
+        new_plugin->utf8_add_offset = &plugin_api_utf8_add_offset;
+        new_plugin->utf8_real_pos = &plugin_api_utf8_real_pos;
+        new_plugin->utf8_pos = &plugin_api_utf8_pos;
         
         new_plugin->mkdir_home = &plugin_api_mkdir_home;
         new_plugin->mkdir = &plugin_api_mkdir;

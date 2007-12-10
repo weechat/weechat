@@ -251,6 +251,205 @@ plugin_api_string_free_splitted_command (struct t_weechat_plugin *plugin,
 }
 
 /*
+ * plugin_api_utf8_has_8bits: return 1 if string has 8-bits chars, 0 if only
+ *                            7-bits chars
+ */
+
+int
+plugin_api_utf8_has_8bits (struct t_weechat_plugin *plugin, char *string)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_has_8bits (string);
+}
+
+/*
+ * plugin_api_utf8_is_valid: return 1 if UTF-8 string is valid, 0 otherwise
+ *                           if error is not NULL, it's set with first non
+ *                           valid UTF-8 char in string, if any
+ */
+
+int
+plugin_api_utf8_is_valid (struct t_weechat_plugin *plugin, char *string,
+                          char **error)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_is_valid (string, error);
+}
+
+/*
+ * plugin_api_utf8_normalize: normalize UTF-8 string: remove non UTF-8 chars
+ *                            and replace them by a char
+ */
+
+void
+plugin_api_utf8_normalize (struct t_weechat_plugin *plugin, char *string,
+                           char replacement)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    utf8_normalize (string, replacement);
+}
+
+/*
+ * plugin_api_utf8_prev_char: return previous UTF-8 char in a string
+ */
+
+char *
+plugin_api_utf8_prev_char (struct t_weechat_plugin *plugin, char *string_start,
+                           char *string)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_prev_char (string_start, string);
+}
+
+/*
+ * plugin_api_utf8_next_char: return next UTF-8 char in a string
+ */
+
+char *
+plugin_api_utf8_next_char (struct t_weechat_plugin *plugin, char *string)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_next_char (string);
+}
+
+/*
+ * plugin_api_utf8_char_size: return UTF-8 char size (in bytes)
+ */
+
+int
+plugin_api_utf8_char_size (struct t_weechat_plugin *plugin, char *string)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_char_size (string);
+}
+
+/*
+ * plugin_api_utf8_strlen: return length of an UTF-8 string (<= strlen(string))
+ */
+
+int
+plugin_api_utf8_strlen (struct t_weechat_plugin *plugin, char *string)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_strlen (string);
+}
+
+/*
+ * plugin_api_utf8_strnlen: return length of an UTF-8 string, for N bytes max
+ *                          in string
+ */
+
+int
+plugin_api_utf8_strnlen (struct t_weechat_plugin *plugin, char *string,
+                         int bytes)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_strnlen (string, bytes);
+}
+
+/*
+ * plugin_api_utf8_strlen_screen: return number of chars needed on screen to
+ *                                display UTF-8 string
+ */
+
+int
+plugin_api_utf8_strlen_screen (struct t_weechat_plugin *plugin, char *string)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_strlen_screen (string);
+}
+
+/*
+ * plugin_api_utf8_charcasecmp: compare two utf8 chars (case is ignored)
+ */
+
+int
+plugin_api_utf8_charcasecmp (struct t_weechat_plugin *plugin, char *string1,
+                             char *string2)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_charcasecmp (string1, string2);
+}
+
+/*
+ * plugin_api_utf8_char_size_screen: return number of chars needed on screen
+ *                                   to display UTF-8 char
+ */
+
+int
+plugin_api_utf8_char_size_screen (struct t_weechat_plugin *plugin, char *string)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_char_size_screen (string);
+}
+
+/*
+ * plugin_api_utf8_add_offset: moves forward N chars in an UTF-8 string
+ */
+
+char *
+plugin_api_utf8_add_offset (struct t_weechat_plugin *plugin, char *string,
+                            int offset)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_add_offset (string, offset);
+}
+
+/*
+ * plugin_api_utf8_real_pos: get real position in UTF-8
+ *                           for example: ("aébc", 2) returns 3
+ */
+
+int
+plugin_api_utf8_real_pos (struct t_weechat_plugin *plugin, char *string,
+                          int pos)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_real_pos (string, pos);
+}
+
+/*
+ * plugin_api_utf8_pos: get position in UTF-8
+ *                      for example: ("aébc", 3) returns 2
+ */
+
+int
+plugin_api_utf8_pos (struct t_weechat_plugin *plugin, char *string,
+                     int real_pos)
+{
+    /* make C compiler happy */
+    (void) plugin;
+    
+    return utf8_real_pos (string, real_pos);
+}
+
+/*
  * plugin_api_mkdir_home: create a directory in WeeChat home
  */
 

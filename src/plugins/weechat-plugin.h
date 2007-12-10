@@ -71,15 +71,31 @@ struct t_weechat_plugin
     char **(*string_split_command) (struct t_weechat_plugin *, char *, char);
     void (*string_free_splitted_command) (struct t_weechat_plugin *, char **);
     
+    /* UTF-8 strings */
+    int (*utf8_has_8bits) (struct t_weechat_plugin *, char *);
+    int (*utf8_is_valid) (struct t_weechat_plugin *, char *, char **);
+    void (*utf8_normalize) (struct t_weechat_plugin *, char *, char);
+    char *(*utf8_prev_char) (struct t_weechat_plugin *, char *, char *);
+    char *(*utf8_next_char) (struct t_weechat_plugin *, char *);
+    int (*utf8_char_size) (struct t_weechat_plugin *, char *);
+    int (*utf8_strlen) (struct t_weechat_plugin *, char *);
+    int (*utf8_strnlen) (struct t_weechat_plugin *, char *, int);
+    int (*utf8_strlen_screen) (struct t_weechat_plugin *, char *);
+    int (*utf8_charcasecmp) (struct t_weechat_plugin *, char *, char *);
+    int (*utf8_char_size_screen) (struct t_weechat_plugin *, char *);
+    char *(*utf8_add_offset) (struct t_weechat_plugin *, char *, int);
+    int (*utf8_real_pos) (struct t_weechat_plugin *, char *, int);
+    int (*utf8_pos) (struct t_weechat_plugin *, char *, int);
+    
     /* directories */
     int (*mkdir_home) (struct t_weechat_plugin *, char *, int);
     int (*mkdir) (struct t_weechat_plugin *, char *, int);
     void (*exec_on_files) (struct t_weechat_plugin *, char *,
                            int (*)(char *));
-
+    
     /* util */
     long (*timeval_diff) (struct t_weechat_plugin *, void *, void *);
-
+    
     /* sorted list */
     struct t_weelist *(*list_new) (struct t_weechat_plugin *);
     char *(*list_add) (struct t_weechat_plugin *, void *, char *,
@@ -239,6 +255,36 @@ struct t_weechat_plugin
 #define weechat_string_free_splitted_command(__array_str)               \
     weechat_plugin->string_free_splitted_command(weechat_plugin,        \
                                                  __array_str)
+
+/* UTF-8 strings */
+#define weechat_utf8_has_8bits(__string)                        \
+    weechat_plugin->utf8_has_8bits(weechat_plugin, __string)
+#define weechat_utf8_is_valid(__string, __error)                        \
+    weechat_plugin->utf8_is_valid(weechat_plugin, __string, __error)
+#define weechat_utf8_normalise(__string, __char)                        \
+    weechat_plugin->utf8_normalize(weechat_plugin, __string, __char)
+#define weechat_utf8_prev_char(__start, __string)                       \
+    weechat_plugin->utf8_has_8bits(weechat_plugin, __start, __string)
+#define weechat_utf8_next_char(__string)                        \
+    weechat_plugin->utf8_next_char(weechat_plugin, __string)
+#define weechat_utf8_char_size(__string)                        \
+    weechat_plugin->utf8_char_size(weechat_plugin, __string)
+#define weechat_utf8_strlen(__string)                           \
+    weechat_plugin->utf8_strlen(weechat_plugin, __string)
+#define weechat_utf8_strnlen(__string, __bytes)                         \
+    weechat_plugin->utf8_strnlen(weechat_plugin, __string, __bytes)
+#define weechat_utf8_strlen_screen(__string)                            \
+    weechat_plugin->utf8_strlen_screen(weechat_plugin, __string)
+#define weechat_utf8_charcasecmp(__string)                      \
+    weechat_plugin->utf8_charcasecmp(weechat_plugin, __string)
+#define weechat_utf8_char_size_screen(__string)                         \
+    weechat_plugin->utf8_char_size_screen(weechat_plugin, __string)
+#define weechat_utf8_add_offset(__string, __offset)                     \
+    weechat_plugin->utf8_add_offset(weechat_plugin, __string, __offset)
+#define weechat_utf8_real_pos(__string, __pos)                          \
+    weechat_plugin->utf8_real_pos(weechat_plugin, __string, __pos)
+#define weechat_utf8_pos(__string, __real_pos)                          \
+    weechat_plugin->utf8_pos(weechat_plugin, __string, __real_pos)
 
 /* directories */
 #define weechat_mkdir_home(__directory, __mode)                         \

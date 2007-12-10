@@ -47,6 +47,5 @@ extern int utf8_char_size_screen (char *);
 extern char *utf8_add_offset (char *, int);
 extern int utf8_real_pos (char *, int);
 extern int utf8_pos (char *, int);
-extern wint_t utf8_get_wide_char (char *);
 
 #endif /* wee-utf8.h */

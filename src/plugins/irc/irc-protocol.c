@@ -24,6 +24,16 @@
 #include "config.h"
 #endif
 
+#ifndef __USE_XOPEN
+#define __USE_XOPEN
+#endif
+
+#if defined(__OpenBSD__)
+#include <utf8/wchar.h>
+#else
+#include <wchar.h>
+#endif
+
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
@@ -161,13 +171,53 @@ char *irc_message = NULL;
 
 
 /*
+ * irc_protocol_get_wide_char: get wide char from string (first char)
+ */
+
+wint_t
+irc_protocol_get_wide_char (char *string)
+{
+    int char_size;
+    wint_t result;
+    
+    if (!string || !string[0])
+        return WEOF;
+    
+    char_size = weechat_utf8_char_size (string);
+    switch (char_size)
+    {
+        case 1:
+            result = (wint_t)string[0];
+            break;
+        case 2:
+            result = ((wint_t)((unsigned char)string[0])) << 8
+                |  ((wint_t)((unsigned char)string[1]));
+            break;
+        case 3:
+            result = ((wint_t)((unsigned char)string[0])) << 16
+                |  ((wint_t)((unsigned char)string[1])) << 8
+                |  ((wint_t)((unsigned char)string[2]));
+            break;
+        case 4:
+            result = ((wint_t)((unsigned char)string[0])) << 24
+                |  ((wint_t)((unsigned char)string[1])) << 16
+                |  ((wint_t)((unsigned char)string[2])) << 8
+                |  ((wint_t)((unsigned char)string[3]));
+            break;
+        default:
+            result = WEOF;
+    }
+    return result;
+}
+
+/*
  * irc_protocol_is_word_char: return 1 if given character is a "word character"
  */
 
 int
 irc_protocol_is_word_char (char *str)
 {
-    wint_t c = utf8_get_wide_char (str);
+    wint_t c = irc_protocol_get_wide_char (str);
 
     if (c == WEOF)
         return 0;
@@ -222,7 +272,7 @@ irc_protocol_is_highlight (char *message, char *nick)
     match = strstr (message, nick);
     if (match)
     {
-        match_pre = utf8_prev_char (message, match);
+        match_pre = weechat_utf8_prev_char (message, match);
         if (!match_pre)
             match_pre = match - 1;
         match_post = match + strlen(nick);
