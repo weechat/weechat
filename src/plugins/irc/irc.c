@@ -34,6 +34,9 @@
 #include "irc-completion.h"
 #include "irc-config.h"
 #include "irc-server.h"
+#include "irc-channel.h"
+#include "irc-nick.h"
+#include "irc-dcc.h"
 
 
 char plugin_name[] = "irc";
@@ -51,42 +54,49 @@ gnutls_certificate_credentials gnutls_xcred; /* gnutls client credentials */
 
 
 /*
- * irc_dump: dump IRC data in WeeChat log file
+ * irc_dump_data_cb: dump IRC data in WeeChat log file
  */
 
-/*int
-irc_dump ()
+int
+irc_dump_data_cb (void *data, char *event, void *pointer)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     
+    /* make C compiler happy */
+    (void) data;
+    (void) event;
+    (void) pointer;
+    
+    weechat_log_printf ("");
+    weechat_log_printf ("***** IRC plugin dump *****");
+    
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        weechat_log_printf ("");
         irc_server_print_log (ptr_server);
         
         for (ptr_channel = ptr_server->channels; ptr_channel;
-            ptr_channel = ptr_channel->next_channel)
+             ptr_channel = ptr_channel->next_channel)
         {
-            weechat_log_printf ("");
             irc_channel_print_log (ptr_channel);
             
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                 ptr_nick = ptr_nick->next_nick)
             {
-                weechat_log_printf ("");
                 irc_nick_print_log (ptr_nick);
             }
         }
     }
     
-    irc_dcc_print_log ();
+    //irc_dcc_print_log ();
+    
+    weechat_log_printf ("");
+    weechat_log_printf ("***** End of IRC plugin dump *****");
     
     return WEECHAT_RC_OK;
 }
-*/
 
 /*
  * irc_create_directories: create directories for IRC plugin
@@ -165,6 +175,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     irc_command_init ();
 
     /* hook events */
+    weechat_hook_event ("dump_data", &irc_dump_data_cb, NULL);
     weechat_hook_event ("config_reload", &irc_config_reload_cb, NULL);
     weechat_hook_event ("quit", &irc_quit_cb, NULL);
     

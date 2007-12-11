@@ -521,8 +521,10 @@ weechat_dump (int crash)
     
     plugin_print_log ();
     
+    hook_event_exec ("dump_data", NULL);
+    
     log_printf ("");
-    log_printf ("******                 End of dump                 ******");
+    log_printf ("******             End of WeeChat dump             ******");
     log_printf ("");
 }
 
