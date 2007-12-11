@@ -28,6 +28,8 @@ irc_la_SOURCES = irc.c \
                  irc-color.h \
                  irc-command.c \
                  irc-command.h \
+                 irc-completion.c \
+                 irc-completion.h \
                  irc-config.c \
                  irc-config.h \
                  irc-display.c \

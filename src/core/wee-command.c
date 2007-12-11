@@ -1908,7 +1908,7 @@ command_init ()
                      " scroll 15 min down: /buffer scroll +15m\n"
                      "  scroll 20 msgs up: /buffer scroll -20\n"
                      "   jump to #weechat: /buffer #weechat"),
-                  "move|close|list|notify|scroll|set|%S|%C %S|%C",
+                  "move|close|list|notify|scroll|set|%b|%c %b|%c",
                   command_buffer, NULL);
     hook_command (NULL, "builtin",
                   N_("launch WeeChat builtin command (do not look at commands "
@@ -1975,12 +1975,12 @@ command_init ()
                      "all plugins, then autoload plugins)\n"
                      "  unload: unload one or all plugins\n\n"
                      "Without argument, /plugin command lists loaded plugins."),
-                  "list|listfull|load|autoload|reload|unload %P",
+                  "list|listfull|load|autoload|reload|unload %p",
                   command_plugin, NULL);
     hook_command (NULL, "quit",
                   N_("quit WeeChat"),
                   "", "",
-                  NULL,
+                  "%q",
                   command_quit, NULL);
     hook_command (NULL, "reload",
                   N_("reload WeeChat and plugins configuration files from "

@@ -1235,33 +1235,35 @@ plugin_api_log_printf (struct t_weechat_plugin *plugin, char *format, ...)
 }
 
 /*
- * plugin_api_print_infobar: print a message in infobar
+ * plugin_api_infobar_printf: print a message in infobar
  */
 
 void
-plugin_api_print_infobar (struct t_weechat_plugin *plugin, int time_displayed,
-                          char *message, ...)
+plugin_api_infobar_printf (struct t_weechat_plugin *plugin, int time_displayed,
+                           char *color_name, char *format, ...)
 {
-    (void) plugin;
-    (void) time_displayed;
-    (void) message;
-    
-    /*va_list argptr;
+    va_list argptr;
     static char buf[1024];
     char *buf2;
+    int num_color;
     
-    if (!plugin || (time_displayed < 0) || !message)
+    if (!plugin || (time_displayed < 0) || !format)
         return;
     
-    va_start (argptr, message);
-    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+    va_start (argptr, format);
+    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
     va_end (argptr);
     
     buf2 = string_iconv_to_internal (plugin->charset, buf);
-    gui_infobar_printf (time_displayed, GUI_COLOR_WIN_INFOBAR, "%s",
+    num_color = gui_color_search_config (color_name);
+    if (num_color < 0)
+        num_color = GUI_COLOR_INFOBAR;
+    gui_infobar_printf (time_displayed,
+                        num_color,
+                        "%s",
                         (buf2) ? buf2 : buf);
     if (buf2)
-    free (buf2);*/
+        free (buf2);
 }
 
 /*
@@ -1284,7 +1286,7 @@ plugin_api_infobar_remove (struct t_weechat_plugin *plugin, int how_many)
             how_many--;
         }
     }
-    gui_infobar_draw (gui_current_window->buffer, 1);
+    //gui_infobar_draw (gui_current_window->buffer, 1);
 }
 
 /*
@@ -1402,7 +1404,7 @@ plugin_api_hook_config (struct t_weechat_plugin *plugin, char *config_type,
 
 struct t_hook *
 plugin_api_hook_completion (struct t_weechat_plugin *plugin, char *completion,
-                            int (*callback)(void *, char *, void *),
+                            int (*callback)(void *, char *, void *, void *),
                             void *data)
 {
     if (plugin && callback)

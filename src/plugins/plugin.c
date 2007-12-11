@@ -296,7 +296,7 @@ plugin_load (char *filename)
         new_plugin->printf = &plugin_api_printf;
         new_plugin->printf_date = &plugin_api_printf_date;
         new_plugin->log_printf = &plugin_api_log_printf;
-        new_plugin->print_infobar = &plugin_api_print_infobar;
+        new_plugin->infobar_printf = &plugin_api_infobar_printf;
         new_plugin->infobar_remove = &plugin_api_infobar_remove;
         
         new_plugin->hook_command = &plugin_api_hook_command;

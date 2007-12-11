@@ -24,11 +24,13 @@
 #endif
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <limits.h>
 
 #include "irc.h"
 #include "irc-nick.h"
+#include "irc-config.h"
 #include "irc-server.h"
 #include "irc-channel.h"
 
@@ -423,9 +425,25 @@ irc_nick_set_away (struct t_irc_channel *channel, struct t_irc_nick *nick,
  */
 
 char *
-irc_nick_as_prefix (struct t_irc_nick *nick)
+irc_nick_as_prefix (struct t_irc_nick *nick, char *nickname, char *force_color)
 {
-    static char result[10] = "";
+    static char result[256];
+    
+    snprintf (result, sizeof (result), "%s%s%s%s%s%s\t",
+              (weechat_config_string (irc_config_irc_nick_prefix)
+               && weechat_config_string (irc_config_irc_nick_prefix)[0]) ?
+              IRC_COLOR_CHAT_DELIMITERS : "",
+              (weechat_config_string (irc_config_irc_nick_prefix)
+               && weechat_config_string (irc_config_irc_nick_prefix)[0]) ?
+              weechat_config_string (irc_config_irc_nick_prefix) : "",
+              (force_color) ? force_color : ((nick) ? nick->color : IRC_COLOR_CHAT_NICK),
+              (nick) ? nick->nick : nickname,
+              (weechat_config_string (irc_config_irc_nick_suffix)
+               && weechat_config_string (irc_config_irc_nick_suffix)[0]) ?
+              IRC_COLOR_CHAT_DELIMITERS : "",
+              (weechat_config_string (irc_config_irc_nick_suffix)
+               && weechat_config_string (irc_config_irc_nick_suffix)[0]) ?
+              weechat_config_string (irc_config_irc_nick_suffix) : "");
     
     return result;
 }

@@ -34,7 +34,7 @@
 #include "gui-window.h"
 
 
-t_gui_infobar *gui_infobar;                 /* pointer to infobar content   */
+struct t_gui_infobar *gui_infobar;     /* pointer to infobar content        */
 
 
 /* 
@@ -46,14 +46,17 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
 {
     static char buf[1024];
     va_list argptr;
-    t_gui_infobar *ptr_infobar;
+    struct t_gui_infobar *ptr_infobar;
     char *buf2, *ptr_buf, *pos;
+    
+    if (!message)
+        return;
     
     va_start (argptr, message);
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
     
-    ptr_infobar = (t_gui_infobar *)malloc (sizeof (t_gui_infobar));
+    ptr_infobar = (struct t_gui_infobar *)malloc (sizeof (struct t_gui_infobar));
     if (ptr_infobar)
     {
         buf2 = (char *)gui_color_decode ((unsigned char *)buf);
@@ -82,7 +85,7 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
 void
 gui_infobar_remove ()
 {
-    t_gui_infobar *new_infobar;
+    struct t_gui_infobar *new_infobar;
     
     if (gui_infobar)
     {

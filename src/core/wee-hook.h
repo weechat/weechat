@@ -123,7 +123,7 @@ struct t_hook_config
                                        /* (NULL = hook for all options)     */
 };
 
-typedef int (t_hook_callback_completion)(void *, char *, void *);
+typedef int (t_hook_callback_completion)(void *, char *, void *, void *);
 
 struct t_hook_completion
 {
@@ -161,7 +161,7 @@ extern struct t_hook *hook_config (void *, char *, char *,
 extern void hook_config_exec (char *, char *, char *);
 extern struct t_hook *hook_completion (void *, char *,
                                        t_hook_callback_completion *, void *);
-extern void hook_completion_exec (void *, char *, void *);
+extern void hook_completion_exec (void *, char *, void *, void *);
 
 extern void unhook (struct t_hook *);
 extern void unhook_all_plugin (void *);

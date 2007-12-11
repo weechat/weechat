@@ -45,7 +45,7 @@ struct t_irc_nick
     char *host;                     /* full hostname                         */
     int flags;                      /* chanowner/chanadmin (unrealircd),     */
                                     /* op, halfop, voice, away               */
-    int color;                      /* color for nickname in chat window     */
+    char *color;                    /* color for nickname in chat window     */
     struct t_irc_nick *prev_nick;   /* link to previous nick on channel      */
     struct t_irc_nick *next_nick;   /* link to next nick on channel          */
 };
@@ -62,7 +62,7 @@ extern void irc_nick_free_all (struct t_irc_channel *);
 extern struct t_irc_nick *irc_nick_search (struct t_irc_channel *, char *);
 extern void irc_nick_count (struct t_irc_channel *, int *, int *, int *, int *, int *);
 extern void irc_nick_set_away (struct t_irc_channel *, struct t_irc_nick *, int);
-extern char *irc_nick_as_prefix (struct t_irc_nick *);
+extern char *irc_nick_as_prefix (struct t_irc_nick *, char *, char *);
 extern void irc_nick_print_log (struct t_irc_nick *);
 
 #endif /* irc-nick.h */

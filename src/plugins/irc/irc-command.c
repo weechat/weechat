@@ -48,7 +48,7 @@ int
 irc_command_admin (void *data, void *buffer, int argc, char **argv,
                    char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
 
@@ -219,7 +219,8 @@ irc_command_amsg (void *data, void *buffer, int argc, char **argv,
                             string = (char *)irc_color_decode (
                                 (unsigned char *)argv_eol[1], 1, 0);
                             weechat_printf (ptr_channel->buffer, "%s%s",
-                                            irc_nick_as_prefix (ptr_nick),
+                                            irc_nick_as_prefix (ptr_nick,
+                                                                NULL, NULL),
                                             (string) ? string : argv_eol[1]);
                             if (string)
                                 free (string);
@@ -378,7 +379,7 @@ int
 irc_command_away (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server)
         return WEECHAT_RC_ERROR;
     
@@ -415,7 +416,7 @@ irc_command_ban (void *data, void *buffer, int argc, char **argv,
     char *pos_channel;
     int pos_args;
     
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -529,7 +530,7 @@ irc_command_connect (void *data, void *buffer, int argc, char **argv,
     char *error;
     long number;
     
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -677,7 +678,7 @@ irc_command_ctcp (void *data, void *buffer, int argc, char **argv,
     char *pos, *irc_cmd;
     struct timeval tv;
     
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -766,7 +767,7 @@ irc_command_cycle (void *data, void *buffer, int argc, char **argv,
     char **channels;
     int i, num_channels;
     
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -865,7 +866,7 @@ int
 irc_command_dcc (void *data, void *buffer, int argc, char **argv,
                  char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -930,7 +931,7 @@ int
 irc_command_dehalfop (void *data, void *buffer, int argc, char **argv,
                       char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -967,7 +968,7 @@ int
 irc_command_deop (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1004,7 +1005,7 @@ int
 irc_command_devoice (void *data, void *buffer, int argc, char **argv,
                      char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1041,7 +1042,7 @@ int
 irc_command_die (void *data, void *buffer, int argc, char **argv,
                  char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1133,7 +1134,7 @@ irc_command_disconnect (void *data, void *buffer, int argc, char **argv,
 {
     int i, disconnect_ok;
     
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -1193,7 +1194,7 @@ int
 irc_command_halfop (void *data, void *buffer, int argc, char **argv,
                     char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1230,7 +1231,7 @@ int
 irc_command_info (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1253,7 +1254,7 @@ int
 irc_command_invite (void *data, void *buffer, int argc, char **argv,
                     char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1289,7 +1290,7 @@ int
 irc_command_ison (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1328,7 +1329,7 @@ int
 irc_command_join (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1356,7 +1357,7 @@ irc_command_kick (void *data, void *buffer, int argc, char **argv,
 {
     char *pos_channel, *pos_nick, *pos_comment;
     
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1422,7 +1423,7 @@ irc_command_kickban (void *data, void *buffer, int argc, char **argv,
 {
     char *pos_channel, *pos_nick, *pos_comment;
     
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1488,7 +1489,7 @@ int
 irc_command_kill (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1517,7 +1518,7 @@ int
 irc_command_links (void *data, void *buffer, int argc, char **argv,
                    char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1544,7 +1545,7 @@ irc_command_list (void *data, void *buffer, int argc, char **argv,
     char buf[512];
     int ret;
     
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1602,7 +1603,7 @@ int
 irc_command_lusers (void *data, void *buffer, int argc, char **argv,
                     char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1626,7 +1627,7 @@ int
 irc_command_me (void *data, void *buffer, int argc, char **argv,
                 char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1672,7 +1673,7 @@ int
 irc_command_mode (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1698,7 +1699,7 @@ int
 irc_command_motd (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1728,7 +1729,7 @@ irc_command_msg (void *data, void *buffer, int argc, char **argv,
     struct t_irc_nick *ptr_nick;
     char *string;
     
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1897,7 +1898,7 @@ int
 irc_command_names (void *data, void *buffer, int argc, char **argv,
                    char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -1961,7 +1962,7 @@ int
 irc_command_nick (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server)
         return WEECHAT_RC_ERROR;
     
@@ -2007,7 +2008,7 @@ irc_command_notice (void *data, void *buffer, int argc, char **argv,
 {
     char *string;
     
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -2047,7 +2048,7 @@ int
 irc_command_op (void *data, void *buffer, int argc, char **argv,
                 char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -2084,7 +2085,7 @@ int
 irc_command_oper (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -2112,7 +2113,7 @@ irc_command_part (void *data, void *buffer, int argc, char **argv,
 {
     char *channel_name, *pos_args, *ptr_arg, *buf, *version;
 
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -2196,7 +2197,7 @@ int
 irc_command_ping (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -2222,7 +2223,7 @@ int
 irc_command_pong (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server)
         return WEECHAT_RC_ERROR;
     
@@ -2250,7 +2251,7 @@ irc_command_query (void *data, void *buffer, int argc, char **argv,
 {
     char *string;
     
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -2312,7 +2313,7 @@ int
 irc_command_quote (void *data, void *buffer, int argc, char **argv,
                    char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server)// || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -2371,7 +2372,7 @@ irc_command_reconnect (void *data, void *buffer, int argc, char **argv,
 {
     int i, nb_reconnect, reconnect_ok, all_servers, no_join;
 
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -2444,7 +2445,7 @@ int
 irc_command_rehash (void *data, void *buffer, int argc, char **argv,
                     char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -2467,7 +2468,7 @@ int
 irc_command_restart (void *data, void *buffer, int argc, char **argv,
                      char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -2976,7 +2977,7 @@ int
 irc_command_service (void *data, void *buffer, int argc, char **argv,
                      char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3002,7 +3003,7 @@ int
 irc_command_servlist (void *data, void *buffer, int argc, char **argv,
                       char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3026,7 +3027,7 @@ int
 irc_command_squery (void *data, void *buffer, int argc, char **argv,
                     char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3057,7 +3058,7 @@ int
 irc_command_squit (void *data, void *buffer, int argc, char **argv,
                    char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3083,7 +3084,7 @@ int
 irc_command_stats (void *data, void *buffer, int argc, char **argv,
                    char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3108,7 +3109,7 @@ int
 irc_command_summon (void *data, void *buffer, int argc, char **argv,
                     char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3134,7 +3135,7 @@ int
 irc_command_time (void *data, void *buffer, int argc, char **argv,
                   char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3160,7 +3161,7 @@ irc_command_topic (void *data, void *buffer, int argc, char **argv,
 {
     char *channel_name, *new_topic;
     
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3221,7 +3222,7 @@ int
 irc_command_trace (void *data, void *buffer, int argc, char **argv,
                    char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3248,7 +3249,7 @@ irc_command_unban (void *data, void *buffer, int argc, char **argv,
     char *pos_channel;
     int pos_args;
     
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3311,7 +3312,7 @@ int
 irc_command_userhost (void *data, void *buffer, int argc, char **argv,
                       char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3337,7 +3338,7 @@ int
 irc_command_users (void *data, void *buffer, int argc, char **argv,
                    char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3361,7 +3362,7 @@ int
 irc_command_version (void *data, void *buffer, int argc, char **argv,
                      char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3393,7 +3394,7 @@ int
 irc_command_voice (void *data, void *buffer, int argc, char **argv,
                    char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER_CHANNEL(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3431,7 +3432,7 @@ int
 irc_command_wallops (void *data, void *buffer, int argc, char **argv,
                      char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3457,7 +3458,7 @@ int
 irc_command_who (void *data, void *buffer, int argc, char **argv,
                  char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3481,7 +3482,7 @@ int
 irc_command_whois (void *data, void *buffer, int argc, char **argv,
                    char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3507,7 +3508,7 @@ int
 irc_command_whowas (void *data, void *buffer, int argc, char **argv,
                     char **argv_eol)
 {
-    IRC_COMMAND_GET_SERVER(buffer);
+    IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3563,7 +3564,7 @@ irc_command_init ()
                           N_("[channel] [nickname [nickname ...]]"),
                           N_(" channel: channel for ban\n"
                              "nickname: user or host to ban"),
-                          "%N", &irc_command_ban, NULL);
+                          "%(irc_channel_nicks_hosts)", &irc_command_ban, NULL);
     weechat_hook_command ("connect",
                           N_("connect to server(s)"),
                           N_("[-all [-nojoin] | servername [servername ...] "
@@ -3579,7 +3580,7 @@ irc_command_init ()
                              "is 6667)\n"
                              "      ipv6: use IPv6 protocol\n"
                              "       ssl: use SSL protocol"),
-                          "%S|-all|-nojoin|%*", &irc_command_connect, NULL);
+                          "%(irc_servers)|-all|-nojoin|%*", &irc_command_connect, NULL);
     weechat_hook_command ("ctcp",
                           N_("send a CTCP message (Client-To-Client Protocol)"),
                           N_("receiver type [arguments]"),
@@ -3587,14 +3588,15 @@ irc_command_init ()
                              "     type: CTCP type (examples: \"version\", "
                              "\"ping\", ..)\n"
                              "arguments: arguments for CTCP"),
-                          "%c|%n action|ping|version", &irc_command_ctcp, NULL);
+                          "%(irc_channel)|%(irc_channel_nicks) action|ping|version",
+                          &irc_command_ctcp, NULL);
     weechat_hook_command ("cycle",
                           N_("leave and rejoin a channel"),
                           N_("[channel[,channel]] [part_message]"),
                           N_("     channel: channel name for cycle\n"
                              "part_message: part message (displayed to other "
                              "users)"),
-                          "%p", &irc_command_cycle, NULL);
+                          "%(irc_msg_part)", &irc_command_cycle, NULL);
     weechat_hook_command ("dcc",
                           N_("starts DCC (file or chat) or close chat"),
                           N_("action [nickname [file]]"),
@@ -3602,7 +3604,8 @@ irc_command_init ()
                              "(chat)\n"
                              "nickname: nickname to send file or chat\n"
                              "    file: filename (on local host)"),
-                          "chat|send|close %n %f", &irc_command_dcc, NULL);
+                          "chat|send|close %(irc_channel_nicks) %f",
+                          &irc_command_dcc, NULL);
     weechat_hook_command ("dehalfop",
                           N_("removes half channel operator status from "
                              "nickname(s)"),
@@ -3630,7 +3633,7 @@ irc_command_init ()
                           N_("[-all | servername [servername ...]]"),
                           N_("      -all: disconnect from all servers\n"
                              "servername: server name to disconnect"),
-                          "%S|-all", &irc_command_disconnect, NULL);
+                          "%(irc_servers)|-all", &irc_command_disconnect, NULL);
     weechat_hook_command ("halfop",
                           N_("gives half channel operator status to "
                              "nickname(s)"),
@@ -3647,7 +3650,7 @@ irc_command_init ()
                           N_("nickname channel"),
                           N_("nickname: nick to invite\n"
                              " channel: channel to invite"),
-                          "%n %c", &irc_command_invite, NULL);
+                          "%(irc_channel_nicks) %(irc_channel)", &irc_command_invite, NULL);
     weechat_hook_command ("ison",
                           N_("check if a nickname is currently on IRC"),
                           N_("nickname [nickname ...]"),
@@ -3658,27 +3661,27 @@ irc_command_init ()
                           N_("channel[,channel] [key[,key]]"),
                           N_("channel: channel name to join\n"
                              "    key: key to join the channel"),
-                          "%C", &irc_command_join, NULL);
+                          "%(irc_channels)", &irc_command_join, NULL);
     weechat_hook_command ("kick",
                           N_("forcibly remove a user from a channel"),
                           N_("[channel] nickname [comment]"),
                           N_(" channel: channel where user is\n"
                              "nickname: nickname to kick\n"
                              " comment: comment for kick"),
-                          "%n %-", &irc_command_kick, NULL);
+                          "%(irc_channel_nicks) %-", &irc_command_kick, NULL);
     weechat_hook_command ("kickban",
                           N_("kicks and bans a nick from a channel"),
                           N_("[channel] nickname [comment]"),
                           N_(" channel: channel where user is\n"
                              "nickname: nickname to kick and ban\n"
                              " comment: comment for kick"),
-                          "%n %-", &irc_command_kickban, NULL);
+                          "%(irc_channel_nicks) %-", &irc_command_kickban, NULL);
     weechat_hook_command ("kill",
                           N_("close client-server connection"),
                           N_("nickname comment"),
                           N_("nickname: nickname\n"
                              " comment: comment for kill"),
-                          "%n %-", &irc_command_kill, NULL);
+                          "%(irc_channel_nicks) %-", &irc_command_kill, NULL);
     weechat_hook_command ("links",
                           N_("list all servernames which are known by the "
                              "server answering the query"),
@@ -3734,7 +3737,7 @@ irc_command_init ()
                              "  s: mark a user for receive server notices\n"
                              "  w: user receives wallops\n"
                              "  o: operator flag"),
-                          "%c|%m", &irc_command_mode, NULL);
+                          "%(irc_channel)|%m", &irc_command_mode, NULL);
     weechat_hook_command ("motd",
                           N_("get the \"Message Of The Day\""),
                           N_("[target]"),
@@ -3751,7 +3754,7 @@ irc_command_init ()
                           N_("list nicknames on channels"),
                           N_("[channel[,channel]]"),
                           N_("channel: channel name"),
-                          "%C|%*", &irc_command_names, NULL);
+                          "%(irc_channels)|%*", &irc_command_names, NULL);
     weechat_hook_command ("nick",
                           N_("change current nickname"),
                           N_("[-all] nickname"),
@@ -3764,7 +3767,7 @@ irc_command_init ()
                           N_("nickname text"),
                           N_("nickname: user to send notice to\n"
                              "    text: text to send"),
-                          "%n %-", &irc_command_notice, NULL);
+                          "%(irc_channel_nicks) %-", &irc_command_notice, NULL);
     weechat_hook_command ("op",
                           N_("gives channel operator status to nickname(s)"),
                           N_("nickname [nickname]"),
@@ -3782,7 +3785,7 @@ irc_command_init ()
                           N_("     channel: channel name to leave\n"
                              "part_message: part message (displayed to other "
                              "users)"),
-                          "%p", &irc_command_part, NULL);
+                          "%(irc_msg_part)", &irc_command_part, NULL);
     weechat_hook_command ("ping",
                           N_("ping server"),
                           N_("server1 [server2]"),
@@ -3801,7 +3804,7 @@ irc_command_init ()
                           N_("nickname [text]"),
                           N_("nickname: nickname for private conversation\n"
                              "    text: text to send"),
-                          "%n %-", &irc_command_query, NULL);
+                          "%(irc_channel_nicks) %-", &irc_command_query, NULL);
     weechat_hook_command ("quote",
                           N_("send raw data to server without parsing"),
                           N_("data"),
@@ -3815,7 +3818,7 @@ irc_command_init ()
                              "servername: server name to reconnect\n"
                              "   -nojoin: do not join any channel (even if "
                              "autojoin is enabled on server)"),
-                          "%S|-all|-nojoin|%*", &irc_command_reconnect, NULL);
+                          "%(irc_servers)|-all|-nojoin|%*", &irc_command_reconnect, NULL);
     weechat_hook_command ("rehash",
                           N_("tell the server to reload its config file"),
                           "",
@@ -3876,7 +3879,8 @@ irc_command_init ()
                              "   deloutq: delete messages out queue for all "
                              "servers (all messages "
                              "WeeChat is currently sending)"),
-                          "add|copy|rename|keep|del|deloutq|list|listfull %S %S",
+                          "add|copy|rename|keep|del|deloutq|list|listfull "
+                          "%(irc_servers) %(irc_servers)",
                           &irc_command_server, NULL);
     weechat_hook_command ("servlist",
                           N_("list services currently connected to the "
@@ -3924,7 +3928,7 @@ irc_command_init ()
                              "topic: new topic for "
                              "channel (if topic is \"-delete\" then topic "
                              "is deleted)"),
-                          "%t|-delete %-", &irc_command_topic, NULL);
+                          "%(irc_topic)|-delete %-", &irc_command_topic, NULL);
     weechat_hook_command ("trace",
                           N_("find the route to specific server"),
                           N_("[target]"),
@@ -3940,7 +3944,7 @@ irc_command_init ()
                           N_("return a list of information about nicknames"),
                           N_("nickname [nickname ...]"),
                           N_("nickname: nickname"),
-                          "%n", &irc_command_userhost, NULL);
+                          "%(irc_channel_nicks)", &irc_command_userhost, NULL);
     weechat_hook_command ("users",
                           N_("list of users logged into the server"),
                           N_("[target]"),
@@ -3952,7 +3956,7 @@ irc_command_init ()
                           N_("[server | nickname]"),
                           N_("  server: server name\n"
                              "nickname: nickname"),
-                          "%n", &irc_command_version, NULL);
+                          "%(irc_channel_nicks)", &irc_command_version, NULL);
     weechat_hook_command ("voice",
                           N_("gives voice to nickname(s)"),
                           N_("[nickname [nickname]]"),
@@ -3971,7 +3975,7 @@ irc_command_init ()
                           N_("mask: only information which match this mask\n"
                              "   o: only operators are returned according to "
                              "the mask supplied"),
-                          "%C", &irc_command_who, NULL);
+                          "%(irc_channels)", &irc_command_who, NULL);
     weechat_hook_command ("whois",
                           N_("query information about user(s)"),
                           N_("[server] nickname[,nickname]"),

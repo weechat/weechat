@@ -68,7 +68,6 @@ extern struct t_config_option *config_look_prefix_align_max;
 extern struct t_config_option *config_look_prefix_suffix;
 extern struct t_config_option *config_look_nick_completor;
 extern struct t_config_option *config_look_nick_completion_ignore;
-extern struct t_config_option *config_look_nick_completion_smart;
 extern struct t_config_option *config_look_nick_complete_first;
 extern struct t_config_option *config_look_infobar;
 extern struct t_config_option *config_look_infobar_time_format;

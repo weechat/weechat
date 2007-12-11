@@ -31,6 +31,7 @@
 
 #include "irc.h"
 #include "irc-command.h"
+#include "irc-completion.h"
 #include "irc-config.h"
 #include "irc-server.h"
 
@@ -41,8 +42,8 @@ char plugin_description[] = "IRC (Internet Relay Chat)";
 
 struct t_weechat_plugin *weechat_irc_plugin = NULL;
 
-struct t_hook *irc_timer = NULL;
-struct t_hook *irc_timer_check_away = NULL;
+struct t_hook *irc_hook_timer = NULL;
+struct t_hook *irc_hook_timer_check_away = NULL;
 
 #ifdef HAVE_GNUTLS
 gnutls_certificate_credentials gnutls_xcred; /* gnutls client credentials */
@@ -163,9 +164,24 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 
     irc_command_init ();
 
+    /* hook events */
     weechat_hook_event ("config_reload", &irc_config_reload_cb, NULL);
-
     weechat_hook_event ("quit", &irc_quit_cb, NULL);
+    
+    /* hook completions */
+    weechat_hook_completion ("irc_server", &irc_completion_server_cb, NULL);
+    weechat_hook_completion ("irc_server_nicks",
+                             &irc_completion_server_nicks_cb, NULL);
+    weechat_hook_completion ("irc_servers", &irc_completion_servers_cb, NULL);
+    weechat_hook_completion ("irc_channel", &irc_completion_channel_cb, NULL);
+    weechat_hook_completion ("irc_channel_nicks",
+                             &irc_completion_channel_nicks_cb, NULL);
+    weechat_hook_completion ("irc_channel_nicks_hosts",
+                             &irc_completion_channel_nicks_hosts_cb, NULL);
+    weechat_hook_completion ("irc_channel_topic",
+                             &irc_completion_channel_topic_cb, NULL);
+    weechat_hook_completion ("irc_channels", &irc_completion_channels_cb, NULL);
+    weechat_hook_completion ("irc_msg_part", &irc_completion_msg_part_cb, NULL);
     
     //irc_server_auto_connect (1, 0);
 
@@ -190,23 +206,12 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 int
 weechat_plugin_end ()
 {
-    if (irc_timer)
-    {
-        weechat_unhook (irc_timer);
-        irc_timer = NULL;
-    }
-    if (irc_timer_check_away)
-    {
-        weechat_unhook (irc_timer_check_away);
-        irc_timer_check_away = NULL;
-    }
-    
-    //irc_server_disconnect_all ();
-    //irc_dcc_end ();
-    //irc_server_free_all ();
-    
     irc_config_write ();
-
+    
+    irc_server_disconnect_all ();
+    //irc_dcc_end ();
+    irc_server_free_all ();
+    
 #ifdef HAVE_GNUTLS
     /* GnuTLS end */
     gnutls_certificate_free_credentials (gnutls_xcred);

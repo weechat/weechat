@@ -49,6 +49,7 @@
 #include "irc-channel.h"
 #include "irc-config.h"
 #include "irc-nick.h"
+#include "irc-protocol.h"
 
 
 struct t_irc_server *irc_servers = NULL;
@@ -1227,7 +1228,7 @@ irc_server_msgq_flush ()
                         irc_server_parse_message (ptr_msg, &host,
                                                   &command, &args);
                         
-                        /*switch (irc_protocol_recv_command (irc_recv_msgq->server,
+                        switch (irc_protocol_recv_command (irc_recv_msgq->server,
                                                            ptr_msg,
                                                            host, command, args))
                         {
@@ -1254,7 +1255,7 @@ irc_server_msgq_flush ()
                                                 command, host, args);
                                 break;
                         }
-                        */
+                        
                         if (host)
                             free (host);
                         if (command)

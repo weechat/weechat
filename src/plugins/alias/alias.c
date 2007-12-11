@@ -40,10 +40,6 @@ struct t_weechat_plugin *weechat_alias_plugin = NULL;
 struct t_config_file *alias_config_file = NULL;
 struct t_alias *alias_list = NULL;
 struct t_alias *last_alias = NULL;
-struct t_hook *alias_command = NULL;
-struct t_hook *unalias_command = NULL;
-struct t_hook *config_reload = NULL;
-struct t_hook *completion = NULL;
 
 
 /*
@@ -692,18 +688,19 @@ unalias_command_cb (void *data, void *buffer, int argc, char **argv,
 }
 
 /*
- * alias_completion_cb: callback for completion
+ * alias_completion_cb: callback for completion with list of aliases
  */
 
 int
-alias_completion_cb (void *data, char *completion, void *list)
+alias_completion_cb (void *data, char *completion, void *buffer, void *list)
 {
     struct t_alias *ptr_alias;
     
     /* make C compiler happy */
     (void) data;
     (void) completion;
-
+    (void) buffer;
+    
     for (ptr_alias = alias_list; ptr_alias;
          ptr_alias = ptr_alias->next_alias)
     {
@@ -732,39 +729,30 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     }
     alias_config_read ();
     
-    alias_command = weechat_hook_command ("alias",
-                                          N_("create an alias for a command"),
-                                          N_("[alias_name [command [arguments]]]"),
-                                          N_("alias_name: name of alias\n"
-                                             "   command: command name (many "
-                                             "commands can be separated by "
-                                             "semicolons)\n"
-                                             " arguments: arguments for "
-                                             "command\n\n"
-                                             "Note: in command, special "
-                                             "variables $1, $2,..,$9 "
-                                             "are replaced by arguments given "
-                                             "by user, and $* "
-                                             "is replaced by all arguments.\n"
-                                             "Variables $nick, $channel and "
-                                             "$server are "
-                                             "replaced by current nick/channel"
-                                             "/server."),
-                                          "%- %h",
-                                          &alias_command_cb, NULL);
+    weechat_hook_command ("alias",
+                          N_("create an alias for a command"),
+                          N_("[alias_name [command [arguments]]]"),
+                          N_("alias_name: name of alias\n"
+                             "   command: command name (many commands can be "
+                             "separated by semicolons)\n"
+                             " arguments: arguments for command\n\n"
+                             "Note: in command, special variables "
+                             "$1, $2,..,$9 are replaced by arguments given "
+                             "by user, and $* is replaced by all arguments.\n"
+                             "Variables $nick, $channel and $server are "
+                             "replaced by current nick/channel/server."),
+                          "%- %h",
+                          &alias_command_cb, NULL);
     
-    unalias_command = weechat_hook_command ("unalias", N_("remove an alias"),
-                                            N_("alias_name"),
-                                            N_("alias_name: name of alias to "
-                                               "remove"),
-                                            "%(alias)",
-                                            &unalias_command_cb, NULL);
-
-    config_reload = weechat_hook_event ("config_reload",
-                                        &alias_config_reload_event_cb, NULL);
+    weechat_hook_command ("unalias", N_("remove an alias"),
+                          N_("alias_name"),
+                          N_("alias_name: name of alias to remove"),
+                          "%(alias)",
+                          &unalias_command_cb, NULL);
     
-    completion = weechat_hook_completion ("alias",
-                                          &alias_completion_cb, NULL);
+    weechat_hook_event ("config_reload", &alias_config_reload_event_cb, NULL);
+    
+    weechat_hook_completion ("alias", &alias_completion_cb, NULL);
     
     return WEECHAT_RC_OK;
 }
@@ -777,12 +765,8 @@ int
 weechat_plugin_end ()
 {
     alias_config_write ();
-    alias_free_all ();
+    alias_free_all ();    
     weechat_config_free (alias_config_file);
-    weechat_unhook (alias_command);
-    weechat_unhook (unalias_command);
-    weechat_unhook (config_reload);
-    weechat_unhook (completion);
     
     return WEECHAT_RC_OK;
 }

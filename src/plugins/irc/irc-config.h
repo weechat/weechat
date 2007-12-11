@@ -32,6 +32,7 @@ struct t_config_option *irc_config_irc_one_server_buffer;
 struct t_config_option *irc_config_irc_open_near_server;
 struct t_config_option *irc_config_irc_nick_prefix;
 struct t_config_option *irc_config_irc_nick_suffix;
+struct t_config_option *irc_config_irc_nick_completion_smart;
 struct t_config_option *irc_config_irc_display_away;
 struct t_config_option *irc_config_irc_show_away_once;
 struct t_config_option *irc_config_irc_default_msg_part;

@@ -35,10 +35,13 @@
 #endif
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 #include <wctype.h>
 #include <sys/utsname.h>
+#include <sys/time.h>
+#include <time.h>
 
 #include "irc.h"
 #include "irc-protocol.h"
@@ -660,6 +663,7 @@ irc_protocol_cmd_invite (struct t_irc_server *server, char *irc_message, char *h
                         weechat_prefix ("error"), "", "invite");
         return WEECHAT_RC_ERROR;
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -743,6 +747,7 @@ irc_protocol_cmd_join (struct t_irc_server *server, char *irc_message, char *hos
     /* redraw nicklist and status bar */
     //gui_nicklist_draw (ptr_channel->buffer, 1, 1);
     //gui_status_draw (ptr_channel->buffer, 1);
+    
     return WEECHAT_RC_OK;
 }
 
@@ -846,6 +851,7 @@ irc_protocol_cmd_kick (struct t_irc_server *server, char *irc_message, char *hos
         if (server->autorejoin)
             irc_command_join_server (server, ptr_channel->name);
     }
+    else
     {
         /* someone was kicked from channel (but not me) => remove only this
            nick */
@@ -857,6 +863,7 @@ irc_protocol_cmd_kick (struct t_irc_server *server, char *irc_message, char *hos
             //gui_status_draw (ptr_channel->buffer, 1);
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -945,6 +952,7 @@ irc_protocol_cmd_kill (struct t_irc_server *server, char *irc_message,
                                      weechat_prefix ("error"), "kill");
         return WEECHAT_RC_ERROR;
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -1046,6 +1054,7 @@ irc_protocol_cmd_mode (struct t_irc_server *server, char *irc_message, char *hos
         }
         irc_mode_user_set (server, pos_modes);
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -1162,10 +1171,13 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *irc_message, char *h
     struct timeval tv;
     long sec1, usec1, sec2, usec2, difftime;
     struct t_irc_channel *ptr_channel;
-    int highlight_displayed;
+    int highlight_displayed, look_infobar_delay_highlight;
     
     /* make C compiler happy */
     (void) irc_message;
+    
+    look_infobar_delay_highlight = weechat_config_integer (
+        weechat_config_get ("look_infobar_delay_highlight"));
     
     host2 = NULL;
     if (host)
@@ -1264,7 +1276,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *irc_message, char *h
                         {
                             weechat_printf (server->buffer,
                                             _("%sirc: cannot create new "
-                                              "private window \"%s\""),
+                                              "private buffer \"%s\""),
                                             weechat_prefix ("error"), nick);
                             return WEECHAT_RC_ERROR;
                         }
@@ -1275,88 +1287,86 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *irc_message, char *h
                         //gui_chat_draw_title (ptr_channel->buffer, 1);
                     }
                     
-                    gui_chat_printf_type (ptr_channel->buffer, GUI_MSG_TYPE_NICK,
-                                          NULL, -1, "%s<",
-                                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
                     if (highlight
                         || irc_protocol_is_highlight (pos, server->nick))
                     {
-                        gui_chat_printf_type (ptr_channel->buffer,
-                                              GUI_MSG_TYPE_NICK |
-                                              GUI_MSG_TYPE_HIGHLIGHT,
-                                              NULL, -1, "%s%s",
-                                              GUI_COLOR(GUI_COLOR_CHAT_HIGHLIGHT),
-                                              nick);
-                        if ( (cfg_look_infobar_delay_highlight > 0)
-                             && (ptr_channel->buffer != gui_current_window->buffer) )
-                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                                GUI_COLOR_INFOBAR_HIGHLIGHT,
-                                                _("Private %s> %s"),
-                                                nick, pos);
+                        weechat_printf (ptr_channel->buffer,
+                                        "%s%s",
+                                        irc_nick_as_prefix (NULL, nick,
+                                                            IRC_COLOR_CHAT_HIGHLIGHT),
+                                        pos);
+                        if ((look_infobar_delay_highlight > 0)
+                            && (ptr_channel->buffer != weechat_current_buffer))
+                            weechat_infobar_printf (look_infobar_delay_highlight,
+                                                    IRC_COLOR_INFOBAR_HIGHLIGHT,
+                                                    _("Private %s> %s"),
+                                                    nick, pos);
                         highlight_displayed = 1;
                     }
                     else
                     {
-                        gui_chat_printf_type (ptr_channel->buffer, GUI_MSG_TYPE_NICK,
-                                              NULL, -1, "%s%s",
-                                              GUI_COLOR(GUI_COLOR_CHAT_NICK_OTHER),
-                                              nick);
+                        weechat_printf (ptr_channel->buffer,
+                                        "%s%s",
+                                        irc_nick_as_prefix (NULL, nick,
+                                                            IRC_COLOR_CHAT_NICK_OTHER),
+                                        pos);
                         highlight_displayed = 0;
                     }
-                    gui_chat_printf_type (ptr_channel->buffer, GUI_MSG_TYPE_NICK,
-                                          NULL, -1, "%s> ",
-                                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-                    gui_chat_printf_type (ptr_channel->buffer, GUI_MSG_TYPE_MSG,
-                                          NULL, -1, "%s%s\n",
-                                          GUI_COLOR(GUI_COLOR_CHAT),
-                                          pos);
-                    if (highlight_displayed)
-                        (void) plugin_msg_handler_exec (server->name,
-                                                        "weechat_highlight",
-                                                        irc_message);
+                    //if (highlight_displayed)
+                    //    (void) plugin_msg_handler_exec (server->name,
+                    //                                    "weechat_highlight",
+                    //                                    irc_message);
                 }
                 else
                 {
                     if (host)
                     {
-                        gui_chat_printf_server (server->buffer, "%s%s",
-                                                GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                                nick);
                         if (host2)
-                            gui_chat_printf (server->buffer, " %s(%s%s%s)",
-                                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                             GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                             host2,
-                                             GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-                        gui_chat_printf (server->buffer, "%s: ",
-                                         GUI_COLOR(GUI_COLOR_CHAT));
-                        gui_chat_printf (server->buffer, "%s%s\n",
-                                         GUI_COLOR(GUI_COLOR_CHAT),
-                                         pos);
+                        {
+                            weechat_printf (server->buffer,
+                                            "%s%s %s(%s%s%s)%s: %s",
+                                            IRC_COLOR_CHAT_NICK,
+                                            nick,
+                                            IRC_COLOR_CHAT_DELIMITERS,
+                                            IRC_COLOR_CHAT_HOST,
+                                            host2,
+                                            IRC_COLOR_CHAT_DELIMITERS,
+                                            IRC_COLOR_CHAT,
+                                            pos);
+                        }
+                        else
+                        {
+                            weechat_printf (server->buffer, "%s%s%s: %s",
+                                            IRC_COLOR_CHAT_NICK,
+                                            nick,
+                                            IRC_COLOR_CHAT,
+                                            pos);
+                        }
                     }
                     else
-                        gui_chat_printf_server (server->buffer, "%s%s\n",
-                                                GUI_COLOR(GUI_COLOR_CHAT),
-                                                pos);
+                        weechat_printf (server->buffer, "%s%s",
+                                        IRC_COLOR_CHAT,
+                                        pos);
 
                     if ((nick)
                         && (weechat_strcasecmp (nick, "nickserv") != 0)
                         && (weechat_strcasecmp (nick, "chanserv") != 0)
                         && (weechat_strcasecmp (nick, "memoserv") != 0))
                     {
-                        if (gui_add_hotlist
-                            && ((server->buffer->num_displayed == 0)
-                                || (gui_buffer_is_scrolled (server->buffer))))
-                        {
-                            gui_hotlist_add (GUI_HOTLIST_PRIVATE, NULL,
-                                             server->buffer, 0);
-                            gui_status_draw (gui_current_window->buffer, 1);
-                        }
+                        //if (gui_add_hotlist
+                        //    && ((server->buffer->num_displayed == 0)
+                        //        || (gui_buffer_is_scrolled (server->buffer))))
+                        //{
+                        //    gui_hotlist_add (GUI_HOTLIST_PRIVATE, NULL,
+                        //                     server->buffer, 0);
+                        //    gui_status_draw (gui_current_window->buffer, 1);
+                        //}
                     }
                 }
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -1380,10 +1390,10 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *irc_message, char *hos
     /* no host => we can't identify sender of message! */
     if (!host || !arguments)
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                     _("%s \"%s\" command received without "
-                                       "host or channel\n"),
-                                     weechat_prefix ("error"), "part");
+        weechat_printf (server->buffer,
+                        _("%sirc: \"%s\" command received without host or "
+                          "channel"),
+                        weechat_prefix ("error"), "part");
         return WEECHAT_RC_ERROR;
     }
     
@@ -1411,25 +1421,38 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *irc_message, char *hos
             if (!ignore)
             {
                 pos = strchr (host, '!');
-                gui_chat_printf_quit (ptr_channel->buffer,
-                                      _("%s%s %s(%s%s%s)%s has left %s%s"),
-                                      GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                      nick,
-                                      GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                      GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                      (pos) ? pos + 1 : "",
-                                      GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                      GUI_COLOR(GUI_COLOR_CHAT),
-                                      GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                      ptr_channel->name);
                 if (pos_args && pos_args[0])
-                    gui_chat_printf (ptr_channel->buffer, " %s(%s%s%s)\n",
-                                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     pos_args,
-                                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                {
+                    weechat_printf (ptr_channel->buffer,
+                                    _("%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"),
+                                    IRC_COLOR_CHAT_NICK,
+                                    nick,
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT_HOST,
+                                    (pos) ? pos + 1 : "",
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT,
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    ptr_channel->name,
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT,
+                                    pos_args,
+                                    IRC_COLOR_CHAT_DELIMITERS);
+                }
                 else
-                    gui_chat_printf (ptr_channel->buffer, "\n");
+                {
+                    weechat_printf (ptr_channel->buffer,
+                                    _("%s%s %s(%s%s%s)%s has left %s%s"),
+                                    IRC_COLOR_CHAT_NICK,
+                                    nick,
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT_HOST,
+                                    (pos) ? pos + 1 : "",
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT,
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    ptr_channel->name);
+                }
             }
             
             /* part request was issued by local client ? */
@@ -1451,18 +1474,19 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *irc_message, char *hos
                             snprintf (join_string, join_length, "%s %s",
                                       ptr_channel->name,
                                       ptr_channel->key);
-                            irc_cmd_join_server (server, join_string);
+                            irc_command_join_server (server, join_string);
                             free (join_string);
                         }
                         else
-                            irc_cmd_join_server (server, ptr_channel->name);
+                            irc_command_join_server (server, ptr_channel->name);
                     }
                     else
-                        irc_cmd_join_server (server, ptr_channel->name);
+                        irc_command_join_server (server, ptr_channel->name);
                 }
                 if (ptr_channel->close)
                 {
-                    gui_buffer_free (ptr_channel->buffer, 1);
+                    weechat_buffer_close (ptr_channel->buffer);
+                    ptr_channel->buffer = NULL;
                     irc_channel_free (server, ptr_channel);
                     ptr_channel = NULL;
                 }
@@ -1472,18 +1496,18 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *irc_message, char *hos
             
             if (ptr_channel)
             {
-                gui_nicklist_draw (ptr_channel->buffer, 1, 1);
-                gui_status_draw (ptr_channel->buffer, 1);
+                //gui_nicklist_draw (ptr_channel->buffer, 1, 1);
+                //gui_status_draw (ptr_channel->buffer, 1);
             }
-            gui_input_draw (gui_current_window->buffer, 1);
+            //gui_input_draw (gui_current_window->buffer, 1);
         }
     }
     else
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                     _("%s channel \"%s\" not found for "
-                                       "\"%s\" command\n"),
-                                     weechat_prefix ("error"), arguments, "part");
+        weechat_printf (server->buffer,
+                        _("%sirc: channel \"%s\" not found for \"%s\" "
+                          "command"),
+                        weechat_prefix ("error"), arguments, "part");
         return WEECHAT_RC_ERROR;
     }
     
@@ -1543,25 +1567,27 @@ irc_protocol_cmd_pong (struct t_irc_server *server, char *irc_message, char *hos
         /* calculate lag (time diff with lag check) */
         old_lag = server->lag;
         gettimeofday (&tv, NULL);
-        server->lag = (int) weechat_get_timeval_diff (&(server->lag_check_time), &tv);
-        if (old_lag != server->lag)
-            gui_status_draw (gui_current_window->buffer, 1);
+        server->lag = (int) weechat_timeval_diff (&(server->lag_check_time), &tv);
+        //if (old_lag != server->lag)
+        //    gui_status_draw (gui_current_window->buffer, 1);
         
         /* schedule next lag check */
         server->lag_check_time.tv_sec = 0;
         server->lag_check_time.tv_usec = 0;
-        server->lag_next_check = time (NULL) + irc_cfg_irc_lag_check;
+        server->lag_next_check = time (NULL) +
+            weechat_config_integer (irc_config_irc_lag_check);
     }
+    
     return WEECHAT_RC_OK;
 }
 
 /*
- * irc_cmd_reply_version: send version in reply to "CTCP VERSION" request
+ * irc_protocol_reply_version: send version in reply to "CTCP VERSION" request
  */
 
 void
-irc_cmd_reply_version (struct t_irc_server *server, struct t_irc_channel *channel,
-                       char *nick, char *message, int ignore)
+irc_protocol_reply_version (struct t_irc_server *server, struct t_irc_channel *channel,
+                            char *nick, char *message, int ignore)
 {
     char *pos;
     struct utsname *buf;
@@ -1600,21 +1626,29 @@ irc_cmd_reply_version (struct t_irc_server *server, struct t_irc_channel *channe
                               " compiled on %s%s",
                               nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
                               "\01");
-        gui_chat_printf_server (ptr_buffer,
-                                _("CTCP %sVERSION%s received from %s%s"),
-                                GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                GUI_COLOR(GUI_COLOR_CHAT),
-                                GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                nick);
         if (pos)
-            gui_chat_printf (ptr_buffer, "%s: %s\n",
-                             GUI_COLOR(GUI_COLOR_CHAT),
-                             pos);
+        {
+            weechat_printf (ptr_buffer,
+                            _("CTCP %sVERSION%s received from %s%s%s: %s"),
+                            IRC_COLOR_CHAT_CHANNEL,
+                            IRC_COLOR_CHAT,
+                            IRC_COLOR_CHAT_NICK,
+                            nick,
+                            IRC_COLOR_CHAT,
+                            pos);
+        }
         else
-            gui_chat_printf (ptr_buffer, "\n");
-        (void) plugin_msg_handler_exec (server->name,
-                                        "weechat_ctcp",
-                                        irc_message);
+        {
+            weechat_printf (ptr_buffer,
+                            _("CTCP %sVERSION%s received from %s%s"),
+                            IRC_COLOR_CHAT_CHANNEL,
+                            IRC_COLOR_CHAT,
+                            IRC_COLOR_CHAT_NICK,
+                            nick);
+        }
+        //(void) plugin_msg_handler_exec (server->name,
+        //                                "weechat_ctcp",
+        //                                irc_message);
     }
 }
 
@@ -1630,7 +1664,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
     char *pos_file, *pos_addr, *pos_port, *pos_size, *pos_start_resume;  /* for DCC */
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    int highlight_displayed;
+    int highlight_displayed, look_infobar_delay_highlight;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -1638,12 +1672,14 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
     /* no host => we can't identify sender of message! */
     if (!host)
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                     _("%s \"%s\" command received without "
-                                       "host\n"),
-                                     weechat_prefix ("error"), "privmsg");
+        weechat_printf (server->buffer,
+                        _("%sirc: \"%s\" command received without host"),
+                        weechat_prefix ("error"), "privmsg");
         return WEECHAT_RC_ERROR;
     }
+    
+    look_infobar_delay_highlight = weechat_config_integer (
+        weechat_config_get ("look_infobar_delay_highlight"));
     
     pos = strchr (host, '!');
     if (pos)
@@ -1678,39 +1714,34 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                         if (highlight
                             || irc_protocol_is_highlight (pos, server->nick))
                         {
-                            gui_chat_printf_type (ptr_channel->buffer,
-                                                  GUI_MSG_TYPE_MSG |
-                                                  GUI_MSG_TYPE_HIGHLIGHT,
-                                                  cfg_look_prefix_action,
-                                                  cfg_col_chat_prefix_action,
-                                                  "%s%s",
-                                                  GUI_COLOR(GUI_COLOR_CHAT_HIGHLIGHT),
-                                                  nick);
-                            if ( (cfg_look_infobar)
-                                 && (cfg_look_infobar_delay_highlight > 0)
-                                 && (ptr_channel->buffer != gui_current_window->buffer) )
-                                gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                                    GUI_COLOR_INFOBAR_HIGHLIGHT,
-                                                    _("Channel %s: * %s %s"),
-                                                    ptr_channel->name, nick, pos);
-                            gui_chat_printf (ptr_channel->buffer, " %s%s\n",
-                                        GUI_COLOR(GUI_COLOR_CHAT), pos);
-                            (void) plugin_msg_handler_exec (server->name,
-                                                            "weechat_highlight",
-                                                            irc_message);
+                            weechat_printf (ptr_channel->buffer,
+                                            "%s%s%s %s%s",
+                                            weechat_prefix ("action"),
+                                            IRC_COLOR_CHAT_HIGHLIGHT,
+                                            nick,
+                                            IRC_COLOR_CHAT,
+                                            pos);
+                            if ((look_infobar_delay_highlight > 0)
+                                && (ptr_channel->buffer != weechat_current_buffer))
+                                weechat_infobar_printf (look_infobar_delay_highlight,
+                                                        "color_infobar_highlight",
+                                                        _("Channel %s: * %s %s"),
+                                                        ptr_channel->name,
+                                                        nick,
+                                                        pos);
+                            //(void) plugin_msg_handler_exec (server->name,
+                            //                                "weechat_highlight",
+                            //                                irc_message);
                         }
                         else
                         {
-                            gui_chat_printf_type (ptr_channel->buffer,
-                                                  GUI_MSG_TYPE_MSG,
-                                                  NULL, -1,
-                                                  "%s%s",
-                                                  GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                                  cfg_look_prefix_action,
-                                                  cfg_col_chat_prefix_action,
-                                                  nick);
-                            gui_chat_printf (ptr_channel->buffer, " %s%s\n",
-                                             GUI_COLOR(GUI_COLOR_CHAT), pos);
+                            weechat_printf (ptr_channel->buffer,
+                                            "%s%s%s %s%s",
+                                            weechat_prefix ("action"),
+                                            IRC_COLOR_CHAT_NICK,
+                                            nick,
+                                            IRC_COLOR_CHAT,
+                                            pos);
                         }
                         irc_channel_add_nick_speaking (ptr_channel, nick);
                     }
@@ -1724,14 +1755,14 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                         pos2[0] = '\0';
                     if (!ignore)
                     {
-                        gui_chat_printf_server (ptr_channel->buffer,
-                                                _("Received a CTCP %sSOUND%s "
-                                                  "\"%s\" from %s%s\n"),
-                                                GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                                GUI_COLOR(GUI_COLOR_CHAT),
-                                                pos,
-                                                GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                                nick);
+                        weechat_printf (ptr_channel->buffer,
+                                        _("Received a CTCP %sSOUND%s \"%s\" "
+                                          "from %s%s"),
+                                        IRC_COLOR_CHAT_CHANNEL,
+                                        IRC_COLOR_CHAT,
+                                        pos,
+                                        IRC_COLOR_CHAT_NICK,
+                                        nick);
                     }
                     return WEECHAT_RC_OK;
                 }
@@ -1753,19 +1784,18 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     else
                         irc_server_sendf (server, "NOTICE %s :\01PING\01",
                                           nick);
-                    gui_chat_printf_server (ptr_channel->buffer,
-                                            _("CTCP %sPING%s received from "
-                                              "%s%s\n"),
-                                            GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                            GUI_COLOR(GUI_COLOR_CHAT),
-                                            GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                            nick);
+                    weechat_printf (ptr_channel->buffer,
+                                    _("CTCP %sPING%s received from %s%s"),
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    IRC_COLOR_CHAT,
+                                    IRC_COLOR_CHAT_NICK,
+                                    nick);
                     return WEECHAT_RC_OK;
                 }
                 if (strncmp (pos, "\01VERSION", 8) == 0)
                 {
-                    irc_cmd_reply_version (server, ptr_channel, nick,
-                                           pos, ignore);
+                    irc_protocol_reply_version (server, ptr_channel, nick,
+                                                pos, ignore);
                     return WEECHAT_RC_OK;
                 }
                 
@@ -1787,20 +1817,30 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     }
                     if (!ignore)
                     {
-                        gui_chat_printf_server (ptr_channel->buffer,
-                                                _("Unknown CTCP %s%s%s "
-                                                  "received from %s%s"),
-                                                GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                                pos,
-                                                GUI_COLOR(GUI_COLOR_CHAT),
-                                                GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                                nick);
                         if (pos2)
-                            gui_chat_printf (ptr_channel->buffer, "%s: %s\n",
-                                             GUI_COLOR(GUI_COLOR_CHAT),
-                                             pos2);
+                        {
+                            weechat_printf (ptr_channel->buffer,
+                                            _("Unknown CTCP %s%s%s received "
+                                              "from %s%s%s: %s"),
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            pos,
+                                            IRC_COLOR_CHAT,
+                                            IRC_COLOR_CHAT_NICK,
+                                            nick,
+                                            IRC_COLOR_CHAT,
+                                            pos2);
+                        }
                         else
-                            gui_chat_printf (ptr_channel->buffer, "\n");
+                        {
+                            weechat_printf (ptr_channel->buffer,
+                                            _("Unknown CTCP %s%s%s "
+                                              "received from %s%s"),
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            pos,
+                                            IRC_COLOR_CHAT,
+                                            IRC_COLOR_CHAT_NICK,
+                                            nick);
+                        }
                     }
                     return WEECHAT_RC_OK;
                 }
@@ -1811,45 +1851,43 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     ptr_nick = irc_nick_search (ptr_channel, nick);
                     if (highlight || irc_protocol_is_highlight (pos, server->nick))
                     {
-                        irc_display_nick (ptr_channel->buffer, ptr_nick,
-                                          (ptr_nick) ? NULL : nick,
-                                          GUI_MSG_TYPE_NICK | GUI_MSG_TYPE_HIGHLIGHT,
-                                          1, GUI_COLOR(GUI_COLOR_CHAT_HIGHLIGHT), 0);
-                        if ( (cfg_look_infobar)
-                             && (cfg_look_infobar_delay_highlight > 0)
-                             && (ptr_channel->buffer != gui_current_window->buffer) )
-                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                                GUI_COLOR_INFOBAR_HIGHLIGHT,
-                                                _("Channel %s: %s> %s"),
-                                                ptr_channel->name, nick, pos);
-                        gui_chat_printf_type (ptr_channel->buffer,
-                                              GUI_MSG_TYPE_MSG,
-                                              NULL, -1,
-                                              "%s\n", pos);
-                        (void) plugin_msg_handler_exec (server->name,
-                                                        "weechat_highlight",
-                                                        irc_message);
+                        weechat_printf (ptr_channel->buffer,
+                                        "%s%s",
+                                        irc_nick_as_prefix (ptr_nick,
+                                                            (ptr_nick) ? NULL : nick,
+                                                            IRC_COLOR_CHAT_HIGHLIGHT),
+                                        pos);
+                        if ((look_infobar_delay_highlight > 0)
+                            && (ptr_channel->buffer != weechat_current_buffer))
+                            weechat_infobar_printf (look_infobar_delay_highlight,
+                                                    "color_infobar_highlight",
+                                                    _("Channel %s: %s> %s"),
+                                                    ptr_channel->name,
+                                                    nick,
+                                                    pos);
+                        //(void) plugin_msg_handler_exec (server->name,
+                        //                                "weechat_highlight",
+                        //                                irc_message);
                     }
                     else
                     {
-                        irc_display_nick (ptr_channel->buffer, ptr_nick,
-                                          (ptr_nick) ? NULL : nick,
-                                          GUI_MSG_TYPE_NICK, 1, NULL, 0);
-                        gui_chat_printf_type (ptr_channel->buffer,
-                                              GUI_MSG_TYPE_MSG,
-                                              NULL, -1,
-                                              "%s\n", pos);
+                        weechat_printf (ptr_channel->buffer,
+                                        "%s%s",
+                                        irc_nick_as_prefix (ptr_nick,
+                                                            (ptr_nick) ? NULL : nick,
+                                                            NULL),
+                                        pos);
                     }
                     irc_channel_add_nick_speaking (ptr_channel, nick);
                 }
             }
             else
             {
-                gui_chat_printf_error_nolog (server->buffer,
-                                             _("%s channel \"%s\" not found "
-                                               "for \"%s\" command\n"),
-                                             weechat_prefix ("error"), arguments,
-                                             "privmsg");
+                weechat_printf (server->buffer,
+                                _("%sirc: channel \"%s\" not found for \"%s\" "
+                                  "command"),
+                                weechat_prefix ("error"),
+                                arguments, "privmsg");
                 return WEECHAT_RC_ERROR;
             }
         }
@@ -1869,7 +1907,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
             /* version asked by another user => answer with WeeChat version */
             if (strncmp (pos, "\01VERSION", 8) == 0)
             {
-                irc_cmd_reply_version (server, NULL, nick, pos, ignore);
+                irc_protocol_reply_version (server, NULL, nick, pos, ignore);
                 return WEECHAT_RC_OK;
             }
             
@@ -1894,16 +1932,15 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     else
                         irc_server_sendf (server, "NOTICE %s :\01PING\01",
                                           nick);
-                    gui_chat_printf_server (server->buffer,
-                                            _("CTCP %sPING%s received from "
-                                              "%s%s\n"),
-                                            GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                            GUI_COLOR(GUI_COLOR_CHAT),
-                                            GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                            nick);
-                    (void) plugin_msg_handler_exec (server->name,
-                                                    "weechat_ctcp",
-                                                    irc_message);
+                    weechat_printf (server->buffer,
+                                    _("CTCP %sPING%s received from %s%s"),
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    IRC_COLOR_CHAT,
+                                    IRC_COLOR_CHAT_NICK,
+                                    nick);
+                    //(void) plugin_msg_handler_exec (server->name,
+                    //                                "weechat_ctcp",
+                    //                                irc_message);
                 }
                 return WEECHAT_RC_OK;
             }
@@ -1915,10 +1952,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                 pos2 = strchr (pos + 1, '\01');
                 if (!pos2)
                 {
-                    gui_chat_printf_error_nolog (server->buffer,
-                                                 _("%s cannot parse \"%s\" "
-                                                   "command\n"),
-                                                 weechat_prefix ("error"), "privmsg");
+                    weechat_printf (server->buffer,
+                                    _("%sirc: cannot parse \"%s\" command"),
+                                    weechat_prefix ("error"), "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
                 pos2[0] = '\0';
@@ -1934,10 +1970,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     pos_size = strrchr (pos_file, ' ');
                     if (!pos_size)
                     {
-                        gui_chat_printf_error_nolog (server->buffer,
-                                                     _("%s cannot parse "
-                                                       "\"%s\" command\n"),
-                                                     weechat_prefix ("error"), "privmsg");
+                        weechat_printf (server->buffer,
+                                        _("%sirc: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_size;
@@ -1950,10 +1985,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     pos_port = strrchr (pos_file, ' ');
                     if (!pos_port)
                     {
-                        gui_chat_printf_error_nolog (server->buffer,
-                                                     _("%s cannot parse "
-                                                       "\"%s\" command\n"),
-                                                     weechat_prefix ("error"), "privmsg");
+                        weechat_printf (server->buffer,
+                                        _("%sirc: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_port;
@@ -1966,10 +2000,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     pos_addr = strrchr (pos_file, ' ');
                     if (!pos_addr)
                     {
-                        gui_chat_printf_error_nolog (server->buffer,
-                                                     _("%s cannot parse "
-                                                       "\"%s\" command\n"),
-                                                     weechat_prefix ("error"), "privmsg");
+                        weechat_printf (server->buffer,
+                                        _("%sirc: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_addr;
@@ -1978,13 +2011,13 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                         pos2--;
                     pos2[1] = '\0';
                     
-                    irc_dcc_add (server, IRC_DCC_FILE_RECV,
-                                 strtoul (pos_addr, NULL, 10),
-                                 atoi (pos_port), nick, -1, pos_file, NULL,
-                                 strtoul (pos_size, NULL, 10));
-                    (void) plugin_msg_handler_exec (server->name,
-                                                    "weechat_dcc",
-                                                    irc_message);
+                    //irc_dcc_add (server, IRC_DCC_FILE_RECV,
+                    //             strtoul (pos_addr, NULL, 10),
+                    //             atoi (pos_port), nick, -1, pos_file, NULL,
+                    //             strtoul (pos_size, NULL, 10));
+                    //(void) plugin_msg_handler_exec (server->name,
+                    //                                "weechat_dcc",
+                    //                                irc_message);
                 }
                 return WEECHAT_RC_OK;
             }
@@ -1996,10 +2029,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                 pos2 = strchr (pos + 1, '\01');
                 if (!pos2)
                 {
-                    gui_chat_printf_error_nolog (server->buffer,
-                                                 _("%s cannot parse \"%s\" "
-                                                   "command\n"),
-                                                 weechat_prefix ("error"), "privmsg");
+                    weechat_printf (server->buffer,
+                                    _("%sirc: cannot parse \"%s\" command"),
+                                    weechat_prefix ("error"), "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
                 pos2[0] = '\0';
@@ -2015,10 +2047,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     pos_start_resume = strrchr (pos_file, ' ');
                     if (!pos_start_resume)
                     {
-                        gui_chat_printf_error_nolog (server->buffer,
-                                                     _("%s cannot parse "
-                                                       "\"%s\" command\n"),
-                                                     weechat_prefix ("error"), "privmsg");
+                        weechat_printf (server->buffer,
+                                        _("%sirc: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_start_resume;
@@ -2031,10 +2062,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     pos_port = strrchr (pos_file, ' ');
                     if (!pos_port)
                     {
-                        gui_chat_printf_error_nolog (server->buffer,
-                                                     _("%s cannot parse "
-                                                       "\"%s\" command\n"),
-                                                     weechat_prefix ("error"), "privmsg");
+                        weechat_printf (server->buffer,
+                                        _("%sirc: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_port;
@@ -2043,11 +2073,11 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                         pos2--;
                     pos2[1] = '\0';
                     
-                    irc_dcc_accept_resume (server, pos_file, atoi (pos_port),
-                                           strtoul (pos_start_resume, NULL, 10));
-                    (void) plugin_msg_handler_exec (server->name,
-                                                    "weechat_dcc",
-                                                    irc_message);
+                    //irc_dcc_accept_resume (server, pos_file, atoi (pos_port),
+                    //                       strtoul (pos_start_resume, NULL, 10));
+                    //(void) plugin_msg_handler_exec (server->name,
+                    //                                "weechat_dcc",
+                    //                                irc_message);
                 }
                 return WEECHAT_RC_OK;
             }
@@ -2059,10 +2089,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                 pos2 = strchr (pos + 1, '\01');
                 if (!pos2)
                 {
-                    gui_chat_printf_error_nolog (server->buffer,
-                                                 _("%s cannot parse "
-                                                   "\"%s\" command\n"),
-                                                 weechat_prefix ("error"), "privmsg");
+                    weechat_printf (server->buffer,
+                                    _("%sirc: cannot parse \"%s\" command"),
+                                    weechat_prefix ("error"), "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
                 pos2[0] = '\0';
@@ -2078,10 +2107,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     pos_start_resume = strrchr (pos_file, ' ');
                     if (!pos_start_resume)
                     {
-                        gui_chat_printf_error_nolog (server->buffer,
-                                                     _("%s cannot parse "
-                                                       "\"%s\" command\n"),
-                                                     weechat_prefix ("error"), "privmsg");
+                        weechat_printf (server->buffer,
+                                        _("%sirc: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_start_resume;
@@ -2094,10 +2122,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     pos_port = strrchr (pos_file, ' ');
                     if (!pos_port)
                     {
-                        gui_chat_printf_error_nolog (server->buffer,
-                                                     _("%s cannot parse "
-                                                       "\"%s\" command\n"),
-                                                     weechat_prefix ("error"), "privmsg");
+                        weechat_printf (server->buffer,
+                                        _("%sirc: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_port;
@@ -2106,11 +2133,11 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                         pos2--;
                     pos2[1] = '\0';
                     
-                    irc_dcc_start_resume (server, pos_file, atoi (pos_port),
-                                          strtoul (pos_start_resume, NULL, 10));
-                    (void) plugin_msg_handler_exec (server->name,
-                                                    "weechat_dcc",
-                                                    irc_message);
+                    //irc_dcc_start_resume (server, pos_file, atoi (pos_port),
+                    //                      strtoul (pos_start_resume, NULL, 10));
+                    //(void) plugin_msg_handler_exec (server->name,
+                    //                                "weechat_dcc",
+                    //                                irc_message);
                 }
                 return WEECHAT_RC_OK;
             }
@@ -2122,10 +2149,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                 pos2 = strchr (pos + 1, '\01');
                 if (!pos2)
                 {
-                    gui_chat_printf_error_nolog (server->buffer,
-                                                 _("%s cannot parse "
-                                                   "\"%s\" command\n"),
-                                                 weechat_prefix ("error"), "privmsg");
+                    weechat_printf (server->buffer,
+                                    _("%sirc: cannot parse \"%s\" command"),
+                                    weechat_prefix ("error"), "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
                 pos2[0] = '\0';
@@ -2141,10 +2167,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     pos_addr = strchr (pos_file, ' ');
                     if (!pos_addr)
                     {
-                        gui_chat_printf_error_nolog (server->buffer,
-                                                     _("%s cannot parse "
-                                                       "\"%s\" command\n"),
-                                                     weechat_prefix ("error"), "privmsg");
+                        weechat_printf (server->buffer,
+                                        _("%sirc: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos_addr[0] = '\0';
@@ -2156,10 +2181,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     pos_port = strchr (pos_addr, ' ');
                     if (!pos_port)
                     {
-                        gui_chat_printf_error_nolog (server->buffer,
-                                                     _("%s cannot parse "
-                                                       "\"%s\" command\n"),
-                                                     weechat_prefix ("error"), "privmsg");
+                        weechat_printf (server->buffer,
+                                        _("%sirc: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos_port[0] = '\0';
@@ -2169,24 +2193,23 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     
                     if (weechat_strcasecmp (pos_file, "chat") != 0)
                     {
-                        gui_chat_printf_error_nolog (server->buffer,
-                                                     _("%s unknown DCC CHAT "
-                                                       "type received from "),
-                                                     weechat_prefix ("error"));
-                        gui_chat_printf (server->buffer, "%s%s%s: \"%s\"\n",
-                                         GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                         nick,
-                                         GUI_COLOR(GUI_COLOR_CHAT),
-                                         pos_file);
+                        weechat_printf (server->buffer,
+                                        _("%sirc: unknown DCC CHAT type "
+                                          "received from %s%s%s: \"%s\""),
+                                        weechat_prefix ("error"),
+                                        IRC_COLOR_CHAT_NICK,
+                                        nick,
+                                        IRC_COLOR_CHAT,
+                                        pos_file);
                         return WEECHAT_RC_ERROR;
                     }
                     
-                    irc_dcc_add (server, IRC_DCC_CHAT_RECV,
-                                 strtoul (pos_addr, NULL, 10),
-                                 atoi (pos_port), nick, -1, NULL, NULL, 0);
-                    (void) plugin_msg_handler_exec (server->name,
-                                                    "weechat_dcc",
-                                                    irc_message);
+                    //irc_dcc_add (server, IRC_DCC_CHAT_RECV,
+                    //             strtoul (pos_addr, NULL, 10),
+                    //             atoi (pos_port), nick, -1, NULL, NULL, 0);
+                    //(void) plugin_msg_handler_exec (server->name,
+                    //                                "weechat_dcc",
+                    //                                irc_message);
                 }
                 return WEECHAT_RC_OK;
             }
@@ -2205,18 +2228,17 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                                                        nick, 0);
                         if (!ptr_channel)
                         {
-                            gui_chat_printf_error_nolog (server->buffer,
-                                                         _("%s cannot create "
-                                                           "new private "
-                                                           "window \"%s\"\n"),
-                                                         weechat_prefix ("error"), nick);
+                            weechat_printf (server->buffer,
+                                            _("%sirc: cannot create new "
+                                              "private buffer \"%s\""),
+                                            weechat_prefix ("error"), nick);
                             return WEECHAT_RC_ERROR;
                         }
                     }
                     if (!ptr_channel->topic)
                     {
                         ptr_channel->topic = strdup (host2);
-                        gui_chat_draw_title (ptr_channel->buffer, 1);
+                        //gui_chat_draw_title (ptr_channel->buffer, 1);
                     }
                     
                     pos += 8;
@@ -2225,42 +2247,36 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                         pos2[0] = '\0';
                     if (highlight || irc_protocol_is_highlight (pos, server->nick))
                     {
-                        gui_chat_printf_type (ptr_channel->buffer,
-                                              GUI_MSG_TYPE_MSG |
-                                              GUI_MSG_TYPE_HIGHLIGHT,
-                                              cfg_look_prefix_action,
-                                              cfg_col_chat_prefix_action,
-                                              "%s%s",
-                                              GUI_COLOR(GUI_COLOR_CHAT_HIGHLIGHT),
-                                              nick);
-                        if ( (cfg_look_infobar)
-                             && (cfg_look_infobar_delay_highlight > 0)
-                             && (ptr_channel->buffer != gui_current_window->buffer) )
-                            gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                                GUI_COLOR_INFOBAR_HIGHLIGHT,
-                                                _("Channel %s: * %s %s"),
-                                                ptr_channel->name, nick, pos);
-                        gui_chat_printf (ptr_channel->buffer, " %s%s\n",
-                                         GUI_COLOR(GUI_COLOR_CHAT), pos);
-                        (void) plugin_msg_handler_exec (server->name,
-                                                        "weechat_highlight",
-                                                        irc_message);
+                        weechat_printf (ptr_channel->buffer,
+                                        "%s%s%s %s%s",
+                                        weechat_prefix ("action"),
+                                        IRC_COLOR_CHAT_HIGHLIGHT,
+                                        nick,
+                                        IRC_COLOR_CHAT,
+                                        pos);
+                        if ((look_infobar_delay_highlight > 0)
+                            && (ptr_channel->buffer != weechat_current_buffer))
+                            weechat_infobar_printf (look_infobar_delay_highlight,
+                                                    "look_infobar_highlight",
+                                                    _("Channel %s: * %s %s"),
+                                                    ptr_channel->name,
+                                                    nick, pos);
+                        //(void) plugin_msg_handler_exec (server->name,
+                        //                                "weechat_highlight",
+                        //                                irc_message);
                     }
                     else
                     {
-                        gui_chat_printf_type (ptr_channel->buffer,
-                                              GUI_MSG_TYPE_MSG,
-                                              NULL, -1,
-                                              "%s%s",
-                                              GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                              cfg_look_prefix_action,
-                                              cfg_col_chat_prefix_action,
-                                              nick);
-                        gui_chat_printf (ptr_channel->buffer, " %s%s\n",
-                                         GUI_COLOR(GUI_COLOR_CHAT), pos);
-                        (void) plugin_msg_handler_exec (server->name,
-                                                        "weechat_pv",
-                                                        irc_message);
+                        weechat_printf (ptr_channel->buffer,
+                                        "%s%s%s %s%s",
+                                        weechat_prefix ("action"),
+                                        IRC_COLOR_CHAT_NICK,
+                                        nick,
+                                        IRC_COLOR_CHAT,
+                                        pos);
+                        //(void) plugin_msg_handler_exec (server->name,
+                        //                                "weechat_pv",
+                        //                                irc_message);
                     }
                 }
             }
@@ -2284,23 +2300,33 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                             if (!pos2[0])
                                 pos2 = NULL;
                         }
-                        gui_chat_printf_server (server->buffer,
-                                                _("Unknown CTCP %s%s%s "
-                                                  "received from %s%s"),
-                                                GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                                pos,
-                                                GUI_COLOR(GUI_COLOR_CHAT),
-                                                GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                                nick);
                         if (pos2)
-                            gui_chat_printf (server->buffer, "%s: %s\n",
-                                             GUI_COLOR(GUI_COLOR_CHAT),
-                                             pos2);
+                        {
+                            weechat_printf (server->buffer,
+                                            _("Unknown CTCP %s%s%s received "
+                                              "from %s%s%s: %s"),
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            pos,
+                                            IRC_COLOR_CHAT,
+                                            IRC_COLOR_CHAT_NICK,
+                                            nick,
+                                            IRC_COLOR_CHAT,
+                                            pos2);
+                        }
                         else
-                            gui_chat_printf (server->buffer, "\n");
-                        (void) plugin_msg_handler_exec (server->name,
-                                                        "weechat_ctcp",
-                                                        irc_message);
+                        {
+                            weechat_printf (server->buffer,
+                                            _("Unknown CTCP %s%s%s received "
+                                              "from %s%s"),
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            pos,
+                                            IRC_COLOR_CHAT,
+                                            IRC_COLOR_CHAT_NICK,
+                                            nick);
+                        }
+                        //(void) plugin_msg_handler_exec (server->name,
+                        //                                "weechat_ctcp",
+                        //                                irc_message);
                     }
                     return WEECHAT_RC_OK;
                 }
@@ -2315,68 +2341,66 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                                                            nick, 0);
                             if (!ptr_channel)
                             {
-                                gui_chat_printf_error_nolog (server->buffer,
-                                                             _("%s cannot "
-                                                               "create new "
-                                                               "private "
-                                                               "window "
-                                                               "\"%s\"\n"),
-                                                             weechat_prefix ("error"),
-                                                             nick);
+                                weechat_printf (server->buffer,
+                                                _("%s cannot create new "
+                                                  "private buffer \"%s\""),
+                                                weechat_prefix ("error"),
+                                                nick);
                                 return WEECHAT_RC_ERROR;
                             }
                         }
                         if (!ptr_channel->topic)
                         {
                             ptr_channel->topic = strdup (host2);
-                            gui_chat_draw_title (ptr_channel->buffer, 1);
+                            //gui_chat_draw_title (ptr_channel->buffer, 1);
                         }
                         
                         if (highlight || irc_protocol_is_highlight (pos, server->nick))
                         {
-                            irc_display_nick (ptr_channel->buffer, NULL, nick,
-                                              GUI_MSG_TYPE_NICK | GUI_MSG_TYPE_HIGHLIGHT, 1,
-                                              GUI_COLOR(GUI_COLOR_CHAT_HIGHLIGHT), 0);
-                            if ((cfg_look_infobar_delay_highlight > 0)
-                                && (ptr_channel->buffer != gui_current_window->buffer))
-                                gui_infobar_printf (cfg_look_infobar_delay_highlight,
-                                                    GUI_COLOR_INFOBAR_HIGHLIGHT,
-                                                    _("Private %s> %s"),
-                                                    nick, pos);
+                            weechat_printf (ptr_channel->buffer,
+                                            "%s%s",
+                                            irc_nick_as_prefix (NULL,
+                                                                nick,
+                                                                IRC_COLOR_CHAT_HIGHLIGHT),
+                                            pos);
+                            if ((look_infobar_delay_highlight > 0)
+                                && (ptr_channel->buffer != weechat_current_buffer))
+                                weechat_infobar_printf (look_infobar_delay_highlight,
+                                                        "color_infobar_highlight",
+                                                        _("Private %s> %s"),
+                                                        nick, pos);
                             highlight_displayed = 1;
                         }
                         else
                         {
-                            irc_display_nick (ptr_channel->buffer, NULL, nick,
-                                              GUI_MSG_TYPE_NICK, 1,
-                                              GUI_COLOR(GUI_COLOR_CHAT_NICK_OTHER), 0);
+                            weechat_printf (ptr_channel->buffer,
+                                            "%s%s",
+                                            irc_nick_as_prefix (NULL,
+                                                                nick,
+                                                                IRC_COLOR_CHAT_NICK_OTHER),
+                                            pos);
                             highlight_displayed = 0;
                         }
-                        gui_chat_printf_type (ptr_channel->buffer,
-                                              GUI_MSG_TYPE_MSG,
-                                              NULL, -1,
-                                              "%s%s\n",
-                                              GUI_COLOR(GUI_COLOR_CHAT),
-                                              pos);
-                        (void) plugin_msg_handler_exec (server->name,
-                                                        "weechat_pv",
-                                                        irc_message);
-                        if (highlight_displayed)
-                            (void) plugin_msg_handler_exec (server->name,
-                                                            "weechat_highlight",
-                                                            irc_message);
+                        //(void) plugin_msg_handler_exec (server->name,
+                        //                                "weechat_pv",
+                        //                                irc_message);
+                        //if (highlight_displayed)
+                        //    (void) plugin_msg_handler_exec (server->name,
+                        //                                    "weechat_highlight",
+                        //                                    irc_message);
                     }
                 }
             }
         }
         else
         {
-            gui_chat_printf_error_nolog (server->buffer,
-                                         _("%s cannot parse \"%s\" command\n"),
-                                         weechat_prefix ("error"), "privmsg");
+            weechat_printf (server->buffer,
+                            _("%sirc: cannot parse \"%s\" command"),
+                            weechat_prefix ("error"), "privmsg");
             return WEECHAT_RC_ERROR;
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -2399,10 +2423,9 @@ irc_protocol_cmd_quit (struct t_irc_server *server, char *irc_message, char *hos
     /* no host => we can't identify sender of message! */
     if (!host)
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                     _("%s \"%s\" command received without "
-                                       "host\n"),
-                                     weechat_prefix ("error"), "quit");
+        weechat_printf (server->buffer,
+                        _("irc:%s \"%s\" command received without host"),
+                        weechat_prefix ("error"), "quit");
         return WEECHAT_RC_ERROR;
     }
 
@@ -2425,24 +2448,22 @@ irc_protocol_cmd_quit (struct t_irc_server *server, char *irc_message, char *hos
             if (!ignore)
             {
                 pos = strchr (host, '!');
-                gui_chat_printf_quit (ptr_channel->buffer,
-                                 _("%s%s %s(%s%s%s)%s has quit"),
-                                 GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                 nick,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                 (pos) ? pos + 1 : "",
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT));
-                gui_chat_printf (ptr_channel->buffer,
-                            " %s(%s%s%s)\n",
-                            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                            GUI_COLOR(GUI_COLOR_CHAT),
-                            arguments,
-                            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                weechat_printf (ptr_channel->buffer,
+                                _("%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"),
+                                IRC_COLOR_CHAT_NICK,
+                                nick,
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT_HOST,
+                                (pos) ? pos + 1 : "",
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT,
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT,
+                                arguments,
+                                IRC_COLOR_CHAT_DELIMITERS);
             }
-            gui_nicklist_draw (ptr_channel->buffer, 1, 1);
-            gui_status_draw (ptr_channel->buffer, 1);
+            //gui_nicklist_draw (ptr_channel->buffer, 1, 1);
+            //gui_status_draw (ptr_channel->buffer, 1);
         }
     }
     
@@ -2455,8 +2476,10 @@ irc_protocol_cmd_quit (struct t_irc_server *server, char *irc_message, char *hos
  */
 
 int
-irc_protocol_cmd_server_mode_reason (struct t_irc_server *server, char *irc_message, char *host,
-                                     char *nick, char *arguments, int ignore, int highlight)
+irc_protocol_cmd_server_mode_reason (struct t_irc_server *server,
+                                     char *irc_message, char *host,
+                                     char *nick, char *arguments, int ignore,
+                                     int highlight)
 {
     char *ptr_msg;
     
@@ -2487,10 +2510,12 @@ irc_protocol_cmd_server_mode_reason (struct t_irc_server *server, char *irc_mess
                 ptr_msg++;
         }
         
-        gui_chat_printf_server (server->buffer, "%s%s: %s\n",
-                           GUI_COLOR(GUI_COLOR_CHAT), arguments,
-                           (ptr_msg) ? ptr_msg : "");
+        weechat_printf (server->buffer,
+                        "%s: %s",
+                        arguments,
+                        (ptr_msg) ? ptr_msg : "");
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -2525,9 +2550,11 @@ irc_protocol_cmd_server_msg (struct t_irc_server *server, char *irc_message,
         if (arguments[0] == ':')
             arguments++;
         
-        gui_chat_printf_server (server->buffer, "%s%s\n",
-                           GUI_COLOR(GUI_COLOR_CHAT), arguments);
+        weechat_printf (server->buffer,
+                        "%s",
+                        arguments);
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -2550,9 +2577,9 @@ irc_protocol_cmd_topic (struct t_irc_server *server, char *irc_message, char *ho
     
     if (!irc_channel_is_channel (arguments))
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s \"%s\" command received without channel\n"),
-                                weechat_prefix ("error"), "topic");
+        weechat_printf (server->buffer,
+                        _("%sirc: \"%s\" command received without channel"),
+                        weechat_prefix ("error"), "topic");
         return WEECHAT_RC_ERROR;
     }
     
@@ -2576,24 +2603,28 @@ irc_protocol_cmd_topic (struct t_irc_server *server, char *irc_message, char *ho
     {
         if (pos)
         {
-            gui_chat_printf_info (buffer,
-                             _("%s%s%s has changed topic for %s%s%s to:"),
-                             GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                             nick,
-                             GUI_COLOR(GUI_COLOR_CHAT),
-                             GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                             arguments,
-                             GUI_COLOR(GUI_COLOR_CHAT));
-            gui_chat_printf (buffer, " \"%s%s\"\n", pos, GUI_NO_COLOR);
+            weechat_printf (buffer,
+                            _("%s%s%s%s has changed topic for %s%s%s to: "
+                              "\"%s%s\""),
+                            weechat_prefix ("info"),
+                            IRC_COLOR_CHAT_NICK,
+                            nick,
+                            IRC_COLOR_CHAT,
+                            IRC_COLOR_CHAT_CHANNEL,
+                            arguments,
+                            IRC_COLOR_CHAT,
+                            pos,
+                            IRC_COLOR_CHAT);
         }
         else
-            gui_chat_printf_info (buffer,
-                             _("%s%s%s has unset topic for %s%s\n"),
-                             GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                             nick,
-                             GUI_COLOR(GUI_COLOR_CHAT),
-                             GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                             arguments);
+            weechat_printf (buffer,
+                            _("%s%s%s%s has unset topic for %s%s"),
+                            weechat_prefix ("info"),
+                            IRC_COLOR_CHAT_NICK,
+                            nick,
+                            IRC_COLOR_CHAT,
+                            IRC_COLOR_CHAT_CHANNEL,
+                            arguments);
     }
     
     if (ptr_channel)
@@ -2604,7 +2635,7 @@ irc_protocol_cmd_topic (struct t_irc_server *server, char *irc_message, char *ho
             ptr_channel->topic = strdup (pos);
         else
             ptr_channel->topic = strdup ("");
-        gui_chat_draw_title (ptr_channel->buffer, 1);
+        //gui_chat_draw_title (ptr_channel->buffer, 1);
     }
     
     return WEECHAT_RC_OK;
@@ -2627,12 +2658,12 @@ irc_protocol_cmd_wallops (struct t_irc_server *server, char *irc_message, char *
     {
         if (arguments[0] == ':')
             arguments++;
-        gui_chat_printf_server (server->buffer,
-                           _("WALLOPS from %s%s%s: %s\n"),
-                           GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                           nick,
-                           GUI_COLOR(GUI_COLOR_CHAT),
-                           arguments);
+        weechat_printf (server->buffer,
+                        _("WALLOPS from %s%s%s: %s"),
+                        IRC_COLOR_CHAT_NICK,
+                        nick,
+                        IRC_COLOR_CHAT,
+                        arguments);
     }
     
     return WEECHAT_RC_OK;
@@ -2664,7 +2695,8 @@ irc_protocol_cmd_001 (struct t_irc_server *server, char *irc_message, char *host
     
     /* connection to IRC server is ok! */
     server->is_connected = 1;
-    server->lag_next_check = time (NULL) + irc_cfg_irc_lag_check;
+    server->lag_next_check = time (NULL) +
+        weechat_config_integer (irc_config_irc_lag_check);
     
     /* set away message if user was away (before disconnection for example) */
     if (server->away_message && server->away_message[0])
@@ -2672,7 +2704,7 @@ irc_protocol_cmd_001 (struct t_irc_server *server, char *irc_message, char *host
         away_msg = strdup (server->away_message);
         if (away_msg)
         {
-            irc_cmd_away_server (server, away_msg);
+            irc_command_away_server (server, away_msg);
             free (away_msg);
         }
     }
@@ -2681,18 +2713,18 @@ irc_protocol_cmd_001 (struct t_irc_server *server, char *irc_message, char *host
     if (server->command && server->command[0])
     {	
 	/* splitting command on ';' which can be escaped with '\;' */ 
-	commands = weechat_split_command (server->command, ';');
+	commands = weechat_string_split_command (server->command, ';');
 	if (commands)
 	{
 	    for (ptr = commands; *ptr; ptr++)
             {
                 vars_replaced = irc_protocol_replace_vars (server, NULL, *ptr);
-                protocol_input_data (gui_window_search_by_buffer (server->buffer),
-                                     (vars_replaced) ? vars_replaced : *ptr, 0);
+                weechat_command (server->buffer,
+                                 (vars_replaced) ? vars_replaced : *ptr);
                 if (vars_replaced)
                     free (vars_replaced);
             }
-	    weechat_free_splitted_command (commands);
+	    weechat_string_free_splitted_command (commands);
 	}
 	
 	if (server->command_delay > 0)
@@ -2703,8 +2735,8 @@ irc_protocol_cmd_001 (struct t_irc_server *server, char *irc_message, char *host
     else
         irc_server_autojoin_channels (server);
     
-    gui_status_draw (server->buffer, 1);
-    gui_input_draw (server->buffer, 1);
+    //gui_status_draw (server->buffer, 1);
+    //gui_input_draw (server->buffer, 1);
     
     return WEECHAT_RC_OK;
 }
@@ -2773,22 +2805,22 @@ irc_protocol_cmd_221 (struct t_irc_server *server, char *irc_message, char *host
         
         if (!ignore)
         {
-            gui_chat_printf_server (server->buffer,
-                               _("User mode for %s%s%s is %s[%s%s%s]\n"),
-                               GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                               arguments,
-                               GUI_COLOR(GUI_COLOR_CHAT),
-                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                               GUI_COLOR(GUI_COLOR_CHAT),
-                               pos_mode,
-                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+            weechat_printf (server->buffer,
+                            _("User mode for %s%s%s is %s[%s%s%s]"),
+                            IRC_COLOR_CHAT_NICK,
+                            arguments,
+                            IRC_COLOR_CHAT,
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_CHAT,
+                            pos_mode,
+                            IRC_COLOR_CHAT_DELIMITERS);
         }
     }
     else
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot parse \"%s\" command\n"),
-                                weechat_prefix ("error"), "221");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "221");
         return WEECHAT_RC_ERROR;
     }
     
@@ -2833,17 +2865,19 @@ irc_protocol_cmd_301 (struct t_irc_server *server, char *irc_message, char *host
             {
                 /* look for private buffer to display message */
                 ptr_channel = irc_channel_search (server, pos_nick);
-                if (!irc_cfg_irc_show_away_once || !ptr_channel ||
-                    !(ptr_channel->away_message) ||
-                    (strcmp (ptr_channel->away_message, pos_message) != 0))
+                if (!weechat_config_boolean (irc_config_irc_show_away_once)
+                    || !ptr_channel
+                    || !(ptr_channel->away_message)
+                    || (strcmp (ptr_channel->away_message, pos_message) != 0))
                 {
                     ptr_buffer = (ptr_channel) ? ptr_channel->buffer : server->buffer;
-                    gui_chat_printf_info (ptr_buffer,
-                                     _("%s%s%s is away: %s\n"),
-                                     GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                     pos_nick,
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     pos_message);
+                    weechat_printf (ptr_buffer,
+                                    _("%s%s%s%s is away: %s"),
+                                    weechat_prefix ("info"),
+                                    IRC_COLOR_CHAT_NICK,
+                                    pos_nick,
+                                    IRC_COLOR_CHAT,
+                                    pos_message);
                     if (ptr_channel)
                     {
                         if (ptr_channel->away_message)
@@ -2854,6 +2888,7 @@ irc_protocol_cmd_301 (struct t_irc_server *server, char *irc_message, char *host
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -2899,13 +2934,13 @@ irc_protocol_cmd_302 (struct t_irc_server *server, char *irc_message, char *host
                             ptr_next++;
                     }
                     
-                    gui_chat_printf_server (server->buffer,
-                                       "%s%s%s=%s%s\n",
-                                       GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                       arguments,
-                                       GUI_COLOR(GUI_COLOR_CHAT),
-                                       GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                       pos_host);
+                    weechat_printf (server->buffer,
+                                    "%s%s%s=%s%s",
+                                    IRC_COLOR_CHAT_NICK,
+                                    arguments,
+                                    IRC_COLOR_CHAT,
+                                    IRC_COLOR_CHAT_HOST,
+                                    pos_host);
                 }
                 else
                     ptr_next = NULL;
@@ -2915,6 +2950,7 @@ irc_protocol_cmd_302 (struct t_irc_server *server, char *irc_message, char *host
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -2936,7 +2972,8 @@ irc_protocol_cmd_303 (struct t_irc_server *server, char *irc_message, char *host
     
     if (!ignore)
     {
-        gui_chat_printf_server (server->buffer, _("Users online: "));
+        weechat_printf (server->buffer,
+                        _("Users online: "));
         
         arguments = strchr (arguments, ' ');
         if (arguments)
@@ -2955,16 +2992,17 @@ irc_protocol_cmd_303 (struct t_irc_server *server, char *irc_message, char *host
                     while (ptr_next[0] == ' ')
                         ptr_next++;
                 }
-                gui_chat_printf (server->buffer, "%s%s ",
-                            GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                            arguments);
+                weechat_printf (server->buffer,
+                                "%s%s ",
+                                IRC_COLOR_CHAT_NICK,
+                                arguments);
                 arguments = ptr_next;
                 if (arguments && !arguments[0])
                     arguments = NULL;
             }
         }
-        gui_chat_printf (server->buffer, "\n");
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -2976,7 +3014,7 @@ int
 irc_protocol_cmd_305 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
-    struct t_gui_window *ptr_window;
+    //struct t_gui_window *ptr_window;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -2993,11 +3031,12 @@ irc_protocol_cmd_305 (struct t_irc_server *server, char *irc_message, char *host
                 arguments++;
             if (arguments[0] == ':')
                 arguments++;
-            gui_chat_printf_server (server->buffer, "%s\n", arguments);
+            weechat_printf (server->buffer, "%s", arguments);
         }
     }
     server->is_away = 0;
     server->away_time = 0;
+    /*
     for (ptr_window = gui_windows; ptr_window;
          ptr_window = ptr_window->next_window)
     {
@@ -3005,6 +3044,8 @@ irc_protocol_cmd_305 (struct t_irc_server *server, char *irc_message, char *host
             && (IRC_BUFFER_SERVER(ptr_window->buffer) == server))
             gui_status_draw (ptr_window->buffer, 1);
     }
+    */
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3016,7 +3057,7 @@ int
 irc_protocol_cmd_306 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
-    struct t_gui_window *ptr_window;
+    //struct t_gui_window *ptr_window;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -3033,11 +3074,12 @@ irc_protocol_cmd_306 (struct t_irc_server *server, char *irc_message, char *host
                 arguments++;
             if (arguments[0] == ':')
                 arguments++;
-            gui_chat_printf_server (server->buffer, "%s\n", arguments);
+            weechat_printf (server->buffer, "%s", arguments);
         }
     }
     server->is_away = 1;
     server->away_time = time (NULL);
+    /*
     for (ptr_window = gui_windows; ptr_window;
          ptr_window = ptr_window->next_window)
     {
@@ -3051,6 +3093,8 @@ irc_protocol_cmd_306 (struct t_irc_server *server, char *irc_message, char *host
             }
         }
     }
+    */
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3087,16 +3131,18 @@ irc_protocol_cmd_whois_nick_msg (struct t_irc_server *server, char *irc_message,
                 if (pos_msg[0] == ':')
                     pos_msg++;
                 
-                gui_chat_printf_server (server->buffer, "%s[%s%s%s] %s%s\n",
-                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                   GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                   pos_nick,
-                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                   GUI_COLOR(GUI_COLOR_CHAT),
-                                   pos_msg);
+                weechat_printf (server->buffer,
+                                "%s[%s%s%s] %s%s",
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT_NICK,
+                                pos_nick,
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT,
+                                pos_msg);
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3124,15 +3170,16 @@ irc_protocol_cmd_310 (struct t_irc_server *server, char *irc_message, char *host
             while (pos_nick[0] == ' ')
                 pos_nick++;
             
-            gui_chat_printf_server (server->buffer,
-                               _("%s[%s%s%s]%s help mode (+h)\n"),
-                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                               GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                               pos_nick,
-                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                               GUI_COLOR(GUI_COLOR_CHAT));
+            weechat_printf (server->buffer,
+                            _("%s[%s%s%s]%s help mode (+h)"),
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_CHAT_NICK,
+                            pos_nick,
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_CHAT);
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3187,23 +3234,24 @@ irc_protocol_cmd_311 (struct t_irc_server *server, char *irc_message, char *host
                         if (pos_realname[0] == ':')
                             pos_realname++;
                         
-                        gui_chat_printf_server (server->buffer,
-                                           "%s[%s%s%s] (%s%s@%s%s)%s: %s\n",
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                           GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                           pos_nick,
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                           GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                           pos_user,
-                                           pos_host,
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                           GUI_COLOR(GUI_COLOR_CHAT),
-                                           pos_realname);
+                        weechat_printf (server->buffer,
+                                        "%s[%s%s%s] (%s%s@%s%s)%s: %s",
+                                        IRC_COLOR_CHAT_DELIMITERS,
+                                        IRC_COLOR_CHAT_NICK,
+                                        pos_nick,
+                                        IRC_COLOR_CHAT_DELIMITERS,
+                                        IRC_COLOR_CHAT_HOST,
+                                        pos_user,
+                                        pos_host,
+                                        IRC_COLOR_CHAT_DELIMITERS,
+                                        IRC_COLOR_CHAT,
+                                        pos_realname);
                     }
                 }
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3247,18 +3295,18 @@ irc_protocol_cmd_312 (struct t_irc_server *server, char *irc_message, char *host
                     if (pos_serverinfo[0] == ':')
                         pos_serverinfo++;
                     
-                    gui_chat_printf_server (server->buffer,
-                                       "%s[%s%s%s] %s%s %s(%s%s%s)\n",
-                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                       GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                       pos_nick,
-                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                       GUI_COLOR(GUI_COLOR_CHAT),
-                                       pos_server,
-                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                       GUI_COLOR(GUI_COLOR_CHAT),
-                                       pos_serverinfo,
-                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                    weechat_printf (server->buffer,
+                                    "%s[%s%s%s] %s%s %s(%s%s%s)",
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT_NICK,
+                                    pos_nick,
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT,
+                                    pos_server,
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT,
+                                    pos_serverinfo,
+                                    IRC_COLOR_CHAT_DELIMITERS);
                 }
             }
         }
@@ -3320,17 +3368,17 @@ irc_protocol_cmd_314 (struct t_irc_server *server, char *irc_message, char *host
                             if (pos_realname[0] == ':')
                                 pos_realname++;
                             
-                            gui_chat_printf_server (server->buffer,
-                                               _("%s%s %s(%s%s@%s%s)%s was %s\n"),
-                                               GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                               pos_nick,
-                                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                               GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                               pos_user,
-                                               pos_host,
-                                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                               GUI_COLOR(GUI_COLOR_CHAT),
-                                               pos_realname);
+                            weechat_printf (server->buffer,
+                                            _("%s%s %s(%s%s@%s%s)%s was %s"),
+                                            IRC_COLOR_CHAT_NICK,
+                                            pos_nick,
+                                            IRC_COLOR_CHAT_DELIMITERS,
+                                            IRC_COLOR_CHAT_HOST,
+                                            pos_user,
+                                            pos_host,
+                                            IRC_COLOR_CHAT_DELIMITERS,
+                                            IRC_COLOR_CHAT,
+                                            pos_realname);
                         }
                     }
                 }
@@ -3378,19 +3426,20 @@ irc_protocol_cmd_315 (struct t_irc_server *server, char *irc_message, char *host
         }
         if (!ignore)
         {
-            gui_chat_printf_server (server->buffer,
-                               "%s%s %s%s\n",
-                               GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                               arguments,
-                               GUI_COLOR(GUI_COLOR_CHAT),
-                               pos);
+            weechat_printf (server->buffer,
+                            "%s%s %s%s",
+                            IRC_COLOR_CHAT_CHANNEL,
+                            arguments,
+                            IRC_COLOR_CHAT,
+                            pos);
         }
     }
     else
     {
         if (!ignore)
-            gui_chat_printf_server (server->buffer, "%s\n", arguments);
+            weechat_printf (server->buffer, "%s", arguments);
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3444,43 +3493,70 @@ irc_protocol_cmd_317 (struct t_irc_server *server, char *irc_message, char *host
                         min = ((idle_time % (60 * 60 * 24)) % (60 * 60)) / 60;
                         sec = ((idle_time % (60 * 60 * 24)) % (60 * 60)) % 60;
                         
-                        gui_chat_printf_server (server->buffer,
-                                           _("%s[%s%s%s]%s idle: "),
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                           GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                           pos_nick,
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                           GUI_COLOR(GUI_COLOR_CHAT));
+                        datetime = (time_t)(atol (pos_signon));
                         
                         if (day > 0)
-                            gui_chat_printf (server->buffer, "%s%d %s%s, ",
-                                        GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                        day,
-                                        GUI_COLOR(GUI_COLOR_CHAT),
-                                        (day > 1) ? _("days") : _("day"));
-                        
-                        datetime = (time_t)(atol (pos_signon));
-                        gui_chat_printf (server->buffer,
-                                    _("%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"),
-                                    GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                    hour,
-                                    GUI_COLOR(GUI_COLOR_CHAT),
-                                    (hour > 1) ? _("hours") : _("hour"),
-                                    GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                    min,
-                                    GUI_COLOR(GUI_COLOR_CHAT),
-                                    (min > 1) ? _("minutes") : _("minute"),
-                                    GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                    sec,
-                                    GUI_COLOR(GUI_COLOR_CHAT),
-                                    (sec > 1) ? _("seconds") : _("second"),
-                                    GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                    ctime (&datetime));
+                        {
+                            weechat_printf (server->buffer,
+                                            _("%s[%s%s%s]%s idle: %s%d %s%s, "
+                                              "%s%02d %s%s %s%02d %s%s %s%02d "
+                                              "%s%s, signon at: %s%s"),
+                                            IRC_COLOR_CHAT_DELIMITERS,
+                                            IRC_COLOR_CHAT_NICK,
+                                            pos_nick,
+                                            IRC_COLOR_CHAT_DELIMITERS,
+                                            IRC_COLOR_CHAT,
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            day,
+                                            IRC_COLOR_CHAT,
+                                            (day > 1) ? _("days") : _("day"),
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            hour,
+                                            IRC_COLOR_CHAT,
+                                            (hour > 1) ? _("hours") : _("hour"),
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            min,
+                                            IRC_COLOR_CHAT,
+                                            (min > 1) ? _("minutes") : _("minute"),
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            sec,
+                                            IRC_COLOR_CHAT,
+                                            (sec > 1) ? _("seconds") : _("second"),
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            ctime (&datetime));
+                        }
+                        else
+                        {
+                            weechat_printf (server->buffer,
+                                            _("%s[%s%s%s]%s idle: %s%02d %s%s "
+                                              "%s%02d %s%s %s%02d %s%s, "
+                                              "signon at: %s%s"),
+                                            IRC_COLOR_CHAT_DELIMITERS,
+                                            IRC_COLOR_CHAT_NICK,
+                                            pos_nick,
+                                            IRC_COLOR_CHAT_DELIMITERS,
+                                            IRC_COLOR_CHAT,
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            hour,
+                                            IRC_COLOR_CHAT,
+                                            (hour > 1) ? _("hours") : _("hour"),
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            min,
+                                            IRC_COLOR_CHAT,
+                                            (min > 1) ? _("minutes") : _("minute"),
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            sec,
+                                            IRC_COLOR_CHAT,
+                                            (sec > 1) ? _("seconds") : _("second"),
+                                            IRC_COLOR_CHAT_CHANNEL,
+                                            ctime (&datetime));
+                        }
                     }
                 }
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3492,8 +3568,7 @@ int
 irc_protocol_cmd_319 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
-    char *pos_nick, *pos_channel, *pos;
-    int color;
+    char *pos_nick, *pos_channel, *pos, *color;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -3518,13 +3593,13 @@ irc_protocol_cmd_319 (struct t_irc_server *server, char *irc_message, char *host
                 if (pos_channel[0] == ':')
                     pos_channel++;
                 
-                gui_chat_printf_server (server->buffer,
-                                   _("%s[%s%s%s]%s Channels: "),
-                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                   GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                   pos_nick,
-                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                   GUI_COLOR(GUI_COLOR_CHAT));
+                weechat_printf (server->buffer,
+                                _("%s[%s%s%s]%s Channels: "),
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT_NICK,
+                                pos_nick,
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT);
                 while (pos_channel && pos_channel[0])
                 {
                     if (irc_mode_nick_prefix_allowed (server, pos_channel[0]))
@@ -3532,32 +3607,32 @@ irc_protocol_cmd_319 (struct t_irc_server *server, char *irc_message, char *host
                         switch (pos_channel[0])
                         {
                             case '@': /* op */
-                                color = GUI_COLOR_NICKLIST_PREFIX1;
+                                color = IRC_COLOR_NICKLIST_PREFIX1;
                                 break;
                             case '~': /* channel owner */
-                                color = GUI_COLOR_NICKLIST_PREFIX1;
+                                color = IRC_COLOR_NICKLIST_PREFIX1;
                                 break;
                             case '&': /* channel admin */
-                                color = GUI_COLOR_NICKLIST_PREFIX1;
+                                color = IRC_COLOR_NICKLIST_PREFIX1;
                                 break;
                             case '!': /* channel admin (2) */
-                                color = GUI_COLOR_NICKLIST_PREFIX1;
+                                color = IRC_COLOR_NICKLIST_PREFIX1;
                                 break;
                             case '%': /* half-op */
-                                color = GUI_COLOR_NICKLIST_PREFIX2;
+                                color = IRC_COLOR_NICKLIST_PREFIX2;
                                 break;
                             case '+': /* voice */
-                                color = GUI_COLOR_NICKLIST_PREFIX3;
+                                color = IRC_COLOR_NICKLIST_PREFIX3;
                                 break;
                             case '-': /* channel user */
-                                color = GUI_COLOR_NICKLIST_PREFIX4;
+                                color = IRC_COLOR_NICKLIST_PREFIX4;
                                 break;
                             default:
-                                color = GUI_COLOR_CHAT;
+                                color = IRC_COLOR_CHAT;
                                 break;
                         }
-                        gui_chat_printf (server->buffer, "%s%c",
-                                    GUI_COLOR(color), pos_channel[0]);
+                        weechat_printf (server->buffer, "%s%c",
+                                        color, pos_channel[0]);
                         pos_channel++;
                     }
                     
@@ -3569,15 +3644,16 @@ irc_protocol_cmd_319 (struct t_irc_server *server, char *irc_message, char *host
                         while (pos[0] == ' ')
                             pos++;
                     }
-                    gui_chat_printf (server->buffer, "%s%s%s",
-                                GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                pos_channel,
-                                (pos && pos[0]) ? " " : "\n");
+                    weechat_printf (server->buffer, "%s%s%s",
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    pos_channel,
+                                    (pos && pos[0]) ? " " : "");
                     pos_channel = pos;
                 }
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3610,8 +3686,9 @@ irc_protocol_cmd_321 (struct t_irc_server *server, char *irc_message, char *host
         else
             pos = arguments;
         
-        gui_chat_printf_server (server->buffer, "%s\n", pos);
+        weechat_printf (server->buffer, "%s", pos);
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3647,11 +3724,12 @@ irc_protocol_cmd_322 (struct t_irc_server *server, char *irc_message, char *host
 	if (server->cmd_list_regexp)
 	{
 	    if (regexec (server->cmd_list_regexp, pos, 0, NULL, 0) == 0)
-		gui_chat_printf_server (server->buffer, "%s\n", pos);
+		weechat_printf (server->buffer, "%s", pos);
 	}
 	else
-	    gui_chat_printf_server (server->buffer, "%s\n", pos);
+	    weechat_printf (server->buffer, "%s", pos);
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3684,8 +3762,9 @@ irc_protocol_cmd_323 (struct t_irc_server *server, char *irc_message, char *host
         else
             pos = arguments;
         
-        gui_chat_printf_server (server->buffer, "%s\n", pos);
+        weechat_printf (server->buffer, "%s", pos);
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3753,10 +3832,11 @@ irc_protocol_cmd_324 (struct t_irc_server *server, char *irc_message, char *host
                         ptr_channel->modes = NULL;
                     }
                 }
-                gui_status_draw (ptr_channel->buffer, 1);
+                //gui_status_draw (ptr_channel->buffer, 1);
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3807,25 +3887,26 @@ irc_protocol_cmd_327 (struct t_irc_server *server, char *irc_message, char *host
                             pos_other++;
                     }
                     
-                    gui_chat_printf_server (server->buffer,
-                                       "%s[%s%s%s] %s%s %s %s%s%s%s%s%s\n",
-                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                       GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                       pos_nick,
-                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                       GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                       pos_host1,
-                                       pos_host2,
-                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                       (pos_other) ? "(" : "",
-                                       GUI_COLOR(GUI_COLOR_CHAT),
-                                       (pos_other) ? pos_other : "",
-                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                       (pos_other) ? ")" : "");
+                    weechat_printf (server->buffer,
+                                    "%s[%s%s%s] %s%s %s %s%s%s%s%s%s",
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT_NICK,
+                                    pos_nick,
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT_HOST,
+                                    pos_host1,
+                                    pos_host2,
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    (pos_other) ? "(" : "",
+                                    IRC_COLOR_CHAT,
+                                    (pos_other) ? pos_other : "",
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    (pos_other) ? ")" : "");
                 }
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3863,39 +3944,41 @@ irc_protocol_cmd_329 (struct t_irc_server *server, char *irc_message, char *host
             ptr_channel = irc_channel_search (server, pos_channel);
             if (!ptr_channel)
             {
-                gui_chat_printf_error_nolog (server->buffer,
-                                        _("%s channel \"%s\" not found for "
-                                          "\"%s\" command\n"),
-                                        weechat_prefix ("error"), pos_channel, "329");
+                weechat_printf (server->buffer,
+                                _("%sirc: channel \"%s\" not found for "
+                                  "\"%s\" command"),
+                                weechat_prefix ("error"), pos_channel, "329");
                 return WEECHAT_RC_ERROR;
             }
             
             if (!ignore && (ptr_channel->display_creation_date))
             {
                 datetime = (time_t)(atol (pos_date));
-                gui_chat_printf_info (ptr_channel->buffer,
-                                 _("Channel created on %s"),
-                                 ctime (&datetime));
+                weechat_printf (ptr_channel->buffer,
+                                _("%sChannel created on %s"),
+                                weechat_prefix ("info"),
+                                ctime (&datetime));
             }
             ptr_channel->display_creation_date = 0;
         }
         else
         {
-            gui_chat_printf_error_nolog (server->buffer,
-                                    _("%s cannot identify date/time for "
-                                      "\"%s\" command\n"),
-                                    weechat_prefix ("error"), "329");
+            weechat_printf (server->buffer,
+                            _("%sirc: cannot identify date/time for \"%s\" "
+                              "command"),
+                            weechat_prefix ("error"), "329");
             return WEECHAT_RC_ERROR;
         }
     }
     else
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot identify channel for "
-                                  "\"%s\" command\n"),
-                                weechat_prefix ("error"), "329");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot identify channel for \"%s\" "
+                          "command"),
+                        weechat_prefix ("error"), "329");
         return WEECHAT_RC_ERROR;
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3931,20 +4014,25 @@ irc_protocol_cmd_331 (struct t_irc_server *server, char *irc_message, char *host
         }
         else
         {
-            gui_chat_printf_error_nolog (server->buffer,
-                                    _("%s channel \"%s\" not found for "
-                                      "\"%s\" command\n"),
-                                    weechat_prefix ("error"), "", "331");
+            weechat_printf (server->buffer,
+                            _("%sirc: channel \"%s\" not found for \"%s\" "
+                              "command"),
+                            weechat_prefix ("error"), "", "331");
             return WEECHAT_RC_ERROR;
         }
         
         ptr_channel = irc_channel_search (server, pos_channel);
         if (!ignore)
-            gui_chat_printf_info ((ptr_channel) ? ptr_channel->buffer : NULL,
-                             _("No topic set for %s%s\n"),
-                             GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                             pos_channel);
+        {
+            weechat_printf ((ptr_channel) ?
+                            ptr_channel->buffer : server->buffer,
+                            _("%sNo topic set for %s%s"),
+                            weechat_prefix ("info"),
+                            IRC_COLOR_CHAT_CHANNEL,
+                            pos_channel);
+        }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -3992,25 +4080,29 @@ irc_protocol_cmd_332 (struct t_irc_server *server, char *irc_message, char *host
             
             if (!ignore)
             {
-                gui_chat_printf_info (ptr_buffer, _("Topic for %s%s%s is: "),
-                                 GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                 pos,
-                                 GUI_COLOR(GUI_COLOR_CHAT));
-                gui_chat_printf (ptr_buffer, "\"%s%s\"\n", pos2, GUI_NO_COLOR);
+                weechat_printf (ptr_buffer,
+                                _("%sTopic for %s%s%s is: \"%s%s\""),
+                                weechat_prefix ("info"),
+                                IRC_COLOR_CHAT_CHANNEL,
+                                pos,
+                                IRC_COLOR_CHAT,
+                                pos2,
+                                IRC_COLOR_CHAT);
             }
             
-            if (ptr_channel)
-                gui_chat_draw_title (ptr_buffer, 1);
+            //if (ptr_channel)
+            //    gui_chat_draw_title (ptr_buffer, 1);
         }
     }
     else
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot identify channel for \"%s\" "
-                                  "command\n"),
-                                weechat_prefix ("error"), "332");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot identify channel for \"%s\" "
+                          "command"),
+                        weechat_prefix ("error"), "332");
         return WEECHAT_RC_ERROR;
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -4060,12 +4152,13 @@ irc_protocol_cmd_333 (struct t_irc_server *server, char *irc_message, char *host
                 if (!ignore)
                 {
                     datetime = (time_t)(atol (pos_date));
-                    gui_chat_printf_info (ptr_buffer,
-                                     _("Topic set by %s%s%s, %s"),
-                                     GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                     pos_nick,
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     ctime (&datetime));
+                    weechat_printf (ptr_buffer,
+                                    _("%sTopic set by %s%s%s, %s"),
+                                    weechat_prefix ("info"),
+                                    IRC_COLOR_CHAT_NICK,
+                                    pos_nick,
+                                    IRC_COLOR_CHAT,
+                                    ctime (&datetime));
                 }
             }
             else
@@ -4076,12 +4169,13 @@ irc_protocol_cmd_333 (struct t_irc_server *server, char *irc_message, char *host
     }
     else
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot identify channel for \"%s\" "
-                                  "command\n"),
-                                weechat_prefix ("error"), "333");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot identify channel for \"%s\" "
+                          "command"),
+                        weechat_prefix ("error"), "333");
         return WEECHAT_RC_ERROR;
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -4125,22 +4219,23 @@ irc_protocol_cmd_338 (struct t_irc_server *server, char *irc_message, char *host
                     if (pos_message[0] == ':')
                         pos_message++;
                     
-                    gui_chat_printf_server (server->buffer,
-                                       "%s[%s%s%s] %s%s %s%s %s%s\n",
-                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                       GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                       pos_nick,
-                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                       GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                       pos_nick,
-                                       GUI_COLOR(GUI_COLOR_CHAT),
-                                       pos_message,
-                                       GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                       pos_host);
+                    weechat_printf (server->buffer,
+                                    "%s[%s%s%s] %s%s %s%s %s%s\n",
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT_NICK,
+                                    pos_nick,
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT_NICK,
+                                    pos_nick,
+                                    IRC_COLOR_CHAT,
+                                    pos_message,
+                                    IRC_COLOR_CHAT_HOST,
+                                    pos_host);
                 }
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -4180,36 +4275,37 @@ irc_protocol_cmd_341 (struct t_irc_server *server, char *irc_message, char *host
                 if (pos_channel[0] == ':')
                     pos_channel++;
                 
-                gui_chat_printf_server (server->buffer,
-                                   _("%s%s%s has invited %s%s%s on %s%s\n"),
-                                   GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                   arguments,
-                                   GUI_COLOR(GUI_COLOR_CHAT),
-                                   GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                   pos_nick,
-                                   GUI_COLOR(GUI_COLOR_CHAT),
-                                   GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                   pos_channel);
-                gui_status_draw (gui_current_window->buffer, 1);
+                weechat_printf (server->buffer,
+                                _("%s%s%s has invited %s%s%s on %s%s"),
+                                IRC_COLOR_CHAT_NICK,
+                                arguments,
+                                IRC_COLOR_CHAT,
+                                IRC_COLOR_CHAT_NICK,
+                                pos_nick,
+                                IRC_COLOR_CHAT,
+                                IRC_COLOR_CHAT_CHANNEL,
+                                pos_channel);
+                //gui_status_draw (gui_current_window->buffer, 1);
             }
         }
         else
         {
-            gui_chat_printf_error_nolog (server->buffer,
-                                    _("%s cannot identify channel for \"%s\" "
-                                      "command\n"),
-                                    weechat_prefix ("error"), "341");
+            weechat_printf (server->buffer,
+                            _("%sirc: cannot identify channel for \"%s\" "
+                              "command"),
+                            weechat_prefix ("error"), "341");
             return WEECHAT_RC_ERROR;
         }
     }
     else
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot identify nickname for \"%s\" "
-                                  "command\n"),
-                                weechat_prefix ("error"), "341");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot identify nickname for \"%s\" "
+                          "command"),
+                        weechat_prefix ("error"), "341");
         return WEECHAT_RC_ERROR;
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -4244,16 +4340,17 @@ irc_protocol_cmd_344 (struct t_irc_server *server, char *irc_message, char *host
                 while (pos_host[0] == ' ')
                     pos_host++;
                 
-                gui_chat_printf_server (server->buffer,
-                                   _("Channel reop %s%s%s: %s%s\n"),
-                                   GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                   pos_channel,
-                                   GUI_COLOR(GUI_COLOR_CHAT),
-                                   GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                   pos_host);
+                weechat_printf (server->buffer,
+                                _("Channel reop %s%s%s: %s%s"),
+                                IRC_COLOR_CHAT_CHANNEL,
+                                pos_channel,
+                                IRC_COLOR_CHAT,
+                                IRC_COLOR_CHAT_HOST,
+                                pos_host);
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -4287,18 +4384,21 @@ irc_protocol_cmd_345 (struct t_irc_server *server, char *irc_message, char *host
         pos[0] = '\0';
         pos++;
         if (!ignore)
-            gui_chat_printf_server (server->buffer,
-                               "%s%s %s%s\n",
-                               GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                               arguments,
-                               GUI_COLOR(GUI_COLOR_CHAT),
-                               pos);
+        {
+            weechat_printf (server->buffer,
+                            "%s%s %s%s",
+                            IRC_COLOR_CHAT_CHANNEL,
+                            arguments,
+                            IRC_COLOR_CHAT,
+                            pos);
+        }
     }
     else
     {
         if (!ignore)
-            gui_chat_printf_server (server->buffer, "%s\n", arguments);
+            weechat_printf (server->buffer, "%s", arguments);
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -4325,9 +4425,9 @@ irc_protocol_cmd_348 (struct t_irc_server *server, char *irc_message, char *host
     pos_channel = strchr (arguments, ' ');
     if (!pos_channel)
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot parse \"%s\" command\n"),
-                                weechat_prefix ("error"), "348");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "348");
         return WEECHAT_RC_ERROR;
     }
     pos_channel[0] = '\0';
@@ -4339,9 +4439,9 @@ irc_protocol_cmd_348 (struct t_irc_server *server, char *irc_message, char *host
     pos_exception = strchr (pos_channel, ' ');
     if (!pos_exception)
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot parse \"%s\" command\n"),
-                                weechat_prefix ("error"), "348");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "348");
         return WEECHAT_RC_ERROR;
     }
     pos_exception[0] = '\0';
@@ -4376,48 +4476,48 @@ irc_protocol_cmd_348 (struct t_irc_server *server, char *irc_message, char *host
     
     if (!ignore)
     {
-        gui_chat_printf_info (buffer,
-                         _("%s[%s%s%s]%s exception %s%s%s"),
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                         pos_channel,
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                         pos_exception,
-                         GUI_COLOR(GUI_COLOR_CHAT));
+        weechat_printf (buffer,
+                        _("%s%s[%s%s%s]%s exception %s%s%s"),
+                        weechat_prefix ("info"),
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_CHAT_CHANNEL,
+                        pos_channel,
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_CHAT,
+                        IRC_COLOR_CHAT_HOST,
+                        pos_exception,
+                        IRC_COLOR_CHAT);
         if (pos_user)
         {
             pos = strchr (pos_user, '!');
             if (pos)
             {
                 pos[0] = '\0';
-                gui_chat_printf (buffer,
-                            _(" by %s%s %s(%s%s%s)"),
-                            GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                            pos_user,
-                            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                            GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                            pos + 1,
-                            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                weechat_printf (buffer,
+                                _(" by %s%s %s(%s%s%s)"),
+                                IRC_COLOR_CHAT_NICK,
+                                pos_user,
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT_HOST,
+                                pos + 1,
+                                IRC_COLOR_CHAT_DELIMITERS);
             }
             else
-                gui_chat_printf (buffer,
-                            _(" by %s%s"),
-                            GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                            pos_user);
+                weechat_printf (buffer,
+                                _(" by %s%s"),
+                                IRC_COLOR_CHAT_NICK,
+                                pos_user);
         }
         if (pos_date)
         {
             datetime = (time_t)(atol (pos_date));
-            gui_chat_printf_nolog (buffer, NULL, -1,
-                              "%s, %s",
-                              GUI_COLOR(GUI_COLOR_CHAT),
-                              ctime (&datetime));
+            weechat_printf (buffer,
+                            "%s, %s",
+                            IRC_COLOR_CHAT,
+                            ctime (&datetime));
         }
-        else
-            gui_chat_printf_nolog (buffer, NULL, -1, "\n");
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -4442,9 +4542,9 @@ irc_protocol_cmd_349 (struct t_irc_server *server, char *irc_message, char *host
     pos_channel = strchr (arguments, ' ');
     if (!pos_channel)
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot parse \"%s\" command\n"),
-                                weechat_prefix ("error"), "349");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "349");
         return WEECHAT_RC_ERROR;
     }
     pos_channel[0] = '\0';
@@ -4455,9 +4555,9 @@ irc_protocol_cmd_349 (struct t_irc_server *server, char *irc_message, char *host
     pos_msg = strchr (pos_channel, ' ');
     if (!pos_msg)
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot parse \"%s\" command\n"),
-                                weechat_prefix ("error"), "349");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "349");
         return WEECHAT_RC_ERROR;
     }
     pos_msg[0] = '\0';
@@ -4472,15 +4572,16 @@ irc_protocol_cmd_349 (struct t_irc_server *server, char *irc_message, char *host
     
     if (!ignore)
     {
-        gui_chat_printf_info (buffer,
-                         "%s[%s%s%s] %s%s\n",
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                         pos_channel,
-                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         GUI_COLOR(GUI_COLOR_CHAT),
-                         pos_msg);
+        weechat_printf (buffer,
+                        "%s[%s%s%s] %s%s",
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_CHAT_CHANNEL,
+                        pos_channel,
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_CHAT,
+                        pos_msg);
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -4520,10 +4621,11 @@ irc_protocol_cmd_351 (struct t_irc_server *server, char *irc_message, char *host
     if (!ignore)
     {
         if (pos2)
-            gui_chat_printf_server (server->buffer, "%s %s\n", pos, pos2);
+            weechat_printf (server->buffer, "%s %s", pos, pos2);
         else
-            gui_chat_printf_server (server->buffer, "%s\n", pos);
+            weechat_printf (server->buffer, "%s", pos);
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -4624,25 +4726,25 @@ irc_protocol_cmd_352 (struct t_irc_server *server, char *irc_message, char *host
                                     
                                     if (!ignore)
                                     {
-                                        gui_chat_printf_server (server->buffer,
-                                                           _("%s%s%s on %s%s%s "
-                                                             "%s %s %s%s@%s "
-                                                             "%s(%s%s%s)\n"),
-                                                           GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                                           pos_nick,
-                                                           GUI_COLOR(GUI_COLOR_CHAT),
-                                                           GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                                           pos_channel,
-                                                           GUI_COLOR(GUI_COLOR_CHAT),
-                                                           pos_attr,
-                                                           pos_hopcount,
-                                                           GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                                           pos_user,
-                                                           pos_host,
-                                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                                           GUI_COLOR(GUI_COLOR_CHAT),
-                                                           pos_realname,
-                                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                                        weechat_printf (server->buffer,
+                                                        _("%s%s%s on %s%s%s "
+                                                          "%s %s %s%s@%s "
+                                                          "%s(%s%s%s)"),
+                                                        IRC_COLOR_CHAT_NICK,
+                                                        pos_nick,
+                                                        IRC_COLOR_CHAT,
+                                                        IRC_COLOR_CHAT_CHANNEL,
+                                                        pos_channel,
+                                                        IRC_COLOR_CHAT,
+                                                        pos_attr,
+                                                        pos_hopcount,
+                                                        IRC_COLOR_CHAT_HOST,
+                                                        pos_user,
+                                                        pos_host,
+                                                        IRC_COLOR_CHAT_DELIMITERS,
+                                                        IRC_COLOR_CHAT,
+                                                        pos_realname,
+                                                        IRC_COLOR_CHAT_DELIMITERS);
                                     }
                                 }
                             }
@@ -4652,6 +4754,7 @@ irc_protocol_cmd_352 (struct t_irc_server *server, char *irc_message, char *host
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -4663,10 +4766,10 @@ int
 irc_protocol_cmd_353 (struct t_irc_server *server, char *irc_message, char *host,
                       char *nick, char *arguments, int ignore, int highlight)
 {
-    char *pos, *pos_nick;
+    char *pos, *pos_nick, *color;
     int is_chanowner, is_chanadmin, is_chanadmin2, is_op, is_halfop;
     int has_voice, is_chanuser;
-    int prefix_found, color;
+    int prefix_found;
     struct t_irc_channel *ptr_channel;
     struct t_gui_buffer *ptr_buffer;
     
@@ -4707,9 +4810,9 @@ irc_protocol_cmd_353 (struct t_irc_server *server, char *irc_message, char *host
             pos++;
         if (pos[0] != ':')
         {
-            gui_chat_printf_error_nolog (server->buffer,
-                                    _("%s cannot parse \"%s\" command\n"),
-                                    weechat_prefix ("error"), "353");
+            weechat_printf (server->buffer,
+                            _("%sirc: cannot parse \"%s\" command"),
+                            weechat_prefix ("error"), "353");
             return WEECHAT_RC_ERROR;
         }
         
@@ -4717,12 +4820,12 @@ irc_protocol_cmd_353 (struct t_irc_server *server, char *irc_message, char *host
         if (!ignore && !ptr_channel)
         {
             /* display users on channel */
-            gui_chat_printf_server (ptr_buffer,
-                               _("Nicks %s%s%s: %s["),
-                               GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                               arguments,
-                               GUI_COLOR(GUI_COLOR_CHAT),
-                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+            weechat_printf (ptr_buffer,
+                            _("Nicks %s%s%s: %s["),
+                            IRC_COLOR_CHAT_CHANNEL,
+                            arguments,
+                            IRC_COLOR_CHAT,
+                            IRC_COLOR_CHAT_DELIMITERS);
         }
         
         pos++;
@@ -4750,39 +4853,39 @@ irc_protocol_cmd_353 (struct t_irc_server *server, char *irc_message, char *host
                         {
                             case '@': /* op */
                                 is_op = 1;
-                                color = GUI_COLOR_NICKLIST_PREFIX1;
+                                color = IRC_COLOR_NICKLIST_PREFIX1;
                                 break;
                             case '~': /* channel owner */
                                 is_chanowner = 1;
-                                color = GUI_COLOR_NICKLIST_PREFIX1;
+                                color = IRC_COLOR_NICKLIST_PREFIX1;
                                 break;
                             case '&': /* channel admin */
                                 is_chanadmin = 1;
-                                color = GUI_COLOR_NICKLIST_PREFIX1;
+                                color = IRC_COLOR_NICKLIST_PREFIX1;
                                 break;
                             case '!': /* channel admin (2) */
                                 is_chanadmin2 = 1;
-                                color = GUI_COLOR_NICKLIST_PREFIX1;
+                                color = IRC_COLOR_NICKLIST_PREFIX1;
                                 break;
                             case '%': /* half-op */
                                 is_halfop = 1;
-                                color = GUI_COLOR_NICKLIST_PREFIX2;
+                                color = IRC_COLOR_NICKLIST_PREFIX2;
                                 break;
                             case '+': /* voice */
                                 has_voice = 1;
-                                color = GUI_COLOR_NICKLIST_PREFIX3;
+                                color = IRC_COLOR_NICKLIST_PREFIX3;
                                 break;
                             case '-': /* channel user */
                                 is_chanuser = 1;
-                                color = GUI_COLOR_NICKLIST_PREFIX4;
+                                color = IRC_COLOR_NICKLIST_PREFIX4;
                                 break;
                             default:
-                                color = GUI_COLOR_CHAT;
+                                color = IRC_COLOR_CHAT;
                                 break;
                         }
                         if (!ignore && !ptr_channel)
-                            gui_chat_printf (ptr_buffer, "%s%c",
-                                        GUI_COLOR(color), pos[0]);
+                            weechat_printf (ptr_buffer, "%s%c",
+                                            color, pos[0]);
                     }
                     if (prefix_found)
                         pos++;
@@ -4800,44 +4903,44 @@ irc_protocol_cmd_353 (struct t_irc_server *server, char *irc_message, char *host
                                        is_chanowner, is_chanadmin, is_chanadmin2,
                                        is_op, is_halfop, has_voice, is_chanuser))
                     {
-                        gui_chat_printf_error_nolog (server->buffer,
-                                                _("%s cannot create nick \"%s\" "
-                                                  "for channel \"%s\"\n"),
-                                                weechat_prefix ("error"), pos_nick,
-                                                ptr_channel->name);
+                        weechat_printf (server->buffer,
+                                        _("%sirc: cannot create nick \"%s\" "
+                                          "for channel \"%s\""),
+                                        weechat_prefix ("error"), pos_nick,
+                                        ptr_channel->name);
                     }
                 }
                 else
                 {
                     if (!ignore)
                     {
-                        gui_chat_printf (ptr_buffer, "%s%s",
-                                    GUI_COLOR(GUI_COLOR_CHAT), pos_nick);
+                        weechat_printf (ptr_buffer, "%s%s",
+                                        IRC_COLOR_CHAT, pos_nick);
                         if (pos && pos[0])
-                            gui_chat_printf (ptr_buffer, " ");
+                            weechat_printf (ptr_buffer, " ");
                     }
                 }
             }
         }
         if (ptr_channel)
         {
-            gui_nicklist_draw (ptr_channel->buffer, 1, 1);
-            gui_status_draw (ptr_channel->buffer, 1);
+            //gui_nicklist_draw (ptr_channel->buffer, 1, 1);
+            //gui_status_draw (ptr_channel->buffer, 1);
         }
         else
         {
             if (!ignore)
-                gui_chat_printf (ptr_buffer, "%s]\n",
-                            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                weechat_printf (ptr_buffer, "%s]", IRC_COLOR_CHAT_DELIMITERS);
         }
     }
     else
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot parse \"%s\" command\n"),
-                                weechat_prefix ("error"), "353");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "353");
         return WEECHAT_RC_ERROR;
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -4851,7 +4954,7 @@ irc_protocol_cmd_366 (struct t_irc_server *server, char *irc_message, char *host
 {
     char *pos, *pos2;
     struct t_irc_channel *ptr_channel;
-    struct t_irc_nick *ptr_nick;
+    //struct t_irc_nick *ptr_nick;
     int num_nicks, num_op, num_halfop, num_voice, num_normal;
     
     /* make C compiler happy */
@@ -4881,74 +4984,78 @@ irc_protocol_cmd_366 (struct t_irc_server *server, char *irc_message, char *host
                 if (!ignore)
                 {
                     /* display users on channel */
-                    gui_chat_printf_server (ptr_channel->buffer,
-                                       _("Nicks %s%s%s: %s["),
-                                       GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                       ptr_channel->name,
-                                       GUI_COLOR(GUI_COLOR_CHAT),
-                                       GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                    weechat_printf (ptr_channel->buffer,
+                                    _("Nicks %s%s%s: %s["),
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    ptr_channel->name,
+                                    IRC_COLOR_CHAT,
+                                    IRC_COLOR_CHAT_DELIMITERS);
                     
+                    /*
                     for (ptr_nick = ptr_channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
                     {
                         irc_display_nick (ptr_channel->buffer, ptr_nick, NULL,
                                           GUI_MSG_TYPE_MSG, 0,
-                                          GUI_COLOR(GUI_COLOR_CHAT), 1);
+                                          IRC_COLOR_CHAT, 1);
                         if (ptr_nick != ptr_channel->last_nick)
                             gui_chat_printf (ptr_channel->buffer, " ");
                     }
-                    gui_chat_printf (ptr_channel->buffer, "%s]\n",
-                                GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                    */
+                    weechat_printf (ptr_channel->buffer, "%s]",
+                                    IRC_COLOR_CHAT_DELIMITERS);
                     
                     /* display number of nicks, ops, halfops & voices on the channel */
                     irc_nick_count (ptr_channel, &num_nicks, &num_op, &num_halfop, &num_voice,
                                     &num_normal);
-                    gui_chat_printf_info (ptr_channel->buffer,
-                                     _("Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, "
-                                       "%s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"),
-                                     GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                     ptr_channel->name,
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                     num_nicks,
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     (num_nicks > 1) ? _("nicks") : _("nick"),
-                                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                     GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                     num_op,
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     (num_op > 1) ? _("ops") : _("op"),
-                                     GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                     num_halfop,
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     (num_halfop > 1) ? _("halfops") : _("halfop"),
-                                     GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                     num_voice,
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     (num_voice > 1) ? _("voices") : _("voice"),
-                                     GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                     num_normal,
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     _("normal"),
-                                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                    weechat_printf (ptr_channel->buffer,
+                                    _("%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, "
+                                      "%s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"),
+                                    weechat_prefix ("info"),
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    ptr_channel->name,
+                                    IRC_COLOR_CHAT,
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    num_nicks,
+                                    IRC_COLOR_CHAT,
+                                    (num_nicks > 1) ? _("nicks") : _("nick"),
+                                    IRC_COLOR_CHAT_DELIMITERS,
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    num_op,
+                                    IRC_COLOR_CHAT,
+                                    (num_op > 1) ? _("ops") : _("op"),
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    num_halfop,
+                                    IRC_COLOR_CHAT,
+                                    (num_halfop > 1) ? _("halfops") : _("halfop"),
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    num_voice,
+                                    IRC_COLOR_CHAT,
+                                    (num_voice > 1) ? _("voices") : _("voice"),
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    num_normal,
+                                    IRC_COLOR_CHAT,
+                                    _("normal"),
+                                    IRC_COLOR_CHAT_DELIMITERS);
                 }
-                irc_cmd_mode_server (server, ptr_channel->name);
+                irc_command_mode_server (server, ptr_channel->name);
                 irc_channel_check_away (server, ptr_channel, 1);
             }
             else
             {
                 if (!ignore)
                 {
-                    gui_chat_printf_info (gui_current_window->buffer,
-                                     "%s%s%s: %s\n",
-                                     GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                     pos,
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     pos2);
+                    weechat_printf (server->buffer,
+                                    "%s%s%s: %s",
+                                    IRC_COLOR_CHAT_CHANNEL,
+                                    pos,
+                                    IRC_COLOR_CHAT,
+                                    pos2);
                 }
                 return WEECHAT_RC_OK;
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -4975,9 +5082,9 @@ irc_protocol_cmd_367 (struct t_irc_server *server, char *irc_message, char *host
     pos_channel = strchr (arguments, ' ');
     if (!pos_channel)
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot parse \"%s\" command\n"),
-                                weechat_prefix ("error"), "367");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "367");
         return WEECHAT_RC_ERROR;
     }
     pos_channel[0] = '\0';
@@ -4989,9 +5096,9 @@ irc_protocol_cmd_367 (struct t_irc_server *server, char *irc_message, char *host
     pos_ban = strchr (pos_channel, ' ');
     if (!pos_ban)
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot parse \"%s\" command\n"),
-                                weechat_prefix ("error"), "367");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "367");
         return WEECHAT_RC_ERROR;
     }
     pos_ban[0] = '\0';
@@ -5027,55 +5134,55 @@ irc_protocol_cmd_367 (struct t_irc_server *server, char *irc_message, char *host
     {
         if (pos_user)
         {
-            gui_chat_printf_info_nolog (buffer,
-                                   _("%s[%s%s%s] %s%s%s banned by "),
-                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                   GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                   pos_channel,
-                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                   GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                   pos_ban,
-                                   GUI_COLOR(GUI_COLOR_CHAT));
+            weechat_printf (buffer,
+                            _("%s[%s%s%s] %s%s%s banned by "),
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_CHAT_CHANNEL,
+                            pos_channel,
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_CHAT_HOST,
+                            pos_ban,
+                            IRC_COLOR_CHAT);
             pos = strchr (pos_user, '!');
             if (pos)
             {
                 pos[0] = '\0';
-                gui_chat_printf (buffer,
-                            "%s%s %s(%s%s%s)",
-                            GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                            pos_user,
-                            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                            GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                            pos + 1,
-                            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
+                weechat_printf (buffer,
+                                "%s%s %s(%s%s%s)",
+                                IRC_COLOR_CHAT_NICK,
+                                pos_user,
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT_HOST,
+                                pos + 1,
+                                IRC_COLOR_CHAT_DELIMITERS);
             }
             else
-                gui_chat_printf (buffer,
-                            "%s%s",
-                            GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                            pos_user);
+                weechat_printf (buffer,
+                                "%s%s",
+                                IRC_COLOR_CHAT_NICK,
+                                pos_user);
             if (pos_date)
             {
                 datetime = (time_t)(atol (pos_date));
-                gui_chat_printf (buffer,
-                            "%s, %s",
-                            GUI_COLOR(GUI_COLOR_CHAT),
-                            ctime (&datetime));
+                weechat_printf (buffer,
+                                "%s, %s",
+                                IRC_COLOR_CHAT,
+                                ctime (&datetime));
             }
-            else
-                gui_chat_printf (buffer, "\n");
         }
         else
-            gui_chat_printf_info_nolog (buffer,
-                                   _("%s[%s%s%s] %s%s%s banned\n"),
-                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                   GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                                   pos_channel,
-                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                   GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                   pos_ban,
-                                   GUI_COLOR(GUI_COLOR_CHAT));
-    }    
+            weechat_printf (buffer,
+                            _("%s%s[%s%s%s] %s%s%s banned"),
+                            weechat_prefix ("info"),
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_CHAT_CHANNEL,
+                            pos_channel,
+                            IRC_COLOR_CHAT_DELIMITERS,
+                            IRC_COLOR_CHAT_HOST,
+                            pos_ban,
+                            IRC_COLOR_CHAT);
+    }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -5100,9 +5207,9 @@ irc_protocol_cmd_368 (struct t_irc_server *server, char *irc_message, char *host
     pos_channel = strchr (arguments, ' ');
     if (!pos_channel)
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot parse \"%s\" command\n"),
-                                weechat_prefix ("error"), "368");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "368");
         return WEECHAT_RC_ERROR;
     }
     pos_channel[0] = '\0';
@@ -5113,9 +5220,9 @@ irc_protocol_cmd_368 (struct t_irc_server *server, char *irc_message, char *host
     pos_msg = strchr (pos_channel, ' ');
     if (!pos_msg)
     {
-        gui_chat_printf_error_nolog (server->buffer,
-                                _("%s cannot parse \"%s\" command\n"),
-                                weechat_prefix ("error"), "368");
+        weechat_printf (server->buffer,
+                        _("%sirc: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "368");
         return WEECHAT_RC_ERROR;
     }
     pos_msg[0] = '\0';
@@ -5130,15 +5237,17 @@ irc_protocol_cmd_368 (struct t_irc_server *server, char *irc_message, char *host
     
     if (!ignore)
     {
-        gui_chat_printf_info_nolog (buffer,
-                               "%s[%s%s%s] %s%s\n",
-                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                               GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
-                               pos_channel,
-                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                               GUI_COLOR(GUI_COLOR_CHAT),
-                               pos_msg);
-    }    
+        weechat_printf (buffer,
+                        "%s%s[%s%s%s] %s%s",
+                        weechat_prefix ("info"),
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_CHAT_CHANNEL,
+                        pos_channel,
+                        IRC_COLOR_CHAT_DELIMITERS,
+                        IRC_COLOR_CHAT,
+                        pos_msg);
+    }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -5159,9 +5268,11 @@ irc_protocol_cmd_432 (struct t_irc_server *server, char *irc_message, char *host
     {
         if (strcmp (server->nick, server->nick1) == 0)
         {
-            gui_chat_printf_info (server->buffer,
-                             _("%s: trying 2nd nickname \"%s\"\n"),
-                             PACKAGE_NAME, server->nick2);
+            weechat_printf (server->buffer,
+                            _("%sirc: nickname \"%s\" is invalid, "
+                              "trying 2nd nickname \"%s\""),
+                            weechat_prefix ("info"), server->nick,
+                            server->nick2);
             free (server->nick);
             server->nick = strdup (server->nick2);
         }
@@ -5169,9 +5280,11 @@ irc_protocol_cmd_432 (struct t_irc_server *server, char *irc_message, char *host
         {
             if (strcmp (server->nick, server->nick2) == 0)
             {
-                gui_chat_printf_info (server->buffer,
-                                 _("%s: trying 3rd nickname \"%s\"\n"),
-                                 PACKAGE_NAME, server->nick3);
+                weechat_printf (server->buffer,
+                                _("%sirc: nickname \"%s\" is invalid, "
+                                  "trying 3rd nickname \"%s\""),
+                                weechat_prefix ("info"), server->nick,
+                                server->nick3);
                 free (server->nick);
                 server->nick = strdup (server->nick3);
             }
@@ -5179,19 +5292,21 @@ irc_protocol_cmd_432 (struct t_irc_server *server, char *irc_message, char *host
             {
                 if (strcmp (server->nick, server->nick3) == 0)
                 {
-                    gui_chat_printf_info (server->buffer,
-                                     _("%s: all declared nicknames are already in "
-                                       "use or invalid, closing connection with "
-                                       "server!\n"),
-                                     PACKAGE_NAME);
+                    weechat_printf (server->buffer,
+                                    _("%sirc: all declared nicknames are "
+                                      "already in use or invalid, closing "
+                                      "connection with server!"),
+                                    weechat_prefix ("error"));
                     irc_server_disconnect (server, 1);
                     return WEECHAT_RC_OK;
                 }
                 else
                 {
-                    gui_chat_printf_info (server->buffer,
-                                     _("%s: trying 1st nickname \"%s\"\n"),
-                                     PACKAGE_NAME, server->nick1);
+                    weechat_printf (server->buffer,
+                                    _("%sirc: nickname \"%s\" is invalid, "
+                                      "trying 1st nickname \"%s\""),
+                                    weechat_prefix ("info"), server->nick,
+                                    server->nick1);
                     free (server->nick);
                     server->nick = strdup (server->nick1);
                 }
@@ -5199,6 +5314,7 @@ irc_protocol_cmd_432 (struct t_irc_server *server, char *irc_message, char *host
         }
         irc_server_sendf (server, "NICK %s", server->nick);
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -5216,10 +5332,11 @@ irc_protocol_cmd_433 (struct t_irc_server *server, char *irc_message, char *host
     {
         if (strcmp (server->nick, server->nick1) == 0)
         {
-            gui_chat_printf_info (server->buffer,
-                             _("%s: nickname \"%s\" is already in use, "
-                               "trying 2nd nickname \"%s\"\n"),
-                             PACKAGE_NAME, server->nick, server->nick2);
+            weechat_printf (server->buffer,
+                            _("%sirc: nickname \"%s\" is already in use, "
+                              "trying 2nd nickname \"%s\""),
+                            weechat_prefix ("info"), server->nick,
+                            server->nick2);
             free (server->nick);
             server->nick = strdup (server->nick2);
         }
@@ -5227,10 +5344,10 @@ irc_protocol_cmd_433 (struct t_irc_server *server, char *irc_message, char *host
         {
             if (strcmp (server->nick, server->nick2) == 0)
             {
-                gui_chat_printf_info (server->buffer,
-                                 _("%s: nickname \"%s\" is already in use, "
-                                   "trying 3rd nickname \"%s\"\n"),
-                                 PACKAGE_NAME, server->nick, server->nick3);
+                weechat_printf (server->buffer,
+                                _("%sirc: nickname \"%s\" is already in use, "
+                                  "trying 3rd nickname \"%s\""),
+                                PACKAGE_NAME, server->nick, server->nick3);
                 free (server->nick);
                 server->nick = strdup (server->nick3);
             }
@@ -5238,18 +5355,19 @@ irc_protocol_cmd_433 (struct t_irc_server *server, char *irc_message, char *host
             {
                 if (strcmp (server->nick, server->nick3) == 0)
                 {
-                    gui_chat_printf_error (server->buffer,
-                                      _("%s: all declared nicknames are already in use, "
-                                        "closing connection with server!\n"),
-                                      PACKAGE_NAME);
+                    weechat_printf (server->buffer,
+                                    _("%sirc: all declared nicknames are "
+                                      "already in use, closing connection "
+                                      "with server!"),
+                                    weechat_prefix ("error"));
                     irc_server_disconnect (server, 1);
                     return WEECHAT_RC_OK;
                 }
                 else
                 {
-                    gui_chat_printf_info (server->buffer,
-                                     _("%s: nickname \"%s\" is already in use, "
-                                       "trying 1st nickname \"%s\"\n"),
+                    weechat_printf (server->buffer,
+                                    _("%sirc: nickname \"%s\" is already in use, "
+                                      "trying 1st nickname \"%s\""),
                                      PACKAGE_NAME, server->nick, server->nick1);
                     free (server->nick);
                     server->nick = strdup (server->nick1);
@@ -5295,18 +5413,19 @@ irc_protocol_cmd_438 (struct t_irc_server *server, char *irc_message, char *host
             {
                 pos2[0] = '\0';
                 pos2 += 2;
-                gui_chat_printf_server (server->buffer,
-                                   "%s (%s => %s)\n",
-                                   pos2, arguments, pos);
+                weechat_printf (server->buffer,
+                                "%s (%s => %s)",
+                                pos2, arguments, pos);
             }
             else
-                gui_chat_printf_server (server->buffer,
-                                   "%s (%s)\n",
-                                   pos, arguments);
+                weechat_printf (server->buffer,
+                                "%s (%s)",
+                                pos, arguments);
         }
         else
-            gui_chat_printf_server (server->buffer, "%s\n", arguments);
+            weechat_printf (server->buffer, "%s", arguments);
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -5343,16 +5462,17 @@ irc_protocol_cmd_671 (struct t_irc_server *server, char *irc_message, char *host
                 if (pos_message[0] == ':')
                     pos_message++;
                 
-                gui_chat_printf_server (server->buffer,
-                                   "%s[%s%s%s] %s%s\n",
-                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                   GUI_COLOR(GUI_COLOR_CHAT_NICK),
-                                   pos_nick,
-                                   GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                   GUI_COLOR(GUI_COLOR_CHAT),
-                                   pos_message);
+                weechat_printf (server->buffer,
+                                "%s[%s%s%s] %s%s",
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT_NICK,
+                                pos_nick,
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT,
+                                pos_message);
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }

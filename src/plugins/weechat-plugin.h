@@ -151,7 +151,8 @@ struct t_weechat_plugin
     void (*printf_date) (struct t_weechat_plugin *, void *, time_t,
                          char *, ...);
     void (*log_printf) (struct t_weechat_plugin *, char *, ...);
-    void (*print_infobar) (struct t_weechat_plugin *, int, char *, ...);
+    void (*infobar_printf) (struct t_weechat_plugin *, int, char *,
+                            char *, ...);
     void (*infobar_remove) (struct t_weechat_plugin *, int);
     
     /* hooks */
@@ -173,7 +174,7 @@ struct t_weechat_plugin
                                    int (*)(void *, char *, char *, char *),
                                    void *);
     struct t_hook *(*hook_completion) (struct t_weechat_plugin *, char *,
-                                       int (*)(void *, char *, void *),
+                                       int (*)(void *, char *, void *, void *),
                                        void *);
     void (*unhook) (struct t_weechat_plugin *, void *);
     void (*unhook_all) (struct t_weechat_plugin *);
@@ -392,6 +393,11 @@ struct t_weechat_plugin
                                 ##__argz)
 #define weechat_log_printf(__argz...)                           \
     weechat_plugin->log_printf(weechat_plugin, ##__argz)
+#define weechat_infobar_printf(__delay, __color, __argz...)             \
+    weechat_plugin->infobar_printf(weechat_plugin, __delay, __color,    \
+                                   ##__argz)
+#define weechat_infobar_remove(__number)                        \
+    weechat_plugin->infobar_remove(weechat_plugin, __number)
 
 /* hooks */
 #define weechat_hook_command(__command, __description, __args,          \

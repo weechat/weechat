@@ -866,9 +866,12 @@ hook_completion (void *plugin, char *completion,
  */
 
 void
-hook_completion_exec (void *plugin, char *completion, void *list)
+hook_completion_exec (void *plugin, char *completion, void *buffer, void *list)
 {
     struct t_hook *ptr_hook, *next_hook;
+    
+    /* make C compiler happy */
+    (void) plugin;
     
     hook_exec_recursion++;
     
@@ -879,13 +882,12 @@ hook_completion_exec (void *plugin, char *completion, void *list)
         
         if ((ptr_hook->type == HOOK_TYPE_COMPLETION)
             && (!ptr_hook->running)
-            && (ptr_hook->plugin == plugin)
             && (string_strcasecmp (HOOK_COMPLETION(ptr_hook, completion),
                                    completion) == 0))
         {
             ptr_hook->running = 1;
             (void) (HOOK_COMPLETION(ptr_hook, callback))
-                (ptr_hook->callback_data, completion, list);
+                (ptr_hook->callback_data, completion, buffer, list);
             if (ptr_hook->type == HOOK_TYPE_COMPLETION)
                 ptr_hook->running = 0;
         }
@@ -895,7 +897,7 @@ hook_completion_exec (void *plugin, char *completion, void *list)
     
     if (hook_exec_recursion > 0)
         hook_exec_recursion--;
-
+    
     if (hook_exec_recursion == 0)
         hook_remove_deleted ();
 }

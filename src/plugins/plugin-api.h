@@ -136,8 +136,8 @@ extern void plugin_api_printf (struct t_weechat_plugin *, void *,
 extern void plugin_api_printf_date (struct t_weechat_plugin *, void *,
                                     time_t, char *, ...);
 extern void plugin_api_log_printf (struct t_weechat_plugin *, char *, ...);
-extern void plugin_api_print_infobar (struct t_weechat_plugin *, int,
-                                      char *, ...);
+extern void plugin_api_infobar_printf (struct t_weechat_plugin *, int, char *,
+                                       char *, ...);
 extern void plugin_api_infobar_remove (struct t_weechat_plugin *, int);
 
 /* hooks */
@@ -165,7 +165,7 @@ extern struct t_hook *plugin_api_hook_config (struct t_weechat_plugin *,
                                               void *);
 extern struct t_hook *plugin_api_hook_completion (struct t_weechat_plugin *,
                                                   char *,
-                                                  int (*)(void *, char *, void *),
+                                                  int (*)(void *, char *, void *, void *),
                                                   void *);
 extern void plugin_api_unhook (struct t_weechat_plugin *, void *);
 extern void plugin_api_unhook_all (struct t_weechat_plugin *);

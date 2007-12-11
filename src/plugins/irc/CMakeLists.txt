@@ -15,12 +15,14 @@
 #
 
 SET(LIB_PROTOCOL_IRC_SRC irc.c irc.h irc-channel.c irc-channel.h irc-command.c
-irc-command.h irc-config.c irc-config.h irc-server.c irc-server.h)
+irc-command.h irc-completion.c irc-completion.h irc-config.c irc-config.h
+irc-server.c irc-server.h)
 
 #SET(LIB_PROTOCOL_IRC_SRC irc.c irc.h irc-buffer.c irc-buffer.h irc-channel.c
-#irc-channel.h irc-command.c irc-command.h irc-color.c irc-color.h irc-config.c
-#irc-config.h irc-dcc.c irc-dcc.h irc-display.c irc-input.c irc-log.c irc-mode.c
-#irc-nick.c irc-nick.h irc-protocol.c irc-protocol.h irc-server.c irc-server.h)
+#irc-channel.h irc-command.c irc-command.h irc-completion.c irc-completion.h
+#irc-color.c irc-color.h irc-config.c irc-config.h irc-dcc.c irc-dcc.h
+#irc-display.c irc-input.c irc-log.c irc-mode.c irc-nick.c irc-nick.h
+#irc-protocol.c irc-protocol.h irc-server.c irc-server.h)
 
 CHECK_INCLUDE_FILES("regex.h" HAVE_REGEX_H)
 CHECK_FUNCTION_EXISTS(regexec HAVE_REGEXEC)

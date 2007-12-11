@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* completion.c: completes words according to context (cmd/nick) */
+/* gui-completion.c: completes words according to context */
 
 
 #ifdef HAVE_CONFIG_H
@@ -245,43 +245,38 @@ gui_completion_list_add (struct t_gui_completion *completion, char *word,
 }
 
 /*
- * gui_completion_list_add_channel: add current channel to completion list
+ * gui_completion_list_add_buffers_names: add buffers names to completion list
  */
 
 void
-gui_completion_list_add_channel (struct t_gui_completion *completion)
+gui_completion_list_add_buffers_names (struct t_gui_completion *completion)
 {
-    (void) completion;
-    /*if (completion->channel)
-        gui_completion_list_add (completion,
-                                 ((t_irc_channel *)(completion->channel))->name,
-                                 0, WEELIST_POS_SORT);*/
+    struct t_gui_buffer *ptr_buffer;
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        gui_completion_list_add (completion, ptr_buffer->name,
+                                 0, WEELIST_POS_SORT);
+    }
 }
 
 /*
- * gui_completion_list_add_channels: add server channels to completion list
+ * gui_completion_list_add_buffers_categories: add buffers categories to
+ *                                             completion list
  */
 
 void
-gui_completion_list_add_channels (struct t_gui_completion *completion)
+gui_completion_list_add_buffers_categories (struct t_gui_completion *completion)
 {
-    (void) completion;
-    /*t_irc_server *ptr_server;
-    t_irc_channel *ptr_channel;
-    
-    if (completion->server)
+    struct t_gui_buffer *ptr_buffer;
+
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
     {
-        for (ptr_server = irc_servers; ptr_server;
-             ptr_server = ptr_server->next_server)
-        {
-            for (ptr_channel = ptr_server->channels;
-                 ptr_channel; ptr_channel = ptr_channel->next_channel)
-            {
-                gui_completion_list_add (completion, ptr_channel->name,
-                                         0, WEELIST_POS_SORT);
-            }
-        }
-        }*/
+        gui_completion_list_add (completion, ptr_buffer->category,
+                                 0, WEELIST_POS_SORT);
+    }
 }
 
 /*
@@ -400,25 +395,6 @@ gui_completion_list_add_command_hooks (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_list_add_irc_cmd_recv: add IRC command (received) to
- *                                       completion list
- */
-
-void
-gui_completion_list_add_irc_cmd_recv (struct t_gui_completion *completion)
-{
-    (void) completion;
-    /*int i;
-    
-    for (i = 0; irc_commands[i].name; i++)
-    {
-        if (irc_commands[i].recv_function)
-            gui_completion_list_add(completion, irc_commands[i].name,
-                                    0, WEELIST_POS_SORT);
-                                    }*/
-}
-
-/*
  * gui_completion_list_add_key_cmd: add key commands/functions to completion
  *                                  list
  */
@@ -446,161 +422,6 @@ gui_completion_list_add_self_nick (struct t_gui_completion *completion)
         gui_completion_list_add (completion,
                                  completion->buffer->input_nick,
                                  0, WEELIST_POS_SORT);
-}
-
-/*
- * gui_completion_list_add_server_nicks: add server nicks to completion list
- */
-
-void
-gui_completion_list_add_server_nicks (struct t_gui_completion *completion)
-{
-    (void) completion;
-    /*t_irc_server *ptr_server;
-    t_irc_channel *ptr_channel;
-    t_irc_nick *ptr_nick;
-    
-    if (completion->server)
-    {
-        for (ptr_server = (t_irc_server *)(completion->server); ptr_server;
-             ptr_server = ptr_server->next_server)
-        {
-            for (ptr_channel = ptr_server->channels; ptr_channel;
-                 ptr_channel = ptr_channel->next_channel)
-            {
-                if ((!completion->channel || (t_irc_channel *)(completion->channel) != ptr_channel)
-                    && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL))
-                {
-                    for (ptr_nick = ptr_channel->nicks; ptr_nick;
-                         ptr_nick = ptr_nick->next_nick)
-                    {
-                        gui_completion_list_add (completion, ptr_nick->nick,
-                                                 1, WEELIST_POS_SORT);
-                    }
-                }
-            }
-        }
-        
-        // add current channel nicks at beginning
-        if (completion->channel && (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_CHANNEL))
-        {
-            for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
-                 ptr_nick; ptr_nick = ptr_nick->next_nick)
-            {
-                gui_completion_list_add (completion, ptr_nick->nick,
-                                         1, WEELIST_POS_BEGINNING);
-            }
-        }
-        
-        // add self nick at the end
-        if (completion->server)
-            gui_completion_list_add (completion,
-                                 ((t_irc_server *)(completion->server))->nick,
-                                 1, WEELIST_POS_END);
-        
-        completion->arg_is_nick = 1;
-    }*/
-}
-
-/*
- * gui_completion_list_add_channel_nicks: add channel nicks to completion list
- */
-
-void
-gui_completion_list_add_channel_nicks (struct t_gui_completion *completion)
-{
-    (void) completion;
-    /*t_irc_nick *ptr_nick;
-    struct t_weelist *ptr_weelist;
-    
-    if (completion->channel)
-    {
-        if (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_CHANNEL)
-        {
-            // add channel nicks
-            for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
-                 ptr_nick; ptr_nick = ptr_nick->next_nick)
-            {
-                gui_completion_list_add (completion, ptr_nick->nick,
-                                         1, WEELIST_POS_SORT);
-            }
-            
-            // add nicks speaking recently on this channel
-            if (CONFIG_BOOLEAN(config_look_nick_completion_smart))
-            {
-                for (ptr_weelist = ((t_irc_channel *)(completion->channel))->nicks_speaking;
-                     ptr_weelist; ptr_weelist = ptr_weelist->next_weelist)
-                {
-                    if (irc_nick_search ((t_irc_channel *)(completion->channel),
-                                         ptr_weelist->data))
-                        gui_completion_list_add (completion, ptr_weelist->data,
-                                                 1, WEELIST_POS_BEGINNING);
-                }
-            }
-            
-            // add self nick at the end
-            if (completion->server)
-                gui_completion_list_add (completion,
-                                         ((t_irc_server *)(completion->server))->nick,
-                                         1, WEELIST_POS_END);
-        }
-        if ((((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_PRIVATE)
-            || (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_DCC_CHAT))
-        {
-            gui_completion_list_add (completion,
-                                     ((t_irc_channel *)(completion->channel))->name,
-                                     1, WEELIST_POS_SORT);
-        }
-        completion->arg_is_nick = 1;
-        }*/
-}
-
-/*
- * gui_completion_list_add_channel_nicks_hosts: add channel nicks and hosts to completion list
- */
-
-void
-gui_completion_list_add_channel_nicks_hosts (struct t_gui_completion *completion)
-{
-    (void) completion;
-    /*t_irc_nick *ptr_nick;
-    char *buf;
-    int length;
-    
-    if (completion->channel)
-    {
-        if (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_CHANNEL)
-        {
-            for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
-                 ptr_nick; ptr_nick = ptr_nick->next_nick)
-            {
-                gui_completion_list_add (completion, ptr_nick->nick,
-                                         1, WEELIST_POS_SORT);
-                if (ptr_nick->host)
-                {
-                    length = strlen (ptr_nick->nick) + 1 +
-                        strlen (ptr_nick->host) + 1;
-                    buf = (char *) malloc (length);
-                    if (buf)
-                    {
-                        snprintf (buf, length, "%s!%s",
-                                  ptr_nick->nick, ptr_nick->host);
-                        gui_completion_list_add (completion, buf,
-                                                 1, WEELIST_POS_SORT);
-                        free (buf);
-                    }
-                }
-            }
-        }
-        if ((((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_PRIVATE)
-             || (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_PRIVATE))
-        {
-            gui_completion_list_add (completion,
-                                     ((t_irc_channel *)(completion->channel))->name,
-                                     1, WEELIST_POS_SORT);
-        }
-        completion->arg_is_nick = 1;
-        }*/
 }
 
 /*
@@ -644,19 +465,6 @@ gui_completion_list_add_plugin_option (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_list_add_part: add part message to completion list
- */
-
-void
-gui_completion_list_add_part (struct t_gui_completion *completion)
-{
-    (void) completion;
-    /*if (config_irc_default_msg_part && config_irc_default_msg_part[0])
-        gui_completion_list_add (completion, config_irc_default_msg_part,
-        0, WEELIST_POS_SORT);*/
-}
-
-/*
  * gui_completion_list_add_plugin: add plugin name to completion list
  */
 
@@ -680,69 +488,11 @@ gui_completion_list_add_plugin (struct t_gui_completion *completion)
 void
 gui_completion_list_add_quit (struct t_gui_completion *completion)
 {
-    (void) completion;
-    /*if (config_irc_default_msg_quit && config_irc_default_msg_quit[0])
-        gui_completion_list_add (completion, config_irc_default_msg_quit,
-        0, WEELIST_POS_SORT);*/
-}
-
-/*
- * gui_completion_list_add_server: add current server to completion list
- */
-
-void
-gui_completion_list_add_server (struct t_gui_completion *completion)
-{
-    (void) completion;
-    /*if (completion->server)
+    if (CONFIG_STRING(config_look_default_msg_quit)
+        && CONFIG_STRING(config_look_default_msg_quit)[0])
         gui_completion_list_add (completion,
-                             ((t_irc_server *)(completion->server))->name,
-                             0, WEELIST_POS_SORT);*/
-}
-
-/*
- * gui_completion_list_add_servers: add all servers to completion list
- */
-
-void
-gui_completion_list_add_servers (struct t_gui_completion *completion)
-{
-    (void) completion;
-    /*t_irc_server *ptr_server;
-    
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
-    {
-        gui_completion_list_add (completion, ptr_server->name,
+                                 CONFIG_STRING(config_look_default_msg_quit),
                                  0, WEELIST_POS_SORT);
-                                 }*/
-}
-
-/*
- * gui_completion_list_add_topic: add topic to completion list
- */
-
-void
-gui_completion_list_add_topic (struct t_gui_completion *completion)
-{
-    (void) completion;
-    /*char *string;
-    
-    if (completion->server && completion->channel
-        && ((t_irc_channel *)(completion->channel))->topic
-        && ((t_irc_channel *)(completion->channel))->topic[0])
-    {
-        if (config_irc_colors_send)
-            string = (char *)gui_color_decode_for_user_entry ((unsigned char *)((t_irc_channel *)(completion->channel))->topic);
-        else
-            string = (char *)gui_color_decode ((unsigned char *)((t_irc_channel *)(completion->channel))->topic, 0, 0);
-        gui_completion_list_add (completion,
-                                 (string) ?
-                                 string : ((t_irc_channel *)(completion->channel))->topic,
-                                 0, WEELIST_POS_SORT);
-        if (string)
-            free (string);
-            }*/
 }
 
 /*
@@ -868,6 +618,7 @@ gui_completion_custom (struct t_gui_completion *completion,
 {
     hook_completion_exec (plugin,
                           custom_completion,
+                          completion->buffer,
                           completion->completion_list);
 }
 
@@ -914,11 +665,11 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                             break;
                         case '*': /* repeat last completion (do nothing there) */
                             break;
-                        case 'c': /* current channel */
-                            gui_completion_list_add_channel (completion);
+                        case 'b': /* buffers names */
+                            gui_completion_list_add_buffers_names (completion);
                             break;
-                        case 'C': /* all channels */
-                            gui_completion_list_add_channels (completion);
+                        case 'c': /* buffers categories */
+                            gui_completion_list_add_buffers_categories (completion);
                             break;
                         case 'f': /* filename */
                             gui_completion_list_add_filename (completion);
@@ -932,39 +683,17 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                         case 'm': /* self nickname */
                             gui_completion_list_add_self_nick (completion);
                             break;
-                        case 'M': /* nicks of current server (all open channels) */
-                            gui_completion_list_add_server_nicks (completion);
-                            break;
-                        case 'n': /* channel nicks */
-                            gui_completion_list_add_channel_nicks (completion);
-                            completion->context = GUI_COMPLETION_NICK;
-                            break;
-                        case 'N': /* channel nicks and hosts */
-                            gui_completion_list_add_channel_nicks_hosts (completion);
-                            break;
                         case 'o': /* config option */
                             gui_completion_list_add_option (completion);
                             break;
                         case 'O': /* plugin option */
                             gui_completion_list_add_plugin_option (completion);
                             break;
-                        case 'p': /* part message */
-                            gui_completion_list_add_part (completion);
-                            break;
-                        case 'P': /* plugin name */
+                        case 'p': /* plugin name */
                             gui_completion_list_add_plugin (completion);
                             break;
                         case 'q': /* quit message */
                             gui_completion_list_add_quit (completion);
-                            break;
-                        case 's': /* current server */
-                            gui_completion_list_add_server (completion);
-                            break;
-                        case 'S': /* all servers */
-                            gui_completion_list_add_servers (completion);
-                            break;
-                        case 't': /* topic */
-                            gui_completion_list_add_topic (completion);
                             break;
                         case 'v': /* value of config option */
                             gui_completion_list_add_option_value (completion);

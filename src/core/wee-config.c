@@ -74,7 +74,6 @@ struct t_config_option *config_look_prefix_align_max;
 struct t_config_option *config_look_prefix_suffix;
 struct t_config_option *config_look_nick_completor;
 struct t_config_option *config_look_nick_completion_ignore;
-struct t_config_option *config_look_nick_completion_smart;
 struct t_config_option *config_look_nick_complete_first;
 struct t_config_option *config_look_infobar;
 struct t_config_option *config_look_infobar_time_format;
@@ -529,10 +528,6 @@ config_weechat_init ()
         ptr_section, "look_nick_completion_ignore", "string",
         N_("chars ignored for nick completion"),
         NULL, 0, 0, "[]-^", NULL);
-    config_look_nick_completion_smart = config_file_new_option (
-        ptr_section, "look_nick_completion_smart", "boolean",
-        N_("smart completion for nicks (completes with last speakers first)"),
-        NULL, 0, 0, "on", NULL);
     config_look_nick_complete_first = config_file_new_option (
         ptr_section, "look_nick_complete_first", "boolean",
         N_("complete only with first nick found"),

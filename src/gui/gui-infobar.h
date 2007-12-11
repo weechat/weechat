@@ -22,8 +22,6 @@
 
 #include "gui-buffer.h"
 
-typedef struct t_gui_infobar t_gui_infobar;
-
 struct t_gui_infobar
 {
     int color;                      /* text color                           */
@@ -31,12 +29,12 @@ struct t_gui_infobar
     int remaining_time;             /* delay (sec) before erasing this text */
                                     /* if < 0, text is never erased (except */
                                     /* by user action to erase it)          */
-    t_gui_infobar *next_infobar;    /* next message for infobar             */
+    struct t_gui_infobar *next_infobar; /* next message for infobar         */
 };
 
 /* infobar variables */
 
-extern t_gui_infobar *gui_infobar;
+extern struct t_gui_infobar *gui_infobar;
 
 /* infobar functions */
 

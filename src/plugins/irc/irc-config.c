@@ -44,6 +44,7 @@ struct t_config_option *irc_config_irc_one_server_buffer;
 struct t_config_option *irc_config_irc_open_near_server;
 struct t_config_option *irc_config_irc_nick_prefix;
 struct t_config_option *irc_config_irc_nick_suffix;
+struct t_config_option *irc_config_irc_nick_completion_smart;
 struct t_config_option *irc_config_irc_display_away;
 struct t_config_option *irc_config_irc_show_away_once;
 struct t_config_option *irc_config_irc_default_msg_part;
@@ -130,20 +131,20 @@ irc_config_change_one_server_buffer ()
 void
 irc_config_change_away_check ()
 {
-    if (irc_timer_check_away)
+    if (irc_hook_timer_check_away)
     {
-        weechat_unhook (irc_timer_check_away);
-        irc_timer_check_away = NULL;
+        weechat_unhook (irc_hook_timer_check_away);
+        irc_hook_timer_check_away = NULL;
     }
     if (weechat_config_integer (irc_config_irc_away_check) == 0)
     {
         /* reset away flag for all nicks/chans/servers */
         //irc_server_remove_away ();
     }
-    /*irc_timer_check_away = weechat_hook_timer (weechat_config_integer (irc_config_irc_away_check) * 60 * 1000,
-                                               0,
-                                               irc_server_timer_check_away,
-                                               NULL);
+    /*irc_hook_timer_check_away = weechat_hook_timer (weechat_config_integer (irc_config_irc_away_check) * 60 * 1000,
+                                                      0,
+                                                      irc_server_timer_check_away,
+                                                      NULL);
     */
 }
 
@@ -434,6 +435,10 @@ irc_config_init ()
         ptr_section, "irc_nick_suffix", "string",
         N_("text to display after nick in chat window"),
         NULL, 0, 0, "", NULL);
+    irc_config_irc_nick_completion_smart = weechat_config_new_option (
+        ptr_section, "irc_nick_completion_smart", "boolean",
+        N_("smart completion for nicks (completes with last speakers first)"),
+        NULL, 0, 0, "on", NULL);
     irc_config_irc_display_away = weechat_config_new_option (
         ptr_section, "irc_display_away", "integer",
         N_("display message when (un)marking as away"),
