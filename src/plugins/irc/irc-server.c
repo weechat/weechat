@@ -1202,6 +1202,8 @@ irc_server_msgq_flush ()
                 /*new_msg = plugin_modifier_exec (PLUGIN_MODIFIER_IRC_IN,
                                                 irc_recv_msgq->server->name,
                                                 ptr_data);*/
+                new_msg = NULL;
+                
                 /* no changes in new message */
                 if (new_msg && (strcmp (ptr_data, new_msg) == 0))
                 {
