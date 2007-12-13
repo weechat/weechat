@@ -168,8 +168,8 @@ struct t_weechat_plugin
                                   int,
                                   int (*)(void *, void *, time_t, char *, char *),
                                   void *);
-    struct t_hook *(*hook_event) (struct t_weechat_plugin *, char *,
-                                  int (*)(void *, char *, void *), void *);
+    struct t_hook *(*hook_signal) (struct t_weechat_plugin *, char *,
+                                   int (*)(void *, char *, void *), void *);
     struct t_hook *(*hook_config) (struct t_weechat_plugin *, char *, char *,
                                    int (*)(void *, char *, char *, char *),
                                    void *);
@@ -418,8 +418,9 @@ struct t_weechat_plugin
                            __data)                                      \
     weechat_plugin->hook_print(weechat_plugin, __buffer, __msg,         \
                                __stri__colors, __callback, __data)
-#define weechat_hook_event(__event, __callback, __data)                 \
-    weechat_plugin->hook_event(weechat_plugin, __event, __callback, __data)
+#define weechat_hook_signal(__signal, __callback, __data)               \
+    weechat_plugin->hook_signal(weechat_plugin, __signal, __callback,   \
+                                __data)
 #define weechat_hook_config(__type, __option, __callback, __data)       \
     weechat_plugin->hook_config(weechat_plugin, __type, __option,       \
                                 __callback, __data)

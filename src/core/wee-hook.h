@@ -29,7 +29,7 @@ enum t_hook_type
     HOOK_TYPE_TIMER,                   /* timer                             */
     HOOK_TYPE_FD,                      /* socket of file descriptor         */
     HOOK_TYPE_PRINT,                   /* printed message                   */
-    HOOK_TYPE_EVENT,                   /* event                             */
+    HOOK_TYPE_SIGNAL,                  /* signal                            */
     HOOK_TYPE_CONFIG,                  /* config option                     */
     HOOK_TYPE_COMPLETION,              /* custom completions                */
 };
@@ -42,7 +42,7 @@ enum t_hook_type
 #define HOOK_TIMER(hook, var) (((struct t_hook_timer *)hook->hook_data)->var)
 #define HOOK_FD(hook, var) (((struct t_hook_fd *)hook->hook_data)->var)
 #define HOOK_PRINT(hook, var) (((struct t_hook_print *)hook->hook_data)->var)
-#define HOOK_EVENT(hook, var) (((struct t_hook_event *)hook->hook_data)->var)
+#define HOOK_SIGNAL(hook, var) (((struct t_hook_signal *)hook->hook_data)->var)
 #define HOOK_CONFIG(hook, var) (((struct t_hook_config *)hook->hook_data)->var)
 #define HOOK_COMPLETION(hook, var) (((struct t_hook_completion *)hook->hook_data)->var)
 
@@ -105,12 +105,12 @@ struct t_hook_print
     int strip_colors;                  /* strip colors in msg for callback? */
 };
 
-typedef int (t_hook_callback_event)(void *, char *, void *);
+typedef int (t_hook_callback_signal)(void *, char *, void *);
 
-struct t_hook_event
+struct t_hook_signal
 {
-    t_hook_callback_event *callback;   /* event callback                    */
-    char *event;                       /* event selected ("*" = any event)  */
+    t_hook_callback_signal *callback;  /* signal callback                   */
+    char *signal;                      /* signal selected ("*" = any signal)*/
 };
 
 typedef int (t_hook_callback_config)(void *, char *, char *, char *);
@@ -153,9 +153,9 @@ extern void hook_fd_exec (fd_set *, fd_set *, fd_set *);
 extern struct t_hook *hook_print (void *, void *, char *, int,
                                   t_hook_callback_print *, void *);
 extern void hook_print_exec (void *, time_t, char *, char *);
-extern struct t_hook *hook_event (void *, char *,
-                                  t_hook_callback_event *, void *);
-extern void hook_event_exec (char *, void *);
+extern struct t_hook *hook_signal (void *, char *,
+                                   t_hook_callback_signal *, void *);
+extern void hook_signal_exec (char *, void *);
 extern struct t_hook *hook_config (void *, char *, char *,
                                    t_hook_callback_config *, void *);
 extern void hook_config_exec (char *, char *, char *);

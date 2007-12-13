@@ -1367,16 +1367,16 @@ plugin_api_hook_print (struct t_weechat_plugin *plugin, void *buffer,
 }
 
 /*
- * plugin_api_hook_event: hook an event
+ * plugin_api_hook_signal: hook a signal
  */
 
 struct t_hook *
-plugin_api_hook_event (struct t_weechat_plugin *plugin, char *event,
-                       int (*callback)(void *, char *, void *),
-                       void *data)
+plugin_api_hook_signal (struct t_weechat_plugin *plugin, char *signal,
+                        int (*callback)(void *, char *, void *),
+                        void *data)
 {
-    if (plugin && event && event[0] && callback)
-        return hook_event (plugin, event, callback, data);
+    if (plugin && signal && signal[0] && callback)
+        return hook_signal (plugin, signal, callback, data);
     
     return NULL;
 }

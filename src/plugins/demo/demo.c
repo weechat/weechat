@@ -254,18 +254,18 @@ demo_info_command_cb (void *data, void *buffer, int argc, char **argv,
 }
 
 /*
- * demo_event_cb: callback for event hook
+ * demo_signal_cb: callback for signal hook
  */
 
 int
-demo_event_cb (void *data, char *event, void *pointer)
+demo_signal_cb (void *data, char *signal, void *pointer)
 {
     /* make C compiler happy */
     (void) data;
     
     weechat_printf (NULL,
-                    _("demo_event: event: %s, pointer: %X"),
-                    event, pointer);
+                    _("demo_signal: signal: %s, pointer: %X"),
+                    signal, pointer);
     
     return WEECHAT_RC_OK;
 }
@@ -313,7 +313,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           "inactivity|input|input_mask|input_pos",
                           &demo_info_command_cb, NULL);
 
-    weechat_hook_event ("*", &demo_event_cb, NULL);
+    weechat_hook_signal ("*", &demo_signal_cb, NULL);
     
     return WEECHAT_RC_OK;
 }

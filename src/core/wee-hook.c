@@ -679,34 +679,34 @@ hook_print_exec (void *buffer, time_t date, char *prefix, char *message)
 }
 
 /*
- * hook_event: hook an event
+ * hook_signal: hook a signal
  */
 
 struct t_hook *
-hook_event (void *plugin, char *event,
-            t_hook_callback_event *callback, void *callback_data)
+hook_signal (void *plugin, char *signal,
+             t_hook_callback_signal *callback, void *callback_data)
 {
     struct t_hook *new_hook;
-    struct t_hook_event *new_hook_event;
+    struct t_hook_signal *new_hook_signal;
 
-    if (!event || !event[0])
+    if (!signal || !signal[0])
         return NULL;
     
     new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
     if (!new_hook)
         return NULL;
-    new_hook_event = (struct t_hook_event *)malloc (sizeof (struct t_hook_event));
-    if (!new_hook_event)
+    new_hook_signal = (struct t_hook_signal *)malloc (sizeof (struct t_hook_signal));
+    if (!new_hook_signal)
     {
         free (new_hook);
         return NULL;
     }
     
-    hook_init (new_hook, plugin, HOOK_TYPE_EVENT, callback_data);
+    hook_init (new_hook, plugin, HOOK_TYPE_SIGNAL, callback_data);
     
-    new_hook->hook_data = new_hook_event;
-    new_hook_event->callback = callback;
-    new_hook_event->event = strdup (event);
+    new_hook->hook_data = new_hook_signal;
+    new_hook_signal->callback = callback;
+    new_hook_signal->signal = strdup (signal);
     
     hook_add_to_list (new_hook);
     
@@ -714,11 +714,11 @@ hook_event (void *plugin, char *event,
 }
 
 /*
- * hook_event_exec: execute event hook
+ * hook_signal_exec: execute signal hook
  */
 
 void
-hook_event_exec (char *event, void *pointer)
+hook_signal_exec (char *signal, void *pointer)
 {
     struct t_hook *ptr_hook, *next_hook;
     
@@ -729,15 +729,15 @@ hook_event_exec (char *event, void *pointer)
     {
         next_hook = ptr_hook->next_hook;
         
-        if ((ptr_hook->type == HOOK_TYPE_EVENT)
+        if ((ptr_hook->type == HOOK_TYPE_SIGNAL)
             && (!ptr_hook->running)
-            && ((string_strcasecmp (HOOK_EVENT(ptr_hook, event), "*") == 0)
-                || (string_strcasecmp (HOOK_EVENT(ptr_hook, event), event) == 0)))
+            && ((string_strcasecmp (HOOK_SIGNAL(ptr_hook, signal), "*") == 0)
+                || (string_strcasecmp (HOOK_SIGNAL(ptr_hook, signal), signal) == 0)))
         {
             ptr_hook->running = 1;
-            (void) (HOOK_EVENT(ptr_hook, callback))
-                (ptr_hook->callback_data, event, pointer);
-            if (ptr_hook->type == HOOK_TYPE_EVENT)
+            (void) (HOOK_SIGNAL(ptr_hook, callback))
+                (ptr_hook->callback_data, signal, pointer);
+            if (ptr_hook->type == HOOK_TYPE_SIGNAL)
                 ptr_hook->running = 0;
         }
         
@@ -958,10 +958,10 @@ unhook (struct t_hook *hook)
                     free (HOOK_PRINT(hook, message));
                 free ((struct t_hook_print *)hook->hook_data);
                 break;
-            case HOOK_TYPE_EVENT:
-                if (HOOK_EVENT(hook, event))
-                    free (HOOK_EVENT(hook, event));
-                free ((struct t_hook_event *)hook->hook_data);
+            case HOOK_TYPE_SIGNAL:
+                if (HOOK_SIGNAL(hook, signal))
+                    free (HOOK_SIGNAL(hook, signal));
+                free ((struct t_hook_signal *)hook->hook_data);
                 break;
             case HOOK_TYPE_CONFIG:
                 if (HOOK_CONFIG(hook, type))
@@ -1087,12 +1087,12 @@ hook_print_log ()
                 log_printf ("    buffer . . . . . . . : 0x%X", HOOK_PRINT(ptr_hook, buffer));
                 log_printf ("    message. . . . . . . : '%s'", HOOK_PRINT(ptr_hook, message));
                 break;
-            case HOOK_TYPE_EVENT:
-                log_printf ("  type . . . . . . . . . : %d (event)", ptr_hook->type);
+            case HOOK_TYPE_SIGNAL:
+                log_printf ("  type . . . . . . . . . : %d (signal)", ptr_hook->type);
                 log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
-                log_printf ("  event data:");
-                log_printf ("    callback . . . . . . : 0x%X", HOOK_EVENT(ptr_hook, callback));
-                log_printf ("    event. . . . . . . . : '%s'", HOOK_EVENT(ptr_hook, event));
+                log_printf ("  signal data:");
+                log_printf ("    callback . . . . . . : 0x%X", HOOK_SIGNAL(ptr_hook, callback));
+                log_printf ("    signal . . . . . . . : '%s'", HOOK_SIGNAL(ptr_hook, signal));
                 break;
             case HOOK_TYPE_CONFIG:
                 log_printf ("  type . . . . . . . . . : %d (config)", ptr_hook->type);

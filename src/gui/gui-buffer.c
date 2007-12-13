@@ -174,7 +174,7 @@ gui_buffer_new (void *plugin, char *category, char *name,
             gui_window_redraw_buffer (new_buffer);
         }
         
-        (void) hook_event_exec ("buffer_open", new_buffer);
+        hook_signal_exec ("buffer_open", new_buffer);
     }
     else
         return NULL;
@@ -582,7 +582,7 @@ gui_buffer_free (struct t_gui_buffer *buffer, int switch_to_another)
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
     
-    (void) hook_event_exec ("buffer_close", buffer);
+    hook_signal_exec ("buffer_close", buffer);
     
     if (switch_to_another)
     {
@@ -888,7 +888,7 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     argv[0] = buf1_str;
     argv[1] = buf2_str;
     /* TODO: send buffer_move event */
-    /*(void) plugin_event_handler_exec ("buffer_move", 2, argv);*/
+    /*plugin_event_handler_exec ("buffer_move", 2, argv);*/
 }
 
 /*

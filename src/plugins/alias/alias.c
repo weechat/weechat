@@ -533,15 +533,15 @@ alias_config_read ()
 }
 
 /*
- * alias_config_reaload_event_cb: reload alias configuration file
+ * alias_config_reaload_signal_cb: reload alias configuration file
  */
 
 int
-alias_config_reload_event_cb (void *data, char *event, void *pointer)
+alias_config_reload_signal_cb (void *data, char *signal, void *pointer)
 {
     /* make C compiler happy */
     (void) data;
-    (void) event;
+    (void) signal;
     (void) pointer;
     
     alias_free_all ();
@@ -750,7 +750,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           "%(alias)",
                           &unalias_command_cb, NULL);
     
-    weechat_hook_event ("config_reload", &alias_config_reload_event_cb, NULL);
+    weechat_hook_signal ("config_reload", &alias_config_reload_signal_cb, NULL);
     
     weechat_hook_completion ("alias", &alias_completion_cb, NULL);
     

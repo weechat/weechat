@@ -45,15 +45,15 @@ char plugin_description[] = "Logger plugin for WeeChat";
 struct t_weechat_plugin *weechat_logger_plugin = NULL;
 #define weechat_plugin weechat_logger_plugin
 
-static char *logger_path = NULL;
-static char *logger_time_format = NULL;
+char *logger_path = NULL;
+char *logger_time_format = NULL;
 
 
 /*
  * logger_config_read: read config options for logger plugin
  */
 
-static void
+void
 logger_config_read ()
 {
     if (logger_path)
@@ -80,7 +80,7 @@ logger_config_read ()
  *                          return 1 if success, 0 if failed
  */
 
-static int
+int
 logger_create_directory ()
 {
     int rc;
@@ -99,8 +99,7 @@ logger_create_directory ()
             {
                 if (mkdir (dir2, 0755) < 0)
                 {
-                    if (errno != EEXIST)
-                        rc = 0;
+                    if (errno != EEXIST)                        rc = 0;
                 }
                 else
                     chmod (dir2, 0700);
@@ -124,7 +123,7 @@ logger_create_directory ()
  * logger_get_filename: build log filename for a buffer
  */
 
-static char *
+char *
 logger_get_filename (void *buffer)
 {
     struct t_plugin_infolist *ptr_infolist;
@@ -202,7 +201,7 @@ logger_get_filename (void *buffer)
  * logger_write_line: write a line to log file
  */
 
-static void
+void
 logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
 {
     va_list argptr;
@@ -270,7 +269,7 @@ logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
  * logger_start_buffer: start a log for a buffer
  */
 
-static void
+void
 logger_start_buffer (void *buffer)
 {
     struct t_logger_buffer *ptr_logger_buffer;
@@ -305,7 +304,7 @@ logger_start_buffer (void *buffer)
  * logger_start_buffer_all: start log buffer for all buffers
  */
 
-static void
+void
 logger_start_buffer_all ()
 {
     struct t_plugin_infolist *ptr_infolist;
@@ -322,7 +321,7 @@ logger_start_buffer_all ()
  * logger_end: end log for a logger buffer
  */
 
-static void
+void
 logger_end (struct t_logger_buffer *logger_buffer)
 {
     time_t seconds;
@@ -353,7 +352,7 @@ logger_end (struct t_logger_buffer *logger_buffer)
  * logger_end_all: end log for all buffers
  */
 
-static void
+void
 logger_end_all ()
 {
     struct t_logger_buffer *ptr_logger_buffer;
@@ -366,24 +365,35 @@ logger_end_all ()
 }
 
 /*
- * logger_event_cb: callback for event hook
+ * logger_buffer_open_signal_cb: callback for buffer_open signal
  */
 
-static int
-logger_event_cb (void *data, char *event, void *pointer)
+int
+logger_buffer_open_signal_cb (void *data, char *signal, void *pointer)
 {
     /* make C compiler happy */
     (void) data;
+    (void) signal;
     (void) pointer;
     
-    if (weechat_strcasecmp (event, "buffer_open") == 0)
-    {
-        logger_start_buffer (pointer);
-    }
-    else if (weechat_strcasecmp (event, "buffer_close") == 0)
-    {
-        logger_end (logger_buffer_search (pointer));
-    }
+    logger_start_buffer (pointer);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * logger_buffer_close_signal_cb: callback for buffer_close signal
+ */
+
+int
+logger_buffer_close_signal_cb (void *data, char *signal, void *pointer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) pointer;
+    
+    logger_end (logger_buffer_search (pointer));
     
     return WEECHAT_RC_OK;
 }
@@ -392,7 +402,7 @@ logger_event_cb (void *data, char *event, void *pointer)
  * logger_print_cb: callback for print hook
  */
 
-static int
+int
 logger_print_cb (void *data, void *buffer, time_t date, char *prefix,
                  char *message)
 {
@@ -441,8 +451,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     logger_start_buffer_all ();
     
-    weechat_hook_event ("buffer_open", &logger_event_cb, NULL);
-    weechat_hook_event ("buffer_close", &logger_event_cb, NULL);
+    weechat_hook_signal ("buffer_open", &logger_buffer_open_signal_cb, NULL);
+    weechat_hook_signal ("buffer_close", &logger_buffer_close_signal_cb, NULL);
     
     weechat_hook_print (NULL, NULL, 1, &logger_print_cb, NULL);
     

@@ -992,21 +992,21 @@ command_plugin_list (char *name, int full)
                     }
                 }
                 
-                /* events hooked */
+                /* signals hooked */
                 hook_found = 0;
                 for (ptr_hook = weechat_hooks; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
                 {
                     if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_EVENT))
+                        && (ptr_hook->type == HOOK_TYPE_SIGNAL))
                     {
                         if (!hook_found)
-                            gui_chat_printf (NULL, _("     events hooked:"));
+                            gui_chat_printf (NULL, _("     signals hooked:"));
                         hook_found = 1;
                         gui_chat_printf (NULL,
-                                         _("       event: %s"),
-                                         HOOK_EVENT(ptr_hook, event) ?
-                                         HOOK_EVENT(ptr_hook, event) : _("(all)"));
+                                         _("       signal: %s"),
+                                         HOOK_SIGNAL(ptr_hook, signal) ?
+                                         HOOK_SIGNAL(ptr_hook, signal) : _("(all)"));
                     }
                 }
                 
@@ -1139,9 +1139,9 @@ command_quit (void *data, void *buffer,
     (void) argc;
     (void) argv;
     
-    hook_event_exec ("quit",
-                     (argc > 1) ?
-                     argv_eol[1] : CONFIG_STRING(config_look_default_msg_quit));
+    hook_signal_exec ("quit",
+                      (argc > 1) ?
+                      argv_eol[1] : CONFIG_STRING(config_look_default_msg_quit));
     
     quit_weechat = 1;
     
@@ -1184,7 +1184,7 @@ command_reload (void *data, void *buffer,
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
 
     /* tell to plugins to reload their configuration */
-    (void) hook_event_exec ("config_reload", NULL);
+    hook_signal_exec ("config_reload", NULL);
     
     return WEECHAT_RC_OK;
 }

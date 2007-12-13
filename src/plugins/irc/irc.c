@@ -58,7 +58,7 @@ gnutls_certificate_credentials gnutls_xcred; /* gnutls client credentials */
  */
 
 int
-irc_dump_data_cb (void *data, char *event, void *pointer)
+irc_dump_data_cb (void *data, char *signal, void *pointer)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
@@ -66,7 +66,7 @@ irc_dump_data_cb (void *data, char *event, void *pointer)
     
     /* make C compiler happy */
     (void) data;
-    (void) event;
+    (void) signal;
     (void) pointer;
     
     weechat_log_printf ("");
@@ -125,17 +125,17 @@ irc_create_directories ()
 }
 
 /*
- * irc_quit_cb: callback for event "quit"
+ * irc_quit_cb: callback for "quit" signal
  */
 
 int
-irc_quit_cb (void *data, char *event, void *pointer)
+irc_quit_cb (void *data, char *signal, void *pointer)
 {
     struct t_irc_server *ptr_server;
     
     /* make C compiler happy */
     (void) data;
-    (void) event;
+    (void) signal;
     (void) pointer;
     
     for (ptr_server = irc_servers; ptr_server;
@@ -174,10 +174,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 
     irc_command_init ();
 
-    /* hook events */
-    weechat_hook_event ("dump_data", &irc_dump_data_cb, NULL);
-    weechat_hook_event ("config_reload", &irc_config_reload_cb, NULL);
-    weechat_hook_event ("quit", &irc_quit_cb, NULL);
+    /* hook signals */
+    weechat_hook_signal ("dump_data", &irc_dump_data_cb, NULL);
+    weechat_hook_signal ("config_reload", &irc_config_reload_cb, NULL);
+    weechat_hook_signal ("quit", &irc_quit_cb, NULL);
     
     /* hook completions */
     weechat_hook_completion ("irc_server", &irc_completion_server_cb, NULL);
