@@ -304,6 +304,7 @@ plugin_load (char *filename)
         new_plugin->hook_fd = &plugin_api_hook_fd;
         new_plugin->hook_print = &plugin_api_hook_print;
         new_plugin->hook_signal = &plugin_api_hook_signal;
+        new_plugin->hook_signal_send = &plugin_api_hook_signal_send;
         new_plugin->hook_config = &plugin_api_hook_config;
         new_plugin->hook_completion = &plugin_api_hook_completion;
         new_plugin->unhook = &plugin_api_unhook;

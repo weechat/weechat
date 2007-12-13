@@ -170,6 +170,7 @@ struct t_weechat_plugin
                                   void *);
     struct t_hook *(*hook_signal) (struct t_weechat_plugin *, char *,
                                    int (*)(void *, char *, void *), void *);
+    void (*hook_signal_send) (struct t_weechat_plugin *, char *, void *);
     struct t_hook *(*hook_config) (struct t_weechat_plugin *, char *, char *,
                                    int (*)(void *, char *, char *, char *),
                                    void *);
@@ -421,6 +422,9 @@ struct t_weechat_plugin
 #define weechat_hook_signal(__signal, __callback, __data)               \
     weechat_plugin->hook_signal(weechat_plugin, __signal, __callback,   \
                                 __data)
+#define weechat_hook_signal_send(__signal, __pointer)                   \
+    weechat_plugin->hook_signal_send(weechat_plugin, __signal,          \
+                                     __pointer)
 #define weechat_hook_config(__type, __option, __callback, __data)       \
     weechat_plugin->hook_config(weechat_plugin, __type, __option,       \
                                 __callback, __data)

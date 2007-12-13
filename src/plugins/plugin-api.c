@@ -1382,6 +1382,18 @@ plugin_api_hook_signal (struct t_weechat_plugin *plugin, char *signal,
 }
 
 /*
+ * plugin_api_hook_signal_send: send a signal
+ */
+
+void
+plugin_api_hook_signal_send (struct t_weechat_plugin *plugin, char *signal,
+                             void *pointer)
+{
+    if (plugin && signal && signal[0])
+        hook_signal_exec (signal, pointer);
+}
+
+/*
  * plugin_api_hook_config: hook a config option
  */
 
