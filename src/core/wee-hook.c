@@ -38,10 +38,27 @@
 #include "../plugins/plugin.h"
 
 
-struct t_hook *weechat_hooks = NULL;
-struct t_hook *last_weechat_hook = NULL;
+struct t_hook *weechat_hooks[HOOK_NUM_TYPES];
+struct t_hook *last_weechat_hook[HOOK_NUM_TYPES];
 int hook_exec_recursion = 0;
+int real_delete_pending = 0;
 
+
+/*
+ * hook_init: init hooks lists
+ */
+
+void
+hook_init ()
+{
+    int type;
+    
+    for (type = 0; type < HOOK_NUM_TYPES; type++)
+    {
+        weechat_hooks[type] = NULL;
+        last_weechat_hook[type] = NULL;
+    }
+}
 
 /*
  * hook_find_pos: find position for new hook (keeping command list sorted)
@@ -57,10 +74,10 @@ hook_find_pos (struct t_hook *hook)
         return NULL;
     
     /* for command hook, keep list sorted */
-    for (ptr_hook = weechat_hooks; ptr_hook;
+    for (ptr_hook = weechat_hooks[hook->type]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
-        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+        if (!ptr_hook->deleted
             && (string_strcasecmp (HOOK_COMMAND(hook, command),
                                    HOOK_COMMAND(ptr_hook, command)) <= 0))
             return ptr_hook;
@@ -79,7 +96,7 @@ hook_add_to_list (struct t_hook *new_hook)
 {
     struct t_hook *pos_hook;
 
-    if (weechat_hooks)
+    if (weechat_hooks[new_hook->type])
     {
         pos_hook = hook_find_pos (new_hook);
         if (pos_hook)
@@ -90,24 +107,24 @@ hook_add_to_list (struct t_hook *new_hook)
             if (pos_hook->prev_hook)
                 (pos_hook->prev_hook)->next_hook = new_hook;
             else
-                weechat_hooks = new_hook;
+                weechat_hooks[new_hook->type] = new_hook;
             pos_hook->prev_hook = new_hook;
         }
         else
         {
             /* add hook to end of list */
-            new_hook->prev_hook = last_weechat_hook;
+            new_hook->prev_hook = last_weechat_hook[new_hook->type];
             new_hook->next_hook = NULL;
-            last_weechat_hook->next_hook = new_hook;
-            last_weechat_hook = new_hook;
+            last_weechat_hook[new_hook->type]->next_hook = new_hook;
+            last_weechat_hook[new_hook->type] = new_hook;
         }
     }
     else
     {
         new_hook->prev_hook = NULL;
         new_hook->next_hook = NULL;
-        weechat_hooks = new_hook;
-        last_weechat_hook = new_hook;
+        weechat_hooks[new_hook->type] = new_hook;
+        last_weechat_hook[new_hook->type] = new_hook;
     }
 }
 
@@ -120,12 +137,12 @@ hook_remove_from_list (struct t_hook *hook)
 {
     struct t_hook *new_hooks;
     
-    if (last_weechat_hook == hook)
-        last_weechat_hook = hook->prev_hook;
+    if (last_weechat_hook[hook->type] == hook)
+        last_weechat_hook[hook->type] = hook->prev_hook;
     if (hook->prev_hook)
     {
         hook->prev_hook->next_hook = hook->next_hook;
-        new_hooks = weechat_hooks;
+        new_hooks = weechat_hooks[hook->type];
     }
     else
         new_hooks = hook->next_hook;
@@ -134,7 +151,7 @@ hook_remove_from_list (struct t_hook *hook)
         hook->next_hook->prev_hook = hook->prev_hook;
     
     free (hook);
-    weechat_hooks = new_hooks;
+    weechat_hooks[hook->type] = new_hooks;
 }
 
 /*
@@ -144,34 +161,41 @@ hook_remove_from_list (struct t_hook *hook)
 void
 hook_remove_deleted ()
 {
+    int type;
     struct t_hook *ptr_hook, *next_hook;
-    
-    ptr_hook = weechat_hooks;
-    while (ptr_hook)
+
+    if (real_delete_pending)
     {
-        next_hook = ptr_hook->next_hook;
-        
-        if (ptr_hook->type == HOOK_TYPE_DELETED)
-            hook_remove_from_list (ptr_hook);
-        
-        ptr_hook = next_hook;
+        for (type = 0; type < HOOK_NUM_TYPES; type++)
+        {
+            ptr_hook = weechat_hooks[type];
+            while (ptr_hook)
+            {
+                next_hook = ptr_hook->next_hook;
+                
+                if (ptr_hook->deleted)
+                    hook_remove_from_list (ptr_hook);
+                
+                ptr_hook = next_hook;
+            }
+        }
+        real_delete_pending = 0;
     }
 }
 
 /*
- * hook_init: init a new hook with default values
+ * hook_init_data: init data a new hook with default values
  */
 
 void
-hook_init (struct t_hook *hook, void *plugin, int type, void *callback_data)
+hook_init_data (struct t_hook *hook, void *plugin, int type, void *callback_data)
 {
     hook->plugin = plugin;
     hook->type = type;
-    hook->callback_data = callback_data;
-    
-    hook->hook_data = NULL;
-    
+    hook->deleted = 0;
     hook->running = 0;
+    hook->callback_data = callback_data;
+    hook->hook_data = NULL;
 }
 
 /*
@@ -183,13 +207,17 @@ hook_init (struct t_hook *hook, void *plugin, int type, void *callback_data)
 int
 hook_valid (struct t_hook *hook)
 {
+    int type;
     struct t_hook *ptr_hook;
-    
-    for (ptr_hook = weechat_hooks; ptr_hook;
-         ptr_hook = ptr_hook->next_hook)
+
+    for (type = 0; type < HOOK_NUM_TYPES; type++)
     {
-        if (ptr_hook == hook)
-            return 1;
+        for (ptr_hook = weechat_hooks[type]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if (!ptr_hook->deleted && (ptr_hook == hook))
+                return 1;
+        }
     }
     
     /* hook not found */
@@ -205,14 +233,18 @@ hook_valid (struct t_hook *hook)
 int
 hook_valid_for_plugin (void *plugin, struct t_hook *hook)
 {
+    int type;
     struct t_hook *ptr_hook;
-    
-    for (ptr_hook = weechat_hooks; ptr_hook;
-         ptr_hook = ptr_hook->next_hook)
+
+    for (type = 0; type < HOOK_NUM_TYPES; type++)
     {
-        if ((ptr_hook == hook)
-            && (ptr_hook->plugin == (struct t_weechat_plugin *)plugin))
-            return 1;
+        for (ptr_hook = weechat_hooks[type]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if (!ptr_hook->deleted && (ptr_hook == hook)
+                && (ptr_hook->plugin == (struct t_weechat_plugin *)plugin))
+                return 1;
+        }
     }
     
     /* hook not found */
@@ -228,10 +260,10 @@ hook_search_command (char *command)
 {
     struct t_hook *ptr_hook;
     
-    for (ptr_hook = weechat_hooks; ptr_hook;
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
-        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+        if (!ptr_hook->deleted
             && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command), command) == 0))
             return ptr_hook;
     }
@@ -260,10 +292,10 @@ hook_command (void *plugin, char *command, char *description,
     /* increase level for command hooks with same command name
        so that these commands will not be used any more, until this
        one is removed */
-    for (ptr_hook = weechat_hooks; ptr_hook;
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
-        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+        if (!ptr_hook->deleted
             && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command), command) == 0))
         {
             HOOK_COMMAND(ptr_hook, level)++;
@@ -280,7 +312,7 @@ hook_command (void *plugin, char *command, char *description,
         return NULL;
     }
     
-    hook_init (new_hook, plugin, HOOK_TYPE_COMMAND, callback_data);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_COMMAND, callback_data);
     
     new_hook->hook_data = new_hook_command;
     new_hook_command->callback = callback;
@@ -328,14 +360,14 @@ hook_command_exec (void *buffer, char *string, int only_builtin)
     
     hook_exec_recursion++;
     
-    ptr_hook = weechat_hooks;
+    ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND];
     while (ptr_hook)
     {
         next_hook = ptr_hook->next_hook;
         
-        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
             && (HOOK_COMMAND(ptr_hook, level) == 0)
-            && (!ptr_hook->running)
             && (!only_builtin || !ptr_hook->plugin)
             && (!ptr_hook->plugin
                 || !((struct t_gui_buffer *)buffer)->plugin
@@ -346,8 +378,7 @@ hook_command_exec (void *buffer, char *string, int only_builtin)
             ptr_hook->running = 1;
             rc = (int) (HOOK_COMMAND(ptr_hook, callback))
                 (ptr_hook->callback_data, buffer, argc, argv, argv_eol);
-            if (ptr_hook->type == HOOK_TYPE_COMMAND)
-                ptr_hook->running = 0;
+            ptr_hook->running = 0;
             if (hook_exec_recursion > 0)
                 hook_exec_recursion--;
             if (hook_exec_recursion == 0)
@@ -379,11 +410,12 @@ hook_command_exec (void *buffer, char *string, int only_builtin)
  */
 
 struct t_hook *
-hook_timer (void *plugin, long interval, int max_calls,
+hook_timer (void *plugin, long interval, int align_second, int max_calls,
             t_hook_callback_timer *callback, void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_timer *new_hook_timer;
+    struct timezone tz;
     
     new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
     if (!new_hook)
@@ -395,13 +427,28 @@ hook_timer (void *plugin, long interval, int max_calls,
         return NULL;
     }
     
-    hook_init (new_hook, plugin, HOOK_TYPE_TIMER, callback_data);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_TIMER, callback_data);
     
     new_hook->hook_data = new_hook_timer;
     new_hook_timer->callback = callback;
     new_hook_timer->interval = interval;
     new_hook_timer->remaining_calls = max_calls;
-    gettimeofday (&new_hook_timer->last_exec, NULL);
+
+    tz.tz_minuteswest = 0;
+    gettimeofday (&new_hook_timer->last_exec, &tz);
+    
+    if ((interval >= 1000) && (align_second > 0))
+    {
+        new_hook_timer->last_exec.tv_usec = 0;
+        new_hook_timer->last_exec.tv_sec =
+            new_hook_timer->last_exec.tv_sec -
+            ((new_hook_timer->last_exec.tv_sec - (tz.tz_minuteswest * 60)) %
+             align_second);
+    }
+    
+    new_hook_timer->next_exec.tv_sec = new_hook_timer->last_exec.tv_sec;
+    new_hook_timer->next_exec.tv_usec = new_hook_timer->last_exec.tv_usec;
+    util_timeval_add (&new_hook_timer->next_exec, interval);
     
     hook_add_to_list (new_hook);
     
@@ -409,43 +456,104 @@ hook_timer (void *plugin, long interval, int max_calls,
 }
 
 /*
+ * hook_timer_time_to_next: get time to next timeout
+ *                          return 1 if timeout is set with next timeout
+ *                                 0 if there's no timeout
+ */
+
+int
+hook_timer_time_to_next (struct timeval *tv_time)
+{
+    struct t_hook *ptr_hook;
+    int found;
+    struct timeval tv_now;
+    long diff_usec;
+    
+    found = 0;
+    tv_time->tv_sec = 0;
+    tv_time->tv_usec = 0;
+    
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_TIMER]; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
+    {
+        if (!ptr_hook->deleted
+            && (!found
+                || (util_timeval_cmp (&HOOK_TIMER(ptr_hook, next_exec), tv_time) < 0)))
+        {
+            found = 1;
+            tv_time->tv_sec = HOOK_TIMER(ptr_hook, next_exec).tv_sec;
+            tv_time->tv_usec = HOOK_TIMER(ptr_hook, next_exec).tv_usec;
+        }
+    }
+    
+    /* no timeout found */
+    if (!found)
+        return 0;
+    
+    gettimeofday (&tv_now, NULL);
+    
+    /* next timeout is past date! */
+    if (util_timeval_cmp (tv_time, &tv_now) < 0)
+    {
+        tv_time->tv_sec = 0;
+        tv_time->tv_usec = 0;
+        return 1;
+    }
+    
+    tv_time->tv_sec = tv_time->tv_sec - tv_now.tv_sec;
+    diff_usec = tv_time->tv_usec - tv_now.tv_usec;
+    if (diff_usec >= 0)
+        tv_time->tv_usec = diff_usec;
+    else
+    {
+        tv_time->tv_sec--;
+        tv_time->tv_usec = 1000000 + diff_usec;
+    }
+    
+    return 1;
+}
+
+/*
  * hook_timer_exec: execute timer hooks
  */
 
 void
-hook_timer_exec (struct timeval *tv_time)
+hook_timer_exec ()
 {
+    struct timeval tv_time;
     struct t_hook *ptr_hook, *next_hook;
-    long time_diff;
+    
+    gettimeofday (&tv_time, NULL);
     
     hook_exec_recursion++;
     
-    ptr_hook = weechat_hooks;
+    ptr_hook = weechat_hooks[HOOK_TYPE_TIMER];
     while (ptr_hook)
     {
         next_hook = ptr_hook->next_hook;
         
-        if ((ptr_hook->type == HOOK_TYPE_TIMER)
-            && (!ptr_hook->running))
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
+            && (util_timeval_cmp (&HOOK_TIMER(ptr_hook, next_exec),
+                                  &tv_time) <= 0))
         {
-            time_diff = util_timeval_diff (&HOOK_TIMER(ptr_hook, last_exec),
-                                           tv_time);
-            if (time_diff >= HOOK_TIMER(ptr_hook, interval))
+            ptr_hook->running = 1;
+            (void) (HOOK_TIMER(ptr_hook, callback))
+                (ptr_hook->callback_data);
+            ptr_hook->running = 0;
+            if (!ptr_hook->deleted)
             {
-                ptr_hook->running = 1;
-                (void) (HOOK_TIMER(ptr_hook, callback))
-                    (ptr_hook->callback_data);
-                if (ptr_hook->type == HOOK_TYPE_TIMER)
+                HOOK_TIMER(ptr_hook, last_exec).tv_sec = tv_time.tv_sec;
+                HOOK_TIMER(ptr_hook, last_exec).tv_usec = tv_time.tv_usec;
+                
+                util_timeval_add (&HOOK_TIMER(ptr_hook, next_exec),
+                                  HOOK_TIMER(ptr_hook, interval));
+                
+                if (HOOK_TIMER(ptr_hook, remaining_calls) > 0)
                 {
-                    ptr_hook->running = 0;
-                    HOOK_TIMER(ptr_hook, last_exec).tv_sec = tv_time->tv_sec;
-                    HOOK_TIMER(ptr_hook, last_exec).tv_usec = tv_time->tv_usec;
-                    if (HOOK_TIMER(ptr_hook, remaining_calls) > 0)
-                    {
-                        HOOK_TIMER(ptr_hook, remaining_calls)--;
-                        if (HOOK_TIMER(ptr_hook, remaining_calls) == 0)
-                            unhook (ptr_hook);
-                    }
+                    HOOK_TIMER(ptr_hook, remaining_calls)--;
+                    if (HOOK_TIMER(ptr_hook, remaining_calls) == 0)
+                        unhook (ptr_hook);
                 }
             }
         }
@@ -469,11 +577,10 @@ hook_search_fd (int fd)
 {
     struct t_hook *ptr_hook;
     
-    for (ptr_hook = weechat_hooks; ptr_hook;
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_FD]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
-        if ((ptr_hook->type == HOOK_TYPE_FD)
-            && (HOOK_FD(ptr_hook, fd) == fd))
+        if (!ptr_hook->deleted && (HOOK_FD(ptr_hook, fd) == fd))
             return ptr_hook;
     }
     
@@ -505,7 +612,7 @@ hook_fd (void *plugin, int fd, int flags,
         return NULL;
     }
     
-    hook_init (new_hook, plugin, HOOK_TYPE_FD, callback_data);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_FD, callback_data);
     
     new_hook->hook_data = new_hook_fd;
     new_hook_fd->callback = callback;
@@ -530,10 +637,10 @@ hook_fd_set (fd_set *read_fds, fd_set *write_fds, fd_set *except_fds)
     FD_ZERO (write_fds);
     FD_ZERO (except_fds);
     
-    for (ptr_hook = weechat_hooks; ptr_hook;
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_FD]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
-        if (ptr_hook->type == HOOK_TYPE_FD)
+        if (!ptr_hook->deleted)
         {
             if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_READ)
                 FD_SET (HOOK_FD(ptr_hook, fd), read_fds);
@@ -556,13 +663,13 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *except_fds)
     
     hook_exec_recursion++;
     
-    ptr_hook = weechat_hooks;
+    ptr_hook = weechat_hooks[HOOK_TYPE_FD];
     while (ptr_hook)
     {
         next_hook = ptr_hook->next_hook;
         
-        if ((ptr_hook->type == HOOK_TYPE_FD)
-            && (!ptr_hook->running)
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
             && (((HOOK_FD(ptr_hook, flags)& HOOK_FD_FLAG_READ)
                  && (FD_ISSET(HOOK_FD(ptr_hook, fd), read_fds)))
                 || ((HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_WRITE)
@@ -572,8 +679,7 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *except_fds)
         {
             ptr_hook->running = 1;
             (HOOK_FD(ptr_hook, callback)) (ptr_hook->callback_data);
-            if (ptr_hook->type == HOOK_TYPE_FD)
-                ptr_hook->running = 0;
+            ptr_hook->running = 0;
         }
         
         ptr_hook = next_hook;
@@ -607,7 +713,7 @@ hook_print (void *plugin, void *buffer, char *message, int strip_colors,
         return NULL;
     }
     
-    hook_init (new_hook, plugin, HOOK_TYPE_PRINT, callback_data);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_PRINT, callback_data);
     
     new_hook->hook_data = new_hook_print;
     new_hook_print->callback = callback;
@@ -632,10 +738,9 @@ hook_print_exec (void *buffer, time_t date, char *prefix, char *message)
     
     if (!message || !message[0])
         return;
-
-    prefix_no_color = (char *)gui_color_decode ((unsigned char *)prefix);
-    if (!prefix_no_color)
-        return;
+    
+    prefix_no_color = (prefix) ?
+        (char *)gui_color_decode ((unsigned char *)prefix) : NULL;
     
     message_no_color = (char *)gui_color_decode ((unsigned char *)message);
     if (!message_no_color)
@@ -646,13 +751,13 @@ hook_print_exec (void *buffer, time_t date, char *prefix, char *message)
     
     hook_exec_recursion++;
     
-    ptr_hook = weechat_hooks;
+    ptr_hook = weechat_hooks[HOOK_TYPE_PRINT];
     while (ptr_hook)
     {
         next_hook = ptr_hook->next_hook;
         
-        if ((ptr_hook->type == HOOK_TYPE_PRINT)
-            && (!ptr_hook->running)
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
             && (!HOOK_PRINT(ptr_hook, buffer)
                 || ((struct t_gui_buffer *)buffer == HOOK_PRINT(ptr_hook, buffer)))
             && (!HOOK_PRINT(ptr_hook, message)
@@ -664,8 +769,7 @@ hook_print_exec (void *buffer, time_t date, char *prefix, char *message)
                 (ptr_hook->callback_data, buffer, date,
                  (HOOK_PRINT(ptr_hook, strip_colors)) ? prefix_no_color : prefix,
                  (HOOK_PRINT(ptr_hook, strip_colors)) ? message_no_color : message);
-            if (ptr_hook->type == HOOK_TYPE_PRINT)
-                ptr_hook->running = 0;
+            ptr_hook->running = 0;
         }
         
         ptr_hook = next_hook;
@@ -702,7 +806,7 @@ hook_signal (void *plugin, char *signal,
         return NULL;
     }
     
-    hook_init (new_hook, plugin, HOOK_TYPE_SIGNAL, callback_data);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_SIGNAL, callback_data);
     
     new_hook->hook_data = new_hook_signal;
     new_hook_signal->callback = callback;
@@ -724,21 +828,20 @@ hook_signal_exec (char *signal, void *pointer)
     
     hook_exec_recursion++;
     
-    ptr_hook = weechat_hooks;
+    ptr_hook = weechat_hooks[HOOK_TYPE_SIGNAL];
     while (ptr_hook)
     {
         next_hook = ptr_hook->next_hook;
         
-        if ((ptr_hook->type == HOOK_TYPE_SIGNAL)
-            && (!ptr_hook->running)
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
             && ((string_strcasecmp (HOOK_SIGNAL(ptr_hook, signal), "*") == 0)
                 || (string_strcasecmp (HOOK_SIGNAL(ptr_hook, signal), signal) == 0)))
         {
             ptr_hook->running = 1;
             (void) (HOOK_SIGNAL(ptr_hook, callback))
                 (ptr_hook->callback_data, signal, pointer);
-            if (ptr_hook->type == HOOK_TYPE_SIGNAL)
-                ptr_hook->running = 0;
+            ptr_hook->running = 0;
         }
         
         ptr_hook = next_hook;
@@ -772,7 +875,7 @@ hook_config (void *plugin, char *type, char *option,
         return NULL;
     }
     
-    hook_init (new_hook, plugin, HOOK_TYPE_CONFIG, callback_data);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_CONFIG, callback_data);
     
     new_hook->hook_data = new_hook_config;
     new_hook_config->callback = callback;
@@ -795,13 +898,13 @@ hook_config_exec (char *type, char *option, char *value)
     
     hook_exec_recursion++;
     
-    ptr_hook = weechat_hooks;
+    ptr_hook = weechat_hooks[HOOK_TYPE_CONFIG];
     while (ptr_hook)
     {
         next_hook = ptr_hook->next_hook;
         
-        if ((ptr_hook->type == HOOK_TYPE_CONFIG)
-            && (!ptr_hook->running)
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
             && (!HOOK_CONFIG(ptr_hook, type)
                 || (string_strcasecmp (HOOK_CONFIG(ptr_hook, type),
                                        type) == 0))
@@ -812,8 +915,7 @@ hook_config_exec (char *type, char *option, char *value)
             ptr_hook->running = 1;
             (void) (HOOK_CONFIG(ptr_hook, callback))
                 (ptr_hook->callback_data, type, option, value);
-            if (ptr_hook->type == HOOK_TYPE_CONFIG)
-                ptr_hook->running = 0;
+            ptr_hook->running = 0;
         }
         
         ptr_hook = next_hook;
@@ -850,7 +952,7 @@ hook_completion (void *plugin, char *completion,
         return NULL;
     }
     
-    hook_init (new_hook, plugin, HOOK_TYPE_COMPLETION, callback_data);
+    hook_init_data (new_hook, plugin, HOOK_TYPE_COMPLETION, callback_data);
     
     new_hook->hook_data = new_hook_completion;
     new_hook_completion->callback = callback;
@@ -875,21 +977,20 @@ hook_completion_exec (void *plugin, char *completion, void *buffer, void *list)
     
     hook_exec_recursion++;
     
-    ptr_hook = weechat_hooks;
+    ptr_hook = weechat_hooks[HOOK_TYPE_COMPLETION];
     while (ptr_hook)
     {
         next_hook = ptr_hook->next_hook;
         
-        if ((ptr_hook->type == HOOK_TYPE_COMPLETION)
-            && (!ptr_hook->running)
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
             && (string_strcasecmp (HOOK_COMPLETION(ptr_hook, completion),
                                    completion) == 0))
         {
             ptr_hook->running = 1;
             (void) (HOOK_COMPLETION(ptr_hook, callback))
                 (ptr_hook->callback_data, completion, buffer, list);
-            if (ptr_hook->type == HOOK_TYPE_COMPLETION)
-                ptr_hook->running = 0;
+            ptr_hook->running = 0;
         }
         
         ptr_hook = next_hook;
@@ -911,23 +1012,23 @@ unhook (struct t_hook *hook)
 {
     struct t_hook *ptr_hook;
     
+    /* hook already deleted? */
+    if (hook->deleted)
+        return;
+    
     /* free data */
     if (hook->hook_data)
     {
         switch (hook->type)
         {
-            case HOOK_TYPE_DELETED:
-                /* hook will be deleted later, we do nothing here, hook data is
-                   already free */
-                break;
             case HOOK_TYPE_COMMAND:
                 /* decrease level for command hooks with same command name
                    and level higher than this one */
-                for (ptr_hook = weechat_hooks; ptr_hook;
+                for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
                 {
-                    if ((ptr_hook != hook)
-                        && (ptr_hook->type == HOOK_TYPE_COMMAND)
+                    if (!ptr_hook->deleted
+                        && (ptr_hook != hook)
                         && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
                                                HOOK_COMMAND(hook, command)) == 0)
                         && (HOOK_COMMAND(ptr_hook, level) > HOOK_COMMAND(hook, level)))
@@ -975,6 +1076,10 @@ unhook (struct t_hook *hook)
                     free (HOOK_COMPLETION(hook, completion));
                 free ((struct t_hook_completion *)hook->hook_data);
                 break;
+            case HOOK_NUM_TYPES:
+                /* this constant is used to count types only,
+                   it is never used as type */
+                break;
         }
         hook->hook_data = NULL;
     }           
@@ -987,7 +1092,8 @@ unhook (struct t_hook *hook)
     else
     {
         /* there is one or more hook exec, then delete later */
-        hook->type = HOOK_TYPE_DELETED;
+        hook->deleted = 1;
+        real_delete_pending = 1;
     }
 }
 
@@ -998,15 +1104,19 @@ unhook (struct t_hook *hook)
 void
 unhook_all_plugin (void *plugin)
 {
+    int type;
     struct t_hook *ptr_hook, *next_hook;
     
-    ptr_hook = weechat_hooks;
-    while (ptr_hook)
+    for (type = 0; type < HOOK_NUM_TYPES; type++)
     {
-        next_hook = ptr_hook->next_hook;
-        if (ptr_hook->plugin == plugin)
-            unhook (ptr_hook);
-        ptr_hook = next_hook;
+        ptr_hook = weechat_hooks[type];
+        while (ptr_hook)
+        {
+            next_hook = ptr_hook->next_hook;
+            if (ptr_hook->plugin == plugin)
+                unhook (ptr_hook);
+            ptr_hook = next_hook;
+        }
     }
 }
 
@@ -1017,14 +1127,18 @@ unhook_all_plugin (void *plugin)
 void
 unhook_all ()
 {
+    int type;
     struct t_hook *ptr_hook, *next_hook;
     
-    ptr_hook = weechat_hooks;
-    while (ptr_hook)
+    for (type = 0; type < HOOK_NUM_TYPES; type++)
     {
-        next_hook = ptr_hook->next_hook;
-        unhook (ptr_hook);
-        ptr_hook = next_hook;
+        ptr_hook = weechat_hooks[type];
+        while (ptr_hook)
+        {
+            next_hook = ptr_hook->next_hook;
+            unhook (ptr_hook);
+            ptr_hook = next_hook;
+        }
     }
 }
 
@@ -1035,83 +1149,122 @@ unhook_all ()
 void
 hook_print_log ()
 {
+    int type;
     struct t_hook *ptr_hook;
+    struct tm *local_time;
+    char text_time[1024];
     
-    for (ptr_hook = weechat_hooks; ptr_hook;
-         ptr_hook = ptr_hook->next_hook)
+    for (type = 0; type < HOOK_NUM_TYPES; type++)
     {
-        log_printf ("");
-        log_printf ("[hook (addr:0x%X)]", ptr_hook);
-        log_printf ("  plugin . . . . . . . . : 0x%X", ptr_hook->plugin);
-        switch (ptr_hook->type)
+        for (ptr_hook = weechat_hooks[type]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
         {
-            case HOOK_TYPE_DELETED:
-                log_printf ("  type . . . . . . . . . : %d (hook deleted)", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
-                log_printf ("  hook_data. . . . . . . : 0x%X", ptr_hook->hook_data);
-                break;
-            case HOOK_TYPE_COMMAND:
-                log_printf ("  type . . . . . . . . . : %d (command)", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
-                log_printf ("  command data:");
-                log_printf ("    callback . . . . . . : 0x%X", HOOK_COMMAND(ptr_hook, callback));
-                log_printf ("    command. . . . . . . : '%s'", HOOK_COMMAND(ptr_hook, command));
-                log_printf ("    level. . . . . . . . : %d",   HOOK_COMMAND(ptr_hook, level));
-                log_printf ("    command_desc . . . . : '%s'", HOOK_COMMAND(ptr_hook, description));
-                log_printf ("    command_args . . . . : '%s'", HOOK_COMMAND(ptr_hook, args));
-                log_printf ("    command_args_desc. . : '%s'", HOOK_COMMAND(ptr_hook, args_description));
-                log_printf ("    command_completion . : '%s'", HOOK_COMMAND(ptr_hook, completion));
-                break;
-            case HOOK_TYPE_TIMER:
-                log_printf ("  type . . . . . . . . . : %d (timer)", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
-                log_printf ("  timer data:");
-                log_printf ("    callback . . . . . . : 0x%X", HOOK_TIMER(ptr_hook, callback));
-                log_printf ("    interval . . . . . . : %ld",  HOOK_TIMER(ptr_hook, interval));
-                log_printf ("    last_exec.tv_sec . . : %ld",  HOOK_TIMER(ptr_hook, last_exec.tv_sec));
-                log_printf ("    last_exec.tv_usec. . : %ld",  HOOK_TIMER(ptr_hook, last_exec.tv_usec));
-                break;
-            case HOOK_TYPE_FD:
-                log_printf ("  type . . . . . . . . . : %d (fd)", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
-                log_printf ("  fd data:");
-                log_printf ("    callback . . . . . . : 0x%X", HOOK_FD(ptr_hook, callback));
-                log_printf ("    fd . . . . . . . . . : %ld",  HOOK_FD(ptr_hook, fd));
-                log_printf ("    flags. . . . . . . . : %ld",  HOOK_FD(ptr_hook, flags));
-                break;
-            case HOOK_TYPE_PRINT:
-                log_printf ("  type . . . . . . . . . : %d (print)", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
-                log_printf ("  print data:");
-                log_printf ("    callback . . . . . . : 0x%X", HOOK_PRINT(ptr_hook, callback));
-                log_printf ("    buffer . . . . . . . : 0x%X", HOOK_PRINT(ptr_hook, buffer));
-                log_printf ("    message. . . . . . . : '%s'", HOOK_PRINT(ptr_hook, message));
-                break;
-            case HOOK_TYPE_SIGNAL:
-                log_printf ("  type . . . . . . . . . : %d (signal)", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
-                log_printf ("  signal data:");
-                log_printf ("    callback . . . . . . : 0x%X", HOOK_SIGNAL(ptr_hook, callback));
-                log_printf ("    signal . . . . . . . : '%s'", HOOK_SIGNAL(ptr_hook, signal));
-                break;
-            case HOOK_TYPE_CONFIG:
-                log_printf ("  type . . . . . . . . . : %d (config)", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
-                log_printf ("  config data:");
-                log_printf ("    callback . . . . . . : 0x%X", HOOK_CONFIG(ptr_hook, callback));
-                log_printf ("    type . . . . . . . . : '%s'", HOOK_CONFIG(ptr_hook, type));
-                log_printf ("    option . . . . . . . : '%s'", HOOK_CONFIG(ptr_hook, option));
-                break;
-            case HOOK_TYPE_COMPLETION:
-                log_printf ("  type . . . . . . . . . : %d (completion)", ptr_hook->type);
-                log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
-                log_printf ("  completion data:");
-                log_printf ("    callback . . . . . . : 0x%X", HOOK_COMPLETION(ptr_hook, callback));
-                log_printf ("    completion . . . . . : '%s'", HOOK_COMPLETION(ptr_hook, completion));
-                break;
-        }        
-        log_printf ("  running. . . . . . . . : %d",   ptr_hook->running);
-        log_printf ("  prev_hook. . . . . . . : 0x%X", ptr_hook->prev_hook);
-        log_printf ("  next_hook. . . . . . . : 0x%X", ptr_hook->next_hook);
+            log_printf ("");
+            log_printf ("[hook (addr:0x%X)]", ptr_hook);
+            log_printf ("  plugin . . . . . . . . : 0x%X", ptr_hook->plugin);
+            log_printf ("  deleted. . . . . . . . : %d",   ptr_hook->deleted);
+            log_printf ("  running. . . . . . . . : %d",   ptr_hook->running);
+            switch (ptr_hook->type)
+            {
+                case HOOK_TYPE_COMMAND:
+                    log_printf ("  type . . . . . . . . . : %d (command)", ptr_hook->type);
+                    log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  command data:");
+                        log_printf ("    callback . . . . . . : 0x%X", HOOK_COMMAND(ptr_hook, callback));
+                        log_printf ("    command. . . . . . . : '%s'", HOOK_COMMAND(ptr_hook, command));
+                        log_printf ("    level. . . . . . . . : %d",   HOOK_COMMAND(ptr_hook, level));
+                        log_printf ("    command_desc . . . . : '%s'", HOOK_COMMAND(ptr_hook, description));
+                        log_printf ("    command_args . . . . : '%s'", HOOK_COMMAND(ptr_hook, args));
+                        log_printf ("    command_args_desc. . : '%s'", HOOK_COMMAND(ptr_hook, args_description));
+                        log_printf ("    command_completion . : '%s'", HOOK_COMMAND(ptr_hook, completion));
+                    }
+                    break;
+                case HOOK_TYPE_TIMER:
+                    log_printf ("  type . . . . . . . . . : %d (timer)", ptr_hook->type);
+                    log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  timer data:");
+                        log_printf ("    callback . . . . . . : 0x%X", HOOK_TIMER(ptr_hook, callback));
+                        log_printf ("    interval . . . . . . : %ld",  HOOK_TIMER(ptr_hook, interval));
+                        local_time = localtime (&HOOK_TIMER(ptr_hook, last_exec).tv_sec);
+                        strftime (text_time, sizeof (text_time),
+                                  "%d/%m/%Y %H:%M:%S", local_time);
+                        log_printf ("    last_exec.tv_sec . . : %ld (%s)",
+                                    HOOK_TIMER(ptr_hook, last_exec.tv_sec),
+                                    text_time);
+                        log_printf ("    last_exec.tv_usec. . : %ld",  HOOK_TIMER(ptr_hook, last_exec.tv_usec));
+                        local_time = localtime (&HOOK_TIMER(ptr_hook, next_exec).tv_sec);
+                        strftime (text_time, sizeof (text_time),
+                                  "%d/%m/%Y %H:%M:%S", local_time);
+                        log_printf ("    next_exec.tv_sec . . : %ld (%s)",
+                                    HOOK_TIMER(ptr_hook, next_exec.tv_sec),
+                                    text_time);
+                        log_printf ("    next_exec.tv_usec. . : %ld",  HOOK_TIMER(ptr_hook, next_exec.tv_usec));
+                    }
+                    break;
+                case HOOK_TYPE_FD:
+                    log_printf ("  type . . . . . . . . . : %d (fd)", ptr_hook->type);
+                    log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  fd data:");
+                        log_printf ("    callback . . . . . . : 0x%X", HOOK_FD(ptr_hook, callback));
+                        log_printf ("    fd . . . . . . . . . : %ld",  HOOK_FD(ptr_hook, fd));
+                        log_printf ("    flags. . . . . . . . : %ld",  HOOK_FD(ptr_hook, flags));
+                    }
+                    break;
+                case HOOK_TYPE_PRINT:
+                    log_printf ("  type . . . . . . . . . : %d (print)", ptr_hook->type);
+                    log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  print data:");
+                        log_printf ("    callback . . . . . . : 0x%X", HOOK_PRINT(ptr_hook, callback));
+                        log_printf ("    buffer . . . . . . . : 0x%X", HOOK_PRINT(ptr_hook, buffer));
+                        log_printf ("    message. . . . . . . : '%s'", HOOK_PRINT(ptr_hook, message));
+                    }
+                    break;
+                case HOOK_TYPE_SIGNAL:
+                    log_printf ("  type . . . . . . . . . : %d (signal)", ptr_hook->type);
+                    log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  signal data:");
+                        log_printf ("    callback . . . . . . : 0x%X", HOOK_SIGNAL(ptr_hook, callback));
+                        log_printf ("    signal . . . . . . . : '%s'", HOOK_SIGNAL(ptr_hook, signal));
+                    }
+                    break;
+                case HOOK_TYPE_CONFIG:
+                    log_printf ("  type . . . . . . . . . : %d (config)", ptr_hook->type);
+                    log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  config data:");
+                        log_printf ("    callback . . . . . . : 0x%X", HOOK_CONFIG(ptr_hook, callback));
+                        log_printf ("    type . . . . . . . . : '%s'", HOOK_CONFIG(ptr_hook, type));
+                        log_printf ("    option . . . . . . . : '%s'", HOOK_CONFIG(ptr_hook, option));
+                    }
+                    break;
+                case HOOK_TYPE_COMPLETION:
+                    log_printf ("  type . . . . . . . . . : %d (completion)", ptr_hook->type);
+                    log_printf ("  callback_data. . . . . : 0x%X", ptr_hook->callback_data);
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  completion data:");
+                        log_printf ("    callback . . . . . . : 0x%X", HOOK_COMPLETION(ptr_hook, callback));
+                        log_printf ("    completion . . . . . : '%s'", HOOK_COMPLETION(ptr_hook, completion));
+                    }
+                    break;
+                case HOOK_NUM_TYPES:
+                    /* this constant is used to count types only,
+                       it is never used as type */
+                    break;
+            }
+            log_printf ("  prev_hook. . . . . . . : 0x%X", ptr_hook->prev_hook);
+            log_printf ("  next_hook. . . . . . . : 0x%X", ptr_hook->next_hook);
+        }
     }
 }

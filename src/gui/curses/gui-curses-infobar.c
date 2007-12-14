@@ -28,7 +28,9 @@
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
+#include "../../core/wee-hook.h"
 #include "../../core/wee-string.h"
+#include "../../plugins/plugin.h"
 #include "../gui-infobar.h"
 #include "../gui-color.h"
 #include "../gui-main.h"
@@ -145,4 +147,57 @@ gui_infobar_draw (struct t_gui_buffer *buffer, int erase)
         wnoutrefresh (GUI_CURSES(ptr_win)->win_infobar);
         refresh ();
     }
+}
+
+/*
+ * gui_infobar_refresh_timer_cb: timer callback for refresh of infobar
+ */
+
+int
+gui_infobar_refresh_timer_cb (void *data)
+{
+    /* make C compiler happy */
+    (void) data;
+
+    if (gui_ok)
+    {
+        if (data)
+            gui_infobar_draw (gui_current_window->buffer, 1);
+        else
+            gui_infobar_draw_time (gui_current_window->buffer);
+        wmove (GUI_CURSES(gui_current_window)->win_input,
+               0, gui_current_window->win_input_cursor_x);
+        wrefresh (GUI_CURSES(gui_current_window)->win_input);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * gui_infobar_highlight_timer_cb: timer callback for highlights in infobar
+ */
+
+int
+gui_infobar_highlight_timer_cb (void *data)
+{
+    /* make C compiler happy */
+    (void) data;
+    
+    if (gui_ok)
+    {
+        if (gui_infobar && gui_infobar->remaining_time > 0)
+        {
+            gui_infobar->remaining_time--;
+            if (gui_infobar->remaining_time == 0)
+            {
+                gui_infobar_remove ();
+                gui_infobar_draw (gui_current_window->buffer, 1);
+            }
+        }
+        /* remove this timer if there's no more data for infobar */
+        if (!gui_infobar)
+            unhook (gui_infobar_highlight_timer);
+    }
+    
+    return WEECHAT_RC_OK;
 }

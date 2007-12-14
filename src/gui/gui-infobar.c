@@ -28,13 +28,16 @@
 #include <stdarg.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-hook.h"
 #include "../core/wee-log.h"
 #include "gui-infobar.h"
 #include "gui-color.h"
 #include "gui-window.h"
 
 
-struct t_gui_infobar *gui_infobar;     /* pointer to infobar content        */
+struct t_gui_infobar *gui_infobar = NULL;          /* infobar content       */
+struct t_hook *gui_infobar_refresh_timer = NULL;   /* refresh timer         */
+struct t_hook *gui_infobar_highlight_timer = NULL; /* highlight timer       */
 
 
 /* 
@@ -73,6 +76,11 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
         gui_infobar_draw (gui_current_window->buffer, 1);
         if (buf2)
             free (buf2);
+        
+        if (!gui_infobar_highlight_timer)
+            gui_infobar_highlight_timer = hook_timer (NULL, 1 * 1000, 0, 0,
+                                                      &gui_infobar_highlight_timer_cb,
+                                                      NULL);
     }
     else
         log_printf (_("Error: not enough memory for infobar message"));

@@ -147,7 +147,7 @@ extern struct t_hook *plugin_api_hook_command (struct t_weechat_plugin *,
                                                int (*)(void *, void *, int, char **, char **),
                                                void *);
 extern struct t_hook *plugin_api_hook_timer (struct t_weechat_plugin *,
-                                             long, int,
+                                             long, int, int,
                                              int (*)(void *), void *);
 extern struct t_hook *plugin_api_hook_fd (struct t_weechat_plugin *,
                                           int, int, int, int,

@@ -135,10 +135,10 @@ gui_completion_search_command (struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook;
     
-    for (ptr_hook = weechat_hooks; ptr_hook;
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
-        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+        if (!ptr_hook->deleted
             && HOOK_COMMAND(ptr_hook, command)
             && HOOK_COMMAND(ptr_hook, command)[0]
             && (HOOK_COMMAND(ptr_hook, level) == 0)
@@ -382,10 +382,10 @@ gui_completion_list_add_command_hooks (struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook;
     
-    for (ptr_hook = weechat_hooks; ptr_hook;
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
-        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+        if (!ptr_hook->deleted
             && (HOOK_COMMAND(ptr_hook, command))
             && (HOOK_COMMAND(ptr_hook, command)[0]))
             gui_completion_list_add (completion,
@@ -592,10 +592,10 @@ gui_completion_list_add_weechat_cmd (struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook;
     
-    for (ptr_hook = weechat_hooks; ptr_hook;
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
-        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+        if (!ptr_hook->deleted
             && !ptr_hook->plugin
             && HOOK_COMMAND(ptr_hook, command)
             && HOOK_COMMAND(ptr_hook, command)[0])
@@ -939,10 +939,10 @@ gui_completion_command (struct t_gui_completion *completion)
     other_completion = 0;
     if (!completion->completion_list->items)
     {
-        for (ptr_hook = weechat_hooks; ptr_hook;
+        for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
              ptr_hook = ptr_hook->next_hook)
         {
-            if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+            if (!ptr_hook->deleted
                 && HOOK_COMMAND(ptr_hook, command)
                 && HOOK_COMMAND(ptr_hook, command)[0]
                 && (HOOK_COMMAND(ptr_hook, level) == 0))

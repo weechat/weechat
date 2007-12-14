@@ -82,6 +82,26 @@ demo_printf_command_cb (void *data, void *buffer, int argc, char **argv,
 }
 
 /*
+ * demo_infobar_command_cb: demo command for infobar
+ */
+
+int
+demo_infobar_command_cb (void *data, void *buffer, int argc, char **argv,
+                         char **argv_eol)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    (void) argv;
+    
+    weechat_infobar_printf (10, NULL,
+                            (argc > 1) ?
+                            argv_eol[1] : _("test infobar"));
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * demo_buffer_input_data_cb: callback for input data on buffer
  */
 
@@ -285,6 +305,14 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           _("text: write some text on current buffer"),
                           "",
                           &demo_printf_command_cb, NULL);
+
+    weechat_hook_command ("demo_infobar",
+                          _("demo command: print a message in infobar for 10 "
+                            "seconds"),
+                          _("[text]"),
+                          _("text: write this text on infobar"),
+                          "",
+                          &demo_infobar_command_cb, NULL);
 
     weechat_hook_command ("demo_buffer",
                           _("open a new buffer"),

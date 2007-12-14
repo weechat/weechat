@@ -28,6 +28,7 @@
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
+#include "../../plugins/plugin.h"
 #include "../gui-infobar.h"
 #include "../gui-window.h"
 #include "gui-gtk.h"
@@ -75,4 +76,30 @@ gui_infobar_draw (struct t_gui_buffer *buffer, int erase)
     /* TODO: write this function for Gtk */
     (void) buffer;
     (void) erase;
+}
+
+/*
+ * gui_infobar_refresh_timer_cb: timer callback for refresh of infobar
+ */
+
+int
+gui_infobar_refresh_timer_cb (void *data)
+{
+    /* make C compiler happy */
+    (void) data;
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * gui_infobar_highlight_timer_cb: timer callback for highlights in infobar
+ */
+
+int
+gui_infobar_highlight_timer_cb (void *data)
+{
+    /* make C compiler happy */
+    (void) data;
+    
+    return WEECHAT_RC_OK;
 }

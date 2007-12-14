@@ -42,8 +42,6 @@
 #include "../gui-infobar.h"
 #include "../gui-input.h"
 #include "../gui-history.h"
-#include "../gui-hotlist.h"
-#include "../gui-keyboard.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
 
@@ -131,23 +129,11 @@ gui_main_quit ()
 void
 gui_main_loop ()
 {
-    fd_set read_fds, write_fds, except_fds;
-    static struct timeval timeout;
     struct t_gui_buffer *ptr_buffer;
-    int old_day, old_min, old_sec;
-    char text_time[1024], *text_time2;
-    struct timeval tv_time;
-    struct tm *local_time;
+    struct timeval tv_timeout;
+    fd_set read_fds, write_fds, except_fds;
     
     quit_weechat = 0;
-    
-    gettimeofday (&tv_time, NULL);
-    gui_keyboard_last_activity_time = tv_time.tv_sec;
-    local_time = localtime (&tv_time.tv_sec);
-    old_day = local_time->tm_mday;
-    
-    old_min = -1;
-    old_sec = -1;
     
     /* if SIGTERM or SIGHUP received => quit */
     signal (SIGTERM, gui_main_quit);
@@ -155,10 +141,16 @@ gui_main_loop ()
     
     while (!quit_weechat)
     {
+        /* execute hook timers */
+        hook_timer_exec ();
+        
+        /* infobar count down */
+        
+        
         /* refresh needed ? */
         if (gui_refresh_screen_needed)
             gui_window_refresh_screen (0);
-
+        
         for (ptr_buffer = gui_buffers; ptr_buffer;
              ptr_buffer = ptr_buffer->next_buffer)
         {
@@ -169,114 +161,22 @@ gui_main_loop ()
             }
         }
         
-        gettimeofday (&tv_time, NULL);
-        local_time = localtime (&tv_time.tv_sec);
-
-        /* execute hook timers */
-        hook_timer_exec (&tv_time);
-        
-        /* minute has changed ? => redraw infobar */
-        if (local_time->tm_min != old_min)
-        {
-            old_min = local_time->tm_min;
-            gui_infobar_draw (gui_current_window->buffer, 1);
-            
-            if (CONFIG_BOOLEAN(config_look_day_change)
-                && (local_time->tm_mday != old_day))
-            {
-                strftime (text_time, sizeof (text_time),
-                          CONFIG_STRING(config_look_day_change_time_format),
-                          local_time);
-                text_time2 = string_iconv_to_internal (NULL, text_time);
-                gui_add_hotlist = 0;
-                for (ptr_buffer = gui_buffers; ptr_buffer;
-                     ptr_buffer = ptr_buffer->next_buffer)
-                {
-                    if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATED)
-                        gui_chat_printf (ptr_buffer,
-                                         _("\t\tDay changed to %s"),
-                                         (text_time2) ?
-                                         text_time2 : text_time);
-                }
-                if (text_time2)
-                    free (text_time2);
-                gui_add_hotlist = 1;
-            }
-            old_day = local_time->tm_mday;
-        }
-        
-        /* second has changed ? */
-        if (local_time->tm_sec != old_sec)
-        {
-            old_sec = local_time->tm_sec;
-            
-            /* display time in infobar (if seconds displayed) */
-            if (CONFIG_BOOLEAN(config_look_infobar_seconds))
-            {
-                gui_infobar_draw_time (gui_current_window->buffer);
-                wmove (GUI_CURSES(gui_current_window)->win_input,
-                       0, gui_current_window->win_input_cursor_x);
-                wrefresh (GUI_CURSES(gui_current_window)->win_input);
-            }
-            
-            /* infobar count down */
-            if (gui_infobar && gui_infobar->remaining_time > 0)
-            {
-                gui_infobar->remaining_time--;
-                if (gui_infobar->remaining_time == 0)
-                {
-                    gui_infobar_remove ();
-                    gui_infobar_draw (gui_current_window->buffer, 1);
-                }
-            }
-        }
-        
-        /* read keyboard */
-
-        /* on GNU/Hurd 2 select() are causing troubles with keyboard */
-        /* waiting for a fix, we use only one select() */
-#ifndef __GNU__        
+        /* wait for keyboard or network activity */
         FD_ZERO (&read_fds);
-        timeout.tv_sec = 0;
-        timeout.tv_usec = 8000;
-        
-        FD_SET (STDIN_FILENO, &read_fds);
-        
-        if (select (FD_SETSIZE, &read_fds, NULL, NULL, &timeout) > 0)
-        {
-            if (FD_ISSET (STDIN_FILENO, &read_fds))
-            {
-                gui_keyboard_read ();
-            }
-        }
-        else
-            gui_keyboard_flush ();
-#endif
-        
-        /* read sockets/files/pipes */
+        FD_ZERO (&write_fds);
+        FD_ZERO (&except_fds);
         hook_fd_set (&read_fds, &write_fds, &except_fds);
-        
-#ifdef __GNU__
-        timeout.tv_sec = 0;
-        timeout.tv_usec = 10000;
         FD_SET (STDIN_FILENO, &read_fds);
-#else
-        timeout.tv_sec = 0;
-        timeout.tv_usec = 2000;
-#endif
-        
-        if (select (FD_SETSIZE,
-                    &read_fds, &write_fds, &except_fds,
-                    &timeout) > 0)
+        if (hook_timer_time_to_next (&tv_timeout))
+            select (FD_SETSIZE, &read_fds, &write_fds, &except_fds, &tv_timeout);
+        else
+            select (FD_SETSIZE, &read_fds, &write_fds, &except_fds, NULL);
+        if (FD_ISSET (STDIN_FILENO, &read_fds))
         {
-#ifdef __GNU__
-            if (FD_ISSET (STDIN_FILENO, &read_fds))
-            {
-                gui_keyboard_read ();
-            }
-#endif
-            hook_fd_exec (&read_fds, &write_fds, &except_fds);
+            gui_keyboard_read ();
+            gui_keyboard_flush ();
         }
+        hook_fd_exec (&read_fds, &write_fds, &except_fds);
     }
 }
 

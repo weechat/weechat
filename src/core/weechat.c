@@ -586,6 +586,7 @@ main (int argc, char *argv[])
     signal (SIGQUIT, SIG_IGN);          /* ignore SIGQUIT signal            */
     signal (SIGPIPE, SIG_IGN);          /* ignore SIGPIPE signal            */
     signal (SIGSEGV, weechat_sigsegv);  /* crash dump when SIGSEGV received */
+    hook_init ();                       /* initialize hooks                 */
     gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
     weechat_init_vars ();               /* initialize some variables        */
     command_init ();                    /* initialize WeeChat commands      */

@@ -35,6 +35,8 @@ struct t_gui_infobar
 /* infobar variables */
 
 extern struct t_gui_infobar *gui_infobar;
+extern struct t_hook *gui_infobar_refresh_timer;
+extern struct t_hook *gui_infobar_highlight_timer;
 
 /* infobar functions */
 
@@ -46,5 +48,7 @@ extern void gui_infobar_remove_all ();
 
 extern void gui_infobar_draw_time (struct t_gui_buffer *);
 extern void gui_infobar_draw (struct t_gui_buffer *, int);
+extern int gui_infobar_refresh_timer_cb (void *);
+extern int gui_infobar_highlight_timer_cb (void *);
 
 #endif /* gui-infobar.h */

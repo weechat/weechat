@@ -180,6 +180,20 @@ gui_keyboard_init ()
 }
 
 /*
+ * gui_keyboard_init_last_activity_time: init last activity time with current
+ *                                       time
+ */
+
+void
+gui_keyboard_init_last_activity_time ()
+{
+    struct timeval tv_time;
+    
+    gettimeofday (&tv_time, NULL);
+    gui_keyboard_last_activity_time = tv_time.tv_sec;
+}
+
+/*
  * gui_keyboard_grab_init: init "grab" mode
  */
 

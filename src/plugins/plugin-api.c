@@ -1255,9 +1255,15 @@ plugin_api_infobar_printf (struct t_weechat_plugin *plugin, int time_displayed,
     va_end (argptr);
     
     buf2 = string_iconv_to_internal (plugin->charset, buf);
-    num_color = gui_color_search_config (color_name);
-    if (num_color < 0)
+    if (color_name && color_name[0])
+    {
+        num_color = gui_color_search_config (color_name);
+        if (num_color < 0)
+            num_color = GUI_COLOR_INFOBAR;
+    }
+    else
         num_color = GUI_COLOR_INFOBAR;
+    
     gui_infobar_printf (time_displayed,
                         num_color,
                         "%s",
@@ -1314,10 +1320,12 @@ plugin_api_hook_command (struct t_weechat_plugin *plugin, char *command,
 
 struct t_hook *
 plugin_api_hook_timer (struct t_weechat_plugin *plugin, long interval,
-                       int max_calls, int (*callback)(void *), void *data)
+                       int align_second, int max_calls,
+                       int (*callback)(void *), void *data)
 {
     if (plugin && (interval > 0) && callback)
-        return hook_timer (plugin, interval, max_calls, callback, data);
+        return hook_timer (plugin, interval, align_second, max_calls,
+                           callback, data);
     
     return NULL;
 }

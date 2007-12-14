@@ -494,10 +494,10 @@ command_help (void *data, void *buffer,
         case 1:
             gui_chat_printf (NULL, "");
             gui_chat_printf (NULL, _("%s internal commands:"), PACKAGE_NAME);
-            for (ptr_hook = weechat_hooks; ptr_hook;
+            for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
                  ptr_hook = ptr_hook->next_hook)
             {
-                if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+                if (!ptr_hook->deleted
                     && !ptr_hook->plugin
                     && HOOK_COMMAND(ptr_hook, command)
                     && HOOK_COMMAND(ptr_hook, command)[0])
@@ -522,10 +522,10 @@ command_help (void *data, void *buffer,
             }
             gui_chat_printf (NULL, "");
             gui_chat_printf (NULL, _("Other commands:"));
-            for (ptr_hook = weechat_hooks; ptr_hook;
+            for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
                  ptr_hook = ptr_hook->next_hook)
             {
-                if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+                if (!ptr_hook->deleted
                     && ptr_hook->plugin
                     && HOOK_COMMAND(ptr_hook, command)
                     && HOOK_COMMAND(ptr_hook, command)[0])
@@ -550,10 +550,10 @@ command_help (void *data, void *buffer,
             }
             break;
         case 2:
-            for (ptr_hook = weechat_hooks; ptr_hook;
+            for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
                  ptr_hook = ptr_hook->next_hook)
             {
-                if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+                if (!ptr_hook->deleted
                     && HOOK_COMMAND(ptr_hook, command)
                     && HOOK_COMMAND(ptr_hook, command)[0]
                     && (HOOK_COMMAND(ptr_hook, level) == 0)
@@ -886,11 +886,10 @@ command_plugin_list (char *name, int full)
             {
                 /* commands hooked */
                 hook_found = 0;
-                for (ptr_hook = weechat_hooks; ptr_hook;
+                for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
                 {
-                    if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_COMMAND))
+                    if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL, _("     commands hooked:"));
@@ -907,11 +906,10 @@ command_plugin_list (char *name, int full)
                 
                 /* timers hooked */
                 hook_found = 0;
-                for (ptr_hook = weechat_hooks; ptr_hook;
+                for (ptr_hook = weechat_hooks[HOOK_TYPE_TIMER]; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
                 {
-                    if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_TIMER))
+                    if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL, _("     timers hooked:"));
@@ -949,11 +947,10 @@ command_plugin_list (char *name, int full)
                 
                 /* fd hooked */
                 hook_found = 0;
-                for (ptr_hook = weechat_hooks; ptr_hook;
+                for (ptr_hook = weechat_hooks[HOOK_TYPE_FD]; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
                 {
-                    if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_FD))
+                    if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL,
@@ -968,11 +965,10 @@ command_plugin_list (char *name, int full)
                 
                 /* prints hooked */
                 hook_found = 0;
-                for (ptr_hook = weechat_hooks; ptr_hook;
+                for (ptr_hook = weechat_hooks[HOOK_TYPE_PRINT]; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
                 {
-                    if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_PRINT))
+                    if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL, _("     prints hooked:"));
@@ -994,11 +990,10 @@ command_plugin_list (char *name, int full)
                 
                 /* signals hooked */
                 hook_found = 0;
-                for (ptr_hook = weechat_hooks; ptr_hook;
+                for (ptr_hook = weechat_hooks[HOOK_TYPE_SIGNAL]; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
                 {
-                    if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_SIGNAL))
+                    if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL, _("     signals hooked:"));
@@ -1012,11 +1007,10 @@ command_plugin_list (char *name, int full)
                 
                 /* config options hooked */
                 hook_found = 0;
-                for (ptr_hook = weechat_hooks; ptr_hook;
+                for (ptr_hook = weechat_hooks[HOOK_TYPE_CONFIG]; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
                 {
-                    if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_CONFIG))
+                    if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL,
@@ -1034,11 +1028,10 @@ command_plugin_list (char *name, int full)
 
                 /* completion hooked */
                 hook_found = 0;
-                for (ptr_hook = weechat_hooks; ptr_hook;
+                for (ptr_hook = weechat_hooks[HOOK_TYPE_COMPLETION]; ptr_hook;
                      ptr_hook = ptr_hook->next_hook)
                 {
-                    if ((ptr_hook->plugin == ptr_plugin)
-                        && (ptr_hook->type == HOOK_TYPE_COMPLETION))
+                    if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL,
@@ -2067,10 +2060,10 @@ command_print_stdout ()
 {
     struct t_hook *ptr_hook;
 
-    for (ptr_hook = weechat_hooks; ptr_hook;
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
-        if ((ptr_hook->type == HOOK_TYPE_COMMAND)
+        if (!ptr_hook->deleted
             && HOOK_COMMAND(ptr_hook, command)
             && HOOK_COMMAND(ptr_hook, command)[0]
             && !ptr_hook->plugin)

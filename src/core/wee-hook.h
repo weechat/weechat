@@ -24,14 +24,15 @@
 
 enum t_hook_type
 {
-    HOOK_TYPE_DELETED = 0,             /* used when hook is deleted         */
-    HOOK_TYPE_COMMAND,                 /* new command                       */
+    HOOK_TYPE_COMMAND = 0,             /* new command                       */
     HOOK_TYPE_TIMER,                   /* timer                             */
     HOOK_TYPE_FD,                      /* socket of file descriptor         */
     HOOK_TYPE_PRINT,                   /* printed message                   */
     HOOK_TYPE_SIGNAL,                  /* signal                            */
     HOOK_TYPE_CONFIG,                  /* config option                     */
     HOOK_TYPE_COMPLETION,              /* custom completions                */
+    /* number of hook types */
+    HOOK_NUM_TYPES,
 };
 
 #define HOOK_FD_FLAG_READ       1
@@ -52,12 +53,12 @@ struct t_hook
     struct t_weechat_plugin *plugin;   /* plugin which created this hook    */
                                        /* (NULL for hook created by WeeChat)*/
     enum t_hook_type type;             /* hook type                         */
+    int deleted;                       /* hook marked for deletion ?        */
+    int running;                       /* 1 if hook is currently running    */
     void *callback_data;               /* data sent to callback             */
-
+    
     /* hook data (depends on hook type) */
     void *hook_data;                   /* hook specific data                */
-    
-    int running;                       /* 1 if hook is currently running    */
     struct t_hook *prev_hook;          /* link to previous hook             */
     struct t_hook *next_hook;          /* link to next hook                 */
 };
@@ -84,6 +85,7 @@ struct t_hook_timer
     long interval;                     /* timer interval (milliseconds)     */
     int remaining_calls;               /* calls remaining (0 = unlimited)   */
     struct timeval last_exec;          /* last time hook was executed       */
+    struct timeval next_exec;          /* next scheduled execution          */
 };
 
 typedef int (t_hook_callback_fd)(void *);
@@ -133,20 +135,22 @@ struct t_hook_completion
 
 /* hook variables */
 
-extern struct t_hook *weechat_hooks;
-extern struct t_hook *last_weechat_hook;
+extern struct t_hook *weechat_hooks[];
+extern struct t_hook *last_weechat_hook[];
 
 /* hook functions */
 
+extern void hook_init ();
 extern int hook_valid (struct t_hook *);
 extern int hook_valid_for_plugin (void *, struct t_hook *);
 
 extern struct t_hook *hook_command (void *, char *, char *, char *, char *,
                                     char *, t_hook_callback_command *, void *);
 extern int hook_command_exec (void *, char *, int);
-extern struct t_hook *hook_timer (void *, long, int, t_hook_callback_timer *,
-                                  void *);
-extern void hook_timer_exec (struct timeval *);
+extern struct t_hook *hook_timer (void *, long, int, int,
+                                  t_hook_callback_timer *, void *);
+extern int hook_timer_time_to_next (struct timeval *);
+extern void hook_timer_exec ();
 extern struct t_hook *hook_fd (void *, int, int, t_hook_callback_fd *,void *);
 extern void hook_fd_set (fd_set *, fd_set *, fd_set *);
 extern void hook_fd_exec (fd_set *, fd_set *, fd_set *);

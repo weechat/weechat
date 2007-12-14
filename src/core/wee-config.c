@@ -36,15 +36,19 @@
 #include "weechat.h"
 #include "wee-config.h"
 #include "wee-config-file.h"
+#include "wee-hook.h"
 #include "wee-log.h"
 #include "wee-util.h"
 #include "wee-list.h"
+#include "wee-string.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-hotlist.h"
+#include "../gui/gui-infobar.h"
 #include "../gui/gui-keyboard.h"
 #include "../gui/gui-status.h"
 #include "../gui/gui-window.h"
+#include "../plugins/plugin.h"
 
 
 struct t_config_file *weechat_config_file = NULL;
@@ -177,6 +181,10 @@ struct t_config_option *config_proxy_password;
 struct t_config_option *config_plugins_path;
 struct t_config_option *config_plugins_autoload;
 struct t_config_option *config_plugins_extension;
+
+/* hooks */
+
+struct t_hook *config_day_change_timer = NULL;
 
 
 /*
@@ -313,6 +321,91 @@ config_change_nicks_colors ()
             {
                 //gui_nick_find_color (ptr_nick);
             }   
+        }
+    }
+}
+
+/*
+ * config_change_infobar_seconds: called when display of seconds in infobar changed
+ */
+
+void
+config_change_infobar_seconds ()
+{
+    int seconds;
+    
+    if (gui_infobar_refresh_timer)
+        unhook (gui_infobar_refresh_timer);
+    
+    seconds = (CONFIG_BOOLEAN(config_look_infobar_seconds)) ? 1 : 60;
+    gui_infobar_refresh_timer = hook_timer (NULL, seconds * 1000, seconds, 0,
+                                            gui_infobar_refresh_timer_cb, NULL);
+    (void) gui_infobar_refresh_timer_cb ("force");
+}
+
+/*
+ * config_day_change_timer_cb: timer callback for displaying
+ *                             "Day changed to xxx" message
+ */
+
+int
+config_day_change_timer_cb (void *data)
+{
+    struct timeval tv_time;
+    struct tm *local_time;
+    char text_time[1024], *text_time2;
+    struct t_gui_buffer *ptr_buffer;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    gettimeofday (&tv_time, NULL);
+    local_time = localtime (&tv_time.tv_sec);
+    
+    strftime (text_time, sizeof (text_time),
+              CONFIG_STRING(config_look_day_change_time_format),
+              local_time);
+    text_time2 = string_iconv_to_internal (NULL, text_time);
+    gui_add_hotlist = 0;
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATED)
+            gui_chat_printf (ptr_buffer,
+                             _("\t\tDay changed to %s"),
+                             (text_time2) ?
+                             text_time2 : text_time);
+    }
+    if (text_time2)
+        free (text_time2);
+    gui_add_hotlist = 1;
+
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * config_change_day_change: called when day_change option changed
+ */
+
+void
+config_change_day_change ()
+{
+    if (CONFIG_BOOLEAN(config_look_day_change))
+    {
+        if (!config_day_change_timer)
+            config_day_change_timer = hook_timer (NULL,
+                                                  24 * 3600 * 1000,
+                                                  24 * 3600,
+                                                  0,
+                                                  &config_day_change_timer_cb,
+                                                  NULL);
+    }
+    else
+    {
+        if (config_day_change_timer)
+        {
+            unhook (config_day_change_timer);
+            config_day_change_timer = NULL;
         }
     }
 }
@@ -543,7 +636,7 @@ config_weechat_init ()
     config_look_infobar_seconds = config_file_new_option (
         ptr_section, "look_infobar_seconds", "boolean",
         N_("display seconds in infobar time"),
-        NULL, 0, 0, "on", &config_change_buffer_content);
+        NULL, 0, 0, "on", &config_change_infobar_seconds);
     config_look_infobar_delay_highlight = config_file_new_option (
         ptr_section, "look_infobar_delay_highlight", "integer",
         N_("delay (in seconds) for highlight messages in "
@@ -576,7 +669,7 @@ config_weechat_init ()
     config_look_day_change = config_file_new_option (
         ptr_section, "look_day_change", "boolean",
         N_("display special message when day changes"),
-        NULL, 0, 0, "on", NULL);
+        NULL, 0, 0, "on", &config_change_day_change);
     config_look_day_change_time_format = config_file_new_option (
         ptr_section, "look_day_change_time_format", "string",
         N_("time format for date displayed when day changed"),
@@ -1045,7 +1138,16 @@ config_weechat_init ()
 int
 config_weechat_read ()
 {
-    return config_file_read (weechat_config_file);
+    int rc;
+    
+    rc = config_file_read (weechat_config_file);
+    if (rc == 0)
+    {
+        config_change_infobar_seconds ();
+        config_change_day_change ();
+    }
+    
+    return rc;
 }
 
 /*

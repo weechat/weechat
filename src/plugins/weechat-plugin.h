@@ -160,7 +160,7 @@ struct t_weechat_plugin
                                     char *, char *, char *,
                                     int (*)(void *, void *, int, char **, char **),
                                     void *);
-    struct t_hook *(*hook_timer) (struct t_weechat_plugin *, long, int,
+    struct t_hook *(*hook_timer) (struct t_weechat_plugin *, long, int, int,
                                   int (*)(void *), void *);
     struct t_hook *(*hook_fd) (struct t_weechat_plugin *, int, int, int, int,
                                int (*)(void *), void *);
@@ -407,8 +407,10 @@ struct t_weechat_plugin
     weechat_plugin->hook_command(weechat_plugin, __command, __description, \
                                  __args, __args_desc, __completion,     \
                                  __callback, __data)
-#define weechat_hook_timer(__interval, __max_calls, __callback, __data) \
-    weechat_plugin->hook_timer(weechat_plugin, __interval, __max_calls, \
+#define weechat_hook_timer(__interval, __align_second, __max_calls,     \
+                           __callback, __data)                          \
+    weechat_plugin->hook_timer(weechat_plugin, __interval,              \
+                               __align_second, __max_calls,             \
                                __callback, __data)
 #define weechat_hook_fd(__fd, __flag_read, __flag_write,                \
                         __flag_exception, __callback, __data)           \

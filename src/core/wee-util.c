@@ -37,6 +37,27 @@
 
 
 /*
+ * util_timeval_cmp: compare two timeval structures
+ *                   return: -1 if tv1 < tv2
+ *                            0 if tv1 == tv2
+ *                            1 if tv1 > tv2
+ */
+
+int
+util_timeval_cmp (struct timeval *tv1, struct timeval *tv2)
+{
+    if (tv1->tv_sec < tv2->tv_sec)
+        return -1;
+    if (tv1->tv_sec > tv2->tv_sec)
+        return 1;
+    if (tv1->tv_usec < tv2->tv_usec)
+        return -1;
+    if (tv1->tv_usec > tv2->tv_usec)
+        return 1;
+    return 0;
+}
+
+/*
  * util_timeval_diff: calculates difference between two times (return in
  *                    milliseconds)
  */
@@ -55,6 +76,26 @@ util_timeval_diff (struct timeval *tv1, struct timeval *tv2)
         diff_sec--;
     }
     return ((diff_usec / 1000) + (diff_sec * 1000));
+}
+
+/*
+ * util_timeval_add: add interval (in milliseconds) to a timeval struct 
+ */
+
+void
+util_timeval_add (struct timeval *tv, long interval)
+{
+    long usec;
+    
+    tv->tv_sec += (interval / 1000);
+    usec = tv->tv_usec + ((interval % 1000) * 1000);
+    if (usec > 1000000)
+    {
+        tv->tv_usec = usec % 1000000;
+        tv->tv_sec++;
+    }
+    else
+        tv->tv_usec = usec;
 }
 
 /*
