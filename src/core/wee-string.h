@@ -21,23 +21,25 @@
 #define __WEECHAT_STRING_H 1
 
 #ifndef HAVE_STRNDUP
-extern char *strndup (char *, int);
+extern char *strndup (char *string, int length);
 #endif
-extern void string_tolower (char *);
-extern void string_toupper (char *);
-extern int string_strcasecmp (char *, char *);
-extern int string_strncasecmp (char *, char *, int);
-extern char *string_strcasestr (char *, char *);
-extern char *string_replace (char *, char *, char *);
-extern char *string_remove_quotes (char *, char *);
-extern char *string_convert_hex_chars (char *);
-extern char **string_explode (char *, char *, int, int, int *);
-extern void string_free_exploded (char **);
-extern char **string_split_command (char *, char);
-extern void string_free_splitted_command (char **);
-extern char *string_iconv (int, char *, char *, char *);
-extern char *string_iconv_to_internal (char *, char *);
-extern char *string_iconv_from_internal (char *, char *);
-extern void string_iconv_fprintf (FILE *, char *, ...);
+extern void string_tolower (char *string);
+extern void string_toupper (char *string);
+extern int string_strcasecmp (char *string1, char *string2);
+extern int string_strncasecmp (char *string1, char *string2, int max);
+extern char *string_strcasestr (char *string, char *search);
+extern char *string_replace (char *string, char *search, char *replace);
+extern char *string_remove_quotes (char *string, char *quotes);
+extern char *string_convert_hex_chars (char *string);
+extern char **string_explode (char *string, char *separators, int keep_eol,
+                              int num_items_max, int *num_items);
+extern void string_free_exploded (char **exploded_string);
+extern char **string_split_command (char *command, char separator);
+extern void string_free_splitted_command (char **splitted_command);
+extern char *string_iconv (int from_utf8, char *from_code, char *to_code,
+                           char *string);
+extern char *string_iconv_to_internal (char *charset, char *string);
+extern char *string_iconv_from_internal (char *charset, char *string);
+extern void string_iconv_fprintf (FILE *file, char *data, ...);
 
 #endif /* wee-string.h */

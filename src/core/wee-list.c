@@ -78,7 +78,7 @@ weelist_find_pos (struct t_weelist *weelist, char *data)
 
 void
 weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
-                int position)
+                char *where)
 {
     struct t_weelist_item *pos_item;
 
@@ -97,18 +97,12 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
     {
         /* search position for new element, according to pos asked */
         pos_item = NULL;
-        switch (position)
-        {
-            case WEELIST_POS_SORT:
-                pos_item = weelist_find_pos (weelist, item->data);
-                break;
-            case WEELIST_POS_BEGINNING:
-                pos_item = weelist->items;
-                break;
-            case WEELIST_POS_END:
-                pos_item = NULL;
-                break;
-        }
+        if (string_strcasecmp (where, WEELIST_POS_BEGINNING) == 0)
+            pos_item = weelist->items;
+        else if (string_strcasecmp (where, WEELIST_POS_END) == 0)
+            pos_item = NULL;
+        else
+            pos_item = weelist_find_pos (weelist, item->data);
         
         if (pos_item)
         {
@@ -144,17 +138,17 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
  */
 
 struct t_weelist_item *
-weelist_add (struct t_weelist *weelist, char *data, int position)
+weelist_add (struct t_weelist *weelist, char *data, char *where)
 {
     struct t_weelist_item *new_item;
     
-    if (!weelist || !data || (!data[0]))
+    if (!weelist || !data || !data[0] || !where || !where[0])
         return NULL;
     
-    if ((new_item = ((struct t_weelist_item *) malloc (sizeof (struct t_weelist_item)))))
+    if ((new_item = ((struct t_weelist_item *)malloc (sizeof (struct t_weelist_item)))))
     {
         new_item->data = strdup (data);
-        weelist_insert (weelist, new_item, position);
+        weelist_insert (weelist, new_item, where);
         weelist->size++;
     }
     return new_item;
@@ -228,6 +222,46 @@ weelist_get (struct t_weelist *weelist, int position)
     }
     /* item not found */
     return NULL;
+}
+
+/*
+ * weelist_next: get next item
+ */
+
+struct t_weelist_item *
+weelist_next (struct t_weelist_item *item)
+{
+    return item->next_item;
+}
+
+/*
+ * weelist_prev: get previous item
+ */
+
+struct t_weelist_item *
+weelist_prev (struct t_weelist_item *item)
+{
+    return item->prev_item;
+}
+
+/*
+ * weelist_string: get string pointer to item data
+ */
+
+char *
+weelist_string (struct t_weelist_item *item)
+{
+    return item->data;
+}
+
+/*
+ * weelist_size: return size of weelist
+ */
+
+int
+weelist_size (struct t_weelist *weelist)
+{
+    return weelist->size;
 }
 
 /*

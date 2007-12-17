@@ -31,11 +31,12 @@
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
 #include "gui-input.h"
+#include "gui-buffer.h"
 #include "gui-completion.h"
 #include "gui-window.h"
 
 
-char *gui_input_clipboard = NULL;           /* clipboard content            */
+char *gui_input_clipboard = NULL;      /* clipboard content                 */
 
 
 /*
@@ -84,7 +85,8 @@ gui_input_init_color_mask (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_move (struct t_gui_buffer *buffer, char *target, char *source, int size)
+gui_input_move (struct t_gui_buffer *buffer, char *target, char *source,
+                int size)
 {
     int pos_source, pos_target;
     
@@ -148,7 +150,7 @@ gui_input_insert_string (struct t_gui_buffer *buffer, char *string, int pos)
         
         buffer->input_buffer_pos += length;
         
-        string2 = (char *) malloc (size + 2);
+        string2 = (char *)malloc (size + 2);
         if (string2)
         {
             snprintf (string2, size + 2, "*%s", string);
@@ -510,10 +512,10 @@ gui_exec_action_raw_data (struct t_gui_window *window, char *actions)
                                 gui_window_switch_to_buffer (ptr_win,
                                                              gui_buffer_before_raw_data);
                         }
-                        gui_buffer_free (ptr_buffer, 0);
+                        gui_buffer_close (ptr_buffer, 0);
                     }
                     else
-                        gui_buffer_free (window->buffer, 1);
+                        gui_buffer_close (window->buffer, 1);
                     gui_window_redraw_buffer (window->buffer);
                     return;
                     break;

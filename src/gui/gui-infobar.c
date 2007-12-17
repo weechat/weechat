@@ -45,7 +45,7 @@ struct t_hook *gui_infobar_highlight_timer = NULL; /* highlight timer       */
  */
 
 void
-gui_infobar_printf (int time_displayed, int color, char *message, ...)
+gui_infobar_printf (int delay, int color, char *message, ...)
 {
     static char buf[1024];
     va_list argptr;
@@ -70,7 +70,7 @@ gui_infobar_printf (int time_displayed, int color, char *message, ...)
         pos = strchr (ptr_infobar->text, '\n');
         if (pos)
             pos[0] = '\0';
-        ptr_infobar->remaining_time = (time_displayed <= 0) ? -1 : time_displayed;
+        ptr_infobar->remaining_time = (delay <= 0) ? -1 : delay;
         ptr_infobar->next_infobar = gui_infobar;
         gui_infobar = ptr_infobar;
         gui_infobar_draw (gui_current_window->buffer, 1);

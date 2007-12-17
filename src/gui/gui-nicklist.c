@@ -36,6 +36,8 @@
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "gui-nicklist.h"
+#include "gui-buffer.h"
+#include "gui-color.h"
 
 
 /*
@@ -171,9 +173,10 @@ gui_nicklist_search (struct t_gui_buffer *buffer, char *nick)
 
 struct t_gui_nick *
 gui_nicklist_add (struct t_gui_buffer *buffer, char *nick, int sort_index,
-                  int color_nick, char prefix, int color_prefix)
+                  char *color_nick, char prefix, char *color_prefix)
 {
     struct t_gui_nick *new_nick;
+    int num_color_nick, num_color_prefix;
     
     if (!nick || gui_nicklist_search (buffer, nick))
         return NULL;
@@ -182,11 +185,19 @@ gui_nicklist_add (struct t_gui_buffer *buffer, char *nick, int sort_index,
     if (!new_nick)
         return NULL;
     
+    num_color_nick = gui_color_search_config (color_nick);
+    if (num_color_nick < 0)
+        num_color_nick = GUI_COLOR_NICKLIST;
+    
+    num_color_prefix = gui_color_search_config (color_prefix);
+    if (num_color_prefix < 0)
+        num_color_prefix = GUI_COLOR_NICKLIST;
+    
     new_nick->nick = strdup (nick);
     new_nick->sort_index = sort_index;
-    new_nick->color_nick = color_nick;
+    new_nick->color_nick = num_color_nick;
     new_nick->prefix = prefix;
-    new_nick->color_prefix = color_prefix;
+    new_nick->color_prefix = num_color_prefix;
     
     gui_nicklist_insert_sorted (buffer, new_nick);
     
@@ -202,10 +213,20 @@ gui_nicklist_add (struct t_gui_buffer *buffer, char *nick, int sort_index,
 void
 gui_nicklist_update (struct t_gui_buffer *buffer, struct t_gui_nick *nick,
                      char *new_nick, int sort_index,
-                     int color_nick, char prefix, int color_prefix)
+                     char *color_nick, char prefix, char *color_prefix)
 {
+    int num_color_nick, num_color_prefix;
+    
     if (!nick)
         return;
+    
+    num_color_nick = gui_color_search_config (color_nick);
+    if (num_color_nick < 0)
+        num_color_nick = GUI_COLOR_NICKLIST;
+    
+    num_color_prefix = gui_color_search_config (color_prefix);
+    if (num_color_prefix < 0)
+        num_color_prefix = GUI_COLOR_NICKLIST;
     
     if (new_nick)
     {
@@ -213,9 +234,9 @@ gui_nicklist_update (struct t_gui_buffer *buffer, struct t_gui_nick *nick,
         nick->nick = strdup (new_nick);
     }
     nick->sort_index = sort_index;
-    nick->color_nick = color_nick;
+    nick->color_nick = num_color_nick;
     nick->prefix = prefix;
-    nick->color_prefix = color_prefix;
+    nick->color_prefix = num_color_prefix;
     
     gui_nicklist_resort (buffer, nick);
 }

@@ -25,6 +25,7 @@ struct t_logger_buffer
     struct t_gui_buffer *buffer;          /* pointer to buffer              */
     char *log_filename;                   /* log filename                   */
     FILE *log_file;                       /* log file                       */
+    int log_enabled;                      /* log enabled ?                  */
     struct t_logger_buffer *prev_buffer;  /* link to previous buffer        */
     struct t_logger_buffer *next_buffer;  /* link to next buffer            */
 };
@@ -32,9 +33,10 @@ struct t_logger_buffer
 extern struct t_logger_buffer *logger_buffers;
 extern struct t_logger_buffer *last_logger_buffer;
 
-extern struct t_logger_buffer *logger_buffer_add (void *, char *);
-extern struct t_logger_buffer *logger_buffer_search (void *);
-extern void logger_buffer_remove (void *);
-extern void logger_buffer_remove_all ();
+extern struct t_logger_buffer *logger_buffer_add (struct t_gui_buffer *,
+                                                  char *log_filename);
+extern struct t_logger_buffer *logger_buffer_search (struct t_gui_buffer *buffer);
+extern void logger_buffer_free (struct t_logger_buffer *logger_buffer);
+extern void logger_buffer_free_all ();
 
 #endif /* logger-buffer.h */

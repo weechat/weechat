@@ -65,8 +65,8 @@ struct t_gui_buffer *gui_buffer_before_raw_data = NULL; /* buf. before raw  */
  */
 
 struct t_gui_buffer *
-gui_buffer_new (void *plugin, char *category, char *name,
-                void (*input_data_cb)(struct t_gui_buffer *, char *))
+gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
+                void (*callback_input_data)(struct t_gui_buffer *buffer, char *data))
 {
     struct t_gui_buffer *new_buffer;
     struct t_gui_completion *new_completion;
@@ -121,11 +121,11 @@ gui_buffer_new (void *plugin, char *category, char *name,
         
         /* input */
         new_buffer->input = 1;
-        new_buffer->input_data_cb = input_data_cb;
+        new_buffer->input_data_cb = callback_input_data;
         new_buffer->input_nick = NULL;
         new_buffer->input_buffer_alloc = GUI_BUFFER_INPUT_BLOCK_SIZE;
-        new_buffer->input_buffer = (char *) malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
-        new_buffer->input_buffer_color_mask = (char *) malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
+        new_buffer->input_buffer = (char *)malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
+        new_buffer->input_buffer_color_mask = (char *)malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
         new_buffer->input_buffer[0] = '\0';
         new_buffer->input_buffer_color_mask[0] = '\0';
         new_buffer->input_buffer_size = 0;
@@ -174,7 +174,7 @@ gui_buffer_new (void *plugin, char *category, char *name,
             gui_window_redraw_buffer (new_buffer);
         }
         
-        hook_signal_exec ("buffer_open", new_buffer);
+        hook_signal_send ("buffer_open", new_buffer);
     }
     else
         return NULL;
@@ -572,17 +572,17 @@ gui_buffer_clear_all ()
 }
 
 /*
- * gui_buffer_free: delete a buffer
+ * gui_buffer_close: close a buffer
  */
 
 void
-gui_buffer_free (struct t_gui_buffer *buffer, int switch_to_another)
+gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
 {
     struct t_gui_window *ptr_window;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
     
-    hook_signal_exec ("buffer_close", buffer);
+    hook_signal_send ("buffer_close", buffer);
     
     if (switch_to_another)
     {

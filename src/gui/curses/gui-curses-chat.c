@@ -31,6 +31,7 @@
 #include "../../core/wee-config.h"
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
+#include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
 #include "../gui-main.h"
@@ -849,13 +850,14 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
 }
 
 /*
- * gui_chat_calculate_line_diff: returns pointer to line & offset for a difference
- *                               with given line
+ * gui_chat_calculate_line_diff: returns pointer to line & offset for a
+ *                               difference with given line
  */
 
 void
-gui_chat_calculate_line_diff (struct t_gui_window *window, struct t_gui_line **line,
-                              int *line_pos, int difference)
+gui_chat_calculate_line_diff (struct t_gui_window *window,
+                              struct t_gui_line **line, int *line_pos,
+                              int difference)
 {
     int backward, current_size;
     

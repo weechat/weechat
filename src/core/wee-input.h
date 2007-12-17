@@ -20,8 +20,9 @@
 #ifndef __WEECHAT_INPUT_H
 #define __WEECHAT_INPUT_H 1
 
-#include "../gui/gui-buffer.h"
+struct t_gui_buffer;
 
-extern void input_data (struct t_gui_buffer *, char *, int);
+extern void input_data (struct t_gui_buffer *buffer, char *data,
+                        int only_builtin);
 
 #endif /* wee-input.h */

@@ -17,9 +17,13 @@
  */
 
 
-#ifndef __WEECHAT_IRC_COMPLETION_H
-#define __WEECHAT_IRC_COMPLETION_H 1
+#ifndef __WEECHAT_LOGGER_H
+#define __WEECHAT_LOGGER_H 1
 
-extern void irc_completion_init ();
+#include "../weechat-plugin.h"
 
-#endif /* irc-completion.h */
+#define weechat_plugin weechat_logger_plugin
+
+extern struct t_weechat_plugin *weechat_logger_plugin;
+
+#endif /* logger.h */

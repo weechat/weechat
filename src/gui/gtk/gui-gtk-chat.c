@@ -30,6 +30,7 @@
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
 #include "../../core/wee-utf8.h"
+#include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
 #include "../gui-main.h"

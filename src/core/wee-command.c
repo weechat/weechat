@@ -38,6 +38,7 @@
 #include "wee-string.h"
 #include "wee-utf8.h"
 #include "wee-list.h"
+#include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-history.h"
@@ -54,7 +55,7 @@
  */
 
 int
-command_buffer (void *data, void *buffer,
+command_buffer (void *data, struct t_gui_buffer *buffer,
                 int argc, char **argv, char **argv_eol)
 {
     struct t_gui_buffer *ptr_buffer;
@@ -84,7 +85,7 @@ command_buffer (void *data, void *buffer,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
                              (ptr_buffer->plugin) ?
-                             ((struct t_weechat_plugin *)ptr_buffer->plugin)->name :
+                             ptr_buffer->plugin->name :
                              "weechat",
                              ptr_buffer->category,
                              ptr_buffer->name);
@@ -114,10 +115,10 @@ command_buffer (void *data, void *buffer,
             {
                 if (argv[2][0] == '+')
                     gui_buffer_move_to_number (buffer,
-                                               ((struct t_gui_buffer *)buffer)->number + ((int) number));
+                                               buffer->number + ((int) number));
                 else if (argv[2][0] == '-')
                     gui_buffer_move_to_number (buffer,
-                                               ((struct t_gui_buffer *)buffer)->number - ((int) number));
+                                               buffer->number - ((int) number));
                 else
                     gui_buffer_move_to_number (buffer, (int) number);
             }
@@ -132,7 +133,7 @@ command_buffer (void *data, void *buffer,
         }
         else if (string_strcasecmp (argv[1], "close") == 0)
         {
-            if (!((struct t_gui_buffer *)buffer)->plugin)
+            if (!buffer->plugin)
             {
                 gui_chat_printf (NULL,
                                  _("%sError: WeeChat main buffer can't be "
@@ -140,7 +141,7 @@ command_buffer (void *data, void *buffer,
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                 return WEECHAT_RC_ERROR;
             }
-            gui_buffer_free (buffer, 1);
+            gui_buffer_close (buffer, 1);
             gui_status_draw (gui_current_window->buffer, 1);
             gui_input_draw (gui_current_window->buffer, 1);
         }
@@ -186,7 +187,7 @@ command_buffer (void *data, void *buffer,
                                        "%d %s"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
                                      GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                     ((struct t_gui_buffer *)buffer)->name,
+                                     buffer->name,
                                      GUI_COLOR(GUI_COLOR_CHAT),
                                      number,
                                      GUI_COLOR(GUI_COLOR_CHAT));
@@ -258,7 +259,7 @@ command_buffer (void *data, void *buffer,
                 number = strtol (argv[1] + 1, &error, 10);
                 if (error && (error[0] == '\0'))
                 {
-                    target_buffer = ((struct t_gui_buffer *)buffer)->number - (int) number;
+                    target_buffer = buffer->number - (int) number;
                     if (target_buffer < 1)
                         target_buffer = (last_gui_buffer) ?
                             last_gui_buffer->number + target_buffer : 1;
@@ -273,7 +274,7 @@ command_buffer (void *data, void *buffer,
                 number = strtol (argv[1] + 1, &error, 10);
                 if (error && (error[0] == '\0'))
                 {
-                    target_buffer = ((struct t_gui_buffer *)buffer)->number + (int) number;
+                    target_buffer = buffer->number + (int) number;
                     if (last_gui_buffer && target_buffer > last_gui_buffer->number)
                         target_buffer -= last_gui_buffer->number;
                     gui_buffer_switch_by_number (gui_current_window,
@@ -321,7 +322,7 @@ command_buffer (void *data, void *buffer,
  */
 
 int
-command_builtin (void *data, void *buffer,
+command_builtin (void *data, struct t_gui_buffer *buffer,
                  int argc, char **argv, char **argv_eol)
 {
     char *command;
@@ -354,7 +355,7 @@ command_builtin (void *data, void *buffer,
  */
 
 int
-command_clear (void *data, void *buffer,
+command_clear (void *data, struct t_gui_buffer *buffer,
                int argc, char**argv, char **argv_eol)
 {
     struct t_gui_buffer *ptr_buffer;
@@ -435,7 +436,7 @@ command_debug_display_windows (struct t_gui_window_tree *tree, int indent)
  */
 
 int
-command_debug (void *data, void *buffer,
+command_debug (void *data, struct t_gui_buffer *buffer,
                int argc, char **argv, char **argv_eol)
 {
     /* make C compiler happy */
@@ -479,7 +480,7 @@ command_debug (void *data, void *buffer,
  */
 
 int
-command_help (void *data, void *buffer,
+command_help (void *data, struct t_gui_buffer *buffer,
               int argc, char **argv, char **argv_eol)
 {
     struct t_hook *ptr_hook;
@@ -605,7 +606,7 @@ command_help (void *data, void *buffer,
  */
 
 int
-command_history (void *data, void *buffer,
+command_history (void *data, struct t_gui_buffer *buffer,
                  int argc, char **argv, char **argv_eol)
 {
     struct t_gui_history *ptr_history;
@@ -628,10 +629,10 @@ command_history (void *data, void *buffer,
             n_user = atoi (argv[1]);
     }
     
-    if (((struct t_gui_buffer *)buffer)->history)
+    if (buffer->history)
     {
         n_total = 1;
-        for (ptr_history = ((struct t_gui_buffer *)buffer)->history;
+        for (ptr_history = buffer->history;
              ptr_history->next_history;
              ptr_history = ptr_history->next_history)
         {
@@ -696,7 +697,7 @@ command_key_display (t_gui_key *key, int new_key)
  */
 
 int
-command_key (void *data, void *buffer,
+command_key (void *data, struct t_gui_buffer *buffer,
              int argc, char **argv, char **argv_eol)
 {
     char *args, *internal_code;
@@ -1059,7 +1060,7 @@ command_plugin_list (char *name, int full)
  */
 
 int
-command_plugin (void *data, void *buffer,
+command_plugin (void *data, struct t_gui_buffer *buffer,
                 int argc, char **argv, char **argv_eol)
 {
     /* make C compiler happy */
@@ -1123,7 +1124,7 @@ command_plugin (void *data, void *buffer,
  */
 
 int
-command_quit (void *data, void *buffer,
+command_quit (void *data, struct t_gui_buffer *buffer,
               int argc, char **argv, char **argv_eol)
 {
     /* make C compiler happy */
@@ -1132,7 +1133,7 @@ command_quit (void *data, void *buffer,
     (void) argc;
     (void) argv;
     
-    hook_signal_exec ("quit",
+    hook_signal_send ("quit",
                       (argc > 1) ?
                       argv_eol[1] : CONFIG_STRING(config_look_default_msg_quit));
     
@@ -1146,7 +1147,7 @@ command_quit (void *data, void *buffer,
  */
 
 int
-command_reload (void *data, void *buffer,
+command_reload (void *data, struct t_gui_buffer *buffer,
                 int argc, char **argv, char **argv_eol)
 {
     /* make C compiler happy */
@@ -1177,7 +1178,7 @@ command_reload (void *data, void *buffer,
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
 
     /* tell to plugins to reload their configuration */
-    hook_signal_exec ("config_reload", NULL);
+    hook_signal_send ("config_reload", NULL);
     
     return WEECHAT_RC_OK;
 }
@@ -1187,7 +1188,7 @@ command_reload (void *data, void *buffer,
  */
 
 int
-command_save (void *data, void *buffer,
+command_save (void *data, struct t_gui_buffer *buffer,
               int argc, char **argv, char **argv_eol)
 {
     /* make C compiler happy */
@@ -1339,7 +1340,7 @@ command_set_display_option_list (struct t_config_file *config_file,
  */
 
 int
-command_set (void *data, void *buffer,
+command_set (void *data, struct t_gui_buffer *buffer,
              int argc, char **argv, char **argv_eol)
 {
     char *value;
@@ -1407,7 +1408,8 @@ command_set (void *data, void *buffer,
         }
         value = string_remove_quotes (argv_eol[3], "'\"");
         rc = config_file_option_set (ptr_option,
-                                     (value) ? value : argv_eol[3]);
+                                     (value) ? value : argv_eol[3],
+                                     0);
         if (value)
             free (value);
         if (rc > 0)
@@ -1437,7 +1439,7 @@ command_set (void *data, void *buffer,
  */
 
 int
-command_setp (void *data, void *buffer,
+command_setp (void *data, struct t_gui_buffer *buffer,
               int argc, char **argv, char **argv_eol)
 {
     char *pos, *ptr_name, *value;
@@ -1557,7 +1559,7 @@ command_setp (void *data, void *buffer,
  */
 
 int
-command_upgrade (void *data, void *buffer,
+command_upgrade (void *data, struct t_gui_buffer *buffer,
                  int argc, char **argv, char **argv_eol)
 {
     /*int filename_length;
@@ -1602,7 +1604,7 @@ command_upgrade (void *data, void *buffer,
     }
     
     filename_length = strlen (weechat_home) + strlen (WEECHAT_SESSION_NAME) + 2;
-    filename = (char *) malloc (filename_length * sizeof (char));
+    filename = (char *)malloc (filename_length * sizeof (char));
     if (!filename)
         return -2;
     snprintf (filename, filename_length, "%s%s" WEECHAT_SESSION_NAME,
@@ -1655,7 +1657,7 @@ command_upgrade (void *data, void *buffer,
  */
 
 int
-command_uptime (void *data, void *buffer,
+command_uptime (void *data, struct t_gui_buffer *buffer,
                 int argc, char **argv, char **argv_eol)
 {
     time_t running_time;
@@ -1716,7 +1718,7 @@ command_uptime (void *data, void *buffer,
  */
 
 int
-command_window (void *data, void *buffer,
+command_window (void *data, struct t_gui_buffer *buffer,
                 int argc, char **argv, char **argv_eol)
 {
     struct t_gui_window *ptr_win;

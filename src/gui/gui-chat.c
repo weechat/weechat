@@ -35,6 +35,7 @@
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "gui-chat.h"
+#include "gui-buffer.h"
 #include "gui-color.h"
 #include "gui-hotlist.h"
 #include "gui-main.h"
@@ -409,7 +410,7 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
 {
     struct t_gui_line *new_line, *ptr_line;
     
-    new_line = (struct t_gui_line *) malloc (sizeof (struct t_gui_line));
+    new_line = (struct t_gui_line *)malloc (sizeof (struct t_gui_line));
     if (!new_line)
     {
         log_printf (_("Not enough memory for new line"));

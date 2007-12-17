@@ -26,72 +26,80 @@
 #define SCRIPT_EXEC_INT    1
 #define SCRIPT_EXEC_STRING 2
 
-typedef struct t_plugin_script t_plugin_script;
-
 struct t_plugin_script
 {
     /* script variables */
-    char *filename;                     /* name of script on disk              */
-    void *interpreter;                  /* interpreter for script              */
-    char *name;                         /* script name                         */
-    char *description;                  /* plugin description                  */
-    char *version;                      /* plugin version                      */
-    char *shutdown_func;                /* function when script is unloaded    */
-    char *charset;                      /* script charset                      */
+    char *filename;                      /* name of script on disk          */
+    void *interpreter;                   /* interpreter for script          */
+    char *name;                          /* script name                     */
+    char *description;                   /* plugin description              */
+    char *version;                       /* plugin version                  */
+    char *shutdown_func;                 /* function when script is unloaded*/
+    char *charset;                       /* script charset                  */
     
-    t_plugin_script *prev_script;       /* link to previous script             */
-    t_plugin_script *next_script;       /* link to next script                 */
+    struct t_plugin_script *prev_script; /* link to previous script         */
+    struct t_plugin_script *next_script; /* link to next script             */
 };
 
-extern void weechat_script_auto_load (t_weechat_plugin *, char *,
-                                      int (*)(t_weechat_plugin *, char *));
-extern t_plugin_script *weechat_script_search (t_weechat_plugin *,
-                                               t_plugin_script **, char *);
-extern char *weechat_script_search_full_name (t_weechat_plugin *,
-                                              char *, char *);
-extern t_plugin_script *weechat_script_add (t_weechat_plugin *,
-                                            t_plugin_script **, char *, char *,
-                                            char *, char *, char *, char *);
-extern void weechat_script_remove (t_weechat_plugin *,
-                                   t_plugin_script **, t_plugin_script *);
-extern void weechat_script_print (t_weechat_plugin *,
-                                  t_plugin_script *,
-                                  char *, char *, char *, ...);
-extern void weechat_script_print_server (t_weechat_plugin *,
-                                         t_plugin_script *,
-                                         char *, ...);
-extern void weechat_script_print_infobar (t_weechat_plugin *,
-                                          t_plugin_script *,
-                                          int, char *, ...);
-extern void weechat_script_log (t_weechat_plugin *,
-                                t_plugin_script *,
-                                char *, char *, char *, ...);
-extern void weechat_script_exec_command (t_weechat_plugin *,
-                                         t_plugin_script *,
-                                         char *, char *, char *);
-extern void weechat_script_remove_handler (t_weechat_plugin *,
-                                           t_plugin_script *,
-                                           char *, char *);
-extern void weechat_script_remove_timer_handler (t_weechat_plugin *,
-                                                 t_plugin_script *,
-                                                 char *);
-extern void weechat_script_remove_keyboard_handler (t_weechat_plugin *,
-                                                    t_plugin_script *,
-                                                    char *);
-extern void weechat_script_remove_event_handler (t_weechat_plugin *,
-                                                 t_plugin_script *,
-                                                 char *);
-extern void weechat_script_remove_modifier (t_weechat_plugin *,
-                                            t_plugin_script *,
-                                            char *, char *, char *);
-extern char *weechat_script_get_plugin_config (t_weechat_plugin *,
-                                               t_plugin_script *,
-                                               char *);
-extern int weechat_script_set_plugin_config (t_weechat_plugin *,
-                                             t_plugin_script *,
-                                             char *, char *);
-extern void weechat_script_set_charset (t_weechat_plugin *,
-                                        t_plugin_script *,
-                                        char *);
+extern void weechat_script_auto_load (struct t_weechat_plugin *plugin, char *language,
+                                      int (*callback)(void *data, char *filename));
+extern struct t_plugin_script *weechat_script_search (struct t_weechat_plugin *plugin,
+                                                      struct t_plugin_script **list,
+                                                      char *name);
+extern char *weechat_script_search_full_name (struct t_weechat_plugin *plugin,
+                                              char *language, char *filename);
+extern struct t_plugin_script *weechat_script_add (struct t_weechat_plugin *plugin,
+                                                   struct t_plugin_script **script_list,
+                                                   char *filename, char *name,
+                                                   char *version,
+                                                   char *shutdown_func,
+                                                   char *description,
+                                                   char *charset);
+extern void weechat_script_remove (struct t_weechat_plugin *plugin,
+                                   struct t_plugin_script **script_list,
+                                   struct t_plugin_script *script);
+extern void weechat_script_print (struct t_weechat_plugin *plugin,
+                                  struct t_plugin_script *script,
+                                  char *server, char *channel,
+                                  char *message, ...);
+extern void weechat_script_print_server (struct t_weechat_plugin *plugin,
+                                         struct t_plugin_script *script,
+                                         char *message, ...);
+extern void weechat_script_print_infobar (struct t_weechat_plugin *plugin,
+                                          struct t_plugin_script *script,
+                                          int delay, char *message, ...);
+extern void weechat_script_log (struct t_weechat_plugin *plugin,
+                                struct t_plugin_script *script,
+                                char *server, char *channel,
+                                char *message, ...);
+extern void weechat_script_exec_command (struct t_weechat_plugin *plugin,
+                                         struct t_plugin_script *script,
+                                         char *server, char *channel,
+                                         char *command);
+extern void weechat_script_remove_handler (struct t_weechat_plugin *plugin,
+                                           struct t_plugin_script *script,
+                                           char *arg1, char *arg2);
+extern void weechat_script_remove_timer_handler (struct t_weechat_plugin *plugin,
+                                                 struct t_plugin_script *script,
+                                                 char *function);
+extern void weechat_script_remove_keyboard_handler (struct t_weechat_plugin *plugin,
+                                                    struct t_plugin_script *script,
+                                                    char *function);
+extern void weechat_script_remove_event_handler (struct t_weechat_plugin *plugin,
+                                                 struct t_plugin_script *script,
+                                                 char *function);
+extern void weechat_script_remove_modifier (struct t_weechat_plugin *plugin,
+                                            struct t_plugin_script *script,
+                                            char *arg1, char *arg2,
+                                            char *arg3);
+extern char *weechat_script_get_plugin_config (struct t_weechat_plugin *plugin,
+                                               struct t_plugin_script *script,
+                                               char *option);
+extern int weechat_script_set_plugin_config (struct t_weechat_plugin *plugin,
+                                             struct t_plugin_script *script,
+                                             char *option, char *value);
+extern void weechat_script_set_charset (struct t_weechat_plugin *plugin,
+                                        struct t_plugin_script *script,
+                                        char *charset);
 
 #endif /* weechat-script.h */

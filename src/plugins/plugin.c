@@ -36,10 +36,14 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
+#include "../core/wee-list.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
+#include "../core/wee-utf8.h"
 #include "../core/wee-util.h"
+#include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
+#include "../gui/gui-nicklist.h"
 #include "plugin.h"
 #include "plugin-api.h"
 #include "plugin-config.h"
@@ -49,37 +53,6 @@
 struct t_weechat_plugin *weechat_plugins = NULL;
 struct t_weechat_plugin *last_weechat_plugin = NULL;
 
-
-/*
- * plugin_exec_on_files: find files in a directory and execute a
- *                       function on each file
- */
-
-void
-plugin_exec_on_files (struct t_weechat_plugin *plugin, char *directory,
-                      int (*callback)(struct t_weechat_plugin *, char *))
-{
-    char complete_filename[1024];
-    DIR *dir;
-    struct dirent *entry;
-    struct stat statbuf;
-    
-    dir = opendir (directory);
-    if (dir)
-    {
-        while ((entry = readdir (dir)))
-        {
-            snprintf (complete_filename, sizeof (complete_filename) - 1,
-                      "%s/%s", directory, entry->d_name);
-            lstat (complete_filename, &statbuf);
-            if (!S_ISDIR(statbuf.st_mode))
-            {
-                (int) (*callback) (plugin, complete_filename);
-            }
-        }
-        closedir (dir);
-    }
-}
 
 /*
  * plugin_search: search a plugin by name
@@ -224,99 +197,100 @@ plugin_load (char *filename)
         
         /* functions */
         new_plugin->charset_set = &plugin_api_charset_set;
-        new_plugin->iconv_to_internal = &plugin_api_iconv_to_internal;
-        new_plugin->iconv_from_internal = &plugin_api_iconv_from_internal;
+        new_plugin->iconv_to_internal = &string_iconv_to_internal;
+        new_plugin->iconv_from_internal = &string_iconv_from_internal;
         new_plugin->gettext = &plugin_api_gettext;
         new_plugin->ngettext = &plugin_api_ngettext;
-        new_plugin->strcasecmp = &plugin_api_strcasecmp;
-        new_plugin->strncasecmp = &plugin_api_strncasecmp;
-        new_plugin->strcasestr = &plugin_api_strcasestr;
-        new_plugin->string_replace = &plugin_api_string_replace;
-        new_plugin->string_explode = &plugin_api_string_explode;
-        new_plugin->string_free_exploded = &plugin_api_string_free_exploded;
-        new_plugin->string_split_command = &plugin_api_string_split_command;
-        new_plugin->string_free_splitted_command = &plugin_api_string_free_splitted_command;
-
-        new_plugin->utf8_has_8bits = &plugin_api_utf8_has_8bits;
-        new_plugin->utf8_is_valid = &plugin_api_utf8_is_valid;
-        new_plugin->utf8_normalize = &plugin_api_utf8_normalize;
-        new_plugin->utf8_prev_char = &plugin_api_utf8_prev_char;
-        new_plugin->utf8_next_char = &plugin_api_utf8_next_char;
-        new_plugin->utf8_char_size = &plugin_api_utf8_char_size;
-        new_plugin->utf8_strlen = &plugin_api_utf8_strlen;
-        new_plugin->utf8_strnlen = &plugin_api_utf8_strnlen;
-        new_plugin->utf8_strlen_screen = &plugin_api_utf8_strlen_screen;
-        new_plugin->utf8_charcasecmp = &plugin_api_utf8_charcasecmp;
-        new_plugin->utf8_char_size_screen = &plugin_api_utf8_char_size_screen;
-        new_plugin->utf8_add_offset = &plugin_api_utf8_add_offset;
-        new_plugin->utf8_real_pos = &plugin_api_utf8_real_pos;
-        new_plugin->utf8_pos = &plugin_api_utf8_pos;
+        new_plugin->strcasecmp = &string_strcasecmp;
+        new_plugin->strncasecmp = &string_strncasecmp;
+        new_plugin->strcasestr = &string_strcasestr;
+        new_plugin->string_replace = &string_replace;
+        new_plugin->string_explode = &string_explode;
+        new_plugin->string_free_exploded = &string_free_exploded;
+        new_plugin->string_split_command = &string_split_command;
+        new_plugin->string_free_splitted_command = &string_free_splitted_command;
+        
+        new_plugin->utf8_has_8bits = &utf8_has_8bits;
+        new_plugin->utf8_is_valid = &utf8_is_valid;
+        new_plugin->utf8_normalize = &utf8_normalize;
+        new_plugin->utf8_prev_char = &utf8_prev_char;
+        new_plugin->utf8_next_char = &utf8_next_char;
+        new_plugin->utf8_char_size = &utf8_char_size;
+        new_plugin->utf8_strlen = &utf8_strlen;
+        new_plugin->utf8_strnlen = &utf8_strnlen;
+        new_plugin->utf8_strlen_screen = &utf8_strlen_screen;
+        new_plugin->utf8_charcasecmp = &utf8_charcasecmp;
+        new_plugin->utf8_char_size_screen = &utf8_char_size_screen;
+        new_plugin->utf8_add_offset = &utf8_add_offset;
+        new_plugin->utf8_real_pos = &utf8_real_pos;
+        new_plugin->utf8_pos = &utf8_pos;
         
         new_plugin->mkdir_home = &plugin_api_mkdir_home;
         new_plugin->mkdir = &plugin_api_mkdir;
-        new_plugin->exec_on_files = &plugin_api_exec_on_files;
+        new_plugin->exec_on_files = &util_exec_on_files;
         
-        new_plugin->timeval_diff = &plugin_api_timeval_diff;
+        new_plugin->timeval_cmp = &util_timeval_cmp;
+        new_plugin->timeval_diff = &util_timeval_diff;
+        new_plugin->timeval_add = &util_timeval_add;
         
-        new_plugin->list_new = &plugin_api_list_new;
-        new_plugin->list_add = &plugin_api_list_add;
-        new_plugin->list_search = &plugin_api_list_search;
-        new_plugin->list_casesearch = &plugin_api_list_casesearch;
-        new_plugin->list_get = &plugin_api_list_get;
-        new_plugin->list_next = &plugin_api_list_next;
-        new_plugin->list_prev = &plugin_api_list_prev;
-        new_plugin->list_string = &plugin_api_list_string;
-        new_plugin->list_size = &plugin_api_list_size;
-        new_plugin->list_remove = &plugin_api_list_remove;
-        new_plugin->list_remove_all = &plugin_api_list_remove_all;
-        new_plugin->list_free = &plugin_api_list_free;
+        new_plugin->list_new = &weelist_new;
+        new_plugin->list_add = &weelist_add;
+        new_plugin->list_search = &weelist_search;
+        new_plugin->list_casesearch = &weelist_casesearch;
+        new_plugin->list_get = &weelist_get;
+        new_plugin->list_next = &weelist_next;
+        new_plugin->list_prev = &weelist_prev;
+        new_plugin->list_string = &weelist_string;
+        new_plugin->list_size = &weelist_size;
+        new_plugin->list_remove = &weelist_remove;
+        new_plugin->list_remove_all = &weelist_remove_all;
+        new_plugin->list_free = &weelist_free;
         
-        new_plugin->config_new = &plugin_api_config_new;
-        new_plugin->config_new_section = &plugin_api_config_new_section;
-        new_plugin->config_search_section = &plugin_api_config_search_section;
-        new_plugin->config_new_option = &plugin_api_config_new_option;
-        new_plugin->config_search_option = &plugin_api_config_search_option;
-        new_plugin->config_option_set = &plugin_api_config_option_set;
-        new_plugin->config_string_to_boolean = &plugin_api_config_string_to_boolean;
-        new_plugin->config_boolean = &plugin_api_config_boolean;
-        new_plugin->config_integer = &plugin_api_config_integer;
-        new_plugin->config_string = &plugin_api_config_string;
-        new_plugin->config_color = &plugin_api_config_color;
-        new_plugin->config_read = &plugin_api_config_read;
-        new_plugin->config_reload = &plugin_api_config_reload;
-        new_plugin->config_write = &plugin_api_config_write;
-        new_plugin->config_write_line = &plugin_api_config_write_line;
-        new_plugin->config_free = &plugin_api_config_free;
-        new_plugin->config_get = &plugin_api_config_get;
-        new_plugin->plugin_config_get = &plugin_api_plugin_config_get;
-        new_plugin->plugin_config_set = &plugin_api_plugin_config_set;
+        new_plugin->config_new = &config_file_new;
+        new_plugin->config_new_section = &config_file_new_section;
+        new_plugin->config_search_section = &config_file_search_section;
+        new_plugin->config_new_option = &config_file_new_option;
+        new_plugin->config_search_option = &config_file_search_option;
+        new_plugin->config_option_set = &config_file_option_set;
+        new_plugin->config_string_to_boolean = &config_file_string_to_boolean;
+        new_plugin->config_boolean = &config_file_option_boolean;
+        new_plugin->config_integer = &config_file_option_integer;
+        new_plugin->config_string = &config_file_option_string;
+        new_plugin->config_color = &config_file_option_color;
+        new_plugin->config_write_line = &config_file_write_line;
+        new_plugin->config_write = &config_file_write;
+        new_plugin->config_read = &config_file_read;
+        new_plugin->config_reload = &config_file_reload;
+        new_plugin->config_free = &config_file_free;
+        new_plugin->config_get_weechat = &plugin_api_config_get_weechat;
+        new_plugin->config_get_plugin = &plugin_api_config_get_plugin;
+        new_plugin->config_set_plugin = &plugin_api_config_set_plugin;
 
         new_plugin->prefix = &plugin_api_prefix;
         new_plugin->color = &plugin_api_color;
-        new_plugin->printf = &plugin_api_printf;
-        new_plugin->printf_date = &plugin_api_printf_date;
-        new_plugin->log_printf = &plugin_api_log_printf;
+        new_plugin->printf_date = &gui_chat_printf_date;
+        new_plugin->log_printf = &log_printf;
         new_plugin->infobar_printf = &plugin_api_infobar_printf;
         new_plugin->infobar_remove = &plugin_api_infobar_remove;
         
-        new_plugin->hook_command = &plugin_api_hook_command;
-        new_plugin->hook_timer = &plugin_api_hook_timer;
-        new_plugin->hook_fd = &plugin_api_hook_fd;
-        new_plugin->hook_print = &plugin_api_hook_print;
-        new_plugin->hook_signal = &plugin_api_hook_signal;
-        new_plugin->hook_signal_send = &plugin_api_hook_signal_send;
-        new_plugin->hook_config = &plugin_api_hook_config;
-        new_plugin->hook_completion = &plugin_api_hook_completion;
-        new_plugin->unhook = &plugin_api_unhook;
-        new_plugin->unhook_all = &plugin_api_unhook_all;
+        new_plugin->hook_command = &hook_command;
+        new_plugin->hook_timer = &hook_timer;
+        new_plugin->hook_fd = &hook_fd;
+        new_plugin->hook_print = &hook_print;
+        new_plugin->hook_signal = &hook_signal;
+        new_plugin->hook_signal_send = &hook_signal_send;
+        new_plugin->hook_config = &hook_config;
+        new_plugin->hook_completion = &hook_completion;
+        new_plugin->unhook = &unhook;
+        new_plugin->unhook_all = &unhook_all_plugin;
         
-        new_plugin->buffer_new = &plugin_api_buffer_new;
-        new_plugin->buffer_search = &plugin_api_buffer_search;
-        new_plugin->buffer_close = &plugin_api_buffer_close;
-        new_plugin->buffer_get = &plugin_api_buffer_get;
-        new_plugin->buffer_set = &plugin_api_buffer_set;
-        new_plugin->buffer_nick_add = &plugin_api_buffer_nick_add;
-        new_plugin->buffer_nick_remove = &plugin_api_buffer_nick_remove;
+        new_plugin->buffer_new = &gui_buffer_new;
+        new_plugin->buffer_search = &gui_buffer_search_by_category_name;
+        new_plugin->buffer_close = &gui_buffer_close;
+        new_plugin->buffer_get = &gui_buffer_get;
+        new_plugin->buffer_set = &gui_buffer_set;
+        new_plugin->buffer_nick_add = &gui_nicklist_add;
+        new_plugin->buffer_nick_remove = &gui_nicklist_remove;
         
         new_plugin->command = &plugin_api_command;
         
@@ -331,8 +305,6 @@ plugin_load (char *filename)
         new_plugin->infolist_pointer = &plugin_api_infolist_pointer;
         new_plugin->infolist_time = &plugin_api_infolist_time;
         new_plugin->infolist_free = &plugin_api_infolist_free;
-        
-        new_plugin->log = &plugin_api_log;
         
         /* add new plugin to list */
         new_plugin->prev_plugin = last_weechat_plugin;
@@ -383,7 +355,7 @@ plugin_load (char *filename)
  */
 
 int
-plugin_auto_load_file (struct t_weechat_plugin *plugin, char *filename)
+plugin_auto_load_file (void *plugin, char *filename)
 {
     char *pos;
     
@@ -432,11 +404,11 @@ plugin_auto_load ()
                 plugins_path2 = string_replace ((plugins_path) ?
                                                 plugins_path : CONFIG_STRING(config_plugins_path),
                                                 "%h", weechat_home);
-                plugin_exec_on_files (NULL,
-                                      (plugins_path2) ?
-                                      plugins_path2 : ((plugins_path) ?
-                                                       plugins_path : CONFIG_STRING(config_plugins_path)),
-                                      &plugin_auto_load_file);
+                util_exec_on_files ((plugins_path2) ?
+                                    plugins_path2 : ((plugins_path) ?
+                                                     plugins_path : CONFIG_STRING(config_plugins_path)),
+                                    NULL,
+                                    &plugin_auto_load_file);
                 if (plugins_path)
                     free (plugins_path);
                 if (plugins_path2)
@@ -449,7 +421,7 @@ plugin_auto_load ()
             {
                 snprintf (dir_name, strlen (WEECHAT_LIBDIR) + 16,
                           "%s/plugins", WEECHAT_LIBDIR);
-                plugin_exec_on_files (NULL, dir_name, &plugin_auto_load_file);
+                util_exec_on_files (dir_name, NULL, &plugin_auto_load_file);
                 free (dir_name);
             }
         }

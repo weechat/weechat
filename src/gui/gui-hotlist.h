@@ -44,13 +44,16 @@ extern int gui_add_hotlist;
 
 /* hotlist functions */
 
-extern void gui_hotlist_add (struct t_gui_buffer *, int, struct timeval *, int);
+extern void gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
+                             struct timeval *creation_time,
+                             int allow_current_buffer);
 extern void gui_hotlist_resort ();
-extern void gui_hotlist_free (struct t_gui_hotlist **, struct t_gui_hotlist **,
-                              struct t_gui_hotlist *);
-extern void gui_hotlist_free_all (struct t_gui_hotlist **,
-                                  struct t_gui_hotlist **);
-extern void gui_hotlist_remove_buffer (struct t_gui_buffer *);
+extern void gui_hotlist_free (struct t_gui_hotlist **hotlist,
+                              struct t_gui_hotlist **last_hotlist,
+                              struct t_gui_hotlist *ptr_hotlist);
+extern void gui_hotlist_free_all (struct t_gui_hotlist **hotlist,
+                                  struct t_gui_hotlist **last_hotlist);
+extern void gui_hotlist_remove_buffer (struct t_gui_buffer *buffer);
 extern void gui_hotlist_print_log ();
 
 #endif /* gui-hotlist.h */

@@ -20,7 +20,7 @@
 #ifndef __WEECHAT_GUI_INPUT_H
 #define __WEECHAT_GUI_INPUT_H 1
 
-#include "gui-buffer.h"
+struct t_gui_buffer;
 
 /* input variables */
 
@@ -28,16 +28,18 @@ extern char *gui_input_clipboard;
 
 /* input functions */
 
-extern void gui_input_optimize_size (struct t_gui_buffer *);
-extern void gui_input_init_color_mask (struct t_gui_buffer *);
-extern void gui_input_move (struct t_gui_buffer *, char *, char *, int );
-extern int gui_input_insert_string (struct t_gui_buffer *, char *, int);
-extern void gui_input_complete (struct t_gui_buffer *);
-extern void gui_input_delete_line (struct t_gui_buffer *);
-extern int gui_input_get_prompt_length (struct t_gui_buffer *);
+extern void gui_input_optimize_size (struct t_gui_buffer *buffer);
+extern void gui_input_init_color_mask (struct t_gui_buffer *buffer);
+extern void gui_input_move (struct t_gui_buffer *buffer, char *target,
+                            char *source, int size);
+extern int gui_input_insert_string (struct t_gui_buffer *buffer, char *string,
+                                    int pos);
+extern void gui_input_complete (struct t_gui_buffer *buffer);
+extern void gui_input_delete_line (struct t_gui_buffer *buffer);
+extern int gui_input_get_prompt_length (struct t_gui_buffer *buffer);
 
 /* input functions (GUI dependent) */
 
-extern void gui_input_draw (struct t_gui_buffer *, int);
+extern void gui_input_draw (struct t_gui_buffer *buffer, int erase);
 
 #endif /* gui-input.h */

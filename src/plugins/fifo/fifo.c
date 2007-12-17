@@ -49,19 +49,23 @@ char *fifo_unterminated = NULL;
 
 /*
  * fifo_create: create FIFO pipe for remote control
+ *              return: 1 if ok
+ *                      0 if error
  */
 
-void
+int
 fifo_create ()
 {
-    int filename_length;
+    int rc, filename_length;
     char *fifo_option, *weechat_home;
-
-    fifo_option = weechat_plugin_config_get ("fifo");
+    
+    rc = 0;
+    
+    fifo_option = weechat_config_get_plugin ("fifo");
     if (!fifo_option)
     {
-        weechat_plugin_config_set ("fifo", "on");
-        fifo_option = weechat_plugin_config_get ("fifo");
+        weechat_config_set_plugin ("fifo", "on");
+        fifo_option = weechat_config_get_plugin ("fifo");
     }
     
     weechat_home = weechat_info_get ("weechat_dir");
@@ -75,8 +79,8 @@ fifo_create ()
             if (!fifo_filename)
             {
                 filename_length = strlen (weechat_home) + 64;
-                fifo_filename = (char *) malloc (filename_length *
-                                                 sizeof (char));
+                fifo_filename = (char *)malloc (filename_length *
+                                                sizeof (char));
                 snprintf (fifo_filename, filename_length,
                           "%s/weechat_fifo_%d",
                           weechat_home, (int) getpid());
@@ -90,9 +94,12 @@ fifo_create ()
                 /* open FIFO pipe in read-only, non blockingmode */
                 if ((fifo_fd = open (fifo_filename,
                                      O_RDONLY | O_NONBLOCK)) != -1)
+                {
                     weechat_printf (NULL,
                                     _("%sFifo: pipe is open\n"),
                                     weechat_prefix ("info"));
+                    rc = 1;
+                }
                 else
                     weechat_printf (NULL,
                                     _("%sFifo: unable to open pipe (%s) for "
@@ -108,10 +115,10 @@ fifo_create ()
                                 fifo_filename);
         }
     }
-    if (fifo_option)
-        free (fifo_option);
     if (weechat_home)
         free (weechat_home);
+    
+    return rc;
 }
 
 /*
@@ -168,6 +175,8 @@ fifo_exec (char *text)
     {
         pos_msg = text + 1;
         ptr_buffer = weechat_buffer_search (NULL, NULL);
+        if (!ptr_buffer)
+            ptr_buffer = weechat_current_buffer;
     }
     else
     {
@@ -198,6 +207,8 @@ fifo_exec (char *text)
             }
             else
                 ptr_buffer = weechat_buffer_search (NULL, text);
+            if (!ptr_buffer)
+                ptr_buffer = weechat_current_buffer;
         }
     }
     
@@ -232,8 +243,8 @@ fifo_read ()
         ptr_buf = buffer;
         if (fifo_unterminated)
         {
-            buf2 = (char *) malloc (strlen (fifo_unterminated) +
-                strlen (buffer) + 1);
+            buf2 = (char *)malloc (strlen (fifo_unterminated) +
+                                   strlen (buffer) + 1);
             if (buf2)
             {
                 strcpy (buf2, fifo_unterminated);
@@ -292,7 +303,16 @@ fifo_read ()
             weechat_unhook (fifo_fd_hook);
             close (fifo_fd);
             fifo_fd = open (fifo_filename, O_RDONLY | O_NONBLOCK);
-            fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0, fifo_read, NULL);
+            if (fifo_fd < 0)
+            {
+                weechat_printf (NULL,
+                                _("%sFifo: error opening file, closing it"),
+                                weechat_prefix ("error"));
+                fifo_remove ();
+            }
+            else
+                fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0,
+                                                &fifo_read, NULL);
         }
     }
 
@@ -334,9 +354,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 {
     weechat_plugin = plugin;
     
-    fifo_create ();
-    
-    fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0, &fifo_read, NULL);
+    if (fifo_create ())
+        fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0,
+                                        &fifo_read, NULL);
     
     weechat_hook_config ("plugin", "fifo.fifo", &fifo_config_cb, NULL);
     

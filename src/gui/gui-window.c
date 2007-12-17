@@ -37,6 +37,7 @@
 #include "../core/wee-log.h"
 #include "../core/wee-utf8.h"
 #include "gui-window.h"
+#include "gui-buffer.h"
 #include "gui-chat.h"
 #include "gui-input.h"
 #include "gui-hotlist.h"

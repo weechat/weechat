@@ -95,7 +95,7 @@ weechat_lua_exec (t_weechat_plugin *plugin,
 	ret_value = strdup ((char *) lua_tostring (lua_current_interpreter, -1));
     else if (ret_type == SCRIPT_EXEC_INT)
     {
-	ret_i = (int *) malloc (sizeof(int));
+	ret_i = (int *)malloc (sizeof(int));
 	if (ret_i)
 	    *ret_i = lua_tonumber (lua_current_interpreter, -1);
 	ret_value = ret_i;

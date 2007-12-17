@@ -14,7 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(logger MODULE logger.c logger-buffer.c logger-buffer.h)
+ADD_LIBRARY(logger MODULE logger.c logger.h logger-buffer.c logger-buffer.h
+logger-tail.c logger-tail.h)
 SET_TARGET_PROPERTIES(logger PROPERTIES PREFIX "")
 
 TARGET_LINK_LIBRARIES(logger)

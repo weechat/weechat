@@ -29,7 +29,7 @@
 #include <dirent.h>
 
 #include "../weechat-plugin.h"
-#include "weechat-script.h"
+#include "script.h"
 
 
 /*
@@ -37,8 +37,8 @@
  */
 
 void
-weechat_script_auto_load (t_weechat_plugin *plugin, char *language,
-                          int (*callback)(t_weechat_plugin *, char *))
+weechat_script_auto_load (struct t_weechat_plugin *plugin, char *language,
+                          int (*callback)(void *data, char *filename))
 {
     char *dir_home, *dir_name;
     int dir_length;
@@ -49,7 +49,7 @@ weechat_script_auto_load (t_weechat_plugin *plugin, char *language,
         return;
     dir_length = strlen (dir_home) + strlen (language) + 16;
     dir_name =
-        (char *) malloc (dir_length * sizeof (char));
+        (char *)malloc (dir_length * sizeof (char));
     if (!dir_name)
     {
         free (dir_home);
@@ -57,7 +57,7 @@ weechat_script_auto_load (t_weechat_plugin *plugin, char *language,
     }
     snprintf (dir_name, dir_length, "%s/%s/autoload", dir_home, language);
     
-    plugin->exec_on_files (plugin, dir_name, callback);
+    plugin->exec_on_files (dir_name, plugin, callback);
     
     free (dir_name);
     free (dir_home);
@@ -68,7 +68,7 @@ weechat_script_auto_load (t_weechat_plugin *plugin, char *language,
  */
 
 t_plugin_script *
-weechat_script_search (t_weechat_plugin *plugin,
+weechat_script_search (struct t_weechat_plugin *plugin,
                        t_plugin_script **list, char *name)
 {
     t_plugin_script *ptr_script;
@@ -89,7 +89,7 @@ weechat_script_search (t_weechat_plugin *plugin,
  */
 
 char *
-weechat_script_search_full_name (t_weechat_plugin *plugin,
+weechat_script_search_full_name (struct t_weechat_plugin *plugin,
                                  char *language, char *filename)
 {
     char *final_name, *dir_home, *dir_system;
@@ -102,7 +102,7 @@ weechat_script_search_full_name (t_weechat_plugin *plugin,
         if (!dir_home)
             return NULL;
         length = strlen (dir_home) + strlen (filename + 1) + 1;
-        final_name = (char *) malloc (length);
+        final_name = (char *)malloc (length);
         if (final_name)
         {
             snprintf (final_name, length, "%s%s", dir_home, filename + 1);
@@ -116,7 +116,7 @@ weechat_script_search_full_name (t_weechat_plugin *plugin,
     if (dir_home)
     {
         length = strlen (dir_home) + strlen (language) + 8 + strlen (filename) + 16;
-        final_name = (char *) malloc (length);
+        final_name = (char *)malloc (length);
         if (final_name)
         {
             snprintf (final_name, length, "%s/%s/autoload/%s", dir_home, language, filename);
@@ -135,7 +135,7 @@ weechat_script_search_full_name (t_weechat_plugin *plugin,
     if (dir_home)
     {
         length = strlen (dir_home) + strlen (language) + strlen (filename) + 16;
-        final_name = (char *) malloc (length);
+        final_name = (char *)malloc (length);
         if (final_name)
         {
             snprintf (final_name, length, "%s/%s/%s", dir_home, language, filename);
@@ -154,7 +154,7 @@ weechat_script_search_full_name (t_weechat_plugin *plugin,
     if (dir_home)
     {
         length = strlen (dir_home) + strlen (filename) + 16;
-        final_name = (char *) malloc (length);
+        final_name = (char *)malloc (length);
         if (final_name)
         {
             snprintf (final_name, length, "%s/%s", dir_home, filename);
@@ -173,7 +173,7 @@ weechat_script_search_full_name (t_weechat_plugin *plugin,
     if (dir_system)
     {
         length = strlen (dir_system) + strlen (dir_system) + strlen (filename) + 16;
-        final_name = (char *) malloc (length);
+        final_name = (char *)malloc (length);
         if (final_name)
         {
             snprintf (final_name,length, "%s/%s/%s", dir_system, language, filename);
@@ -195,7 +195,7 @@ weechat_script_search_full_name (t_weechat_plugin *plugin,
  */
 
 t_plugin_script *
-weechat_script_add (t_weechat_plugin *plugin,
+weechat_script_add (struct t_weechat_plugin *plugin,
                     t_plugin_script **script_list,
                     char *filename,
                     char *name, char *version,
@@ -245,7 +245,7 @@ weechat_script_add (t_weechat_plugin *plugin,
  */
 
 void
-weechat_script_remove (t_weechat_plugin *plugin,
+weechat_script_remove (struct t_weechat_plugin *plugin,
                        t_plugin_script **script_list, t_plugin_script *script)
 {
     t_plugin_handler *ptr_handler, *next_handler;
@@ -310,7 +310,7 @@ weechat_script_remove (t_weechat_plugin *plugin,
  */
 
 void
-weechat_script_print (t_weechat_plugin *plugin,
+weechat_script_print (struct t_weechat_plugin *plugin,
                       t_plugin_script *script,
                       char *server, char *channel,
                       char *message, ...)
@@ -335,7 +335,7 @@ weechat_script_print (t_weechat_plugin *plugin,
  */
 
 void
-weechat_script_print_server (t_weechat_plugin *plugin,
+weechat_script_print_server (struct t_weechat_plugin *plugin,
                              t_plugin_script *script,
                              char *message, ...)
 {
@@ -359,9 +359,9 @@ weechat_script_print_server (t_weechat_plugin *plugin,
  */
 
 void
-weechat_script_print_infobar (t_weechat_plugin *plugin,
+weechat_script_print_infobar (struct t_weechat_plugin *plugin,
                               t_plugin_script *script,
-                              int time_displayed, char *message, ...)
+                              int delay, char *message, ...)
 {
     va_list argptr;
     static char buf[1024];
@@ -373,7 +373,7 @@ weechat_script_print_infobar (t_weechat_plugin *plugin,
     
     buf2 = (script->charset && script->charset[0]) ?
         plugin->iconv_to_internal (plugin, script->charset, buf) : NULL;
-    plugin->print_infobar (plugin, time_displayed, "%s", (buf2) ? buf2 : buf);
+    plugin->print_infobar (plugin, delay, "%s", (buf2) ? buf2 : buf);
     if (buf2)
         free (buf2);
 }
@@ -383,7 +383,7 @@ weechat_script_print_infobar (t_weechat_plugin *plugin,
  */
 
 void
-weechat_script_log (t_weechat_plugin *plugin,
+weechat_script_log (struct t_weechat_plugin *plugin,
                     t_plugin_script *script,
                     char *server, char *channel, char *message, ...)
 {
@@ -407,7 +407,7 @@ weechat_script_log (t_weechat_plugin *plugin,
  */
 
 void
-weechat_script_exec_command (t_weechat_plugin *plugin,
+weechat_script_exec_command (struct t_weechat_plugin *plugin,
                              t_plugin_script *script,
                              char *server, char *channel, char *command)
 {
@@ -428,7 +428,7 @@ weechat_script_exec_command (t_weechat_plugin *plugin,
  */
 
 void
-weechat_script_remove_handler (t_weechat_plugin *plugin,
+weechat_script_remove_handler (struct t_weechat_plugin *plugin,
                                t_plugin_script *script,
                                char *arg1, char *arg2)
 {
@@ -464,7 +464,7 @@ weechat_script_remove_handler (t_weechat_plugin *plugin,
  */
 
 void
-weechat_script_remove_timer_handler (t_weechat_plugin *plugin,
+weechat_script_remove_timer_handler (struct t_weechat_plugin *plugin,
                                      t_plugin_script *script,
                                      char *function)
 {
@@ -492,7 +492,7 @@ weechat_script_remove_timer_handler (t_weechat_plugin *plugin,
  */
 
 void
-weechat_script_remove_keyboard_handler (t_weechat_plugin *plugin,
+weechat_script_remove_keyboard_handler (struct t_weechat_plugin *plugin,
                                         t_plugin_script *script,
                                         char *function)
 {
@@ -520,7 +520,7 @@ weechat_script_remove_keyboard_handler (t_weechat_plugin *plugin,
  */
 
 void
-weechat_script_remove_event_handler (t_weechat_plugin *plugin,
+weechat_script_remove_event_handler (struct t_weechat_plugin *plugin,
                                      t_plugin_script *script,
                                      char *function)
 {
@@ -549,7 +549,7 @@ weechat_script_remove_event_handler (t_weechat_plugin *plugin,
  */
 
 void
-weechat_script_remove_modifier (t_weechat_plugin *plugin,
+weechat_script_remove_modifier (struct t_weechat_plugin *plugin,
                                 t_plugin_script *script,
                                 char *arg1, char *arg2, char *arg3)
 {
@@ -594,7 +594,7 @@ weechat_script_remove_modifier (t_weechat_plugin *plugin,
  */
 
 char *
-weechat_script_get_plugin_config (t_weechat_plugin *plugin,
+weechat_script_get_plugin_config (struct t_weechat_plugin *plugin,
                                   t_plugin_script *script,
                                   char *option)
 {
@@ -621,7 +621,7 @@ weechat_script_get_plugin_config (t_weechat_plugin *plugin,
  */
 
 int
-weechat_script_set_plugin_config (t_weechat_plugin *plugin,
+weechat_script_set_plugin_config (struct t_weechat_plugin *plugin,
                                   t_plugin_script *script,
                                   char *option, char *value)
 {
@@ -648,7 +648,7 @@ weechat_script_set_plugin_config (t_weechat_plugin *plugin,
  */
 
 void
-weechat_script_set_charset (t_weechat_plugin *plugin,
+weechat_script_set_charset (struct t_weechat_plugin *plugin,
                             t_plugin_script *script,
                             char *charset)
 {

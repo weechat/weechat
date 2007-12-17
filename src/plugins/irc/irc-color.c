@@ -40,7 +40,8 @@
  */
 
 unsigned char *
-irc_color_decode (unsigned char *string, int keep_irc_colors, int keep_weechat_attr)
+irc_color_decode (unsigned char *string, int keep_irc_colors,
+                  int keep_weechat_attr)
 {
     /*unsigned char *out;
     int out_length, out_pos, length;

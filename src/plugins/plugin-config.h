@@ -25,10 +25,12 @@
 extern struct t_config_file *plugin_config;
 extern struct t_config_option *plugin_options;
 
-extern struct t_config_option *plugin_config_search_internal (char *);
-extern struct t_config_option *plugin_config_search (char *, char *);
-extern int plugin_config_set_internal (char *, char *);
-extern int plugin_config_set (char *, char *, char *);
+extern struct t_config_option *plugin_config_search_internal (char *option_name);
+extern struct t_config_option *plugin_config_search (char *plugin_name,
+                                                     char *option_name);
+extern int plugin_config_set_internal (char *option, char *value);
+extern int plugin_config_set (char *plugin_name, char *option_name,
+                              char *value);
 extern void plugin_config_init ();
 extern int plugin_config_read ();
 extern int plugin_config_reload ();

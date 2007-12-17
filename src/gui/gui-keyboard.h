@@ -24,7 +24,7 @@
 
 /* keyboard structures */
 
-typedef void (t_gui_key_func)(char *);
+typedef void (t_gui_key_func)(char *args);
 
 typedef struct t_gui_key t_gui_key;
 
@@ -52,7 +52,7 @@ struct t_gui_key_function
 extern t_gui_key *gui_keys;
 extern t_gui_key *last_gui_key;
 extern t_gui_key_function gui_key_functions[];
-extern char gui_key_combo_buffer[128];
+extern char gui_key_combo_buffer[];
 extern int gui_key_grab;
 extern int gui_key_grab_count;
 extern int *gui_keyboard_buffer;
@@ -65,18 +65,18 @@ extern time_t gui_keyboard_last_activity_time;
 extern void gui_keyboard_init ();
 extern void gui_keyboard_grab_init ();
 extern void gui_keyboard_grab_end ();
-extern char *gui_keyboard_get_internal_code (char *);
-extern char *gui_keyboard_get_expanded_name (char *);
-extern t_gui_key *gui_keyboard_search (char *);
-extern t_gui_key_func *gui_keyboard_function_search_by_name (char *);
-extern char *gui_keyboard_function_search_by_ptr (t_gui_key_func *);
-extern t_gui_key *gui_keyboard_bind (char *, char *);
-extern int gui_keyboard_unbind (char *);
-extern int gui_keyboard_pressed (char *);
-extern void gui_keyboard_free (t_gui_key *);
+extern char *gui_keyboard_get_internal_code (char *key);
+extern char *gui_keyboard_get_expanded_name (char *key);
+extern t_gui_key *gui_keyboard_search (char *key);
+extern t_gui_key_func *gui_keyboard_function_search_by_name (char *name);
+extern char *gui_keyboard_function_search_by_ptr (t_gui_key_func *function);
+extern t_gui_key *gui_keyboard_bind (char *key, char *command);
+extern int gui_keyboard_unbind (char *key);
+extern int gui_keyboard_pressed (char *key_str);
+extern void gui_keyboard_free (t_gui_key *key);
 extern void gui_keyboard_free_all ();
 extern void gui_keyboard_buffer_reset ();
-extern void gui_keyboard_buffer_add (int);
+extern void gui_keyboard_buffer_add (int key);
 extern int gui_keyboard_get_paste_lines ();
 extern void gui_keyboard_paste_accept ();
 extern void gui_keyboard_paste_cancel ();

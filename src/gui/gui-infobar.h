@@ -20,8 +20,6 @@
 #ifndef __WEECHAT_GUI_INFOBAR_H
 #define __WEECHAT_GUI_INFOBAR_H 1
 
-#include "gui-buffer.h"
-
 struct t_gui_infobar
 {
     int color;                      /* text color                           */
@@ -40,15 +38,15 @@ extern struct t_hook *gui_infobar_highlight_timer;
 
 /* infobar functions */
 
-extern void gui_infobar_printf (int, int, char *, ...);
+extern void gui_infobar_printf (int delay, int color, char *message, ...);
 extern void gui_infobar_remove ();
 extern void gui_infobar_remove_all ();
 
 /* infobar functions (GUI dependent) */
 
-extern void gui_infobar_draw_time (struct t_gui_buffer *);
-extern void gui_infobar_draw (struct t_gui_buffer *, int);
-extern int gui_infobar_refresh_timer_cb (void *);
-extern int gui_infobar_highlight_timer_cb (void *);
+extern void gui_infobar_draw_time (struct t_gui_buffer *buffer);
+extern void gui_infobar_draw (struct t_gui_buffer *buffer, int erase);
+extern int gui_infobar_refresh_timer_cb (void *data);
+extern int gui_infobar_highlight_timer_cb (void *data);
 
 #endif /* gui-infobar.h */

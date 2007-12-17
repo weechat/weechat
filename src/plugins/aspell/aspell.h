@@ -18,8 +18,8 @@
 
 /* weechat-aspell.h: Aspell plugin support for WeeChat */
 
-#ifndef WEECHAT_ASPELL__H
-#define WEECHAT_ASPELL__H 1
+#ifndef __WEECHAT_ASPELL_H
+#define __WEECHAT_ASPELL_H 1
 
 #include <aspell.h>
 
@@ -192,4 +192,4 @@ cmds_keep_t cmd_tokeep[] =
     { NULL, 0}
 };
 
-#endif /* WEECHAT_ASPELL__H */
+#endif /* aspell.h */

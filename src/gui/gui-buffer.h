@@ -50,17 +50,6 @@ struct t_gui_line
     struct t_gui_line *next_line;      /* link to next line                 */
 };
 
-struct t_gui_nick
-{
-    char *nick;                        /* nickname                          */
-    int sort_index;                    /* index to force sort               */
-    int color_nick;                    /* color for nick in nicklist        */
-    char prefix;                       /* prefix for nick (for admins, ..)  */
-    int color_prefix;                  /* color for prefix                  */
-    struct t_gui_nick *prev_nick;      /* link to previous nick in nicklist */
-    struct t_gui_nick *next_nick;      /* link to next nick in nicklist     */
-};
-
 struct t_gui_buffer
 {
     struct t_weechat_plugin *plugin;   /* plugin which created this buffer  */
@@ -96,7 +85,7 @@ struct t_gui_buffer
     
     /* inupt */
     int input;                         /* = 1 if input is enabled           */
-    void (*input_data_cb)(struct t_gui_buffer *, char *);
+    void (*input_data_cb)(struct t_gui_buffer *buffer, char *data);
                                        /* called when user send data        */
                                        /* to this buffer                    */
     char *input_nick;                  /* self nick                         */
@@ -139,38 +128,40 @@ extern struct t_gui_buffer *gui_buffer_before_raw_data;
 
 /* buffer functions */
 
-extern struct t_gui_buffer *gui_buffer_new (void *, char *, char *,
-                                            void (*)(struct t_gui_buffer *, char *));
-extern int gui_buffer_valid (struct t_gui_buffer *);
-extern void *gui_buffer_get (struct t_gui_buffer *, char *);
-extern void gui_buffer_set_category (struct t_gui_buffer *, char *);
-extern void gui_buffer_set_name (struct t_gui_buffer *, char *);
-extern void gui_buffer_set_log (struct t_gui_buffer *, char *);
-extern void gui_buffer_set_title (struct t_gui_buffer *, char *);
-extern void gui_buffer_set_nick_case_sensitive (struct t_gui_buffer *, int);
-extern void gui_buffer_set_nick (struct t_gui_buffer *, char *);
-extern void gui_buffer_set (struct t_gui_buffer *, char *, char *);
+extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
+                                            char *category, char *name,
+                                            void (*input_data_cb)(struct t_gui_buffer *buffer,
+                                                                  char *data));
+extern int gui_buffer_valid (struct t_gui_buffer *buffer);
+extern void *gui_buffer_get (struct t_gui_buffer *buffer, char *property);
+extern void gui_buffer_set_category (struct t_gui_buffer *buffer,
+                                     char *category);
+extern void gui_buffer_set_name (struct t_gui_buffer *buffer, char *name);
+extern void gui_buffer_set_title (struct t_gui_buffer *buffer, char *new_title);
+extern void gui_buffer_set_nicklist (struct t_gui_buffer *buffer, int nicklist);
+extern void gui_buffer_set_nick_case_sensitive (struct t_gui_buffer * buffer,
+                                                int nick_case_sensitive);
+extern void gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick);
+extern void gui_buffer_set (struct t_gui_buffer *buffer, char *property,
+                            char *value);
 extern struct t_gui_buffer *gui_buffer_search_main ();
-extern struct t_gui_buffer *gui_buffer_search_by_category_name (char *,
-                                                                char *);
-extern struct t_gui_buffer *gui_buffer_search_by_number (int);
-extern struct t_gui_window *gui_buffer_find_window (struct t_gui_buffer *);
-extern void gui_buffer_find_context (void *, void *,
-                                     struct t_gui_window **,
-                                     struct t_gui_buffer **);
-extern int gui_buffer_is_scrolled (struct t_gui_buffer *);
-extern struct t_gui_buffer *gui_buffer_get_dcc (struct t_gui_window *);
-extern void gui_buffer_clear (struct t_gui_buffer *);
+extern struct t_gui_buffer *gui_buffer_search_by_category_name (char *category,
+                                                                char *name);
+extern struct t_gui_buffer *gui_buffer_search_by_number (int number);
+extern struct t_gui_window *gui_buffer_find_window (struct t_gui_buffer *buffer);
+extern int gui_buffer_is_scrolled (struct t_gui_buffer *buffer);
+extern struct t_gui_buffer *gui_buffer_get_dcc (struct t_gui_window *window);
+extern void gui_buffer_clear (struct t_gui_buffer *buffer);
 extern void gui_buffer_clear_all ();
-extern void gui_buffer_free (struct t_gui_buffer *, int);
-extern void gui_buffer_switch_previous (struct t_gui_window *);
-extern void gui_buffer_switch_next (struct t_gui_window *);
-extern void gui_buffer_switch_dcc (struct t_gui_window *);
-extern void gui_buffer_switch_raw_data (struct t_gui_window *);
-extern struct t_gui_buffer *gui_buffer_switch_by_number (struct t_gui_window *,
-                                                         int);
-extern void gui_buffer_move_to_number (struct t_gui_buffer *, int);
-extern void gui_buffer_dump_hexa (struct t_gui_buffer *);
+extern void gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another);
+extern void gui_buffer_switch_previous (struct t_gui_window *window);
+extern void gui_buffer_switch_next (struct t_gui_window *window);
+extern void gui_buffer_switch_dcc (struct t_gui_window *window);
+extern void gui_buffer_switch_raw_data (struct t_gui_window *window);
+extern struct t_gui_buffer *gui_buffer_switch_by_number (struct t_gui_window *window,
+                                                         int number);
+extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);
+extern void gui_buffer_dump_hexa (struct t_gui_buffer *buffer);
 extern void gui_buffer_print_log ();
 
 #endif /* gui-buffer.h */

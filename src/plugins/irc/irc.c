@@ -180,19 +180,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_hook_signal ("quit", &irc_quit_cb, NULL);
     
     /* hook completions */
-    weechat_hook_completion ("irc_server", &irc_completion_server_cb, NULL);
-    weechat_hook_completion ("irc_server_nicks",
-                             &irc_completion_server_nicks_cb, NULL);
-    weechat_hook_completion ("irc_servers", &irc_completion_servers_cb, NULL);
-    weechat_hook_completion ("irc_channel", &irc_completion_channel_cb, NULL);
-    weechat_hook_completion ("irc_channel_nicks",
-                             &irc_completion_channel_nicks_cb, NULL);
-    weechat_hook_completion ("irc_channel_nicks_hosts",
-                             &irc_completion_channel_nicks_hosts_cb, NULL);
-    weechat_hook_completion ("irc_channel_topic",
-                             &irc_completion_channel_topic_cb, NULL);
-    weechat_hook_completion ("irc_channels", &irc_completion_channels_cb, NULL);
-    weechat_hook_completion ("irc_msg_part", &irc_completion_msg_part_cb, NULL);
+    irc_completion_init ();
     
     //irc_server_auto_connect (1, 0);
 

@@ -33,19 +33,19 @@
 extern int local_utf8;
 
 extern void utf8_init ();
-extern int utf8_has_8bits (char *);
-extern int utf8_is_valid (char *, char **);
-extern void utf8_normalize (char *, char);
-extern char *utf8_prev_char (char *, char *);
-extern char *utf8_next_char (char *);
-extern int utf8_char_size (char *);
-extern int utf8_strlen (char *);
-extern int utf8_strnlen (char *, int);
-extern int utf8_strlen_screen (char *);
-extern int utf8_charcasecmp (char *, char *);
-extern int utf8_char_size_screen (char *);
-extern char *utf8_add_offset (char *, int);
-extern int utf8_real_pos (char *, int);
-extern int utf8_pos (char *, int);
+extern int utf8_has_8bits (char *string);
+extern int utf8_is_valid (char *string, char **error);
+extern void utf8_normalize (char *string, char replacement);
+extern char *utf8_prev_char (char *string_start, char *string);
+extern char *utf8_next_char (char *string);
+extern int utf8_char_size (char *string);
+extern int utf8_strlen (char *string);
+extern int utf8_strnlen (char *string, int bytes);
+extern int utf8_strlen_screen (char *string);
+extern int utf8_charcasecmp (char *string1, char *string2);
+extern int utf8_char_size_screen (char *string);
+extern char *utf8_add_offset (char *string, int offset);
+extern int utf8_real_pos (char *string, int pos);
+extern int utf8_pos (char *string, int real_pos);
 
 #endif /* wee-utf8.h */

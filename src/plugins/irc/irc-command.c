@@ -45,8 +45,8 @@
  */
 
 int
-irc_command_admin (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_admin (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -143,8 +143,8 @@ irc_command_mode_nicks (struct t_irc_server *server, char *channel,
  */
 
 int
-irc_command_ame (void *data, void *buffer, int argc, char **argv,
-                 char **argv_eol)
+irc_command_ame (void *data, struct t_gui_buffer *buffer, int argc,
+                 char **argv, char **argv_eol)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
@@ -181,8 +181,8 @@ irc_command_ame (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_amsg (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_amsg (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
@@ -261,7 +261,7 @@ irc_command_away_server (struct t_irc_server *server, char *arguments)
     {
         if (server->away_message)
             free (server->away_message);
-        server->away_message = (char *) malloc (strlen (arguments) + 1);
+        server->away_message = (char *)malloc (strlen (arguments) + 1);
         if (server->away_message)
             strcpy (server->away_message, arguments);
 
@@ -376,8 +376,8 @@ irc_command_away_server (struct t_irc_server *server, char *arguments)
  */
 
 int
-irc_command_away (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server)
@@ -410,8 +410,8 @@ irc_command_away (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_ban (void *data, void *buffer, int argc, char **argv,
-                 char **argv_eol)
+irc_command_ban (void *data, struct t_gui_buffer *buffer, int argc,
+                 char **argv, char **argv_eol)
 {
     char *pos_channel;
     int pos_args;
@@ -522,8 +522,8 @@ irc_command_connect_one_server (struct t_irc_server *server, int no_join)
  */
 
 int
-irc_command_connect (void *data, void *buffer, int argc, char **argv,
-                     char **argv_eol)
+irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
+                     char **argv, char **argv_eol)
 {
     struct t_irc_server server_tmp;
     int i, nb_connect, connect_ok, all_servers, no_join, port, ipv6, ssl;
@@ -672,8 +672,8 @@ irc_command_connect (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_ctcp (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_ctcp (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     char *pos, *irc_cmd;
     struct timeval tv;
@@ -760,8 +760,8 @@ irc_command_ctcp (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_cycle (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     char *channel_name, *pos_args, *ptr_arg, *buf, *version;
     char **channels;
@@ -863,8 +863,8 @@ irc_command_cycle (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_dcc (void *data, void *buffer, int argc, char **argv,
-                 char **argv_eol)
+irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
+                 char **argv, char **argv_eol)
 {
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -872,6 +872,7 @@ irc_command_dcc (void *data, void *buffer, int argc, char **argv,
     
     /* make compiler happy */
     (void) data;
+    (void) argv_eol; // to remove!
     
     if (argc > 1)
     {
@@ -928,8 +929,8 @@ irc_command_dcc (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_dehalfop (void *data, void *buffer, int argc, char **argv,
-                      char **argv_eol)
+irc_command_dehalfop (void *data, struct t_gui_buffer *buffer, int argc,
+                      char **argv, char **argv_eol)
 {
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -965,8 +966,8 @@ irc_command_dehalfop (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_deop (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_deop (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1002,8 +1003,8 @@ irc_command_deop (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_devoice (void *data, void *buffer, int argc, char **argv,
-                     char **argv_eol)
+irc_command_devoice (void *data, struct t_gui_buffer *buffer, int argc,
+                     char **argv, char **argv_eol)
 {
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1039,8 +1040,8 @@ irc_command_devoice (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_die (void *data, void *buffer, int argc, char **argv,
-                 char **argv_eol)
+irc_command_die (void *data, struct t_gui_buffer *buffer, int argc,
+                 char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1129,8 +1130,8 @@ irc_command_disconnect_one_server (struct t_irc_server *server)
  */
 
 int
-irc_command_disconnect (void *data, void *buffer, int argc, char **argv,
-                        char **argv_eol)
+irc_command_disconnect (void *data, struct t_gui_buffer *buffer, int argc,
+                        char **argv, char **argv_eol)
 {
     int i, disconnect_ok;
     
@@ -1191,8 +1192,8 @@ irc_command_disconnect (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_halfop (void *data, void *buffer, int argc, char **argv,
-                    char **argv_eol)
+irc_command_halfop (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
 {
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1228,8 +1229,8 @@ irc_command_halfop (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_info (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_info (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1251,8 +1252,8 @@ irc_command_info (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_invite (void *data, void *buffer, int argc, char **argv,
-                    char **argv_eol)
+irc_command_invite (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
 {
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1287,8 +1288,8 @@ irc_command_invite (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_ison (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_ison (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1326,8 +1327,8 @@ irc_command_join_server (struct t_irc_server *server, char *arguments)
  */
 
 int
-irc_command_join (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_join (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1352,8 +1353,8 @@ irc_command_join (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_kick (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_kick (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     char *pos_channel, *pos_nick, *pos_comment;
     
@@ -1418,8 +1419,8 @@ irc_command_kick (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_kickban (void *data, void *buffer, int argc, char **argv,
-                     char **argv_eol)
+irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
+                     char **argv, char **argv_eol)
 {
     char *pos_channel, *pos_nick, *pos_comment;
     
@@ -1486,8 +1487,8 @@ irc_command_kickban (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_kill (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_kill (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1515,8 +1516,8 @@ irc_command_kill (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_links (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_links (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1539,8 +1540,8 @@ irc_command_links (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_list (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_list (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     char buf[512];
     int ret;
@@ -1562,7 +1563,7 @@ irc_command_list (void *data, void *buffer, int argc, char **argv,
     
     if (argc > 1)
     {
-	ptr_server->cmd_list_regexp = (regex_t *) malloc (sizeof (regex_t));
+	ptr_server->cmd_list_regexp = (regex_t *)malloc (sizeof (regex_t));
 	if (ptr_server->cmd_list_regexp)
 	{
 	    if ((ret = regcomp (ptr_server->cmd_list_regexp,
@@ -1600,8 +1601,8 @@ irc_command_list (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_lusers (void *data, void *buffer, int argc, char **argv,
-                    char **argv_eol)
+irc_command_lusers (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1624,7 +1625,7 @@ irc_command_lusers (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_me (void *data, void *buffer, int argc, char **argv,
+irc_command_me (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                 char **argv_eol)
 {
     IRC_GET_SERVER_CHANNEL(buffer);
@@ -1670,8 +1671,8 @@ irc_command_mode_server (struct t_irc_server *server, char *arguments)
  */
 
 int
-irc_command_mode (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_mode (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1696,8 +1697,8 @@ irc_command_mode (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_motd (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_motd (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1720,8 +1721,8 @@ irc_command_motd (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_msg (void *data, void *buffer, int argc, char **argv,
-                 char **argv_eol)
+irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
+                 char **argv, char **argv_eol)
 {
     char **targets;
     int num_targets, i;
@@ -1895,8 +1896,8 @@ irc_command_msg (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_names (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_names (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1959,8 +1960,8 @@ irc_send_nick_server (struct t_irc_server *server, char *nickname)
  */
 
 int
-irc_command_nick (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_nick (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server)
@@ -2003,8 +2004,8 @@ irc_command_nick (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_notice (void *data, void *buffer, int argc, char **argv,
-                    char **argv_eol)
+irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
 {
     char *string;
     
@@ -2045,7 +2046,7 @@ irc_command_notice (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_op (void *data, void *buffer, int argc, char **argv,
+irc_command_op (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                 char **argv_eol)
 {
     IRC_GET_SERVER_CHANNEL(buffer);
@@ -2082,8 +2083,8 @@ irc_command_op (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_oper (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_oper (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -2108,8 +2109,8 @@ irc_command_oper (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_part (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     char *channel_name, *pos_args, *ptr_arg, *buf, *version;
 
@@ -2155,7 +2156,7 @@ irc_command_part (void *data, void *buffer, int argc, char **argv,
         }
         if (!ptr_channel->nicks)
         {
-            weechat_buffer_close (ptr_channel->buffer);
+            weechat_buffer_close (ptr_channel->buffer, 1);
             ptr_channel->buffer = NULL;
             irc_channel_free (ptr_server, ptr_channel);
             //gui_status_draw (gui_current_window->buffer, 1);
@@ -2194,8 +2195,8 @@ irc_command_part (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_ping (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_ping (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -2220,8 +2221,8 @@ irc_command_ping (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_pong (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_pong (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server)
@@ -2246,8 +2247,8 @@ irc_command_pong (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_query (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     char *string;
     
@@ -2310,8 +2311,8 @@ irc_command_query (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_quote (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_quote (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server)// || !ptr_server->is_connected)
@@ -2367,8 +2368,8 @@ irc_command_reconnect_one_server (struct t_irc_server *server, int no_join)
  */
 
 int
-irc_command_reconnect (void *data, void *buffer, int argc, char **argv,
-                       char **argv_eol)
+irc_command_reconnect (void *data, struct t_gui_buffer *buffer, int argc,
+                       char **argv, char **argv_eol)
 {
     int i, nb_reconnect, reconnect_ok, all_servers, no_join;
 
@@ -2442,8 +2443,8 @@ irc_command_reconnect (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_rehash (void *data, void *buffer, int argc, char **argv,
-                    char **argv_eol)
+irc_command_rehash (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -2465,8 +2466,8 @@ irc_command_rehash (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_restart (void *data, void *buffer, int argc, char **argv,
-                     char **argv_eol)
+irc_command_restart (void *data, struct t_gui_buffer *buffer, int argc,
+                     char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -2488,8 +2489,8 @@ irc_command_restart (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_server (void *data, void *buffer, int argc, char **argv,
-                    char **argv_eol)
+irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
 {
     int i, detailed_list, one_server_found;
     struct t_irc_server server_tmp, *ptr_server, *server_found, *new_server;
@@ -2568,7 +2569,7 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
             {
                 IRC_COMMAND_TOO_FEW_ARGUMENTS(NULL, "server add");
             }
-            if (irc_server_name_already_exists (argv[2]))
+            if (irc_server_search (argv[2]))
             {
                 weechat_printf (NULL,
                                 _("%sirc: server \"%s\" already exists, "
@@ -2974,8 +2975,8 @@ irc_command_server (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_service (void *data, void *buffer, int argc, char **argv,
-                     char **argv_eol)
+irc_command_service (void *data, struct t_gui_buffer *buffer, int argc,
+                     char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3000,8 +3001,8 @@ irc_command_service (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_servlist (void *data, void *buffer, int argc, char **argv,
-                      char **argv_eol)
+irc_command_servlist (void *data, struct t_gui_buffer *buffer, int argc,
+                      char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3024,8 +3025,8 @@ irc_command_servlist (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_squery (void *data, void *buffer, int argc, char **argv,
-                    char **argv_eol)
+irc_command_squery (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3055,8 +3056,8 @@ irc_command_squery (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_squit (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_squit (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3081,8 +3082,8 @@ irc_command_squit (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_stats (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_stats (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3106,8 +3107,8 @@ irc_command_stats (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_summon (void *data, void *buffer, int argc, char **argv,
-                    char **argv_eol)
+irc_command_summon (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3132,8 +3133,8 @@ irc_command_summon (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_time (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+irc_command_time (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3156,8 +3157,8 @@ irc_command_time (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_topic (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_topic (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     char *channel_name, *new_topic;
     
@@ -3219,8 +3220,8 @@ irc_command_topic (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_trace (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_trace (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3243,8 +3244,8 @@ irc_command_trace (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_unban (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_unban (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     char *pos_channel;
     int pos_args;
@@ -3309,8 +3310,8 @@ irc_command_unban (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_userhost (void *data, void *buffer, int argc, char **argv,
-                      char **argv_eol)
+irc_command_userhost (void *data, struct t_gui_buffer *buffer, int argc,
+                      char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3335,8 +3336,8 @@ irc_command_userhost (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_users (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_users (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3359,8 +3360,8 @@ irc_command_users (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_version (void *data, void *buffer, int argc, char **argv,
-                     char **argv_eol)
+irc_command_version (void *data, struct t_gui_buffer *buffer, int argc,
+                     char **argv, char **argv_eol)
 {
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3391,8 +3392,8 @@ irc_command_version (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_voice (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_voice (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3429,8 +3430,8 @@ irc_command_voice (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_wallops (void *data, void *buffer, int argc, char **argv,
-                     char **argv_eol)
+irc_command_wallops (void *data, struct t_gui_buffer *buffer, int argc,
+                     char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3455,8 +3456,8 @@ irc_command_wallops (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_who (void *data, void *buffer, int argc, char **argv,
-                 char **argv_eol)
+irc_command_who (void *data, struct t_gui_buffer *buffer, int argc,
+                 char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3479,8 +3480,8 @@ irc_command_who (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_whois (void *data, void *buffer, int argc, char **argv,
-                   char **argv_eol)
+irc_command_whois (void *data, struct t_gui_buffer *buffer, int argc,
+                   char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -3505,8 +3506,8 @@ irc_command_whois (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-irc_command_whowas (void *data, void *buffer, int argc, char **argv,
-                    char **argv_eol)
+irc_command_whowas (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
     if (!ptr_server || !ptr_server->is_connected)

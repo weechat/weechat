@@ -23,7 +23,7 @@
 /* main functions (GUI dependent) */
 
 extern void gui_main_loop ();
-extern void gui_main_pre_init (int *, char **[]);
+extern void gui_main_pre_init (int *argc, char **argv[]);
 extern void gui_main_init ();
 extern void gui_main_end ();
 

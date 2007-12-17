@@ -37,6 +37,7 @@
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
+#include "gui-action.h"
 #include "gui-buffer.h"
 #include "gui-chat.h"
 #include "gui-completion.h"
@@ -62,7 +63,7 @@ gui_action_clipboard_copy (char *buffer, int size)
     if (gui_input_clipboard != NULL)
         free (gui_input_clipboard);
     
-    gui_input_clipboard = (char *) malloc( (size + 1) * sizeof(*gui_input_clipboard));
+    gui_input_clipboard = (char *)malloc( (size + 1) * sizeof(*gui_input_clipboard));
     
     if (gui_input_clipboard)
     {

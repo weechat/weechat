@@ -22,6 +22,9 @@
 
 #include <gtk/gtk.h>
 
+struct t_gui_window;
+struct t_gui_line;
+
 /* TODO: remove these temporary defines */
 
 #define A_BOLD      1
@@ -78,12 +81,13 @@ extern GtkWidget *gui_gtk_entry_input;
 extern GtkWidget *gui_gtk_label1;
 
 /* color functions */
-extern int gui_color_get_pair (int);
+extern int gui_color_get_pair (int num_color);
 extern void gui_color_init ();
 
 /* chat functions */
-extern void gui_chat_calculate_line_diff (struct t_gui_window *,
-                                          struct t_gui_line **, int *, int);
+extern void gui_chat_calculate_line_diff (struct t_gui_window *window,
+                                          struct t_gui_line **line,
+                                          int *line_pos, int difference);
 
 /* keyboard functions */
 extern void gui_keyboard_default_bindings ();
@@ -91,7 +95,7 @@ extern void gui_keyboard_read ();
 extern void gui_keyboard_flush ();
 
 /* window functions */
-extern void gui_window_set_title ();
-extern void gui_window_reset_title ();
+extern void gui_window_title_set ();
+extern void gui_window_title_reset ();
 
 #endif /* gui-gtk.h */

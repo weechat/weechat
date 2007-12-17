@@ -289,7 +289,8 @@ plugin_config_free_all ()
  */
 
 void
-plugin_config_read_option (void *config_file, char *option_name, char *value)
+plugin_config_read_option (struct t_config_file *config_file,
+                           char *option_name, char *value)
 {
     char *value2;
     
@@ -311,7 +312,8 @@ plugin_config_read_option (void *config_file, char *option_name, char *value)
  */
 
 void
-plugin_config_write_options (void *config_file, char *section_name)
+plugin_config_write_options (struct t_config_file *config_file,
+                             char *section_name)
 {
     struct t_config_option *ptr_option;
     
@@ -383,5 +385,5 @@ int
 plugin_config_write ()
 {
     log_printf (_("Saving plugins configuration to disk"));
-    return config_file_write (plugin_config, 0);
+    return config_file_write (plugin_config);
 }

@@ -67,11 +67,6 @@ struct t_config_option *irc_config_log_auto_channel;
 struct t_config_option *irc_config_log_auto_private;
 struct t_config_option *irc_config_log_hide_nickserv_pwd;
 
-void irc_config_change_noop ();
-void irc_config_change_one_server_buffer ();
-void irc_config_change_away_check ();
-void irc_config_change_log ();
-void irc_config_change_notify_levels ();
 int irc_config_init ();
 int irc_config_read ();
 int irc_config_reload_cb ();

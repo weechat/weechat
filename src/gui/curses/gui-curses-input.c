@@ -32,6 +32,7 @@
 #include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
 #include "../gui-input.h"
+#include "../gui-buffer.h"
 #include "../gui-color.h"
 #include "../gui-keyboard.h"
 #include "../gui-main.h"

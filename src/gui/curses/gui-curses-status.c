@@ -31,6 +31,7 @@
 #include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
 #include "../gui-status.h"
+#include "../gui-buffer.h"
 #include "../gui-color.h"
 #include "../gui-main.h"
 #include "../gui-hotlist.h"

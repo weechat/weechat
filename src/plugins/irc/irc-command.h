@@ -20,7 +20,7 @@
 #ifndef __WEECHAT_IRC_COMMAND_H
 #define __WEECHAT_IRC_COMMAND_H 1
 
-#include "irc-server.h"
+struct t_irc_server;
 
 #define IRC_COMMAND_TOO_FEW_ARGUMENTS(__buffer, __command)              \
     weechat_printf (__buffer,                                           \
@@ -29,10 +29,14 @@
     return WEECHAT_RC_ERROR;
 
 
-extern void irc_command_away_server (struct t_irc_server *, char *);
-extern void irc_command_join_server (struct t_irc_server *, char *);
-extern void irc_command_mode_server (struct t_irc_server *, char *);
-extern void irc_command_quit_server (struct t_irc_server *, char *);
+extern void irc_command_away_server (struct t_irc_server *server,
+                                     char *arguments);
+extern void irc_command_join_server (struct t_irc_server *server,
+                                     char *arguments);
+extern void irc_command_mode_server (struct t_irc_server *server,
+                                     char *arguments);
+extern void irc_command_quit_server (struct t_irc_server *server,
+                                     char *arguments);
 extern void irc_command_init ();
 
 #endif /* irc-command.h */

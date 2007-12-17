@@ -600,7 +600,7 @@ session_read_str (FILE *file, char **string)
     
     if (string)
     {
-        (*string) = (char *) malloc (length + 1);
+        (*string) = (char *)malloc (length + 1);
         if (!(*string))
             return 0;
         

@@ -42,9 +42,9 @@ struct t_irc_buffer_data
     int all_servers;
 };
 
-extern struct t_irc_buffer_data *irc_buffer_data_create (struct t_irc_server *);
-extern void irc_buffer_data_free (struct t_gui_buffer *);
-extern void irc_buffer_merge_servers (struct t_gui_window *);
-extern void irc_buffer_split_server (struct t_gui_window *);
+extern struct t_irc_buffer_data *irc_buffer_data_create (struct t_irc_server *server);
+extern void irc_buffer_data_free (struct t_gui_buffer *buffer);
+extern void irc_buffer_merge_servers (struct t_gui_window *window);
+extern void irc_buffer_split_server (struct t_gui_window *window);
 
 #endif /* irc-buffer.h */

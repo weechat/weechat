@@ -164,18 +164,6 @@ extern struct t_config_option *config_plugins_path;
 extern struct t_config_option *config_plugins_autoload;
 extern struct t_config_option *config_plugins_extension;
 
-extern void config_change_noop ();
-extern void config_change_save_on_exit ();
-extern void config_change_title ();
-extern void config_change_buffers ();
-extern void config_change_buffer_content ();
-extern void config_change_buffer_time_format ();
-extern void config_change_hotlist ();
-extern void config_change_read_marker ();
-extern void config_change_prefix ();
-extern void config_change_color ();
-extern void config_change_nicks_colors ();
-
 extern int config_weechat_init ();
 extern int config_weechat_read ();
 extern int config_weechat_reload ();

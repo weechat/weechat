@@ -49,7 +49,8 @@ irc_nick_find_color (struct t_irc_nick *nick)
     {
         color += (int)(nick->nick[i]);
     }
-    color = (color % weechat_config_integer (weechat_config_get ("look_color_nicks_number")));
+    color = (color %
+             weechat_config_integer (weechat_config_get_weechat ("look_color_nicks_number")));
     
     return color;
 }
@@ -164,7 +165,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     }
     
     // alloc memory for new nick
-    if ((new_nick = (struct t_irc_nick *) malloc (sizeof (struct t_irc_nick))) == NULL)
+    if ((new_nick = (struct t_irc_nick *)malloc (sizeof (struct t_irc_nick))) == NULL)
         return NULL;
     
     // initialize new nick

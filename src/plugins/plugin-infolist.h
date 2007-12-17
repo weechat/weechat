@@ -51,11 +51,11 @@ struct t_plugin_infolist_item
 
 struct t_plugin_infolist
 {
-    struct t_plugin_infolist_item *items;     /* link to items                  */
-    struct t_plugin_infolist_item *last_item; /* last variable                  */
-    struct t_plugin_infolist_item *ptr_item;  /* pointer to current item        */
-    struct t_plugin_infolist *prev_infolist;  /* link to previous list          */
-    struct t_plugin_infolist *next_infolist;  /* link to next list              */
+    struct t_plugin_infolist_item *items;     /* link to items              */
+    struct t_plugin_infolist_item *last_item; /* last variable              */
+    struct t_plugin_infolist_item *ptr_item;  /* pointer to current item    */
+    struct t_plugin_infolist *prev_infolist;  /* link to previous list      */
+    struct t_plugin_infolist *next_infolist;  /* link to next list          */
 };
 
 /* list variables */
@@ -66,24 +66,32 @@ extern struct t_plugin_infolist *last_plugin_infolist;
 /* list functions */
 
 extern struct t_plugin_infolist *plugin_infolist_new ();
-extern struct t_plugin_infolist_item *plugin_infolist_new_item (struct t_plugin_infolist *);
-extern struct t_plugin_infolist_var *plugin_infolist_new_var_integer (struct t_plugin_infolist_item *,
-                                                                      char *, int);
-extern struct t_plugin_infolist_var *plugin_infolist_new_var_string (struct t_plugin_infolist_item *,
-                                                                     char *, char *);
-extern struct t_plugin_infolist_var *plugin_infolist_new_var_pointer (struct t_plugin_infolist_item *,
-                                                                      char *, void *);
-extern struct t_plugin_infolist_var *plugin_infolist_new_var_time (struct t_plugin_infolist_item *,
-                                                                   char *, time_t);
-extern int plugin_infolist_valid (struct t_plugin_infolist *);
-extern struct t_plugin_infolist_item *plugin_infolist_next_item (struct t_plugin_infolist *);
-extern struct t_plugin_infolist_item *plugin_infolist_prev_item (struct t_plugin_infolist *);
-extern char *plugin_infolist_get_fields (struct t_plugin_infolist *);
-extern int plugin_infolist_get_integer (struct t_plugin_infolist *, char *);
-extern char *plugin_infolist_get_string (struct t_plugin_infolist *, char *);
-extern void *plugin_infolist_get_pointer (struct t_plugin_infolist *, char *);
-extern time_t plugin_infolist_get_time (struct t_plugin_infolist *, char *);
-extern void plugin_infolist_free (struct t_plugin_infolist *);
+extern struct t_plugin_infolist_item *plugin_infolist_new_item (struct t_plugin_infolist *list);
+extern struct t_plugin_infolist_var *plugin_infolist_new_var_integer (struct t_plugin_infolist_item *item,
+                                                                      char *name,
+                                                                      int value);
+extern struct t_plugin_infolist_var *plugin_infolist_new_var_string (struct t_plugin_infolist_item *item,
+                                                                     char *name,
+                                                                     char *value);
+extern struct t_plugin_infolist_var *plugin_infolist_new_var_pointer (struct t_plugin_infolist_item *item,
+                                                                      char *name,
+                                                                      void *pointer);
+extern struct t_plugin_infolist_var *plugin_infolist_new_var_time (struct t_plugin_infolist_item *item,
+                                                                   char *name,
+                                                                   time_t time);
+extern int plugin_infolist_valid (struct t_plugin_infolist *list);
+extern struct t_plugin_infolist_item *plugin_infolist_next_item (struct t_plugin_infolist *list);
+extern struct t_plugin_infolist_item *plugin_infolist_prev_item (struct t_plugin_infolist *list);
+extern char *plugin_infolist_get_fields (struct t_plugin_infolist *list);
+extern int plugin_infolist_get_integer (struct t_plugin_infolist *list,
+                                        char *var);
+extern char *plugin_infolist_get_string (struct t_plugin_infolist *list,
+                                         char *var);
+extern void *plugin_infolist_get_pointer (struct t_plugin_infolist *list,
+                                          char *var);
+extern time_t plugin_infolist_get_time (struct t_plugin_infolist *list,
+                                        char *var);
+extern void plugin_infolist_free (struct t_plugin_infolist *list);
 extern void plugin_infolist_print_log ();
 
 #endif /* plugin-infolist.h */

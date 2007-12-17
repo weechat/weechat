@@ -51,8 +51,10 @@
 #define IRC_COLOR_UNDERLINE_CHAR  '\x1F'
 #define IRC_COLOR_UNDERLINE_STR   "\x1F"
 
-extern unsigned char *irc_color_decode (unsigned char *, int, int);
-extern unsigned char *irc_color_decode_for_user_entry (unsigned char *);
-extern unsigned char *irc_color_encode (unsigned char *, int);
+extern unsigned char *irc_color_decode (unsigned char *string,
+                                        int keep_irc_colors,
+                                        int keep_weechat_attr);
+extern unsigned char *irc_color_decode_for_user_entry (unsigned char *string);
+extern unsigned char *irc_color_encode (unsigned char *string, int keep_colors);
 
 #endif /* irc-color.h */

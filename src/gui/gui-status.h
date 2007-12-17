@@ -20,10 +20,10 @@
 #ifndef __WEECHAT_GUI_STATUS_H
 #define __WEECHAT_GUI_STATUS_H 1
 
-#include "gui-buffer.h"
+struct t_gui_buffer;
 
 /* statusbar functions (GUI dependent) */
 
-extern void gui_status_draw (struct t_gui_buffer *, int);
+extern void gui_status_draw (struct t_gui_buffer *buffer, int erase);
 
 #endif /* gui-status.h */

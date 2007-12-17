@@ -48,7 +48,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     struct t_gui_buffer *new_buffer;
     
     /* alloc memory for new channel */
-    if ((new_channel = (struct t_irc_channel *) malloc (sizeof (struct t_irc_channel))) == NULL)
+    if ((new_channel = (struct t_irc_channel *)malloc (sizeof (struct t_irc_channel))) == NULL)
     {
         weechat_printf (NULL,
                         _("%sirc: cannot allocate new channel"),
@@ -88,7 +88,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     //new_buffer->notify_level = irc_channel_get_notify_level (server, new_channel);
     
     /* add new channel to channels list */
-    new_channel->prev_channel = ((struct t_irc_server *)server)->last_channel;
+    new_channel->prev_channel = server->last_channel;
     new_channel->next_channel = NULL;
     if (server->channels)
         (server->last_channel)->next_channel = new_channel;
@@ -346,17 +346,17 @@ irc_channel_set_away (struct t_irc_channel *channel, char *nick, int is_away)
  */
 
 int
-irc_channel_create_dcc (void *dcc)
+irc_channel_create_dcc (struct t_irc_dcc *dcc)
 {
     struct t_irc_channel *ptr_channel;
     
-    ptr_channel = irc_channel_search_dcc (((struct t_irc_dcc *)dcc)->server,
-                                          ((struct t_irc_dcc *)dcc)->nick);
+    ptr_channel = irc_channel_search_dcc (dcc->server, dcc->nick);
     if (!ptr_channel)
     {
-        ptr_channel = irc_channel_new (((struct t_irc_dcc *)dcc)->server,
+        ptr_channel = irc_channel_new (dcc->server,
                                        IRC_CHANNEL_TYPE_DCC_CHAT,
-                                       ((struct t_irc_dcc *)dcc)->nick, 0);
+                                       dcc->nick,
+                                       0);
         if (!ptr_channel)
             return 0;
     }
@@ -366,7 +366,7 @@ irc_channel_create_dcc (void *dcc)
         return 0;
     
     ptr_channel->dcc_chat = dcc;
-    ((struct t_irc_dcc *)dcc)->channel = ptr_channel;
+    dcc->channel = ptr_channel;
     //gui_window_redraw_buffer (ptr_channel->buffer);
     return 1;
 }
@@ -395,7 +395,7 @@ irc_channel_get_notify_level (struct t_irc_server *server,
         && (server_default_notify == 1))
         server_default_notify = 2;
     
-    name = (char *) malloc (strlen (channel->name) + 2);
+    name = (char *)malloc (strlen (channel->name) + 2);
     strcpy (name, channel->name);
     strcat (name, ":");
     pos = strstr (server->notify_levels, name);

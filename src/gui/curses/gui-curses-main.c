@@ -37,6 +37,7 @@
 #include "../../core/wee-util.h"
 #include "../../plugins/plugin.h"
 #include "../gui-main.h"
+#include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
 #include "../gui-infobar.h"
@@ -198,7 +199,7 @@ gui_main_end ()
 
     /* delete all buffers */
     while (gui_buffers)
-        gui_buffer_free (gui_buffers, 0);
+        gui_buffer_close (gui_buffers, 0);
     
     /* delete global history */
     gui_history_global_free ();

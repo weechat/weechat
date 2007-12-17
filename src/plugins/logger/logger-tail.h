@@ -17,9 +17,16 @@
  */
 
 
-#ifndef __WEECHAT_IRC_COMPLETION_H
-#define __WEECHAT_IRC_COMPLETION_H 1
+#ifndef __WEECHAT_LOGGER_TAIL_H
+#define __WEECHAT_LOGGER_TAIL_H 1
 
-extern void irc_completion_init ();
+struct t_logger_line
+{
+    char *data;                        /* line content                      */
+    struct t_logger_line *next_line;   /* link to next line                 */
+};
 
-#endif /* irc-completion.h */
+extern struct t_logger_line *logger_tail_file (char *filename, int n_lines);
+extern void logger_tail_free (struct t_logger_line *lines);
+
+#endif /* logger-tail.h */

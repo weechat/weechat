@@ -50,11 +50,14 @@ struct t_config_section
 {
     char *name;                            /* section name                  */
     void (*callback_read)                  /* called when unknown option    */
-    (void *, char *, char *);              /* is read from config file      */
+    (struct t_config_file *config_file,    /* is read from config file      */
+     char *option_name, char *value);      
     void (*callback_write)                 /* called to write special       */
-    (void *, char *);                      /* options in config file        */
+    (struct t_config_file *config_file,    /* options in config file        */
+     char *section_name);
     void (*callback_write_default)         /* called to write default       */
-    (void *, char *);                      /* options in config file        */
+    (struct t_config_file *config_file,    /* options in config file        */
+     char *section_name);
     struct t_config_option *options;       /* options in section            */
     struct t_config_option *last_option;   /* last option in section        */
     struct t_config_section *prev_section; /* link to previous section      */
@@ -84,40 +87,57 @@ struct t_config_option
     struct t_config_option *next_option;   /* link to next option           */
 };
 
-extern struct t_config_file *config_file_new (void *, char *);
-extern int config_file_valid_for_plugin (void *, struct t_config_file *);
-extern struct t_config_section *config_file_new_section (struct t_config_file *,
-                                                         char *,
-                                                         void (*)(void *, char *, char *),
-                                                         void (*)(void *, char *),
-                                                         void (*)(void *, char *));
-extern struct t_config_section *config_file_search_section (struct t_config_file *,
-                                                            char *);
-extern int config_file_section_valid_for_plugin (void *, struct t_config_section *);
-extern struct t_config_option *config_file_new_option (struct t_config_section *,
-                                                       char *, char *, char *,
-                                                       char *, int, int,
-                                                       char *, void (*)());
-extern struct t_config_option *config_file_search_option (struct t_config_file *,
-                                                          struct t_config_section *,
-                                                          char *);
-extern int config_file_option_valid_for_plugin (void *, struct t_config_option *);
-extern int config_file_string_to_boolean (char *);
-extern int config_file_option_set (struct t_config_option *, char *);
-extern int config_file_option_reset (struct t_config_option *);
+extern struct t_config_file *config_file_new (struct t_weechat_plugin *plugin,
+                                              char *filename);
+extern int config_file_valid_for_plugin (struct t_weechat_plugin *plugin,
+                                         struct t_config_file *config_file);
+extern struct t_config_section *config_file_new_section (struct t_config_file *config_file,
+                                                         char *name,
+                                                         void (*callback_read)(struct t_config_file *config_file,
+                                                                               char *option_name,
+                                                                               char *value),
+                                                         void (*callback_write)(struct t_config_file *config_file,
+                                                                                char *section_name),
+                                                         void (*callback_write_default)(struct t_config_file *config_file,
+                                                                                        char *section_name));
+extern struct t_config_section *config_file_search_section (struct t_config_file *config_file,
+                                                            char *section_name);
+extern int config_file_section_valid_for_plugin (struct t_weechat_plugin *plugin,
+                                                 struct t_config_section *);
+extern struct t_config_option *config_file_new_option (struct t_config_section *section,
+                                                       char *name, char *type,
+                                                       char *description,
+                                                       char *string_values,
+                                                       int min, int max,
+                                                       char *default_value,
+                                                       void (*callback_change)());
+extern struct t_config_option *config_file_search_option (struct t_config_file *config_file,
+                                                          struct t_config_section *section,
+                                                          char *option_name);
+extern int config_file_option_valid_for_plugin (struct t_weechat_plugin *plugin,
+                                                struct t_config_option *option);
+extern int config_file_string_to_boolean (char *text);
+extern int config_file_option_set (struct t_config_option *option,
+                                   char *new_value, int run_callback);
+extern int config_file_option_reset (struct t_config_option *option);
+extern int config_file_option_boolean (struct t_config_option *option);
+extern int config_file_option_integer (struct t_config_option *option);
+extern char *config_file_option_string (struct t_config_option *option);
+extern int config_file_option_color (struct t_config_option *option);
 
-extern int config_file_read (struct t_config_file *);
-extern int config_file_reload (struct t_config_file *);
-extern void config_file_write_line (struct t_config_file *, char *, char *, ...);
-extern int config_file_write (struct t_config_file *, int);
-extern void config_file_option_free (struct t_config_section *,
-                                     struct t_config_option *);
-extern void config_file_section_free (struct t_config_file *,
-                                      struct t_config_section *);
-extern void config_file_free (struct t_config_file *);
+extern void config_file_write_line (struct t_config_file *config_file,
+                                    char *option_name, char *value, ...);
+extern int config_file_write (struct t_config_file *config_files);
+extern int config_file_read (struct t_config_file *config_file);
+extern int config_file_reload (struct t_config_file *config_file);
+extern void config_file_option_free (struct t_config_section *section,
+                                     struct t_config_option *option);
+extern void config_file_section_free (struct t_config_file *config_file,
+                                      struct t_config_section *section);
+extern void config_file_free (struct t_config_file *config_file);
 extern void config_file_free_all ();
-extern void config_file_free_all_plugin (void *);
-extern void config_file_print_stdout (struct t_config_file *);
+extern void config_file_free_all_plugin (struct t_weechat_plugin *plugin);
+extern void config_file_print_stdout (struct t_config_file *config_file);
 extern void config_file_print_log ();
 
 #endif /* wee-config-file.h */

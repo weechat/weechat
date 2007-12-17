@@ -98,7 +98,7 @@ plugin_infolist_new_item (struct t_plugin_infolist *list)
 
 struct t_plugin_infolist_var *
 plugin_infolist_new_var_integer (struct t_plugin_infolist_item *item,
-                             char *name, int value)
+                                 char *name, int value)
 {
     struct t_plugin_infolist_var *new_var;
     
@@ -131,7 +131,7 @@ plugin_infolist_new_var_integer (struct t_plugin_infolist_item *item,
 
 struct t_plugin_infolist_var *
 plugin_infolist_new_var_string (struct t_plugin_infolist_item *item,
-                            char *name, char *value)
+                                char *name, char *value)
 {
     struct t_plugin_infolist_var *new_var;
     
@@ -163,7 +163,7 @@ plugin_infolist_new_var_string (struct t_plugin_infolist_item *item,
 
 struct t_plugin_infolist_var *
 plugin_infolist_new_var_pointer (struct t_plugin_infolist_item *item,
-                             char *name, void *pointer)
+                                 char *name, void *pointer)
 {
     struct t_plugin_infolist_var *new_var;
     
@@ -195,7 +195,7 @@ plugin_infolist_new_var_pointer (struct t_plugin_infolist_item *item,
 
 struct t_plugin_infolist_var *
 plugin_infolist_new_var_time (struct t_plugin_infolist_item *item,
-                          char *name, time_t time)
+                              char *name, time_t time)
 {
     struct t_plugin_infolist_var *new_var;
     
@@ -447,7 +447,7 @@ plugin_infolist_get_time (struct t_plugin_infolist *list, char *var)
 
 void
 plugin_infolist_var_free (struct t_plugin_infolist_item *item,
-                      struct t_plugin_infolist_var *var)
+                          struct t_plugin_infolist_var *var)
 {
     struct t_plugin_infolist_var *new_vars;
     
@@ -485,7 +485,7 @@ plugin_infolist_var_free (struct t_plugin_infolist_item *item,
 
 void
 plugin_infolist_item_free (struct t_plugin_infolist *list,
-                       struct t_plugin_infolist_item *item)
+                           struct t_plugin_infolist_item *item)
 {
     struct t_plugin_infolist_item *new_items;
     

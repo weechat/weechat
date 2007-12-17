@@ -228,7 +228,7 @@ gui_completion_nickncmp (char *base_word, char *nick, int max)
 
 void
 gui_completion_list_add (struct t_gui_completion *completion, char *word,
-                         int nick_completion, int position)
+                         int nick_completion, char *where)
 {
     if (!word || !word[0])
         return;
@@ -239,8 +239,7 @@ gui_completion_list_add (struct t_gui_completion *completion, char *word,
         || (!nick_completion && (string_strncasecmp (completion->base_word, word,
                                                      strlen (completion->base_word)) == 0)))
     {
-        weelist_add (completion->completion_list,
-                     word, position);
+        weelist_add (completion->completion_list, word, where);
     }
 }
 
@@ -296,7 +295,7 @@ gui_completion_list_add_filename (struct t_gui_completion *completion)
     char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
     
     buffer_len = PATH_MAX;
-    buffer = (char *) malloc (buffer_len * sizeof (char));
+    buffer = (char *)malloc (buffer_len * sizeof (char));
     if (!buffer)
 	return;
     
@@ -880,7 +879,7 @@ gui_completion_find_context (struct t_gui_completion *completion, char *data,
         if (pos_start <= pos_end)
         {
             completion->position_replace = pos_start;
-            completion->base_word = (char *) malloc (pos_end - pos_start + 2);
+            completion->base_word = (char *)malloc (pos_end - pos_start + 2);
             for (i = pos_start; i <= pos_end; i++)
                 completion->base_word[i - pos_start] = data[i];
             completion->base_word[pos_end - pos_start + 1] = '\0';
@@ -905,7 +904,7 @@ gui_completion_find_context (struct t_gui_completion *completion, char *data,
             if (data[pos_end] == ' ')
                 pos_end--;
             
-            completion->base_command = (char *) malloc (pos_end - pos_start + 2);
+            completion->base_command = (char *)malloc (pos_end - pos_start + 2);
             for (i = pos_start; i <= pos_end; i++)
                 completion->base_command[i - pos_start] = data[i];
             completion->base_command[pos_end - pos_start + 1] = '\0';

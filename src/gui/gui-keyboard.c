@@ -34,6 +34,7 @@
 #include "../plugins/plugin.h"
 #include "gui-keyboard.h"
 #include "gui-action.h"
+#include "gui-buffer.h"
 #include "gui-completion.h"
 #include "gui-input.h"
 #include "gui-window.h"
@@ -244,7 +245,7 @@ gui_keyboard_get_internal_code (char *key)
 {
     char *result;
     
-    if ((result = (char *) malloc (strlen (key) + 1)))
+    if ((result = (char *)malloc (strlen (key) + 1)))
     {
         result[0] = '\0';
         while (key[0])
@@ -287,7 +288,7 @@ gui_keyboard_get_expanded_name (char *key)
 {
     char *result;
     
-    if ((result = (char *) malloc ((strlen (key) * 5) + 1)))
+    if ((result = (char *)malloc ((strlen (key) * 5) + 1)))
     {
         result[0] = '\0';
         while (key[0])
@@ -390,7 +391,7 @@ gui_keyboard_new (char *key, char *command, t_gui_key_func *function, char *args
     char *internal_code;
     int length;
     
-    if ((new_key = (t_gui_key *) malloc (sizeof (t_gui_key))))
+    if ((new_key = (t_gui_key *)malloc (sizeof (t_gui_key))))
     {
         internal_code = gui_keyboard_get_internal_code (key);
         new_key->key = (internal_code) ? strdup (internal_code) : strdup (key);
@@ -750,7 +751,7 @@ gui_keyboard_buffer_reset ()
     {
         gui_keyboard_buffer_alloc = GUI_KEYBOARD_BUFFER_BLOCK_SIZE;
         gui_keyboard_buffer_size = 0;
-        gui_keyboard_buffer = (int *) malloc (gui_keyboard_buffer_alloc);
+        gui_keyboard_buffer = (int *)malloc (gui_keyboard_buffer_alloc);
     }
     else
     {

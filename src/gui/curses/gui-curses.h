@@ -50,12 +50,13 @@ extern struct t_gui_color gui_weechat_colors[];
 extern int gui_refresh_screen_needed;
 
 /* color functions */
-extern int gui_color_get_pair (int);
+extern int gui_color_get_pair (int num_color);
 extern void gui_color_init ();
 
 /* chat functions */
-extern void gui_chat_calculate_line_diff (struct t_gui_window *,
-                                          struct t_gui_line **, int *, int);
+extern void gui_chat_calculate_line_diff (struct t_gui_window *window,
+                                          struct t_gui_line **line,
+                                          int *line_pos, int difference);
 
 /* keyboard functions */
 extern void gui_keyboard_default_bindings ();
@@ -63,9 +64,9 @@ extern void gui_keyboard_read ();
 extern void gui_keyboard_flush ();
 
 /* window functions */
-extern void gui_window_wprintw (WINDOW *, char *, ...);
-extern void gui_window_curses_clear (WINDOW *, int);
-extern void gui_window_set_weechat_color (WINDOW *, int);
+extern void gui_window_wprintw (WINDOW *window, char *data, ...);
+extern void gui_window_curses_clear (WINDOW *window, int num_color);
+extern void gui_window_set_weechat_color (WINDOW *window, int num_color);
 extern void gui_window_refresh_screen_sigwinch ();
 extern void gui_window_title_set ();
 extern void gui_window_title_reset ();

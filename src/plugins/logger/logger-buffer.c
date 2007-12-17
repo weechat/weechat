@@ -39,7 +39,7 @@ struct t_logger_buffer *last_logger_buffer = NULL;
  */
 
 struct t_logger_buffer *
-logger_buffer_add (void *buffer, char *log_filename)
+logger_buffer_add (struct t_gui_buffer *buffer, char *log_filename)
 {
     struct t_logger_buffer *new_logger_buffer;
     
@@ -52,6 +52,7 @@ logger_buffer_add (void *buffer, char *log_filename)
         new_logger_buffer->buffer = buffer;
         new_logger_buffer->log_filename = strdup (log_filename);
         new_logger_buffer->log_file = NULL;
+        new_logger_buffer->log_enabled = 1;
         
         new_logger_buffer->prev_buffer = last_logger_buffer;
         new_logger_buffer->next_buffer = NULL;
@@ -70,14 +71,14 @@ logger_buffer_add (void *buffer, char *log_filename)
  */
 
 struct t_logger_buffer *
-logger_buffer_search (void *buffer)
+logger_buffer_search (struct t_gui_buffer *buffer)
 {
     struct t_logger_buffer *ptr_logger_buffer;
     
     for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
          ptr_logger_buffer = ptr_logger_buffer->next_buffer)
     {
-        if (ptr_logger_buffer->buffer == (struct t_gui_buffer *)buffer)
+        if (ptr_logger_buffer->buffer == buffer)
             return ptr_logger_buffer;
     }
     
@@ -116,25 +117,11 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
 }
 
 /*
- * logger_buffer_remove: remove a buffer from list
+ * logger_buffer_free_all: remove all buffers from list
  */
 
 void
-logger_buffer_remove (void *buffer)
-{
-    struct t_logger_buffer *ptr_logger_buffer;
-    
-    ptr_logger_buffer = logger_buffer_search (buffer);
-    if (ptr_logger_buffer)
-        logger_buffer_free (ptr_logger_buffer);
-}
-
-/*
- * logger_buffer_remove_all: remove all buffers from list
- */
-
-void
-logger_buffer_remove_all ()
+logger_buffer_free_all ()
 {
     while (logger_buffers)
     {

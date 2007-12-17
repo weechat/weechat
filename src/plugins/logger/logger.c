@@ -34,8 +34,9 @@
 #include <fcntl.h>
 #include <time.h>
 
-#include "../weechat-plugin.h"
+#include "logger.h"
 #include "logger-buffer.h"
+#include "logger-tail.h"
 
 
 char plugin_name[] = "logger";
@@ -43,36 +44,74 @@ char plugin_version[]     = "0.1";
 char plugin_description[] = "Logger plugin for WeeChat";
 
 struct t_weechat_plugin *weechat_logger_plugin = NULL;
-#define weechat_plugin weechat_logger_plugin
 
-char *logger_path = NULL;
-char *logger_time_format = NULL;
+#define LOGGER_OPTION_PATH        "path"
+#define LOGGER_OPTION_TIME_FORMAT "time_format"
+#define LOGGER_OPTION_INFO_LINES  "info_lines"
+#define LOGGER_OPTION_BACKLOG     "backlog"
+
+char *logger_option_path = NULL;
+char *logger_option_time_format = NULL;
+int logger_option_info_lines;
+int logger_option_backlog;
 
 
 /*
  * logger_config_read: read config options for logger plugin
+ *                     return: 1 if ok
+ *                             0 if error
  */
 
-void
+int
 logger_config_read ()
 {
-    if (logger_path)
-        free (logger_path);
-    logger_path = weechat_plugin_config_get ("path");
-    if (!logger_path)
+    long number;
+    char *string, *error;
+    
+    logger_option_path = weechat_config_get_plugin (LOGGER_OPTION_PATH);
+    if (!logger_option_path)
     {
-        weechat_plugin_config_set ("path", "%h/logs/");
-        logger_path = weechat_plugin_config_get ("path");
+        weechat_config_set_plugin (LOGGER_OPTION_PATH, "%h/logs/");
+        logger_option_path = weechat_config_get_plugin ("path");
     }
-
-    if (logger_time_format)
-        free (logger_time_format);
-    logger_time_format = weechat_plugin_config_get ("time_format");
-    if (!logger_time_format)
+    
+    logger_option_time_format = weechat_config_get_plugin (LOGGER_OPTION_TIME_FORMAT);
+    if (!logger_option_time_format)
     {
-        weechat_plugin_config_set ("time_format", "%Y %b %d %H:%M:%S");
-        logger_time_format = weechat_plugin_config_get ("time_format");
+        weechat_config_set_plugin (LOGGER_OPTION_TIME_FORMAT,
+                                   "%Y %b %d %H:%M:%S");
+        logger_option_time_format = weechat_config_get_plugin (LOGGER_OPTION_TIME_FORMAT);
     }
+    
+    string = weechat_config_get_plugin (LOGGER_OPTION_INFO_LINES);
+    if (!string)
+    {
+        weechat_config_set_plugin (LOGGER_OPTION_INFO_LINES, "off");
+        string = weechat_config_get_plugin (LOGGER_OPTION_INFO_LINES);
+    }
+    if (string && (weechat_config_string_to_boolean (string) > 0))
+        logger_option_info_lines = 1;
+    else
+        logger_option_info_lines = 0;
+    
+    string = weechat_config_get_plugin (LOGGER_OPTION_BACKLOG);
+    if (!string)
+    {
+        weechat_config_set_plugin (LOGGER_OPTION_BACKLOG, "20");
+        string = weechat_config_get_plugin (LOGGER_OPTION_BACKLOG);
+    }
+    logger_option_backlog = 20;
+    if (string)
+    {
+        error = NULL;
+        number = strtol (string, &error, 10);
+        if (error && (error[0] == '\0'))
+            logger_option_backlog = number;
+    }
+    if (logger_option_path && logger_option_time_format && logger_option_backlog)
+        return 1;
+    else
+        return 0;
 }
 
 /*
@@ -88,7 +127,7 @@ logger_create_directory ()
     
     rc = 1;
     
-    dir1 = weechat_string_replace (logger_path, "~", getenv ("HOME"));
+    dir1 = weechat_string_replace (logger_option_path, "~", getenv ("HOME"));
     if (dir1)
     {
         weechat_dir = weechat_info_get ("weechat_dir");
@@ -99,7 +138,8 @@ logger_create_directory ()
             {
                 if (mkdir (dir2, 0755) < 0)
                 {
-                    if (errno != EEXIST)                        rc = 0;
+                    if (errno != EEXIST)
+                        rc = 0;
                 }
                 else
                     chmod (dir2, 0700);
@@ -124,7 +164,7 @@ logger_create_directory ()
  */
 
 char *
-logger_get_filename (void *buffer)
+logger_get_filename (struct t_gui_buffer *buffer)
 {
     struct t_plugin_infolist *ptr_infolist;
     char *res;
@@ -136,7 +176,8 @@ logger_get_filename (void *buffer)
     
     dir_separator = weechat_info_get ("dir_separator");
     weechat_dir = weechat_info_get ("weechat_dir");
-    log_path = weechat_string_replace (logger_path, "~", getenv ("HOME"));
+    log_path = weechat_string_replace (logger_option_path, "~",
+                                       getenv ("HOME"));
     log_path2 = weechat_string_replace (log_path, "%h", weechat_dir);
     
     if (dir_separator && weechat_dir && log_path && log_path2)
@@ -230,22 +271,25 @@ logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
                     free (charset);
                 return;
             }
-            
-            seconds = time (NULL);
-            date_tmp = localtime (&seconds);
-            buf_time[0] = '\0';
-            if (date_tmp)
-                strftime (buf_time, sizeof (buf_time) - 1,
-                          logger_time_format, date_tmp);
-            snprintf (buf, sizeof (buf) - 1,
-                      _("****  Beginning of log  %s  ****"),
-                      buf_time);
-            message = (charset) ?
-                weechat_iconv_from_internal (charset, buf) : NULL;
-            fprintf (logger_buffer->log_file,
-                     "%s\n", (message) ? message : buf);
-            if (message)
-                free (message);
+
+            if (logger_option_info_lines)
+            {
+                seconds = time (NULL);
+                date_tmp = localtime (&seconds);
+                buf_time[0] = '\0';
+                if (date_tmp)
+                    strftime (buf_time, sizeof (buf_time) - 1,
+                              logger_option_time_format, date_tmp);
+                snprintf (buf, sizeof (buf) - 1,
+                          _("%s\t****  Beginning of log  ****"),
+                          buf_time);
+                message = (charset) ?
+                    weechat_iconv_from_internal (charset, buf) : NULL;
+                fprintf (logger_buffer->log_file,
+                         "%s\n", (message) ? message : buf);
+                if (message)
+                    free (message);
+            }
         }
         
         va_start (argptr, format);
@@ -270,7 +314,7 @@ logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
  */
 
 void
-logger_start_buffer (void *buffer)
+logger_start_buffer (struct t_gui_buffer *buffer)
 {
     struct t_logger_buffer *ptr_logger_buffer;
     char *log_filename;
@@ -333,18 +377,21 @@ logger_end (struct t_logger_buffer *logger_buffer)
     
     if (logger_buffer->log_file)
     {
-        seconds = time (NULL);
-        date_tmp = localtime (&seconds);
-        buf_time[0] = '\0';
-        if (date_tmp)
-            strftime (buf_time, sizeof (buf_time) - 1,
-                      logger_time_format, date_tmp);
-        logger_write_line (logger_buffer,
-                           _("****  End of log  %s  ****"),
-                           buf_time);
+        if (logger_option_info_lines)
+        {
+            seconds = time (NULL);
+            date_tmp = localtime (&seconds);
+            buf_time[0] = '\0';
+            if (date_tmp)
+                strftime (buf_time, sizeof (buf_time) - 1,
+                          logger_option_time_format, date_tmp);
+            logger_write_line (logger_buffer,
+                               _("%s\t****  End of log  ****"),
+                               buf_time);
+        }
         fclose (logger_buffer->log_file);
         logger_buffer->log_file = NULL;
-        logger_buffer_remove (logger_buffer);
+        logger_buffer_free (logger_buffer);
     }
 }
 
@@ -356,7 +403,7 @@ void
 logger_end_all ()
 {
     struct t_logger_buffer *ptr_logger_buffer;
-
+    
     for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
          ptr_logger_buffer = ptr_logger_buffer->next_buffer)
     {
@@ -365,7 +412,7 @@ logger_end_all ()
 }
 
 /*
- * logger_buffer_open_signal_cb: callback for buffer_open signal
+ * logger_buffer_open_signal_cb: callback for "buffer_open" signal
  */
 
 int
@@ -382,7 +429,7 @@ logger_buffer_open_signal_cb (void *data, char *signal, void *pointer)
 }
 
 /*
- * logger_buffer_close_signal_cb: callback for buffer_close signal
+ * logger_buffer_close_signal_cb: callback for "buffer_close" signal
  */
 
 int
@@ -399,12 +446,95 @@ logger_buffer_close_signal_cb (void *data, char *signal, void *pointer)
 }
 
 /*
+ * logger_backlog: display backlog for a buffer (by reading end of log file)
+ */
+
+void
+logger_backlog (struct t_gui_buffer *buffer, char *filename, int lines)
+{
+    struct t_logger_line *last_lines, *ptr_lines;
+    char *pos_message, *error;
+    time_t datetime;
+    struct tm tm_line;
+    int num_lines;
+    
+    num_lines = 0;
+    last_lines = logger_tail_file (filename, lines);
+    ptr_lines = last_lines;
+    while (ptr_lines)
+    {
+        datetime = 0;
+        pos_message = strchr (ptr_lines->data, '\t');
+        if (pos_message)
+        {
+            pos_message[0] = '\0';
+            error = strptime (ptr_lines->data, logger_option_time_format,
+                              &tm_line);
+            if (error && !error[0])
+                datetime = mktime (&tm_line);
+            pos_message[0] = '\t';
+        }
+        if (pos_message)
+        {
+            if (datetime != 0)
+                weechat_printf_date (buffer, datetime, pos_message + 1);
+            else
+                weechat_printf (buffer, ptr_lines->data);
+        }
+        else
+        {
+            weechat_printf (buffer, ptr_lines->data);
+        }
+        num_lines++;
+        ptr_lines = ptr_lines->next_line;
+    }
+    if (last_lines)
+        logger_tail_free (last_lines);
+    if (num_lines > 0)
+        weechat_printf (buffer,
+                        _("===\t========== End of backlog (%d lines) =========="),
+                        num_lines);
+}
+
+/*
+ * logger_backlog_signal_cb: callback for "logger_backlog" signal
+ */
+
+int
+logger_backlog_signal_cb (void *data, char *signal, void *pointer)
+{
+    struct t_logger_buffer *ptr_logger_buffer;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+
+    if (logger_option_backlog >= 0)
+    {
+        ptr_logger_buffer = logger_buffer_search (pointer);
+        if (ptr_logger_buffer && ptr_logger_buffer->log_filename
+            && ptr_logger_buffer->log_enabled)
+        {
+            ptr_logger_buffer->log_enabled = 0;
+            
+            logger_backlog (pointer,
+                            ptr_logger_buffer->log_filename,
+                            logger_option_backlog);
+            
+            ptr_logger_buffer->log_enabled = 1;
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * logger_print_cb: callback for print hook
  */
 
 int
-logger_print_cb (void *data, void *buffer, time_t date, char *prefix,
-                 char *message)
+logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
+                 char *prefix, char *message)
 {
     struct t_logger_buffer *ptr_logger_buffer;
     struct tm *date_tmp;
@@ -414,22 +544,39 @@ logger_print_cb (void *data, void *buffer, time_t date, char *prefix,
     (void) data;
 
     ptr_logger_buffer = logger_buffer_search (buffer);
-    if (ptr_logger_buffer && ptr_logger_buffer->log_filename)
+    if (ptr_logger_buffer && ptr_logger_buffer->log_filename
+        && ptr_logger_buffer->log_enabled)
     {
         date_tmp = localtime (&date);
         buf_time[0] = '\0';
         if (date_tmp)
             strftime (buf_time, sizeof (buf_time) - 1,
-                      logger_time_format, date_tmp);
+                      logger_option_time_format, date_tmp);
         
         logger_write_line (ptr_logger_buffer,
-                           "%s%s%s%s%s",
+                           "%s\t%s\t%s",
                            buf_time,
-                           (buf_time[0]) ? "  " : "",
                            (prefix) ? prefix : "",
-                           (prefix && prefix[0]) ? " " : "",
                            message);
     }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * logger_config_cb: callback for config hook
+ */
+
+int
+logger_config_cb (void *data, char *type, char *option, char *value)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) type;
+    (void) option;
+    (void) value;
+    
+    logger_config_read ();
     
     return WEECHAT_RC_OK;
 }
@@ -443,8 +590,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 {
     weechat_plugin = plugin;
     
-    logger_config_read ();
-    if (!logger_path || !logger_time_format)
+    if (!logger_config_read ())
         return WEECHAT_RC_ERROR;
     if (!logger_create_directory ())
         return WEECHAT_RC_ERROR;
@@ -453,8 +599,18 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     weechat_hook_signal ("buffer_open", &logger_buffer_open_signal_cb, NULL);
     weechat_hook_signal ("buffer_close", &logger_buffer_close_signal_cb, NULL);
+    weechat_hook_signal ("logger_backlog", &logger_backlog_signal_cb, NULL);
     
     weechat_hook_print (NULL, NULL, 1, &logger_print_cb, NULL);
+    
+    weechat_hook_config ("plugin", "logger." LOGGER_OPTION_PATH,
+                         &logger_config_cb, NULL);
+    weechat_hook_config ("plugin", "logger." LOGGER_OPTION_TIME_FORMAT,
+                         &logger_config_cb, NULL);
+    weechat_hook_config ("plugin", "logger." LOGGER_OPTION_INFO_LINES,
+                         &logger_config_cb, NULL);
+    weechat_hook_config ("plugin", "logger." LOGGER_OPTION_BACKLOG,
+                         &logger_config_cb, NULL);
     
     return WEECHAT_RC_OK;
 }

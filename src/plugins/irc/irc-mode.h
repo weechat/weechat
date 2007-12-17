@@ -22,9 +22,10 @@
 
 #include "irc-server.h"
 
-extern void irc_mode_channel_set (struct t_irc_server *,
-                                  struct t_irc_channel *, char *);
-extern void irc_mode_user_set (struct t_irc_server *, char *);
-extern int irc_mode_nick_prefix_allowed (struct t_irc_server *, char);
+extern void irc_mode_channel_set (struct t_irc_server *server,
+                                  struct t_irc_channel *channel, char *modes);
+extern void irc_mode_user_set (struct t_irc_server *server, char *modes);
+extern int irc_mode_nick_prefix_allowed (struct t_irc_server *server,
+                                         char prefix);
 
 #endif /* irc-mode.h */

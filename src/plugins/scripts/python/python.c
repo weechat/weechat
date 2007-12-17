@@ -121,7 +121,7 @@ weechat_python_exec (t_weechat_plugin *plugin,
     else if (PyInt_Check (rc) && (ret_type == SCRIPT_EXEC_INT))
     {
 	
-	ret_i = (int *) malloc (sizeof(int));
+	ret_i = (int *)malloc (sizeof(int));
 	if (ret_i)
 	    *ret_i = (int) PyInt_AsLong(rc);
 	ret_value = ret_i;
@@ -2279,7 +2279,7 @@ weechat_python_load (t_weechat_plugin *plugin, char *filename)
     if (w_home)
     {
 	len = strlen (w_home) + 1 + strlen("python") + 1;
-	p_home = (char *) malloc (len * sizeof(char));
+	p_home = (char *)malloc (len * sizeof(char));
 	if (p_home)
 	{
 	    snprintf (p_home, len, "%s/python", w_home);

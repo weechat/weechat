@@ -41,11 +41,13 @@
 #include "wee-util.h"
 #include "wee-list.h"
 #include "wee-string.h"
+#include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-infobar.h"
 #include "../gui/gui-keyboard.h"
+#include "../gui/gui-nicklist.h"
 #include "../gui/gui-status.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
@@ -415,7 +417,7 @@ config_change_day_change ()
  */
 
 void
-config_weechat_read_key (void *config_file,
+config_weechat_read_key (struct t_config_file *config_file,
                          char *option_name, char *value)
 {
     /* make C compiler happy */
@@ -443,7 +445,8 @@ config_weechat_read_key (void *config_file,
  */
 
 void
-config_weechat_write_keys (void *config_file, char *section_name)
+config_weechat_write_keys (struct t_config_file *config_file,
+                           char *section_name)
 {
     t_gui_key *ptr_key;
     char *expanded_name, *function_name;
@@ -1177,5 +1180,5 @@ int
 config_weechat_write ()
 {
     log_printf (_("Saving WeeChat configuration to disk"));
-    return config_file_write (weechat_config_file, 0);
+    return config_file_write (weechat_config_file);
 }

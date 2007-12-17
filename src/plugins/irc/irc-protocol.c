@@ -1177,7 +1177,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *irc_message, char *h
     (void) irc_message;
     
     look_infobar_delay_highlight = weechat_config_integer (
-        weechat_config_get ("look_infobar_delay_highlight"));
+        weechat_config_get_weechat ("look_infobar_delay_highlight"));
     
     host2 = NULL;
     if (host)
@@ -1485,7 +1485,7 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *irc_message, char *hos
                 }
                 if (ptr_channel->close)
                 {
-                    weechat_buffer_close (ptr_channel->buffer);
+                    weechat_buffer_close (ptr_channel->buffer, 1);
                     ptr_channel->buffer = NULL;
                     irc_channel_free (server, ptr_channel);
                     ptr_channel = NULL;
@@ -1608,7 +1608,7 @@ irc_protocol_reply_version (struct t_irc_server *server, struct t_irc_channel *c
                 pos = NULL;
         }
         
-        buf = (struct utsname *) malloc (sizeof (struct utsname));
+        buf = (struct utsname *)malloc (sizeof (struct utsname));
         if (buf && (uname (buf) >= 0))
         {
             irc_server_sendf (server,
@@ -1679,7 +1679,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
     }
     
     look_infobar_delay_highlight = weechat_config_integer (
-        weechat_config_get ("look_infobar_delay_highlight"));
+        weechat_config_get_weechat ("look_infobar_delay_highlight"));
     
     pos = strchr (host, '!');
     if (pos)
@@ -3817,10 +3817,10 @@ irc_protocol_cmd_324 (struct t_irc_server *server, char *irc_message, char *host
                 if (pos_modes[0])
                 {
                     if (ptr_channel->modes)
-                        ptr_channel->modes = (char *) realloc (ptr_channel->modes,
-                                                               strlen (pos_modes) + 1);
+                        ptr_channel->modes = (char *)realloc (ptr_channel->modes,
+                                                              strlen (pos_modes) + 1);
                     else
-                        ptr_channel->modes = (char *) malloc (strlen (pos_modes) + 1);
+                        ptr_channel->modes = (char *)malloc (strlen (pos_modes) + 1);
                     strcpy (ptr_channel->modes, pos_modes);
                     irc_mode_channel_set (server, ptr_channel, pos_modes);
                 }
@@ -4715,7 +4715,7 @@ irc_protocol_cmd_352 (struct t_irc_server *server, char *irc_message, char *host
                                             if (ptr_nick->host)
                                                 free (ptr_nick->host);
                                             length = strlen (pos_user) + 1 + strlen (pos_host) + 1;
-                                            ptr_nick->host = (char *) malloc (length);
+                                            ptr_nick->host = (char *)malloc (length);
                                             if (ptr_nick->host)
                                                 snprintf (ptr_nick->host, length, "%s@%s", pos_user, pos_host);
                                             irc_nick_set_away (ptr_channel, ptr_nick,

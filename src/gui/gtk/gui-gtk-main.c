@@ -34,6 +34,7 @@
 #include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
 #include "../gui-main.h"
+#include "../gui-buffer.h"
 #include "../gui-history.h"
 #include "../gui-infobar.h"
 #include "../gui-input.h"
@@ -211,7 +212,7 @@ gui_main_end ()
     
     /* delete all buffers */
     while (gui_buffers)
-        gui_buffer_free (gui_buffers, 0);
+        gui_buffer_close (gui_buffers, 0);
     
     /* delete all windows */
     while (gui_windows)

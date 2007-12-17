@@ -31,6 +31,7 @@
 #include "wee-config.h"
 #include "wee-hook.h"
 #include "wee-string.h"
+#include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../plugins/plugin.h"
 

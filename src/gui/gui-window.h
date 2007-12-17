@@ -123,61 +123,68 @@ extern struct t_gui_window *gui_current_window;
 extern struct t_gui_window_tree *gui_windows_tree;
 
 /* window functions */
-extern int gui_window_tree_init (struct t_gui_window *);
-extern void gui_window_tree_node_to_leaf (struct t_gui_window_tree *,
-                                          struct t_gui_window *);
-extern void gui_window_tree_free (struct t_gui_window_tree **);
-extern struct t_gui_window *gui_window_new (struct t_gui_window *, int, int,
-                                            int, int, int, int);
-extern void gui_window_free (struct t_gui_window *);
-extern struct t_gui_window *gui_window_search_by_buffer (struct t_gui_buffer *);
-extern void gui_window_switch_server (struct t_gui_window *);
-extern void gui_window_switch_previous (struct t_gui_window *);
-extern void gui_window_switch_next (struct t_gui_window *);
-extern void gui_window_switch_by_buffer (struct t_gui_window *, int);
-extern void gui_window_scroll (struct t_gui_window *, char *);
-extern void gui_window_search_start (struct t_gui_window *);
-extern void gui_window_search_restart (struct t_gui_window *);
-extern void gui_window_search_stop (struct t_gui_window *);
-extern int gui_window_search_text (struct t_gui_window *);
+extern int gui_window_tree_init (struct t_gui_window *window);
+extern void gui_window_tree_node_to_leaf (struct t_gui_window_tree *node,
+                                          struct t_gui_window *window);
+extern void gui_window_tree_free (struct t_gui_window_tree **tree);
+extern struct t_gui_window *gui_window_new (struct t_gui_window *parent,
+                                            int x, int y, int width, int height,
+                                            int width_pct, int height_pct);
+extern void gui_window_free (struct t_gui_window *window);
+extern struct t_gui_window *gui_window_search_by_buffer (struct t_gui_buffer *buffer);
+extern void gui_window_switch_server (struct t_gui_window *window);
+extern void gui_window_switch_previous (struct t_gui_window *window);
+extern void gui_window_switch_next (struct t_gui_window *window);
+extern void gui_window_switch_by_buffer (struct t_gui_window *window,
+                                         int buffer_number);
+extern void gui_window_scroll (struct t_gui_window *window, char *scroll);
+extern void gui_window_search_start (struct t_gui_window *window);
+extern void gui_window_search_restart (struct t_gui_window *window);
+extern void gui_window_search_stop (struct t_gui_window *window);
+extern int gui_window_search_text (struct t_gui_window *window);
 extern void gui_window_print_log ();
 
 /* window functions (GUI dependent) */
 
 extern int gui_window_get_width ();
 extern int gui_window_get_height ();
-extern int gui_window_objects_init (struct t_gui_window *);
-extern void gui_window_objects_free (struct t_gui_window *, int);
-extern int gui_window_calculate_pos_size (struct t_gui_window *, int);
-extern void gui_window_redraw_buffer (struct t_gui_buffer *);
+extern int gui_window_objects_init (struct t_gui_window *window);
+extern void gui_window_objects_free (struct t_gui_window *window,
+                                     int free_separator);
+extern int gui_window_calculate_pos_size (struct t_gui_window *window,
+                                          int force_calculate);
+extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
 extern void gui_window_redraw_all_buffers ();
-extern void gui_window_switch_to_buffer (struct t_gui_window *, struct t_gui_buffer *);
-extern void gui_window_page_up (struct t_gui_window *);
-extern void gui_window_page_down (struct t_gui_window *);
-extern void gui_window_scroll_up (struct t_gui_window *);
-extern void gui_window_scroll_down (struct t_gui_window *);
-extern void gui_window_scroll_top (struct t_gui_window *);
-extern void gui_window_scroll_bottom (struct t_gui_window *);
-extern void gui_window_scroll_topic_left (struct t_gui_window *);
-extern void gui_window_scroll_topic_right (struct t_gui_window *);
-extern void gui_window_nick_beginning (struct t_gui_window *);
-extern void gui_window_nick_end (struct t_gui_window *);
-extern void gui_window_nick_page_up (struct t_gui_window *);
-extern void gui_window_nick_page_down (struct t_gui_window *);
-extern void gui_window_init_subwindows (struct t_gui_window *);
+extern void gui_window_switch_to_buffer (struct t_gui_window *window,
+                                         struct t_gui_buffer *buffer);
+extern void gui_window_page_up (struct t_gui_window *window);
+extern void gui_window_page_down (struct t_gui_window *window);
+extern void gui_window_scroll_up (struct t_gui_window *window);
+extern void gui_window_scroll_down (struct t_gui_window *window);
+extern void gui_window_scroll_top (struct t_gui_window *window);
+extern void gui_window_scroll_bottom (struct t_gui_window *window);
+extern void gui_window_scroll_topic_left (struct t_gui_window *window);
+extern void gui_window_scroll_topic_right (struct t_gui_window *window);
+extern void gui_window_nick_beginning (struct t_gui_window *window);
+extern void gui_window_nick_end (struct t_gui_window *window);
+extern void gui_window_nick_page_up (struct t_gui_window *window);
+extern void gui_window_nick_page_down (struct t_gui_window *window);
+extern void gui_window_init_subwindows (struct t_gui_window *window);
 extern void gui_window_refresh_windows ();
-extern void gui_window_split_horiz (struct t_gui_window *, int);
-extern void gui_window_split_vertic (struct t_gui_window *, int);
-extern void gui_window_resize (struct t_gui_window *, int);
-extern int gui_window_merge (struct t_gui_window *);
-extern void gui_window_merge_all (struct t_gui_window *);
-extern void gui_window_switch_up (struct t_gui_window *);
-extern void gui_window_switch_down (struct t_gui_window *);
-extern void gui_window_switch_left (struct t_gui_window *);
-extern void gui_window_switch_right (struct t_gui_window *);
+extern void gui_window_split_horiz (struct t_gui_window *window,
+                                    int pourcentage);
+extern void gui_window_split_vertic (struct t_gui_window *window,
+                                     int pourcentage);
+extern void gui_window_resize (struct t_gui_window *window, int pourcentage);
+extern int gui_window_merge (struct t_gui_window *window);
+extern void gui_window_merge_all (struct t_gui_window *window);
+extern void gui_window_switch_up (struct t_gui_window *window);
+extern void gui_window_switch_down (struct t_gui_window *window);
+extern void gui_window_switch_left (struct t_gui_window *window);
+extern void gui_window_switch_right (struct t_gui_window *window);
 extern void gui_window_refresh_screen ();
 extern void gui_window_title_set ();
 extern void gui_window_title_reset ();
-extern void gui_window_objects_print_log (struct t_gui_window *);
+extern void gui_window_objects_print_log (struct t_gui_window *window);
 
 #endif /* gui-window.h */

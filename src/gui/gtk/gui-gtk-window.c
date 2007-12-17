@@ -30,6 +30,7 @@
 #include "../../core/wee-config.h"
 #include "../../core/wee-log.h"
 #include "../gui-window.h"
+#include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-hotlist.h"
 #include "../gui-nicklist.h"
@@ -67,7 +68,7 @@ gui_window_objects_init (struct t_gui_window *window)
 {
     struct t_gui_gtk_objects *new_objects;
 
-    if ((new_objects = (struct t_gui_gtk_objects *) malloc (sizeof (struct t_gui_gtk_objects))))
+    if ((new_objects = (struct t_gui_gtk_objects *)malloc (sizeof (struct t_gui_gtk_objects))))
     {
         window->gui_objects = new_objects;
         GUI_GTK(window)->textview_chat = NULL;

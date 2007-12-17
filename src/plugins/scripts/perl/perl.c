@@ -131,7 +131,7 @@ weechat_perl_exec (t_weechat_plugin *plugin,
     
 #ifndef MULTIPLICITY
     int size = strlen (script->interpreter) + strlen(function) + 3;
-    func = (char *) malloc ( size * sizeof(char));
+    func = (char *)malloc (size * sizeof(char));
     if (!func)
 	return NULL;
     snprintf (func, size, "%s::%s", (char *) script->interpreter, function);
@@ -199,7 +199,7 @@ weechat_perl_exec (t_weechat_plugin *plugin,
 	    }
 	    else if (ret_type == SCRIPT_EXEC_INT)
 	    {
-		ret_i = (int *) malloc (sizeof(int));
+		ret_i = (int *)malloc (sizeof(int));
 		if (ret_i)
 		    *ret_i = POPi;
 		ret_value = ret_i;

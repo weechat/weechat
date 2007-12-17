@@ -48,8 +48,8 @@ struct t_weechat_plugin *weechat_demo_plugin = NULL;
  */
 
 int
-demo_printf_command_cb (void *data, void *buffer, int argc, char **argv,
-                        char **argv_eol)
+demo_printf_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
+                        char **argv, char **argv_eol)
 {
     /* make C compiler happy */
     (void) data;
@@ -86,8 +86,8 @@ demo_printf_command_cb (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-demo_infobar_command_cb (void *data, void *buffer, int argc, char **argv,
-                         char **argv_eol)
+demo_infobar_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
+                         char **argv, char **argv_eol)
 {
     /* make C compiler happy */
     (void) data;
@@ -116,8 +116,8 @@ demo_buffer_input_data_cb (struct t_gui_buffer *buffer, char *data)
  */
 
 int
-demo_buffer_command_cb (void *data, void *buffer, int argc, char **argv,
-                        char **argv_eol)
+demo_buffer_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
+                        char **argv, char **argv_eol)
 {
     struct t_gui_buffer *new_buffer;
 
@@ -132,6 +132,7 @@ demo_buffer_command_cb (void *data, void *buffer, int argc, char **argv,
                                          demo_buffer_input_data_cb);
         if (new_buffer)
             weechat_buffer_set (new_buffer, "display", "1");
+        weechat_hook_signal_send ("logger_backlog", new_buffer);
     }
     
     return WEECHAT_RC_OK;
@@ -142,7 +143,7 @@ demo_buffer_command_cb (void *data, void *buffer, int argc, char **argv,
  */
 
 void
-demo_infolist_print (void *infolist, char *item_name)
+demo_infolist_print (struct t_plugin_infolist *infolist, char *item_name)
 {
     char *fields, **argv;
     int i, j, argc;
@@ -202,8 +203,8 @@ demo_infolist_print (void *infolist, char *item_name)
  */
 
 int
-demo_infolist_command_cb (void *data, void *buffer, int argc, char **argv,
-                          char **argv_eol)
+demo_infolist_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
+                          char **argv, char **argv_eol)
 {
     struct t_plugin_infolist *infolist;
     
@@ -250,8 +251,8 @@ demo_infolist_command_cb (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-demo_info_command_cb (void *data, void *buffer, int argc, char **argv,
-                      char **argv_eol)
+demo_info_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
+                      char **argv, char **argv_eol)
 {
     /* make C compiler happy */
     (void) data;
@@ -278,14 +279,14 @@ demo_info_command_cb (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-demo_signal_cb (void *data, char *signal, void *pointer)
+demo_signal_cb (void *data, char *signal, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
     
     weechat_printf (NULL,
-                    _("demo_signal: signal: %s, pointer: %X"),
-                    signal, pointer);
+                    _("demo_signal: signal: %s, signal_data: %X"),
+                    signal, signal_data);
     
     return WEECHAT_RC_OK;
 }

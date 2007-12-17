@@ -44,19 +44,16 @@ int num_history_global = 0;
  */
 
 void
-gui_history_buffer_add (void *buffer, char *string)
+gui_history_buffer_add (struct t_gui_buffer *buffer, char *string)
 {
-    struct t_gui_buffer *ptr_buffer;
     struct t_gui_history *new_history, *ptr_history;
-
-    ptr_buffer = (struct t_gui_buffer *)buffer;
     
     if (!string)
         return;
     
-    if (!ptr_buffer->history
-        || (ptr_buffer->history
-            && (strcmp (ptr_buffer->history->text, string) != 0)))
+    if (!buffer->history
+        || (buffer->history
+            && (strcmp (buffer->history->text, string) != 0)))
     {	
 	new_history = (struct t_gui_history *)malloc (sizeof (struct t_gui_history));
 	if (new_history)
@@ -65,28 +62,28 @@ gui_history_buffer_add (void *buffer, char *string)
 	    /*if (config_log_hide_nickserv_pwd)
               irc_display_hide_password (new_history->text, 1);*/
 	    
-	    if (ptr_buffer->history)
-		ptr_buffer->history->prev_history = new_history;
+	    if (buffer->history)
+		buffer->history->prev_history = new_history;
 	    else
-		ptr_buffer->last_history = new_history;
-	    new_history->next_history = ptr_buffer->history;
+		buffer->last_history = new_history;
+	    new_history->next_history = buffer->history;
 	    new_history->prev_history = NULL;
-	    ptr_buffer->history = new_history;
-	    ptr_buffer->num_history++;
+	    buffer->history = new_history;
+	    buffer->num_history++;
 	    
 	    /* remove one command if necessary */
 	    if ((CONFIG_INTEGER(config_history_max_commands) > 0)
-		&& (ptr_buffer->num_history > CONFIG_INTEGER(config_history_max_commands)))
+		&& (buffer->num_history > CONFIG_INTEGER(config_history_max_commands)))
 	    {
-		ptr_history = ptr_buffer->last_history->prev_history;
-                if (ptr_buffer->ptr_history == ptr_buffer->last_history)
-                    ptr_buffer->ptr_history = ptr_history;
-		ptr_buffer->last_history->prev_history->next_history = NULL;
-		if (ptr_buffer->last_history->text)
-		    free (ptr_buffer->last_history->text);
-		free (ptr_buffer->last_history);
-		ptr_buffer->last_history = ptr_history;
-		ptr_buffer->num_history++;
+		ptr_history = buffer->last_history->prev_history;
+                if (buffer->ptr_history == buffer->last_history)
+                    buffer->ptr_history = ptr_history;
+		buffer->last_history->prev_history->next_history = NULL;
+		if (buffer->last_history->text)
+		    free (buffer->last_history->text);
+		free (buffer->last_history);
+		buffer->last_history = ptr_history;
+		buffer->num_history++;
 	    }
 	}
     }
@@ -171,23 +168,20 @@ gui_history_global_free ()
  */
 
 void
-gui_history_buffer_free (void *buffer)
+gui_history_buffer_free (struct t_gui_buffer *buffer)
 {
-    struct t_gui_buffer *ptr_buffer;
     struct t_gui_history *ptr_history;
     
-    ptr_buffer = (struct t_gui_buffer *)buffer;
-    
-    while (ptr_buffer->history)
+    while (buffer->history)
     {
-        ptr_history = ptr_buffer->history->next_history;
-        if (ptr_buffer->history->text)
-            free (ptr_buffer->history->text);
-        free (ptr_buffer->history);
-        ptr_buffer->history = ptr_history;
+        ptr_history = buffer->history->next_history;
+        if (buffer->history->text)
+            free (buffer->history->text);
+        free (buffer->history);
+        buffer->history = ptr_history;
     }
-    ptr_buffer->history = NULL;
-    ptr_buffer->last_history = NULL;
-    ptr_buffer->ptr_history = NULL;
-    ptr_buffer->num_history = 0;
+    buffer->history = NULL;
+    buffer->last_history = NULL;
+    buffer->ptr_history = NULL;
+    buffer->num_history = 0;
 }

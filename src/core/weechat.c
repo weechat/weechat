@@ -362,7 +362,7 @@ weechat_create_home_dirs ()
         }
         dir_length = strlen (ptr_home) + 10;
         weechat_home =
-            (char *) malloc (dir_length * sizeof (char));
+            (char *)malloc (dir_length * sizeof (char));
         if (!weechat_home)
         {
             string_iconv_fprintf (stderr,
@@ -521,7 +521,7 @@ weechat_dump (int crash)
     
     plugin_print_log ();
     
-    hook_signal_exec ("dump_data", NULL);
+    hook_signal_send ("dump_data", NULL);
     
     log_printf ("");
     log_printf ("******             End of WeeChat dump             ******");

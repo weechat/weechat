@@ -79,7 +79,7 @@ alias_add_word (char **alias, int *length, char *word)
     
     if (*alias == NULL)
     {
-        *alias = (char *) malloc (length_word + 1);
+        *alias = (char *)malloc (length_word + 1);
         strcpy (*alias, word);
     }
     else
@@ -174,7 +174,7 @@ alias_replace_args (char *alias_args, char *user_args)
  */
 
 int
-alias_cb (void *data, void *buffer, int argc, char **argv,
+alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
           char **argv_eol)
 {
     struct t_alias *ptr_alias;
@@ -219,7 +219,7 @@ alias_cb (void *data, void *buffer, int argc, char **argv,
                         weechat_command (buffer, args_replaced);
                     else
                     {
-                        alias_command = (char *) malloc (1 + strlen(args_replaced) + 1);
+                        alias_command = (char *)malloc (1 + strlen(args_replaced) + 1);
                         if (alias_command)
                         {
                             strcpy (alias_command, "/");
@@ -239,7 +239,7 @@ alias_cb (void *data, void *buffer, int argc, char **argv,
                         length1 = strlen (*ptr_cmd);
                         length2 = strlen (argv_eol[1]);
                         
-                        alias_command = (char *) malloc ( 1 + length1 + 1 + length2 + 1);
+                        alias_command = (char *)malloc ( 1 + length1 + 1 + length2 + 1);
                         if (alias_command)
                         {
                             if (*ptr_cmd[0] != '/')
@@ -261,7 +261,7 @@ alias_cb (void *data, void *buffer, int argc, char **argv,
                             (void) weechat_command(buffer, *ptr_cmd);
                         else
                         {
-                            alias_command = (char *) malloc (1 + strlen (*ptr_cmd) + 1);
+                            alias_command = (char *)malloc (1 + strlen (*ptr_cmd) + 1);
                             if (alias_command)
                             {
                                 strcpy (alias_command, "/");
@@ -307,7 +307,7 @@ alias_new (char *name, char *command)
 	return ptr_alias;
     }
     
-    if ((new_alias = ((struct t_alias *) malloc (sizeof (struct t_alias)))))
+    if ((new_alias = ((struct t_alias *)malloc (sizeof (struct t_alias)))))
     {
         new_hook = weechat_hook_command (name, "[alias]", NULL, NULL, NULL,
                                          alias_cb, new_alias);
@@ -419,7 +419,8 @@ alias_free_all ()
  */
 
 void
-alias_config_read_line (void *config_file, char *option_name, char *value)
+alias_config_read_line (struct t_config_file *config_file, char *option_name,
+                        char *value)
 {
     /* make C compiler happy */
     (void) config_file;
@@ -444,7 +445,8 @@ alias_config_read_line (void *config_file, char *option_name, char *value)
  */
 
 void
-alias_config_write_section (void *config_file, char *section_name)
+alias_config_write_section (struct t_config_file *config_file,
+                            char *section_name)
 {
     struct t_alias *ptr_alias;
     
@@ -465,7 +467,8 @@ alias_config_write_section (void *config_file, char *section_name)
  */
 
 void
-alias_config_write_default_aliases (void *config_file, char *section_name)
+alias_config_write_default_aliases (struct t_config_file *config_file,
+                                    char *section_name)
 {
     weechat_config_write_line (config_file, section_name, NULL);
     
@@ -537,12 +540,12 @@ alias_config_read ()
  */
 
 int
-alias_config_reload_signal_cb (void *data, char *signal, void *pointer)
+alias_config_reload_signal_cb (void *data, char *signal, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
     (void) signal;
-    (void) pointer;
+    (void) signal_data;
     
     alias_free_all ();
     if (weechat_config_reload (alias_config_file) == 0)
@@ -574,8 +577,8 @@ alias_config_write ()
  */
 
 int
-alias_command_cb (void *data, void *buffer, int argc, char **argv,
-                  char **argv_eol)
+alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
+                  char **argv, char **argv_eol)
 {
     char *alias_name;
     struct t_alias *ptr_alias;
@@ -655,8 +658,8 @@ alias_command_cb (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-unalias_command_cb (void *data, void *buffer, int argc, char **argv,
-                    char **argv_eol)
+unalias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
 {
     char *alias_name;
     struct t_alias *ptr_alias;
@@ -692,7 +695,8 @@ unalias_command_cb (void *data, void *buffer, int argc, char **argv,
  */
 
 int
-alias_completion_cb (void *data, char *completion, void *buffer, void *list)
+alias_completion_cb (void *data, char *completion, struct t_gui_buffer *buffer,
+                     struct t_weelist *list)
 {
     struct t_alias *ptr_alias;
     

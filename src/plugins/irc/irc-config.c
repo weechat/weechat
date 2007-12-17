@@ -211,7 +211,8 @@ irc_config_change_notify_levels ()
  */
 
 void
-irc_config_read_server_line (void *config_file, char *option_name, char *value)
+irc_config_read_server_line (struct t_config_file *config_file,
+                             char *option_name, char *value)
 {
     struct t_config_option *ptr_option;
     int rc;
@@ -228,7 +229,7 @@ irc_config_read_server_line (void *config_file, char *option_name, char *value)
                                                        option_name);
             if (ptr_option)
             {
-                rc = weechat_config_option_set (ptr_option, value);
+                rc = weechat_config_option_set (ptr_option, value, 0);
                 switch (rc)
                 {
                     case 2:
@@ -280,7 +281,8 @@ irc_config_read_server_line (void *config_file, char *option_name, char *value)
  */
 
 void
-irc_config_write_servers (void *config_file, char *section_name)
+irc_config_write_servers (struct t_config_file *config_file,
+                          char *section_name)
 {
     struct t_irc_server *ptr_server;
     
@@ -337,7 +339,8 @@ irc_config_write_servers (void *config_file, char *section_name)
  */
 
 void
-irc_config_write_server_default (void *config_file, char *section_name)
+irc_config_write_server_default (struct t_config_file *config_file,
+                                 char *section_name)
 {
     struct passwd *my_passwd;
     char *realname, *pos;
