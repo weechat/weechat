@@ -362,11 +362,11 @@ logger_start_buffer_all ()
 }
 
 /*
- * logger_end: end log for a logger buffer
+ * logger_stop: stop log for a logger buffer
  */
 
 void
-logger_end (struct t_logger_buffer *logger_buffer)
+logger_stop (struct t_logger_buffer *logger_buffer, int write_info_line)
 {
     time_t seconds;
     struct tm *date_tmp;
@@ -377,7 +377,7 @@ logger_end (struct t_logger_buffer *logger_buffer)
     
     if (logger_buffer->log_file)
     {
-        if (logger_option_info_lines)
+        if (write_info_line && logger_option_info_lines)
         {
             seconds = time (NULL);
             date_tmp = localtime (&seconds);
@@ -391,23 +391,23 @@ logger_end (struct t_logger_buffer *logger_buffer)
         }
         fclose (logger_buffer->log_file);
         logger_buffer->log_file = NULL;
-        logger_buffer_free (logger_buffer);
     }
+    logger_buffer_free (logger_buffer);
 }
 
 /*
- * logger_end_all: end log for all buffers
+ * logger_stop_all: end log for all buffers
  */
 
 void
-logger_end_all ()
+logger_stop_all ()
 {
     struct t_logger_buffer *ptr_logger_buffer;
     
     for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
          ptr_logger_buffer = ptr_logger_buffer->next_buffer)
     {
-        logger_end (ptr_logger_buffer);
+        logger_stop (ptr_logger_buffer, 1);
     }
 }
 
@@ -440,7 +440,7 @@ logger_buffer_close_signal_cb (void *data, char *signal, void *pointer)
     (void) signal;
     (void) pointer;
     
-    logger_end (logger_buffer_search (pointer));
+    logger_stop (logger_buffer_search (pointer), 1);
     
     return WEECHAT_RC_OK;
 }
@@ -529,6 +529,42 @@ logger_backlog_signal_cb (void *data, char *signal, void *pointer)
 }
 
 /*
+ * logger_start_signal_cb: callback for "logger_start" signal
+ */
+
+int
+logger_start_signal_cb (void *data, char *signal, void *pointer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    
+    logger_start_buffer (pointer);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * logger_stop_signal_cb: callback for "logger_stop" signal
+ */
+
+int
+logger_stop_signal_cb (void *data, char *signal, void *pointer)
+{
+    struct t_logger_buffer *ptr_logger_buffer;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    
+    ptr_logger_buffer = logger_buffer_search (pointer);
+    if (ptr_logger_buffer)
+        logger_stop (ptr_logger_buffer, 0);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * logger_print_cb: callback for print hook
  */
 
@@ -600,6 +636,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_hook_signal ("buffer_open", &logger_buffer_open_signal_cb, NULL);
     weechat_hook_signal ("buffer_close", &logger_buffer_close_signal_cb, NULL);
     weechat_hook_signal ("logger_backlog", &logger_backlog_signal_cb, NULL);
+    weechat_hook_signal ("logger_start", &logger_start_signal_cb, NULL);
+    weechat_hook_signal ("logger_stop", &logger_stop_signal_cb, NULL);
     
     weechat_hook_print (NULL, NULL, 1, &logger_print_cb, NULL);
     
@@ -622,7 +660,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 int
 weechat_plugin_end ()
 {
-    logger_end_all ();
+    logger_stop_all ();
     
     return WEECHAT_RC_OK;
 }
