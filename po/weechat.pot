@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-11-01 11:09+0100\n"
+"POT-Creation-Date: 2007-12-18 17:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,10 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-
-#, c-format
-msgid "%sError: circular reference when calling alias \"/%s\""
-msgstr ""
 
 #, c-format
 msgid ""
@@ -94,22 +90,302 @@ msgstr ""
 msgid "compiled on"
 msgstr ""
 
-msgid "create an alias for a command"
+msgid "Buffers list:"
 msgstr ""
 
-msgid "[alias_name [command [arguments]]]"
+#, c-format
+msgid "%sError: missing arguments for \"%s\" command"
 msgstr ""
 
+#, c-format
+msgid "%sError: incorrect buffer number"
+msgstr ""
+
+#, c-format
+msgid "%sError: WeeChat main buffer can't be closed"
+msgstr ""
+
+msgid "Notify levels:"
+msgstr ""
+
+#, c-format
+msgid "%sError: incorrect notify level (must be between %d and %d)"
+msgstr ""
+
+#, c-format
+msgid "%sNew notify level for %s%s%s: %d %s"
+msgstr ""
+
+msgid "(hotlist: never)"
+msgstr ""
+
+msgid "(hotlist: highlights)"
+msgstr ""
+
+msgid "(hotlist: highlights + messages)"
+msgstr ""
+
+msgid "(hotlist: highlights + messages + join/part (all))"
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown option for \"%s\" command"
+msgstr ""
+
+#. TRANSLATORS: %s is "WeeChat"
+#, c-format
+msgid "%s internal commands:"
+msgstr ""
+
+msgid "  (used by a plugin)"
+msgstr ""
+
+msgid "Other commands:"
+msgstr ""
+
+msgid "  (masked by a plugin)"
+msgstr ""
+
+msgid "plugin:"
+msgstr ""
+
+#, c-format
+msgid "%sNo help available, \"%s\" is an unknown command"
+msgstr ""
+
+msgid "Buffer command history:"
+msgstr ""
+
+#, c-format
+msgid "%sNew key binding: %s%s => %s%s%s%s%s"
+msgstr ""
+
+msgid "Key bindings:"
+msgstr ""
+
+msgid "Internal key functions:"
+msgstr ""
+
+#, c-format
+msgid "%sDefault key bindings restored"
+msgstr ""
+
+#, c-format
+msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
+msgstr ""
+
+#, c-format
+msgid "%sKey \"%s\" unbound"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to unbind key \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown key function \"%s\""
+msgstr ""
+
+msgid "Key:"
+msgstr ""
+
+msgid "No key found."
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to bind key \"%s\""
+msgstr ""
+
+msgid "Plugins loaded:"
+msgstr ""
+
+msgid "     commands hooked:"
+msgstr ""
+
+msgid "     timers hooked:"
+msgstr ""
+
+#, c-format
+msgid "       %d %s (%d calls remaining)"
+msgstr ""
+
+msgid "second"
+msgid_plural "seconds"
+msgstr[0] ""
+msgstr[1] ""
+
+msgid "millisecond"
+msgid_plural "milliseconds"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "       %d %s (no call limit)"
+msgstr ""
+
+msgid "     fd hooked:"
+msgstr ""
+
+#, c-format
+msgid "       %d (flags: %d)"
+msgstr ""
+
+msgid "     prints hooked:"
+msgstr ""
+
+#, c-format
+msgid "       buffer: %s / %s, message: \"%s\""
+msgstr ""
+
+msgid "(none)"
+msgstr ""
+
+#, c-format
+msgid "       message: \"%s\""
+msgstr ""
+
+msgid "     signals hooked:"
+msgstr ""
+
+#, c-format
+msgid "       signal: %s"
+msgstr ""
+
+msgid "(all)"
+msgstr ""
+
+msgid "     configuration options hooked:"
+msgstr ""
+
+msgid "     completion hooked:"
+msgstr ""
+
+msgid "No plugin found."
+msgstr ""
+
+msgid "  (no plugin)"
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong argument count for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%sWeeChat configuration file reloaded"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to reload WeeChat configuration file"
+msgstr ""
+
+#, c-format
+msgid "%sPlugins options reloaded"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to reload plugins options"
+msgstr ""
+
+#, c-format
+msgid "%sWeeChat configuration file saved"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to save WeeChat configuration file"
+msgstr ""
+
+#, c-format
+msgid "%sPlugins options saved"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to save plugins options"
+msgstr ""
+
+msgid "(unknown)"
+msgstr ""
+
+#, c-format
+msgid "No configuration option found with \"%s\""
+msgstr ""
+
+msgid "No configuration option found"
+msgstr ""
+
+#, c-format
+msgid "%s%d%s configuration option found with \"%s\""
+msgid_plural "%s%d%s configuration options found with \"%s\""
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%s%d%s configuration option found"
+msgid_plural "%s%d%s configuration options found"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%sError: configuration option \"%s\" not found"
+msgstr ""
+
+msgid "Option changed: "
+msgstr ""
+
+#, c-format
+msgid "%sError: incorrect value for option \"%s\""
+msgstr ""
+
+#, c-format
+msgid "No plugin option found with \"%s\""
+msgstr ""
+
+msgid "No plugin option found"
+msgstr ""
+
+#, c-format
+msgid "%s%d%s plugin option found with \"%s\""
+msgid_plural "%s%d%s plugin options found with \"%s\""
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%s%d%s plugin option found"
+msgid_plural "%s%d%s plugin options found"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%sError: plugin \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "Plugin option changed: %s%s = \"%s%s%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: incorrect value for plugin option \"%s\""
+msgstr ""
+
+#, c-format
+msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
+msgstr ""
+
+msgid "day"
+msgid_plural "days"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "WeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
+msgstr ""
+
+msgid "Windows list:"
+msgstr ""
+
+#, c-format
 msgid ""
-"alias_name: name of alias\n"
-"   command: command name (WeeChat or IRC command, many commands can be "
-"separated by semicolons)\n"
-" arguments: arguments for command\n"
-"\n"
-"Note: in command, special variables $1, $2,..,$9 are replaced by arguments "
-"given by user, and $* is replaced by all arguments.\n"
-"Variables $nick, $channel and $server are replaced by current nick/channel/"
-"server."
+"%sError: can not merge windows, there's no other window with same size near "
+"current one."
 msgstr ""
 
 msgid "manage buffers"
@@ -122,7 +398,7 @@ msgid ""
 " action: action to do:\n"
 "   move: move buffer in the list (may be relative, for example -1)\n"
 "  close: close buffer\n"
-"   list: list open buffers (no parameter implies this list)\n"
+"   list: list buffers (no parameter implies this list)\n"
 " notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2"
 "+join/part)\n"
 "         (when executed on server buffer, this sets default notify level for "
@@ -148,9 +424,7 @@ msgid ""
 "   jump to #weechat: /buffer #weechat"
 msgstr ""
 
-msgid ""
-"launch WeeChat/IRC builtin command (do not look at plugins handlers or "
-"aliases)"
+msgid "launch WeeChat builtin command (do not look at commands hooked)"
 msgstr ""
 
 msgid "command"
@@ -158,10 +432,10 @@ msgstr ""
 
 msgid ""
 "command: command to execute (a '/' is automatically added if not found at "
-"beginning of command)\n"
+"beginning of command)"
 msgstr ""
 
-msgid "clear window(s)"
+msgid "clear buffer(s)"
 msgstr ""
 
 msgid "[-all | number [number ...]]"
@@ -243,7 +517,13 @@ msgid ""
 "Without argument, /plugin command lists loaded plugins."
 msgstr ""
 
-msgid "save configuration files to disk"
+msgid "quit WeeChat"
+msgstr ""
+
+msgid "reload WeeChat and plugins configuration files from disk"
+msgstr ""
+
+msgid "save WeeChat and plugins configuration files to disk"
 msgstr ""
 
 msgid "set config options"
@@ -269,15 +549,6 @@ msgid ""
 " value: value for option\n"
 "\n"
 "Option is format: plugin.option, example: perl.myscript.item1"
-msgstr ""
-
-msgid "remove an alias"
-msgstr ""
-
-msgid "alias_name"
-msgstr ""
-
-msgid "alias_name: name of alias to remove"
 msgstr ""
 
 msgid "upgrade WeeChat without disconnecting from servers"
@@ -329,288 +600,13 @@ msgid ""
 "create a new window with size = current_size / 4"
 msgstr ""
 
-#, c-format
-msgid "%sError: missing arguments for \"%s\" command"
-msgstr ""
-
-#, c-format
-msgid "%sAlias \"%s\" => \"%s\" created"
-msgstr ""
-
-#, c-format
-msgid "%sError: not enough memory for creating alias \"%s\" => \"%s\""
-msgstr ""
-
-msgid "Alias:"
-msgstr ""
-
-#, c-format
-msgid "%sNo alias found."
-msgstr ""
-
-msgid "List of aliases:"
-msgstr ""
-
-#, c-format
-msgid "%sNo alias defined."
-msgstr ""
-
-msgid "Open buffers:"
-msgstr ""
-
-#, c-format
-msgid "%sError: incorrect buffer number"
-msgstr ""
-
-msgid "Notify levels:"
-msgstr ""
-
-#, c-format
-msgid "%sError: incorrect notify level (must be between %d and %d)"
-msgstr ""
-
-#, c-format
-msgid "%sNew notify level for %s%s%s: %d %s"
-msgstr ""
-
-msgid "(hotlist: never)"
-msgstr ""
-
-msgid "(hotlist: highlights)"
-msgstr ""
-
-msgid "(hotlist: highlights + messages)"
-msgstr ""
-
-msgid "(hotlist: highlights + messages + join/part (all))"
-msgstr ""
-
-#, c-format
-msgid "%sError: buffer number \"%s\" not found for \"%s\" command"
-msgstr ""
-
-#, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr ""
-
-#, c-format
-msgid "%sError: wrong argument count for \"%s\" command"
-msgstr ""
-
-#, c-format
-msgid "%s internal commands:"
-msgstr ""
-
-msgid "Other commands:"
-msgstr ""
-
-#, c-format
-msgid "[%s%s]  %s/%s  %s%s"
-msgstr ""
-
-msgid "plugin:"
-msgstr ""
-
-#, c-format
-msgid "%sNo help available, \"%s\" is an unknown command"
-msgstr ""
-
-#, c-format
-msgid "New key binding:  %s"
-msgstr ""
-
-msgid "Key bindings:"
-msgstr ""
-
-#, c-format
-msgid "%sKey \"%s\" unbound"
-msgstr ""
-
-#, c-format
-msgid "%sError: unable to unbind key \"%s\""
-msgstr ""
-
-msgid "Internal key functions:"
-msgstr ""
-
-#, c-format
-msgid "%sError: unknown key function \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%sDefault key bindings restored"
-msgstr ""
-
-#, c-format
-msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
-msgstr ""
-
-msgid "Key:"
-msgstr ""
-
-#, c-format
-msgid "%sNo key found."
-msgstr ""
-
-#, c-format
-msgid "%sError: unable to bind key \"%s\""
-msgstr ""
-
-msgid "Plugins loaded:"
-msgstr ""
-
-msgid "     commands hooked:"
-msgstr ""
-
-msgid "     messages hooked:"
-msgstr ""
-
-msgid "     configuration otions hooked:"
-msgstr ""
-
-msgid "     timers hooked:"
-msgstr ""
-
-#, c-format
-msgid "       %d %s (%d calls remaining)"
-msgstr ""
-
-msgid "seconds"
-msgstr ""
-
-msgid "second"
-msgstr ""
-
-msgid "milliseconds"
-msgstr ""
-
-msgid "millisecond"
-msgstr ""
-
-#, c-format
-msgid "       %d %s (no call limit)"
-msgstr ""
-
-msgid "     fd hooked:"
-msgstr ""
-
-#, c-format
-msgid "       %d (flags: %d)"
-msgstr ""
-
-#, c-format
-msgid "     %d keyboards hooked"
-msgstr ""
-
-msgid "No plugin found."
-msgstr ""
-
-msgid "  (no plugin)"
-msgstr ""
-
-#, c-format
-msgid "%sWeeChat configuration file saved"
-msgstr ""
-
-#, c-format
-msgid "%sError: failed to save configuration file"
-msgstr ""
-
-#, c-format
-msgid "%sPlugins options saved"
-msgstr ""
-
-#, c-format
-msgid "%sError: failed to save plugins options"
-msgstr ""
-
-msgid "(unknown)"
-msgstr ""
-
-#, c-format
-msgid "%sError: option \"%s\" can not be changed while WeeChat is running"
-msgstr ""
-
-msgid "Option changed: "
-msgstr ""
-
-#, c-format
-msgid "%sError: incorrect value for option \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%sError: configuration option \"%s\" not found"
-msgstr ""
-
-#, c-format
-msgid "No configuration option found with \"%s\""
-msgstr ""
-
-msgid "No configuration option found"
-msgstr ""
-
-#, c-format
-msgid "%s%d%s configuration option(s) found with \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%d%s configuration option(s) found"
-msgstr ""
-
-#, c-format
-msgid "%sError: plugin \"%s\" not found"
-msgstr ""
-
-#, c-format
-msgid "Plugin option changed: %s%s = \"%s%s%s\""
-msgstr ""
-
-#, c-format
-msgid "%sError: incorrect value for plugin option \"%s\""
-msgstr ""
-
-#, c-format
-msgid "No plugin option found with \"%s\""
-msgstr ""
-
-msgid "No plugin option found"
-msgstr ""
-
-#, c-format
-msgid "plugin option(s) found with \"%s\""
-msgstr ""
-
-msgid "plugin option(s) found"
-msgstr ""
-
-#, c-format
-msgid "%sError: alias or command \"%s\" not found"
-msgstr ""
-
-#, c-format
-msgid "%sAlias \"%s\" removed"
-msgstr ""
-
-#, c-format
-msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
-msgstr ""
-
-msgid "day"
-msgid_plural "days"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%sWeeChat uptime: %s%d %s%s %s%02d%s:%s%02d%s:%s%02d%s, started on %s%s"
-msgstr ""
-
-msgid "Open windows:"
-msgstr ""
-
-#, c-format
 msgid ""
-"%sError: can not merge windows, there's no other window with same size near "
-"current one."
+"Warning: you should now issue /save to write \"save_on_exit\" option in "
+"configuration file"
+msgstr ""
+
+#, c-format
+msgid "\t\tDay changed to %s"
 msgstr ""
 
 msgid ""
@@ -643,10 +639,7 @@ msgstr ""
 msgid "number of colors to use for nicks colors"
 msgstr ""
 
-msgid "display actions with different colors"
-msgstr ""
-
-msgid "display nicklist window (for channel windows)"
+msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr ""
 
 msgid "nicklist position (top, left, right (default), bottom)"
@@ -663,9 +656,6 @@ msgid ""
 msgstr ""
 
 msgid "separator between chat and nicklist"
-msgstr ""
-
-msgid "text to display instead of nick when not connected"
 msgstr ""
 
 msgid "display nick mode ((half)op/voice) before each nick"
@@ -692,7 +682,7 @@ msgstr ""
 msgid "prefix for quit messages"
 msgstr ""
 
-msgid "prefix alignment (none, left, right))"
+msgid "prefix alignment (none, left, right (default))"
 msgstr ""
 
 msgid "max size for prefix (0 = no max size)"
@@ -701,19 +691,10 @@ msgstr ""
 msgid "string displayed after prefix"
 msgstr ""
 
-msgid ""
-"offset for aligning lines of messages (except first lines), default is -1 "
-"(align after prefix), a null or positive value is offset after beginning of "
-"line"
-msgstr ""
-
-msgid "the string inserted after nick completion"
+msgid "string inserted after nick completion"
 msgstr ""
 
 msgid "chars ignored for nick completion"
-msgstr ""
-
-msgid "smart completion for nicks (completes with last speakers first)"
 msgstr ""
 
 msgid "complete only with first nick found"
@@ -769,237 +750,239 @@ msgid ""
 "max number of lines for paste without asking user (0 = disable this feature)"
 msgstr ""
 
-msgid "color for window separators (when splited)"
+msgid ""
+"default quit message ('%v' will be replaced by WeeChat version in string)"
 msgstr ""
 
-msgid "color for title bar"
+msgid "background color for window separators (when splited)"
+msgstr ""
+
+msgid "text color for title bar"
 msgstr ""
 
 msgid "background color for title bar"
 msgstr ""
 
-msgid "color for '+' when scrolling title"
+msgid "text color for '+' when scrolling title"
 msgstr ""
 
-msgid "color for chat text"
+msgid "text color for chat"
 msgstr ""
 
-msgid "background for chat text"
+msgid "background color for chat"
 msgstr ""
 
-msgid "color for time in chat window"
+msgid "text color for time in chat window"
 msgstr ""
 
-msgid "color for time delimiters)"
+msgid "text color for time delimiters"
 msgstr ""
 
-msgid "color for info prefix"
+msgid "text color for info prefix"
 msgstr ""
 
-msgid "color for error prefix"
+msgid "text color for error prefix"
 msgstr ""
 
-msgid "color for network prefix"
+msgid "text color for network prefix"
 msgstr ""
 
-msgid "color for action prefix"
+msgid "text color for action prefix"
 msgstr ""
 
-msgid "color for join prefix"
+msgid "text color for join prefix"
 msgstr ""
 
-msgid "color for quit prefix"
+msgid "text color for quit prefix"
 msgstr ""
 
-msgid "color for '+' when prefix is too long"
+msgid "text color for '+' when prefix is too long"
 msgstr ""
 
-msgid "color for text after prefix"
+msgid "text color for suffix (after prefix)"
 msgstr ""
 
-msgid "color for buffer names"
+msgid "text color for buffer names"
 msgstr ""
 
-msgid "color for server names"
+msgid "text color for server names"
 msgstr ""
 
-msgid "color for channel names"
+msgid "text color for channel names"
 msgstr ""
 
-msgid "color for nicks"
+msgid "text color for nicks in chat window"
 msgstr ""
 
-msgid "color for local nick"
+msgid "text color for local nick in chat window"
 msgstr ""
 
-msgid "color for other nick in private buffer"
+msgid "text color for other nick in private buffer"
 msgstr ""
 
-msgid "color #1 for nick"
+msgid "text color #1 for nick"
 msgstr ""
 
-msgid "color #2 for nick"
+msgid "text color #2 for nick"
 msgstr ""
 
-msgid "color #3 for nick"
+msgid "text color #3 for nick"
 msgstr ""
 
-msgid "color #4 for nick"
+msgid "text color #4 for nick"
 msgstr ""
 
-msgid "color #5 for nick"
+msgid "text color #5 for nick"
 msgstr ""
 
-msgid "color #6 for nick"
+msgid "text color #6 for nick"
 msgstr ""
 
-msgid "color #7 for nick"
+msgid "text color #7 for nick"
 msgstr ""
 
-msgid "color #8 for nick"
+msgid "text color #8 for nick"
 msgstr ""
 
-msgid "color #9 for nick"
+msgid "text color #9 for nick"
 msgstr ""
 
-msgid "color #10 for nick"
+msgid "text color #10 for nick"
 msgstr ""
 
-msgid "color for hostnames"
+msgid "text color for hostnames"
 msgstr ""
 
-msgid "color for delimiters"
+msgid "text color for delimiters"
 msgstr ""
 
-msgid "color for highlighted nick"
+msgid "text color for highlighted nick"
 msgstr ""
 
-msgid "color for unread data marker"
+msgid "text color for unread data marker"
 msgstr ""
 
 msgid "background color for unread data marker"
 msgstr ""
 
-msgid "color for status bar"
+msgid "text color for status bar"
 msgstr ""
 
 msgid "background color for status bar"
 msgstr ""
 
-msgid "color for status bar delimiters"
+msgid "text color for status bar delimiters"
 msgstr ""
 
-msgid "color for current channel in status bar"
+msgid "text color for current channel in status bar"
 msgstr ""
 
-msgid "color for window with new messages (status bar)"
+msgid "text color for buffer with new messages (status bar)"
 msgstr ""
 
-msgid "color for window with private message (status bar)"
+msgid "text color for buffer with private message (status bar)"
 msgstr ""
 
-msgid "color for window with highlight (status bar)"
+msgid "text color for buffer with highlight (status bar)"
 msgstr ""
 
-msgid "color for window with new data (not messages) (status bar)"
+msgid "text color for buffer with new data (not messages) (status bar)"
 msgstr ""
 
-msgid "color for window with new data (status bar)"
+msgid "text color for buffer with new data (status bar)"
 msgstr ""
 
-msgid "color for info bar text"
+msgid "text color for infobar"
 msgstr ""
 
-msgid "background color for info bar text"
+msgid "background color for infobar"
 msgstr ""
 
-msgid "color for infobar delimiters"
+msgid "text color for infobar delimiters"
 msgstr ""
 
-msgid "color for info bar highlight notification"
+msgid "text color for infobar highlight notification"
 msgstr ""
 
-msgid "color for input text"
+msgid "text color for input line"
 msgstr ""
 
-msgid "background color for input text"
+msgid "background color for input line"
 msgstr ""
 
-msgid "color for input text (server name)"
+msgid "text color for server name in input line"
 msgstr ""
 
-msgid "color for input text (channel name)"
+msgid "text color for channel name in input line"
 msgstr ""
 
-msgid "color for input text (nick name)"
+msgid "text color for nick name in input line"
 msgstr ""
 
-msgid "color for input text (delimiters)"
+msgid "text color for delimiters in input line"
 msgstr ""
 
-msgid "color for text not found"
+msgid "text color for unsucessful text search in input line"
 msgstr ""
 
-msgid "color for actions in input window"
+msgid "text color for actions in input line"
 msgstr ""
 
-msgid "color for nicklist"
+msgid "text color for nicklist"
 msgstr ""
 
 msgid "background color for nicklist"
 msgstr ""
 
-msgid "color for away nicknames"
+msgid "text color for away nicknames"
 msgstr ""
 
-msgid "color for prefix 1"
+msgid "text color for prefix #1 in nicklist"
 msgstr ""
 
-msgid "color for prefix 2"
+msgid "text color for prefix #2 in nicklist"
 msgstr ""
 
-msgid "color for prefix 3"
+msgid "text color for prefix #3 in nicklist"
 msgstr ""
 
-msgid "color for prefix 4"
+msgid "text color for prefix #4 in nicklist"
 msgstr ""
 
-msgid "color for prefix 5"
+msgid "text color for prefix #5 in nicklist"
 msgstr ""
 
-msgid "color for '+' when scrolling nicks (nicklist)"
+msgid "text color for '+' when scrolling nicks in nicklist"
 msgstr ""
 
-msgid "color for nicklist separator"
+msgid "text color for nicklist separator"
 msgstr ""
 
-msgid "color for status info"
+msgid "text color for status info"
 msgstr ""
 
 msgid "background color for status info"
 msgstr ""
 
-msgid "color for \"waiting\" status info"
+msgid "text color for \"waiting\" status info"
 msgstr ""
 
-msgid "color for \"connecting\" status info"
+msgid "text color for \"connecting\" status info"
 msgstr ""
 
-msgid "color for \"active\" status info"
+msgid "text color for \"active\" status info"
 msgstr ""
 
-msgid "color for \"done\" status info"
+msgid "text color for \"done\" status info"
 msgstr ""
 
-msgid "color for \"failed\" status info"
+msgid "text color for \"failed\" status info"
 msgstr ""
 
-msgid "color for \"aborted\" status info"
+msgid "text color for \"aborted\" status info"
 msgstr ""
 
-msgid ""
-"maximum number of lines in history for one server/channel/private window (0 "
-"= unlimited)"
+msgid "maximum number of lines in history per buffer (0 = unlimited)"
 msgstr ""
 
 msgid "maximum number of user commands in history (0 = unlimited)"
@@ -1010,24 +993,13 @@ msgid ""
 "unlimited)"
 msgstr ""
 
-msgid "log messages from plugins"
-msgstr ""
-
-msgid ""
-"path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/."
-"weechat by default)"
-msgstr ""
-
-msgid "time format for log (see man strftime for date/time specifiers)"
-msgstr ""
-
-msgid "use a proxy server to connect to irc server"
+msgid "use a proxy server"
 msgstr ""
 
 msgid "proxy type (http (default), socks4, socks5)"
 msgstr ""
 
-msgid "connect to proxy in ipv6"
+msgid "connect to proxy using ipv6"
 msgstr ""
 
 msgid "proxy server address (IP or hostname)"
@@ -1054,80 +1026,49 @@ msgid ""
 msgstr ""
 
 msgid ""
-"standard plugins extension in filename, used for autoload (if empty, then "
-"all files are loaded when autoload is \"*\")"
+"standard plugins extension in filename (for example \".so\" under Linux or "
+"\".dll\" under Microsoft Windows)"
 msgstr ""
 
-msgid ""
-"Warning: you should now issue /save to write \"save_on_exit\" option in "
-"configuration file.\n"
-msgstr ""
-
-msgid "Saving WeeChat configuration to disk\n"
+msgid "Saving WeeChat configuration to disk"
 msgstr ""
 
 #, c-format
-msgid "Warning: config file \"%s\" not found.\n"
-msgstr ""
-
-#, c-format
-msgid "Warning: %s, line %d: invalid syntax, missing \"]\"\n"
-msgstr ""
-
-#, c-format
-msgid "Warning: %s, line %d: unknown section identifier (\"%s\")\n"
-msgstr ""
-
-#, c-format
-msgid "Warning: %s, line %d: error reading new section \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "Warning: %s, line %d: invalid syntax, missing \"=\"\n"
-msgstr ""
-
-#, c-format
-msgid "Warning: %s, line %d: unknown option \"%s\" (outside a section)\n"
-msgstr ""
-
-#, c-format
-msgid "Warning: %s, line %d: option \"%s\" unknown for section \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "Warning: %s, line %d: invalid value for option \"%s\"\n"
+msgid "%sError: cannot create file \"%s\""
 msgstr ""
 
 #, c-format
 msgid ""
 "#\n"
-"# %s configuration file, created by %s v%s on %s"
-msgstr ""
-
-msgid ""
-"# WARNING! Be careful when editing this file, WeeChat may write it at any "
-"time.\n"
-"#\n"
+"# %s configuration file, created by %s v%s on %s#\n"
 msgstr ""
 
 #, c-format
-msgid "Error: cannot create file \"%s\"\n"
+msgid "%sWarning: config file \"%s\" not found"
 msgstr ""
 
 #, c-format
-msgid "%s: creating default config file \"%s\"...\n"
+msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
 msgstr ""
 
 #, c-format
-msgid "Creating default config file \"%s\"\n"
+msgid "%sWarning: %s, line %d: unknown section identifier (\"%s\")"
 msgstr ""
 
 #, c-format
-msgid "Warning: unable to assign default int with string (\"%s\")\n"
+msgid "%sWarning: %s, line %d: invalid syntax, missing \"=\""
 msgstr ""
 
 #, c-format
-msgid "Warning: unable to assign default color (\"%s\")\n"
+msgid "%sWarning: %s, line %d: option \"%s\" unknown for section \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sWarning: %s, line %d: unknown option \"%s\" (outside a section)"
+msgstr ""
+
+#, c-format
+msgid "%sWarning: %s, line %d: invalid value for option \"%s\""
 msgstr ""
 
 msgid "  . type: boolean\n"
@@ -1140,6 +1081,12 @@ msgstr ""
 msgid "  . default value: '%s'\n"
 msgstr ""
 
+msgid "  . type: string\n"
+msgstr ""
+
+msgid "  . values: "
+msgstr ""
+
 msgid "  . type: integer\n"
 msgstr ""
 
@@ -1149,15 +1096,6 @@ msgstr ""
 
 #, c-format
 msgid "  . default value: %d\n"
-msgstr ""
-
-msgid "  . type: string\n"
-msgstr ""
-
-msgid "  . values: "
-msgstr ""
-
-msgid "empty"
 msgstr ""
 
 msgid "  . values: any string\n"
@@ -1188,28 +1126,11 @@ msgid "%sError: command \"%s\" failed"
 msgstr ""
 
 #, c-format
-msgid "%sError: wrong argument count for %s command \"%s\" (expected: %d arg)"
-msgid_plural ""
-"%s%s wrong argument count for %s command \"%s\" (expected: %d args)"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid ""
-"%sError: wrong argument count for %s command \"%s\" (expected: between %d "
-"and %d arg)"
-msgid_plural ""
-"%s%s wrong argument count for %s command \"%s\" (expected: between %d and %d "
-"args)"
-msgstr[0] ""
-msgstr[1] ""
-
-#, c-format
-msgid "%sError: unknown command \"%s\" (type /help for help)."
+msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr ""
 
 #, c-format
-msgid "%sYou can not write text in this buffer!"
+msgid "%sYou can not write text in this buffer"
 msgstr ""
 
 msgid ""
@@ -1265,10 +1186,6 @@ msgstr ""
 msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
 msgstr ""
 
-#, c-format
-msgid "\t\tDay changed to %s"
-msgstr ""
-
 msgid "Act: "
 msgstr ""
 
@@ -1278,13 +1195,17 @@ msgstr ""
 msgid "server"
 msgstr ""
 
-msgid "Not enough memory for new line\n"
+#, c-format
+msgid "%sError: a buffer with same name already exists (%s / %s)"
 msgstr ""
 
-msgid "Error: not enough memory to add a buffer to hotlist\n"
+msgid "Not enough memory for new line"
 msgstr ""
 
-msgid "Error: not enough memory for infobar message\n"
+msgid "Error: not enough memory to add a buffer to hotlist"
+msgstr ""
+
+msgid "Error: not enough memory for infobar message"
 msgstr ""
 
 msgid "terminate line"
@@ -1444,60 +1365,333 @@ msgid "search text in buffer history"
 msgstr ""
 
 #, c-format
-msgid "Error: unable to bind key \"%s\"\n"
+msgid "Error: unable to bind key \"%s\""
 msgstr ""
 
 #, c-format
-msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")\n"
+msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")"
 msgstr ""
 
-msgid "Error: not enough memory for key binding\n"
-msgstr ""
-
-#, c-format
-msgid "Unable to write log file \"%s\"\n"
+msgid "Error: not enough memory for key binding"
 msgstr ""
 
 #, c-format
-msgid "%sError: Unable to write log file \"%s\"\n"
-msgstr ""
-
-msgid "****  Beginning of log  "
-msgstr ""
-
-msgid "****  End of log  "
+msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sFifo: pipe is open\n"
+msgid "%s%s: configuration file reloaded"
 msgstr ""
 
 #, c-format
-msgid "%sFifo: unable to open pipe (%s) for reading"
+msgid "%s%s: failed to reload configuration file"
 msgstr ""
 
 #, c-format
-msgid "%sFifo: unable to create pipe for remote control (%s)"
+msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sFifo: pipe is closed"
+msgid "%sAlias \"%s\" => \"%s\" created"
+msgstr ""
+
+msgid "Alias:"
 msgstr ""
 
 #, c-format
-msgid "%sFifo error: invalid text received on pipe"
+msgid "%sNo alias found."
+msgstr ""
+
+msgid "List of aliases:"
+msgstr ""
+
+msgid "No alias defined"
 msgstr ""
 
 #, c-format
-msgid "%sFifo error: buffer not found for pipe data"
+msgid "%sAlias \"%s\" not found"
 msgstr ""
 
 #, c-format
-msgid "%sFifo: error reading pipe, closing it"
+msgid "%sAlias \"%s\" removed"
+msgstr ""
+
+msgid "create an alias for a command"
+msgstr ""
+
+msgid "[alias_name [command [arguments]]]"
+msgstr ""
+
+msgid ""
+"alias_name: name of alias\n"
+"   command: command name (many commands can be separated by semicolons)\n"
+" arguments: arguments for command\n"
+"\n"
+"Note: in command, special variables $1, $2,..,$9 are replaced by arguments "
+"given by user, and $* is replaced by all arguments.\n"
+"Variables $nick, $channel and $server are replaced by current nick/channel/"
+"server."
+msgstr ""
+
+msgid "remove an alias"
+msgstr ""
+
+msgid "alias_name"
+msgstr ""
+
+msgid "alias_name: name of alias to remove"
+msgstr ""
+
+msgid "demo message without prefix"
 msgstr ""
 
 #, c-format
-msgid "%s cannot allocate new channel"
+msgid "%sdemo message with info prefix"
+msgstr ""
+
+#, c-format
+msgid "%sdemo message with error prefix"
+msgstr ""
+
+#, c-format
+msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
+msgstr ""
+
+msgid "test message in infobar"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
+msgstr ""
+
+#, c-format
+msgid "demo_signal: signal: %s, signal_data: %X"
+msgstr ""
+
+msgid "print some messages on current ubffer"
+msgstr ""
+
+msgid "[text]"
+msgstr ""
+
+msgid "text: write this text"
+msgstr ""
+
+msgid "print a message in infobar for 10 seconds"
+msgstr ""
+
+msgid "open a new buffer"
+msgstr ""
+
+msgid "category name"
+msgstr ""
+
+msgid "get and display an infolist"
+msgstr ""
+
+msgid "infolist"
+msgstr ""
+
+msgid "infolist: infolist to display (values: buffer, buffer_lines)"
+msgstr ""
+
+msgid "get and display an info"
+msgstr ""
+
+msgid "info"
+msgstr ""
+
+msgid ""
+"info: info to display (values: version, weechat_dir, weechat_libdir, "
+"weechat_sharedir, charset_terminal, charset_internal, inactivity, input, "
+"input_mask, input_pos)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: pipe open"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to open pipe (%s) for reading"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create pipe for remote control (%s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: pipe closed"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error, invalid text received on pipe"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error, buffer not found for pipe data"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error reading pipe, closing it"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error opening file, closing it"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot allocate new channel"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot find nick for sending message"
+msgstr ""
+
+#, c-format
+msgid "%s%s: future away on %s%s%s: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: future away on %s%s%s removed"
+msgstr ""
+
+#, c-format
+msgid "%s%s: \"%s\" command can only be executed in a channel buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: already connected to server \"%s\"!"
+msgstr ""
+
+#, c-format
+msgid "%s%s: currently connecting to server \"%s\"!"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing argument for \"%s\" option"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server %s%s%s created (temporary server, NOT SAVED!)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create server \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: \"%s\" command can not be executed on a server buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: wrong arguments for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not connected to server \"%s\"!"
+msgstr ""
+
+#, c-format
+msgid "%s%s: auto-reconnection is cancelled"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for regular expression"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: \"%s\" command can only be executed in a channel or private buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: nick \"%s\" not found for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot create new private buffer \"%s\""
+msgstr ""
+
+msgid "All servers:"
+msgstr ""
+
+msgid "No server"
+msgstr ""
+
+#, c-format
+msgid "Servers with '%s':"
+msgstr ""
+
+#, c-format
+msgid "No server found with \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" already exists, can't create it!"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server %s%s%s created"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create server"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: Server %s%s%s has been copied to %s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server %s%s%s has been renamed to %s%s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" is not a temporary server"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server %s%s%s is not temporary any more"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: you can not delete server \"%s\" because you are connected to. Try \"/"
+"disconnect %s\" before."
+msgstr ""
+
+#, c-format
+msgid "%s%s: Server %s%s%s has been deleted"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: messages outqueue DELETED for all servers. Some messages from you or "
+"WeeChat may have been lost!"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown option for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: wrong argument count for \"%s\" command"
 msgstr ""
 
 msgid "find information about the administrator of the server"
@@ -1868,15 +2062,6 @@ msgid ""
 "    text: text to send"
 msgstr ""
 
-msgid "close all connections and quit"
-msgstr ""
-
-msgid "[quit_message]"
-msgstr ""
-
-msgid "quit_message: quit message (displayed to other users)"
-msgstr ""
-
 msgid "send raw data to server without parsing"
 msgstr ""
 
@@ -2104,167 +2289,19 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s cannot find nick for sending message\n"
+msgid "%sirc: too few arguments for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "Future away on %s%s%s: %s\n"
+msgid "%s%s: value \"%s\" is invalid for option \"%s\""
 msgstr ""
 
 #, c-format
-msgid "Future away on %s%s%s removed.\n"
+msgid "%s%s: option \"%s\" not found"
 msgstr ""
 
 #, c-format
-msgid "%s \"%s\" command can only be executed in a channel buffer\n"
-msgstr ""
-
-#, c-format
-msgid "%s already connected to server \"%s\"!\n"
-msgstr ""
-
-#, c-format
-msgid "%s currently connecting to server \"%s\"!\n"
-msgstr ""
-
-#, c-format
-msgid "%s missing argument for \"%s\" option\n"
-msgstr ""
-
-#, c-format
-msgid "Server %s%s%s created (temporary server, NOT SAVED!)\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to create server \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s \"%s\" command can not be executed on a server buffer\n"
-msgstr ""
-
-#, c-format
-msgid "%s wrong argument count for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s wrong arguments for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s not connected to server \"%s\"!\n"
-msgstr ""
-
-msgid "Auto-reconnection is cancelled\n"
-msgstr ""
-
-#, c-format
-msgid "%s server \"%s\" not found\n"
-msgstr ""
-
-#, c-format
-msgid "%s \"%s\" is not a valid regular expression (%s)\n"
-msgstr ""
-
-#, c-format
-msgid "%s not enough memory for regular expression\n"
-msgstr ""
-
-#, c-format
-msgid "%s \"%s\" command can only be executed in a channel or private buffer\n"
-msgstr ""
-
-#, c-format
-msgid "%s nick \"%s\" not found for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot create new private buffer \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s command \"%s\" needs a server connection!\n"
-msgstr ""
-
-msgid "All servers:\n"
-msgstr ""
-
-msgid "No server.\n"
-msgstr ""
-
-#, c-format
-msgid "Servers with '%s':\n"
-msgstr ""
-
-#, c-format
-msgid "No server with '%s' found.\n"
-msgstr ""
-
-#, c-format
-msgid "%s missing parameters for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s server \"%s\" already exists, can't create it!\n"
-msgstr ""
-
-#, c-format
-msgid "Server %s%s%s created\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to create server\n"
-msgstr ""
-
-#, c-format
-msgid "%s missing server name for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s server \"%s\" not found for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s server \"%s\" already exists for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "Server %s%s%s has been copied to %s%s\n"
-msgstr ""
-
-#, c-format
-msgid "Server %s%s%s has been renamed to %s%s\n"
-msgstr ""
-
-#, c-format
-msgid "%s server \"%s\" is not a temporary server\n"
-msgstr ""
-
-#, c-format
-msgid "Server %s%s%s is not temporary any more\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s you can not delete server \"%s\" because you are connected to. Try /"
-"disconnect %s before.\n"
-msgstr ""
-
-#, c-format
-msgid "Server %s%s%s has been deleted\n"
-msgstr ""
-
-msgid ""
-"Messages outqueue DELETED for all servers. Some messages from you or WeeChat "
-"may have been lost!\n"
-msgstr ""
-
-#, c-format
-msgid "%s unknown option for \"%s\" command\n"
-msgstr ""
-
-#, c-format
-msgid "%s, compiled on %s %s\n"
+msgid "%s%s: error creating server for reading configuration file"
 msgstr ""
 
 msgid "use same buffer for all servers"
@@ -2279,6 +2316,9 @@ msgstr ""
 msgid "text to display after nick in chat window"
 msgstr ""
 
+msgid "smart completion for nicks (completes with last speakers first)"
+msgstr ""
+
 msgid "display message when (un)marking as away"
 msgstr ""
 
@@ -2288,10 +2328,6 @@ msgstr ""
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
 "version in string)"
-msgstr ""
-
-msgid ""
-"default quit message ('%v' will be replaced by WeeChat version in string)"
 msgstr ""
 
 msgid "display notices as private messages"
@@ -2304,7 +2340,7 @@ msgid ""
 "do not check away nicks on channels with high number of nicks (0 = unlimited)"
 msgstr ""
 
-msgid "interval between two checks for lag (in seconds)"
+msgid "interval between two checks for lag (in seconds, 0 = never check)"
 msgstr ""
 
 msgid "minimum lag to show (in seconds)"
@@ -2332,7 +2368,7 @@ msgstr ""
 msgid "send unknown commands to IRC server"
 msgstr ""
 
-msgid "automatically accept incoming dcc files"
+msgid "automatically accept incoming dcc files (use carefully!)"
 msgstr ""
 
 msgid "automatically accept dcc chats (use carefully!)"
@@ -2341,7 +2377,7 @@ msgstr ""
 msgid "timeout for dcc request (in seconds)"
 msgstr ""
 
-msgid "block size for dcc packets in bytes (default: 65536)"
+msgid "block size for dcc packets in bytes"
 msgstr ""
 
 msgid "does not wait for ACK when sending file"
@@ -2358,7 +2394,7 @@ msgid ""
 "used)"
 msgstr ""
 
-msgid "path for writing incoming files with dcc (default: user home)"
+msgid "path for writing incoming files with dcc"
 msgstr ""
 
 msgid ""
@@ -2461,15 +2497,9 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s %s, line %d: new server, but previous was incomplete\n"
-msgstr ""
-
-#, c-format
-msgid "%s %s, line %d: server '%s' already exists\n"
-msgstr ""
-
-#, c-format
-msgid "%s %s, line %d: unable to create server\n"
+msgid ""
+"%s%s: warning: server \"%s\" not found in configuration file. It has not "
+"been deleted because it's used now."
 msgstr ""
 
 msgid "Waiting"
@@ -2641,11 +2671,11 @@ msgid "%s DCC: unable to set 'nonblock' option for socket\n"
 msgstr ""
 
 #, c-format
-msgid "Aborting active DCC: \"%s\" from %s\n"
+msgid "Aborting active DCC: \"%s\" from %s"
 msgstr ""
 
 #, c-format
-msgid "%sServer: %s%s %s[%s%s%s]\n"
+msgid "%sServer: %s%s %s[%s%s%s]"
 msgstr ""
 
 msgid "connected"
@@ -2666,17 +2696,16 @@ msgstr ""
 msgid "(hidden)"
 msgstr ""
 
-#, c-format
-msgid "%d channel"
-msgid_plural "%d channels"
+msgid " (temporary)"
+msgstr ""
+
+msgid "channel"
+msgid_plural "channels"
 msgstr[0] ""
 msgstr[1] ""
 
 #, c-format
-msgid "%d pv"
-msgstr ""
-
-msgid " (temporary)"
+msgid "%s cannot find nick for sending message\n"
 msgstr ""
 
 #, c-format
@@ -2694,6 +2723,9 @@ msgid "error received from IRC server"
 msgstr ""
 
 msgid "message received"
+msgstr ""
+
+msgid "close all connections and quit"
 msgstr ""
 
 msgid "a server message"
@@ -2979,79 +3011,91 @@ msgid "whois (secure connection)"
 msgstr ""
 
 #, c-format
-msgid "You have been invited to %s%s%s by %s%s\n"
+msgid "You have been invited to %s%s%s by %s%s"
 msgstr ""
 
 #, c-format
-msgid "%s channel \"%s\" not found for \"%s\" command\n"
+msgid "%s%s: channel \"%s\" not found for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "%s \"%s\" command received without host\n"
+msgid "%s%s: \"%s\" command received without host"
 msgstr ""
 
 #, c-format
-msgid "%s cannot create new channel \"%s\"\n"
+msgid "%s%s: cannot create new channel \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s %s(%s%s%s)%s has joined %s%s\n"
+msgid "%s%s%s %s(%s%s%s)%s has joined %s%s"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s has kicked %s%s%s from %s%s"
+msgid "%s%s%s%s has kicked %s%s%s from %s%s %s(%s%s%s)"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s has killed %s%s%s from server"
+msgid "%s%s%s%s has kicked %s%s%s from %s%s"
 msgstr ""
 
 #, c-format
-msgid "%s host not found for \"%s\" command\n"
+msgid "%s%s%s%s has killed %s%s%s from server %s(%s%s%s)"
 msgstr ""
 
 #, c-format
-msgid "%s \"%s\" command received without channel or nickname\n"
+msgid "%s%s%s%s has killed %s%s%s from server"
 msgstr ""
 
 #, c-format
-msgid "Mode %s%s %s[%s%s%s]%s by %s%s\n"
+msgid "%s%s: host not found for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "User mode %s[%s%s%s]%s by %s%s\n"
+msgid "%s%s: \"%s\" command received without channel or nickname"
 msgstr ""
 
 #, c-format
-msgid "You are now known as %s%s\n"
+msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s is now known as %s%s\n"
+msgid "%sUser mode %s[%s%s%s]%s by %s%s"
 msgstr ""
 
 #, c-format
-msgid "%s nickname not found for \"%s\" command\n"
+msgid "%sYou are now known as %s%s"
 msgstr ""
 
 #, c-format
-msgid "CTCP %sVERSION%s reply from %s%s%s: %s\n"
+msgid "%s%s%s%s is now known as %s%s"
 msgstr ""
 
 #, c-format
-msgid "CTCP %sPING%s reply from %s%s%s: %ld.%ld seconds\n"
+msgid "%s%s: nickname not found for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "%s cannot create new private window \"%s\"\n"
+msgid "CTCP %sVERSION%s reply from %s%s%s: %s"
 msgstr ""
 
 #, c-format
-msgid "%s \"%s\" command received without host or channel\n"
+msgid "CTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: \"%s\" command received without host or channel"
+msgstr ""
+
+#, c-format
+msgid "%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr ""
 
 #, c-format
 msgid "%s%s %s(%s%s%s)%s has left %s%s"
+msgstr ""
+
+#, c-format
+msgid "CTCP %sVERSION%s received from %s%s%s: %s"
 msgstr ""
 
 #, c-format
@@ -3063,11 +3107,15 @@ msgid "Channel %s: * %s %s"
 msgstr ""
 
 #, c-format
-msgid "Received a CTCP %sSOUND%s \"%s\" from %s%s\n"
+msgid "Received a CTCP %sSOUND%s \"%s\" from %s%s"
 msgstr ""
 
 #, c-format
-msgid "CTCP %sPING%s received from %s%s\n"
+msgid "CTCP %sPING%s received from %s%s"
+msgstr ""
+
+#, c-format
+msgid "Unknown CTCP %s%s%s received from %s%s%s: %s"
 msgstr ""
 
 #, c-format
@@ -3079,73 +3127,70 @@ msgid "Channel %s: %s> %s"
 msgstr ""
 
 #, c-format
-msgid "%s cannot parse \"%s\" command\n"
+msgid "%s%s: cannot parse \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "%s unknown DCC CHAT type received from "
+msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s %s(%s%s%s)%s has quit"
+msgid "%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
 msgstr ""
 
 #, c-format
-msgid "%s \"%s\" command received without channel\n"
+msgid "%s%s: \"%s\" command received without channel"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s has changed topic for %s%s%s to:"
+msgid "%s%s%s%s has changed topic for %s%s%s to: \"%s%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s%s has unset topic for %s%s\n"
+msgid "%s%s%s%s has unset topic for %s%s"
 msgstr ""
 
 #, c-format
-msgid "WALLOPS from %s%s%s: %s\n"
+msgid "WALLOPS from %s%s%s: %s"
 msgstr ""
 
 #, c-format
-msgid "User mode for %s%s%s is %s[%s%s%s]\n"
+msgid "User mode for %s%s%s is %s[%s%s%s]"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s is away: %s\n"
+msgid "%s%s%s%s is away: %s"
 msgstr ""
 
 msgid "Users online: "
 msgstr ""
 
 #, c-format
-msgid "%s[%s%s%s]%s help mode (+h)\n"
+msgid "%s[%s%s%s]%s help mode (+h)"
 msgstr ""
 
 #, c-format
-msgid "%s%s %s(%s%s@%s%s)%s was %s\n"
+msgid "%s%s %s(%s%s@%s%s)%s was %s"
 msgstr ""
 
 #, c-format
-msgid "%s[%s%s%s]%s idle: "
-msgstr ""
-
-msgid "days"
-msgstr ""
-
-#, c-format
-msgid "%s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
-msgstr ""
-
-msgid "hours"
+msgid ""
+"%s[%s%s%s]%s idle: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon "
+"at: %s%s"
 msgstr ""
 
 msgid "hour"
-msgstr ""
-
-msgid "minutes"
-msgstr ""
+msgid_plural "hours"
+msgstr[0] ""
+msgstr[1] ""
 
 msgid "minute"
+msgid_plural "minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#, c-format
+msgid "%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
 msgstr ""
 
 #, c-format
@@ -3153,43 +3198,43 @@ msgid "%s[%s%s%s]%s Channels: "
 msgstr ""
 
 #, c-format
-msgid "Channel created on %s"
+msgid "%sChannel created on %s"
 msgstr ""
 
 #, c-format
-msgid "%s cannot identify date/time for \"%s\" command\n"
+msgid "%s%s: cannot identify date/time for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "%s cannot identify channel for \"%s\" command\n"
+msgid "%s%s: cannot identify channel for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "No topic set for %s%s\n"
+msgid "%sNo topic set for %s%s"
 msgstr ""
 
 #, c-format
-msgid "Topic for %s%s%s is: "
+msgid "%sTopic for %s%s%s is: \"%s%s\""
 msgstr ""
 
 #, c-format
-msgid "Topic set by %s%s%s, %s"
+msgid "%sTopic set by %s%s%s, %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s has invited %s%s%s on %s%s\n"
+msgid "%s%s%s has invited %s%s%s on %s%s"
 msgstr ""
 
 #, c-format
-msgid "%s cannot identify nickname for \"%s\" command\n"
+msgid "%s%s: cannot identify nickname for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "Channel reop %s%s%s: %s%s\n"
+msgid "Channel reop %s%s%s: %s%s"
 msgstr ""
 
 #, c-format
-msgid "%s[%s%s%s]%s exception %s%s%s"
+msgid "%s%s[%s%s%s]%s exception %s%s%s"
 msgstr ""
 
 #, c-format
@@ -3201,7 +3246,7 @@ msgid " by %s%s"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)\n"
+msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
 msgstr ""
 
 #, c-format
@@ -3209,12 +3254,12 @@ msgid "Nicks %s%s%s: %s["
 msgstr ""
 
 #, c-format
-msgid "%s cannot create nick \"%s\" for channel \"%s\"\n"
+msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
 msgstr ""
 
 #, c-format
 msgid ""
-"Channel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
+"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
 msgstr ""
 
 msgid "nicks"
@@ -3249,229 +3294,232 @@ msgid "%s[%s%s%s] %s%s%s banned by "
 msgstr ""
 
 #, c-format
-msgid "%s[%s%s%s] %s%s%s banned\n"
+msgid "%s%s[%s%s%s] %s%s%s banned"
 msgstr ""
 
 #, c-format
-msgid "%s: trying 2nd nickname \"%s\"\n"
+msgid "%s%s: nickname \"%s\" is invalid, trying 2nd nickname \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s: trying 3rd nickname \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s: all declared nicknames are already in use or invalid, closing connection "
-"with server!\n"
-msgstr ""
-
-#, c-format
-msgid "%s: trying 1st nickname \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\"\n"
+msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
 msgstr ""
 
 #, c-format
 msgid ""
-"%s: all declared nicknames are already in use, closing connection with "
-"server!\n"
+"%s%s: all declared nicknames are already in use or invalid, closing "
+"connection with server!"
 msgstr ""
 
 #, c-format
-msgid "%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\"\n"
-msgstr ""
-
-msgid "Unable to get user's name"
+msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s cannot allocate new server\n"
+msgid "%s%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\""
 msgstr ""
 
 #, c-format
-msgid ""
-"%s error sending data to IRC server: null pointer (please report problem to "
-"developers)"
+msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
 msgstr ""
 
 #, c-format
 msgid ""
-"%s error sending data to IRC server: empty buffer (please report problem to "
-"developers)"
+"%s%s: all declared nicknames are already in use, closing connection with "
+"server!"
 msgstr ""
 
 #, c-format
-msgid "%s error sending data to IRC server (%s)"
+msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s error sending data to IRC server\n"
-msgstr ""
-
-msgid "(message dropped)"
+msgid "%s%s: error retrieving user's name: %s"
 msgstr ""
 
 #, c-format
-msgid "%s not enough memory for received IRC message\n"
-msgstr ""
-
-#, c-format
-msgid "%s Command \"%s\" failed!\n"
-msgstr ""
-
-#, c-format
-msgid "%s No command to execute!\n"
-msgstr ""
-
-#, c-format
-msgid "%s Unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot read data from socket, disconnecting from server...\n"
-msgstr ""
-
-#, c-format
-msgid "%s lag is high, disconnecting from server...\n"
-msgstr ""
-
-#, c-format
-msgid "%s: Reconnecting to server in %d seconds\n"
-msgstr ""
-
-#, c-format
-msgid "%s GnuTLS handshake failed\n"
-msgstr ""
-
-#, c-format
-msgid "%s proxy address \"%s\" not found\n"
-msgstr ""
-
-#, c-format
-msgid "%s address \"%s\" not found\n"
-msgstr ""
-
-#, c-format
-msgid "%s proxy IP address not found\n"
-msgstr ""
-
-#, c-format
-msgid "%s IP address not found\n"
-msgstr ""
-
-#, c-format
-msgid "%s proxy connection refused\n"
-msgstr ""
-
-#, c-format
-msgid "%s connection refused\n"
+msgid "%s%s: error when allocating new server"
 msgstr ""
 
 #, c-format
 msgid ""
-"%s proxy fails to establish connection to server (check username/password if "
-"used)\n"
-msgstr ""
-
-#, c-format
-msgid "%s unable to set local hostname/IP\n"
+"%s%s: error sending data to IRC server: null pointer (please report problem "
+"to developers)"
 msgstr ""
 
 #, c-format
 msgid ""
-"%s cannot connect with SSL since WeeChat was not built with GnuTLS support\n"
+"%s%s: error sending data to IRC server: empty buffer (please report problem "
+"to developers)"
 msgstr ""
 
 #, c-format
-msgid "%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
+msgid "%s%s: error sending data to IRC server (%s)"
 msgstr ""
 
 #, c-format
-msgid "Connecting to server %s:%d%s%s via %s proxy %s:%d%s...\n"
+msgid "%s%s: not enough memory for received IRC message"
 msgstr ""
 
 #, c-format
-msgid "%s: connecting to server %s:%d%s%s...\n"
+msgid "%s%s: command \"%s\" failed"
 msgstr ""
 
 #, c-format
-msgid "Connecting to server %s:%d%s%s...\n"
+msgid "%s%s: no command to execute"
 msgstr ""
 
 #, c-format
-msgid "%s GnuTLS init error\n"
+msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s cannot create pipe\n"
+msgid "%s%s: cannot read data from socket, disconnecting from server..."
 msgstr ""
 
 #, c-format
-msgid "%s cannot create socket\n"
+msgid "%s%s: lag is high, disconnecting from server..."
 msgstr ""
 
 #, c-format
-msgid "%s cannot set socket option \"SO_REUSEADDR\"\n"
+msgid "%s%s: reconnecting to server in %d %s"
 msgstr ""
 
 #, c-format
-msgid "%s cannot set socket option \"SO_KEEPALIVE\"\n"
-msgstr ""
-
-msgid "Reconnecting to server...\n"
-msgstr ""
-
-msgid "Disconnected from server!\n"
+msgid "%s%s: GnuTLS handshake failed"
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to load plugin \"%s\": %s\n"
+msgid "%s%s: proxy address \"%s\" not found"
 msgstr ""
 
 #, c-format
-msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load\n"
+msgid "%s%s: address \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: proxy IP address not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: IP address not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: proxy connection refused"
+msgstr ""
+
+#, c-format
+msgid "%s%s: connection refused"
 msgstr ""
 
 #, c-format
 msgid ""
-"%sError: unable to load plugin \"%s\": a plugin with same name already "
-"exists\n"
+"%s%s: proxy fails to establish connection to server (check username/password "
+"if used)"
 msgstr ""
 
 #, c-format
-msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load\n"
+msgid "%s%s: unable to set local hostname/IP"
 msgstr ""
 
 #, c-format
-msgid "%sInitializing plugin \"%s\" %s\n"
+msgid ""
+"%s%s: cannot connect with SSL since WeeChat was not built with GnuTLS support"
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to initialize plugin \"%s\"\n"
+msgid "%s%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s..."
 msgstr ""
 
 #, c-format
-msgid "%sError: unable to load plugin \"%s\" (not enough memory)\n"
+msgid "Connecting to server %s:%d%s%s via %s proxy %s:%d%s..."
 msgstr ""
 
 #, c-format
-msgid "%sPlugin \"%s\" (%s) loaded.\n"
+msgid "%s%s: connecting to server %s:%d%s%s..."
 msgstr ""
 
 #, c-format
-msgid "%sPlugin \"%s\" unloaded.\n"
+msgid "%s: connecting to server %s:%d%s%s..."
 msgstr ""
 
 #, c-format
-msgid "%sError: plugin \"%s\" not found\n"
+msgid "%s%s: GnuTLS init error"
 msgstr ""
 
-msgid "Saving plugins configuration to disk\n"
+#, c-format
+msgid "%s%s: cannot create pipe"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot create socket"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot set socket option \"SO_REUSEADDR\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: reconnecting to server..."
+msgstr ""
+
+#, c-format
+msgid "%s%s: disconnected from server"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to write log file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s\t****  Beginning of log  ****"
+msgstr ""
+
+#, c-format
+msgid "%s\t****  End of log  ****"
+msgstr ""
+
+#, c-format
+msgid "===\t========== End of backlog (%d lines) =========="
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to load plugin \"%s\": %s"
+msgstr ""
+
+#, c-format
+msgid "%sError: symbol \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sError: unable to load plugin \"%s\": a plugin with same name already exists"
+msgstr ""
+
+#, c-format
+msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to initialize plugin \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
+msgstr ""
+
+#, c-format
+msgid "%sPlugin \"%s\" %s loaded"
+msgstr ""
+
+#, c-format
+msgid "%sPlugin \"%s\" unloaded"
+msgstr ""
+
+msgid "Saving plugins configuration to disk"
 msgstr ""

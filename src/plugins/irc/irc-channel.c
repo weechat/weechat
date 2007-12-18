@@ -51,8 +51,8 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     if ((new_channel = (struct t_irc_channel *)malloc (sizeof (struct t_irc_channel))) == NULL)
     {
         weechat_printf (NULL,
-                        _("%sirc: cannot allocate new channel"),
-                        weechat_prefix ("error"));
+                        _("%s%s: cannot allocate new channel"),
+                        weechat_prefix ("error"), "irc");
         return NULL;
     }
 

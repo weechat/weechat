@@ -238,19 +238,18 @@ irc_config_read_server_line (struct t_config_file *config_file,
                         break;
                     case 0:
                         weechat_printf (NULL,
-                                        _("%sirc: warning, failed to set option "
-                                          "\"%s\" with value \"%s\""),
-                                        weechat_prefix ("error"),
-                                        option_name, value);
+                                        _("%s%s: value \"%s\" is invalid "
+                                          "for option \"%s\""),
+                                        weechat_prefix ("error"), "irc",
+                                        value, option_name);
                         break;
                 }
             }
             else
             {
                 weechat_printf (NULL,
-                                _("%sirc: warning, option not found in config "
-                                  "file: \"%s\""),
-                                weechat_prefix ("error"),
+                                _("%s%s: option \"%s\" not found"),
+                                weechat_prefix ("error"), "irc",
                                 option_name);
             }
         }
@@ -269,8 +268,8 @@ irc_config_read_server_line (struct t_config_file *config_file,
         if (!irc_config_server)
         {
             weechat_printf (NULL,
-                            _("%sirc: error creating server for reading "
-                              "config file"),
+                            _("%s%s: error creating server for reading "
+                              "configuration file"), "irc",
                             weechat_prefix ("error"));
         }
     }
@@ -769,10 +768,10 @@ irc_config_reload_cb (void *data, char *event, void *pointer)
                 if (ptr_server->is_connected)
                 {
                     weechat_printf (NULL,
-                                    _("%sirc: warning: server \"%s\" not found in "
-                                      "configuration file, but was not deleted "
-                                      "(currently used)"),
-                                    weechat_prefix ("info"),
+                                    _("%s%s: warning: server \"%s\" not found "
+                                      "in configuration file. It has not been "
+                                      "deleted because it's used now."),
+                                    weechat_prefix ("info"), "irc",
                                     ptr_server->name);
                 }
                 else
@@ -783,15 +782,14 @@ irc_config_reload_cb (void *data, char *event, void *pointer)
         }
 
         weechat_printf (NULL,
-                        _("%sirc: configuration file reloaded"),
-                        weechat_prefix ("info"));
+                        _("%s%s: configuration file reloaded"),
+                        weechat_prefix ("info"), "irc");
         return WEECHAT_RC_OK;
     }
     
     weechat_printf (NULL,
-                    _("%sirc: failed to reload alias configuration "
-                      "file"),
-                    weechat_prefix ("error"));
+                    _("%s%s: failed to reload configuration file"),
+                    weechat_prefix ("error"), "irc");
     return WEECHAT_RC_ERROR;
 }
 

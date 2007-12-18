@@ -354,7 +354,7 @@ irc_display_server (struct t_irc_server *server, int with_detail)
                         (server->autoreconnect) ? _("on") : _("off"));
         weechat_printf (NULL, "  server_autoreconnect_delay : %d %s",
                         server->autoreconnect_delay,
-                        _("seconds"));
+                        NG_("second", "seconds", server->autoreconnect_delay));
         weechat_printf (NULL, "  server_address . . . . . . : %s",
                         server->address);
         weechat_printf (NULL, "  server_port  . . . . . . . : %d",
@@ -399,7 +399,7 @@ irc_display_server (struct t_irc_server *server, int with_detail)
                             server->command : "");
         weechat_printf (NULL, "  server_command_delay . . . : %d %s",
                         server->command_delay,
-                        _("seconds"));
+                        NG_("second", "seconds", server->command_delay));
         weechat_printf (NULL, "  server_autojoin  . . . . . : %s",
                         (server->autojoin && server->autojoin[0]) ?
                         server->autojoin : "");

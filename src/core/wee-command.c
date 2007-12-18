@@ -494,7 +494,10 @@ command_help (void *data, struct t_gui_buffer *buffer,
     {
         case 1:
             gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL, _("%s internal commands:"), PACKAGE_NAME);
+            gui_chat_printf (NULL,
+                             /* TRANSLATORS: %s is "WeeChat" */
+                             _("%s internal commands:"),
+                             PACKAGE_NAME);
             for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
                  ptr_hook = ptr_hook->next_hook)
             {
@@ -563,7 +566,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
                 {
                     gui_chat_printf (NULL, "");
                     gui_chat_printf (NULL,
-                                     _("[%s%s]  %s/%s  %s%s"),
+                                     "[%s%s]  %s/%s  %s%s",
                                      (ptr_hook->plugin) ?
                                      _("plugin:") : "weechat",
                                      (ptr_hook->plugin) ?
@@ -924,12 +927,8 @@ command_plugin_list (char *name, int full)
                                                "(%d calls remaining)"),
                                              interval,
                                              (HOOK_TIMER(ptr_hook, interval) % 1000 == 0) ?
-                                             ((interval > 1) ?
-                                              _("seconds") :
-                                              _("second")) :
-                                             ((interval > 1) ?
-                                              _("milliseconds") :
-                                              _("millisecond")),
+                                             (NG_("second", "seconds", interval)) :
+                                             (NG_("millisecond", "milliseconds", interval)),
                                              HOOK_TIMER(ptr_hook, remaining_calls));
                         else
                             gui_chat_printf (NULL,
@@ -937,12 +936,8 @@ command_plugin_list (char *name, int full)
                                                "(no call limit)"),
                                              interval,
                                              (HOOK_TIMER(ptr_hook, interval) % 1000 == 0) ?
-                                             ((interval > 1) ?
-                                              _("seconds") :
-                                              _("second")) :
-                                             ((interval > 1) ?
-                                              _("milliseconds") :
-                                              _("millisecond")));
+                                             (NG_("second", "seconds", interval)) :
+                                             (NG_("millisecond", "milliseconds", interval)));
                     }
                 }
                 
@@ -1377,15 +1372,20 @@ command_set (void *data, struct t_gui_buffer *buffer,
             gui_chat_printf (NULL, "");
             if (argc == 2)
                 gui_chat_printf (NULL,
-                                 _("%s%d%s configuration option(s) found with "
-                                   "\"%s\""),
+                                 NG_("%s%d%s configuration option found with "
+                                     "\"%s\"",
+                                     "%s%d%s configuration options found with "
+                                     "\"%s\"",
+                                     number_found),
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  number_found,
                                  GUI_COLOR(GUI_COLOR_CHAT),
                                  argv[1]);
             else
                 gui_chat_printf (NULL,
-                                 _("%s%d%s configuration option(s) found"),
+                                 NG_("%s%d%s configuration option found",
+                                     "%s%d%s configuration options found",
+                                     number_found),
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  number_found,
                                  GUI_COLOR(GUI_COLOR_CHAT));
@@ -1485,13 +1485,19 @@ command_setp (void *data, struct t_gui_buffer *buffer,
         {
             gui_chat_printf (NULL, "");
             if (argc == 2)
-                gui_chat_printf (NULL, "%s%d%s plugin option(s) found with \"%s\"",
+                gui_chat_printf (NULL,
+                                 NG_("%s%d%s plugin option found with \"%s\"",
+                                     "%s%d%s plugin options found with \"%s\"",
+                                     number_found),
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  number_found,
                                  GUI_COLOR(GUI_COLOR_CHAT),
                                  argv[1]);
             else
-                gui_chat_printf (NULL, "%s%d%s plugin option(s) found",
+                gui_chat_printf (NULL,
+                                 NG_("%s%d%s plugin option found",
+                                     "%s%d%s plugin options found",
+                                     number_found),
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  number_found,
                                  GUI_COLOR(GUI_COLOR_CHAT));

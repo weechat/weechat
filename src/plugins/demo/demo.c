@@ -96,7 +96,7 @@ demo_infobar_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     
     weechat_infobar_printf (10, NULL,
                             (argc > 1) ?
-                            argv_eol[1] : _("test infobar"));
+                            argv_eol[1] : _("test message in infobar"));
     
     return WEECHAT_RC_OK;
 }
@@ -238,9 +238,9 @@ demo_infolist_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     }
     
     weechat_printf (NULL,
-                    _("%sDemo: missing argument for /%s command "
+                    _("%s%s: missing argument for \"%s\" command "
                       "(try /help %s)"),
-                    weechat_prefix ("error"),
+                    weechat_prefix ("error"), "Demo",
                     "demo_infolist", "demo_infolist");
     
     return WEECHAT_RC_OK;
@@ -266,9 +266,9 @@ demo_info_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                         weechat_info_get (argv[1]));
     else
         weechat_printf (NULL,
-                        _("%sDemo: missing argument for /%s command "
+                        _("%s%s: missing argument for \"%s\" command "
                           "(try /help %s)"),
-                        weechat_prefix ("error"),
+                        weechat_prefix ("error"), "Demo",
                         "demo_info", "demo_info");
     
     return WEECHAT_RC_OK;
@@ -301,17 +301,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_plugin = plugin;
     
     weechat_hook_command ("demo_printf",
-                          _("demo command: print some messages"),
+                          _("print some messages on current ubffer"),
                           _("[text]"),
-                          _("text: write some text on current buffer"),
+                          _("text: write this text"),
                           "",
                           &demo_printf_command_cb, NULL);
 
     weechat_hook_command ("demo_infobar",
-                          _("demo command: print a message in infobar for 10 "
-                            "seconds"),
+                          _("print a message in infobar for 10 seconds"),
                           _("[text]"),
-                          _("text: write this text on infobar"),
+                          _("text: write this text"),
                           "",
                           &demo_infobar_command_cb, NULL);
 
@@ -323,7 +322,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           &demo_buffer_command_cb, NULL);
     
     weechat_hook_command ("demo_infolist",
-                          _("demo command: get and display list"),
+                          _("get and display an infolist"),
                           _("infolist"),
                           _("infolist: infolist to display (values: buffer, "
                             "buffer_lines)"),
@@ -331,7 +330,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           &demo_infolist_command_cb, NULL);
     
     weechat_hook_command ("demo_info",
-                          _("demo command: get and display info"),
+                          _("get and display an info"),
                           _("info"),
                           _("info: info to display (values: version, "
                             "weechat_dir, weechat_libdir, weechat_sharedir, "

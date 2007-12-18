@@ -91,6 +91,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-color.h
 ./src/plugins/irc/irc-command.c
 ./src/plugins/irc/irc-command.h
+./src/plugins/irc/irc-completion.c
+./src/plugins/irc/irc-completion.h
 ./src/plugins/irc/irc-config.c
 ./src/plugins/irc/irc-config.h
 ./src/plugins/irc/irc-dcc.c
@@ -111,6 +113,9 @@ SET(WEECHAT_SOURCES
 ./src/plugins/logger/logger-buffer.c
 ./src/plugins/logger/logger-buffer.h
 ./src/plugins/logger/logger.c
+./src/plugins/logger/logger.h
+./src/plugins/logger/logger-tail.c
+./src/plugins/logger/logger-tail.h
 ./src/plugins/plugin-api.c
 ./src/plugins/plugin-api.h
 ./src/plugins/plugin.c

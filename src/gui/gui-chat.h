@@ -45,6 +45,7 @@ extern int gui_chat_time_length;
 
 /* chat functions */
 
+extern void gui_chat_prefix_build_empty ();
 extern void gui_chat_prefix_build ();
 extern int gui_chat_strlen_screen (char *string);
 extern int gui_chat_string_real_pos (char *string, int pos);

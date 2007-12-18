@@ -577,7 +577,7 @@ irc_protocol_cmd_error (struct t_irc_server *server, char *irc_message, char *ho
             pos = strchr (arguments, ' ');
             if (pos)
                 pos[0] = '\0';
-            if (strcasecmp (arguments, server->nick) != 0)
+            if (weechat_strcasecmp (arguments, server->nick) != 0)
             {
                 if (first)
                 {
@@ -658,9 +658,9 @@ irc_protocol_cmd_invite (struct t_irc_server *server, char *irc_message, char *h
     else
     {
         weechat_printf (server->buffer,
-                        _("%sirc: channel \"%s\" not found for "
+                        _("%s%s: channel \"%s\" not found for "
                           "\"%s\" command"),
-                        weechat_prefix ("error"), "", "invite");
+                        weechat_prefix ("error"), "irc", "", "invite");
         return WEECHAT_RC_ERROR;
     }
     
@@ -688,8 +688,8 @@ irc_protocol_cmd_join (struct t_irc_server *server, char *irc_message, char *hos
     if (!host)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: \"%s\" command received without host"),
-                        weechat_prefix ("error"), "join");
+                        _("%s%s: \"%s\" command received without host"),
+                        weechat_prefix ("error"), "irc", "join");
         return WEECHAT_RC_ERROR;
     }
     
@@ -704,8 +704,8 @@ irc_protocol_cmd_join (struct t_irc_server *server, char *irc_message, char *hos
         if (!ptr_channel)
         {
             weechat_printf (server->buffer,
-                            _("%sirc: cannot create new channel \"%s\""),
-                            weechat_prefix ("error"), arguments);
+                            _("%s%s: cannot create new channel \"%s\""),
+                            weechat_prefix ("error"), "irc", arguments);
             return WEECHAT_RC_ERROR;
         }
     }
@@ -791,9 +791,10 @@ irc_protocol_cmd_kick (struct t_irc_server *server, char *irc_message, char *hos
         if (!ptr_channel)
         {
             weechat_printf (server->buffer,
-                            _("%sirc: channel \"%s\" not found for "
+                            _("%s%s: channel \"%s\" not found for "
                               "\"%s\" command"),
-                            weechat_prefix ("error"), arguments, "kick");
+                            weechat_prefix ("error"), "irc", arguments,
+                            "kick");
             return WEECHAT_RC_ERROR;
         }
         
@@ -836,9 +837,9 @@ irc_protocol_cmd_kick (struct t_irc_server *server, char *irc_message, char *hos
     else
     {
         weechat_printf (server->buffer,
-                        _("%sirc: nick \"%s\" not found for \"%s\" "
+                        _("%s%s: nick \"%s\" not found for \"%s\" "
                           "command"),
-                        weechat_prefix ("error"), "", "kick");
+                        weechat_prefix ("error"), "irc", "", "kick");
         return WEECHAT_RC_ERROR;
     }
     if (strcmp (pos_nick, server->nick) == 0)
@@ -916,8 +917,9 @@ irc_protocol_cmd_kill (struct t_irc_server *server, char *irc_message,
                 if (pos_comment)
                 {
                     weechat_printf (ptr_channel->buffer,
-                                    _("%s%s%s has killed %s%s%s from "
+                                    _("%s%s%s%s has killed %s%s%s from "
                                       "server %s(%s%s%s)"),
+                                    weechat_prefix ("quit"),
                                     IRC_COLOR_CHAT_NICK,
                                     nick,
                                     IRC_COLOR_CHAT,
@@ -932,8 +934,9 @@ irc_protocol_cmd_kill (struct t_irc_server *server, char *irc_message,
                 else
                 {
                     weechat_printf (ptr_channel->buffer,
-                                    _("%s%s%s has killed %s%s%s from "
+                                    _("%s%s%s%s has killed %s%s%s from "
                                       "server"),
+                                    weechat_prefix ("quit"),
                                     IRC_COLOR_CHAT_NICK,
                                     nick,
                                     IRC_COLOR_CHAT,
@@ -947,9 +950,8 @@ irc_protocol_cmd_kill (struct t_irc_server *server, char *irc_message,
     else
     {
         weechat_printf (server->buffer,
-                                     _("%s host not found for \"%s\" "
-                                       "command\n"),
-                                     weechat_prefix ("error"), "kill");
+                        _("%s%s: host not found for \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "kill");
         return WEECHAT_RC_ERROR;
     }
     
@@ -975,9 +977,9 @@ irc_protocol_cmd_mode (struct t_irc_server *server, char *irc_message, char *hos
     if (!host)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: \"%s\" command received without "
+                        _("%s%s: \"%s\" command received without "
                           "host"),
-                        weechat_prefix ("error"), "mode");
+                        weechat_prefix ("error"), "irc", "mode");
         return WEECHAT_RC_ERROR;
     }
     
@@ -985,9 +987,9 @@ irc_protocol_cmd_mode (struct t_irc_server *server, char *irc_message, char *hos
     if (!pos_modes)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: \"%s\" command received without "
+                        _("%s%s: \"%s\" command received without "
                           "channel or nickname"),
-                        weechat_prefix ("error"), "mode");
+                        weechat_prefix ("error"), "irc", "mode");
         return WEECHAT_RC_ERROR;
     }
     pos_modes[0] = '\0';
@@ -1031,9 +1033,10 @@ irc_protocol_cmd_mode (struct t_irc_server *server, char *irc_message, char *hos
         else
         {
             weechat_printf (server->buffer,
-                            _("%s channel \"%s\" not found for \"%s\" "
+                            _("%s%s: channel \"%s\" not found for \"%s\" "
                               "command"),
-                            weechat_prefix ("error"), arguments, "mode");
+                            weechat_prefix ("error"), "irc", arguments,
+                            "mode");
             return WEECHAT_RC_ERROR;
         }
     }
@@ -1079,8 +1082,8 @@ irc_protocol_cmd_nick (struct t_irc_server *server, char *irc_message, char *hos
     if (!host)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: \"%s\" command received without host"),
-                        weechat_prefix ("error"), "nick");
+                        _("%s%s: \"%s\" command received without host"),
+                        weechat_prefix ("error"), "irc", "nick");
         return WEECHAT_RC_ERROR;
     }
 
@@ -1200,8 +1203,8 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *irc_message, char *h
     else
     {
         weechat_printf (server->buffer,
-                        _("%s nickname not found for \"%s\" command"),
-                        weechat_prefix ("error"), "notice");
+                        _("%s%s: nickname not found for \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "notice");
         return WEECHAT_RC_ERROR;
     }
     
@@ -1250,14 +1253,16 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *irc_message, char *h
                         
                         weechat_printf (server->buffer,
                                         _("CTCP %sPING%s reply from "
-                                          "%s%s%s: %ld.%ld seconds\n"),
+                                          "%s%s%s: %ld.%ld %s"),
                                         IRC_COLOR_CHAT_CHANNEL,
                                         IRC_COLOR_CHAT,
                                         IRC_COLOR_CHAT_NICK,
                                         nick,
                                         IRC_COLOR_CHAT,
                                         difftime / 1000000,
-                                        (difftime % 1000000) / 1000);
+                                        (difftime % 1000000) / 1000,
+                                        (NG_("second", "seconds",
+                                             (difftime / 1000000))));
                     }
                 }
             }
@@ -1275,9 +1280,10 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *irc_message, char *h
                         if (!ptr_channel)
                         {
                             weechat_printf (server->buffer,
-                                            _("%sirc: cannot create new "
+                                            _("%s%s: cannot create new "
                                               "private buffer \"%s\""),
-                                            weechat_prefix ("error"), nick);
+                                            weechat_prefix ("error"), "irc",
+                                            nick);
                             return WEECHAT_RC_ERROR;
                         }
                     }
@@ -1391,9 +1397,9 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *irc_message, char *hos
     if (!host || !arguments)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: \"%s\" command received without host or "
+                        _("%s%s: \"%s\" command received without host or "
                           "channel"),
-                        weechat_prefix ("error"), "part");
+                        weechat_prefix ("error"), "irc", "part");
         return WEECHAT_RC_ERROR;
     }
     
@@ -1505,9 +1511,9 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *irc_message, char *hos
     else
     {
         weechat_printf (server->buffer,
-                        _("%sirc: channel \"%s\" not found for \"%s\" "
+                        _("%s%s: channel \"%s\" not found for \"%s\" "
                           "command"),
-                        weechat_prefix ("error"), arguments, "part");
+                        weechat_prefix ("error"), "irc", arguments, "part");
         return WEECHAT_RC_ERROR;
     }
     
@@ -1589,7 +1595,7 @@ void
 irc_protocol_reply_version (struct t_irc_server *server, struct t_irc_channel *channel,
                             char *nick, char *message, int ignore)
 {
-    char *pos;
+    char *pos, *version, *date;
     struct utsname *buf;
     struct t_gui_buffer *ptr_buffer;
     
@@ -1607,45 +1613,54 @@ irc_protocol_reply_version (struct t_irc_server *server, struct t_irc_channel *c
             else if (!pos[0])
                 pos = NULL;
         }
-        
-        buf = (struct utsname *)malloc (sizeof (struct utsname));
-        if (buf && (uname (buf) >= 0))
+
+        version = weechat_info_get ("version");
+        date = weechat_info_get ("date");
+        if (version && date)
         {
-            irc_server_sendf (server,
-                              "NOTICE %s :%sVERSION %s v%s"
-                              " compiled on %s, running "
-                              "%s %s / %s%s",
-                              nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
-                              &buf->sysname,
-                              &buf->release, &buf->machine, "\01");
-            free (buf);
+            buf = (struct utsname *)malloc (sizeof (struct utsname));
+            if (buf && (uname (buf) >= 0))
+            {
+                irc_server_sendf (server,
+                                  "NOTICE %s :%sVERSION %s v%s"
+                                  " compiled on %s, running "
+                                  "%s %s / %s%s",
+                                  nick, "\01", "WeeChat", version, date,
+                                  &buf->sysname,
+                                  &buf->release, &buf->machine, "\01");
+                free (buf);
+            }
+            else
+                irc_server_sendf (server,
+                                  "NOTICE %s :%sVERSION %s v%s"
+                                  " compiled on %s%s",
+                                  nick, "\01", "WeeChat", version, date,
+                                  "\01");
+            if (pos)
+            {
+                weechat_printf (ptr_buffer,
+                                _("CTCP %sVERSION%s received from %s%s%s: %s"),
+                                IRC_COLOR_CHAT_CHANNEL,
+                                IRC_COLOR_CHAT,
+                                IRC_COLOR_CHAT_NICK,
+                                nick,
+                                IRC_COLOR_CHAT,
+                                pos);
+            }
+            else
+            {
+                weechat_printf (ptr_buffer,
+                                _("CTCP %sVERSION%s received from %s%s"),
+                                IRC_COLOR_CHAT_CHANNEL,
+                                IRC_COLOR_CHAT,
+                                IRC_COLOR_CHAT_NICK,
+                                nick);
+            }
         }
-        else
-            irc_server_sendf (server,
-                              "NOTICE %s :%sVERSION %s v%s"
-                              " compiled on %s%s",
-                              nick, "\01", PACKAGE_NAME, PACKAGE_VERSION, __DATE__,
-                              "\01");
-        if (pos)
-        {
-            weechat_printf (ptr_buffer,
-                            _("CTCP %sVERSION%s received from %s%s%s: %s"),
-                            IRC_COLOR_CHAT_CHANNEL,
-                            IRC_COLOR_CHAT,
-                            IRC_COLOR_CHAT_NICK,
-                            nick,
-                            IRC_COLOR_CHAT,
-                            pos);
-        }
-        else
-        {
-            weechat_printf (ptr_buffer,
-                            _("CTCP %sVERSION%s received from %s%s"),
-                            IRC_COLOR_CHAT_CHANNEL,
-                            IRC_COLOR_CHAT,
-                            IRC_COLOR_CHAT_NICK,
-                            nick);
-        }
+        if (version)
+            free (version);
+        if (date)
+            free (date);
         //(void) plugin_msg_handler_exec (server->name,
         //                                "weechat_ctcp",
         //                                irc_message);
@@ -1673,8 +1688,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
     if (!host)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: \"%s\" command received without host"),
-                        weechat_prefix ("error"), "privmsg");
+                        _("%s%s: \"%s\" command received without host"),
+                        weechat_prefix ("error"), "irc", "privmsg");
         return WEECHAT_RC_ERROR;
     }
     
@@ -1884,9 +1899,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
             else
             {
                 weechat_printf (server->buffer,
-                                _("%sirc: channel \"%s\" not found for \"%s\" "
+                                _("%s%s: channel \"%s\" not found for \"%s\" "
                                   "command"),
-                                weechat_prefix ("error"),
+                                weechat_prefix ("error"), "irc",
                                 arguments, "privmsg");
                 return WEECHAT_RC_ERROR;
             }
@@ -1953,8 +1968,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                 if (!pos2)
                 {
                     weechat_printf (server->buffer,
-                                    _("%sirc: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "privmsg");
+                                    _("%s%s: cannot parse \"%s\" command"),
+                                    weechat_prefix ("error"), "irc",
+                                    "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
                 pos2[0] = '\0';
@@ -1971,8 +1987,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     if (!pos_size)
                     {
                         weechat_printf (server->buffer,
-                                        _("%sirc: cannot parse \"%s\" command"),
-                                        weechat_prefix ("error"), "privmsg");
+                                        _("%s%s: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "irc",
+                                        "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_size;
@@ -1986,8 +2003,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     if (!pos_port)
                     {
                         weechat_printf (server->buffer,
-                                        _("%sirc: cannot parse \"%s\" command"),
-                                        weechat_prefix ("error"), "privmsg");
+                                        _("%s%s: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "irc",
+                                        "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_port;
@@ -2001,8 +2019,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     if (!pos_addr)
                     {
                         weechat_printf (server->buffer,
-                                        _("%sirc: cannot parse \"%s\" command"),
-                                        weechat_prefix ("error"), "privmsg");
+                                        _("%s%s: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "irc",
+                                        "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_addr;
@@ -2030,8 +2049,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                 if (!pos2)
                 {
                     weechat_printf (server->buffer,
-                                    _("%sirc: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "privmsg");
+                                    _("%s%s: cannot parse \"%s\" command"),
+                                    weechat_prefix ("error"), "irc",
+                                    "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
                 pos2[0] = '\0';
@@ -2048,8 +2068,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     if (!pos_start_resume)
                     {
                         weechat_printf (server->buffer,
-                                        _("%sirc: cannot parse \"%s\" command"),
-                                        weechat_prefix ("error"), "privmsg");
+                                        _("%s%s: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "irc",
+                                        "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_start_resume;
@@ -2063,8 +2084,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     if (!pos_port)
                     {
                         weechat_printf (server->buffer,
-                                        _("%sirc: cannot parse \"%s\" command"),
-                                        weechat_prefix ("error"), "privmsg");
+                                        _("%s%s: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "irc",
+                                        "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_port;
@@ -2090,8 +2112,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                 if (!pos2)
                 {
                     weechat_printf (server->buffer,
-                                    _("%sirc: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "privmsg");
+                                    _("%s%s: cannot parse \"%s\" command"),
+                                    weechat_prefix ("error"), "irc",
+                                    "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
                 pos2[0] = '\0';
@@ -2108,8 +2131,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     if (!pos_start_resume)
                     {
                         weechat_printf (server->buffer,
-                                        _("%sirc: cannot parse \"%s\" command"),
-                                        weechat_prefix ("error"), "privmsg");
+                                        _("%s%s: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "irc",
+                                        "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_start_resume;
@@ -2123,8 +2147,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     if (!pos_port)
                     {
                         weechat_printf (server->buffer,
-                                        _("%sirc: cannot parse \"%s\" command"),
-                                        weechat_prefix ("error"), "privmsg");
+                                        _("%s%s: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "irc",
+                                        "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos2 = pos_port;
@@ -2150,8 +2175,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                 if (!pos2)
                 {
                     weechat_printf (server->buffer,
-                                    _("%sirc: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "privmsg");
+                                    _("%s%s: cannot parse \"%s\" command"),
+                                    weechat_prefix ("error"), "irc",
+                                    "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
                 pos2[0] = '\0';
@@ -2168,8 +2194,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     if (!pos_addr)
                     {
                         weechat_printf (server->buffer,
-                                        _("%sirc: cannot parse \"%s\" command"),
-                                        weechat_prefix ("error"), "privmsg");
+                                        _("%s%s: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "irc",
+                                        "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos_addr[0] = '\0';
@@ -2182,8 +2209,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     if (!pos_port)
                     {
                         weechat_printf (server->buffer,
-                                        _("%sirc: cannot parse \"%s\" command"),
-                                        weechat_prefix ("error"), "privmsg");
+                                        _("%s%s: cannot parse \"%s\" command"),
+                                        weechat_prefix ("error"), "irc",
+                                        "privmsg");
                         return WEECHAT_RC_ERROR;
                     }
                     pos_port[0] = '\0';
@@ -2194,9 +2222,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                     if (weechat_strcasecmp (pos_file, "chat") != 0)
                     {
                         weechat_printf (server->buffer,
-                                        _("%sirc: unknown DCC CHAT type "
+                                        _("%s%s: unknown DCC CHAT type "
                                           "received from %s%s%s: \"%s\""),
-                                        weechat_prefix ("error"),
+                                        weechat_prefix ("error"), "irc",
                                         IRC_COLOR_CHAT_NICK,
                                         nick,
                                         IRC_COLOR_CHAT,
@@ -2229,9 +2257,10 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                         if (!ptr_channel)
                         {
                             weechat_printf (server->buffer,
-                                            _("%sirc: cannot create new "
+                                            _("%s%s: cannot create new "
                                               "private buffer \"%s\""),
-                                            weechat_prefix ("error"), nick);
+                                            weechat_prefix ("error"), "irc",
+                                            nick);
                             return WEECHAT_RC_ERROR;
                         }
                     }
@@ -2342,10 +2371,10 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                             if (!ptr_channel)
                             {
                                 weechat_printf (server->buffer,
-                                                _("%s cannot create new "
+                                                _("%s%s: cannot create new "
                                                   "private buffer \"%s\""),
                                                 weechat_prefix ("error"),
-                                                nick);
+                                                "irc", nick);
                                 return WEECHAT_RC_ERROR;
                             }
                         }
@@ -2395,8 +2424,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
         else
         {
             weechat_printf (server->buffer,
-                            _("%sirc: cannot parse \"%s\" command"),
-                            weechat_prefix ("error"), "privmsg");
+                            _("%s%s: cannot parse \"%s\" command"),
+                            weechat_prefix ("error"), "irc", "privmsg");
             return WEECHAT_RC_ERROR;
         }
     }
@@ -2424,8 +2453,8 @@ irc_protocol_cmd_quit (struct t_irc_server *server, char *irc_message, char *hos
     if (!host)
     {
         weechat_printf (server->buffer,
-                        _("irc:%s \"%s\" command received without host"),
-                        weechat_prefix ("error"), "quit");
+                        _("%s%s: \"%s\" command received without host"),
+                        weechat_prefix ("error"), "irc", "quit");
         return WEECHAT_RC_ERROR;
     }
 
@@ -2540,7 +2569,7 @@ irc_protocol_cmd_server_msg (struct t_irc_server *server, char *irc_message,
             arguments++;
         
         /* skip nickname if at beginning of server message */
-        if (strncasecmp (server->nick, arguments, strlen (server->nick)) == 0)
+        if (weechat_strncasecmp (server->nick, arguments, strlen (server->nick)) == 0)
         {
             arguments += strlen (server->nick) + 1;
             while (arguments[0] == ' ')
@@ -2578,8 +2607,8 @@ irc_protocol_cmd_topic (struct t_irc_server *server, char *irc_message, char *ho
     if (!irc_channel_is_channel (arguments))
     {
         weechat_printf (server->buffer,
-                        _("%sirc: \"%s\" command received without channel"),
-                        weechat_prefix ("error"), "topic");
+                        _("%s%s: \"%s\" command received without channel"),
+                        weechat_prefix ("error"), "irc", "topic");
         return WEECHAT_RC_ERROR;
     }
     
@@ -2819,8 +2848,8 @@ irc_protocol_cmd_221 (struct t_irc_server *server, char *irc_message, char *host
     else
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot parse \"%s\" command"),
-                        weechat_prefix ("error"), "221");
+                        _("%s%s: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "221");
         return WEECHAT_RC_ERROR;
     }
     
@@ -3509,19 +3538,19 @@ irc_protocol_cmd_317 (struct t_irc_server *server, char *irc_message, char *host
                                             IRC_COLOR_CHAT_CHANNEL,
                                             day,
                                             IRC_COLOR_CHAT,
-                                            (day > 1) ? _("days") : _("day"),
+                                            NG_("day", "days", day),
                                             IRC_COLOR_CHAT_CHANNEL,
                                             hour,
                                             IRC_COLOR_CHAT,
-                                            (hour > 1) ? _("hours") : _("hour"),
+                                            NG_("hour", "hours", hour),
                                             IRC_COLOR_CHAT_CHANNEL,
                                             min,
                                             IRC_COLOR_CHAT,
-                                            (min > 1) ? _("minutes") : _("minute"),
+                                            NG_("minute", "minutes", min),
                                             IRC_COLOR_CHAT_CHANNEL,
                                             sec,
                                             IRC_COLOR_CHAT,
-                                            (sec > 1) ? _("seconds") : _("second"),
+                                            NG_("second", "seconds", sec),
                                             IRC_COLOR_CHAT_CHANNEL,
                                             ctime (&datetime));
                         }
@@ -3539,15 +3568,15 @@ irc_protocol_cmd_317 (struct t_irc_server *server, char *irc_message, char *host
                                             IRC_COLOR_CHAT_CHANNEL,
                                             hour,
                                             IRC_COLOR_CHAT,
-                                            (hour > 1) ? _("hours") : _("hour"),
+                                            NG_("hour", "hours", hour),
                                             IRC_COLOR_CHAT_CHANNEL,
                                             min,
                                             IRC_COLOR_CHAT,
-                                            (min > 1) ? _("minutes") : _("minute"),
+                                            NG_("minute", "minutes", min),
                                             IRC_COLOR_CHAT_CHANNEL,
                                             sec,
                                             IRC_COLOR_CHAT,
-                                            (sec > 1) ? _("seconds") : _("second"),
+                                            NG_("second", "seconds", sec),
                                             IRC_COLOR_CHAT_CHANNEL,
                                             ctime (&datetime));
                         }
@@ -3945,9 +3974,10 @@ irc_protocol_cmd_329 (struct t_irc_server *server, char *irc_message, char *host
             if (!ptr_channel)
             {
                 weechat_printf (server->buffer,
-                                _("%sirc: channel \"%s\" not found for "
+                                _("%s%s: channel \"%s\" not found for "
                                   "\"%s\" command"),
-                                weechat_prefix ("error"), pos_channel, "329");
+                                weechat_prefix ("error"), "irc", pos_channel,
+                                "329");
                 return WEECHAT_RC_ERROR;
             }
             
@@ -3964,18 +3994,18 @@ irc_protocol_cmd_329 (struct t_irc_server *server, char *irc_message, char *host
         else
         {
             weechat_printf (server->buffer,
-                            _("%sirc: cannot identify date/time for \"%s\" "
+                            _("%s%s: cannot identify date/time for \"%s\" "
                               "command"),
-                            weechat_prefix ("error"), "329");
+                            weechat_prefix ("error"), "irc", "329");
             return WEECHAT_RC_ERROR;
         }
     }
     else
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot identify channel for \"%s\" "
+                        _("%s%s: cannot identify channel for \"%s\" "
                           "command"),
-                        weechat_prefix ("error"), "329");
+                        weechat_prefix ("error"), "irc", "329");
         return WEECHAT_RC_ERROR;
     }
     
@@ -4015,9 +4045,9 @@ irc_protocol_cmd_331 (struct t_irc_server *server, char *irc_message, char *host
         else
         {
             weechat_printf (server->buffer,
-                            _("%sirc: channel \"%s\" not found for \"%s\" "
+                            _("%s%s: channel \"%s\" not found for \"%s\" "
                               "command"),
-                            weechat_prefix ("error"), "", "331");
+                            weechat_prefix ("error"), "irc", "", "331");
             return WEECHAT_RC_ERROR;
         }
         
@@ -4097,9 +4127,9 @@ irc_protocol_cmd_332 (struct t_irc_server *server, char *irc_message, char *host
     else
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot identify channel for \"%s\" "
+                        _("%s%s: cannot identify channel for \"%s\" "
                           "command"),
-                        weechat_prefix ("error"), "332");
+                        weechat_prefix ("error"), "irc", "332");
         return WEECHAT_RC_ERROR;
     }
     
@@ -4170,9 +4200,9 @@ irc_protocol_cmd_333 (struct t_irc_server *server, char *irc_message, char *host
     else
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot identify channel for \"%s\" "
+                        _("%s%s: cannot identify channel for \"%s\" "
                           "command"),
-                        weechat_prefix ("error"), "333");
+                        weechat_prefix ("error"), "irc", "333");
         return WEECHAT_RC_ERROR;
     }
     
@@ -4220,7 +4250,7 @@ irc_protocol_cmd_338 (struct t_irc_server *server, char *irc_message, char *host
                         pos_message++;
                     
                     weechat_printf (server->buffer,
-                                    "%s[%s%s%s] %s%s %s%s %s%s\n",
+                                    "%s[%s%s%s] %s%s %s%s %s%s",
                                     IRC_COLOR_CHAT_DELIMITERS,
                                     IRC_COLOR_CHAT_NICK,
                                     pos_nick,
@@ -4291,18 +4321,18 @@ irc_protocol_cmd_341 (struct t_irc_server *server, char *irc_message, char *host
         else
         {
             weechat_printf (server->buffer,
-                            _("%sirc: cannot identify channel for \"%s\" "
+                            _("%s%s: cannot identify channel for \"%s\" "
                               "command"),
-                            weechat_prefix ("error"), "341");
+                            weechat_prefix ("error"), "irc", "341");
             return WEECHAT_RC_ERROR;
         }
     }
     else
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot identify nickname for \"%s\" "
+                        _("%s%s: cannot identify nickname for \"%s\" "
                           "command"),
-                        weechat_prefix ("error"), "341");
+                        weechat_prefix ("error"), "irc", "341");
         return WEECHAT_RC_ERROR;
     }
     
@@ -4426,8 +4456,8 @@ irc_protocol_cmd_348 (struct t_irc_server *server, char *irc_message, char *host
     if (!pos_channel)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot parse \"%s\" command"),
-                        weechat_prefix ("error"), "348");
+                        _("%s%s: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "348");
         return WEECHAT_RC_ERROR;
     }
     pos_channel[0] = '\0';
@@ -4440,8 +4470,8 @@ irc_protocol_cmd_348 (struct t_irc_server *server, char *irc_message, char *host
     if (!pos_exception)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot parse \"%s\" command"),
-                        weechat_prefix ("error"), "348");
+                        _("%s%s: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "348");
         return WEECHAT_RC_ERROR;
     }
     pos_exception[0] = '\0';
@@ -4543,8 +4573,8 @@ irc_protocol_cmd_349 (struct t_irc_server *server, char *irc_message, char *host
     if (!pos_channel)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot parse \"%s\" command"),
-                        weechat_prefix ("error"), "349");
+                        _("%s%s: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "349");
         return WEECHAT_RC_ERROR;
     }
     pos_channel[0] = '\0';
@@ -4556,8 +4586,8 @@ irc_protocol_cmd_349 (struct t_irc_server *server, char *irc_message, char *host
     if (!pos_msg)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot parse \"%s\" command"),
-                        weechat_prefix ("error"), "349");
+                        _("%s%s: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "349");
         return WEECHAT_RC_ERROR;
     }
     pos_msg[0] = '\0';
@@ -4811,8 +4841,8 @@ irc_protocol_cmd_353 (struct t_irc_server *server, char *irc_message, char *host
         if (pos[0] != ':')
         {
             weechat_printf (server->buffer,
-                            _("%sirc: cannot parse \"%s\" command"),
-                            weechat_prefix ("error"), "353");
+                            _("%s%s: cannot parse \"%s\" command"),
+                            weechat_prefix ("error"), "irc", "353");
             return WEECHAT_RC_ERROR;
         }
         
@@ -4904,10 +4934,10 @@ irc_protocol_cmd_353 (struct t_irc_server *server, char *irc_message, char *host
                                        is_op, is_halfop, has_voice, is_chanuser))
                     {
                         weechat_printf (server->buffer,
-                                        _("%sirc: cannot create nick \"%s\" "
+                                        _("%s%s: cannot create nick \"%s\" "
                                           "for channel \"%s\""),
-                                        weechat_prefix ("error"), pos_nick,
-                                        ptr_channel->name);
+                                        weechat_prefix ("error"), "irc",
+                                        pos_nick, ptr_channel->name);
                     }
                 }
                 else
@@ -4936,8 +4966,8 @@ irc_protocol_cmd_353 (struct t_irc_server *server, char *irc_message, char *host
     else
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot parse \"%s\" command"),
-                        weechat_prefix ("error"), "353");
+                        _("%s%s: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "353");
         return WEECHAT_RC_ERROR;
     }
     
@@ -5009,7 +5039,7 @@ irc_protocol_cmd_366 (struct t_irc_server *server, char *irc_message, char *host
                                     &num_normal);
                     weechat_printf (ptr_channel->buffer,
                                     _("%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, "
-                                      "%s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"),
+                                      "%s%d%s %s, %s%d%s %s, %s%d%s %s%s)"),
                                     weechat_prefix ("info"),
                                     IRC_COLOR_CHAT_CHANNEL,
                                     ptr_channel->name,
@@ -5083,8 +5113,8 @@ irc_protocol_cmd_367 (struct t_irc_server *server, char *irc_message, char *host
     if (!pos_channel)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot parse \"%s\" command"),
-                        weechat_prefix ("error"), "367");
+                        _("%s%s: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "367");
         return WEECHAT_RC_ERROR;
     }
     pos_channel[0] = '\0';
@@ -5097,8 +5127,8 @@ irc_protocol_cmd_367 (struct t_irc_server *server, char *irc_message, char *host
     if (!pos_ban)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot parse \"%s\" command"),
-                        weechat_prefix ("error"), "367");
+                        _("%s%s: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "367");
         return WEECHAT_RC_ERROR;
     }
     pos_ban[0] = '\0';
@@ -5208,8 +5238,8 @@ irc_protocol_cmd_368 (struct t_irc_server *server, char *irc_message, char *host
     if (!pos_channel)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot parse \"%s\" command"),
-                        weechat_prefix ("error"), "368");
+                        _("%s%s: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "368");
         return WEECHAT_RC_ERROR;
     }
     pos_channel[0] = '\0';
@@ -5221,8 +5251,8 @@ irc_protocol_cmd_368 (struct t_irc_server *server, char *irc_message, char *host
     if (!pos_msg)
     {
         weechat_printf (server->buffer,
-                        _("%sirc: cannot parse \"%s\" command"),
-                        weechat_prefix ("error"), "368");
+                        _("%s%s: cannot parse \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "368");
         return WEECHAT_RC_ERROR;
     }
     pos_msg[0] = '\0';
@@ -5269,9 +5299,9 @@ irc_protocol_cmd_432 (struct t_irc_server *server, char *irc_message, char *host
         if (strcmp (server->nick, server->nick1) == 0)
         {
             weechat_printf (server->buffer,
-                            _("%sirc: nickname \"%s\" is invalid, "
+                            _("%s%s: nickname \"%s\" is invalid, "
                               "trying 2nd nickname \"%s\""),
-                            weechat_prefix ("info"), server->nick,
+                            weechat_prefix ("info"), "irc", server->nick,
                             server->nick2);
             free (server->nick);
             server->nick = strdup (server->nick2);
@@ -5281,9 +5311,9 @@ irc_protocol_cmd_432 (struct t_irc_server *server, char *irc_message, char *host
             if (strcmp (server->nick, server->nick2) == 0)
             {
                 weechat_printf (server->buffer,
-                                _("%sirc: nickname \"%s\" is invalid, "
+                                _("%s%s: nickname \"%s\" is invalid, "
                                   "trying 3rd nickname \"%s\""),
-                                weechat_prefix ("info"), server->nick,
+                                weechat_prefix ("info"), "irc", server->nick,
                                 server->nick3);
                 free (server->nick);
                 server->nick = strdup (server->nick3);
@@ -5293,20 +5323,20 @@ irc_protocol_cmd_432 (struct t_irc_server *server, char *irc_message, char *host
                 if (strcmp (server->nick, server->nick3) == 0)
                 {
                     weechat_printf (server->buffer,
-                                    _("%sirc: all declared nicknames are "
+                                    _("%s%s: all declared nicknames are "
                                       "already in use or invalid, closing "
                                       "connection with server!"),
-                                    weechat_prefix ("error"));
+                                    weechat_prefix ("error"), "irc");
                     irc_server_disconnect (server, 1);
                     return WEECHAT_RC_OK;
                 }
                 else
                 {
                     weechat_printf (server->buffer,
-                                    _("%sirc: nickname \"%s\" is invalid, "
+                                    _("%s%s: nickname \"%s\" is invalid, "
                                       "trying 1st nickname \"%s\""),
-                                    weechat_prefix ("info"), server->nick,
-                                    server->nick1);
+                                    weechat_prefix ("info"), "irc",
+                                    server->nick, server->nick1);
                     free (server->nick);
                     server->nick = strdup (server->nick1);
                 }
@@ -5333,9 +5363,9 @@ irc_protocol_cmd_433 (struct t_irc_server *server, char *irc_message, char *host
         if (strcmp (server->nick, server->nick1) == 0)
         {
             weechat_printf (server->buffer,
-                            _("%sirc: nickname \"%s\" is already in use, "
+                            _("%s%s: nickname \"%s\" is already in use, "
                               "trying 2nd nickname \"%s\""),
-                            weechat_prefix ("info"), server->nick,
+                            weechat_prefix ("info"), "irc", server->nick,
                             server->nick2);
             free (server->nick);
             server->nick = strdup (server->nick2);
@@ -5345,9 +5375,10 @@ irc_protocol_cmd_433 (struct t_irc_server *server, char *irc_message, char *host
             if (strcmp (server->nick, server->nick2) == 0)
             {
                 weechat_printf (server->buffer,
-                                _("%sirc: nickname \"%s\" is already in use, "
+                                _("%s%s: nickname \"%s\" is already in use, "
                                   "trying 3rd nickname \"%s\""),
-                                PACKAGE_NAME, server->nick, server->nick3);
+                                weechat_prefix ("info"), "irc", server->nick,
+                                server->nick3);
                 free (server->nick);
                 server->nick = strdup (server->nick3);
             }
@@ -5356,19 +5387,20 @@ irc_protocol_cmd_433 (struct t_irc_server *server, char *irc_message, char *host
                 if (strcmp (server->nick, server->nick3) == 0)
                 {
                     weechat_printf (server->buffer,
-                                    _("%sirc: all declared nicknames are "
+                                    _("%s%s: all declared nicknames are "
                                       "already in use, closing connection "
                                       "with server!"),
-                                    weechat_prefix ("error"));
+                                    weechat_prefix ("error"), "irc");
                     irc_server_disconnect (server, 1);
                     return WEECHAT_RC_OK;
                 }
                 else
                 {
                     weechat_printf (server->buffer,
-                                    _("%sirc: nickname \"%s\" is already in use, "
+                                    _("%s%s: nickname \"%s\" is already in use, "
                                       "trying 1st nickname \"%s\""),
-                                     PACKAGE_NAME, server->nick, server->nick1);
+                                    weechat_prefix ("info"), "irc",
+                                    server->nick, server->nick1);
                     free (server->nick);
                     server->nick = strdup (server->nick1);
                 }

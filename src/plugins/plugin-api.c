@@ -323,11 +323,13 @@ plugin_api_info_get (struct t_weechat_plugin *plugin, char *info)
     if (!plugin || !info)
         return NULL;
     
-    /* below are infos that do NOT need server to return info */
-    
     if (string_strcasecmp (info, "version") == 0)
     {
         return strdup (PACKAGE_VERSION);
+    }
+    if (string_strcasecmp (info, "date") == 0)
+    {
+        return strdup (__DATE__);
     }
     else if (string_strcasecmp (info, "dir_separator") == 0)
     {

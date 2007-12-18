@@ -807,7 +807,8 @@ config_file_write_internal (struct t_config_file *config_file, int default_optio
     if ((config_file->file = fopen (filename2, "w")) == NULL)
     {
         gui_chat_printf (NULL,
-                         _("Error: cannot create file \"%s\"\n"),
+                         _("%sError: cannot create file \"%s\""),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          filename2);
         free (filename);
         free (filename2);
@@ -817,12 +818,9 @@ config_file_write_internal (struct t_config_file *config_file, int default_optio
     current_time = time (NULL);
     string_iconv_fprintf (config_file->file,
                           _("#\n# %s configuration file, created by "
-                            "%s v%s on %s"),
+                            "%s v%s on %s#\n"),
                           PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
                           ctime (&current_time));
-    string_iconv_fprintf (config_file->file,
-                          _("# WARNING! Be careful when editing this file, "
-                            "WeeChat may write it at any time.\n#\n"));
     
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
@@ -908,7 +906,8 @@ config_file_read (struct t_config_file *config_file)
         if ((config_file->file = fopen (filename, "r")) == NULL)
         {
             gui_chat_printf (NULL,
-                             _("Warning: config file \"%s\" not found.\n"),
+                             _("%sWarning: config file \"%s\" not found"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              filename);
             free (filename);
             return -1;
@@ -945,8 +944,9 @@ config_file_read (struct t_config_file *config_file)
                     if (pos == NULL)
                     {
                         gui_chat_printf (NULL,
-                                         _("Warning: %s, line %d: invalid "
-                                           "syntax, missing \"]\"\n"),
+                                         _("%sWarning: %s, line %d: invalid "
+                                           "syntax, missing \"]\""),
+                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                          filename, line_number);
                     }
                     else
@@ -966,9 +966,10 @@ config_file_read (struct t_config_file *config_file)
                         else
                         {
                             gui_chat_printf (NULL,
-                                             _("Warning: %s, line %d: unknown "
+                                             _("%sWarning: %s, line %d: unknown "
                                                "section identifier "
-                                               "(\"%s\")\n"),
+                                               "(\"%s\")"),
+                                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                              filename, line_number, pos);
                         }
                     }
@@ -979,8 +980,9 @@ config_file_read (struct t_config_file *config_file)
                     if (pos == NULL)
                     {
                         gui_chat_printf (NULL,
-                                         _("Warning: %s, line %d: invalid "
-                                           "syntax, missing \"=\"\n"),
+                                         _("%sWarning: %s, line %d: invalid "
+                                           "syntax, missing \"=\""),
+                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                          filename, line_number);
                     }
                     else
@@ -1056,25 +1058,28 @@ config_file_read (struct t_config_file *config_file)
                             case -1:
                                 if (ptr_section)
                                     gui_chat_printf (NULL,
-                                                     _("Warning: %s, line %d: "
+                                                     _("%sWarning: %s, line %d: "
                                                        "option \"%s\" "
                                                        "unknown for "
-                                                       "section \"%s\"\n"),
+                                                       "section \"%s\""),
+                                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                                      filename, line_number,
                                                      line, ptr_section->name);
                                 else
                                     gui_chat_printf (NULL,
-                                                     _("Warning: %s, line %d: "
+                                                     _("%sWarning: %s, line %d: "
                                                        "unknown option \"%s\" "
-                                                       "(outside a section)\n"),
+                                                       "(outside a section)"),
+                                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                                      filename, line_number,
                                                      line);
                                 break;
                             case 0:
                                 gui_chat_printf (NULL,
-                                                 _("Warning: %s, line %d: "
+                                                 _("%sWarning: %s, line %d: "
                                                    "invalid value for option "
-                                                   "\"%s\"\n"),
+                                                   "\"%s\""),
+                                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                                  filename, line_number, line);
                                 break;
                         }

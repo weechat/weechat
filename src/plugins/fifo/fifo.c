@@ -96,22 +96,22 @@ fifo_create ()
                                      O_RDONLY | O_NONBLOCK)) != -1)
                 {
                     weechat_printf (NULL,
-                                    _("%sFifo: pipe is open\n"),
-                                    weechat_prefix ("info"));
+                                    _("%s%s: pipe open"),
+                                    weechat_prefix ("info"), "Fifo"),
                     rc = 1;
                 }
                 else
                     weechat_printf (NULL,
-                                    _("%sFifo: unable to open pipe (%s) for "
+                                    _("%s%s: unable to open pipe (%s) for "
                                       "reading"),
-                                    weechat_prefix ("error"),
+                                    weechat_prefix ("error"), "Fifo",
                                     fifo_filename);
             }
             else
                 weechat_printf (NULL,
-                                _("%sFifo: unable to create pipe for remote "
+                                _("%s%s: unable to create pipe for remote "
                                   "control (%s)"),
-                                weechat_prefix ("error"),
+                                weechat_prefix ("error"), "Fifo",
                                 fifo_filename);
         }
     }
@@ -152,8 +152,8 @@ fifo_remove ()
     }
     
     weechat_printf (NULL,
-                    _("%sFifo: pipe is closed"),
-                    weechat_prefix ("info"));
+                    _("%s%s: pipe closed"),
+                    weechat_prefix ("info"), "Fifo");
 }
 
 /*
@@ -184,8 +184,8 @@ fifo_exec (char *text)
         if (!pos_msg)
         {
             weechat_printf (NULL,
-                            _("%sFifo error: invalid text received on pipe"),
-                            weechat_prefix ("error"));
+                            _("%s%s: error, invalid text received on pipe"),
+                            weechat_prefix ("error"), "Fifo");
             return;
         }
         pos_msg[0] = '\0';
@@ -215,8 +215,8 @@ fifo_exec (char *text)
     if (!ptr_buffer)
     {
         weechat_printf (NULL,
-                        _("%sFifo error: buffer not found for pipe data"),
-                        weechat_prefix ("error"));
+                        _("%s%s: error, buffer not found for pipe data"),
+                        weechat_prefix ("error"), "Fifo");
         return;
     }
     
@@ -294,8 +294,8 @@ fifo_read ()
         if (num_read < 0)
         {
             weechat_printf (NULL,
-                            _("%sFifo: error reading pipe, closing it"),
-                            weechat_prefix ("error"));
+                            _("%s%s: error reading pipe, closing it"),
+                            weechat_prefix ("error"), "Fifo");
             fifo_remove ();
         }
         else
@@ -306,8 +306,8 @@ fifo_read ()
             if (fifo_fd < 0)
             {
                 weechat_printf (NULL,
-                                _("%sFifo: error opening file, closing it"),
-                                weechat_prefix ("error"));
+                                _("%s%s: error opening file, closing it"),
+                                weechat_prefix ("error"), "Fifo");
                 fifo_remove ();
             }
             else

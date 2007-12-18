@@ -49,7 +49,24 @@ int gui_chat_time_length = 0;    /* length of time for each line (in chars) */
 
 
 /*
+ * gui_chat_prefix_build_empty: build empty prefixes
+ *                              (called before reading WeeChat config file)
+ */
+
+void
+gui_chat_prefix_build_empty ()
+{
+    gui_chat_prefix[GUI_CHAT_PREFIX_INFO] = gui_chat_prefix_empty;
+    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR] = gui_chat_prefix_empty;
+    gui_chat_prefix[GUI_CHAT_PREFIX_NETWORK] = gui_chat_prefix_empty;
+    gui_chat_prefix[GUI_CHAT_PREFIX_ACTION] = gui_chat_prefix_empty;
+    gui_chat_prefix[GUI_CHAT_PREFIX_JOIN] = gui_chat_prefix_empty;
+    gui_chat_prefix[GUI_CHAT_PREFIX_QUIT] = gui_chat_prefix_empty;
+}
+
+/*
  * gui_chat_prefix_build: build prefix with colors
+ *                        (called after reading WeeChat config file)
  */
 
 void

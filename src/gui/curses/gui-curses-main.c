@@ -54,9 +54,12 @@
 void
 gui_main_pre_init (int *argc, char **argv[])
 {
-    /* nothing for Curses interface */
+    /* make C compiler happy */
     (void) argc;
     (void) argv;
+
+    /* build empty prefixes (before reading config) */
+    gui_chat_prefix_build_empty ();
 }
 
 /*
@@ -76,6 +79,8 @@ gui_main_init ()
     raw ();
     
     gui_color_init ();
+
+    /* build prefixes according to config */
     gui_chat_prefix_build ();
     
     gui_infobar = NULL;

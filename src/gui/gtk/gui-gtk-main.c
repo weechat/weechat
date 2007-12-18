@@ -33,6 +33,7 @@
 #include "../../core/wee-config.h"
 #include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
+#include "../gui-chat.h"
 #include "../gui-main.h"
 #include "../gui-buffer.h"
 #include "../gui-history.h"
@@ -62,6 +63,9 @@ GtkWidget *gui_gtk_label1;
 void
 gui_main_pre_init (int *argc, char **argv[])
 {
+    /* build empty prefixes (before reading config) */
+    gui_chat_prefix_build_empty ();
+    
     /* Initialise Gtk */
     gtk_init (argc, argv);
 }
@@ -82,11 +86,14 @@ gui_main_init ()
     
     gui_ok = 1;
     
+    /* build prefixes according to config */
+    gui_chat_prefix_build ();
+    
     /* init clipboard buffer */
     gui_input_clipboard = NULL;
     
     /* create Gtk widgets */
-
+    
     gdk_color_parse ("white", &color_fg);
     gdk_color_parse ("black", &color_bg);
     

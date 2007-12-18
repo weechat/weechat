@@ -228,9 +228,9 @@ irc_command_amsg (void *data, struct t_gui_buffer *buffer, int argc,
                         else
                         {
                             weechat_printf (ptr_server->buffer,
-                                            _("%sirc: cannot find nick for "
+                                            _("%s%s: cannot find nick for "
                                               "sending message"),
-                                            weechat_prefix ("error"));
+                                            weechat_prefix ("error"), "irc");
                         }
                     }
                 }
@@ -304,8 +304,8 @@ irc_command_away_server (struct t_irc_server *server, char *arguments)
             string = (char *)irc_color_decode ((unsigned char *)arguments,
                                                1, 0);
             weechat_printf (server->buffer,
-                            _("%sirc: future away on %s%s%s: %s"),
-                            weechat_prefix ("info"),
+                            _("%s%s: future away on %s%s%s: %s"),
+                            weechat_prefix ("info"), "irc",
                             IRC_COLOR_CHAT_SERVER,
                             server->name,
                             IRC_COLOR_CHAT,
@@ -362,8 +362,8 @@ irc_command_away_server (struct t_irc_server *server, char *arguments)
             /* server not connected, remove away message but do not send
                anything */
             weechat_printf (server->buffer,
-                            _("%sirc: future away on %s%s%s removed"),
-                            weechat_prefix ("info"),
+                            _("%s%s: future away on %s%s%s removed"),
+                            weechat_prefix ("info"), "irc",
                             IRC_COLOR_CHAT_SERVER,
                             server->name,
                             IRC_COLOR_CHAT);
@@ -445,9 +445,9 @@ irc_command_ban (void *data, struct t_gui_buffer *buffer, int argc,
             else
             {
                 weechat_printf (ptr_server->buffer,
-                                _("%sirc: \"%s\" command can only be "
+                                _("%s%s: \"%s\" command can only be "
                                   "executed in a channel buffer"),
-                                weechat_prefix ("error"), "ban");
+                                weechat_prefix ("error"), "irc", "ban");
                 return WEECHAT_RC_ERROR;
             }
         }
@@ -465,9 +465,9 @@ irc_command_ban (void *data, struct t_gui_buffer *buffer, int argc,
         if (!ptr_channel)
         {
             weechat_printf (ptr_server->buffer,
-                            _("%sirc: \"%s\" command can only be "
+                            _("%s%s: \"%s\" command can only be "
                               "executed in a channel buffer"),
-                            weechat_prefix ("error"),
+                            weechat_prefix ("error"), "irc",
                             "ban");
             return WEECHAT_RC_ERROR;
         }
@@ -491,18 +491,18 @@ irc_command_connect_one_server (struct t_irc_server *server, int no_join)
     if (server->is_connected)
     {
         weechat_printf (NULL,
-                        _("%sirc: already connected to server "
+                        _("%s%s: already connected to server "
                           "\"%s\"!"),
-                        weechat_prefix ("error"),
+                        weechat_prefix ("error"), "irc",
                         server->name);
         return 0;
     }
     if (server->child_pid > 0)
     {
         weechat_printf (NULL,
-                        _("%sirc: currently connecting to server "
+                        _("%s%s: currently connecting to server "
                           "\"%s\"!"),
-                        weechat_prefix ("error"),
+                        weechat_prefix ("error"), "irc",
                         server->name);
         return 0;
     }
@@ -559,9 +559,9 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
             if (i == (argc - 1))
             {
                 weechat_printf (NULL,
-                                _("%sirc: missing argument for \"%s\" "
+                                _("%s%s: missing argument for \"%s\" "
                                   "option"),
-                                weechat_prefix ("error"),
+                                weechat_prefix ("error"), "irc",
                                 "-port");
                 return WEECHAT_RC_ERROR;
             }
@@ -630,10 +630,10 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                     if (ptr_server)
                     {
                         weechat_printf (NULL,
-                                        _("%sirc: server %s%s%s created "
+                                        _("%s%s: server %s%s%s created "
                                           "(temporary server, "
                                           "NOT SAVED!)"),
-                                        weechat_prefix ("info"),
+                                        weechat_prefix ("info"), "irc",
                                         IRC_COLOR_CHAT_SERVER,
                                         server_tmp.name,
                                         IRC_COLOR_CHAT);
@@ -643,9 +643,9 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                     else
                     {
                         weechat_printf (NULL,
-                                        _("%sirc: unable to create server "
+                                        _("%s%s: unable to create server "
                                           "\"%s\""),
-                                        weechat_prefix ("error"),
+                                        weechat_prefix ("error"), "irc",
                                         argv[i]);
                     }
                 }
@@ -801,9 +801,9 @@ irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
             if (!ptr_channel)
             {
                 weechat_printf (ptr_server->buffer,
-                                _("%sirc: \"%s\" command can not be executed "
+                                _("%s%s: \"%s\" command can not be executed "
                                   "on a server buffer"),
-                                weechat_prefix ("error"), "cycle");
+                                weechat_prefix ("error"), "irc", "cycle");
                 return WEECHAT_RC_ERROR;
             }
             
@@ -821,9 +821,9 @@ irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
         if (!ptr_channel)
         {
             weechat_printf (ptr_server->buffer,
-                            _("%sirc: \"%s\" command can not be executed on "
+                            _("%s%s: \"%s\" command can not be executed on "
                               "a server buffer"),
-                            weechat_prefix ("error"), "part");
+                            weechat_prefix ("error"), "irc", "part");
             return WEECHAT_RC_ERROR;
         }
         
@@ -911,8 +911,8 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
         else
         {
             weechat_printf (ptr_server->buffer,
-                            _("%sirc: wrong arguments for \"%s\" command"),
-                            weechat_prefix ("error"), "dcc");
+                            _("%s%s: wrong arguments for \"%s\" command"),
+                            weechat_prefix ("error"), "irc", "dcc");
             return WEECHAT_RC_ERROR;
         }
     }
@@ -953,9 +953,9 @@ irc_command_dehalfop (void *data, struct t_gui_buffer *buffer, int argc,
     else
     {
         weechat_printf (ptr_server->buffer,
-                        _("%sirc: \"%s\" command can only be executed in "
+                        _("%s%s: \"%s\" command can only be executed in "
                           "a channel buffer"),
-                        weechat_prefix ("error"), "dehalfop");
+                        weechat_prefix ("error"), "irc", "dehalfop");
         return WEECHAT_RC_ERROR;
     }
     return WEECHAT_RC_OK;
@@ -990,9 +990,9 @@ irc_command_deop (void *data, struct t_gui_buffer *buffer, int argc,
     else
     {
         weechat_printf (ptr_server->buffer,
-                        _("%sirc: \"%s\" command can only be executed in "
+                        _("%s%s: \"%s\" command can only be executed in "
                           "a channel buffer"),
-                        weechat_prefix ("error"), "deop");
+                        weechat_prefix ("error"), "irc", "deop");
         return WEECHAT_RC_ERROR;
     }
     return WEECHAT_RC_OK;
@@ -1027,9 +1027,9 @@ irc_command_devoice (void *data, struct t_gui_buffer *buffer, int argc,
     else
     {
         weechat_printf (ptr_server->buffer,
-                        _("%sirc: \"%s\" command can only be "
+                        _("%s%s: \"%s\" command can only be "
                           "executed in a channel buffer"),
-                        weechat_prefix ("error"), "devoice");
+                        weechat_prefix ("error"), "irc", "devoice");
         return WEECHAT_RC_ERROR;
     }
     return WEECHAT_RC_OK;
@@ -1108,14 +1108,15 @@ irc_command_disconnect_one_server (struct t_irc_server *server)
         && (server->reconnect_start == 0))
     {
         weechat_printf (server->buffer,
-                        _("%sirc: not connected to server \"%s\"!"),
-                        weechat_prefix ("error"), server->name);
+                        _("%s%s: not connected to server \"%s\"!"),
+                        weechat_prefix ("error"), "irc", server->name);
         return 0;
     }
     if (server->reconnect_start > 0)
     {
         weechat_printf (server->buffer,
-                        _("irc: auto-reconnection is cancelled"));
+                        _("%s%s: auto-reconnection is cancelled"),
+                        weechat_prefix ("info"), "irc");
     }
     irc_command_quit_server (server, NULL);
     irc_server_disconnect (server, 0);
@@ -1173,8 +1174,8 @@ irc_command_disconnect (void *data, struct t_gui_buffer *buffer, int argc,
                 else
                 {
                     weechat_printf (NULL,
-                                    _("%sirc: server \"%s\" not found"),
-                                    weechat_prefix ("error"), argv[i]);
+                                    _("%s%s: server \"%s\" not found"),
+                                    weechat_prefix ("error"), "irc", argv[i]);
                     disconnect_ok = 0;
                 }
             }
@@ -1216,9 +1217,9 @@ irc_command_halfop (void *data, struct t_gui_buffer *buffer, int argc,
     else
     {
         weechat_printf (ptr_server->buffer,
-                        _("%sirc: \"%s\" command can only be "
+                        _("%s%s: \"%s\" command can only be "
                           "executed in a channel buffer"),
-                        weechat_prefix ("error"), "halfop");
+                        weechat_prefix ("error"), "irc", "halfop");
         return WEECHAT_RC_ERROR;
     }
     return WEECHAT_RC_OK;
@@ -1273,9 +1274,9 @@ irc_command_invite (void *data, struct t_gui_buffer *buffer, int argc,
         else
         {
             weechat_printf (ptr_server->buffer,
-                            _("%sirc: \"%s\" command can only be "
+                            _("%s%s: \"%s\" command can only be "
                               "executed in a channel buffer"),
-                            weechat_prefix ("error"), "invite");
+                            weechat_prefix ("error"), "irc", "invite");
             return WEECHAT_RC_ERROR;
         }
 
@@ -1372,9 +1373,9 @@ irc_command_kick (void *data, struct t_gui_buffer *buffer, int argc,
             if (argc < 3)
             {
                 weechat_printf (ptr_server->buffer,
-                                _("%sirc: wrong arguments for \"%s\" "
+                                _("%s%s: wrong arguments for \"%s\" "
                                   "command"),
-                                weechat_prefix ("error"), "kick");
+                                weechat_prefix ("error"), "irc", "kick");
                 return WEECHAT_RC_ERROR;
             }
             pos_channel = argv[1];
@@ -1392,9 +1393,9 @@ irc_command_kick (void *data, struct t_gui_buffer *buffer, int argc,
             else
             {
                 weechat_printf (ptr_server->buffer,
-                                _("%sirc: \"%s\" command can only be "
+                                _("%s%s: \"%s\" command can only be "
                                   "executed in a channel buffer"),
-                                weechat_prefix ("error"), "kick");
+                                weechat_prefix ("error"), "irc", "kick");
                 return WEECHAT_RC_ERROR;
             }
         }
@@ -1438,9 +1439,9 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
             if (argc < 3)
             {
                 weechat_printf (ptr_server->buffer,
-                                _("%sirc: wrong arguments for \"%s\" "
+                                _("%s%s: wrong arguments for \"%s\" "
                                   "command"),
-                                weechat_prefix ("error"), "kickban");
+                                weechat_prefix ("error"), "irc", "kickban");
                 return WEECHAT_RC_ERROR;
             }
             pos_channel = argv[1];
@@ -1458,9 +1459,9 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
             else
             {
                 weechat_printf (ptr_server->buffer,
-                                _("%sirc: \"%s\" command can only be "
+                                _("%s%s: \"%s\" command can only be "
                                   "executed in a channel buffer"),
-                                weechat_prefix ("error"), "kickban");
+                                weechat_prefix ("error"), "irc", "kickban");
                 return WEECHAT_RC_ERROR;
             }
         }
@@ -1573,9 +1574,9 @@ irc_command_list (void *data, struct t_gui_buffer *buffer, int argc,
 		regerror (ret, ptr_server->cmd_list_regexp,
                           buf, sizeof(buf));
 		weechat_printf (ptr_server->buffer,
-                                _("%sirc: \"%s\" is not a valid regular "
+                                _("%s%s: \"%s\" is not a valid regular "
                                   "expression (%s)"),
-                                weechat_prefix ("error"), argv_eol, buf);
+                                weechat_prefix ("error"), "irc", argv_eol, buf);
                 return WEECHAT_RC_ERROR;
 	    }
 	    else
@@ -1584,9 +1585,9 @@ irc_command_list (void *data, struct t_gui_buffer *buffer, int argc,
 	else
 	{
 	    weechat_printf (ptr_server->buffer,
-                            _("%sirc: not enough memory for regular "
+                            _("%s%s: not enough memory for regular "
                               "expression"),
-                            weechat_prefix ("error"));
+                            weechat_prefix ("error"), "irc");
             return WEECHAT_RC_ERROR;
 	}
     }
@@ -1641,9 +1642,9 @@ irc_command_me (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
         if (!ptr_channel)
         {
             weechat_printf (ptr_server->buffer,
-                            _("%sirc: \"%s\" command can not be executed "
+                            _("%s%s: \"%s\" command can not be executed "
                               "on a server buffer"),
-                            weechat_prefix ("error"), "me");
+                            weechat_prefix ("error"), "irc", "me");
             return WEECHAT_RC_ERROR;
         }
         irc_command_me_channel (ptr_server, ptr_channel, argv_eol[1]);
@@ -1753,10 +1754,10 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                             && (ptr_channel->type != IRC_CHANNEL_TYPE_PRIVATE)))
                     {
                         weechat_printf (ptr_server->buffer,
-                                        _("%sirc: \"%s\" command can only be "
+                                        _("%s%s: \"%s\" command can only be "
                                           "executed in a channel or private "
                                           "buffer"),
-                                        weechat_prefix ("error"), "msg *");
+                                        weechat_prefix ("error"), "irc", "msg *");
                     }
                     if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
                         ptr_nick = irc_nick_search (ptr_channel, ptr_server->nick);
@@ -1803,10 +1804,10 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                             else
                             {
                                 weechat_printf (ptr_server->buffer,
-                                                _("%sirc: nick \"%s\" not "
+                                                _("%s%s: nick \"%s\" not "
                                                   "found for \"%s\" command"),
                                                 weechat_prefix ("error"),
-                                                ptr_server->nick,
+                                                "irc", ptr_server->nick,
                                                 "msg");
                             }
                         }
@@ -1917,9 +1918,9 @@ irc_command_names (void *data, struct t_gui_buffer *buffer, int argc,
         else
         {
             weechat_printf (ptr_server->buffer,
-                            _("%sirc: \"%s\" command can only be "
+                            _("%s%s: \"%s\" command can only be "
                               "executed in a channel buffer"),
-                            weechat_prefix ("error"), "names");
+                            weechat_prefix ("error"), "irc", "names");
             return WEECHAT_RC_ERROR;
         }
     }
@@ -1976,8 +1977,8 @@ irc_command_nick (void *data, struct t_gui_buffer *buffer, int argc,
         if (weechat_strcasecmp (argv[1], "-all") != 0)
         {
             weechat_printf (ptr_server->buffer,
-                            _("%sirc: wrong arguments for \"%s\" command"),
-                            weechat_prefix ("error"), "nick");
+                            _("%s%s: wrong arguments for \"%s\" command"),
+                            weechat_prefix ("error"), "irc", "nick");
             return WEECHAT_RC_ERROR;
         }
         for (ptr_server = irc_servers; ptr_server;
@@ -2070,9 +2071,9 @@ irc_command_op (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
     else
     {
         weechat_printf (ptr_server->buffer,
-                        _("%sirc: \"%s\" command can only be "
+                        _("%s%s: \"%s\" command can only be "
                           "executed in a channel buffer"),
-                        weechat_prefix ("error"), "op");
+                        weechat_prefix ("error"), "irc", "op");
         return WEECHAT_RC_ERROR;
     }
     return WEECHAT_RC_OK;
@@ -2133,10 +2134,10 @@ irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
             if (!ptr_channel)
             {
                 weechat_printf (ptr_server->buffer,
-                                _("%sirc: \"%s\" command can only be "
+                                _("%s%s: \"%s\" command can only be "
                                   "executed in a channel or "
                                   "private buffer"),
-                                weechat_prefix ("error"), "part");
+                                weechat_prefix ("error"), "irc", "part");
                 return WEECHAT_RC_ERROR;
             }
             channel_name = ptr_channel->name;
@@ -2148,10 +2149,10 @@ irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
         if (!ptr_channel)
         {
             weechat_printf (ptr_server->buffer,
-                            _("%sirc: \"%s\" command can only be "
+                            _("%s%s: \"%s\" command can only be "
                               "executed in a channel or private "
                               "buffer"),
-                            weechat_prefix ("error"), "part");
+                            weechat_prefix ("error"), "irc", "part");
             return WEECHAT_RC_ERROR;
         }
         if (!ptr_channel->nicks)
@@ -2272,9 +2273,9 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
             if (!ptr_channel)
             {
                 weechat_printf (ptr_server->buffer,
-                                _("%sirc: cannot create new private "
+                                _("%s%s: cannot create new private "
                                   "buffer \"%s\""),
-                                weechat_prefix ("error"), argv[1]);
+                                weechat_prefix ("error"), "irc", argv[1]);
                 return WEECHAT_RC_ERROR;
             }
         }
@@ -2346,8 +2347,8 @@ irc_command_reconnect_one_server (struct t_irc_server *server, int no_join)
     if ((!server->is_connected) && (server->child_pid == 0))
     {
         weechat_printf (server->buffer,
-                        _("%sirc: not connected to server \"%s\"!"),
-                        weechat_prefix ("error"), server->name);
+                        _("%s%s: not connected to server \"%s\"!"),
+                        weechat_prefix ("error"), "irc", server->name);
         return 0;
     }
     irc_command_quit_server (server, NULL);
@@ -2421,8 +2422,8 @@ irc_command_reconnect (void *data, struct t_gui_buffer *buffer, int argc,
                 else
                 {
                     weechat_printf (NULL,
-                                    _("%sirc: server \"%s\" not found"),
-                                    weechat_prefix ("error"), argv[i]);
+                                    _("%s%s: server \"%s\" not found"),
+                                    weechat_prefix ("error"), "irc", argv[i]);
                     reconnect_ok = 0;
                 }
             }
@@ -2557,7 +2558,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             }
             if (!one_server_found)
                 weechat_printf (NULL,
-                                _("No server with '%s' found"),
+                                _("No server found with \"%s\""),
                                 server_name);
         }
     }
@@ -2572,9 +2573,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             if (irc_server_search (argv[2]))
             {
                 weechat_printf (NULL,
-                                _("%sirc: server \"%s\" already exists, "
+                                _("%s%s: server \"%s\" already exists, "
                                   "can't create it!"),
-                                weechat_prefix ("error"), argv[2]);
+                                weechat_prefix ("error"), "irc", argv[2]);
                 return WEECHAT_RC_ERROR;
             }
             
@@ -2605,9 +2606,10 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         if (i == (argc - 1))
                         {
                             weechat_printf (NULL,
-                                            _("%sirc: missing argument for "
+                                            _("%s%s: missing argument for "
                                               "\"%s\" option"),
-                                            weechat_prefix ("error"), "-port");
+                                            weechat_prefix ("error"), "irc",
+                                            "-port");
                             irc_server_free_data (&server_tmp);
                             return WEECHAT_RC_ERROR;
                         }
@@ -2621,9 +2623,10 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         if (i == (argc - 1))
                         {
                             weechat_printf (NULL,
-                                            _("%sirc: missing argument for "
+                                            _("%s%s: missing argument for "
                                               "\"%s\" option"),
-                                            weechat_prefix ("error"), "-pwd");
+                                            weechat_prefix ("error"), "irc",
+                                            "-pwd");
                             irc_server_free_data (&server_tmp);
                             return WEECHAT_RC_ERROR;
                         }
@@ -2634,9 +2637,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         if (i >= (argc - 3))
                         {
                             weechat_printf (NULL,
-                                            _("%sirc: missing argument for "
+                                            _("%s%s: missing argument for "
                                               "\"%s\" option"),
-                                            weechat_prefix ("error"),
+                                            weechat_prefix ("error"), "irc",
                                             "-nicks");
                             irc_server_free_data (&server_tmp);
                             return WEECHAT_RC_ERROR;
@@ -2650,9 +2653,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         if (i == (argc - 1))
                         {
                             weechat_printf (NULL,
-                                            _("%sirc: missing argument for "
+                                            _("%s%s: missing argument for "
                                               "\"%s\" option"),
-                                            weechat_prefix ("error"),
+                                            weechat_prefix ("error"), "irc",
                                             "-username");
                             irc_server_free_data (&server_tmp);
                             return WEECHAT_RC_ERROR;
@@ -2664,9 +2667,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         if (i == (argc - 1))
                         {
                             weechat_printf (NULL,
-                                            _("%sirc: missing argument for "
+                                            _("%s%s: missing argument for "
                                               "\"%s\" option"),
-                                            weechat_prefix ("error"),
+                                            weechat_prefix ("error"), "irc",
                                             "-realname");
                             irc_server_free_data (&server_tmp);
                             return WEECHAT_RC_ERROR;
@@ -2678,9 +2681,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         if (i == (argc - 1))
                         {
                             weechat_printf (NULL,
-                                            _("%sirc: missing argument for "
+                                            _("%s%s: missing argument for "
                                               "\"%s\" option"),
-                                            weechat_prefix ("error"),
+                                            weechat_prefix ("error"), "irc",
                                             "-command");
                             irc_server_free_data (&server_tmp);
                             return WEECHAT_RC_ERROR;
@@ -2692,9 +2695,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         if (i == (argc - 1))
                         {
                             weechat_printf (NULL,
-                                            _("%sirc: missing argument for "
+                                            _("%s%s: missing argument for "
                                               "\"%s\" option"),
-                                            weechat_prefix ("error"),
+                                            weechat_prefix ("error"), "irc",
                                             "-autojoin");
                             irc_server_free_data (&server_tmp);
                             return WEECHAT_RC_ERROR;
@@ -2729,8 +2732,8 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             if (new_server)
             {
                 weechat_printf (NULL,
-                                _("%sirc: server %s%s%s created"),
-                                weechat_prefix ("info"),
+                                _("%s%s: server %s%s%s created"),
+                                weechat_prefix ("info"), "irc",
                                 IRC_COLOR_CHAT_SERVER,
                                 server_tmp.name,
                                 IRC_COLOR_CHAT);
@@ -2738,8 +2741,8 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             else
             {
                 weechat_printf (NULL,
-                                _("%sirc: unable to create server"),
-                                weechat_prefix ("error"));
+                                _("%s%s: unable to create server"),
+                                weechat_prefix ("error"), "irc");
                 irc_server_free_data (&server_tmp);
                 return WEECHAT_RC_ERROR;
             }
@@ -2761,9 +2764,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             if (!server_found)
             {
                 weechat_printf (NULL,
-                                _("%sirc: server \"%s\" not found for "
+                                _("%s%s: server \"%s\" not found for "
                                   "\"%s\" command"),
-                                weechat_prefix ("error"),
+                                weechat_prefix ("error"), "irc",
                                 argv[2], "server copy");
                 return WEECHAT_RC_ERROR;
             }
@@ -2772,9 +2775,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             if (irc_server_search (argv[3]))
             {
                 weechat_printf (NULL,
-                                _("%sirc: server \"%s\" already exists for "
+                                _("%s%s: server \"%s\" already exists for "
                                   "\"%s\" command"),
-                                weechat_prefix ("error"),
+                                weechat_prefix ("error"), "irc",
                                 argv[3], "server copy");
                 return WEECHAT_RC_ERROR;
             }
@@ -2784,8 +2787,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             if (new_server)
             {
                 weechat_printf (NULL,
-                                _("%sirc: Server %s%s%s has been copied to "
+                                _("%s%s: Server %s%s%s has been copied to "
                                   "%s%s"),
+                                weechat_prefix ("info"), "irc",
                                 IRC_COLOR_CHAT_SERVER,
                                 argv[2],
                                 IRC_COLOR_CHAT,
@@ -2809,9 +2813,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             if (!server_found)
             {
                 weechat_printf (NULL,
-                                _("%sirc: server \"%s\" not found for "
+                                _("%s%s: server \"%s\" not found for "
                                   "\"%s\" command"),
-                                weechat_prefix ("error"),
+                                weechat_prefix ("error"), "irc",
                                 argv[2], "server rename");
                 return WEECHAT_RC_ERROR;
             }
@@ -2820,9 +2824,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             if (irc_server_search (argv[3]))
             {
                 weechat_printf (NULL,
-                                _("%sirc: server \"%s\" already exists for "
+                                _("%s%s: server \"%s\" already exists for "
                                   "\"%s\" command"),
-                                weechat_prefix ("error"),
+                                weechat_prefix ("error"), "irc",
                                 argv[3], "server rename");
                 return WEECHAT_RC_ERROR;
             }
@@ -2831,9 +2835,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             if (irc_server_rename (server_found, argv[3]))
             {
                 weechat_printf (NULL,
-                                _("%sirc: server %s%s%s has been renamed to "
+                                _("%s%s: server %s%s%s has been renamed to "
                                   "%s%s"),
-                                weechat_prefix ("info"),
+                                weechat_prefix ("info"), "irc",
                                 IRC_COLOR_CHAT_SERVER,
                                 argv[2],
                                 IRC_COLOR_CHAT,
@@ -2857,9 +2861,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             if (!server_found)
             {
                 weechat_printf (NULL,
-                                _("%sirc: server \"%s\" not found for "
+                                _("%s%s: server \"%s\" not found for "
                                   "\"%s\" command"),
-                                weechat_prefix ("error"),
+                                weechat_prefix ("error"), "irc",
                                 argv[2], "server keep");
                 return WEECHAT_RC_ERROR;
             }
@@ -2868,9 +2872,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             if (!server_found->temp_server)
             {
                 weechat_printf (NULL,
-                                _("%sirc: server \"%s\" is not a temporary "
+                                _("%s%s: server \"%s\" is not a temporary "
                                   "server"),
-                                weechat_prefix ("error"), argv[2]);
+                                weechat_prefix ("error"), "irc", argv[2]);
                 return WEECHAT_RC_ERROR;
             }
             
@@ -2878,9 +2882,9 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             server_found->temp_server = 0;
 
             weechat_printf (NULL,
-                            _("%sirc: server %s%s%s is not temporary any "
+                            _("%s%s: server %s%s%s is not temporary any "
                               "more"),
-                            weechat_prefix ("info"),
+                            weechat_prefix ("info"), "irc",
                             IRC_COLOR_CHAT_SERVER,
                             argv[2],
                             IRC_COLOR_CHAT);
@@ -2899,19 +2903,20 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             if (!server_found)
             {
                 weechat_printf (NULL,
-                                _("%sirc: server \"%s\" not found for "
+                                _("%s%s: server \"%s\" not found for "
                                   "\"%s\" command"),
-                                weechat_prefix ("error"),
+                                weechat_prefix ("error"), "irc",
                                 argv[2], "server del");
                 return WEECHAT_RC_ERROR;
             }
             if (server_found->is_connected)
             {
                 weechat_printf (NULL,
-                                _("%sirc: you can not delete server \"%s\" "
+                                _("%s%s: you can not delete server \"%s\" "
                                   "because you are connected to. "
                                   "Try \"/disconnect %s\" before."),
-                                weechat_prefix ("error"), argv[2], argv[2]);
+                                weechat_prefix ("error"), "irc",
+                                argv[2], argv[2]);
                 return WEECHAT_RC_ERROR;
             }
 
@@ -2933,8 +2938,8 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             irc_server_free (server_found);
             
             weechat_printf (NULL,
-                            _("%sirc: Server %s%s%s has been deleted"),
-                            weechat_prefix ("info"),
+                            _("%s%s: Server %s%s%s has been deleted"),
+                            weechat_prefix ("info"), "irc",
                             IRC_COLOR_CHAT_SERVER,
                             (server_name) ? server_name : "???",
                             IRC_COLOR_CHAT);
@@ -2953,16 +2958,17 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                 irc_server_outqueue_free_all (ptr_server);
             }
             weechat_printf (NULL,
-                            _("irc: messages outqueue DELETED for all "
+                            _("%s%s: messages outqueue DELETED for all "
                               "servers. Some messages from you or "
-                              "WeeChat may have been lost!"));
+                              "WeeChat may have been lost!"),
+                            weechat_prefix ("info"), "irc");
             return WEECHAT_RC_OK;
         }
         else
         {
             weechat_printf (NULL,
-                            _("%sirc: unknown option for \"%s\" command"),
-                            weechat_prefix ("error"), "server");
+                            _("%s%s: unknown option for \"%s\" command"),
+                            weechat_prefix ("error"), "irc", "server");
             return WEECHAT_RC_ERROR;
         }
     }
@@ -3192,9 +3198,9 @@ irc_command_topic (void *data, struct t_gui_buffer *buffer, int argc,
         else
         {
             weechat_printf (ptr_server->buffer,
-                            _("%sirc: \"%s\" command can only be "
+                            _("%s%s: \"%s\" command can only be "
                               "executed in a channel buffer"),
-                            weechat_prefix ("error"), "topic");
+                            weechat_prefix ("error"), "irc", "topic");
             return WEECHAT_RC_ERROR;
         }
     }
@@ -3279,9 +3285,9 @@ irc_command_unban (void *data, struct t_gui_buffer *buffer, int argc,
             else
             {
                 weechat_printf (ptr_server->buffer,
-                                _("%sirc: \"%s\" command can only be "
+                                _("%s%s: \"%s\" command can only be "
                                   "executed in a channel buffer"),
-                                weechat_prefix ("error"), "unban");
+                                weechat_prefix ("error"), "irc", "unban");
                 return WEECHAT_RC_ERROR;
             }
         }
@@ -3297,8 +3303,8 @@ irc_command_unban (void *data, struct t_gui_buffer *buffer, int argc,
     else
     {
         weechat_printf (ptr_server->buffer,
-                        _("%sirc: wrong argument count for \"%s\" command"),
-                        weechat_prefix ("error"), "unban");
+                        _("%s%s: wrong argument count for \"%s\" command"),
+                        weechat_prefix ("error"), "irc", "unban");
         return WEECHAT_RC_ERROR;
     }
     
@@ -3416,9 +3422,9 @@ irc_command_voice (void *data, struct t_gui_buffer *buffer, int argc,
     else
     {
         weechat_printf (ptr_server->buffer,
-                        _("%sirc: \"%s\" command can only be "
+                        _("%s%s: \"%s\" command can only be "
                           "executed in a channel buffer"),
-                        weechat_prefix ("error"), "voice");
+                        weechat_prefix ("error"), "irc", "voice");
         return WEECHAT_RC_ERROR;
     }
     return WEECHAT_RC_OK;

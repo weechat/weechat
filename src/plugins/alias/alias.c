@@ -191,9 +191,9 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
     if (ptr_alias->running)
     {
         weechat_printf (NULL,
-                        _("%sAlias: error, circular reference when calling "
-                          "alias \"/%s\""),
-                        weechat_prefix ("error"),
+                        _("%s%s: error, circular reference when calling "
+                          "alias \"%s\""),
+                        weechat_prefix ("error"), "Alias",
                         ptr_alias->name);
         return WEECHAT_RC_ERROR;
     }
@@ -349,9 +349,9 @@ alias_get_final_command (struct t_alias *alias)
     if (alias->running)
     {
         weechat_printf (NULL,
-                        _("%sAlias: error, circular reference when calling "
-                          "alias \"/%s\""),
-                        weechat_prefix ("error"),
+                        _("%s%s: error, circular reference when calling "
+                          "alias \"%s\""),
+                        weechat_prefix ("error"), "Alias",
                         alias->name);
         return NULL;
     }
@@ -431,8 +431,8 @@ alias_config_read_line (struct t_config_file *config_file, char *option_name,
         if (!alias_new (option_name, value))
         {
             weechat_printf (NULL,
-                            "%sAlias: error creating alias \"%s\" => \"%s\"",
-                            weechat_prefix ("error"),
+                            "%s%s: error creating alias \"%s\" => \"%s\"",
+                            weechat_prefix ("error"), "Alias",
                             option_name, value);
         }
     }
@@ -551,14 +551,13 @@ alias_config_reload_signal_cb (void *data, char *signal, void *signal_data)
     if (weechat_config_reload (alias_config_file) == 0)
     {
         weechat_printf (NULL,
-                        _("%sAlias: configuration file reloaded"),
-                        weechat_prefix ("info"));
+                        _("%s%s: configuration file reloaded"),
+                        weechat_prefix ("info"), "Alias");
         return WEECHAT_RC_OK;
     }
     weechat_printf (NULL,
-                    _("%sAlias: failed to reload alias configuration "
-                      "file"),
-                    weechat_prefix ("error"));
+                    _("%s%s: failed to reload configuration file"),
+                    weechat_prefix ("error"), "Alias");
     return WEECHAT_RC_ERROR;
 }
 
@@ -596,9 +595,9 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
             if (!alias_new (alias_name, argv_eol[2]))
             {
                 weechat_printf (NULL,
-                                _("%sAlias: error creating alias \"%s\" "
-                                  "=> \"%\""),
-                                weechat_prefix ("error"),
+                                _("%s%s: error creating alias \"%s\" "
+                                  "=> \"%s\""),
+                                weechat_prefix ("error"), "Alias",
                                 alias_name, argv_eol[2]);
                 return WEECHAT_RC_ERROR;
             }
@@ -646,9 +645,7 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
             }
         }
         else
-            weechat_printf (NULL,
-                            _("%sNo alias defined."),
-                            weechat_prefix ("info"));
+            weechat_printf (NULL, _("No alias defined"));
     }
     return 0;
 }
@@ -726,8 +723,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     if (!alias_config_init ())
     {
         weechat_printf (NULL,
-                        "%sAlias: error creating configuration file \"%s\"",
-                        weechat_prefix("error"),
+                        "%s%s: error creating configuration file \"%s\"",
+                        weechat_prefix("error"), "Alias",
                         ALIAS_CONFIG_FILENAME);
         return WEECHAT_RC_ERROR;
     }

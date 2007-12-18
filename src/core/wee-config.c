@@ -198,10 +198,9 @@ config_change_save_on_exit ()
 {
     if (!config_look_save_on_exit)
     {
-        gui_chat_printf (NULL, "\n");
         gui_chat_printf (NULL,
                          _("Warning: you should now issue /save to write "
-                           "\"save_on_exit\" option in configuration file.\n"));
+                           "\"save_on_exit\" option in configuration file"));
     }
 }
 
@@ -550,7 +549,7 @@ config_weechat_init ()
         NULL, 1, 10, "10", &config_change_nicks_colors);
     config_look_nicklist = config_file_new_option (
         ptr_section, "look_nicklist", "boolean",
-        N_("display nicklist (on buffers with nicklist enabled"),
+        N_("display nicklist (on buffers with nicklist enabled)"),
         NULL, 0, 0, "on", &config_change_buffers);
     config_look_nicklist_position = config_file_new_option (
         ptr_section, "look_nicklist_position", "integer",
@@ -560,7 +559,7 @@ config_weechat_init ()
     config_look_nicklist_min_size = config_file_new_option (
         ptr_section, "look_nicklist_min_size", "integer",
         N_("min size for nicklist (width or height, depending on "
-           "look_nicklist_position "),
+           "look_nicklist_position (0 = no min size))"),
         NULL, 0, 100, "0", &config_change_buffers);
     config_look_nicklist_max_size = config_file_new_option (
         ptr_section, "look_nicklist_max_size", "integer",
@@ -618,7 +617,7 @@ config_weechat_init ()
         NULL, 0, 0, "|", &config_change_buffers);
     config_look_nick_completor = config_file_new_option (
         ptr_section, "look_nick_completor", "string",
-        N_("the string inserted after nick completion"),
+        N_("string inserted after nick completion"),
         NULL, 0, 0, ":", NULL);
     config_look_nick_completion_ignore = config_file_new_option (
         ptr_section, "look_nick_completion_ignore", "string",
@@ -710,12 +709,12 @@ config_weechat_init ()
     /* general color settings */
     config_color_separator = config_file_new_option (
         ptr_section, "color_separator", "color",
-        N_("color for window separators (when splited)"),
+        N_("background color for window separators (when splited)"),
         NULL, GUI_COLOR_SEPARATOR, 0, "blue", &config_change_color);
     /* title window */
     config_color_title = config_file_new_option (
         ptr_section, "color_title", "color",
-        N_("color for title bar"),
+        N_("text color for title bar"),
         NULL, GUI_COLOR_TITLE, 0, "default", &config_change_color);
     config_color_title_bg = config_file_new_option (
         ptr_section, "color_title_bg", "color",
@@ -723,136 +722,136 @@ config_weechat_init ()
         NULL, -1, 0, "blue", &config_change_color);
     config_color_title_more = config_file_new_option (
         ptr_section, "color_title_more", "color",
-        N_("color for '+' when scrolling title"),
+        N_("text color for '+' when scrolling title"),
         NULL, GUI_COLOR_TITLE_MORE, 0, "lightmagenta", &config_change_color);
     /* chat window */
     config_color_chat = config_file_new_option (
         ptr_section, "color_chat", "color",
-        N_("color for chat text"),
+        N_("text color for chat"),
         NULL, GUI_COLOR_CHAT, 0, "default", &config_change_color);
     config_color_chat_bg = config_file_new_option (
         ptr_section, "color_chat_bg", "color",
-        N_("background for chat text"),
+        N_("background color for chat"),
         NULL, -1, 0, "default", &config_change_color);
     config_color_chat_time = config_file_new_option (
         ptr_section, "color_chat_time", "color",
-        N_("color for time in chat window"),
+        N_("text color for time in chat window"),
         NULL, GUI_COLOR_CHAT_TIME, 0, "default", &config_change_color);
     config_color_chat_time_delimiters = config_file_new_option (
         ptr_section, "color_chat_time_delimiters", "color",
-        N_("color for time delimiters)"),
+        N_("text color for time delimiters"),
         NULL, GUI_COLOR_CHAT_TIME_DELIMITERS, 0, "brown", &config_change_color);
     config_color_chat_prefix[GUI_CHAT_PREFIX_INFO] = config_file_new_option (
         ptr_section, "color_chat_prefix_info", "color",
-        N_("color for info prefix"),
+        N_("text color for info prefix"),
         NULL, GUI_COLOR_CHAT_PREFIX_INFO, 0, "lightcyan", &config_change_color);
     config_color_chat_prefix[GUI_CHAT_PREFIX_ERROR] = config_file_new_option (
         ptr_section, "color_chat_prefix_error", "color",
-        N_("color for error prefix"),
+        N_("text color for error prefix"),
         NULL, GUI_COLOR_CHAT_PREFIX_ERROR, 0, "yellow", &config_change_color);
     config_color_chat_prefix[GUI_CHAT_PREFIX_NETWORK] = config_file_new_option (
         ptr_section, "color_chat_prefix_network", "color",
-        N_("color for network prefix"),
+        N_("text color for network prefix"),
         NULL, GUI_COLOR_CHAT_PREFIX_NETWORK, 0, "lightmagenta", &config_change_color);
     config_color_chat_prefix[GUI_CHAT_PREFIX_ACTION] = config_file_new_option (
         ptr_section, "color_chat_prefix_action", "color",
-        N_("color for action prefix"),
+        N_("text color for action prefix"),
         NULL, GUI_COLOR_CHAT_PREFIX_ACTION, 0, "white", &config_change_color);
     config_color_chat_prefix[GUI_CHAT_PREFIX_JOIN] = config_file_new_option (
         ptr_section, "color_chat_prefix_join", "color",
-        N_("color for join prefix"),
+        N_("text color for join prefix"),
         NULL, GUI_COLOR_CHAT_PREFIX_JOIN, 0, "lightgreen", &config_change_color);
     config_color_chat_prefix[GUI_CHAT_PREFIX_QUIT] = config_file_new_option (
         ptr_section, "color_chat_prefix_quit", "color",
-        N_("color for quit prefix"),
+        N_("text color for quit prefix"),
         NULL, GUI_COLOR_CHAT_PREFIX_QUIT, 0, "lightred", &config_change_color);
     config_color_chat_prefix_more = config_file_new_option (
         ptr_section, "color_chat_prefix_more", "color",
-        N_("color for '+' when prefix is too long"),
+        N_("text color for '+' when prefix is too long"),
         NULL, GUI_COLOR_CHAT_PREFIX_MORE, 0, "lightmagenta", &config_change_color);
     config_color_chat_prefix_suffix = config_file_new_option (
         ptr_section, "color_chat_prefix_suffix", "color",
-        N_("color for text after prefix"),
+        N_("text color for suffix (after prefix)"),
         NULL, GUI_COLOR_CHAT_PREFIX_SUFFIX, 0, "green", &config_change_color);
     config_color_chat_buffer = config_file_new_option (
         ptr_section, "color_chat_buffer", "color",
-        N_("color for buffer names"),
+        N_("text color for buffer names"),
         NULL, GUI_COLOR_CHAT_BUFFER, 0, "white", &config_change_color);
     config_color_chat_server = config_file_new_option (
         ptr_section, "color_chat_server", "color",
-        N_("color for server names"),
+        N_("text color for server names"),
         NULL, GUI_COLOR_CHAT_SERVER, 0, "brown", &config_change_color);
     config_color_chat_channel = config_file_new_option (
         ptr_section, "color_chat_channel", "color",
-        N_("color for channel names"),
+        N_("text color for channel names"),
         NULL, GUI_COLOR_CHAT_CHANNEL, 0, "white", &config_change_color);
     config_color_chat_nick = config_file_new_option (
         ptr_section, "color_chat_nick", "color",
-        N_("color for nicks"),
+        N_("text color for nicks in chat window"),
         NULL, GUI_COLOR_CHAT_NICK, 0, "lightcyan", &config_change_color);
     config_color_chat_nick_self = config_file_new_option (
         ptr_section, "color_chat_nick_self", "color",
-        N_("color for local nick"),
+        N_("text color for local nick in chat window"),
         NULL, GUI_COLOR_CHAT_NICK_SELF, 0, "white", &config_change_color);
     config_color_chat_nick_other = config_file_new_option (
         ptr_section, "color_chat_nick_other", "color",
-        N_("color for other nick in private buffer"),
+        N_("text color for other nick in private buffer"),
         NULL, GUI_COLOR_CHAT_NICK_OTHER, 0, "default", &config_change_color);
     config_color_chat_nick_colors[0] = config_file_new_option (
         ptr_section, "color_chat_nick_color1", "color",
-        N_("color #1 for nick"),
+        N_("text color #1 for nick"),
         NULL, GUI_COLOR_CHAT_NICK1, 0, "cyan", &config_change_color);
     config_color_chat_nick_colors[1] = config_file_new_option (
         ptr_section, "color_chat_nick_color2", "color",
-        N_("color #2 for nick"),
+        N_("text color #2 for nick"),
         NULL, GUI_COLOR_CHAT_NICK2, 0, "magenta", &config_change_color);
     config_color_chat_nick_colors[2] = config_file_new_option (
         ptr_section, "color_chat_nick_color3", "color",
-        N_("color #3 for nick"),
+        N_("text color #3 for nick"),
         NULL, GUI_COLOR_CHAT_NICK3, 0, "green", &config_change_color);
     config_color_chat_nick_colors[3] = config_file_new_option (
         ptr_section, "color_chat_nick_color4", "color",
-        N_("color #4 for nick"),
+        N_("text color #4 for nick"),
         NULL, GUI_COLOR_CHAT_NICK4, 0, "brown", &config_change_color);
     config_color_chat_nick_colors[4] = config_file_new_option (
         ptr_section, "color_chat_nick_color5", "color",
-        N_("color #5 for nick"),
+        N_("text color #5 for nick"),
         NULL, GUI_COLOR_CHAT_NICK5, 0, "lightblue", &config_change_color);
     config_color_chat_nick_colors[5] = config_file_new_option (
         ptr_section, "color_chat_nick_color6", "color",
-        N_("color #6 for nick"),
+        N_("text color #6 for nick"),
         NULL, GUI_COLOR_CHAT_NICK6, 0, "default", &config_change_color);
     config_color_chat_nick_colors[6] = config_file_new_option (
         ptr_section, "color_chat_nick_color7", "color",
-        N_("color #7 for nick"),
+        N_("text color #7 for nick"),
         NULL, GUI_COLOR_CHAT_NICK7, 0, "lightcyan", &config_change_color);
     config_color_chat_nick_colors[7] = config_file_new_option (
         ptr_section, "color_chat_nick_color8", "color",
-        N_("color #8 for nick"),
+        N_("text color #8 for nick"),
         NULL, GUI_COLOR_CHAT_NICK8, 0, "lightmagenta", &config_change_color);
     config_color_chat_nick_colors[8] = config_file_new_option (
         ptr_section, "color_chat_nick_color9", "color",
-        N_("color #9 for nick"),
+        N_("text color #9 for nick"),
         NULL, GUI_COLOR_CHAT_NICK9, 0, "lightgreen", &config_change_color);
     config_color_chat_nick_colors[9] = config_file_new_option (
         ptr_section, "color_chat_nick_color10", "color",
-        N_("color #10 for nick"),
+        N_("text color #10 for nick"),
         NULL, GUI_COLOR_CHAT_NICK10, 0, "blue", &config_change_color);
     config_color_chat_host = config_file_new_option (
         ptr_section, "color_chat_host", "color",
-        N_("color for hostnames"),
+        N_("text color for hostnames"),
         NULL, GUI_COLOR_CHAT_HOST, 0, "cyan", &config_change_color);
     config_color_chat_delimiters = config_file_new_option (
         ptr_section, "color_chat_delimiters", "color",
-        N_("color for delimiters"),
+        N_("text color for delimiters"),
         NULL, GUI_COLOR_CHAT_DELIMITERS, 0, "green", &config_change_color);
     config_color_chat_highlight = config_file_new_option (
         ptr_section, "color_chat_highlight", "color",
-        N_("color for highlighted nick"),
+        N_("text color for highlighted nick"),
         NULL, GUI_COLOR_CHAT_HIGHLIGHT, 0, "yellow", &config_change_color);
     config_color_chat_read_marker = config_file_new_option (
         ptr_section, "color_chat_read_marker", "color",
-        N_("color for unread data marker"),
+        N_("text color for unread data marker"),
         NULL, GUI_COLOR_CHAT_READ_MARKER, 0, "yellow", &config_change_color);
     config_color_chat_read_marker_bg = config_file_new_option (
         ptr_section, "color_chat_read_marker_bg", "color",
@@ -861,7 +860,7 @@ config_weechat_init ()
     /* status window */
     config_color_status = config_file_new_option (
         ptr_section, "color_status", "color",
-        N_("color for status bar"),
+        N_("text color for status bar"),
         NULL, GUI_COLOR_STATUS, 0, "default", &config_change_color);
     config_color_status_bg = config_file_new_option (
         ptr_section, "color_status_bg", "color",
@@ -869,87 +868,87 @@ config_weechat_init ()
         NULL, -1, 0, "blue", &config_change_color);
     config_color_status_delimiters = config_file_new_option (
         ptr_section, "color_status_delimiters", "color",
-        N_("color for status bar delimiters"),
+        N_("text color for status bar delimiters"),
         NULL, GUI_COLOR_STATUS_DELIMITERS, 0, "cyan", &config_change_color);
     config_color_status_channel = config_file_new_option (
         ptr_section, "color_status_channel", "color",
-        N_("color for current channel in status bar"),
+        N_("text color for current channel in status bar"),
         NULL, GUI_COLOR_STATUS_CHANNEL, 0, "white", &config_change_color);
     config_color_status_data_msg = config_file_new_option (
         ptr_section, "color_status_data_msg", "color",
-        N_("color for window with new messages (status bar)"),
+        N_("text color for buffer with new messages (status bar)"),
         NULL, GUI_COLOR_STATUS_DATA_MSG, 0, "yellow", &config_change_color);
     config_color_status_data_private = config_file_new_option (
         ptr_section, "color_status_data_private", "color",
-        N_("color for window with private message (status bar)"),
+        N_("text color for buffer with private message (status bar)"),
         NULL, GUI_COLOR_STATUS_DATA_PRIVATE, 0, "lightgreen", &config_change_color);
     config_color_status_data_highlight = config_file_new_option (
         ptr_section, "color_status_data_highlight", "color",
-        N_("color for window with highlight (status bar)"),
+        N_("text color for buffer with highlight (status bar)"),
         NULL, GUI_COLOR_STATUS_DATA_HIGHLIGHT, 0, "lightmagenta", &config_change_color);
     config_color_status_data_other = config_file_new_option (
         ptr_section, "color_status_data_other", "color",
-        N_("color for window with new data (not messages) "
+        N_("text color for buffer with new data (not messages) "
            "(status bar)"),
         NULL, GUI_COLOR_STATUS_DATA_OTHER, 0, "default", &config_change_color);
     config_color_status_more = config_file_new_option (
         ptr_section, "color_status_more", "color",
-        N_("color for window with new data (status bar)"),
+        N_("text color for buffer with new data (status bar)"),
         NULL, GUI_COLOR_STATUS_MORE, 0, "white", &config_change_color);
     /* infobar window */
     config_color_infobar = config_file_new_option (
         ptr_section, "color_infobar", "color",
-        N_("color for infobar text"),
+        N_("text color for infobar"),
         NULL, GUI_COLOR_INFOBAR, 0, "black", &config_change_color);
     config_color_infobar_bg = config_file_new_option (
         ptr_section, "color_infobar_bg", "color",
-        N_("background color for info bar text"),
+        N_("background color for infobar"),
         NULL, -1, 0, "cyan", &config_change_color);
     config_color_infobar_delimiters = config_file_new_option (
         ptr_section, "color_infobar_delimiters", "color",
-        N_("color for infobar delimiters"),
+        N_("text color for infobar delimiters"),
         NULL, GUI_COLOR_INFOBAR_DELIMITERS, 0, "blue", &config_change_color);
     config_color_infobar_highlight = config_file_new_option (
         ptr_section, "color_infobar_highlight", "color",
-        N_("color for infobar highlight notification"),
+        N_("text color for infobar highlight notification"),
         NULL, GUI_COLOR_INFOBAR_HIGHLIGHT, 0, "white", &config_change_color);
     /* input window */
     config_color_input = config_file_new_option (
         ptr_section, "color_input", "color",
-        N_("color for input text"),
+        N_("text color for input line"),
         NULL, GUI_COLOR_INPUT, 0, "default", &config_change_color);
     config_color_input_bg = config_file_new_option (
         ptr_section, "color_input_bg", "color",
-        N_("background color for input text"),
+        N_("background color for input line"),
         NULL, -1, 0, "default", &config_change_color);
     config_color_input_server = config_file_new_option (
         ptr_section, "color_input_server", "color",
-        N_("color for input text (server name)"),
+        N_("text color for server name in input line"),
         NULL, GUI_COLOR_INPUT_SERVER, 0, "brown", &config_change_color);
     config_color_input_channel = config_file_new_option (
         ptr_section, "color_input_channel", "color",
-        N_("color for input text (channel name)"),
+        N_("text color for channel name in input line"),
         NULL, GUI_COLOR_INPUT_CHANNEL, 0, "white", &config_change_color);
     config_color_input_nick = config_file_new_option (
         ptr_section, "color_input_nick", "color",
-        N_("color for input text (nick name)"),
+        N_("text color for nick name in input line"),
         NULL, GUI_COLOR_INPUT_NICK, 0, "lightcyan", &config_change_color);
     config_color_input_delimiters = config_file_new_option (
         ptr_section, "color_input_delimiters", "color",
-        N_("color for input text (delimiters)"),
+        N_("text color for delimiters in input line"),
         NULL, GUI_COLOR_INPUT_DELIMITERS, 0, "cyan", &config_change_color);
     config_color_input_text_not_found = config_file_new_option (
         ptr_section, "color_input_text_not_found", "color",
-        N_("color for text not found"),
+        N_("text color for unsucessful text search in input line"),
         NULL, GUI_COLOR_INPUT_TEXT_NOT_FOUND, 0, "red", &config_change_color);
     config_color_input_actions = config_file_new_option (
         ptr_section, "color_input_actions", "color",
-        N_("color for actions in input window"),
+        N_("text color for actions in input line"),
         NULL, GUI_COLOR_INPUT_ACTIONS, 0, "lightgreen", &config_change_color);
     /* nicklist window */
     config_color_nicklist = config_file_new_option (
         ptr_section, "color_nicklist", "color",
-        N_("color for nicklist"),
+        N_("text color for nicklist"),
         NULL, GUI_COLOR_NICKLIST, 0, "default", &config_change_color);
     config_color_nicklist_bg = config_file_new_option (
         ptr_section, "color_nicklist_bg", "color",
@@ -957,40 +956,40 @@ config_weechat_init ()
         NULL, -1, 0, "default", &config_change_color);
     config_color_nicklist_away = config_file_new_option (
         ptr_section, "color_nicklist_away", "color",
-        N_("color for away nicknames"),
+        N_("text color for away nicknames"),
         NULL, GUI_COLOR_NICKLIST_AWAY, 0, "cyan", &config_change_color);
     config_color_nicklist_prefix1 = config_file_new_option (
         ptr_section, "color_nicklist_prefix1", "color",
-        N_("color for prefix 1"),
+        N_("text color for prefix #1 in nicklist"),
         NULL, GUI_COLOR_NICKLIST_PREFIX1, 0, "lightgreen", &config_change_color);
     config_color_nicklist_prefix2 = config_file_new_option (
         ptr_section, "color_nicklist_prefix2", "color",
-        N_("color for prefix 2"),
+        N_("text color for prefix #2 in nicklist"),
         NULL, GUI_COLOR_NICKLIST_PREFIX2, 0, "lightmagenta", &config_change_color);
     config_color_nicklist_prefix3 = config_file_new_option (
         ptr_section, "color_nicklist_prefix3", "color",
-        N_("color for prefix 3"),
+        N_("text color for prefix #3 in nicklist"),
         NULL, GUI_COLOR_NICKLIST_PREFIX3, 0, "yellow", &config_change_color);
     config_color_nicklist_prefix4 = config_file_new_option (
         ptr_section, "color_nicklist_prefix4", "color",
-        N_("color for prefix 4"),
+        N_("text color for prefix #4 in nicklist"),
         NULL, GUI_COLOR_NICKLIST_PREFIX4, 0, "blue", &config_change_color);
     config_color_nicklist_prefix5 = config_file_new_option (
         ptr_section, "color_nicklist_prefix5", "color",
-        N_("color for prefix 5"),
+        N_("text color for prefix #5 in nicklist"),
         NULL, GUI_COLOR_NICKLIST_PREFIX5, 0, "brown", &config_change_color);
     config_color_nicklist_more = config_file_new_option (
         ptr_section, "color_nicklist_more", "color",
-        N_("color for '+' when scrolling nicks (nicklist)"),
+        N_("text color for '+' when scrolling nicks in nicklist"),
         NULL, GUI_COLOR_NICKLIST_MORE, 0, "lightmagenta", &config_change_color);
     config_color_nicklist_separator = config_file_new_option (
         ptr_section, "color_nicklist_separator", "color",
-        N_("color for nicklist separator"),
+        N_("text color for nicklist separator"),
         NULL, GUI_COLOR_NICKLIST_SEPARATOR, 0, "blue", &config_change_color);
     /* status info */
     config_color_info = config_file_new_option (
         ptr_section, "color_info", "color",
-        N_("color for status info"),
+        N_("text color for status info"),
         NULL, GUI_COLOR_INFO, 0, "default", &config_change_color);
     config_color_info_bg = config_file_new_option (
         ptr_section, "color_info_bg", "color",
@@ -998,27 +997,27 @@ config_weechat_init ()
         NULL, -1, 0, "default", &config_change_color);
     config_color_info_waiting = config_file_new_option (
         ptr_section, "color_info_waiting", "color",
-        N_("color for \"waiting\" status info"),
+        N_("text color for \"waiting\" status info"),
         NULL, GUI_COLOR_INFO_WAITING, 0, "lightcyan", &config_change_color);
     config_color_info_connecting = config_file_new_option (
         ptr_section, "color_info_connecting", "color",
-        N_("color for \"connecting\" status info"),
+        N_("text color for \"connecting\" status info"),
         NULL, GUI_COLOR_INFO_CONNECTING, 0, "yellow", &config_change_color);
     config_color_info_active = config_file_new_option (
         ptr_section, "color_info_active", "color",
-        N_("color for \"active\" status info"),
+        N_("text color for \"active\" status info"),
         NULL, GUI_COLOR_INFO_ACTIVE, 0, "lightblue", &config_change_color);
     config_color_info_done = config_file_new_option (
         ptr_section, "color_info_done", "color",
-        N_("color for \"done\" status info"),
+        N_("text color for \"done\" status info"),
         NULL, GUI_COLOR_INFO_DONE, 0, "lightgreen", &config_change_color);
     config_color_info_failed = config_file_new_option (
         ptr_section, "color_info_failed", "color",
-        N_("color for \"failed\" status info"),
+        N_("text color for \"failed\" status info"),
         NULL, GUI_COLOR_INFO_FAILED, 0, "lightred", &config_change_color);
     config_color_info_aborted = config_file_new_option (
         ptr_section, "color_info_aborted", "color",
-        N_("color for \"aborted\" status info"),
+        N_("text color for \"aborted\" status info"),
         NULL, GUI_COLOR_INFO_ABORTED, 0, "lightred", &config_change_color);
 
     /* history */
@@ -1108,7 +1107,7 @@ config_weechat_init ()
     config_plugins_extension = config_file_new_option (
         ptr_section, "plugins_extension", "string",
         N_("standard plugins extension in filename (for example "
-           "\".so\" under Linux or \".dll\" under Windows)"),
+           "\".so\" under Linux or \".dll\" under Microsoft Windows)"),
         NULL, 0, 0,
 #ifdef WIN32
         ".dll",

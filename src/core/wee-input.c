@@ -153,7 +153,7 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
 
             gui_chat_printf (NULL,
                              _("%sError: unknown command \"%s\" (type /help "
-                               "for help)."),
+                               "for help)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              command + 1);
             
@@ -220,7 +220,7 @@ input_data (struct t_gui_buffer *buffer, char *data, int only_builtin)
                 else
                     gui_chat_printf (buffer,
                                      _("%sYou can not write text in this "
-                                       "buffer!"),
+                                       "buffer"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             }
 
