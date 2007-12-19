@@ -136,6 +136,9 @@ void
 hook_remove_from_list (struct t_hook *hook)
 {
     struct t_hook *new_hooks;
+    int type;
+    
+    type = hook->type;
     
     if (last_weechat_hook[hook->type] == hook)
         last_weechat_hook[hook->type] = hook->prev_hook;
@@ -151,7 +154,8 @@ hook_remove_from_list (struct t_hook *hook)
         hook->next_hook->prev_hook = hook->prev_hook;
     
     free (hook);
-    weechat_hooks[hook->type] = new_hooks;
+    
+    weechat_hooks[type] = new_hooks;
 }
 
 /*
