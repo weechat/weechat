@@ -456,6 +456,7 @@ void
 plugin_remove (struct t_weechat_plugin *plugin)
 {
     struct t_weechat_plugin *new_weechat_plugins;
+    struct t_gui_buffer *ptr_buffer;
     
     /* remove plugin from list */
     if (last_weechat_plugin == plugin)
@@ -476,6 +477,14 @@ plugin_remove (struct t_weechat_plugin *plugin)
     
     /* remove all hooks */
     unhook_all_plugin (plugin);
+
+    /* remove pointer to this plugin on buffers */
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->plugin == plugin)
+            ptr_buffer->plugin = NULL;
+    }
     
     /* free data */
     if (plugin->filename)
