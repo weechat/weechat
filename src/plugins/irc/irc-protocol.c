@@ -533,10 +533,8 @@ int
 irc_protocol_cmd_error (struct t_irc_server *server, char *irc_message, char *host,
                         char *nick, char *arguments, int ignore, int highlight)
 {
-    char *pos;
+    char *pos_args, *pos;
     int first;
-    struct t_gui_buffer *ptr_buffer;
-    struct t_irc_channel *ptr_channel;
     
     /* make C compiler happy */
     (void) irc_message;
@@ -546,63 +544,38 @@ irc_protocol_cmd_error (struct t_irc_server *server, char *irc_message, char *ho
     (void) highlight;
     
     first = 1;
-    ptr_buffer = server->buffer;
     
-    while (arguments && arguments[0])
+    pos_args = strstr (arguments, " :");
+    if (pos_args)
     {
-        while (arguments[0] == ' ')
-            arguments++;
-        
-        if (arguments[0] == ':')
-        {
-            arguments++;
-            if (first)
-                weechat_printf (ptr_buffer,
-                                "%s%s%s",
-                                IRC_COLOR_CHAT,
-                                (first) ? "" : ": ",
-                                arguments);
-            else
-                weechat_printf (ptr_buffer,
-                                "%s%s%s",
-                                IRC_COLOR_CHAT,
-                                (first) ? "" : ": ",
-                                arguments);
-            if (strncmp (arguments, "Closing Link", 12) == 0)
-                irc_server_disconnect (server, 1);
-            arguments = NULL;
-        }
-        else
+        pos_args[0] = '\0';
+        if (weechat_strncasecmp (arguments, server->nick,
+                                 strlen (server->nick)) == 0)
         {
             pos = strchr (arguments, ' ');
             if (pos)
-                pos[0] = '\0';
-            if (weechat_strcasecmp (arguments, server->nick) != 0)
             {
-                if (first)
-                {
-                    ptr_channel = irc_channel_search (server, arguments);
-                    if (ptr_channel)
-                        ptr_buffer = ptr_channel->buffer;
-                    weechat_printf (ptr_buffer,
-                                    "%s%s%s",
-                                    IRC_COLOR_CHAT_CHANNEL,
-                                    (first) ? "" : " ",
-                                    arguments);
-                }
-                else
-                    weechat_printf (ptr_buffer,
-                                    "%s%s%s",
-                                    IRC_COLOR_CHAT_CHANNEL,
-                                    (first) ? "" : " ",
-                                    arguments);
-                first = 0;
+                while (pos[0] == ' ')
+                    pos++;
             }
-            if (pos)
-                arguments = pos + 1;
             else
-                arguments = NULL;
+                pos = arguments;
         }
+        else
+        {
+            pos = arguments;
+        }
+        weechat_printf (server->buffer, "%s%s: %s",
+                        weechat_prefix ("error"),
+                        pos, pos_args + 2);
+        if (strncmp (arguments, "Closing Link", 12) == 0)
+            irc_server_disconnect (server, 1);
+    }
+    else
+    {
+        weechat_printf (server->buffer, "%s%s",
+                        weechat_prefix ("error"),
+                        arguments);
     }
     
     return WEECHAT_RC_OK;
