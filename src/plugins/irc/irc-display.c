@@ -29,6 +29,7 @@
 #include <string.h>
 
 #include "irc.h"
+#include "irc-channel.h"
 #include "irc-command.h"
 #include "irc-config.h"
 #include "irc-server.h"

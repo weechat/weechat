@@ -124,7 +124,7 @@ irc_dcc_file_is_resumable (struct t_irc_dcc *ptr_dcc, char *filename)
 {
     struct stat st;
     
-    if (!irc_cfg_dcc_auto_resume)
+    if (!weechat_config_boolean (irc_config_dcc_auto_resume))
         return 0;
     
     if (access (filename, W_OK) == 0)
@@ -154,15 +154,24 @@ irc_dcc_file_is_resumable (struct t_irc_dcc *ptr_dcc, char *filename)
 void
 irc_dcc_find_filename (struct t_irc_dcc *ptr_dcc)
 {
-    char *dir1, *dir2, *filename2;
+    char *weechat_home, *dir1, *dir2, *filename2, *dir_separator;
     
     if (!IRC_DCC_IS_FILE(ptr_dcc->type))
         return;
     
-    dir1 = weechat_strreplace (irc_cfg_dcc_download_path, "~", getenv ("HOME"));
+    dir1 = weechat_string_replace (weechat_config_string (irc_config_dcc_download_path),
+                                                          "~",
+                                                          getenv ("HOME"));
     if (!dir1)
         return;
-    dir2 = weechat_strreplace (dir1, "%h", weechat_home);
+    
+    weechat_home = weechat_info_get ("weechat_dir");
+    if (!weechat_home)
+    {
+        free (dir1);
+        return;
+    }
+    dir2 = weechat_string_replace (dir1, "%h", weechat_home);
     if (!dir2)
     {
         free (dir1);
@@ -176,8 +185,10 @@ irc_dcc_find_filename (struct t_irc_dcc *ptr_dcc)
         return;
     
     strcpy (ptr_dcc->local_filename, dir2);
-    if (ptr_dcc->local_filename[strlen (ptr_dcc->local_filename) - 1] != DIR_SEPARATOR_CHAR)
-        strcat (ptr_dcc->local_filename, DIR_SEPARATOR);
+    dir_separator = weechat_info_get("dir_separator");
+    if (dir_separator
+        && (ptr_dcc->local_filename[strlen (ptr_dcc->local_filename) - 1] != dir_separator[0]))
+        strcat (ptr_dcc->local_filename, dir_separator);
     strcat (ptr_dcc->local_filename, ptr_dcc->nick);
     strcat (ptr_dcc->local_filename, ".");
     strcat (ptr_dcc->local_filename, ptr_dcc->filename);

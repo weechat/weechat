@@ -73,15 +73,16 @@ struct t_gui_buffer
     struct t_gui_line *last_read_line; /* last read line before jump        */
     int lines_count;                   /* number of lines in the buffer     */
     int prefix_max_length;             /* length for prefix align           */
-    int chat_refresh_needed;           /* if refresh is needed (printf)     */
+    int chat_refresh_needed;           /* refresh for chat is needed ?      */
     
     /* nicklist */ 
     int nicklist;                      /* = 1 if nicklist is enabled        */
-    int nick_case_sensitive;           /* nicks are case sensitive ?        */
-    struct t_gui_nick *nicks;          /* pointer to nicks for nicklist     */
-    struct t_gui_nick *last_nick;      /* last nick in nicklist             */
-    int nick_max_length;               /* max length for a nick             */
-    int nicks_count;                   /* number of nicks on buffer         */
+    int nicklist_case_sensitive;       /* nicks are case sensitive ?        */
+    struct t_gui_nick_group *nicklist_root; /* pointer to groups root       */
+    int nicklist_max_length;           /* max length for a nick             */
+    int nicklist_display_groups;       /* display groups ?                  */
+    int nicklist_visible_count;        /* number of nicks/groups to display */
+    int nicklist_refresh_needed;       /* refresh for nicklist is needed ?  */
     
     /* inupt */
     int input;                         /* = 1 if input is enabled           */
@@ -139,8 +140,8 @@ extern void gui_buffer_set_category (struct t_gui_buffer *buffer,
 extern void gui_buffer_set_name (struct t_gui_buffer *buffer, char *name);
 extern void gui_buffer_set_title (struct t_gui_buffer *buffer, char *new_title);
 extern void gui_buffer_set_nicklist (struct t_gui_buffer *buffer, int nicklist);
-extern void gui_buffer_set_nick_case_sensitive (struct t_gui_buffer * buffer,
-                                                int nick_case_sensitive);
+extern void gui_buffer_set_nicklist_case_sensitive (struct t_gui_buffer * buffer,
+                                                    int case_sensitive);
 extern void gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick);
 extern void gui_buffer_set (struct t_gui_buffer *buffer, char *property,
                             char *value);

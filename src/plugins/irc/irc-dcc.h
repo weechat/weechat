@@ -20,9 +20,6 @@
 #ifndef __WEECHAT_IRC_DCC_H
 #define __WEECHAT_IRC_DCC_H 1
 
-#include "irc-server.h"
-#include "irc-channel.h"
-
 /* DCC types */
 
 #define IRC_DCC_CHAT_RECV        0  /* receiving DCC chat                    */

@@ -115,6 +115,7 @@ struct t_weechat_plugin
                                                char *data);
     struct t_weelist_item *(*list_get) (struct t_weelist *weelist,
                                         int position);
+    void (*list_set) (struct t_weelist_item *item, char *new_value);
     struct t_weelist_item *(*list_next) (struct t_weelist_item *item);
     struct t_weelist_item *(*list_prev) (struct t_weelist_item *item);
     char *(*list_string) (struct t_weelist_item *item);
@@ -176,7 +177,8 @@ struct t_weechat_plugin
     void (*printf_date) (struct t_gui_buffer *buffer, time_t date,
                          char *message, ...);
     void (*log_printf) (char *message, ...);
-    void (*infobar_printf) (int delay, char *color_name, char *format, ...);
+    void (*infobar_printf) (struct t_weechat_plugin *plugin, int delay,
+                            char *color_name, char *format, ...);
     void (*infobar_remove) (int how_many);
     
     /* hooks */
@@ -238,11 +240,28 @@ struct t_weechat_plugin
     void *(*buffer_get) (struct t_gui_buffer *buffer, char *property);
     void (*buffer_set) (struct t_gui_buffer *buffer, char *property,
                         char *value);
-    struct t_gui_nick *(*buffer_nick_add) (struct t_gui_buffer *buffer,
-                                           char *nick, int sort_index,
-                                           char *color_nick, char prefix,
-                                           char *color_prefix);
-    int (*buffer_nick_remove) (struct t_gui_buffer *buffer, char *nick);
+    
+    /* nicklist */
+    struct t_gui_nick_group *(*nicklist_add_group) (struct t_gui_buffer *buffer,
+                                                    struct t_gui_nick_group *parent_group,
+                                                    char *name, char *color,
+                                                    int visible);
+    struct t_gui_nick_group *(*nicklist_search_group) (struct t_gui_buffer *buffer,
+                                                       struct t_gui_nick_group *from_group,
+                                                       char *name);
+    struct t_gui_nick *(*nicklist_add_nick) (struct t_gui_buffer *buffer,
+                                             struct t_gui_nick_group *group,
+                                             char *name, char *color,
+                                             char prefix, char *prefix_color,
+                                             int visible);
+    struct t_gui_nick *(*nicklist_search_nick) (struct t_gui_buffer *buffer,
+                                                struct t_gui_nick_group *from_group,
+                                                char *name);
+    void (*nicklist_remove_group) (struct t_gui_buffer *buffer,
+                                   struct t_gui_nick_group *group);
+    void (*nicklist_remove_nick) (struct t_gui_buffer *buffer,
+                                  struct t_gui_nick *nick);
+    void (*nicklist_remove_all) (struct t_gui_buffer *buffer);
     
     /* command */
     void (*command) (struct t_weechat_plugin *plugin,
@@ -356,6 +375,8 @@ struct t_weechat_plugin
     weechat_plugin->list_casesearch(__list, __string)
 #define weechat_list_get(__list, __index)       \
     weechat_plugin->list_get(__list, __index)
+#define weechat_list_set(__item, __new_value)           \
+    weechat_plugin->list_set(__item, __new_value)
 #define weechat_list_next(__item)               \
     weechat_plugin->list_next(__item)
 #define weechat_list_prev(__item)               \
@@ -434,8 +455,8 @@ struct t_weechat_plugin
     weechat_plugin->log_printf(__message, ##__argz)
 #define weechat_infobar_printf(__delay, __color_name, __message,        \
                                __argz...)                               \
-    weechat_plugin->infobar_printf(__delay, __color_name, __message,    \
-                                   ##__argz)
+    weechat_plugin->infobar_printf(weechat_plugin, __delay,             \
+                                   __color_name, __message, ##__argz)
 #define weechat_infobar_remove(__how_many)      \
     weechat_plugin->infobar_remove(__how_many)
 
@@ -490,6 +511,28 @@ struct t_weechat_plugin
     weechat_plugin->buffer_get(__buffer, __property)
 #define weechat_buffer_set(__buffer, __property, __value)       \
     weechat_plugin->buffer_set(__buffer, __property, __value)
+
+/* nicklist */
+#define weechat_nicklist_add_group(__buffer, __parent_group, __name, \
+                                   __color, __visible)               \
+    weechat_plugin->nicklist_add_group(__buffer, __parent_group,     \
+                                       __name, __color, __visible)
+#define weechat_nicklist_search_group(__buffer, __from_group, __name)   \
+    weechat_plugin->nicklist_search_group(__buffer, __from_group,       \
+                                          __name)
+#define weechat_nicklist_add_nick(__buffer, __group, __name, __color,   \
+                                  __prefix, __prefix_color, __visible)  \
+    weechat_plugin->nicklist_add_nick(__buffer, __group, __name,        \
+                                      __color, __prefix, __prefix_color, \
+                                      __visible)
+#define weechat_nicklist_search_nick(__buffer, __from_group, __name)    \
+    weechat_plugin->nicklist_search_nick(__buffer, __from_group, __name)
+#define weechat_nicklist_remove_group(__buffer, __group)        \
+    weechat_plugin->nicklist_remove_group(__buffer, __group)
+#define weechat_nicklist_remove_nick(__buffer, __nick)          \
+    weechat_plugin->nicklist_remove_nick(__buffer, __nick)
+#define weechat_nicklist_remove_all(__buffer)           \
+    weechat_plugin->nicklist_remove_all(__buffer)
 
 /* command */
 #define weechat_command(__buffer, __command)                            \

@@ -20,9 +20,6 @@
 #ifndef __WEECHAT_IRC_BUFFER_H
 #define __WEECHAT_IRC_BUFFER_H 1
 
-#include "irc-server.h"
-#include "irc-channel.h"
-
 #define IRC_BUFFER_SERVER(buffer) (((t_irc_buffer_data *)(buffer->protocol_data))->server)
 #define IRC_BUFFER_CHANNEL(buffer) (((t_irc_buffer_data *)(buffer->protocol_data))->channel)
 #define IRC_BUFFER_ALL_SERVERS(buffer) (((t_irc_buffer_data *)(buffer->protocol_data))->all_servers)

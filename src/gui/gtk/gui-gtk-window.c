@@ -451,7 +451,7 @@ gui_window_nick_end (struct t_gui_window *window)
     if (window->buffer->nicklist)
     {
         new_start =
-            window->buffer->nicks_count - window->win_nick_height;
+            window->buffer->nicklist_visible_count - window->win_nick_height;
         if (new_start < 0)
             new_start = 0;
         else if (new_start >= 1)
@@ -499,9 +499,9 @@ gui_window_nick_page_down (struct t_gui_window *window)
     
     if (window->buffer->nicklist)
     {
-        if ((window->buffer->nicks_count > window->win_nick_height)
+        if ((window->buffer->nicklist_visible_count > window->win_nick_height)
             && (window->win_nick_start + window->win_nick_height - 1
-                < window->buffer->nicks_count))
+                < window->buffer->nicklist_visible_count))
         {
             if (window->win_nick_start == 0)
                 window->win_nick_start += (window->win_nick_height - 1);

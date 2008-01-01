@@ -385,7 +385,7 @@ string_explode (char *string, char *separators, int keep_eol,
     i = 1;
     while ((ptr = strpbrk (ptr, separators)))
     {
-        while (strchr (separators, ptr[0]) != NULL)
+        while (ptr[0] && (strchr (separators, ptr[0]) != NULL))
             ptr++;
         i++;
     }
@@ -402,7 +402,7 @@ string_explode (char *string, char *separators, int keep_eol,
     
     for (i = 0; i < n_items; i++)
     {
-        while (strchr (separators, ptr1[0]) != NULL)
+        while (ptr1[0] && (strchr (separators, ptr1[0]) != NULL))
             ptr1++;
         if (i == (n_items - 1) || (ptr2 = strpbrk (ptr1, separators)) == NULL)
             if ((ptr2 = strchr (ptr1, '\r')) == NULL)

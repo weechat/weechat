@@ -638,26 +638,43 @@ hook_fd (struct t_weechat_plugin *plugin, int fd, int flag_read,
 
 /*
  * hook_fd_set: fill sets according to hd hooked
+ *              return highest fd set
  */
 
-void
+int
 hook_fd_set (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
 {
     struct t_hook *ptr_hook;
-    
+    int max_fd;
+
+    max_fd = 0;
     for (ptr_hook = weechat_hooks[HOOK_TYPE_FD]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
         if (!ptr_hook->deleted)
         {
             if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_READ)
+            {
                 FD_SET (HOOK_FD(ptr_hook, fd), read_fds);
+                if (HOOK_FD(ptr_hook, fd) > max_fd)
+                    max_fd = HOOK_FD(ptr_hook, fd);
+            }
             if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_WRITE)
+            {
                 FD_SET (HOOK_FD(ptr_hook, fd), write_fds);
+                if (HOOK_FD(ptr_hook, fd) > max_fd)
+                    max_fd = HOOK_FD(ptr_hook, fd);
+            }
             if (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_EXCEPTION)
+            {
                 FD_SET (HOOK_FD(ptr_hook, fd), exception_fds);
+                if (HOOK_FD(ptr_hook, fd) > max_fd)
+                    max_fd = HOOK_FD(ptr_hook, fd);
+            }
         }
     }
+    
+    return max_fd;
 }
 
 /*
@@ -678,7 +695,7 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
         
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (((HOOK_FD(ptr_hook, flags)& HOOK_FD_FLAG_READ)
+            && (((HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_READ)
                  && (FD_ISSET(HOOK_FD(ptr_hook, fd), read_fds)))
                 || ((HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_WRITE)
                     && (FD_ISSET(HOOK_FD(ptr_hook, fd), write_fds)))
@@ -1172,7 +1189,9 @@ hook_print_log ()
         {
             log_printf ("");
             log_printf ("[hook (addr:0x%X)]", ptr_hook);
-            log_printf ("  plugin . . . . . . . . : 0x%X", ptr_hook->plugin);
+            log_printf ("  plugin . . . . . . . . : 0x%X ('%s')",
+                        ptr_hook->plugin,
+                        (ptr_hook->plugin) ? ptr_hook->plugin->name : "");
             log_printf ("  deleted. . . . . . . . : %d",   ptr_hook->deleted);
             log_printf ("  running. . . . . . . . : %d",   ptr_hook->running);
             switch (ptr_hook->type)

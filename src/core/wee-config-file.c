@@ -273,10 +273,8 @@ config_file_new_option (struct t_config_section *section, char *name,
                 *((int *)new_option->value) = int_value;
                 break;
             case CONFIG_OPTION_INTEGER:
-                if (string_values)
-                    new_option->string_values = string_explode (string_values,
-                                                                "|", 0, 0,
-                                                                &argc);
+                new_option->string_values = (string_values) ?
+                    string_explode (string_values, "|", 0, 0, &argc) : NULL;
                 if (new_option->string_values)
                 {
                     new_option->min = 0;

@@ -145,6 +145,7 @@ struct t_config_option *config_color_input_text_not_found;
 struct t_config_option *config_color_input_actions;
 struct t_config_option *config_color_nicklist;
 struct t_config_option *config_color_nicklist_bg;
+struct t_config_option *config_color_nicklist_group;
 struct t_config_option *config_color_nicklist_away;
 struct t_config_option *config_color_nicklist_prefix1;
 struct t_config_option *config_color_nicklist_prefix2;
@@ -309,9 +310,10 @@ config_change_color ()
 void
 config_change_nicks_colors ()
 {
+    /*
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_nick *ptr_nick;
-
+    
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
@@ -320,10 +322,11 @@ config_change_nicks_colors ()
             for (ptr_nick = ptr_buffer->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
-                //gui_nick_find_color (ptr_nick);
+                gui_nick_find_color (ptr_nick);
             }   
         }
     }
+    */
 }
 
 /*
@@ -954,6 +957,10 @@ config_weechat_init ()
         ptr_section, "color_nicklist_bg", "color",
         N_("background color for nicklist"),
         NULL, -1, 0, "default", &config_change_color);
+    config_color_nicklist_group = config_file_new_option (
+        ptr_section, "color_nicklist_group", "color",
+        N_("text color for groups in nicklist"),
+        NULL, GUI_COLOR_NICKLIST_GROUP, 0, "green", &config_change_color);
     config_color_nicklist_away = config_file_new_option (
         ptr_section, "color_nicklist_away", "color",
         N_("text color for away nicknames"),

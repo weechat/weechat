@@ -47,6 +47,7 @@
 #include "irc.h"
 #include "irc-server.h"
 #include "irc-channel.h"
+#include "irc-command.h"
 #include "irc-config.h"
 #include "irc-nick.h"
 #include "irc-protocol.h"
@@ -632,18 +633,23 @@ irc_server_new (char *name, int autoconnect, int autoreconnect,
     if (!name || !address || (port < 0))
         return NULL;
     
-#ifdef DEBUG
-    weechat_log_printf ("Creating new server (name:%s, address:%s, port:%d, pwd:%s, "
-                        "nick1:%s, nick2:%s, nick3:%s, username:%s, realname:%s, "
-                        "hostname: %s, command:%s, autojoin:%s, autorejoin:%s, "
-                        "notify_levels:%s)",
-                        name, address, port, (password) ? password : "",
-                        (nick1) ? nick1 : "", (nick2) ? nick2 : "", (nick3) ? nick3 : "",
-                        (username) ? username : "", (realname) ? realname : "",
-                        (hostname) ? hostname : "", (command) ? command : "",
-                        (autojoin) ? autojoin : "", (autorejoin) ? "on" : "off",
-                        (notify_levels) ? notify_levels : "");
-#endif
+    if (irc_debug)
+    {
+        weechat_log_printf ("Creating new server (name:%s, address:%s, "
+                            "port:%d, pwd:%s, nick1:%s, nick2:%s, nick3:%s, "
+                            "username:%s, realname:%s, hostname: %s, "
+                            "command:%s, autojoin:%s, autorejoin:%s, "
+                            "notify_levels:%s)",
+                            name, address, port, (password) ? password : "",
+                            (nick1) ? nick1 : "", (nick2) ? nick2 : "",
+                            (nick3) ? nick3 : "", (username) ? username : "",
+                            (realname) ? realname : "",
+                            (hostname) ? hostname : "",
+                            (command) ? command : "",
+                            (autojoin) ? autojoin : "",
+                            (autorejoin) ? "on" : "off",
+                            (notify_levels) ? notify_levels : "");
+    }
     
     if ((new_server = irc_server_alloc ()))
     {
@@ -850,12 +856,13 @@ irc_server_send_one_msg (struct t_irc_server *server, char *message)
     time_t time_now;
     
     rc = 1;
-    
-#ifdef DEBUG
-    weechat_printf (server->buffer,
-                    "[DEBUG] Sending to server >>> %s",
-                    message);
-#endif
+
+    if (irc_debug)
+    {
+        weechat_printf (server->buffer,
+                        "[DEBUG] Sending to server >>> %s",
+                        message);
+    }
     /*new_msg = plugin_modifier_exec (PLUGIN_MODIFIER_IRC_OUT,
                                     server->name,
                                     message)
@@ -1169,11 +1176,12 @@ irc_server_msgq_flush ()
     {
         if (irc_recv_msgq->data)
         {
-#ifdef DEBUG
-            weechat_printf (irc_recv_msgq->server->buffer,
-                            "[DEBUG] %s",
-                            irc_recv_msgq->data);
-#endif
+            if (irc_debug)
+            {
+                weechat_printf (irc_recv_msgq->server->buffer,
+                                "[DEBUG] %s",
+                                irc_recv_msgq->data);
+            }
             ptr_data = irc_recv_msgq->data;
             while (ptr_data[0] == ' ')
                 ptr_data++;
@@ -1182,11 +1190,12 @@ irc_server_msgq_flush ()
             {
                 //gui_chat_printf_raw_data (irc_recv_msgq->server, 0, 0,
                 //                          ptr_data);
-#ifdef DEBUG
-                weechat_printf (irc_recv_msgq->server->buffer,
-                                "[DEBUG] data received from server: %s",
-                                ptr_data);
-#endif
+                if (irc_debug)
+                {
+                    weechat_printf (irc_recv_msgq->server->buffer,
+                                    "[DEBUG] data received from server: %s",
+                                    ptr_data);
+                }
                 /*new_msg = plugin_modifier_exec (PLUGIN_MODIFIER_IRC_IN,
                                                 irc_recv_msgq->server->name,
                                                 ptr_data);*/
@@ -1293,7 +1302,7 @@ irc_server_recv_cb (void *arg_server)
     
     static char buffer[4096 + 2];
     int num_read;
-
+    
     if (!server)
         return WEECHAT_RC_ERROR;
     
@@ -1319,7 +1328,7 @@ irc_server_recv_cb (void *arg_server)
                         weechat_prefix ("error"), "irc");
         irc_server_disconnect (server, 1);
     }
-
+    
     return WEECHAT_RC_OK;
 }
 
@@ -1443,6 +1452,11 @@ irc_server_child_kill (struct t_irc_server *server)
 void
 irc_server_close_connection (struct t_irc_server *server)
 {
+    if (server->hook_fd)
+    {
+        weechat_unhook (server->hook_fd);
+        server->hook_fd = NULL;
+    }
     irc_server_child_kill (server);
     
     /* close network socket */
@@ -1555,9 +1569,9 @@ irc_server_child_read (void *arg_server)
                 }
 #endif
                 /* kill child and login to server */
+                weechat_unhook (server->hook_fd);
                 irc_server_child_kill (server);
                 irc_server_login (server);
-                weechat_unhook (server->hook_fd);
                 server->hook_fd = weechat_hook_fd (server->sock,
                                                    1, 0, 0,
                                                    irc_server_recv_cb,
@@ -2260,9 +2274,9 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
     
     /* create socket and set options */
     if (config_proxy_use)
-      server->sock = socket ((config_proxy_ipv6) ? AF_INET6 : AF_INET, SOCK_STREAM, 0);
+        server->sock = socket ((config_proxy_ipv6) ? AF_INET6 : AF_INET, SOCK_STREAM, 0);
     else
-      server->sock = socket ((server->ipv6) ? AF_INET6 : AF_INET, SOCK_STREAM, 0);
+        server->sock = socket ((server->ipv6) ? AF_INET6 : AF_INET, SOCK_STREAM, 0);
     if (server->sock == -1)
     {
         weechat_printf (server->buffer,
@@ -2473,8 +2487,8 @@ irc_server_autojoin_channels (struct t_irc_server *server)
     else
     {
         /* auto-join when connecting to server for first time */
-        //if (!server->disable_autojoin && server->autojoin && server->autojoin[0])
-        //    irc_cmd_join_server (server, server->autojoin);
+        if (!server->disable_autojoin && server->autojoin && server->autojoin[0])
+            irc_command_join_server (server, server->autojoin);
     }
 
     server->disable_autojoin = 0;
@@ -2713,7 +2727,8 @@ void
 irc_server_print_log ()
 {
     struct t_irc_server *ptr_server;
-
+    struct t_irc_channel *ptr_channel;
+    
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
@@ -2774,5 +2789,11 @@ irc_server_print_log ()
         weechat_log_printf ("  last_channel. . . . : 0x%X", ptr_server->last_channel);
         weechat_log_printf ("  prev_server . . . . : 0x%X", ptr_server->prev_server);
         weechat_log_printf ("  next_server . . . . : 0x%X", ptr_server->next_server);
+
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            irc_channel_print_log (ptr_channel);
+        }
     }
 }

@@ -205,7 +205,7 @@ gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
     /* init chat & nicklist settings */
     if (window->buffer->nicklist)
     {
-        max_length = gui_nicklist_get_max_length (window->buffer);
+        max_length = window->buffer->nicklist_max_length;
         
         lines = 0;
         
@@ -226,10 +226,10 @@ gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
         else
         {
             width_used = window->win_width - (window->win_width % (max_length + 2));
-            if (((max_length + 2) * window->buffer->nicks_count) % width_used == 0)
-                lines = ((max_length + 2) * window->buffer->nicks_count) / width_used;
+            if (((max_length + 2) * window->buffer->nicklist_visible_count) % width_used == 0)
+                lines = ((max_length + 2) * window->buffer->nicklist_visible_count) / width_used;
             else
-                lines = (((max_length + 2) * window->buffer->nicks_count) / width_used) + 1;
+                lines = (((max_length + 2) * window->buffer->nicklist_visible_count) / width_used) + 1;
             if ((CONFIG_INTEGER(config_look_nicklist_max_size) > 0)
                 && (lines > CONFIG_INTEGER(config_look_nicklist_max_size)))
                 lines = CONFIG_INTEGER(config_look_nicklist_max_size);
@@ -808,7 +808,7 @@ gui_window_nick_end (struct t_gui_window *window)
     if (window->buffer->nicklist)
     {
         new_start =
-            window->buffer->nicks_count - window->win_nick_num_max;
+            window->buffer->nicklist_visible_count - window->win_nick_num_max;
         if (new_start < 0)
             new_start = 0;
         else if (new_start >= 1)
@@ -856,9 +856,9 @@ gui_window_nick_page_down (struct t_gui_window *window)
     
     if (window->buffer->nicklist)
     {
-        if ((window->buffer->nicks_count > window->win_nick_num_max)
+        if ((window->buffer->nicklist_visible_count > window->win_nick_num_max)
             && (window->win_nick_start + window->win_nick_num_max - 1
-                < window->buffer->nicks_count))
+                < window->buffer->nicklist_visible_count))
         {
             if (window->win_nick_start == 0)
                 window->win_nick_start += (window->win_nick_num_max - 1);
@@ -1335,9 +1335,9 @@ gui_window_refresh_screen (int force)
 void
 gui_window_refresh_screen_sigwinch ()
 {
-    if (gui_refresh_screen_needed < 2)
-        gui_refresh_screen_needed++;
-    signal (SIGWINCH, gui_window_refresh_screen_sigwinch);
+    gui_refresh_screen_needed = 1;
+    //gui_window_refresh_screen (0);
+    signal (SIGWINCH, &gui_window_refresh_screen_sigwinch);
 }
 
 /*

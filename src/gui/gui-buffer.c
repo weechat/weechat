@@ -113,11 +113,13 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         
         /* nicklist */
         new_buffer->nicklist = 0;
-        new_buffer->nick_case_sensitive = 0;
-        new_buffer->nicks = NULL;
-        new_buffer->last_nick = NULL;
-        new_buffer->nick_max_length = -1;
-        new_buffer->nicks_count = 0;
+        new_buffer->nicklist_case_sensitive = 0;
+        new_buffer->nicklist_root = NULL;
+        new_buffer->nicklist_max_length = -1;
+        new_buffer->nicklist_display_groups = 1;
+        new_buffer->nicklist_visible_count = 0;
+        new_buffer->nicklist_refresh_needed = 0;
+        gui_nicklist_add_group (new_buffer, NULL, "root", NULL, 0);
         
         /* input */
         new_buffer->input = 1;
@@ -282,14 +284,27 @@ gui_buffer_set_nicklist (struct t_gui_buffer *buffer, int nicklist)
 }
 
 /*
- * gui_buffer_set_nick_case_sensitive: set nick_case_sensitive flag for a buffer
+ * gui_buffer_set_nicklist_case_sensitive: set case_sensitive flag for a buffer
  */
 
 void
-gui_buffer_set_nick_case_sensitive (struct t_gui_buffer *buffer,
-                                    int nick_case_sensitive)
+gui_buffer_set_nicklist_case_sensitive (struct t_gui_buffer *buffer,
+                                        int case_sensitive)
 {
-    buffer->nick_case_sensitive = (nick_case_sensitive) ? 1 : 0;
+    buffer->nicklist_case_sensitive = (case_sensitive) ? 1 : 0;
+}
+
+/*
+ * gui_buffer_set_nicklist_display_groups: set display_groups flag for a buffer
+ */
+
+void
+gui_buffer_set_nicklist_display_groups (struct t_gui_buffer *buffer,
+                                        int display_groups)
+{
+    buffer->nicklist_display_groups = (display_groups) ? 1 : 0;
+    buffer->nicklist_visible_count = 0;
+    gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
 }
 
 /*
@@ -344,12 +359,19 @@ gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
             gui_window_refresh_windows ();
         }
     }
-    else if (string_strcasecmp (property, "nick_case_sensitive") == 0)
+    else if (string_strcasecmp (property, "nicklist_case_sensitive") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && (error[0] == '\0'))
-            gui_buffer_set_nick_case_sensitive (buffer, number);
+            gui_buffer_set_nicklist_case_sensitive (buffer, number);
+    }
+    else if (string_strcasecmp (property, "nicklist_display_groups") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && (error[0] == '\0'))
+            gui_buffer_set_nicklist_display_groups (buffer, number);
     }
     else if (string_strcasecmp (property, "nick") == 0)
     {
@@ -641,6 +663,7 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     gui_history_buffer_free (buffer);
     if (buffer->text_search_input)
         free (buffer->text_search_input);
+    gui_nicklist_remove_all (buffer);
     
     /* remove buffer from buffers list */
     if (buffer->prev_buffer)
@@ -962,7 +985,6 @@ void
 gui_buffer_print_log ()
 {
     struct t_gui_buffer *ptr_buffer;
-    struct t_gui_nick *ptr_nick;
     struct t_gui_line *ptr_line;
     int num;
     
@@ -986,10 +1008,12 @@ gui_buffer_print_log ()
         log_printf ("  prefix_max_length. . . : %d",   ptr_buffer->prefix_max_length);
         log_printf ("  chat_refresh_needed. . : %d",   ptr_buffer->chat_refresh_needed);
         log_printf ("  nicklist . . . . . . . : %d",   ptr_buffer->nicklist);
-        log_printf ("  nick_case_sensitive. . : %d",   ptr_buffer->nick_case_sensitive);
-        log_printf ("  nicks. . . . . . . . . : 0x%X", ptr_buffer->nicks);
-        log_printf ("  last_nick. . . . . . . : 0x%X", ptr_buffer->last_nick);
-        log_printf ("  nicks_count. . . . . . : %d",   ptr_buffer->nicks_count);
+        log_printf ("  nicklist_case_sensitive: %d",   ptr_buffer->nicklist_case_sensitive);
+        log_printf ("  nicklist_root. . . . . : 0x%X", ptr_buffer->nicklist_root);
+        log_printf ("  nicklist_max_length. . : %d",   ptr_buffer->nicklist_max_length);
+        log_printf ("  nicklist_display_groups: %d",   ptr_buffer->nicklist_display_groups);
+        log_printf ("  nicklist_visible_count.: %d",   ptr_buffer->nicklist_visible_count);
+        log_printf ("  nicklist_refresh_needed: %d",   ptr_buffer->nicklist_refresh_needed);
         log_printf ("  input. . . . . . . . . : %d",   ptr_buffer->input);
         log_printf ("  input_data_cb. . . . . : 0x%X", ptr_buffer->input_data_cb);
         log_printf ("  input_nick . . . . . . : '%s'", ptr_buffer->input_nick);
@@ -1011,19 +1035,10 @@ gui_buffer_print_log ()
         log_printf ("  text_search_input. . . : '%s'", ptr_buffer->text_search_input);
         log_printf ("  prev_buffer. . . . . . : 0x%X", ptr_buffer->prev_buffer);
         log_printf ("  next_buffer. . . . . . : 0x%X", ptr_buffer->next_buffer);
-        
-        for (ptr_nick = ptr_buffer->nicks; ptr_nick;
-             ptr_nick = ptr_nick->next_nick)
-        {
-            log_printf ("");
-            log_printf ("  => nick %s (addr:0x%X):", ptr_nick->nick, ptr_nick);
-            log_printf ("       sort_index. . . . . . : %d",   ptr_nick->sort_index);
-            log_printf ("       color_nick. . . . . . : %d",   ptr_nick->color_nick);
-            log_printf ("       prefix. . . . . . . . : '%c'", ptr_nick->prefix);
-            log_printf ("       color_prefix. . . . . : %d",   ptr_nick->color_prefix);
-            log_printf ("       prev_nick . . . . . . : 0x%X", ptr_nick->prev_nick);
-            log_printf ("       next_nick . . . . . . : 0x%X", ptr_nick->next_nick);
-        }
+
+        log_printf ("");
+        log_printf ("  => nicklist_root (addr:0x%X):", ptr_buffer->nicklist_root);
+        gui_nicklist_print_log (ptr_buffer->nicklist_root, 0);
         
         log_printf ("");
         log_printf ("  => last 100 lines:");

@@ -173,8 +173,8 @@ extern struct t_hook *hook_fd (struct t_weechat_plugin *plugin, int fd,
                                int flag_exception,
                                t_hook_callback_fd * callback,
                                void *callback_data);
-extern void hook_fd_set (fd_set *read_fds, fd_set *write_fds,
-                         fd_set *exception_fds);
+extern int hook_fd_set (fd_set *read_fds, fd_set *write_fds,
+                        fd_set *exception_fds);
 extern void hook_fd_exec (fd_set *read_fds, fd_set *write_fds,
                           fd_set *exception_fds);
 extern struct t_hook *hook_print (struct t_weechat_plugin *plugin,
@@ -188,7 +188,7 @@ extern struct t_hook *hook_signal (struct t_weechat_plugin *plugin,
                                    char *signal,
                                    t_hook_callback_signal *callback,
                                    void *callback_data);
-extern void hook_signal_send (char *signal, void *signal_date);
+extern void hook_signal_send (char *signal, void *signal_data);
 extern struct t_hook *hook_config (struct t_weechat_plugin *, char *type,
                                    char *option,
                                    t_hook_callback_config *callback,

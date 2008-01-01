@@ -55,6 +55,7 @@
 #define IRC_COLOR_CHAT_HIGHLIGHT weechat_color("color_chat_highlight")
 #define IRC_COLOR_CHAT_HOST weechat_color("color_chat_host")
 #define IRC_COLOR_CHAT_NICK weechat_color("color_chat_nick")
+#define IRC_COLOR_CHAT_NICK_SELF weechat_color("color_chat_nick_self")
 #define IRC_COLOR_CHAT_NICK_OTHER weechat_color("color_chat_nick_other")
 #define IRC_COLOR_CHAT_SERVER weechat_color("color_chat_server")
 #define IRC_COLOR_INFOBAR_HIGHLIGHT weechat_color("color_infobar_highlight")
@@ -66,6 +67,8 @@
 
 extern struct t_weechat_plugin *weechat_irc_plugin;
 extern struct t_hook *irc_hook_timer_check_away;
+
+extern int irc_debug;
 
 extern gnutls_certificate_credentials gnutls_xcred;
 

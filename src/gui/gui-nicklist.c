@@ -33,6 +33,7 @@
 #include <ctype.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "gui-nicklist.h"
@@ -41,58 +42,198 @@
 
 
 /*
- * gui_nicklist_compare: compare two nicks
- *                       return: -1 is nick1 < nick2
- *                                0 if nick1 = nick2
- *                               +1 if nick1 > nick2
+ * gui_nicklist_find_pos_group: find position for a group (for sorting nicklist)
  */
 
-int
-gui_nicklist_compare (struct t_gui_buffer *buffer,
-                      struct t_gui_nick *nick1, struct t_gui_nick *nick2)
+struct t_gui_nick_group *
+gui_nicklist_find_pos_group (struct t_gui_nick_group *groups,
+                             struct t_gui_nick_group *group)
 {
-    if (nick1->sort_index > nick2->sort_index)
-        return 1;
+    struct t_gui_nick_group *ptr_group;
     
-    if (nick1->sort_index < nick2->sort_index)
-        return -1;
-    
-    /* sort index are the same, then use alphabetical sorting */
-    if (buffer->nick_case_sensitive)
-        return strcmp (nick1->nick, nick2->nick);
-    else
-        return string_strcasecmp (nick1->nick, nick2->nick);
-}
-
-/*
- * gui_nicklist_find_pos: find position for a nick (for sorting nicklist)
- */
-
-struct t_gui_nick *
-gui_nicklist_find_pos (struct t_gui_buffer *buffer, struct t_gui_nick *nick)
-{
-    struct t_gui_nick *ptr_nick;
-    
-    for (ptr_nick = buffer->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    for (ptr_group = groups; ptr_group; ptr_group = ptr_group->next_group)
     {
-        if (gui_nicklist_compare (buffer, nick, ptr_nick) < 0)
-            return ptr_nick;
+        if (strcmp (group->name, ptr_group->name) < 0)
+            return ptr_group;
     }
+    
+    /* group will be inserted at end of list */
     return NULL;
 }
 
 /*
- * gui_nicklist_insert_sorted: insert nick into sorted list
+ * gui_nicklist_insert_group_sorted: insert group into sorted list
  */
 
 void
-gui_nicklist_insert_sorted (struct t_gui_buffer *buffer, struct t_gui_nick *nick)
+gui_nicklist_insert_group_sorted (struct t_gui_nick_group **groups,
+                                  struct t_gui_nick_group **last_group,
+                                  struct t_gui_nick_group *group)
+{
+    struct t_gui_nick_group *pos_group;
+    
+    if (*groups)
+    {
+        pos_group = gui_nicklist_find_pos_group (*groups, group);
+        
+        if (pos_group)
+        {
+            /* insert group into the list (before group found) */
+            group->prev_group = pos_group->prev_group;
+            group->next_group = pos_group;
+            if (pos_group->prev_group)
+                pos_group->prev_group->next_group = group;
+            else
+                *groups = group;
+            pos_group->prev_group = group;
+        }
+        else
+        {
+            /* add group to the end */
+            group->prev_group = *last_group;
+            group->next_group = NULL;
+            (*last_group)->next_group = group;
+            *last_group = group;
+        }
+    }
+    else
+    {
+        group->prev_group = NULL;
+        group->next_group = NULL;
+        *groups = group;
+        *last_group = group;
+    }
+}
+
+/*
+ * gui_nicklist_search_group: search a group in buffer nicklist
+ */
+
+struct t_gui_nick_group *
+gui_nicklist_search_group (struct t_gui_buffer *buffer,
+                           struct t_gui_nick_group *from_group,
+                           char *name)
+{
+    struct t_gui_nick_group *ptr_group;
+
+    if (!from_group)
+        from_group = buffer->nicklist_root;
+    
+    if (!from_group)
+        return NULL;
+    
+    if (from_group->childs)
+    {
+        ptr_group = gui_nicklist_search_group (buffer, from_group->childs, name);
+        if (ptr_group)
+            return ptr_group;
+    }
+    
+    ptr_group = from_group;
+    while (ptr_group)
+    {
+        if (strcmp (ptr_group->name, name) == 0)
+            return ptr_group;
+        ptr_group = ptr_group->next_group;
+    }
+    
+    /* group not found */
+    return NULL;
+}
+
+/*
+ * gui_nicklist_add_group: add a group to nicklist for a buffer
+ */
+
+struct t_gui_nick_group *
+gui_nicklist_add_group (struct t_gui_buffer *buffer,
+                        struct t_gui_nick_group *parent_group, char *name,
+                        char *color, int visible)
+{
+    struct t_gui_nick_group *new_group;
+    int num_color;
+    
+    if (!name || gui_nicklist_search_group (buffer, parent_group, name))
+        return NULL;
+    
+    new_group = (struct t_gui_nick_group *)malloc (sizeof (struct t_gui_nick_group));
+    if (!new_group)
+        return NULL;
+
+    if (color)
+    {
+        num_color = gui_color_search_config (color);
+        if (num_color < 0)
+            num_color = GUI_COLOR_NICKLIST;
+    }
+    else
+        num_color = GUI_COLOR_NICKLIST;
+    
+    new_group->name = strdup (name);
+    new_group->color = num_color;
+    new_group->visible = visible;
+    new_group->parent = (parent_group) ? parent_group : buffer->nicklist_root;
+    new_group->level = (new_group->parent) ? new_group->parent->level + 1 : 0;
+    new_group->childs = NULL;
+    new_group->last_child = NULL;
+    new_group->nicks = NULL;
+    new_group->last_nick = NULL;
+    new_group->prev_group = NULL;
+    new_group->next_group = NULL;
+    
+    if (new_group->parent)
+    {
+        gui_nicklist_insert_group_sorted (&(new_group->parent->childs),
+                                          &(new_group->parent->last_child),
+                                          new_group);
+    }
+    else
+    {
+        buffer->nicklist_root = new_group;
+    }
+    
+    if (buffer->nicklist_display_groups && visible)
+    {
+        buffer->nicklist_refresh_needed = 1;
+        buffer->nicklist_visible_count++;
+    }
+    
+    return new_group;
+}
+
+/*
+ * gui_nicklist_find_pos_nick: find position for a nick (for sorting nicklist)
+ */
+
+struct t_gui_nick *
+gui_nicklist_find_pos_nick (struct t_gui_nick_group *group,
+                            struct t_gui_nick *nick)
+{
+    struct t_gui_nick *ptr_nick;
+    
+    for (ptr_nick = group->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+        if (strcmp (nick->name, ptr_nick->name) < 0)
+            return ptr_nick;
+    }
+    
+    /* nick will be inserted at end of list */
+    return NULL;
+}
+
+/*
+ * gui_nicklist_insert_nick_sorted: insert nick into sorted list
+ */
+
+void
+gui_nicklist_insert_nick_sorted (struct t_gui_nick_group *group,
+                                 struct t_gui_nick *nick)
 {
     struct t_gui_nick *pos_nick;
     
-    if (buffer->nicks)
+    if (group->nicks)
     {
-        pos_nick = gui_nicklist_find_pos (buffer, nick);
+        pos_nick = gui_nicklist_find_pos_nick (group, nick);
         
         if (pos_nick)
         {
@@ -102,64 +243,42 @@ gui_nicklist_insert_sorted (struct t_gui_buffer *buffer, struct t_gui_nick *nick
             if (pos_nick->prev_nick)
                 pos_nick->prev_nick->next_nick = nick;
             else
-                buffer->nicks = nick;
+                group->nicks = nick;
             pos_nick->prev_nick = nick;
         }
         else
         {
             /* add nick to the end */
-            nick->prev_nick = buffer->last_nick;
+            nick->prev_nick = group->last_nick;
             nick->next_nick = NULL;
-            buffer->last_nick->next_nick = nick;
-            buffer->last_nick = nick;
+            group->last_nick->next_nick = nick;
+            group->last_nick = nick;
         }
     }
     else
     {
         nick->prev_nick = NULL;
         nick->next_nick = NULL;
-        buffer->nicks = nick;
-        buffer->last_nick = nick;
+        group->nicks = nick;
+        group->last_nick = nick;
     }
 }
 
 /*
- * gui_nicklist_resort: resort a nick in nicklist
- */
-
-void
-gui_nicklist_resort (struct t_gui_buffer *buffer, struct t_gui_nick *nick)
-{
-    /* temporarly remove nick from list */
-    if (nick == buffer->nicks)
-        buffer->nicks = nick->next_nick;
-    else
-        nick->prev_nick->next_nick = nick->next_nick;
-    if (nick->next_nick)
-        nick->next_nick->prev_nick = nick->prev_nick;
-    if (nick == buffer->last_nick)
-        buffer->last_nick = nick->prev_nick;
-    
-    /* insert again nick into sorted list */
-    gui_nicklist_insert_sorted (buffer, nick);
-}
-
-/*
- * gui_nicklist_search: search a nick in buffer nicklist
+ * gui_nicklist_search_nick: search a nick in buffer nicklist
  */
 
 struct t_gui_nick *
-gui_nicklist_search (struct t_gui_buffer *buffer, char *nick)
+gui_nicklist_search_nick (struct t_gui_buffer *buffer,
+                          struct t_gui_nick_group *from_group,
+                          char *name)
 {
     struct t_gui_nick *ptr_nick;
-
-    for (ptr_nick = buffer->nicks; ptr_nick;
-         ptr_nick = ptr_nick->next_nick)
+    
+    for (ptr_nick = (from_group) ? from_group->nicks : buffer->nicklist_root->nicks;
+         ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
-        if ((buffer->nick_case_sensitive
-             && (strcmp (ptr_nick->nick, nick) == 0))
-            || (!buffer->nick_case_sensitive
-                && (string_strcasecmp (ptr_nick->nick, nick) == 0)))
+        if (strcmp (ptr_nick->name, name) == 0)
             return ptr_nick;
     }
     
@@ -168,132 +287,257 @@ gui_nicklist_search (struct t_gui_buffer *buffer, char *nick)
 }
 
 /*
- * gui_nicklist_add: add a nick to nicklist for a buffer
+ * gui_nicklist_add_nick: add a nick to nicklist for a buffer
  */
 
 struct t_gui_nick *
-gui_nicklist_add (struct t_gui_buffer *buffer, char *nick, int sort_index,
-                  char *color_nick, char prefix, char *color_prefix)
+gui_nicklist_add_nick (struct t_gui_buffer *buffer,
+                       struct t_gui_nick_group *group, char *name,
+                       char *color, char prefix, char *prefix_color,
+                       int visible)
 {
     struct t_gui_nick *new_nick;
-    int num_color_nick, num_color_prefix;
+    int num_color, num_color_prefix;
     
-    if (!nick || gui_nicklist_search (buffer, nick))
+    if (!name || gui_nicklist_search_nick (buffer, NULL, name))
         return NULL;
     
     new_nick = (struct t_gui_nick *)malloc (sizeof (struct t_gui_nick));
     if (!new_nick)
         return NULL;
-    
-    num_color_nick = gui_color_search_config (color_nick);
-    if (num_color_nick < 0)
-        num_color_nick = GUI_COLOR_NICKLIST;
-    
-    num_color_prefix = gui_color_search_config (color_prefix);
-    if (num_color_prefix < 0)
+
+    if (color)
+    {
+        num_color = gui_color_search_config (color);
+        if (num_color < 0)
+            num_color = GUI_COLOR_NICKLIST;
+    }
+    else
+        num_color = GUI_COLOR_NICKLIST;
+
+    if (prefix_color)
+    {
+        num_color_prefix = gui_color_search_config (prefix_color);
+        if (num_color_prefix < 0)
+            num_color_prefix = GUI_COLOR_NICKLIST;
+    }
+    else
         num_color_prefix = GUI_COLOR_NICKLIST;
-    
-    new_nick->nick = strdup (nick);
-    new_nick->sort_index = sort_index;
-    new_nick->color_nick = num_color_nick;
+
+    new_nick->group = (group) ? group : buffer->nicklist_root;
+    new_nick->name = strdup (name);
+    new_nick->color = num_color;
     new_nick->prefix = prefix;
-    new_nick->color_prefix = num_color_prefix;
+    new_nick->prefix_color = num_color_prefix;
+    new_nick->visible = visible;
     
-    gui_nicklist_insert_sorted (buffer, new_nick);
+    gui_nicklist_insert_nick_sorted (new_nick->group, new_nick);
     
-    buffer->nicks_count++;
+    if (visible)
+    {
+        buffer->nicklist_refresh_needed = 1;
+        buffer->nicklist_visible_count++;
+    }
     
     return new_nick;
 }
 
 /*
- * gui_nicklist_update: update a nick in nicklist
+ * gui_nicklist_remove_nick: remove a nick from a group
  */
 
 void
-gui_nicklist_update (struct t_gui_buffer *buffer, struct t_gui_nick *nick,
-                     char *new_nick, int sort_index,
-                     char *color_nick, char prefix, char *color_prefix)
+gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
+                          struct t_gui_nick *nick)
 {
-    int num_color_nick, num_color_prefix;
-    
     if (!nick)
         return;
     
-    num_color_nick = gui_color_search_config (color_nick);
-    if (num_color_nick < 0)
-        num_color_nick = GUI_COLOR_NICKLIST;
-    
-    num_color_prefix = gui_color_search_config (color_prefix);
-    if (num_color_prefix < 0)
-        num_color_prefix = GUI_COLOR_NICKLIST;
-    
-    if (new_nick)
-    {
-        free (nick->nick);
-        nick->nick = strdup (new_nick);
-    }
-    nick->sort_index = sort_index;
-    nick->color_nick = num_color_nick;
-    nick->prefix = prefix;
-    nick->color_prefix = num_color_prefix;
-    
-    gui_nicklist_resort (buffer, nick);
-}
-
-/*
- * gui_nicklist_free: remove a nick to nicklist for a buffer
- */
-
-void
-gui_nicklist_free (struct t_gui_buffer *buffer, struct t_gui_nick *nick)
-{
-    if (nick->nick)
-        free (nick->nick);
-    
-    /* remove nick from nicks list */
+    /* remove nick from list */
     if (nick->prev_nick)
         nick->prev_nick->next_nick = nick->next_nick;
     if (nick->next_nick)
         nick->next_nick->prev_nick = nick->prev_nick;
-    if (buffer->nicks == nick)
-        buffer->nicks = nick->next_nick;
-    if (buffer->last_nick == nick)
-        buffer->last_nick = nick->prev_nick;
+    if (nick->group->nicks == nick)
+        nick->group->nicks = nick->next_nick;
+    if (nick->group->last_nick == nick)
+        nick->group->last_nick = nick->prev_nick;
     
-    if (buffer->nicks_count > 0)
-        buffer->nicks_count--;
+    /* free data */
+    if (nick->name)
+        free (nick->name);
+    
+    if (nick->visible)
+    {
+        buffer->nicklist_refresh_needed = 1;
+        if (buffer->nicklist_visible_count > 0)
+            buffer->nicklist_visible_count--;
+    }
+    
+    free (nick);
 }
 
 /*
- * gui_nicklist_free_all: remove all nicks in nicklist
+ * gui_nicklist_remove_group: remove a group from nicklist
  */
 
 void
-gui_nicklist_free_all (struct t_gui_buffer *buffer)
+gui_nicklist_remove_group (struct t_gui_buffer *buffer,
+                           struct t_gui_nick_group *group)
 {
-    while (buffer->nicks)
+    if (!group)
+        return;
+    
+    /* remove childs first */
+    while (group->childs)
     {
-        gui_nicklist_free (buffer, buffer->nicks);
+        gui_nicklist_remove_group (buffer, group->childs);
+    }
+    
+    /* remove nicks from group */
+    while (group->nicks)
+    {
+        gui_nicklist_remove_nick (buffer, group->nicks);
+    }
+    
+    if (group->parent)
+    {
+        /* remove group from list */
+        if (group->prev_group)
+            group->prev_group->next_group = group->next_group;
+        if (group->next_group)
+            group->next_group->prev_group = group->prev_group;
+        if (group->parent->childs == group)
+            group->parent->childs = group->next_group;
+        if (group->parent->last_child == group)
+            group->parent->last_child = group->prev_group;
+    }
+    else
+    {
+        buffer->nicklist_root = NULL;
+    }
+    
+    /* free data */
+    if (group->name)
+        free (group->name);
+    
+    if (group->visible)
+    {
+        buffer->nicklist_refresh_needed = 1;
+        if (buffer->nicklist_display_groups
+            && (buffer->nicklist_visible_count > 0))
+            buffer->nicklist_visible_count--;
+    }
+    
+    free (group);
+}
+
+/*
+ * gui_nicklist_remove_all: remove all nicks in nicklist
+ */
+
+void
+gui_nicklist_remove_all (struct t_gui_buffer *buffer)
+{
+    while (buffer->nicklist_root)
+    {
+        gui_nicklist_remove_group (buffer, buffer->nicklist_root);
     }
 }
 
 /*
- * gui_nicklist_remove: remove a nickname to nicklist for a buffer
- *                      return 1 if a nick was removed, 0 otherwise
+ * gui_nicklist_get_next_item: get next item (group or nick) of a group/nick
  */
 
-int
-gui_nicklist_remove (struct t_gui_buffer *buffer, char *nick)
+void
+gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
+                            struct t_gui_nick_group **group,
+                            struct t_gui_nick **nick)
 {
-    struct t_gui_nick *ptr_nick;
+    struct t_gui_nick_group *ptr_group;
     
-    ptr_nick = gui_nicklist_search (buffer, nick);
-    if (!ptr_nick)
-    return 0;
+    /* root group */
+    if (!*group && !*nick)
+    {
+        *group = buffer->nicklist_root;
+        return;
+    }
     
-    gui_nicklist_free (buffer, ptr_nick);
-    return 1;
+    /* next nick */
+    if (*nick && (*nick)->next_nick)
+    {
+        *nick = (*nick)->next_nick;
+        return;
+    }
+    
+    if (*group && !*nick)
+    {
+        /* first child */
+        if ((*group)->childs)
+        {
+            *group = (*group)->childs;
+            return;
+        }
+        /* first nick of current group */
+        if ((*group)->nicks)
+        {
+            *nick = (*group)->nicks;
+            return;
+        }
+        if ((*group)->next_group)
+        {
+            *group = (*group)->next_group;
+            return;
+        }
+    }
+    
+    *nick = NULL;
+    ptr_group = (*group) ? *group : buffer->nicklist_root;
+    
+    /* next group */
+    if (ptr_group->next_group)
+    {
+        *group = ptr_group->next_group;
+        return;
+    }
+    
+    /* find next group by parents */
+    while ((ptr_group = ptr_group->parent))
+    {
+        if (ptr_group->next_group)
+        {
+            *group = ptr_group->next_group;
+            return;
+        }
+    }
+    
+    /* nothing found */
+    *group = NULL;
+}
+
+/*
+ * gui_nicklist_get_group_start: return first char of a group that will be
+ *                               displayed on screen: if name begins with
+ *                               some digits followed by '|', then start is
+ *                               after '|', otherwise it's beginning of name
+ */
+
+char *
+gui_nicklist_get_group_start (char *name)
+{
+    char *ptr_name;
+    
+    ptr_name = name;
+    while (isdigit (ptr_name[0]))
+    {
+        if (ptr_name[0] == '|')
+            break;
+        ptr_name++;
+    }
+    if ((ptr_name[0] == '|') && (ptr_name != name))
+        return ptr_name + 1;
+    else
+        return name;
 }
 
 /*
@@ -301,17 +545,172 @@ gui_nicklist_remove (struct t_gui_buffer *buffer, char *nick)
  */
 
 int
-gui_nicklist_get_max_length (struct t_gui_buffer *buffer)
+gui_nicklist_get_max_length (struct t_gui_buffer *buffer,
+                             struct t_gui_nick_group *group)
 {
     int length, max_length;
+    struct t_gui_nick_group *ptr_group;
     struct t_gui_nick *ptr_nick;
     
     max_length = 0;
-    for (ptr_nick = buffer->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    for (ptr_group = (group) ? group : buffer->nicklist_root;
+         ptr_group; ptr_group = ptr_group->next_group)
     {
-        length = utf8_strlen_screen (ptr_nick->nick);
-        if (length > max_length)
-            max_length = length;
+        if (buffer->nicklist_display_groups && ptr_group->visible)
+        {
+            length = utf8_strlen_screen (gui_nicklist_get_group_start (ptr_group->name)) +
+                                         ptr_group->level - 1;
+            if (length > max_length)
+                max_length = length;
+        }
+        for (ptr_nick = ptr_group->nicks; ptr_nick;
+             ptr_nick = ptr_nick->next_nick)
+        {
+            if (ptr_nick->visible)
+            {
+                if (buffer->nicklist_display_groups)
+                    length = utf8_strlen_screen (ptr_nick->name) + ptr_group->level + 1;
+                else
+                    length = utf8_strlen_screen (ptr_nick->name) + 1;
+                if (length > max_length)
+                    max_length = length;
+            }
+        }
+        if (ptr_group->childs)
+        {
+            length = gui_nicklist_get_max_length (buffer, ptr_group->childs);
+            if (length > max_length)
+                max_length = length;
+        }
     }
     return max_length;
+}
+
+/*
+ * gui_nicklist_compute_visible_count: compute visible_count variable for a buffer
+ */
+
+void
+gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
+                                    struct t_gui_nick_group *group)
+{
+    if (!group)
+        return;
+    
+    /* count for childs */
+    if (group->childs)
+        gui_nicklist_compute_visible_count (buffer, group->childs);
+    
+    /* count current group */
+    if (buffer->nicklist_display_groups && group->visible)
+        buffer->nicklist_visible_count++;
+}
+
+/*
+ * gui_nicklist_print_log: print nicklist infos in log (usually for crash dump)
+ */
+
+void
+gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
+{
+    char format[128];
+    struct t_gui_nick_group *ptr_group;
+    struct t_gui_nick *ptr_nick;
+    
+    snprintf (format, sizeof (format),
+              "%%-%ds=> group (addr:0x%%X)",
+              (indent * 2) + 4);
+    log_printf (format, " ", group);
+    snprintf (format, sizeof (format),
+              "%%-%dsname. . . . : '%%s'",
+              (indent * 2) + 6);
+    log_printf (format, " ", group->name);
+    snprintf (format, sizeof (format),
+              "%%-%dscolor . . . : %%d",
+              (indent * 2) + 6);
+    log_printf (format, " ", group->color);
+    snprintf (format, sizeof (format),
+              "%%-%dsvisible . . : %%d",
+              (indent * 2) + 6);
+    log_printf (format, " ", group->visible);
+    snprintf (format, sizeof (format),
+              "%%-%dsparent. . . : 0x%%X",
+              (indent * 2) + 6);
+    log_printf (format, " ", group->parent);
+    snprintf (format, sizeof (format),
+              "%%-%dschilds. . . : 0x%%X",
+              (indent * 2) + 6);
+    log_printf (format, " ", group->childs);
+    snprintf (format, sizeof (format),
+              "%%-%dslast_child. : 0x%%X",
+              (indent * 2) + 6);
+    log_printf (format, " ", group->last_child);
+    snprintf (format, sizeof (format),
+              "%%-%dsnicks . . . : 0x%%X",
+              (indent * 2) + 6);
+    log_printf (format, " ", group->nicks);
+    snprintf (format, sizeof (format),
+              "%%-%dslast_nick . : 0x%%X",
+              (indent * 2) + 6);
+    log_printf (format, " ", group->last_nick);
+    snprintf (format, sizeof (format),
+              "%%-%dsprev_group. : 0x%%X",
+              (indent * 2) + 6);
+    log_printf (format, " ", group->prev_group);
+    snprintf (format, sizeof (format),
+              "%%-%dsnext_group. : 0x%%X",
+              (indent * 2) + 6);
+    log_printf (format, " ", group->next_group);
+    
+    /* display child groups first */
+    if (group->childs)
+    {
+        for (ptr_group = group->childs; ptr_group;
+             ptr_group = ptr_group->next_group)
+        {
+            gui_nicklist_print_log (ptr_group, indent + 1);
+        }
+    }
+
+    /* then display nicks in group */
+    for (ptr_nick = group->nicks; ptr_nick;
+         ptr_nick = ptr_nick->next_nick)
+    {
+        snprintf (format, sizeof (format),
+                  "%%-%ds=> nick (addr:0x%%X)",
+                  (indent * 2) + 4);
+        log_printf (format, " ", ptr_nick);
+        snprintf (format, sizeof (format),
+                  "%%-%dsgroup . . . : 0x%%X",
+                  (indent * 2) + 6);
+        log_printf (format, " ", ptr_nick->group);
+        snprintf (format, sizeof (format),
+                  "%%-%dsname. . . . : '%%s'",
+                  (indent * 2) + 6);
+        log_printf (format, " ", ptr_nick->name);
+        snprintf (format, sizeof (format),
+                  "%%-%dscolor . . . : %%d",
+                  (indent * 2) + 6);
+        log_printf (format, " ", ptr_nick->color);
+        snprintf (format, sizeof (format),
+                  "%%-%dsprefix. . . : '%%c'",
+                  (indent * 2) + 6);
+        log_printf (format, " ", ptr_nick->prefix);
+        snprintf (format, sizeof (format),
+                  "%%-%dsprefix_color: %%d",
+                  (indent * 2) + 6);
+        log_printf (format, " ", ptr_nick->prefix_color);
+        snprintf (format, sizeof (format),
+                  "%%-%dsvisible . . : %%d",
+                  (indent * 2) + 6);
+        log_printf (format, " ", ptr_nick->visible);
+        snprintf (format, sizeof (format),
+                  "%%-%dsprev_nick . : 0x%%X",
+                  (indent * 2) + 6);
+        log_printf (format, " ", ptr_nick->prev_nick);
+        snprintf (format, sizeof (format),
+                  "%%-%dsnext_nick . : 0x%%X",
+                  (indent * 2) + 6);
+        log_printf (format, " ", ptr_nick->next_nick);
+    }
 }

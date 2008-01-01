@@ -238,6 +238,7 @@ plugin_load (char *filename)
         new_plugin->list_search = &weelist_search;
         new_plugin->list_casesearch = &weelist_casesearch;
         new_plugin->list_get = &weelist_get;
+        new_plugin->list_set = &weelist_set;
         new_plugin->list_next = &weelist_next;
         new_plugin->list_prev = &weelist_prev;
         new_plugin->list_string = &weelist_string;
@@ -289,8 +290,14 @@ plugin_load (char *filename)
         new_plugin->buffer_close = &gui_buffer_close;
         new_plugin->buffer_get = &gui_buffer_get;
         new_plugin->buffer_set = &gui_buffer_set;
-        new_plugin->buffer_nick_add = &gui_nicklist_add;
-        new_plugin->buffer_nick_remove = &gui_nicklist_remove;
+
+        new_plugin->nicklist_add_group = &gui_nicklist_add_group;
+        new_plugin->nicklist_search_group = &gui_nicklist_search_group;
+        new_plugin->nicklist_add_nick = &gui_nicklist_add_nick;
+        new_plugin->nicklist_search_nick = &gui_nicklist_search_nick;
+        new_plugin->nicklist_remove_group = &gui_nicklist_remove_group;
+        new_plugin->nicklist_remove_nick = &gui_nicklist_remove_nick;
+        new_plugin->nicklist_remove_all = &gui_nicklist_remove_all;
         
         new_plugin->command = &plugin_api_command;
         

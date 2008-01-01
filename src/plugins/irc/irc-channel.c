@@ -64,7 +64,20 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         return NULL;
     }
     if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
+    {
         weechat_buffer_set (new_buffer, "nicklist", "1");
+        weechat_buffer_set (new_buffer, "nicklist_display_groups", "0");
+        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_OP,
+                                    "color_nicklist_group", 1);
+        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_HALFOP,
+                                    "color_nicklist_group", 1);
+        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_VOICE,
+                                    "color_nicklist_group", 1);
+        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_CHANUSER,
+                                    "color_nicklist_group", 1);
+        weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_NORMAL,
+                                    "color_nicklist_group", 1);
+    }
     
     /* initialize new channel */
     new_channel->type = channel_type;
@@ -450,6 +463,9 @@ void
 irc_channel_add_nick_speaking (struct t_irc_channel *channel, char *nick)
 {
     int size, to_remove, i;
+
+    if (!channel->nicks_speaking)
+        channel->nicks_speaking = weechat_list_new ();
     
     weechat_list_add (channel->nicks_speaking, nick, "end");
     
@@ -474,25 +490,27 @@ irc_channel_print_log (struct t_irc_channel *channel)
 {
     struct t_weelist_item *ptr_item;
     int i;
+    struct t_irc_nick *ptr_nick;
     
-    weechat_log_printf ("=> channel %s (addr:0x%X)]", channel->name, channel);
-    weechat_log_printf ("     type . . . . . . . . : %d",     channel->type);
-    weechat_log_printf ("     dcc_chat . . . . . . : 0x%X",   channel->dcc_chat);
-    weechat_log_printf ("     topic. . . . . . . . : '%s'",   channel->topic);
-    weechat_log_printf ("     modes. . . . . . . . : '%s'",   channel->modes);
-    weechat_log_printf ("     limit. . . . . . . . : %d",     channel->limit);
-    weechat_log_printf ("     key. . . . . . . . . : '%s'",   channel->key);
-    weechat_log_printf ("     checking_away. . . . : %d",     channel->checking_away);
-    weechat_log_printf ("     away_message . . . . : '%s'",   channel->away_message);
-    weechat_log_printf ("     cycle. . . . . . . . : %d",     channel->cycle);
-    weechat_log_printf ("     close. . . . . . . . : %d",     channel->close);
-    weechat_log_printf ("     display_creation_date: %d",     channel->display_creation_date);
-    weechat_log_printf ("     nicks. . . . . . . . : 0x%X",   channel->nicks);
-    weechat_log_printf ("     last_nick. . . . . . : 0x%X",   channel->last_nick);
-    weechat_log_printf ("     buffer . . . . . . . : 0x%X",   channel->buffer);
-    weechat_log_printf ("     nicks_speaking . . . : 0x%X",   channel->nicks_speaking);
-    weechat_log_printf ("     prev_channel . . . . : 0x%X",   channel->prev_channel);
-    weechat_log_printf ("     next_channel . . . . : 0x%X",   channel->next_channel);
+    weechat_log_printf ("");
+    weechat_log_printf ("  => channel %s (addr:0x%X)]", channel->name, channel);
+    weechat_log_printf ("       type . . . . . . . . : %d",     channel->type);
+    weechat_log_printf ("       dcc_chat . . . . . . : 0x%X",   channel->dcc_chat);
+    weechat_log_printf ("       topic. . . . . . . . : '%s'",   channel->topic);
+    weechat_log_printf ("       modes. . . . . . . . : '%s'",   channel->modes);
+    weechat_log_printf ("       limit. . . . . . . . : %d",     channel->limit);
+    weechat_log_printf ("       key. . . . . . . . . : '%s'",   channel->key);
+    weechat_log_printf ("       checking_away. . . . : %d",     channel->checking_away);
+    weechat_log_printf ("       away_message . . . . : '%s'",   channel->away_message);
+    weechat_log_printf ("       cycle. . . . . . . . : %d",     channel->cycle);
+    weechat_log_printf ("       close. . . . . . . . : %d",     channel->close);
+    weechat_log_printf ("       display_creation_date: %d",     channel->display_creation_date);
+    weechat_log_printf ("       nicks. . . . . . . . : 0x%X",   channel->nicks);
+    weechat_log_printf ("       last_nick. . . . . . : 0x%X",   channel->last_nick);
+    weechat_log_printf ("       buffer . . . . . . . : 0x%X",   channel->buffer);
+    weechat_log_printf ("       nicks_speaking . . . : 0x%X",   channel->nicks_speaking);
+    weechat_log_printf ("       prev_channel . . . . : 0x%X",   channel->prev_channel);
+    weechat_log_printf ("       next_channel . . . . : 0x%X",   channel->next_channel);
     if (channel->nicks_speaking)
     {
         weechat_log_printf ("");
@@ -500,9 +518,13 @@ irc_channel_print_log (struct t_irc_channel *channel)
         for (ptr_item = weechat_list_get (channel->nicks_speaking, 0);
              ptr_item; ptr_item = weechat_list_next (ptr_item))
         {
-            weechat_log_printf ("       nick speaking %d: '%s'",
+            weechat_log_printf ("         nick speaking %d: '%s'",
                                 i, weechat_list_string (ptr_item));
             i++;
         }
+    }
+    for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+        irc_nick_print_log (ptr_nick);
     }
 }

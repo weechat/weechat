@@ -90,7 +90,7 @@ irc_completion_server_nicks_cb (void *data, char *completion,
                     for (ptr_nick = ptr_channel2->nicks; ptr_nick;
                          ptr_nick = ptr_nick->next_nick)
                     {
-                        weechat_list_add (list, ptr_nick->nick, "sort");
+                        weechat_list_add (list, ptr_nick->name, "sort");
                     }
                 }
             }
@@ -102,7 +102,7 @@ irc_completion_server_nicks_cb (void *data, char *completion,
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
-                weechat_list_add (list, ptr_nick->nick, "beginning");
+                weechat_list_add (list, ptr_nick->name, "beginning");
             }
         }
 
@@ -184,7 +184,7 @@ irc_completion_channel_nicks_cb (void *data, char *completion,
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
-                weechat_list_add (list, ptr_nick->nick, "sort");
+                weechat_list_add (list, ptr_nick->name, "sort");
             }
             
             /* add nicks speaking recently on this channel */
@@ -241,16 +241,16 @@ irc_completion_channel_nicks_hosts_cb (void *data, char *completion,
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
-                weechat_list_add (list, ptr_nick->nick, "sort");
+                weechat_list_add (list, ptr_nick->name, "sort");
                 if (ptr_nick->host)
                 {
-                    length = strlen (ptr_nick->nick) + 1 +
+                    length = strlen (ptr_nick->name) + 1 +
                         strlen (ptr_nick->host) + 1;
                     buf = (char *)malloc (length);
                     if (buf)
                     {
                         snprintf (buf, length, "%s!%s",
-                                  ptr_nick->nick, ptr_nick->host);
+                                  ptr_nick->name, ptr_nick->host);
                         weechat_list_add (list, buf, "sort");
                         free (buf);
                     }

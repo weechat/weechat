@@ -147,7 +147,6 @@ logger_create_directory ()
             }
             else
                 rc = 0;
-            free (weechat_dir);
         }
         else
             rc = 0;
@@ -226,10 +225,6 @@ logger_get_filename (struct t_gui_buffer *buffer)
         }
     }
     
-    if (dir_separator)
-        free (dir_separator);
-    if (weechat_dir)
-        free (weechat_dir);
     if (log_path)
         free (log_path);
     if (log_path2)
@@ -267,8 +262,6 @@ logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
                                 logger_buffer->log_filename);
                 free (logger_buffer->log_filename);
                 logger_buffer->log_filename = NULL;
-                if (charset)
-                    free (charset);
                 return;
             }
 
@@ -304,8 +297,6 @@ logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
         fflush (logger_buffer->log_file);
         if (message)
             free (message);
-        if (charset)
-            free (charset);
     }
 }
 

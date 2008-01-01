@@ -20,8 +20,6 @@
 #ifndef __WEECHAT_IRC_CHANNEL_H
 #define __WEECHAT_IRC_CHANNEL_H 1
 
-#include "irc-server.h"
-
 #define IRC_CHANNEL_PREFIX "#&+!"
 
 /* channel types */
@@ -31,6 +29,8 @@
 #define IRC_CHANNEL_TYPE_DCC_CHAT 2
 
 #define IRC_CHANNEL_NICKS_SPEAKING_LIMIT 32
+
+struct t_irc_server;
 
 struct t_irc_channel
 {

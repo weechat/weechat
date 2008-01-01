@@ -25,19 +25,23 @@
 typedef int (t_irc_recv_func)(struct t_irc_server *server, char *irc_message,
                               char *host, char *nick, char *arguments,
                               int ignore, int highlight);
+typedef int (t_irc_recv_func2)(struct t_irc_server *server, int argc,
+                               char **argv, char **argv_eol,
+                               int ignore, int highlight);
 
 struct t_irc_protocol_msg
 {
     char *name;                     /* IRC message name                      */
     char *description;              /* message description                   */
     t_irc_recv_func *recv_function; /* function called when msg is received  */
+    t_irc_recv_func2 *recv_function2; /* function called when msg is received  */
 };
 
 extern int irc_protocol_is_highlight (char *, char *);
 extern int irc_protocol_recv_command (struct t_irc_server *, char *, char *, char *, char *);
-extern int irc_protocol_cmd_error (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
-extern int irc_protocol_cmd_invite (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
-extern int irc_protocol_cmd_join (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
+extern int irc_protocol_cmd_error (struct t_irc_server *server, int argc, char **argv, char **argv_eol, int ignore, int highlight);
+extern int irc_protocol_cmd_invite (struct t_irc_server *server, int argc, char **argv, char **argv_eol, int ignore, int highlight);
+extern int irc_protocol_cmd_join (struct t_irc_server *server, int argc, char **argv, char **argv_eol, int ignore, int highlight);
 extern int irc_protocol_cmd_kick (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
 extern int irc_protocol_cmd_kill (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
 extern int irc_protocol_cmd_mode (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
@@ -91,8 +95,8 @@ extern int irc_protocol_cmd_365 (struct t_irc_server *server, char *irc_message,
 extern int irc_protocol_cmd_366 (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
 extern int irc_protocol_cmd_367 (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
 extern int irc_protocol_cmd_368 (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
-extern int irc_protocol_cmd_432 (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
-extern int irc_protocol_cmd_433 (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
+extern int irc_protocol_cmd_432 (struct t_irc_server *server, int argc, char **argv, char **argv_eol, int ignore, int highlight);
+extern int irc_protocol_cmd_433 (struct t_irc_server *server, int argc, char **argv, char **argv_eol, int ignore, int highlight);
 extern int irc_protocol_cmd_438 (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
 extern int irc_protocol_cmd_671 (struct t_irc_server *server, char *irc_message, char *host, char *nick, char *arguments, int ignore, int highlight);
 

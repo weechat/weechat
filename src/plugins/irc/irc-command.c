@@ -849,8 +849,6 @@ irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
                           (buf) ? buf : ptr_arg);
         if (buf)
             free (buf);
-        if (version)
-            free (version);
     }
     else
         irc_server_sendf (ptr_server, "PART %s", channel_name);
@@ -1085,8 +1083,6 @@ irc_command_quit_server (struct t_irc_server *server, char *arguments)
                               (buf) ? buf : ptr_arg);
             if (buf)
                 free (buf);
-            if (version)
-                free (version);
         }
         else
             irc_server_sendf (server, "QUIT");
@@ -2182,8 +2178,6 @@ irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
                           (buf) ? buf : ptr_arg);
         if (buf)
             free (buf);
-        if (version)
-            free (version);
     }
     else
         irc_server_sendf (ptr_server, "PART %s", channel_name);

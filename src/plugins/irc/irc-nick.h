@@ -20,9 +20,6 @@
 #ifndef __WEECHAT_IRC_NICK_H
 #define __WEECHAT_IRC_NICK_H 1
 
-#include "irc-server.h"
-#include "irc-channel.h"
-
 #define IRC_NICK_DEFAULT_PREFIXES_LIST "@%+~&!-"
 
 #define IRC_NICK_CHANOWNER  1
@@ -39,9 +36,18 @@
     else \
         nick->flags &= 0xFFFF - flag;
 
+#define IRC_NICK_GROUP_OP       "1|op"
+#define IRC_NICK_GROUP_HALFOP   "2|halfop"
+#define IRC_NICK_GROUP_VOICE    "3|voice"
+#define IRC_NICK_GROUP_CHANUSER "4|chanuser"
+#define IRC_NICK_GROUP_NORMAL   "5|normal"
+
+struct t_irc_server;
+struct t_irc_channel;
+
 struct t_irc_nick
 {
-    char *nick;                     /* nickname                              */
+    char *name;                     /* nickname                              */
     char *host;                     /* full hostname                         */
     int flags;                      /* chanowner/chanadmin (unrealircd),     */
                                     /* op, halfop, voice, away               */
@@ -50,9 +56,6 @@ struct t_irc_nick
     struct t_irc_nick *next_nick;   /* link to next nick on channel          */
 };
 
-extern int irc_nick_find_color (struct t_irc_nick *nick);
-extern void irc_nick_get_gui_infos (struct t_irc_nick *nick, int *sort_index,
-                                    char *prefix, int *color_prefix);
 extern struct t_irc_nick *irc_nick_new (struct t_irc_server *server,
                                         struct t_irc_channel *channel,
                                         char *nick_name, int is_chanowner,

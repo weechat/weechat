@@ -22,35 +22,64 @@
 
 struct t_gui_buffer;
 
+struct t_gui_nick_group
+{
+    char *name;                        /* group name                        */
+    int color;                         /* color for group in nicklist       */
+    int visible;                       /* 1 if group is displayed           */
+    int level;                         /* group level (root is 0)           */
+    struct t_gui_nick_group *parent;   /* parent                            */
+    struct t_gui_nick_group *childs;     /* childs                          */
+    struct t_gui_nick_group *last_child; /* last child                      */
+    struct t_gui_nick *nicks;          /* nicks for group                   */
+    struct t_gui_nick *last_nick;      /* last nick for group               */
+    struct t_gui_nick_group *prev_group; /* link to previous group          */
+    struct t_gui_nick_group *next_group; /* link to next group              */
+};
+
 struct t_gui_nick
 {
-    char *nick;                        /* nickname                          */
-    int sort_index;                    /* index to force sort               */
-    int color_nick;                    /* color for nick in nicklist        */
+    struct t_gui_nick_group *group;    /* group which contains nick         */
+    char *name;                        /* nick name                         */
+    int color;                         /* color for nick in nicklist        */
     char prefix;                       /* prefix for nick (for admins, ..)  */
-    int color_prefix;                  /* color for prefix                  */
-    struct t_gui_nick *prev_nick;      /* link to previous nick in nicklist */
-    struct t_gui_nick *next_nick;      /* link to next nick in nicklist     */
+    int prefix_color;                  /* color for prefix                  */
+    int visible;                       /* 1 if nick is displayed            */
+    struct t_gui_nick *prev_nick;      /* link to previous nick             */
+    struct t_gui_nick *next_nick;      /* link to next nick                 */
 };
 
 /* nicklist functions */
 
-extern struct t_gui_nick *gui_nicklist_search (struct t_gui_buffer *buffer,
-                                               char *nick);
-extern struct t_gui_nick *gui_nicklist_add (struct t_gui_buffer *buffer,
-                                            char *nick,
-                                            int sort_index, char *color_nick,
-                                            char prefix, char *color_prefix);
-extern void gui_nicklist_update (struct t_gui_buffer *buffer,
-                                 struct t_gui_nick *nick,
-                                 char *new_nick, int sort_index,
-                                 char *color_nick, char prefix,
-                                 char *color_prefix);
-extern void gui_nicklist_free (struct t_gui_buffer *buffer,
-                               struct t_gui_nick *nick);
-extern void gui_nicklist_free_all (struct t_gui_buffer *buffer);
-extern int gui_nicklist_remove (struct t_gui_buffer *buffer, char *nick);
-extern int gui_nicklist_get_max_length (struct t_gui_buffer *buffer);
+extern struct t_gui_nick_group *gui_nicklist_search_group (struct t_gui_buffer *buffer,
+                                                           struct t_gui_nick_group *from_group,
+                                                           char *name);
+extern struct t_gui_nick_group *gui_nicklist_add_group (struct t_gui_buffer *buffer,
+                                                        struct t_gui_nick_group *parent_group,
+                                                        char *name, char *color,
+                                                        int visible);
+extern struct t_gui_nick *gui_nicklist_search_nick (struct t_gui_buffer *buffer,
+                                                    struct t_gui_nick_group *from_group,
+                                                    char *name);
+extern struct t_gui_nick *gui_nicklist_add_nick (struct t_gui_buffer *buffer,
+                                                 struct t_gui_nick_group *group,
+                                                 char *name, char *color,
+                                                 char prefix, char *prefix_color,
+                                                 int visible);
+extern void gui_nicklist_remove_group (struct t_gui_buffer *buffer,
+                                       struct t_gui_nick_group *group);
+extern void gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
+                                      struct t_gui_nick *nick);
+extern void gui_nicklist_remove_all (struct t_gui_buffer *buffer);
+extern void gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
+                                        struct t_gui_nick_group **group,
+                                        struct t_gui_nick **nick);
+extern char *gui_nicklist_get_group_start (char *name);
+extern int gui_nicklist_get_max_length (struct t_gui_buffer *buffer,
+                                        struct t_gui_nick_group *group);
+extern void gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
+                                                struct t_gui_nick_group *group);
+extern void gui_nicklist_print_log (struct t_gui_nick_group *group, int indent);
 
 /* nicklist functions (GUI dependent) */
 

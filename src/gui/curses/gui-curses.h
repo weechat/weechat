@@ -60,8 +60,7 @@ extern void gui_chat_calculate_line_diff (struct t_gui_window *window,
 
 /* keyboard functions */
 extern void gui_keyboard_default_bindings ();
-extern void gui_keyboard_read ();
-extern void gui_keyboard_flush ();
+extern int gui_keyboard_read_cb (void *data);
 
 /* window functions */
 extern void gui_window_wprintw (WINDOW *window, char *data, ...);

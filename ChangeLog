@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2007-12-17
+ChangeLog - 2008-01-01
 
 
 Version 0.2.7 (under dev!):
+   * added group support in nicklist
    * added backlog option in logger plugin
    * improved main loop: higher timout in select(), less CPU usage
    * added /reload command to reload WeeChat and plugins config files

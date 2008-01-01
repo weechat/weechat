@@ -30,6 +30,7 @@
 #include "../../core/wee-config.h"
 #include "../../core/wee-utf8.h"
 #include "../../core/wee-string.h"
+#include "../../plugins/plugin.h"
 #include "../gui-keyboard.h"
 #include "../gui-buffer.h"
 #include "../gui-color.h"
@@ -152,83 +153,6 @@ gui_keyboard_default_bindings ()
         sprintf (key_str, "meta-j%02d", i);
         sprintf (command, "/buffer %d", i);
         gui_keyboard_bind (key_str, command);
-    }
-}
-
-/*
- * gui_keyboard_read: read keyboard chars
- */
-
-void
-gui_keyboard_read ()
-{
-    int key, accept_paste, cancel_paste, text_added_to_buffer, paste_lines;
-    
-    accept_paste = 0;
-    cancel_paste = 0;
-    text_added_to_buffer = 0;
-    
-    while (1)
-    {
-        key = getch ();
-        
-        if (key == ERR)
-            break;
-        
-#ifdef KEY_RESIZE
-        if (key == KEY_RESIZE)
-            continue;
-#endif
-        if (gui_keyboard_paste_pending)
-        {
-            /* ctrl-Y: accept paste */
-            if (key == 25)
-            {
-                accept_paste = 1;
-                break;
-            }
-            /* ctrl-N: cancel paste */
-            else if (key == 14)
-            {
-                cancel_paste = 1;
-                break;
-            }
-        }
-        
-        gui_keyboard_buffer_add (key);
-        text_added_to_buffer = 1;
-    }
-    
-    if (gui_keyboard_paste_pending)
-    {
-        /* user is ok for pasting text, let's paste! */
-        if (accept_paste)
-        {
-            gui_keyboard_paste_accept ();
-            gui_input_draw (gui_current_window->buffer, 1);
-        }
-        /* user doesn't want to paste text: clear whole buffer! */
-        else if (cancel_paste)
-        {
-            gui_keyboard_paste_cancel ();
-            gui_input_draw (gui_current_window->buffer, 1);
-        }
-        else if (text_added_to_buffer)
-            gui_input_draw (gui_current_window->buffer, 1);
-    }
-    else
-    {
-        /* detect user paste or large amount of text
-           if so, ask user what to do */
-        if (CONFIG_INTEGER(config_look_paste_max_lines) > 0)
-        {
-            paste_lines = gui_keyboard_get_paste_lines ();
-            if (paste_lines > CONFIG_INTEGER(config_look_paste_max_lines))
-            {
-                gui_keyboard_paste_pending = 1;
-                gui_input_draw (gui_current_window->buffer, 1);
-            }
-        }
     }
 }
 
@@ -409,4 +333,88 @@ gui_keyboard_flush ()
         
         gui_keyboard_buffer_reset ();
     }
+}
+
+/*
+ * gui_keyboard_read_cb: read keyboard chars
+ */
+
+int
+gui_keyboard_read_cb (void *data)
+{
+    int key, accept_paste, cancel_paste, text_added_to_buffer, paste_lines;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    accept_paste = 0;
+    cancel_paste = 0;
+    text_added_to_buffer = 0;
+    
+    while (1)
+    {
+        key = getch ();
+        
+        if (key == ERR)
+            break;
+        
+#ifdef KEY_RESIZE
+        if (key == KEY_RESIZE)
+            continue;
+#endif
+        if (gui_keyboard_paste_pending)
+        {
+            /* ctrl-Y: accept paste */
+            if (key == 25)
+            {
+                accept_paste = 1;
+                break;
+            }
+            /* ctrl-N: cancel paste */
+            else if (key == 14)
+            {
+                cancel_paste = 1;
+                break;
+            }
+        }
+        
+        gui_keyboard_buffer_add (key);
+        text_added_to_buffer = 1;
+    }
+    
+    if (gui_keyboard_paste_pending)
+    {
+        /* user is ok for pasting text, let's paste! */
+        if (accept_paste)
+        {
+            gui_keyboard_paste_accept ();
+            gui_input_draw (gui_current_window->buffer, 1);
+        }
+        /* user doesn't want to paste text: clear whole buffer! */
+        else if (cancel_paste)
+        {
+            gui_keyboard_paste_cancel ();
+            gui_input_draw (gui_current_window->buffer, 1);
+        }
+        else if (text_added_to_buffer)
+            gui_input_draw (gui_current_window->buffer, 1);
+    }
+    else
+    {
+        /* detect user paste or large amount of text
+           if so, ask user what to do */
+        if (CONFIG_INTEGER(config_look_paste_max_lines) > 0)
+        {
+            paste_lines = gui_keyboard_get_paste_lines ();
+            if (paste_lines > CONFIG_INTEGER(config_look_paste_max_lines))
+            {
+                gui_keyboard_paste_pending = 1;
+                gui_input_draw (gui_current_window->buffer, 1);
+            }
+        }
+    }
+    
+    gui_keyboard_flush ();
+    
+    return WEECHAT_RC_OK;
 }

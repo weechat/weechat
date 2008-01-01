@@ -399,15 +399,22 @@ command_clear (void *data, struct t_gui_buffer *buffer,
 void
 command_debug_display_windows (struct t_gui_window_tree *tree, int indent)
 {
+    char format[128];
+    
     if (tree)
     {
         if (tree->window)
         {
             /* leaf */
+            snprintf (format,
+                      sizeof (format),
+                      "%%-%dsleaf: 0x%%X (parent:0x%%X), win=0x%%X, "
+                      "child1=0x%%X, child2=0x%%X, %%d,%%d %%dx%%d, "
+                      "%%d%%%%x%%d%%%%",
+                      indent * 2);
             gui_chat_printf (NULL,
-                             "leaf: %X (parent:%X), win=%X, child1=%X, "
-                             "child2=%X, %d,%d %dx%d, %d%%x%d%%",
-                             tree, tree->parent_node, tree->window,
+                             format,
+                             " ", tree, tree->parent_node, tree->window,
                              tree->child1, tree->child2,
                              tree->window->win_x, tree->window->win_y,
                              tree->window->win_width, tree->window->win_height,
@@ -417,10 +424,14 @@ command_debug_display_windows (struct t_gui_window_tree *tree, int indent)
         else
         {
             /* node */
+            snprintf (format,
+                      sizeof (format),
+                      "%%-%dsnode: 0x%%X (parent:0x%%X), win=0x%%X, "
+                      "child1=0x%%X, child2=0x%%X)",
+                      indent * 2);
             gui_chat_printf (NULL,
-                             "node: %X (parent:%X), win=%X, child1=%X, "
-                             "child2=%X)",
-                             tree, tree->parent_node, tree->window,
+                             format,
+                             " ", tree, tree->parent_node, tree->window,
                              tree->child1, tree->child2);
         }
         
@@ -464,11 +475,7 @@ command_debug (void *data, struct t_gui_buffer *buffer,
         }
         else
         {
-            gui_chat_printf (NULL,
-                             _("%sError: unknown option for \"%s\" command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "debug");
-            return WEECHAT_RC_ERROR;
+            hook_signal_send ("debug", argv_eol[1]);
         }
     }
     
@@ -1928,12 +1935,14 @@ command_init ()
                   command_clear, NULL);
     hook_command (NULL, "debug",
                   N_("print debug messages"),
-                  N_("dump | buffer | windows"),
+                  N_("dump | buffer | windows | text"),
                   N_("   dump: save memory dump in WeeChat log file (same "
                      "dump is written when WeeChat crashes)\n"
                      " buffer: dump buffer content with hexadecimal values "
                      "in log file\n"
-                     "windows: display windows tree"),
+                     "windows: display windows tree\n"
+                     "   text: send \"debug\" signal with \"text\" as "
+                     "arguments"),
                   "dump|buffer|windows",
                   command_debug, NULL);
     hook_command (NULL, "help",

@@ -20,7 +20,8 @@
 #ifndef __WEECHAT_IRC_MODE_H
 #define __WEECHAT_IRC_MODE_H 1
 
-#include "irc-server.h"
+struct t_irc_server;
+struct t_irc_channel;
 
 extern void irc_mode_channel_set (struct t_irc_server *server,
                                   struct t_irc_channel *channel, char *modes);

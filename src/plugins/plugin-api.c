@@ -310,50 +310,48 @@ plugin_api_command (struct t_weechat_plugin *plugin,
 
 /*
  * plugin_api_info_get: get info about WeeChat
- *                      WARNING: caller has to free string returned
- *                      by this function after use
  */
 
 char *
 plugin_api_info_get (struct t_weechat_plugin *plugin, char *info)
 {
     time_t inactivity;
-    char *return_str;
+    static char keyboard_inactivity[32];
     
     if (!plugin || !info)
         return NULL;
     
     if (string_strcasecmp (info, "version") == 0)
     {
-        return strdup (PACKAGE_VERSION);
+        return PACKAGE_VERSION;
     }
     if (string_strcasecmp (info, "date") == 0)
     {
-        return strdup (__DATE__);
+        return __DATE__;
     }
     else if (string_strcasecmp (info, "dir_separator") == 0)
     {
-        return strdup (DIR_SEPARATOR);
+        return DIR_SEPARATOR;
     }
     else if (string_strcasecmp (info, "weechat_dir") == 0)
     {
-        return strdup (weechat_home);
+        return weechat_home;
     }
     else if (string_strcasecmp (info, "weechat_libdir") == 0)
     {
-        return strdup (WEECHAT_LIBDIR);
+        return WEECHAT_LIBDIR;
     }
     else if (string_strcasecmp (info, "weechat_sharedir") == 0)
     {
-        return strdup (WEECHAT_SHAREDIR);
+        return WEECHAT_SHAREDIR;
     }
     else if (string_strcasecmp (info, "charset_terminal") == 0)
     {
-        return strdup (local_charset);
+        return local_charset;
     }
     else if (string_strcasecmp (info, "charset_internal") == 0)
     {
-        return strdup (WEECHAT_INTERNAL_CHARSET);
+        return WEECHAT_INTERNAL_CHARSET;
     }
     else if (string_strcasecmp (info, "inactivity") == 0)
     {
@@ -361,43 +359,9 @@ plugin_api_info_get (struct t_weechat_plugin *plugin, char *info)
             inactivity = 0;
         else
             inactivity = time (NULL) - gui_keyboard_last_activity_time;
-        return_str = (char *)malloc (32);
-        if (!return_str)
-            return NULL;
-        snprintf (return_str, 32, "%ld", (long int)inactivity);
-        return return_str;
-    }
-    else if (string_strcasecmp (info, "input") == 0)
-    {
-        if (gui_current_window->buffer->input)
-        {
-            return_str = string_iconv_from_internal (plugin->charset,
-                                                     gui_current_window->buffer->input_buffer);
-            return (return_str) ? return_str : strdup ("");
-        }
-        else
-            return strdup ("");
-    }
-    else if (string_strcasecmp (info, "input_mask") == 0)
-    {
-        if (gui_current_window->buffer->input)
-            return strdup (gui_current_window->buffer->input_buffer_color_mask);
-        else
-            return strdup ("");
-    }
-    else if (string_strcasecmp (info, "input_pos") == 0)
-    {
-        if (gui_current_window->buffer->input)
-        {
-            return_str = (char *)malloc (32);
-            if (!return_str)
-                return NULL;
-            snprintf (return_str, 32, "%d",
-                      gui_current_window->buffer->input_buffer_pos);
-            return return_str;
-        }
-        else
-            return strdup ("");
+        snprintf (keyboard_inactivity, sizeof (keyboard_inactivity),
+                  "%ld", (long int)inactivity);
+        return keyboard_inactivity;
     }
     
     /* info not found */

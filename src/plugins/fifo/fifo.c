@@ -115,8 +115,6 @@ fifo_create ()
                                 fifo_filename);
         }
     }
-    if (weechat_home)
-        free (weechat_home);
     
     return rc;
 }

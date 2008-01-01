@@ -185,7 +185,7 @@ gui_infobar_highlight_timer_cb (void *data)
     
     if (gui_ok)
     {
-        if (gui_infobar && gui_infobar->remaining_time > 0)
+        if (gui_infobar && (gui_infobar->remaining_time > 0))
         {
             gui_infobar->remaining_time--;
             if (gui_infobar->remaining_time == 0)
@@ -196,7 +196,10 @@ gui_infobar_highlight_timer_cb (void *data)
         }
         /* remove this timer if there's no more data for infobar */
         if (!gui_infobar)
+        {
             unhook (gui_infobar_highlight_timer);
+            gui_infobar_highlight_timer = NULL;
+        }
     }
     
     return WEECHAT_RC_OK;

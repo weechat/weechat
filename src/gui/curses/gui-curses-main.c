@@ -43,6 +43,7 @@
 #include "../gui-infobar.h"
 #include "../gui-input.h"
 #include "../gui-history.h"
+#include "../gui-nicklist.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
 
@@ -113,8 +114,6 @@ gui_main_init ()
         
         if (CONFIG_BOOLEAN(config_look_set_title))
             gui_window_title_set ();
-        
-        signal (SIGWINCH, gui_window_refresh_screen_sigwinch);
     }
 }
 
@@ -135,23 +134,32 @@ gui_main_quit ()
 void
 gui_main_loop ()
 {
+    struct t_hook *hook_fd_keyboard;
     struct t_gui_buffer *ptr_buffer;
     struct timeval tv_timeout;
     fd_set read_fds, write_fds, except_fds;
+    int max_fd;
+    int ready;
     
     quit_weechat = 0;
     
-    /* if SIGTERM or SIGHUP received => quit */
-    signal (SIGTERM, gui_main_quit);
-    signal (SIGHUP, gui_main_quit);
+    /* catch SIGTERM signal: quit program */
+    util_catch_signal (SIGTERM, &gui_main_quit);
+    
+    /* cach SIGHUP signal: reload configuration */
+    util_catch_signal (SIGHUP, &gui_main_quit);
+    
+    /* catch SIGWINCH signal: redraw screen */
+    util_catch_signal (SIGWINCH, &gui_window_refresh_screen_sigwinch);
+    
+    /* hook stdin (read keyboard) */
+    hook_fd_keyboard = hook_fd (NULL, STDIN_FILENO, 1, 0, 0,
+                                &gui_keyboard_read_cb, NULL);
     
     while (!quit_weechat)
     {
         /* execute hook timers */
         hook_timer_exec ();
-        
-        /* infobar count down */
-        
         
         /* refresh needed ? */
         if (gui_refresh_screen_needed)
@@ -165,25 +173,32 @@ gui_main_loop ()
                 gui_chat_draw (ptr_buffer, 0);
                 ptr_buffer->chat_refresh_needed = 0;
             }
+            if (ptr_buffer->nicklist_refresh_needed)
+            {
+                gui_nicklist_draw (ptr_buffer, 0);
+                ptr_buffer->nicklist_refresh_needed = 0;
+            }
         }
         
         /* wait for keyboard or network activity */
         FD_ZERO (&read_fds);
         FD_ZERO (&write_fds);
         FD_ZERO (&except_fds);
-        hook_fd_set (&read_fds, &write_fds, &except_fds);
-        FD_SET (STDIN_FILENO, &read_fds);
+        max_fd = hook_fd_set (&read_fds, &write_fds, &except_fds);
         if (hook_timer_time_to_next (&tv_timeout))
-            select (FD_SETSIZE, &read_fds, &write_fds, &except_fds, &tv_timeout);
+            ready = select (max_fd + 1, &read_fds, &write_fds, &except_fds,
+                            &tv_timeout);
         else
-            select (FD_SETSIZE, &read_fds, &write_fds, &except_fds, NULL);
-        if (FD_ISSET (STDIN_FILENO, &read_fds))
+            ready = select (max_fd + 1, &read_fds, &write_fds, &except_fds,
+                            NULL);
+        if (ready > 0)
         {
-            gui_keyboard_read ();
-            gui_keyboard_flush ();
+            hook_fd_exec (&read_fds, &write_fds, &except_fds);
         }
-        hook_fd_exec (&read_fds, &write_fds, &except_fds);
     }
+    
+    /* remove keyboard hook */
+    unhook (hook_fd_keyboard);
 }
 
 /*

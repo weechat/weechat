@@ -29,6 +29,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
+#include <signal.h>
 
 #include "weechat.h"
 #include "wee-util.h"
@@ -119,6 +120,20 @@ util_get_time_length (char *time_format)
     return strlen (text_time);
 }
 
+/*
+ * util_catch_signal: catch a signal
+ */
+
+void
+util_catch_signal (int signum, void (*handler)(int))
+{
+    struct sigaction act;
+    
+    sigemptyset (&act.sa_mask);
+    act.sa_flags = 0;
+    act.sa_handler = handler;
+    sigaction(signum, &act, NULL);
+}
 
 /*
  * util_create_dir: create a directory

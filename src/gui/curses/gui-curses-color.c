@@ -398,6 +398,7 @@ gui_color_init_weechat ()
     gui_color[GUI_COLOR_INPUT_ACTIONS] = gui_color_build (GUI_COLOR_INPUT_ACTIONS, CONFIG_COLOR(config_color_input_actions), CONFIG_COLOR(config_color_input_bg));
     
     gui_color[GUI_COLOR_NICKLIST] = gui_color_build (GUI_COLOR_NICKLIST, CONFIG_COLOR(config_color_nicklist), CONFIG_COLOR(config_color_nicklist_bg));
+    gui_color[GUI_COLOR_NICKLIST_GROUP] = gui_color_build (GUI_COLOR_NICKLIST_GROUP, CONFIG_COLOR(config_color_nicklist_group), CONFIG_COLOR(config_color_nicklist_bg));
     gui_color[GUI_COLOR_NICKLIST_AWAY] = gui_color_build (GUI_COLOR_NICKLIST_AWAY, CONFIG_COLOR(config_color_nicklist_away), CONFIG_COLOR(config_color_nicklist_bg));
     gui_color[GUI_COLOR_NICKLIST_PREFIX1] = gui_color_build (GUI_COLOR_NICKLIST_PREFIX1, CONFIG_COLOR(config_color_nicklist_prefix1), CONFIG_COLOR(config_color_nicklist_bg));
     gui_color[GUI_COLOR_NICKLIST_PREFIX2] = gui_color_build (GUI_COLOR_NICKLIST_PREFIX2, CONFIG_COLOR(config_color_nicklist_prefix2), CONFIG_COLOR(config_color_nicklist_bg));

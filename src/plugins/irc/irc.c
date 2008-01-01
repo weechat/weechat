@@ -45,8 +45,10 @@ char plugin_description[] = "IRC (Internet Relay Chat)";
 
 struct t_weechat_plugin *weechat_irc_plugin = NULL;
 
-struct t_hook *irc_hook_timer = NULL;
+ struct t_hook *irc_hook_timer = NULL;
 struct t_hook *irc_hook_timer_check_away = NULL;
+
+int irc_debug = 0;
 
 #ifdef HAVE_GNUTLS
 gnutls_certificate_credentials gnutls_xcred; /* gnutls client credentials */
@@ -60,10 +62,6 @@ gnutls_certificate_credentials gnutls_xcred; /* gnutls client credentials */
 int
 irc_dump_data_cb (void *data, char *signal, void *pointer)
 {
-    struct t_irc_server *ptr_server;
-    struct t_irc_channel *ptr_channel;
-    struct t_irc_nick *ptr_nick;
-    
     /* make C compiler happy */
     (void) data;
     (void) signal;
@@ -72,23 +70,7 @@ irc_dump_data_cb (void *data, char *signal, void *pointer)
     weechat_log_printf ("");
     weechat_log_printf ("***** IRC plugin dump *****");
     
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
-    {
-        irc_server_print_log (ptr_server);
-        
-        for (ptr_channel = ptr_server->channels; ptr_channel;
-             ptr_channel = ptr_channel->next_channel)
-        {
-            irc_channel_print_log (ptr_channel);
-            
-            for (ptr_nick = ptr_channel->nicks; ptr_nick;
-                ptr_nick = ptr_nick->next_nick)
-            {
-                irc_nick_print_log (ptr_nick);
-            }
-        }
-    }
+    irc_server_print_log ();
     
     //irc_dcc_print_log ();
     
@@ -120,7 +102,6 @@ irc_create_directories ()
             free (dir1);
         if (dir2)
             free (dir2);
-        free (weechat_dir);
     }
 }
 
@@ -147,6 +128,22 @@ irc_quit_cb (void *data, char *signal, void *pointer)
     return WEECHAT_RC_OK;
 }
 
+/*
+ * irc_debug_cb: callback for "debug" signal
+ */
+
+int
+irc_debug_cb (void *data, char *signal, void *pointer)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    
+    if (weechat_strcasecmp ((char *)pointer, "irc") == 0)
+        irc_debug ^= 1;
+    
+    return WEECHAT_RC_OK;
+}
 
 /*
  * weechat_plugin_init: initialize IRC plugin
@@ -178,12 +175,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_hook_signal ("dump_data", &irc_dump_data_cb, NULL);
     weechat_hook_signal ("config_reload", &irc_config_reload_cb, NULL);
     weechat_hook_signal ("quit", &irc_quit_cb, NULL);
+    weechat_hook_signal ("debug", &irc_debug_cb, NULL);
     
     /* hook completions */
     irc_completion_init ();
     
-    //irc_server_auto_connect (1, 0);
-
+    irc_server_auto_connect (1, 0);
+    
     /*
     irc_timer = weechat_hook_timer (1 * 1000, 0,
                                     &irc_server_timer,

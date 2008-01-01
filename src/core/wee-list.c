@@ -225,6 +225,21 @@ weelist_get (struct t_weelist *weelist, int position)
 }
 
 /*
+ * weelist_set: set a new value for an item
+ */
+
+void
+weelist_set (struct t_weelist_item *item, char *new_value)
+{
+    if (!item || !new_value)
+        return;
+
+    if (item->data)
+        free (item->data);
+    item->data = strdup (new_value);
+}
+
+/*
  * weelist_next: get next item
  */
 
