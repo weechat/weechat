@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-12-18 17:16+0100\n"
+"POT-Creation-Date: 2008-01-02 12:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s (c) Copyright 2003-2007, compiled on %s %s\n"
+"%s (c) Copyright 2003-2008, compiled on %s %s\n"
 "Developed by FlashCode <flashcode@flashtux.org> - %s"
 msgstr ""
 
@@ -126,10 +126,6 @@ msgid "(hotlist: highlights + messages)"
 msgstr ""
 
 msgid "(hotlist: highlights + messages + join/part (all))"
-msgstr ""
-
-#, c-format
-msgid "%sError: unknown option for \"%s\" command"
 msgstr ""
 
 #. TRANSLATORS: %s is "WeeChat"
@@ -264,6 +260,10 @@ msgid "No plugin found."
 msgstr ""
 
 msgid "  (no plugin)"
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown option for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -449,14 +449,15 @@ msgstr ""
 msgid "print debug messages"
 msgstr ""
 
-msgid "dump | buffer | windows"
+msgid "dump | buffer | windows | text"
 msgstr ""
 
 msgid ""
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 " buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
 msgstr ""
 
 msgid "display help about commands"
@@ -932,6 +933,9 @@ msgid "text color for nicklist"
 msgstr ""
 
 msgid "background color for nicklist"
+msgstr ""
+
+msgid "text color for groups in nicklist"
 msgstr ""
 
 msgid "text color for away nicknames"
@@ -3087,11 +3091,11 @@ msgid "%s%s: \"%s\" command received without host or channel"
 msgstr ""
 
 #, c-format
-msgid "%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr ""
 
 #, c-format
-msgid "%s%s %s(%s%s%s)%s has left %s%s"
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
 msgstr ""
 
 #, c-format
@@ -3135,7 +3139,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
+msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
 msgstr ""
 
 #, c-format
@@ -3247,10 +3251,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
-msgstr ""
-
-#, c-format
-msgid "Nicks %s%s%s: %s["
 msgstr ""
 
 #, c-format

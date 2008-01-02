@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003-2007 by FlashCode <flashcode@flashtux.org>
+ * Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
  * See README for License detail, AUTHORS for developers list.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -19,8 +19,8 @@
 /* This header is designed to be distributed with WeeChat plugins, if scripts
    management is needed */
 
-#ifndef __WEECHAT_WEECHAT_SCRIPT_H
-#define __WEECHAT_WEECHAT_SCRIPT_H 1
+#ifndef __WEECHAT_SCRIPT_H
+#define __WEECHAT_SCRIPT_H 1
 
 /* constants which defines return types for weechat_<lang>_exec functions */
 #define SCRIPT_EXEC_INT    1
@@ -102,4 +102,4 @@ extern void weechat_script_set_charset (struct t_weechat_plugin *plugin,
                                         struct t_plugin_script *script,
                                         char *charset);
 
-#endif /* weechat-script.h */
+#endif /* script.h */

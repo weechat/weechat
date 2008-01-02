@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003-2007 by FlashCode <flashcode@flashtux.org>
+ * Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
  * See README for License detail, AUTHORS for developers list.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* scripts.c: script interface for WeeChat plugins */
+/* script.c: script interface for WeeChat plugins */
 
 
 #include <stdlib.h>

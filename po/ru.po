@@ -1,12 +1,12 @@
 # WeeChat: fast and light chat environment for many operating systems.
-# Copyright (c) 2003-2007 FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2003-2008 FlashCode <flashcode@flashtux.org>
 # This file is distributed under the same license as the WeeChat package.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-12-18 17:16+0100\n"
+"POT-Creation-Date: 2008-01-02 12:39+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -16,9 +16,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-Bookmarks: -1,-1,608,-1,-1,-1,-1,-1,-1,-1\n"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s (c) Copyright 2003-2007, compiled on %s %s\n"
+"%s (c) Copyright 2003-2008, compiled on %s %s\n"
 "Developed by FlashCode <flashcode@flashtux.org> - %s"
 msgstr ""
 "%s (c) Copyright 2003-2007, собран %s %s\n"
@@ -152,10 +152,6 @@ msgstr "(hotlist: подсвечивание + сообщения)\n"
 #, fuzzy
 msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr "(хотлист: подсвечивание + сообщения + входы/выходы (всё))\n"
-
-#, fuzzy, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 #. TRANSLATORS: %s is "WeeChat"
 #, fuzzy, c-format
@@ -313,6 +309,10 @@ msgstr "Plugin не найден\n"
 #, fuzzy
 msgid "  (no plugin)"
 msgstr "  (нет pluginа)\n"
+
+#, fuzzy, c-format
+msgid "%sError: unknown option for \"%s\" command"
+msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%sError: wrong argument count for \"%s\" command"
@@ -539,14 +539,17 @@ msgstr ""
 msgid "print debug messages"
 msgstr "выводить отладочные сообщения"
 
-msgid "dump | buffer | windows"
+#, fuzzy
+msgid "dump | buffer | windows | text"
 msgstr "dump | buffer | windows"
 
+#, fuzzy
 msgid ""
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 " buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
 msgstr ""
 "   dump: сохранить дамп памяти в журнал WeeChat (аналогично дампу при крахе "
 "WeeChat)\n"
@@ -1188,6 +1191,10 @@ msgstr "цвет ника"
 #, fuzzy
 msgid "background color for nicklist"
 msgstr "фон ников"
+
+#, fuzzy
+msgid "text color for groups in nicklist"
+msgstr "цвет ника"
 
 #, fuzzy
 msgid "text color for away nicknames"
@@ -3599,11 +3606,11 @@ msgid "%s%s: \"%s\" command received without host or channel"
 msgstr "%s \"%s\" команда получена без хоста или канала\n"
 
 #, fuzzy, c-format
-msgid "%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s покинул %s%s"
 
-#, c-format
-msgid "%s%s %s(%s%s%s)%s has left %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
 msgstr "%s%s %s(%s%s%s)%s покинул %s%s"
 
 #, fuzzy, c-format
@@ -3647,7 +3654,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s неизвестный режим DCC CHAT получен от "
 
 #, fuzzy, c-format
-msgid "%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
+msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s вышел"
 
 #, fuzzy, c-format
@@ -3762,10 +3769,6 @@ msgstr " пользователем %s%s"
 #, fuzzy, c-format
 msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
 msgstr "%sна %s%s%s/%s%s%s:%s игнорирует %s%s%s с %s%s\n"
-
-#, c-format
-msgid "Nicks %s%s%s: %s["
-msgstr "Ники %s%s%s: %s["
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -4049,6 +4052,9 @@ msgstr "Plugin \"%s\" выгружен.\n"
 #, fuzzy
 msgid "Saving plugins configuration to disk"
 msgstr "Сохраняю конфигурацию\n"
+
+#~ msgid "Nicks %s%s%s: %s["
+#~ msgstr "Ники %s%s%s: %s["
 
 #, fuzzy
 #~ msgid "%s%s: error sending data to IRC server"

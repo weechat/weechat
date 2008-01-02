@@ -1,4 +1,4 @@
-WeeChat FAQ, 2007-09-06
+WeeChat FAQ, 2008-01-02
 =======================
 
 Intended audience:
@@ -36,8 +36,8 @@ A:	Curses GUI is built by default.
 Q:	I can't compile WeeChat CVS.
 
 A:	Check that you have latest version of autoconf and automake.
-	WeeChat has been developed with autoconf version 2.59 and automake
-	version 1.9.5.
+	WeeChat has been developed with autoconf version 2.61 and automake
+	version 1.10.
 	You should have at least these versions in order to compile WeeChat CVS.
 	If you can't or don't want to install these versions, you can download and
 	install "devel package", a package built almost every day, based on CVS.

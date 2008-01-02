@@ -1,4 +1,4 @@
-WeeChat FAQ, 2007-09-06
+WeeChat FAQ, 2008-01-02
 =======================
 
 Public concerné :
@@ -38,8 +38,8 @@ R:	L'interface Curses est construite par défaut.
 Q:	Je ne peux pas compiler le CVS WeeChat.
 
 R:	Vérifiez que vous avez bien la dernière version d'autoconf et automake.
-	WeeChat a été développé avec autoconf version 2.59 et automake
-	version 1.9.5.
+	WeeChat a été développé avec autoconf version 2.61 et automake
+	version 1.10.
 	Vous devez avoir au moins ces versions pour compiler le CVS WeeChat.
 	Si vous n'avez pas ou ne souhaitez pas installer ces versions, vous
 	pouvez télécharger et installer le paquet "devel", un paquet construit

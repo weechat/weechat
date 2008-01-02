@@ -14,7 +14,7 @@
  * ###                                                                      ###
  * ############################################################################
  *
- * Copyright (c) 2003-2007 by FlashCode <flashcode@flashtux.org>
+ * Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
  * See README for License detail, AUTHORS for developers list.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -93,7 +93,7 @@ weechat_display_usage (char *exec_name)
 {
     string_iconv_fprintf (stdout, "\n");
     string_iconv_fprintf (stdout,
-                          _("%s (c) Copyright 2003-2007, compiled on %s %s\n"
+                          _("%s (c) Copyright 2003-2008, compiled on %s %s\n"
                             "Developed by FlashCode <flashcode@flashtux.org> "
                             "- %s"),
                           PACKAGE_STRING, __DATE__, __TIME__, WEECHAT_WEBSITE);

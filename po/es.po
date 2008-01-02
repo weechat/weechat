@@ -1,12 +1,12 @@
 # WeeChat: fast and light chat environment for many operating systems.
-# Copyright (c) 2003-2007 FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2003-2008 FlashCode <flashcode@flashtux.org>
 # This file is distributed under the same license as the WeeChat package.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-12-18 17:16+0100\n"
+"POT-Creation-Date: 2008-01-02 12:39+0100\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -15,9 +15,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#, c-format
+#, fuzzy, c-format
 msgid ""
-"%s (c) Copyright 2003-2007, compiled on %s %s\n"
+"%s (c) Copyright 2003-2008, compiled on %s %s\n"
 "Developed by FlashCode <flashcode@flashtux.org> - %s"
 msgstr ""
 "%s (c) Copyright 2003-2007, compilado a %s %s\n"
@@ -152,10 +152,6 @@ msgstr "(hotlist: resaltados + mensajes)\n"
 #, fuzzy
 msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr "(hotlist: resaltados + mensajes + join/part (todos))\n"
-
-#, fuzzy, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr "%s opciÃ³n desconocida para el comando \"%s\"\n"
 
 #. TRANSLATORS: %s is "WeeChat"
 #, fuzzy, c-format
@@ -313,6 +309,10 @@ msgstr "Ninguna opciÃ³n de plugin encontrada\n"
 #, fuzzy
 msgid "  (no plugin)"
 msgstr "  (sin plugins)\n"
+
+#, fuzzy, c-format
+msgid "%sError: unknown option for \"%s\" command"
+msgstr "%s opciÃ³n desconocida para el comando \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%sError: wrong argument count for \"%s\" command"
@@ -528,7 +528,7 @@ msgid "print debug messages"
 msgstr "imprime mensajes de depuraciÃ³n"
 
 #, fuzzy
-msgid "dump | buffer | windows"
+msgid "dump | buffer | windows | text"
 msgstr "volcar | ventanas"
 
 #, fuzzy
@@ -536,7 +536,8 @@ msgid ""
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 " buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
 msgstr ""
 " volcar: guardar el volcado de memoria en el archivo de registro de Weechat "
 "(el mismo volcado se escribe cuando Weechat se cuelga)\n"
@@ -1168,6 +1169,10 @@ msgstr "color para el nombre de usuario"
 #, fuzzy
 msgid "background color for nicklist"
 msgstr "color de fondo para los nombres de usuario"
+
+#, fuzzy
+msgid "text color for groups in nicklist"
+msgstr "color para el nombre de usuario"
 
 #, fuzzy
 msgid "text color for away nicknames"
@@ -3611,11 +3616,11 @@ msgid "%s%s: \"%s\" command received without host or channel"
 msgstr "%s comando \"%s\" recibido sin host o canal\n"
 
 #, fuzzy, c-format
-msgid "%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s ha abandonado %s%s"
 
-#, c-format
-msgid "%s%s %s(%s%s%s)%s has left %s%s"
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
 msgstr "%s%s %s(%s%s%s)%s ha abandonado %s%s"
 
 #, fuzzy, c-format
@@ -3659,7 +3664,7 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s tipo DCC CHAT desconocido recibido de "
 
 #, fuzzy, c-format
-msgid "%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
+msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s ha salido"
 
 #, fuzzy, c-format
@@ -3775,10 +3780,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
 msgstr "%sen %s%s%s/%s%s%s:%s ignorando %s%s%s de %s%s\n"
-
-#, c-format
-msgid "Nicks %s%s%s: %s["
-msgstr "Usuarios %s%s%s: %s["
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -4080,6 +4081,9 @@ msgstr "Plugin \"%s\" descargado.\n"
 #, fuzzy
 msgid "Saving plugins configuration to disk"
 msgstr "Guardar configuraciÃ³n a disco\n"
+
+#~ msgid "Nicks %s%s%s: %s["
+#~ msgstr "Usuarios %s%s%s: %s["
 
 #, fuzzy
 #~ msgid "%s%s: error sending data to IRC server"

@@ -1,13 +1,13 @@
 # WeeChat: fast and light chat environment for many operating systems.
-# Copyright (c) 2003-2007 FlashCode <flashcode@flashtux.org>
+# Copyright (c) 2003-2008 FlashCode <flashcode@flashtux.org>
 # This file is distributed under the same license as the WeeChat package.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2007-12-18 17:16+0100\n"
-"PO-Revision-Date: 2007-12-18 17:11+0100\n"
+"POT-Creation-Date: 2008-01-02 12:39+0100\n"
+"PO-Revision-Date: 2008-01-02 12:39+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,10 +17,10 @@ msgstr ""
 
 #, c-format
 msgid ""
-"%s (c) Copyright 2003-2007, compiled on %s %s\n"
+"%s (c) Copyright 2003-2008, compiled on %s %s\n"
 "Developed by FlashCode <flashcode@flashtux.org> - %s"
 msgstr ""
-"%s (c) Copyright 2003-2007, compilé le %s %s\n"
+"%s (c) Copyright 2003-2008, compilé le %s %s\n"
 "Développé par FlashCode <flashcode@flashtux.org> - %s"
 
 #, c-format
@@ -144,10 +144,6 @@ msgstr "(hotlist: highlights + messages)"
 
 msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr "(hotlist: highlights + messages + join/part (tous))"
-
-#, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr "%sErreur: option inconnue pour la commande \"%s\""
 
 #. TRANSLATORS: %s is "WeeChat"
 #, c-format
@@ -284,6 +280,10 @@ msgstr "Aucune extension trouvée."
 
 msgid "  (no plugin)"
 msgstr "  (aucune extension)"
+
+#, c-format
+msgid "%sError: unknown option for \"%s\" command"
+msgstr "%sErreur: option inconnue pour la commande \"%s\""
 
 #, c-format
 msgid "%sError: wrong argument count for \"%s\" command"
@@ -503,20 +503,22 @@ msgstr ""
 msgid "print debug messages"
 msgstr "affiche des messages de debogage"
 
-msgid "dump | buffer | windows"
-msgstr "dump | buffer | windows"
+msgid "dump | buffer | windows | text"
+msgstr "dump | buffer | windows | texte"
 
 msgid ""
 "   dump: save memory dump in WeeChat log file (same dump is written when "
 "WeeChat crashes)\n"
 " buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
 msgstr ""
 "   dump: affiche les variables mémoire WeeChat dans le fichier log (les "
 "mêmes messages sont affichés lorsque WeeChat plante)\n"
 " buffer: affiche le contenu du tampon en valeurs hexadécimales dans le "
 "fichier log\n"
-"windows: affiche l'arbre des fenêtres"
+"windows: affiche l'arbre des fenêtres<\n"
+"  texte: envoie le signal \"debug\" avec \"texte\" comme paramètre"
 
 msgid "display help about commands"
 msgstr "afficher l'aide sur les commandes"
@@ -1099,6 +1101,9 @@ msgstr "couleur du texte pour la liste des pseudos"
 
 msgid "background color for nicklist"
 msgstr "couleur du fond pour la liste des pseudos"
+
+msgid "text color for groups in nicklist"
+msgstr "couleur du texte pour les groupes dans la liste des pseudos"
 
 msgid "text color for away nicknames"
 msgstr "couleur du texte pour les pseudos absents"
@@ -3515,12 +3520,12 @@ msgid "%s%s: \"%s\" command received without host or channel"
 msgstr "%s%s: commande \"%s\" reçue sans hôte ou canal"
 
 #, c-format
-msgid "%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
-msgstr "%s%s %s(%s%s%s)%s a quitté %s%s %s(%s%s%s)"
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
+msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s %s(%s%s%s)"
 
 #, c-format
-msgid "%s%s %s(%s%s%s)%s has left %s%s"
-msgstr "%s%s %s(%s%s%s)%s a quitté %s%s"
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
+msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s"
 
 #, c-format
 msgid "CTCP %sVERSION%s received from %s%s%s: %s"
@@ -3563,8 +3568,8 @@ msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
 msgstr "%s%s: type de DCC CHAT inconnu reçu de %s%s%s: \"%s\""
 
 #, c-format
-msgid "%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
-msgstr "%s%s %s(%s%s%s)%s a quitté %s(%s%s%s)"
+msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
+msgstr "%s%s%s %s(%s%s%s)%s a quitté %s(%s%s%s)"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without channel"
@@ -3679,10 +3684,6 @@ msgstr " par %s%s"
 #, c-format
 msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
 msgstr "%s%s%s sur %s%s%s %s %s %s%s@%s %s(%s%s%s)"
-
-#, c-format
-msgid "Nicks %s%s%s: %s["
-msgstr "Pseudos %s%s%s: %s["
 
 #, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -3987,3 +3988,6 @@ msgstr "%sExtension \"%s\" déchargée"
 
 msgid "Saving plugins configuration to disk"
 msgstr "Sauvegarde de la configuration des extensions sur disque"
+
+#~ msgid "Nicks %s%s%s: %s["
+#~ msgstr "Pseudos %s%s%s: %s["
