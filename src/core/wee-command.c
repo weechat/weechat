@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2003-2007 by FlashCode <flashcode@flashtux.org>
+ * Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
  * See README for License detail, AUTHORS for developers list.
  *
  * This program is free software; you can redistribute it and/or modify
@@ -554,7 +554,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
                                      " - " : "",
                                      (HOOK_COMMAND(ptr_hook, description)
                                       && HOOK_COMMAND(ptr_hook, description)[0]) ?
-                                     HOOK_COMMAND(ptr_hook, description) : "",
+                                     _(HOOK_COMMAND(ptr_hook, description)) : "",
                                      (HOOK_COMMAND(ptr_hook, level) > 0) ?
                                      _("  (masked by a plugin)") : "");
                 }
@@ -583,20 +583,20 @@ command_help (void *data, struct t_gui_buffer *buffer,
                                      GUI_COLOR(GUI_COLOR_CHAT),
                                      (HOOK_COMMAND(ptr_hook, args)
                                       && HOOK_COMMAND(ptr_hook, args)[0]) ?
-                                     HOOK_COMMAND(ptr_hook, args) : "");
+                                     _(HOOK_COMMAND(ptr_hook, args)) : "");
                     if (HOOK_COMMAND(ptr_hook, description)
                         && HOOK_COMMAND(ptr_hook, description)[0])
                     {
                         gui_chat_printf (NULL, "");
                         gui_chat_printf (NULL, "%s",
-                                         HOOK_COMMAND(ptr_hook, description));
+                                         _(HOOK_COMMAND(ptr_hook, description)));
                     }
                     if (HOOK_COMMAND(ptr_hook, args_description)
                         && HOOK_COMMAND(ptr_hook, args_description)[0])
                     {
                         gui_chat_printf (NULL, "");
                         gui_chat_printf (NULL, "%s",
-                                         HOOK_COMMAND(ptr_hook, args_description));
+                                         _(HOOK_COMMAND(ptr_hook, args_description)));
                     }
                     return WEECHAT_RC_OK;
                 }
@@ -1942,7 +1942,7 @@ command_init ()
                      "in log file\n"
                      "windows: display windows tree\n"
                      "   text: send \"debug\" signal with \"text\" as "
-                     "arguments"),
+                     "argument"),
                   "dump|buffer|windows",
                   command_debug, NULL);
     hook_command (NULL, "help",
