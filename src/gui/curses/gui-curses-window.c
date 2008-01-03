@@ -220,7 +220,7 @@ gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
                 max_length = CONFIG_INTEGER(config_look_nicklist_max_size);
             if (!force_calculate
                 && (window->win_nick_width ==
-                    max_length + 1 + ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0)))
+                    max_length + ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0)))
                 return 0;
         }
         else
@@ -250,14 +250,14 @@ gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
         switch (CONFIG_INTEGER(config_look_nicklist_position))
         {
             case CONFIG_LOOK_NICKLIST_LEFT:
-                window->win_chat_x = window->win_x + max_length + 1 +
+                window->win_chat_x = window->win_x + max_length +
                     ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
                 window->win_chat_y = window->win_y + 1;
-                window->win_chat_width = window->win_width - max_length - 1 -
+                window->win_chat_width = window->win_width - max_length -
                     ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
                 window->win_nick_x = window->win_x + 0;
                 window->win_nick_y = window->win_y + 1;
-                window->win_nick_width = max_length + 1 +
+                window->win_nick_width = max_length +
                     ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
                 if (CONFIG_BOOLEAN(config_look_infobar))
                 {
@@ -274,13 +274,13 @@ gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
             case CONFIG_LOOK_NICKLIST_RIGHT:
                 window->win_chat_x = window->win_x;
                 window->win_chat_y = window->win_y + 1;
-                window->win_chat_width = window->win_width - max_length - 1 -
+                window->win_chat_width = window->win_width - max_length -
                     ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
                 window->win_nick_x = window->win_x + window->win_width -
-                    max_length - 1 -
+                    max_length -
                     ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
                 window->win_nick_y = window->win_y + 1;
-                window->win_nick_width = max_length + 1 +
+                window->win_nick_width = max_length +
                     ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
                 if (CONFIG_BOOLEAN(config_look_infobar))
                 {
@@ -310,7 +310,7 @@ gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
                 window->win_nick_width = window->win_width;
                 window->win_nick_height = lines +
                     ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_nick_num_max = lines * (window->win_nick_width / (max_length + 2));
+                window->win_nick_num_max = lines * (window->win_nick_width / (max_length + 1));
                 break;
             case CONFIG_LOOK_NICKLIST_BOTTOM:
                 window->win_chat_x = window->win_x;
@@ -334,7 +334,7 @@ gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
                 window->win_nick_width = window->win_width;
                 window->win_nick_height = lines +
                     ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_nick_num_max = lines * (window->win_nick_width / (max_length + 2));
+                window->win_nick_num_max = lines * (window->win_nick_width / (max_length + 1));
                 break;
         }
         

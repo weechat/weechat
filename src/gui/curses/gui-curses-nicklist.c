@@ -211,6 +211,7 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                     {
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
                                                       GUI_COLOR_NICKLIST);
+                        chars_left = max_chars;
                         if (ptr_nick)
                         {
                             /* display spaces and prefix for nick */
@@ -222,12 +223,14 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                                                y, x, " ");
                                     x++;
                                 }
+                                chars_left -= ptr_nick->group->level;
                             }
                             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
                                                           ptr_nick->prefix_color);
                             mvwprintw (GUI_CURSES(ptr_win)->win_nick,
                                        y, x, "%c", ptr_nick->prefix);
                             x++;
+                            chars_left--;
                             
                             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
                                                           ptr_nick->color);
@@ -242,6 +245,7 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                                            y, x, " ");
                                 x++;
                             }
+                            chars_left -= ptr_group->level;
                             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
                                                           ptr_group->color);
                             //wattron (GUI_CURSES(ptr_win)->win_nick, A_UNDERLINE);
@@ -249,7 +253,6 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                         }
                         wmove (GUI_CURSES(ptr_win)->win_nick, y, x);
                         saved_char = '\0';
-                        chars_left = max_chars - ((ptr_nick) ? 1 : 0);
                         for (k = 0; k < chars_left; k++)
                         {
                             if (ptr_buf && ptr_buf[0])
