@@ -33,6 +33,7 @@
 #include "irc-dcc.h"
 #include "irc-nick.h"
 #include "irc-server.h"
+#include "irc-input.h"
 
 
 /*
@@ -57,7 +58,8 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     }
 
     /* create buffer for channel */
-    new_buffer = weechat_buffer_new (server->name, channel_name, NULL);
+    new_buffer = weechat_buffer_new (server->name, channel_name,
+                                     &irc_input_data);
     if (!new_buffer)
     {
         free (new_channel);

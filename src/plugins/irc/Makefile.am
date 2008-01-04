@@ -34,6 +34,7 @@ irc_la_SOURCES = irc.c \
                  irc-config.h \
                  irc-display.c \
                  irc-display.h \
+                 irc-input.c \
                  irc-mode.c \
                  irc-mode.h \
                  irc-nick.c \
@@ -47,7 +48,6 @@ irc_la_SOURCES = irc.c \
 #                 irc-buffer.h \
 #                 irc-dcc.c \
 #                 irc-dcc.h \
-#                 irc-input.c \
 #                 irc-log.c
 
 irc_la_LDFLAGS = -module
