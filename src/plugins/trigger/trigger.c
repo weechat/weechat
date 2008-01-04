@@ -27,6 +27,13 @@
 #include "weechat-trigger-libirc.h"
 #include "weechat-trigger-libc.h"
 
+
+WEECHAT_PLUGIN_NAME("trigger");
+WEECHAT_PLUGIN_DESCRIPTION("Trigger plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_LICENSE("GPL");
+
 t_weechat_trigger *weechat_trigger_list = NULL;
 t_weechat_trigger *weechat_trigger_last = NULL;
 

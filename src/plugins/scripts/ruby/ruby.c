@@ -38,9 +38,11 @@
 #include "../weechat-script.h"
 
 
-char plugin_name[]        = "Ruby";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Ruby scripts support";
+WEECHAT_PLUGIN_NAME("ruby");
+WEECHAT_PLUGIN_DESCRIPTION("Ruby plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_LICENSE("GPL");
 
 t_weechat_plugin *ruby_plugin;
 

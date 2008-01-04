@@ -27,9 +27,12 @@
 #include "../weechat-plugin.h"
 #include "aspell.h"
 
-char plugin_name[] = "aspell";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Aspell plugin for WeeChat";
+
+WEECHAT_PLUGIN_NAME("aspell");
+WEECHAT_PLUGIN_DESCRIPTION("Aspell plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_LICENSE("GPL");
 
 struct t_weechat_plugin *weechat_aspell_plugin = NULL;
 #define weechat_plugin weechat_aspell_plugin

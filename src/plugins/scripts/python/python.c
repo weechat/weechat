@@ -36,9 +36,11 @@
 #include "../weechat-script.h"
 
 
-char plugin_name[]        = "Python";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Python scripts support";
+WEECHAT_PLUGIN_NAME("python");
+WEECHAT_PLUGIN_DESCRIPTION("Python plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_LICENSE("GPL");
 
 t_weechat_plugin *python_plugin;
 

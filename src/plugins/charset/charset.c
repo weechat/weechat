@@ -28,9 +28,11 @@
 #include "../weechat-plugin.h"
 
 
-char plugin_name[] = "charset";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Charset plugin for WeeChat";
+WEECHAT_PLUGIN_NAME("charset");
+WEECHAT_PLUGIN_DESCRIPTION("Charset plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_LICENSE("GPL");
 
 struct t_weechat_plugin *weechat_charset_plugin = NULL;
 #define weechat_plugin weechat_charset_plugin

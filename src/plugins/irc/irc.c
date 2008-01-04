@@ -39,13 +39,15 @@
 #include "irc-dcc.h"
 
 
-char plugin_name[] = "irc";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "IRC (Internet Relay Chat)";
+WEECHAT_PLUGIN_NAME("irc");
+WEECHAT_PLUGIN_DESCRIPTION("IRC (Internet Relay Chat) plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_LICENSE("GPL");
 
 struct t_weechat_plugin *weechat_irc_plugin = NULL;
 
- struct t_hook *irc_hook_timer = NULL;
+struct t_hook *irc_hook_timer = NULL;
 struct t_hook *irc_hook_timer_check_away = NULL;
 
 int irc_debug = 0;

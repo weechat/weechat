@@ -895,6 +895,12 @@ command_plugin_list (char *name, int full)
             
             if (full)
             {
+                /* second line of plugin info */
+                gui_chat_printf (NULL,
+                                 _("  written by \"%s\", license: s%"),
+                                 ptr_plugin->author,
+                                 ptr_plugin->license);
+                
                 /* commands hooked */
                 hook_found = 0;
                 for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
@@ -903,10 +909,10 @@ command_plugin_list (char *name, int full)
                     if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
                     {
                         if (!hook_found)
-                            gui_chat_printf (NULL, _("     commands hooked:"));
+                            gui_chat_printf (NULL, _("    commands hooked:"));
                         hook_found = 1;
                         gui_chat_printf (NULL,
-                                         "       /%s %s%s%s",
+                                         "      /%s %s%s%s",
                                          HOOK_COMMAND(ptr_hook, command),
                                          HOOK_COMMAND(ptr_hook, description) ? "(" : "",
                                          HOOK_COMMAND(ptr_hook, description) ?
@@ -923,14 +929,14 @@ command_plugin_list (char *name, int full)
                     if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
                     {
                         if (!hook_found)
-                            gui_chat_printf (NULL, _("     timers hooked:"));
+                            gui_chat_printf (NULL, _("    timers hooked:"));
                         hook_found = 1;
                         interval = (HOOK_TIMER(ptr_hook, interval) % 1000 == 0) ?
                             HOOK_TIMER(ptr_hook, interval) / 1000 :
                             HOOK_TIMER(ptr_hook, interval);
                         if (HOOK_TIMER(ptr_hook, remaining_calls) > 0)
                             gui_chat_printf (NULL,
-                                             _("       %d %s "
+                                             _("      %d %s "
                                                "(%d calls remaining)"),
                                              interval,
                                              (HOOK_TIMER(ptr_hook, interval) % 1000 == 0) ?
@@ -939,7 +945,7 @@ command_plugin_list (char *name, int full)
                                              HOOK_TIMER(ptr_hook, remaining_calls));
                         else
                             gui_chat_printf (NULL,
-                                             _("       %d %s "
+                                             _("      %d %s "
                                                "(no call limit)"),
                                              interval,
                                              (HOOK_TIMER(ptr_hook, interval) % 1000 == 0) ?
@@ -957,10 +963,10 @@ command_plugin_list (char *name, int full)
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL,
-                                             _("     fd hooked:"));
+                                             _("    fd hooked:"));
                         hook_found = 1;
                         gui_chat_printf (NULL,
-                                         _("       %d (flags: %d)"),
+                                         _("      %d (flags: %d)"),
                                          HOOK_FD(ptr_hook, fd),
                                          HOOK_FD(ptr_hook, flags));
                     }
@@ -974,18 +980,18 @@ command_plugin_list (char *name, int full)
                     if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
                     {
                         if (!hook_found)
-                            gui_chat_printf (NULL, _("     prints hooked:"));
+                            gui_chat_printf (NULL, _("    prints hooked:"));
                         hook_found = 1;
                         if (HOOK_PRINT(ptr_hook, buffer))
                             gui_chat_printf (NULL,
-                                             _("       buffer: %s / %s, message: \"%s\""),
+                                             _("      buffer: %s / %s, message: \"%s\""),
                                              HOOK_PRINT(ptr_hook, buffer)->category,
                                              HOOK_PRINT(ptr_hook, buffer)->name,
                                              HOOK_PRINT(ptr_hook, message) ?
                                              HOOK_PRINT(ptr_hook, message) : _("(none)"));
                         else
                             gui_chat_printf (NULL,
-                                             _("       message: \"%s\""),
+                                             _("      message: \"%s\""),
                                              HOOK_PRINT(ptr_hook, message) ?
                                              HOOK_PRINT(ptr_hook, message) : _("(none)"));
                     }
@@ -999,10 +1005,10 @@ command_plugin_list (char *name, int full)
                     if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
                     {
                         if (!hook_found)
-                            gui_chat_printf (NULL, _("     signals hooked:"));
+                            gui_chat_printf (NULL, _("    signals hooked:"));
                         hook_found = 1;
                         gui_chat_printf (NULL,
-                                         _("       signal: %s"),
+                                         _("      signal: %s"),
                                          HOOK_SIGNAL(ptr_hook, signal) ?
                                          HOOK_SIGNAL(ptr_hook, signal) : _("(all)"));
                     }
@@ -1017,11 +1023,11 @@ command_plugin_list (char *name, int full)
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL,
-                                             _("     configuration options "
+                                             _("    configuration options "
                                                "hooked:"));
                         hook_found = 1;
                         gui_chat_printf (NULL,
-                                         "       (%s) %s",
+                                         "      (%s) %s",
                                          HOOK_CONFIG(ptr_hook, type) ?
                                          HOOK_CONFIG(ptr_hook, type) : "*",
                                          HOOK_CONFIG(ptr_hook, option) ?
@@ -1038,10 +1044,10 @@ command_plugin_list (char *name, int full)
                     {
                         if (!hook_found)
                             gui_chat_printf (NULL,
-                                             _("     completion hooked:"));
+                                             _("    completions hooked:"));
                         hook_found = 1;
                         gui_chat_printf (NULL,
-                                         "       %s",
+                                         "        %s",
                                          HOOK_COMPLETION(ptr_hook, completion));
                     }
                 }

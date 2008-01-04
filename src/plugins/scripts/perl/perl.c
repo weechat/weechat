@@ -39,9 +39,11 @@
 #include "../../weechat-plugin.h"
 #include "../weechat-script.h"
 
-char plugin_name[]        = "Perl";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Perl scripts support";
+WEECHAT_PLUGIN_NAME("perl");
+WEECHAT_PLUGIN_DESCRIPTION("Perl plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_LICENSE("GPL");
 
 t_weechat_plugin *perl_plugin;
 

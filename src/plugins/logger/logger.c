@@ -39,9 +39,11 @@
 #include "logger-tail.h"
 
 
-char plugin_name[] = "logger";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Logger plugin for WeeChat";
+WEECHAT_PLUGIN_NAME("logger");
+WEECHAT_PLUGIN_DESCRIPTION("Logger plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_LICENSE("GPL");
 
 struct t_weechat_plugin *weechat_logger_plugin = NULL;
 

@@ -26,6 +26,18 @@
 struct t_gui_buffer;
 struct t_weelist;
 
+/* macros for defining plugin infos */
+#define WEECHAT_PLUGIN_NAME(__name)             \
+    char weechat_plugin_name[] = __name;
+#define WEECHAT_PLUGIN_AUTHOR(__author)         \
+    char weechat_plugin_author[] = __author;
+#define WEECHAT_PLUGIN_DESCRIPTION(__desc)      \
+    char weechat_plugin_description[] = __desc;
+#define WEECHAT_PLUGIN_VERSION(__version)       \
+    char weechat_plugin_version[] = __version;
+#define WEECHAT_PLUGIN_LICENSE(__license)       \
+    char weechat_plugin_license[] = __license;
+
 /* return codes for plugin functions */
 #define WEECHAT_RC_ERROR           -1  /* function failed with an error     */
 #define WEECHAT_RC_OK               0  /* function ok                       */
@@ -49,9 +61,11 @@ struct t_weechat_plugin
     /* plugin variables */
     char *filename;                    /* name of plugin on disk            */
     void *handle;                      /* handle of plugin (given by dlopen)*/
-    char *name;                        /* plugin name                       */
-    char *description;                 /* plugin description                */
-    char *version;                     /* plugin version                    */
+    char *name;                        /* short name                        */
+    char *description;                 /* description                       */
+    char *author;                      /* author                            */
+    char *version;                     /* version                           */
+    char *license;                     /* license                           */
     char *charset;                     /* charset used by plugin            */
     struct t_weechat_plugin *prev_plugin; /* link to previous plugin        */
     struct t_weechat_plugin *next_plugin; /* link to next plugin            */

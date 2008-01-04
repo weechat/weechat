@@ -21,14 +21,6 @@
 #ifndef __WEECHAT_TRIGGER_H
 #define __WEECHAT_TRIGGER_H 1
 
-#define _PLUGIN_NAME    "trigger"
-#define _PLUGIN_VERSION "0.1"
-#define _PLUGIN_DESC    "Trigger plugin for WeeChat"
-
-char plugin_name[]        = _PLUGIN_NAME;
-char plugin_version[]     = _PLUGIN_VERSION;
-char plugin_description[] = _PLUGIN_DESC;
-
 typedef struct t_weechat_trigger
 {
     char *pattern;

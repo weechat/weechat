@@ -35,9 +35,11 @@
 #include "../weechat-plugin.h"
 
 
-char plugin_name[] = "demo";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Demo plugin for WeeChat";
+WEECHAT_PLUGIN_NAME("demo");
+WEECHAT_PLUGIN_DESCRIPTION("Demo plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_LICENSE("GPL");
 
 struct t_weechat_plugin *weechat_demo_plugin = NULL;
 #define weechat_plugin weechat_demo_plugin

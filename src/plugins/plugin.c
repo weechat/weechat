@@ -84,7 +84,7 @@ plugin_load (char *filename)
 {
     char *full_name;
     void *handle;
-    char *name, *description, *version, *charset;
+    char *name, *author, *description, *version, *license, *charset;
     t_weechat_init_func *init_func;
     struct t_weechat_plugin *new_plugin;
     
@@ -108,7 +108,7 @@ plugin_load (char *filename)
     }
     
     /* look for plugin name */
-    name = dlsym (handle, "plugin_name");
+    name = dlsym (handle, "weechat_plugin_name");
     if (!name)
     {
         dlclose (handle);
@@ -116,7 +116,7 @@ plugin_load (char *filename)
                          _("%sError: symbol \"%s\" not found in "
                            "plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         "plugin_name",
+                         "weechat_plugin_name",
                          full_name);
         free (full_name);
         return NULL;
@@ -136,7 +136,7 @@ plugin_load (char *filename)
     }
     
     /* look for plugin description */
-    description = dlsym (handle, "plugin_description");
+    description = dlsym (handle, "weechat_plugin_description");
     if (!description)
     {
         dlclose (handle);
@@ -144,14 +144,29 @@ plugin_load (char *filename)
                          _("%sError: symbol \"%s\" not found "
                            "in plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         "plugin_description",
+                         "weechat_plugin_description",
+                         full_name);
+        free (full_name);
+        return NULL;
+    }
+    
+    /* look for plugin author */
+    author = dlsym (handle, "weechat_plugin_author");
+    if (!author)
+    {
+        dlclose (handle);
+        gui_chat_printf (NULL,
+                         _("%sError: symbol \"%s\" not found "
+                           "in plugin \"%s\", failed to load"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         "weechat_plugin_author",
                          full_name);
         free (full_name);
         return NULL;
     }
     
     /* look for plugin version */
-    version = dlsym (handle, "plugin_version");
+    version = dlsym (handle, "weechat_plugin_version");
     if (!version)
     {
         dlclose (handle);
@@ -159,14 +174,29 @@ plugin_load (char *filename)
                          _("%sError: symbol \"%s\" not found in "
                            "plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         "plugin_version",
+                         "weechat_plugin_version",
+                         full_name);
+        free (full_name);
+        return NULL;
+    }
+
+    /* look for plugin license */
+    license = dlsym (handle, "weechat_plugin_license");
+    if (!license)
+    {
+        dlclose (handle);
+        gui_chat_printf (NULL,
+                         _("%sError: symbol \"%s\" not found in "
+                           "plugin \"%s\", failed to load"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         "weechat_plugin_license",
                          full_name);
         free (full_name);
         return NULL;
     }
     
-    /* look for plugin charset (optional) */
-    charset = dlsym (handle, "plugin_charset");
+    /* look for plugin charset (optional, default is UTF-8) */
+    charset = dlsym (handle, "weechat_plugin_charset");
     
     /* look for plugin init function */
     init_func = dlsym (handle, "weechat_plugin_init");
@@ -192,7 +222,9 @@ plugin_load (char *filename)
         new_plugin->handle = handle;
         new_plugin->name = strdup (name);
         new_plugin->description = strdup (description);
+        new_plugin->author = strdup (author);
         new_plugin->version = strdup (version);
+        new_plugin->license = strdup (license);
         new_plugin->charset = (charset) ? strdup (charset) : NULL;
         
         /* functions */

@@ -38,9 +38,11 @@
 #include "../weechat-script.h"
 
 
-char plugin_name[]        = "Lua";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Lua scripts support";
+WEECHAT_PLUGIN_NAME("lua");
+WEECHAT_PLUGIN_DESCRIPTION("Lua plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_LICENSE("GPL");
 
 t_weechat_plugin *lua_plugin;
 

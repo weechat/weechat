@@ -30,9 +30,11 @@
 #include "alias.h"
 
 
-char plugin_name[] = "alias";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Alias plugin for WeeChat";
+WEECHAT_PLUGIN_NAME("alias");
+WEECHAT_PLUGIN_DESCRIPTION("Alias plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_LICENSE("GPL");
 
 struct t_weechat_plugin *weechat_alias_plugin = NULL;
 #define weechat_plugin weechat_alias_plugin

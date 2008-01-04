@@ -34,9 +34,11 @@
 #include "../weechat-plugin.h"
 
 
-char plugin_name[] = "fifo";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Fifo plugin for WeeChat";
+WEECHAT_PLUGIN_NAME("fifo");
+WEECHAT_PLUGIN_DESCRIPTION("Fifo plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_LICENSE("GPL");
 
 struct t_weechat_plugin *weechat_fifo_plugin = NULL;
 #define weechat_plugin weechat_fifo_plugin
