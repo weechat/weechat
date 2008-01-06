@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-02 12:39+0100\n"
+"POT-Creation-Date: 2008-01-06 12:35+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -234,16 +234,20 @@ msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
 msgid "Plugins loaded:"
 msgstr "Betöltött modulok:\n"
 
+#, c-format
+msgid "  written by \"%s\", license: %s"
+msgstr ""
+
 #, fuzzy
-msgid "     commands hooked:"
+msgid "    commands hooked:"
 msgstr "     parancskezelők:\n"
 
 #, fuzzy
-msgid "     timers hooked:"
+msgid "    timers hooked:"
 msgstr "     időkezelők:\n"
 
 #, c-format
-msgid "       %d %s (%d calls remaining)"
+msgid "      %d %s (%d calls remaining)"
 msgstr ""
 
 #, fuzzy
@@ -259,50 +263,50 @@ msgstr[0] "másodperc"
 msgstr[1] "másodperc"
 
 #, c-format
-msgid "       %d %s (no call limit)"
+msgid "      %d %s (no call limit)"
 msgstr ""
 
 #, fuzzy
-msgid "     fd hooked:"
+msgid "    fd hooked:"
 msgstr "     parancskezelők:\n"
 
 #, fuzzy, c-format
-msgid "       %d (flags: %d)"
+msgid "      %d (flags: %d)"
 msgstr "       %d másodperc\n"
 
 #, fuzzy
-msgid "     prints hooked:"
+msgid "    prints hooked:"
 msgstr "     időkezelők:\n"
 
-#, c-format
-msgid "       buffer: %s / %s, message: \"%s\""
-msgstr ""
+#, fuzzy, c-format
+msgid "      buffer: %s / %s, message: \"%s\""
+msgstr "       (nincs üzenetkezelő)\n"
 
 #, fuzzy
 msgid "(none)"
 msgstr "(ismeretlen)"
 
 #, fuzzy, c-format
-msgid "       message: \"%s\""
+msgid "      message: \"%s\""
 msgstr "       (nincs üzenetkezelő)\n"
 
 #, fuzzy
-msgid "     signals hooked:"
+msgid "    signals hooked:"
 msgstr "     üzenetkezelők:\n"
 
 #, fuzzy, c-format
-msgid "       signal: %s"
+msgid "      signal: %s"
 msgstr "       IRC(%s)\n"
 
 msgid "(all)"
 msgstr ""
 
 #, fuzzy
-msgid "     configuration options hooked:"
+msgid "    configuration options hooked:"
 msgstr "konfigurációs paraméterek beállítása"
 
 #, fuzzy
-msgid "     completion hooked:"
+msgid "    completions hooked:"
 msgstr "     parancskezelők:\n"
 
 #, fuzzy
@@ -3234,16 +3238,12 @@ msgid_plural "channels"
 msgstr[0] "%d szoba"
 msgstr[1] "%d szoba"
 
-#, c-format
-msgid "%s cannot find nick for sending message\n"
-msgstr "%s nem található név az üzenet küldéséhez\n"
-
-#, c-format
-msgid "%s you are not connected to server\n"
+#, fuzzy, c-format
+msgid "%s%s: you are not connected to server"
 msgstr "%s nincs csatlakozva szerverhez!\n"
 
-#, fuzzy
-msgid "This buffer is not a channel!\n"
+#, fuzzy, c-format
+msgid "%s: this buffer is not a channel!"
 msgstr "Ez az ablak nem egy szoba!\n"
 
 #, c-format
@@ -4070,6 +4070,9 @@ msgstr "A \"%s\" modul eltávolítva.\n"
 #, fuzzy
 msgid "Saving plugins configuration to disk"
 msgstr "Beállítások mentése a lemezre\n"
+
+#~ msgid "%s cannot find nick for sending message\n"
+#~ msgstr "%s nem található név az üzenet küldéséhez\n"
 
 #~ msgid "Nicks %s%s%s: %s["
 #~ msgstr "Felhasználók a %s%s%s szobában: %s["

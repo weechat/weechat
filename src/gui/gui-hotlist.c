@@ -32,6 +32,7 @@
 #include "../core/wee-util.h"
 #include "gui-hotlist.h"
 #include "gui-buffer.h"
+#include "gui-status.h"
 #include "gui-window.h"
 
 
@@ -190,13 +191,18 @@ gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
 {
     struct t_gui_hotlist *new_hotlist, *ptr_hotlist;
     
-    if (!buffer)
+    if (!buffer || !gui_add_hotlist)
         return;
     
     /* do not highlight current buffer */
     if ((buffer == gui_current_window->buffer)
         && (!allow_current_buffer) && (!gui_buffer_is_scrolled (buffer)))
         return;
+    
+    if (priority < GUI_HOTLIST_MIN)
+        priority = GUI_HOTLIST_MIN;
+    else if (priority > GUI_HOTLIST_MAX)
+        priority = GUI_HOTLIST_MAX;
     
     if ((ptr_hotlist = gui_hotlist_search (gui_hotlist, buffer)))
     {
@@ -226,6 +232,8 @@ gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
     new_hotlist->prev_hotlist = NULL;
     
     gui_hotlist_add_hotlist (&gui_hotlist, &last_gui_hotlist, new_hotlist);
+    
+    gui_status_refresh_needed = 1;
 }
 
 /*

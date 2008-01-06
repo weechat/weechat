@@ -66,6 +66,7 @@ struct t_gui_buffer
     
     /* buffer title */
     char *title;                       /* buffer title                      */
+    int title_refresh_needed;          /* refresh for title is needed ?     */
     
     /* chat content */
     struct t_gui_line *lines;          /* lines of chat window              */
@@ -97,6 +98,7 @@ struct t_gui_buffer
     int input_buffer_length;           /* number of chars in buffer         */
     int input_buffer_pos;              /* position into buffer              */
     int input_buffer_1st_display;      /* first char displayed on screen    */
+    int input_refresh_needed;          /* refresh for input is needed ?     */
     
     /* completion */
     struct t_gui_completion *completion; /* completion                      */

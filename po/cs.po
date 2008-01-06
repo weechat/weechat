@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-02 12:39+0100\n"
+"POT-Creation-Date: 2008-01-06 12:35+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -229,16 +229,20 @@ msgstr "%s nemohu napojit kalávesu \"%s\"\n"
 msgid "Plugins loaded:"
 msgstr "Načtené pluginy:\n"
 
+#, c-format
+msgid "  written by \"%s\", license: %s"
+msgstr ""
+
 #, fuzzy
-msgid "     commands hooked:"
+msgid "    commands hooked:"
 msgstr "     obsluhovače příkazu:\n"
 
 #, fuzzy
-msgid "     timers hooked:"
+msgid "    timers hooked:"
 msgstr "     obsluhovače časovače:\n"
 
 #, c-format
-msgid "       %d %s (%d calls remaining)"
+msgid "      %d %s (%d calls remaining)"
 msgstr ""
 
 #, fuzzy
@@ -254,50 +258,50 @@ msgstr[0] "sekunda"
 msgstr[1] "sekunda"
 
 #, c-format
-msgid "       %d %s (no call limit)"
+msgid "      %d %s (no call limit)"
 msgstr ""
 
 #, fuzzy
-msgid "     fd hooked:"
+msgid "    fd hooked:"
 msgstr "     obsluhovače příkazu:\n"
 
 #, fuzzy, c-format
-msgid "       %d (flags: %d)"
+msgid "      %d (flags: %d)"
 msgstr "       %d sekund\n"
 
 #, fuzzy
-msgid "     prints hooked:"
+msgid "    prints hooked:"
 msgstr "     obsluhovače časovače:\n"
 
-#, c-format
-msgid "       buffer: %s / %s, message: \"%s\""
-msgstr ""
+#, fuzzy, c-format
+msgid "      buffer: %s / %s, message: \"%s\""
+msgstr "       (není obsluhovač zprávy)\n"
 
 #, fuzzy
 msgid "(none)"
 msgstr "(neznámý)"
 
 #, fuzzy, c-format
-msgid "       message: \"%s\""
+msgid "      message: \"%s\""
 msgstr "       (není obsluhovač zprávy)\n"
 
 #, fuzzy
-msgid "     signals hooked:"
+msgid "    signals hooked:"
 msgstr "     obsluhovače zpráv:\n"
 
 #, fuzzy, c-format
-msgid "       signal: %s"
+msgid "      signal: %s"
 msgstr "       IRC(%s)\n"
 
 msgid "(all)"
 msgstr ""
 
 #, fuzzy
-msgid "     configuration options hooked:"
+msgid "    configuration options hooked:"
 msgstr "nastaví konfigurační možnosti"
 
 #, fuzzy
-msgid "     completion hooked:"
+msgid "    completions hooked:"
 msgstr "     obsluhovače příkazu:\n"
 
 #, fuzzy
@@ -3232,16 +3236,12 @@ msgid_plural "channels"
 msgstr[0] "%d kanál"
 msgstr[1] "%d kanálů"
 
-#, c-format
-msgid "%s cannot find nick for sending message\n"
-msgstr "%s nemohu najít přezdívku pro poslání zprávy\n"
-
-#, c-format
-msgid "%s you are not connected to server\n"
+#, fuzzy, c-format
+msgid "%s%s: you are not connected to server"
 msgstr "%s nepřipojen k serveru\n"
 
-#, fuzzy
-msgid "This buffer is not a channel!\n"
+#, fuzzy, c-format
+msgid "%s: this buffer is not a channel!"
 msgstr "Tohe není okno kanálu!\n"
 
 #, c-format
@@ -4070,6 +4070,9 @@ msgstr "Plugin \"%s\" odebrán.\n"
 #, fuzzy
 msgid "Saving plugins configuration to disk"
 msgstr "Ukládám konfiguraci na disk\n"
+
+#~ msgid "%s cannot find nick for sending message\n"
+#~ msgstr "%s nemohu najít přezdívku pro poslání zprávy\n"
 
 #~ msgid "Nicks %s%s%s: %s["
 #~ msgstr "Přezdívkz %s%s%s: %s["

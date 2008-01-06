@@ -68,6 +68,7 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-main.h
 ./src/gui/gui-nicklist.c
 ./src/gui/gui-nicklist.h
+./src/gui/gui-status.c
 ./src/gui/gui-status.h
 ./src/gui/gui-window.c
 ./src/gui/gui-window.h
@@ -101,6 +102,7 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-display.h
 ./src/plugins/irc/irc.h
 ./src/plugins/irc/irc-input.c
+./src/plugins/irc/irc-input.h
 ./src/plugins/irc/irc-log.c
 ./src/plugins/irc/irc-mode.c
 ./src/plugins/irc/irc-mode.h

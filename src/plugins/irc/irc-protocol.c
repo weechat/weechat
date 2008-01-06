@@ -659,16 +659,8 @@ irc_protocol_cmd_invite (struct t_irc_server *server, int argc, char **argv,
                         IRC_COLOR_CHAT,
                         IRC_COLOR_CHAT_NICK,
                         irc_protocol_get_nick_from_host (argv[0]));
-        /*
-          if (gui_add_hotlist
-          && ((server->buffer->num_displayed == 0)
-          || (gui_buffer_is_scrolled (server->buffer))))
-          {
-          gui_hotlist_add (GUI_HOTLIST_HIGHLIGHT, NULL,
-          server->buffer, 0);
-          gui_status_draw (gui_current_window->buffer, 1);
-          }
-        */
+        weechat_buffer_set (server->buffer, "hotlist",
+                            WEECHAT_HOTLIST_HIGHLIGHT);
     }
     else
     {
@@ -747,7 +739,7 @@ irc_protocol_cmd_join (struct t_irc_server *server, int argc, char **argv,
         {
             free (ptr_channel->topic);
             ptr_channel->topic = NULL;
-            //gui_chat_draw_title (ptr_channel->buffer, 1);
+            weechat_buffer_set (ptr_channel->buffer, "title", NULL);
         }
         ptr_channel->display_creation_date = 1;
     }
@@ -758,10 +750,6 @@ irc_protocol_cmd_join (struct t_irc_server *server, int argc, char **argv,
                              0, 0, 0, 0, 0, 0, 0);
     if (ptr_nick)
         ptr_nick->host = strdup (irc_protocol_get_address_from_host (argv[0]));
-
-    /* redraw nicklist and status bar */
-    //gui_nicklist_draw (ptr_channel->buffer, 1, 1);
-    //gui_status_draw (ptr_channel->buffer, 1);
     
     return WEECHAT_RC_OK;
 }
@@ -862,8 +850,6 @@ irc_protocol_cmd_kick (struct t_irc_server *server, char *irc_message, char *hos
         /* my nick was kicked => free all nicks, channel is not active any
            more */
         irc_nick_free_all (ptr_channel);
-        //gui_nicklist_draw (ptr_channel->buffer, 1, 1);
-        //gui_status_draw (ptr_channel->buffer, 1);
         if (server->autorejoin)
             irc_command_join_server (server, ptr_channel->name);
     }
@@ -873,11 +859,7 @@ irc_protocol_cmd_kick (struct t_irc_server *server, char *irc_message, char *hos
            nick */
         ptr_nick = irc_nick_search (ptr_channel, pos_nick);
         if (ptr_nick)
-        {
             irc_nick_free (ptr_channel, ptr_nick);
-            //gui_nicklist_draw (ptr_channel->buffer, 1, 1);
-            //gui_status_draw (ptr_channel->buffer, 1);
-        }
     }
     
     return WEECHAT_RC_OK;
@@ -1125,8 +1107,11 @@ irc_protocol_cmd_nick (struct t_irc_server *server, char *irc_message, char *hos
                 if (ptr_nick)
                 {
                     nick_is_me = (strcmp (ptr_nick->name, server->nick) == 0) ? 1 : 0;
-                    //if (nick_is_me)
-                    //    gui_add_hotlist = 0;
+                    
+                    /* temporary disable hotlist */
+                    weechat_buffer_set (NULL, "hotlist", "-");
+                    
+                    /* change nick and display message on all channels */
                     irc_nick_change (server, ptr_channel, ptr_nick, arguments);
                     if (!ignore)
                     {
@@ -1146,8 +1131,9 @@ irc_protocol_cmd_nick (struct t_irc_server *server, char *irc_message, char *hos
                                             IRC_COLOR_CHAT_NICK,
                                             arguments);
                     }
-                    //gui_nicklist_draw (ptr_channel->buffer, 1, 1);
-                    //gui_add_hotlist = 1;
+
+                    /* enable hotlist */
+                    weechat_buffer_set (NULL, "hotlist", "+");
                 }
                 break;
         }
@@ -1157,21 +1143,13 @@ irc_protocol_cmd_nick (struct t_irc_server *server, char *irc_message, char *hos
     {
         free (server->nick);
         server->nick = strdup (arguments);
-        /*
-        gui_status_draw (gui_current_window->buffer, 1);
-        for (ptr_window = gui_windows; ptr_window;
-             ptr_window = ptr_window->next_window)
+        
+        for (ptr_channel = server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
         {
-            if ((ptr_window->buffer->protocol == irc_protocol)
-                && (IRC_BUFFER_SERVER(ptr_window->buffer) == server))
-                gui_input_draw (ptr_window->buffer, 1);
+            weechat_buffer_set (ptr_channel->buffer, "nick",
+                                server->nick);
         }
-        */
-    }
-    else
-    {
-        //gui_status_draw (gui_current_window->buffer, 1);
-        //gui_input_draw (gui_current_window->buffer, 1);
     }
     
     return WEECHAT_RC_OK;
@@ -1368,20 +1346,14 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *irc_message, char *h
                         weechat_printf (server->buffer, "%s%s",
                                         IRC_COLOR_CHAT,
                                         pos);
-
+                    
                     if ((nick)
                         && (weechat_strcasecmp (nick, "nickserv") != 0)
                         && (weechat_strcasecmp (nick, "chanserv") != 0)
                         && (weechat_strcasecmp (nick, "memoserv") != 0))
                     {
-                        //if (gui_add_hotlist
-                        //    && ((server->buffer->num_displayed == 0)
-                        //        || (gui_buffer_is_scrolled (server->buffer))))
-                        //{
-                        //    gui_hotlist_add (GUI_HOTLIST_PRIVATE, NULL,
-                        //                     server->buffer, 0);
-                        //    gui_status_draw (gui_current_window->buffer, 1);
-                        //}
+                        weechat_buffer_set (server->buffer, "hotlist",
+                                            WEECHAT_HOTLIST_PRIVATE);
                     }
                 }
             }
@@ -1516,13 +1488,6 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *irc_message, char *hos
             }
             else
                 irc_nick_free (ptr_channel, ptr_nick);
-            
-            if (ptr_channel)
-            {
-                //gui_nicklist_draw (ptr_channel->buffer, 1, 1);
-                //gui_status_draw (ptr_channel->buffer, 1);
-            }
-            //gui_input_draw (gui_current_window->buffer, 1);
         }
     }
     else
@@ -1893,6 +1858,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                                                     ptr_channel->name,
                                                     nick,
                                                     pos);
+                        weechat_buffer_set (ptr_channel->buffer, "hotlist",
+                                            WEECHAT_HOTLIST_HIGHLIGHT);
                         //(void) plugin_msg_handler_exec (server->name,
                         //                                "weechat_highlight",
                         //                                irc_message);
@@ -1905,6 +1872,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                                                             (ptr_nick) ? NULL : nick,
                                                             NULL),
                                         pos);
+                        weechat_buffer_set (ptr_channel->buffer, "hotlist",
+                                            WEECHAT_HOTLIST_MESSAGE);
                     }
                     irc_channel_add_nick_speaking (ptr_channel, nick);
                 }
@@ -2306,6 +2275,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                         //(void) plugin_msg_handler_exec (server->name,
                         //                                "weechat_highlight",
                         //                                irc_message);
+                        weechat_buffer_set (ptr_channel->buffer, "hotlist",
+                                            WEECHAT_HOTLIST_HIGHLIGHT);
                     }
                     else
                     {
@@ -2319,6 +2290,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                         //(void) plugin_msg_handler_exec (server->name,
                         //                                "weechat_pv",
                         //                                irc_message);
+                        weechat_buffer_set (ptr_channel->buffer, "hotlist",
+                                            WEECHAT_HOTLIST_MESSAGE);
                     }
                 }
             }
@@ -2394,7 +2367,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *irc_message, char *
                         if (!ptr_channel->topic)
                         {
                             ptr_channel->topic = strdup (host2);
-                            //gui_chat_draw_title (ptr_channel->buffer, 1);
+                            weechat_buffer_set (ptr_channel->buffer, "title",
+                                                ptr_channel->topic);
                         }
                         
                         if (highlight || irc_protocol_is_highlight (pos, server->nick))
@@ -2505,8 +2479,6 @@ irc_protocol_cmd_quit (struct t_irc_server *server, char *irc_message, char *hos
                                 arguments,
                                 IRC_COLOR_CHAT_DELIMITERS);
             }
-            //gui_nicklist_draw (ptr_channel->buffer, 1, 1);
-            //gui_status_draw (ptr_channel->buffer, 1);
         }
     }
     
@@ -2678,7 +2650,7 @@ irc_protocol_cmd_topic (struct t_irc_server *server, char *irc_message, char *ho
             ptr_channel->topic = strdup (pos);
         else
             ptr_channel->topic = strdup ("");
-        //gui_chat_draw_title (ptr_channel->buffer, 1);
+        weechat_buffer_set (ptr_channel->buffer, "title", ptr_channel->topic);
     }
     
     return WEECHAT_RC_OK;
@@ -2777,9 +2749,6 @@ irc_protocol_cmd_001 (struct t_irc_server *server, char *irc_message, char *host
     }
     else
         irc_server_autojoin_channels (server);
-    
-    //gui_status_draw (server->buffer, 1);
-    //gui_input_draw (server->buffer, 1);
     
     return WEECHAT_RC_OK;
 }
@@ -4328,7 +4297,6 @@ irc_protocol_cmd_341 (struct t_irc_server *server, char *irc_message, char *host
                                 IRC_COLOR_CHAT,
                                 IRC_COLOR_CHAT_CHANNEL,
                                 pos_channel);
-                //gui_status_draw (gui_current_window->buffer, 1);
             }
         }
         else

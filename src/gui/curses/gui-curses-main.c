@@ -44,6 +44,7 @@
 #include "../gui-input.h"
 #include "../gui-history.h"
 #include "../gui-nicklist.h"
+#include "../gui-status.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
 
@@ -161,22 +162,43 @@ gui_main_loop ()
         /* execute hook timers */
         hook_timer_exec ();
         
-        /* refresh needed ? */
-        if (gui_refresh_screen_needed)
+        /* refresh window if needed */
+        if (gui_window_refresh_needed)
             gui_window_refresh_screen (0);
+
+        /* refresh status bar if needed */
+        if (gui_status_refresh_needed)
+        {
+            gui_status_draw (1);
+            gui_status_refresh_needed = 0;
+        }
         
         for (ptr_buffer = gui_buffers; ptr_buffer;
              ptr_buffer = ptr_buffer->next_buffer)
         {
+            /* refresh title if needed */
+            if (ptr_buffer->title_refresh_needed)
+            {
+                gui_chat_draw_title (ptr_buffer, 1);
+                ptr_buffer->title_refresh_needed = 0;
+            }
+            /* refresh chat if needed */
             if (ptr_buffer->chat_refresh_needed)
             {
                 gui_chat_draw (ptr_buffer, 0);
                 ptr_buffer->chat_refresh_needed = 0;
             }
+            /* refresh nicklist if needed */
             if (ptr_buffer->nicklist_refresh_needed)
             {
                 gui_nicklist_draw (ptr_buffer, 0);
                 ptr_buffer->nicklist_refresh_needed = 0;
+            }
+            /* refresh input if needed */
+            if (ptr_buffer->input_refresh_needed)
+            {
+                gui_input_draw (ptr_buffer, 1);
+                ptr_buffer->input_refresh_needed = 0;
             }
         }
         

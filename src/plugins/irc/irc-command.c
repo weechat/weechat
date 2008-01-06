@@ -156,7 +156,7 @@ irc_command_ame (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (argc > 1)
     {
-        //gui_add_hotlist = 0;
+        weechat_buffer_set (NULL, "hotlist", "-");
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
@@ -171,7 +171,7 @@ irc_command_ame (void *data, struct t_gui_buffer *buffer, int argc,
                 }
             }
         }
-        //gui_add_hotlist = 1;
+        weechat_buffer_set (NULL, "hotlist", "+");
     }
     return WEECHAT_RC_OK;
 }
@@ -196,7 +196,7 @@ irc_command_amsg (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (argc > 1)
     {
-        //gui_add_hotlist = 0;
+        weechat_buffer_set (NULL, "hotlist", "-");
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
@@ -236,7 +236,7 @@ irc_command_amsg (void *data, struct t_gui_buffer *buffer, int argc,
                 }
             }
         }
-        //gui_add_hotlist = 1;
+        weechat_buffer_set (NULL, "hotlist", "+");
     }
     else
         return WEECHAT_RC_ERROR;
@@ -387,7 +387,7 @@ irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
     (void) data;
     (void) argv;
     
-    //gui_add_hotlist = 0;
+    weechat_buffer_set (NULL, "hotlist", "-");
     if ((argc > 2) && (weechat_strcasecmp (argv[1], "-all") == 0))
     {
         for (ptr_server = irc_servers; ptr_server;
@@ -400,8 +400,8 @@ irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
     else
         irc_command_away_server (ptr_server, argv_eol[1]);
     
-    //gui_status_draw (window->buffer, 1);
-    //gui_add_hotlist = 1;
+    weechat_buffer_set (NULL, "hotlist", "+");
+    
     return WEECHAT_RC_OK;
 }
 

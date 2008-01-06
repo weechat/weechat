@@ -50,7 +50,7 @@ irc_completion_server_cb (void *data, char *completion,
     (void) completion;
     
     if (ptr_server)
-        weechat_list_add (list, ptr_server->name, "sort");
+        weechat_list_add (list, ptr_server->name, WEECHAT_LIST_POS_SORT);
     
     return WEECHAT_RC_OK;
 }
@@ -90,7 +90,8 @@ irc_completion_server_nicks_cb (void *data, char *completion,
                     for (ptr_nick = ptr_channel2->nicks; ptr_nick;
                          ptr_nick = ptr_nick->next_nick)
                     {
-                        weechat_list_add (list, ptr_nick->name, "sort");
+                        weechat_list_add (list, ptr_nick->name,
+                                          WEECHAT_LIST_POS_SORT);
                     }
                 }
             }
@@ -102,12 +103,13 @@ irc_completion_server_nicks_cb (void *data, char *completion,
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
-                weechat_list_add (list, ptr_nick->name, "beginning");
+                weechat_list_add (list, ptr_nick->name,
+                                  WEECHAT_LIST_POS_BEGINNING);
             }
         }
 
         /* add self nick at the end */
-        weechat_list_add (list, ptr_server->nick, "end");
+        weechat_list_add (list, ptr_server->nick, WEECHAT_LIST_POS_END);
     }
     
     return WEECHAT_RC_OK;
@@ -131,7 +133,7 @@ irc_completion_servers_cb (void *data, char *completion,
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        weechat_list_add (list, ptr_server->name, "sort");
+        weechat_list_add (list, ptr_server->name, WEECHAT_LIST_POS_SORT);
     }
     
     return WEECHAT_RC_OK;
@@ -152,7 +154,7 @@ irc_completion_channel_cb (void *data, char *completion,
     (void) completion;
     
     if (ptr_channel)
-        weechat_list_add (list, ptr_channel->name, "sort");
+        weechat_list_add (list, ptr_channel->name, WEECHAT_LIST_POS_SORT);
     
     return WEECHAT_RC_OK;
 }
@@ -184,7 +186,8 @@ irc_completion_channel_nicks_cb (void *data, char *completion,
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
-                weechat_list_add (list, ptr_nick->name, "sort");
+                weechat_list_add (list, ptr_nick->name,
+                                  WEECHAT_LIST_POS_SORT);
             }
             
             /* add nicks speaking recently on this channel */
@@ -196,18 +199,19 @@ irc_completion_channel_nicks_cb (void *data, char *completion,
                     nick = weechat_list_string (weechat_list_get (ptr_channel->nicks_speaking, i));
                     if (nick && irc_nick_search (ptr_channel, nick))
                     {
-                        weechat_list_add (list, nick, "beginning");
+                        weechat_list_add (list, nick,
+                                          WEECHAT_LIST_POS_BEGINNING);
                     }
                 }
             }
             
             /* add self nick at the end */
-            weechat_list_add (list, ptr_server->nick, "end");
+            weechat_list_add (list, ptr_server->nick, WEECHAT_LIST_POS_END);
         }
         if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
             || (ptr_channel->type == IRC_CHANNEL_TYPE_DCC_CHAT))
         {
-            weechat_list_add (list, ptr_channel->name, "sort");
+            weechat_list_add (list, ptr_channel->name, WEECHAT_LIST_POS_SORT);
         }
     }
     
@@ -241,7 +245,7 @@ irc_completion_channel_nicks_hosts_cb (void *data, char *completion,
             for (ptr_nick = ptr_channel->nicks; ptr_nick;
                  ptr_nick = ptr_nick->next_nick)
             {
-                weechat_list_add (list, ptr_nick->name, "sort");
+                weechat_list_add (list, ptr_nick->name, WEECHAT_LIST_POS_SORT);
                 if (ptr_nick->host)
                 {
                     length = strlen (ptr_nick->name) + 1 +
@@ -251,7 +255,7 @@ irc_completion_channel_nicks_hosts_cb (void *data, char *completion,
                     {
                         snprintf (buf, length, "%s!%s",
                                   ptr_nick->name, ptr_nick->host);
-                        weechat_list_add (list, buf, "sort");
+                        weechat_list_add (list, buf, WEECHAT_LIST_POS_SORT);
                         free (buf);
                     }
                 }
@@ -260,7 +264,8 @@ irc_completion_channel_nicks_hosts_cb (void *data, char *completion,
         if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
             || (ptr_channel->type == IRC_CHANNEL_TYPE_DCC_CHAT))
         {
-            weechat_list_add (list, ptr_channel->name, "sort");
+            weechat_list_add (list, ptr_channel->name,
+                              WEECHAT_LIST_POS_SORT);
         }
     }
     
@@ -285,7 +290,7 @@ irc_completion_channel_topic_cb (void *data, char *completion,
     
     if (ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
     {
-        weechat_list_add (list, ptr_channel->topic, "sort");
+        weechat_list_add (list, ptr_channel->topic, WEECHAT_LIST_POS_SORT);
     }
     
     return WEECHAT_RC_OK;
@@ -313,7 +318,7 @@ irc_completion_channels_cb (void *data, char *completion,
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)
         {
-            weechat_list_add (list, ptr_channel->name, "sort");
+            weechat_list_add (list, ptr_channel->name, WEECHAT_LIST_POS_SORT);
         }
     }
     
@@ -338,7 +343,7 @@ irc_completion_msg_part_cb (void *data, char *completion,
     {
         weechat_list_add (list,
                           weechat_config_string (irc_config_irc_default_msg_part),
-                          "sort");
+                          WEECHAT_LIST_POS_SORT);
     }
     
     return WEECHAT_RC_OK;

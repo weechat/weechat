@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-02 12:39+0100\n"
-"PO-Revision-Date: 2008-01-02 12:39+0100\n"
+"POT-Creation-Date: 2008-01-06 12:35+0100\n"
+"PO-Revision-Date: 2008-01-06 12:36+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -214,15 +214,19 @@ msgstr "%sErreur: impossible de créer la touche \"%s\""
 msgid "Plugins loaded:"
 msgstr "Extensions chargées:"
 
-msgid "     commands hooked:"
-msgstr "     commandes accrochées:"
+#, c-format
+msgid "  written by \"%s\", license: %s"
+msgstr "  écrit par \"%s\", licence: %s"
 
-msgid "     timers hooked:"
-msgstr "     gestionnaires de temps accrochés:"
+msgid "    commands hooked:"
+msgstr "    commandes accrochées:"
+
+msgid "    timers hooked:"
+msgstr "    gestionnaires de temps accrochés:"
 
 #, c-format
-msgid "       %d %s (%d calls remaining)"
-msgstr "       %d %s (%d appels restants)"
+msgid "      %d %s (%d calls remaining)"
+msgstr "      %d %s (%d appels restants)"
 
 msgid "second"
 msgid_plural "seconds"
@@ -235,45 +239,45 @@ msgstr[0] "milliseconde"
 msgstr[1] "millisecondes"
 
 #, c-format
-msgid "       %d %s (no call limit)"
-msgstr "       %d %s (pas de limite d'appel)"
+msgid "      %d %s (no call limit)"
+msgstr "      %d %s (pas de limite d'appel)"
 
-msgid "     fd hooked:"
-msgstr "     fichiers accrochés:"
-
-#, c-format
-msgid "       %d (flags: %d)"
-msgstr "       %d (drapeaux: %d)"
-
-msgid "     prints hooked:"
-msgstr "     impressions accrochées:"
+msgid "    fd hooked:"
+msgstr "    fichiers accrochés:"
 
 #, c-format
-msgid "       buffer: %s / %s, message: \"%s\""
-msgstr "       tampon: %s / %s, message: \"%s\""
+msgid "      %d (flags: %d)"
+msgstr "      %d (drapeaux: %d)"
+
+msgid "    prints hooked:"
+msgstr "    impressions accrochées:"
+
+#, c-format
+msgid "      buffer: %s / %s, message: \"%s\""
+msgstr "      tampon: %s / %s, message: \"%s\""
 
 msgid "(none)"
 msgstr "(aucun)"
 
 #, c-format
-msgid "       message: \"%s\""
-msgstr "       message: \"%s\""
+msgid "      message: \"%s\""
+msgstr "      message: \"%s\""
 
-msgid "     signals hooked:"
-msgstr "     signaux accrochés:"
+msgid "    signals hooked:"
+msgstr "    signaux accrochés:"
 
 #, c-format
-msgid "       signal: %s"
-msgstr "       signal: %s"
+msgid "      signal: %s"
+msgstr "      signal: %s"
 
 msgid "(all)"
 msgstr "(tous)"
 
-msgid "     configuration options hooked:"
-msgstr "     options de configuration accrochées:"
+msgid "    configuration options hooked:"
+msgstr "    options de configuration accrochées:"
 
-msgid "     completion hooked:"
-msgstr "     completion accrochées:"
+msgid "    completions hooked:"
+msgstr "    completion accrochées:"
 
 msgid "No plugin found."
 msgstr "Aucune extension trouvée."
@@ -3138,15 +3142,12 @@ msgstr[0] "canal"
 msgstr[1] "canaux"
 
 #, c-format
-msgid "%s cannot find nick for sending message\n"
-msgstr "%s impossible de trouver le pseudo pour envoyer le message\n"
+msgid "%s%s: you are not connected to server"
+msgstr "%s%s: vous n'êtes pas connecté au serveur"
 
 #, c-format
-msgid "%s you are not connected to server\n"
-msgstr "%s vous n'êtes pas connecté au serveur\n"
-
-msgid "This buffer is not a channel!\n"
-msgstr "Ce tampon n'est pas un canal !\n"
+msgid "%s: this buffer is not a channel!"
+msgstr "%s: ce tampon n'est pas un canal !"
 
 #, c-format
 msgid "Not enough memory to write log file \"%s\"\n"
@@ -3988,6 +3989,9 @@ msgstr "%sExtension \"%s\" déchargée"
 
 msgid "Saving plugins configuration to disk"
 msgstr "Sauvegarde de la configuration des extensions sur disque"
+
+#~ msgid "%s cannot find nick for sending message\n"
+#~ msgstr "%s impossible de trouver le pseudo pour envoyer le message\n"
 
 #~ msgid "Nicks %s%s%s: %s["
 #~ msgstr "Pseudos %s%s%s: %s["

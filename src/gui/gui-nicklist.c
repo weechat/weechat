@@ -39,6 +39,7 @@
 #include "gui-nicklist.h"
 #include "gui-buffer.h"
 #include "gui-color.h"
+#include "gui-status.h"
 
 
 /*
@@ -196,6 +197,7 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     {
         buffer->nicklist_refresh_needed = 1;
         buffer->nicklist_visible_count++;
+        gui_status_refresh_needed = 1;
     }
     
     return new_group;
@@ -337,6 +339,7 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
     {
         buffer->nicklist_refresh_needed = 1;
         buffer->nicklist_visible_count++;
+        gui_status_refresh_needed = 1;
     }
     
     return new_nick;
@@ -372,6 +375,7 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
         buffer->nicklist_refresh_needed = 1;
         if (buffer->nicklist_visible_count > 0)
             buffer->nicklist_visible_count--;
+        gui_status_refresh_needed = 1;
     }
     
     free (nick);
@@ -427,6 +431,7 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
         if (buffer->nicklist_display_groups
             && (buffer->nicklist_visible_count > 0))
             buffer->nicklist_visible_count--;
+        gui_status_refresh_needed = 1;
     }
     
     free (group);

@@ -469,7 +469,7 @@ irc_channel_add_nick_speaking (struct t_irc_channel *channel, char *nick)
     if (!channel->nicks_speaking)
         channel->nicks_speaking = weechat_list_new ();
     
-    weechat_list_add (channel->nicks_speaking, nick, "end");
+    weechat_list_add (channel->nicks_speaking, nick, WEECHAT_LIST_POS_END);
     
     size = weechat_list_size (channel->nicks_speaking);
     if (size > IRC_CHANNEL_NICKS_SPEAKING_LIMIT)

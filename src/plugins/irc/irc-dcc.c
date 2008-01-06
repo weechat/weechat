@@ -57,19 +57,13 @@ char *irc_dcc_status_string[] =        /* strings for DCC status            */
  */
 
 void
-irc_dcc_redraw (int highlight)
+irc_dcc_redraw (char *hotlist)
 {
-    (void) highlight;
-    /*struct t_gui_buffer *ptr_buffer;
-
-    ptr_buffer = gui_buffer_get_dcc (gui_current_window);
-    gui_window_redraw_buffer (ptr_buffer);
-    if (highlight && gui_add_hotlist && (ptr_buffer->num_displayed == 0))
-    {
-        gui_hotlist_add (highlight, NULL, ptr_buffer, 0);
-        gui_status_draw (gui_current_window->buffer, 0);
-    }
-    */
+    struct t_gui_buffer *ptr_buffer;
+    
+    ptr_buffer = weechat_buffer_search ("irc", "<dcc>");
+    if (ptr_buffer && hotlist)
+        weechat_buffer_set (ptr_buffer, "hotlist", hotlist);
 }
 
 /*
@@ -208,7 +202,7 @@ irc_dcc_find_filename (struct t_irc_dcc *ptr_dcc)
         if (!irc_cfg_dcc_auto_rename)
         {
             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-            irc_dcc_redraw (GUI_HOTLIST_MSG);
+            irc_dcc_redraw (WEECHAT_HOTLIST_MSG);
             return;
         }
         
@@ -216,7 +210,7 @@ irc_dcc_find_filename (struct t_irc_dcc *ptr_dcc)
         if (!filename2)
         {
             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
-            irc_dcc_redraw (GUI_HOTLIST_MSG);
+            irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
             return;
         }
         ptr_dcc->filename_suffix = 0;
@@ -562,7 +556,7 @@ irc_dcc_channel_for_chat (struct t_irc_dcc *dcc)
                                  "DCC CHAT?)\n"),
                                WEECHAT_ERROR);
         irc_dcc_close (dcc, IRC_DCC_FAILED);
-        irc_dcc_redraw (GUI_HOTLIST_MSG);
+        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
         return;
     }
     
@@ -611,7 +605,7 @@ irc_dcc_recv_connect_init (struct t_irc_dcc *dcc)
     if (!irc_dcc_connect (dcc))
     {
         irc_dcc_close (dcc, IRC_DCC_FAILED);
-        irc_dcc_redraw (GUI_HOTLIST_MSG);
+        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
     }
     else
     {
@@ -628,7 +622,7 @@ irc_dcc_recv_connect_init (struct t_irc_dcc *dcc)
             irc_dcc_channel_for_chat (dcc);
         }
     }
-    irc_dcc_redraw (GUI_HOTLIST_MSG);
+    irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
 }
 
 /*
@@ -647,7 +641,7 @@ irc_dcc_accept (struct t_irc_dcc *dcc)
                           "PRIVMSG %s :\01DCC RESUME %s %d %u\01",
                           dcc->nick, dcc->filename,
                           dcc->port, dcc->start_resume);
-        irc_dcc_redraw (GUI_HOTLIST_MSG);
+        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
     }
     else
         irc_dcc_recv_connect_init (dcc);
@@ -684,7 +678,7 @@ irc_dcc_accept_resume (struct t_irc_server *server, char *filename, int port,
                               ptr_dcc->filename,
                               GUI_COLOR(GUI_COLOR_CHAT),
                               ptr_dcc->start_resume);
-        irc_dcc_redraw (GUI_HOTLIST_MSG);
+        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
     }
     else
         gui_chat_printf (server->buffer,
@@ -854,7 +848,7 @@ irc_dcc_add (struct t_irc_server *server, int type, unsigned long addr, int port
                               GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
                               size,
                               GUI_COLOR(GUI_COLOR_CHAT));
-        irc_dcc_redraw (GUI_HOTLIST_MSG);
+        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
     }
     if (type == IRC_DCC_FILE_SEND)
     {
@@ -873,7 +867,7 @@ irc_dcc_add (struct t_irc_server *server, int type, unsigned long addr, int port
                               GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
                               size,
                               GUI_COLOR(GUI_COLOR_CHAT));
-        irc_dcc_redraw (GUI_HOTLIST_MSG);
+        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
     }
     if (type == IRC_DCC_CHAT_RECV)
     {
@@ -889,7 +883,7 @@ irc_dcc_add (struct t_irc_server *server, int type, unsigned long addr, int port
                               (addr >> 8) & 0xff,
                               addr & 0xff,
                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-        irc_dcc_redraw (GUI_HOTLIST_MSG);
+        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
     }
     if (type == IRC_DCC_CHAT_SEND)
     {
@@ -897,13 +891,13 @@ irc_dcc_add (struct t_irc_server *server, int type, unsigned long addr, int port
                               _("Sending DCC chat request to %s%s\n"),
                               GUI_COLOR(GUI_COLOR_CHAT_NICK),
                               nick);
-        irc_dcc_redraw (GUI_HOTLIST_MSG);
+        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
     }
     
     if (IRC_DCC_IS_FILE(type) && (!new_dcc->local_filename))
     {
         irc_dcc_close (new_dcc, IRC_DCC_FAILED);
-        irc_dcc_redraw (GUI_HOTLIST_MSG);
+        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
         return NULL;
     }
     
@@ -919,7 +913,7 @@ irc_dcc_add (struct t_irc_server *server, int type, unsigned long addr, int port
                               new_dcc->local_filename,
                               GUI_COLOR(GUI_COLOR_CHAT),
                               new_dcc->start_resume);
-        irc_dcc_redraw (GUI_HOTLIST_MSG);
+        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
     }
     
     /* connect if needed and redraw DCC buffer */
@@ -928,7 +922,7 @@ irc_dcc_add (struct t_irc_server *server, int type, unsigned long addr, int port
         if (!irc_dcc_connect (new_dcc))
         {
             irc_dcc_close (new_dcc, IRC_DCC_FAILED);
-            irc_dcc_redraw (GUI_HOTLIST_MSG);
+            irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
             return NULL;
         }
     }
@@ -937,7 +931,7 @@ irc_dcc_add (struct t_irc_server *server, int type, unsigned long addr, int port
         || ( (type == IRC_DCC_FILE_RECV) && (irc_cfg_dcc_auto_accept_files) ) )
         irc_dcc_accept (new_dcc);
     else
-        irc_dcc_redraw (GUI_HOTLIST_PRIVATE);
+        irc_dcc_redraw (WEECHAT_HOTLIST_PRIVATE);
     gui_status_draw (gui_current_window->buffer, 0);
     
     return new_dcc;
@@ -1350,7 +1344,7 @@ irc_dcc_chat_recv (struct t_irc_dcc *dcc)
     else
     {
         irc_dcc_close (dcc, IRC_DCC_ABORTED);
-        irc_dcc_redraw (GUI_HOTLIST_MSG);
+        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
     }
 }
 
@@ -1370,7 +1364,7 @@ irc_dcc_file_create_pipe (struct t_irc_dcc *dcc)
                                _("%s DCC: unable to create pipe\n"),
                                WEECHAT_ERROR);
         irc_dcc_close (dcc, IRC_DCC_FAILED);
-        irc_dcc_redraw (GUI_HOTLIST_MSG);
+        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
         return 0;
     }
     
@@ -1640,18 +1634,18 @@ irc_dcc_file_child_read (struct t_irc_dcc *dcc)
                     dcc->status = IRC_DCC_ACTIVE;
                     dcc->start_transfer = time (NULL);
                     dcc->last_check_time = time (NULL);
-                    irc_dcc_redraw (GUI_HOTLIST_MSG);
+                    irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
                 }
                 else
-                    irc_dcc_redraw (GUI_HOTLIST_LOW);
+                    irc_dcc_redraw (WEECHAT_HOTLIST_LOW);
                 break;
             case IRC_DCC_DONE:
                 irc_dcc_close (dcc, IRC_DCC_DONE);
-                irc_dcc_redraw (GUI_HOTLIST_MSG);
+                irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
                 break;
             case IRC_DCC_FAILED:
                 irc_dcc_close (dcc, IRC_DCC_FAILED);
-                irc_dcc_redraw (GUI_HOTLIST_MSG);
+                irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
                 break;
         }
     }
@@ -1679,7 +1673,7 @@ irc_dcc_file_send_fork (struct t_irc_dcc *dcc)
                                    _("%s DCC: unable to fork\n"),
                                    WEECHAT_ERROR);
             irc_dcc_close (dcc, IRC_DCC_FAILED);
-            irc_dcc_redraw (GUI_HOTLIST_MSG);
+            irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
             return;
             /* child process */
         case 0:
@@ -1720,7 +1714,7 @@ irc_dcc_file_recv_fork (struct t_irc_dcc *dcc)
                                    _("%s DCC: unable to fork\n"),
                                    WEECHAT_ERROR);
             irc_dcc_close (dcc, IRC_DCC_FAILED);
-            irc_dcc_redraw (GUI_HOTLIST_MSG);
+            irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
             return;
             /* child process */
         case 0:
@@ -1759,7 +1753,7 @@ irc_dcc_handle ()
                                        _("%s DCC: timeout\n"),
                                        WEECHAT_ERROR);
                 irc_dcc_close (dcc, IRC_DCC_FAILED);
-                irc_dcc_redraw (GUI_HOTLIST_MSG);
+                irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
                 continue;
             }
         }
@@ -1792,7 +1786,7 @@ irc_dcc_handle ()
                                                      "sending file\n"),
                                                    WEECHAT_ERROR);
                             irc_dcc_close (dcc, IRC_DCC_FAILED);
-                            irc_dcc_redraw (GUI_HOTLIST_MSG);
+                            irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
                             continue;
                         }
                         dcc->sock = sock;
@@ -1804,13 +1798,13 @@ irc_dcc_handle ()
                                                      "socket\n"),
                                                    WEECHAT_ERROR);
                             irc_dcc_close (dcc, IRC_DCC_FAILED);
-                            irc_dcc_redraw (GUI_HOTLIST_MSG);
+                            irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
                             continue;
                         }
                         dcc->addr = ntohl (addr.sin_addr.s_addr);
                         dcc->status = IRC_DCC_ACTIVE;
                         dcc->start_transfer = time (NULL);
-                        irc_dcc_redraw (GUI_HOTLIST_MSG);
+                        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
                         irc_dcc_file_send_fork (dcc);
                     }
                 }
@@ -1843,19 +1837,19 @@ irc_dcc_handle ()
                         if (sock < 0)
                         {
                             irc_dcc_close (dcc, IRC_DCC_FAILED);
-                            irc_dcc_redraw (GUI_HOTLIST_MSG);
+                            irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
                             continue;
                         }
                         dcc->sock = sock;
                         if (fcntl (dcc->sock, F_SETFL, O_NONBLOCK) == -1)
                         {
                             irc_dcc_close (dcc, IRC_DCC_FAILED);
-                            irc_dcc_redraw (GUI_HOTLIST_MSG);
+                            irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
                             continue;
                         }
                         dcc->addr = ntohl (addr.sin_addr.s_addr);
                         dcc->status = IRC_DCC_ACTIVE;
-                        irc_dcc_redraw (GUI_HOTLIST_MSG);
+                        irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
                         irc_dcc_channel_for_chat (dcc);
                     }
                 }

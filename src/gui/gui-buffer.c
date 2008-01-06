@@ -102,6 +102,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         
         /* title */
         new_buffer->title = NULL;
+        new_buffer->title_refresh_needed = 1;
         
         /* chat lines */
         new_buffer->lines = NULL;
@@ -118,7 +119,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         new_buffer->nicklist_max_length = -1;
         new_buffer->nicklist_display_groups = 1;
         new_buffer->nicklist_visible_count = 0;
-        new_buffer->nicklist_refresh_needed = 0;
+        new_buffer->nicklist_refresh_needed = 1;
         gui_nicklist_add_group (new_buffer, NULL, "root", NULL, 0);
         
         /* input */
@@ -134,6 +135,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         new_buffer->input_buffer_length = 0;
         new_buffer->input_buffer_pos = 0;
         new_buffer->input_buffer_1st_display = 0;
+        new_buffer->input_refresh_needed = 1;
         
         /* init completion */
         new_completion = (struct t_gui_completion *)malloc (sizeof (struct t_gui_completion));
@@ -244,6 +246,7 @@ gui_buffer_set_category (struct t_gui_buffer *buffer, char *category)
             free (buffer->category);
         buffer->category = strdup (category);
     }
+    gui_status_refresh_needed = 1;
 }
 
 /*
@@ -259,6 +262,7 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, char *name)
             free (buffer->name);
         buffer->name = strdup (name);
     }
+    gui_status_refresh_needed = 1;
 }
 
 /*
@@ -271,6 +275,7 @@ gui_buffer_set_title (struct t_gui_buffer *buffer, char *new_title)
     if (buffer->title)
         free (buffer->title);
     buffer->title = (new_title && new_title[0]) ? strdup (new_title) : NULL;
+    buffer->title_refresh_needed = 1;
 }
 
 /*
@@ -281,6 +286,7 @@ void
 gui_buffer_set_nicklist (struct t_gui_buffer *buffer, int nicklist)
 {
     buffer->nicklist = (nicklist) ? 1 : 0;
+    gui_window_refresh_windows ();
 }
 
 /*
@@ -305,6 +311,7 @@ gui_buffer_set_nicklist_display_groups (struct t_gui_buffer *buffer,
     buffer->nicklist_display_groups = (display_groups) ? 1 : 0;
     buffer->nicklist_visible_count = 0;
     gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
+    buffer->nicklist_refresh_needed = 1;
 }
 
 /*
@@ -317,6 +324,7 @@ gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick)
     if (buffer->input_nick)
         free (buffer->input_nick);
     buffer->input_nick = (new_nick && new_nick[0]) ? strdup (new_nick) : NULL;
+    buffer->input_refresh_needed = 1;
 }
 
 /*
@@ -337,27 +345,21 @@ gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
     else if (string_strcasecmp (property, "category") == 0)
     {
         gui_buffer_set_category (buffer, value);
-        gui_status_draw (buffer, 1);
     }
     else if (string_strcasecmp (property, "name") == 0)
     {
         gui_buffer_set_name (buffer, value);
-        gui_status_draw (buffer, 1);
     }
     else if (string_strcasecmp (property, "title") == 0)
     {
         gui_buffer_set_title (buffer, value);
-        gui_chat_draw_title (buffer, 1);
     }
     else if (string_strcasecmp (property, "nicklist") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && (error[0] == '\0'))
-        {
             gui_buffer_set_nicklist (buffer, number);
-            gui_window_refresh_windows ();
-        }
     }
     else if (string_strcasecmp (property, "nicklist_case_sensitive") == 0)
     {
@@ -376,7 +378,20 @@ gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
     else if (string_strcasecmp (property, "nick") == 0)
     {
         gui_buffer_set_nick (buffer, value);
-        gui_input_draw (buffer, 1);
+    }
+    else if (string_strcasecmp (property, "hotlist") == 0)
+    {
+        if (strcmp (value, "-") == 0)
+            gui_add_hotlist = 0;
+        else if (strcmp (value, "+") == 0)
+            gui_add_hotlist = 1;
+        else
+        {
+            error = NULL;
+            number = strtol (value, &error, 10);
+            if (error && (error[0] == '\0'))
+                gui_hotlist_add (buffer, number, NULL, 1);
+        }
     }
 }
 
@@ -576,8 +591,8 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
         }
     }
     
-    gui_chat_draw (buffer, 1);
-    gui_status_draw (buffer, 1);
+    buffer->chat_refresh_needed = 1;
+    gui_status_refresh_needed = 1;
 }
 
 /*
@@ -685,7 +700,7 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     free (buffer);
     
     if (gui_windows && gui_current_window && gui_current_window->buffer)
-        gui_status_draw (gui_current_window->buffer, 1);
+        gui_status_refresh_needed = 1;
 }
 
 /*

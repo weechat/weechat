@@ -40,20 +40,17 @@
 
 
 /*
- * gui_status_draw: draw status window for a buffer
+ * gui_status_draw: draw status window
  */
 
 void
-gui_status_draw (struct t_gui_buffer *buffer, int erase)
+gui_status_draw (int erase)
 {
     struct t_gui_window *ptr_win;
     struct t_gui_hotlist *ptr_hotlist;
     char format[32], *more;
     int x;
     int display_name, names_count;
-    
-    /* make C compiler happy */
-    (void) buffer;
     
     if (!gui_ok)
         return;
@@ -139,7 +136,7 @@ gui_status_draw (struct t_gui_buffer *buffer, int erase)
                                                       GUI_COLOR_STATUS_DATA_OTHER);
                         display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 1) != 0);
                         break;
-                    case GUI_HOTLIST_MSG:
+                    case GUI_HOTLIST_MESSAGE:
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                                       GUI_COLOR_STATUS_DATA_MSG);
                         display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 2) != 0);

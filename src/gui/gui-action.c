@@ -684,8 +684,8 @@ gui_action_up (char *args)
                         ((t_irc_dcc *)(window->dcc_first))->prev_dcc;
                 window->dcc_selected =
                     ((t_irc_dcc *)(window->dcc_selected))->prev_dcc;
-                gui_chat_draw (gui_current_window->buffer, 1);
-                gui_input_draw (gui_current_window->buffer, 1);
+                gui_current_window->buffer->chat_refresh_needed = 1;
+                gui_current_window->buffer->input_refresh_needed = 1;
             }
         }
     }
@@ -824,8 +824,8 @@ gui_action_down (char *args)
                 else
                     window->dcc_selected =
                         irc_dcc_list->next_dcc;
-                gui_chat_draw (gui_current_window->buffer, 1);
-                gui_input_draw (gui_current_window->buffer, 1);
+                gui_current_window->buffer->chat_refresh_needed = 1;
+                gui_current_window->buffer->input_refresh_needed = 1;
             }
         }
     }
@@ -1329,8 +1329,8 @@ gui_action_scroll_previous_highlight (char *args)
                     window->start_line_pos = 0;
                     window->first_line_displayed =
                         (window->start_line == gui_current_window->buffer->lines);
-                    gui_chat_draw (gui_current_window->buffer, 1);
-                    gui_status_draw (gui_current_window->buffer, 0);
+                    gui_current_window->buffer->chat_refresh_needed = 1;
+                    gui_current_window->buffer->input_refresh_needed = 1;
                     return;
                 }
                 ptr_line = ptr_line->prev_line;
@@ -1366,8 +1366,8 @@ gui_action_scroll_next_highlight (char *args)
                     window->start_line_pos = 0;
                     window->first_line_displayed =
                         (window->start_line == gui_current_window->buffer->lines);
-                    gui_chat_draw (gui_current_window->buffer, 1);
-                    gui_status_draw (gui_current_window->buffer, 0);
+                    gui_current_window->buffer->chat_refresh_needed = 1;
+                    gui_current_window->buffer->input_refresh_needed = 1;
                     return;
                 }
                 ptr_line = ptr_line->next_line;
@@ -1399,8 +1399,8 @@ gui_action_scroll_unread (char *args)
             gui_current_window->start_line_pos = 0;
             gui_current_window->first_line_displayed =
                 (gui_current_window->start_line == gui_current_window->buffer->lines);
-            gui_chat_draw (gui_current_window->buffer, 1);
-            gui_status_draw (gui_current_window->buffer, 0);
+            gui_current_window->buffer->chat_refresh_needed = 1;
+            gui_status_refresh_needed = 1;
         }
     }
 }

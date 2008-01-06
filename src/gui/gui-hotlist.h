@@ -21,9 +21,12 @@
 #define __WEECHAT_GUI_HOTLIST_H 1
 
 #define GUI_HOTLIST_LOW       0
-#define GUI_HOTLIST_MSG       1
+#define GUI_HOTLIST_MESSAGE   1
 #define GUI_HOTLIST_PRIVATE   2
 #define GUI_HOTLIST_HIGHLIGHT 3
+
+#define GUI_HOTLIST_MIN       0
+#define GUI_HOTLIST_MAX       3
 
 struct t_gui_hotlist
 {

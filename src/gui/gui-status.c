@@ -16,29 +16,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* gui-gtk-status.c: status display functions for Gtk GUI */
+/* gui-status.c: status functions, used by all GUI */
 
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 
-#include <stdlib.h>
-#include <string.h>
 
-#include "../../core/weechat.h"
-#include "../../core/wee-config.h"
-#include "../gui-status.h"
-#include "gui-gtk.h"
-
-
-/*
- * gui_status_draw: draw status window
- */
-
-void
-gui_status_draw (int erase)
-{
-    /* TODO: write this function for Gtk */
-    (void) erase;
-}
+int gui_status_refresh_needed = 0;     /* refresh needed for status bar ?   */

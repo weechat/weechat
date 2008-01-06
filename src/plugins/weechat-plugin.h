@@ -52,9 +52,16 @@ struct t_weelist;
 #define WEECHAT_RC_WITH_HIGHLIGHT   4  /* ok and ask for highlight          */
                                        /* (for message handler only)        */
 
-#define WEELIST_POS_SORT      "sort"
-#define WEELIST_POS_BEGINNING "beginning"
-#define WEELIST_POS_END       "end"
+/* list management (order of elements) */
+#define WEECHAT_LIST_POS_SORT      "sort"
+#define WEECHAT_LIST_POS_BEGINNING "beginning"
+#define WEECHAT_LIST_POS_END       "end"
+
+/* buffer hotlist */
+#define WEECHAT_HOTLIST_LOW       "0"
+#define WEECHAT_HOTLIST_MESSAGE   "1"
+#define WEECHAT_HOTLIST_PRIVATE   "2"
+#define WEECHAT_HOTLIST_HIGHLIGHT "3"
 
 struct t_weechat_plugin
 {

@@ -142,8 +142,8 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                 return WEECHAT_RC_ERROR;
             }
             gui_buffer_close (buffer, 1);
-            gui_status_draw (gui_current_window->buffer, 1);
-            gui_input_draw (gui_current_window->buffer, 1);
+            gui_status_refresh_needed = 1;
+            buffer->input_refresh_needed = 1;
         }
         else if (string_strcasecmp (argv[1], "notify") == 0)
         {
@@ -897,7 +897,7 @@ command_plugin_list (char *name, int full)
             {
                 /* second line of plugin info */
                 gui_chat_printf (NULL,
-                                 _("  written by \"%s\", license: s%"),
+                                 _("  written by \"%s\", license: %s"),
                                  ptr_plugin->author,
                                  ptr_plugin->license);
                 

@@ -47,7 +47,6 @@ struct t_gui_curses_objects
 };
 
 extern struct t_gui_color gui_weechat_colors[];
-extern int gui_refresh_screen_needed;
 
 /* color functions */
 extern int gui_color_get_pair (int num_color);

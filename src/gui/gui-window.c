@@ -47,6 +47,7 @@
 int gui_init_ok = 0;                            /* = 1 if GUI is initialized*/
 int gui_ok = 0;                                 /* = 1 if GUI is ok         */
                                                 /* (0 when size too small)  */
+int gui_window_refresh_needed = 0;              /* = 1 if refresh needed    */
 
 struct t_gui_window *gui_windows = NULL;        /* first window             */
 struct t_gui_window *last_gui_window = NULL;    /* last window              */
@@ -617,8 +618,8 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                     window->start_line_pos = 0;
                     window->first_line_displayed =
                         (window->start_line == window->buffer->lines);
-                    gui_chat_draw (window->buffer, 1);
-                    gui_status_draw (window->buffer, 0);
+                    window->buffer->chat_refresh_needed = 1;
+                    gui_status_refresh_needed = 1;
                     return;
                 }
             }
@@ -656,8 +657,8 @@ gui_window_search_text (struct t_gui_window *window)
                     window->start_line_pos = 0;
                     window->first_line_displayed =
                         (window->start_line == window->buffer->lines);
-                    gui_chat_draw (window->buffer, 1);
-                    gui_status_draw (window->buffer, 1);
+                    window->buffer->chat_refresh_needed = 1;
+                    gui_status_refresh_needed = 1;
                     return 1;
                 }
                 ptr_line = ptr_line->prev_line;
@@ -681,8 +682,8 @@ gui_window_search_text (struct t_gui_window *window)
                     window->start_line_pos = 0;
                     window->first_line_displayed =
                         (window->start_line == window->buffer->lines);
-                    gui_chat_draw (window->buffer, 1);
-                    gui_status_draw (window->buffer, 1);
+                    window->buffer->chat_refresh_needed = 1;
+                    gui_status_refresh_needed = 1;
                     return 1;
                 }
                 ptr_line = ptr_line->next_line;
@@ -711,8 +712,8 @@ gui_window_search_start (struct t_gui_window *window)
         window->buffer->text_search_input =
             strdup (window->buffer->input_buffer);
     gui_input_delete_line (window->buffer);
-    gui_status_draw (window->buffer, 1);
-    gui_input_draw (window->buffer, 1);
+    gui_status_refresh_needed = 1;
+    window->buffer->input_refresh_needed = 1;
 }
 
 /*
@@ -731,8 +732,8 @@ gui_window_search_restart (struct t_gui_window *window)
         window->buffer->text_search_found = 1;
     else
     {
-        gui_chat_draw (window->buffer, 1);
-        gui_status_draw (window->buffer, 1);
+        window->buffer->chat_refresh_needed = 1;
+        gui_status_refresh_needed = 1;
     }
 }
 
@@ -756,9 +757,9 @@ gui_window_search_stop (struct t_gui_window *window)
     window->start_line = NULL;
     window->start_line_pos = 0;
     gui_hotlist_remove_buffer (window->buffer);
-    gui_chat_draw (window->buffer, 0);
-    gui_status_draw (window->buffer, 1);
-    gui_input_draw (window->buffer, 1);
+    window->buffer->chat_refresh_needed = 1;
+    gui_status_refresh_needed = 1;
+    window->buffer->input_refresh_needed = 1;
 }
 
 /*

@@ -46,9 +46,6 @@
 #include "gui-curses.h"
 
 
-int gui_refresh_screen_needed = 0;
-
-
 /*
  * gui_window_get_width: get screen width (terminal width in chars for Curses)
  */
@@ -444,7 +441,7 @@ gui_window_redraw_buffer (struct t_gui_buffer *buffer)
             gui_chat_draw (buffer, 1);
             if (GUI_CURSES(ptr_win)->win_nick)
                 gui_nicklist_draw (buffer, 1);
-            gui_status_draw (buffer, 1);
+            gui_status_draw (1);
             if (CONFIG_BOOLEAN(config_look_infobar))
                 gui_infobar_draw (buffer, 1);
             gui_input_draw (buffer, 1);
@@ -576,7 +573,7 @@ gui_window_page_up (struct t_gui_window *window)
             window->start_line = NULL;
             window->start_line_pos = 0;
         }
-        gui_status_draw (window->buffer, 1);
+        gui_status_refresh_needed = 1;
     }
 }
 
@@ -618,7 +615,7 @@ gui_window_page_down (struct t_gui_window *window)
             window->start_line_pos = 0;
             gui_hotlist_remove_buffer (window->buffer);
         }
-        gui_status_draw (window->buffer, 1);
+        gui_status_refresh_needed = 1;
     }
 }
 
@@ -646,7 +643,7 @@ gui_window_scroll_up (struct t_gui_window *window)
             window->start_line = NULL;
             window->start_line_pos = 0;
         }
-        gui_status_draw (window->buffer, 1);
+        gui_status_refresh_needed = 1;
     }
 }
 
@@ -689,7 +686,7 @@ gui_window_scroll_down (struct t_gui_window *window)
             window->start_line_pos = 0;
             gui_hotlist_remove_buffer (window->buffer);
         }
-        gui_status_draw (window->buffer, 1);
+        gui_status_refresh_needed = 1;
     }
 }
 
@@ -713,7 +710,7 @@ gui_window_scroll_top (struct t_gui_window *window)
             window->start_line = NULL;
             window->start_line_pos = 0;
         }
-        gui_status_draw (window->buffer, 1);
+        gui_status_refresh_needed = 1;
     }
 }
 
@@ -738,7 +735,7 @@ gui_window_scroll_bottom (struct t_gui_window *window)
             window->start_line_pos = 0;
             gui_hotlist_remove_buffer (window->buffer);
         }
-        gui_status_draw (window->buffer, 1);
+        gui_status_refresh_needed = 1;
     }
 }
 
@@ -1308,7 +1305,7 @@ gui_window_refresh_screen (int force)
 {
     int new_height, new_width;
 
-    if (force || (gui_refresh_screen_needed == 1))
+    if (force || (gui_window_refresh_needed == 1))
     {
         endwin ();
         refresh ();
@@ -1324,8 +1321,8 @@ gui_window_refresh_screen (int force)
         }
     }
 
-    if (!force && (gui_refresh_screen_needed > 0))
-        gui_refresh_screen_needed--;
+    if (!force && (gui_window_refresh_needed > 0))
+        gui_window_refresh_needed--;
 }
 
 /*
@@ -1335,7 +1332,7 @@ gui_window_refresh_screen (int force)
 void
 gui_window_refresh_screen_sigwinch ()
 {
-    gui_refresh_screen_needed = 1;
+    gui_window_refresh_needed = 1;
     //gui_window_refresh_screen (0);
     signal (SIGWINCH, &gui_window_refresh_screen_sigwinch);
 }

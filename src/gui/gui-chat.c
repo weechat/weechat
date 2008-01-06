@@ -404,8 +404,8 @@ gui_chat_line_free (struct t_gui_line *line)
         {
             ptr_win->start_line = ptr_win->start_line->next_line;
             ptr_win->start_line_pos = 0;
-            gui_chat_draw (ptr_win->buffer, 0);
-            gui_status_draw (ptr_win->buffer, 0);
+            ptr_win->buffer->chat_refresh_needed = 1;
+            gui_status_refresh_needed = 1;
         }
     }
     if (line->str_time)
@@ -566,7 +566,7 @@ gui_chat_printf_date (struct t_gui_buffer *buffer, time_t date,
                 || (gui_buffer_is_scrolled (buffer))))
         {
             gui_hotlist_add (buffer, 0, NULL, 1);
-            gui_status_draw (buffer, 0);
+            gui_status_refresh_needed = 1;
         }
     }
 }

@@ -258,7 +258,7 @@ void
 config_change_hotlist ()
 {
     gui_hotlist_resort ();
-    gui_status_draw (gui_current_window->buffer, 1);
+    gui_status_refresh_needed = 1;
 }
 
 /*

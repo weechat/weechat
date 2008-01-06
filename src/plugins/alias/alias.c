@@ -707,7 +707,7 @@ alias_completion_cb (void *data, char *completion, struct t_gui_buffer *buffer,
     for (ptr_alias = alias_list; ptr_alias;
          ptr_alias = ptr_alias->next_alias)
     {
-        weechat_list_add (list, ptr_alias->name, "sort");
+        weechat_list_add (list, ptr_alias->name, WEECHAT_LIST_POS_SORT);
     }
     
     return WEECHAT_RC_OK;

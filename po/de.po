@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-02 12:39+0100\n"
+"POT-Creation-Date: 2008-01-06 12:35+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -235,16 +235,20 @@ msgstr "%s kann die Taste \"%s\" nicht zuordnen\n"
 msgid "Plugins loaded:"
 msgstr "Plugins geladen:\n"
 
+#, c-format
+msgid "  written by \"%s\", license: %s"
+msgstr ""
+
 #, fuzzy
-msgid "     commands hooked:"
+msgid "    commands hooked:"
 msgstr "     Befehls-Handler:\n"
 
 #, fuzzy
-msgid "     timers hooked:"
+msgid "    timers hooked:"
 msgstr "     Timer-Handler:\n"
 
 #, c-format
-msgid "       %d %s (%d calls remaining)"
+msgid "      %d %s (%d calls remaining)"
 msgstr ""
 
 #, fuzzy
@@ -260,50 +264,50 @@ msgstr[0] "Sekunde"
 msgstr[1] "Sekunde"
 
 #, c-format
-msgid "       %d %s (no call limit)"
+msgid "      %d %s (no call limit)"
 msgstr ""
 
 #, fuzzy
-msgid "     fd hooked:"
+msgid "    fd hooked:"
 msgstr "     Befehls-Handler:\n"
 
 #, fuzzy, c-format
-msgid "       %d (flags: %d)"
+msgid "      %d (flags: %d)"
 msgstr "       %d Sekunden\n"
 
 #, fuzzy
-msgid "     prints hooked:"
+msgid "    prints hooked:"
 msgstr "     Timer-Handler:\n"
 
-#, c-format
-msgid "       buffer: %s / %s, message: \"%s\""
-msgstr ""
+#, fuzzy, c-format
+msgid "      buffer: %s / %s, message: \"%s\""
+msgstr "       (kein Message-Handler)\n"
 
 #, fuzzy
 msgid "(none)"
 msgstr "(unbekannt)"
 
 #, fuzzy, c-format
-msgid "       message: \"%s\""
+msgid "      message: \"%s\""
 msgstr "       (kein Message-Handler)\n"
 
 #, fuzzy
-msgid "     signals hooked:"
+msgid "    signals hooked:"
 msgstr "     Message-Handler:\n"
 
 #, fuzzy, c-format
-msgid "       signal: %s"
+msgid "      signal: %s"
 msgstr "       IRC(%s)\n"
 
 msgid "(all)"
 msgstr ""
 
 #, fuzzy
-msgid "     configuration options hooked:"
+msgid "    configuration options hooked:"
 msgstr "Konfigurationsparameter setzen"
 
 #, fuzzy
-msgid "     completion hooked:"
+msgid "    completions hooked:"
 msgstr "     Befehls-Handler:\n"
 
 #, fuzzy
@@ -3223,17 +3227,12 @@ msgid_plural "channels"
 msgstr[0] "ungültige Channelmaske"
 msgstr[1] "ungültige Channelmaske"
 
-#, c-format
-msgid "%s cannot find nick for sending message\n"
-msgstr ""
-"%s kann keinen Nickname finden, an den die Nachricht gesendet werden soll\n"
-
 #, fuzzy, c-format
-msgid "%s you are not connected to server\n"
+msgid "%s%s: you are not connected to server"
 msgstr "%s keine Verbindung zum Server \"%s\"!\n"
 
-#, fuzzy
-msgid "This buffer is not a channel!\n"
+#, fuzzy, c-format
+msgid "%s: this buffer is not a channel!"
 msgstr "Dieses Fenster ist kein Channel!\n"
 
 #, fuzzy, c-format
@@ -4068,6 +4067,11 @@ msgstr "Plugin \"%s\" entladen.\n"
 #, fuzzy
 msgid "Saving plugins configuration to disk"
 msgstr "Konfiguration wird gespeichert\n"
+
+#~ msgid "%s cannot find nick for sending message\n"
+#~ msgstr ""
+#~ "%s kann keinen Nickname finden, an den die Nachricht gesendet werden "
+#~ "soll\n"
 
 #~ msgid "Nicks %s%s%s: %s["
 #~ msgstr "Nicks %s%s%s: %s["

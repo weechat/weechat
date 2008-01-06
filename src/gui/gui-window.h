@@ -22,6 +22,7 @@
 
 extern int gui_init_ok;
 extern int gui_ok;
+extern int gui_window_refresh_needed;
 
 /* window structures */
 

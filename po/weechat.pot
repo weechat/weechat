@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-02 12:39+0100\n"
+"POT-Creation-Date: 2008-01-06 12:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,14 +195,18 @@ msgstr ""
 msgid "Plugins loaded:"
 msgstr ""
 
-msgid "     commands hooked:"
+#, c-format
+msgid "  written by \"%s\", license: %s"
 msgstr ""
 
-msgid "     timers hooked:"
+msgid "    commands hooked:"
+msgstr ""
+
+msgid "    timers hooked:"
 msgstr ""
 
 #, c-format
-msgid "       %d %s (%d calls remaining)"
+msgid "      %d %s (%d calls remaining)"
 msgstr ""
 
 msgid "second"
@@ -216,44 +220,44 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, c-format
-msgid "       %d %s (no call limit)"
+msgid "      %d %s (no call limit)"
 msgstr ""
 
-msgid "     fd hooked:"
-msgstr ""
-
-#, c-format
-msgid "       %d (flags: %d)"
-msgstr ""
-
-msgid "     prints hooked:"
+msgid "    fd hooked:"
 msgstr ""
 
 #, c-format
-msgid "       buffer: %s / %s, message: \"%s\""
+msgid "      %d (flags: %d)"
+msgstr ""
+
+msgid "    prints hooked:"
+msgstr ""
+
+#, c-format
+msgid "      buffer: %s / %s, message: \"%s\""
 msgstr ""
 
 msgid "(none)"
 msgstr ""
 
 #, c-format
-msgid "       message: \"%s\""
+msgid "      message: \"%s\""
 msgstr ""
 
-msgid "     signals hooked:"
+msgid "    signals hooked:"
 msgstr ""
 
 #, c-format
-msgid "       signal: %s"
+msgid "      signal: %s"
 msgstr ""
 
 msgid "(all)"
 msgstr ""
 
-msgid "     configuration options hooked:"
+msgid "    configuration options hooked:"
 msgstr ""
 
-msgid "     completion hooked:"
+msgid "    completions hooked:"
 msgstr ""
 
 msgid "No plugin found."
@@ -2709,14 +2713,11 @@ msgstr[0] ""
 msgstr[1] ""
 
 #, c-format
-msgid "%s cannot find nick for sending message\n"
+msgid "%s%s: you are not connected to server"
 msgstr ""
 
 #, c-format
-msgid "%s you are not connected to server\n"
-msgstr ""
-
-msgid "This buffer is not a channel!\n"
+msgid "%s: this buffer is not a channel!"
 msgstr ""
 
 #, c-format
