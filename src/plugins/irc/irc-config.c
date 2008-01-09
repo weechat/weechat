@@ -29,6 +29,7 @@
 #include <limits.h>
 #include <pwd.h>
 
+#include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-config.h"
 #include "irc-dcc.h"

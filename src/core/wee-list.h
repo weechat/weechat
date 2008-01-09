@@ -20,10 +20,6 @@
 #ifndef __WEECHAT_LIST_H
 #define __WEECHAT_LIST_H 1
 
-#define WEELIST_POS_SORT      "sort"
-#define WEELIST_POS_BEGINNING "beginning"
-#define WEELIST_POS_END       "end"
-
 struct t_weelist_item
 {
     char *data;                        /* item data                         */

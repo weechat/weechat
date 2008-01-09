@@ -126,7 +126,10 @@
 ./src/plugins/plugin-infolist.c
 ./src/plugins/plugin-infolist.h
 ./src/plugins/scripts/lua/lua.c
-./src/plugins/scripts/perl/perl.c
+./src/plugins/scripts/perl/weechat-perl-api.c
+./src/plugins/scripts/perl/weechat-perl-api.h
+./src/plugins/scripts/perl/weechat-perl.c
+./src/plugins/scripts/perl/weechat-perl.h
 ./src/plugins/scripts/python/python.c
 ./src/plugins/scripts/ruby/ruby.c
 ./src/plugins/scripts/script.c

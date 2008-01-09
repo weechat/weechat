@@ -24,11 +24,13 @@
 #endif
 
 #include <stdlib.h>
+#include <string.h>
 
 #ifdef HAVE_GNUTLS
 #include <gnutls/gnutls.h>
 #endif
 
+#include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-command.h"
 #include "irc-completion.h"
@@ -62,12 +64,13 @@ gnutls_certificate_credentials gnutls_xcred; /* gnutls client credentials */
  */
 
 int
-irc_dump_data_cb (void *data, char *signal, void *pointer)
+irc_dump_data_cb (void *data, char *signal, char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
     (void) signal;
-    (void) pointer;
+    (void) type_data;
+    (void) signal_data;
     
     weechat_log_printf ("");
     weechat_log_printf ("***** IRC plugin dump *****");
@@ -112,19 +115,21 @@ irc_create_directories ()
  */
 
 int
-irc_quit_cb (void *data, char *signal, void *pointer)
+irc_quit_cb (void *data, char *signal, char *type_data, void *signal_data)
 {
     struct t_irc_server *ptr_server;
     
     /* make C compiler happy */
     (void) data;
     (void) signal;
-    (void) pointer;
     
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
-        irc_command_quit_server (ptr_server, (char *)pointer);
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            irc_command_quit_server (ptr_server, (char *)signal_data);
+        }
     }
     
     return WEECHAT_RC_OK;
@@ -135,14 +140,17 @@ irc_quit_cb (void *data, char *signal, void *pointer)
  */
 
 int
-irc_debug_cb (void *data, char *signal, void *pointer)
+irc_debug_cb (void *data, char *signal, char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
     (void) signal;
-    
-    if (weechat_strcasecmp ((char *)pointer, "irc") == 0)
-        irc_debug ^= 1;
+
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        if (weechat_strcasecmp ((char *)signal_data, "irc") == 0)
+            irc_debug ^= 1;
+    }
     
     return WEECHAT_RC_OK;
 }

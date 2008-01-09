@@ -256,7 +256,7 @@ gui_completion_list_add_buffers_names (struct t_gui_completion *completion)
          ptr_buffer = ptr_buffer->next_buffer)
     {
         gui_completion_list_add (completion, ptr_buffer->name,
-                                 0, WEELIST_POS_SORT);
+                                 0, WEECHAT_LIST_POS_SORT);
     }
 }
 
@@ -274,7 +274,7 @@ gui_completion_list_add_buffers_categories (struct t_gui_completion *completion)
          ptr_buffer = ptr_buffer->next_buffer)
     {
         gui_completion_list_add (completion, ptr_buffer->category,
-                                 0, WEELIST_POS_SORT);
+                                 0, WEECHAT_LIST_POS_SORT);
     }
 }
 
@@ -359,7 +359,7 @@ gui_completion_list_add_filename (struct t_gui_completion *completion)
 			 S_ISDIR(statbuf.st_mode) ? DIR_SEPARATOR : "");
 		
 		gui_completion_list_add (completion, buffer,
-                                         0, WEELIST_POS_SORT);
+                                         0, WEECHAT_LIST_POS_SORT);
 	    }
 	}
     }
@@ -389,7 +389,7 @@ gui_completion_list_add_command_hooks (struct t_gui_completion *completion)
             && (HOOK_COMMAND(ptr_hook, command)[0]))
             gui_completion_list_add (completion,
                                      HOOK_COMMAND(ptr_hook, command),
-                                     0, WEELIST_POS_SORT);
+                                     0, WEECHAT_LIST_POS_SORT);
     }
 }
 
@@ -406,7 +406,7 @@ gui_completion_list_add_key_cmd (struct t_gui_completion *completion)
     for (i = 0; gui_key_functions[i].function_name; i++)
     {
         gui_completion_list_add (completion, gui_key_functions[i].function_name,
-                                 0, WEELIST_POS_SORT);
+                                 0, WEECHAT_LIST_POS_SORT);
     }
 }
 
@@ -420,7 +420,7 @@ gui_completion_list_add_self_nick (struct t_gui_completion *completion)
     if (completion->buffer->input_nick)
         gui_completion_list_add (completion,
                                  completion->buffer->input_nick,
-                                 0, WEELIST_POS_SORT);
+                                 0, WEECHAT_LIST_POS_SORT);
 }
 
 /*
@@ -441,7 +441,7 @@ gui_completion_list_add_option (struct t_gui_completion *completion)
         {
             gui_completion_list_add (completion,
                                      ptr_option->name,
-                                     0, WEELIST_POS_SORT);
+                                     0, WEECHAT_LIST_POS_SORT);
         }
     }
 }
@@ -459,7 +459,7 @@ gui_completion_list_add_plugin_option (struct t_gui_completion *completion)
          ptr_option = ptr_option->next_option)
     {
         gui_completion_list_add (completion, ptr_option->name,
-                                 0, WEELIST_POS_SORT);
+                                 0, WEECHAT_LIST_POS_SORT);
     }
 }
 
@@ -476,7 +476,7 @@ gui_completion_list_add_plugin (struct t_gui_completion *completion)
          ptr_plugin = ptr_plugin->next_plugin)
     {
         gui_completion_list_add (completion, ptr_plugin->name,
-                                 0, WEELIST_POS_SORT);
+                                 0, WEECHAT_LIST_POS_SORT);
     }
 }
 
@@ -491,7 +491,7 @@ gui_completion_list_add_quit (struct t_gui_completion *completion)
         && CONFIG_STRING(config_look_default_msg_quit)[0])
         gui_completion_list_add (completion,
                                  CONFIG_STRING(config_look_default_msg_quit),
-                                 0, WEELIST_POS_SORT);
+                                 0, WEECHAT_LIST_POS_SORT);
 }
 
 /*
@@ -519,10 +519,10 @@ gui_completion_list_add_option_value (struct t_gui_completion *completion)
                 case CONFIG_OPTION_BOOLEAN:
                     if (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE)
                         gui_completion_list_add (completion, "on",
-                                                 0, WEELIST_POS_SORT);
+                                                 0, WEECHAT_LIST_POS_SORT);
                     else
                         gui_completion_list_add (completion, "off",
-                                                 0, WEELIST_POS_SORT);
+                                                 0, WEECHAT_LIST_POS_SORT);
                     break;
                 case CONFIG_OPTION_INTEGER:
                     if (ptr_option->string_values)
@@ -533,21 +533,21 @@ gui_completion_list_add_option_value (struct t_gui_completion *completion)
                         snprintf (option_string, sizeof (option_string) - 1,
                                   "%d", CONFIG_INTEGER(ptr_option));
                     gui_completion_list_add (completion, option_string,
-                                             0, WEELIST_POS_SORT);
+                                             0, WEECHAT_LIST_POS_SORT);
                     break;
                 case CONFIG_OPTION_STRING:
                     snprintf (option_string, sizeof (option_string) - 1,
                               "\"%s\"",
                               CONFIG_STRING(ptr_option));
                     gui_completion_list_add (completion, option_string,
-                                             0, WEELIST_POS_SORT);
+                                             0, WEECHAT_LIST_POS_SORT);
                     break;
                 case CONFIG_OPTION_COLOR:
                     color_name = gui_color_get_name (CONFIG_INTEGER(ptr_option));
                     if (color_name)
                         gui_completion_list_add (completion,
                                                  color_name,
-                                                 0, WEELIST_POS_SORT);
+                                                 0, WEECHAT_LIST_POS_SORT);
                     break;
             }
         }
@@ -575,7 +575,7 @@ gui_completion_list_add_plugin_option_value (struct t_gui_completion *completion
         ptr_option = plugin_config_search_internal (completion->args);
         if (ptr_option)
             gui_completion_list_add (completion, ptr_option->value,
-                                     0, WEELIST_POS_SORT);
+                                     0, WEECHAT_LIST_POS_SORT);
         
         if (pos)
             pos[0] = ' ';
@@ -601,7 +601,7 @@ gui_completion_list_add_weechat_cmd (struct t_gui_completion *completion)
         {
             gui_completion_list_add (completion,
                                      HOOK_COMMAND(ptr_hook, command),
-                                     0, WEELIST_POS_SORT);
+                                     0, WEECHAT_LIST_POS_SORT);
         }
     }
 }
@@ -647,7 +647,7 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                 {
                     word[word_offset] = '\0';
                     weelist_add (completion->completion_list,
-                                 word, WEELIST_POS_SORT);
+                                 word, WEECHAT_LIST_POS_SORT);
                 }
                 word_offset = 0;
                 break;
@@ -948,7 +948,7 @@ gui_completion_command (struct t_gui_completion *completion)
             {
                 gui_completion_list_add (completion,
                                          HOOK_COMMAND(ptr_hook, command),
-                                         0, WEELIST_POS_SORT);
+                                         0, WEECHAT_LIST_POS_SORT);
             }
         }
     }
@@ -1108,10 +1108,10 @@ gui_completion_nick (struct t_gui_completion *completion)
         {
             weelist_add (completion->completion_list,
                          ((t_irc_channel *)(completion->channel))->name,
-                         WEELIST_POS_SORT);
+                         WEECHAT_LIST_POS_SORT);
             weelist_add (completion->completion_list,
                          ((t_irc_server *)(completion->server))->nick,
-                         WEELIST_POS_SORT);
+                         WEECHAT_LIST_POS_SORT);
         }
         gui_completion_command_arg (completion, 1);
         return;
@@ -1135,7 +1135,7 @@ gui_completion_nick (struct t_gui_completion *completion)
         {
             weelist_add (completion->completion_list,
                          ptr_nick->nick,
-                         WEELIST_POS_SORT);
+                         WEECHAT_LIST_POS_SORT);
         }
         
         // add nicks speaking recently on this channel
@@ -1148,7 +1148,7 @@ gui_completion_nick (struct t_gui_completion *completion)
                                      ptr_item->data))
                     weelist_add (completion->completion_list,
                                  ptr_item->data,
-                                 WEELIST_POS_BEGINNING);
+                                 WEECHAT_LIST_POS_BEGINNING);
             }
         }
         
@@ -1156,7 +1156,7 @@ gui_completion_nick (struct t_gui_completion *completion)
         if (completion->server)
             weelist_add (completion->completion_list,
                          ((t_irc_server *)(completion->server))->nick,
-                         WEELIST_POS_END);
+                         WEECHAT_LIST_POS_END);
         
         ((t_irc_channel *)(completion->channel))->nick_completion_reset = 0;
     }
@@ -1343,8 +1343,8 @@ gui_completion_search (struct t_gui_completion *completion, int direction,
 void
 gui_completion_print_log (struct t_gui_completion *completion)
 {
-    log_printf ("[completion (addr:0x%X)]", completion);
-    log_printf ("  buffer . . . . . . . . : 0x%X", completion->buffer);
+    log_printf ("[completion (addr:0x%x)]", completion);
+    log_printf ("  buffer . . . . . . . . : 0x%x", completion->buffer);
     log_printf ("  context. . . . . . . . : %d",   completion->context);
     log_printf ("  base_command . . . . . : '%s'", completion->base_command);
     log_printf ("  base_command_arg . . . : %d",   completion->base_command_arg);
@@ -1355,7 +1355,7 @@ gui_completion_print_log (struct t_gui_completion *completion)
     log_printf ("  args . . . . . . . . . : '%s'", completion->args);
     log_printf ("  direction. . . . . . . : %d",   completion->direction);
     log_printf ("  add_space. . . . . . . : %d",   completion->add_space);
-    log_printf ("  completion_list. . . . : 0x%X", completion->completion_list);
+    log_printf ("  completion_list. . . . : 0x%x", completion->completion_list);
     log_printf ("  word_found . . . . . . : '%s'", completion->word_found);
     log_printf ("  position_replace . . . : %d",   completion->position_replace);
     log_printf ("  diff_size. . . . . . . : %d",   completion->diff_size);

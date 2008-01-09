@@ -302,9 +302,9 @@ plugin_load (char *filename)
         new_plugin->prefix = &plugin_api_prefix;
         new_plugin->color = &plugin_api_color;
         new_plugin->printf_date = &gui_chat_printf_date;
-        new_plugin->log_printf = &log_printf;
         new_plugin->infobar_printf = &plugin_api_infobar_printf;
         new_plugin->infobar_remove = &plugin_api_infobar_remove;
+        new_plugin->log_printf = &log_printf;
         
         new_plugin->hook_command = &hook_command;
         new_plugin->hook_timer = &hook_timer;
@@ -676,15 +676,15 @@ plugin_print_log ()
          ptr_plugin = ptr_plugin->next_plugin)
     {
         log_printf ("");
-        log_printf ("[plugin (addr:0x%X)]", ptr_plugin);
+        log_printf ("[plugin (addr:0x%x)]", ptr_plugin);
         log_printf ("  filename . . . . . . . : '%s'", ptr_plugin->filename);
-        log_printf ("  handle . . . . . . . . : 0x%X", ptr_plugin->handle);
+        log_printf ("  handle . . . . . . . . : 0x%x", ptr_plugin->handle);
         log_printf ("  name . . . . . . . . . : '%s'", ptr_plugin->name);
         log_printf ("  description. . . . . . : '%s'", ptr_plugin->description);
         log_printf ("  version. . . . . . . . : '%s'", ptr_plugin->version);
         log_printf ("  charset. . . . . . . . : '%s'", ptr_plugin->charset);
-        log_printf ("  prev_plugin. . . . . . : 0x%X", ptr_plugin->prev_plugin);
-        log_printf ("  next_plugin. . . . . . : 0x%X", ptr_plugin->next_plugin);
+        log_printf ("  prev_plugin. . . . . . : 0x%x", ptr_plugin->prev_plugin);
+        log_printf ("  next_plugin. . . . . . : 0x%x", ptr_plugin->next_plugin);
     }
 
     plugin_infolist_print_log ();

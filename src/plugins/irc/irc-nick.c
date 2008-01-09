@@ -28,6 +28,7 @@
 #include <string.h>
 #include <limits.h>
 
+#include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-nick.h"
 #include "irc-config.h"
@@ -470,10 +471,10 @@ void
 irc_nick_print_log (struct t_irc_nick *nick)
 {
     weechat_log_printf ("");
-    weechat_log_printf ("    => nick %s (addr:0x%X):",    nick->name, nick);
+    weechat_log_printf ("    => nick %s (addr:0x%x):",    nick->name, nick);
     weechat_log_printf ("         host . . . . . : %s",   nick->host);
     weechat_log_printf ("         flags. . . . . : %d",   nick->flags);
     weechat_log_printf ("         color. . . . . : '%s'", nick->color);
-    weechat_log_printf ("         prev_nick. . . : 0x%X", nick->prev_nick);
-    weechat_log_printf ("         next_nick. . . : 0x%X", nick->next_nick);
+    weechat_log_printf ("         prev_nick. . . : 0x%x", nick->prev_nick);
+    weechat_log_printf ("         next_nick. . . : 0x%x", nick->next_nick);
 }

@@ -561,28 +561,28 @@ plugin_infolist_print_log ()
          ptr_infolist = ptr_infolist->next_infolist)
     {
         log_printf ("");
-        log_printf ("[plugin infolist (addr:0x%X)]", ptr_infolist);
-        log_printf ("  items. . . . . . . . . : 0x%X", ptr_infolist->items);
-        log_printf ("  last_item. . . . . . . : 0x%X", ptr_infolist->last_item);
-        log_printf ("  ptr_item . . . . . . . : 0x%X", ptr_infolist->ptr_item);
-        log_printf ("  prev_infolist. . . . . : 0x%X", ptr_infolist->prev_infolist);
-        log_printf ("  next_infolist. . . . . : 0x%X", ptr_infolist->next_infolist);
+        log_printf ("[plugin infolist (addr:0x%x)]", ptr_infolist);
+        log_printf ("  items. . . . . . . . . : 0x%x", ptr_infolist->items);
+        log_printf ("  last_item. . . . . . . : 0x%x", ptr_infolist->last_item);
+        log_printf ("  ptr_item . . . . . . . : 0x%x", ptr_infolist->ptr_item);
+        log_printf ("  prev_infolist. . . . . : 0x%x", ptr_infolist->prev_infolist);
+        log_printf ("  next_infolist. . . . . : 0x%x", ptr_infolist->next_infolist);
         
         for (ptr_item = ptr_infolist->items; ptr_item;
              ptr_item = ptr_item->next_item)
         {
             log_printf ("");
-            log_printf ("    [item (addr:0x%X)]", ptr_item);
-            log_printf ("      vars . . . . . . . . . : 0x%X", ptr_item->vars);
-            log_printf ("      last_var . . . . . . . : 0x%X", ptr_item->last_var);
-            log_printf ("      prev_item. . . . . . . : 0x%X", ptr_item->prev_item);
-            log_printf ("      next_item. . . . . . . : 0x%X", ptr_item->next_item);
+            log_printf ("    [item (addr:0x%x)]", ptr_item);
+            log_printf ("      vars . . . . . . . . . : 0x%x", ptr_item->vars);
+            log_printf ("      last_var . . . . . . . : 0x%x", ptr_item->last_var);
+            log_printf ("      prev_item. . . . . . . : 0x%x", ptr_item->prev_item);
+            log_printf ("      next_item. . . . . . . : 0x%x", ptr_item->next_item);
             
             for (ptr_var = ptr_item->vars; ptr_var;
                  ptr_var = ptr_var->next_var)
             {
                 log_printf ("");
-                log_printf ("      [var (addr:0x%X)]", ptr_var);
+                log_printf ("      [var (addr:0x%x)]", ptr_var);
                 log_printf ("        name . . . . . . . . : '%s'", ptr_var->name);
                 log_printf ("        type . . . . . . . . : %d",   ptr_var->type);
                 switch (ptr_var->type)
@@ -594,14 +594,14 @@ plugin_infolist_print_log ()
                         log_printf ("        value (string) . . . : '%s'", (char *)ptr_var->value);
                         break;
                     case PLUGIN_INFOLIST_POINTER:
-                        log_printf ("        value (pointer). . . : 0x%X", ptr_var->value);
+                        log_printf ("        value (pointer). . . : 0x%x", ptr_var->value);
                         break;
                     case PLUGIN_INFOLIST_TIME:
                         log_printf ("        value (time) . . . . : %ld", *((time_t *)ptr_var->value));
                         break;
                 }
-                log_printf ("        prev_var . . . . . . : 0x%X", ptr_var->prev_var);
-                log_printf ("        next_var . . . . . . : 0x%X", ptr_var->next_var);
+                log_printf ("        prev_var . . . . . . : 0x%x", ptr_var->prev_var);
+                log_printf ("        next_var . . . . . . : 0x%x", ptr_var->next_var);
             }
         }
     }

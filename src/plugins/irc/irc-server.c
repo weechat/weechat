@@ -44,6 +44,7 @@
 #include <gnutls/gnutls.h>
 #endif
 
+#include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-server.h"
 #include "irc-channel.h"
@@ -2187,7 +2188,8 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
         if (!server->buffer)
             return 0;
         weechat_buffer_set (server->buffer, "display", "1");
-        weechat_hook_signal_send ("logger_backlog", server->buffer);
+        weechat_hook_signal_send ("logger_backlog",
+                                  WEECHAT_HOOK_SIGNAL_POINTER, server->buffer);
     }
     
 #ifndef HAVE_GNUTLS
@@ -2733,7 +2735,7 @@ irc_server_print_log ()
          ptr_server = ptr_server->next_server)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[server %s (addr:0x%X)]",      ptr_server->name, ptr_server);
+        weechat_log_printf ("[server %s (addr:0x%x)]",      ptr_server->name, ptr_server);
         weechat_log_printf ("  autoconnect . . . . : %d",   ptr_server->autoconnect);
         weechat_log_printf ("  autoreconnect . . . : %d",   ptr_server->autoreconnect);
         weechat_log_printf ("  autoreconnect_delay : %d",   ptr_server->autoreconnect_delay);
@@ -2762,7 +2764,7 @@ irc_server_print_log ()
         weechat_log_printf ("  child_read  . . . . : %d",   ptr_server->child_read);
         weechat_log_printf ("  child_write . . . . : %d",   ptr_server->child_write);
         weechat_log_printf ("  sock. . . . . . . . : %d",   ptr_server->sock);
-        weechat_log_printf ("  hook_fd . . . . . . : 0x%X", ptr_server->hook_fd);
+        weechat_log_printf ("  hook_fd . . . . . . : 0x%x", ptr_server->hook_fd);
         weechat_log_printf ("  is_connected. . . . : %d",   ptr_server->is_connected);
         weechat_log_printf ("  ssl_connected . . . : %d",   ptr_server->ssl_connected);
         weechat_log_printf ("  unterminated_message: '%s'", ptr_server->unterminated_message);
@@ -2782,13 +2784,13 @@ irc_server_print_log ()
                             ptr_server->lag_check_time.tv_usec);
         weechat_log_printf ("  lag_next_check. . . : %ld",  ptr_server->lag_next_check);
         weechat_log_printf ("  last_user_message . : %ld",  ptr_server->last_user_message);
-        weechat_log_printf ("  outqueue. . . . . . : 0x%X", ptr_server->outqueue);
-        weechat_log_printf ("  last_outqueue . . . : 0x%X", ptr_server->last_outqueue);
-        weechat_log_printf ("  buffer. . . . . . . : 0x%X", ptr_server->buffer);
-        weechat_log_printf ("  channels. . . . . . : 0x%X", ptr_server->channels);
-        weechat_log_printf ("  last_channel. . . . : 0x%X", ptr_server->last_channel);
-        weechat_log_printf ("  prev_server . . . . : 0x%X", ptr_server->prev_server);
-        weechat_log_printf ("  next_server . . . . : 0x%X", ptr_server->next_server);
+        weechat_log_printf ("  outqueue. . . . . . : 0x%x", ptr_server->outqueue);
+        weechat_log_printf ("  last_outqueue . . . : 0x%x", ptr_server->last_outqueue);
+        weechat_log_printf ("  buffer. . . . . . . : 0x%x", ptr_server->buffer);
+        weechat_log_printf ("  channels. . . . . . : 0x%x", ptr_server->channels);
+        weechat_log_printf ("  last_channel. . . . : 0x%x", ptr_server->last_channel);
+        weechat_log_printf ("  prev_server . . . . : 0x%x", ptr_server->prev_server);
+        weechat_log_printf ("  next_server . . . . : 0x%x", ptr_server->next_server);
 
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)

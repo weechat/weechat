@@ -39,6 +39,7 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
+#include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-dcc.h"
 #include "irc-config.h"
@@ -1899,9 +1900,9 @@ irc_dcc_print_log ()
     for (ptr_dcc = irc_dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[DCC (addr:0x%X)]", ptr_dcc);
-        weechat_log_printf ("  server. . . . . . . : 0x%X", ptr_dcc->server);
-        weechat_log_printf ("  channel . . . . . . : 0x%X", ptr_dcc->channel);
+        weechat_log_printf ("[DCC (addr:0x%x)]", ptr_dcc);
+        weechat_log_printf ("  server. . . . . . . : 0x%x", ptr_dcc->server);
+        weechat_log_printf ("  channel . . . . . . : 0x%x", ptr_dcc->channel);
         weechat_log_printf ("  type. . . . . . . . : %d",   ptr_dcc->type);
         weechat_log_printf ("  status. . . . . . . : %d",   ptr_dcc->status);
         weechat_log_printf ("  start_time. . . . . : %ld",  ptr_dcc->start_time);
@@ -1929,7 +1930,7 @@ irc_dcc_print_log ()
         weechat_log_printf ("  last_activity . . . : %ld",  ptr_dcc->last_activity);
         weechat_log_printf ("  bytes_per_sec . . . : %lu",  ptr_dcc->bytes_per_sec);
         weechat_log_printf ("  eta . . . . . . . . : %lu",  ptr_dcc->eta);
-        weechat_log_printf ("  prev_dcc. . . . . . : 0x%X", ptr_dcc->prev_dcc);
-        weechat_log_printf ("  next_dcc. . . . . . : 0x%X", ptr_dcc->next_dcc);
+        weechat_log_printf ("  prev_dcc. . . . . . : 0x%x", ptr_dcc->prev_dcc);
+        weechat_log_printf ("  next_dcc. . . . . . : 0x%x", ptr_dcc->next_dcc);
     }
 }

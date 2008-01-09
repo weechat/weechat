@@ -27,6 +27,7 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-color.h"
 

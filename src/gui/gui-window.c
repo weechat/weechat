@@ -772,12 +772,12 @@ gui_window_print_log ()
     struct t_gui_window *ptr_window;
     
     log_printf ("");
-    log_printf ("current window = 0x%X", gui_current_window);
+    log_printf ("current window = 0x%x", gui_current_window);
     
     for (ptr_window = gui_windows; ptr_window; ptr_window = ptr_window->next_window)
     {
         log_printf ("");
-        log_printf ("[window (addr:0x%X)]", ptr_window);
+        log_printf ("[window (addr:0x%x)]", ptr_window);
         log_printf ("  win_x . . . . . . . : %d",   ptr_window->win_x);
         log_printf ("  win_y . . . . . . . : %d",   ptr_window->win_y);
         log_printf ("  win_width . . . . . : %d",   ptr_window->win_width);
@@ -814,14 +814,14 @@ gui_window_print_log ()
         log_printf ("  win_input_height. . : %d",   ptr_window->win_input_height);
         log_printf ("  win_input_cursor_x. : %d",   ptr_window->win_input_cursor_x);
         gui_window_objects_print_log (ptr_window);
-        log_printf ("  dcc_first . . . . . : 0x%X", ptr_window->dcc_first);
-        log_printf ("  dcc_selected. . . . : 0x%X", ptr_window->dcc_selected);
-        log_printf ("  dcc_last_displayed. : 0x%X", ptr_window->dcc_last_displayed);
-        log_printf ("  buffer. . . . . . . : 0x%X", ptr_window->buffer);
+        log_printf ("  dcc_first . . . . . : 0x%x", ptr_window->dcc_first);
+        log_printf ("  dcc_selected. . . . : 0x%x", ptr_window->dcc_selected);
+        log_printf ("  dcc_last_displayed. : 0x%x", ptr_window->dcc_last_displayed);
+        log_printf ("  buffer. . . . . . . : 0x%x", ptr_window->buffer);
         log_printf ("  first_line_displayed: %d",   ptr_window->first_line_displayed);
-        log_printf ("  start_line. . . . . : 0x%X", ptr_window->start_line);
+        log_printf ("  start_line. . . . . : 0x%x", ptr_window->start_line);
         log_printf ("  start_line_pos. . . : %d",   ptr_window->start_line_pos);
-        log_printf ("  prev_window . . . . : 0x%X", ptr_window->prev_window);
-        log_printf ("  next_window . . . . : 0x%X", ptr_window->next_window);
+        log_printf ("  prev_window . . . . : 0x%x", ptr_window->prev_window);
+        log_printf ("  next_window . . . . : 0x%x", ptr_window->next_window);
     }
 }

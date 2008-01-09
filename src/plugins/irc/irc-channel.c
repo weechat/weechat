@@ -27,6 +27,7 @@
 #include <unistd.h>
 #include <string.h>
 
+#include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-channel.h"
 #include "irc-config.h"
@@ -495,9 +496,9 @@ irc_channel_print_log (struct t_irc_channel *channel)
     struct t_irc_nick *ptr_nick;
     
     weechat_log_printf ("");
-    weechat_log_printf ("  => channel %s (addr:0x%X)]", channel->name, channel);
+    weechat_log_printf ("  => channel %s (addr:0x%x)]", channel->name, channel);
     weechat_log_printf ("       type . . . . . . . . : %d",     channel->type);
-    weechat_log_printf ("       dcc_chat . . . . . . : 0x%X",   channel->dcc_chat);
+    weechat_log_printf ("       dcc_chat . . . . . . : 0x%x",   channel->dcc_chat);
     weechat_log_printf ("       topic. . . . . . . . : '%s'",   channel->topic);
     weechat_log_printf ("       modes. . . . . . . . : '%s'",   channel->modes);
     weechat_log_printf ("       limit. . . . . . . . : %d",     channel->limit);
@@ -507,12 +508,12 @@ irc_channel_print_log (struct t_irc_channel *channel)
     weechat_log_printf ("       cycle. . . . . . . . : %d",     channel->cycle);
     weechat_log_printf ("       close. . . . . . . . : %d",     channel->close);
     weechat_log_printf ("       display_creation_date: %d",     channel->display_creation_date);
-    weechat_log_printf ("       nicks. . . . . . . . : 0x%X",   channel->nicks);
-    weechat_log_printf ("       last_nick. . . . . . : 0x%X",   channel->last_nick);
-    weechat_log_printf ("       buffer . . . . . . . : 0x%X",   channel->buffer);
-    weechat_log_printf ("       nicks_speaking . . . : 0x%X",   channel->nicks_speaking);
-    weechat_log_printf ("       prev_channel . . . . : 0x%X",   channel->prev_channel);
-    weechat_log_printf ("       next_channel . . . . : 0x%X",   channel->next_channel);
+    weechat_log_printf ("       nicks. . . . . . . . : 0x%x",   channel->nicks);
+    weechat_log_printf ("       last_nick. . . . . . : 0x%x",   channel->last_nick);
+    weechat_log_printf ("       buffer . . . . . . . : 0x%x",   channel->buffer);
+    weechat_log_printf ("       nicks_speaking . . . : 0x%x",   channel->nicks_speaking);
+    weechat_log_printf ("       prev_channel . . . . : 0x%x",   channel->prev_channel);
+    weechat_log_printf ("       next_channel . . . . : 0x%x",   channel->next_channel);
     if (channel->nicks_speaking)
     {
         weechat_log_printf ("");

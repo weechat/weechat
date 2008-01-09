@@ -43,6 +43,7 @@
 #include <sys/time.h>
 #include <time.h>
 
+#include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-protocol.h"
 #include "irc-command.h"

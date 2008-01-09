@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-06 12:35+0100\n"
+"POT-Creation-Date: 2008-01-09 15:15+0100\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1770,7 +1770,20 @@ msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 msgstr "%s faltan argumentos para el comando \"%s\"\n"
 
 #, c-format
-msgid "demo_signal: signal: %s, signal_data: %X"
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: '%s'"
+msgstr ""
+
+#, c-format
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
+msgstr ""
+
+#, c-format
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%x"
+msgstr ""
+
+#, c-format
+msgid ""
+"demo_signal: signal: %s, type_data: %s, signal_data: 0x%x (unknown type)"
 msgstr ""
 
 msgid "print some messages on current ubffer"
@@ -4082,6 +4095,129 @@ msgstr "Plugin \"%s\" descargado.\n"
 msgid "Saving plugins configuration to disk"
 msgstr "Guardar configuraciÃ³n a disco\n"
 
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: registered script \"%s\", version %s (%s)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error: %s"
+msgstr "%sServidor: %s%s\n"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return one valid value (%d)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: function \"%s\" is internally misused"
+msgstr "%s plugin \"%s\" no encontrado\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory in function \"%s\""
+msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: loading Perl script \"%s\""
+msgstr "sesiÃ³n: cargando servidor \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s servidor \"%s\" no encontrado\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s no es posible crear el servidor\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory to parse file \"%s\""
+msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to parse file \"%s\""
+msgstr "No es posible escribir un fichero de log para un bÃºfer\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to run file \"%s\""
+msgstr "No es posible escribir un fichero de log para un bÃºfer\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown error while loading file \"%s\""
+msgstr "No es posible escribir un fichero de log para un bÃºfer\n"
+
+#, fuzzy, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+"%s funciÃ³n \"weechat_plugin_init\" no encontrada en el plugin \"%s\", "
+"fallÃ³ al cargar\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unloading script \"%s\""
+msgstr "sesiÃ³n: cargando servidor \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" unloaded"
+msgstr "Plugin \"%s\" descargado.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr "%s servidor \"%s\" no encontrado\n"
+
+msgid "Registered Perl scripts:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: unknown option for command \"%s\""
+msgstr "%s opciÃ³n desconocida para el comando \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to initialize Perl"
+msgstr "%s no ha sido posible inicializar el plugin \"%s\"\n"
+
+#, fuzzy
+msgid "list/load/unload Perl scripts"
+msgstr "listar/cargar/descargar plugins"
+
+#, fuzzy
+msgid "[load filename] | [autoload] | [reload] | [unload [script]]"
+msgstr "[cargar fichero] | [autocargar] | [recargar] | [descargar]"
+
+msgid ""
+"filename: Perl script (file) to load\n"
+"script: script name to unload\n"
+"\n"
+"Without argument, /perl command lists all loaded Perl scripts."
+msgstr ""
+
+#, c-format
+msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: error loading script \"%s\" (not enough memory)"
+msgstr ""
+"%s no ha sido posible cargar el plugin \"%s\" (no hay suficiente memoria)\n"
+
+#, c-format
+msgid "%s%s: unable to call function \"%s\", script is not initialized"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: wrong arguments for function \"%s\""
+msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: scripts unloaded"
+#~ msgstr "La tuberÃ­a FIFO estÃ¡ cerrada\n"
+
+#, fuzzy
+#~ msgid "%s%s: plugin ended"
+#~ msgstr "La tuberÃ­a FIFO estÃ¡ abierta\n"
+
 #~ msgid "%s cannot find nick for sending message\n"
 #~ msgstr ""
 #~ "%s no ha sido posible encontrar el usuario al que enviar el mensaje\n"
@@ -4490,9 +4626,6 @@ msgstr "Guardar configuraciÃ³n a disco\n"
 #~ msgid "server name not found"
 #~ msgstr "nombre de servidor no encontrado"
 
-#~ msgid "session: loading server \"%s\"\n"
-#~ msgstr "sesiÃ³n: cargando servidor \"%s\"\n"
-
 #~ msgid "server found, updating values\n"
 #~ msgstr "servidor encontrado, actualizando valores\n"
 
@@ -4825,24 +4958,8 @@ msgstr "Guardar configuraciÃ³n a disco\n"
 #~ "nombre ya existe\n"
 
 #, fuzzy
-#~ msgid "%s function \"%s\" not found in protocol \"%s\", failed to load\n"
-#~ msgstr ""
-#~ "%s funciÃ³n \"weechat_plugin_init\" no encontrada en el plugin \"%s\", "
-#~ "fallÃ³ al cargar\n"
-
-#, fuzzy
 #~ msgid "Initializing protocol \"%s\" %s\n"
 #~ msgstr "Inicializando plugin \"%s\" %s\n"
-
-#, fuzzy
-#~ msgid "%s unable to initialize protocol \"%s\"\n"
-#~ msgstr "%s no ha sido posible inicializar el plugin \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%s unable to load protocol \"%s\" (not enough memory)\n"
-#~ msgstr ""
-#~ "%s no ha sido posible cargar el plugin \"%s\" (no hay suficiente "
-#~ "memoria)\n"
 
 #, fuzzy
 #~ msgid "Protocol \"%s\" (%s) loaded.\n"
@@ -5081,9 +5198,6 @@ msgstr "Guardar configuraciÃ³n a disco\n"
 #~ msgid "%s command \"%s\" can not be executed on DCC CHAT buffer\n"
 #~ msgstr ""
 #~ "%s el comando \"%s\" no puede ejecutarse en el bÃºfer de charla DCC\n"
-
-#~ msgid "%sServer: %s%s\n"
-#~ msgstr "%sServidor: %s%s\n"
 
 #~ msgid "%snot connected\n"
 #~ msgstr "%sno conectado\n"

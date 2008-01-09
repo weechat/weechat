@@ -475,7 +475,8 @@ command_debug (void *data, struct t_gui_buffer *buffer,
         }
         else
         {
-            hook_signal_send ("debug", argv_eol[1]);
+            hook_signal_send ("debug",
+                              WEECHAT_HOOK_SIGNAL_STRING, argv_eol[1]);
         }
     }
     
@@ -1142,6 +1143,7 @@ command_quit (void *data, struct t_gui_buffer *buffer,
     (void) argv;
     
     hook_signal_send ("quit",
+                      WEECHAT_HOOK_SIGNAL_STRING,
                       (argc > 1) ?
                       argv_eol[1] : CONFIG_STRING(config_look_default_msg_quit));
     
@@ -1186,7 +1188,7 @@ command_reload (void *data, struct t_gui_buffer *buffer,
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
 
     /* tell to plugins to reload their configuration */
-    hook_signal_send ("config_reload", NULL);
+    hook_signal_send ("config_reload", WEECHAT_HOOK_SIGNAL_STRING, NULL);
     
     return WEECHAT_RC_OK;
 }

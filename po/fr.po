@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-06 12:35+0100\n"
-"PO-Revision-Date: 2008-01-06 12:36+0100\n"
+"POT-Creation-Date: 2008-01-09 15:15+0100\n"
+"PO-Revision-Date: 2008-01-09 15:17+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1676,8 +1676,22 @@ msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 msgstr "%s%s: paramètre manquant pour la commande \"%s\" (essayez /help %s)"
 
 #, c-format
-msgid "demo_signal: signal: %s, signal_data: %X"
-msgstr "demo_signal: signal: %s, signal_data: %X"
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: '%s'"
+msgstr "demo_signal: signal: %s, type_data: %s, signal_data: '%s'"
+
+#, c-format
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
+msgstr "demo_signal: signal: %s, type_data: %s, signal_data: %d"
+
+#, c-format
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: 0x%x"
+msgstr "demo_signal: signal: %s, type_data: %s, signal_data: 0x%x"
+
+#, c-format
+msgid ""
+"demo_signal: signal: %s, type_data: %s, signal_data: 0x%x (unknown type)"
+msgstr ""
+"demo_signal: signal: %s, type_data: %s, signal_data: 0x%x (type inconnu)"
 
 msgid "print some messages on current ubffer"
 msgstr "affiche des messages sur le tampon courant"
@@ -3990,8 +4004,122 @@ msgstr "%sExtension \"%s\" déchargée"
 msgid "Saving plugins configuration to disk"
 msgstr "Sauvegarde de la configuration des extensions sur disque"
 
-#~ msgid "%s cannot find nick for sending message\n"
-#~ msgstr "%s impossible de trouver le pseudo pour envoyer le message\n"
+#, c-format
+msgid ""
+"%s%s: unable to register script \"%s\" (another script already exists with "
+"this name)"
+msgstr ""
+"%s%s: impossible d'utiliser le script \"%s\" (un autre script existe avec le "
+"même nom)"
 
-#~ msgid "Nicks %s%s%s: %s["
-#~ msgstr "Pseudos %s%s%s: %s["
+#, c-format
+msgid "%s%s: registered script \"%s\", version %s (%s)"
+msgstr "%s%s: script \"%s\" chargé, version %s (%s)"
+
+#, c-format
+msgid "%s%s: error: %s"
+msgstr "%s%s: erreur: %s"
+
+#, c-format
+msgid "%s%s: function \"%s\" must return one valid value (%d)"
+msgstr "%s%s: la fonction \"%s\" doit retourner une valeur valide (%d)"
+
+#, c-format
+msgid "%s%s: function \"%s\" is internally misused"
+msgstr "%s%s: la fonction \"%s\" est mal utilisée en interne"
+
+#, c-format
+msgid "%s%s: not enough memory in function \"%s\""
+msgstr "%s%s: pas assez de mémoire dans la fonction \"%s\""
+
+#, c-format
+msgid "%s%s: loading Perl script \"%s\""
+msgstr "%s%s: chargement du script Perl \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" not found"
+msgstr "%s%s: script \"%s\" non trouvé"
+
+#, c-format
+msgid "%s%s: unable to create new sub-interpreter"
+msgstr "%s%s: impossible de créer le sous-interpréteur"
+
+#, c-format
+msgid "%s%s: not enough memory to parse file \"%s\""
+msgstr "%s%s: mémoire insuffisante pour lire le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: unable to parse file \"%s\""
+msgstr "%s%s: impossible de lire le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: unable to run file \"%s\""
+msgstr "%s%s: impossible de lancer le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: unknown error while loading file \"%s\""
+msgstr "%s%s: erreur inconnue en chargeant le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
+msgstr ""
+"%s%s: fonction \"register\" non trouvée (ou a échoué) dans le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: unloading script \"%s\""
+msgstr "%s%s: déchargement du script \"%s\""
+
+#, c-format
+msgid "%s%s: script \"%s\" unloaded"
+msgstr "%s%s: script \"%s\" déchargé"
+
+#, c-format
+msgid "%s%s: script \"%s\" not loaded"
+msgstr "%s%s: script \"%s\" non chargé"
+
+msgid "Registered Perl scripts:"
+msgstr "Scripts Perl chargés:"
+
+#, c-format
+msgid "%s%s: unknown option for command \"%s\""
+msgstr "%s%s: option inconnue pour la commande \"%s\""
+
+#, c-format
+msgid "%s%s: unable to initialize Perl"
+msgstr "%s%s: impossible d'initialiser Perl"
+
+msgid "list/load/unload Perl scripts"
+msgstr "liste/charge/décharge des scripts Perl"
+
+msgid "[load filename] | [autoload] | [reload] | [unload [script]]"
+msgstr "[load fichier] | [autoload] | [reload] | [unload [script]]"
+
+msgid ""
+"filename: Perl script (file) to load\n"
+"script: script name to unload\n"
+"\n"
+"Without argument, /perl command lists all loaded Perl scripts."
+msgstr ""
+"fichier: script Perl (fichier) à charger\n"
+"script: nom du script à décharger\n"
+"\n"
+"Sans argument, la commande /perl liste tous les scripts Perl chargés."
+
+#, c-format
+msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
+msgstr ""
+"%s: erreur de chargement du script \"%s\" (mauvais nom, les espaces sont "
+"interdits)"
+
+#, c-format
+msgid "%s: error loading script \"%s\" (not enough memory)"
+msgstr "%s: erreur de chargement du script \"%s\" (mémoire insuffisante)"
+
+#, c-format
+msgid "%s%s: unable to call function \"%s\", script is not initialized"
+msgstr ""
+"%s%s: impossible d'appeler la fonction \"%s\", le script n'est pas initialisé"
+
+#, c-format
+msgid "%s%s: wrong arguments for function \"%s\""
+msgstr "%s%s: paramètres invalides pour la fonction \"%s\""

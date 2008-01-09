@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-server.h"
 #include "irc-channel.h"

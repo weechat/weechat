@@ -27,6 +27,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-completion.h"
 #include "irc-config.h"

@@ -113,7 +113,7 @@ struct t_hook_print
 };
 
 typedef int (t_hook_callback_signal)(void *data, char *signal,
-                                     void *signal_data);
+                                     char *type_data, void *signal_data);
 
 struct t_hook_signal
 {
@@ -188,7 +188,8 @@ extern struct t_hook *hook_signal (struct t_weechat_plugin *plugin,
                                    char *signal,
                                    t_hook_callback_signal *callback,
                                    void *callback_data);
-extern void hook_signal_send (char *signal, void *signal_data);
+extern void hook_signal_send (char *signal, char *type_data,
+                              void *signal_data);
 extern struct t_hook *hook_config (struct t_weechat_plugin *, char *type,
                                    char *option,
                                    t_hook_callback_config *callback,

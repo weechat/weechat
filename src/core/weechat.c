@@ -521,7 +521,7 @@ weechat_dump (int crash)
     
     plugin_print_log ();
     
-    hook_signal_send ("dump_data", NULL);
+    hook_signal_send ("dump_data", WEECHAT_HOOK_SIGNAL_STRING, NULL);
     
     log_printf ("");
     log_printf ("******             End of WeeChat dump             ******");

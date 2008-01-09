@@ -30,6 +30,7 @@
 #include "wee-list.h"
 #include "wee-log.h"
 #include "wee-string.h"
+#include "../plugins/weechat-plugin.h"
 
 
 /*
@@ -97,9 +98,9 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
     {
         /* search position for new element, according to pos asked */
         pos_item = NULL;
-        if (string_strcasecmp (where, WEELIST_POS_BEGINNING) == 0)
+        if (string_strcasecmp (where, WEECHAT_LIST_POS_BEGINNING) == 0)
             pos_item = weelist->items;
-        else if (string_strcasecmp (where, WEELIST_POS_END) == 0)
+        else if (string_strcasecmp (where, WEECHAT_LIST_POS_END) == 0)
             pos_item = NULL;
         else
             pos_item = weelist_find_pos (weelist, item->data);
@@ -353,13 +354,13 @@ weelist_print_log (struct t_weelist *weelist, char *name)
 {
     struct t_weelist_item *ptr_item;
     
-    log_printf ("[%s (addr:0x%X)]", name, weelist);
+    log_printf ("[%s (addr:0x%x)]", name, weelist);
     
     for (ptr_item = weelist->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {
         log_printf ("  data . . . . . . . . . : '%s'", ptr_item->data);
-        log_printf ("  prev_item. . . . . . . : 0x%X", ptr_item->prev_item);
-        log_printf ("  next_item. . . . . . . : 0x%X", ptr_item->next_item);
+        log_printf ("  prev_item. . . . . . . : 0x%x", ptr_item->prev_item);
+        log_printf ("  next_item. . . . . . . : 0x%x", ptr_item->next_item);
     }
 }

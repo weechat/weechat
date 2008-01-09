@@ -44,13 +44,13 @@ struct t_weelist;
 
 /* return codes specific to message handlers: messages can be discarded for
    WeeChat, for plugins, or both */
-#define WEECHAT_RC_IGNORE_WEECHAT   1  /* ignore WeeChat for this message   */
-#define WEECHAT_RC_IGNORE_PLUGINS   2  /* ignore other plugins for msg      */
-#define WEECHAT_RC_IGNORE_ALL       (PLUGIN_RC_OK_IGNORE_WEECHAT      \
-                                    | PLUGIN_RC_OK_IGNORE_PLUGINS)
-                                       /* ignore WeeChat and other plugins  */
-#define WEECHAT_RC_WITH_HIGHLIGHT   4  /* ok and ask for highlight          */
-                                       /* (for message handler only)        */
+#define WEECHAT_RC_OK_IGNORE_WEECHAT  1 /* ignore WeeChat for this message  */
+#define WEECHAT_RC_OK_IGNORE_PLUGINS  2 /* ignore other plugins for msg     */
+#define WEECHAT_RC_OK_IGNORE_ALL      (WEECHAT_RC_OK_IGNORE_WEECHAT      \
+                                      | WEECHAT_RC_OK_IGNORE_PLUGINS)
+                                        /* ignore WeeChat and other plugins */
+#define WEECHAT_RC_OK_WITH_HIGHLIGHT  4 /* ok and ask for highlight         */
+                                        /* (for message handler only)       */
 
 /* list management (order of elements) */
 #define WEECHAT_LIST_POS_SORT      "sort"
@@ -62,6 +62,11 @@ struct t_weelist;
 #define WEECHAT_HOTLIST_MESSAGE   "1"
 #define WEECHAT_HOTLIST_PRIVATE   "2"
 #define WEECHAT_HOTLIST_HIGHLIGHT "3"
+
+/* type of data for signal hooked */
+#define WEECHAT_HOOK_SIGNAL_STRING  "string"
+#define WEECHAT_HOOK_SIGNAL_INT     "int"
+#define WEECHAT_HOOK_SIGNAL_POINTER "pointer"
 
 struct t_weechat_plugin
 {
@@ -197,10 +202,10 @@ struct t_weechat_plugin
     char *(*color) (char *color_name);
     void (*printf_date) (struct t_gui_buffer *buffer, time_t date,
                          char *message, ...);
-    void (*log_printf) (char *message, ...);
     void (*infobar_printf) (struct t_weechat_plugin *plugin, int delay,
                             char *color_name, char *format, ...);
     void (*infobar_remove) (int how_many);
+    void (*log_printf) (char *message, ...);
     
     /* hooks */
     struct t_hook *(*hook_command) (struct t_weechat_plugin *plugin,
@@ -233,9 +238,11 @@ struct t_weechat_plugin
     struct t_hook *(*hook_signal) (struct t_weechat_plugin *plugin,
                                    char *signal,
                                    int (*callback)(void *data, char *signal,
+                                                   char *type_data,
                                                    void *signal_data),
                                    void *callback_data);
-    void (*hook_signal_send) (char *signal, void *signal_data);
+    void (*hook_signal_send) (char *signal, char *type_data,
+                              void *signal_data);
     struct t_hook *(*hook_config) (struct t_weechat_plugin *plugin,
                                    char *type, char *option,
                                    int (*callback)(void *data, char *type,
@@ -315,11 +322,16 @@ struct t_weechat_plugin
 #define weechat_iconv_from_internal(__charset, __string)        \
     weechat_plugin->iconv_from_internal(__charset, __string)
 #ifndef __WEECHAT_H
+#ifndef _
 #define _(string) weechat_plugin->gettext(string)
 #define N_(string) (string)
 #define NG_(single,plural,number)                       \
     weechat_plugin->ngettext(single, plural, number)
 #endif
+#endif
+#define weechat_gettext(string) weechat_plugin->gettext(string)
+#define weechat_ngettext(single,plural,number)          \
+    weechat_plugin->ngettext(single, plural, number)
 #define weechat_strcasecmp(__string1, __string2)        \
     weechat_plugin->strcasecmp(__string1, __string2)
 #define weechat_strncasecmp(__string1, __string2, __max)        \
@@ -472,14 +484,14 @@ struct t_weechat_plugin
     weechat_plugin->printf_date(__buffer, 0, __message, ##__argz)
 #define weechat_printf_date(__buffer, __date, __message, __argz...)     \
     weechat_plugin->printf_date(__buffer, __date, __message, ##__argz)
-#define weechat_log_printf(__message, __argz...)        \
-    weechat_plugin->log_printf(__message, ##__argz)
 #define weechat_infobar_printf(__delay, __color_name, __message,        \
                                __argz...)                               \
     weechat_plugin->infobar_printf(weechat_plugin, __delay,             \
                                    __color_name, __message, ##__argz)
 #define weechat_infobar_remove(__how_many)      \
     weechat_plugin->infobar_remove(__how_many)
+#define weechat_log_printf(__message, __argz...)        \
+    weechat_plugin->log_printf(__message, ##__argz)
 
 /* hooks */
 #define weechat_hook_command(__command, __description, __args,          \
@@ -505,8 +517,9 @@ struct t_weechat_plugin
 #define weechat_hook_signal(__signal, __callback, __data)               \
     weechat_plugin->hook_signal(weechat_plugin, __signal, __callback,   \
                                 __data)
-#define weechat_hook_signal_send(__signal, __pointer)                   \
-    weechat_plugin->hook_signal_send(__signal, __pointer)
+#define weechat_hook_signal_send(__signal, __type_data, __signal_data)  \
+    weechat_plugin->hook_signal_send(__signal, __type_data,             \
+                                     __signal_data)
 #define weechat_hook_config(__type, __option, __callback, __data)       \
     weechat_plugin->hook_config(weechat_plugin, __type, __option,       \
                                 __callback, __data)

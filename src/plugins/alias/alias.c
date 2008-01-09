@@ -542,11 +542,13 @@ alias_config_read ()
  */
 
 int
-alias_config_reload_signal_cb (void *data, char *signal, void *signal_data)
+alias_config_reload_signal_cb (void *data, char *signal, char *type_data,
+                               void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
     (void) signal;
+    (void) type_data;
     (void) signal_data;
     
     alias_free_all ();

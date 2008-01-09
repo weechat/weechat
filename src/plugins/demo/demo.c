@@ -134,7 +134,8 @@ demo_buffer_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                                          demo_buffer_input_data_cb);
         if (new_buffer)
             weechat_buffer_set (new_buffer, "display", "1");
-        weechat_hook_signal_send ("logger_backlog", new_buffer);
+        weechat_hook_signal_send ("logger_backlog",
+                                  WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
     }
     
     return WEECHAT_RC_OK;
@@ -281,14 +282,39 @@ demo_info_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 int
-demo_signal_cb (void *data, char *signal, void *signal_data)
+demo_signal_cb (void *data, char *signal, char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
     
-    weechat_printf (NULL,
-                    _("demo_signal: signal: %s, signal_data: %X"),
-                    signal, signal_data);
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        weechat_printf (NULL,
+                        _("demo_signal: signal: %s, type_data: %s, "
+                          "signal_data: '%s'"),
+                        signal, type_data, (char *)signal_data);
+    }
+    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
+    {
+        weechat_printf (NULL,
+                        _("demo_signal: signal: %s, type_data: %s, "
+                          "signal_data: %d"),
+                        signal, type_data, *((int *)signal_data));
+    }
+    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
+    {
+        weechat_printf (NULL,
+                        _("demo_signal: signal: %s, type_data: %s, "
+                          "signal_data: 0x%x"),
+                        signal, type_data, signal_data);
+    }
+    else
+    {
+        weechat_printf (NULL,
+                        _("demo_signal: signal: %s, type_data: %s, "
+                          "signal_data: 0x%x (unknown type)"),
+                        signal, type_data, signal_data);
+    }
     
     return WEECHAT_RC_OK;
 }

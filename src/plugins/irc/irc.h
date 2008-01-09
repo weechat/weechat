@@ -24,8 +24,6 @@
 #include <gnutls/gnutls.h>
 #endif
 
-#include "../weechat-plugin.h"
-
 #define weechat_plugin weechat_irc_plugin
 
 #define IRC_GET_SERVER(__buffer)                                        \

@@ -355,13 +355,13 @@ gui_hotlist_print_log ()
     for (ptr_hotlist = gui_hotlist; ptr_hotlist;
          ptr_hotlist = ptr_hotlist->next_hotlist)
     {
-        log_printf ("[hotlist (addr:0x%X)]", ptr_hotlist);
+        log_printf ("[hotlist (addr:0x%x)]", ptr_hotlist);
         log_printf ("  priority . . . . . . . : %d",   ptr_hotlist->priority);
         log_printf ("  creation_time. . . . . : tv_sec:%d, tv_usec:%d",
                     ptr_hotlist->creation_time.tv_sec,
                     ptr_hotlist->creation_time.tv_usec);
-        log_printf ("  buffer . . . . . . . . : 0x%X", ptr_hotlist->buffer);
-        log_printf ("  prev_hotlist . . . . . : 0x%X", ptr_hotlist->prev_hotlist);
-        log_printf ("  next_hotlist . . . . . : 0x%X", ptr_hotlist->next_hotlist);
+        log_printf ("  buffer . . . . . . . . : 0x%x", ptr_hotlist->buffer);
+        log_printf ("  prev_hotlist . . . . . : 0x%x", ptr_hotlist->prev_hotlist);
+        log_printf ("  next_hotlist . . . . . : 0x%x", ptr_hotlist->next_hotlist);
     }
 }

@@ -1399,38 +1399,38 @@ config_file_print_log ()
          ptr_config_file = ptr_config_file->next_config)
     {
         log_printf ("");
-        log_printf ("[config (addr:0x%X)]", ptr_config_file);
-        log_printf ("  plugin . . . . . . . . : 0x%X", ptr_config_file->plugin);
+        log_printf ("[config (addr:0x%x)]", ptr_config_file);
+        log_printf ("  plugin . . . . . . . . : 0x%x", ptr_config_file->plugin);
         log_printf ("  filename . . . . . . . : '%s'", ptr_config_file->filename);
-        log_printf ("  file . . . . . . . . . : 0x%X", ptr_config_file->file);
-        log_printf ("  sections . . . . . . . : 0x%X", ptr_config_file->sections);
-        log_printf ("  last_section . . . . . : 0x%X", ptr_config_file->last_section);
-        log_printf ("  prev_config. . . . . . : 0x%X", ptr_config_file->prev_config);
-        log_printf ("  next_config. . . . . . : 0x%X", ptr_config_file->next_config);
+        log_printf ("  file . . . . . . . . . : 0x%x", ptr_config_file->file);
+        log_printf ("  sections . . . . . . . : 0x%x", ptr_config_file->sections);
+        log_printf ("  last_section . . . . . : 0x%x", ptr_config_file->last_section);
+        log_printf ("  prev_config. . . . . . : 0x%x", ptr_config_file->prev_config);
+        log_printf ("  next_config. . . . . . : 0x%x", ptr_config_file->next_config);
         
         for (ptr_section = ptr_config_file->sections; ptr_section;
              ptr_section = ptr_section->next_section)
         {
             log_printf ("");
-            log_printf ("    [section (addr:0x%X)]", ptr_section);
+            log_printf ("    [section (addr:0x%x)]", ptr_section);
             log_printf ("      name . . . . . . . . . : '%s'", ptr_section->name);
-            log_printf ("      callback_read. . . . . : 0x%X", ptr_section->callback_read);
-            log_printf ("      callback_write . . . . : 0x%X", ptr_section->callback_write);
-            log_printf ("      callback_write_default : 0x%X", ptr_section->callback_write_default);
-            log_printf ("      options. . . . . . . . : 0x%X", ptr_section->options);
-            log_printf ("      last_option. . . . . . : 0x%X", ptr_section->last_option);
-            log_printf ("      prev_section . . . . . : 0x%X", ptr_section->prev_section);
-            log_printf ("      next_section . . . . . : 0x%X", ptr_section->next_section);
+            log_printf ("      callback_read. . . . . : 0x%x", ptr_section->callback_read);
+            log_printf ("      callback_write . . . . : 0x%x", ptr_section->callback_write);
+            log_printf ("      callback_write_default : 0x%x", ptr_section->callback_write_default);
+            log_printf ("      options. . . . . . . . : 0x%x", ptr_section->options);
+            log_printf ("      last_option. . . . . . : 0x%x", ptr_section->last_option);
+            log_printf ("      prev_section . . . . . : 0x%x", ptr_section->prev_section);
+            log_printf ("      next_section . . . . . : 0x%x", ptr_section->next_section);
             
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {
                 log_printf ("");
-                log_printf ("      [option (addr:0x%X)]", ptr_option);
+                log_printf ("      [option (addr:0x%x)]", ptr_option);
                 log_printf ("        name . . . . . . . . : '%s'", ptr_option->name);
                 log_printf ("        type . . . . . . . . : %d",   ptr_option->type);
                 log_printf ("        description. . . . . : '%s'", ptr_option->description);
-                log_printf ("        string_values. . . . : 0x%X", ptr_option->string_values);
+                log_printf ("        string_values. . . . : 0x%x", ptr_option->string_values);
                 log_printf ("        min. . . . . . . . . : %d",   ptr_option->min);
                 log_printf ("        max. . . . . . . . . : %d",   ptr_option->max);
                 switch (ptr_option->type)
@@ -1470,10 +1470,10 @@ config_file_print_log ()
                                     gui_color_get_name (CONFIG_COLOR(ptr_option)));
                         break;
                 }
-                log_printf ("        callback_change. . . : 0x%X", ptr_option->callback_change);
+                log_printf ("        callback_change. . . : 0x%x", ptr_option->callback_change);
                 log_printf ("        loaded . . . . . . . : %d",   ptr_option->loaded);
-                log_printf ("        prev_option. . . . . : 0x%X", ptr_option->prev_option);
-                log_printf ("        next_option. . . . . : 0x%X", ptr_option->next_option);
+                log_printf ("        prev_option. . . . . : 0x%x", ptr_option->prev_option);
+                log_printf ("        next_option. . . . . : 0x%x", ptr_option->next_option);
             }
         }
     }

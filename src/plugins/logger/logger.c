@@ -409,14 +409,15 @@ logger_stop_all ()
  */
 
 int
-logger_buffer_open_signal_cb (void *data, char *signal, void *pointer)
+logger_buffer_open_signal_cb (void *data, char *signal, char *type_data,
+                              void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
     (void) signal;
-    (void) pointer;
+    (void) type_data;
     
-    logger_start_buffer (pointer);
+    logger_start_buffer (signal_data);
     
     return WEECHAT_RC_OK;
 }
@@ -426,14 +427,15 @@ logger_buffer_open_signal_cb (void *data, char *signal, void *pointer)
  */
 
 int
-logger_buffer_close_signal_cb (void *data, char *signal, void *pointer)
+logger_buffer_close_signal_cb (void *data, char *signal, char *type_data,
+                               void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
     (void) signal;
-    (void) pointer;
+    (void) type_data;
     
-    logger_stop (logger_buffer_search (pointer), 1);
+    logger_stop (logger_buffer_search (signal_data), 1);
     
     return WEECHAT_RC_OK;
 }
@@ -494,23 +496,25 @@ logger_backlog (struct t_gui_buffer *buffer, char *filename, int lines)
  */
 
 int
-logger_backlog_signal_cb (void *data, char *signal, void *pointer)
+logger_backlog_signal_cb (void *data, char *signal, char *type_data,
+                          void *signal_data)
 {
     struct t_logger_buffer *ptr_logger_buffer;
     
     /* make C compiler happy */
     (void) data;
     (void) signal;
+    (void) type_data;
 
     if (logger_option_backlog >= 0)
     {
-        ptr_logger_buffer = logger_buffer_search (pointer);
+        ptr_logger_buffer = logger_buffer_search (signal_data);
         if (ptr_logger_buffer && ptr_logger_buffer->log_filename
             && ptr_logger_buffer->log_enabled)
         {
             ptr_logger_buffer->log_enabled = 0;
             
-            logger_backlog (pointer,
+            logger_backlog (signal_data,
                             ptr_logger_buffer->log_filename,
                             logger_option_backlog);
             
@@ -526,13 +530,15 @@ logger_backlog_signal_cb (void *data, char *signal, void *pointer)
  */
 
 int
-logger_start_signal_cb (void *data, char *signal, void *pointer)
+logger_start_signal_cb (void *data, char *signal, char *type_data,
+                        void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
     (void) signal;
+    (void) type_data;
     
-    logger_start_buffer (pointer);
+    logger_start_buffer (signal_data);
     
     return WEECHAT_RC_OK;
 }
@@ -542,15 +548,17 @@ logger_start_signal_cb (void *data, char *signal, void *pointer)
  */
 
 int
-logger_stop_signal_cb (void *data, char *signal, void *pointer)
+logger_stop_signal_cb (void *data, char *signal, char *type_data,
+                       void *signal_data)
 {
     struct t_logger_buffer *ptr_logger_buffer;
     
     /* make C compiler happy */
     (void) data;
     (void) signal;
+    (void) type_data;
     
-    ptr_logger_buffer = logger_buffer_search (pointer);
+    ptr_logger_buffer = logger_buffer_search (signal_data);
     if (ptr_logger_buffer)
         logger_stop (ptr_logger_buffer, 0);
     
