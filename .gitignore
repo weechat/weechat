@@ -17,6 +17,7 @@
 *.so.0.0.0
 *.xsl
 
+ABOUT-NLS
 autom4te*
 build/*
 config.guess
