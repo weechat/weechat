@@ -2184,7 +2184,8 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
     
     if (!server->buffer)
     {
-        server->buffer = weechat_buffer_new (server->name, server->name, NULL);
+        server->buffer = weechat_buffer_new (server->name, server->name,
+                                             NULL, NULL);
         if (!server->buffer)
             return 0;
         weechat_buffer_set (server->buffer, "display", "1");

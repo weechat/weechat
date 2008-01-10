@@ -101,7 +101,7 @@ gui_main_init ()
     if (gui_window_new (NULL, 0, 0, COLS, LINES, 100, 100))
     {
         gui_current_window = gui_windows;
-        ptr_buffer = gui_buffer_new (NULL, "weechat", "weechat", NULL);
+        ptr_buffer = gui_buffer_new (NULL, "weechat", "weechat", NULL, NULL);
         if (ptr_buffer)
         {
             gui_init_ok = 1;

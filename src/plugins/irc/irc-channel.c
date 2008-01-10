@@ -60,7 +60,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 
     /* create buffer for channel */
     new_buffer = weechat_buffer_new (server->name, channel_name,
-                                     &irc_input_data);
+                                     &irc_input_data, NULL);
     if (!new_buffer)
     {
         free (new_channel);

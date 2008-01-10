@@ -213,9 +213,11 @@ input_data (struct t_gui_buffer *buffer, char *data, int only_builtin)
 
                 hook_command_exec (buffer, ptr_data, 0);
                 
-                if (buffer->input_data_cb)
+                if (buffer->input_callback)
                 {
-                    (void)(buffer->input_data_cb) (buffer, ptr_data);
+                    (void)(buffer->input_callback) (buffer->input_callback_data,
+                                                    buffer,
+                                                    ptr_data);
                 }
                 else
                     gui_chat_printf (buffer,

@@ -87,8 +87,11 @@ struct t_gui_buffer
     
     /* inupt */
     int input;                         /* = 1 if input is enabled           */
-    void (*input_data_cb)(struct t_gui_buffer *buffer, char *data);
+    int (*input_callback)(void *data,
+                          struct t_gui_buffer *buffer,
+                          char *input_data);
                                        /* called when user send data        */
+    void *input_callback_data;         /* data for callback                 */
                                        /* to this buffer                    */
     char *input_nick;                  /* self nick                         */
     char *input_buffer;                /* input buffer                      */
@@ -133,8 +136,10 @@ extern struct t_gui_buffer *gui_buffer_before_raw_data;
 
 extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
                                             char *category, char *name,
-                                            void (*input_data_cb)(struct t_gui_buffer *buffer,
-                                                                  char *data));
+                                            int (*input_callback)(void *data,
+                                                                  struct t_gui_buffer *buffer,
+                                                                  char *input_data),
+                                            void *input_callback_data);
 extern int gui_buffer_valid (struct t_gui_buffer *buffer);
 extern void *gui_buffer_get (struct t_gui_buffer *buffer, char *property);
 extern void gui_buffer_set_category (struct t_gui_buffer *buffer,

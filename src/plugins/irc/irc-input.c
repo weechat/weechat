@@ -151,16 +151,19 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, char *text)
  *                         PROTOCOL_RC_KO if error
  */
 
-void
-irc_input_data (struct t_gui_buffer *buffer, char *data)
+int
+irc_input_data (void *data, struct t_gui_buffer *buffer, char *input_data)
 {
     char *data_with_colors;
+    
+    /* make C compiler happy */
+    (void) data;
     
     IRC_GET_SERVER_CHANNEL(buffer);
     
     if (ptr_channel)
     {
-        data_with_colors = (char *)irc_color_encode ((unsigned char *)data,
+        data_with_colors = (char *)irc_color_encode ((unsigned char *)input_data,
                                                      weechat_config_boolean (irc_config_irc_colors_send));
         
         if (ptr_channel->dcc_chat)
@@ -175,15 +178,15 @@ irc_input_data (struct t_gui_buffer *buffer, char *data)
             {
                 //irc_dcc_chat_sendf (ptr_channel->dcc_chat,
                 //                    "%s\r\n",
-                //                    (data_with_colors) ? data_with_colors : data);
+                //                    (data_with_colors) ? data_with_colors : input_data);
                 //irc_input_user_message_display (buffer,
                 //                                (data_with_colors) ?
-                //                                data_with_colors : data);
+                //                                data_with_colors : input_data);
             }
         }
         else
             irc_input_send_user_message (buffer,
-                                         (data_with_colors) ? data_with_colors : data);
+                                         (data_with_colors) ? data_with_colors : input_data);
         
         if (data_with_colors)
             free (data_with_colors);
@@ -194,4 +197,6 @@ irc_input_data (struct t_gui_buffer *buffer, char *data)
                         _("%s: this buffer is not a channel!"),
                         "irc");
     }
+    
+    return WEECHAT_RC_OK;
 }

@@ -20,8 +20,6 @@
 
 
 #include <stdlib.h>
-#include <unistd.h>
-#include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
@@ -30,16 +28,17 @@
 
 #include "../weechat-plugin.h"
 #include "script.h"
+#include "script-callback.h"
 
 
 /*
- * weechat_script_pointer_to_string: convert pointer to string for usage
- *                                   in a script (any language)
- *                                   WARNING: result has to be free() after use
+ * script_pointer_to_string: convert pointer to string for usage
+ *                           in a script (any language)
+ *                           WARNING: result has to be free() after use
  */
 
 char *
-weechat_script_pointer_to_string (void *pointer)
+script_pointer_to_string (void *pointer)
 {
     char pointer_str[128];
 
@@ -53,16 +52,16 @@ weechat_script_pointer_to_string (void *pointer)
 }
 
 /*
- * weechat_script_string_to_pointer: convert stirng to pointer for usage
- *                                   outside script
+ * script_string_to_pointer: convert stirng to pointer for usage
+ *                           outside script
  */
 
 void *
-weechat_script_string_to_pointer (char *pointer_str)
+script_string_to_pointer (char *pointer_str)
 {
     unsigned int value;
     
-    if (!pointer_str || (pointer_str[0] != '0') || (pointer_str[0] != 'x'))
+    if (!pointer_str || (pointer_str[0] != '0') || (pointer_str[1] != 'x'))
         return NULL;
     
     sscanf (pointer_str + 2, "%x", &value);
@@ -71,13 +70,13 @@ weechat_script_string_to_pointer (char *pointer_str)
 }
 
 /*
- * weechat_script_auto_load: auto-load all scripts in a directory
+ * script_auto_load: auto-load all scripts in a directory
  */
 
 void
-weechat_script_auto_load (struct t_weechat_plugin *weechat_plugin,
-                          char *language,
-                          int (*callback)(void *data, char *filename))
+script_auto_load (struct t_weechat_plugin *weechat_plugin,
+                  char *language,
+                  int (*callback)(void *data, char *filename))
 {
     char *dir_home, *dir_name;
     int dir_length;
@@ -98,12 +97,12 @@ weechat_script_auto_load (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * weechat_script_search: search a script in list
+ * script_search: search a script in list
  */
 
 struct t_plugin_script *
-weechat_script_search (struct t_weechat_plugin *weechat_plugin,
-                       struct t_plugin_script **list, char *name)
+script_search (struct t_weechat_plugin *weechat_plugin,
+               struct t_plugin_script **list, char *name)
 {
     struct t_plugin_script *ptr_script;
     
@@ -119,12 +118,12 @@ weechat_script_search (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * weechat_script_search_full_name: search the full path name of a script
+ * script_search_full_name: search the full path name of a script
  */
 
 char *
-weechat_script_search_full_name (struct t_weechat_plugin *weechat_plugin,
-                                 char *language, char *filename)
+script_search_full_name (struct t_weechat_plugin *weechat_plugin,
+                         char *language, char *filename)
 {
     char *final_name, *dir_home, *dir_system;
     int length;
@@ -205,16 +204,16 @@ weechat_script_search_full_name (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * weechat_script_add: add a script to list of scripts
+ * script_add: add a script to list of scripts
  */
 
 struct t_plugin_script *
-weechat_script_add (struct t_weechat_plugin *weechat_plugin,
-                    struct t_plugin_script **script_list,
-                    char *filename,
-                    char *name, char *version,
-                    char *shutdown_func, char *description,
-                    char *charset)
+script_add (struct t_weechat_plugin *weechat_plugin,
+            struct t_plugin_script **script_list,
+            char *filename,
+            char *name, char *version,
+            char *shutdown_func, char *description,
+            char *charset)
 {
     struct t_plugin_script *new_script;
     
@@ -238,7 +237,7 @@ weechat_script_add (struct t_weechat_plugin *weechat_plugin,
         new_script->description = strdup (description);
         new_script->charset = (charset) ? strdup (charset) : NULL;
         
-        new_script->hooks = NULL;
+        new_script->callbacks = NULL;
         
         /* add new script to list */
         if ((*script_list))
@@ -258,45 +257,16 @@ weechat_script_add (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * weechat_script_remove_script_hook: remove a script_hook from script
+ * script_remove: remove a script from list of scripts
  */
 
 void
-weechat_script_remove_script_hook (struct t_weechat_plugin *weechat_plugin,
-                                   struct t_plugin_script *script,
-                                   struct t_script_hook *script_hook)
+script_remove (struct t_weechat_plugin *weechat_plugin,
+               struct t_plugin_script **script_list,
+               struct t_plugin_script *script)
 {
-    /* remove script_hook from list */
-    if (script_hook->prev_hook)
-        script_hook->prev_hook->next_hook = script_hook->next_hook;
-    if (script_hook->next_hook)
-        script_hook->next_hook->prev_hook = script_hook->prev_hook;
-    if (script->hooks == script_hook)
-        script->hooks = script_hook->next_hook;
-    
-    /* unhook and free data */
-    if (script_hook->hook)
-        weechat_unhook (script_hook->hook);
-    if (script_hook->function)
-        free (script_hook->function);
-}
-
-/*
- * weechat_script_remove: remove a script from list of scripts
- */
-
-void
-weechat_script_remove (struct t_weechat_plugin *weechat_plugin,
-                       struct t_plugin_script **script_list,
-                       struct t_plugin_script *script)
-{
-    /* remove all hooks created by this script */
-    while (script->hooks)
-    {
-        weechat_script_remove_script_hook (weechat_plugin,
-                                           script,
-                                           script->hooks);
-    }
+    /* remove all callbacks created by this script */
+    script_callback_remove_all (weechat_plugin, script);
     
     /* free data */
     if (script->filename)
@@ -322,515 +292,4 @@ weechat_script_remove (struct t_weechat_plugin *weechat_plugin,
     
     /* free script */
     free (script);
-}
-
-/*
- * weechat_script_charset_set: set charset for script
- */
-
-void
-weechat_script_charset_set (struct t_plugin_script *script,
-                            char *charset)
-{
-    if (script->charset)
-        free (script->charset);
-    
-    script->charset = (charset) ? strdup (charset) : NULL;
-}
-
-/*
- * weechat_script_printf: print a message
- */
-
-void
-weechat_script_printf (struct t_weechat_plugin *weechat_plugin,
-                       struct t_plugin_script *script,
-                       struct t_gui_buffer *buffer, char *format, ...)
-{
-    va_list argptr;
-    static char buf[8192];
-    char *buf2;
-    
-    va_start (argptr, format);
-    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
-    va_end (argptr);
-    
-    buf2 = (script->charset && script->charset[0]) ?
-        weechat_iconv_to_internal (script->charset, buf) : NULL;
-    weechat_printf (buffer, "%s", (buf2) ? buf2 : buf);
-    if (buf2)
-        free (buf2);
-}
-
-/*
- * weechat_script_infobar_printf: print a message in infobar
- */
-
-void
-weechat_script_infobar_printf (struct t_weechat_plugin *weechat_plugin,
-                               struct t_plugin_script *script,
-                               int delay, char *color_name, char *format, ...)
-{
-    va_list argptr;
-    static char buf[1024];
-    char *buf2;
-    
-    va_start (argptr, format);
-    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
-    va_end (argptr);
-    
-    buf2 = (script->charset && script->charset[0]) ?
-        weechat_iconv_to_internal (script->charset, buf) : NULL;
-    weechat_infobar_printf (delay, color_name, "%s", (buf2) ? buf2 : buf);
-    if (buf2)
-        free (buf2);
-}
-
-/*
- * weechat_script_log_printf: add a message in WeeChat log file
- */
-
-void
-weechat_script_log_printf (struct t_weechat_plugin *weechat_plugin,
-                           struct t_plugin_script *script,
-                           char *format, ...)
-{
-    va_list argptr;
-    static char buf[1024];
-    char *buf2;
-    
-    va_start (argptr, format);
-    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
-    va_end (argptr);
-    
-    buf2 = (script->charset && script->charset[0]) ?
-        weechat_iconv_to_internal (script->charset, buf) : NULL;
-    weechat_log_printf ("%s", (buf2) ? buf2 : buf);
-    if (buf2)
-        free (buf2);
-}
-
-/*
- * weechat_script_hook_command: hook a command
- *                              return 1 if ok, 0 if error
- */
-
-int
-weechat_script_hook_command (struct t_weechat_plugin *weechat_plugin,
-                             struct t_plugin_script *script,
-                             char *command, char *description,
-                             char *args, char *args_description,
-                             char *completion,
-                             int (*callback)(void *data,
-                                             struct t_gui_buffer *buffer,
-                                             int argc, char **argv,
-                                             char **argv_eol),
-                             char *function)
-{
-    struct t_script_hook *new_script_hook;
-    struct t_hook *new_hook;
-
-    new_script_hook = (struct t_script_hook *)malloc (sizeof (struct t_script_hook));
-    if (!new_script_hook)
-        return 0;
-
-    new_script_hook->hook = NULL;
-    new_script_hook->function = NULL;
-    new_script_hook->script = NULL;
-    
-    new_hook = weechat_hook_command (command, description, args,
-                                     args_description, completion,
-                                     callback, new_script_hook);
-    if (!new_hook)
-    {
-        free (new_script_hook);
-        return 0;
-    }
-    
-    new_script_hook->hook = new_hook;
-    new_script_hook->function = strdup (function);
-    new_script_hook->script = script;
-    
-    /* add script_hook to list of hooks for current script */
-    if (script->hooks)
-        script->hooks->prev_hook = new_script_hook;
-    new_script_hook->prev_hook = NULL;
-    new_script_hook->next_hook = script->hooks;
-    script->hooks = new_script_hook;
-    
-    return 1;
-}
-
-/*
- * weechat_script_hook_timer: hook a timer
- *                            return 1 if ok, 0 if error
- */
-
-int
-weechat_script_hook_timer (struct t_weechat_plugin *weechat_plugin,
-                           struct t_plugin_script *script,
-                           int interval, int align_second, int max_calls,
-                           int (*callback)(void *data),
-                           char *function)
-{
-    struct t_script_hook *new_script_hook;
-    struct t_hook *new_hook;
-
-    new_script_hook = (struct t_script_hook *)malloc (sizeof (struct t_script_hook));
-    if (!new_script_hook)
-        return 0;
-
-    new_script_hook->hook = NULL;
-    new_script_hook->function = NULL;
-    new_script_hook->script = NULL;
-    
-    new_hook = weechat_hook_timer (interval, align_second, max_calls,
-                                   callback, new_script_hook);
-    if (!new_hook)
-    {
-        free (new_script_hook);
-        return 0;
-    }
-    
-    new_script_hook->hook = new_hook;
-    new_script_hook->function = strdup (function);
-    new_script_hook->script = script;
-    
-    /* add script_hook to list of hooks for current script */
-    if (script->hooks)
-        script->hooks->prev_hook = new_script_hook;
-    new_script_hook->prev_hook = NULL;
-    new_script_hook->next_hook = script->hooks;
-    script->hooks = new_script_hook;
-    
-    return 1;
-}
-
-/*
- * weechat_script_hook_fd: hook a fd
- *                         return 1 if ok, 0 if error
- */
-
-int
-weechat_script_hook_fd (struct t_weechat_plugin *weechat_plugin,
-                        struct t_plugin_script *script,
-                        int fd, int flag_read, int flag_write,
-                        int flag_exception,
-                        int (*callback)(void *data),
-                        char *function)
-{
-    struct t_script_hook *new_script_hook;
-    struct t_hook *new_hook;
-
-    new_script_hook = (struct t_script_hook *)malloc (sizeof (struct t_script_hook));
-    if (!new_script_hook)
-        return 0;
-
-    new_script_hook->hook = NULL;
-    new_script_hook->function = NULL;
-    new_script_hook->script = NULL;
-    
-    new_hook = weechat_hook_fd (fd, flag_read, flag_write, flag_exception,
-                                callback, new_script_hook);
-    if (!new_hook)
-    {
-        free (new_script_hook);
-        return 0;
-    }
-    
-    new_script_hook->hook = new_hook;
-    new_script_hook->function = strdup (function);
-    new_script_hook->script = script;
-    
-    /* add script_hook to list of hooks for current script */
-    if (script->hooks)
-        script->hooks->prev_hook = new_script_hook;
-    new_script_hook->prev_hook = NULL;
-    new_script_hook->next_hook = script->hooks;
-    script->hooks = new_script_hook;
-    
-    return 1;
-}
-
-/*
- * weechat_script_hook_print: hook a print
- *                            return 1 if ok, 0 if error
- */
-
-int
-weechat_script_hook_print (struct t_weechat_plugin *weechat_plugin,
-                           struct t_plugin_script *script,
-                           struct t_gui_buffer *buffer,
-                           char *message, int strip_colors,
-                           int (*callback)(void *data,
-                                           struct t_gui_buffer *buffer,
-                                           time_t date, char *prefix,
-                                           char *message),
-                           char *function)
-{
-    struct t_script_hook *new_script_hook;
-    struct t_hook *new_hook;
-
-    new_script_hook = (struct t_script_hook *)malloc (sizeof (struct t_script_hook));
-    if (!new_script_hook)
-        return 0;
-
-    new_script_hook->hook = NULL;
-    new_script_hook->function = NULL;
-    new_script_hook->script = NULL;
-    
-    new_hook = weechat_hook_print (buffer, message, strip_colors,
-                                   callback, new_script_hook);
-    if (!new_hook)
-    {
-        free (new_script_hook);
-        return 0;
-    }
-    
-    new_script_hook->hook = new_hook;
-    new_script_hook->function = strdup (function);
-    new_script_hook->script = script;
-    
-    /* add script_hook to list of hooks for current script */
-    if (script->hooks)
-        script->hooks->prev_hook = new_script_hook;
-    new_script_hook->prev_hook = NULL;
-    new_script_hook->next_hook = script->hooks;
-    script->hooks = new_script_hook;
-    
-    return 1;
-}
-
-/*
- * weechat_script_hook_signal: hook a signal
- *                             return 1 if ok, 0 if error
- */
-
-int
-weechat_script_hook_signal (struct t_weechat_plugin *weechat_plugin,
-                            struct t_plugin_script *script,
-                            char *signal,
-                            int (*callback)(void *data, char *signal,
-                                            char *type_data,
-                                            void *signal_data),
-                            char *function)
-{
-    struct t_script_hook *new_script_hook;
-    struct t_hook *new_hook;
-
-    new_script_hook = (struct t_script_hook *)malloc (sizeof (struct t_script_hook));
-    if (!new_script_hook)
-        return 0;
-
-    new_script_hook->hook = NULL;
-    new_script_hook->function = NULL;
-    new_script_hook->script = NULL;
-    
-    new_hook = weechat_hook_signal (signal, callback, new_script_hook);
-    if (!new_hook)
-    {
-        free (new_script_hook);
-        return 0;
-    }
-    
-    new_script_hook->hook = new_hook;
-    new_script_hook->function = strdup (function);
-    new_script_hook->script = script;
-    
-    /* add script_hook to list of hooks for current script */
-    if (script->hooks)
-        script->hooks->prev_hook = new_script_hook;
-    new_script_hook->prev_hook = NULL;
-    new_script_hook->next_hook = script->hooks;
-    script->hooks = new_script_hook;
-    
-    return 1;
-}
-
-/*
- * weechat_script_hook_config: hook a config option
- *                             return 1 if ok, 0 if error
- */
-
-int
-weechat_script_hook_config (struct t_weechat_plugin *weechat_plugin,
-                            struct t_plugin_script *script,
-                            char *type, char *option,
-                            int (*callback)(void *data, char *type,
-                                            char *option, char *value),
-                            char *function)
-{
-    struct t_script_hook *new_script_hook;
-    struct t_hook *new_hook;
-
-    new_script_hook = (struct t_script_hook *)malloc (sizeof (struct t_script_hook));
-    if (!new_script_hook)
-        return 0;
-
-    new_script_hook->hook = NULL;
-    new_script_hook->function = NULL;
-    new_script_hook->script = NULL;
-    
-    new_hook = weechat_hook_config (type, option, callback, new_script_hook);
-    if (!new_hook)
-    {
-        free (new_script_hook);
-        return 0;
-    }
-    
-    new_script_hook->hook = new_hook;
-    new_script_hook->function = strdup (function);
-    new_script_hook->script = script;
-    
-    /* add script_hook to list of hooks for current script */
-    if (script->hooks)
-        script->hooks->prev_hook = new_script_hook;
-    new_script_hook->prev_hook = NULL;
-    new_script_hook->next_hook = script->hooks;
-    script->hooks = new_script_hook;
-    
-    return 1;
-}
-
-/*
- * weechat_script_hook_completion: hook a completion
- *                                 return 1 if ok, 0 if error
- */
-
-int
-weechat_script_hook_completion (struct t_weechat_plugin *weechat_plugin,
-                                struct t_plugin_script *script,
-                                char *completion,
-                                int (*callback)(void *data, char *completion,
-                                                struct t_gui_buffer *buffer,
-                                                struct t_weelist *list),
-                                char *function)
-{
-    struct t_script_hook *new_script_hook;
-    struct t_hook *new_hook;
-
-    new_script_hook = (struct t_script_hook *)malloc (sizeof (struct t_script_hook));
-    if (!new_script_hook)
-        return 0;
-
-    new_script_hook->hook = NULL;
-    new_script_hook->function = NULL;
-    new_script_hook->script = NULL;
-    
-    new_hook = weechat_hook_completion (completion, callback, new_script_hook);
-    if (!new_hook)
-    {
-        free (new_script_hook);
-        return 0;
-    }
-    
-    new_script_hook->hook = new_hook;
-    new_script_hook->function = strdup (function);
-    new_script_hook->script = script;
-    
-    /* add script_hook to list of hooks for current script */
-    if (script->hooks)
-        script->hooks->prev_hook = new_script_hook;
-    new_script_hook->prev_hook = NULL;
-    new_script_hook->next_hook = script->hooks;
-    script->hooks = new_script_hook;
-    
-    return 1;
-}
-
-/*
- * weechat_script_unhook: unhook something
- */
-
-void
-weechat_script_unhook (struct t_weechat_plugin *weechat_plugin,
-                       struct t_plugin_script *script,
-                       struct t_hook *hook)
-{
-    struct t_script_hook *ptr_script_hook;
-
-    for (ptr_script_hook = script->hooks; ptr_script_hook;
-         ptr_script_hook = ptr_script_hook->next_hook)
-    {
-        if (ptr_script_hook->hook == hook)
-            break;
-    }
-    
-    if (ptr_script_hook)
-        weechat_script_remove_script_hook (weechat_plugin,
-                                           script,
-                                           ptr_script_hook);
-}
-
-/*
- * weechat_script_command: execute a command (simulate user entry)
- */
-
-void
-weechat_script_command (struct t_weechat_plugin *weechat_plugin,
-                        struct t_plugin_script *script,
-                        struct t_gui_buffer *buffer, char *command)
-{
-    char *command2;
-    
-    command2 = (script->charset && script->charset[0]) ?
-        weechat_iconv_to_internal (script->charset, command) : NULL;
-    weechat_command (buffer, (command2) ? command2 : command);
-    if (command2)
-        free (command2);
-}
-
-/*
- * weechat_script_config_get_plugin: get a value of a script option
- *                                   format in file is: plugin.script.option=value
- */
-
-char *
-weechat_script_config_get_plugin (struct t_weechat_plugin *weechat_plugin,
-                                  struct t_plugin_script *script,
-                                  char *option)
-{
-    char *option_fullname, *return_value;
-    
-    option_fullname = (char *)malloc (strlen (script->name) +
-                                      strlen (option) + 2);
-    if (!option_fullname)
-        return NULL;
-    
-    strcpy (option_fullname, script->name);
-    strcat (option_fullname, ".");
-    strcat (option_fullname, option);
-    
-    return_value = weechat_config_get_plugin (option_fullname);
-    free (option_fullname);
-    
-    return return_value;
-}
-
-/*
- * weechat_script_config_set_plugin: set value of a script config option
- *                                   format in file is: plugin.script.option=value
- */
-
-int
-weechat_script_config_set_plugin (struct t_weechat_plugin *weechat_plugin,
-                                  struct t_plugin_script *script,
-                                  char *option, char *value)
-{
-    char *option_fullname;
-    int return_code;
-    
-    option_fullname = (char *)malloc (strlen (script->name) +
-                                      strlen (option) + 2);
-    if (!option_fullname)
-        return 0;
-    
-    strcpy (option_fullname, script->name);
-    strcat (option_fullname, ".");
-    strcat (option_fullname, option);
-    
-    return_code = weechat_config_set_plugin (option_fullname, value);
-    free (option_fullname);
-    
-    return return_code;
 }

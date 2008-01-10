@@ -66,14 +66,13 @@ struct t_gui_buffer *gui_buffer_before_raw_data = NULL; /* buf. before raw  */
 
 struct t_gui_buffer *
 gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
-                void (*callback_input_data)(struct t_gui_buffer *buffer, char *data))
+                int (*input_callback)(void *data,
+                                      struct t_gui_buffer *buffer,
+                                      char *input_data),
+                void *input_callback_data)
 {
     struct t_gui_buffer *new_buffer;
     struct t_gui_completion *new_completion;
-    
-#ifdef DEBUG
-    log_printf ("Creating new buffer");
-#endif
     
     if (!category || !name)
         return NULL;
@@ -124,7 +123,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         
         /* input */
         new_buffer->input = 1;
-        new_buffer->input_data_cb = callback_input_data;
+        new_buffer->input_callback = input_callback;
+        new_buffer->input_callback_data = input_callback_data;
         new_buffer->input_nick = NULL;
         new_buffer->input_buffer_alloc = GUI_BUFFER_INPUT_BLOCK_SIZE;
         new_buffer->input_buffer = (char *)malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
@@ -1032,7 +1032,8 @@ gui_buffer_print_log ()
         log_printf ("  nicklist_visible_count.: %d",   ptr_buffer->nicklist_visible_count);
         log_printf ("  nicklist_refresh_needed: %d",   ptr_buffer->nicklist_refresh_needed);
         log_printf ("  input. . . . . . . . . : %d",   ptr_buffer->input);
-        log_printf ("  input_data_cb. . . . . : 0x%x", ptr_buffer->input_data_cb);
+        log_printf ("  input_callback . . . . : 0x%x", ptr_buffer->input_callback);
+        log_printf ("  input_callback_data. . : 0x%x", ptr_buffer->input_callback_data);
         log_printf ("  input_nick . . . . . . : '%s'", ptr_buffer->input_nick);
         log_printf ("  input_buffer . . . . . : '%s'", ptr_buffer->input_buffer);
         log_printf ("  input_buffer_color_mask: '%s'", ptr_buffer->input_buffer_color_mask);
