@@ -2419,7 +2419,7 @@ weechat_lua_unload (t_weechat_plugin *plugin, t_plugin_script *script)
                           "Unloading Lua script \"%s\"",
                           script->name);
     
-    if (script->shutdown_func[0])
+    if (script->shutdow_func && script->shutdown_func[0])
     {
         r = weechat_lua_exec (plugin, script, SCRIPT_EXEC_INT,
 			      script->shutdown_func, NULL, NULL, NULL);
@@ -2712,6 +2712,7 @@ weechat_plugin_init (t_weechat_plugin *plugin)
     plugin->mkdir_home (plugin, "lua");
     plugin->mkdir_home (plugin, "lua/autoload");
     
+    script_init (weechat_lua_plugin);
     weechat_script_auto_load (plugin, "lua", weechat_lua_load);
     
     /* init ok */

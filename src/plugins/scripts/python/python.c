@@ -2377,7 +2377,7 @@ weechat_python_unload (t_weechat_plugin *plugin, t_plugin_script *script)
                           "Unloading Python script \"%s\"",
                           script->name);
     
-    if (script->shutdown_func[0])
+    if (script->shutdown_func && script->shutdown_func[0])
     {
         r = (int *) weechat_python_exec (plugin, script, SCRIPT_EXEC_INT,
 					 script->shutdown_func, NULL, NULL, NULL);
@@ -2694,7 +2694,8 @@ weechat_plugin_init (t_weechat_plugin *plugin)
 
     plugin->mkdir_home (plugin, "python");
     plugin->mkdir_home (plugin, "python/autoload");
-    
+
+    script_init (weechat_python_plugin);
     weechat_script_auto_load (plugin, "python", weechat_python_load);
     
     /* init ok */

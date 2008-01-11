@@ -235,6 +235,7 @@ plugin_load (char *filename)
         new_plugin->ngettext = &plugin_api_ngettext;
         new_plugin->strcasecmp = &string_strcasecmp;
         new_plugin->strncasecmp = &string_strncasecmp;
+        new_plugin->strcmp_ignore_chars = &string_strcmp_ignore_chars;
         new_plugin->strcasestr = &string_strcasestr;
         new_plugin->string_replace = &string_replace;
         new_plugin->string_explode = &string_explode;

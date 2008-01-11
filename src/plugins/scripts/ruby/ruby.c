@@ -2273,7 +2273,7 @@ weechat_ruby_unload (t_weechat_plugin *plugin, t_plugin_script *script)
                           "Unloading Ruby script \"%s\"",
                           script->name);
     
-    if (script->shutdown_func[0])
+    if (script->shutdown_func && script->shutdown_func[0])
     {
         r = (int *) weechat_ruby_exec (plugin, script, SCRIPT_EXEC_INT,
 				       script->shutdown_func, NULL, NULL, NULL);
@@ -2675,7 +2675,8 @@ weechat_plugin_init (t_weechat_plugin *plugin)
                                    "Ruby error: %s", STR2CSTR(ruby_error_info));
 	return PLUGIN_RC_KO;
     }
-   
+    
+    script_init (weechat_ruby_plugin);
     weechat_script_auto_load (plugin, "ruby", weechat_ruby_load);
     
     /* init ok */

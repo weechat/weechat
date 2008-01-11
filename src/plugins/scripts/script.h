@@ -23,17 +23,19 @@
 #define WEECHAT_SCRIPT_EXEC_INT    1
 #define WEECHAT_SCRIPT_EXEC_STRING 2
 
-#define WEECHAT_SCRIPT_MSG_NOT_INITIALIZED(__language, __function)      \
+#define WEECHAT_SCRIPT_MSG_NOT_INITIALIZED(__function)                  \
     weechat_printf (NULL,                                               \
                     weechat_gettext("%s%s: unable to call function "    \
                                     "\"%s\", script is not "            \
                                     "initialized"),                     \
-                    weechat_prefix ("error"), __language, __function)
-#define WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS(__language, __function)      \
+                    weechat_prefix ("error"), weechat_plugin->name,     \
+                    __function)
+#define WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS(__function)                  \
     weechat_printf (NULL,                                               \
                     weechat_gettext("%s%s: wrong arguments for "        \
                                     "function \"%s\""),                 \
-                    weechat_prefix ("error"), __language, __function)
+                    weechat_prefix ("error"), weechat_plugin->name,     \
+                    __function)
 
 struct t_plugin_script
 {
@@ -41,8 +43,10 @@ struct t_plugin_script
     char *filename;                      /* name of script on disk          */
     void *interpreter;                   /* interpreter for script          */
     char *name;                          /* script name                     */
-    char *description;                   /* plugin description              */
+    char *author;                        /* author name/mail                */
     char *version;                       /* plugin version                  */
+    char *license;                       /* script license                  */
+    char *description;                   /* plugin description              */
     char *shutdown_func;                 /* function when script is unloaded*/
     char *charset;                       /* script charset                  */
     
@@ -52,6 +56,7 @@ struct t_plugin_script
     struct t_plugin_script *next_script; /* link to next script             */
 };
 
+extern void script_init (struct t_weechat_plugin *weechat_plugin);
 extern char *script_pointer_to_string (void *pointer);
 extern void *script_string_to_pointer (char *pointer_str);
 extern void script_auto_load (struct t_weechat_plugin *weechat_plugin,
@@ -65,8 +70,8 @@ extern char *script_search_full_name (struct t_weechat_plugin *weechat_plugin,
 extern struct t_plugin_script *script_add (struct t_weechat_plugin *weechat_plugin,
                                            struct t_plugin_script **script_list,
                                            char *filename, char *name,
-                                           char *version,
-                                           char *shutdown_func,
+                                           char *author, char *version,
+                                           char *license, char *shutdown_func,
                                            char *description,
                                            char *charset);
 extern void script_remove (struct t_weechat_plugin *weechat_plugin,

@@ -260,7 +260,7 @@ logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
             {
                 weechat_printf (NULL,
                                 _("%s%s: unable to write log file \"%s\""),
-                                weechat_prefix ("error"), "Logger",
+                                weechat_prefix ("error"), "logger",
                                 logger_buffer->log_filename);
                 free (logger_buffer->log_filename);
                 logger_buffer->log_filename = NULL;

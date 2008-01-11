@@ -96,6 +96,8 @@ struct t_weechat_plugin
     char *(*ngettext) (char *single, char *plural, int count);
     int (*strcasecmp) (char *string1, char *string2);
     int (*strncasecmp) (char *string1, char *string2, int max);
+    int (*strcmp_ignore_chars) (char *string1, char *string2,
+                                char *chars_ignored, int case_sensitive);
     char *(*strcasestr) (char *string1, char *string2);
     char *(*string_replace) (char *string, char *search, char *replace);
     char **(*string_explode) (char *string, char *separators, int keep_eol,
@@ -338,6 +340,11 @@ struct t_weechat_plugin
     weechat_plugin->strcasecmp(__string1, __string2)
 #define weechat_strncasecmp(__string1, __string2, __max)        \
     weechat_plugin->strncasecmp(__string1, __string2, __max)
+#define weechat_strcmp_ignore_chars(__string1, __string2,               \
+                                    __chars_ignored, __case_sensitive)  \
+    weechat_plugin->strcmp_ignore_chars(__string1, __string2,           \
+                                        __chars_ignored,                \
+                                        __case_sensitive)
 #define weechat_strcasestr(__string1, __string2)        \
     weechat_plugin->strcasestr(__string1, __string2)
 #define weechat_string_replace(__string, __search, __replace)           \
@@ -372,8 +379,8 @@ struct t_weechat_plugin
     weechat_plugin->utf8_strnlen(__string, __bytes)
 #define weechat_utf8_strlen_screen(__string)            \
     weechat_plugin->utf8_strlen_screen(__string)
-#define weechat_utf8_charcasecmp(__string)      \
-    weechat_plugin->utf8_charcasecmp(__string)
+#define weechat_utf8_charcasecmp(__string1, __string2)          \
+    weechat_plugin->utf8_charcasecmp(__string1, __string2)
 #define weechat_utf8_char_size_screen(__string)         \
     weechat_plugin->utf8_char_size_screen(__string)
 #define weechat_utf8_add_offset(__string, __offset)     \

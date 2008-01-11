@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-09 15:15+0100\n"
-"PO-Revision-Date: 2008-01-09 15:17+0100\n"
+"POT-Creation-Date: 2008-01-11 14:53+0100\n"
+"PO-Revision-Date: 2008-01-11 14:55+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4081,6 +4081,10 @@ msgid "Registered Perl scripts:"
 msgstr "Scripts Perl chargés:"
 
 #, c-format
+msgid "  %s v%s (%s), by %s, license %s"
+msgstr "  %s v%s (%s), par %s, licence %s"
+
+#, c-format
 msgid "%s%s: unknown option for command \"%s\""
 msgstr "%s%s: option inconnue pour la commande \"%s\""
 
@@ -4110,6 +4114,14 @@ msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
 msgstr ""
 "%s: erreur de chargement du script \"%s\" (mauvais nom, les espaces sont "
 "interdits)"
+
+#, c-format
+msgid ""
+"%s%s: warning, license \"%s\" for script \"%s\" differs from plugin license "
+"(\"%s\")"
+msgstr ""
+"%s%s: attention, la licence \"%s\" pour le script \"%s\" diffère de la "
+"licence de l'extension (\"%s\")"
 
 #, c-format
 msgid "%s: error loading script \"%s\" (not enough memory)"

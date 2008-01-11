@@ -27,6 +27,8 @@ extern void string_tolower (char *string);
 extern void string_toupper (char *string);
 extern int string_strcasecmp (char *string1, char *string2);
 extern int string_strncasecmp (char *string1, char *string2, int max);
+extern int string_strcmp_ignore_chars (char *string1, char *string2,
+                                       char *chars_ignored, int case_sensitive);
 extern char *string_strcasestr (char *string, char *search);
 extern char *string_replace (char *string, char *search, char *replace);
 extern char *string_remove_quotes (char *string, char *quotes);

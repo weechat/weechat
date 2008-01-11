@@ -44,7 +44,8 @@ extern void boot_DynaLoader (pTHX_ CV* cv);
 
 static XS (XS_weechat_register)
 {
-    char *name, *version, *shutdown_func, *description, *charset;
+    char *name, *author, *version, *license, *shutdown_func, *description;
+    char *charset;
     dXSARGS;
     
     /* make C compiler happy */
@@ -53,17 +54,25 @@ static XS (XS_weechat_register)
 
     perl_current_script = NULL;
     
-    if ((items < 4) || (items > 5))
+    if (items < 5)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "register");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("register");
         XSRETURN_NO;
     }
     
     name = SvPV (ST (0), PL_na);
-    version = SvPV (ST (1), PL_na);
-    shutdown_func = SvPV (ST (2), PL_na);
-    description = SvPV (ST (3), PL_na);
-    charset = (items == 5) ? SvPV (ST (4), PL_na) : NULL;
+    author = SvPV (ST (1), PL_na);
+    version = SvPV (ST (2), PL_na);
+    license = SvPV (ST (3), PL_na);
+    description = SvPV (ST (4), PL_na);
+    shutdown_func = NULL;
+    charset = NULL;
+    if (items > 5)
+    {
+        shutdown_func = SvPV (ST (5), PL_na);
+        if (items > 6)
+            charset = SvPV (ST (6), PL_na);
+    }
     
     if (script_search (weechat_perl_plugin, &perl_scripts, name))
     {
@@ -72,7 +81,7 @@ static XS (XS_weechat_register)
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
                                          "exists with this name)"),
-                        weechat_prefix ("error"), "Perl", name);
+                        weechat_prefix ("error"), "perl", name);
         XSRETURN_NO;
     }
     
@@ -81,14 +90,14 @@ static XS (XS_weechat_register)
                                       &perl_scripts,
                                       (perl_current_script_filename) ?
                                       perl_current_script_filename : "",
-                                      name, version, shutdown_func,
-                                      description, charset);
+                                      name, author, version, license,
+                                      shutdown_func, description, charset);
     if (perl_current_script)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: registered script \"%s\", "
                                          "version %s (%s)"),
-                        weechat_prefix ("info"), "Perl",
+                        weechat_prefix ("info"), "perl",
                         name, version, description);
     }
     else
@@ -112,13 +121,13 @@ static XS (XS_weechat_charset_set)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "charset_set");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("charset_set");
         XSRETURN_NO;
     }
     
     if (items < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "charset_set");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("charset_set");
         XSRETURN_NO;
     }
     
@@ -142,13 +151,13 @@ static XS (XS_weechat_iconv_to_internal)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "iconv_to_internal");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("iconv_to_internal");
         XSRETURN_EMPTY;
     }
     
     if (items < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "iconv_to_internal");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("iconv_to_internal");
         XSRETURN_EMPTY;
     }
 
@@ -190,13 +199,13 @@ static XS (XS_weechat_iconv_from_internal)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "iconv_from_internal");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("iconv_from_internal");
         XSRETURN_EMPTY;
     }
     
     if (items < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "iconv_from_internal");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("iconv_from_internal");
         XSRETURN_EMPTY;
     }
     
@@ -228,13 +237,13 @@ static XS (XS_weechat_mkdir_home)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "mkdir_home");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir_home");
         XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "mkdir_home");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir_home");
         XSRETURN_NO;
     }
     
@@ -256,13 +265,13 @@ static XS (XS_weechat_mkdir)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "mkdir");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir");
         XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "mkdir");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir");
         XSRETURN_NO;
     }
     
@@ -286,13 +295,13 @@ static XS (XS_weechat_prefix)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "prefix");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("prefix");
         XSRETURN_EMPTY;
     }
     
     if (items < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "prefix");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("prefix");
         XSRETURN_EMPTY;
     }
     
@@ -321,13 +330,13 @@ static XS (XS_weechat_color)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "color");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("color");
         XSRETURN_EMPTY;
     }
     
     if (items < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "color");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("color");
         XSRETURN_EMPTY;
     }
     
@@ -356,13 +365,13 @@ static XS (XS_weechat_print)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "print");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print");
         XSRETURN_NO;
     }
     
     if (items < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "print");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print");
         XSRETURN_NO;
     }
 
@@ -397,13 +406,13 @@ static XS (XS_weechat_infobar_print)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "infobar_print");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
         XSRETURN_NO;
     }
     
     if (items < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "infobar_print");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
         XSRETURN_NO;
     }
     
@@ -429,7 +438,7 @@ static XS (XS_weechat_infobar_remove)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "infobar_remove");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_remove");
         XSRETURN_NO;
     }
     
@@ -451,13 +460,13 @@ static XS (XS_weechat_log_print)
 
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "log_print");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("log_print");
         XSRETURN_NO;
     }
 
     if (items < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "log_print");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("log_print");
         XSRETURN_NO;
     }
     
@@ -524,13 +533,13 @@ static XS (XS_weechat_hook_command)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "hook_command");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command");
 	XSRETURN_NO;
     }
     
     if (items < 6)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "hook_command");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_command");
         XSRETURN_NO;
     }
     
@@ -589,13 +598,13 @@ static XS (XS_weechat_hook_timer)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "hook_timer");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_timer");
 	XSRETURN_NO;
     }
     
     if (items < 4)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "hook_timer");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_timer");
         XSRETURN_NO;
     }
     
@@ -653,13 +662,13 @@ static XS (XS_weechat_hook_fd)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "hook_fd");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_fd");
 	XSRETURN_NO;
     }
     
     if (items < 5)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "hook_fd");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_fd");
         XSRETURN_NO;
     }
     
@@ -729,13 +738,13 @@ static XS (XS_weechat_hook_print)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "hook_print");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_print");
 	XSRETURN_NO;
     }
     
     if (items < 4)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "hook_print");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_print");
         XSRETURN_NO;
     }
     
@@ -817,13 +826,13 @@ static XS (XS_weechat_hook_signal)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "hook_signal");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_signal");
 	XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "hook_signal");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_signal");
         XSRETURN_NO;
     }
     
@@ -850,13 +859,13 @@ static XS (XS_weechat_hook_signal_send)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "hook_signal_send");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_signal_send");
 	XSRETURN_NO;
     }
     
     if (items < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "hook_signal_send");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_signal_send");
         XSRETURN_NO;
     }
     
@@ -914,13 +923,13 @@ static XS (XS_weechat_hook_config)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "hook_config");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_config");
 	XSRETURN_NO;
     }
     
     if (items < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "hook_config");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_config");
         XSRETURN_NO;
     }
     
@@ -987,13 +996,13 @@ static XS (XS_weechat_hook_completion)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "hook_completion");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_completion");
 	XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "hook_completion");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion");
         XSRETURN_NO;
     }
     
@@ -1020,13 +1029,13 @@ static XS (XS_weechat_unhook)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "unhook");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("unhook");
 	XSRETURN_NO;
     }
     
     if (items < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "unhook");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("unhook");
         XSRETURN_NO;
     }
     
@@ -1050,7 +1059,7 @@ static XS (XS_weechat_unhook_all)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "unhook_all");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("unhook_all");
 	XSRETURN_NO;
     }
     
@@ -1109,13 +1118,13 @@ static XS (XS_weechat_buffer_new)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "buffer_new");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_new");
 	XSRETURN_EMPTY;
     }
     
     if (items < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "buffer_new");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_new");
         XSRETURN_EMPTY;
     }
     
@@ -1153,13 +1162,13 @@ static XS (XS_weechat_buffer_search)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "buffer_search");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_search");
 	XSRETURN_EMPTY;
     }
     
     if (items < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "buffer_search");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_search");
         XSRETURN_EMPTY;
     }
     
@@ -1191,13 +1200,13 @@ static XS (XS_weechat_buffer_close)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "buffer_close");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_close");
 	XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "buffer_close");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_close");
         XSRETURN_NO;
     }
     
@@ -1223,13 +1232,13 @@ static XS (XS_weechat_buffer_get)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "buffer_get");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get");
 	XSRETURN_EMPTY;
     }
     
     if (items < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "buffer_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get");
         XSRETURN_EMPTY;
     }
     
@@ -1258,13 +1267,13 @@ static XS (XS_weechat_buffer_set)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "buffer_set");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_set");
 	XSRETURN_NO;
     }
     
     if (items < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "buffer_set");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_set");
         XSRETURN_NO;
     }
     
@@ -1290,13 +1299,13 @@ static XS (XS_weechat_nicklist_add_group)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "nicklist_add_group");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_add_group");
 	XSRETURN_EMPTY;
     }
     
     if (items < 5)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "nicklist_add_group");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_add_group");
         XSRETURN_EMPTY;
     }
     
@@ -1333,13 +1342,13 @@ static XS (XS_weechat_nicklist_search_group)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "nicklist_search_group");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_search_group");
 	XSRETURN_EMPTY;
     }
     
     if (items < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "nicklist_search_group");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_search_group");
         XSRETURN_EMPTY;
     }
     
@@ -1374,13 +1383,13 @@ static XS (XS_weechat_nicklist_add_nick)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "nicklist_add_nick");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_add_nick");
 	XSRETURN_EMPTY;
     }
     
     if (items < 7)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "nicklist_add_nick");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_add_nick");
         XSRETURN_EMPTY;
     }
 
@@ -1424,13 +1433,13 @@ static XS (XS_weechat_nicklist_search_nick)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "nicklist_search_nick");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_search_nick");
 	XSRETURN_EMPTY;
     }
     
     if (items < 3)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "nicklist_search_nick");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_search_nick");
         XSRETURN_EMPTY;
     }
     
@@ -1463,13 +1472,13 @@ static XS (XS_weechat_nicklist_remove_group)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "nicklist_remove_group");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_group");
 	XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "nicklist_remove_group");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_remove_group");
         XSRETURN_NO;
     }
     
@@ -1492,13 +1501,13 @@ static XS (XS_weechat_nicklist_remove_nick)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "nicklist_remove_nick");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_nick");
 	XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "nicklist_remove_nick");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_remove_nick");
         XSRETURN_NO;
     }
     
@@ -1521,13 +1530,13 @@ static XS (XS_weechat_nicklist_remove_all)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "nicklist_remove_all");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_all");
 	XSRETURN_NO;
     }
     
     if (items < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "nicklist_remove_all");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_remove_all");
         XSRETURN_NO;
     }
     
@@ -1550,13 +1559,13 @@ static XS (XS_weechat_command)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "command");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("command");
         XSRETURN_NO;
     }
     
     if (items < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "command");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("command");
         XSRETURN_NO;
     }
     
@@ -1592,13 +1601,13 @@ static XS (XS_weechat_info_get)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "info_get");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("info_get");
 	XSRETURN_EMPTY;
     }
     
     if (items < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "info_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("info_get");
         XSRETURN_EMPTY;
     }
     
@@ -1697,13 +1706,13 @@ static XS (XS_weechat_config_get_weechat)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("Perl", "config_get_weechat");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get_weechat");
 	XSRETURN_EMPTY;
     }
     
     if (items < 1)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("Perl", "config_get_weechat");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get_weechat");
         XSRETURN_EMPTY;
     }
     

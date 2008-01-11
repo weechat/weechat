@@ -195,7 +195,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
         weechat_printf (NULL,
                         _("%s%s: error, circular reference when calling "
                           "alias \"%s\""),
-                        weechat_prefix ("error"), "Alias",
+                        weechat_prefix ("error"), "alias",
                         ptr_alias->name);
         return WEECHAT_RC_ERROR;
     }
@@ -353,7 +353,7 @@ alias_get_final_command (struct t_alias *alias)
         weechat_printf (NULL,
                         _("%s%s: error, circular reference when calling "
                           "alias \"%s\""),
-                        weechat_prefix ("error"), "Alias",
+                        weechat_prefix ("error"), "alias",
                         alias->name);
         return NULL;
     }
@@ -434,7 +434,7 @@ alias_config_read_line (struct t_config_file *config_file, char *option_name,
         {
             weechat_printf (NULL,
                             "%s%s: error creating alias \"%s\" => \"%s\"",
-                            weechat_prefix ("error"), "Alias",
+                            weechat_prefix ("error"), "alias",
                             option_name, value);
         }
     }
@@ -556,12 +556,12 @@ alias_config_reload_signal_cb (void *data, char *signal, char *type_data,
     {
         weechat_printf (NULL,
                         _("%s%s: configuration file reloaded"),
-                        weechat_prefix ("info"), "Alias");
+                        weechat_prefix ("info"), "alias");
         return WEECHAT_RC_OK;
     }
     weechat_printf (NULL,
                     _("%s%s: failed to reload configuration file"),
-                    weechat_prefix ("error"), "Alias");
+                    weechat_prefix ("error"), "alias");
     return WEECHAT_RC_ERROR;
 }
 
@@ -601,7 +601,7 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                 weechat_printf (NULL,
                                 _("%s%s: error creating alias \"%s\" "
                                   "=> \"%s\""),
-                                weechat_prefix ("error"), "Alias",
+                                weechat_prefix ("error"), "alias",
                                 alias_name, argv_eol[2]);
                 return WEECHAT_RC_ERROR;
             }
@@ -728,7 +728,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     {
         weechat_printf (NULL,
                         "%s%s: error creating configuration file \"%s\"",
-                        weechat_prefix("error"), "Alias",
+                        weechat_prefix("error"), "alias",
                         ALIAS_CONFIG_FILENAME);
         return WEECHAT_RC_ERROR;
     }

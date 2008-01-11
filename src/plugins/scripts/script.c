@@ -22,6 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <dirent.h>
@@ -30,6 +31,73 @@
 #include "script.h"
 #include "script-callback.h"
 
+
+#define SCRIPT_OPTION_CHECK_LICENSE "check_license"
+
+int script_option_check_license = 0;
+
+
+/*
+ * script_config_read: read config options
+ */
+
+void
+script_config_read (struct t_weechat_plugin *weechat_plugin)
+{
+    char *string;
+    
+    weechat_printf (NULL, "script_config_read");
+    
+    string = weechat_config_get_plugin (SCRIPT_OPTION_CHECK_LICENSE);
+    if (!string)
+    {
+        weechat_config_set_plugin (SCRIPT_OPTION_CHECK_LICENSE, "on");
+        string = weechat_config_get_plugin (SCRIPT_OPTION_CHECK_LICENSE);
+    }
+    if (string && (weechat_config_string_to_boolean (string) > 0))
+        script_option_check_license = 1;
+    else
+        script_option_check_license = 0;
+}
+
+/*
+ * script_config_cb: callback called when config option is changed
+ */
+
+int
+script_config_cb (void *data, char *type, char *option, char *value)
+{
+    (void) type;
+    (void) option;
+    (void) value;
+    
+    script_config_read (data);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * script_init: initialize script
+ */
+
+void
+script_init (struct t_weechat_plugin *weechat_plugin)
+{
+    char *option;
+    int length;
+    
+    script_config_read (weechat_plugin);
+    
+    length = strlen (weechat_plugin->name) + 32;
+    option= (char *)malloc (length);
+    if (option)
+    {
+        snprintf (option, length - 1, "%s.%s",
+                  weechat_plugin->name, SCRIPT_OPTION_CHECK_LICENSE);
+        weechat_hook_config ("plugin", option,
+                             &script_config_cb, (void *)weechat_plugin);
+    }
+}
 
 /*
  * script_pointer_to_string: convert pointer to string for usage
@@ -211,9 +279,8 @@ struct t_plugin_script *
 script_add (struct t_weechat_plugin *weechat_plugin,
             struct t_plugin_script **script_list,
             char *filename,
-            char *name, char *version,
-            char *shutdown_func, char *description,
-            char *charset)
+            char *name, char *author, char *version, char *license,
+            char *shutdown_func, char *description, char *charset)
 {
     struct t_plugin_script *new_script;
     
@@ -226,15 +293,29 @@ script_add (struct t_weechat_plugin *weechat_plugin,
         return NULL;
     }
     
+    if (script_option_check_license
+        && (weechat_strcmp_ignore_chars (weechat_plugin->license, license,
+                                         "0123456789-.,/\\()[]{}", 0) != 0))
+    {
+        weechat_printf (NULL,
+                        _("%s%s: warning, license \"%s\" for script \"%s\" "
+                          "differs from plugin license (\"%s\")"),
+                        weechat_prefix ("error"), weechat_plugin->name,
+                        license, name, weechat_plugin->license);
+    }
+    
     new_script = (struct t_plugin_script *)malloc (sizeof (struct t_plugin_script));
     if (new_script)
     {
         new_script->filename = strdup (filename);
         new_script->interpreter = NULL;
         new_script->name = strdup (name);
+        new_script->author = strdup (author);
         new_script->version = strdup (version);
-        new_script->shutdown_func = strdup (shutdown_func);
+        new_script->license = strdup (license);
         new_script->description = strdup (description);
+        new_script->shutdown_func = (shutdown_func) ?
+            strdup (shutdown_func) : NULL;
         new_script->charset = (charset) ? strdup (charset) : NULL;
         
         new_script->callbacks = NULL;

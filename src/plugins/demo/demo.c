@@ -251,7 +251,7 @@ demo_infolist_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     weechat_printf (NULL,
                     _("%s%s: missing argument for \"%s\" command "
                       "(try /help %s)"),
-                    weechat_prefix ("error"), "Demo",
+                    weechat_prefix ("error"), "demo",
                     "demo_infolist", "demo_infolist");
     
     return WEECHAT_RC_OK;
@@ -279,7 +279,7 @@ demo_info_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         weechat_printf (NULL,
                         _("%s%s: missing argument for \"%s\" command "
                           "(try /help %s)"),
-                        weechat_prefix ("error"), "Demo",
+                        weechat_prefix ("error"), "demo",
                         "demo_info", "demo_info");
     
     return WEECHAT_RC_OK;
