@@ -46,8 +46,6 @@ script_config_read (struct t_weechat_plugin *weechat_plugin)
 {
     char *string;
     
-    weechat_printf (NULL, "script_config_read");
-    
     string = weechat_config_get_plugin (SCRIPT_OPTION_CHECK_LICENSE);
     if (!string)
     {

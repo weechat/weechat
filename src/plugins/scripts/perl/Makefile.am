@@ -22,6 +22,7 @@ lib_LTLIBRARIES = perl.la
 
 perl_la_SOURCES = weechat-perl.c \
                   weechat-perl.h \
-                  weechat-perl-api.c
+                  weechat-perl-api.c \
+                  weechat-perl-api.h
 perl_la_LDFLAGS = -module
 perl_la_LIBADD = ../lib_weechat_plugins_scripts.la $(PERL_LFLAGS)

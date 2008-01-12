@@ -35,6 +35,27 @@
 #include "weechat-perl.h"
 
 
+#define PERL_RETURN_OK XSRETURN_YES
+#define PERL_RETURN_ERROR XSRETURN_NO
+#define PERL_RETURN_EMPTY XSRETURN_EMPTY
+#define PERL_RETURN_STRING(string)              \
+    if (string)                                 \
+    {                                           \
+        XST_mPV (0, string);                    \
+        XSRETURN (1);                           \
+    }                                           \
+    XST_mPV (0, "");                            \
+    XSRETURN (1);
+#define PERL_RETURN_STRING_FREE(string)         \
+    if (string)                                 \
+    {                                           \
+        XST_mPV (0, string);                    \
+        free (string);                          \
+        XSRETURN (1);                           \
+    }                                           \
+    XST_mPV (0, "");                            \
+    XSRETURN (1);
+
 extern void boot_DynaLoader (pTHX_ CV* cv);
 
 
@@ -57,7 +78,7 @@ static XS (XS_weechat_register)
     if (items < 5)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("register");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     name = SvPV (ST (0), PL_na);
@@ -82,7 +103,7 @@ static XS (XS_weechat_register)
                                          "\"%s\" (another script already "
                                          "exists with this name)"),
                         weechat_prefix ("error"), "perl", name);
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     /* register script */
@@ -102,10 +123,10 @@ static XS (XS_weechat_register)
     }
     else
     {
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -122,19 +143,19 @@ static XS (XS_weechat_charset_set)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("charset_set");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 1)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("charset_set");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     script_api_charset_set (perl_current_script,
-                            SvPV (ST (0), PL_na));
+                            SvPV (ST (0), PL_na)); /* charset */
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -143,7 +164,7 @@ static XS (XS_weechat_charset_set)
 
 static XS (XS_weechat_iconv_to_internal)
 {
-    char *charset, *string, *result;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -152,46 +173,28 @@ static XS (XS_weechat_iconv_to_internal)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("iconv_to_internal");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
-    if (items < 1)
+    if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("iconv_to_internal");
-        XSRETURN_EMPTY;
-    }
-
-    if (items > 1)
-    {
-        charset = SvPV (ST (0), PL_na);
-        string = SvPV (ST (1), PL_na);
-    }
-    else
-    {
-        charset = (perl_current_script->charset) ?
-            perl_current_script->charset : weechat_perl_plugin->charset;
-        string = SvPV (ST (0), PL_na);
+        PERL_RETURN_EMPTY;
     }
     
-    result = weechat_iconv_to_internal (charset, string);
-    if (result)
-    {
-        XST_mPV (0, result);
-        free (result);
-        XSRETURN (1);
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
+    result = weechat_iconv_to_internal (SvPV (ST (0), PL_na), /* charset */
+                                        SvPV (ST (1), PL_na)); /* string */
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
- * weechat::iconv_from_internal: convert string from WeeChat inernal to other
+ * weechat::iconv_from_internal: convert string from WeeChat inernal charset
+ *                               to another one
  */
 
 static XS (XS_weechat_iconv_from_internal)
 {
-    char *charset, *string, *result;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -200,28 +203,18 @@ static XS (XS_weechat_iconv_from_internal)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("iconv_from_internal");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("iconv_from_internal");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
-    charset = SvPV (ST (0), PL_na);
-    string = SvPV (ST (1), PL_na);
-    
-    result = weechat_iconv_from_internal (charset, string);
-    if (result)
-    {
-        XST_mPV (0, result);
-        free (result);
-        XSRETURN (1);
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
+    result = weechat_iconv_from_internal (SvPV (ST (0), PL_na), /* charset */
+                                          SvPV (ST (1), PL_na)); /* string */
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -238,18 +231,20 @@ static XS (XS_weechat_mkdir_home)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir_home");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir_home");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
-    weechat_mkdir_home (SvPV (ST (0), PL_na), /* directory */
-                        SvIV (ST (1))); /* mode */
-    XSRETURN_YES;
+    if (weechat_mkdir_home (SvPV (ST (0), PL_na), /* directory */
+                            SvIV (ST (1)))) /* mode */
+        PERL_RETURN_OK;
+    
+    PERL_RETURN_ERROR;
 }
 
 /*
@@ -266,19 +261,20 @@ static XS (XS_weechat_mkdir)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
-    weechat_mkdir (SvPV (ST (0), PL_na), /* directory */
-                   SvIV (ST (1))); /* mode */
+    if (weechat_mkdir (SvPV (ST (0), PL_na), /* directory */
+                       SvIV (ST (1)))) /* mode */
+        PERL_RETURN_OK;
     
-    XSRETURN_YES;
+    PERL_RETURN_ERROR;
 }
 
 /*
@@ -296,24 +292,17 @@ static XS (XS_weechat_prefix)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("prefix");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("prefix");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     result = weechat_prefix (SvPV (ST (0), PL_na));
-    if (result)
-    {
-        XST_mPV (0, result);
-        XSRETURN (1);
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
+    PERL_RETURN_STRING(result);
 }
 
 /*
@@ -331,24 +320,17 @@ static XS (XS_weechat_color)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("color");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("color");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     result = weechat_color (SvPV (ST (0), PL_na));
-    if (result)
-    {
-        XST_mPV (0, result);
-        XSRETURN (1);
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
+    PERL_RETURN_STRING(result);
 }
 
 /*
@@ -357,7 +339,6 @@ static XS (XS_weechat_color)
 
 static XS (XS_weechat_print)
 {
-    char *buffer, *message;
     dXSARGS;
     
     /* make C compiler happy */
@@ -366,31 +347,20 @@ static XS (XS_weechat_print)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
-    if (items < 1)
+    if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print");
-        XSRETURN_NO;
-    }
-
-    if (items > 1)
-    {
-        buffer = SvPV (ST (0), PL_na);
-        message = SvPV (ST (1), PL_na);
-    }
-    else
-    {
-        buffer = NULL;
-        message = SvPV (ST (0), PL_na);
+        PERL_RETURN_ERROR;
     }
     
     script_api_printf (weechat_perl_plugin, perl_current_script,
-                       script_string_to_pointer (buffer),
-                       "%s", message);
+                       script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
+                       "%s", SvPV (ST (1), PL_na)); /* message */
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -407,13 +377,13 @@ static XS (XS_weechat_infobar_print)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     script_api_infobar_printf (weechat_perl_plugin, perl_current_script,
@@ -422,7 +392,7 @@ static XS (XS_weechat_infobar_print)
                                "%s",
                                SvPV (ST (1), PL_na)); /* message */
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -439,16 +409,16 @@ static XS (XS_weechat_infobar_remove)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_remove");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     weechat_infobar_remove ((items >= 1) ? SvIV (ST (0)) : 0);
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
- * weechat::log_print: log message in server/channel (current or specified ones)
+ * weechat::log_print: print message in WeeChat log file
  */
 
 static XS (XS_weechat_log_print)
@@ -461,19 +431,19 @@ static XS (XS_weechat_log_print)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("log_print");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
 
     if (items < 1)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("log_print");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     script_api_log_printf (weechat_perl_plugin, perl_current_script,
-                           "%s", SvPV (ST (0), PL_na));
+                           "%s", SvPV (ST (0), PL_na)); /* message */
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -485,7 +455,7 @@ weechat_perl_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
                                   int argc, char **argv, char **argv_eol)
 {
     struct t_script_callback *script_callback;
-    char *perl_argv[3];
+    char *perl_argv[3], empty_arg[1] = { '\0' };
     int *r, ret;
     
     /* make C compiler happy */
@@ -494,15 +464,9 @@ weechat_perl_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
     script_callback = (struct t_script_callback *)data;
     
     perl_argv[0] = script_pointer_to_string (buffer);
-    if (argc > 1)
-    {
-        perl_argv[1] = argv_eol[1];
-        perl_argv[2] = NULL;
-    }
-    else
-    {
-        perl_argv[1] = NULL;
-    }
+    perl_argv[1] = (argc > 1) ? argv_eol[1] : empty_arg;
+    perl_argv[2] = NULL;
+    
     r = (int *) weechat_perl_exec (script_callback->script,
                                    WEECHAT_SCRIPT_EXEC_INT,
                                    script_callback->function,
@@ -526,6 +490,8 @@ weechat_perl_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
 
 static XS (XS_weechat_hook_command)
 {
+    struct t_hook *new_hook;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -534,27 +500,27 @@ static XS (XS_weechat_hook_command)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_command");
-	XSRETURN_NO;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 6)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_command");
-        XSRETURN_NO;
+        PERL_RETURN_EMPTY;
     }
     
-    if (script_api_hook_command (weechat_perl_plugin,
-                                 perl_current_script,
-                                 SvPV (ST (0), PL_na), /* command */
-                                 SvPV (ST (1), PL_na), /* description */
-                                 SvPV (ST (2), PL_na), /* args */
-                                 SvPV (ST (3), PL_na), /* args_description */
-                                 SvPV (ST (4), PL_na), /* completion */
-                                 &weechat_perl_api_hook_command_cb,
-                                 SvPV (ST (5), PL_na))) /* perl function */
-        XSRETURN_YES;
+    new_hook = script_api_hook_command (weechat_perl_plugin,
+                                        perl_current_script,
+                                        SvPV (ST (0), PL_na), /* command */
+                                        SvPV (ST (1), PL_na), /* description */
+                                        SvPV (ST (2), PL_na), /* args */
+                                        SvPV (ST (3), PL_na), /* args_description */
+                                        SvPV (ST (4), PL_na), /* completion */
+                                        &weechat_perl_api_hook_command_cb,
+                                        SvPV (ST (5), PL_na)); /* perl function */
     
-    XSRETURN_NO;
+    result = script_pointer_to_string (new_hook);
+    PERL_RETURN_STRING_FREE(result);;
 }
 
 /*
@@ -591,6 +557,8 @@ weechat_perl_api_hook_timer_cb (void *data)
 
 static XS (XS_weechat_hook_timer)
 {
+    struct t_hook *new_hook;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -599,25 +567,25 @@ static XS (XS_weechat_hook_timer)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_timer");
-	XSRETURN_NO;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 4)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_timer");
-        XSRETURN_NO;
+        PERL_RETURN_EMPTY;
     }
     
-    if (script_api_hook_timer (weechat_perl_plugin,
-                               perl_current_script,
-                               SvIV (ST (0)), /* interval */
-                               SvIV (ST (1)), /* align_second */
-                               SvIV (ST (2)), /* max_calls */
-                               &weechat_perl_api_hook_timer_cb,
-                               SvPV (ST (3), PL_na))) /* perl function */
-        XSRETURN_YES;
+    new_hook = script_api_hook_timer (weechat_perl_plugin,
+                                      perl_current_script,
+                                      SvIV (ST (0)), /* interval */
+                                      SvIV (ST (1)), /* align_second */
+                                      SvIV (ST (2)), /* max_calls */
+                                      &weechat_perl_api_hook_timer_cb,
+                                      SvPV (ST (3), PL_na)); /* perl function */
     
-    XSRETURN_NO;
+    result = script_pointer_to_string (new_hook);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -655,6 +623,8 @@ weechat_perl_api_hook_fd_cb (void *data)
 
 static XS (XS_weechat_hook_fd)
 {
+    struct t_hook *new_hook;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -663,26 +633,26 @@ static XS (XS_weechat_hook_fd)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_fd");
-	XSRETURN_NO;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 5)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_fd");
-        XSRETURN_NO;
+        PERL_RETURN_EMPTY;
     }
     
-    if (script_api_hook_fd (weechat_perl_plugin,
-                            perl_current_script,
-                            SvIV (ST (0)), /* fd */
-                            SvIV (ST (1)), /* read */
-                            SvIV (ST (2)), /* write */
-                            SvIV (ST (3)), /* exception */
-                            &weechat_perl_api_hook_fd_cb,
-                            SvPV (ST (4), PL_na))) /* perl function */
-        XSRETURN_YES;
+    new_hook = script_api_hook_fd (weechat_perl_plugin,
+                                   perl_current_script,
+                                   SvIV (ST (0)), /* fd */
+                                   SvIV (ST (1)), /* read */
+                                   SvIV (ST (2)), /* write */
+                                   SvIV (ST (3)), /* exception */
+                                   &weechat_perl_api_hook_fd_cb,
+                                   SvPV (ST (4), PL_na)); /* perl function */
     
-    XSRETURN_NO;
+    result = script_pointer_to_string (new_hook);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -731,6 +701,8 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
 
 static XS (XS_weechat_hook_print)
 {
+    struct t_hook *new_hook;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -739,25 +711,25 @@ static XS (XS_weechat_hook_print)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_print");
-	XSRETURN_NO;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 4)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_print");
-        XSRETURN_NO;
+        PERL_RETURN_EMPTY;
     }
     
-    if (script_api_hook_print (weechat_perl_plugin,
-                               perl_current_script,
-                               script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
-                               SvPV (ST (1), PL_na), /* message */
-                               SvIV (ST (2)), /* strip_colors */
-                               &weechat_perl_api_hook_print_cb,
-                               SvPV (ST (3), PL_na))) /* perl function */
-        XSRETURN_YES;
+    new_hook = script_api_hook_print (weechat_perl_plugin,
+                                      perl_current_script,
+                                      script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
+                                      SvPV (ST (1), PL_na), /* message */
+                                      SvIV (ST (2)), /* strip_colors */
+                                      &weechat_perl_api_hook_print_cb,
+                                      SvPV (ST (3), PL_na)); /* perl function */
     
-    XSRETURN_NO;
+    result = script_pointer_to_string (new_hook);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -819,6 +791,8 @@ weechat_perl_api_hook_signal_cb (void *data, char *signal, char *type_data,
 
 static XS (XS_weechat_hook_signal)
 {
+    struct t_hook *new_hook;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -827,23 +801,23 @@ static XS (XS_weechat_hook_signal)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_signal");
-	XSRETURN_NO;
+	PERL_RETURN_ERROR;
     }
     
     if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_signal");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
-    if (script_api_hook_signal (weechat_perl_plugin,
-                                perl_current_script,
-                                SvPV (ST (0), PL_na), /* signal */
-                                &weechat_perl_api_hook_signal_cb,
-                                SvPV (ST (1), PL_na))) /* perl function */
-        XSRETURN_YES;
+    new_hook = script_api_hook_signal (weechat_perl_plugin,
+                                       perl_current_script,
+                                       SvPV (ST (0), PL_na), /* signal */
+                                       &weechat_perl_api_hook_signal_cb,
+                                       SvPV (ST (1), PL_na)); /* perl function */
     
-    XSRETURN_NO;
+    result = script_pointer_to_string (new_hook);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -852,6 +826,8 @@ static XS (XS_weechat_hook_signal)
 
 static XS (XS_weechat_hook_signal_send)
 {
+    char *type_data;
+    int int_value;
     dXSARGS;
     
     /* make C compiler happy */
@@ -860,20 +836,40 @@ static XS (XS_weechat_hook_signal_send)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_signal_send");
-	XSRETURN_NO;
+	PERL_RETURN_ERROR;
     }
     
     if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_signal_send");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
-    weechat_hook_signal_send (SvPV (ST (0), PL_na), /* signal */
-                              SvPV (ST (1), PL_na), /* type_data */
-                              SvPV (ST (2), PL_na)); /* signal_data */
+    type_data = SvPV (ST (1), PL_na);
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        weechat_hook_signal_send (SvPV (ST (0), PL_na), /* signal */
+                                  type_data,
+                                  SvPV (ST (2), PL_na)); /* signal_data */
+        PERL_RETURN_OK;
+    }
+    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
+    {
+        int_value = SvIV(ST (2));
+        weechat_hook_signal_send (SvPV (ST (0), PL_na), /* signal */
+                                  type_data,
+                                  &int_value); /* signal_data */
+        PERL_RETURN_OK;
+    }
+    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
+    {
+        weechat_hook_signal_send (SvPV (ST (0), PL_na), /* signal */
+                                  type_data,
+                                  script_string_to_pointer (SvPV (ST (2), PL_na))); /* signal_data */
+        PERL_RETURN_OK;
+    }
     
-    XSRETURN_YES;
+    PERL_RETURN_ERROR;
 }
 
 /*
@@ -916,6 +912,8 @@ weechat_perl_api_hook_config_cb (void *data, char *type, char *option,
 
 static XS (XS_weechat_hook_config)
 {
+    struct t_hook *new_hook;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -924,24 +922,24 @@ static XS (XS_weechat_hook_config)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_config");
-	XSRETURN_NO;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_config");
-        XSRETURN_NO;
+        PERL_RETURN_EMPTY;
     }
     
-    if (script_api_hook_config (weechat_perl_plugin,
-                                perl_current_script,
-                                SvPV (ST (0), PL_na), /* type */
-                                SvPV (ST (1), PL_na), /* option */
-                                &weechat_perl_api_hook_config_cb,
-                                SvPV (ST (2), PL_na))) /* perl function */
-        XSRETURN_YES;
+    new_hook = script_api_hook_config (weechat_perl_plugin,
+                                       perl_current_script,
+                                       SvPV (ST (0), PL_na), /* type */
+                                       SvPV (ST (1), PL_na), /* option */
+                                       &weechat_perl_api_hook_config_cb,
+                                       SvPV (ST (2), PL_na)); /* perl function */
     
-    XSRETURN_NO;
+    result = script_pointer_to_string (new_hook);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -989,6 +987,8 @@ weechat_perl_api_hook_completion_cb (void *data, char *completion,
 
 static XS (XS_weechat_hook_completion)
 {
+    struct t_hook *new_hook;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -997,23 +997,23 @@ static XS (XS_weechat_hook_completion)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_completion");
-	XSRETURN_NO;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion");
-        XSRETURN_NO;
+        PERL_RETURN_EMPTY;
     }
     
-    if (script_api_hook_completion (weechat_perl_plugin,
-                                    perl_current_script,
-                                    SvPV (ST (0), PL_na), /* completion */
-                                    &weechat_perl_api_hook_completion_cb,
-                                    SvPV (ST (1), PL_na))) /* perl function */
-        XSRETURN_YES;
+    new_hook = script_api_hook_completion (weechat_perl_plugin,
+                                           perl_current_script,
+                                           SvPV (ST (0), PL_na), /* completion */
+                                           &weechat_perl_api_hook_completion_cb,
+                                           SvPV (ST (1), PL_na)); /* perl function */
     
-    XSRETURN_NO;
+    result = script_pointer_to_string (new_hook);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -1030,19 +1030,20 @@ static XS (XS_weechat_unhook)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("unhook");
-	XSRETURN_NO;
+	PERL_RETURN_ERROR;
     }
     
     if (items < 1)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("unhook");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
-    script_api_unhook (weechat_perl_plugin, perl_current_script,
-                       script_string_to_pointer (SvPV (ST (0), PL_na)));
+    if (script_api_unhook (weechat_perl_plugin, perl_current_script,
+                           script_string_to_pointer (SvPV (ST (0), PL_na))))
+        PERL_RETURN_OK;
     
-    XSRETURN_YES;
+    PERL_RETURN_ERROR;
 }
 
 /*
@@ -1060,12 +1061,12 @@ static XS (XS_weechat_unhook_all)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("unhook_all");
-	XSRETURN_NO;
+	PERL_RETURN_ERROR;
     }
     
     script_api_unhook_all (weechat_perl_plugin, perl_current_script);
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -1119,13 +1120,13 @@ static XS (XS_weechat_buffer_new)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_new");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_new");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     new_buffer = script_api_buffer_new (weechat_perl_plugin,
@@ -1136,15 +1137,7 @@ static XS (XS_weechat_buffer_new)
                                         SvPV (ST (2), PL_na)); /* perl function */
     
     result = script_pointer_to_string (new_buffer);
-    if (result)
-    {
-        XST_mPV (0, result);
-        free (result);
-        XSRETURN (1);
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -1163,28 +1156,20 @@ static XS (XS_weechat_buffer_search)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_search");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_search");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     ptr_buffer = weechat_buffer_search (SvPV (ST (0), PL_na), /* category */
                                         SvPV (ST (1), PL_na)); /* name */
     
     result = script_pointer_to_string (ptr_buffer);
-    if (result)
-    {
-        XST_mPV (0, result);
-        free (result);
-        XSRETURN (1);
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -1201,13 +1186,13 @@ static XS (XS_weechat_buffer_close)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_close");
-	XSRETURN_NO;
+	PERL_RETURN_ERROR;
     }
     
     if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_close");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     script_api_buffer_close (weechat_perl_plugin,
@@ -1215,7 +1200,7 @@ static XS (XS_weechat_buffer_close)
                              script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
                              SvIV (ST (1))); /* switch_to_another */
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -1233,25 +1218,18 @@ static XS (XS_weechat_buffer_get)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     value = weechat_buffer_get (script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
                                 SvPV (ST (1), PL_na)); /* property */
-    if (value)
-    {
-        XST_mPV (0, value);
-        XSRETURN (1);
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
+    PERL_RETURN_STRING(value);
 }
 
 /*
@@ -1268,20 +1246,20 @@ static XS (XS_weechat_buffer_set)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_set");
-	XSRETURN_NO;
+	PERL_RETURN_ERROR;
     }
     
     if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_set");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     weechat_buffer_set (script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
                         SvPV (ST (1), PL_na), /* property */
                         SvPV (ST (2), PL_na)); /* value */
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -1300,13 +1278,13 @@ static XS (XS_weechat_nicklist_add_group)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_add_group");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 5)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_add_group");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     new_group = weechat_nicklist_add_group (script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
@@ -1316,15 +1294,7 @@ static XS (XS_weechat_nicklist_add_group)
                                             SvIV (ST (4))); /* visible */
     
     result = script_pointer_to_string (new_group);
-    if (result)
-    {
-        XST_mPV (0, result);
-        free (result);
-        XSRETURN (1);
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -1343,13 +1313,13 @@ static XS (XS_weechat_nicklist_search_group)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_search_group");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_search_group");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     ptr_group = weechat_nicklist_search_group (script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
@@ -1357,15 +1327,7 @@ static XS (XS_weechat_nicklist_search_group)
                                                SvPV (ST (2), PL_na)); /* name */
     
     result = script_pointer_to_string (ptr_group);
-    if (result)
-    {
-        XST_mPV (0, result);
-        free (result);
-        XSRETURN (1);
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -1384,20 +1346,21 @@ static XS (XS_weechat_nicklist_add_nick)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_add_nick");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 7)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_add_nick");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
-
+    
     str_prefix = SvPV(ST (4), PL_na);
     if (str_prefix && str_prefix[0])
         prefix = str_prefix[0];
     else
         prefix = ' ';
+    
     new_nick = weechat_nicklist_add_nick (script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
                                           script_string_to_pointer (SvPV (ST (1), PL_na)), /* group */
                                           SvPV (ST (2), PL_na), /* name */
@@ -1407,15 +1370,7 @@ static XS (XS_weechat_nicklist_add_nick)
                                           SvIV (ST (6))); /* visible */
     
     result = script_pointer_to_string (new_nick);
-    if (result)
-    {
-        XST_mPV (0, result);
-        free (result);
-        XSRETURN (1);
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -1434,13 +1389,13 @@ static XS (XS_weechat_nicklist_search_nick)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_search_nick");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_search_nick");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     ptr_nick = weechat_nicklist_search_nick (script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
@@ -1448,15 +1403,7 @@ static XS (XS_weechat_nicklist_search_nick)
                                              SvPV (ST (2), PL_na)); /* name */
     
     result = script_pointer_to_string (ptr_nick);
-    if (result)
-    {
-        XST_mPV (0, result);
-        free (result);
-        XSRETURN (1);
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -1473,19 +1420,19 @@ static XS (XS_weechat_nicklist_remove_group)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_group");
-	XSRETURN_NO;
+	PERL_RETURN_ERROR;
     }
     
     if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_remove_group");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     weechat_nicklist_remove_group (script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
                                    script_string_to_pointer (SvPV (ST (1), PL_na))); /* group */
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -1502,19 +1449,19 @@ static XS (XS_weechat_nicklist_remove_nick)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_nick");
-	XSRETURN_NO;
+	PERL_RETURN_ERROR;
     }
     
     if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_remove_nick");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     weechat_nicklist_remove_nick (script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
                                   script_string_to_pointer (SvPV (ST (1), PL_na))); /* nick */
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -1531,18 +1478,18 @@ static XS (XS_weechat_nicklist_remove_all)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("nicklist_remove_all");
-	XSRETURN_NO;
+	PERL_RETURN_ERROR;
     }
     
     if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("nicklist_remove_all");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     weechat_nicklist_remove_all (script_string_to_pointer (SvPV (ST (0), PL_na))); /* buffer */
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -1551,7 +1498,6 @@ static XS (XS_weechat_nicklist_remove_all)
 
 static XS (XS_weechat_command)
 {
-    char *buffer, *command;
     dXSARGS;
     
     /* make C compiler happy */
@@ -1560,31 +1506,20 @@ static XS (XS_weechat_command)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("command");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
-    if (items < 1)
+    if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("command");
-        XSRETURN_NO;
-    }
-    
-    if (items > 1)
-    {
-        buffer = SvPV (ST (0), PL_na);
-        command = SvPV (ST (1), PL_na);
-    }
-    else
-    {
-        buffer = NULL;
-        command = SvPV (ST (0), PL_na);
+        PERL_RETURN_ERROR;
     }
     
     script_api_command (weechat_perl_plugin, perl_current_script,
-                        script_string_to_pointer (buffer),
-                        command);
+                        script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
+                        SvPV (ST (1), PL_na)); /* command */
     
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -1602,24 +1537,17 @@ static XS (XS_weechat_info_get)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("info_get");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("info_get");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     value = weechat_info_get (SvPV (ST (0), PL_na));
-    if (value)
-    {
-        XST_mPV (0, value);
-        XSRETURN (1);
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
+    PERL_RETURN_STRING(value);
 }
 
 /*
@@ -1646,13 +1574,13 @@ static XS (XS_weechat_get_dcc_info)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: unable to get DCC info, "
                                    "script not initialized");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
 
     dcc_info = weechat_perl_plugin->get_dcc_info (weechat_perl_plugin);
     count = 0;
     if (!dcc_info)
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     
     for (ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
     {
@@ -1707,13 +1635,13 @@ static XS (XS_weechat_config_get_weechat)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get_weechat");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get_weechat");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     option = SvPV (ST (0), PL_na);
@@ -1753,7 +1681,7 @@ static XS (XS_weechat_set_config)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: unable to set config option, "
                                    "script not initialized");
-	XSRETURN_NO;
+	PERL_RETURN_ERROR;
     }
     
     if (items < 2)
@@ -1761,7 +1689,7 @@ static XS (XS_weechat_set_config)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: wrong parameters for "
                                    "\"set_config\" function");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     option = SvPV (ST (0), PL_na);
@@ -1770,10 +1698,10 @@ static XS (XS_weechat_set_config)
     if (option && value)
     {
         if (weechat_perl_plugin->set_config (weechat_perl_plugin, option, value))
-            XSRETURN_YES;
+            PERL_RETURN_OK;
     }
     
-    XSRETURN_NO;
+    PERL_RETURN_ERROR;
 }
 */
 
@@ -1795,7 +1723,7 @@ static XS (XS_weechat_get_plugin_config)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: unable to get plugin config option, "
                                    "script not initialized");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     if (items < 1)
@@ -1803,7 +1731,7 @@ static XS (XS_weechat_get_plugin_config)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: wrong parameters for "
                                    "\"get_plugin_config\" function");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     option = SvPV (ST (0), PL_na);
@@ -1845,7 +1773,7 @@ static XS (XS_weechat_set_plugin_config)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: unable to set plugin config option, "
                                    "script not initialized");
-	XSRETURN_NO;
+	PERL_RETURN_ERROR;
     }
     
     if (items < 2)
@@ -1853,7 +1781,7 @@ static XS (XS_weechat_set_plugin_config)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: wrong parameters for "
                                    "\"set_plugin_config\" function");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     option = SvPV (ST (0), PL_na);
@@ -1864,10 +1792,10 @@ static XS (XS_weechat_set_plugin_config)
         if (weechat_script_set_plugin_config (weechat_perl_plugin,
                                               perl_current_script,
                                               option, value))
-            XSRETURN_YES;
+            PERL_RETURN_OK;
     }
     
-    XSRETURN_NO;
+    PERL_RETURN_ERROR;
 }
 */
 
@@ -1892,20 +1820,20 @@ static XS (XS_weechat_get_server_info)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: unable to get server info, "
                                    "script not initialized");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     server_info = weechat_perl_plugin->get_server_info (weechat_perl_plugin);
     if (!server_info)
     {
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }    
     
     server_hash = (HV *) sv_2mortal((SV *) newHV());
     if (!server_hash)
     {
         weechat_perl_plugin->free_server_info (weechat_perl_plugin, server_info);
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     for (ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_server)
@@ -1972,7 +1900,7 @@ static XS (XS_weechat_get_channel_info)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: unable to get channel info, "
                                    "script not initialized");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
 
     if (items != 1)
@@ -1980,24 +1908,24 @@ static XS (XS_weechat_get_channel_info)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: wrong parameters for "
                                    "\"get_channel_info\" function");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     server = SvPV (ST (0), PL_na);
     if (!server)
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
 
     channel_info = weechat_perl_plugin->get_channel_info (weechat_perl_plugin, server);
     if (!channel_info)
     {
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     channel_hash = (HV *) sv_2mortal((SV *) newHV());
     if (!channel_hash)
     {
         weechat_perl_plugin->free_channel_info (weechat_perl_plugin, channel_info);
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     for (ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_channel)
@@ -2042,7 +1970,7 @@ static XS (XS_weechat_get_nick_info)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: unable to get nick info, "
                                    "script not initialized");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
 
     if (items != 2)
@@ -2050,25 +1978,25 @@ static XS (XS_weechat_get_nick_info)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: wrong parameters for "
                                    "\"get_nick_info\" function");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     server = SvPV (ST (0), PL_na);
     channel = SvPV (ST (1), PL_na);
     if (!server || !channel)
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     
     nick_info = weechat_perl_plugin->get_nick_info (weechat_perl_plugin, server, channel);
     if (!nick_info)
     {
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     nick_hash = (HV *) sv_2mortal((SV *) newHV());
     if (!nick_hash)
     {
         weechat_perl_plugin->free_nick_info (weechat_perl_plugin, nick_info);
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     for (ptr_nick = nick_info; ptr_nick; ptr_nick = ptr_nick->next_nick)
@@ -2108,7 +2036,7 @@ static XS (XS_weechat_input_color)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: unable to colorize input, "
                                    "script not initialized");
-	XSRETURN_NO;
+	PERL_RETURN_ERROR;
     }
 
     if (items < 3)
@@ -2116,7 +2044,7 @@ static XS (XS_weechat_input_color)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: wrong parameters for "
                                    "\"color_input\" function");
-        XSRETURN_NO;
+        PERL_RETURN_ERROR;
     }
     
     color = SvIV (ST (0));
@@ -2125,7 +2053,7 @@ static XS (XS_weechat_input_color)
     
     weechat_perl_plugin->input_color (weechat_perl_plugin, color, start, length);
 
-    XSRETURN_YES;
+    PERL_RETURN_OK;
 }
 */
 
@@ -2194,13 +2122,13 @@ static XS (XS_weechat_get_window_info)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: unable to get window info, "
                                    "script not initialized");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     window_info = weechat_perl_plugin->get_window_info (weechat_perl_plugin);
     count = 0;
     if (!window_info)
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     
     for (ptr_win = window_info; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -2244,20 +2172,20 @@ static XS (XS_weechat_get_buffer_info)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: unable to get buffer info, "
                                    "script not initialized");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     buffer_info = weechat_perl_plugin->get_buffer_info (weechat_perl_plugin);
     if (!buffer_info)
     {
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }    
     
     buffer_hash = (HV *) sv_2mortal((SV *) newHV());
     if (!buffer_hash)
     {
         weechat_perl_plugin->free_buffer_info (weechat_perl_plugin, buffer_info);
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     for (ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
@@ -2309,7 +2237,7 @@ static XS (XS_weechat_get_buffer_data)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: unable to get buffer data, "
                                    "script not initialized");
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     }
     
     if (items != 2)
@@ -2317,7 +2245,7 @@ static XS (XS_weechat_get_buffer_data)
         weechat_perl_plugin->print_server (weechat_perl_plugin,
                                    "Perl error: wrong parameters for "
                                    "\"get_buffer_data\" function");
-        XSRETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     channel = NULL;
@@ -2333,7 +2261,7 @@ static XS (XS_weechat_get_buffer_data)
     buffer_data = weechat_perl_plugin->get_buffer_data (weechat_perl_plugin, server, channel);
     count = 0;
     if (!buffer_data)
-	XSRETURN_EMPTY;
+	PERL_RETURN_EMPTY;
     
     for (ptr_data = buffer_data; ptr_data; ptr_data = ptr_data->next_line)
     {
@@ -2421,8 +2349,8 @@ weechat_perl_xs_init (pTHX)
 
     /* interface constants */
     stash = gv_stashpv ("weechat", TRUE);
-    newCONSTSUB (stash, "weechat::WEECHAT_RC_ERROR", newSViv (WEECHAT_RC_ERROR));
     newCONSTSUB (stash, "weechat::WEECHAT_RC_OK", newSViv (WEECHAT_RC_OK));
+    newCONSTSUB (stash, "weechat::WEECHAT_RC_ERROR", newSViv (WEECHAT_RC_ERROR));
     newCONSTSUB (stash, "weechat::WEECHAT_RC_OK_IGNORE_WEECHAT", newSViv (WEECHAT_RC_OK_IGNORE_WEECHAT));
     newCONSTSUB (stash, "weechat::WEECHAT_RC_OK_IGNORE_PLUGINS", newSViv (WEECHAT_RC_OK_IGNORE_PLUGINS));
     newCONSTSUB (stash, "weechat::WEECHAT_RC_OK_IGNORE_ALL", newSViv (WEECHAT_RC_OK_IGNORE_ALL));

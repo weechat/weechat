@@ -20,6 +20,9 @@ libdir = ${weechat_libdir}/plugins
 
 lib_LTLIBRARIES = python.la
 
-python_la_SOURCES = python.c
+python_la_SOURCES = weechat-python.c \
+                    weechat-python.h \
+                    weechat-python-api.c \
+                    weechat-python-api.h
 python_la_LDFLAGS = -module
 python_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(PYTHON_LFLAGS)

@@ -84,6 +84,7 @@ plugin_api_ngettext (char *single, char *plural, int count)
 
 /*
  * plugin_api_mkdir_home: create a directory in WeeChat home
+ *                        return 1 if ok, 0 if error
  */
 
 int
@@ -119,6 +120,7 @@ plugin_api_mkdir_home (char *directory, int mode)
 
 /*
  * plugin_api_mkdir: create a directory
+ *                   return 1 if ok, 0 if error
  */
 
 int

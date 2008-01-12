@@ -21,7 +21,6 @@
 #define __WEECHAT_PERL_H 1
 
 #include "../../weechat-plugin.h"
-#include "../script.h"
 
 #define weechat_plugin weechat_perl_plugin
 

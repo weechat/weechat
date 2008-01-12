@@ -17,9 +17,9 @@
  */
 
 
-#ifndef __WEECHAT_PERL_API_H
-#define __WEECHAT_PERL_API_H 1
+#ifndef __WEECHAT_PYTHON_API_H
+#define __WEECHAT_PYTHON_API_H 1
 
-extern void weechat_perl_xs_init (pTHX);
+extern PyMethodDef weechat_python_funcs[];
 
-#endif /* weechat-perl.h */
+#endif /* weechat-python.h */

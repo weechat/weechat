@@ -230,7 +230,7 @@ weechat_perl_load (char *filename)
 #endif
     
     weechat_printf (NULL,
-                    weechat_gettext ("%s%s: loading Perl script \"%s\""),
+                    weechat_gettext ("%s%s: loading script \"%s\""),
                     weechat_prefix ("info"), "perl", filename);
     
     if (stat (filename, &buf) != 0)
@@ -476,7 +476,9 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
     {
         /* list registered Perl scripts */
         weechat_printf (NULL, "");
-        weechat_printf (NULL, weechat_gettext ("Registered Perl scripts:"));
+        weechat_printf (NULL,
+                        weechat_gettext ("Registered %s scripts:"),
+                        "perl");
         if (perl_scripts)
         {
             for (ptr_script = perl_scripts; ptr_script;
@@ -493,127 +495,128 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
             }
         }
         else
-            weechat_printf (NULL, "  (none)");
+            weechat_printf (NULL, weechat_gettext ("  (none)"));
+
+        /*
+        // List Perl message handlers
+        plugin->print_server (plugin, "");
+        plugin->print_server (plugin, "Perl message handlers:");
+        handler_found = 0;
+        for (ptr_handler = plugin->handlers;
+             ptr_handler; ptr_handler = ptr_handler->next_handler)
+        {
+            if ((ptr_handler->type == PLUGIN_HANDLER_MESSAGE)
+                && (ptr_handler->handler_args))
+            {
+                handler_found = 1;
+                plugin->print_server (plugin, "  IRC(%s) => Perl(%s)",
+                                      ptr_handler->irc_command,
+                                      ptr_handler->handler_args);
+            }
+        }
+        if (!handler_found)
+            plugin->print_server (plugin, "  (none)");
         
-        /* list Perl message handlers */
-        /*plugin->print_server (plugin, "");
-          plugin->print_server (plugin, "Perl message handlers:");
-          handler_found = 0;
-          for (ptr_handler = plugin->handlers;
-          ptr_handler; ptr_handler = ptr_handler->next_handler)
-          {
-          if ((ptr_handler->type == PLUGIN_HANDLER_MESSAGE)
-          && (ptr_handler->handler_args))
-          {
-          handler_found = 1;
-          plugin->print_server (plugin, "  IRC(%s) => Perl(%s)",
-          ptr_handler->irc_command,
-          ptr_handler->handler_args);
-          }
-          }
-          if (!handler_found)
-          plugin->print_server (plugin, "  (none)");
-        */
-        /* list Perl command handlers */
-        /*plugin->print_server (plugin, "");
-          plugin->print_server (plugin, "Perl command handlers:");
-          handler_found = 0;
-          for (ptr_handler = plugin->handlers;
-          ptr_handler; ptr_handler = ptr_handler->next_handler)
-          {
-          if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
-          && (ptr_handler->handler_args))
-          {
-          handler_found = 1;
-          plugin->print_server (plugin, "  /%s => Perl(%s)",
-          ptr_handler->command,
-          ptr_handler->handler_args);
-          }
-          }
-          if (!handler_found)
-          plugin->print_server (plugin, "  (none)");
-        */
-        /* list Perl timer handlers */
-        /*plugin->print_server (plugin, "");
-          plugin->print_server (plugin, "Perl timer handlers:");
-          handler_found = 0;
-          for (ptr_handler = plugin->handlers;
-          ptr_handler; ptr_handler = ptr_handler->next_handler)
-          {
-          if ((ptr_handler->type == PLUGIN_HANDLER_TIMER)
-          && (ptr_handler->handler_args))
-          {
-          handler_found = 1;
-          plugin->print_server (plugin, "  %d seconds => Perl(%s)",
-          ptr_handler->interval,
-          ptr_handler->handler_args);
-          }
-          }
-          if (!handler_found)
-          plugin->print_server (plugin, "  (none)");
-        */
-        /* list Perl keyboard handlers */
-        /*plugin->print_server (plugin, "");
-          plugin->print_server (plugin, "Perl keyboard handlers:");
-          handler_found = 0;
-          for (ptr_handler = plugin->handlers;
-          ptr_handler; ptr_handler = ptr_handler->next_handler)
-          {
-          if ((ptr_handler->type == PLUGIN_HANDLER_KEYBOARD)
-          && (ptr_handler->handler_args))
-          {
-          handler_found = 1;
-          plugin->print_server (plugin, "  Perl(%s)",
-          ptr_handler->handler_args);
-          }
-          }
-          if (!handler_found)
-          plugin->print_server (plugin, "  (none)");
-        */
-        /* list Perl event handlers */
-        /*plugin->print_server (plugin, "");
-          plugin->print_server (plugin, "Perl event handlers:");
-          handler_found = 0;
-          for (ptr_handler = plugin->handlers;
-          ptr_handler; ptr_handler = ptr_handler->next_handler)
-          {
-          if ((ptr_handler->type == PLUGIN_HANDLER_EVENT)
-          && (ptr_handler->handler_args))
-          {
-          handler_found = 1;
-          plugin->print_server (plugin, "  %s => Perl(%s)",
-          ptr_handler->event,
-          ptr_handler->handler_args);
-          }
-          }
-          if (!handler_found)
-          plugin->print_server (plugin, "  (none)");
-        */
-        /* List Perl modifiers */
-        /*plugin->print_server (plugin, "");
-          plugin->print_server (plugin, "Perl modifiers:");
-          modifier_found = 0;
-          for (ptr_modifier = plugin->modifiers;
-          ptr_modifier; ptr_modifier = ptr_modifier->next_modifier)
-          {
-          modifier_found = 1;
-          if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_IN)
-          plugin->print_server (plugin, "  IRC(%s, %s) => Perl(%s)",
-          ptr_modifier->command,
-          PLUGIN_MODIFIER_IRC_IN_STR,
-          ptr_modifier->modifier_args);
-          else if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_USER)
-          plugin->print_server (plugin, "  IRC(%s, %s) => Perl(%s)",
-          ptr_modifier->command,
-          PLUGIN_MODIFIER_IRC_USER_STR,
-          ptr_modifier->modifier_args);
-          else if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_OUT)
-          plugin->print_server (plugin, "  IRC(%s, %s) => Perl(%s)",
-          ptr_modifier->command,
-          PLUGIN_MODIFIER_IRC_OUT_STR,
-          ptr_modifier->modifier_args);
-          }
-          if (!modifier_found)
+        // List Perl command handlers
+        plugin->print_server (plugin, "");
+        plugin->print_server (plugin, "Perl command handlers:");
+        handler_found = 0;
+        for (ptr_handler = plugin->handlers;
+             ptr_handler; ptr_handler = ptr_handler->next_handler)
+        {
+            if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
+                && (ptr_handler->handler_args))
+            {
+                handler_found = 1;
+                plugin->print_server (plugin, "  /%s => Perl(%s)",
+                                      ptr_handler->command,
+                                      ptr_handler->handler_args);
+            }
+        }
+        if (!handler_found)
+            plugin->print_server (plugin, "  (none)");
+        
+        // List Perl timer handlers
+        plugin->print_server (plugin, "");
+        plugin->print_server (plugin, "Perl timer handlers:");
+        handler_found = 0;
+        for (ptr_handler = plugin->handlers;
+             ptr_handler; ptr_handler = ptr_handler->next_handler)
+        {
+            if ((ptr_handler->type == PLUGIN_HANDLER_TIMER)
+                && (ptr_handler->handler_args))
+            {
+                handler_found = 1;
+                plugin->print_server (plugin, "  %d seconds => Perl(%s)",
+                                      ptr_handler->interval,
+                                      ptr_handler->handler_args);
+            }
+        }
+        if (!handler_found)
+            plugin->print_server (plugin, "  (none)");
+        
+        // List Perl keyboard handlers
+        plugin->print_server (plugin, "");
+        plugin->print_server (plugin, "Perl keyboard handlers:");
+        handler_found = 0;
+        for (ptr_handler = plugin->handlers;
+             ptr_handler; ptr_handler = ptr_handler->next_handler)
+        {
+            if ((ptr_handler->type == PLUGIN_HANDLER_KEYBOARD)
+                && (ptr_handler->handler_args))
+            {
+                handler_found = 1;
+                plugin->print_server (plugin, "  Perl(%s)",
+                                      ptr_handler->handler_args);
+            }
+        }
+        if (!handler_found)
+            plugin->print_server (plugin, "  (none)");
+        
+        // List Perl event handlers
+        plugin->print_server (plugin, "");
+        plugin->print_server (plugin, "Perl event handlers:");
+        handler_found = 0;
+        for (ptr_handler = plugin->handlers;
+             ptr_handler; ptr_handler = ptr_handler->next_handler)
+        {
+            if ((ptr_handler->type == PLUGIN_HANDLER_EVENT)
+                && (ptr_handler->handler_args))
+            {
+                handler_found = 1;
+                plugin->print_server (plugin, "  %s => Perl(%s)",
+                                      ptr_handler->event,
+                                      ptr_handler->handler_args);
+            }
+        }
+        if (!handler_found)
+            plugin->print_server (plugin, "  (none)");
+        
+        // List Perl modifiers
+        plugin->print_server (plugin, "");
+        plugin->print_server (plugin, "Perl modifiers:");
+        modifier_found = 0;
+        for (ptr_modifier = plugin->modifiers;
+             ptr_modifier; ptr_modifier = ptr_modifier->next_modifier)
+        {
+            modifier_found = 1;
+            if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_IN)
+                plugin->print_server (plugin, "  IRC(%s, %s) => Perl(%s)",
+                                      ptr_modifier->command,
+                                      PLUGIN_MODIFIER_IRC_IN_STR,
+                                      ptr_modifier->modifier_args);
+            else if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_USER)
+                plugin->print_server (plugin, "  IRC(%s, %s) => Perl(%s)",
+                                      ptr_modifier->command,
+                                      PLUGIN_MODIFIER_IRC_USER_STR,
+                                      ptr_modifier->modifier_args);
+            else if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_OUT)
+                plugin->print_server (plugin, "  IRC(%s, %s) => Perl(%s)",
+                                      ptr_modifier->command,
+                                      PLUGIN_MODIFIER_IRC_OUT_STR,
+                                      ptr_modifier->modifier_args);
+        }
+        if (!modifier_found)
           plugin->print_server (plugin, "  (none)");
         */
     }
@@ -680,8 +683,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     if (!perl_main)
     {
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s: unable to initialize Perl"),
-                        weechat_prefix ("error"), "perl");
+                        weechat_gettext ("%s%s: unable to initialize %s"),
+                        weechat_prefix ("error"), "perl", "perl");
         return WEECHAT_RC_ERROR;
     }
     
@@ -706,7 +709,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_mkdir_home ("perl/autoload", 0644);
     
     script_init (weechat_perl_plugin);
-    script_auto_load (weechat_perl_plugin, "perl", &weechat_perl_load_cb);
+    script_auto_load (weechat_perl_plugin, "perl",
+                      &weechat_perl_load_cb);
     
     /* init ok */
     return WEECHAT_RC_OK;
@@ -723,7 +727,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     (void) plugin;
     
     /* unload all scripts */
-    weechat_perl_unload_all (weechat_perl_plugin);
+    weechat_perl_unload_all ();
     
 #ifndef MULTIPLICITY
     /* free perl intepreter */

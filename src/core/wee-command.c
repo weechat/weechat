@@ -60,7 +60,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
 {
     struct t_gui_buffer *ptr_buffer;
     long number;
-    char *error ,*value;
+    char *error, *value;
     int target_buffer;
     
     /* make C compiler happy */

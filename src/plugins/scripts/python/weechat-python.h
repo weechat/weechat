@@ -17,9 +17,20 @@
  */
 
 
-#ifndef __WEECHAT_PERL_API_H
-#define __WEECHAT_PERL_API_H 1
+#ifndef __WEECHAT_PYTHON_H
+#define __WEECHAT_PYTHON_H 1
 
-extern void weechat_perl_xs_init (pTHX);
+#include "../../weechat-plugin.h"
+
+#define weechat_plugin weechat_python_plugin
+
+extern struct t_weechat_plugin *weechat_python_plugin;
+
+extern struct t_plugin_script *python_scripts;
+extern struct t_plugin_script *python_current_script;
+extern char *python_current_script_filename;
+
+extern void * weechat_python_exec (struct t_plugin_script *script,
+                                   int ret_type, char *function, char **argv);
 
 #endif /* weechat-perl.h */

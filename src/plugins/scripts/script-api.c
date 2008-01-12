@@ -118,10 +118,10 @@ script_api_log_printf (struct t_weechat_plugin *weechat_plugin,
 
 /*
  * script_api_hook_command: hook a command
- *                          return 1 if ok, 0 if error
+ *                          return new hook, NULL if error
  */
 
-int
+struct t_hook *
 script_api_hook_command (struct t_weechat_plugin *weechat_plugin,
                          struct t_plugin_script *script,
                          char *command, char *description,
@@ -138,7 +138,7 @@ script_api_hook_command (struct t_weechat_plugin *weechat_plugin,
 
     new_script_callback = script_callback_alloc ();
     if (!new_script_callback)
-        return 0;
+        return NULL;
     
     new_script_callback->script = NULL;
     new_script_callback->function = NULL;
@@ -150,7 +150,7 @@ script_api_hook_command (struct t_weechat_plugin *weechat_plugin,
     if (!new_hook)
     {
         free (new_script_callback);
-        return 0;
+        return NULL;
     }
     
     new_script_callback->script = script;
@@ -159,15 +159,15 @@ script_api_hook_command (struct t_weechat_plugin *weechat_plugin,
     
     script_callback_add (script, new_script_callback);
     
-    return 1;
+    return new_hook;
 }
 
 /*
  * script_api_hook_timer: hook a timer
- *                        return 1 if ok, 0 if error
+ *                        return new hook, NULL if error
  */
 
-int
+struct t_hook *
 script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
                        struct t_plugin_script *script,
                        int interval, int align_second, int max_calls,
@@ -179,14 +179,14 @@ script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
     
     new_script_callback = script_callback_alloc ();
     if (!new_script_callback)
-        return 0;
+        return NULL;
     
     new_hook = weechat_hook_timer (interval, align_second, max_calls,
                                    callback, new_script_callback);
     if (!new_hook)
     {
         free (new_script_callback);
-        return 0;
+        return NULL;
     }
     
     new_script_callback->script = script;
@@ -195,15 +195,15 @@ script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
 
     script_callback_add (script, new_script_callback);
     
-    return 1;
+    return new_hook;
 }
 
 /*
  * script_api_hook_fd: hook a fd
- *                     return 1 if ok, 0 if error
+ *                     return new hook, NULL if error
  */
 
-int
+struct t_hook *
 script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
                     struct t_plugin_script *script,
                     int fd, int flag_read, int flag_write,
@@ -216,14 +216,14 @@ script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
 
     new_script_callback = script_callback_alloc ();
     if (!new_script_callback)
-        return 0;
+        return NULL;
     
     new_hook = weechat_hook_fd (fd, flag_read, flag_write, flag_exception,
                                 callback, new_script_callback);
     if (!new_hook)
     {
         free (new_script_callback);
-        return 0;
+        return NULL;
     }
     
     new_script_callback->script = script;
@@ -232,15 +232,15 @@ script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
     
     script_callback_add (script, new_script_callback);
     
-    return 1;
+    return new_hook;
 }
 
 /*
  * script_api_hook_print: hook a print
- *                        return 1 if ok, 0 if error
+ *                        return new hook, NULL if error
  */
 
-int
+struct t_hook *
 script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
                        struct t_plugin_script *script,
                        struct t_gui_buffer *buffer,
@@ -256,14 +256,14 @@ script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
     
     new_script_callback = script_callback_alloc ();
     if (!new_script_callback)
-        return 0;
+        return NULL;
     
     new_hook = weechat_hook_print (buffer, message, strip_colors,
                                    callback, new_script_callback);
     if (!new_hook)
     {
         free (new_script_callback);
-        return 0;
+        return NULL;
     }
     
     new_script_callback->script = script;
@@ -272,15 +272,15 @@ script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
     
     script_callback_add (script, new_script_callback);
     
-    return 1;
+    return new_hook;
 }
 
 /*
  * script_api_hook_signal: hook a signal
- *                         return 1 if ok, 0 if error
+ *                         return new hook, NULL if error
  */
 
-int
+struct t_hook *
 script_api_hook_signal (struct t_weechat_plugin *weechat_plugin,
                         struct t_plugin_script *script,
                         char *signal,
@@ -294,13 +294,13 @@ script_api_hook_signal (struct t_weechat_plugin *weechat_plugin,
     
     new_script_callback = script_callback_alloc ();
     if (!new_script_callback)
-        return 0;
+        return NULL;
     
     new_hook = weechat_hook_signal (signal, callback, new_script_callback);
     if (!new_hook)
     {
         free (new_script_callback);
-        return 0;
+        return NULL;
     }
     
     new_script_callback->script = script;
@@ -309,15 +309,15 @@ script_api_hook_signal (struct t_weechat_plugin *weechat_plugin,
     
     script_callback_add (script, new_script_callback);
     
-    return 1;
+    return new_hook;
 }
 
 /*
  * script_api_hook_config: hook a config option
- *                         return 1 if ok, 0 if error
+ *                         return new hook, NULL if error
  */
 
-int
+struct t_hook *
 script_api_hook_config (struct t_weechat_plugin *weechat_plugin,
                         struct t_plugin_script *script,
                         char *type, char *option,
@@ -330,13 +330,13 @@ script_api_hook_config (struct t_weechat_plugin *weechat_plugin,
     
     new_script_callback = script_callback_alloc ();
     if (!new_script_callback)
-        return 0;
+        return NULL;
     
     new_hook = weechat_hook_config (type, option, callback, new_script_callback);
     if (!new_hook)
     {
         free (new_script_callback);
-        return 0;
+        return NULL;
     }
     
     new_script_callback->script = script;
@@ -345,15 +345,15 @@ script_api_hook_config (struct t_weechat_plugin *weechat_plugin,
     
     script_callback_add (script, new_script_callback);
     
-    return 1;
+    return new_hook;
 }
 
 /*
  * script_api_hook_completion: hook a completion
- *                             return 1 if ok, 0 if error
+ *                             return new hook, NULL if error
  */
 
-int
+struct t_hook *
 script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
                             struct t_plugin_script *script,
                             char *completion,
@@ -367,13 +367,13 @@ script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
     
     new_script_callback = script_callback_alloc ();
     if (!new_script_callback)
-        return 0;
+        return NULL;
     
     new_hook = weechat_hook_completion (completion, callback, new_script_callback);
     if (!new_hook)
     {
         free (new_script_callback);
-        return 0;
+        return NULL;
     }
     
     new_script_callback->script = script;
@@ -382,14 +382,15 @@ script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
     
     script_callback_add (script, new_script_callback);
     
-    return 1;
+    return new_hook;
 }
 
 /*
  * script_api_unhook: unhook something
+ *                    return 1 if ok, 0 if error
  */
 
-void
+int
 script_api_unhook (struct t_weechat_plugin *weechat_plugin,
                    struct t_plugin_script *script,
                    struct t_hook *hook)
@@ -397,7 +398,7 @@ script_api_unhook (struct t_weechat_plugin *weechat_plugin,
     struct t_script_callback *ptr_script_callback;
     
     if (!weechat_plugin || !script || !hook)
-        return;
+        return 0;
     
     for (ptr_script_callback = script->callbacks; ptr_script_callback;
          ptr_script_callback = ptr_script_callback->next_callback)
@@ -409,7 +410,10 @@ script_api_unhook (struct t_weechat_plugin *weechat_plugin,
     if (ptr_script_callback)
     {
         script_callback_remove (weechat_plugin, script, ptr_script_callback);
+        return 1;
     }
+
+    return 0;
 }
 
 /*
