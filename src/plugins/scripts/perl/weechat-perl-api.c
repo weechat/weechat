@@ -45,7 +45,7 @@
         XSRETURN (1);                             \
     }                                             \
     XST_mPV (0, "");                              \
-    XSRETURN (1);
+    XSRETURN (1)
 #define PERL_RETURN_STRING_FREE(__string)         \
     if (__string)                                 \
     {                                             \
@@ -54,7 +54,7 @@
         XSRETURN (1);                             \
     }                                             \
     XST_mPV (0, "");                              \
-    XSRETURN (1);
+    XSRETURN (1)
 
 extern void boot_DynaLoader (pTHX_ CV* cv);
 
@@ -328,7 +328,7 @@ static XS (XS_weechat_color)
 }
 
 /*
- * weechat::print: print message into a buffer (current or specified one)
+ * weechat::print: print message in a buffer
  */
 
 static XS (XS_weechat_print)
@@ -828,7 +828,7 @@ static XS (XS_weechat_hook_signal)
 static XS (XS_weechat_hook_signal_send)
 {
     char *type_data;
-    int int_value;
+    int number;
     dXSARGS;
     
     /* make C compiler happy */
@@ -856,10 +856,10 @@ static XS (XS_weechat_hook_signal_send)
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
-        int_value = SvIV(ST (2));
+        number = SvIV(ST (2));
         weechat_hook_signal_send (SvPV (ST (0), PL_na), /* signal */
                                   type_data,
-                                  &int_value); /* signal_data */
+                                  &number); /* signal_data */
         PERL_RETURN_OK;
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)

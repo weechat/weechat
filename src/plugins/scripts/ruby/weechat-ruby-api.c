@@ -45,7 +45,7 @@
 #define RUBY_RETURN_STRING(__string)                        \
     if (__string)                                           \
         return rb_str_new2 (__string);                      \
-    return rb_str_new2 ("");
+    return rb_str_new2 ("")
 #define RUBY_RETURN_STRING_FREE(__string)                   \
     if (__string)                                           \
     {                                                       \
@@ -53,7 +53,7 @@
         free (__string);                                    \
         return return_value;                                \
     }                                                       \
-    return rb_str_new2 ("");
+    return rb_str_new2 ("")
 
 
 /*
@@ -402,7 +402,7 @@ weechat_ruby_api_color (VALUE class, VALUE color)
 }
 
 /*
- * weechat_ruby_api_print: print message into a buffer (current or specified one)
+ * weechat_ruby_api_print: print message in a buffer
  */
 
 static VALUE
@@ -1043,7 +1043,7 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
                                    VALUE signal_data)
 {
     char *c_signal, *c_type_data, *c_signal_data;
-    int int_value;
+    int number;
     
     /* make C compiler happy */
     (void) class;
@@ -1080,8 +1080,8 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
     else if (strcmp (c_type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
         Check_Type (signal_data, T_STRING);
-        int_value = FIX2INT (signal_data);
-        weechat_hook_signal_send (c_signal, c_type_data, &int_value);
+        number = FIX2INT (signal_data);
+        weechat_hook_signal_send (c_signal, c_type_data, &number);
         RUBY_RETURN_OK;
     }
     else if (strcmp (c_type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
@@ -1101,7 +1101,8 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
  */
 
 int
-weechat_ruby_api_hook_config_cb (void *data, char *type, char *option, char *value)
+weechat_ruby_api_hook_config_cb (void *data, char *type, char *option,
+                                 char *value)
 {
     struct t_script_callback *script_callback;
     char *ruby_argv[4];
@@ -1184,7 +1185,8 @@ weechat_ruby_api_hook_config (VALUE class, VALUE type, VALUE option, VALUE funct
  */
 
 int
-weechat_ruby_api_hook_completion_cb (void *data, char *completion, struct t_gui_buffer *buffer,
+weechat_ruby_api_hook_completion_cb (void *data, char *completion,
+                                     struct t_gui_buffer *buffer,
                                      struct t_weelist *list)
 {
     struct t_script_callback *script_callback;
@@ -1734,7 +1736,7 @@ weechat_ruby_api_nicklist_add_nick (VALUE class, VALUE buffer, VALUE group,
                                           script_string_to_pointer (c_group),
                                           c_name,
                                           c_color,
-                                          prefix,
+                                          char_prefix,
                                           c_prefix_color,
                                           c_visible);
     

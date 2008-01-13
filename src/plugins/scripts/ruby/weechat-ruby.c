@@ -821,8 +821,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_hook_signal ("dump_data", &weechat_ruby_dump_data_cb, NULL);
     
     script_init (weechat_ruby_plugin);
-    script_auto_load (weechat_ruby_plugin,
-                      "ruby", &weechat_ruby_load_cb);
+    script_auto_load (weechat_ruby_plugin, "ruby", &weechat_ruby_load_cb);
     
     /* init ok */
     return WEECHAT_RC_OK;

@@ -41,7 +41,7 @@
 #define PYTHON_RETURN_STRING(__string)             \
     if (__string)                                  \
         return Py_BuildValue ("s", __string);      \
-    return Py_BuildValue ("s", "");
+    return Py_BuildValue ("s", "")
 #define PYTHON_RETURN_STRING_FREE(__string)        \
     if (__string)                                  \
     {                                              \
@@ -49,7 +49,7 @@
         free (__string);                           \
         return object;                             \
     }                                              \
-    return Py_BuildValue ("s", "");
+    return Py_BuildValue ("s", "")
 
 
 /*
@@ -342,7 +342,7 @@ weechat_python_api_color (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat_python_api_prnt: print message into a buffer (current or specified one)
+ * weechat_python_api_prnt: print message in a buffer
  */
 
 static PyObject *
@@ -900,7 +900,7 @@ static PyObject *
 weechat_python_api_hook_signal_send (PyObject *self, PyObject *args)
 {
     char *signal, *type_data, *signal_data, *error;
-    long number;
+    int number;
     
     /* make C compiler happy */
     (void) self;
@@ -920,10 +920,11 @@ weechat_python_api_hook_signal_send (PyObject *self, PyObject *args)
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_signal_send");
         PYTHON_RETURN_ERROR;
     }
-
+    
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
         weechat_hook_signal_send (signal, type_data, signal_data);
+        PYTHON_RETURN_OK;
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {
@@ -933,13 +934,16 @@ weechat_python_api_hook_signal_send (PyObject *self, PyObject *args)
         {
             weechat_hook_signal_send (signal, type_data, &number);
         }
+        PYTHON_RETURN_OK;
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
     {
         weechat_hook_signal_send (signal, type_data,
                                   script_string_to_pointer (signal_data));
+        PYTHON_RETURN_OK;
     }
-    PYTHON_RETURN_OK;
+    
+    PYTHON_RETURN_ERROR;
 }
 
 /*

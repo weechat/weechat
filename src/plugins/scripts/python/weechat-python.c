@@ -767,8 +767,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_hook_signal ("dump_data", &weechat_python_dump_data_cb, NULL);
     
     script_init (weechat_python_plugin);
-    script_auto_load (weechat_python_plugin,
-                      "python", &weechat_python_load_cb);
+    script_auto_load (weechat_python_plugin, "python", &weechat_python_load_cb);
     
     /* init ok */
     return WEECHAT_RC_OK;
