@@ -20,6 +20,6 @@
 #ifndef __WEECHAT_PERL_API_H
 #define __WEECHAT_PERL_API_H 1
 
-extern void weechat_perl_xs_init (pTHX);
+extern void weechat_perl_api_init (pTHX);
 
 #endif /* weechat-perl.h */

@@ -38,7 +38,7 @@ int script_option_check_license = 0;
 
 
 /*
- * script_config_read: read config options
+ * script_config_read: read script configuration
  */
 
 void
@@ -65,6 +65,7 @@ script_config_read (struct t_weechat_plugin *weechat_plugin)
 int
 script_config_cb (void *data, char *type, char *option, char *value)
 {
+    /* make C compiler happy */
     (void) type;
     (void) option;
     (void) value;
@@ -84,8 +85,10 @@ script_init (struct t_weechat_plugin *weechat_plugin)
     char *option;
     int length;
     
+    /* read script configuration */
     script_config_read (weechat_plugin);
     
+    /* add hook for config option */
     length = strlen (weechat_plugin->name) + 32;
     option= (char *)malloc (length);
     if (option)
@@ -93,7 +96,7 @@ script_init (struct t_weechat_plugin *weechat_plugin)
         snprintf (option, length - 1, "%s.%s",
                   weechat_plugin->name, SCRIPT_OPTION_CHECK_LICENSE);
         weechat_hook_config ("plugin", option,
-                             &script_config_cb, (void *)weechat_plugin);
+                             &script_config_cb, weechat_plugin);
     }
 }
 
@@ -141,8 +144,7 @@ script_string_to_pointer (char *pointer_str)
 
 void
 script_auto_load (struct t_weechat_plugin *weechat_plugin,
-                  char *language,
-                  int (*callback)(void *data, char *filename))
+                  char *language, int (*callback)(void *data, char *filename))
 {
     char *dir_home, *dir_name;
     int dir_length;
@@ -168,11 +170,11 @@ script_auto_load (struct t_weechat_plugin *weechat_plugin,
 
 struct t_plugin_script *
 script_search (struct t_weechat_plugin *weechat_plugin,
-               struct t_plugin_script **list, char *name)
+               struct t_plugin_script *scripts, char *name)
 {
     struct t_plugin_script *ptr_script;
     
-    for (ptr_script = *list; ptr_script;
+    for (ptr_script = scripts; ptr_script;
          ptr_script = ptr_script->next_script)
     {
         if (weechat_strcasecmp (ptr_script->name, name) == 0)
@@ -275,10 +277,10 @@ script_search_full_name (struct t_weechat_plugin *weechat_plugin,
 
 struct t_plugin_script *
 script_add (struct t_weechat_plugin *weechat_plugin,
-            struct t_plugin_script **script_list,
-            char *filename,
-            char *name, char *author, char *version, char *license,
-            char *shutdown_func, char *description, char *charset)
+            struct t_plugin_script **scripts,
+            char *filename, char *name, char *author, char *version,
+            char *license, char *description, char *shutdown_func,
+            char *charset)
 {
     struct t_plugin_script *new_script;
     
@@ -319,11 +321,11 @@ script_add (struct t_weechat_plugin *weechat_plugin,
         new_script->callbacks = NULL;
         
         /* add new script to list */
-        if ((*script_list))
-            (*script_list)->prev_script = new_script;
+        if (*scripts)
+            (*scripts)->prev_script = new_script;
         new_script->prev_script = NULL;
-        new_script->next_script = (*script_list);
-        (*script_list) = new_script;
+        new_script->next_script = *scripts;
+        *scripts = new_script;
         
         return new_script;
     }
@@ -341,7 +343,7 @@ script_add (struct t_weechat_plugin *weechat_plugin,
 
 void
 script_remove (struct t_weechat_plugin *weechat_plugin,
-               struct t_plugin_script **script_list,
+               struct t_plugin_script **scripts,
                struct t_plugin_script *script)
 {
     /* remove all callbacks created by this script */
@@ -365,10 +367,55 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
     if (script->prev_script)
         (script->prev_script)->next_script = script->next_script;
     else
-        (*script_list) = script->next_script;
+        *scripts = script->next_script;
     if (script->next_script)
         (script->next_script)->prev_script = script->prev_script;
     
     /* free script */
     free (script);
+}
+
+/*
+ * script_print_log: print script infos in log (usually for crash dump)
+ */
+
+void
+script_print_log (struct t_weechat_plugin *weechat_plugin,
+                  struct t_plugin_script *scripts)
+{
+    struct t_plugin_script *ptr_script;
+    struct t_script_callback *ptr_script_callback;
+    
+    weechat_log_printf ("");
+    weechat_log_printf ("***** \"%s\" plugin dump *****",
+                        weechat_plugin->name);
+    
+    for (ptr_script = scripts; ptr_script;
+         ptr_script = ptr_script->next_script)
+    {
+        weechat_log_printf ("");
+        weechat_log_printf ("[script %s (addr:0x%x)]",      ptr_script->name, ptr_script);
+        weechat_log_printf ("  filename. . . . . . : '%s'", ptr_script->filename);
+        weechat_log_printf ("  interpreter . . . . : 0x%x", ptr_script->interpreter);
+        weechat_log_printf ("  name. . . . . . . . : '%s'", ptr_script->name);
+        weechat_log_printf ("  author. . . . . . . : '%s'", ptr_script->author);
+        weechat_log_printf ("  version . . . . . . : '%s'", ptr_script->version);
+        weechat_log_printf ("  license . . . . . . : '%s'", ptr_script->license);
+        weechat_log_printf ("  description . . . . : '%s'", ptr_script->description);
+        weechat_log_printf ("  shutdown_func . . . : '%s'", ptr_script->shutdown_func);
+        weechat_log_printf ("  charset . . . . . . : '%s'", ptr_script->charset);
+        weechat_log_printf ("  callbacks . . . . . : 0x%x", ptr_script->callbacks);
+        weechat_log_printf ("  prev_script . . . . : 0x%x", ptr_script->prev_script);
+        weechat_log_printf ("  next_script . . . . : 0x%x", ptr_script->next_script);
+
+        for (ptr_script_callback = ptr_script->callbacks; ptr_script_callback;
+             ptr_script_callback = ptr_script_callback->next_callback)
+        {
+            script_callback_print_log (weechat_plugin, ptr_script_callback);
+        }
+    }
+    
+    weechat_log_printf ("");
+    weechat_log_printf ("***** End of \"%s\" plugin dump *****",
+                        weechat_plugin->name);
 }

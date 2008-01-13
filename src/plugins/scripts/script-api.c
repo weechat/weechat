@@ -453,6 +453,9 @@ script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
     struct t_script_callback *new_script_callback;
     struct t_gui_buffer *new_buffer;
     
+    if (!function || !function[0])
+        return weechat_buffer_new (category, name, NULL, NULL);
+    
     new_script_callback = script_callback_alloc ();
     if (!new_script_callback)
         return NULL;

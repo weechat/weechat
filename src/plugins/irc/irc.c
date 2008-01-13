@@ -73,14 +73,16 @@ irc_dump_data_cb (void *data, char *signal, char *type_data, void *signal_data)
     (void) signal_data;
     
     weechat_log_printf ("");
-    weechat_log_printf ("***** IRC plugin dump *****");
+    weechat_log_printf ("***** \"%s\" plugin dump *****",
+                        weechat_plugin->name);
     
     irc_server_print_log ();
     
     //irc_dcc_print_log ();
     
     weechat_log_printf ("");
-    weechat_log_printf ("***** End of IRC plugin dump *****");
+    weechat_log_printf ("***** End of \"%s\" plugin dump *****",
+                        weechat_plugin->name);
     
     return WEECHAT_RC_OK;
 }

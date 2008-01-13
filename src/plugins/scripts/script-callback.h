@@ -37,5 +37,7 @@ extern void script_callback_remove (struct t_weechat_plugin *weechat_plugin,
                                     struct t_script_callback *script_callback);
 extern void script_callback_remove_all (struct t_weechat_plugin *weechat_plugin,
                                         struct t_plugin_script *script);
+extern void script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
+                                       struct t_script_callback *script_callback);
 
 #endif /* script-callback.h */

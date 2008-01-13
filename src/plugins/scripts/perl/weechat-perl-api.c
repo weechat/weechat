@@ -38,22 +38,22 @@
 #define PERL_RETURN_OK XSRETURN_YES
 #define PERL_RETURN_ERROR XSRETURN_NO
 #define PERL_RETURN_EMPTY XSRETURN_EMPTY
-#define PERL_RETURN_STRING(string)              \
-    if (string)                                 \
-    {                                           \
-        XST_mPV (0, string);                    \
-        XSRETURN (1);                           \
-    }                                           \
-    XST_mPV (0, "");                            \
+#define PERL_RETURN_STRING(__string)              \
+    if (__string)                                 \
+    {                                             \
+        XST_mPV (0, __string);                    \
+        XSRETURN (1);                             \
+    }                                             \
+    XST_mPV (0, "");                              \
     XSRETURN (1);
-#define PERL_RETURN_STRING_FREE(string)         \
-    if (string)                                 \
-    {                                           \
-        XST_mPV (0, string);                    \
-        free (string);                          \
-        XSRETURN (1);                           \
-    }                                           \
-    XST_mPV (0, "");                            \
+#define PERL_RETURN_STRING_FREE(__string)         \
+    if (__string)                                 \
+    {                                             \
+        XST_mPV (0, __string);                    \
+        free (__string);                          \
+        XSRETURN (1);                             \
+    }                                             \
+    XST_mPV (0, "");                              \
     XSRETURN (1);
 
 extern void boot_DynaLoader (pTHX_ CV* cv);
@@ -65,17 +65,17 @@ extern void boot_DynaLoader (pTHX_ CV* cv);
 
 static XS (XS_weechat_register)
 {
-    char *name, *author, *version, *license, *shutdown_func, *description;
+    char *name, *author, *version, *license, *description, *shutdown_func;
     char *charset;
     dXSARGS;
     
     /* make C compiler happy */
     (void) items;
     (void) cv;
-
+    
     perl_current_script = NULL;
     
-    if (items < 5)
+    if (items < 7)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("register");
         PERL_RETURN_ERROR;
@@ -86,16 +86,10 @@ static XS (XS_weechat_register)
     version = SvPV (ST (2), PL_na);
     license = SvPV (ST (3), PL_na);
     description = SvPV (ST (4), PL_na);
-    shutdown_func = NULL;
-    charset = NULL;
-    if (items > 5)
-    {
-        shutdown_func = SvPV (ST (5), PL_na);
-        if (items > 6)
-            charset = SvPV (ST (6), PL_na);
-    }
+    shutdown_func = SvPV (ST (5), PL_na);
+    charset = SvPV (ST (6), PL_na);
     
-    if (script_search (weechat_perl_plugin, &perl_scripts, name))
+    if (script_search (weechat_perl_plugin, perl_scripts, name))
     {
         /* error: another script already exists with this name! */
         weechat_printf (NULL,
@@ -112,7 +106,7 @@ static XS (XS_weechat_register)
                                       (perl_current_script_filename) ?
                                       perl_current_script_filename : "",
                                       name, author, version, license,
-                                      shutdown_func, description, charset);
+                                      description, shutdown_func, charset);
     if (perl_current_script)
     {
         weechat_printf (NULL,
@@ -356,7 +350,8 @@ static XS (XS_weechat_print)
         PERL_RETURN_ERROR;
     }
     
-    script_api_printf (weechat_perl_plugin, perl_current_script,
+    script_api_printf (weechat_perl_plugin,
+                       perl_current_script,
                        script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
                        "%s", SvPV (ST (1), PL_na)); /* message */
     
@@ -386,7 +381,8 @@ static XS (XS_weechat_infobar_print)
         PERL_RETURN_ERROR;
     }
     
-    script_api_infobar_printf (weechat_perl_plugin, perl_current_script,
+    script_api_infobar_printf (weechat_perl_plugin,
+                               perl_current_script,
                                SvIV (ST (0)), /* delay */
                                SvPV (ST (1), PL_na), /* color */
                                "%s",
@@ -440,7 +436,8 @@ static XS (XS_weechat_log_print)
         PERL_RETURN_ERROR;
     }
     
-    script_api_log_printf (weechat_perl_plugin, perl_current_script,
+    script_api_log_printf (weechat_perl_plugin,
+                           perl_current_script,
                            "%s", SvPV (ST (0), PL_na)); /* message */
     
     PERL_RETURN_OK;
@@ -456,7 +453,7 @@ weechat_perl_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
 {
     struct t_script_callback *script_callback;
     char *perl_argv[3], empty_arg[1] = { '\0' };
-    int *r, ret;
+    int *rc, ret;
     
     /* make C compiler happy */
     (void) argv;
@@ -467,16 +464,17 @@ weechat_perl_api_hook_command_cb (void *data, struct t_gui_buffer *buffer,
     perl_argv[1] = (argc > 1) ? argv_eol[1] : empty_arg;
     perl_argv[2] = NULL;
     
-    r = (int *) weechat_perl_exec (script_callback->script,
-                                   WEECHAT_SCRIPT_EXEC_INT,
-                                   script_callback->function,
-                                   perl_argv);
-    if (!r)
+    rc = (int *) weechat_perl_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    perl_argv);
+    
+    if (!rc)
         ret = WEECHAT_RC_ERROR;
     else
     {
-        ret = *r;
-        free (r);
+        ret = *rc;
+        free (rc);
     }
     if (perl_argv[0])
         free (perl_argv[0]);
@@ -532,20 +530,21 @@ weechat_perl_api_hook_timer_cb (void *data)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[1] = { NULL };
-    int *r, ret;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
-    r = (int *) weechat_perl_exec (script_callback->script,
-                                   WEECHAT_SCRIPT_EXEC_INT,
-                                   script_callback->function,
-                                   perl_argv);
-    if (!r)
+    rc = (int *) weechat_perl_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    perl_argv);
+    
+    if (!rc)
         ret = WEECHAT_RC_ERROR;
     else
     {
-        ret = *r;
-        free (r);
+        ret = *rc;
+        free (rc);
     }
     
     return ret;
@@ -597,21 +596,21 @@ weechat_perl_api_hook_fd_cb (void *data)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[1] = { NULL };
-    int *r;
-    int ret;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
-    r = (int *) weechat_perl_exec (script_callback->script,
-                                   WEECHAT_SCRIPT_EXEC_INT,
-                                   script_callback->function,
-                                   perl_argv);
-    if (!r)
+    rc = (int *) weechat_perl_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    perl_argv);
+    
+    if (!rc)
         ret = WEECHAT_RC_ERROR;
     else
     {
-        ret = *r;
-        free (r);
+        ret = *rc;
+        free (rc);
     }
     
     return ret;
@@ -666,7 +665,7 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     struct t_script_callback *script_callback;
     char *perl_argv[5];
     static char timebuffer[64];
-    int *r, ret;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
@@ -678,16 +677,17 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     perl_argv[3] = message;
     perl_argv[4] = NULL;
     
-    r = (int *) weechat_perl_exec (script_callback->script,
-                                   WEECHAT_SCRIPT_EXEC_INT,
-                                   script_callback->function,
-                                   perl_argv);
-    if (!r)
+    rc = (int *) weechat_perl_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    perl_argv);
+    
+    if (!rc)
         ret = WEECHAT_RC_ERROR;
     else
     {
-        ret = *r;
-        free (r);
+        ret = *rc;
+        free (rc);
     }
     if (perl_argv[0])
         free (perl_argv[0]);
@@ -743,7 +743,7 @@ weechat_perl_api_hook_signal_cb (void *data, char *signal, char *type_data,
     struct t_script_callback *script_callback;
     char *perl_argv[3];
     static char value_str[64];
-    int *r, ret, free_needed;
+    int *rc, ret, free_needed;
     
     script_callback = (struct t_script_callback *)data;
     
@@ -768,16 +768,17 @@ weechat_perl_api_hook_signal_cb (void *data, char *signal, char *type_data,
         perl_argv[1] = NULL;
     perl_argv[2] = NULL;
     
-    r = (int *) weechat_perl_exec (script_callback->script,
-                                   WEECHAT_SCRIPT_EXEC_INT,
-                                   script_callback->function,
-                                   perl_argv);
-    if (!r)
+    rc = (int *) weechat_perl_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    perl_argv);
+    
+    if (!rc)
         ret = WEECHAT_RC_ERROR;
     else
     {
-        ret = *r;
-        free (r);
+        ret = *rc;
+        free (rc);
     }
     if (free_needed && perl_argv[1])
         free (perl_argv[1]);
@@ -882,7 +883,7 @@ weechat_perl_api_hook_config_cb (void *data, char *type, char *option,
 {
     struct t_script_callback *script_callback;
     char *perl_argv[4];
-    int *r, ret;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
@@ -891,16 +892,17 @@ weechat_perl_api_hook_config_cb (void *data, char *type, char *option,
     perl_argv[2] = value;
     perl_argv[3] = NULL;
     
-    r = (int *) weechat_perl_exec (script_callback->script,
-                                   WEECHAT_SCRIPT_EXEC_INT,
-                                   script_callback->function,
-                                   perl_argv);
-    if (!r)
+    rc = (int *) weechat_perl_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    perl_argv);
+    
+    if (!rc)
         ret = WEECHAT_RC_ERROR;
     else
     {
-        ret = *r;
-        free (r);
+        ret = *rc;
+        free (rc);
     }
     
     return ret;
@@ -953,7 +955,7 @@ weechat_perl_api_hook_completion_cb (void *data, char *completion,
 {
     struct t_script_callback *script_callback;
     char *perl_argv[4];
-    int *r, ret;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
@@ -962,16 +964,17 @@ weechat_perl_api_hook_completion_cb (void *data, char *completion,
     perl_argv[2] = script_pointer_to_string (list);
     perl_argv[3] = NULL;
     
-    r = (int *) weechat_perl_exec (script_callback->script,
-                                   WEECHAT_SCRIPT_EXEC_INT,
-                                   script_callback->function,
-                                   perl_argv);
-    if (!r)
+    rc = (int *) weechat_perl_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    perl_argv);
+    
+    if (!rc)
         ret = WEECHAT_RC_ERROR;
     else
     {
-        ret = *r;
-        free (r);
+        ret = *rc;
+        free (rc);
     }
     if (perl_argv[1])
         free (perl_argv[1]);
@@ -1039,7 +1042,8 @@ static XS (XS_weechat_unhook)
         PERL_RETURN_ERROR;
     }
     
-    if (script_api_unhook (weechat_perl_plugin, perl_current_script,
+    if (script_api_unhook (weechat_perl_plugin,
+                           perl_current_script,
                            script_string_to_pointer (SvPV (ST (0), PL_na))))
         PERL_RETURN_OK;
     
@@ -1064,7 +1068,8 @@ static XS (XS_weechat_unhook_all)
 	PERL_RETURN_ERROR;
     }
     
-    script_api_unhook_all (weechat_perl_plugin, perl_current_script);
+    script_api_unhook_all (weechat_perl_plugin,
+                           perl_current_script);
     
     PERL_RETURN_OK;
 }
@@ -1337,7 +1342,7 @@ static XS (XS_weechat_nicklist_search_group)
 static XS (XS_weechat_nicklist_add_nick)
 {
     struct t_gui_nick *new_nick;
-    char *str_prefix, prefix, *result;
+    char *prefix, char_prefix, *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -1355,17 +1360,17 @@ static XS (XS_weechat_nicklist_add_nick)
         PERL_RETURN_EMPTY;
     }
     
-    str_prefix = SvPV(ST (4), PL_na);
-    if (str_prefix && str_prefix[0])
-        prefix = str_prefix[0];
+    prefix = SvPV(ST (4), PL_na);
+    if (prefix && prefix[0])
+        char_prefix = prefix[0];
     else
-        prefix = ' ';
+        char_prefix = ' ';
     
     new_nick = weechat_nicklist_add_nick (script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
                                           script_string_to_pointer (SvPV (ST (1), PL_na)), /* group */
                                           SvPV (ST (2), PL_na), /* name */
                                           SvPV (ST (3), PL_na), /* color */
-                                          prefix,
+                                          char_prefix,
                                           SvPV (ST (5), PL_na), /* prefix_color */
                                           SvIV (ST (6))); /* visible */
     
@@ -1515,7 +1520,8 @@ static XS (XS_weechat_command)
         PERL_RETURN_ERROR;
     }
     
-    script_api_command (weechat_perl_plugin, perl_current_script,
+    script_api_command (weechat_perl_plugin,
+                        perl_current_script,
                         script_string_to_pointer (SvPV (ST (0), PL_na)), /* buffer */
                         SvPV (ST (1), PL_na)); /* command */
     
@@ -2290,7 +2296,7 @@ static XS (XS_weechat_get_buffer_data)
  */
 
 void
-weechat_perl_xs_init (pTHX)
+weechat_perl_api_init (pTHX)
 {
     HV *stash;
     

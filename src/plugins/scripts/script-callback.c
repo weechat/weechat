@@ -105,3 +105,21 @@ script_callback_remove_all (struct t_weechat_plugin *weechat_plugin,
         script_callback_remove (weechat_plugin, script, script->callbacks);
     }
 }
+
+/*
+ * script_callback_print_log: print callback infos in log (usually for crash dump)
+ */
+
+void
+script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
+                           struct t_script_callback *script_callback)
+{
+    weechat_log_printf ("");
+    weechat_log_printf ("[callback (addr:0x%x)]",       script_callback);
+    weechat_log_printf ("  script. . . . . . . : 0x%x", script_callback->script);
+    weechat_log_printf ("  function. . . . . . : '%s'", script_callback->function);
+    weechat_log_printf ("  hook. . . . . . . . : 0x%x", script_callback->hook);
+    weechat_log_printf ("  buffer. . . . . . . : 0x%x", script_callback->buffer);
+    weechat_log_printf ("  prev_callback . . . : 0x%x", script_callback->prev_callback);
+    weechat_log_printf ("  next_callback . . . : 0x%x", script_callback->next_callback);
+}

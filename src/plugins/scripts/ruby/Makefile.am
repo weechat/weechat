@@ -20,6 +20,9 @@ libdir = ${weechat_libdir}/plugins
 
 lib_LTLIBRARIES = ruby.la
 
-ruby_la_SOURCES = ruby.c
+ruby_la_SOURCES = weechat-ruby.c \
+                  weechat-ruby.h \
+                  weechat-ruby-api.c \
+                  weechat-ruby-api.h
 ruby_la_LDFLAGS = -module
 ruby_la_LIBADD  = ../lib_weechat_plugins_scripts.la $(RUBY_LFLAGS)

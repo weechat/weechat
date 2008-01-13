@@ -63,19 +63,20 @@ extern void script_auto_load (struct t_weechat_plugin *weechat_plugin,
                               char *language,
                               int (*callback)(void *data, char *filename));
 extern struct t_plugin_script *script_search (struct t_weechat_plugin *weechat_plugin,
-                                              struct t_plugin_script **list,
+                                              struct t_plugin_script *scripts,
                                               char *name);
 extern char *script_search_full_name (struct t_weechat_plugin *weechat_plugin,
                                       char *language, char *filename);
 extern struct t_plugin_script *script_add (struct t_weechat_plugin *weechat_plugin,
-                                           struct t_plugin_script **script_list,
+                                           struct t_plugin_script **scripts,
                                            char *filename, char *name,
                                            char *author, char *version,
-                                           char *license, char *shutdown_func,
-                                           char *description,
-                                           char *charset);
+                                           char *license, char *description,
+                                           char *shutdown_func, char *charset);
 extern void script_remove (struct t_weechat_plugin *weechat_plugin,
-                           struct t_plugin_script **script_list,
+                           struct t_plugin_script **scripts,
                            struct t_plugin_script *script);
+extern void script_print_log (struct t_weechat_plugin *weechat_plugin,
+                              struct t_plugin_script *scripts);
 
 #endif /* script.h */

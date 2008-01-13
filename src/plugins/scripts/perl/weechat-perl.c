@@ -229,10 +229,6 @@ weechat_perl_load (char *filename)
     char *perl_args[] = { "", "-e", "0" };    
 #endif
     
-    weechat_printf (NULL,
-                    weechat_gettext ("%s%s: loading script \"%s\""),
-                    weechat_prefix ("info"), "perl", filename);
-    
     if (stat (filename, &buf) != 0)
     {
         weechat_printf (NULL,
@@ -240,11 +236,15 @@ weechat_perl_load (char *filename)
                         weechat_prefix ("error"), "perl", filename);
         return 0;
     }
-
+    
+    weechat_printf (NULL,
+                    weechat_gettext ("%s%s: loading script \"%s\""),
+                    weechat_prefix ("info"), "perl", filename);
+    
     perl_current_script = NULL;
     
 #ifndef MULTIPLICITY
-    snprintf(pkgname, sizeof(pkgname), "%s%d", PKG_NAME_PREFIX, perl_num);
+    snprintf (pkgname, sizeof(pkgname), "%s%d", PKG_NAME_PREFIX, perl_num);
     perl_num++;
     tempscript.interpreter = "WeechatPerlScriptLoader";
     perl_argv[0] = filename;
@@ -270,7 +270,7 @@ weechat_perl_load (char *filename)
     PERL_SET_CONTEXT (perl_current_interpreter);
     perl_construct (perl_current_interpreter);
     tempscript.interpreter = (PerlInterpreter *) perl_current_interpreter;
-    perl_parse (perl_current_interpreter, weechat_perl_xs_init, 3, perl_args,
+    perl_parse (perl_current_interpreter, weechat_perl_api_init, 3, perl_args,
                 NULL);
     
     eval_pv (perl_weechat_code, TRUE);
@@ -330,8 +330,8 @@ weechat_perl_load (char *filename)
 #endif
 	if (perl_current_script && (perl_current_script != &tempscript))
         {
-            script_remove (weechat_perl_plugin,
-                           &perl_scripts, perl_current_script);
+            script_remove (weechat_perl_plugin, &perl_scripts,
+                           perl_current_script);
         }
 	
 	free (eval);
@@ -425,7 +425,7 @@ weechat_perl_unload_name (char *name)
 {
     struct t_plugin_script *ptr_script;
     
-    ptr_script = script_search (weechat_perl_plugin, &perl_scripts, name);
+    ptr_script = script_search (weechat_perl_plugin, perl_scripts, name);
     if (ptr_script)
     {
         weechat_perl_unload (ptr_script);
@@ -498,7 +498,7 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
             weechat_printf (NULL, weechat_gettext ("  (none)"));
 
         /*
-        // List Perl message handlers
+        // list Perl message handlers
         plugin->print_server (plugin, "");
         plugin->print_server (plugin, "Perl message handlers:");
         handler_found = 0;
@@ -517,7 +517,7 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
         if (!handler_found)
             plugin->print_server (plugin, "  (none)");
         
-        // List Perl command handlers
+        // list Perl command handlers
         plugin->print_server (plugin, "");
         plugin->print_server (plugin, "Perl command handlers:");
         handler_found = 0;
@@ -536,7 +536,7 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
         if (!handler_found)
             plugin->print_server (plugin, "  (none)");
         
-        // List Perl timer handlers
+        // list Perl timer handlers
         plugin->print_server (plugin, "");
         plugin->print_server (plugin, "Perl timer handlers:");
         handler_found = 0;
@@ -555,7 +555,7 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
         if (!handler_found)
             plugin->print_server (plugin, "  (none)");
         
-        // List Perl keyboard handlers
+        // list Perl keyboard handlers
         plugin->print_server (plugin, "");
         plugin->print_server (plugin, "Perl keyboard handlers:");
         handler_found = 0;
@@ -573,7 +573,7 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
         if (!handler_found)
             plugin->print_server (plugin, "  (none)");
         
-        // List Perl event handlers
+        // list Perl event handlers
         plugin->print_server (plugin, "");
         plugin->print_server (plugin, "Perl event handlers:");
         handler_found = 0;
@@ -592,7 +592,7 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
         if (!handler_found)
             plugin->print_server (plugin, "  (none)");
         
-        // List Perl modifiers
+        // list Perl modifiers
         plugin->print_server (plugin, "");
         plugin->print_server (plugin, "Perl modifiers:");
         modifier_found = 0;
@@ -624,8 +624,8 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
     {
         if (weechat_strcasecmp (argv[1], "autoload") == 0)
         {
-            script_auto_load (weechat_perl_plugin, "perl",
-                              &weechat_perl_load_cb);
+            script_auto_load (weechat_perl_plugin,
+                              "perl", &weechat_perl_load_cb);
         }
         else if (weechat_strcasecmp (argv[1], "reload") == 0)
         {
@@ -667,6 +667,25 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * weechat_perl_dump_data_cb: dump Perl plugin data in WeeChat log file
+ */
+
+int
+weechat_perl_dump_data_cb (void *data, char *signal, char *type_data,
+                           void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+    
+    script_print_log (weechat_perl_plugin, perl_scripts);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * weechat_plugin_init: initialize Perl plugin
  */
 
@@ -674,7 +693,7 @@ int
 weechat_plugin_init (struct t_weechat_plugin *plugin)
 {
     weechat_perl_plugin = plugin;
-
+    
 #ifndef MULTIPLICITY
     char *perl_args[] = { "", "-e", "0" };
     
@@ -708,9 +727,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_mkdir_home ("perl", 0644);
     weechat_mkdir_home ("perl/autoload", 0644);
     
+    weechat_hook_signal ("dump_data", &weechat_perl_dump_data_cb, NULL);
+    
     script_init (weechat_perl_plugin);
-    script_auto_load (weechat_perl_plugin, "perl",
-                      &weechat_perl_load_cb);
+    script_auto_load (weechat_perl_plugin,
+                      "perl", &weechat_perl_load_cb);
     
     /* init ok */
     return WEECHAT_RC_OK;

@@ -25,14 +25,6 @@
 #endif
 
 #include <Python.h>
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
-//#include <stdarg.h>
-//#include <time.h>
-//#include <sys/socket.h>
-//#include <netinet/in.h>
-//#include <arpa/inet.h>
 
 #include "../../weechat-plugin.h"
 #include "../script.h"
@@ -46,7 +38,7 @@ WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION("0.1");
 WEECHAT_PLUGIN_LICENSE("GPL");
 
-struct t_weechat_plugin *weechat_python_plugin;
+struct t_weechat_plugin *weechat_python_plugin = NULL;
 
 struct t_plugin_script *python_scripts = NULL;
 struct t_plugin_script *python_current_script = NULL;
@@ -256,9 +248,6 @@ weechat_python_load (char *filename)
     char *w_home, *p_home;
     int len;
     
-    weechat_printf (NULL,
-                    weechat_gettext ("%s%s: loading script \"%s\""),
-                    weechat_prefix ("info"), "python", filename);    
     if ((fp = fopen (filename, "r")) == NULL)
     {
         weechat_printf (NULL,
@@ -266,6 +255,10 @@ weechat_python_load (char *filename)
                         weechat_prefix ("error"), "python", filename);
         return 0;
     }
+    
+    weechat_printf (NULL,
+                    weechat_gettext ("%s%s: loading script \"%s\""),
+                    weechat_prefix ("info"), "python", filename);
     
     python_current_script = NULL;
     
@@ -460,7 +453,7 @@ weechat_python_unload_name (char *name)
 {
     struct t_plugin_script *ptr_script;
     
-    ptr_script = script_search (weechat_python_plugin, &python_scripts, name);
+    ptr_script = script_search (weechat_python_plugin, python_scripts, name);
     if (ptr_script)
     {
         weechat_python_unload (ptr_script);
@@ -490,7 +483,7 @@ weechat_python_unload_all ()
 }
 
 /*
- * weechat_python_cmd: /python command handler
+ * weechat_python_cmd: callback for "/python" command
  */
 
 int
@@ -533,7 +526,7 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
             weechat_printf (NULL, weechat_gettext ("  (none)"));
         
         /*
-        // List Python message handlers
+        // list Python message handlers
         plugin->print_server (plugin, "");
         plugin->print_server (plugin, "Python message handlers:");
         handler_found = 0;
@@ -552,7 +545,7 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
         if (!handler_found)
             plugin->print_server (plugin, "  (none)");
         
-        // List Python command handlers
+        // list Python command handlers
         plugin->print_server (plugin, "");
         plugin->print_server (plugin, "Python command handlers:");
         handler_found = 0;
@@ -571,7 +564,7 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
         if (!handler_found)
             plugin->print_server (plugin, "  (none)");
         
-        // List Python timer handlers
+        // list Python timer handlers
         plugin->print_server (plugin, "");
         plugin->print_server (plugin, "Python timer handlers:");
         handler_found = 0;
@@ -590,7 +583,7 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
         if (!handler_found)
             plugin->print_server (plugin, "  (none)");
         
-        // List Python keyboard handlers
+        // list Python keyboard handlers
         plugin->print_server (plugin, "");
         plugin->print_server (plugin, "Python keyboard handlers:");
         handler_found = 0;
@@ -608,7 +601,7 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
         if (!handler_found)
             plugin->print_server (plugin, "  (none)");
         
-        // List Python event handlers
+        // list Python event handlers
         plugin->print_server (plugin, "");
         plugin->print_server (plugin, "Python event handlers:");
         handler_found = 0;
@@ -627,7 +620,7 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
         if (!handler_found)
             plugin->print_server (plugin, "  (none)");
         
-        // List Python modifiers
+        // list Python modifiers
         plugin->print_server (plugin, "");
         plugin->print_server (plugin, "Python modifiers:");
         modifier_found = 0;
@@ -659,14 +652,14 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
     {
         if (weechat_strcasecmp (argv[1], "autoload") == 0)
         {
-            script_auto_load (weechat_python_plugin, "python",
-                              &weechat_python_load_cb);
+            script_auto_load (weechat_python_plugin,
+                              "python", &weechat_python_load_cb);
         }
         else if (weechat_strcasecmp (argv[1], "reload") == 0)
         {
             weechat_python_unload_all ();
-            script_auto_load (weechat_python_plugin, "python",
-                              &weechat_python_load_cb);
+            script_auto_load (weechat_python_plugin,
+                              "python", &weechat_python_load_cb);
         }
         else if (weechat_strcasecmp (argv[1], "unload") == 0)
         {
@@ -697,6 +690,25 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
                             weechat_prefix ("error"), "python", "python");
         }
     }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * weechat_python_dump_data_cb: dump Python plugin data in WeeChat log file
+ */
+
+int
+weechat_python_dump_data_cb (void *data, char *signal, char *type_data,
+                             void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+    
+    script_print_log (weechat_python_plugin, python_scripts);
     
     return WEECHAT_RC_OK;
 }
@@ -752,9 +764,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_mkdir_home ("python", 0644);
     weechat_mkdir_home ("python/autoload", 0644);
     
+    weechat_hook_signal ("dump_data", &weechat_python_dump_data_cb, NULL);
+    
     script_init (weechat_python_plugin);
-    script_auto_load (weechat_python_plugin, "python",
-                      &weechat_python_load_cb);
+    script_auto_load (weechat_python_plugin,
+                      "python", &weechat_python_load_cb);
     
     /* init ok */
     return WEECHAT_RC_OK;
