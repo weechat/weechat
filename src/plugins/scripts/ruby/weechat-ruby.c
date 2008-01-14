@@ -21,14 +21,7 @@
 #undef _
 
 #include <ruby.h>
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
 #include <stdarg.h>
-//#include <time.h>
-//#include <sys/socket.h>
-//#include <netinet/in.h>
-//#include <arpa/inet.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
@@ -239,7 +232,7 @@ weechat_ruby_output (VALUE self, VALUE str)
 	if (strlen (m) + strlen (ruby_buffer_output) > 0)
         {
             weechat_printf (NULL,
-                            weechat_gettext ("%s%s: stdout/stderr : %s%s"),
+                            weechat_gettext ("%s%s: stdout/stderr: %s%s"),
                             weechat_prefix ("error"), "ruby",
                             ruby_buffer_output, m);
         }
@@ -251,7 +244,7 @@ weechat_ruby_output (VALUE self, VALUE str)
     if (strlen(m) + strlen(ruby_buffer_output) > sizeof(ruby_buffer_output))
     {
 	weechat_printf (NULL,
-                        weechat_gettext ("%s%s: stdout/stderr : %s%s"),
+                        weechat_gettext ("%s%s: stdout/stderr: %s%s"),
                         weechat_prefix ("error"), "ruby",
                         ruby_buffer_output, m);
 	ruby_buffer_output[0] = '\0';
@@ -344,8 +337,8 @@ weechat_ruby_load (char *filename)
                 break;
             case 3:
                 weechat_printf (NULL,
-                                weechat_gettext ("%s%s: unable to find "
-                                                 "\"weechat_init\" function "
+                                weechat_gettext ("%s%s: function "
+                                                 "\"weechat_init\" is missing "
                                                  "in file \"%s\""),
                                 weechat_prefix ("error"), "ruby", filename);
                 break;
@@ -366,12 +359,13 @@ weechat_ruby_load (char *filename)
 	return 0;
     }
     
-    ruby_retcode = rb_protect_funcall (curModule, rb_intern("weechat_init"), &ruby_error, 0);
+    ruby_retcode = rb_protect_funcall (curModule, rb_intern("weechat_init"),
+                                       &ruby_error, 0);
     
     if (ruby_error)
     {
 	weechat_printf (NULL,
-                        weechat_gettext ("%s%s: unable to eval "
+                        weechat_gettext ("%s%s: unable to eval function "
                                          "\"weechat_init\" in file \"%s\""),
                         weechat_prefix ("error"), "ruby", filename);
 	
@@ -493,11 +487,7 @@ int
 weechat_ruby_command_cb (void *data, struct t_gui_buffer *buffer,
                          int argc, char **argv, char **argv_eol)
 {
-    //int handler_found, modifier_found;
     char *path_script;
-    struct t_plugin_script *ptr_script;
-    //t_plugin_handler *ptr_handler;
-    //t_plugin_modifier *ptr_modifier;
     
     /* make C compiler happy */
     (void) data;
@@ -505,164 +495,29 @@ weechat_ruby_command_cb (void *data, struct t_gui_buffer *buffer,
     
     if (argc == 1)
     {
-        /* list registered Ruby scripts */
-        weechat_printf (NULL, "");
-        weechat_printf (NULL,
-                        weechat_gettext ("Registered %s scripts:"),
-                        "ruby");
-        if (ruby_scripts)
-        {
-            for (ptr_script = ruby_scripts; ptr_script;
-                 ptr_script = ptr_script->next_script)
-            {
-                weechat_printf (NULL,
-                                weechat_gettext ("  %s v%s (%s), by %s, "
-                                                 "license %s"),
-                                ptr_script->name,
-                                ptr_script->version,
-                                ptr_script->description,
-                                ptr_script->author,
-                                ptr_script->license);
-            }
-        }
-        else
-            weechat_printf (NULL, weechat_gettext ("  (none)"));
-        
-        /*
-        // list Ruby message handlers
-        plugin->print_server (plugin, "");
-        plugin->print_server (plugin, "Ruby message handlers:");
-        handler_found = 0;
-        for (ptr_handler = plugin->handlers;
-             ptr_handler; ptr_handler = ptr_handler->next_handler)
-        {
-            if ((ptr_handler->type == PLUGIN_HANDLER_MESSAGE)
-                && (ptr_handler->handler_args))
-            {
-                handler_found = 1;
-                plugin->print_server (plugin, "  IRC(%s) => Ruby(%s)",
-                                      ptr_handler->irc_command,
-                                      ptr_handler->handler_args);
-            }
-        }
-        if (!handler_found)
-            plugin->print_server (plugin, "  (none)");
-            
-        // list Ruby command handlers
-        plugin->print_server (plugin, "");
-        plugin->print_server (plugin, "Ruby command handlers:");
-        handler_found = 0;
-        for (ptr_handler = plugin->handlers;
-             ptr_handler; ptr_handler = ptr_handler->next_handler)
-        {
-            if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
-                && (ptr_handler->handler_args))
-            {
-                handler_found = 1;
-                plugin->print_server (plugin, "  /%s => Ruby(%s)",
-                                      ptr_handler->command,
-                                      ptr_handler->handler_args);
-            }
-        }
-        if (!handler_found)
-            plugin->print_server (plugin, "  (none)");
-            
-        // list Ruby timer handlers
-        plugin->print_server (plugin, "");
-        plugin->print_server (plugin, "Ruby timer handlers:");
-        handler_found = 0;
-        for (ptr_handler = plugin->handlers;
-             ptr_handler; ptr_handler = ptr_handler->next_handler)
-        {
-            if ((ptr_handler->type == PLUGIN_HANDLER_TIMER)
-                && (ptr_handler->handler_args))
-            {
-                handler_found = 1;
-                plugin->print_server (plugin, "  %d seconds => Ruby(%s)",
-                                      ptr_handler->interval,
-                                      ptr_handler->handler_args);
-            }
-        }
-        if (!handler_found)
-            plugin->print_server (plugin, "  (none)");
-            
-        // list Ruby keyboard handlers
-        plugin->print_server (plugin, "");
-        plugin->print_server (plugin, "Ruby keyboard handlers:");
-        handler_found = 0;
-        for (ptr_handler = plugin->handlers;
-             ptr_handler; ptr_handler = ptr_handler->next_handler)
-        {
-            if ((ptr_handler->type == PLUGIN_HANDLER_KEYBOARD)
-                && (ptr_handler->handler_args))
-            {
-                handler_found = 1;
-                plugin->print_server (plugin, "  Ruby(%s)",
-                                      ptr_handler->handler_args);
-            }
-        }
-        if (!handler_found)
-            plugin->print_server (plugin, "  (none)");
-            
-        // list Ruby event handlers
-        plugin->print_server (plugin, "");
-        plugin->print_server (plugin, "Ruby event handlers:");
-        handler_found = 0;
-        for (ptr_handler = plugin->handlers;
-             ptr_handler; ptr_handler = ptr_handler->next_handler)
-        {
-            if ((ptr_handler->type == PLUGIN_HANDLER_EVENT)
-                && (ptr_handler->handler_args))
-            {
-                handler_found = 1;
-                plugin->print_server (plugin, "  %s => Ruby(%s)",
-                                      ptr_handler->event,
-                                      ptr_handler->handler_args);
-            }
-        }
-        if (!handler_found)
-            plugin->print_server (plugin, "  (none)");
-            
-        // list Ruby modifiers
-        plugin->print_server (plugin, "");
-        plugin->print_server (plugin, "Ruby modifiers:");
-        modifier_found = 0;
-        for (ptr_modifier = plugin->modifiers;
-             ptr_modifier; ptr_modifier = ptr_modifier->next_modifier)
-        {
-            modifier_found = 1;
-            if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_IN)
-                plugin->print_server (plugin, "  IRC(%s, %s) => Ruby(%s)",
-                                      ptr_modifier->command,
-                                      PLUGIN_MODIFIER_IRC_IN_STR,
-                                      ptr_modifier->modifier_args);
-            else if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_USER)
-                plugin->print_server (plugin, "  IRC(%s, %s) => Ruby(%s)",
-                                      ptr_modifier->command,
-                                      PLUGIN_MODIFIER_IRC_USER_STR,
-                                      ptr_modifier->modifier_args);
-            else if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_OUT)
-                plugin->print_server (plugin, "  IRC(%s, %s) => Ruby(%s)",
-                                      ptr_modifier->command,
-                                      PLUGIN_MODIFIER_IRC_OUT_STR,
-                                      ptr_modifier->modifier_args);
-        }
-        if (!modifier_found)
-            plugin->print_server (plugin, "  (none)");
-        */
+        script_display_list (weechat_ruby_plugin, ruby_scripts,
+                             NULL, 0);
     }
     else if (argc == 2)
     {
-        if (weechat_strcasecmp (argv[1], "autoload") == 0)
+        if (weechat_strcasecmp (argv[1], "list") == 0)
         {
-            script_auto_load (weechat_ruby_plugin,
-                              "ruby", &weechat_ruby_load_cb);
+            script_display_list (weechat_ruby_plugin, ruby_scripts,
+                                 NULL, 0);
+        }
+        else if (weechat_strcasecmp (argv[1], "listfull") == 0)
+        {
+            script_display_list (weechat_ruby_plugin, ruby_scripts,
+                                 NULL, 1);
+        }
+        else if (weechat_strcasecmp (argv[1], "autoload") == 0)
+        {
+            script_auto_load (weechat_ruby_plugin, &weechat_ruby_load_cb);
         }
         else if (weechat_strcasecmp (argv[1], "reload") == 0)
         {
             weechat_ruby_unload_all ();
-            script_auto_load (weechat_ruby_plugin,
-                              "ruby", &weechat_ruby_load_cb);
+            script_auto_load (weechat_ruby_plugin, &weechat_ruby_load_cb);
         }
         else if (weechat_strcasecmp (argv[1], "unload") == 0)
         {
@@ -671,11 +526,21 @@ weechat_ruby_command_cb (void *data, struct t_gui_buffer *buffer,
     }
     else
     {
-        if (weechat_strcasecmp (argv[1], "load") == 0)
+        if (weechat_strcasecmp (argv[1], "list") == 0)
+        {
+            script_display_list (weechat_ruby_plugin, ruby_scripts,
+                                 argv_eol[2], 0);
+        }
+        else if (weechat_strcasecmp (argv[1], "listfull") == 0)
+        {
+            script_display_list (weechat_ruby_plugin, ruby_scripts,
+                                 argv_eol[2], 1);
+        }
+        else if (weechat_strcasecmp (argv[1], "load") == 0)
         {
             /* load Ruby script */
             path_script = script_search_full_name (weechat_ruby_plugin,
-                                                   "ruby", argv_eol[2]);
+                                                   argv_eol[2]);
             weechat_ruby_load ((path_script) ? path_script : argv_eol[2]);
             if (path_script)
                 free (path_script);
@@ -793,7 +658,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     {
 	VALUE ruby_error_info = rb_inspect(ruby_errinfo);
 	weechat_printf (NULL,
-                        weechat_gettext ("%s%s: unable to eval weechat ruby "
+                        weechat_gettext ("%s%s: unable to eval WeeChat ruby "
                                          "internal code"),
                         weechat_prefix ("error"), "ruby");
 	weechat_printf (NULL,
@@ -803,25 +668,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 	return WEECHAT_RC_ERROR;
     }
     
-    weechat_hook_command ("ruby",
-                          weechat_gettext ("list/load/unload Ruby scripts"),
-                          weechat_gettext ("[load filename] | [autoload] | "
-                                           "[reload] | [unload [script]]"),
-                          weechat_gettext ("filename: Ruby script (file) to "
-                                           "load\n"
-                                           "script: script name to unload\n\n"
-                                           "Without argument, /ruby command "
-                                           "lists all loaded Ruby scripts."),
-                          "load|autoload|reload|unload %f",
-                          &weechat_ruby_command_cb, NULL);
-    
-    weechat_mkdir_home ("ruby", 0644);
-    weechat_mkdir_home ("ruby/autoload", 0644);
-    
-    weechat_hook_signal ("dump_data", &weechat_ruby_dump_data_cb, NULL);
-    
-    script_init (weechat_ruby_plugin);
-    script_auto_load (weechat_ruby_plugin, "ruby", &weechat_ruby_load_cb);
+    script_init (weechat_ruby_plugin,
+                 &weechat_ruby_command_cb, &weechat_ruby_dump_data_cb,
+                 &weechat_ruby_load_cb);
     
     /* init ok */
     return WEECHAT_RC_OK;

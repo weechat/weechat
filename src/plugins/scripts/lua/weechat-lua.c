@@ -23,15 +23,8 @@
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
-
-//#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//#include <stdarg.h>
-//#include <time.h>
-//#include <sys/socket.h>
-//#include <netinet/in.h>
-//#include <arpa/inet.h>
 
 #include "../../weechat-plugin.h"
 #include "../script.h"
@@ -132,7 +125,7 @@ weechat_lua_load (char *filename)
     char *weechat_lua_code = {
 	"weechat_outputs = {\n"
 	"    write = function (self, str)\n"
-	"        weechat.print(\"Lua stdout/stderr : \" .. str)\n"
+	"        weechat.print(\"\", \"lua: stdout/stderr: \" .. str)\n"
         "    end\n"
 	"}\n"
 	"io.stdout = weechat_outputs\n"
@@ -328,11 +321,7 @@ int
 weechat_lua_command_cb (void *data, struct t_gui_buffer *buffer,
                         int argc, char **argv, char **argv_eol)
 {
-    //int handler_found, modifier_found;
     char *path_script;
-    struct t_plugin_script *ptr_script;
-    //t_plugin_handler *ptr_handler;
-    //t_plugin_modifier *ptr_modifier;
     
     /* make C compiler happy */
     (void) data;
@@ -340,162 +329,29 @@ weechat_lua_command_cb (void *data, struct t_gui_buffer *buffer,
     
     if (argc == 1)
     {
-        /* list registered Lua scripts */
-        weechat_printf (NULL, "");
-        weechat_printf (NULL,
-                        weechat_gettext ("Registered %s scripts:"),
-                        "lua");
-        if (lua_scripts)
-        {
-            for (ptr_script = lua_scripts; ptr_script;
-                 ptr_script = ptr_script->next_script)
-            {
-                weechat_printf (NULL,
-                                weechat_gettext ("  %s v%s (%s), by %s, "
-                                                 "license %s"),
-                                ptr_script->name,
-                                ptr_script->version,
-                                ptr_script->description,
-                                ptr_script->author,
-                                ptr_script->license);
-            }
-        }
-        else
-            weechat_printf (NULL, weechat_gettext ("  (none)"));
-
-        /*
-        // list Lua message handlers
-        plugin->print_server (plugin, "");
-        plugin->print_server (plugin, "Lua message handlers:");
-        handler_found = 0;
-        for (ptr_handler = plugin->handlers;
-             ptr_handler; ptr_handler = ptr_handler->next_handler)
-        {
-            if ((ptr_handler->type == PLUGIN_HANDLER_MESSAGE)
-                && (ptr_handler->handler_args))
-            {
-                handler_found = 1;
-                plugin->print_server (plugin, "  IRC(%s) => Lua(%s)",
-                                      ptr_handler->irc_command,
-                                      ptr_handler->handler_args);
-            }
-        }
-        if (!handler_found)
-            plugin->print_server (plugin, "  (none)");
-            
-        // list Lua command handlers
-        plugin->print_server (plugin, "");
-        plugin->print_server (plugin, "Lua command handlers:");
-        handler_found = 0;
-        for (ptr_handler = plugin->handlers;
-             ptr_handler; ptr_handler = ptr_handler->next_handler)
-        {
-            if ((ptr_handler->type == PLUGIN_HANDLER_COMMAND)
-                && (ptr_handler->handler_args))
-            {
-                handler_found = 1;
-                plugin->print_server (plugin, "  /%s => Lua(%s)",
-                                      ptr_handler->command,
-                                      ptr_handler->handler_args);
-            }
-        }
-        if (!handler_found)
-            plugin->print_server (plugin, "  (none)");
-            
-        // list Lua timer handlers
-        plugin->print_server (plugin, "");
-        plugin->print_server (plugin, "Lua timer handlers:");
-        handler_found = 0;
-        for (ptr_handler = plugin->handlers;
-             ptr_handler; ptr_handler = ptr_handler->next_handler)
-        {
-            if ((ptr_handler->type == PLUGIN_HANDLER_TIMER)
-                && (ptr_handler->handler_args))
-            {
-                handler_found = 1;
-                plugin->print_server (plugin, "  %d seconds => Lua(%s)",
-                                      ptr_handler->interval,
-                                      ptr_handler->handler_args);
-            }
-        }
-        if (!handler_found)
-            plugin->print_server (plugin, "  (none)");
-            
-        // list Lua keyboard handlers
-        plugin->print_server (plugin, "");
-        plugin->print_server (plugin, "Lua keyboard handlers:");
-        handler_found = 0;
-        for (ptr_handler = plugin->handlers;
-             ptr_handler; ptr_handler = ptr_handler->next_handler)
-        {
-            if ((ptr_handler->type == PLUGIN_HANDLER_KEYBOARD)
-                && (ptr_handler->handler_args))
-            {
-                handler_found = 1;
-                plugin->print_server (plugin, "  Lua(%s)",
-                                      ptr_handler->handler_args);
-            }
-        }
-        if (!handler_found)
-            plugin->print_server (plugin, "  (none)");
-            
-        // list Lua event handlers
-        plugin->print_server (plugin, "");
-        plugin->print_server (plugin, "Lua event handlers:");
-        handler_found = 0;
-        for (ptr_handler = plugin->handlers;
-             ptr_handler; ptr_handler = ptr_handler->next_handler)
-        {
-            if ((ptr_handler->type == PLUGIN_HANDLER_EVENT)
-                && (ptr_handler->handler_args))
-            {
-                handler_found = 1;
-                plugin->print_server (plugin, "  %s => Lua(%s)",
-                                      ptr_handler->event,
-                                      ptr_handler->handler_args);
-            }
-        }
-        if (!handler_found)
-            plugin->print_server (plugin, "  (none)");
-            
-        // list Lua modifiers
-        plugin->print_server (plugin, "");
-        plugin->print_server (plugin, "Lua modifiers:");
-        modifier_found = 0;
-        for (ptr_modifier = plugin->modifiers;
-             ptr_modifier; ptr_modifier = ptr_modifier->next_modifier)
-        {
-            modifier_found = 1;
-            if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_IN)
-                plugin->print_server (plugin, "  IRC(%s, %s) => Lua(%s)",
-                                      ptr_modifier->command,
-                                      PLUGIN_MODIFIER_IRC_IN_STR,
-                                      ptr_modifier->modifier_args);
-            else if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_USER)
-                plugin->print_server (plugin, "  IRC(%s, %s) => Lua(%s)",
-                                      ptr_modifier->command,
-                                      PLUGIN_MODIFIER_IRC_USER_STR,
-                                      ptr_modifier->modifier_args);
-            else if (ptr_modifier->type == PLUGIN_MODIFIER_IRC_OUT)
-                plugin->print_server (plugin, "  IRC(%s, %s) => Lua(%s)",
-                                      ptr_modifier->command,
-                                      PLUGIN_MODIFIER_IRC_OUT_STR,
-                                      ptr_modifier->modifier_args);
-        }
-        if (!modifier_found)
-            plugin->print_server (plugin, "  (none)");
-        */
+        script_display_list (weechat_lua_plugin, lua_scripts,
+                             NULL, 0);
     }
     else if (argc == 2)
     {
-        if (weechat_strcasecmp (argv[1], "autoload") == 0)
-            script_auto_load (weechat_lua_plugin,
-                              "lua", &weechat_lua_load_cb);
+        if (weechat_strcasecmp (argv[1], "list") == 0)
+        {
+            script_display_list (weechat_lua_plugin, lua_scripts,
+                                 NULL, 0);
+        }
+        else if (weechat_strcasecmp (argv[1], "listfull") == 0)
+        {
+            script_display_list (weechat_lua_plugin, lua_scripts,
+                                 NULL, 1);
+        }
+        else if (weechat_strcasecmp (argv[1], "autoload") == 0)
+        {
+            script_auto_load (weechat_lua_plugin, &weechat_lua_load_cb);
+        }
         else if (weechat_strcasecmp (argv[1], "reload") == 0)
         {
             weechat_lua_unload_all ();
-            script_auto_load (weechat_lua_plugin,
-                              "lua", &weechat_lua_load_cb);
+            script_auto_load (weechat_lua_plugin, &weechat_lua_load_cb);
         }
         else if (weechat_strcasecmp (argv[1], "unload") == 0)
         {
@@ -504,11 +360,21 @@ weechat_lua_command_cb (void *data, struct t_gui_buffer *buffer,
     }
     else
     {
-        if (weechat_strcasecmp (argv[1], "load") == 0)
+        if (weechat_strcasecmp (argv[1], "list") == 0)
+        {
+            script_display_list (weechat_lua_plugin, lua_scripts,
+                                 argv_eol[2], 0);
+        }
+        else if (weechat_strcasecmp (argv[1], "listfull") == 0)
+        {
+            script_display_list (weechat_lua_plugin, lua_scripts,
+                                 argv_eol[2], 1);
+        }
+        else if (weechat_strcasecmp (argv[1], "load") == 0)
         {
             /* load Lua script */
             path_script = script_search_full_name (weechat_lua_plugin,
-                                                   "lua", argv_eol[2]);
+                                                   argv_eol[2]);
             weechat_lua_load ((path_script) ? path_script : argv_eol[2]);
             if (path_script)
                 free (path_script);
@@ -558,26 +424,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 {
     
     weechat_lua_plugin = plugin;
-    
-    weechat_hook_command ("lua",
-                          weechat_gettext ("list/load/unload Lua scripts"),
-                          weechat_gettext ("[load filename] | [autoload] | "
-                                           "[reload] | [unload [script]]"),
-                          weechat_gettext ("filename: Lua script (file) to "
-                                           "load\n"
-                                           "script: script name to unload\n\n"
-                                           "Without argument, /lua command "
-                                           "lists all loaded Lua scripts."),
-                          "load|autoload|reload|unload %f",
-                          &weechat_lua_command_cb, NULL);
-    
-    weechat_mkdir_home ("lua", 0644);
-    weechat_mkdir_home ("lua/autoload", 0644);
 
-    weechat_hook_signal ("dump_data", &weechat_lua_dump_data_cb, NULL);
-    
-    script_init (weechat_lua_plugin);
-    script_auto_load (weechat_lua_plugin, "lua", &weechat_lua_load_cb);
+    script_init (weechat_lua_plugin,
+                 &weechat_lua_command_cb, &weechat_lua_dump_data_cb,
+                 &weechat_lua_load_cb);
     
     /* init ok */
     return WEECHAT_RC_OK;

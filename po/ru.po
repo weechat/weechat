@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-11 14:53+0100\n"
+"POT-Creation-Date: 2008-01-14 11:13+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4077,47 +4077,35 @@ msgid "%s%s: registered script \"%s\", version %s (%s)"
 msgstr ""
 
 #, fuzzy, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
 msgid "%s%s: error: %s"
 msgstr "%sСервер: %s%s\n"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s plugin \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%s%s: not enough memory in function \"%s\""
-msgstr "%s недостаточно памяти для нового DCC\n"
-
-#, fuzzy, c-format
-msgid "%s%s: loading Perl script \"%s\""
-msgstr "сессия: загружаю сервер \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: script \"%s\" not found"
 msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy, c-format
+msgid "%s%s: loading script \"%s\""
+msgstr "сессия: загружаю сервер \"%s\"\n"
+
+#, fuzzy, c-format
 msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s не могу создать сервер\n"
 
 #, fuzzy, c-format
-msgid "%s%s: not enough memory to parse file \"%s\""
-msgstr "%s недостаточно памяти для нового DCC\n"
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s не могу создать сервер\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to parse file \"%s\""
+msgid "%s%s: unable to load file \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to run file \"%s\""
-msgstr "Не могу записать лог-файл \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown error while loading file \"%s\""
+msgid "%s%s: unable to execute file \"%s\""
 msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
@@ -4138,36 +4126,123 @@ msgstr "Plugin \"%s\" выгружен.\n"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s сервер \"%s\" не найден\n"
 
-msgid "Registered Perl scripts:"
-msgstr ""
-
-#, c-format
-msgid "  %s v%s (%s), by %s, license %s"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "%s%s: unknown option for command \"%s\""
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
+#, c-format
+msgid "%s%s: function \"%s\" must return one valid value (%d)"
+msgstr ""
+
 #, fuzzy, c-format
-msgid "%s%s: unable to initialize Perl"
+msgid "%s%s: function \"%s\" is internally misused"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory in function \"%s\""
+msgstr "%s недостаточно памяти для нового DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory to parse file \"%s\""
+msgstr "%s недостаточно памяти для нового DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to parse file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to run file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown error while loading file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to initialize %s"
 msgstr "%s не могу инициализировать plugin \"%s\"\n"
 
+#, fuzzy, c-format
+msgid "%s%s unable to run function \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to initialize WeeChat module"
+msgstr "%s не могу инициализировать plugin \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stdout"
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to redirect stderr"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to launch global interpreter"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to get current interpreter state"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to free interpreter"
+msgstr "%s не могу создать сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error: \"%s\""
+msgstr "%sСервер: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s: stdout/stderr: %s%s"
+msgstr "%sСервер: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to read file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error while loading file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to eval WeeChat ruby internal code"
+msgstr "%s не могу создать сервер\n"
+
 #, fuzzy
-msgid "list/load/unload Perl scripts"
+msgid "list/load/unload scripts"
 msgstr "перечислить/загрузить/выгрузить plugin'ы"
 
 #, fuzzy
-msgid "[load filename] | [autoload] | [reload] | [unload [script]]"
+msgid ""
+"[list [name]] | [listfull [name]] [load filename] | [autoload] | [reload] | "
+"[unload [name]]"
 msgstr ""
 "[list [имя]] | [listfull [имя]] | [load имя_файла] | [autoload] | [reload "
 "[имя]] | [unload [имя]]"
 
 msgid ""
-"filename: Perl script (file) to load\n"
-"script: script name to unload\n"
+"filename: script (file) to load\n"
+"name: a script name\n"
 "\n"
-"Without argument, /perl command lists all loaded Perl scripts."
+"Without argument, this command lists all loaded scripts."
 msgstr ""
 
 #, c-format
@@ -4184,6 +4259,23 @@ msgstr ""
 msgid "%s: error loading script \"%s\" (not enough memory)"
 msgstr "%s не могу загрузить plugin \"%s\" (недостаточно памяти)\n"
 
+#. TRANSLATORS: %s is language (for example "perl")
+#, fuzzy, c-format
+msgid "%s scripts loaded:"
+msgstr "FIFO pipe закрыт\n"
+
+#, fuzzy, c-format
+msgid "    file: %s"
+msgstr "       IRC(%s)\n"
+
+#, c-format
+msgid "    written by \"%s\", license: %s"
+msgstr ""
+
+#, fuzzy
+msgid "  (none)"
+msgstr "(неизвестен)"
+
 #, c-format
 msgid "%s%s: unable to call function \"%s\", script is not initialized"
 msgstr ""
@@ -4193,8 +4285,42 @@ msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
 #, fuzzy
-#~ msgid "%s%s: scripts unloaded"
-#~ msgstr "FIFO pipe закрыт\n"
+#~ msgid "  %s%s%s v%s - %s"
+#~ msgstr " пользователем %s%s %s(%s%s%s)"
+
+#, fuzzy
+#~ msgid ""
+#~ "[list [name]] | [listfull [name]] [load filename] | [autoload] | [reload] "
+#~ "| [unload [script]]"
+#~ msgstr ""
+#~ "[list [имя]] | [listfull [имя]] | [load имя_файла] | [autoload] | [reload "
+#~ "[имя]] | [unload [имя]]"
+
+#, fuzzy
+#~ msgid "%s%s: not enough memory for function \"%s\""
+#~ msgstr "%s недостаточно памяти для нового DCC\n"
+
+#, fuzzy
+#~ msgid "[load filename] | [autoload] | [reload] | [unload [script]]"
+#~ msgstr ""
+#~ "[list [имя]] | [listfull [имя]] | [load имя_файла] | [autoload] | [reload "
+#~ "[имя]] | [unload [имя]]"
+
+#, fuzzy
+#~ msgid "list/load/unload Perl scripts"
+#~ msgstr "перечислить/загрузить/выгрузить plugin'ы"
+
+#, fuzzy
+#~ msgid "list/load/unload Python scripts"
+#~ msgstr "перечислить/загрузить/выгрузить plugin'ы"
+
+#, fuzzy
+#~ msgid "list/load/unload Ruby scripts"
+#~ msgstr "перечислить/загрузить/выгрузить plugin'ы"
+
+#, fuzzy
+#~ msgid "%s%s: loading Perl script \"%s\""
+#~ msgstr "сессия: загружаю сервер \"%s\"\n"
 
 #, fuzzy
 #~ msgid "%s%s: plugin ended"

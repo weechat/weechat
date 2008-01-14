@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-11 14:53+0100\n"
-"PO-Revision-Date: 2008-01-11 14:55+0100\n"
+"POT-Creation-Date: 2008-01-14 11:13+0100\n"
+"PO-Revision-Date: 2008-01-14 11:15+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4017,48 +4017,36 @@ msgid "%s%s: registered script \"%s\", version %s (%s)"
 msgstr "%s%s: script \"%s\" chargé, version %s (%s)"
 
 #, c-format
+msgid "%s%s: unable to run function \"%s\""
+msgstr "%s%s: impossible de lancer la fonction \"%s\""
+
+#, c-format
 msgid "%s%s: error: %s"
 msgstr "%s%s: erreur: %s"
-
-#, c-format
-msgid "%s%s: function \"%s\" must return one valid value (%d)"
-msgstr "%s%s: la fonction \"%s\" doit retourner une valeur valide (%d)"
-
-#, c-format
-msgid "%s%s: function \"%s\" is internally misused"
-msgstr "%s%s: la fonction \"%s\" est mal utilisée en interne"
-
-#, c-format
-msgid "%s%s: not enough memory in function \"%s\""
-msgstr "%s%s: pas assez de mémoire dans la fonction \"%s\""
-
-#, c-format
-msgid "%s%s: loading Perl script \"%s\""
-msgstr "%s%s: chargement du script Perl \"%s\""
 
 #, c-format
 msgid "%s%s: script \"%s\" not found"
 msgstr "%s%s: script \"%s\" non trouvé"
 
 #, c-format
+msgid "%s%s: loading script \"%s\""
+msgstr "%s%s: chargement du script \"%s\""
+
+#, c-format
 msgid "%s%s: unable to create new sub-interpreter"
 msgstr "%s%s: impossible de créer le sous-interpréteur"
 
 #, c-format
-msgid "%s%s: not enough memory to parse file \"%s\""
-msgstr "%s%s: mémoire insuffisante pour lire le fichier \"%s\""
+msgid "%s%s: unable to redirect stdout and stderr"
+msgstr "%s%s: impossible de rediriger stdout et stderr"
 
 #, c-format
-msgid "%s%s: unable to parse file \"%s\""
-msgstr "%s%s: impossible de lire le fichier \"%s\""
+msgid "%s%s: unable to load file \"%s\""
+msgstr "%s%s: impossible de charger le fichier \"%s\""
 
 #, c-format
-msgid "%s%s: unable to run file \"%s\""
-msgstr "%s%s: impossible de lancer le fichier \"%s\""
-
-#, c-format
-msgid "%s%s: unknown error while loading file \"%s\""
-msgstr "%s%s: erreur inconnue en chargeant le fichier \"%s\""
+msgid "%s%s: unable to execute file \"%s\""
+msgstr "%s%s: impossible d'exécuter le fichier \"%s\""
 
 #, c-format
 msgid "%s%s: function \"register\" not found (or failed) in file \"%s\""
@@ -4077,37 +4065,129 @@ msgstr "%s%s: script \"%s\" déchargé"
 msgid "%s%s: script \"%s\" not loaded"
 msgstr "%s%s: script \"%s\" non chargé"
 
-msgid "Registered Perl scripts:"
-msgstr "Scripts Perl chargés:"
-
-#, c-format
-msgid "  %s v%s (%s), by %s, license %s"
-msgstr "  %s v%s (%s), par %s, licence %s"
-
 #, c-format
 msgid "%s%s: unknown option for command \"%s\""
 msgstr "%s%s: option inconnue pour la commande \"%s\""
 
 #, c-format
-msgid "%s%s: unable to initialize Perl"
-msgstr "%s%s: impossible d'initialiser Perl"
+msgid "%s%s: function \"%s\" must return one valid value (%d)"
+msgstr "%s%s: la fonction \"%s\" doit retourner une valeur valide (%d)"
 
-msgid "list/load/unload Perl scripts"
-msgstr "liste/charge/décharge des scripts Perl"
+#, c-format
+msgid "%s%s: function \"%s\" is internally misused"
+msgstr "%s%s: la fonction \"%s\" est mal utilisée en interne"
 
-msgid "[load filename] | [autoload] | [reload] | [unload [script]]"
-msgstr "[load fichier] | [autoload] | [reload] | [unload [script]]"
+#, c-format
+msgid "%s%s: not enough memory in function \"%s\""
+msgstr "%s%s: pas assez de mémoire dans la fonction \"%s\""
+
+#, c-format
+msgid "%s%s: not enough memory to parse file \"%s\""
+msgstr "%s%s: mémoire insuffisante pour lire le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: unable to parse file \"%s\""
+msgstr "%s%s: impossible de lire le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: unable to run file \"%s\""
+msgstr "%s%s: impossible de lancer le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: unknown error while loading file \"%s\""
+msgstr "%s%s: erreur inconnue en chargement du fichier \"%s\""
+
+#, c-format
+msgid "%s%s: unable to initialize %s"
+msgstr "%s%s: impossible d'initialiser %s"
+
+#, c-format
+msgid "%s%s unable to run function \"%s\""
+msgstr "%s%s: impossible de lancer la fonction \"%s\""
+
+#, c-format
+msgid "%s%s: function \"%s\" must return a valid value"
+msgstr "%s%s: la fonction \"%s\" doit retourner une valeur valide"
+
+#, c-format
+msgid "%s: stdout/stderr: %s%s"
+msgstr "%s: stdout/stderr: %s%s"
+
+#, c-format
+msgid "%s%s: unable to initialize WeeChat module"
+msgstr "%s%s: impossible d'initialiser le module WeeChat"
+
+#, c-format
+msgid "%s%s: unable to redirect stdout"
+msgstr "%s%s: impossible de rediriger stdout"
+
+#, c-format
+msgid "%s%s: unable to redirect stderr"
+msgstr "%s%s: impossible de rediriger stderr"
+
+#, c-format
+msgid "%s%s: unable to launch global interpreter"
+msgstr "%s%s: impossible de lancer l'interpréteur global"
+
+#, c-format
+msgid "%s%s: unable to get current interpreter state"
+msgstr "%s%s: impossible de lire l'état courant de l'interpréteur"
+
+#, c-format
+msgid "%s%s: unable to free interpreter"
+msgstr "%s%s: impossible de libérer l'interpréteur"
+
+#, c-format
+msgid "%s%s: error: \"%s\""
+msgstr "%s%s: erreur: \"%s\""
+
+#, c-format
+msgid "%s%s: stdout/stderr: %s%s"
+msgstr "%s%s: stdout/stderr: %s%s"
+
+#, c-format
+msgid "%s%s: unable to read file \"%s\""
+msgstr "%s%s: impossible de lire le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: error while loading file \"%s\""
+msgstr "%s%s: erreur en chargement du fichier \"%s\""
+
+#, c-format
+msgid "%s%s: function \"weechat_init\" is missing in file \"%s\""
+msgstr ""
+"%s%s: la fonction \"weechat_init\" est manquante dans le fichier \"%s\""
+
+#, c-format
+msgid "%s%s: unable to eval function \"weechat_init\" in file \"%s\""
+msgstr ""
+"%s%s: impossible d'évaluer la fonction \"weechat_init\" dans le fichier \"%s"
+"\""
+
+#, c-format
+msgid "%s%s: unable to eval WeeChat ruby internal code"
+msgstr "%s%s: impossible d'évaluer le code ruby interne WeeChat"
+
+msgid "list/load/unload scripts"
+msgstr "liste/charge/décharge des scripts"
 
 msgid ""
-"filename: Perl script (file) to load\n"
-"script: script name to unload\n"
-"\n"
-"Without argument, /perl command lists all loaded Perl scripts."
+"[list [name]] | [listfull [name]] [load filename] | [autoload] | [reload] | "
+"[unload [name]]"
 msgstr ""
-"fichier: script Perl (fichier) à charger\n"
-"script: nom du script à décharger\n"
+"[list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload] | "
+"[unload [nom]]"
+
+msgid ""
+"filename: script (file) to load\n"
+"name: a script name\n"
 "\n"
-"Sans argument, la commande /perl liste tous les scripts Perl chargés."
+"Without argument, this command lists all loaded scripts."
+msgstr ""
+"fichier: script (fichier) à charger\n"
+"nom: un nom de script\n"
+"\n"
+"Sans argument, cette commande liste tous les scripts chargés."
 
 #, c-format
 msgid "%s: error loading script \"%s\" (bad name, spaces are forbidden)"
@@ -4126,6 +4206,22 @@ msgstr ""
 #, c-format
 msgid "%s: error loading script \"%s\" (not enough memory)"
 msgstr "%s: erreur de chargement du script \"%s\" (mémoire insuffisante)"
+
+#. TRANSLATORS: %s is language (for example "perl")
+#, c-format
+msgid "%s scripts loaded:"
+msgstr "Scripts %s chargés:"
+
+#, c-format
+msgid "    file: %s"
+msgstr "    fichier: %s"
+
+#, c-format
+msgid "    written by \"%s\", license: %s"
+msgstr "    écrit par \"%s\", licence: %s"
+
+msgid "  (none)"
+msgstr "  (aucun)"
 
 #, c-format
 msgid "%s%s: unable to call function \"%s\", script is not initialized"

@@ -56,17 +56,24 @@ struct t_plugin_script
     struct t_plugin_script *next_script; /* link to next script             */
 };
 
-extern void script_init (struct t_weechat_plugin *weechat_plugin);
+extern void script_init (struct t_weechat_plugin *weechat_plugin,
+                         int (*callback_command)(void *data,
+                                                 struct t_gui_buffer *buffer,
+                                                 int argc, char **argv,
+                                                 char **argv_eol),
+                         int (*callback_signal_dump)(void *data, char *signal,
+                                                     char *type_data,
+                                                     void *signal_data),
+                         int (*callback_load_file)(void *data, char *filename));
 extern char *script_pointer_to_string (void *pointer);
 extern void *script_string_to_pointer (char *pointer_str);
 extern void script_auto_load (struct t_weechat_plugin *weechat_plugin,
-                              char *language,
                               int (*callback)(void *data, char *filename));
 extern struct t_plugin_script *script_search (struct t_weechat_plugin *weechat_plugin,
                                               struct t_plugin_script *scripts,
                                               char *name);
 extern char *script_search_full_name (struct t_weechat_plugin *weechat_plugin,
-                                      char *language, char *filename);
+                                      char *filename);
 extern struct t_plugin_script *script_add (struct t_weechat_plugin *weechat_plugin,
                                            struct t_plugin_script **scripts,
                                            char *filename, char *name,
@@ -76,6 +83,9 @@ extern struct t_plugin_script *script_add (struct t_weechat_plugin *weechat_plug
 extern void script_remove (struct t_weechat_plugin *weechat_plugin,
                            struct t_plugin_script **scripts,
                            struct t_plugin_script *script);
+extern void script_display_list (struct t_weechat_plugin *weechat_plugin,
+                                 struct t_plugin_script *scripts,
+                                 char *name, int full);
 extern void script_print_log (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *scripts);
 

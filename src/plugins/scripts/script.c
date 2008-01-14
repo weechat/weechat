@@ -80,9 +80,17 @@ script_config_cb (void *data, char *type, char *option, char *value)
  */
 
 void
-script_init (struct t_weechat_plugin *weechat_plugin)
+script_init (struct t_weechat_plugin *weechat_plugin,
+             int (*callback_command)(void *data,
+                                     struct t_gui_buffer *buffer,
+                                     int argc, char **argv,
+                                     char **argv_eol),
+             int (*callback_signal_dump)(void *data, char *signal,
+                                         char *type_data,
+                                         void *signal_data),
+             int (*callback_load_file)(void *data, char *filename))
 {
-    char *option;
+    char *string;
     int length;
     
     /* read script configuration */
@@ -90,14 +98,45 @@ script_init (struct t_weechat_plugin *weechat_plugin)
     
     /* add hook for config option */
     length = strlen (weechat_plugin->name) + 32;
-    option= (char *)malloc (length);
-    if (option)
+    string = (char *)malloc (length);
+    if (string)
     {
-        snprintf (option, length - 1, "%s.%s",
+        snprintf (string, length, "%s.%s",
                   weechat_plugin->name, SCRIPT_OPTION_CHECK_LICENSE);
-        weechat_hook_config ("plugin", option,
+        weechat_hook_config ("plugin", string,
                              &script_config_cb, weechat_plugin);
+        free (string);
     }
+    
+    /* create directories in WeeChat home */
+    weechat_mkdir_home (weechat_plugin->name, 0644);
+    length = strlen (weechat_plugin->name) + strlen ("/autoload") + 1;
+    string = (char *)malloc (length);
+    if (string)
+    {
+        snprintf (string, length, "%s/autoload", weechat_plugin->name);
+        weechat_mkdir_home (string, 0644);
+        free (string);
+    }
+    
+    /* add command */
+    weechat_hook_command (weechat_plugin->name,
+                          _("list/load/unload scripts"),
+                          _("[list [name]] | [listfull [name]] "
+                            "[load filename] | [autoload] | "
+                            "[reload] | [unload [name]]"),
+                          _("filename: script (file) to load\n"
+                            "name: a script name\n\n"
+                            "Without argument, this command "
+                            "lists all loaded scripts."),
+                          "list|listfull|load|autoload|reload|unload %f",
+                          callback_command, NULL);
+    
+    /* add signal for "dump_data" */
+    weechat_hook_signal ("dump_data", callback_signal_dump, NULL);
+    
+    /* autoload scripts */
+    script_auto_load (weechat_plugin, callback_load_file);
 }
 
 /*
@@ -144,7 +183,7 @@ script_string_to_pointer (char *pointer_str)
 
 void
 script_auto_load (struct t_weechat_plugin *weechat_plugin,
-                  char *language, int (*callback)(void *data, char *filename))
+                  int (*callback)(void *data, char *filename))
 {
     char *dir_home, *dir_name;
     int dir_length;
@@ -153,12 +192,13 @@ script_auto_load (struct t_weechat_plugin *weechat_plugin,
     dir_home = weechat_info_get ("weechat_dir");
     if (!dir_home)
         return;
-    dir_length = strlen (dir_home) + strlen (language) + 16;
+    dir_length = strlen (dir_home) + strlen (weechat_plugin->name) + 16;
     dir_name = (char *)malloc (dir_length * sizeof (char));
     if (!dir_name)
         return;
     
-    snprintf (dir_name, dir_length, "%s/%s/autoload", dir_home, language);
+    snprintf (dir_name, dir_length,
+              "%s/%s/autoload", dir_home, weechat_plugin->name);
     weechat_exec_on_files (dir_name, NULL, callback);
     
     free (dir_name);
@@ -191,7 +231,7 @@ script_search (struct t_weechat_plugin *weechat_plugin,
 
 char *
 script_search_full_name (struct t_weechat_plugin *weechat_plugin,
-                         char *language, char *filename)
+                         char *filename)
 {
     char *final_name, *dir_home, *dir_system;
     int length;
@@ -216,24 +256,27 @@ script_search_full_name (struct t_weechat_plugin *weechat_plugin,
     if (dir_home)
     {
         /* try WeeChat user's autoload dir */
-        length = strlen (dir_home) + strlen (language) + 8 + strlen (filename) + 16;
+        length = strlen (dir_home) + strlen (weechat_plugin->name) + 8 +
+            strlen (filename) + 16;
         final_name = (char *)malloc (length);
         if (final_name)
         {
             snprintf (final_name, length,
-                      "%s/%s/autoload/%s", dir_home, language, filename);
+                      "%s/%s/autoload/%s",
+                      dir_home, weechat_plugin->name, filename);
             if ((stat (final_name, &st) == 0) && (st.st_size > 0))
                 return final_name;
             free (final_name);
         }
 
         /* try WeeChat language user's dir */
-        length = strlen (dir_home) + strlen (language) + strlen (filename) + 16;
+        length = strlen (dir_home) + strlen (weechat_plugin->name) +
+            strlen (filename) + 16;
         final_name = (char *)malloc (length);
         if (final_name)
         {
             snprintf (final_name, length,
-                      "%s/%s/%s", dir_home, language, filename);
+                      "%s/%s/%s", dir_home, weechat_plugin->name, filename);
             if ((stat (final_name, &st) == 0) && (st.st_size > 0))
                 return final_name;
             free (final_name);
@@ -256,12 +299,13 @@ script_search_full_name (struct t_weechat_plugin *weechat_plugin,
     dir_system = weechat_info_get ("weechat_sharedir");
     if (dir_system)
     {
-        length = strlen (dir_system) + strlen (dir_system) + strlen (filename) + 16;
+        length = strlen (dir_system) + strlen (weechat_plugin->name) +
+            strlen (filename) + 16;
         final_name = (char *)malloc (length);
         if (final_name)
         {
             snprintf (final_name,length,
-                      "%s/%s/%s", dir_system, language, filename);
+                      "%s/%s/%s", dir_system, weechat_plugin->name, filename);
             if ((stat (final_name, &st) == 0) && (st.st_size > 0))
                 return final_name;
             free (final_name);
@@ -373,6 +417,53 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
     
     /* free script */
     free (script);
+}
+
+/*
+ * script_display_list: print list of scripts
+ */
+
+void
+script_display_list (struct t_weechat_plugin *weechat_plugin,
+                     struct t_plugin_script *scripts,
+                     char *name, int full)
+{
+    struct t_plugin_script *ptr_script;
+    
+    weechat_printf (NULL, "");
+    weechat_printf (NULL,
+                    /* TRANSLATORS: %s is language (for example "perl") */
+                    _("%s scripts loaded:"),
+                    weechat_plugin->name);
+    if (scripts)
+    {
+        for (ptr_script = scripts; ptr_script;
+             ptr_script = ptr_script->next_script)
+        {
+            if (!name || (weechat_strcasestr (ptr_script->name, name)))
+            {
+                weechat_printf (NULL,
+                                "  %s%s%s v%s - %s",
+                                weechat_color ("color_chat_buffer"),
+                                ptr_script->name,
+                                weechat_color ("color_chat"),
+                                ptr_script->version,
+                                ptr_script->description);
+                if (full)
+                {
+                    weechat_printf (NULL,
+                                    _("    file: %s"),
+                                    ptr_script->filename);
+                    weechat_printf (NULL,
+                                    _("    written by \"%s\", license: %s"),
+                                    ptr_script->author,
+                                    ptr_script->license);
+                }
+            }
+        }
+    }
+    else
+        weechat_printf (NULL, _("  (none)"));
 }
 
 /*
