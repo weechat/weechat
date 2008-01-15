@@ -61,7 +61,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     struct t_gui_buffer *ptr_buffer;
     long number;
     char *error, *value;
-    int target_buffer;
+    int i, target_buffer;
     
     /* make C compiler happy */
     (void) data;
@@ -93,7 +93,31 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     }
     else
     {
-        if (string_strcasecmp (argv[1], "move") == 0)
+        if (string_strcasecmp (argv[1], "clear") == 0)
+        {
+            if (argc > 2)
+            {
+                if (string_strcasecmp (argv[2], "-all") == 0)
+                    gui_buffer_clear_all ();
+                else
+                {
+                    for (i = 2; i < argc; i++)
+                    {
+                        error = NULL;
+                        number = strtol (argv[i], &error, 10);
+                        if (error && (error[0] == '\0'))
+                        {
+                            ptr_buffer = gui_buffer_search_by_number (number);
+                            if (ptr_buffer)
+                                gui_buffer_clear (ptr_buffer);
+                        }
+                    }
+                }
+            }
+            else
+                gui_buffer_clear (buffer);
+        }
+        else if (string_strcasecmp (argv[1], "move") == 0)
         {
             /* move buffer to another number in the list */
             
@@ -347,48 +371,6 @@ command_builtin (void *data, struct t_gui_buffer *buffer,
             }
         }
     }
-    return WEECHAT_RC_OK;
-}
-
-/*
- * command_clear: display or create alias
- */
-
-int
-command_clear (void *data, struct t_gui_buffer *buffer,
-               int argc, char**argv, char **argv_eol)
-{
-    struct t_gui_buffer *ptr_buffer;
-    char *error;
-    long number;
-    int i;
-    
-    /* make C compiler happy */
-    (void) data;
-    (void) argv_eol;
-    
-    if (argc > 1)
-    {
-        if (string_strcasecmp (argv[1], "-all") == 0)
-            gui_buffer_clear_all ();
-        else
-        {
-            for (i = 1; i < argc; i++)
-            {
-                error = NULL;
-                number = strtol (argv[i], &error, 10);
-                if (error && (error[0] == '\0'))
-                {
-                    ptr_buffer = gui_buffer_search_by_number (number);
-                    if (ptr_buffer)
-                        gui_buffer_clear (ptr_buffer);
-                }
-            }
-        }
-    }
-    else
-        gui_buffer_clear (buffer);
-    
     return WEECHAT_RC_OK;
 }
 
@@ -1898,6 +1880,8 @@ command_init ()
                   N_("manage buffers"),
                   N_("[action [args] | number | [[server] [channel]]]"),
                   N_(" action: action to do:\n"
+                     "  clear: clear buffer content (-all for all buffers,"
+                     "number for a buffer, empty for current buffer)\n"
                      "   move: move buffer in the list (may be relative, for "
                      "example -1)\n"
                      "  close: close buffer\n"
@@ -1914,17 +1898,19 @@ command_init ()
                      "server,\n"
                      "channel: jump to buffer by server and/or channel name\n\n"
                      "Examples:\n"
-                     "        move buffer: /buffer move 5\n"
-                     "       close buffer: /buffer close this is part msg\n"
-                     "         set notify: /buffer notify 2\n"
-                     "    scroll 1 day up: /buffer scroll 1d  ==  /buffer "
-                     "scroll -1d  ==  /buffer scroll -24h\n"
-                     "scroll to beginning\n"
-                     "        of this day: /buffer scroll d\n"
-                     " scroll 15 min down: /buffer scroll +15m\n"
-                     "  scroll 20 msgs up: /buffer scroll -20\n"
-                     "   jump to #weechat: /buffer #weechat"),
-                  "move|close|list|notify|scroll|set|%b|%c %b|%c",
+                     "clear current buffer: /buffer clear\n"
+                     "   clear all buffers: /buffer clear -all\n"
+                     "         move buffer: /buffer move 5\n"
+                     "        close buffer: /buffer close this is part msg\n"
+                     "          set notify: /buffer notify 2\n"
+                     "     scroll 1 day up: /buffer scroll 1d  ==  /buffer "
+                     " scroll -1d  ==  /buffer scroll -24h\n"
+                     " scroll to beginning\n"
+                     "         of this day: /buffer scroll d\n"
+                     "  scroll 15 min down: /buffer scroll +15m\n"
+                     "   scroll 20 msgs up: /buffer scroll -20\n"
+                     "    jump to #weechat: /buffer #weechat"),
+                  "clear|move|close|list|notify|scroll|set|%b|%c %b|%c",
                   command_buffer, NULL);
     hook_command (NULL, "builtin",
                   N_("launch WeeChat builtin command (do not look at commands "
@@ -1934,13 +1920,6 @@ command_init ()
                      "added if not found at beginning of command)"),
                   "%w",
                   command_builtin, NULL);
-    hook_command (NULL, "clear",
-                  N_("clear buffer(s)"),
-                  N_("[-all | number [number ...]]"),
-                  N_("  -all: clear all buffers\n"
-                     "number: clear buffer by number"),
-                  "-all",
-                  command_clear, NULL);
     hook_command (NULL, "debug",
                   N_("print debug messages"),
                   N_("dump | buffer | windows | text"),
