@@ -478,8 +478,8 @@ alias_config_write_default_aliases (struct t_config_file *config_file,
     weechat_config_write_line (config_file, "BYE", "%s", "\"quit\"");
     weechat_config_write_line (config_file, "EXIT", "%s", "\"quit\"");
     weechat_config_write_line (config_file, "SIGNOFF", "%s", "\"quit\"");
-    weechat_config_write_line (config_file, "C", "%s", "\"clear\"");
-    weechat_config_write_line (config_file, "CL", "%s", "\"clear\"");
+    weechat_config_write_line (config_file, "C", "%s", "\"buffer clear\"");
+    weechat_config_write_line (config_file, "CL", "%s", "\"buffer clear\"");
     weechat_config_write_line (config_file, "CLOSE", "%s", "\"buffer close\"");
     weechat_config_write_line (config_file, "CHAT", "%s", "\"dcc chat\"");
     weechat_config_write_line (config_file, "IG", "%s", "\"ignore\"");
