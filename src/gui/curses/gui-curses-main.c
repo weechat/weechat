@@ -185,13 +185,13 @@ gui_main_loop ()
             /* refresh chat if needed */
             if (ptr_buffer->chat_refresh_needed)
             {
-                gui_chat_draw (ptr_buffer, 0);
+                gui_chat_draw (ptr_buffer, 1);
                 ptr_buffer->chat_refresh_needed = 0;
             }
             /* refresh nicklist if needed */
             if (ptr_buffer->nicklist_refresh_needed)
             {
-                gui_nicklist_draw (ptr_buffer, 0);
+                gui_nicklist_draw (ptr_buffer, 1);
                 ptr_buffer->nicklist_refresh_needed = 0;
             }
             /* refresh input if needed */
