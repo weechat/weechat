@@ -170,7 +170,7 @@ weelist_search (struct t_weelist *weelist, char *data)
     for (ptr_item = weelist->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {
-        if (string_strcasecmp (data, ptr_item->data) == 0)
+        if (strcmp (data, ptr_item->data) == 0)
             return ptr_item;
     }
     /* data not found in list */
@@ -247,7 +247,10 @@ weelist_set (struct t_weelist_item *item, char *new_value)
 struct t_weelist_item *
 weelist_next (struct t_weelist_item *item)
 {
-    return item->next_item;
+    if (item)
+        return item->next_item;
+    
+    return NULL;
 }
 
 /*
@@ -257,7 +260,10 @@ weelist_next (struct t_weelist_item *item)
 struct t_weelist_item *
 weelist_prev (struct t_weelist_item *item)
 {
-    return item->prev_item;
+    if (item)
+        return item->prev_item;
+    
+    return NULL;
 }
 
 /*
@@ -267,7 +273,10 @@ weelist_prev (struct t_weelist_item *item)
 char *
 weelist_string (struct t_weelist_item *item)
 {
-    return item->data;
+    if (item)
+        return item->data;
+    
+    return NULL;
 }
 
 /*
@@ -277,7 +286,10 @@ weelist_string (struct t_weelist_item *item)
 int
 weelist_size (struct t_weelist *weelist)
 {
-    return weelist->size;
+    if (weelist)
+        return weelist->size;
+    
+    return 0;
 }
 
 /*

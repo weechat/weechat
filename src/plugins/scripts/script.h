@@ -61,12 +61,15 @@ extern void script_init (struct t_weechat_plugin *weechat_plugin,
                                                  struct t_gui_buffer *buffer,
                                                  int argc, char **argv,
                                                  char **argv_eol),
+                         int (*callback_completion)(void *data, char *completion,
+                                                    struct t_gui_buffer *buffer,
+                                                    struct t_weelist *list),
                          int (*callback_signal_dump)(void *data, char *signal,
                                                      char *type_data,
                                                      void *signal_data),
                          int (*callback_load_file)(void *data, char *filename));
-extern char *script_pointer_to_string (void *pointer);
-extern void *script_string_to_pointer (char *pointer_str);
+extern char *script_ptr2str (void *pointer);
+extern void *script_str2ptr (char *pointer_str);
 extern void script_auto_load (struct t_weechat_plugin *weechat_plugin,
                               int (*callback)(void *data, char *filename));
 extern struct t_plugin_script *script_search (struct t_weechat_plugin *weechat_plugin,
@@ -83,6 +86,9 @@ extern struct t_plugin_script *script_add (struct t_weechat_plugin *weechat_plug
 extern void script_remove (struct t_weechat_plugin *weechat_plugin,
                            struct t_plugin_script **scripts,
                            struct t_plugin_script *script);
+extern void script_completion (struct t_weechat_plugin *weechat_plugin,
+                               struct t_weelist *list,
+                               struct t_plugin_script *scripts);
 extern void script_display_list (struct t_weechat_plugin *weechat_plugin,
                                  struct t_plugin_script *scripts,
                                  char *name, int full);

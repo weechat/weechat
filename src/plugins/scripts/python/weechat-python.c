@@ -566,6 +566,25 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * weechat_python_completion_cb: callback for script completion
+ */
+
+int
+weechat_python_completion_cb (void *data, char *completion,
+                              struct t_gui_buffer *buffer,
+                              struct t_weelist *list)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) completion;
+    (void) buffer;
+    
+    script_completion (weechat_python_plugin, list, python_scripts);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * weechat_python_dump_data_cb: dump Python plugin data in WeeChat log file
  */
 
@@ -621,7 +640,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     }
     
     script_init (weechat_python_plugin,
-                 &weechat_python_command_cb, &weechat_python_dump_data_cb,
+                 &weechat_python_command_cb,
+                 &weechat_python_completion_cb,
+                 &weechat_python_dump_data_cb,
                  &weechat_python_load_cb);
     
     /* init ok */

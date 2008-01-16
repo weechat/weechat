@@ -25,6 +25,15 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#undef PACKAGE_BUGREPORT
+#undef PACKAGE_NAME
+#undef PACKAGE_STRING
+#undef PACKAGE_TARNAME
+#undef PACKAGE_VERSION
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include "../../weechat-plugin.h"
 #include "../script.h"
 #include "weechat-ruby.h"
@@ -563,6 +572,25 @@ weechat_ruby_command_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * weechat_ruby_completion_cb: callback for script completion
+ */
+
+int
+weechat_ruby_completion_cb (void *data, char *completion,
+                            struct t_gui_buffer *buffer,
+                            struct t_weelist *list)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) completion;
+    (void) buffer;
+    
+    script_completion (weechat_ruby_plugin, list, ruby_scripts);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * weechat_ruby_dump_data_cb: dump Ruby plugin data in WeeChat log file
  */
 
@@ -669,7 +697,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     }
     
     script_init (weechat_ruby_plugin,
-                 &weechat_ruby_command_cb, &weechat_ruby_dump_data_cb,
+                 &weechat_ruby_command_cb,
+                 &weechat_ruby_completion_cb,
+                 &weechat_ruby_dump_data_cb,
                  &weechat_ruby_load_cb);
     
     /* init ok */

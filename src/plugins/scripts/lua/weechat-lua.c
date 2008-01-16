@@ -20,6 +20,10 @@
 
 #undef _
 
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>
@@ -397,6 +401,25 @@ weechat_lua_command_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * weechat_lua_completion_cb: callback for script completion
+ */
+
+int
+weechat_lua_completion_cb (void *data, char *completion,
+                           struct t_gui_buffer *buffer,
+                           struct t_weelist *list)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) completion;
+    (void) buffer;
+    
+    script_completion (weechat_lua_plugin, list, lua_scripts);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * weechat_lua_dump_data_cb: dump Lua plugin data in WeeChat log file
  */
 
@@ -426,7 +449,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_lua_plugin = plugin;
 
     script_init (weechat_lua_plugin,
-                 &weechat_lua_command_cb, &weechat_lua_dump_data_cb,
+                 &weechat_lua_command_cb,
+                 &weechat_lua_completion_cb,
+                 &weechat_lua_dump_data_cb,
                  &weechat_lua_load_cb);
     
     /* init ok */

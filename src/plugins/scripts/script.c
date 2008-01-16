@@ -85,12 +85,15 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                                      struct t_gui_buffer *buffer,
                                      int argc, char **argv,
                                      char **argv_eol),
+             int (*callback_completion)(void *data, char *completion,
+                                        struct t_gui_buffer *buffer,
+                                        struct t_weelist *list),
              int (*callback_signal_dump)(void *data, char *signal,
                                          char *type_data,
                                          void *signal_data),
              int (*callback_load_file)(void *data, char *filename))
 {
-    char *string;
+    char *string, *completion = "list|listfull|load|autoload|reload|unload %f";
     int length;
     
     /* read script configuration */
@@ -120,6 +123,13 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     }
     
     /* add command */
+    length = strlen (completion) + strlen (weechat_plugin->name) + 16;
+    string = (char *)malloc (length);
+    if (string)
+    {
+        snprintf (string, length, "%s|%%(%s_script)",
+                  completion, weechat_plugin->name);
+    }
     weechat_hook_command (weechat_plugin->name,
                           _("list/load/unload scripts"),
                           _("[list [name]] | [listfull [name]] "
@@ -129,8 +139,20 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                             "name: a script name\n\n"
                             "Without argument, this command "
                             "lists all loaded scripts."),
-                          "list|listfull|load|autoload|reload|unload %f",
+                          (string) ? string : completion,
                           callback_command, NULL);
+    if (string)
+        free (string);
+
+    /* add completion */
+    length = strlen (weechat_plugin->name) + 16;
+    string = (char *)malloc (length);
+    if (string)
+    {
+        snprintf (string, length, "%s_script", weechat_plugin->name);
+        weechat_hook_completion (string, callback_completion, NULL);
+        free (string);
+    }
     
     /* add signal for "dump_data" */
     weechat_hook_signal ("dump_data", callback_signal_dump, NULL);
@@ -140,13 +162,13 @@ script_init (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * script_pointer_to_string: convert pointer to string for usage
- *                           in a script (any language)
- *                           WARNING: result has to be free() after use
+ * script_ptr2str: convert pointer to string for usage in a script
+ *                 (any language)
+ *                 WARNING: result has to be free() after use
  */
 
 char *
-script_pointer_to_string (void *pointer)
+script_ptr2str (void *pointer)
 {
     char pointer_str[128];
 
@@ -160,12 +182,11 @@ script_pointer_to_string (void *pointer)
 }
 
 /*
- * script_string_to_pointer: convert stirng to pointer for usage
- *                           outside script
+ * script_str2ptr: convert stirng to pointer for usage outside script
  */
 
 void *
-script_string_to_pointer (char *pointer_str)
+script_str2ptr (char *pointer_str)
 {
     unsigned int value;
     
@@ -417,6 +438,24 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
     
     /* free script */
     free (script);
+}
+
+/*
+ * script_completion: complete with list of scripts
+ */
+
+void
+script_completion (struct t_weechat_plugin *weechat_plugin,
+                   struct t_weelist *list,
+                   struct t_plugin_script *scripts)
+{
+    struct t_plugin_script *ptr_script;
+
+    for (ptr_script = scripts; ptr_script;
+         ptr_script = ptr_script->next_script)
+    {
+        weechat_list_add (list, ptr_script->name, WEECHAT_LIST_POS_SORT);
+    }
 }
 
 /*
