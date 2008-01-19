@@ -1880,8 +1880,8 @@ command_init ()
                   N_("manage buffers"),
                   N_("[action [args] | number | [[server] [channel]]]"),
                   N_(" action: action to do:\n"
-                     "  clear: clear buffer content (-all for all buffers,"
-                     "number for a buffer, empty for current buffer)\n"
+                     "  clear: clear buffer content (-all for all buffers, "
+                     "number for a buffer, or nothing for current buffer)\n"
                      "   move: move buffer in the list (may be relative, for "
                      "example -1)\n"
                      "  close: close buffer\n"
