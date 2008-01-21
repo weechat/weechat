@@ -20,10 +20,6 @@
 
 #undef _
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <lua.h>
 #include <lualib.h>
 #include <lauxlib.h>

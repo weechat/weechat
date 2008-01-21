@@ -20,10 +20,6 @@
 
 #undef _
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <EXTERN.h>
 #include <perl.h>
 #include <XSUB.h>

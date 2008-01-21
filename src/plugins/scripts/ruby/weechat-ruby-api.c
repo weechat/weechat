@@ -22,15 +22,6 @@
 
 #include <ruby.h>
 
-#undef PACKAGE_BUGREPORT
-#undef PACKAGE_NAME
-#undef PACKAGE_STRING
-#undef PACKAGE_TARNAME
-#undef PACKAGE_VERSION
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include "../../weechat-plugin.h"
 #include "../script.h"
 #include "../script-api.h"
