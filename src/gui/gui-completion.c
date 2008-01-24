@@ -710,8 +710,8 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                             {
                                 if (pos_end > pos)
                                 {
-                                    custom_completion = strndup (pos,
-                                                                 pos_end - pos);
+                                    custom_completion = string_strndup (pos,
+                                                                        pos_end - pos);
                                     if (custom_completion)
                                     {
                                         gui_completion_custom (completion,

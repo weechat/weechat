@@ -20,9 +20,7 @@
 #ifndef __WEECHAT_STRING_H
 #define __WEECHAT_STRING_H 1
 
-#ifndef HAVE_STRNDUP
-extern char *strndup (char *string, int length);
-#endif
+extern char *string_strndup (char *string, int length);
 extern void string_tolower (char *string);
 extern void string_toupper (char *string);
 extern int string_strcasecmp (char *string1, char *string2);

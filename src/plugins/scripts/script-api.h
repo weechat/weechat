@@ -87,6 +87,14 @@ extern struct t_hook *script_api_hook_completion (struct t_weechat_plugin *weech
                                                                   struct t_gui_buffer *buffer,
                                                                   struct t_weelist *list),
                                                   char *function);
+extern struct t_hook *script_api_hook_modifier (struct t_weechat_plugin *weechat_plugin,
+                                                struct t_plugin_script *script,
+                                                char *modifier,
+                                                char *(*callback)(void *data,
+                                                                  char *modifier,
+                                                                  char *modifier_data,
+                                                                  char *string),
+                                                char *function);
 extern int script_api_unhook (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *script,
                               struct t_hook *hook);

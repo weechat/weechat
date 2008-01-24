@@ -1778,6 +1778,114 @@ weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
 }
 
 /*
+ * weechat_ruby_api_hook_modifier_cb: callback for modifier hooked
+ */
+
+char *
+weechat_ruby_api_hook_modifier_cb (void *data, char *modifier,
+                                   char *modifier_data,  char *string)
+{
+    struct t_script_callback *script_callback;
+    char *ruby_argv[4];
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    ruby_argv[0] = modifier;
+    ruby_argv[1] = modifier_data;
+    ruby_argv[2] = string;
+    ruby_argv[3] = NULL;
+    
+    return (char *)weechat_ruby_exec (script_callback->script,
+                                      WEECHAT_SCRIPT_EXEC_STRING,
+                                      script_callback->function,
+                                      ruby_argv);
+}
+
+/*
+ * weechat_ruby_api_hook_modifier: hook a modifier
+ */
+
+static VALUE
+weechat_ruby_api_hook_modifier (VALUE class, VALUE modifier, VALUE function)
+{
+    char *c_modifier, *c_function, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_modifier = NULL;
+    c_function = NULL;
+    
+    if (NIL_P (modifier) || NIL_P (function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_modifier");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (modifier, T_STRING);
+    Check_Type (function, T_STRING);
+    
+    c_modifier = STR2CSTR (modifier);
+    c_function = STR2CSTR (function);
+    
+    result = script_ptr2str (script_api_hook_modifier (weechat_ruby_plugin,
+                                                       ruby_current_script,
+                                                       c_modifier,
+                                                       &weechat_ruby_api_hook_modifier_cb,
+                                                       c_function));
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_hook_modifier_exec: execute a modifier hook
+ */
+
+static VALUE
+weechat_ruby_api_hook_modifier_exec (VALUE class, VALUE modifier,
+                                     VALUE modifier_data, VALUE string)
+{
+    char *c_modifier, *c_modifier_data, *c_string, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier_exec");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_modifier = NULL;
+    c_modifier_data = NULL;
+    c_string = NULL;
+    
+    if (NIL_P (modifier) || NIL_P (modifier_data) || NIL_P (string))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_modifier_exec");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (modifier, T_STRING);
+    Check_Type (modifier_data, T_STRING);
+    Check_Type (string, T_STRING);
+    
+    c_modifier = STR2CSTR (modifier);
+    c_modifier_data = STR2CSTR (modifier_data);
+    c_string = STR2CSTR (string);
+
+    result = weechat_hook_modifier_exec (c_modifier, c_modifier_data, c_string);
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_ruby_api_unhook: unhook something
  */
 
@@ -3300,6 +3408,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "hook_signal_send", &weechat_ruby_api_hook_signal_send, 3);
     rb_define_module_function (ruby_mWeechat, "hook_config", &weechat_ruby_api_hook_config, 3);
     rb_define_module_function (ruby_mWeechat, "hook_completion", &weechat_ruby_api_hook_completion, 2);
+    rb_define_module_function (ruby_mWeechat, "hook_modifier", &weechat_ruby_api_hook_modifier, 2);
+    rb_define_module_function (ruby_mWeechat, "hook_modifier_exec", &weechat_ruby_api_hook_modifier_exec, 3);
     rb_define_module_function (ruby_mWeechat, "unhook", &weechat_ruby_api_unhook, 1);
     rb_define_module_function (ruby_mWeechat, "unhook_all", &weechat_ruby_api_unhook_all, 0);
     rb_define_module_function (ruby_mWeechat, "buffer_new", &weechat_ruby_api_buffer_new, 3);

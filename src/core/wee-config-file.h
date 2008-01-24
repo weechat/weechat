@@ -40,6 +40,8 @@ struct t_config_file
     struct t_weechat_plugin *plugin;       /* plugin which created this cfg */
     char *filename;                        /* config filename (without path)*/
     FILE *file;                            /* file pointer                  */
+    int (*callback_reload)                 /* callback for reloading file   */
+    (struct t_config_file *config_file);
     struct t_config_section *sections;     /* config sections               */
     struct t_config_section *last_section; /* last config section           */
     struct t_config_file *prev_config;     /* link to previous config file  */
@@ -87,8 +89,12 @@ struct t_config_option
     struct t_config_option *next_option;   /* link to next option           */
 };
 
+extern struct t_config_file *config_files;
+extern struct t_config_file *last_config_file;
+
 extern struct t_config_file *config_file_new (struct t_weechat_plugin *plugin,
-                                              char *filename);
+                                              char *filename,
+                                              int (*callback_reload)(struct t_config_file *config_file));
 extern int config_file_valid_for_plugin (struct t_weechat_plugin *plugin,
                                          struct t_config_file *config_file);
 extern struct t_config_section *config_file_new_section (struct t_config_file *config_file,

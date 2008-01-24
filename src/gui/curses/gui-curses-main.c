@@ -30,6 +30,7 @@
 #include <signal.h>
 
 #include "../../core/weechat.h"
+#include "../../core/wee-command.h"
 #include "../../core/wee-config.h"
 #include "../../core/wee-hook.h"
 #include "../../core/wee-string.h"
@@ -119,13 +120,23 @@ gui_main_init ()
 }
 
 /*
- * gui_main_quit: quit weechat (signal received)
+ * gui_main_quit: quit WeeChat
  */
 
 void
 gui_main_quit ()
 {
     quit_weechat = 1;
+}
+
+/*
+ * gui_main_reload: reload WeeChat configuration
+ */
+
+void
+gui_main_reload ()
+{
+    command_reload (NULL, NULL, 0, NULL, NULL);
 }
 
 /*
@@ -147,8 +158,8 @@ gui_main_loop ()
     /* catch SIGTERM signal: quit program */
     util_catch_signal (SIGTERM, &gui_main_quit);
     
-    /* cach SIGHUP signal: reload configuration */
-    util_catch_signal (SIGHUP, &gui_main_quit);
+    /* catch SIGHUP signal: reload configuration */
+    util_catch_signal (SIGHUP, &gui_main_reload);
     
     /* catch SIGWINCH signal: redraw screen */
     util_catch_signal (SIGWINCH, &gui_window_refresh_screen_sigwinch);

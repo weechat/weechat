@@ -20,6 +20,6 @@ libdir = ${weechat_libdir}/plugins
 
 lib_LTLIBRARIES = charset.la
 
-charset_la_SOURCES = charset.c
+charset_la_SOURCES = charset.c charset.h
 charset_la_LDFLAGS = -module
 charset_la_LIBADD  = $(CHARSET_LFLAGS)

@@ -161,8 +161,9 @@ extern int irc_server_send (struct t_irc_server *server, char *buffer,
                             int size_buf);
 extern void irc_server_outqueue_send (struct t_irc_server *server);
 extern void irc_server_sendf (struct t_irc_server *server, char *format, ...);
-extern void irc_server_parse_message (char *message, char **host,
-                                      char **command, char **args);
+extern void irc_server_parse_message (char *message, char **nick,
+                                      char **host, char **command,
+                                      char **channel, char **arguments);
 extern int irc_server_recv_cb (void *arg_server);
 extern void irc_server_timer_cb (void *empty);
 extern void irc_server_timer_check_away (void *empty);

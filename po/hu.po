@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-19 17:18+0100\n"
+"POT-Creation-Date: 2008-01-24 16:42+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -223,7 +223,7 @@ msgid "Key:"
 msgstr "Billentyű:\n"
 
 #, fuzzy
-msgid "No key found."
+msgid "No key found"
 msgstr "Nem találtam billentyűt.\n"
 
 #, fuzzy, c-format
@@ -310,7 +310,11 @@ msgid "    completions hooked:"
 msgstr "     parancskezelők:\n"
 
 #, fuzzy
-msgid "No plugin found."
+msgid "    modifiers hooked:"
+msgstr "     időkezelők:\n"
+
+#, fuzzy
+msgid "No plugin found"
 msgstr "Nem található modul.\n"
 
 #, fuzzy
@@ -326,35 +330,19 @@ msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
-msgid "%sWeeChat configuration file reloaded"
-msgstr "Konfigurációs fájl elmentve\n"
-
-#, fuzzy, c-format
-msgid "%sError: failed to reload WeeChat configuration file"
-msgstr "%s nem sikerült a konfigurációs fájlt elmenteni\n"
-
-#, fuzzy, c-format
-msgid "%sPlugins options reloaded"
+msgid "%sOptions reloaded from %s"
 msgstr "Modul beállítások elmentve\n"
 
 #, fuzzy, c-format
-msgid "%sError: failed to reload plugins options"
+msgid "%sError: failed to reload options from %s"
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy, c-format
-msgid "%sWeeChat configuration file saved"
-msgstr "Konfigurációs fájl elmentve\n"
-
-#, fuzzy, c-format
-msgid "%sError: failed to save WeeChat configuration file"
-msgstr "%s nem sikerült a konfigurációs fájlt elmenteni\n"
-
-#, fuzzy, c-format
-msgid "%sPlugins options saved"
+msgid "%sOptions saved to %s"
 msgstr "Modul beállítások elmentve\n"
 
 #, fuzzy, c-format
-msgid "%sError: failed to save plugins options"
+msgid "%sError: failed to save options to %s"
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 msgid "(unknown)"
@@ -445,7 +433,7 @@ msgstr "a /who lista vége"
 #, fuzzy, c-format
 msgid ""
 "%sError: can not merge windows, there's no other window with same size near "
-"current one."
+"current one"
 msgstr ""
 "%s nem sikerült az ablakokat összefésülni: nincs a közelben azonos méretű "
 "ablak.\n"
@@ -1312,8 +1300,8 @@ msgid ""
 "\".dll\" under Microsoft Windows)"
 msgstr ""
 
-#, fuzzy
-msgid "Saving WeeChat configuration to disk"
+#, fuzzy, c-format
+msgid "Saving WeeChat configuration to disk (%s)"
 msgstr "Beállítások mentése a lemezre\n"
 
 #, fuzzy, c-format
@@ -1679,14 +1667,6 @@ msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s körreferencia a \"/%s\" aliasz hívásakor\n"
 
 #, fuzzy, c-format
-msgid "%s%s: configuration file reloaded"
-msgstr "Konfigurációs fájl elmentve\n"
-
-#, fuzzy, c-format
-msgid "%s%s: failed to reload configuration file"
-msgstr "%s nem sikerült a konfigurációs fájlt elmenteni\n"
-
-#, fuzzy, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
@@ -1754,6 +1734,70 @@ msgstr "alias_név"
 
 msgid "alias_name: name of alias to remove"
 msgstr "alias_név: az eltávolítandó alias neve"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating charset \"%s\" => \"%s\""
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
+#, fuzzy, c-format
+msgid "%sCharset \"%s\" => \"%s\""
+msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
+
+#, fuzzy, c-format
+msgid "%s%s: charset \"%s\" not found"
+msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy, c-format
+msgid "%sCharset \"%s\" removed"
+msgstr "A \"%s\" aliasz eltávolítva\n"
+
+#, fuzzy
+msgid "List of charsets:"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy, c-format
+msgid "List of charsets with \"%s\":"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "No charset found"
+msgstr "Nem találtam billentyűt.\n"
+
+#, fuzzy
+msgid "No charset defined"
+msgstr "Nincs aliasz definiálva.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: terminal: %s, internal: %s"
+msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating configuration file \"%s\""
+msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, fuzzy
+msgid "manage charsets"
+msgstr "pufferek kezelése"
+
+msgid "[[type.]plugin.string [= charset]]"
+msgstr ""
+
+msgid ""
+"   type: \"decode\" or \"encode\" (if type is omitted, then both \"decode\" "
+"and \"encode\" are set)\n"
+" plugin: plugin name\n"
+" string: string specific to plugin (for example a server name or server."
+"channel for IRC plugin)\n"
+"charset: charset to use (if empty, then charset is removed)\n"
+"\n"
+"Examples :\n"
+"/charset decode iso-8859-15 => set global decode charset to iso-8859-15\n"
+"/charset encode iso-8859-15 => set global encode charset to iso-8859-15\n"
+"/charset decode.irc.freenode => set decode charset to iso-8859-15 for IRC "
+"server \"freenode\" (all channels)\n"
+"/charset decode.irc.freenode.#weechat => set decode charset to iso-8859-15 "
+"for IRC channel \"#weechat\" on server \"freenode\""
+msgstr ""
 
 msgid "demo message without prefix"
 msgstr ""
@@ -2785,6 +2829,12 @@ msgstr ""
 msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
+#, c-format
+msgid ""
+"%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
+"memory because it's currently used"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: value \"%s\" is invalid for option \"%s\""
 msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
@@ -3019,12 +3069,6 @@ msgstr ""
 "vesszővel elválasztott emlékeztetési szintek ezen szerver szobáira (forma: "
 "#szoba:1,...), a '*' szobanév a szerver alapértelmezett értesítési "
 "szintjének van fenntartva"
-
-#, c-format
-msgid ""
-"%s%s: warning: server \"%s\" not found in configuration file. It has not "
-"been deleted because it's used now."
-msgstr ""
 
 msgid "Waiting"
 msgstr "Várakozás"
@@ -3905,7 +3949,7 @@ msgid "%s%s: no command to execute"
 msgstr "%s A futtatandó parancs nem található!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\""
+msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", arguments=\"%s\""
 msgstr ""
 "%s Ismeretlen parancs: parancs=\"%s\", gépnév=\"%s\", argumentum=\"%s\"\n"
 
@@ -4291,6 +4335,30 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
+
+#, fuzzy
+#~ msgid "%sWeeChat configuration file reloaded"
+#~ msgstr "Konfigurációs fájl elmentve\n"
+
+#, fuzzy
+#~ msgid "%sError: failed to reload WeeChat configuration file"
+#~ msgstr "%s nem sikerült a konfigurációs fájlt elmenteni\n"
+
+#, fuzzy
+#~ msgid "%sWeeChat configuration file saved"
+#~ msgstr "Konfigurációs fájl elmentve\n"
+
+#, fuzzy
+#~ msgid "%sError: failed to save WeeChat configuration file"
+#~ msgstr "%s nem sikerült a konfigurációs fájlt elmenteni\n"
+
+#, fuzzy
+#~ msgid "%s%s: configuration file reloaded"
+#~ msgstr "Konfigurációs fájl elmentve\n"
+
+#, fuzzy
+#~ msgid "%s%s: failed to reload configuration file"
+#~ msgstr "%s nem sikerült a konfigurációs fájlt elmenteni\n"
 
 #, fuzzy
 #~ msgid "clear buffer(s)"

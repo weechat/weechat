@@ -499,7 +499,7 @@ irc_protocol_recv_command (struct t_irc_server *server, char *entire_line,
     
     if (!command)
         return -2;
-
+    
     /* look for IRC command */
     cmd_found = -1;
     for (i = 0; irc_protocol_messages[i].name; i++)

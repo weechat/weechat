@@ -69,7 +69,8 @@ config_file_search (char *filename)
  */
 
 struct t_config_file *
-config_file_new (struct t_weechat_plugin *plugin, char *filename)
+config_file_new (struct t_weechat_plugin *plugin, char *filename,
+                 int (*callback_reload)(struct t_config_file *config_file))
 {
     struct t_config_file *new_config_file;
     
@@ -86,6 +87,7 @@ config_file_new (struct t_weechat_plugin *plugin, char *filename)
         new_config_file->plugin = plugin;
         new_config_file->filename = strdup (filename);
         new_config_file->file = NULL;
+        new_config_file->callback_reload = callback_reload;
         new_config_file->sections = NULL;
         new_config_file->last_section = NULL;
         

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-19 17:18+0100\n"
+"POT-Creation-Date: 2008-01-24 16:42+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -218,7 +218,7 @@ msgid "Key:"
 msgstr "Klávesa: \n"
 
 #, fuzzy
-msgid "No key found."
+msgid "No key found"
 msgstr "Žádná klávesa nenalezena.\n"
 
 #, fuzzy, c-format
@@ -305,7 +305,11 @@ msgid "    completions hooked:"
 msgstr "     obsluhovače příkazu:\n"
 
 #, fuzzy
-msgid "No plugin found."
+msgid "    modifiers hooked:"
+msgstr "     obsluhovače časovače:\n"
+
+#, fuzzy
+msgid "No plugin found"
 msgstr "Nebyl nalezen žádný plugin\n"
 
 #, fuzzy
@@ -321,35 +325,19 @@ msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s špatný počet parametrů pro příkaz \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%sWeeChat configuration file reloaded"
-msgstr "Konfigurační soubor uložen\n"
-
-#, fuzzy, c-format
-msgid "%sError: failed to reload WeeChat configuration file"
-msgstr "%s selhalo uložení konfiguračního souboru\n"
-
-#, fuzzy, c-format
-msgid "%sPlugins options reloaded"
+msgid "%sOptions reloaded from %s"
 msgstr "Možnosti pluginů uloženy\n"
 
 #, fuzzy, c-format
-msgid "%sError: failed to reload plugins options"
+msgid "%sError: failed to reload options from %s"
 msgstr "%s selhalo uložení nastavení pluginů\n"
 
 #, fuzzy, c-format
-msgid "%sWeeChat configuration file saved"
-msgstr "Konfigurační soubor uložen\n"
-
-#, fuzzy, c-format
-msgid "%sError: failed to save WeeChat configuration file"
-msgstr "%s selhalo uložení konfiguračního souboru\n"
-
-#, fuzzy, c-format
-msgid "%sPlugins options saved"
+msgid "%sOptions saved to %s"
 msgstr "Možnosti pluginů uloženy\n"
 
 #, fuzzy, c-format
-msgid "%sError: failed to save plugins options"
+msgid "%sError: failed to save options to %s"
 msgstr "%s selhalo uložení nastavení pluginů\n"
 
 msgid "(unknown)"
@@ -439,7 +427,7 @@ msgstr "konec /who seznamu"
 #, fuzzy, c-format
 msgid ""
 "%sError: can not merge windows, there's no other window with same size near "
-"current one."
+"current one"
 msgstr ""
 "%s nemohu spojit okna, není zde další okno se stejnou velikostí poblíž "
 "aktuálního okna.\n"
@@ -1308,8 +1296,8 @@ msgid ""
 "\".dll\" under Microsoft Windows)"
 msgstr ""
 
-#, fuzzy
-msgid "Saving WeeChat configuration to disk"
+#, fuzzy, c-format
+msgid "Saving WeeChat configuration to disk (%s)"
 msgstr "Ukládám konfiguraci na disk\n"
 
 #, fuzzy, c-format
@@ -1673,14 +1661,6 @@ msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s cyklický odkaz při volání aliasu \"/%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: configuration file reloaded"
-msgstr "Konfigurační soubor uložen\n"
-
-#, fuzzy, c-format
-msgid "%s%s: failed to reload configuration file"
-msgstr "%s selhalo uložení konfiguračního souboru\n"
-
-#, fuzzy, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s nedostatek paměti pro infobar zprávu\n"
 
@@ -1747,6 +1727,70 @@ msgstr "jméno_aliasu"
 
 msgid "alias_name: name of alias to remove"
 msgstr "jméno_aliasu: jméno aliasu pro odebrání"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating charset \"%s\" => \"%s\""
+msgstr "%s nedostatek paměti pro infobar zprávu\n"
+
+#, fuzzy, c-format
+msgid "%sCharset \"%s\" => \"%s\""
+msgstr "Alias \"%s\" => \"%s\" vytvořen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: charset \"%s\" not found"
+msgstr "%s server \"%s\" nenalezen\n"
+
+#, fuzzy, c-format
+msgid "%sCharset \"%s\" removed"
+msgstr "Alias \"%s\" odebrán\n"
+
+#, fuzzy
+msgid "List of charsets:"
+msgstr "Seznam pro aliasy:\n"
+
+#, fuzzy, c-format
+msgid "List of charsets with \"%s\":"
+msgstr "Seznam pro aliasy:\n"
+
+#, fuzzy
+msgid "No charset found"
+msgstr "Žádná klávesa nenalezena.\n"
+
+#, fuzzy
+msgid "No charset defined"
+msgstr "Žádné aliasy nejsou definovány.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: terminal: %s, internal: %s"
+msgstr "%s plugin \"%s\" nenalezen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating configuration file \"%s\""
+msgstr "říct serveru, aby znovu načetl svůj konfigurační soubor"
+
+#, fuzzy
+msgid "manage charsets"
+msgstr "řídit buffery"
+
+msgid "[[type.]plugin.string [= charset]]"
+msgstr ""
+
+msgid ""
+"   type: \"decode\" or \"encode\" (if type is omitted, then both \"decode\" "
+"and \"encode\" are set)\n"
+" plugin: plugin name\n"
+" string: string specific to plugin (for example a server name or server."
+"channel for IRC plugin)\n"
+"charset: charset to use (if empty, then charset is removed)\n"
+"\n"
+"Examples :\n"
+"/charset decode iso-8859-15 => set global decode charset to iso-8859-15\n"
+"/charset encode iso-8859-15 => set global encode charset to iso-8859-15\n"
+"/charset decode.irc.freenode => set decode charset to iso-8859-15 for IRC "
+"server \"freenode\" (all channels)\n"
+"/charset decode.irc.freenode.#weechat => set decode charset to iso-8859-15 "
+"for IRC channel \"#weechat\" on server \"freenode\""
+msgstr ""
 
 msgid "demo message without prefix"
 msgstr ""
@@ -2775,6 +2819,12 @@ msgstr ""
 msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
+#, c-format
+msgid ""
+"%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
+"memory because it's currently used"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: value \"%s\" is invalid for option \"%s\""
 msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
@@ -3020,12 +3070,6 @@ msgstr ""
 "čárkou oddělený seznam levelů upozornění pro kanály na tomto serveru "
 "(formát: #kanál:1,..), jméno serveru '*' je rezervováno pro defaultní "
 "hodnotu levelu upozornění"
-
-#, c-format
-msgid ""
-"%s%s: warning: server \"%s\" not found in configuration file. It has not "
-"been deleted because it's used now."
-msgstr ""
 
 msgid "Waiting"
 msgstr "Čekám"
@@ -3911,7 +3955,7 @@ msgid "%s%s: no command to execute"
 msgstr "%s Žádný příkaz pro provedení!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\""
+msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", arguments=\"%s\""
 msgstr "%s Neznámý příkaz: příkaz=\"%s\", host=\"%s\", parametry=\"%s\"\n"
 
 #, fuzzy, c-format
@@ -4291,6 +4335,30 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sWeeChat configuration file reloaded"
+#~ msgstr "Konfigurační soubor uložen\n"
+
+#, fuzzy
+#~ msgid "%sError: failed to reload WeeChat configuration file"
+#~ msgstr "%s selhalo uložení konfiguračního souboru\n"
+
+#, fuzzy
+#~ msgid "%sWeeChat configuration file saved"
+#~ msgstr "Konfigurační soubor uložen\n"
+
+#, fuzzy
+#~ msgid "%sError: failed to save WeeChat configuration file"
+#~ msgstr "%s selhalo uložení konfiguračního souboru\n"
+
+#, fuzzy
+#~ msgid "%s%s: configuration file reloaded"
+#~ msgstr "Konfigurační soubor uložen\n"
+
+#, fuzzy
+#~ msgid "%s%s: failed to reload configuration file"
+#~ msgstr "%s selhalo uložení konfiguračního souboru\n"
 
 #, fuzzy
 #~ msgid "clear buffer(s)"

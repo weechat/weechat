@@ -69,7 +69,6 @@ struct t_config_option *irc_config_log_hide_nickserv_pwd;
 
 int irc_config_init ();
 int irc_config_read ();
-int irc_config_reload_cb ();
 int irc_config_write ();
 
 #endif /* irc-config.h */

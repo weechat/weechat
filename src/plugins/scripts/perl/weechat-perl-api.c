@@ -1423,6 +1423,92 @@ static XS (XS_weechat_hook_completion)
 }
 
 /*
+ * weechat_perl_api_hook_modifier_cb: callback for modifier hooked
+ */
+
+char *
+weechat_perl_api_hook_modifier_cb (void *data, char *modifier,
+                                   char *modifier_data, char *string)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[4];
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    perl_argv[0] = modifier;
+    perl_argv[1] = modifier_data;
+    perl_argv[2] = string;
+    perl_argv[3] = NULL;
+    
+    return (char *)weechat_perl_exec (script_callback->script,
+                                      WEECHAT_SCRIPT_EXEC_STRING,
+                                      script_callback->function,
+                                      perl_argv);
+}
+
+/*
+ * weechat::hook_modifier: hook a modifier
+ */
+
+static XS (XS_weechat_hook_modifier)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_modifier");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_hook_modifier (weechat_perl_plugin,
+                                                       perl_current_script,
+                                                       SvPV (ST (0), PL_na), /* modifier */
+                                                       &weechat_perl_api_hook_modifier_cb,
+                                                       SvPV (ST (1), PL_na))); /* perl function */
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::hook_modifier_exec: execute a modifier hook
+ */
+
+static XS (XS_weechat_hook_modifier_exec)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier_exec");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_modifier_exec");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = weechat_hook_modifier_exec (SvPV (ST (0), PL_na), /* modifier */
+                                         SvPV (ST (1), PL_na), /* modifier_data */
+                                         SvPV (ST (2), PL_na)); /* string */
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat::unhook: unhook something
  */
 
@@ -1487,7 +1573,7 @@ weechat_perl_api_input_data_cb (void *data, struct t_gui_buffer *buffer,
 {
     struct t_script_callback *script_callback;
     char *perl_argv[3];
-    int *r, ret;
+    int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
@@ -1495,16 +1581,16 @@ weechat_perl_api_input_data_cb (void *data, struct t_gui_buffer *buffer,
     perl_argv[1] = input_data;
     perl_argv[2] = NULL;
     
-    r = (int *) weechat_perl_exec (script_callback->script,
-                                   WEECHAT_SCRIPT_EXEC_INT,
-                                   script_callback->function,
-                                   perl_argv);
-    if (!r)
+    rc = (int *) weechat_perl_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    perl_argv);
+    if (!rc)
         ret = WEECHAT_RC_ERROR;
     else
     {
-        ret = *r;
-        free (r);
+        ret = *rc;
+        free (rc);
     }
     if (perl_argv[0])
         free (perl_argv[0]);
@@ -2723,6 +2809,8 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::hook_signal_send", XS_weechat_hook_signal_send, "weechat");
     newXS ("weechat::hook_config", XS_weechat_hook_config, "weechat");
     newXS ("weechat::hook_completion", XS_weechat_hook_completion, "weechat");
+    newXS ("weechat::hook_modifier", XS_weechat_hook_modifier, "weechat");
+    newXS ("weechat::hook_modifier_exec", XS_weechat_hook_modifier_exec, "weechat");
     newXS ("weechat::unhook", XS_weechat_unhook, "weechat");
     newXS ("weechat::unhook_all", XS_weechat_unhook_all, "weechat");
     newXS ("weechat::buffer_new", XS_weechat_buffer_new, "weechat");

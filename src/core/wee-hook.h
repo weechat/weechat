@@ -34,6 +34,7 @@ enum t_hook_type
     HOOK_TYPE_SIGNAL,                  /* signal                            */
     HOOK_TYPE_CONFIG,                  /* config option                     */
     HOOK_TYPE_COMPLETION,              /* custom completions                */
+    HOOK_TYPE_MODIFIER,                /* stirng modifier                   */
     /* number of hook types */
     HOOK_NUM_TYPES,
 };
@@ -49,6 +50,7 @@ enum t_hook_type
 #define HOOK_SIGNAL(hook, var) (((struct t_hook_signal *)hook->hook_data)->var)
 #define HOOK_CONFIG(hook, var) (((struct t_hook_config *)hook->hook_data)->var)
 #define HOOK_COMPLETION(hook, var) (((struct t_hook_completion *)hook->hook_data)->var)
+#define HOOK_MODIFIER(hook, var) (((struct t_hook_modifier *)hook->hook_data)->var)
 
 struct t_hook
 {
@@ -139,7 +141,16 @@ typedef int (t_hook_callback_completion)(void *data, char *completion,
 struct t_hook_completion
 {
     t_hook_callback_completion *callback; /* completion callback            */
-    char *completion;                  /* name of completion                */
+    char *completion;                     /* name of completion             */
+};
+
+typedef char *(t_hook_callback_modifier)(void *data, char *modifier,
+                                         char *modifier_data, char *string);
+
+struct t_hook_modifier
+{
+    t_hook_callback_modifier *callback; /* modifier callback                */
+    char *modifier;                     /* name of modifier                 */
 };
 
 /* hook variables */
@@ -203,6 +214,13 @@ extern void hook_completion_exec (struct t_weechat_plugin *plugin,
                                   char *completion,
                                   struct t_gui_buffer *buffer,
                                   struct t_weelist *list);
+extern struct t_hook *hook_modifier (struct t_weechat_plugin *plugin,
+                                     char *modifier,
+                                     t_hook_callback_modifier *callback,
+                                     void *callback_data);
+extern char *hook_modifier_exec (struct t_weechat_plugin *plugin,
+                                 char *modifier, char *modifier_data,
+                                 char *string);
 extern void unhook (struct t_hook *hook);
 extern void unhook_all_plugin (struct t_weechat_plugin *plugin);
 extern void unhook_all ();

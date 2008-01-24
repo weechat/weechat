@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-core.c: main IRC functions */
+/* irc.c: IRC plugin for WeeChat */
 
 
 #ifdef HAVE_CONFIG_H
@@ -185,7 +185,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 
     /* hook signals */
     weechat_hook_signal ("dump_data", &irc_dump_data_cb, NULL);
-    weechat_hook_signal ("config_reload", &irc_config_reload_cb, NULL);
     weechat_hook_signal ("quit", &irc_quit_cb, NULL);
     weechat_hook_signal ("debug", &irc_debug_cb, NULL);
     
@@ -213,8 +212,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
  */
 
 int
-weechat_plugin_end ()
+weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
+    /* make C compiler happy */
+    (void) plugin;
+    
     irc_config_write ();
     
     irc_server_disconnect_all ();

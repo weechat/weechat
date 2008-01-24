@@ -98,7 +98,7 @@ gui_color_get_fg_bg (char *string, char **fg, char **bg)
             {
                 pos_end_fg--;
             }
-            *fg = strndup (string, pos_end_fg - string + 1);
+            *fg = string_strndup (string, pos_end_fg - string + 1);
         }
         else
             *fg = strudp ("default");

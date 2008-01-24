@@ -47,12 +47,12 @@
 
 
 /*
- * strndup: define strndup function if not existing (FreeBSD and maybe other)
+ * string_strndup: define strndup function for systems where this function does
+ *                 not exist (FreeBSD and maybe other)
  */
 
-#ifndef HAVE_STRNDUP
 char *
-strndup (char *string, int length)
+string_strndup (char *string, int length)
 {
     char *result;
     
@@ -68,7 +68,6 @@ strndup (char *string, int length)
     
     return result;
 }
-#endif
 
 /*
  * string_tolower: locale independant string conversion to lower case
@@ -337,7 +336,7 @@ string_remove_quotes (char *string, char *quotes)
     {
         if (pos_end == (pos_start + 1))
             return strdup ("");
-        return strndup (pos_start + 1, pos_end - pos_start - 1);
+        return string_strndup (pos_start + 1, pos_end - pos_start - 1);
     }
     
     return strdup (string);

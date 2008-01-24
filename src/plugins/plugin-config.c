@@ -282,6 +282,26 @@ plugin_config_free_all ()
 }
 
 /*
+ * plugin_config_reload: reload plugins configuration file
+ *                       return:  0 = successful
+ *                               -1 = config file file not found
+ *                               -2 = error in config file
+ */
+
+int
+plugin_config_reload (struct t_config_file *config_file)
+{
+    /* make C compiler happy */
+    (void) config_file;
+    
+    /* remove all plugin options */
+    plugin_config_free_all ();
+    
+    /* reload plugins config file */
+    return config_file_reload (plugin_config);
+}
+
+/*
  * plugin_config_read_option: read an option in config file
  *                            Return:  0 = successful
  *                                    -1 = option not found
@@ -335,7 +355,8 @@ plugin_config_write_options (struct t_config_file *config_file,
 void
 plugin_config_init ()
 {
-    plugin_config = config_file_new (NULL, PLUGIN_CONFIG_FILENAME);
+    plugin_config = config_file_new (NULL, PLUGIN_CONFIG_FILENAME,
+                                     &plugin_config_reload);
     if (plugin_config)
     {
         config_file_new_section (plugin_config, "plugins",
@@ -356,23 +377,6 @@ int
 plugin_config_read ()
 {
     return config_file_read (plugin_config);
-}
-
-/*
- * plugin_config_reload: read plugins configuration file
- *                       return:  0 = successful
- *                               -1 = config file file not found
- *                               -2 = error in config file
- */
-
-int
-plugin_config_reload ()
-{
-    /* remove all plugin options */
-    plugin_config_free_all ();
-    
-    /* reload plugins config file */
-    return config_file_reload (plugin_config);
 }
 
 /*

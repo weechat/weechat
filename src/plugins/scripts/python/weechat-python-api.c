@@ -1552,6 +1552,99 @@ weechat_python_api_hook_completion (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_hook_modifier_cb: callback for modifier hooked
+ */
+
+char *
+weechat_python_api_hook_modifier_cb (void *data, char *modifier,
+                                     char *modifier_data, char *string)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[4];
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    python_argv[0] = modifier;
+    python_argv[1] = modifier_data;
+    python_argv[2] = string;
+    python_argv[3] = NULL;
+    
+    return (char *)weechat_python_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_STRING,
+                                        script_callback->function,
+                                        python_argv);
+}
+
+/*
+ * weechat_python_api_hook_modifier: hook a modifier
+ */
+
+static PyObject *
+weechat_python_api_hook_modifier (PyObject *self, PyObject *args)
+{
+    char *modifier, *function, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    modifier = NULL;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &modifier, &function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_modifier");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str(script_api_hook_modifier (weechat_python_plugin,
+                                                      python_current_script,
+                                                      modifier,
+                                                      &weechat_python_api_hook_modifier_cb,
+                                                      function));
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hook_modifier_exec: execute a modifier hook
+ */
+
+static PyObject *
+weechat_python_api_hook_modifier_exec (PyObject *self, PyObject *args)
+{
+    char *modifier, *modifier_data, *string, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier_exec");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    modifier = NULL;
+    modifier_data = NULL;
+    string = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &modifier, &modifier_data, &string))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_modifier_exec");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = weechat_hook_modifier_exec (modifier, modifier_data, string);
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_python_api_unhook: unhook something
  */
 
@@ -3160,6 +3253,8 @@ PyMethodDef weechat_python_funcs[] =
     { "hook_signal_send", &weechat_python_api_hook_signal_send, METH_VARARGS, "" },
     { "hook_config", &weechat_python_api_hook_config, METH_VARARGS, "" },
     { "hook_completion", &weechat_python_api_hook_completion, METH_VARARGS, "" },
+    { "hook_modifier", &weechat_python_api_hook_modifier, METH_VARARGS, "" },
+    { "hook_modifier_exec", &weechat_python_api_hook_modifier_exec, METH_VARARGS, "" },
     { "unhook", &weechat_python_api_unhook, METH_VARARGS, "" },
     { "unhook_all", &weechat_python_api_unhook_all, METH_VARARGS, "" },
     { "buffer_new", &weechat_python_api_buffer_new, METH_VARARGS, "" },

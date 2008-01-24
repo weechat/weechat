@@ -17,14 +17,17 @@
  */
 
 
-#ifndef __WEECHAT_COMMAND_H
-#define __WEECHAT_COMMAND_H 1
+#ifndef __WEECHAT_CHARSET_H
+#define __WEECHAT_CHARSET_H 1
 
-struct t_gui_buffer;
+#define CHARSET_CONFIG_FILENAME "charset.rc"
 
-extern int command_reload (void *data, struct t_gui_buffer *buffer,
-                           int argc, char **argv, char **argv_eol);
-extern void command_init ();
-extern void command_print_stdout ();
+struct t_charset
+{
+    char *name;                        /* charset name (identifier)         */
+    char *charset;                     /* charset value for name            */
+    struct t_charset *prev_charset;    /* link to previous charset          */
+    struct t_charset *next_charset;    /* link to next charset              */
+};
 
-#endif /* wee-command.h */
+#endif /* charset.h */

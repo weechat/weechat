@@ -110,19 +110,20 @@ weechat_perl_exec (struct t_plugin_script *script,
     char *func;
     unsigned int count;
     void *ret_value;
-    int *ret_i, mem_err;
+    int *ret_i, mem_err, length;
     SV *ret_s;
 
     /* this code is placed here to conform ISO C90 */
     dSP;
     
 #ifndef MULTIPLICITY
-    int size = strlen (script->interpreter) + strlen(function) + 3;
-    func = (char *)malloc (size * sizeof(char));
+    int length = strlen (script->interpreter) + strlen (function) + 3;
+    func = (char *)malloc (length * sizeof(char));
     if (!func)
 	return NULL;
-    snprintf (func, size, "%s::%s", (char *) script->interpreter, function);
+    snprintf (func, length, "%s::%s", (char *) script->interpreter, function);
 #else
+    (void) length;
     func = function;
     PERL_SET_CONTEXT (script->interpreter);
 #endif    

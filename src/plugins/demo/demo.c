@@ -387,7 +387,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
  */
 
 int
-weechat_plugin_end ()
+weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
+    /* make C compiler happy */
+    (void) plugin;
+    
     return WEECHAT_RC_OK;
 }

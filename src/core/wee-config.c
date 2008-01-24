@@ -415,6 +415,25 @@ config_change_day_change ()
 }
 
 /*
+ * config_weechat_reload: reload WeeChat configuration file
+ *                        return:  0 = successful
+ *                                -1 = config file file not found
+ *                                -2 = error in config file
+ */
+
+int
+config_weechat_reload (struct t_config_file *config_file)
+{
+    /* make C compiler happy */
+    (void) config_file;
+    
+    /* remove all keys */
+    gui_keyboard_free_all ();
+    
+    return config_file_reload (weechat_config_file);
+}
+
+/*
  * config_weechat_read_key: read a key in configuration file
  */
 
@@ -495,7 +514,8 @@ config_weechat_init ()
 {
     struct t_config_section *ptr_section;
     
-    weechat_config_file = config_file_new (NULL, WEECHAT_CONFIG_FILENAME);
+    weechat_config_file = config_file_new (NULL, WEECHAT_CONFIG_FILENAME,
+                                           &config_weechat_reload);
     if (!weechat_config_file)
         return 0;
     
@@ -1160,23 +1180,6 @@ config_weechat_read ()
 }
 
 /*
- * config_weechat_reload: reload WeeChat configuration file
- *                        return:  0 = successful
- *                                -1 = configuration file file not found
- *                                -2 = error in configuration file
- */
-
-int
-config_weechat_reload ()
-{
-    /* remove all keys */
-    gui_keyboard_free_all ();
-    
-    /* reload configuration file */
-    return config_file_reload (weechat_config_file);
-}
-
-/*
  * config_weechat_write: write WeeChat configuration file
  *                       return:  0 if ok
  *                              < 0 if error
@@ -1185,6 +1188,7 @@ config_weechat_reload ()
 int
 config_weechat_write ()
 {
-    log_printf (_("Saving WeeChat configuration to disk"));
+    log_printf (_("Saving WeeChat configuration to disk (%s)"),
+                weechat_config_file->filename);
     return config_file_write (weechat_config_file);
 }

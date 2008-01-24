@@ -386,6 +386,42 @@ script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * script_api_hook_modifier: hook a modifier
+ *                           return new hook, NULL if error
+ */
+
+struct t_hook *
+script_api_hook_modifier (struct t_weechat_plugin *weechat_plugin,
+                          struct t_plugin_script *script,
+                          char *modifier,
+                          char *(*callback)(void *data, char *modifier,
+                                            char *modifier_data, char *string),
+                          char *function)
+{
+    struct t_script_callback *new_script_callback;
+    struct t_hook *new_hook;
+    
+    new_script_callback = script_callback_alloc ();
+    if (!new_script_callback)
+        return NULL;
+    
+    new_hook = weechat_hook_modifier (modifier, callback, new_script_callback);
+    if (!new_hook)
+    {
+        free (new_script_callback);
+        return NULL;
+    }
+    
+    new_script_callback->script = script;
+    new_script_callback->function = strdup (function);
+    new_script_callback->hook = new_hook;
+    
+    script_callback_add (script, new_script_callback);
+    
+    return new_hook;
+}
+
+/*
  * script_api_unhook: unhook something
  *                    return 1 if ok, 0 if error
  */

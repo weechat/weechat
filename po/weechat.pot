@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-19 17:18+0100\n"
+"POT-Creation-Date: 2008-01-24 16:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -185,7 +185,7 @@ msgstr ""
 msgid "Key:"
 msgstr ""
 
-msgid "No key found."
+msgid "No key found"
 msgstr ""
 
 #, c-format
@@ -260,7 +260,10 @@ msgstr ""
 msgid "    completions hooked:"
 msgstr ""
 
-msgid "No plugin found."
+msgid "    modifiers hooked:"
+msgstr ""
+
+msgid "No plugin found"
 msgstr ""
 
 msgid "  (no plugin)"
@@ -275,35 +278,19 @@ msgid "%sError: wrong argument count for \"%s\" command"
 msgstr ""
 
 #, c-format
-msgid "%sWeeChat configuration file reloaded"
+msgid "%sOptions reloaded from %s"
 msgstr ""
 
 #, c-format
-msgid "%sError: failed to reload WeeChat configuration file"
+msgid "%sError: failed to reload options from %s"
 msgstr ""
 
 #, c-format
-msgid "%sPlugins options reloaded"
+msgid "%sOptions saved to %s"
 msgstr ""
 
 #, c-format
-msgid "%sError: failed to reload plugins options"
-msgstr ""
-
-#, c-format
-msgid "%sWeeChat configuration file saved"
-msgstr ""
-
-#, c-format
-msgid "%sError: failed to save WeeChat configuration file"
-msgstr ""
-
-#, c-format
-msgid "%sPlugins options saved"
-msgstr ""
-
-#, c-format
-msgid "%sError: failed to save plugins options"
+msgid "%sError: failed to save options to %s"
 msgstr ""
 
 msgid "(unknown)"
@@ -389,7 +376,7 @@ msgstr ""
 #, c-format
 msgid ""
 "%sError: can not merge windows, there's no other window with same size near "
-"current one."
+"current one"
 msgstr ""
 
 msgid "manage buffers"
@@ -1031,7 +1018,8 @@ msgid ""
 "\".dll\" under Microsoft Windows)"
 msgstr ""
 
-msgid "Saving WeeChat configuration to disk"
+#, c-format
+msgid "Saving WeeChat configuration to disk (%s)"
 msgstr ""
 
 #, c-format
@@ -1381,14 +1369,6 @@ msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%s%s: configuration file reloaded"
-msgstr ""
-
-#, c-format
-msgid "%s%s: failed to reload configuration file"
-msgstr ""
-
-#, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr ""
 
@@ -1441,6 +1421,66 @@ msgid "alias_name"
 msgstr ""
 
 msgid "alias_name: name of alias to remove"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating charset \"%s\" => \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sCharset \"%s\" => \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: charset \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "%sCharset \"%s\" removed"
+msgstr ""
+
+msgid "List of charsets:"
+msgstr ""
+
+#, c-format
+msgid "List of charsets with \"%s\":"
+msgstr ""
+
+msgid "No charset found"
+msgstr ""
+
+msgid "No charset defined"
+msgstr ""
+
+#, c-format
+msgid "%s%s: terminal: %s, internal: %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating configuration file \"%s\""
+msgstr ""
+
+msgid "manage charsets"
+msgstr ""
+
+msgid "[[type.]plugin.string [= charset]]"
+msgstr ""
+
+msgid ""
+"   type: \"decode\" or \"encode\" (if type is omitted, then both \"decode\" "
+"and \"encode\" are set)\n"
+" plugin: plugin name\n"
+" string: string specific to plugin (for example a server name or server."
+"channel for IRC plugin)\n"
+"charset: charset to use (if empty, then charset is removed)\n"
+"\n"
+"Examples :\n"
+"/charset decode iso-8859-15 => set global decode charset to iso-8859-15\n"
+"/charset encode iso-8859-15 => set global encode charset to iso-8859-15\n"
+"/charset decode.irc.freenode => set decode charset to iso-8859-15 for IRC "
+"server \"freenode\" (all channels)\n"
+"/charset decode.irc.freenode.#weechat => set decode charset to iso-8859-15 "
+"for IRC channel \"#weechat\" on server \"freenode\""
 msgstr ""
 
 msgid "demo message without prefix"
@@ -2307,6 +2347,12 @@ msgid "%sirc: too few arguments for \"%s\" command"
 msgstr ""
 
 #, c-format
+msgid ""
+"%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
+"memory because it's currently used"
+msgstr ""
+
+#, c-format
 msgid "%s%s: value \"%s\" is invalid for option \"%s\""
 msgstr ""
 
@@ -2508,12 +2554,6 @@ msgid ""
 "comma separated list of notify levels for channels of this server (format: "
 "#channel:1,..), a channel name '*' is reserved for server default notify "
 "level"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s%s: warning: server \"%s\" not found in configuration file. It has not "
-"been deleted because it's used now."
 msgstr ""
 
 msgid "Waiting"
@@ -3377,7 +3417,7 @@ msgid "%s%s: no command to execute"
 msgstr ""
 
 #, c-format
-msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\""
+msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", arguments=\"%s\""
 msgstr ""
 
 #, c-format

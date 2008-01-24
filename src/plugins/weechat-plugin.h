@@ -94,6 +94,7 @@ struct t_weechat_plugin
     char *(*iconv_from_internal) (char *charset, char *string);
     char *(*gettext) (char *string);
     char *(*ngettext) (char *single, char *plural, int count);
+    char *(*strndup) (char *string, int length);
     int (*strcasecmp) (char *string1, char *string2);
     int (*strncasecmp) (char *string1, char *string2, int max);
     int (*strcmp_ignore_chars) (char *string1, char *string2,
@@ -155,7 +156,8 @@ struct t_weechat_plugin
 
     /* config files */
     struct t_config_file *(*config_new) (struct t_weechat_plugin *plugin,
-                                         char *filename);
+                                         char *filename,
+                                         int (*callback_reload)(struct t_config_file *config_file));
     struct t_config_section *(*config_new_section) (struct t_config_file *config_file,
                                                     char *name,
                                                     void (*callback_read)
@@ -257,6 +259,16 @@ struct t_weechat_plugin
                                                        struct t_gui_buffer *buffer,
                                                        struct t_weelist *list),
                                        void *callback_data);
+    struct t_hook *(*hook_modifier) (struct t_weechat_plugin *plugin,
+                                     char *modifier,
+                                     char *(*callback)(void *data,
+                                                       char *modifier,
+                                                       char *modifier_data,
+                                                       char *string),
+                                     void *callback_data);
+    char *(*hook_modifier_exec) (struct t_weechat_plugin *plugin,
+                                 char *modifier, char *modifier_data,
+                                 char *string);
     void (*unhook) (struct t_hook *hook);
     void (*unhook_all) (struct t_weechat_plugin *plugin);
     
@@ -336,6 +348,8 @@ struct t_weechat_plugin
 #define weechat_gettext(string) weechat_plugin->gettext(string)
 #define weechat_ngettext(single,plural,number)          \
     weechat_plugin->ngettext(single, plural, number)
+#define weechat_strndup(__string, __length)     \
+    weechat_plugin->strndup(__string, __length)
 #define weechat_strcasecmp(__string1, __string2)        \
     weechat_plugin->strcasecmp(__string1, __string2)
 #define weechat_strncasecmp(__string1, __string2, __max)        \
@@ -435,8 +449,9 @@ struct t_weechat_plugin
     weechat_plugin->list_free(__list)
 
 /* config files */
-#define weechat_config_new(__filename)                          \
-    weechat_plugin->config_new(weechat_plugin, __filename)
+#define weechat_config_new(__filename, __callback_reload)       \
+    weechat_plugin->config_new(weechat_plugin, __filename,      \
+                               __callback_reload)
 #define weechat_config_new_section(__config, __name, __cb_read,         \
                                    __cb_write_std, __cb_write_def)      \
     weechat_plugin->config_new_section(__config, __name, __cb_read,     \
@@ -535,6 +550,13 @@ struct t_weechat_plugin
 #define weechat_hook_completion(__completion, __callback, __data)       \
     weechat_plugin->hook_completion(weechat_plugin, __completion,       \
                                     __callback, __data)
+#define weechat_hook_modifier(__modifier, __callback, __data)   \
+    weechat_plugin->hook_modifier(weechat_plugin, __modifier,   \
+                                  __callback, __data)
+#define weechat_hook_modifier_exec(__modifier, __modifier_data,         \
+                                   __string)                            \
+    weechat_plugin->hook_modifier_exec(weechat_plugin, __modifier,      \
+                                       __modifier_data, __string)
 #define weechat_unhook(__hook)                  \
     weechat_plugin->unhook( __hook)
 #define weechat_unhook_all()                            \

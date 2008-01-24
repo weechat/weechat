@@ -405,7 +405,7 @@ gui_keyboard_new (char *key, char *command, t_gui_key_func *function, char *args
             {
                 length = strlen (args);
                 if ((length > 1) && (args[length - 1] == '"'))
-                    new_key->args = strndup (args + 1, length - 2);
+                    new_key->args = string_strndup (args + 1, length - 2);
                 else
                     new_key->args = strdup (args);
             }
@@ -544,7 +544,7 @@ gui_keyboard_bind (char *key, char *command)
     {
         ptr_args = strchr (command, ' ');
         if (ptr_args)
-            command2 = strndup (command, ptr_args - command);
+            command2 = string_strndup (command, ptr_args - command);
         else
             command2 = strdup (command);
         if (command2)

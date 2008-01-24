@@ -24,10 +24,7 @@
 #endif
 
 #include <stdlib.h>
-#include <stdarg.h>
 #include <string.h>
-#include <signal.h>
-#include <libgen.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
@@ -1334,7 +1331,6 @@ gui_window_refresh_screen_sigwinch ()
 {
     gui_window_refresh_needed = 1;
     //gui_window_refresh_screen (0);
-    signal (SIGWINCH, &gui_window_refresh_screen_sigwinch);
 }
 
 /*

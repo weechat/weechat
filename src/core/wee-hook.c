@@ -257,6 +257,30 @@ hook_valid_for_plugin (struct t_weechat_plugin *plugin, struct t_hook *hook)
 }
 
 /*
+ * hook_exec_start: code executed before a hook exec
+ */
+
+void
+hook_exec_start ()
+{
+    hook_exec_recursion++;
+}
+
+/*
+ * hook_exec_end: code executed after a hook exec
+ */
+
+void
+hook_exec_end ()
+{
+    if (hook_exec_recursion > 0)
+        hook_exec_recursion--;
+    
+    if (hook_exec_recursion == 0)
+        hook_remove_deleted ();
+}
+
+/*
  * hook_search_command: search command hook in list
  */
 
@@ -362,7 +386,7 @@ hook_command_exec (struct t_gui_buffer *buffer, char *string, int only_builtin)
     }
     argv_eol = string_explode (string, " ", 1, 0, NULL);
     
-    hook_exec_recursion++;
+    hook_exec_start ();
     
     ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND];
     while (ptr_hook)
@@ -383,10 +407,9 @@ hook_command_exec (struct t_gui_buffer *buffer, char *string, int only_builtin)
             rc = (int) (HOOK_COMMAND(ptr_hook, callback))
                 (ptr_hook->callback_data, buffer, argc, argv, argv_eol);
             ptr_hook->running = 0;
-            if (hook_exec_recursion > 0)
-                hook_exec_recursion--;
-            if (hook_exec_recursion == 0)
-                hook_remove_deleted ();
+            string_free_exploded (argv);
+            string_free_exploded (argv_eol);
+            hook_exec_end ();
             if (rc == WEECHAT_RC_ERROR)
                 return 0;
             else
@@ -399,11 +422,7 @@ hook_command_exec (struct t_gui_buffer *buffer, char *string, int only_builtin)
     string_free_exploded (argv);
     string_free_exploded (argv_eol);
     
-    if (hook_exec_recursion > 0)
-        hook_exec_recursion--;
-
-    if (hook_exec_recursion == 0)
-        hook_remove_deleted ();
+    hook_exec_end ();
     
     /* no hook found */
     return -1;
@@ -530,7 +549,7 @@ hook_timer_exec ()
     
     gettimeofday (&tv_time, NULL);
     
-    hook_exec_recursion++;
+    hook_exec_start ();
     
     ptr_hook = weechat_hooks[HOOK_TYPE_TIMER];
     while (ptr_hook)
@@ -566,11 +585,7 @@ hook_timer_exec ()
         ptr_hook = next_hook;
     }
     
-    if (hook_exec_recursion > 0)
-        hook_exec_recursion--;
-    
-    if (hook_exec_recursion == 0)
-        hook_remove_deleted ();
+    hook_exec_end ();
 }
 
 /*
@@ -686,7 +701,7 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
 {
     struct t_hook *ptr_hook, *next_hook;
     
-    hook_exec_recursion++;
+    hook_exec_start ();
     
     ptr_hook = weechat_hooks[HOOK_TYPE_FD];
     while (ptr_hook)
@@ -710,11 +725,7 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
         ptr_hook = next_hook;
     }
     
-    if (hook_exec_recursion > 0)
-        hook_exec_recursion--;
-
-    if (hook_exec_recursion == 0)
-        hook_remove_deleted ();
+    hook_exec_end ();
 }
 
 /*
@@ -776,7 +787,7 @@ hook_print_exec (struct t_gui_buffer *buffer, time_t date, char *prefix,
         return;
     }
     
-    hook_exec_recursion++;
+    hook_exec_start ();
     
     ptr_hook = weechat_hooks[HOOK_TYPE_PRINT];
     while (ptr_hook)
@@ -802,11 +813,7 @@ hook_print_exec (struct t_gui_buffer *buffer, time_t date, char *prefix,
         ptr_hook = next_hook;
     }
     
-    if (hook_exec_recursion > 0)
-        hook_exec_recursion--;
-
-    if (hook_exec_recursion == 0)
-        hook_remove_deleted ();
+    hook_exec_end ();
 }
 
 /*
@@ -853,7 +860,7 @@ hook_signal_send (char *signal, char *type_data, void *signal_data)
 {
     struct t_hook *ptr_hook, *next_hook;
     
-    hook_exec_recursion++;
+    hook_exec_start ();
     
     ptr_hook = weechat_hooks[HOOK_TYPE_SIGNAL];
     while (ptr_hook)
@@ -874,11 +881,7 @@ hook_signal_send (char *signal, char *type_data, void *signal_data)
         ptr_hook = next_hook;
     }
     
-    if (hook_exec_recursion > 0)
-        hook_exec_recursion--;
-
-    if (hook_exec_recursion == 0)
-        hook_remove_deleted ();
+    hook_exec_end ();
 }
 
 /*
@@ -923,7 +926,7 @@ hook_config_exec (char *type, char *option, char *value)
 {
     struct t_hook *ptr_hook, *next_hook;
     
-    hook_exec_recursion++;
+    hook_exec_start ();
     
     ptr_hook = weechat_hooks[HOOK_TYPE_CONFIG];
     while (ptr_hook)
@@ -948,11 +951,7 @@ hook_config_exec (char *type, char *option, char *value)
         ptr_hook = next_hook;
     }
     
-    if (hook_exec_recursion > 0)
-        hook_exec_recursion--;
-
-    if (hook_exec_recursion == 0)
-        hook_remove_deleted ();
+    hook_exec_end ();
 }
 
 /*
@@ -1003,7 +1002,7 @@ hook_completion_exec (struct t_weechat_plugin *plugin, char *completion,
     /* make C compiler happy */
     (void) plugin;
     
-    hook_exec_recursion++;
+    hook_exec_start ();
     
     ptr_hook = weechat_hooks[HOOK_TYPE_COMPLETION];
     while (ptr_hook)
@@ -1024,11 +1023,103 @@ hook_completion_exec (struct t_weechat_plugin *plugin, char *completion,
         ptr_hook = next_hook;
     }
     
-    if (hook_exec_recursion > 0)
-        hook_exec_recursion--;
+    hook_exec_end ();
+}
+
+/*
+ * hook_modifier: hook a modifier
+ */
+
+struct t_hook *
+hook_modifier (struct t_weechat_plugin *plugin, char *modifier,
+               t_hook_callback_modifier *callback, void *callback_data)
+{
+    struct t_hook *new_hook;
+    struct t_hook_modifier *new_hook_modifier;
     
-    if (hook_exec_recursion == 0)
-        hook_remove_deleted ();
+    if (!modifier || !modifier[0])
+        return NULL;
+    
+    new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
+    if (!new_hook)
+        return NULL;
+    new_hook_modifier = (struct t_hook_modifier *)malloc (sizeof (struct t_hook_modifier));
+    if (!new_hook_modifier)
+    {
+        free (new_hook);
+        return NULL;
+    }
+    
+    hook_init_data (new_hook, plugin, HOOK_TYPE_MODIFIER, callback_data);
+    
+    new_hook->hook_data = new_hook_modifier;
+    new_hook_modifier->callback = callback;
+    new_hook_modifier->modifier = strdup (modifier);
+    
+    hook_add_to_list (new_hook);
+    
+    return new_hook;
+}
+
+/*
+ * hook_modifier_exec: execute modifier hook
+ */
+
+char *
+hook_modifier_exec (struct t_weechat_plugin *plugin, char *modifier,
+                    char *modifier_data, char *string)
+{
+    struct t_hook *ptr_hook, *next_hook;
+    char *new_msg, *message_modified;
+    
+    /* make C compiler happy */
+    (void) plugin;
+    
+    new_msg = NULL;
+    message_modified = strdup (string);
+    if (!message_modified)
+        return NULL;
+    
+    hook_exec_start ();
+    
+    ptr_hook = weechat_hooks[HOOK_TYPE_MODIFIER];
+    while (ptr_hook)
+    {
+        next_hook = ptr_hook->next_hook;
+        
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
+            && (string_strcasecmp (HOOK_MODIFIER(ptr_hook, modifier),
+                                   modifier) == 0))
+        {
+            ptr_hook->running = 1;
+            new_msg = (HOOK_MODIFIER(ptr_hook, callback))
+                (ptr_hook->callback_data, modifier, modifier_data,
+                 message_modified);
+            ptr_hook->running = 0;
+            
+            /* empty string returned => message dropped */
+            if (new_msg && !new_msg[0])
+            {
+                free (message_modified);
+                hook_exec_end ();
+                return new_msg;
+            }
+            
+            /* new message => keep it as base for next modifier */
+            if (new_msg)
+            {
+                free (message_modified);
+                message_modified = new_msg;
+            }
+        }
+        
+        ptr_hook = next_hook;
+    }
+    
+    hook_exec_end ();
+    
+    return message_modified;
 }
 
 /*
@@ -1103,6 +1194,11 @@ unhook (struct t_hook *hook)
                 if (HOOK_COMPLETION(hook, completion))
                     free (HOOK_COMPLETION(hook, completion));
                 free ((struct t_hook_completion *)hook->hook_data);
+                break;
+            case HOOK_TYPE_MODIFIER:
+                if (HOOK_MODIFIER(hook, modifier))
+                    free (HOOK_MODIFIER(hook, modifier));
+                free ((struct t_hook_modifier *)hook->hook_data);
                 break;
             case HOOK_NUM_TYPES:
                 /* this constant is used to count types only,
@@ -1286,6 +1382,16 @@ hook_print_log ()
                         log_printf ("  completion data:");
                         log_printf ("    callback . . . . . . : 0x%x", HOOK_COMPLETION(ptr_hook, callback));
                         log_printf ("    completion . . . . . : '%s'", HOOK_COMPLETION(ptr_hook, completion));
+                    }
+                    break;
+                case HOOK_TYPE_MODIFIER:
+                    log_printf ("  type . . . . . . . . . : %d (modifier)", ptr_hook->type);
+                    log_printf ("  callback_data. . . . . : 0x%x", ptr_hook->callback_data);
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  modifier data:");
+                        log_printf ("    callback . . . . . . : 0x%x", HOOK_MODIFIER(ptr_hook, callback));
+                        log_printf ("    modifier . . . . . . : '%s'", HOOK_MODIFIER(ptr_hook, modifier));
                     }
                     break;
                 case HOOK_NUM_TYPES:

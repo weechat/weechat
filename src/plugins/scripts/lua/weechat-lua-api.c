@@ -1671,7 +1671,7 @@ weechat_lua_api_hook_config (lua_State *L)
 }
 
 /*
- * weechat_lua_api_hook_completion_cb: callback for completion option hooked
+ * weechat_lua_api_hook_completion_cb: callback for completion hooked
  */
 
 int
@@ -1749,6 +1749,114 @@ weechat_lua_api_hook_completion (lua_State *L)
                                                          (char *)completion,
                                                          &weechat_lua_api_hook_completion_cb,
                                                          (char *)function));
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_hook_modifier_cb: callback for modifier hooked
+ */
+
+char *
+weechat_lua_api_hook_modifier_cb (void *data, char *modifier,
+                                  char *modifier_data, char *string)
+{
+    struct t_script_callback *script_callback;
+    char *lua_argv[4];
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    lua_argv[0] = modifier;
+    lua_argv[1] = modifier_data;
+    lua_argv[2] = string;
+    lua_argv[3] = NULL;
+    
+    return (char *)weechat_lua_exec (script_callback->script,
+                                     WEECHAT_SCRIPT_EXEC_STRING,
+                                     script_callback->function,
+                                     lua_argv);
+}
+
+/*
+ * weechat_lua_api_hook_modifier: hook a modifier
+ */
+
+static int
+weechat_lua_api_hook_modifier (lua_State *L)
+{
+    const char *modifier, *function;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier");
+        LUA_RETURN_EMPTY;
+    }
+    
+    modifier = NULL;
+    function = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_modifier");
+        LUA_RETURN_EMPTY;
+    }
+    
+    modifier = lua_tostring (lua_current_interpreter, -2);
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (script_api_hook_modifier (weechat_lua_plugin,
+                                                       lua_current_script,
+                                                       (char *)modifier,
+                                                       &weechat_lua_api_hook_modifier_cb,
+                                                       (char *)function));
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_hook_modifier_exec: execute a modifier hook
+ */
+
+static int
+weechat_lua_api_hook_modifier_exec (lua_State *L)
+{
+    const char *modifier, *modifier_data, *string;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_modifier_exec");
+        LUA_RETURN_EMPTY;
+    }
+    
+    modifier = NULL;
+    modifier_data = NULL;
+    string = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_modifier_exec");
+        LUA_RETURN_ERROR;
+    }
+    
+    modifier = lua_tostring (lua_current_interpreter, -3);
+    modifier_data = lua_tostring (lua_current_interpreter, -2);
+    string = lua_tostring (lua_current_interpreter, -1);
+    
+    result = weechat_hook_modifier_exec ((char *)modifier,
+                                         (char *)modifier_data,
+                                         (char *)string);
     LUA_RETURN_STRING_FREE(result);
 }
 
@@ -3539,6 +3647,8 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "hook_signal_send", &weechat_lua_api_hook_signal_send },
     { "hook_config", &weechat_lua_api_hook_config },
     { "hook_completion", &weechat_lua_api_hook_completion },
+    { "hook_modifier", &weechat_lua_api_hook_modifier },
+    { "hook_modifier_exec", &weechat_lua_api_hook_modifier_exec },
     { "unhook", &weechat_lua_api_unhook },
     { "unhook_all", &weechat_lua_api_unhook_all },
     { "buffer_new", &weechat_lua_api_buffer_new },

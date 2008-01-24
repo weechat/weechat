@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-19 17:18+0100\n"
+"POT-Creation-Date: 2008-01-24 16:42+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -220,7 +220,7 @@ msgid "Key:"
 msgstr "Клавиша:\n"
 
 #, fuzzy
-msgid "No key found."
+msgid "No key found"
 msgstr "Клавиши не найдены.\n"
 
 #, fuzzy, c-format
@@ -307,7 +307,11 @@ msgid "    completions hooked:"
 msgstr "     обработчики команд:\n"
 
 #, fuzzy
-msgid "No plugin found."
+msgid "    modifiers hooked:"
+msgstr "     обработчики таймера:\n"
+
+#, fuzzy
+msgid "No plugin found"
 msgstr "Plugin не найден\n"
 
 #, fuzzy
@@ -323,35 +327,19 @@ msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s некорректное количество аргументов команды \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%sWeeChat configuration file reloaded"
-msgstr "Конфигурационный файл сохранён\n"
-
-#, fuzzy, c-format
-msgid "%sError: failed to reload WeeChat configuration file"
-msgstr "%s не могу сохранить конфигурационный файл\n"
-
-#, fuzzy, c-format
-msgid "%sPlugins options reloaded"
+msgid "%sOptions reloaded from %s"
 msgstr "Настройки pluginов сохранены\n"
 
 #, fuzzy, c-format
-msgid "%sError: failed to reload plugins options"
+msgid "%sError: failed to reload options from %s"
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
 #, fuzzy, c-format
-msgid "%sWeeChat configuration file saved"
-msgstr "Конфигурационный файл сохранён\n"
-
-#, fuzzy, c-format
-msgid "%sError: failed to save WeeChat configuration file"
-msgstr "%s не могу сохранить конфигурационный файл\n"
-
-#, fuzzy, c-format
-msgid "%sPlugins options saved"
+msgid "%sOptions saved to %s"
 msgstr "Настройки pluginов сохранены\n"
 
 #, fuzzy, c-format
-msgid "%sError: failed to save plugins options"
+msgid "%sError: failed to save options to %s"
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
 msgid "(unknown)"
@@ -441,7 +429,7 @@ msgstr "конец списка /who"
 #, fuzzy, c-format
 msgid ""
 "%sError: can not merge windows, there's no other window with same size near "
-"current one."
+"current one"
 msgstr ""
 "%s не могу объединить окна, есть другое окно такого-же размера рядом с "
 "текущим.\n"
@@ -1313,8 +1301,8 @@ msgid ""
 "\".dll\" under Microsoft Windows)"
 msgstr ""
 
-#, fuzzy
-msgid "Saving WeeChat configuration to disk"
+#, fuzzy, c-format
+msgid "Saving WeeChat configuration to disk (%s)"
 msgstr "Сохраняю конфигурацию\n"
 
 #, fuzzy, c-format
@@ -1682,14 +1670,6 @@ msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s рекурсия при вызове сокращения \"/%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: configuration file reloaded"
-msgstr "Конфигурационный файл сохранён\n"
-
-#, fuzzy, c-format
-msgid "%s%s: failed to reload configuration file"
-msgstr "%s не могу сохранить конфигурационный файл\n"
-
-#, fuzzy, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
@@ -1756,6 +1736,70 @@ msgstr "сокращение"
 
 msgid "alias_name: name of alias to remove"
 msgstr "сокращение: удаляемое сокращение"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating charset \"%s\" => \"%s\""
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, fuzzy, c-format
+msgid "%sCharset \"%s\" => \"%s\""
+msgstr "Сокращение \"%s\" => \"%s\" создано\n"
+
+#, fuzzy, c-format
+msgid "%s%s: charset \"%s\" not found"
+msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%sCharset \"%s\" removed"
+msgstr "Сокращение \"%s\" удалено\n"
+
+#, fuzzy
+msgid "List of charsets:"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "List of charsets with \"%s\":"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "No charset found"
+msgstr "Клавиши не найдены.\n"
+
+#, fuzzy
+msgid "No charset defined"
+msgstr "Сокращения не заданы.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: terminal: %s, internal: %s"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating configuration file \"%s\""
+msgstr "перезагрузить конфигурационный файл сервера"
+
+#, fuzzy
+msgid "manage charsets"
+msgstr "управление буферами"
+
+msgid "[[type.]plugin.string [= charset]]"
+msgstr ""
+
+msgid ""
+"   type: \"decode\" or \"encode\" (if type is omitted, then both \"decode\" "
+"and \"encode\" are set)\n"
+" plugin: plugin name\n"
+" string: string specific to plugin (for example a server name or server."
+"channel for IRC plugin)\n"
+"charset: charset to use (if empty, then charset is removed)\n"
+"\n"
+"Examples :\n"
+"/charset decode iso-8859-15 => set global decode charset to iso-8859-15\n"
+"/charset encode iso-8859-15 => set global encode charset to iso-8859-15\n"
+"/charset decode.irc.freenode => set decode charset to iso-8859-15 for IRC "
+"server \"freenode\" (all channels)\n"
+"/charset decode.irc.freenode.#weechat => set decode charset to iso-8859-15 "
+"for IRC channel \"#weechat\" on server \"freenode\""
+msgstr ""
 
 msgid "demo message without prefix"
 msgstr ""
@@ -2776,6 +2820,12 @@ msgstr ""
 msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
+#, c-format
+msgid ""
+"%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
+"memory because it's currently used"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: value \"%s\" is invalid for option \"%s\""
 msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
@@ -3014,12 +3064,6 @@ msgstr ""
 "разделённый запятыми список уровней уведомления этого сервера (формат: "
 "#канал:1,..), название канала '*' зарезервировано для уровня уведомления "
 "сервера"
-
-#, c-format
-msgid ""
-"%s%s: warning: server \"%s\" not found in configuration file. It has not "
-"been deleted because it's used now."
-msgstr ""
 
 msgid "Waiting"
 msgstr "Ожидание"
@@ -3892,7 +3936,7 @@ msgid "%s%s: no command to execute"
 msgstr "%s Нет команд для запуска!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\""
+msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", arguments=\"%s\""
 msgstr ""
 "%s Неизвестная команда: команда=\"%s\", хост=\"%s\", аргументы=\"%s\"\n"
 
@@ -4273,6 +4317,30 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s некорректные аргументы команды \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sWeeChat configuration file reloaded"
+#~ msgstr "Конфигурационный файл сохранён\n"
+
+#, fuzzy
+#~ msgid "%sError: failed to reload WeeChat configuration file"
+#~ msgstr "%s не могу сохранить конфигурационный файл\n"
+
+#, fuzzy
+#~ msgid "%sWeeChat configuration file saved"
+#~ msgstr "Конфигурационный файл сохранён\n"
+
+#, fuzzy
+#~ msgid "%sError: failed to save WeeChat configuration file"
+#~ msgstr "%s не могу сохранить конфигурационный файл\n"
+
+#, fuzzy
+#~ msgid "%s%s: configuration file reloaded"
+#~ msgstr "Конфигурационный файл сохранён\n"
+
+#, fuzzy
+#~ msgid "%s%s: failed to reload configuration file"
+#~ msgstr "%s не могу сохранить конфигурационный файл\n"
 
 #, fuzzy
 #~ msgid "clear buffer(s)"

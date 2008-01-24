@@ -309,7 +309,8 @@ alias_new (char *name, char *command)
 	return ptr_alias;
     }
     
-    if ((new_alias = ((struct t_alias *)malloc (sizeof (struct t_alias)))))
+    new_alias = (struct t_alias *)malloc (sizeof (struct t_alias));
+    if (new_alias)
     {
         new_hook = weechat_hook_command (name, "[alias]", NULL, NULL, NULL,
                                          alias_cb, new_alias);
@@ -331,11 +332,9 @@ alias_new (char *name, char *command)
         else
             alias_list = new_alias;
         last_alias = new_alias;
-        
-        return new_alias;
     }
     
-    return NULL;
+    return new_alias;
 }
 
 /*
@@ -372,7 +371,7 @@ alias_get_final_command (struct t_alias *alias)
 }
 
 /*
- * alias_free: free an alias and reomve it from list
+ * alias_free: free an alias and remove it from list
  */
 
 void
@@ -390,7 +389,6 @@ alias_free (struct t_alias *alias)
     }
     else
         new_alias_list = alias->next_alias;
-    
     if (alias->next_alias)
         (alias->next_alias)->prev_alias = alias->prev_alias;
 
@@ -402,6 +400,7 @@ alias_free (struct t_alias *alias)
     if (alias->command)
         free (alias->command);
     free (alias);
+    
     alias_list = new_alias_list;
 }
 
@@ -414,6 +413,20 @@ alias_free_all ()
 {
     while (alias_list)
         alias_free (alias_list);
+}
+
+/*
+ * alias_config_reaload: reload alias configuration file
+ */
+
+int
+alias_config_reload (struct t_config_file *config_file)
+{
+    /* make C compiler happy */
+    (void) config_file;
+    
+    alias_free_all ();
+    return weechat_config_reload (alias_config_file);
 }
 
 /*
@@ -510,7 +523,8 @@ alias_config_init ()
 {
     struct t_config_section *ptr_section;
     
-    alias_config_file = weechat_config_new (ALIAS_CONFIG_FILENAME);
+    alias_config_file = weechat_config_new (ALIAS_CONFIG_FILENAME,
+                                            &alias_config_reload);
     if (!alias_config_file)
         return 0;
     
@@ -535,34 +549,6 @@ int
 alias_config_read ()
 {
     return weechat_config_read (alias_config_file);
-}
-
-/*
- * alias_config_reaload_signal_cb: reload alias configuration file
- */
-
-int
-alias_config_reload_signal_cb (void *data, char *signal, char *type_data,
-                               void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-    (void) type_data;
-    (void) signal_data;
-    
-    alias_free_all ();
-    if (weechat_config_reload (alias_config_file) == 0)
-    {
-        weechat_printf (NULL,
-                        _("%s%s: configuration file reloaded"),
-                        weechat_prefix ("info"), "alias");
-        return WEECHAT_RC_OK;
-    }
-    weechat_printf (NULL,
-                    _("%s%s: failed to reload configuration file"),
-                    weechat_prefix ("error"), "alias");
-    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -651,7 +637,8 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         else
             weechat_printf (NULL, _("No alias defined"));
     }
-    return 0;
+    
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -755,8 +742,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           "%(alias)",
                           &unalias_command_cb, NULL);
     
-    weechat_hook_signal ("config_reload", &alias_config_reload_signal_cb, NULL);
-    
     weechat_hook_completion ("alias", &alias_completion_cb, NULL);
     
     return WEECHAT_RC_OK;
@@ -767,8 +752,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
  */
 
 int
-weechat_plugin_end ()
+weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
+    /* make C compiler happy */
+    (void) plugin;
+    
     alias_config_write ();
     alias_free_all ();    
     weechat_config_free (alias_config_file);

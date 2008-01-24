@@ -986,24 +986,33 @@ irc_server_sendf (struct t_irc_server *server, char *format, ...)
 
 /*
  * irc_server_parse_message: parse IRC message and return pointer to
- *                           host, command and arguments (if any)
+ *                           host, command, channel, target nick and arguments
+ *                            (if any)
  */
 
 void
-irc_server_parse_message (char *message, char **host, char **command, char **args)
+irc_server_parse_message (char *message, char **nick, char **host,
+                          char **command, char **channel, char **arguments)
 {
-    char *pos, *pos2;
+    char *pos, *pos2, *pos3, *pos4;
     
+    *nick = NULL;
     *host = NULL;
     *command = NULL;
-    *args = NULL;
+    *channel = NULL;
+    *arguments = NULL;
     
     if (message[0] == ':')
     {
+        pos2 = strchr (message, '!');
         pos = strchr (message, ' ');
+        if (pos2)
+            *nick = weechat_strndup (message + 1, pos2 - (message + 1));
+        else if (pos)
+            *nick = weechat_strndup (message + 1, pos - (message + 1));
         if (pos)
         {
-            *host = strndup (message + 1, pos - (message + 1));
+            *host = weechat_strndup (message + 1, pos - (message + 1));
             pos++;
         }
         else
@@ -1019,11 +1028,47 @@ irc_server_parse_message (char *message, char **host, char **command, char **arg
         pos2 = strchr (pos, ' ');
         if (pos2)
         {
-            *command = strndup (pos, pos2 - pos);
+            *command = weechat_strndup (pos, pos2 - pos);
             pos2++;
             while (pos2[0] == ' ')
                 pos2++;
-            *args = strdup (pos2);
+            *arguments = strdup (pos2);
+            if (pos2[0] != ':')
+            {
+                if (irc_channel_is_channel (pos2))
+                {
+                    pos3 = strchr (pos2, ' ');
+                    if (pos3)
+                        *channel = weechat_strndup (pos2, pos3 - pos2);
+                    else
+                        *channel = strdup (pos2);
+                }
+                else
+                {
+                    pos3 = strchr (pos2, ' ');
+                    if (!*nick)
+                    {
+                        if (pos3)
+                            *nick = weechat_strndup (pos2, pos3 - pos2);
+                        else
+                            *nick = strdup (pos2);
+                    }
+                    if (pos3)
+                    {
+                        pos3++;
+                        while (pos3[0] == ' ')
+                            pos3++;
+                        if (irc_channel_is_channel (pos3))
+                        {
+                            pos4 = strchr (pos3, ' ');
+                            if (pos4)
+                                *channel = weechat_strndup (pos3, pos4 - pos3);
+                            else
+                                *channel = strdup (pos3);
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -1171,7 +1216,9 @@ irc_server_msgq_flush ()
 {
     struct t_irc_message *next;
     char *ptr_data, *new_msg, *ptr_msg, *pos;
-    char *host, *command, *args;
+    char *nick, *host, *command, *channel, *arguments, *msg_decoded;
+    char *modifier_data, *ptr_chan_nick;
+    int length;
     
     while (irc_recv_msgq)
     {
@@ -1220,17 +1267,48 @@ irc_server_msgq_flush ()
                         pos = strchr (ptr_msg, '\n');
                         if (pos)
                             pos[0] = '\0';
-
+                        
                         //if (new_msg)
                         //    gui_chat_printf_raw_data (irc_recv_msgq->server,
                         //                              0, 1, ptr_msg);
                         
-                        irc_server_parse_message (ptr_msg, &host,
-                                                  &command, &args);
+                        irc_server_parse_message (ptr_msg, &nick, &host,
+                                                  &command, &channel,
+                                                  &arguments);
                         
+                        /* convert charset for message */
+                        msg_decoded = NULL;
+                        ptr_chan_nick = (channel) ? channel : nick;
+                        length = strlen (weechat_plugin->name) + 1 +
+                            strlen (irc_recv_msgq->server->name) + 1 +
+                            ((ptr_chan_nick) ? strlen (ptr_chan_nick) : 0) + 1;
+                        modifier_data = (char *)malloc (length);
+                        if (modifier_data)
+                        {
+                            if (ptr_chan_nick)
+                            {
+                                snprintf (modifier_data, length, "%s.%s.%s",
+                                          weechat_plugin->name,
+                                          irc_recv_msgq->server->name,
+                                          ptr_chan_nick);
+                            }
+                            else
+                            {
+                                snprintf (modifier_data, length, "%s.%s.%s",
+                                          weechat_plugin->name,
+                                          irc_recv_msgq->server->name,
+                                          ptr_chan_nick);
+                            }
+                            msg_decoded = weechat_hook_modifier_exec ("charset_decode",
+                                                                      modifier_data,
+                                                                      ptr_msg);
+                            free (modifier_data);
+                        }
                         switch (irc_protocol_recv_command (irc_recv_msgq->server,
-                                                           ptr_msg,
-                                                           host, command, args))
+                                                           (msg_decoded) ?
+                                                           msg_decoded : ptr_msg,
+                                                           host, command,
+                                                           arguments))
                         {
                             case -1:
                                 weechat_printf (irc_recv_msgq->server->buffer,
@@ -1251,9 +1329,9 @@ irc_server_msgq_flush ()
                                                 _("%s%s: unknown command: "
                                                   "cmd=\"%s\", "
                                                   "host=\"%s\", "
-                                                  "args=\"%s\""),
+                                                  "arguments=\"%s\""),
                                                 weechat_prefix ("error"),
-                                                "irc", command, host, args);
+                                                "irc", command, host, arguments);
                                 break;
                         }
                         
@@ -1261,8 +1339,8 @@ irc_server_msgq_flush ()
                             free (host);
                         if (command)
                             free (command);
-                        if (args)
-                            free (args);
+                        if (arguments)
+                            free (arguments);
                         
                         if (pos)
                         {

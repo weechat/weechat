@@ -233,6 +233,7 @@ plugin_load (char *filename)
         new_plugin->iconv_from_internal = &string_iconv_from_internal;
         new_plugin->gettext = &plugin_api_gettext;
         new_plugin->ngettext = &plugin_api_ngettext;
+        new_plugin->strndup = &string_strndup;
         new_plugin->strcasecmp = &string_strcasecmp;
         new_plugin->strncasecmp = &string_strncasecmp;
         new_plugin->strcmp_ignore_chars = &string_strcmp_ignore_chars;
@@ -315,6 +316,8 @@ plugin_load (char *filename)
         new_plugin->hook_signal_send = &hook_signal_send;
         new_plugin->hook_config = &hook_config;
         new_plugin->hook_completion = &hook_completion;
+        new_plugin->hook_modifier = &hook_modifier;
+        new_plugin->hook_modifier_exec = &hook_modifier_exec;
         new_plugin->unhook = &unhook;
         new_plugin->unhook_all = &unhook_all_plugin;
         
@@ -517,7 +520,7 @@ plugin_remove (struct t_weechat_plugin *plugin)
     
     /* remove all hooks */
     unhook_all_plugin (plugin);
-
+    
     /* remove pointer to this plugin on buffers */
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)

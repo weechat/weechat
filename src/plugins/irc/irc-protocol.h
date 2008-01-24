@@ -37,8 +37,8 @@ struct t_irc_protocol_msg
     t_irc_recv_func2 *recv_function2; /* function called when msg is received  */
 };
 
-extern int irc_protocol_is_highlight (char *, char *);
-extern int irc_protocol_recv_command (struct t_irc_server *, char *, char *, char *, char *);
+extern int irc_protocol_is_highlight (char *message, char *nick);
+extern int irc_protocol_recv_command (struct t_irc_server *server, char *entire_line, char *host, char *command, char *arguments);
 extern int irc_protocol_cmd_error (struct t_irc_server *server, int argc, char **argv, char **argv_eol, int ignore, int highlight);
 extern int irc_protocol_cmd_invite (struct t_irc_server *server, int argc, char **argv, char **argv_eol, int ignore, int highlight);
 extern int irc_protocol_cmd_join (struct t_irc_server *server, int argc, char **argv, char **argv_eol, int ignore, int highlight);

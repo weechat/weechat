@@ -81,6 +81,7 @@ SET(WEECHAT_SOURCES
 ./src/plugins/aspell/aspell.c
 ./src/plugins/aspell/aspell.h
 ./src/plugins/charset/charset.c
+./src/plugins/charset/charset.h
 ./src/plugins/demo/demo.c
 ./src/plugins/fifo/fifo.c
 ./src/plugins/irc/irc-buffer.c

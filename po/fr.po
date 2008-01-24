@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-19 17:18+0100\n"
-"PO-Revision-Date: 2008-01-19 17:19+0100\n"
+"POT-Creation-Date: 2008-01-24 16:42+0100\n"
+"PO-Revision-Date: 2008-01-24 16:42+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -204,8 +204,8 @@ msgstr "%sErreur: fonction de touche \"%s\" inconnue"
 msgid "Key:"
 msgstr "Touche:"
 
-msgid "No key found."
-msgstr "Aucune touche trouvée."
+msgid "No key found"
+msgstr "Aucune touche trouvée"
 
 #, c-format
 msgid "%sError: unable to bind key \"%s\""
@@ -279,8 +279,11 @@ msgstr "    options de configuration accrochées:"
 msgid "    completions hooked:"
 msgstr "    completion accrochées:"
 
-msgid "No plugin found."
-msgstr "Aucune extension trouvée."
+msgid "    modifiers hooked:"
+msgstr "    modificateurs accrochés:"
+
+msgid "No plugin found"
+msgstr "Aucune extension trouvée"
 
 msgid "  (no plugin)"
 msgstr "  (aucune extension)"
@@ -294,36 +297,20 @@ msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%sErreur: nombre de paramètres erroné pour la commande \"%s\""
 
 #, c-format
-msgid "%sWeeChat configuration file reloaded"
-msgstr "%sFichier de configuration WeeChat rechargé"
+msgid "%sOptions reloaded from %s"
+msgstr "%sOptions rechargées depuis %s"
 
 #, c-format
-msgid "%sError: failed to reload WeeChat configuration file"
-msgstr "%sErreur: impossible de recharger le fichier de configuration WeeChat"
+msgid "%sError: failed to reload options from %s"
+msgstr "%sErreur: impossible de recharger les options depuis %s"
 
 #, c-format
-msgid "%sPlugins options reloaded"
-msgstr "%sOptions des extensions rechargées"
+msgid "%sOptions saved to %s"
+msgstr "%sOptions sauvées dans %s"
 
 #, c-format
-msgid "%sError: failed to reload plugins options"
-msgstr "%sErreur: impossible de recharger les options des extensions"
-
-#, c-format
-msgid "%sWeeChat configuration file saved"
-msgstr "%sFichier de configuration WeeChat sauvé"
-
-#, c-format
-msgid "%sError: failed to save WeeChat configuration file"
-msgstr "%sErreur: impossible de sauver le fichier de configuration WeeChat"
-
-#, c-format
-msgid "%sPlugins options saved"
-msgstr "%sOptions des extensions sauvées"
-
-#, c-format
-msgid "%sError: failed to save plugins options"
-msgstr "%sErreur: impossible de sauver les options des extensions"
+msgid "%sError: failed to save options to %s"
+msgstr "%sErreur: impossible de sauver les options dans %s"
 
 msgid "(unknown)"
 msgstr "(inconnu)"
@@ -408,10 +395,10 @@ msgstr "Liste des fenêtres:"
 #, c-format
 msgid ""
 "%sError: can not merge windows, there's no other window with same size near "
-"current one."
+"current one"
 msgstr ""
 "%sErreur: impossible de fusionner les fenêtres, aucun autre fenêtre avec la "
-"même taille à coté de la fenêtre actuelle."
+"même taille à coté de la fenêtre actuelle"
 
 msgid "manage buffers"
 msgstr "gestion des tampons"
@@ -1210,8 +1197,9 @@ msgstr ""
 "extension par défaut des extensions (par example \".so\" sous Linux ou \".dll"
 "\" sous Microsoft Windows)"
 
-msgid "Saving WeeChat configuration to disk"
-msgstr "Sauvegarde de la configuration WeeChat sur disque"
+#, c-format
+msgid "Saving WeeChat configuration to disk (%s)"
+msgstr "Sauvegarde de la configuration WeeChat sur disque (%s)"
 
 #, c-format
 msgid "%sError: cannot create file \"%s\""
@@ -1574,14 +1562,6 @@ msgid "%s%s: error, circular reference when calling alias \"%s\""
 msgstr "%s%s: erreur, référence circulaire lors de l'appel à l'alias \"%s\""
 
 #, c-format
-msgid "%s%s: configuration file reloaded"
-msgstr "%s%s: fichier de configuration rechargé"
-
-#, c-format
-msgid "%s%s: failed to reload configuration file"
-msgstr "%s%s: impossible de recharger le fichier de configuration"
-
-#, c-format
 msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s%s: erreur en création de l'alias \"%s\" => \"%s\""
 
@@ -1645,6 +1625,83 @@ msgstr "nom_alias"
 
 msgid "alias_name: name of alias to remove"
 msgstr "nom_alias: nom de l'alias à supprimer"
+
+#, c-format
+msgid "%s%s: error creating charset \"%s\" => \"%s\""
+msgstr "%s%s: erreur en création du charset \"%s\" => \"%s\""
+
+#, c-format
+msgid "%sCharset \"%s\" => \"%s\""
+msgstr "%sCharset \"%s\" => \"%s\""
+
+#, c-format
+msgid "%s%s: charset \"%s\" not found"
+msgstr "%s%s: charset \"%s\" non trouvé"
+
+#, c-format
+msgid "%sCharset \"%s\" removed"
+msgstr "%sCharset \"%s\" supprimé"
+
+msgid "List of charsets:"
+msgstr "Liste des charsets:"
+
+#, c-format
+msgid "List of charsets with \"%s\":"
+msgstr "Liste des charsets avec \"%s\":"
+
+msgid "No charset found"
+msgstr "Aucun charset trouvé"
+
+msgid "No charset defined"
+msgstr "Aucun charset défini"
+
+#, c-format
+msgid "%s%s: terminal: %s, internal: %s"
+msgstr "%s%s: terminal: %s, interne: %s"
+
+#, c-format
+msgid "%s%s: error creating configuration file \"%s\""
+msgstr "%s%s: erreur de création du fichier de configuration \"%s\""
+
+msgid "manage charsets"
+msgstr "gestion des charsets"
+
+msgid "[[type.]plugin.string [= charset]]"
+msgstr "[[type.]extension.chaine [= charset]]"
+
+msgid ""
+"   type: \"decode\" or \"encode\" (if type is omitted, then both \"decode\" "
+"and \"encode\" are set)\n"
+" plugin: plugin name\n"
+" string: string specific to plugin (for example a server name or server."
+"channel for IRC plugin)\n"
+"charset: charset to use (if empty, then charset is removed)\n"
+"\n"
+"Examples :\n"
+"/charset decode iso-8859-15 => set global decode charset to iso-8859-15\n"
+"/charset encode iso-8859-15 => set global encode charset to iso-8859-15\n"
+"/charset decode.irc.freenode => set decode charset to iso-8859-15 for IRC "
+"server \"freenode\" (all channels)\n"
+"/charset decode.irc.freenode.#weechat => set decode charset to iso-8859-15 "
+"for IRC channel \"#weechat\" on server \"freenode\""
+msgstr ""
+"     type: \"decode\" ou \"encode\" (si le type est omis, alors \"decode\" "
+"et \"encode\" sont définis)\n"
+"extension: nom d'une extension\n"
+"   chaine: chaine spécifique à une extension (par exemple un nom de serveur "
+"ou serveur.canal pour l'extension IRC)\n"
+"  charset: charset à utiliser (si non renseigné, alors le charset est "
+"supprimé)\n"
+"\n"
+"Exemples :\n"
+"/charset decode iso-8859-15 => définit le charset de décodage global à iso-"
+"8859-15\n"
+"/charset encode iso-8859-15 => définit le charset d'encodage global à iso-"
+"8859-15\n"
+"/charset decode.irc.freenode => définit le charset de décodage à iso-8859-15 "
+"pour le serveur IRC \"freenode\" (tous les serveurs)\n"
+"/charset decode.irc.freenode.#weechat => définit le charset de décodage à "
+"iso-8859-15 pour le canal IRC \"#weechat\" sur le serveur \"freenode\""
 
 msgid "demo message without prefix"
 msgstr "message de démonstration sans préfixe"
@@ -2678,6 +2735,14 @@ msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%sirc: pas assez de paramètres pour la commande \"%s\""
 
 #, c-format
+msgid ""
+"%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
+"memory because it's currently used"
+msgstr ""
+"%s%s: attention: le serveur \"%s\" n'a pas été trouvé dans le fichier de "
+"configuration, non supprimé en mémoire car il est en cours d'utilisation"
+
+#, c-format
 msgid "%s%s: value \"%s\" is invalid for option \"%s\""
 msgstr "%s%s: valeur \"%s\" invalide pour l'option \"%s\""
 
@@ -2928,14 +2993,6 @@ msgstr ""
 "liste des niveaux de notifications (séparés par des virgules) pour les "
 "canaux de ce serveur (format: #canal:1,..), un nom de canal '*' est réservé "
 "pour la notification par défaut du serveur"
-
-#, c-format
-msgid ""
-"%s%s: warning: server \"%s\" not found in configuration file. It has not "
-"been deleted because it's used now."
-msgstr ""
-"%s%s: attention: le serveur \"%s\" n'a pas été trouvé dans le fichier de "
-"configuration. Il n'a pas été supprimé car il est actuellement utilisé."
 
 msgid "Waiting"
 msgstr "Attente"
@@ -3831,8 +3888,8 @@ msgid "%s%s: no command to execute"
 msgstr "%s%s: pas de commande à exécuter"
 
 #, c-format
-msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", args=\"%s\""
-msgstr "%s%s: commande inconnue: cmd=\"%s\", hôte=\"%s\", params=\"%s\""
+msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", arguments=\"%s\""
+msgstr "%s%s: commande inconnue: cmd=\"%s\", hôte=\"%s\", paramètres=\"%s\""
 
 #, c-format
 msgid "%s%s: cannot read data from socket, disconnecting from server..."
@@ -4224,6 +4281,25 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\""
+
+#~ msgid "%sWeeChat configuration file reloaded"
+#~ msgstr "%sFichier de configuration WeeChat rechargé"
+
+#~ msgid "%sError: failed to reload WeeChat configuration file"
+#~ msgstr ""
+#~ "%sErreur: impossible de recharger le fichier de configuration WeeChat"
+
+#~ msgid "%sWeeChat configuration file saved"
+#~ msgstr "%sFichier de configuration WeeChat sauvé"
+
+#~ msgid "%sError: failed to save WeeChat configuration file"
+#~ msgstr "%sErreur: impossible de sauver le fichier de configuration WeeChat"
+
+#~ msgid "%s%s: configuration file reloaded"
+#~ msgstr "%s%s: fichier de configuration rechargé"
+
+#~ msgid "%s%s: failed to reload configuration file"
+#~ msgstr "%s%s: impossible de recharger le fichier de configuration"
 
 #~ msgid "clear buffer(s)"
 #~ msgstr "effacer le(s) tampon(s)"

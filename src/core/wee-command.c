@@ -31,6 +31,7 @@
 #include "weechat.h"
 #include "wee-command.h"
 #include "wee-config.h"
+#include "wee-config-file.h"
 #include "wee-hook.h"
 #include "wee-input.h"
 #include "wee-log.h"
@@ -818,7 +819,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
         else
         {
             gui_chat_printf (NULL,
-                             _("No key found."));
+                             _("No key found"));
         }
         if (internal_code)
             free (internal_code);
@@ -1034,13 +1035,30 @@ command_plugin_list (char *name, int full)
                                          HOOK_COMPLETION(ptr_hook, completion));
                     }
                 }
+
+                /* modifier hooked */
+                hook_found = 0;
+                for (ptr_hook = weechat_hooks[HOOK_TYPE_MODIFIER]; ptr_hook;
+                     ptr_hook = ptr_hook->next_hook)
+                {
+                    if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
+                    {
+                        if (!hook_found)
+                            gui_chat_printf (NULL,
+                                             _("    modifiers hooked:"));
+                        hook_found = 1;
+                        gui_chat_printf (NULL,
+                                         "        %s",
+                                         HOOK_MODIFIER(ptr_hook, modifier));
+                    }
+                }
             }
         }
     }
     if (plugins_found == 0)
     {
         if (name)
-            gui_chat_printf (NULL, _("No plugin found."));
+            gui_chat_printf (NULL, _("No plugin found"));
         else
             gui_chat_printf (NULL, _("  (no plugin)"));
     }
@@ -1142,6 +1160,8 @@ int
 command_reload (void *data, struct t_gui_buffer *buffer,
                 int argc, char **argv, char **argv_eol)
 {
+    struct t_config_file *ptr_config_file;
+    
     /* make C compiler happy */
     (void) data;
     (void) buffer;
@@ -1149,28 +1169,26 @@ command_reload (void *data, struct t_gui_buffer *buffer,
     (void) argv;
     (void) argv_eol;
     
-    /* reload WeeChat configuration */
-    if (config_weechat_reload () == 0)
-        gui_chat_printf (NULL,
-                         _("%sWeeChat configuration file reloaded"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
-    else
-        gui_chat_printf (NULL,
-                         _("%sError: failed to reload WeeChat configuration "
-                           "file"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-    
-    /* reload plugins configuration */
-    if (plugin_config_reload () == 0)
-        gui_chat_printf (NULL, _("%sPlugins options reloaded"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
-    else
-        gui_chat_printf (NULL,
-                         _("%sError: failed to reload plugins options"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-
-    /* tell to plugins to reload their configuration */
-    hook_signal_send ("config_reload", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    for (ptr_config_file = config_files; ptr_config_file;
+         ptr_config_file = ptr_config_file->next_config)
+    {
+        if (ptr_config_file->callback_reload)
+        {
+            if ((int) (ptr_config_file->callback_reload) (ptr_config_file) == 0)
+            {
+                gui_chat_printf (NULL, _("%sOptions reloaded from %s"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                                 ptr_config_file->filename);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: failed to reload options from %s"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 ptr_config_file->filename);
+            }
+        }
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -1183,32 +1201,32 @@ int
 command_save (void *data, struct t_gui_buffer *buffer,
               int argc, char **argv, char **argv_eol)
 {
+    struct t_config_file *ptr_config_file;
+    
     /* make C compiler happy */
     (void) data;
     (void) buffer;
     (void) argc;
     (void) argv;
     (void) argv_eol;
-
-    /* save WeeChat configuration */
-    if (config_weechat_write () == 0)
-        gui_chat_printf (NULL,
-                         _("%sWeeChat configuration file saved"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
-    else
-        gui_chat_printf (NULL,
-                         _("%sError: failed to save WeeChat configuration "
-                           "file"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
     
-    /* save plugins configuration */
-    if (plugin_config_write () == 0)
-        gui_chat_printf (NULL, _("%sPlugins options saved"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
-    else
-        gui_chat_printf (NULL,
-                         _("%sError: failed to save plugins options"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+    for (ptr_config_file = config_files; ptr_config_file;
+         ptr_config_file = ptr_config_file->next_config)
+    {
+        if (config_file_write (ptr_config_file) == 0)
+        {
+            gui_chat_printf (NULL, _("%sOptions saved to %s"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                             ptr_config_file->filename);
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: failed to save options to %s"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             ptr_config_file->filename);
+        }
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -1826,7 +1844,7 @@ command_window (void *data, struct t_gui_buffer *buffer,
                     gui_chat_printf (NULL,
                                      _("%sError: can not merge windows, "
                                        "there's no other window with same "
-                                       "size near current one."),
+                                       "size near current one"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                     return WEECHAT_RC_ERROR;
                 }
@@ -1972,7 +1990,7 @@ command_init ()
                      "all plugins, then autoload plugins)\n"
                      "  unload: unload one or all plugins\n\n"
                      "Without argument, /plugin command lists loaded plugins."),
-                  "list|listfull|load|autoload|reload|unload %p",
+                  "list|listfull|load|autoload|reload|unload %f|%p",
                   command_plugin, NULL);
     hook_command (NULL, "quit",
                   N_("quit WeeChat"),
