@@ -411,8 +411,27 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
                struct t_plugin_script **scripts,
                struct t_plugin_script *script)
 {
+    struct t_script_callback *ptr_script_callback;
+    
+    for (ptr_script_callback = script->callbacks; ptr_script_callback;
+         ptr_script_callback = ptr_script_callback->next_callback)
+    {
+        if (ptr_script_callback->hook)
+        {
+            weechat_unhook (ptr_script_callback->hook);
+        }
+        if (ptr_script_callback->config_file
+            && !ptr_script_callback->config_section
+            && !ptr_script_callback->config_option)
+        {
+            if (weechat_config_boolean (weechat_config_get_weechat ("plugins_save_config_on_unload")))
+                weechat_config_write (ptr_script_callback->config_file);
+            weechat_config_free (ptr_script_callback->config_file);
+        }
+    }
+    
     /* remove all callbacks created by this script */
-    script_callback_remove_all (weechat_plugin, script);
+    script_callback_remove_all (script);
     
     /* free data */
     if (script->filename)

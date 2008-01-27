@@ -289,9 +289,10 @@ plugin_config_free_all ()
  */
 
 int
-plugin_config_reload (struct t_config_file *config_file)
+plugin_config_reload (void *data, struct t_config_file *config_file)
 {
     /* make C compiler happy */
+    (void) data;
     (void) config_file;
     
     /* remove all plugin options */
@@ -309,12 +310,13 @@ plugin_config_reload (struct t_config_file *config_file)
  */
 
 void
-plugin_config_read_option (struct t_config_file *config_file,
+plugin_config_read_option (void *data, struct t_config_file *config_file,
                            char *option_name, char *value)
 {
     char *value2;
     
     /* make C compiler happy */
+    (void) data;
     (void) config_file;
 
     if (option_name && value)
@@ -332,10 +334,13 @@ plugin_config_read_option (struct t_config_file *config_file,
  */
 
 void
-plugin_config_write_options (struct t_config_file *config_file,
+plugin_config_write_options (void *data, struct t_config_file *config_file,
                              char *section_name)
 {
     struct t_config_option *ptr_option;
+    
+    /* make C compiler happy */
+    (void) data;
     
     config_file_write_line (config_file, section_name, NULL);
     
@@ -356,13 +361,13 @@ void
 plugin_config_init ()
 {
     plugin_config = config_file_new (NULL, PLUGIN_CONFIG_FILENAME,
-                                     &plugin_config_reload);
+                                     &plugin_config_reload, NULL);
     if (plugin_config)
     {
         config_file_new_section (plugin_config, "plugins",
-                                 &plugin_config_read_option,
-                                 &plugin_config_write_options,
-                                 NULL);
+                                 &plugin_config_read_option, NULL,
+                                 &plugin_config_write_options, NULL,
+                                 NULL, NULL);
     }
 }
 

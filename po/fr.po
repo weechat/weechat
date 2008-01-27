@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-24 16:42+0100\n"
-"PO-Revision-Date: 2008-01-24 16:42+0100\n"
+"POT-Creation-Date: 2008-01-27 10:27+0100\n"
+"PO-Revision-Date: 2008-01-27 10:28+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -305,12 +305,16 @@ msgid "%sError: failed to reload options from %s"
 msgstr "%sErreur: impossible de recharger les options depuis %s"
 
 #, c-format
+msgid "%sUnknown configuration file \"%s\""
+msgstr "%sFichier de configuration inconnu \"%s\""
+
+#, c-format
 msgid "%sOptions saved to %s"
-msgstr "%sOptions sauvées dans %s"
+msgstr "%sOptions sauvegardées dans %s"
 
 #, c-format
 msgid "%sError: failed to save options to %s"
-msgstr "%sErreur: impossible de sauver les options dans %s"
+msgstr "%sErreur: impossible de sauvegarder les options dans %s"
 
 msgid "(unknown)"
 msgstr "(inconnu)"
@@ -590,14 +594,32 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr "quitter WeeChat"
 
-msgid "reload WeeChat and plugins configuration files from disk"
-msgstr ""
-"recharger les fichiers de configuration WeeChat et extensions depuis le "
-"disque"
+msgid "reload configuration files from disk"
+msgstr "recharger les fichiers de configuration depuis le disque"
 
-msgid "save WeeChat and plugins configuration files to disk"
+msgid "[file [file...]]"
+msgstr "[fichier [fichier...]]"
+
+msgid ""
+"file: configuration file to reload\n"
+"\n"
+"Without argument, all files (WeeChat and plugins) are reloaded."
 msgstr ""
-"sauvegarder les fichiers de configuration WeeChat et extensions sur disque"
+"fichier: fichier de configuration à recharger\n"
+"\n"
+"Sans paramètre, tous les fichiers (WeeChat et extensions) sont rechargés."
+
+msgid "save configuration files to disk"
+msgstr "sauvegarder les fichiers de configuration sur disque"
+
+msgid ""
+"file: configuration file to save\n"
+"\n"
+"Without argument, all files (WeeChat and plugins) are saved."
+msgstr ""
+"fichier: fichier de configuration à sauvegarder\n"
+"\n"
+"Sans paramètre, tous les fichiers (WeeChat et extensions) sont sauvegardés."
 
 msgid "set config options"
 msgstr "modifier des options de configuration"
@@ -1196,6 +1218,10 @@ msgid ""
 msgstr ""
 "extension par défaut des extensions (par example \".so\" sous Linux ou \".dll"
 "\" sous Microsoft Windows)"
+
+msgid "save configuration files when unloading plugins"
+msgstr ""
+"sauvegarder les fichiers de configuration lors du déchargement des extensions"
 
 #, c-format
 msgid "Saving WeeChat configuration to disk (%s)"
@@ -2526,8 +2552,8 @@ msgstr ""
 "    nom_serveur: nom du serveur, pour usage interne et affichage\n"
 "         nom/IP: nom ou adresse IP du serveur\n"
 "           port: port pour le serveur (nombre entier, 6667 par défaut)\n"
-"           temp: créer un serveur temporaire (non sauvé dans le fichier de "
-"configuration)\n"
+"           temp: créer un serveur temporaire (non sauvegardé dans le fichier "
+"de configuration)\n"
 "           auto: se connecter automatiquement au serveur quand WeeChat "
 "démarre\n"
 "         noauto: ne pas se connecter au serveur quand WeeChat démarre (par "
@@ -3192,7 +3218,7 @@ msgid "off"
 msgstr "désactivé"
 
 msgid " (temporary server, will not be saved)"
-msgstr " (serveur temporaire, ne sera pas sauvé)"
+msgstr " (serveur temporaire, ne sera pas sauvegardé)"
 
 msgid "(hidden)"
 msgstr "(caché)"
@@ -4281,35 +4307,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\""
-
-#~ msgid "%sWeeChat configuration file reloaded"
-#~ msgstr "%sFichier de configuration WeeChat rechargé"
-
-#~ msgid "%sError: failed to reload WeeChat configuration file"
-#~ msgstr ""
-#~ "%sErreur: impossible de recharger le fichier de configuration WeeChat"
-
-#~ msgid "%sWeeChat configuration file saved"
-#~ msgstr "%sFichier de configuration WeeChat sauvé"
-
-#~ msgid "%sError: failed to save WeeChat configuration file"
-#~ msgstr "%sErreur: impossible de sauver le fichier de configuration WeeChat"
-
-#~ msgid "%s%s: configuration file reloaded"
-#~ msgstr "%s%s: fichier de configuration rechargé"
-
-#~ msgid "%s%s: failed to reload configuration file"
-#~ msgstr "%s%s: impossible de recharger le fichier de configuration"
-
-#~ msgid "clear buffer(s)"
-#~ msgstr "effacer le(s) tampon(s)"
-
-#~ msgid "[-all | number [number ...]]"
-#~ msgstr "[-all | numéro [numéro ...]]"
-
-#~ msgid ""
-#~ "  -all: clear all buffers\n"
-#~ "number: clear buffer by number"
-#~ msgstr ""
-#~ "  -all: effacer tous les tampons\n"
-#~ "numéro: effacer un tampon par son numéro"

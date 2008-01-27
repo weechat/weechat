@@ -21,10 +21,13 @@
 
 struct t_script_callback
 {
-    void *script;                        /* pointer to script               */
-    char *function;                      /* script function called          */
-    struct t_hook *hook;                 /* not NULL if hook                */
-    struct t_gui_buffer *buffer;         /* not NULL if buffer callback     */
+    void *script;                            /* pointer to script           */
+    char *function;                          /* script function called      */
+    struct t_config_file *config_file;       /* not NULL for config file    */
+    struct t_config_section *config_section; /* not NULL for config section */
+    struct t_config_option *config_option;   /* not NULL for config option  */
+    struct t_hook *hook;                     /* not NULL for hook           */
+    struct t_gui_buffer *buffer;             /* not NULL for buffer callback*/
     struct t_script_callback *prev_callback; /* link to next callback       */
     struct t_script_callback *next_callback; /* link to previous callback   */
 };
@@ -32,11 +35,9 @@ struct t_script_callback
 extern struct t_script_callback *script_callback_alloc ();
 extern void script_callback_add (struct t_plugin_script *script,
                                  struct t_script_callback *callback);
-extern void script_callback_remove (struct t_weechat_plugin *weechat_plugin,
-                                    struct t_plugin_script *script,
+extern void script_callback_remove (struct t_plugin_script *script,
                                     struct t_script_callback *script_callback);
-extern void script_callback_remove_all (struct t_weechat_plugin *weechat_plugin,
-                                        struct t_plugin_script *script);
+extern void script_callback_remove_all (struct t_plugin_script *script);
 extern void script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
                                        struct t_script_callback *script_callback);
 

@@ -279,6 +279,23 @@ gui_completion_list_add_buffers_categories (struct t_gui_completion *completion)
 }
 
 /*
+ * gui_completion_list_add_config_files: add config files to completion list
+ */
+
+void
+gui_completion_list_add_config_files (struct t_gui_completion *completion)
+{
+    struct t_config_file *ptr_config_file;
+
+    for (ptr_config_file = config_files; ptr_config_file;
+         ptr_config_file = ptr_config_file->next_config)
+    {
+        gui_completion_list_add (completion, ptr_config_file->filename,
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
+}
+
+/*
  * gui_completion_list_add_filename: add filename to completion list
  */
 
@@ -670,6 +687,9 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                         case 'c': /* buffers categories */
                             gui_completion_list_add_buffers_categories (completion);
                             break;
+                        case 'C': /* config files */
+                            gui_completion_list_add_config_files (completion);
+                            break;
                         case 'f': /* filename */
                             gui_completion_list_add_filename (completion);
                             break;
@@ -745,7 +765,7 @@ void
 gui_completion_build_list (struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook;
-    char *template, *pos_template, *pos_space;
+    char *pos_template, *pos_space;
     int repeat_last, i, length;
 
     repeat_last = 0;
@@ -789,10 +809,11 @@ gui_completion_build_list (struct t_gui_completion *completion)
     }
     if (repeat_last)
     {
-        pos_space = rindex (template, ' ');
+        pos_space = rindex (HOOK_COMMAND(ptr_hook, completion), ' ');
         gui_completion_build_list_template (completion,
                                             (pos_space) ?
-                                            pos_space + 1 : template,
+                                            pos_space + 1 : HOOK_COMMAND(ptr_hook,
+                                                                         completion),
                                             ptr_hook->plugin);
     }
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-24 16:42+0100\n"
+"POT-Creation-Date: 2008-01-27 10:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -286,6 +286,10 @@ msgid "%sError: failed to reload options from %s"
 msgstr ""
 
 #, c-format
+msgid "%sUnknown configuration file \"%s\""
+msgstr ""
+
+#, c-format
 msgid "%sOptions saved to %s"
 msgstr ""
 
@@ -505,10 +509,25 @@ msgstr ""
 msgid "quit WeeChat"
 msgstr ""
 
-msgid "reload WeeChat and plugins configuration files from disk"
+msgid "reload configuration files from disk"
 msgstr ""
 
-msgid "save WeeChat and plugins configuration files to disk"
+msgid "[file [file...]]"
+msgstr ""
+
+msgid ""
+"file: configuration file to reload\n"
+"\n"
+"Without argument, all files (WeeChat and plugins) are reloaded."
+msgstr ""
+
+msgid "save configuration files to disk"
+msgstr ""
+
+msgid ""
+"file: configuration file to save\n"
+"\n"
+"Without argument, all files (WeeChat and plugins) are saved."
 msgstr ""
 
 msgid "set config options"
@@ -1016,6 +1035,9 @@ msgstr ""
 msgid ""
 "standard plugins extension in filename (for example \".so\" under Linux or "
 "\".dll\" under Microsoft Windows)"
+msgstr ""
+
+msgid "save configuration files when unloading plugins"
 msgstr ""
 
 #, c-format

@@ -21,6 +21,44 @@
 
 extern void script_api_charset_set (struct t_plugin_script *script,
                                     char *charset);
+extern struct t_config_file *script_api_config_new (struct t_weechat_plugin *weechat_plugin,
+                                                    struct t_plugin_script *script,
+                                                    char *filename,
+                                                    int (*callback_reload)(void *data,
+                                                                           struct t_config_file *config_file),
+                                                    char *function);
+extern struct t_config_section *script_api_config_new_section (struct t_weechat_plugin *weechat_plugin,
+                                                               struct t_plugin_script *script,
+                                                               struct t_config_file *config_file,
+                                                               char *name,
+                                                               void (*callback_read)(void *data,
+                                                                                     struct t_config_file *config_file,
+                                                                                     char *option_name,
+                                                                                     char *value),
+                                                               char *function_read,
+                                                               void (*callback_write)(void *data,
+                                                                                      struct t_config_file *config_file,
+                                                                                      char *section_name),
+                                                               char *function_write,
+                                                               void (*callback_write_default)(void *data,
+                                                                                              struct t_config_file *config_file,
+                                                                                              char *section_name),
+                                                               char *function_write_default);
+extern struct t_config_option *script_api_config_new_option (struct t_weechat_plugin *weechat_plugin,
+                                                             struct t_plugin_script *script,
+                                                             struct t_config_file *config_file,
+                                                             struct t_config_section *section,
+                                                             char *name,
+                                                             char *type,
+                                                             char *description,
+                                                             char *string_values,
+                                                             int min, int max,
+                                                             char *default_value,
+                                                             void (*callback_change)(void *data),
+                                                             char *function);
+extern void script_api_config_free (struct t_weechat_plugin *weechat_plugin,
+                                    struct t_plugin_script *script,
+                                    struct t_config_file *config_file);
 extern void script_api_printf (struct t_weechat_plugin *weechat_plugin,
                                struct t_plugin_script *script,
                                struct t_gui_buffer *buffer,
@@ -95,11 +133,10 @@ extern struct t_hook *script_api_hook_modifier (struct t_weechat_plugin *weechat
                                                                   char *modifier_data,
                                                                   char *string),
                                                 char *function);
-extern int script_api_unhook (struct t_weechat_plugin *weechat_plugin,
-                              struct t_plugin_script *script,
-                              struct t_hook *hook);
-extern void script_api_unhook_all (struct t_weechat_plugin *weechat_plugin,
-                                   struct t_plugin_script *script);
+extern void script_api_unhook (struct t_weechat_plugin *weechat_plugin,
+                               struct t_plugin_script *script,
+                               struct t_hook *hook);
+extern void script_api_unhook_all (struct t_plugin_script *script);
 struct t_gui_buffer *script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
                                             struct t_plugin_script *script,
                                             char *category, char *name,

@@ -370,8 +370,8 @@ weechat_python_load (char *filename)
 	/* if script was registered, removing from list */
 	if (python_current_script != NULL)
         {
-	    script_remove (weechat_python_plugin,
-                           &python_scripts, python_current_script);
+	    script_remove (weechat_python_plugin, &python_scripts,
+                           python_current_script);
         }
         return 0;
     }

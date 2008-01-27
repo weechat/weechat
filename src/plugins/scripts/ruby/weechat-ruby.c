@@ -376,8 +376,8 @@ weechat_ruby_load (char *filename)
 	
 	if (ruby_current_script != NULL)
         {
-	    script_remove (weechat_ruby_plugin,
-                           &ruby_scripts, ruby_current_script);
+	    script_remove (weechat_ruby_plugin, &ruby_scripts,
+                           ruby_current_script);
         }
         
 	return 0;

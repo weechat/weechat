@@ -1153,6 +1153,30 @@ command_quit (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * command_reload_file: reload a configuration file
+ */
+
+void
+command_reload_file (struct t_config_file *config_file)
+{
+    if ((int) (config_file->callback_reload) (config_file->callback_reload_data,
+                                              config_file) == 0)
+    {
+        gui_chat_printf (NULL,
+                         _("%sOptions reloaded from %s"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                         config_file->filename);
+    }
+    else
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: failed to reload options from %s"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         config_file->filename);
+    }
+}
+
+/*
  * command_reload: reload WeeChat and plugins options from disk
  */
 
@@ -1161,36 +1185,67 @@ command_reload (void *data, struct t_gui_buffer *buffer,
                 int argc, char **argv, char **argv_eol)
 {
     struct t_config_file *ptr_config_file;
+    int i;
     
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argc;
-    (void) argv;
     (void) argv_eol;
     
-    for (ptr_config_file = config_files; ptr_config_file;
-         ptr_config_file = ptr_config_file->next_config)
+    if (argc > 1)
     {
-        if (ptr_config_file->callback_reload)
+        for (i = 1; i < argc; i++)
         {
-            if ((int) (ptr_config_file->callback_reload) (ptr_config_file) == 0)
+            ptr_config_file = config_file_search (argv[i]);
+            if (ptr_config_file)
             {
-                gui_chat_printf (NULL, _("%sOptions reloaded from %s"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
-                                 ptr_config_file->filename);
+                command_reload_file (ptr_config_file);
             }
             else
             {
                 gui_chat_printf (NULL,
-                                 _("%sError: failed to reload options from %s"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 ptr_config_file->filename);
+                                 _("%sUnknown configuration file \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                                 argv[i]);
+            }
+        }
+    }
+    else
+    {
+        for (ptr_config_file = config_files; ptr_config_file;
+             ptr_config_file = ptr_config_file->next_config)
+        {
+            if (ptr_config_file->callback_reload)
+            {
+                command_reload_file (ptr_config_file);
             }
         }
     }
     
     return WEECHAT_RC_OK;
+}
+
+/*
+ * command_save_file: save a configuration file
+ */
+
+void
+command_save_file (struct t_config_file *config_file)
+{
+    if (config_file_write (config_file) == 0)
+    {
+        gui_chat_printf (NULL,
+                         _("%sOptions saved to %s"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                         config_file->filename);
+    }
+    else
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: failed to save options to %s"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         config_file->filename);
+    }
 }
 
 /*
@@ -1202,29 +1257,37 @@ command_save (void *data, struct t_gui_buffer *buffer,
               int argc, char **argv, char **argv_eol)
 {
     struct t_config_file *ptr_config_file;
+    int i;
     
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argc;
-    (void) argv;
     (void) argv_eol;
-    
-    for (ptr_config_file = config_files; ptr_config_file;
-         ptr_config_file = ptr_config_file->next_config)
+
+    if (argc > 1)
     {
-        if (config_file_write (ptr_config_file) == 0)
+        for (i = 1; i < argc; i++)
         {
-            gui_chat_printf (NULL, _("%sOptions saved to %s"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
-                             ptr_config_file->filename);
+            ptr_config_file = config_file_search (argv[i]);
+            if (ptr_config_file)
+            {
+                command_save_file (ptr_config_file);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sUnknown configuration file \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                                 argv[i]);
+            }
         }
-        else
+    }
+    else
+    {
+        for (ptr_config_file = config_files; ptr_config_file;
+             ptr_config_file = ptr_config_file->next_config)
         {
-            gui_chat_printf (NULL,
-                             _("%sError: failed to save options to %s"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             ptr_config_file->filename);
+            command_save_file (ptr_config_file);
         }
     }
     
@@ -1433,7 +1496,10 @@ command_set (void *data, struct t_gui_buffer *buffer,
                                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
                                         _("Option changed: "));
             if ((rc == 2) && (ptr_option->callback_change))
-                (void) (ptr_option->callback_change) ();
+            {
+                (void) (ptr_option->callback_change)
+                    (ptr_option->callback_change_data);
+            }
         }
         else
         {
@@ -1998,15 +2064,20 @@ command_init ()
                   "%q",
                   command_quit, NULL);
     hook_command (NULL, "reload",
-                  N_("reload WeeChat and plugins configuration files from "
-                     "disk"),
-                  "", "",
-                  NULL,
+                  N_("reload configuration files from disk"),
+                  N_("[file [file...]]"),
+                  N_("file: configuration file to reload\n\n"
+                     "Without argument, all files (WeeChat and plugins) are "
+                     "reloaded."),
+                  "%C|%*",
                   command_reload, NULL);
     hook_command (NULL, "save",
-                  N_("save WeeChat and plugins configuration files to disk"),
-                  "", "",
-                  NULL,
+                  N_("save configuration files to disk"),
+                  N_("[file [file...]]"),
+                  N_("file: configuration file to save\n\n"
+                     "Without argument, all files (WeeChat and plugins) are "
+                     "saved."),
+                  "%C|%*",
                   command_save, NULL);
     hook_command (NULL, "set",
                   N_("set config options"),

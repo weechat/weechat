@@ -420,9 +420,10 @@ alias_free_all ()
  */
 
 int
-alias_config_reload (struct t_config_file *config_file)
+alias_config_reload (void *data, struct t_config_file *config_file)
 {
     /* make C compiler happy */
+    (void) data;
     (void) config_file;
     
     alias_free_all ();
@@ -434,10 +435,11 @@ alias_config_reload (struct t_config_file *config_file)
  */
 
 void
-alias_config_read_line (struct t_config_file *config_file, char *option_name,
-                        char *value)
+alias_config_read_line (void *data, struct t_config_file *config_file,
+                        char *option_name, char *value)
 {
     /* make C compiler happy */
+    (void) data;
     (void) config_file;
 
     if (option_name && value)
@@ -460,10 +462,13 @@ alias_config_read_line (struct t_config_file *config_file, char *option_name,
  */
 
 void
-alias_config_write_section (struct t_config_file *config_file,
+alias_config_write_section (void *data, struct t_config_file *config_file,
                             char *section_name)
 {
     struct t_alias *ptr_alias;
+    
+    /* make C compiler happy */
+    (void) data;
     
     weechat_config_write_line (config_file, section_name, NULL);
     
@@ -482,9 +487,13 @@ alias_config_write_section (struct t_config_file *config_file,
  */
 
 void
-alias_config_write_default_aliases (struct t_config_file *config_file,
+alias_config_write_default_aliases (void *data,
+                                    struct t_config_file *config_file,
                                     char *section_name)
 {
+    /* make C compiler happy */
+    (void) data;
+    
     weechat_config_write_line (config_file, section_name, NULL);
     
     weechat_config_write_line (config_file, "SAY", "%s", "\"msg *\"");
@@ -524,14 +533,17 @@ alias_config_init ()
     struct t_config_section *ptr_section;
     
     alias_config_file = weechat_config_new (ALIAS_CONFIG_FILENAME,
-                                            &alias_config_reload);
+                                            &alias_config_reload, NULL);
     if (!alias_config_file)
         return 0;
     
     ptr_section = weechat_config_new_section (alias_config_file, "alias",
-                                              alias_config_read_line,
-                                              alias_config_write_section,
-                                              alias_config_write_default_aliases);
+                                              &alias_config_read_line,
+                                              NULL,
+                                              &alias_config_write_section,
+                                              NULL,
+                                              &alias_config_write_default_aliases,
+                                              NULL);
     if (!ptr_section)
     {
         weechat_config_free (alias_config_file);

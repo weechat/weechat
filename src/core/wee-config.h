@@ -164,6 +164,7 @@ extern struct t_config_option *config_proxy_password;
 extern struct t_config_option *config_plugins_path;
 extern struct t_config_option *config_plugins_autoload;
 extern struct t_config_option *config_plugins_extension;
+extern struct t_config_option *config_plugins_save_config_on_unload;
 
 extern int config_weechat_init ();
 extern int config_weechat_read ();

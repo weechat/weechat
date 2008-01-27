@@ -696,6 +696,657 @@ static XS (XS_weechat_list_free)
 }
 
 /*
+ * weechat_perl_api_config_reload_cb: callback for config reload
+ */
+
+int
+weechat_perl_api_config_reload_cb (void *data,
+                                   struct t_config_file *config_file)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[2];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback->function && script_callback->function[0])
+    {
+        perl_argv[0] = script_ptr2str (config_file);
+        perl_argv[1] = NULL;
+        
+        rc = (int *) weechat_perl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        perl_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (perl_argv[0])
+            free (perl_argv[0]);
+
+        return ret;
+    }
+    
+    return 0;
+}
+
+/*
+ * weechat::config_new: create a new configuration file
+ */
+
+static XS (XS_weechat_config_new)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_config_new (weechat_perl_plugin,
+                                                    perl_current_script,
+                                                    SvPV (ST (0), PL_na), /* filename */
+                                                    &weechat_perl_api_config_reload_cb,
+                                                    SvPV (ST (1), PL_na))); /* perl function */
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_perl_api_config_section_read_cb: callback for reading option in section
+ */
+
+void
+weechat_perl_api_config_section_read_cb (void *data,
+                                         struct t_config_file *config_file,
+                                         char *option_name, char *value)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[4];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback->function && script_callback->function[0])
+    {
+        perl_argv[0] = script_ptr2str (config_file);
+        perl_argv[1] = option_name;
+        perl_argv[2] = value;
+        perl_argv[3] = NULL;
+        
+        rc = (int *) weechat_perl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        perl_argv);
+        
+        if (rc)
+            free (rc);
+        if (perl_argv[0])
+            free (perl_argv[0]);
+    }
+}
+
+/*
+ * weechat_perl_api_config_section_write_cb: callback for writing section
+ */
+
+void
+weechat_perl_api_config_section_write_cb (void *data,
+                                          struct t_config_file *config_file,
+                                          char *section_name)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[3];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback->function && script_callback->function[0])
+    {
+        perl_argv[0] = script_ptr2str (config_file);
+        perl_argv[1] = section_name;
+        perl_argv[2] = NULL;
+        
+        rc = (int *) weechat_perl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        perl_argv);
+
+        if (rc)
+            free (rc);
+        if (perl_argv[0])
+            free (perl_argv[0]);
+    }
+}
+
+/*
+ * weechat_perl_api_config_section_write_default_cb: callback for writing
+ *                                                   default values for section
+ */
+
+void
+weechat_perl_api_config_section_write_default_cb (void *data,
+                                                  struct t_config_file *config_file,
+                                                  char *section_name)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[3];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback->function && script_callback->function[0])
+    {
+        perl_argv[0] = script_ptr2str (config_file);
+        perl_argv[1] = section_name;
+        perl_argv[2] = NULL;
+        
+        rc = (int *) weechat_perl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        perl_argv);
+        
+        if (rc)
+            free (rc);
+        if (perl_argv[0])
+            free (perl_argv[0]);
+    }
+}
+
+/*
+ * weechat::config_new_section: create a new section in configuration file
+ */
+
+static XS (XS_weechat_config_new_section)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new_section");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 5)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_config_new_section (weechat_perl_plugin,
+                                                            perl_current_script,
+                                                            script_str2ptr (SvPV (ST (0), PL_na)), /* config_file */
+                                                            SvPV (ST (1), PL_na), /* name */
+                                                            &weechat_perl_api_config_section_read_cb,
+                                                            SvPV (ST (2), PL_na), /* perl function (read cb) */
+                                                            &weechat_perl_api_config_section_write_cb,
+                                                            SvPV (ST (3), PL_na), /* perl function (write cb) */
+                                                            &weechat_perl_api_config_section_write_default_cb,
+                                                            SvPV (ST (4), PL_na))); /* perl function (write default cb) */
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::config_search_section: search section in configuration file
+ */
+
+static XS (XS_weechat_config_search_section)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_search_section");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_search_section");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_config_search_section (script_str2ptr (SvPV (ST (0), PL_na)), /* config_file */
+                                                            SvPV (ST (1), PL_na))); /* section_name */
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_perl_api_config_option_change_cb: callback for option changed
+ */
+
+void
+weechat_perl_api_config_option_change_cb (void *data)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[1];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        perl_argv[0] = NULL;
+        
+        rc = (int *) weechat_perl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        perl_argv);
+        
+        if (rc)
+            free (rc);
+    }
+}
+
+/*
+ * weechat::config_new_option: create a new option in section
+ */
+
+static XS (XS_weechat_config_new_option)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new_option");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 10)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_config_new_option (weechat_perl_plugin,
+                                                           perl_current_script,
+                                                           script_str2ptr (SvPV (ST (0), PL_na)), /* config_file */
+                                                           script_str2ptr (SvPV (ST (1), PL_na)), /* section */
+                                                           SvPV (ST (2), PL_na), /* name */
+                                                           SvPV (ST (3), PL_na), /* type */
+                                                           SvPV (ST (4), PL_na), /* description */
+                                                           SvPV (ST (5), PL_na), /* string_values */
+                                                           SvIV (ST (6)), /* min */
+                                                           SvIV (ST (7)), /* max */
+                                                           SvPV (ST (8), PL_na), /* default_value */
+                                                           &weechat_perl_api_config_option_change_cb,
+                                                           SvPV (ST (9), PL_na))); /* perl function */
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::config_search_option: search option in configuration file or section
+ */
+
+static XS (XS_weechat_config_search_option)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_search_option");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_search_option");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_config_search_option (script_str2ptr (SvPV (ST (0), PL_na)), /* config_file */
+                                                           script_str2ptr (SvPV (ST (1), PL_na)), /* section */
+                                                           SvPV (ST (2), PL_na))); /* option_name */
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::config_string_to_boolean: return boolean value of a string
+ */
+
+static XS (XS_weechat_config_string_to_boolean)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string_to_boolean");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string_to_boolean");
+        PERL_RETURN_INT(0);
+    }
+    
+    value = weechat_config_string_to_boolean (SvPV (ST (0), PL_na)); /* text */
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::config_option_set: set new value for option
+ */
+
+static XS (XS_weechat_config_option_set)
+{
+    int rc;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set");
+        PERL_RETURN_INT(0);
+    }
+    
+    rc = weechat_config_option_set (script_str2ptr (SvPV (ST (0), PL_na)), /* option */
+                                    SvPV (ST (1), PL_na), /* new_value */
+                                    SvIV (ST (2))); /* run_callback */
+    PERL_RETURN_INT(rc);
+}
+
+/*
+ * weechat::config_boolean: return boolean value of option
+ */
+
+static XS (XS_weechat_config_boolean)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_boolean");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_boolean");
+        PERL_RETURN_INT(0);
+    }
+    
+    value = weechat_config_boolean (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::config_integer: return integer value of option
+ */
+
+static XS (XS_weechat_config_integer)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_integer");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_integer");
+        PERL_RETURN_INT(0);
+    }
+    
+    value = weechat_config_integer (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::config_string: return string value of option
+ */
+
+static XS (XS_weechat_config_string)
+{
+    char *value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    value = weechat_config_string (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    PERL_RETURN_STRING(value);
+}
+
+/*
+ * weechat::config_color: return color value of option
+ */
+
+static XS (XS_weechat_config_color)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_color");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_color");
+        PERL_RETURN_INT(0);
+    }
+    
+    value = weechat_config_color (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::config_write_line: write a line in configuration file
+ */
+
+static XS (XS_weechat_config_write_line)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write_line");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write_line");
+        PERL_RETURN_ERROR;
+    }
+    
+    weechat_config_write_line (script_str2ptr (SvPV (ST (0), PL_na)), /* config_file */
+                               SvPV (ST (1), PL_na), /* option_name */
+                               "%s",
+                               SvPV (ST (2), PL_na)); /* value */
+    
+    PERL_RETURN_OK;
+}
+
+/*
+ * weechat::config_write: write configuration file
+ */
+
+static XS (XS_weechat_config_write)
+{
+    int rc;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write");
+	PERL_RETURN_INT(-1);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write");
+        PERL_RETURN_INT(-1);
+    }
+    
+    rc = weechat_config_write (script_str2ptr (SvPV (ST (0), PL_na))); /* config_file */
+    PERL_RETURN_INT(rc);
+}
+
+/*
+ * weechat::config_read: read configuration file
+ */
+
+static XS (XS_weechat_config_read)
+{
+    int rc;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_read");
+	PERL_RETURN_INT(-1);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_read");
+        PERL_RETURN_INT(-1);
+    }
+    
+    rc = weechat_config_read (script_str2ptr (SvPV (ST (0), PL_na))); /* config_file */
+    PERL_RETURN_INT(rc);
+}
+
+/*
+ * weechat::config_reload: reload configuration file
+ */
+
+static XS (XS_weechat_config_reload)
+{
+    int rc;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_reload");
+	PERL_RETURN_INT(-1);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_reload");
+        PERL_RETURN_INT(-1);
+    }
+    
+    rc = weechat_config_reload (script_str2ptr (SvPV (ST (0), PL_na))); /* config_file */
+    PERL_RETURN_INT(rc);
+}
+
+/*
+ * weechat::config_free: free configuration file
+ */
+
+static XS (XS_weechat_config_free)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_free");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_free");
+        PERL_RETURN_ERROR;
+    }
+    
+    script_api_config_free (weechat_perl_plugin,
+                            perl_current_script,
+                            script_str2ptr (SvPV (ST (0), PL_na))); /* config_file */
+    
+    PERL_RETURN_OK;
+}
+
+/*
  * weechat::prefix: get a prefix, used for display
  */
 
@@ -1531,12 +2182,11 @@ static XS (XS_weechat_unhook)
         PERL_RETURN_ERROR;
     }
     
-    if (script_api_unhook (weechat_perl_plugin,
-                           perl_current_script,
-                           script_str2ptr (SvPV (ST (0), PL_na))))
-        PERL_RETURN_OK;
+    script_api_unhook (weechat_perl_plugin,
+                       perl_current_script,
+                       script_str2ptr (SvPV (ST (0), PL_na)));
     
-    PERL_RETURN_ERROR;
+    PERL_RETURN_OK;
 }
 
 /*
@@ -1557,8 +2207,7 @@ static XS (XS_weechat_unhook_all)
 	PERL_RETURN_ERROR;
     }
     
-    script_api_unhook_all (weechat_perl_plugin,
-                           perl_current_script);
+    script_api_unhook_all (perl_current_script);
     
     PERL_RETURN_OK;
 }
@@ -2028,741 +2677,6 @@ static XS (XS_weechat_info_get)
 }
 
 /*
- * weechat::get_dcc_info: get infos about DCC
- */
-
-/*
-static XS (XS_weechat_get_dcc_info)
-{
-    t_plugin_dcc_info *dcc_info, *ptr_dcc;    
-    int count;
-    char timebuffer1[64];
-    char timebuffer2[64];
-    struct in_addr in;
-    HV *dcc_hash_member;
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    (void) items;
-    
-    if (!perl_current_script)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: unable to get DCC info, "
-                                   "script not initialized");
-	PERL_RETURN_EMPTY;
-    }
-
-    dcc_info = weechat_perl_plugin->get_dcc_info (weechat_perl_plugin);
-    count = 0;
-    if (!dcc_info)
-	PERL_RETURN_EMPTY;
-    
-    for (ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
-    {
-	strftime(timebuffer1, sizeof(timebuffer1), "%F %T",
-		 localtime(&ptr_dcc->start_time));
-	strftime(timebuffer2, sizeof(timebuffer2), "%F %T",
-		 localtime(&ptr_dcc->start_transfer));
-	in.s_addr = htonl(ptr_dcc->addr);
-
-        dcc_hash_member = (HV *) sv_2mortal ((SV *) newHV());
-        
-        hv_store (dcc_hash_member, "server",           6, newSVpv (ptr_dcc->server, 0), 0);
-        hv_store (dcc_hash_member, "channel",          7, newSVpv (ptr_dcc->channel, 0), 0);
-        hv_store (dcc_hash_member, "type",             4, newSViv (ptr_dcc->type), 0);
-        hv_store (dcc_hash_member, "status",           6, newSViv (ptr_dcc->status), 0);
-        hv_store (dcc_hash_member, "start_time",      10, newSVpv (timebuffer1, 0), 0);
-        hv_store (dcc_hash_member, "start_transfer",  14, newSVpv (timebuffer2, 0), 0);
-        hv_store (dcc_hash_member, "address",          7, newSVpv (inet_ntoa(in), 0), 0);
-        hv_store (dcc_hash_member, "port",             4, newSViv (ptr_dcc->port), 0);
-        hv_store (dcc_hash_member, "nick",             4, newSVpv (ptr_dcc->nick, 0), 0);
-        hv_store (dcc_hash_member, "remote_file",     11, newSVpv (ptr_dcc->filename, 0), 0);
-        hv_store (dcc_hash_member, "local_file",      10, newSVpv (ptr_dcc->local_filename, 0), 0);
-        hv_store (dcc_hash_member, "filename_suffix", 15, newSViv (ptr_dcc->filename_suffix), 0);
-        hv_store (dcc_hash_member, "size",             4, newSVnv (ptr_dcc->size), 0);
-        hv_store (dcc_hash_member, "pos",              3, newSVnv (ptr_dcc->pos), 0);
-        hv_store (dcc_hash_member, "start_resume",    12, newSVnv (ptr_dcc->start_resume), 0);
-        hv_store (dcc_hash_member, "cps",              3, newSViv (ptr_dcc->bytes_per_sec), 0);
-        
-	XPUSHs(newRV_inc((SV *) dcc_hash_member));
-	count++;
-    }
-    weechat_perl_plugin->free_dcc_info (weechat_perl_plugin, dcc_info);    
-    
-    XSRETURN (count);
-}
-*/
-
-/*
- * weechat::config_get_weechat: get value of a WeeChat config option
- */
-
- /*
-static XS (XS_weechat_config_get_weechat)
-{
-    char *option;
-    struct t_config_option *value;
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    
-    if (!perl_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get_weechat");
-	PERL_RETURN_EMPTY;
-    }
-    
-    if (items < 1)
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get_weechat");
-        PERL_RETURN_EMPTY;
-    }
-    
-    option = SvPV (ST (0), PL_na);
-    
-    if (option)
-    {
-        value = weechat_config_get_weechat (option);
-        
-        if (return_value)
-        {
-            XST_mPV (0, return_value);
-            free (return_value);
-            XSRETURN (1);
-        }
-    }
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
-}
-*/
-
-/*
- * weechat::set_config: set value of a WeeChat config option
- */
-
-/*
-static XS (XS_weechat_set_config)
-{
-    char *option, *value;
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    
-    if (!perl_current_script)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: unable to set config option, "
-                                   "script not initialized");
-	PERL_RETURN_ERROR;
-    }
-    
-    if (items < 2)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: wrong parameters for "
-                                   "\"set_config\" function");
-        PERL_RETURN_ERROR;
-    }
-    
-    option = SvPV (ST (0), PL_na);
-    value = SvPV (ST (1), PL_na);
-    
-    if (option && value)
-    {
-        if (weechat_perl_plugin->set_config (weechat_perl_plugin, option, value))
-            PERL_RETURN_OK;
-    }
-    
-    PERL_RETURN_ERROR;
-}
-*/
-
-/*
- * weechat::get_plugin_config: get value of a plugin config option
- */
-
-/*
-static XS (XS_weechat_get_plugin_config)
-{
-    char *option, *return_value;
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    
-    if (!perl_current_script)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: unable to get plugin config option, "
-                                   "script not initialized");
-	PERL_RETURN_EMPTY;
-    }
-    
-    if (items < 1)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: wrong parameters for "
-                                   "\"get_plugin_config\" function");
-        PERL_RETURN_EMPTY;
-    }
-    
-    option = SvPV (ST (0), PL_na);
-    
-    if (option)
-    {
-        return_value = weechat_script_get_plugin_config (weechat_perl_plugin,
-                                                         perl_current_script,
-                                                         option);
-        
-        if (return_value)
-        {
-            XST_mPV (0, return_value);
-            free (return_value);
-            XSRETURN (1);
-        }
-    }    
-    
-    XST_mPV (0, "");
-    XSRETURN (1);
-}
-*/
-
-/*
- * weechat::set_plugin_config: set value of a WeeChat config option
- */
-
-/*
-static XS (XS_weechat_set_plugin_config)
-{
-    char *option, *value;
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    
-    if (!perl_current_script)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: unable to set plugin config option, "
-                                   "script not initialized");
-	PERL_RETURN_ERROR;
-    }
-    
-    if (items < 2)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: wrong parameters for "
-                                   "\"set_plugin_config\" function");
-        PERL_RETURN_ERROR;
-    }
-    
-    option = SvPV (ST (0), PL_na);
-    value = SvPV (ST (1), PL_na);
-    
-    if (option && value)
-    {
-        if (weechat_script_set_plugin_config (weechat_perl_plugin,
-                                              perl_current_script,
-                                              option, value))
-            PERL_RETURN_OK;
-    }
-    
-    PERL_RETURN_ERROR;
-}
-*/
-
-/*
- * weechat::get_server_info: get infos about servers
- */
-
-/*
-static XS (XS_weechat_get_server_info)
-{
-    t_plugin_server_info *server_info, *ptr_server;
-    char timebuffer[64];
-    HV *server_hash, *server_hash_member;
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    (void) items;
-    
-    if (!perl_current_script)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: unable to get server info, "
-                                   "script not initialized");
-	PERL_RETURN_EMPTY;
-    }
-    
-    server_info = weechat_perl_plugin->get_server_info (weechat_perl_plugin);
-    if (!server_info)
-    {
-	PERL_RETURN_EMPTY;
-    }    
-    
-    server_hash = (HV *) sv_2mortal((SV *) newHV());
-    if (!server_hash)
-    {
-        weechat_perl_plugin->free_server_info (weechat_perl_plugin, server_info);
-	PERL_RETURN_EMPTY;
-    }
-    
-    for (ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_server)
-    {
-	strftime(timebuffer, sizeof(timebuffer), "%F %T",
-		 localtime(&ptr_server->away_time));
-	
-	server_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
-
-	hv_store (server_hash_member, "autoconnect",          11, newSViv (ptr_server->autoconnect), 0);
-        hv_store (server_hash_member, "autoreconnect",        13, newSViv (ptr_server->autoreconnect), 0);
-        hv_store (server_hash_member, "autoreconnect_delay",  19, newSViv (ptr_server->autoreconnect_delay), 0);
-        hv_store (server_hash_member, "temp_server",          11, newSViv (ptr_server->temp_server), 0);
-	hv_store (server_hash_member, "address",               7, newSVpv (ptr_server->address, 0), 0);
-        hv_store (server_hash_member, "port",                  4, newSViv (ptr_server->port), 0);
-	hv_store (server_hash_member, "ipv6",                  4, newSViv (ptr_server->ipv6), 0);
-        hv_store (server_hash_member, "ssl",                   3, newSViv (ptr_server->ssl), 0);
-        hv_store (server_hash_member, "password",              8, newSVpv (ptr_server->password, 0), 0);
-        hv_store (server_hash_member, "nick1",                 5, newSVpv (ptr_server->nick1, 0), 0);
-        hv_store (server_hash_member, "nick2",                 5, newSVpv (ptr_server->nick2, 0), 0);
-        hv_store (server_hash_member, "nick3",                 5, newSVpv (ptr_server->nick3, 0), 0);
-        hv_store (server_hash_member, "username",              8, newSVpv (ptr_server->username, 0), 0);
-        hv_store (server_hash_member, "realname",              8, newSVpv (ptr_server->realname, 0), 0);
-        hv_store (server_hash_member, "command",               7, newSVpv (ptr_server->command, 0), 0);
-        hv_store (server_hash_member, "command_delay",        13, newSViv (ptr_server->command_delay), 0);
-        hv_store (server_hash_member, "autojoin",              8, newSVpv (ptr_server->autojoin, 0), 0);
-        hv_store (server_hash_member, "autorejoin",           10, newSViv (ptr_server->autorejoin), 0);
-        hv_store (server_hash_member, "notify_levels",        13, newSVpv (ptr_server->notify_levels, 0), 0);
-        hv_store (server_hash_member, "is_connected",         12, newSViv (ptr_server->is_connected), 0);
-        hv_store (server_hash_member, "ssl_connected",        13, newSViv (ptr_server->ssl_connected), 0);
-        hv_store (server_hash_member, "nick",                  4, newSVpv (ptr_server->nick, 0), 0);
-        hv_store (server_hash_member, "nick_modes",           10, newSVpv (ptr_server->nick_modes, 0), 0);
-	hv_store (server_hash_member, "away_time",             9, newSVpv (timebuffer, 0), 0);
-	hv_store (server_hash_member, "lag",                   3, newSViv (ptr_server->lag), 0);
-
-	hv_store (server_hash, ptr_server->name, strlen(ptr_server->name), newRV_inc((SV *) server_hash_member), 0);	
-    }
-    weechat_perl_plugin->free_server_info (weechat_perl_plugin, server_info);
-    
-    ST (0) = newRV_inc((SV *) server_hash);
-    if (SvREFCNT(ST(0))) sv_2mortal(ST(0));
-    
-    XSRETURN (1);
-}
-*/
-
-/*
- * weechat::get_channel_info: get infos about channels
- */
-
-/*
-static XS (XS_weechat_get_channel_info)
-{
-    t_plugin_channel_info *channel_info, *ptr_channel;
-    char *server;
-    HV *channel_hash, *channel_hash_member;
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    
-    if (!perl_current_script)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: unable to get channel info, "
-                                   "script not initialized");
-	PERL_RETURN_EMPTY;
-    }
-
-    if (items != 1)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: wrong parameters for "
-                                   "\"get_channel_info\" function");
-        PERL_RETURN_EMPTY;
-    }
-    
-    server = SvPV (ST (0), PL_na);
-    if (!server)
-	PERL_RETURN_EMPTY;
-
-    channel_info = weechat_perl_plugin->get_channel_info (weechat_perl_plugin, server);
-    if (!channel_info)
-    {
-	PERL_RETURN_EMPTY;
-    }
-    
-    channel_hash = (HV *) sv_2mortal((SV *) newHV());
-    if (!channel_hash)
-    {
-        weechat_perl_plugin->free_channel_info (weechat_perl_plugin, channel_info);
-	PERL_RETURN_EMPTY;
-    }
-    
-    for (ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_channel)
-    {
-	channel_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
-       
-	hv_store (channel_hash_member, "type",          4, newSViv (ptr_channel->type), 0);
-	hv_store (channel_hash_member, "topic",         5, newSVpv (ptr_channel->topic, 0), 0);
-	hv_store (channel_hash_member, "modes",         5, newSVpv (ptr_channel->modes, 0), 0);
-	hv_store (channel_hash_member, "limit",         5, newSViv (ptr_channel->limit), 0);
-	hv_store (channel_hash_member, "key",           3, newSVpv (ptr_channel->key, 0), 0);
-	hv_store (channel_hash_member, "nicks_count",  11, newSViv (ptr_channel->nicks_count), 0);
-	
-	hv_store (channel_hash, ptr_channel->name, strlen(ptr_channel->name), newRV_inc((SV *) channel_hash_member), 0);
-    }
-    weechat_perl_plugin->free_channel_info (weechat_perl_plugin, channel_info);
-    
-    ST (0) = newRV_inc((SV *) channel_hash);
-    if (SvREFCNT(ST(0))) sv_2mortal(ST(0));
-
-    XSRETURN (1);
-}
-*/
-
-/*
- * weechat::get_nick_info: get infos about nicks
- */
-
-/*
-static XS (XS_weechat_get_nick_info)
-{
-    t_plugin_nick_info *nick_info, *ptr_nick;
-    char *server, *channel;
-    HV *nick_hash;
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    
-    if (!perl_current_script)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: unable to get nick info, "
-                                   "script not initialized");
-	PERL_RETURN_EMPTY;
-    }
-
-    if (items != 2)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: wrong parameters for "
-                                   "\"get_nick_info\" function");
-        PERL_RETURN_EMPTY;
-    }
-    
-    server = SvPV (ST (0), PL_na);
-    channel = SvPV (ST (1), PL_na);
-    if (!server || !channel)
-	PERL_RETURN_EMPTY;
-    
-    nick_info = weechat_perl_plugin->get_nick_info (weechat_perl_plugin, server, channel);
-    if (!nick_info)
-    {
-	PERL_RETURN_EMPTY;
-    }
-    
-    nick_hash = (HV *) sv_2mortal((SV *) newHV());
-    if (!nick_hash)
-    {
-        weechat_perl_plugin->free_nick_info (weechat_perl_plugin, nick_info);
-	PERL_RETURN_EMPTY;
-    }
-    
-    for (ptr_nick = nick_info; ptr_nick; ptr_nick = ptr_nick->next_nick)
-    {
-	HV *nick_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
-       
-	hv_store (nick_hash_member, "flags",  5, newSViv (ptr_nick->flags), 0);
-	hv_store (nick_hash_member, "host",   4, newSVpv (
-		      ptr_nick->host ? ptr_nick->host : "", 0), 0);
-	
-	hv_store (nick_hash, ptr_nick->nick, strlen(ptr_nick->nick), newRV_inc((SV *) nick_hash_member), 0);
-    }
-    weechat_perl_plugin->free_nick_info (weechat_perl_plugin, nick_info);
-    
-    ST (0) = newRV_inc((SV *) nick_hash);
-    if (SvREFCNT(ST(0))) sv_2mortal(ST(0));
-    
-    XSRETURN (1);
-}
-*/
-
-/*
- * weechat::color_input: add color in input buffer
- */
-
-/*
-static XS (XS_weechat_input_color)
-{
-    int color, start, length;
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    
-    if (!perl_current_script)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: unable to colorize input, "
-                                   "script not initialized");
-	PERL_RETURN_ERROR;
-    }
-
-    if (items < 3)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: wrong parameters for "
-                                   "\"color_input\" function");
-        PERL_RETURN_ERROR;
-    }
-    
-    color = SvIV (ST (0));
-    start = SvIV (ST (1));
-    length = SvIV (ST (2));
-    
-    weechat_perl_plugin->input_color (weechat_perl_plugin, color, start, length);
-
-    PERL_RETURN_OK;
-}
-*/
-
-/*
- * weechat::get_irc_color:
- *          get the numeric value which identify an irc color by its name
- */
-
-/*
-static XS (XS_weechat_get_irc_color)
-{
-    char *color;
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    
-    if (!perl_current_script)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: unable to get irc color, "
-                                   "script not initialized");
-	XST_mIV (0, -1);
-	XSRETURN (1);
-    }
-    
-    if (items != 1)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: wrong parameters for "
-                                   "\"get_irc_info\" function");
-	XST_mIV (0, -1);
-	XSRETURN (1);
-    }
-    
-    color = SvPV (ST (0), PL_na);
-    if (color)
-    {
-	XST_mIV (0, weechat_perl_plugin->get_irc_color (weechat_perl_plugin, color));
-	XSRETURN (1);
-    }
-
-    XST_mIV (0, -1);
-    XSRETURN (-1);
-}
-*/
-
-/*
- * weechat::get_window_info: get infos about windows
- */
-
-/*
-static XS (XS_weechat_get_window_info)
-{
-    t_plugin_window_info *window_info, *ptr_win;
-    int count;
-    HV *window_hash_member;
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    (void) items;
-    
-    if (!perl_current_script)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: unable to get window info, "
-                                   "script not initialized");
-	PERL_RETURN_EMPTY;
-    }
-    
-    window_info = weechat_perl_plugin->get_window_info (weechat_perl_plugin);
-    count = 0;
-    if (!window_info)
-	PERL_RETURN_EMPTY;
-    
-    for (ptr_win = window_info; ptr_win; ptr_win = ptr_win->next_window)
-    {
-	window_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
-        
-	hv_store (window_hash_member, "num_buffer",     10, newSViv (ptr_win->num_buffer), 0);
-        hv_store (window_hash_member, "win_x",           5, newSViv (ptr_win->win_x), 0);
-        hv_store (window_hash_member, "win_y",           5, newSViv (ptr_win->win_y), 0);
-        hv_store (window_hash_member, "win_width",       9, newSViv (ptr_win->win_width), 0);
-	hv_store (window_hash_member, "win_height",     10, newSViv (ptr_win->win_height), 0);
-	hv_store (window_hash_member, "win_width_pct",  13, newSViv (ptr_win->win_width_pct), 0);
-	hv_store (window_hash_member, "win_height_pct", 14, newSViv (ptr_win->win_height_pct), 0);
-	
-	XPUSHs(newRV_inc((SV *) window_hash_member));
-	count++;
-    }    
-    weechat_perl_plugin->free_window_info (weechat_perl_plugin, window_info);
-    
-    XSRETURN (count);
-}
-*/
-
-/*
- * weechat::get_buffer_info: get infos about buffers
- */
-
-/*
-static XS (XS_weechat_get_buffer_info)
-{
-    t_plugin_buffer_info *buffer_info, *ptr_buffer;
-    HV *buffer_hash, *buffer_hash_member;
-    char conv[8];
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    (void) items;
-    
-    if (!perl_current_script)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: unable to get buffer info, "
-                                   "script not initialized");
-	PERL_RETURN_EMPTY;
-    }
-    
-    buffer_info = weechat_perl_plugin->get_buffer_info (weechat_perl_plugin);
-    if (!buffer_info)
-    {
-	PERL_RETURN_EMPTY;
-    }    
-    
-    buffer_hash = (HV *) sv_2mortal((SV *) newHV());
-    if (!buffer_hash)
-    {
-        weechat_perl_plugin->free_buffer_info (weechat_perl_plugin, buffer_info);
-	PERL_RETURN_EMPTY;
-    }
-    
-    for (ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
-    {
-	buffer_hash_member = (HV *) sv_2mortal((SV *) newHV());	        
-
-	hv_store (buffer_hash_member, "type",           4, newSViv (ptr_buffer->type), 0);
-        hv_store (buffer_hash_member, "num_displayed", 13, newSViv (ptr_buffer->num_displayed), 0);
-	hv_store (buffer_hash_member, "server",         6, 
-		  newSVpv ((ptr_buffer->server_name == NULL) ? "" : ptr_buffer->server_name, 0), 0);
-        hv_store (buffer_hash_member, "channel",        7, 
-		  newSVpv ((ptr_buffer->channel_name == NULL) ? "" : ptr_buffer->channel_name, 0), 0);
-        hv_store (buffer_hash_member, "notify_level",  12, newSViv (ptr_buffer->notify_level), 0);
-	hv_store (buffer_hash_member, "log_filename",  12, 
-		  newSVpv ((ptr_buffer->log_filename == NULL) ? "" : ptr_buffer->log_filename, 0), 0);
-	snprintf(conv, sizeof(conv), "%d", ptr_buffer->number);
-	hv_store (buffer_hash, conv, strlen(conv), newRV_inc((SV *) buffer_hash_member), 0);
-    }    
-    weechat_perl_plugin->free_buffer_info (weechat_perl_plugin, buffer_info);
-    
-    ST (0) = newRV_inc((SV *) buffer_hash);
-    if (SvREFCNT(ST(0))) sv_2mortal(ST(0));
-    
-    XSRETURN (1);
-}
-*/
-
-/*
- * weechat::get_buffer_data: get buffer content
- */
-
-/*
-static XS (XS_weechat_get_buffer_data)
-{
-    t_plugin_buffer_line *buffer_data, *ptr_data;
-    HV *data_list_member;
-    char *server, *channel;
-    char timebuffer[64];
-    int count;
-    
-    dXSARGS;
-    
-    // make C compiler happy
-    (void) cv;
-    (void) items;
-    
-    if (!perl_current_script)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: unable to get buffer data, "
-                                   "script not initialized");
-	PERL_RETURN_EMPTY;
-    }
-    
-    if (items != 2)
-    {
-        weechat_perl_plugin->print_server (weechat_perl_plugin,
-                                   "Perl error: wrong parameters for "
-                                   "\"get_buffer_data\" function");
-        PERL_RETURN_EMPTY;
-    }
-    
-    channel = NULL;
-    server = NULL;
-
-    if (items >= 1)
-	server = SvPV (ST (0), PL_na);
-    if (items >= 2)
-	channel = SvPV (ST (1), PL_na);
-
-    SP -= items;
-    
-    buffer_data = weechat_perl_plugin->get_buffer_data (weechat_perl_plugin, server, channel);
-    count = 0;
-    if (!buffer_data)
-	PERL_RETURN_EMPTY;
-    
-    for (ptr_data = buffer_data; ptr_data; ptr_data = ptr_data->next_line)
-    {
-	data_list_member = (HV *) sv_2mortal((SV *) newHV());
-
-	strftime(timebuffer, sizeof(timebuffer), "%F %T",
-		 localtime(&ptr_data->date));
-        
-	hv_store (data_list_member, "date", 4, newSVpv (timebuffer, 0), 0);
-	hv_store (data_list_member, "nick", 4, 
-		  newSVpv ((ptr_data->nick == NULL) ? "" : ptr_data->nick, 0), 0);
-	hv_store (data_list_member, "data", 4, 
-		  newSVpv ((ptr_data->data == NULL) ? "" : ptr_data->data, 0), 0);
-	
-	XPUSHs(newRV_inc((SV *) data_list_member));
-	count++;
-    }    
-    weechat_perl_plugin->free_buffer_data (weechat_perl_plugin, buffer_data);
-    
-    XSRETURN (count);
-}
-*/
-
-/*
  * weechat_perl_xs_init: initialize subroutines
  */
 
@@ -2795,6 +2709,22 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::list_remove", XS_weechat_list_remove, "weechat");
     newXS ("weechat::list_remove_all", XS_weechat_list_remove_all, "weechat");
     newXS ("weechat::list_free", XS_weechat_list_free, "weechat");
+    newXS ("weechat::config_new", XS_weechat_config_new, "weechat");
+    newXS ("weechat::config_new_section", XS_weechat_config_new_section, "weechat");
+    newXS ("weechat::config_search_section", XS_weechat_config_search_section, "weechat");
+    newXS ("weechat::config_new_option", XS_weechat_config_new_option, "weechat");
+    newXS ("weechat::config_search_option", XS_weechat_config_search_option, "weechat");
+    newXS ("weechat::config_string_to_boolean", XS_weechat_config_string_to_boolean, "weechat");
+    newXS ("weechat::config_option_set", XS_weechat_config_option_set, "weechat");
+    newXS ("weechat::config_boolean", XS_weechat_config_boolean, "weechat");
+    newXS ("weechat::config_integer", XS_weechat_config_integer, "weechat");
+    newXS ("weechat::config_string", XS_weechat_config_string, "weechat");
+    newXS ("weechat::config_color", XS_weechat_config_color, "weechat");
+    newXS ("weechat::config_write_line", XS_weechat_config_write_line, "weechat");
+    newXS ("weechat::config_write", XS_weechat_config_write, "weechat");
+    newXS ("weechat::config_read", XS_weechat_config_read, "weechat");
+    newXS ("weechat::config_reload", XS_weechat_config_reload, "weechat");
+    newXS ("weechat::config_free", XS_weechat_config_free, "weechat");
     newXS ("weechat::prefix", XS_weechat_prefix, "weechat");
     newXS ("weechat::color", XS_weechat_color, "weechat");
     newXS ("weechat::print", XS_weechat_print, "weechat");
@@ -2827,20 +2757,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::nicklist_remove_all", XS_weechat_nicklist_remove_all, "weechat");
     newXS ("weechat::command", XS_weechat_command, "weechat");
     newXS ("weechat::info_get", XS_weechat_info_get, "weechat");
-    //newXS ("weechat::get_dcc_info", XS_weechat_get_dcc_info, "weechat");
-    //newXS ("weechat::get_config", XS_weechat_get_config, "weechat");
-    //newXS ("weechat::set_config", XS_weechat_set_config, "weechat");
-    //newXS ("weechat::get_plugin_config", XS_weechat_get_plugin_config, "weechat");
-    //newXS ("weechat::set_plugin_config", XS_weechat_set_plugin_config, "weechat");
-    //newXS ("weechat::get_server_info", XS_weechat_get_server_info, "weechat");
-    //newXS ("weechat::get_channel_info", XS_weechat_get_channel_info, "weechat");
-    //newXS ("weechat::get_nick_info", XS_weechat_get_nick_info, "weechat");
-    //newXS ("weechat::input_color", XS_weechat_input_color, "weechat");
-    //newXS ("weechat::get_irc_color", XS_weechat_get_irc_color, "weechat");
-    //newXS ("weechat::get_window_info", XS_weechat_get_window_info, "weechat");
-    //newXS ("weechat::get_buffer_info", XS_weechat_get_buffer_info, "weechat");
-    //newXS ("weechat::get_buffer_data", XS_weechat_get_buffer_data, "weechat");
-
+    
     /* interface constants */
     stash = gv_stashpv ("weechat", TRUE);
     newCONSTSUB (stash, "weechat::WEECHAT_RC_OK", newSViv (WEECHAT_RC_OK));

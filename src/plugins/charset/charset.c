@@ -172,9 +172,10 @@ charset_free_all ()
  */
 
 int
-charset_config_reload (struct t_config_file *config_file)
+charset_config_reload (void *data, struct t_config_file *config_file)
 {
     /* make C compiler happy */
+    (void) data;
     (void) config_file;
     
     charset_free_all ();
@@ -186,10 +187,11 @@ charset_config_reload (struct t_config_file *config_file)
  */
 
 void
-charset_config_read_line (struct t_config_file *config_file, char *option_name,
-                          char *value)
+charset_config_read_line (void *data, struct t_config_file *config_file,
+                          char *option_name, char *value)
 {
     /* make C compiler happy */
+    (void) data;
     (void) config_file;
     
     if (option_name && value)
@@ -212,10 +214,13 @@ charset_config_read_line (struct t_config_file *config_file, char *option_name,
  */
 
 void
-charset_config_write_section (struct t_config_file *config_file,
+charset_config_write_section (void *data, struct t_config_file *config_file,
                               char *section_name)
 {
     struct t_charset *ptr_charset;
+    
+    /* make C compiler happy */
+    (void) data;
     
     weechat_config_write_line (config_file, section_name, NULL);
     
@@ -234,9 +239,13 @@ charset_config_write_section (struct t_config_file *config_file,
  */
 
 void
-charset_config_write_default_charsets (struct t_config_file *config_file,
+charset_config_write_default_charsets (void *data,
+                                       struct t_config_file *config_file,
                                        char *section_name)
 {
+    /* make C compiler happy */
+    (void) data;
+    
     weechat_config_write_line (config_file, section_name, NULL);
 
     if (charset_terminal && charset_internal
@@ -258,14 +267,17 @@ charset_config_init ()
     struct t_config_section *ptr_section;
     
     charset_config_file = weechat_config_new (CHARSET_CONFIG_FILENAME,
-                                              &charset_config_reload);
+                                              &charset_config_reload, NULL);
     if (!charset_config_file)
         return 0;
     
     ptr_section = weechat_config_new_section (charset_config_file, "charset",
-                                              charset_config_read_line,
-                                              charset_config_write_section,
-                                              charset_config_write_default_charsets);
+                                              &charset_config_read_line,
+                                              NULL,
+                                              &charset_config_write_section,
+                                              NULL,
+                                              &charset_config_write_default_charsets,
+                                              NULL);
     if (!ptr_section)
     {
         weechat_config_free (charset_config_file);

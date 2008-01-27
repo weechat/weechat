@@ -44,6 +44,247 @@ script_api_charset_set (struct t_plugin_script *script,
 }
 
 /*
+ * script_api_config_new: create a new configuration file
+ *                        return new configuration file, NULL if error
+ */
+
+struct t_config_file *
+script_api_config_new (struct t_weechat_plugin *weechat_plugin,
+                       struct t_plugin_script *script,
+                       char *filename,
+                       int (*callback_reload)(void *data,
+                                              struct t_config_file *config_file),
+                       char *function)
+{
+    struct t_script_callback *new_script_callback;
+    struct t_config_file *new_config_file;
+
+    if (function && function[0])
+    {
+        new_script_callback = script_callback_alloc ();
+        if (!new_script_callback)
+            return NULL;
+        
+        new_config_file = weechat_config_new (filename, callback_reload,
+                                              new_script_callback);
+        if (!new_config_file)
+        {
+            free (new_script_callback);
+            return NULL;
+        }
+        
+        new_script_callback->script = script;
+        new_script_callback->function = strdup (function);
+        new_script_callback->config_file = new_config_file;
+        
+        script_callback_add (script, new_script_callback);
+    }
+    else
+    {
+        new_config_file = weechat_config_new (filename, NULL, NULL);
+    }
+    
+    return new_config_file;
+}
+
+/*
+ * script_api_config_new_section: create a new section in configuration file
+ *                                return new section, NULL if error
+ */
+
+struct t_config_section *
+script_api_config_new_section (struct t_weechat_plugin *weechat_plugin,
+                               struct t_plugin_script *script,
+                               struct t_config_file *config_file,
+                               char *name,
+                               void (*callback_read)(void *data,
+                                                     struct t_config_file *config_file,
+                                                     char *option_name,
+                                                     char *value),
+                               char *function_read,
+                               void (*callback_write)(void *data,
+                                                      struct t_config_file *config_file,
+                                                      char *section_name),
+                               char *function_write,
+                               void (*callback_write_default)(void *data,
+                                                              struct t_config_file *config_file,
+                                                              char *section_name),
+                               char *function_write_default)
+{
+    struct t_script_callback *new_script_callback1, *new_script_callback2;
+    struct t_script_callback *new_script_callback3;
+    struct t_config_section *new_section;
+    void *callback1, *callback2, *callback3;
+
+    new_script_callback1 = NULL;
+    new_script_callback2 = NULL;
+    new_script_callback3 = NULL;
+    callback1 = NULL;
+    callback2 = NULL;
+    callback3 = NULL;
+    
+    if (function_read && function_read[0])
+    {
+        new_script_callback1 = script_callback_alloc ();
+        if (!new_script_callback1)
+            return NULL;
+        callback1 = callback_read;
+    }
+
+    if (function_write && function_write[0])
+    {
+        new_script_callback2 = script_callback_alloc ();
+        if (!new_script_callback2)
+        {
+            if (new_script_callback1)
+                free (new_script_callback1);
+            return NULL;
+        }
+        callback2 = callback_write;
+    }
+
+    if (function_write_default && function_write_default[0])
+    {
+        new_script_callback3 = script_callback_alloc ();
+        if (!new_script_callback3)
+        {
+            if (new_script_callback1)
+                free (new_script_callback1);
+            if (new_script_callback2)
+                free (new_script_callback2);
+            return NULL;
+        }
+        callback3 = callback_write_default;
+    }
+    
+    new_section = weechat_config_new_section (config_file,
+                                              name,
+                                              callback1,
+                                              new_script_callback1,
+                                              callback2,
+                                              new_script_callback2,
+                                              callback3,
+                                              new_script_callback3);
+    if (!new_section)
+    {
+        if (new_script_callback1)
+            free (new_script_callback1);
+        if (new_script_callback2)
+            free (new_script_callback2);
+        if (new_script_callback3)
+            free (new_script_callback3);
+        return NULL;
+    }
+
+    if (new_script_callback1)
+    {
+        new_script_callback1->script = script;
+        new_script_callback1->function = strdup (function_read);
+        new_script_callback1->config_file = config_file;
+        new_script_callback1->config_section = new_section;
+        script_callback_add (script, new_script_callback1);
+    }
+
+    if (new_script_callback2)
+    {
+        new_script_callback2->script = script;
+        new_script_callback2->function = strdup (function_write);
+        new_script_callback2->config_file = config_file;
+        new_script_callback2->config_section = new_section;
+        script_callback_add (script, new_script_callback2);
+    }
+
+    if (new_script_callback3)
+    {
+        new_script_callback3->script = script;
+        new_script_callback3->function = strdup (function_write_default);
+        new_script_callback3->config_file = config_file;
+        new_script_callback3->config_section = new_section;
+        script_callback_add (script, new_script_callback3);
+    }
+    
+    return new_section;
+}
+
+/*
+ * script_api_config_new_option: create a new option in section
+ *                               return new option, NULL if error
+ */
+
+struct t_config_option *
+script_api_config_new_option (struct t_weechat_plugin *weechat_plugin,
+                              struct t_plugin_script *script,
+                              struct t_config_file *config_file,
+                              struct t_config_section *section,
+                              char *name, char *type,
+                              char *description, char *string_values,
+                              int min, int max, char *default_value,
+                              void (*callback_change)(void *data),
+                              char *function)
+{
+    struct t_script_callback *new_script_callback;
+    struct t_config_option *new_option;
+
+    if (function && function[0])
+    {
+        new_script_callback = script_callback_alloc ();
+        if (!new_script_callback)
+            return NULL;
+        
+        new_option = weechat_config_new_option (config_file, section, name, type,
+                                                description, string_values, min,
+                                                max, default_value,
+                                                callback_change,
+                                                new_script_callback);
+        if (!new_option)
+        {
+            free (new_script_callback);
+            return NULL;
+        }
+        
+        new_script_callback->script = script;
+        new_script_callback->function = strdup (function);
+        new_script_callback->config_file = config_file;
+        new_script_callback->config_section = section;
+        new_script_callback->config_option = new_option;
+        
+        script_callback_add (script, new_script_callback);
+    }
+    else
+    {
+        new_option = weechat_config_new_option (config_file, section, name, type,
+                                                description, string_values, min,
+                                                max, default_value, NULL, NULL);
+    }
+    
+    return new_option;
+}
+
+/*
+ * script_api_config_free: free configuration file
+ */
+
+void
+script_api_config_free (struct t_weechat_plugin *weechat_plugin,
+                        struct t_plugin_script *script,
+                        struct t_config_file *config_file)
+{
+    struct t_script_callback *ptr_script_callback;
+    
+    if (!weechat_plugin || !script || !config_file)
+        return;
+    
+    weechat_config_free (config_file);
+    
+    for (ptr_script_callback = script->callbacks; ptr_script_callback;
+         ptr_script_callback = ptr_script_callback->next_callback)
+    {
+        if (ptr_script_callback->config_file == config_file)
+            script_callback_remove (script, ptr_script_callback);
+    }
+}
+
+/*
  * script_api_printf: print a message
  */
 
@@ -139,10 +380,6 @@ script_api_hook_command (struct t_weechat_plugin *weechat_plugin,
     new_script_callback = script_callback_alloc ();
     if (!new_script_callback)
         return NULL;
-    
-    new_script_callback->script = NULL;
-    new_script_callback->function = NULL;
-    new_script_callback->hook = NULL;
     
     new_hook = weechat_hook_command (command, description, args,
                                      args_description, completion,
@@ -423,10 +660,9 @@ script_api_hook_modifier (struct t_weechat_plugin *weechat_plugin,
 
 /*
  * script_api_unhook: unhook something
- *                    return 1 if ok, 0 if error
  */
 
-int
+void
 script_api_unhook (struct t_weechat_plugin *weechat_plugin,
                    struct t_plugin_script *script,
                    struct t_hook *hook)
@@ -434,22 +670,16 @@ script_api_unhook (struct t_weechat_plugin *weechat_plugin,
     struct t_script_callback *ptr_script_callback;
     
     if (!weechat_plugin || !script || !hook)
-        return 0;
+        return;
+    
+    weechat_unhook (hook);
     
     for (ptr_script_callback = script->callbacks; ptr_script_callback;
          ptr_script_callback = ptr_script_callback->next_callback)
     {
         if (ptr_script_callback->hook == hook)
-            break;
+            script_callback_remove (script, ptr_script_callback);
     }
-    
-    if (ptr_script_callback)
-    {
-        script_callback_remove (weechat_plugin, script, ptr_script_callback);
-        return 1;
-    }
-
-    return 0;
 }
 
 /*
@@ -457,8 +687,7 @@ script_api_unhook (struct t_weechat_plugin *weechat_plugin,
  */
 
 void
-script_api_unhook_all (struct t_weechat_plugin *weechat_plugin,
-                       struct t_plugin_script *script)
+script_api_unhook_all (struct t_plugin_script *script)
 {
     struct t_script_callback *ptr_callback, *next_callback;
     
@@ -467,7 +696,7 @@ script_api_unhook_all (struct t_weechat_plugin *weechat_plugin,
     {
         next_callback = ptr_callback->next_callback;
         
-        script_callback_remove (weechat_plugin, script, ptr_callback);
+        script_callback_remove (script, ptr_callback);
         
         ptr_callback = next_callback;
     }
@@ -539,7 +768,7 @@ script_api_buffer_close (struct t_weechat_plugin *weechat_plugin,
     
     if (ptr_script_callback)
     {
-        script_callback_remove (weechat_plugin, script, ptr_script_callback);
+        script_callback_remove (script, ptr_script_callback);
     }
 }
 

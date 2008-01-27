@@ -157,28 +157,35 @@ struct t_weechat_plugin
     /* config files */
     struct t_config_file *(*config_new) (struct t_weechat_plugin *plugin,
                                          char *filename,
-                                         int (*callback_reload)(struct t_config_file *config_file));
+                                         int (*callback_reload)(void *data,
+                                                                struct t_config_file *config_file),
+                                         void *callback_reload_data);
     struct t_config_section *(*config_new_section) (struct t_config_file *config_file,
                                                     char *name,
-                                                    void (*callback_read)
-                                                    (struct t_config_file *config_file,
-                                                     char *option_name,
-                                                     char *value),
-                                                    void (*callback_write)
-                                                    (struct t_config_file *config_file,
-                                                     char *section_name),
-                                                    void (*callback_write_default)
-                                                    (struct t_config_file *config_file,
-                                                     char *section_name));
+                                                    void (*callback_read)(void *data,
+                                                                          struct t_config_file *config_file,
+                                                                          char *option_name,
+                                                                          char *value),
+                                                    void *callback_read_data,
+                                                    void (*callback_write)(void *data,
+                                                                           struct t_config_file *config_file,
+                                                                           char *section_name),
+                                                    void *callback_write_data,
+                                                    void (*callback_write_default)(void *data,
+                                                                                   struct t_config_file *config_file,
+                                                                                   char *section_name),
+                                                    void *callback_write_default_data);
     struct t_config_section *(*config_search_section) (struct t_config_file *config_file,
                                                        char *section_name);
-    struct t_config_option *(*config_new_option) (struct t_config_section *config_file,
+    struct t_config_option *(*config_new_option) (struct t_config_file *config_file,
+                                                  struct t_config_section *section,
                                                   char *name, char *type,
                                                   char *description,
                                                   char *string_values,
                                                   int min, int max,
                                                   char *default_value,
-                                                  void (*callback_change)());
+                                                  void (*callback_change)(void *data),
+                                                  void *callback_change_data);
     struct t_config_option *(*config_search_option) (struct t_config_file *config_file,
                                                      struct t_config_section *section,
                                                      char *option_name);
@@ -449,22 +456,30 @@ struct t_weechat_plugin
     weechat_plugin->list_free(__list)
 
 /* config files */
-#define weechat_config_new(__filename, __callback_reload)       \
-    weechat_plugin->config_new(weechat_plugin, __filename,      \
-                               __callback_reload)
+#define weechat_config_new(__filename, __callback_reload,               \
+                           __callback_reload_data)                      \
+    weechat_plugin->config_new(weechat_plugin, __filename,              \
+                               __callback_reload,                       \
+                               __callback_reload_data)
 #define weechat_config_new_section(__config, __name, __cb_read,         \
-                                   __cb_write_std, __cb_write_def)      \
+                                   __cb_read_data, __cb_write_std,      \
+                                   __cb_write_std_data, __cb_write_def, \
+                                   __cb_write_def_data)                 \
     weechat_plugin->config_new_section(__config, __name, __cb_read,     \
-                                       __cb_write_std, __cb_write_def)
+                                       __cb_read_data, __cb_write_std,  \
+                                       __cb_write_std_data,\
+                                       __cb_write_def,     \
+                                       __cb_write_def_data)
 #define weechat_config_search_section(__config, __name)         \
     weechat_plugin->config_search_section(__config, __name)
-#define weechat_config_new_option(__section, __name, __type, __desc,    \
-                                  __string_values, __min, __max,        \
-                                  __default, __callback)                \
-    weechat_plugin->config_new_option(__section, __name, __type,        \
-                                      __desc, __string_values,          \
+#define weechat_config_new_option(__config, __section, __name, __type,  \
+                                  __desc, __string_values, __min,       \
+                                  __max, __default, __callback,         \
+                                  __callback_data)                      \
+    weechat_plugin->config_new_option(__config, __section, __name,      \
+                                      __type, __desc, __string_values,  \
                                       __min, __max, __default,          \
-                                      __callback)
+                                      __callback, __callback_data)
 #define weechat_config_search_option(__config, __section, __name)       \
     weechat_plugin->config_search_option(__config, __section, __name)
 #define weechat_config_string_to_boolean(__string)      \

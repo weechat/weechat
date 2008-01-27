@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-24 16:42+0100\n"
+"POT-Creation-Date: 2008-01-27 10:27+0100\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -335,6 +335,10 @@ msgid "%sError: failed to reload options from %s"
 msgstr "%s fallÃ³ al salvar el archivo de configuraciÃ³n\n"
 
 #, fuzzy, c-format
+msgid "%sUnknown configuration file \"%s\""
+msgstr "pedir al servidor que recargue su archivo de configuraciÃ³n"
+
+#, fuzzy, c-format
 msgid "%sOptions saved to %s"
 msgstr "opciÃ³n/opciones de plugin encontrada(s)\n"
 
@@ -599,12 +603,27 @@ msgid "quit WeeChat"
 msgstr ""
 
 #, fuzzy
-msgid "reload WeeChat and plugins configuration files from disk"
+msgid "reload configuration files from disk"
 msgstr "Guardar configuraciÃ³n a disco\n"
 
+msgid "[file [file...]]"
+msgstr ""
+
+msgid ""
+"file: configuration file to reload\n"
+"\n"
+"Without argument, all files (WeeChat and plugins) are reloaded."
+msgstr ""
+
 #, fuzzy
-msgid "save WeeChat and plugins configuration files to disk"
+msgid "save configuration files to disk"
 msgstr "guardar configuraciÃ³n a disco"
+
+msgid ""
+"file: configuration file to save\n"
+"\n"
+"Without argument, all files (WeeChat and plugins) are saved."
+msgstr ""
 
 msgid "set config options"
 msgstr "poner opciones de configuraciÃ³n"
@@ -1281,6 +1300,10 @@ msgid ""
 "standard plugins extension in filename (for example \".so\" under Linux or "
 "\".dll\" under Microsoft Windows)"
 msgstr ""
+
+#, fuzzy
+msgid "save configuration files when unloading plugins"
+msgstr "guardar configuraciÃ³n a disco"
 
 #, fuzzy, c-format
 msgid "Saving WeeChat configuration to disk (%s)"
@@ -4348,6 +4371,21 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
+#~ msgid "[file]"
+#~ msgstr "[archivo]"
+
+#, fuzzy
+#~ msgid "file: configuration file to reload"
+#~ msgstr "guardar configuraciÃ³n a disco"
+
+#, fuzzy
+#~ msgid "save WeeChat and plugins configuration files to disk"
+#~ msgstr "guardar configuraciÃ³n a disco"
+
+#, fuzzy
+#~ msgid "file: configuration file to save"
+#~ msgstr "guardar configuraciÃ³n a disco"
+
 #, fuzzy
 #~ msgid "%sWeeChat configuration file reloaded"
 #~ msgstr "Archivo de configuraciÃ³n guardado\n"
@@ -5335,9 +5373,6 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 #~ "\n"
 #~ "Para cada argumento, '*' significa todo.\n"
 #~ "Sin argumentos, el comando /ignore lista todos los ignores definidos."
-
-#~ msgid "[file]"
-#~ msgstr "[archivo]"
 
 #~ msgid "file: filename for writing config"
 #~ msgstr "archivo: fichero en el que guardar la configuraciÃ³n"

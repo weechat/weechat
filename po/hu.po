@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-24 16:42+0100\n"
+"POT-Creation-Date: 2008-01-27 10:27+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -338,6 +338,10 @@ msgid "%sError: failed to reload options from %s"
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy, c-format
+msgid "%sUnknown configuration file \"%s\""
+msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#, fuzzy, c-format
 msgid "%sOptions saved to %s"
 msgstr "Modul beállítások elmentve\n"
 
@@ -627,12 +631,27 @@ msgid "quit WeeChat"
 msgstr ""
 
 #, fuzzy
-msgid "reload WeeChat and plugins configuration files from disk"
+msgid "reload configuration files from disk"
 msgstr "Beállítások mentése a lemezre\n"
 
+msgid "[file [file...]]"
+msgstr ""
+
+msgid ""
+"file: configuration file to reload\n"
+"\n"
+"Without argument, all files (WeeChat and plugins) are reloaded."
+msgstr ""
+
 #, fuzzy
-msgid "save WeeChat and plugins configuration files to disk"
-msgstr "beállítások lemezre mentése"
+msgid "save configuration files to disk"
+msgstr "beállítások mentése kilépéskor"
+
+msgid ""
+"file: configuration file to save\n"
+"\n"
+"Without argument, all files (WeeChat and plugins) are saved."
+msgstr ""
 
 msgid "set config options"
 msgstr "konfigurációs paraméterek beállítása"
@@ -1299,6 +1318,10 @@ msgid ""
 "standard plugins extension in filename (for example \".so\" under Linux or "
 "\".dll\" under Microsoft Windows)"
 msgstr ""
+
+#, fuzzy
+msgid "save configuration files when unloading plugins"
+msgstr "beállítások mentése kilépéskor"
 
 #, fuzzy, c-format
 msgid "Saving WeeChat configuration to disk (%s)"
@@ -4336,6 +4359,21 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
+#~ msgid "[file]"
+#~ msgstr "[fájl]"
+
+#, fuzzy
+#~ msgid "file: configuration file to reload"
+#~ msgstr "beállítások mentése kilépéskor"
+
+#, fuzzy
+#~ msgid "save WeeChat and plugins configuration files to disk"
+#~ msgstr "beállítások lemezre mentése"
+
+#, fuzzy
+#~ msgid "file: configuration file to save"
+#~ msgstr "beállítások mentése kilépéskor"
+
 #, fuzzy
 #~ msgid "%sWeeChat configuration file reloaded"
 #~ msgstr "Konfigurációs fájl elmentve\n"
@@ -5300,9 +5338,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 #~ "A '*' minden paraméter esetében az összeset jelenti.\n"
 #~ "Paraméter megadása nélkül az /ignore parancs listázza a meglévő "
 #~ "mellőzéseket."
-
-#~ msgid "[file]"
-#~ msgstr "[fájl]"
 
 #~ msgid "file: filename for writing config"
 #~ msgstr "fájl: fájlnév a beállítások mentéséhez"

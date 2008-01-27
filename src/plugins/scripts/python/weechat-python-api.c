@@ -753,6 +753,729 @@ weechat_python_api_list_free (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_config_reload_cb: callback for config reload
+ */
+
+int
+weechat_python_api_config_reload_cb (void *data,
+                                     struct t_config_file *config_file)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[2];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback->function && script_callback->function[0])
+    {
+        python_argv[0] = script_ptr2str (config_file);
+        python_argv[1] = NULL;
+        
+        rc = (int *) weechat_python_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          script_callback->function,
+                                          python_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (python_argv[0])
+            free (python_argv[0]);
+        
+        return ret;
+    }
+    
+    return 0;
+}
+
+/*
+ * weechat_python_api_config_new: create a new configuration file
+ */
+
+static PyObject *
+weechat_python_api_config_new (PyObject *self, PyObject *args)
+{
+    char *filename, *function, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    filename = NULL;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &filename, &function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_config_new (weechat_python_plugin,
+                                                    python_current_script,
+                                                    filename,
+                                                    &weechat_python_api_config_reload_cb,
+                                                    function));
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_config_read_cb: callback for reading option in section
+ */
+
+void
+weechat_python_api_config_read_cb (void *data,
+                                   struct t_config_file *config_file,
+                                   char *option_name, char *value)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[4];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback->function && script_callback->function[0])
+    {
+        python_argv[0] = script_ptr2str (config_file);
+        python_argv[1] = option_name;
+        python_argv[2] = value;
+        python_argv[3] = NULL;
+        
+        rc = (int *) weechat_python_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          script_callback->function,
+                                          python_argv);
+        
+        if (rc)
+            free (rc);
+        if (python_argv[0])
+            free (python_argv[0]);
+    }
+}
+
+/*
+ * weechat_python_api_config_section_write_cb: callback for writing section
+ */
+
+void
+weechat_python_api_config_section_write_cb (void *data,
+                                            struct t_config_file *config_file,
+                                            char *section_name)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[3];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback->function && script_callback->function[0])
+    {
+        python_argv[0] = script_ptr2str (config_file);
+        python_argv[1] = section_name;
+        python_argv[2] = NULL;
+        
+        rc = (int *) weechat_python_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          script_callback->function,
+                                          python_argv);
+        
+        if (rc)
+            free (rc);
+        if (python_argv[0])
+            free (python_argv[0]);
+    }
+}
+
+/*
+ * weechat_python_api_config_section_write_default_cb: callback for writing
+ *                                                     default values for section
+ */
+
+void
+weechat_python_api_config_section_write_default_cb (void *data,
+                                                    struct t_config_file *config_file,
+                                                    char *section_name)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[3];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback->function && script_callback->function[0])
+    {
+        python_argv[0] = script_ptr2str (config_file);
+        python_argv[1] = section_name;
+        python_argv[2] = NULL;
+        
+        rc = (int *) weechat_python_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          script_callback->function,
+                                          python_argv);
+        
+        if (rc)
+            free (rc);
+        if (python_argv[0])
+            free (python_argv[0]);
+    }
+}
+
+/*
+ * weechat_python_api_config_new_section: create a new section in configuration file
+ */
+
+static PyObject *
+weechat_python_api_config_new_section (PyObject *self, PyObject *args)
+{
+    char *config_file, *name, *function_read, *function_write;
+    char *function_write_default, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new_section");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    config_file = NULL;
+    name = NULL;
+    function_read = NULL;
+    function_write = NULL;
+    function_write_default = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sssss", &config_file, &name, &function_read,
+                           &function_write, &function_write_default))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_config_new_section (weechat_python_plugin,
+                                                            python_current_script,
+                                                            script_str2ptr (config_file),
+                                                            name,
+                                                            &weechat_python_api_config_read_cb,
+                                                            function_read,
+                                                            &weechat_python_api_config_section_write_cb,
+                                                            function_write,
+                                                            &weechat_python_api_config_section_write_default_cb,
+                                                            function_write_default));
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_config_search_section: search section in configuration file
+ */
+
+static PyObject *
+weechat_python_api_config_search_section (PyObject *self, PyObject *args)
+{
+    char *config_file, *section_name, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_search_section");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    config_file = NULL;
+    section_name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &config_file, &section_name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_search_section");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_config_search_section (script_str2ptr (config_file),
+                                                            section_name));
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_config_option_change_cb: callback for option changed
+ */
+
+void
+weechat_python_api_config_option_change_cb (void *data)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[1];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback->function && script_callback->function[0])
+    {
+        python_argv[0] = NULL;
+        
+        rc = (int *) weechat_python_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          script_callback->function,
+                                          python_argv);
+        
+        if (rc)
+            free (rc);
+    }
+}
+
+/*
+ * weechat_python_api_config_new_option: create a new option in section
+ */
+
+static PyObject *
+weechat_python_api_config_new_option (PyObject *self, PyObject *args)
+{
+    char *config_file, *section, *name, *type, *description, *string_values;
+    char *default_value, *function, *result;
+    int min, max;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new_option");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    config_file = NULL;
+    section = NULL;
+    name = NULL;
+    type = NULL;
+    description = NULL;
+    string_values = NULL;
+    default_value = NULL;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ssssssiiss", &config_file, &section, &name,
+                           &type, &description, &string_values, &min, &max,
+                           &default_value, &function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_config_new_option (weechat_python_plugin,
+                                                           python_current_script,
+                                                           script_str2ptr (config_file),
+                                                           script_str2ptr (section),
+                                                           name,
+                                                           type,
+                                                           description,
+                                                           string_values,
+                                                           min,
+                                                           max,
+                                                           default_value,
+                                                           &weechat_python_api_config_option_change_cb,
+                                                           function));
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_config_search_option: search option in configuration file or section
+ */
+
+static PyObject *
+weechat_python_api_config_search_option (PyObject *self, PyObject *args)
+{
+    char *config_file, *section, *option_name, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_search_option");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    config_file = NULL;
+    section = NULL;
+    option_name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &config_file, &section, &option_name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_search_option");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_config_search_option (script_str2ptr (config_file),
+                                                           script_str2ptr (section),
+                                                           option_name));
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_config_string_to_boolean: return boolean value of a string
+ */
+
+static PyObject *
+weechat_python_api_config_string_to_boolean (PyObject *self, PyObject *args)
+{
+    char *text;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string_to_boolean");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    text = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &text))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string_to_boolean");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    value = weechat_config_string_to_boolean (text);
+    PYTHON_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_config_option_set: set new value for option
+ */
+
+static PyObject *
+weechat_python_api_config_option_set (PyObject *self, PyObject *args)
+{
+    char *option, *new_value;
+    int run_callback, rc;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    new_value = NULL;
+    run_callback = 0;
+    
+    if (!PyArg_ParseTuple (args, "ssi", &option, &new_value, &run_callback))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    rc = weechat_config_option_set (script_str2ptr (option),
+                                    new_value,
+                                    run_callback);
+    PYTHON_RETURN_INT(rc);
+}
+
+/*
+ * weechat_python_api_config_boolean: return boolean value of option
+ */
+
+static PyObject *
+weechat_python_api_config_boolean (PyObject *self, PyObject *args)
+{
+    char *option;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_boolean");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_boolean");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    value = weechat_config_boolean (script_str2ptr (option));
+    PYTHON_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_config_integer: return integer value of option
+ */
+
+static PyObject *
+weechat_python_api_config_integer (PyObject *self, PyObject *args)
+{
+    char *option;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_integer");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_integer");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    value = weechat_config_integer (script_str2ptr (option));
+    PYTHON_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_config_string: return string value of option
+ */
+
+static PyObject *
+weechat_python_api_config_string (PyObject *self, PyObject *args)
+{
+    char *option, *value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    value = weechat_config_string (script_str2ptr (option));
+    PYTHON_RETURN_STRING(value);
+}
+
+/*
+ * weechat_python_api_config_color: return color value of option
+ */
+
+static PyObject *
+weechat_python_api_config_color (PyObject *self, PyObject *args)
+{
+    char *option;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_color");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_color");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    value = weechat_config_color (script_str2ptr (option));
+    PYTHON_RETURN_INT(value);
+}
+
+/*
+ * weechat_python_api_config_write_line: write a line in configuration file
+ */
+
+static PyObject *
+weechat_python_api_config_write_line (PyObject *self, PyObject *args)
+{
+    char *config_file, *option_name, *value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write_line");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    config_file = NULL;
+    option_name = NULL;
+    value = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &config_file, &option_name, &value))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write_line");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_config_write_line (script_str2ptr (config_file),
+                               option_name,
+                               "%s",
+                               value);
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
+ * weechat_python_api_config_write: write configuration file
+ */
+
+static PyObject *
+weechat_python_api_config_write (PyObject *self, PyObject *args)
+{
+    char *config_file;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    config_file = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &config_file))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    rc = weechat_config_write (script_str2ptr (config_file));
+    PYTHON_RETURN_INT(rc);
+}
+
+/*
+ * weechat_python_api_config_read: read configuration file
+ */
+
+static PyObject *
+weechat_python_api_config_read (PyObject *self, PyObject *args)
+{
+    char *config_file;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_read");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    config_file = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &config_file))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_read");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    rc = weechat_config_read (script_str2ptr (config_file));
+    PYTHON_RETURN_INT(rc);
+}
+
+/*
+ * weechat_python_api_config_reload: reload configuration file
+ */
+
+static PyObject *
+weechat_python_api_config_reload (PyObject *self, PyObject *args)
+{
+    char *config_file;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_reload");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    config_file = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &config_file))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_reload");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    rc = weechat_config_reload (script_str2ptr (config_file));
+    PYTHON_RETURN_INT(rc);
+}
+
+/*
+ * weechat_python_api_config_free: free configuration file
+ */
+
+static PyObject *
+weechat_python_api_config_free (PyObject *self, PyObject *args)
+{
+    char *config_file;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_free");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    config_file = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &config_file))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_free");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    script_api_config_free (weechat_python_plugin,
+                            python_current_script,
+                            script_str2ptr (config_file));
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
  * weechat_python_api_prefix: get a prefix, used for display
  */
 
@@ -1670,12 +2393,11 @@ weechat_python_api_unhook (PyObject *self, PyObject *args)
         PYTHON_RETURN_ERROR;
     }
     
-    if (script_api_unhook (weechat_python_plugin,
-                           python_current_script,
-                           script_str2ptr (hook)))
-        PYTHON_RETURN_OK;
+    script_api_unhook (weechat_python_plugin,
+                       python_current_script,
+                       script_str2ptr (hook));
     
-    PYTHON_RETURN_ERROR;
+    PYTHON_RETURN_OK;
 }
 
 /*
@@ -1695,8 +2417,7 @@ weechat_python_api_unhook_all (PyObject *self, PyObject *args)
         PYTHON_RETURN_ERROR;
     }
     
-    script_api_unhook_all (weechat_python_plugin,
-                           python_current_script);
+    script_api_unhook_all (python_current_script);
     
     PYTHON_RETURN_OK;
 }
@@ -2234,985 +2955,6 @@ weechat_python_api_info_get (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat_python_api_get_dcc_info: get infos about DCC
- */
-
-/*
-static PyObject *
-weechat_python_api_get_dcc_info (PyObject *self, PyObject *args)
-{
-    t_plugin_dcc_info *dcc_info, *ptr_dcc;
-    PyObject *dcc_list, *dcc_list_member, *key, *value;
-    char timebuffer1[64];
-    char timebuffer2[64];
-    struct in_addr in;
-    
-    // make C compiler happy
-    (void) self;
-    (void) args;
-    
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-
-    dcc_list = PyList_New (0);    
-    if (!dcc_list)
-    {
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    dcc_info = python_plugin->get_dcc_info (python_plugin);
-    if (!dcc_info)
-	return dcc_list;
-    
-    for(ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
-    {
-	strftime(timebuffer1, sizeof(timebuffer1), "%F %T",
-		 localtime(&ptr_dcc->start_time));
-	strftime(timebuffer2, sizeof(timebuffer2), "%F %T",
-		 localtime(&ptr_dcc->start_transfer));
-	in.s_addr = htonl(ptr_dcc->addr);
-	
-	dcc_list_member= PyDict_New();
-	
-        if (dcc_list_member) 
-        {
-	    key = Py_BuildValue("s", "server");
-	    value = Py_BuildValue("s", ptr_dcc->server);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "channel");
-	    value = Py_BuildValue("s", ptr_dcc->channel);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "type");
-	    value = Py_BuildValue("i", ptr_dcc->type);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "status");
-	    value = Py_BuildValue("i", ptr_dcc->status);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "start_time");
-	    value = Py_BuildValue("s", timebuffer1);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "start_transfer");
-	    value = Py_BuildValue("s", timebuffer2);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "address");
-	    value = Py_BuildValue("s", inet_ntoa(in));
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "port");
-	    value = Py_BuildValue("i", ptr_dcc->port);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "nick");
-	    value = Py_BuildValue("s", ptr_dcc->nick);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "remote_file");
-	    value = Py_BuildValue("s", ptr_dcc->filename);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "local_file");
-	    value = Py_BuildValue("s", ptr_dcc->local_filename);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "filename_suffix");
-	    value = Py_BuildValue("i", ptr_dcc->filename_suffix);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "size");
-	    value = Py_BuildValue("k", ptr_dcc->size);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "pos");
-	    value = Py_BuildValue("k", ptr_dcc->pos);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "start_resume");
-	    value = Py_BuildValue("k", ptr_dcc->start_resume);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "cps");
-	    value = Py_BuildValue("k", ptr_dcc->bytes_per_sec);
-	    PyDict_SetItem(dcc_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-            PyList_Append(dcc_list, dcc_list_member);
-	    Py_DECREF (dcc_list_member);
-        }
-    }
-    
-    python_plugin->free_dcc_info (python_plugin, dcc_info);
-    
-    return dcc_list;
-}
-*/
-
-/*
- * weechat_python_api_get_config: get value of a WeeChat config option
- */
-
-/*
-static PyObject *
-weechat_python_api_get_config (PyObject *self, PyObject *args)
-{
-    char *option, *return_value;
-    PyObject *python_return_value;
-    
-    // make C compiler happy 
-    (void) self;
-    
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    option = NULL;
-    
-    if (!PyArg_ParseTuple (args, "s", &option))
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    if (option)
-    {
-        return_value = python_plugin->get_config (python_plugin, option);
-        
-        if (return_value)
-        {
-            python_return_value = Py_BuildValue ("s", return_value);
-            free (return_value);
-            return python_return_value;
-        }
-    }
-    
-    return Py_BuildValue ("s", "");
-}
-*/
-
-/*
- * weechat_python_api_set_config: set value of a WeeChat config option
- */
-
-/*
-static PyObject *
-weechat_python_api_set_config (PyObject *self, PyObject *args)
-{
-    char *option, *value;
-    
-    // make C compiler happy
-    (void) self;
-
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PYTHON_RETURN_ERROR;
-    }
-    
-    option = NULL;
-    value = NULL;
-    
-    if (!PyArg_ParseTuple (args, "ss", &option, &value))
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        PYTHON_RETURN_ERROR;
-    }
-    
-    if (option && value)
-    {
-        if (python_plugin->set_config (python_plugin, option, value))
-            PYTHON_RETURN_OK;
-    }
-    
-    PYTHON_RETURN_ERROR;
-}
-*/
-
-/*
- * weechat_python_api_get_plugin_config: get value of a plugin config option
- */
-
-/*
-static PyObject *
-weechat_python_api_get_plugin_config (PyObject *self, PyObject *args)
-{
-    char *option, *return_value;
-    PyObject *python_return_value;
-    
-    // make C compiler happy
-    (void) self;
-    
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    option = NULL;
-    
-    if (!PyArg_ParseTuple (args, "s", &option))
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    if (option)
-    {
-        return_value = weechat_script_get_plugin_config (python_plugin,
-                                                         python_current_script,
-                                                         option);
-        
-        if (return_value)
-        {
-            python_return_value = Py_BuildValue ("s", return_value);
-            free (return_value);
-            return python_return_value;
-        }
-    }
-    
-    return Py_BuildValue ("s", "");
-}
-*/
-
-/*
- * weechat_python_api_set_plugin_config: set value of a plugin config option
- */
-
- /*
-static PyObject *
-weechat_python_api_set_plugin_config (PyObject *self, PyObject *args)
-{
-    char *option, *value;
-    
-    // make C compiler happy
-    (void) self;
-    
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PYTHON_RETURN_ERROR;
-    }
-    
-    option = NULL;
-    value = NULL;
-    
-    if (!PyArg_ParseTuple (args, "ss", &option, &value))
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        PYTHON_RETURN_ERROR;
-    }
-    
-    if (option && value)
-    {
-        if (weechat_script_set_plugin_config (python_plugin,
-                                              python_current_script,
-                                              option, value))
-            PYTHON_RETURN_OK;
-    }
-    
-    PYTHON_RETURN_ERROR;
-}
-*/
-
-/*
- * weechat_python_api_get_server_info: get infos about servers
- */
-
-/*
-static PyObject *
-weechat_python_api_get_server_info (PyObject *self, PyObject *args)
-{
-    t_plugin_server_info *server_info, *ptr_server;
-    PyObject *server_hash, *server_hash_member, *key, *value;
-    char timebuffer[64];
-    
-    // make C compiler happy
-    (void) self;
-    (void) args;
-    
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    server_hash = PyDict_New ();
-    if (!server_hash)
-    {
-        PYTHON_RETURN_EMPTY;
-    }
-
-    server_info = python_plugin->get_server_info (python_plugin);
-    if  (!server_info)
-	return server_hash;
-
-    for(ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_server)
-    {
-	strftime(timebuffer, sizeof(timebuffer), "%F %T",
-		 localtime(&ptr_server->away_time));
-	
-	server_hash_member = PyDict_New();
-	
-	if (server_hash_member)
-	{
-	    key = Py_BuildValue("s", "autoconnect");
-	    value = Py_BuildValue("i", ptr_server->autoconnect);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "autoreconnect");
-	    value = Py_BuildValue("i", ptr_server->autoreconnect);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "autoreconnect_delay");
-	    value = Py_BuildValue("i", ptr_server->autoreconnect_delay);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "temp_server");
-	    value = Py_BuildValue("i", ptr_server->temp_server);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "address");	   
-	    value = Py_BuildValue("s", ptr_server->address);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "port");
-	    value = Py_BuildValue("i", ptr_server->port);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "ipv6");
-	    value = Py_BuildValue("i", ptr_server->ipv6);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "ssl");
-	    value = Py_BuildValue("i", ptr_server->ssl);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    	    
-	    key = Py_BuildValue("s", "password");
-	    value = Py_BuildValue("s", ptr_server->password);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "nick1");
-	    value = Py_BuildValue("s", ptr_server->nick1);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "nick2");
-	    value = Py_BuildValue("s", ptr_server->nick2);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "nick3");
-	    value = Py_BuildValue("s", ptr_server->nick3);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "username");
-	    value = Py_BuildValue("s", ptr_server->username);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "realname");
-	    value = Py_BuildValue("s", ptr_server->realname);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "command");
-	    value = Py_BuildValue("s", ptr_server->command);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "command_delay");
-	    value = Py_BuildValue("i", ptr_server->command_delay);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "autojoin");
-	    value = Py_BuildValue("s", ptr_server->autojoin);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "autorejoin");
-	    value = Py_BuildValue("i", ptr_server->autorejoin);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "notify_levels");
-	    value = Py_BuildValue("s", ptr_server->notify_levels);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "is_connected");
-	    value = Py_BuildValue("i", ptr_server->is_connected);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "ssl_connected");
-	    value = Py_BuildValue("i", ptr_server->ssl_connected);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "nick");
-	    value = Py_BuildValue("s", ptr_server->nick);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-            key = Py_BuildValue("s", "nick_modes");
-	    value = Py_BuildValue("s", ptr_server->nick_modes);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-            
-	    key = Py_BuildValue("s", "away_time");
-	    value = Py_BuildValue("s", timebuffer);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "lag");
-	    value = Py_BuildValue("i", ptr_server->lag);
-	    PyDict_SetItem(server_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", ptr_server->name);
-	    PyDict_SetItem(server_hash, key, server_hash_member);
-	    Py_DECREF (key);
-	    Py_DECREF (server_hash_member);
-	}
-    }    
-    
-    python_plugin->free_server_info(python_plugin, server_info);
-    
-    return server_hash;
-}
-*/
-
-/*
- * weechat_python_api_get_channel_info: get infos about channels
- */
-
-/*
-static PyObject *
-weechat_python_api_get_channel_info (PyObject *self, PyObject *args)
-{
-    t_plugin_channel_info *channel_info, *ptr_channel;
-    PyObject *channel_hash, *channel_hash_member, *key, *value;
-    char *server;
-    
-    // make C compiler happy
-    (void) self;
-        
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    server = NULL;
-    if (!PyArg_ParseTuple (args, "s", &server))
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    channel_hash = PyDict_New ();
-    if (!channel_hash)
-    {
-        PYTHON_RETURN_EMPTY;
-    }
-
-    channel_info = python_plugin->get_channel_info (python_plugin, server);
-    if  (!channel_info)
-	return channel_hash;
-
-    for(ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_channel)
-    {
-	channel_hash_member = PyDict_New();
-	
-	if (channel_hash_member)
-	{	    
-	    key = Py_BuildValue("s", "type");
-	    value = Py_BuildValue("i", ptr_channel->type);
-	    PyDict_SetItem(channel_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "topic");
-	    value = Py_BuildValue("s", ptr_channel->topic);
-	    PyDict_SetItem(channel_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "modes");
-	    value = Py_BuildValue("s", ptr_channel->modes);
-	    PyDict_SetItem(channel_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "limit");
-	    value = Py_BuildValue("i", ptr_channel->limit);
-	    PyDict_SetItem(channel_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "key");
-	    value = Py_BuildValue("s", ptr_channel->key);
-	    PyDict_SetItem(channel_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "nicks_count");
-	    value = Py_BuildValue("i", ptr_channel->nicks_count);
-	    PyDict_SetItem(channel_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", ptr_channel->name);
-	    PyDict_SetItem(channel_hash, key, channel_hash_member);
-	    Py_DECREF (key);
-	    Py_DECREF (channel_hash_member);
-	}
-    }
-
-    python_plugin->free_channel_info(python_plugin, channel_info);
-    
-    return channel_hash;
-}
-*/
-
-/*
- * weechat_python_api_get_nick_info: get infos about nicks
- */
-
-/*
-static PyObject *
-weechat_python_api_get_nick_info (PyObject *self, PyObject *args)
-{
-    t_plugin_nick_info *nick_info, *ptr_nick;
-    PyObject *nick_hash, *nick_hash_member, *key, *value;
-    char *server, *channel;
-    
-    // make C compiler happy
-    (void) self;
-        
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    server = NULL;
-    channel = NULL;
-    if (!PyArg_ParseTuple (args, "ss", &server, &channel))
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    nick_hash = PyDict_New ();
-    if (!nick_hash)
-    {
-        PYTHON_RETURN_EMPTY;
-    }
-
-    nick_info = python_plugin->get_nick_info (python_plugin, server, channel);
-    if  (!nick_info)
-	return nick_hash;
-
-    for(ptr_nick = nick_info; ptr_nick; ptr_nick = ptr_nick->next_nick)
-    {
-	nick_hash_member = PyDict_New();
-	
-	if (nick_hash_member)
-	{
-	    key = Py_BuildValue("s", "flags");
-	    value = Py_BuildValue("i", ptr_nick->flags);
-	    PyDict_SetItem(nick_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "host");
-	    value = Py_BuildValue("s", ptr_nick->host ? ptr_nick->host : "");
-	    PyDict_SetItem(nick_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", ptr_nick->nick);
-	    PyDict_SetItem(nick_hash, key, nick_hash_member);
-	    Py_DECREF (key);
-	    Py_DECREF (nick_hash_member);
-	}
-    }    
-
-    python_plugin->free_nick_info(python_plugin, nick_info);
-    
-    return nick_hash;
-}
-*/
-
-/*
- * weechat_python_api_get_irc_color: get the numeric value which identify an
- *                                   irc color by its name
- */
-
-/*
-static PyObject *
-weechat_python_api_get_irc_color (PyObject *self, PyObject *args)
-{
-    char *color;
-    
-    // make C compiler happy
-    (void) self;
-    
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        return Py_BuildValue ("i", -1);
-    }
-    
-    color = NULL;
-    
-    if (!PyArg_ParseTuple (args, "s", &color))
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        return Py_BuildValue ("i", -1);
-    }
-    
-    if (color)
-	return Py_BuildValue ("i", python_plugin->get_irc_color (python_plugin, color));
-    
-    return Py_BuildValue ("i", -1);
-}
-*/
-
-/*
- * weechat_python_api_get_window_info: get infos about windows
- */
-
-/*
-static PyObject *
-weechat_python_api_get_window_info (PyObject *self, PyObject *args)
-{
-    t_plugin_window_info *window_info, *ptr_win;
-    PyObject *window_list, *window_list_member, *key, *value;
-    
-    // make C compiler happy
-    (void) self;
-    (void) args;
-        
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-        
-    window_list = PyList_New (0);
-    if (!window_list)
-    {
-        PYTHON_RETURN_EMPTY;
-    }
-
-    window_info = python_plugin->get_window_info (python_plugin);
-    if (!window_info)
-	return window_list;
-
-    for (ptr_win = window_info; ptr_win; ptr_win = ptr_win->next_window)
-    {
-	window_list_member = PyDict_New();
-	
-	if (window_list_member)
-	{
-	    key = Py_BuildValue("s", "num_buffer");
-	    value = Py_BuildValue("i", ptr_win->num_buffer);
-	    PyDict_SetItem(window_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "win_x");
-	    value = Py_BuildValue("i", ptr_win->win_x);
-	    PyDict_SetItem(window_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "win_y");
-	    value = Py_BuildValue("i", ptr_win->win_y);
-	    PyDict_SetItem(window_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "win_width");
-	    value = Py_BuildValue("i", ptr_win->win_width);
-	    PyDict_SetItem(window_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "win_height");
-	    value = Py_BuildValue("i", ptr_win->win_height);
-	    PyDict_SetItem(window_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "win_width_pct");
-	    value = Py_BuildValue("i", ptr_win->win_width_pct);
-	    PyDict_SetItem(window_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "win_height_pct");
-	    value = Py_BuildValue("i", ptr_win->win_height_pct);
-	    PyDict_SetItem(window_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    PyList_Append(window_list, window_list_member);
-	    Py_DECREF (window_list_member);
-	}
-    }
-    
-    python_plugin->free_window_info(python_plugin, window_info);
-    
-    return window_list;
-}
-*/
-
-/*
- * weechat_python_api_get_buffer_info: get infos about buffers
- */
-
-/*
-static PyObject *
-weechat_python_api_get_buffer_info (PyObject *self, PyObject *args)
-{
-    t_plugin_buffer_info *buffer_info, *ptr_buffer;
-    PyObject *buffer_hash, *buffer_hash_member, *key, *value;
-    
-    // make C compiler happy
-    (void) self;
-    (void) args;
-    
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    buffer_hash = PyDict_New ();
-    if (!buffer_hash)
-    {
-        PYTHON_RETURN_EMPTY;
-    }
-
-    buffer_info = python_plugin->get_buffer_info (python_plugin);
-    if  (!buffer_info)
-	return buffer_hash;
-    
-    for(ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
-    {
-	buffer_hash_member = PyDict_New();
-	
-	if (buffer_hash_member)
-	{
-
-	    key = Py_BuildValue("s", "type");
-	    value = Py_BuildValue("i", ptr_buffer->type);
-	    PyDict_SetItem(buffer_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "num_displayed");
-	    value = Py_BuildValue("i", ptr_buffer->num_displayed);
-	    PyDict_SetItem(buffer_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "server");
-	    value = Py_BuildValue("s", ptr_buffer->server_name == NULL ? "" : ptr_buffer->server_name);
-	    PyDict_SetItem(buffer_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "channel");
-	    value = Py_BuildValue("s", ptr_buffer->channel_name == NULL ? "" : ptr_buffer->channel_name);
-	    PyDict_SetItem(buffer_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "notify_level");
-	    value = Py_BuildValue("i", ptr_buffer->notify_level);
-	    PyDict_SetItem(buffer_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "log_filename");
-	    value = Py_BuildValue("s", ptr_buffer->log_filename == NULL ? "" : ptr_buffer->log_filename);
-	    PyDict_SetItem(buffer_hash_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("i", ptr_buffer->number);
-	    PyDict_SetItem(buffer_hash, key, buffer_hash_member);
-	    Py_DECREF (key);
-	    Py_DECREF (buffer_hash_member);
-	}
-    }    
-    python_plugin->free_buffer_info(python_plugin, buffer_info);
-    
-    return buffer_hash;
-}
-*/
-
-/*
- * weechat_python_api_get_buffer_data: get buffer content
- */
-
-/*
-static PyObject *
-weechat_python_api_get_buffer_data (PyObject *self, PyObject *args)
-{
-    t_plugin_buffer_line *buffer_data, *ptr_data;
-    PyObject *data_list, *data_list_member, *key, *value;
-    char *server, *channel;
-    char timebuffer[64];
-    
-    // make C compiler happy
-    (void) self;
-    (void) args;
-    
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    server = NULL;
-    channel = NULL;
-    
-    if (!PyArg_ParseTuple (args, "ss|", &server, &channel))
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        PYTHON_RETURN_EMPTY;
-    }
-
-    data_list = PyList_New (0);    
-    if (!data_list)
-    {
-        PYTHON_RETURN_EMPTY;
-    }
-    
-    buffer_data = python_plugin->get_buffer_data (python_plugin, server, channel);
-    if (!buffer_data)
-	return data_list;
-    
-    for(ptr_data = buffer_data; ptr_data; ptr_data = ptr_data->next_line)
-    {
-	data_list_member= PyDict_New();
-	
-        if (data_list_member) 
-        {
-	    strftime(timebuffer, sizeof(timebuffer), "%F %T",
-		     localtime(&ptr_data->date));
-	    	    
-	    key = Py_BuildValue("s", "date");
-	    value = Py_BuildValue("s", timebuffer);
-	    PyDict_SetItem(data_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-
-	    key = Py_BuildValue("s", "nick");
-	    value = Py_BuildValue("s", ptr_data->nick == NULL ? "" : ptr_data->nick);
-	    PyDict_SetItem(data_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-	    key = Py_BuildValue("s", "data");
-	    value = Py_BuildValue("s", ptr_data->data == NULL ? "" : ptr_data->data);
-	    PyDict_SetItem(data_list_member, key, value);
-	    Py_DECREF (key);
-	    Py_DECREF (value);
-	    
-            PyList_Append(data_list, data_list_member);
-	    Py_DECREF (data_list_member);
-        }
-    }
-    
-    python_plugin->free_buffer_data (python_plugin, buffer_data);
-    
-    return data_list;
-}
-*/
-
-/*
  * Python subroutines
  */
 
@@ -3239,6 +2981,22 @@ PyMethodDef weechat_python_funcs[] =
     { "list_remove", &weechat_python_api_list_remove, METH_VARARGS, "" },
     { "list_remove_all", &weechat_python_api_list_remove_all, METH_VARARGS, "" },
     { "list_free", &weechat_python_api_list_free, METH_VARARGS, "" },
+    { "config_new", &weechat_python_api_config_new, METH_VARARGS, "" },
+    { "config_new_section", &weechat_python_api_config_new_section, METH_VARARGS, "" },
+    { "config_search_section", &weechat_python_api_config_search_section, METH_VARARGS, "" },
+    { "config_new_option", &weechat_python_api_config_new_option, METH_VARARGS, "" },
+    { "config_search_option", &weechat_python_api_config_search_option, METH_VARARGS, "" },
+    { "config_string_to_boolean", &weechat_python_api_config_string_to_boolean, METH_VARARGS, "" },
+    { "config_option_set", &weechat_python_api_config_option_set, METH_VARARGS, "" },
+    { "config_boolean", &weechat_python_api_config_boolean, METH_VARARGS, "" },
+    { "config_integer", &weechat_python_api_config_integer, METH_VARARGS, "" },
+    { "config_string", &weechat_python_api_config_string, METH_VARARGS, "" },
+    { "config_color", &weechat_python_api_config_color, METH_VARARGS, "" },
+    { "config_write_line", &weechat_python_api_config_write_line, METH_VARARGS, "" },
+    { "config_write", &weechat_python_api_config_write, METH_VARARGS, "" },
+    { "config_read", &weechat_python_api_config_read, METH_VARARGS, "" },
+    { "config_reload", &weechat_python_api_config_reload, METH_VARARGS, "" },
+    { "config_free", &weechat_python_api_config_free, METH_VARARGS, "" },
     { "prefix", &weechat_python_api_prefix, METH_VARARGS, "" },
     { "color", &weechat_python_api_color, METH_VARARGS, "" },
     { "prnt", &weechat_python_api_prnt, METH_VARARGS, "" },
@@ -3271,19 +3029,5 @@ PyMethodDef weechat_python_funcs[] =
     { "nicklist_remove_all", &weechat_python_api_nicklist_remove_all, METH_VARARGS, "" },
     { "command", &weechat_python_api_command, METH_VARARGS, "" },
     { "info_get", &weechat_python_api_info_get, METH_VARARGS, "" },
-    /*
-    { "get_dcc_info", weechat_python_get_dcc_info, METH_VARARGS, "" },
-    { "get_config", weechat_python_get_config, METH_VARARGS, "" },
-    { "set_config", weechat_python_set_config, METH_VARARGS, "" },
-    { "get_plugin_config", weechat_python_get_plugin_config, METH_VARARGS, "" },
-    { "set_plugin_config", weechat_python_set_plugin_config, METH_VARARGS, "" },
-    { "get_server_info", weechat_python_get_server_info, METH_VARARGS, "" },
-    { "get_channel_info", weechat_python_get_channel_info, METH_VARARGS, "" },
-    { "get_nick_info", weechat_python_get_nick_info, METH_VARARGS, "" },
-    { "get_irc_color", weechat_python_get_irc_color, METH_VARARGS, "" },
-    { "get_window_info", weechat_python_get_window_info, METH_VARARGS, "" },
-    { "get_buffer_info", weechat_python_get_buffer_info, METH_VARARGS, "" },
-    { "get_buffer_data", weechat_python_get_buffer_data, METH_VARARGS, "" },
-    */
     { NULL, NULL, 0, NULL }
 };

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-24 16:42+0100\n"
+"POT-Creation-Date: 2008-01-27 10:27+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -333,6 +333,10 @@ msgid "%sError: failed to reload options from %s"
 msgstr "%s selhalo uložení nastavení pluginů\n"
 
 #, fuzzy, c-format
+msgid "%sUnknown configuration file \"%s\""
+msgstr "říct serveru, aby znovu načetl svůj konfigurační soubor"
+
+#, fuzzy, c-format
 msgid "%sOptions saved to %s"
 msgstr "Možnosti pluginů uloženy\n"
 
@@ -621,12 +625,27 @@ msgid "quit WeeChat"
 msgstr ""
 
 #, fuzzy
-msgid "reload WeeChat and plugins configuration files from disk"
+msgid "reload configuration files from disk"
 msgstr "Ukládám konfiguraci na disk\n"
 
+msgid "[file [file...]]"
+msgstr ""
+
+msgid ""
+"file: configuration file to reload\n"
+"\n"
+"Without argument, all files (WeeChat and plugins) are reloaded."
+msgstr ""
+
 #, fuzzy
-msgid "save WeeChat and plugins configuration files to disk"
-msgstr "uloží nastavení na disk"
+msgid "save configuration files to disk"
+msgstr "uložit soubor s nastavením při ukončení"
+
+msgid ""
+"file: configuration file to save\n"
+"\n"
+"Without argument, all files (WeeChat and plugins) are saved."
+msgstr ""
 
 msgid "set config options"
 msgstr "nastaví konfigurační možnosti"
@@ -1295,6 +1314,10 @@ msgid ""
 "standard plugins extension in filename (for example \".so\" under Linux or "
 "\".dll\" under Microsoft Windows)"
 msgstr ""
+
+#, fuzzy
+msgid "save configuration files when unloading plugins"
+msgstr "uložit soubor s nastavením při ukončení"
 
 #, fuzzy, c-format
 msgid "Saving WeeChat configuration to disk (%s)"
@@ -4336,6 +4359,21 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
+#~ msgid "[file]"
+#~ msgstr "[soubor]"
+
+#, fuzzy
+#~ msgid "file: configuration file to reload"
+#~ msgstr "uložit soubor s nastavením při ukončení"
+
+#, fuzzy
+#~ msgid "save WeeChat and plugins configuration files to disk"
+#~ msgstr "uloží nastavení na disk"
+
+#, fuzzy
+#~ msgid "file: configuration file to save"
+#~ msgstr "uložit soubor s nastavením při ukončení"
+
 #, fuzzy
 #~ msgid "%sWeeChat configuration file reloaded"
 #~ msgstr "Konfigurační soubor uložen\n"
@@ -5305,9 +5343,6 @@ msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 #~ "\n"
 #~ "Pro každý argument, znamená '*' vše.\n"
 #~ "Bez arumentů vypíše příkaz /ignore seznam všech definovaných ignorování."
-
-#~ msgid "[file]"
-#~ msgstr "[soubor]"
 
 #~ msgid "file: filename for writing config"
 #~ msgstr "soubor: jméno souboru pro zapsání"

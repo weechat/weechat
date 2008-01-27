@@ -874,6 +874,821 @@ weechat_lua_api_list_free (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_config_reload_cb: callback for ccnfig reload
+ */
+
+int
+weechat_lua_api_config_reload_cb (void *data,
+                                  struct t_config_file *config_file)
+{
+    struct t_script_callback *script_callback;
+    char *lua_argv[2];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        lua_argv[0] = script_ptr2str (config_file);
+        lua_argv[1] = NULL;
+        
+        rc = (int *) weechat_lua_exec (script_callback->script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       lua_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (lua_argv[0])
+            free (lua_argv[0]);
+        
+        return ret;
+    }
+    
+    return 0;
+}
+
+/*
+ * weechat_lua_api_config_new: create a new configuration file
+ */
+
+static int
+weechat_lua_api_config_new (lua_State *L)
+{
+    const char *filename, *function;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new");
+        LUA_RETURN_EMPTY;
+    }
+    
+    filename = NULL;
+    function = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new");
+        LUA_RETURN_EMPTY;
+    }
+    
+    filename = lua_tostring (lua_current_interpreter, -2);
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (script_api_config_new (weechat_lua_plugin,
+                                                    lua_current_script,
+                                                    (char *)filename,
+                                                    &weechat_lua_api_config_reload_cb,
+                                                    (char *)function));
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_config_read_cb: callback for reading option in section
+ */
+
+void
+weechat_lua_api_config_read_cb (void *data,
+                                struct t_config_file *config_file,
+                                char *option_name, char *value)
+{
+    struct t_script_callback *script_callback;
+    char *lua_argv[4];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        lua_argv[0] = script_ptr2str (config_file);
+        lua_argv[1] = option_name;
+        lua_argv[2] = value;
+        lua_argv[3] = NULL;
+        
+        rc = (int *) weechat_lua_exec (script_callback->script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       lua_argv);
+        
+        if (rc)
+            free (rc);
+        if (lua_argv[0])
+            free (lua_argv[0]);
+    }
+}
+
+/*
+ * weechat_lua_api_config_section_write_cb: callback for writing section
+ */
+
+void
+weechat_lua_api_config_section_write_cb (void *data,
+                                         struct t_config_file *config_file,
+                                         char *section_name)
+{
+    struct t_script_callback *script_callback;
+    char *lua_argv[3];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        lua_argv[0] = script_ptr2str (config_file);
+        lua_argv[1] = section_name;
+        lua_argv[2] = NULL;
+        
+        rc = (int *) weechat_lua_exec (script_callback->script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       lua_argv);
+        
+        if (rc)
+            free (rc);
+        if (lua_argv[0])
+            free (lua_argv[0]);
+    }
+}
+
+/*
+ * weechat_lua_api_config_section_write_default_cb: callback for writing
+ *                                                  default values for section
+ */
+
+void
+weechat_lua_api_config_section_write_default_cb (void *data,
+                                                 struct t_config_file *config_file,
+                                                 char *section_name)
+{
+    struct t_script_callback *script_callback;
+    char *lua_argv[3];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        lua_argv[0] = script_ptr2str (config_file);
+        lua_argv[1] = section_name;
+        lua_argv[2] = NULL;
+        
+        rc = (int *) weechat_lua_exec (script_callback->script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       lua_argv);
+        
+        if (rc)
+            free (rc);
+        if (lua_argv[0])
+            free (lua_argv[0]);
+    }
+}
+
+/*
+ * weechat_lua_api_config_new_section: create a new section in configuration file
+ */
+
+static int
+weechat_lua_api_config_new_section (lua_State *L)
+{
+    const char *config_file, *name, *function_read, *function_write;
+    const char *function_write_default;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new_section");
+        LUA_RETURN_EMPTY;
+    }
+    
+    config_file = NULL;
+    name = NULL;
+    function_read = NULL;
+    function_write = NULL;
+    function_write_default = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 5)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
+        LUA_RETURN_EMPTY;
+    }
+    
+    config_file = lua_tostring (lua_current_interpreter, -5);
+    name = lua_tostring (lua_current_interpreter, -4);
+    function_read = lua_tostring (lua_current_interpreter, -3);
+    function_write = lua_tostring (lua_current_interpreter, -2);
+    function_write_default = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (script_api_config_new_section (weechat_lua_plugin,
+                                                            lua_current_script,
+                                                            script_str2ptr ((char *)config_file),
+                                                            (char *)name,
+                                                            &weechat_lua_api_config_read_cb,
+                                                            (char *)function_read,
+                                                            &weechat_lua_api_config_section_write_cb,
+                                                            (char *)function_write,
+                                                            &weechat_lua_api_config_section_write_cb,
+                                                            (char *)function_write_default));
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_config_search_section: search a section in configuration file
+ */
+
+static int
+weechat_lua_api_config_search_section (lua_State *L)
+{
+    const char *config_file, *section_name;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_search_section");
+        LUA_RETURN_EMPTY;
+    }
+    
+    config_file = NULL;
+    section_name = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_search_section");
+        LUA_RETURN_EMPTY;
+    }
+    
+    config_file = lua_tostring (lua_current_interpreter, -2);
+    section_name = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (weechat_config_search_section (script_str2ptr ((char *)config_file),
+                                                            (char *)section_name));
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_config_option_change_cb: callback for option changed
+ */
+
+void
+weechat_lua_api_config_option_change_cb (void *data)
+{
+    struct t_script_callback *script_callback;
+    char *lua_argv[1];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        lua_argv[1] = NULL;
+        
+        rc = (int *) weechat_lua_exec (script_callback->script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       lua_argv);
+        
+        if (rc)
+            free (rc);
+    }
+}
+
+/*
+ * weechat_lua_api_config_new_option: create a new option in section
+ */
+
+static int
+weechat_lua_api_config_new_option (lua_State *L)
+{
+    const char *config_file, *section, *name, *type, *description;
+    const char *string_values, *default_value, *function;
+    char *result;
+    int n, min, max;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_new_option");
+        LUA_RETURN_EMPTY;
+    }
+    
+    config_file = NULL;
+    section = NULL;
+    name = NULL;
+    type = NULL;
+    description = NULL;
+    string_values = NULL;
+    min = 0;
+    max = 0;
+    default_value = NULL;
+    function = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 10)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
+        LUA_RETURN_EMPTY;
+    }
+    
+    config_file = lua_tostring (lua_current_interpreter, -10);
+    section = lua_tostring (lua_current_interpreter, -9);
+    name = lua_tostring (lua_current_interpreter, -8);
+    type = lua_tostring (lua_current_interpreter, -7);
+    description = lua_tostring (lua_current_interpreter, -6);
+    string_values = lua_tostring (lua_current_interpreter, -5);
+    min = lua_tonumber (lua_current_interpreter, -4);
+    max = lua_tonumber (lua_current_interpreter, -3);
+    default_value = lua_tostring (lua_current_interpreter, -2);
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (script_api_config_new_option (weechat_lua_plugin,
+                                                           lua_current_script,
+                                                           script_str2ptr ((char *)config_file),
+                                                           script_str2ptr ((char *)section),
+                                                           (char *)name,
+                                                           (char *)type,
+                                                           (char *)description,
+                                                           (char *)string_values,
+                                                           min,
+                                                           max,
+                                                           (char *)default_value,
+                                                           &weechat_lua_api_config_option_change_cb,
+                                                           (char *)function));
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_config_search_option: search option in configuration file or section
+ */
+
+static int
+weechat_lua_api_config_search_option (lua_State *L)
+{
+    const char *config_file, *section, *option_name;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_search_option");
+        LUA_RETURN_EMPTY;
+    }
+    
+    config_file = NULL;
+    section = NULL;
+    option_name = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_search_option");
+        LUA_RETURN_EMPTY;
+    }
+    
+    config_file = lua_tostring (lua_current_interpreter, -3);
+    section = lua_tostring (lua_current_interpreter, -2);
+    option_name = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (weechat_config_search_option (script_str2ptr ((char *)config_file),
+                                                           script_str2ptr ((char *)section),
+                                                           (char *)option_name));
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_config_string_to_boolean: return boolean value of a string
+ */
+
+static int
+weechat_lua_api_config_string_to_boolean (lua_State *L)
+{
+    const char *text;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string_to_boolean");
+        LUA_RETURN_INT(0);
+    }
+    
+    text = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string_to_boolean");
+        LUA_RETURN_INT(0);
+    }
+    
+    text = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_config_string_to_boolean ((char *)text);
+    LUA_RETURN_INT(value);
+}
+
+/*
+ * weechat_lua_api_config_option_set: set new value for option
+ */
+
+static int
+weechat_lua_api_config_option_set (lua_State *L)
+{
+    const char *option, *new_value;
+    int n, run_callback, rc;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_set");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    new_value = NULL;
+    run_callback = 0;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_set");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -3);
+    new_value = lua_tostring (lua_current_interpreter, -2);
+    run_callback = lua_tonumber (lua_current_interpreter, -1);
+    
+    rc = weechat_config_option_set (script_str2ptr ((char *)option),
+                                    (char *)new_value,
+                                    run_callback);
+    LUA_RETURN_INT(rc);
+}
+
+/*
+ * weechat_lua_api_config_boolean: return boolean value of option
+ */
+
+static int
+weechat_lua_api_config_boolean (lua_State *L)
+{
+    const char *option;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_boolean");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_boolean");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_config_boolean (script_str2ptr ((char *)option));
+    LUA_RETURN_INT(value);
+}
+
+/*
+ * weechat_lua_api_config_integer: return integer value of option
+ */
+
+static int
+weechat_lua_api_config_integer (lua_State *L)
+{
+    const char *option;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_integer");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_integer");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_config_integer (script_str2ptr ((char *)option));
+    LUA_RETURN_INT(value);
+}
+
+/*
+ * weechat_lua_api_config_string: return string value of option
+ */
+
+static int
+weechat_lua_api_config_string (lua_State *L)
+{
+    const char *option;
+    char *value;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_string");
+        LUA_RETURN_EMPTY;
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_string");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_config_string (script_str2ptr ((char *)option));
+    LUA_RETURN_STRING(value);
+}
+
+/*
+ * weechat_lua_api_config_color: return color value of option
+ */
+
+static int
+weechat_lua_api_config_color (lua_State *L)
+{
+    const char *option;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_color");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_color");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_config_color (script_str2ptr ((char *)option));
+    LUA_RETURN_INT(value);
+}
+
+/*
+ * weechat_lua_api_config_write_line: write a line in configuration file
+ */
+
+static int
+weechat_lua_api_config_write_line (lua_State *L)
+{
+    const char *config_file, *option_name, *value;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write_line");
+        LUA_RETURN_ERROR;
+    }
+    
+    config_file = NULL;
+    option_name = NULL;
+    value = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write_line");
+        LUA_RETURN_ERROR;
+    }
+    
+    config_file = lua_tostring (lua_current_interpreter, -3);
+    option_name = lua_tostring (lua_current_interpreter, -2);
+    value = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_config_write_line (script_str2ptr ((char *)config_file),
+                               (char *)option_name,
+                               "%s",
+                               (char *)value);
+    
+    LUA_RETURN_OK;
+}
+
+/*
+ * weechat_lua_api_config_write: write configuration file
+ */
+
+static int
+weechat_lua_api_config_write (lua_State *L)
+{
+    const char *config_file;
+    int n, rc;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_write");
+        LUA_RETURN_INT(-1);
+    }
+    
+    config_file = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_write");
+        LUA_RETURN_INT(-1);
+    }
+    
+    config_file = lua_tostring (lua_current_interpreter, -1);
+    
+    rc = weechat_config_write (script_str2ptr ((char *)config_file));
+    LUA_RETURN_INT(rc);
+}
+
+/*
+ * weechat_lua_api_config_read: read configuration file
+ */
+
+static int
+weechat_lua_api_config_read (lua_State *L)
+{
+    const char *config_file;
+    int n, rc;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_read");
+        LUA_RETURN_INT(-1);
+    }
+    
+    config_file = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_read");
+        LUA_RETURN_INT(-1);
+    }
+    
+    config_file = lua_tostring (lua_current_interpreter, -1);
+    
+    rc = weechat_config_read (script_str2ptr ((char *)config_file));
+    LUA_RETURN_INT(rc);
+}
+
+/*
+ * weechat_lua_api_config_reload: reload configuration file
+ */
+
+static int
+weechat_lua_api_config_reload (lua_State *L)
+{
+    const char *config_file;
+    int n, rc;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_reload");
+        LUA_RETURN_INT(-1);
+    }
+    
+    config_file = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_reload");
+        LUA_RETURN_INT(-1);
+    }
+    
+    config_file = lua_tostring (lua_current_interpreter, -1);
+    
+    rc = weechat_config_reload (script_str2ptr ((char *)config_file));
+    LUA_RETURN_INT(rc);
+}
+
+/*
+ * weechat_lua_api_config_free: free configuration file
+ */
+
+static int
+weechat_lua_api_config_free (lua_State *L)
+{
+    const char *config_file;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_free");
+        LUA_RETURN_ERROR;
+    }
+    
+    config_file = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_free");
+        LUA_RETURN_ERROR;
+    }
+    
+    config_file = lua_tostring (lua_current_interpreter, -1);
+    
+    script_api_config_free (weechat_lua_plugin,
+                            lua_current_script,
+                            script_str2ptr ((char *)config_file));
+    
+    LUA_RETURN_OK;
+}
+
+/*
  * weechat_lua_api_prefix: get a prefix, used for display
  */
 
@@ -1891,12 +2706,11 @@ weechat_lua_api_unhook (lua_State *L)
     
     hook = lua_tostring (lua_current_interpreter, -1);
     
-    if (script_api_unhook (weechat_lua_plugin,
-                           lua_current_script,
-                           script_str2ptr ((char *)hook)))
-        LUA_RETURN_OK;
-
-    LUA_RETURN_ERROR;
+    script_api_unhook (weechat_lua_plugin,
+                       lua_current_script,
+                       script_str2ptr ((char *)hook));
+    
+    LUA_RETURN_OK;
 }
 
 /*
@@ -1915,8 +2729,7 @@ weechat_lua_api_unhook_all (lua_State *L)
         LUA_RETURN_ERROR;
     }
     
-    script_api_unhook_all (weechat_lua_plugin,
-                           lua_current_script);
+    script_api_unhook_all (lua_current_script);
     
     LUA_RETURN_OK;
 }
@@ -2544,906 +3357,6 @@ weechat_lua_api_info_get (lua_State *L)
 }
 
 /*
- * weechat_lua_api_get_dcc_info: get infos about DCC
- */
-
-/*
-static int
-weechat_lua_api_get_dcc_info (lua_State *L)
-{
-    t_plugin_dcc_info *dcc_info, *ptr_dcc;
-    char timebuffer1[64];
-    char timebuffer2[64];
-    struct in_addr in;
-    int i;
-    
-    // make C compiler happy
-    (void) L;
-    
-    if (!lua_current_script)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to get DCC info, "
-                                  "script not initialized");
-	lua_pushnil (lua_current_interpreter);
-	return 1;
-    }
-    
-    dcc_info = lua_plugin->get_dcc_info (lua_plugin);
-    if (!dcc_info)
-    {
-	lua_pushboolean (lua_current_interpreter, 0);
-	return 1;
-    }
-    
-    lua_newtable (lua_current_interpreter);
-
-    for (i = 0, ptr_dcc = dcc_info; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc, i++)
-    {
-	strftime(timebuffer1, sizeof(timebuffer1), "%F %T",
-		 localtime(&ptr_dcc->start_time));
-	strftime(timebuffer2, sizeof(timebuffer2), "%F %T",
-		 localtime(&ptr_dcc->start_transfer));
-	in.s_addr = htonl(ptr_dcc->addr);
-	
-	lua_pushnumber (lua_current_interpreter, i);
-	lua_newtable (lua_current_interpreter);
-
-	lua_pushstring (lua_current_interpreter, "server");
-	lua_pushstring (lua_current_interpreter, ptr_dcc->server);
-	lua_rawset (lua_current_interpreter, -3);
-		    
-	lua_pushstring (lua_current_interpreter, "channel");
-	lua_pushstring (lua_current_interpreter, ptr_dcc->channel);
-	lua_rawset (lua_current_interpreter, -3);
-		    
-	lua_pushstring (lua_current_interpreter, "type");
-	lua_pushnumber (lua_current_interpreter, ptr_dcc->type);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "status");
-	lua_pushnumber (lua_current_interpreter, ptr_dcc->status);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "start_time");
-	lua_pushstring (lua_current_interpreter, timebuffer1);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "start_transfer");
-	lua_pushstring (lua_current_interpreter, timebuffer2);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "address");
-	lua_pushstring (lua_current_interpreter, inet_ntoa(in));
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "port");
-	lua_pushnumber (lua_current_interpreter, ptr_dcc->port);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "nick");
-	lua_pushstring (lua_current_interpreter, ptr_dcc->nick);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "remote_file");
-	lua_pushstring (lua_current_interpreter, ptr_dcc->filename);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "local_file");
-	lua_pushstring (lua_current_interpreter, ptr_dcc->local_filename);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "filename_suffix");
-	lua_pushnumber (lua_current_interpreter, ptr_dcc->filename_suffix);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "size");
-	lua_pushnumber (lua_current_interpreter, ptr_dcc->size);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "pos");
-	lua_pushnumber (lua_current_interpreter, ptr_dcc->pos);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "start_resume");
-	lua_pushnumber (lua_current_interpreter, ptr_dcc->start_resume);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "cps");
-	lua_pushnumber (lua_current_interpreter, ptr_dcc->bytes_per_sec);
-	lua_rawset (lua_current_interpreter, -3);
-
-	lua_rawset (lua_current_interpreter, -3);
-    }
-    
-    lua_plugin->free_dcc_info (lua_plugin, dcc_info);
-    
-    return 1;
-}
-*/
-
-/*
- * weechat_lua_api_get_config: get value of a WeeChat config option
- */
-
-/*
-static int
-weechat_lua_api_get_config (lua_State *L)
-{
-    const char *option;
-    char *return_value;
-    int n;
-    
-    // make C compiler happy
-    (void) L;
-     
-    if (!lua_current_script)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to get config option, "
-                                  "script not initialized");	
-	lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
-    }
-    
-    option = NULL;
- 
-    n = lua_gettop (lua_current_interpreter);
-
-    if (n != 1)
-    {
-	lua_plugin->print_server (lua_plugin,
-                                  "Lua error: wrong parameters for "
-                                  "\"get_config\" function");
-        lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
-    }
-    
-    option = lua_tostring (lua_current_interpreter, -1);
-    
-    return_value = lua_plugin->get_config (lua_plugin, (char *) option);    
-    if (return_value)
-	lua_pushstring (lua_current_interpreter, return_value);
-    else
-	lua_pushstring (lua_current_interpreter, "");
-    
-    return 1;
-}
-*/
-
-/*
- * weechat_lua_api_set_config: set value of a WeeChat config option
- */
-
-/*
-static int
-weechat_lua_api_set_config (lua_State *L)
-{
-    const char *option, *value;
-    int n;
-    
-    // make C compiler happy
-    (void) L;
-    
-    if (!lua_current_script)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to set config option, "
-                                  "script not initialized");
-	lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
-    }
-    
-    option = NULL;
-    value = NULL;
-    
-    n = lua_gettop (lua_current_interpreter);
-    
-    if (n != 2)
-    {
-	lua_plugin->print_server (lua_plugin,
-                                  "Lua error: wrong parameters for "
-                                  "\"set_config\" function");
-	lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
-    }
-    
-    option = lua_tostring (lua_current_interpreter, -2);
-    value = lua_tostring (lua_current_interpreter, -1);
-
-    if (lua_plugin->set_config (lua_plugin, (char *) option, (char *) value))
-	lua_pushnumber (lua_current_interpreter, 1);
-    else
-	lua_pushnumber (lua_current_interpreter, 0);
-    
-    return 1;
-}
-*/
-
-/*
- * weechat_lua_api_get_plugin_config: get value of a plugin config option
- */
-
-/*
-static int
-weechat_lua_api_get_plugin_config (lua_State *L)
-{
-    const char *option;
-    char *return_value;
-    int n;
-    
-    // make C compiler happy
-    (void) L;
-     
-    if (!lua_current_script)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to get plugin config option, "
-                                  "script not initialized");	
-	lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
-    }
-    
-    option = NULL;
- 
-    n = lua_gettop (lua_current_interpreter);
-
-    if (n != 1)
-    {
-	lua_plugin->print_server (lua_plugin,
-                                  "Lua error: wrong parameters for "
-                                  "\"get_plugin_config\" function");
-        lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
-    }
-    
-    option = lua_tostring (lua_current_interpreter, -1);
-    
-    return_value = weechat_script_get_plugin_config (lua_plugin,
-						     lua_current_script,
-						     (char *) option);
-    if (return_value)
-	lua_pushstring (lua_current_interpreter, return_value);
-    else
-	lua_pushstring (lua_current_interpreter, "");
-    
-    return 1;
-}
-*/
-
-/*
- * weechat_lua_api_set_plugin_config: set value of a plugin config option
- */
-
-/*
-static int
-weechat_lua_api_set_plugin_config (lua_State *L)
-{
-    const char *option, *value;
-    int n;
-    
-    // make C compiler happy
-    (void) L;
- 	
-    if (!lua_current_script)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to set plugin config option, "
-                                  "script not initialized");
-	lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
-    }
-    
-    option = NULL;
-    value = NULL;
-    
-    n = lua_gettop (lua_current_interpreter);
-    
-    if (n != 2)
-    {
-	lua_plugin->print_server (lua_plugin,
-                                  "Lua error: wrong parameters for "
-                                  "\"set_plugin_config\" function");
-	lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
-    }
-    
-    option = lua_tostring (lua_current_interpreter, -2);
-    value = lua_tostring (lua_current_interpreter, -1);
-
-    if (weechat_script_set_plugin_config (lua_plugin,
-					  lua_current_script,
-					  (char *) option, (char *) value))
-	lua_pushnumber (lua_current_interpreter, 1);
-    else
-	lua_pushnumber (lua_current_interpreter, 0);
-    
-    return 1;
-}
-*/
-
-/*
- * weechat_lua_api_get_server_info: get infos about servers
- */
-
-/*
-static int
-weechat_lua_api_get_server_info (lua_State *L)
-{
-    t_plugin_server_info *server_info, *ptr_server;
-    char timebuffer[64];
-    
-    // make C compiler happy
-    (void) L;
-    
-    if (!lua_current_script)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to get server infos, "
-                                  "script not initialized");
-	lua_pushnil (lua_current_interpreter);
-	return 1;
-    }
-    
-    server_info = lua_plugin->get_server_info (lua_plugin);
-    if  (!server_info) {
-	lua_pushboolean (lua_current_interpreter, 0);
-	return 1;
-    }
-
-    lua_newtable (lua_current_interpreter);
-
-    for (ptr_server = server_info; ptr_server; ptr_server = ptr_server->next_server)
-    {
-	strftime(timebuffer, sizeof(timebuffer), "%F %T",
-		 localtime(&ptr_server->away_time));
-	
-	lua_pushstring (lua_current_interpreter, ptr_server->name);
-	lua_newtable (lua_current_interpreter);
-	
-	lua_pushstring (lua_current_interpreter, "autoconnect");
-	lua_pushnumber (lua_current_interpreter, ptr_server->autoconnect);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "autoreconnect");
-	lua_pushnumber (lua_current_interpreter, ptr_server->autoreconnect);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "autoreconnect_delay");
-	lua_pushnumber (lua_current_interpreter, ptr_server->autoreconnect_delay);
-	lua_rawset (lua_current_interpreter, -3);
-		
-	lua_pushstring (lua_current_interpreter, "temp_server");
-	lua_pushnumber (lua_current_interpreter, ptr_server->temp_server);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "address");
-	lua_pushstring (lua_current_interpreter, ptr_server->address);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "port");
-	lua_pushnumber (lua_current_interpreter, ptr_server->port);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "ipv6");
-	lua_pushnumber (lua_current_interpreter, ptr_server->ipv6);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "ssl");
-	lua_pushnumber (lua_current_interpreter, ptr_server->ssl);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "password");
-	lua_pushstring (lua_current_interpreter, ptr_server->password);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "nick1");
-	lua_pushstring (lua_current_interpreter, ptr_server->nick1);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "nick2");
-	lua_pushstring (lua_current_interpreter, ptr_server->nick2);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "nick3");
-	lua_pushstring (lua_current_interpreter, ptr_server->nick3);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "username");
-	lua_pushstring (lua_current_interpreter, ptr_server->username);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "realname");
-	lua_pushstring (lua_current_interpreter, ptr_server->realname);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "command");
-	lua_pushstring (lua_current_interpreter, ptr_server->command);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "command_delay");
-	lua_pushnumber (lua_current_interpreter, ptr_server->command_delay);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "autojoin");
-	lua_pushstring (lua_current_interpreter, ptr_server->autojoin);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "autorejoin");
-	lua_pushnumber (lua_current_interpreter, ptr_server->autorejoin);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "notify_levels");
-	lua_pushstring (lua_current_interpreter, ptr_server->notify_levels);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "is_connected");
-	lua_pushnumber (lua_current_interpreter, ptr_server->is_connected);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "ssl_connected");
-	lua_pushnumber (lua_current_interpreter, ptr_server->ssl_connected);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "nick");
-	lua_pushstring (lua_current_interpreter, ptr_server->nick);
-	lua_rawset (lua_current_interpreter, -3);
-        
-        lua_pushstring (lua_current_interpreter, "nick_modes");
-	lua_pushstring (lua_current_interpreter, ptr_server->nick_modes);
-	lua_rawset (lua_current_interpreter, -3);
-        
-	lua_pushstring (lua_current_interpreter, "away_time");
-	lua_pushstring (lua_current_interpreter, timebuffer);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "lag");
-	lua_pushnumber (lua_current_interpreter, ptr_server->lag);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_rawset (lua_current_interpreter, -3);
-    }
-
-    lua_plugin->free_server_info(lua_plugin, server_info);
-    
-    return 1;
-}
-*/
-
-/*
- * weechat_lua_api_get_channel_info: get infos about channels
- */
-
-/*
-static int
-weechat_lua_api_get_channel_info (lua_State *L)
-{
-    t_plugin_channel_info *channel_info, *ptr_channel;
-    const char *server;
-    int n;
-    
-    // make C compiler happy
-    (void) L;
- 
-    if (!lua_current_script)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to get channel infos, "
-                                  "script not initialized");
-	lua_pushnil (lua_current_interpreter);
-	return 1;
-    }
-    
-    server = NULL;
-    
-    n = lua_gettop (lua_current_interpreter);
-    
-    if (n != 1)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: wrong parameters for "
-                                  "\"get_channel_info\" function");
-        lua_pushnil (lua_current_interpreter);
-	return 1;
-    }
-
-    server = lua_tostring (lua_current_interpreter, -1);
-    
-    channel_info = lua_plugin->get_channel_info (lua_plugin, (char *) server);
-    if  (!channel_info)
-    {
-	lua_pushboolean (lua_current_interpreter, 0);
-	return 1;
-    }
-
-    lua_newtable (lua_current_interpreter);
-
-    for (ptr_channel = channel_info; ptr_channel; ptr_channel = ptr_channel->next_channel)
-    {
-	lua_pushstring (lua_current_interpreter, ptr_channel->name);
-	lua_newtable (lua_current_interpreter);
-	
-	lua_pushstring (lua_current_interpreter, "type");
-	lua_pushnumber (lua_current_interpreter, ptr_channel->type);
-	lua_rawset (lua_current_interpreter, -3);
-
-	lua_pushstring (lua_current_interpreter, "topic");
-	lua_pushstring (lua_current_interpreter, ptr_channel->topic);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "modes");
-	lua_pushstring (lua_current_interpreter, ptr_channel->modes);
-	lua_rawset (lua_current_interpreter, -3);
-
-	lua_pushstring (lua_current_interpreter, "limit");
-	lua_pushnumber (lua_current_interpreter, ptr_channel->limit);
-	lua_rawset (lua_current_interpreter, -3);
-
-	lua_pushstring (lua_current_interpreter, "key");
-	lua_pushstring (lua_current_interpreter, ptr_channel->key);
-	lua_rawset (lua_current_interpreter, -3);
-
-	lua_pushstring (lua_current_interpreter, "nicks_count");
-	lua_pushnumber (lua_current_interpreter, ptr_channel->nicks_count);
-	lua_rawset (lua_current_interpreter, -3);
-
-	lua_rawset (lua_current_interpreter, -3);
-    }    
-
-    lua_plugin->free_channel_info(lua_plugin, channel_info);
-    
-    return 1;
-}
-*/
-
-/*
- * weechat_lua_api_get_nick_info: get infos about nicks
- */
-
-/*
-static int
-weechat_lua_api_get_nick_info (lua_State *L)
-{
-    t_plugin_nick_info *nick_info, *ptr_nick;
-    const char *server, *channel;
-    int n;
-    
-    // make C compiler happy
-    (void) L;
-     
-    if (!lua_current_script)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to get nick infos, "
-                                  "script not initialized");
-		lua_pushnil (lua_current_interpreter);
-	return 1;
-    }
-    
-    server = NULL;
-    channel = NULL;
-    
-    n = lua_gettop (lua_current_interpreter);
-    
-    if (n != 2)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: wrong parameters for "
-                                  "\"get_nick_info\" function");
-        lua_pushnil (lua_current_interpreter);
-	return 1;
-    }
-
-    server = lua_tostring (lua_current_interpreter, -2);
-    channel = lua_tostring (lua_current_interpreter, -1);
-    
-    nick_info = lua_plugin->get_nick_info (lua_plugin, (char *) server, (char *) channel);
-    if  (!nick_info)
-    {
-	lua_pushboolean (lua_current_interpreter, 0);
-	return 1;
-    }
-
-    lua_newtable (lua_current_interpreter);
-    
-    for(ptr_nick = nick_info; ptr_nick; ptr_nick = ptr_nick->next_nick)
-    {
-	lua_pushstring (lua_current_interpreter, ptr_nick->nick);
-	lua_newtable (lua_current_interpreter);
-	
-	lua_pushstring (lua_current_interpreter, "flags");
-	lua_pushnumber (lua_current_interpreter, ptr_nick->flags);
-	lua_rawset (lua_current_interpreter, -3);
-
-	lua_pushstring (lua_current_interpreter, "host");
-	lua_pushstring (lua_current_interpreter,
-			ptr_nick->host ? ptr_nick->host : "");
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_rawset (lua_current_interpreter, -3);
-    }
-    
-    lua_plugin->free_nick_info(lua_plugin, nick_info);
-    
-    return 1;
-}
-*/
-
-/*
- * weechat_lua_api_get_irc_color:
- *          get the numeric value which identify an irc color by its name
- */
-
-/*
-static int
-weechat_lua_api_get_irc_color (lua_State *L)
-{
-    const char *color;
-    int n;
-    
-    // make C compiler happy
-    (void) L;
-     
-    if (!lua_current_script)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to get irc color, "
-                                  "script not initialized");
-        lua_pushnumber (lua_current_interpreter, -1);
-	return 1;
-    }
-    
-    color = NULL;
- 
-    n = lua_gettop (lua_current_interpreter);
-    
-    if (n != 1)
-    {
-	lua_plugin->print_server (lua_plugin,
-                                  "Lua error: wrong parameters for "
-                                  "\"get_irc_color\" function");
-        lua_pushnumber (lua_current_interpreter, -1);
-	return 1;
-    }
-
-    color = lua_tostring (lua_current_interpreter, -1);
-    
-    lua_pushnumber (lua_current_interpreter,
-		    lua_plugin->get_irc_color (lua_plugin, (char *) color));
-    return 1;
-}
-*/
-
-/*
- * weechat_lua_api_get_window_info: get infos about windows
- */
-
-/*
-static int
-weechat_lua_api_get_window_info (lua_State *L)
-{
-    t_plugin_window_info *window_info, *ptr_win;
-    int i;
-    
-    // make C compiler happy
-    (void) L;
-    
-    if (!lua_current_script)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to get window info, "
-                                  "script not initialized");
-	lua_pushnil (lua_current_interpreter);
-	return 1;
-    }
-    
-    window_info = lua_plugin->get_window_info (lua_plugin);
-    if (!window_info)
-    {
-	lua_pushboolean (lua_current_interpreter, 0);
-	return 1;
-    }
-    
-    lua_newtable (lua_current_interpreter);
-
-    i = 0;
-    for (ptr_win = window_info; ptr_win; ptr_win = ptr_win->next_window)
-    {
-	lua_pushnumber (lua_current_interpreter, i);
-	lua_newtable (lua_current_interpreter);
-
-	lua_pushstring (lua_current_interpreter, "num_buffer");
-	lua_pushnumber (lua_current_interpreter, ptr_win->num_buffer);
-	lua_rawset (lua_current_interpreter, -3);
-		    
-	lua_pushstring (lua_current_interpreter, "win_x");
-	lua_pushnumber (lua_current_interpreter, ptr_win->win_x);
-	lua_rawset (lua_current_interpreter, -3);
-		    
-	lua_pushstring (lua_current_interpreter, "win_y");
-	lua_pushnumber (lua_current_interpreter, ptr_win->win_y);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "win_width");
-	lua_pushnumber (lua_current_interpreter, ptr_win->win_width);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "win_height");
-	lua_pushnumber (lua_current_interpreter, ptr_win->win_height);
-	lua_rawset (lua_current_interpreter, -3);
-
-	lua_pushstring (lua_current_interpreter, "win_width_pct");
-	lua_pushnumber (lua_current_interpreter, ptr_win->win_width_pct);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "win_height_pct");
-	lua_pushnumber (lua_current_interpreter, ptr_win->win_height_pct);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_rawset (lua_current_interpreter, -3);
-        
-        i++;
-    }
-    
-    lua_plugin->free_window_info (lua_plugin, window_info);
-    
-    return 1;
-}
-*/
-
-/*
- * weechat_lua_api_get_buffer_info: get infos about buffers
- */
-
-/*
-static int
-weechat_lua_api_get_buffer_info (lua_State *L)
-{
-    t_plugin_buffer_info *buffer_info, *ptr_buffer;
-    
-    // make C compiler happy
-    (void) L;
-    
-    if (!lua_current_script)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to get buffer info, "
-                                  "script not initialized");
-	lua_pushnil (lua_current_interpreter);
-	return 1;
-    }
-    
-    buffer_info = lua_plugin->get_buffer_info (lua_plugin);
-    if  (!buffer_info) {
-	lua_pushboolean (lua_current_interpreter, 0);
-	return 1;
-    }
-
-    lua_newtable (lua_current_interpreter);
-
-    for (ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
-    {
-	lua_pushnumber (lua_current_interpreter, ptr_buffer->number);
-	lua_newtable (lua_current_interpreter);
-	
-	lua_pushstring (lua_current_interpreter, "type");
-	lua_pushnumber (lua_current_interpreter, ptr_buffer->type);
-	lua_rawset (lua_current_interpreter, -3);
-        
-	lua_pushstring (lua_current_interpreter, "num_displayed");
-	lua_pushnumber (lua_current_interpreter, ptr_buffer->num_displayed);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "server");
-	lua_pushstring (lua_current_interpreter, 
-			ptr_buffer->server_name == NULL ? "" : ptr_buffer->server_name);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "channel");
-	lua_pushstring (lua_current_interpreter, 
-			ptr_buffer->channel_name == NULL ? "" : ptr_buffer->channel_name);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "notify_level");
-	lua_pushnumber (lua_current_interpreter, ptr_buffer->notify_level);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_pushstring (lua_current_interpreter, "log_filename");
-	lua_pushstring (lua_current_interpreter, 
-			ptr_buffer->log_filename == NULL ? "" : ptr_buffer->log_filename);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_rawset (lua_current_interpreter, -3);
-    }
-    
-    lua_plugin->free_buffer_info(lua_plugin, buffer_info);
-    
-    return 1;
-}
-*/
-
-/*
- * weechat_lua_api_get_buffer_data: get buffer content
- */
-
-/*
-static int
-weechat_lua_api_get_buffer_data (lua_State *L)
-{
-    t_plugin_buffer_line *buffer_data, *ptr_data;
-    const char *server, *channel;
-    char timebuffer[64];
-    int i, n;
-    
-    // make C compiler happy
-    (void) L;
-    
-    if (!lua_current_script)
-    {
-        lua_plugin->print_server (lua_plugin,
-                                  "Lua error: unable to get buffer data, "
-                                  "script not initialized");
-	lua_pushnil (lua_current_interpreter);
-	return 1;
-    }
-
-    server = NULL;
-    channel = NULL;
-    
-    n = lua_gettop (lua_current_interpreter);
-    if (n != 2)
-    {
-	lua_plugin->print_server (lua_plugin,
-				  "Lua error: wrong parameters for "
-				  "\"get_buffer_data\" function");
-	lua_pushnumber (lua_current_interpreter, 0);
-	return 1;
-    }
-    
-    server  = lua_tostring (lua_current_interpreter, -2);
-    channel = lua_tostring (lua_current_interpreter, -1);
-    
-    buffer_data = lua_plugin->get_buffer_data (lua_plugin, (char *) server, (char *) channel);
-    if (!buffer_data)
-    {
-	lua_pushboolean (lua_current_interpreter, 0);
-	return 1;
-    }
-    
-    lua_newtable (lua_current_interpreter);
-
-    for (i = 0, ptr_data = buffer_data; ptr_data; ptr_data = ptr_data->next_line, i++)
-    {
-	lua_pushnumber (lua_current_interpreter, i);
-	lua_newtable (lua_current_interpreter);
-
-	strftime(timebuffer, sizeof(timebuffer), "%F %T",
-		 localtime(&ptr_data->date));
-
-	lua_pushstring (lua_current_interpreter, "date");
-	lua_pushstring (lua_current_interpreter, timebuffer);
-	lua_rawset (lua_current_interpreter, -3);
-
-	lua_pushstring (lua_current_interpreter, "nick");
-	lua_pushstring (lua_current_interpreter,
-			ptr_data->nick == NULL ? "" : ptr_data->nick);
-	lua_rawset (lua_current_interpreter, -3);
-		    
-	lua_pushstring (lua_current_interpreter, "data");
-	lua_pushstring (lua_current_interpreter,
-			ptr_data->data == NULL ? "" : ptr_data->data);
-	lua_rawset (lua_current_interpreter, -3);
-	
-	lua_rawset (lua_current_interpreter, -3);
-    }
-    
-    lua_plugin->free_buffer_data (lua_plugin, buffer_data);
-    
-    return 1;
-}
-*/
-
-/*
  * Lua constant as functions
  */
 
@@ -3633,6 +3546,22 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "list_remove", &weechat_lua_api_list_remove },
     { "list_remove_all", &weechat_lua_api_list_remove_all },
     { "list_free", &weechat_lua_api_list_free },
+    { "config_new", &weechat_lua_api_config_new },
+    { "config_new_section", &weechat_lua_api_config_new_section },
+    { "config_search_section", &weechat_lua_api_config_search_section },
+    { "config_new_option", &weechat_lua_api_config_new_option },
+    { "config_search_option", &weechat_lua_api_config_search_option },
+    { "config_string_to_boolean", &weechat_lua_api_config_string_to_boolean },
+    { "config_option_set", &weechat_lua_api_config_option_set },
+    { "config_boolean", &weechat_lua_api_config_boolean },
+    { "config_integer", &weechat_lua_api_config_integer },
+    { "config_string", &weechat_lua_api_config_string },
+    { "config_color", &weechat_lua_api_config_color },
+    { "config_write_line", &weechat_lua_api_config_write_line },
+    { "config_write", &weechat_lua_api_config_write },
+    { "config_read", &weechat_lua_api_config_read },
+    { "config_reload", &weechat_lua_api_config_reload },
+    { "config_free", &weechat_lua_api_config_free },
     { "prefix", &weechat_lua_api_prefix },
     { "color", &weechat_lua_api_color },
     { "print", &weechat_lua_api_print },
@@ -3665,18 +3594,6 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "nicklist_remove_all", &weechat_lua_api_nicklist_remove_all },
     { "command", &weechat_lua_api_command },
     { "info_get", &weechat_lua_api_info_get },
-    //{ "get_dcc_info", &weechat_lua_api_get_dcc_info },
-    //{ "get_config", &weechat_lua_api_get_config },
-    //{ "set_config", &weechat_lua_api_set_config },
-    //{ "get_plugin_config", &weechat_lua_api_get_plugin_config },
-    //{ "set_plugin_config", &weechat_lua_api_set_plugin_config },
-    //{ "get_server_info", &weechat_lua_api_get_server_info },
-    //{ "get_channel_info", &weechat_lua_api_get_channel_info },
-    //{ "get_nick_info", &weechat_lua_api_get_nick_info },
-    //{ "get_irc_color", &weechat_lua_api_get_irc_color },
-    //{ "get_window_info", &weechat_lua_api_get_window_info },
-    //{ "get_buffer_info", &weechat_lua_api_get_buffer_info },
-    //{ "get_buffer_data", &weechat_lua_api_get_buffer_data },
     /* define constants as function which returns values */
     { "WEECHAT_RC_OK", &weechat_lua_api_constant_weechat_rc_ok },
     { "WEECHAT_RC_ERROR", &weechat_lua_api_constant_weechat_rc_error },

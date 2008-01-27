@@ -41,6 +41,9 @@ script_callback_alloc ()
     {
         new_script_callback->script = NULL;
         new_script_callback->function = NULL;
+        new_script_callback->config_file = NULL;
+        new_script_callback->config_section = NULL;
+        new_script_callback->config_option = NULL;
         new_script_callback->hook = NULL;
         new_script_callback->buffer = NULL;
         return new_script_callback;
@@ -69,8 +72,7 @@ script_callback_add (struct t_plugin_script *script,
  */
 
 void
-script_callback_remove (struct t_weechat_plugin *weechat_plugin,
-                        struct t_plugin_script *script,
+script_callback_remove (struct t_plugin_script *script,
                         struct t_script_callback *script_callback)
 {
     /* remove callback from list */
@@ -86,8 +88,6 @@ script_callback_remove (struct t_weechat_plugin *weechat_plugin,
     /* unhook and free data */
     if (script_callback->function)
         free (script_callback->function);
-    if (script_callback->hook)
-        weechat_unhook (script_callback->hook);
     
     free (script_callback);
 }
@@ -97,12 +97,11 @@ script_callback_remove (struct t_weechat_plugin *weechat_plugin,
  */
 
 void
-script_callback_remove_all (struct t_weechat_plugin *weechat_plugin,
-                            struct t_plugin_script *script)
+script_callback_remove_all (struct t_plugin_script *script)
 {
     while (script->callbacks)
     {
-        script_callback_remove (weechat_plugin, script, script->callbacks);
+        script_callback_remove (script, script->callbacks);
     }
 }
 

@@ -52,7 +52,10 @@ struct t_config_file *
 config_file_search (char *filename)
 {
     struct t_config_file *ptr_config;
-
+    
+    if (!filename)
+        return NULL;
+    
     for (ptr_config = config_files; ptr_config;
          ptr_config = ptr_config->next_config)
     {
@@ -70,7 +73,9 @@ config_file_search (char *filename)
 
 struct t_config_file *
 config_file_new (struct t_weechat_plugin *plugin, char *filename,
-                 int (*callback_reload)(struct t_config_file *config_file))
+                 int (*callback_reload)(void *data,
+                                        struct t_config_file *config_file),
+                 void *callback_reload_data)
 {
     struct t_config_file *new_config_file;
     
@@ -88,6 +93,7 @@ config_file_new (struct t_weechat_plugin *plugin, char *filename,
         new_config_file->filename = strdup (filename);
         new_config_file->file = NULL;
         new_config_file->callback_reload = callback_reload;
+        new_config_file->callback_reload_data = callback_reload_data;
         new_config_file->sections = NULL;
         new_config_file->last_section = NULL;
         
@@ -133,12 +139,18 @@ config_file_valid_for_plugin (struct t_weechat_plugin *plugin,
 
 struct t_config_section *
 config_file_new_section (struct t_config_file *config_file, char *name,
-                         void (*callback_read)(struct t_config_file *config_file,
+                         void (*callback_read)(void *data,
+                                               struct t_config_file *config_file,
                                                char *option_name, char *value),
-                         void (*callback_write)(struct t_config_file *config_file,
+                         void *callback_read_data,
+                         void (*callback_write)(void *data,
+                                                struct t_config_file *config_file,
                                                 char *section_name),
-                         void (*callback_write_default)(struct t_config_file *,
-                                                        char *section_name))
+                         void *callback_write_data,
+                         void (*callback_write_default)(void *data,
+                                                        struct t_config_file *config_file,
+                                                        char *section_name),
+                         void *callback_write_default_data)
 {
     struct t_config_section *new_section;
     
@@ -150,8 +162,11 @@ config_file_new_section (struct t_config_file *config_file, char *name,
     {
         new_section->name = strdup (name);
         new_section->callback_read = callback_read;
+        new_section->callback_read_data = callback_read_data;
         new_section->callback_write = callback_write;
+        new_section->callback_write_data = callback_write_data;
         new_section->callback_write_default = callback_write_default;
+        new_section->callback_write_default_data = callback_write_default_data;
         new_section->options = NULL;
         new_section->last_option = NULL;
         
@@ -177,6 +192,9 @@ config_file_search_section (struct t_config_file *config_file,
 {
     struct t_config_section *ptr_section;
 
+    if (!config_file || !section_name)
+        return NULL;
+    
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
@@ -224,17 +242,19 @@ config_file_section_valid_for_plugin (struct t_weechat_plugin *plugin,
  */
 
 struct t_config_option *
-config_file_new_option (struct t_config_section *section, char *name,
+config_file_new_option (struct t_config_file *config_file,
+                        struct t_config_section *section, char *name,
                         char *type, char *description, char *string_values,
                         int min, int max, char *default_value,
-                        void (*callback_change)())
+                        void (*callback_change)(),
+                        void *callback_change_data)
 {
     struct t_config_option *new_option;
     int var_type, int_value, argc, i, index_value;
     long number;
     char *error;
     
-    if (!section || !name)
+    if (!config_file || !section || !name)
         return NULL;
     
     var_type = -1;
@@ -332,6 +352,7 @@ config_file_new_option (struct t_config_section *section, char *name,
                 break;
         }
         new_option->callback_change = callback_change;
+        new_option->callback_change_data = callback_change_data;
         new_option->loaded = 0;
         
         new_option->prev_option = section->last_option;
@@ -430,6 +451,9 @@ config_file_string_boolean_is_valid (char *text)
 {
     int i;
     
+    if (!text)
+        return 0;
+    
     for (i = 0; config_boolean_true[i]; i++)
     {
         if (string_strcasecmp (text, config_boolean_true[i]) == 0)
@@ -455,6 +479,9 @@ int
 config_file_string_to_boolean (char *text)
 {
     int i;
+    
+    if (!text)
+        return CONFIG_BOOLEAN_FALSE;
     
     for (i = 0; config_boolean_true[i]; i++)
     {
@@ -495,7 +522,10 @@ config_file_option_set (struct t_config_option *option, char *new_value,
                 return 1;
             *((int *)option->value) = new_value_int;
             if (run_callback && option->callback_change)
-                (void) (option->callback_change) ();
+            {
+                (void) (option->callback_change)
+                    (option->callback_change_data);
+            }
             return 2;
         case CONFIG_OPTION_INTEGER:
             if (!new_value)
@@ -518,7 +548,10 @@ config_file_option_set (struct t_config_option *option, char *new_value,
                     return 1;
                 *((int *)option->value) = new_value_int;
                 if (run_callback && option->callback_change)
-                    (void) (option->callback_change) ();
+                {
+                    (void) (option->callback_change)
+                        (option->callback_change_data);
+                }
                 return 2;
             }
             else
@@ -531,7 +564,10 @@ config_file_option_set (struct t_config_option *option, char *new_value,
                         return 1;
                     *((int *)option->value) = number;
                     if (run_callback && option->callback_change)
-                        (void) (option->callback_change) ();
+                    {
+                        (void) (option->callback_change)
+                            (option->callback_change_data);
+                    }
                     return 2;
                 }
             }
@@ -553,7 +589,10 @@ config_file_option_set (struct t_config_option *option, char *new_value,
             else
                 option->value = NULL;
             if (run_callback && (rc == 2) && option->callback_change)
-                (void) (option->callback_change) ();
+            {
+                (void) (option->callback_change)
+                    (option->callback_change_data);
+            }
             return rc;
         case CONFIG_OPTION_COLOR:
             if (!gui_color_assign (&new_value_int, new_value))
@@ -562,7 +601,10 @@ config_file_option_set (struct t_config_option *option, char *new_value,
                 return 1;
             *((int *)option->value) = new_value_int;
             if (run_callback && option->callback_change)
-                (void) (option->callback_change) ();
+            {
+                (void) (option->callback_change)
+                    (option->callback_change_data);
+            }
             return 2;
     }
     
@@ -631,6 +673,9 @@ config_file_option_reset (struct t_config_option *option)
 int
 config_file_option_boolean (struct t_config_option *option)
 {
+    if (!option)
+        return 0;
+    
     if (option->type == CONFIG_OPTION_BOOLEAN)
         return CONFIG_BOOLEAN(option);
     else
@@ -644,6 +689,9 @@ config_file_option_boolean (struct t_config_option *option)
 int
 config_file_option_integer (struct t_config_option *option)
 {
+    if (!option)
+        return 0;
+    
     switch (option->type)
     {
         case CONFIG_OPTION_BOOLEAN:
@@ -667,6 +715,9 @@ config_file_option_integer (struct t_config_option *option)
 char *
 config_file_option_string (struct t_config_option *option)
 {
+    if (!option)
+        return NULL;
+    
     switch (option->type)
     {
         case CONFIG_OPTION_STRING:
@@ -688,6 +739,9 @@ config_file_option_string (struct t_config_option *option)
 int
 config_file_option_color (struct t_config_option *option)
 {
+    if (!option)
+        return 0;
+    
     if (option->type == CONFIG_OPTION_COLOR)
         return CONFIG_COLOR(option);
     else
@@ -752,7 +806,10 @@ config_file_write_line (struct t_config_file *config_file,
 {
     char buf[4096];
     va_list argptr;
-
+    
+    if (!config_file || !option_name)
+        return;
+    
     va_start (argptr, value);
     vsnprintf (buf, sizeof (buf) - 1, value, argptr);
     va_end (argptr);
@@ -776,7 +833,8 @@ config_file_write_line (struct t_config_file *config_file,
  */
 
 int
-config_file_write_internal (struct t_config_file *config_file, int default_options)
+config_file_write_internal (struct t_config_file *config_file,
+                            int default_options)
 {
     int filename_length, rc;
     char *filename, *filename2;
@@ -828,12 +886,14 @@ config_file_write_internal (struct t_config_file *config_file, int default_optio
         /* call write callback if defined for section */
         if (default_options && ptr_section->callback_write_default)
         {
-            (void) (ptr_section->callback_write_default) (config_file,
+            (void) (ptr_section->callback_write_default) (ptr_section->callback_write_default_data,
+                                                          config_file,
                                                           ptr_section->name);
         }
         else if (!default_options && ptr_section->callback_write)
         {
-            (void) (ptr_section->callback_write) (config_file,
+            (void) (ptr_section->callback_write) (ptr_section->callback_write_data,
+                                                  config_file,
                                                   ptr_section->name);
         }
         else
@@ -959,7 +1019,8 @@ config_file_read (struct t_config_file *config_file)
                         {
                             if (ptr_section->callback_read)
                             {
-                                (void) (ptr_section->callback_read) (config_file,
+                                (void) (ptr_section->callback_read) (ptr_section->callback_read_data,
+                                                                     config_file,
                                                                      NULL, NULL);
                             }
                         }
@@ -1036,7 +1097,8 @@ config_file_read (struct t_config_file *config_file)
                         if (ptr_section && ptr_section->callback_read)
                         {
                             ptr_option = NULL;
-                            (void) (ptr_section->callback_read) (config_file,
+                            (void) (ptr_section->callback_read) (ptr_section->callback_read_data,
+                                                                 config_file,
                                                                  line, pos);
                             rc = 1;
                         }
@@ -1109,7 +1171,10 @@ config_file_reload (struct t_config_file *config_file)
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
     int rc;
-
+    
+    if (!config_file)
+        return -1;
+    
     /* init "loaded" flag for all options */
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
@@ -1141,7 +1206,10 @@ config_file_reload (struct t_config_file *config_file)
                     if (config_file_option_reset (ptr_option) == 2)
                     {
                         if (ptr_option->callback_change)
-                            (void) (ptr_option->callback_change) ();
+                        {
+                            (void) (ptr_option->callback_change)
+                                (ptr_option->callback_change_data);
+                        }
                     }
                 }
             }
@@ -1160,6 +1228,9 @@ config_file_option_free (struct t_config_section *section,
                          struct t_config_option *option)
 {
     struct t_config_option *new_options;
+    
+    if (!section || !option)
+        return;
     
     /* remove option */
     if (section->last_option == option)
@@ -1200,6 +1271,9 @@ config_file_section_free (struct t_config_file *config_file,
 {
     struct t_config_section *new_sections;
     
+    if (!config_file || !section)
+        return;
+    
     /* remove section */
     if (config_file->last_section == section)
         config_file->last_section = section->prev_section;
@@ -1233,6 +1307,9 @@ void
 config_file_free (struct t_config_file *config_file)
 {
     struct t_config_file *new_config_files;
+    
+    if (!config_file)
+        return;
     
     /* remove config file */
     if (last_config_file == config_file)
