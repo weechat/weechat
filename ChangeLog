@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-01-24
+ChangeLog - 2008-01-28
 
 
 Version 0.2.7 (under dev!):
+   * fixed bug when switching window, scrollback is now preserved (task #7680)
    * added group support in nicklist
    * added backlog option in logger plugin
    * improved main loop: higher timout in select(), less CPU usage
