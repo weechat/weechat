@@ -145,8 +145,10 @@ extern void *gui_buffer_get (struct t_gui_buffer *buffer, char *property);
 extern void gui_buffer_set_category (struct t_gui_buffer *buffer,
                                      char *category);
 extern void gui_buffer_set_name (struct t_gui_buffer *buffer, char *name);
-extern void gui_buffer_set_title (struct t_gui_buffer *buffer, char *new_title);
-extern void gui_buffer_set_nicklist (struct t_gui_buffer *buffer, int nicklist);
+extern void gui_buffer_set_title (struct t_gui_buffer *buffer,
+                                  char *new_title);
+extern void gui_buffer_set_nicklist (struct t_gui_buffer *buffer,
+                                     int nicklist);
 extern void gui_buffer_set_nicklist_case_sensitive (struct t_gui_buffer * buffer,
                                                     int case_sensitive);
 extern void gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick);
@@ -161,13 +163,14 @@ extern int gui_buffer_is_scrolled (struct t_gui_buffer *buffer);
 extern struct t_gui_buffer *gui_buffer_get_dcc (struct t_gui_window *window);
 extern void gui_buffer_clear (struct t_gui_buffer *buffer);
 extern void gui_buffer_clear_all ();
-extern void gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another);
+extern void gui_buffer_close (struct t_gui_buffer *buffer,
+                              int switch_to_another);
 extern void gui_buffer_switch_previous (struct t_gui_window *window);
 extern void gui_buffer_switch_next (struct t_gui_window *window);
 extern void gui_buffer_switch_dcc (struct t_gui_window *window);
 extern void gui_buffer_switch_raw_data (struct t_gui_window *window);
-extern struct t_gui_buffer *gui_buffer_switch_by_number (struct t_gui_window *window,
-                                                         int number);
+extern void gui_buffer_switch_by_number (struct t_gui_window *window,
+                                         int number);
 extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);
 extern void gui_buffer_dump_hexa (struct t_gui_buffer *buffer);
 extern void gui_buffer_print_log ();

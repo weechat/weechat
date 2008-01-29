@@ -170,33 +170,37 @@ void
 gui_chat_draw_title (struct t_gui_buffer *buffer, int erase)
 {
     struct t_gui_window *ptr_win;
-    char format[32], *buf, *buf2, *ptr_title;
+    char format[32], *buf, *title_decoded, *ptr_title;
     
     if (!gui_ok)
         return;
     
+    title_decoded = (buffer->title) ?
+        (char *)gui_color_decode ((unsigned char *)buffer->title) : NULL;
+    
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if ((ptr_win->buffer == buffer) && (buffer->num_displayed > 0))
+        if (ptr_win->buffer == buffer)
         {
             if (erase)
                 gui_window_curses_clear (GUI_CURSES(ptr_win)->win_title, GUI_COLOR_TITLE);
             
-            snprintf (format, 32, "%%-%ds", ptr_win->win_title_width);
+            snprintf (format, sizeof (format), "%%-%ds", ptr_win->win_title_width);
             wmove (GUI_CURSES(ptr_win)->win_title, 0, 0);
             
-            if (buffer->title)
+            if (title_decoded)
             {
-                buf = (char *)gui_color_decode ((unsigned char *)buffer->title);
-                ptr_title = utf8_add_offset ((buf) ? buf : buffer->title,
+                ptr_title = utf8_add_offset (title_decoded,
                                              ptr_win->win_title_start);
                 if (!ptr_title || !ptr_title[0])
                 {
                     ptr_win->win_title_start = 0;
-                    ptr_title = (buf) ? buf : buffer->title;
+                    ptr_title = title_decoded;
                 }
-                buf2 = string_iconv_from_internal (NULL,
-                                                   ptr_title);
+                buf = string_iconv_from_internal (NULL,
+                                                  ptr_title);
+                if (buf)
+                    ptr_title = buf;
                 
                 if (ptr_win->win_title_start > 0)
                 {
@@ -209,8 +213,7 @@ gui_chat_draw_title (struct t_gui_buffer *buffer, int erase)
                 {
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
                                                   GUI_COLOR_TITLE);
-                    wprintw (GUI_CURSES(ptr_win)->win_title, "%s",
-                             (buf2) ? buf2 : ptr_title);
+                    wprintw (GUI_CURSES(ptr_win)->win_title, "%s", ptr_title);
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
                                                   GUI_COLOR_TITLE_MORE);
                     mvwprintw (GUI_CURSES(ptr_win)->win_title, 0,
@@ -221,24 +224,24 @@ gui_chat_draw_title (struct t_gui_buffer *buffer, int erase)
                 {
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
                                                   GUI_COLOR_TITLE);
-                    wprintw (GUI_CURSES(ptr_win)->win_title, "%s",
-                             (buf2) ? buf2 : ptr_title);
+                    wprintw (GUI_CURSES(ptr_win)->win_title, "%s", ptr_title);
                 }
                 if (buf)
                     free (buf);
-                if (buf2)
-                    free (buf2);
             }
+            else
+            {
+                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
+                                              GUI_COLOR_TITLE);
+                wprintw (GUI_CURSES(ptr_win)->win_title, format, " ");
+            }
+            wnoutrefresh (GUI_CURSES(ptr_win)->win_title);
+            refresh ();
         }
-        else
-        {
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
-                                          GUI_COLOR_TITLE);
-            wprintw (GUI_CURSES(ptr_win)->win_title, format, " ");
-        }
-        wnoutrefresh (GUI_CURSES(ptr_win)->win_title);
-        refresh ();
     }
+    
+    if (title_decoded)
+        free (title_decoded);
 }
 
 /*

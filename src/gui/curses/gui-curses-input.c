@@ -351,14 +351,14 @@ gui_input_draw (struct t_gui_buffer *buffer, int erase)
                     
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_input,
                                                   GUI_COLOR_INPUT);
-                    snprintf (format, 32, "%%-%ds",
+                    snprintf (format, sizeof (format), "%%-%ds",
                               ptr_win->win_input_width - prompt_length);
                     offset_cursor = 0;
                     if (ptr_win == gui_current_window)
                         offset_cursor = gui_input_draw_text (ptr_win,
                                                              ptr_win->win_input_width - prompt_length);
                     else
-                        wprintw (GUI_CURSES(ptr_win)->win_input, format, "");
+                        wprintw (GUI_CURSES(ptr_win)->win_input, format, " ");
                     wclrtoeol (GUI_CURSES(ptr_win)->win_input);
                     ptr_win->win_input_cursor_x = prompt_length + offset_cursor;
                     if (ptr_win == gui_current_window)

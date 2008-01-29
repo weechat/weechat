@@ -805,18 +805,18 @@ gui_buffer_switch_raw_data (struct t_gui_window *window)
  * gui_buffer_switch_by_number: switch to another buffer with number
  */
 
-struct t_gui_buffer *
+void
 gui_buffer_switch_by_number (struct t_gui_window *window, int number)
 {
     struct t_gui_buffer *ptr_buffer;
     
     /* invalid buffer */
     if (number < 0)
-        return NULL;
+        return;
     
     /* buffer is currently displayed ? */
     if (number == window->buffer->number)
-        return window->buffer;
+        return;
     
     /* search for buffer in the list */
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
@@ -825,12 +825,9 @@ gui_buffer_switch_by_number (struct t_gui_window *window, int number)
         {
             gui_window_switch_to_buffer (window, ptr_buffer);
             gui_window_redraw_buffer (window->buffer);
-            return ptr_buffer;
+            return;
         }
     }
-    
-    /* buffer not found */
-    return NULL;
 }
 
 /*

@@ -425,25 +425,17 @@ gui_window_draw_separator (struct t_gui_window *window)
 void
 gui_window_redraw_buffer (struct t_gui_buffer *buffer)
 {
-    struct t_gui_window *ptr_win;
-    
     if (!gui_ok)
         return;
     
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-    {
-        if (ptr_win->buffer == buffer)
-        {
-            gui_chat_draw_title (buffer, 1);
-            gui_chat_draw (buffer, 1);
-            if (GUI_CURSES(ptr_win)->win_nick)
-                gui_nicklist_draw (buffer, 1);
-            gui_status_draw (1);
-            if (CONFIG_BOOLEAN(config_look_infobar))
-                gui_infobar_draw (buffer, 1);
-            gui_input_draw (buffer, 1);
-        }
-    }
+    gui_chat_draw_title (buffer, 1);
+    gui_chat_draw (buffer, 1);
+    if (buffer->nicklist)
+        gui_nicklist_draw (buffer, 1);
+    gui_status_draw (1);
+    if (CONFIG_BOOLEAN(config_look_infobar))
+        gui_infobar_draw (buffer, 1);
+    gui_input_draw (buffer, 1);
 }
 
 /*
@@ -453,11 +445,15 @@ gui_window_redraw_buffer (struct t_gui_buffer *buffer)
 void
 gui_window_redraw_all_buffers ()
 {
-    struct t_gui_window *ptr_win;
+    struct t_gui_buffer *ptr_buffer;
+
+    if (!gui_ok)
+        return;
     
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
     {
-        gui_window_redraw_buffer (ptr_win->buffer);
+        gui_window_redraw_buffer (ptr_buffer);
     }
 }
 
@@ -877,6 +873,9 @@ gui_window_auto_resize (struct t_gui_window_tree *tree,
 {
     int size1, size2;
     
+    if (!gui_ok)
+        return 0;
+    
     if (tree)
     {
         if (tree->window)
@@ -928,29 +927,31 @@ void
 gui_window_refresh_windows ()
 {
     struct t_gui_window *ptr_win, *old_current_window;
+    struct t_gui_buffer *ptr_buffer;
     
-    if (gui_ok)
+    if (!gui_ok)
+        return;
+    
+    old_current_window = gui_current_window;
+    
+    if (gui_window_auto_resize (gui_windows_tree, 0, 0,
+                                gui_window_get_width (),
+                                gui_window_get_height (), 0) < 0)
+        gui_window_merge_all (gui_current_window);
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        old_current_window = gui_current_window;
-        
-        if (gui_window_auto_resize (gui_windows_tree, 0, 0,
-                                    gui_window_get_width (),
-                                    gui_window_get_height (), 0) < 0)
-            gui_window_merge_all (gui_current_window);
-        
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        {
-            gui_window_switch_to_buffer (ptr_win, ptr_win->buffer);
-        }
-
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        {
-            gui_window_redraw_buffer (ptr_win->buffer);
-            gui_window_draw_separator (ptr_win);
-        }
-        
-        gui_current_window = old_current_window;
+        gui_window_switch_to_buffer (ptr_win, ptr_win->buffer);
+        gui_window_draw_separator (ptr_win);
     }
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        gui_window_redraw_buffer (ptr_buffer);
+    }
+    
+    gui_current_window = old_current_window;
 }
 
 /*
@@ -1049,6 +1050,9 @@ gui_window_resize (struct t_gui_window *window, int pourcentage)
     struct t_gui_window_tree *parent;
     int old_split_pct;
     
+    if (!gui_ok)
+        return;
+    
     parent = window->ptr_tree->parent_node;
     if (parent)
     {
@@ -1075,6 +1079,9 @@ int
 gui_window_merge (struct t_gui_window *window)
 {
     struct t_gui_window_tree *parent, *sister;
+    
+    if (!gui_ok)
+        return 0;
     
     parent = window->ptr_tree->parent_node;
     if (parent)
@@ -1120,7 +1127,10 @@ void
 gui_window_merge_all (struct t_gui_window *window)
 {
     int num_deleted;
-
+    
+    if (!gui_ok)
+        return;
+    
     num_deleted = 0;
     while (gui_windows->next_window)
     {
@@ -1157,6 +1167,9 @@ gui_window_merge_all (struct t_gui_window *window)
 int
 gui_window_side_by_side (struct t_gui_window *win1, struct t_gui_window *win2)
 {
+    if (!gui_ok)
+        return 0;
+    
     /* win2 over win1 ? */
     if (win2->win_y + win2->win_height == win1->win_y)
     {
@@ -1209,6 +1222,9 @@ gui_window_switch_up (struct t_gui_window *window)
 {
     struct t_gui_window *ptr_win;
     
+    if (!gui_ok)
+        return;
+    
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
     {
@@ -1231,6 +1247,9 @@ void
 gui_window_switch_down (struct t_gui_window *window)
 {
     struct t_gui_window *ptr_win;
+    
+    if (!gui_ok)
+        return;
     
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
@@ -1255,6 +1274,9 @@ gui_window_switch_left (struct t_gui_window *window)
 {
     struct t_gui_window *ptr_win;
     
+    if (!gui_ok)
+        return;
+    
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
     {
@@ -1277,6 +1299,9 @@ void
 gui_window_switch_right (struct t_gui_window *window)
 {
     struct t_gui_window *ptr_win;
+    
+    if (!gui_ok)
+        return;
     
     for (ptr_win = gui_windows; ptr_win;
          ptr_win = ptr_win->next_window)
@@ -1301,14 +1326,17 @@ void
 gui_window_refresh_screen (int force)
 {
     int new_height, new_width;
-
+    
+    if (!gui_ok)
+        return;
+    
     if (force || (gui_window_refresh_needed == 1))
     {
         endwin ();
         refresh ();
         
         getmaxyx (stdscr, new_height, new_width);
-
+        
         gui_ok = ((new_width > WINDOW_MIN_WIDTH) && (new_height > WINDOW_MIN_HEIGHT));
         
         if (gui_ok)
@@ -1317,9 +1345,9 @@ gui_window_refresh_screen (int force)
             gui_window_refresh_windows ();
         }
     }
-
-    if (!force && (gui_window_refresh_needed > 0))
-        gui_window_refresh_needed--;
+    
+    if (gui_window_refresh_needed > 0)
+        gui_window_refresh_needed = 0;
 }
 
 /*
