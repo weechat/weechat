@@ -150,6 +150,25 @@ demo_buffer_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * demo_buffer_set_command_cb: demo command for setting buffer property
+ */
+
+int
+demo_buffer_set_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
+                            char **argv, char **argv_eol)
+{
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc > 2)
+    {
+        weechat_buffer_set (buffer, argv[1], argv_eol[2]);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * demo_infolist_print: display an infolist
  */
 
@@ -356,6 +375,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           "",
                           "",
                           &demo_buffer_command_cb, NULL);
+
+    weechat_hook_command ("demo_buffer_set",
+                          _("set a buffer property"),
+                          _("property value"),
+                          "",
+                          "",
+                          &demo_buffer_set_command_cb, NULL);
     
     weechat_hook_command ("demo_infolist",
                           _("get and display an infolist"),
