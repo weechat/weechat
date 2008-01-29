@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-27 10:27+0100\n"
+"POT-Creation-Date: 2008-01-29 15:15+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1878,6 +1878,13 @@ msgid "open a new buffer"
 msgstr "kann keinen neuen Puffer erstellen"
 
 msgid "category name"
+msgstr ""
+
+#, fuzzy
+msgid "set a buffer property"
+msgstr "suche Text im Pufferverlauf"
+
+msgid "property value"
 msgstr ""
 
 #, fuzzy

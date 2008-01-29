@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-27 10:27+0100\n"
-"PO-Revision-Date: 2008-01-27 10:28+0100\n"
+"POT-Creation-Date: 2008-01-29 15:15+0100\n"
+"PO-Revision-Date: 2008-01-29 15:20+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1786,6 +1786,12 @@ msgstr "ouvrir un nouveau tampon"
 
 msgid "category name"
 msgstr "catégorie nom"
+
+msgid "set a buffer property"
+msgstr "définir une propriété de tampon"
+
+msgid "property value"
+msgstr "propriété valeur"
 
 msgid "get and display an infolist"
 msgstr "lit et affiche une infolist"
