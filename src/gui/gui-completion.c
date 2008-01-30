@@ -43,6 +43,7 @@
 #include "gui-buffer.h"
 #include "gui-color.h"
 #include "gui-keyboard.h"
+#include "gui-nicklist.h"
 
 
 /*
@@ -441,6 +442,49 @@ gui_completion_list_add_self_nick (struct t_gui_completion *completion)
 }
 
 /*
+ * gui_completion_list_add_nicks: add nicks to completion list
+ */
+
+void
+gui_completion_list_add_nicks (struct t_gui_completion *completion)
+{
+    struct t_gui_nick_group *ptr_group;
+    struct t_gui_nick *ptr_nick;
+    int count_before;
+    
+    count_before = weelist_size (completion->completion_list);
+    hook_completion_exec (completion->buffer->plugin,
+                          "nick",
+                          completion->buffer,
+                          completion->completion_list);
+    if (weelist_size (completion->completion_list) == count_before)
+    {
+        /* no plugin overrides nick completion, then we use default nick */
+        /* completion, wich nicks of nicklist, in order of nicklist */
+        if (completion->buffer->nicklist)
+        {
+            ptr_group = NULL;
+            ptr_nick = NULL;
+            gui_nicklist_get_next_item (completion->buffer,
+                                        &ptr_group, &ptr_nick);
+            while (ptr_group || ptr_nick)
+            {
+                if (ptr_nick && ptr_nick->visible)
+                {
+                    gui_completion_list_add (completion,
+                                             ptr_nick->name,
+                                             1, WEECHAT_LIST_POS_END);
+                }
+                gui_nicklist_get_next_item (completion->buffer,
+                                            &ptr_group, &ptr_nick);
+            }
+        }
+    }
+    
+    completion->arg_is_nick = 1;
+}
+
+/*
  * gui_completion_list_add_option: add config option to completion list
  */
 
@@ -701,6 +745,9 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                             break;
                         case 'm': /* self nickname */
                             gui_completion_list_add_self_nick (completion);
+                            break;
+                        case 'n': /* nick */
+                            gui_completion_list_add_nicks (completion);
                             break;
                         case 'o': /* config option */
                             gui_completion_list_add_option (completion);
@@ -1036,7 +1083,8 @@ gui_completion_command (struct t_gui_completion *completion)
  */
 
 void
-gui_completion_command_arg (struct t_gui_completion *completion, int nick_completion)
+gui_completion_command_arg (struct t_gui_completion *completion,
+                            int nick_completion)
 {
     int length, word_found_seen, other_completion;
     struct t_weelist_item *ptr_item, *ptr_item2;
@@ -1051,8 +1099,12 @@ gui_completion_command_arg (struct t_gui_completion *completion, int nick_comple
     
     while (ptr_item)
     {
-        if ((nick_completion && (gui_completion_nickncmp (completion->base_word, ptr_item->data, length) == 0))
-            || ((!nick_completion) && (string_strncasecmp (completion->base_word, ptr_item->data, length) == 0)))
+        if ((nick_completion
+             && (gui_completion_nickncmp (completion->base_word, ptr_item->data,
+                                          length) == 0))
+            || ((!nick_completion)
+                && (string_strncasecmp (completion->base_word, ptr_item->data,
+                                        length) == 0)))
         {
             if ((!completion->word_found) || word_found_seen)
             {
@@ -1068,9 +1120,13 @@ gui_completion_command_arg (struct t_gui_completion *completion, int nick_comple
                 while (ptr_item2)
                 {
                     if ((nick_completion
-                         && (gui_completion_nickncmp (completion->base_word, ptr_item2->data, length) == 0))
+                         && (gui_completion_nickncmp (completion->base_word,
+                                                      ptr_item2->data,
+                                                      length) == 0))
                         || ((!nick_completion)
-                            && (string_strncasecmp (completion->base_word, ptr_item2->data, length) == 0)))
+                            && (string_strncasecmp (completion->base_word,
+                                                    ptr_item2->data,
+                                                    length) == 0)))
                         other_completion++;
                     
                     if (completion->direction < 0)
@@ -1112,75 +1168,13 @@ gui_completion_command_arg (struct t_gui_completion *completion, int nick_comple
 void
 gui_completion_nick (struct t_gui_completion *completion)
 {
-    (void) completion;
-    /*int length, word_found_seen, other_completion;
-    t_irc_nick *ptr_nick;
+    int length, word_found_seen, other_completion;
     struct t_weelist_item *ptr_item, *ptr_item2;
-
-    if (!completion->channel)
-        return;
+    
+    if (!completion->completion_list->items)
+        gui_completion_list_add_nicks (completion);
     
     completion->context = GUI_COMPLETION_NICK;
-    
-    if ((((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_PRIVATE)
-        || (((t_irc_channel *)(completion->channel))->type == IRC_CHANNEL_TYPE_DCC_CHAT))
-    {
-        if (!(completion->completion_list->items))
-        {
-            weelist_add (completion->completion_list,
-                         ((t_irc_channel *)(completion->channel))->name,
-                         WEECHAT_LIST_POS_SORT);
-            weelist_add (completion->completion_list,
-                         ((t_irc_server *)(completion->server))->nick,
-                         WEECHAT_LIST_POS_SORT);
-        }
-        gui_completion_command_arg (completion, 1);
-        return;
-    }
-
-    // rebuild nick list for completion, with nicks speaking at beginning of list
-    if ((((t_irc_channel *)(completion->channel))->nick_completion_reset)
-        || (!(completion->completion_list->items)))
-    {
-        // empty completion list
-        if (completion->completion_list)
-        {
-            weelist_free (completion->completion_list);
-            completion->completion_list = NULL;
-            completion->last_completion = NULL;
-        }
-        
-        // add channel nicks
-        for (ptr_nick = ((t_irc_channel *)(completion->channel))->nicks;
-             ptr_nick; ptr_nick = ptr_nick->next_nick)
-        {
-            weelist_add (completion->completion_list,
-                         ptr_nick->nick,
-                         WEECHAT_LIST_POS_SORT);
-        }
-        
-        // add nicks speaking recently on this channel
-        if (CONFIG_BOOLEAN(config_look_nick_completion_smart))
-        {
-            for (ptr_item = ((t_irc_channel *)(completion->channel))->nicks_speaking->items;
-                 ptr_item; ptr_item = ptr_item->next_item)
-            {
-                if (irc_nick_search ((t_irc_channel *)(completion->channel),
-                                     ptr_item->data))
-                    weelist_add (completion->completion_list,
-                                 ptr_item->data,
-                                 WEECHAT_LIST_POS_BEGINNING);
-            }
-        }
-        
-        // add self nick at the end
-        if (completion->server)
-            weelist_add (completion->completion_list,
-                         ((t_irc_server *)(completion->server))->nick,
-                         WEECHAT_LIST_POS_END);
-        
-        ((t_irc_channel *)(completion->channel))->nick_completion_reset = 0;
-    }
     
     length = strlen (completion->base_word);
     word_found_seen = 0;
@@ -1193,7 +1187,8 @@ gui_completion_nick (struct t_gui_completion *completion)
     
     while (ptr_item)
     {
-        if (gui_completion_nickncmp (completion->base_word, ptr_item->data, length) == 0)
+        if (gui_completion_nickncmp (completion->base_word, ptr_item->data,
+                                     length) == 0)
         {
             if ((!completion->word_found) || word_found_seen)
             {
@@ -1205,7 +1200,7 @@ gui_completion_nick (struct t_gui_completion *completion)
                     completion->position = -1;
                     return;
                 }
-
+                
                 if (completion->direction < 0)
                     ptr_item2 = ptr_item->prev_item;
                 else
@@ -1249,7 +1244,7 @@ gui_completion_nick (struct t_gui_completion *completion)
         free (completion->word_found);
         completion->word_found = NULL;
         gui_completion_nick (completion);
-    }*/
+    }
 }
 
 /*
@@ -1259,9 +1254,7 @@ gui_completion_nick (struct t_gui_completion *completion)
 void
 gui_completion_auto (struct t_gui_completion *completion)
 {
-    (void) completion;
-    /*
-    // filename completion
+    /* filename completion */
     if ((completion->base_word[0] == '/')
         || (completion->base_word[0] == '~'))
     {
@@ -1271,21 +1264,11 @@ gui_completion_auto (struct t_gui_completion *completion)
         return;
     }
     
-    // channel completion
-    if (irc_channel_is_channel (completion->base_word))
-    {
-        if (!completion->completion_list->items)
-            gui_completion_list_add_channels (completion);
-        gui_completion_command_arg (completion, 0);
-        return;
-    }
-    
-    // default: nick completion (if channel)
-    if (completion->channel)
+    /* default: nick completion (if there's a nicklist) */
+    if (completion->buffer->nicklist)
         gui_completion_nick (completion);
     else
         completion->context = GUI_COMPLETION_NULL;
-    */
 }
 
 /*

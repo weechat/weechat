@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* plugin-api.c: WeeChat <--> plugin API */
+/* plugin-api.c: WeeChat <--> plugin API (extra functions) */
 
 
 #ifdef HAVE_CONFIG_H

@@ -3590,7 +3590,7 @@ irc_command_init ()
                              "     type: CTCP type (examples: \"version\", "
                              "\"ping\", ..)\n"
                              "arguments: arguments for CTCP"),
-                          "%(irc_channel)|%(irc_channel_nicks) action|ping|version",
+                          "%(irc_channel)|%n action|ping|version",
                           &irc_command_ctcp, NULL);
     weechat_hook_command ("cycle",
                           N_("leave and rejoin a channel"),
@@ -3606,7 +3606,7 @@ irc_command_init ()
                              "(chat)\n"
                              "nickname: nickname to send file or chat\n"
                              "    file: filename (on local host)"),
-                          "chat|send|close %(irc_channel_nicks) %f",
+                          "chat|send|close %n %f",
                           &irc_command_dcc, NULL);
     weechat_hook_command ("dehalfop",
                           N_("removes half channel operator status from "
@@ -3652,7 +3652,7 @@ irc_command_init ()
                           N_("nickname channel"),
                           N_("nickname: nick to invite\n"
                              " channel: channel to invite"),
-                          "%(irc_channel_nicks) %(irc_channel)", &irc_command_invite, NULL);
+                          "%n %(irc_channel)", &irc_command_invite, NULL);
     weechat_hook_command ("ison",
                           N_("check if a nickname is currently on IRC"),
                           N_("nickname [nickname ...]"),
@@ -3670,20 +3670,20 @@ irc_command_init ()
                           N_(" channel: channel where user is\n"
                              "nickname: nickname to kick\n"
                              " comment: comment for kick"),
-                          "%(irc_channel_nicks) %-", &irc_command_kick, NULL);
+                          "%n %-", &irc_command_kick, NULL);
     weechat_hook_command ("kickban",
                           N_("kicks and bans a nick from a channel"),
                           N_("[channel] nickname [comment]"),
                           N_(" channel: channel where user is\n"
                              "nickname: nickname to kick and ban\n"
                              " comment: comment for kick"),
-                          "%(irc_channel_nicks) %-", &irc_command_kickban, NULL);
+                          "%n %-", &irc_command_kickban, NULL);
     weechat_hook_command ("kill",
                           N_("close client-server connection"),
                           N_("nickname comment"),
                           N_("nickname: nickname\n"
                              " comment: comment for kill"),
-                          "%(irc_channel_nicks) %-", &irc_command_kill, NULL);
+                          "%n %-", &irc_command_kill, NULL);
     weechat_hook_command ("links",
                           N_("list all servernames which are known by the "
                              "server answering the query"),
@@ -3769,7 +3769,7 @@ irc_command_init ()
                           N_("nickname text"),
                           N_("nickname: user to send notice to\n"
                              "    text: text to send"),
-                          "%(irc_channel_nicks) %-", &irc_command_notice, NULL);
+                          "%n %-", &irc_command_notice, NULL);
     weechat_hook_command ("op",
                           N_("gives channel operator status to nickname(s)"),
                           N_("nickname [nickname]"),
@@ -3806,7 +3806,7 @@ irc_command_init ()
                           N_("nickname [text]"),
                           N_("nickname: nickname for private conversation\n"
                              "    text: text to send"),
-                          "%(irc_channel_nicks) %-", &irc_command_query, NULL);
+                          "%n %-", &irc_command_query, NULL);
     weechat_hook_command ("quote",
                           N_("send raw data to server without parsing"),
                           N_("data"),
@@ -3946,7 +3946,7 @@ irc_command_init ()
                           N_("return a list of information about nicknames"),
                           N_("nickname [nickname ...]"),
                           N_("nickname: nickname"),
-                          "%(irc_channel_nicks)", &irc_command_userhost, NULL);
+                          "%n", &irc_command_userhost, NULL);
     weechat_hook_command ("users",
                           N_("list of users logged into the server"),
                           N_("[target]"),
@@ -3958,7 +3958,7 @@ irc_command_init ()
                           N_("[server | nickname]"),
                           N_("  server: server name\n"
                              "nickname: nickname"),
-                          "%(irc_channel_nicks)", &irc_command_version, NULL);
+                          "%n", &irc_command_version, NULL);
     weechat_hook_command ("voice",
                           N_("gives voice to nickname(s)"),
                           N_("[nickname [nickname]]"),

@@ -214,6 +214,8 @@ irc_completion_channel_nicks_cb (void *data, char *completion,
         {
             weechat_list_add (list, ptr_channel->name, WEECHAT_LIST_POS_SORT);
         }
+        
+        ptr_channel->nick_completion_reset = 0;
     }
     
     return WEECHAT_RC_OK;
@@ -362,7 +364,7 @@ irc_completion_init ()
                              &irc_completion_server_nicks_cb, NULL);
     weechat_hook_completion ("irc_servers", &irc_completion_servers_cb, NULL);
     weechat_hook_completion ("irc_channel", &irc_completion_channel_cb, NULL);
-    weechat_hook_completion ("irc_channel_nicks",
+    weechat_hook_completion ("nick",
                              &irc_completion_channel_nicks_cb, NULL);
     weechat_hook_completion ("irc_channel_nicks_hosts",
                              &irc_completion_channel_nicks_hosts_cb, NULL);

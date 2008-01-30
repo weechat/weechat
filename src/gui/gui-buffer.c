@@ -427,7 +427,7 @@ gui_buffer_search_by_category_name (char *category, char *name)
     struct t_gui_buffer *ptr_buffer;
     
     if (!category && !name)
-        return NULL;
+        return gui_current_window->buffer;
     
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)

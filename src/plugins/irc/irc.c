@@ -60,11 +60,12 @@ gnutls_certificate_credentials gnutls_xcred; /* gnutls client credentials */
 
 
 /*
- * irc_dump_data_cb: dump IRC data in WeeChat log file
+ * irc_signal_dump_data_cb: dump IRC data in WeeChat log file
  */
 
 int
-irc_dump_data_cb (void *data, char *signal, char *type_data, void *signal_data)
+irc_signal_dump_data_cb (void *data, char *signal, char *type_data,
+                         void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -113,11 +114,12 @@ irc_create_directories ()
 }
 
 /*
- * irc_quit_cb: callback for "quit" signal
+ * irc_siangl_quit_cb: callback for "quit" signal
  */
 
 int
-irc_quit_cb (void *data, char *signal, char *type_data, void *signal_data)
+irc_signal_quit_cb (void *data, char *signal, char *type_data,
+                    void *signal_data)
 {
     struct t_irc_server *ptr_server;
     
@@ -138,11 +140,12 @@ irc_quit_cb (void *data, char *signal, char *type_data, void *signal_data)
 }
 
 /*
- * irc_debug_cb: callback for "debug" signal
+ * irc_signal_debug_cb: callback for "debug" signal
  */
 
 int
-irc_debug_cb (void *data, char *signal, char *type_data, void *signal_data)
+irc_signal_debug_cb (void *data, char *signal, char *type_data,
+                     void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -183,10 +186,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 
     irc_command_init ();
 
-    /* hook signals */
-    weechat_hook_signal ("dump_data", &irc_dump_data_cb, NULL);
-    weechat_hook_signal ("quit", &irc_quit_cb, NULL);
-    weechat_hook_signal ("debug", &irc_debug_cb, NULL);
+    /* hook some signals */
+    weechat_hook_signal ("dump_data", &irc_signal_dump_data_cb, NULL);
+    weechat_hook_signal ("quit", &irc_signal_quit_cb, NULL);
+    weechat_hook_signal ("debug", &irc_signal_debug_cb, NULL);
     
     /* hook completions */
     irc_completion_init ();
