@@ -977,6 +977,12 @@ if test "x$debug" = "x2" ; then
     msg_debug="yes (with verbose messages)"
 fi
 
+if test "x$msg_doc" = "x"; then
+    msg_doc="no"
+else
+    msg_doc="yes: $msg_doc"
+fi
+
 echo ""
 echo "Enabled features:"
 echo "   Interfaces........... :$listgui"
