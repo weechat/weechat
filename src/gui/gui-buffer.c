@@ -665,6 +665,10 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
         gui_buffer_raw_data = NULL;
     }
     
+    /* free title */
+    if (buffer->title)
+        free (buffer->title);
+    
     if (buffer->type == GUI_BUFFER_TYPE_FORMATED)
     {
         /* decrease buffer number for all next buffers */

@@ -176,7 +176,8 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     if (ptr_channel)
     {
         /* send PART for channel if its buffer is closed */
-        if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+        if ((ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+            && (ptr_channel->nicks))
         {
             irc_command_part_channel (ptr_server, ptr_channel->name, NULL);
             irc_channel_free (ptr_server, ptr_channel);

@@ -168,7 +168,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
             }
             gui_buffer_close (buffer, 1);
             gui_status_refresh_needed = 1;
-            buffer->input_refresh_needed = 1;
+            gui_current_window->buffer->input_refresh_needed = 1;
         }
         else if (string_strcasecmp (argv[1], "notify") == 0)
         {
