@@ -746,7 +746,7 @@ gui_window_scroll_topic_left (struct t_gui_window *window)
         window->win_title_start -= (window->win_width * 3) / 4;
     if (window->win_title_start < 0)
         window->win_title_start = 0;
-    gui_chat_draw_title (window->buffer, 1);
+    window->buffer->title_refresh_needed = 1;
 }
 
 /*
@@ -760,7 +760,7 @@ gui_window_scroll_topic_right (struct t_gui_window *window)
         return;
     
     window->win_title_start += (window->win_width * 3) / 4;
-    gui_chat_draw_title (window->buffer, 1);
+    window->buffer->title_refresh_needed = 1;
 }
 
 /*
@@ -778,7 +778,7 @@ gui_window_nick_beginning (struct t_gui_window *window)
         if (window->win_nick_start > 0)
         {
             window->win_nick_start = 0;
-            gui_nicklist_draw (window->buffer, 1);
+            window->buffer->nicklist_refresh_needed = 1;
         }
     }
 }
@@ -807,7 +807,7 @@ gui_window_nick_end (struct t_gui_window *window)
         if (new_start != window->win_nick_start)
         {
             window->win_nick_start = new_start;
-            gui_nicklist_draw (window->buffer, 1);
+            window->buffer->nicklist_refresh_needed = 1;
         }
     }
 }
@@ -829,7 +829,7 @@ gui_window_nick_page_up (struct t_gui_window *window)
             window->win_nick_start -= (window->win_nick_num_max - 1);
             if (window->win_nick_start <= 1)
                 window->win_nick_start = 0;
-            gui_nicklist_draw (window->buffer, 1);
+            window->buffer->nicklist_refresh_needed = 1;
         }
     }
 }
@@ -854,7 +854,7 @@ gui_window_nick_page_down (struct t_gui_window *window)
                 window->win_nick_start += (window->win_nick_num_max - 1);
             else
                 window->win_nick_start += (window->win_nick_num_max - 2);
-            gui_nicklist_draw (window->buffer, 1);
+            window->buffer->nicklist_refresh_needed = 1;
         }
     }
 }
