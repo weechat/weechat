@@ -56,12 +56,12 @@ int gui_chat_time_length = 0;    /* length of time for each line (in chars) */
 void
 gui_chat_prefix_build_empty ()
 {
-    gui_chat_prefix[GUI_CHAT_PREFIX_INFO] = gui_chat_prefix_empty;
-    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR] = gui_chat_prefix_empty;
-    gui_chat_prefix[GUI_CHAT_PREFIX_NETWORK] = gui_chat_prefix_empty;
-    gui_chat_prefix[GUI_CHAT_PREFIX_ACTION] = gui_chat_prefix_empty;
-    gui_chat_prefix[GUI_CHAT_PREFIX_JOIN] = gui_chat_prefix_empty;
-    gui_chat_prefix[GUI_CHAT_PREFIX_QUIT] = gui_chat_prefix_empty;
+    gui_chat_prefix[GUI_CHAT_PREFIX_INFO] = strdup (gui_chat_prefix_empty);
+    gui_chat_prefix[GUI_CHAT_PREFIX_ERROR] = strdup (gui_chat_prefix_empty);
+    gui_chat_prefix[GUI_CHAT_PREFIX_NETWORK] = strdup (gui_chat_prefix_empty);
+    gui_chat_prefix[GUI_CHAT_PREFIX_ACTION] = strdup (gui_chat_prefix_empty);
+    gui_chat_prefix[GUI_CHAT_PREFIX_JOIN] = strdup (gui_chat_prefix_empty);
+    gui_chat_prefix[GUI_CHAT_PREFIX_QUIT] = strdup (gui_chat_prefix_empty);
 }
 
 /*
@@ -73,6 +73,16 @@ void
 gui_chat_prefix_build ()
 {
     char prefix[128];
+    int i;
+    
+    for (i = 0; i < GUI_CHAT_PREFIX_NUMBER; i++)
+    {
+        if (gui_chat_prefix[i])
+        {
+            free (gui_chat_prefix[i]);
+            gui_chat_prefix[i] = NULL;
+        }
+    }
     
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_INFO),

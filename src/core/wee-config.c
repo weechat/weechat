@@ -279,13 +279,6 @@ config_change_read_marker ()
 void
 config_change_prefix ()
 {
-    int i;
-    
-    for (i = 0; i < GUI_CHAT_PREFIX_NUMBER; i++)
-    {
-        if (gui_chat_prefix[i])
-            free (gui_chat_prefix[i]);
-    }
     gui_chat_prefix_build ();
 }
 
