@@ -710,34 +710,76 @@ struct t_gui_buffer *
 script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
                        struct t_plugin_script *script,
                        char *category, char *name,
-                       int (*callback)(void *data,
-                                       struct t_gui_buffer *buffer,
-                                       char *input_data),
-                       char *function)
+                       int (*input_callback)(void *data,
+                                             struct t_gui_buffer *buffer,
+                                             char *input_data),
+                       char *function_input,
+                       int (*close_callback)(void *data,
+                                             struct t_gui_buffer *buffer),
+                       char *function_close)
 {
-    struct t_script_callback *new_script_callback;
+    struct t_script_callback *new_script_callback_input;
+    struct t_script_callback *new_script_callback_close;
     struct t_gui_buffer *new_buffer;
     
-    if (!function || !function[0])
-        return weechat_buffer_new (category, name, NULL, NULL);
+    if ((!function_input || !function_input[0])
+        && (!function_close || !function_close[0]))
+        return weechat_buffer_new (category, name, NULL, NULL, NULL, NULL);
     
-    new_script_callback = script_callback_alloc ();
-    if (!new_script_callback)
-        return NULL;
+    new_script_callback_input = NULL;
+    new_script_callback_close = NULL;
     
-    new_buffer = weechat_buffer_new (category, name,
-                                     callback, new_script_callback);
-    if (!new_buffer)
+    if (function_input && function_input[0])
     {
-        free (new_script_callback);
-        return NULL;
+        new_script_callback_input = script_callback_alloc ();
+        if (!new_script_callback_input)
+            return NULL;
     }
     
-    new_script_callback->script = script;
-    new_script_callback->function = strdup (function);
-    new_script_callback->buffer = new_buffer;
+    if (function_close && function_close[0])
+    {
+        new_script_callback_close = script_callback_alloc ();
+        if (!new_script_callback_close)
+        {
+            if (new_script_callback_input)
+                free (new_script_callback_input);
+            return NULL;
+        }
+    }
     
-    script_callback_add (script, new_script_callback);
+    new_buffer = weechat_buffer_new (category, name,
+                                     (new_script_callback_input) ?
+                                     input_callback : NULL,
+                                     (new_script_callback_input) ?
+                                     function_input : NULL,
+                                     (new_script_callback_close) ?
+                                     close_callback : NULL,
+                                     (new_script_callback_close) ?
+                                     function_close : NULL);
+    if (!new_buffer)
+    {
+        if (new_script_callback_input)
+            free (new_script_callback_input);
+        if (new_script_callback_close)
+            free (new_script_callback_close);
+        return NULL;
+    }
+
+    if (new_script_callback_input)
+    {
+        new_script_callback_input->script = script;
+        new_script_callback_input->function = strdup (function_input);
+        new_script_callback_input->buffer = new_buffer;
+        script_callback_add (script, new_script_callback_input);
+    }
+
+    if (new_script_callback_close)
+    {
+        new_script_callback_close->script = script;
+        new_script_callback_close->function = strdup (function_close);
+        new_script_callback_close->buffer = new_buffer;
+        script_callback_add (script, new_script_callback_close);
+    }
     
     return new_buffer;
 }

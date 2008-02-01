@@ -20,28 +20,6 @@
 #ifndef __WEECHAT_IRC_BUFFER_H
 #define __WEECHAT_IRC_BUFFER_H 1
 
-#define IRC_BUFFER_SERVER(buffer) (((t_irc_buffer_data *)(buffer->protocol_data))->server)
-#define IRC_BUFFER_CHANNEL(buffer) (((t_irc_buffer_data *)(buffer->protocol_data))->channel)
-#define IRC_BUFFER_ALL_SERVERS(buffer) (((t_irc_buffer_data *)(buffer->protocol_data))->all_servers)
-
-#define IRC_BUFFER_GET_SERVER(buffer) \
-    t_irc_server *ptr_server = IRC_BUFFER_SERVER(buffer)
-#define IRC_BUFFER_GET_CHANNEL(buffer) \
-    t_irc_channel *ptr_channel = IRC_BUFFER_CHANNEL(buffer)
-#define IRC_BUFFER_GET_SERVER_CHANNEL(buffer) \
-    t_irc_server *ptr_server = IRC_BUFFER_SERVER(buffer); \
-    t_irc_channel *ptr_channel = IRC_BUFFER_CHANNEL(buffer)
-
-struct t_irc_buffer_data
-{
-    struct t_irc_server *server;
-    struct t_irc_channel *channel;
-    int all_servers;
-};
-
-extern struct t_irc_buffer_data *irc_buffer_data_create (struct t_irc_server *server);
-extern void irc_buffer_data_free (struct t_gui_buffer *buffer);
-extern void irc_buffer_merge_servers (struct t_gui_window *window);
-extern void irc_buffer_split_server (struct t_gui_window *window);
+extern int irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer);
 
 #endif /* irc-buffer.h */

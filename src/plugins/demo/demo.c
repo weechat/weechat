@@ -115,7 +115,31 @@ demo_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
     (void) data;
     
     weechat_printf (buffer,
-                    "buffer input_data_cb: input_data = '%s'", input_data);
+                    "buffer_input_data_cb: buffer = %x (%s / %s), "
+                    "input_data = '%s'",
+                    buffer,
+                    weechat_buffer_get (buffer, "category"),
+                    weechat_buffer_get (buffer, "name"),
+                    input_data);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * demo_buffer_close_cb: callback for buffer closed
+ */
+
+int
+demo_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+{
+    /* make C compiler happy */
+    (void) data;
+    
+    weechat_printf (NULL,
+                    "buffer_close_cb: buffer = %x (%s / %s)",
+                    buffer,
+                    weechat_buffer_get (buffer, "category"),
+                    weechat_buffer_get (buffer, "name"));
     
     return WEECHAT_RC_OK;
 }
@@ -138,8 +162,8 @@ demo_buffer_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     if (argc > 2)
     {
         new_buffer = weechat_buffer_new (argv[1], argv[2],
-                                         &demo_buffer_input_data_cb,
-                                         NULL);
+                                         &demo_buffer_input_data_cb, NULL,
+                                         &demo_buffer_close_cb, NULL);
         if (new_buffer)
             weechat_buffer_set (new_buffer, "display", "1");
         weechat_hook_signal_send ("logger_backlog",

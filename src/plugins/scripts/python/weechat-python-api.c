@@ -1762,10 +1762,12 @@ int
 weechat_python_api_hook_timer_cb (void *data)
 {
     struct t_script_callback *script_callback;
-    char *python_argv[1] = { NULL };
+    char *python_argv[1];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
+    
+    python_argv[0] = NULL;
     
     rc = (int *) weechat_python_exec (script_callback->script,
                                       WEECHAT_SCRIPT_EXEC_INT,
@@ -1833,10 +1835,12 @@ int
 weechat_python_api_hook_fd_cb (void *data)
 {
     struct t_script_callback *script_callback;
-    char *python_argv[1] = { NULL };
+    char *python_argv[1];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
+    
+    python_argv[0] = NULL;
     
     rc = (int *) weechat_python_exec (script_callback->script,
                                       WEECHAT_SCRIPT_EXEC_INT,
@@ -2458,13 +2462,46 @@ weechat_python_api_input_data_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * weechat_python_api_close_cb: callback for buffer closed
+ */
+
+int
+weechat_python_api_close_cb (void *data, struct t_gui_buffer *buffer)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[2];
+    int *r, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    python_argv[0] = script_ptr2str (buffer);
+    python_argv[1] = NULL;
+    
+    r = (int *) weechat_python_exec (script_callback->script,
+                                     WEECHAT_SCRIPT_EXEC_INT,
+                                     script_callback->function,
+                                     python_argv);
+    if (!r)
+        ret = WEECHAT_RC_ERROR;
+    else
+    {
+        ret = *r;
+        free (r);
+    }
+    if (python_argv[0])
+        free (python_argv[0]);
+    
+    return ret;
+}
+
+/*
  * weechat_python_api_buffer_new: create a new buffer
  */
 
 static PyObject *
 weechat_python_api_buffer_new (PyObject *self, PyObject *args)
 {
-    char *category, *name, *function, *result;
+    char *category, *name, *function_input, *function_close, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -2478,9 +2515,11 @@ weechat_python_api_buffer_new (PyObject *self, PyObject *args)
     
     category = NULL;
     name = NULL;
-    function = NULL;
+    function_input = NULL;
+    function_close = NULL;
     
-    if (!PyArg_ParseTuple (args, "sss", &category, &name, &function))
+    if (!PyArg_ParseTuple (args, "ssss", &category, &name, &function_input,
+                           &function_close))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_new");
         PYTHON_RETURN_EMPTY;
@@ -2491,7 +2530,9 @@ weechat_python_api_buffer_new (PyObject *self, PyObject *args)
                                                     category,
                                                     name,
                                                     &weechat_python_api_input_data_cb,
-                                                    function));
+                                                    function_input,
+                                                    &weechat_python_api_close_cb,
+                                                    function_close));
     PYTHON_RETURN_STRING_FREE(result);
 }
 

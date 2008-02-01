@@ -22,6 +22,8 @@ lib_LTLIBRARIES = irc.la
 
 irc_la_SOURCES = irc.c \
                  irc.h \
+                 irc-buffer.c \
+                 irc-buffer.h \
                  irc-channel.c \
                  irc-channel.h \
                  irc-color.c \
@@ -44,8 +46,6 @@ irc_la_SOURCES = irc.c \
                  irc-server.c \
                  irc-server.h
 
-#                 irc-buffer.c \
-#                 irc-buffer.h \
 #                 irc-dcc.c \
 #                 irc-dcc.h \
 #                 irc-log.c

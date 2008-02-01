@@ -526,7 +526,11 @@ plugin_remove (struct t_weechat_plugin *plugin)
          ptr_buffer = ptr_buffer->next_buffer)
     {
         if (ptr_buffer->plugin == plugin)
+        {
             ptr_buffer->plugin = NULL;
+            ptr_buffer->close_callback = NULL;
+            ptr_buffer->close_callback_data = NULL;
+        }
     }
     
     /* free data */

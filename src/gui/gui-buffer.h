@@ -64,6 +64,11 @@ struct t_gui_buffer
                                        /* 3 = highlight + msg + join/part   */
     int num_displayed;                 /* number of windows displaying buf. */
     
+    /* close callback */
+    int (*close_callback)(void *data,  /* called when buffer is closed      */
+                          struct t_gui_buffer *buffer);
+    void *close_callback_data;         /* data for callback                 */
+    
     /* buffer title */
     char *title;                       /* buffer title                      */
     int title_refresh_needed;          /* refresh for title is needed ?     */
@@ -87,10 +92,9 @@ struct t_gui_buffer
     
     /* inupt */
     int input;                         /* = 1 if input is enabled           */
-    int (*input_callback)(void *data,
+    int (*input_callback)(void *data,  /* called when user send data        */
                           struct t_gui_buffer *buffer,
                           char *input_data);
-                                       /* called when user send data        */
     void *input_callback_data;         /* data for callback                 */
                                        /* to this buffer                    */
     char *input_nick;                  /* self nick                         */
@@ -139,7 +143,10 @@ extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
                                             int (*input_callback)(void *data,
                                                                   struct t_gui_buffer *buffer,
                                                                   char *input_data),
-                                            void *input_callback_data);
+                                            void *input_callback_data,
+                                            int (*close_callback)(void *data,
+                                                                  struct t_gui_buffer *buffer),
+                                            void *close_callback_data);
 extern int gui_buffer_valid (struct t_gui_buffer *buffer);
 extern void *gui_buffer_get (struct t_gui_buffer *buffer, char *property);
 extern void gui_buffer_set_category (struct t_gui_buffer *buffer,

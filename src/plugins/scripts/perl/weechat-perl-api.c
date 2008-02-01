@@ -1601,10 +1601,12 @@ int
 weechat_perl_api_hook_timer_cb (void *data)
 {
     struct t_script_callback *script_callback;
-    char *perl_argv[1] = { NULL };
+    char *perl_argv[1];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
+    
+    perl_argv[0] = NULL;
     
     rc = (int *) weechat_perl_exec (script_callback->script,
                                     WEECHAT_SCRIPT_EXEC_INT,
@@ -1664,10 +1666,12 @@ int
 weechat_perl_api_hook_fd_cb (void *data)
 {
     struct t_script_callback *script_callback;
-    char *perl_argv[1] = { NULL };
+    char *perl_argv[1];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
+    
+    perl_argv[0] = NULL;
     
     rc = (int *) weechat_perl_exec (script_callback->script,
                                     WEECHAT_SCRIPT_EXEC_INT,
@@ -2248,6 +2252,39 @@ weechat_perl_api_input_data_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * weechat_perl_api_close_cb: callback for buffer closed
+ */
+
+int
+weechat_perl_api_close_cb (void *data, struct t_gui_buffer *buffer)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[2];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    perl_argv[0] = script_ptr2str (buffer);
+    perl_argv[1] = NULL;
+    
+    rc = (int *) weechat_perl_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    perl_argv);
+    if (!rc)
+        ret = WEECHAT_RC_ERROR;
+    else
+    {
+        ret = *rc;
+        free (rc);
+    }
+    if (perl_argv[0])
+        free (perl_argv[0]);
+    
+    return ret;
+}
+
+/*
  * weechat::buffer_new: create a new buffer
  */
 
@@ -2265,7 +2302,7 @@ static XS (XS_weechat_buffer_new)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 3)
+    if (items < 4)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_new");
         PERL_RETURN_EMPTY;
@@ -2276,7 +2313,9 @@ static XS (XS_weechat_buffer_new)
                                                     SvPV (ST (0), PL_na), /* category */
                                                     SvPV (ST (1), PL_na), /* name */
                                                     &weechat_perl_api_input_data_cb,
-                                                    SvPV (ST (2), PL_na))); /* perl function */
+                                                    SvPV (ST (2), PL_na), /* function input */
+                                                    &weechat_perl_api_close_cb,
+                                                    SvPV (ST (3), PL_na))); /* function close */
     PERL_RETURN_STRING_FREE(result);
 }
 

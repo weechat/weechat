@@ -2103,6 +2103,35 @@ irc_command_oper (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * irc_command_part_channel: send a part message for a channel
+ */
+
+void
+irc_command_part_channel (struct t_irc_server *server, char *channel_name,
+                          char *part_message)
+{
+    char *ptr_arg, *buf, *version;
+    
+    ptr_arg = (part_message) ? part_message :
+        (weechat_config_string (irc_config_irc_default_msg_part)
+         && weechat_config_string (irc_config_irc_default_msg_part)[0]) ?
+        weechat_config_string (irc_config_irc_default_msg_part) : NULL;
+    
+    if (ptr_arg)
+    {
+        version = weechat_info_get ("version");
+        buf = weechat_string_replace (ptr_arg, "%v", (version) ? version : "");
+        irc_server_sendf (server, "PART %s :%s",
+                          channel_name,
+                          (buf) ? buf : ptr_arg);
+        if (buf)
+            free (buf);
+    }
+    else
+        irc_server_sendf (server, "PART %s", channel_name);
+}
+
+/*
  * irc_command_part: leave a channel or close a private window
  */
 
@@ -2110,7 +2139,7 @@ int
 irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
                   char **argv, char **argv_eol)
 {
-    char *channel_name, *pos_args, *ptr_arg, *buf, *version;
+    char *channel_name, *pos_args;
 
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -2157,31 +2186,13 @@ irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
             weechat_buffer_close (ptr_channel->buffer, 1);
             ptr_channel->buffer = NULL;
             irc_channel_free (ptr_server, ptr_channel);
-            //gui_status_draw (gui_current_window->buffer, 1);
-            //gui_input_draw (gui_current_window->buffer, 1);
             return WEECHAT_RC_OK;
         }
         channel_name = ptr_channel->name;
         pos_args = NULL;
     }
     
-    ptr_arg = (pos_args) ? pos_args :
-        (weechat_config_string (irc_config_irc_default_msg_part)
-         && weechat_config_string (irc_config_irc_default_msg_part)[0]) ?
-        weechat_config_string (irc_config_irc_default_msg_part) : NULL;
-    
-    if (ptr_arg)
-    {
-        version = weechat_info_get ("version");
-        buf = weechat_string_replace (ptr_arg, "%v", (version) ? version : "");
-        irc_server_sendf (ptr_server, "PART %s :%s",
-                          channel_name,
-                          (buf) ? buf : ptr_arg);
-        if (buf)
-            free (buf);
-    }
-    else
-        irc_server_sendf (ptr_server, "PART %s", channel_name);
+    irc_command_part_channel (ptr_server, channel_name, pos_args);
     
     return WEECHAT_RC_OK;
 }

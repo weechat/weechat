@@ -137,13 +137,16 @@ extern void script_api_unhook (struct t_weechat_plugin *weechat_plugin,
                                struct t_plugin_script *script,
                                struct t_hook *hook);
 extern void script_api_unhook_all (struct t_plugin_script *script);
-struct t_gui_buffer *script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
-                                            struct t_plugin_script *script,
-                                            char *category, char *name,
-                                            int (*callback)(void *data,
-                                                            struct t_gui_buffer *buffer,
-                                                            char *input_data),
-                                            char *function);
+extern struct t_gui_buffer *script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
+                                                   struct t_plugin_script *script,
+                                                   char *category, char *name,
+                                                   int (*input_callback)(void *data,
+                                                                         struct t_gui_buffer *buffer,
+                                                                         char *input_data),
+                                                   char *function_input,
+                                                   int (*close_callback)(void *data,
+                                                                         struct t_gui_buffer *buffer),
+                                                   char *function_close);
 extern void script_api_buffer_close (struct t_weechat_plugin *weechat_plugin,
                                      struct t_plugin_script *script,
                                      struct t_gui_buffer *buffer,

@@ -47,6 +47,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-server.h"
+#include "irc-buffer.h"
 #include "irc-channel.h"
 #include "irc-command.h"
 #include "irc-config.h"
@@ -2263,7 +2264,8 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
     if (!server->buffer)
     {
         server->buffer = weechat_buffer_new (server->name, server->name,
-                                             NULL, NULL);
+                                             NULL, NULL,
+                                             &irc_buffer_close_cb, NULL);
         if (!server->buffer)
             return 0;
         weechat_buffer_set (server->buffer, "display", "1");

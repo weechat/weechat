@@ -69,7 +69,10 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
                 int (*input_callback)(void *data,
                                       struct t_gui_buffer *buffer,
                                       char *input_data),
-                void *input_callback_data)
+                void *input_callback_data,
+                int (*close_callback)(void *data,
+                                      struct t_gui_buffer *buffer),
+                void *close_callback_data)
 {
     struct t_gui_buffer *new_buffer;
     struct t_gui_completion *new_completion;
@@ -98,6 +101,10 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         new_buffer->type = GUI_BUFFER_TYPE_FORMATED;
         new_buffer->notify_level = GUI_BUFFER_NOTIFY_LEVEL_DEFAULT;
         new_buffer->num_displayed = 0;
+        
+        /* close callback */
+        new_buffer->close_callback = close_callback;
+        new_buffer->close_callback_data = close_callback_data;
         
         /* title */
         new_buffer->title = NULL;
@@ -622,6 +629,11 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     
     hook_signal_send ("buffer_close",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    
+    if (buffer->close_callback)
+    {
+        (void)(buffer->close_callback) (buffer->close_callback_data, buffer);
+    }
     
     if (switch_to_another)
     {

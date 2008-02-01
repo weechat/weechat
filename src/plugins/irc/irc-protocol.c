@@ -1491,14 +1491,6 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *irc_message, char *hos
                 irc_nick_free (ptr_channel, ptr_nick);
         }
     }
-    else
-    {
-        weechat_printf (server->buffer,
-                        _("%s%s: channel \"%s\" not found for \"%s\" "
-                          "command"),
-                        weechat_prefix ("error"), "irc", arguments, "part");
-        return WEECHAT_RC_ERROR;
-    }
     
     return WEECHAT_RC_OK;
 }

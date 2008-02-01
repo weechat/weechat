@@ -146,13 +146,13 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, char *text)
 }
 
 /*
- * irc_input_data: read data from user input
- *                 Return: PROTOCOL_RC_OK if ok
- *                         PROTOCOL_RC_KO if error
+ * irc_input_data_cb: callback for input data in a buffer
+ *                    Return: PROTOCOL_RC_OK if ok
+ *                            PROTOCOL_RC_KO if error
  */
 
 int
-irc_input_data (void *data, struct t_gui_buffer *buffer, char *input_data)
+irc_input_data_cb (void *data, struct t_gui_buffer *buffer, char *input_data)
 {
     char *data_with_colors;
     

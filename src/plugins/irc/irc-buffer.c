@@ -26,76 +26,26 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../../core/weechat.h"
+#include "../weechat-plugin.h"
 #include "irc.h"
-#include "../../core/utf8.h"
-#include "../../core/weechat-config.h"
-#include "../../gui/gui.h"
+#include "irc-buffer.h"
+#include "irc-channel.h"
+#include "irc-command.h"
+#include "irc-server.h"
 
-
-/*
- * irc_buffer_data_create: create protocol data (for GUI buffer)
- */
-
-t_irc_buffer_data *
-irc_buffer_data_create (t_irc_server *server)
-{
-    t_irc_buffer_data *buffer_data;
-    
-    buffer_data = (t_irc_buffer_data *)malloc (sizeof (t_irc_buffer_data));
-    if (!buffer_data)
-        return NULL;
-    
-    buffer_data->server = server;
-    buffer_data->channel = NULL;
-    buffer_data->all_servers = irc_cfg_irc_one_server_buffer;
-    
-    return buffer_data;
-}
-
-/*
- * irc_buffer_data_free: free protocol data (in GUI buffer)
- */
-
-void
-irc_buffer_data_free (t_gui_buffer *buffer)
-{
-    free ((t_irc_buffer_data *)buffer->protocol_data);
-}
-
-/*
- * irc_buffer_servers_search: search servers buffer
- *                            (when same buffer is used for all servers)
- */
-
-t_gui_buffer *
-irc_buffer_servers_search ()
-{
-    t_gui_buffer *ptr_buffer;
-    
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (IRC_BUFFER_ALL_SERVERS(ptr_buffer))
-            return ptr_buffer;
-        
-    }
-    
-    /* buffer not found */
-    return NULL;
-}
 
 /*
  * irc_buffer_merge_servers: merge server buffers in one buffer
  */
 
+/*
 void
 irc_buffer_merge_servers (t_gui_window *window)
 {
     t_gui_buffer *ptr_buffer_server, *ptr_buffer, *new_ptr_buffer;
     t_irc_server *ptr_server;
     
-    /* new server buffer is the first server buffer found */
+    // new server buffer is the first server buffer found
     for (ptr_buffer_server = gui_buffers; ptr_buffer_server;
          ptr_buffer_server = ptr_buffer_server->next_buffer)
     {
@@ -105,7 +55,7 @@ irc_buffer_merge_servers (t_gui_window *window)
             break;
     }
     
-    /* no server buffer found */
+    // no server buffer found
     if (!ptr_buffer_server)
         return;
     
@@ -119,7 +69,7 @@ irc_buffer_merge_servers (t_gui_window *window)
         {
             ptr_server = IRC_BUFFER_SERVER(ptr_buffer);
             
-            /* add (by pointer artefact) lines from buffer found to server buffer */
+            // add (by pointer artefact) lines from buffer found to server buffer
             if (ptr_buffer->lines)
             {
                 if (ptr_buffer_server->lines)
@@ -138,14 +88,14 @@ irc_buffer_merge_servers (t_gui_window *window)
                 }
             }
             
-            /* free buffer but not lines, because they're now used by 
-               our unique server buffer */
+            // free buffer but not lines, because they're now used by 
+            // our unique server buffer
             new_ptr_buffer = ptr_buffer->next_buffer;
             ptr_buffer->lines = NULL;
             gui_buffer_free (ptr_buffer, 1);
             ptr_buffer = new_ptr_buffer;
             
-            /* asociate server with new server buffer */
+            // asociate server with new server buffer
             ptr_server->buffer = ptr_buffer_server;
         }
         else
@@ -155,11 +105,13 @@ irc_buffer_merge_servers (t_gui_window *window)
     IRC_BUFFER_ALL_SERVERS(ptr_buffer_server) = 1;
     gui_window_redraw_buffer (window->buffer);
 }
+*/
 
 /*
  * irc_buffer_split_server: split the server buffer into many buffers (one by server)
  */
 
+/*
 void
 irc_buffer_split_server (t_gui_window *window)
 {
@@ -206,4 +158,45 @@ irc_buffer_split_server (t_gui_window *window)
         gui_status_draw (window->buffer, 1);
         gui_input_draw (window->buffer, 1);
     }
+}
+*/
+
+/*
+ * irc_buffer_close_cb: callback called when a buffer is closed
+ */
+
+int
+irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+{
+    IRC_GET_SERVER_CHANNEL(buffer);
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    if (ptr_channel)
+    {
+        /* send PART for channel if its buffer is closed */
+        if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+        {
+            irc_command_part_channel (ptr_server, ptr_channel->name, NULL);
+            irc_channel_free (ptr_server, ptr_channel);
+        }
+    }
+    else
+    {
+        if (ptr_server)
+        {
+            /* send PART on all channels for server, then disconnect from server */
+            for (ptr_channel = ptr_server->channels; ptr_channel;
+                 ptr_channel = ptr_channel->next_channel)
+            {
+                irc_command_part_channel (ptr_server, ptr_channel->name, NULL);
+                irc_channel_free (ptr_server, ptr_channel);
+            }
+            irc_server_disconnect (ptr_server, 0);
+            ptr_server->buffer = NULL;
+        }
+    }
+    
+    return WEECHAT_RC_OK;
 }
