@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-29 15:15+0100\n"
+"POT-Creation-Date: 2008-02-02 23:26+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2607,10 +2607,11 @@ msgstr ""
 msgid "list, add or remove servers"
 msgstr "szerverek listázása, hozzáadása vagy eltávolítása"
 
+#, fuzzy
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks "
-"nick1 nick2 nick3] [-username username] [-realname realname] [-command "
+"nick1,nick2,nick3,...] [-username username] [-realname realname] [-command "
 "command] [-autojoin channel[,channel]] ] | [copy servername newservername] | "
 "[rename servername newservername] | [keep servername] | [del servername]"
 msgstr ""
@@ -3041,16 +3042,9 @@ msgstr "SSL használata a a kapcsolathoz"
 msgid "password for IRC server"
 msgstr "jelszó az IRC szerveren"
 
-msgid "nickname to use on IRC server"
+#, fuzzy
+msgid "nicknames to use on IRC server (separated by comma)"
 msgstr "felhasználónév az IRC szerveren"
-
-msgid "alternate nickname to use on IRC server (if nickname is already used)"
-msgstr "alternatív név az IRC szerveren (ha a név már foglalt)"
-
-msgid ""
-"2nd alternate nickname to use on IRC server (if alternate nickname is "
-"already used)"
-msgstr "második alternatív név az IRC szerveren (ha az alternatív név foglalt)"
 
 msgid "user name to use on IRC server"
 msgstr "használni kívánt felhasználónév az IRC szerveren"
@@ -3322,10 +3316,6 @@ msgstr "%s nincs csatlakozva szerverhez!\n"
 #, fuzzy, c-format
 msgid "%s: this buffer is not a channel!"
 msgstr "Ez az ablak nem egy szoba!\n"
-
-#, c-format
-msgid "Not enough memory to write log file \"%s\"\n"
-msgstr "Nincs elegendő memória a(z) \"%s\" naplófájl írásához\n"
 
 msgid "error received from IRC server"
 msgstr "az IRC szerver hibát jelzett"
@@ -3905,46 +3895,26 @@ msgid "%s%s[%s%s%s] %s%s%s banned"
 msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 2nd nickname \"%s\""
-msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
-msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a harmadik nevet: \"%s\"\n"
-
-#, fuzzy, c-format
 msgid ""
 "%s%s: all declared nicknames are already in use or invalid, closing "
-"connection with server!"
+"connection with server"
 msgstr ""
 "%s: minden megadott név foglalt vagy érvénytelen, kapcsolat bontása a "
 "szerverrel!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
-msgstr "%s: a(z) \"%s\" név már foglalt, próbálom az első nevet: \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
-msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a harmadik nevet: \"%s\"\n"
 
 #, fuzzy, c-format
 msgid ""
 "%s%s: all declared nicknames are already in use, closing connection with "
-"server!"
+"server"
 msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
-msgstr "%s: a(z) \"%s\" név már foglalt, próbálom az első nevet: \"%s\"\n"
-
-#, c-format
-msgid "%s%s: error retrieving user's name: %s"
-msgstr ""
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
@@ -4365,6 +4335,37 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
+
+#~ msgid ""
+#~ "alternate nickname to use on IRC server (if nickname is already used)"
+#~ msgstr "alternatív név az IRC szerveren (ha a név már foglalt)"
+
+#~ msgid ""
+#~ "2nd alternate nickname to use on IRC server (if alternate nickname is "
+#~ "already used)"
+#~ msgstr ""
+#~ "második alternatív név az IRC szerveren (ha az alternatív név foglalt)"
+
+#~ msgid "Not enough memory to write log file \"%s\"\n"
+#~ msgstr "Nincs elegendő memória a(z) \"%s\" naplófájl írásához\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
+#~ msgstr ""
+#~ "%s: a(z) \"%s\" név már foglalt, próbálom a harmadik nevet: \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
+#~ msgstr "%s: a(z) \"%s\" név már foglalt, próbálom az első nevet: \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
+#~ msgstr ""
+#~ "%s: a(z) \"%s\" név már foglalt, próbálom a harmadik nevet: \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
+#~ msgstr "%s: a(z) \"%s\" név már foglalt, próbálom az első nevet: \"%s\"\n"
 
 #~ msgid "[file]"
 #~ msgstr "[fájl]"

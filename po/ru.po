@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-29 15:15+0100\n"
+"POT-Creation-Date: 2008-02-02 23:26+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2605,10 +2605,11 @@ msgstr ""
 msgid "list, add or remove servers"
 msgstr "перечислить, добавить или удалить серверы"
 
+#, fuzzy
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks "
-"nick1 nick2 nick3] [-username username] [-realname realname] [-command "
+"nick1,nick2,nick3,...] [-username username] [-realname realname] [-command "
 "command] [-autojoin channel[,channel]] ] | [copy servername newservername] | "
 "[rename servername newservername] | [keep servername] | [del servername]"
 msgstr ""
@@ -3036,16 +3037,9 @@ msgstr "использовать SSL при связи с сервером"
 msgid "password for IRC server"
 msgstr "пароль, используемый при подключении к IRC серверу"
 
-msgid "nickname to use on IRC server"
+#, fuzzy
+msgid "nicknames to use on IRC server (separated by comma)"
 msgstr "ник, используемый на IRC сервере"
-
-msgid "alternate nickname to use on IRC server (if nickname is already used)"
-msgstr "альтернативный ник, используемый на IRC сервере"
-
-msgid ""
-"2nd alternate nickname to use on IRC server (if alternate nickname is "
-"already used)"
-msgstr "второй альтернативный ник, используемый на IRC сервере"
 
 msgid "user name to use on IRC server"
 msgstr "имя пользователя, используемое на IRC сервере"
@@ -3310,10 +3304,6 @@ msgstr "%s вы не подключены к серверу\n"
 #, fuzzy, c-format
 msgid "%s: this buffer is not a channel!"
 msgstr "Это окно не является каналом!\n"
-
-#, c-format
-msgid "Not enough memory to write log file \"%s\"\n"
-msgstr "Недостаточно памяти для записи лог-файла \"%s\"\n"
 
 msgid "error received from IRC server"
 msgstr "получена ошибка от IRC сервера"
@@ -3893,45 +3883,25 @@ msgid "%s%s[%s%s%s] %s%s%s banned"
 msgstr "%s[%s%s%s] %s%s%s забанен\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 2nd nickname \"%s\""
-msgstr "%s: ник \"%s\" уже используется, пробую второй ник \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
-msgstr "%s: ник \"%s\" уже используется, пробую третий ник \"%s\"\n"
-
-#, fuzzy, c-format
 msgid ""
 "%s%s: all declared nicknames are already in use or invalid, closing "
-"connection with server!"
+"connection with server"
 msgstr ""
 "%s: все предложенные ники заняты или непригодны, отключаюсь от сервера!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
-msgstr "%s: ник \"%s\" уже используется, пробую первый ник \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
 msgstr "%s: ник \"%s\" уже используется, пробую второй ник \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
-msgstr "%s: ник \"%s\" уже используется, пробую третий ник \"%s\"\n"
 
 #, fuzzy, c-format
 msgid ""
 "%s%s: all declared nicknames are already in use, closing connection with "
-"server!"
+"server"
 msgstr "%s: все предложенные ники заняты, отключаюсь от сервера!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
-msgstr "%s: ник \"%s\" уже используется, пробую первый ник \"%s\"\n"
-
-#, c-format
-msgid "%s%s: error retrieving user's name: %s"
-msgstr ""
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgstr "%s: ник \"%s\" уже используется, пробую второй ник \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
@@ -4347,6 +4317,34 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s некорректные аргументы команды \"%s\"\n"
+
+#~ msgid ""
+#~ "alternate nickname to use on IRC server (if nickname is already used)"
+#~ msgstr "альтернативный ник, используемый на IRC сервере"
+
+#~ msgid ""
+#~ "2nd alternate nickname to use on IRC server (if alternate nickname is "
+#~ "already used)"
+#~ msgstr "второй альтернативный ник, используемый на IRC сервере"
+
+#~ msgid "Not enough memory to write log file \"%s\"\n"
+#~ msgstr "Недостаточно памяти для записи лог-файла \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
+#~ msgstr "%s: ник \"%s\" уже используется, пробую третий ник \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
+#~ msgstr "%s: ник \"%s\" уже используется, пробую первый ник \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
+#~ msgstr "%s: ник \"%s\" уже используется, пробую третий ник \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
+#~ msgstr "%s: ник \"%s\" уже используется, пробую первый ник \"%s\"\n"
 
 #~ msgid "[file]"
 #~ msgstr "[файл]"

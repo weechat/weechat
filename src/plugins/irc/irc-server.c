@@ -91,9 +91,9 @@ irc_server_init (struct t_irc_server *server)
     server->ipv6 = 0;
     server->ssl = 0;
     server->password = NULL;
-    server->nick1 = NULL;
-    server->nick2 = NULL;
-    server->nick3 = NULL;
+    server->nicks = NULL;
+    server->nicks_count = 0;
+    server->nicks_array = NULL;
     server->username = NULL;
     server->realname = NULL;
     server->hostname = NULL;
@@ -145,6 +145,7 @@ irc_server_init (struct t_irc_server *server)
  *                                    -1 = invalid syntax
  */
 
+/*
 int
 irc_server_init_with_url (struct t_irc_server *server, char *irc_url)
 {
@@ -249,7 +250,7 @@ irc_server_init_with_url (struct t_irc_server *server, char *irc_url)
     server->ipv6 = ipv6;
     server->ssl = ssl;
 
-    /* some default values */
+    // some default values
     if (server->port < 0)
         server->port = IRC_SERVER_DEFAULT_PORT;
     server->nick2 = (char *)malloc ((strlen (server->nick1) + 2) * sizeof (char));
@@ -261,6 +262,7 @@ irc_server_init_with_url (struct t_irc_server *server, char *irc_url)
     
     return 0;
 }
+*/
 
 /*
  * irc_server_init_with_config_options: init a server with config options
@@ -342,27 +344,23 @@ irc_server_init_with_config_options (struct t_irc_server *server,
     if (ptr_option)
         ptr_server->password = strdup (weechat_config_string (ptr_option));
     
-    if (ptr_server->nick1)
-        free (ptr_server->nick1);
-    ptr_server->nick1 = NULL;
-    ptr_option = weechat_config_search_option (NULL, section, "server_nick1");
+    if (ptr_server->nicks)
+    {
+        free (ptr_server->nicks);
+        ptr_server->nicks = NULL;
+        weechat_string_free_exploded (ptr_server->nicks_array);
+        ptr_server->nicks_array = NULL;
+    }
+    ptr_server->nicks_count = 0;
+    ptr_option = weechat_config_search_option (NULL, section, "server_nicks");
     if (ptr_option)
-        ptr_server->nick1 = strdup (weechat_config_string (ptr_option));
-
-    if (ptr_server->nick2)
-        free (ptr_server->nick2);
-    ptr_server->nick2 = NULL;
-    ptr_option = weechat_config_search_option (NULL, section, "server_nick2");
-    if (ptr_option)
-        ptr_server->nick2 = strdup (weechat_config_string (ptr_option));
+    {
+        ptr_server->nicks = strdup (weechat_config_string (ptr_option));
+        ptr_server->nicks_array = weechat_string_explode (weechat_config_string (ptr_option),
+                                                          ",", 0, 0,
+                                                          &ptr_server->nicks_count);
+    }
     
-    if (ptr_server->nick3)
-        free (ptr_server->nick3);
-    ptr_server->nick3 = NULL;
-    ptr_option = weechat_config_search_option (NULL, section, "server_nick3");
-    if (ptr_option)
-        ptr_server->nick3 = strdup (weechat_config_string (ptr_option));
-
     if (ptr_server->username)
         free (ptr_server->username);
     ptr_server->username = NULL;
@@ -537,12 +535,10 @@ irc_server_free_data (struct t_irc_server *server)
         free (server->address);
     if (server->password)
         free (server->password);
-    if (server->nick1)
-        free (server->nick1);
-    if (server->nick2)
-        free (server->nick2);
-    if (server->nick3)
-        free (server->nick3);
+    if (server->nicks)
+        free (server->nicks);
+    if (server->nicks_array)
+        weechat_string_free_exploded (server->nicks_array);
     if (server->username)
         free (server->username);
     if (server->realname)
@@ -626,9 +622,9 @@ struct t_irc_server *
 irc_server_new (char *name, int autoconnect, int autoreconnect,
                 int autoreconnect_delay, int temp_server, char *address,
                 int port, int ipv6, int ssl, char *password,
-                char *nick1, char *nick2, char *nick3, char *username,
-                char *realname, char *hostname, char *command, int command_delay,
-                char *autojoin, int autorejoin, char *notify_levels)
+                char *nicks, char *username, char *realname, char *hostname,
+                char *command, int command_delay, char *autojoin,
+                int autorejoin, char *notify_levels)
 {
     struct t_irc_server *new_server;
     
@@ -638,13 +634,11 @@ irc_server_new (char *name, int autoconnect, int autoreconnect,
     if (irc_debug)
     {
         weechat_log_printf ("Creating new server (name:%s, address:%s, "
-                            "port:%d, pwd:%s, nick1:%s, nick2:%s, nick3:%s, "
-                            "username:%s, realname:%s, hostname: %s, "
-                            "command:%s, autojoin:%s, autorejoin:%s, "
-                            "notify_levels:%s)",
+                            "port:%d, pwd:%s, nicks:%s, username:%s, "
+                            "realname:%s, hostname: %s, command:%s, "
+                            "autojoin:%s, autorejoin:%s, notify_levels:%s)",
                             name, address, port, (password) ? password : "",
-                            (nick1) ? nick1 : "", (nick2) ? nick2 : "",
-                            (nick3) ? nick3 : "", (username) ? username : "",
+                            (nicks) ? nicks : "", (username) ? username : "",
                             (realname) ? realname : "",
                             (hostname) ? hostname : "",
                             (command) ? command : "",
@@ -665,9 +659,12 @@ irc_server_new (char *name, int autoconnect, int autoreconnect,
         new_server->ipv6 = ipv6;
         new_server->ssl = ssl;
         new_server->password = (password) ? strdup (password) : strdup ("");
-        new_server->nick1 = (nick1) ? strdup (nick1) : strdup ("weechat_user");
-        new_server->nick2 = (nick2) ? strdup (nick2) : strdup ("weechat2");
-        new_server->nick3 = (nick3) ? strdup (nick3) : strdup ("weechat3");
+        new_server->nicks = (nicks) ?
+            strdup (nicks) : strdup (IRC_SERVER_DEFAULT_NICKS);
+        new_server->nicks_array = weechat_string_explode ((nicks) ?
+                                                          nicks : IRC_SERVER_DEFAULT_NICKS,
+                                                          ",", 0, 0,
+                                                          &new_server->nicks_count);
         new_server->username =
             (username) ? strdup (username) : strdup ("weechat");
         new_server->realname =
@@ -713,9 +710,7 @@ irc_server_duplicate (struct t_irc_server *server, char *new_name)
                                  server->ipv6,
                                  server->ssl,
                                  server->password,
-                                 server->nick1,
-                                 server->nick2,
-                                 server->nick3,
+                                 server->nicks,
                                  server->username,
                                  server->realname,
                                  server->hostname,
@@ -1599,13 +1594,12 @@ irc_server_login (struct t_irc_server *server)
         irc_server_sendf (server, "PASS %s", server->password);
     
     if (!server->nick)
-        server->nick = strdup (server->nick1);
+        server->nick = strdup (server->nicks_array[0]);
     irc_server_sendf (server,
                       "NICK %s\n"
                       "USER %s %s %s :%s",
                       server->nick, server->username, server->username,
                       server->address, server->realname);
-    //gui_input_draw (weechat_current_buffer, 1);
 }
 
 /*
@@ -2828,9 +2822,9 @@ irc_server_print_log ()
         weechat_log_printf ("  password. . . . . . : '%s'",
                             (ptr_server->password && ptr_server->password[0]) ?
                             "(hidden)" : ptr_server->password);
-        weechat_log_printf ("  nick1 . . . . . . . : '%s'", ptr_server->nick1);
-        weechat_log_printf ("  nick2 . . . . . . . : '%s'", ptr_server->nick2);
-        weechat_log_printf ("  nick3 . . . . . . . : '%s'", ptr_server->nick3);
+        weechat_log_printf ("  nicks . . . . . . . : '%s'", ptr_server->nicks);
+        weechat_log_printf ("  nicks_count . . . . : %d",   ptr_server->nicks_count);
+        weechat_log_printf ("  nicks_array . . . . : 0x%x", ptr_server->nicks_array);
         weechat_log_printf ("  username. . . . . . : '%s'", ptr_server->username);
         weechat_log_printf ("  realname. . . . . . : '%s'", ptr_server->realname);
         weechat_log_printf ("  command . . . . . . : '%s'",

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-29 15:15+0100\n"
+"POT-Creation-Date: 2008-02-02 23:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -2188,7 +2188,7 @@ msgstr ""
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks "
-"nick1 nick2 nick3] [-username username] [-realname realname] [-command "
+"nick1,nick2,nick3,...] [-username username] [-realname realname] [-command "
 "command] [-autojoin channel[,channel]] ] | [copy servername newservername] | "
 "[rename servername newservername] | [keep servername] | [del servername]"
 msgstr ""
@@ -2538,15 +2538,7 @@ msgstr ""
 msgid "password for IRC server"
 msgstr ""
 
-msgid "nickname to use on IRC server"
-msgstr ""
-
-msgid "alternate nickname to use on IRC server (if nickname is already used)"
-msgstr ""
-
-msgid ""
-"2nd alternate nickname to use on IRC server (if alternate nickname is "
-"already used)"
+msgid "nicknames to use on IRC server (separated by comma)"
 msgstr ""
 
 msgid "user name to use on IRC server"
@@ -2792,10 +2784,6 @@ msgstr ""
 
 #, c-format
 msgid "%s: this buffer is not a channel!"
-msgstr ""
-
-#, c-format
-msgid "Not enough memory to write log file \"%s\"\n"
 msgstr ""
 
 msgid "error received from IRC server"
@@ -3373,43 +3361,23 @@ msgid "%s%s[%s%s%s] %s%s%s banned"
 msgstr ""
 
 #, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 2nd nickname \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
-msgstr ""
-
-#, c-format
 msgid ""
 "%s%s: all declared nicknames are already in use or invalid, closing "
-"connection with server!"
+"connection with server"
 msgstr ""
 
 #, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
 msgstr ""
 
 #, c-format
 msgid ""
 "%s%s: all declared nicknames are already in use, closing connection with "
-"server!"
+"server"
 msgstr ""
 
 #, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: error retrieving user's name: %s"
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr ""
 
 #, c-format

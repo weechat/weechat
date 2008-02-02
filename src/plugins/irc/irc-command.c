@@ -617,9 +617,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                                                  server_tmp.ipv6,
                                                  server_tmp.ssl,
                                                  server_tmp.password,
-                                                 server_tmp.nick1,
-                                                 server_tmp.nick2,
-                                                 server_tmp.nick3,
+                                                 server_tmp.nicks,
                                                  server_tmp.username,
                                                  server_tmp.realname,
                                                  server_tmp.hostname,
@@ -2640,7 +2638,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                     }
                     if (weechat_strcasecmp (argv[i], "-nicks") == 0)
                     {
-                        if (i >= (argc - 3))
+                        if (i == (argc - 1))
                         {
                             weechat_printf (NULL,
                                             _("%s%s: missing argument for "
@@ -2650,9 +2648,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                             irc_server_free_data (&server_tmp);
                             return WEECHAT_RC_ERROR;
                         }
-                        server_tmp.nick1 = strdup (argv[++i]);
-                        server_tmp.nick2 = strdup (argv[++i]);
-                        server_tmp.nick3 = strdup (argv[++i]);
+                        server_tmp.nicks = strdup (argv[++i]);
                     }
                     if (weechat_strcasecmp (argv[i], "-username") == 0)
                     {
@@ -2724,9 +2720,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                                          server_tmp.ipv6,
                                          server_tmp.ssl,
                                          server_tmp.password,
-                                         server_tmp.nick1,
-                                         server_tmp.nick2,
-                                         server_tmp.nick3,
+                                         server_tmp.nicks,
                                          server_tmp.username,
                                          server_tmp.realname,
                                          server_tmp.hostname,
@@ -3854,10 +3848,11 @@ irc_command_init ()
                           N_("[list [servername]] | [listfull [servername]] | "
                              "[add servername hostname [-port port] [-temp] "
                              "[-auto | -noauto] [-ipv6] [-ssl] [-pwd password] "
-                             "[-nicks nick1 nick2 nick3] [-username username] "
-                             "[-realname realname] [-command command] "
-                             "[-autojoin channel[,channel]] ] | [copy "
-                             "servername newservername] | [rename servername "
+                             "[-nicks nick1,nick2,nick3,...] "
+                             "[-username username] [-realname realname] "
+                             "[-command command] [-autojoin "
+                             "channel[,channel]] ] | [copy servername "
+                             "newservername] | [rename servername "
                              "newservername] | [keep servername] | [del "
                              "servername]"),
                           N_("      list: list servers (no parameter implies "

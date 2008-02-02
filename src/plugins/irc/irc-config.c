@@ -94,9 +94,7 @@ struct t_config_option *irc_config_server_port;
 struct t_config_option *irc_config_server_ipv6;
 struct t_config_option *irc_config_server_ssl;
 struct t_config_option *irc_config_server_password;
-struct t_config_option *irc_config_server_nick1;
-struct t_config_option *irc_config_server_nick2;
-struct t_config_option *irc_config_server_nick3;
+struct t_config_option *irc_config_server_nicks;
 struct t_config_option *irc_config_server_username;
 struct t_config_option *irc_config_server_realname;
 struct t_config_option *irc_config_server_hostname;
@@ -371,12 +369,8 @@ irc_config_write_servers (void *data, struct t_config_file *config_file,
                                        (ptr_server->ssl) ? "on" : "off");
             weechat_config_write_line (config_file, "server_password", "\"%s\"",
                                        (ptr_server->password) ? ptr_server->password : "");
-            weechat_config_write_line (config_file, "server_nick1", "\"%s\"",
-                                       ptr_server->nick1);
-            weechat_config_write_line (config_file, "server_nick2", "\"%s\"",
-                                       ptr_server->nick2);
-            weechat_config_write_line (config_file, "server_nick3", "\"%s\"",
-                                       ptr_server->nick3);
+            weechat_config_write_line (config_file, "server_nicks", "\"%s\"",
+                                       ptr_server->nicks);
             weechat_config_write_line (config_file, "server_username", "\"%s\"",
                                        ptr_server->username);
             weechat_config_write_line (config_file, "server_realname", "\"%s\"",
@@ -426,9 +420,11 @@ irc_config_write_server_default (void *data, struct t_config_file *config_file,
     /* Get the user's name from /etc/passwd */
     if ((my_passwd = getpwuid (geteuid ())) != NULL)
     {
-        weechat_config_write_line (config_file, "server_nick1", "\"%s\"", my_passwd->pw_name);
-        weechat_config_write_line (config_file, "server_nick2", "\"%s1\"", my_passwd->pw_name);
-        weechat_config_write_line (config_file, "server_nick3", "\"%s2\"", my_passwd->pw_name);
+        weechat_config_write_line (config_file,
+                                   "server_nicks", "\"%s,%s1,%s2\"",
+                                   my_passwd->pw_name,
+                                   my_passwd->pw_name,
+                                   my_passwd->pw_name);
         weechat_config_write_line (config_file, "server_username", "\"%s\"", my_passwd->pw_name);
         if ((!my_passwd->pw_gecos)
             || (my_passwd->pw_gecos[0] == '\0')
@@ -451,9 +447,8 @@ irc_config_write_server_default (void *data, struct t_config_file *config_file,
     else
     {
         /* default values if /etc/passwd can't be read */
-        weechat_config_write_line (config_file, "server_nick1", "%s", "\"weechat1\"");
-        weechat_config_write_line (config_file, "server_nick2", "%s", "\"weechat2\"");
-        weechat_config_write_line (config_file, "server_nick3", "%s", "\"weechat3\"");
+        weechat_config_write_line (config_file, "server_nicks", "%s",
+                                   "\"" IRC_SERVER_DEFAULT_NICKS "\"");
         weechat_config_write_line (config_file, "server_username", "%s", "\"weechat\"");
         weechat_config_write_line (config_file, "server_realname", "%s", "\"weechat\"");
     }
@@ -764,21 +759,10 @@ irc_config_init ()
         "server_password", "string",
         N_("password for IRC server"),
         NULL, 0, 0, "", NULL, NULL);
-    irc_config_server_nick1 = weechat_config_new_option (
+    irc_config_server_nicks = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "server_nick1", "string",
-        N_("nickname to use on IRC server"),
-        NULL, 0, 0, "", NULL, NULL);
-    irc_config_server_nick2 = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "server_nick2", "string",
-        N_("alternate nickname to use on IRC server (if nickname is already "
-           "used)"),
-        NULL, 0, 0, "", NULL, NULL);
-    irc_config_server_nick3 = weechat_config_new_option (
-        irc_config_file, ptr_section, "server_nick3", "string",
-        N_("2nd alternate nickname to use on IRC server (if alternate "
-           "nickname is already used)"),
+        "server_nicks", "string",
+        N_("nicknames to use on IRC server (separated by comma)"),
         NULL, 0, 0, "", NULL, NULL);
     irc_config_server_username = weechat_config_new_option (
         irc_config_file, ptr_section, "server_username", "string",

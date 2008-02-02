@@ -30,8 +30,9 @@
 #define NI_MAXHOST 256
 #endif
 
-#define IRC_SERVER_DEFAULT_PORT 6667
+#define IRC_SERVER_DEFAULT_PORT          6667
 #define IRC_SERVER_DEFAULT_PREFIXES_LIST "@%+~&!-"
+#define IRC_SERVER_DEFAULT_NICKS         "weechat1,weechat2,weechat3"
 
 #define irc_server_sendf_queued(server, fmt, argz...) \
     if (server) \
@@ -65,9 +66,9 @@ struct t_irc_server
     int ipv6;                       /* use IPv6 protocol                     */
     int ssl;                        /* SSL protocol                          */
     char *password;                 /* password for server                   */
-    char *nick1;                    /* first nickname for the server         */
-    char *nick2;                    /* alternate nickname                    */
-    char *nick3;                    /* 2nd alternate nickname                */
+    char *nicks;                    /* nicknames as one string               */
+    int nicks_count;                /* number of nicknames                   */
+    char **nicks_array;             /* exploded nicknames                    */
     char *username;                 /* user name                             */
     char *realname;                 /* real name                             */
     char *hostname;                 /* custom hostname                       */
@@ -147,8 +148,7 @@ extern struct t_irc_server *irc_server_new (char *name, int autoconnect,
                                             int autoreconnect_delay,
                                             int temp_server, char *address,
                                             int port, int ipv6, int ssl,
-                                            char *password, char *nick1,
-                                            char *nick2, char *nick3,
+                                            char *password, char *nicks,
                                             char *username, char *realname,
                                             char *hostname, char *command,
                                             int command_delay, char *autojoin,

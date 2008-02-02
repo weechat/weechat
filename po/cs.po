@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-29 15:15+0100\n"
+"POT-Creation-Date: 2008-02-02 23:26+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2597,10 +2597,11 @@ msgstr ""
 msgid "list, add or remove servers"
 msgstr "vypíše, přídá nebo odebere servery"
 
+#, fuzzy
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks "
-"nick1 nick2 nick3] [-username username] [-realname realname] [-command "
+"nick1,nick2,nick3,...] [-username username] [-realname realname] [-command "
 "command] [-autojoin channel[,channel]] ] | [copy servername newservername] | "
 "[rename servername newservername] | [keep servername] | [del servername]"
 msgstr ""
@@ -3039,20 +3040,9 @@ msgstr "použít SSL pro komunikaci se serverem"
 msgid "password for IRC server"
 msgstr "heslo pro IRC server"
 
-msgid "nickname to use on IRC server"
+#, fuzzy
+msgid "nicknames to use on IRC server (separated by comma)"
 msgstr "přezdívka použitá na IRC serveru"
-
-msgid "alternate nickname to use on IRC server (if nickname is already used)"
-msgstr ""
-"alternativní přezdívka použitá na IRC serveru (pokud přezdívka je již "
-"použita)"
-
-msgid ""
-"2nd alternate nickname to use on IRC server (if alternate nickname is "
-"already used)"
-msgstr ""
-"druhá alternativní přezdívka použitá na IRC serveru (pokud alternativní "
-"přezdívka je již použita)"
 
 msgid "user name to use on IRC server"
 msgstr "uživatelské jméno použité na IRC serveru"
@@ -3320,10 +3310,6 @@ msgstr "%s nepřipojen k serveru\n"
 #, fuzzy, c-format
 msgid "%s: this buffer is not a channel!"
 msgstr "Tohe není okno kanálu!\n"
-
-#, c-format
-msgid "Not enough memory to write log file \"%s\"\n"
-msgstr "Nedostatek paměti pro zapsání log sourobru \"%s\"\n"
 
 msgid "error received from IRC server"
 msgstr "přijata chyba z IRC serveru"
@@ -3903,54 +3889,30 @@ msgid "%s%s[%s%s%s] %s%s%s banned"
 msgstr "%s[%s%s%s] %s%s%s takázaný\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 2nd nickname \"%s\""
-msgstr ""
-"%s: přezdívka \"%s\" je již používaná, zkouším druhou přezdívku \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
-msgstr ""
-"%s: přezdívka \"%s\" je již používaná, zkouším třetí přezdívku \"%s\"\n"
-
-#, fuzzy, c-format
 msgid ""
 "%s%s: all declared nicknames are already in use or invalid, closing "
-"connection with server!"
+"connection with server"
 msgstr ""
 "%s: všechny deklarované přezdívky jsou již používány nebo nevalidní, zavírám "
 "spojení se serverem!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
-msgstr ""
-"%s: přezdívka \"%s\" je již použivaná, zkouším první přezdívku \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
 msgstr ""
 "%s: přezdívka \"%s\" je již používaná, zkouším druhou přezdívku \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
-msgstr ""
-"%s: přezdívka \"%s\" je již používaná, zkouším třetí přezdívku \"%s\"\n"
-
-#, fuzzy, c-format
 msgid ""
 "%s%s: all declared nicknames are already in use, closing connection with "
-"server!"
+"server"
 msgstr ""
 "%s: všechny deklarované přezdívky jsou již používány, zavírám spojení se "
 "serverem!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr ""
-"%s: přezdívka \"%s\" je již použivaná, zkouším první přezdívku \"%s\"\n"
-
-#, c-format
-msgid "%s%s: error retrieving user's name: %s"
-msgstr ""
+"%s: přezdívka \"%s\" je již používaná, zkouším druhou přezdívku \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
@@ -4365,6 +4327,42 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
+
+#~ msgid ""
+#~ "alternate nickname to use on IRC server (if nickname is already used)"
+#~ msgstr ""
+#~ "alternativní přezdívka použitá na IRC serveru (pokud přezdívka je již "
+#~ "použita)"
+
+#~ msgid ""
+#~ "2nd alternate nickname to use on IRC server (if alternate nickname is "
+#~ "already used)"
+#~ msgstr ""
+#~ "druhá alternativní přezdívka použitá na IRC serveru (pokud alternativní "
+#~ "přezdívka je již použita)"
+
+#~ msgid "Not enough memory to write log file \"%s\"\n"
+#~ msgstr "Nedostatek paměti pro zapsání log sourobru \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
+#~ msgstr ""
+#~ "%s: přezdívka \"%s\" je již používaná, zkouším třetí přezdívku \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
+#~ msgstr ""
+#~ "%s: přezdívka \"%s\" je již použivaná, zkouším první přezdívku \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
+#~ msgstr ""
+#~ "%s: přezdívka \"%s\" je již používaná, zkouším třetí přezdívku \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
+#~ msgstr ""
+#~ "%s: přezdívka \"%s\" je již použivaná, zkouším první přezdívku \"%s\"\n"
 
 #~ msgid "[file]"
 #~ msgstr "[soubor]"

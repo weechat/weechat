@@ -368,15 +368,8 @@ irc_display_server (struct t_irc_server *server, int with_detail)
         weechat_printf (NULL, "  server_password  . . . . . : %s",
                         (server->password && server->password[0]) ?
                         _("(hidden)") : "");
-        weechat_printf (NULL,
-                        "  server_nick1/2/3 . . . . . : %s %s/ %s%s %s/ %s%s",
-                        server->nick1,
-                        IRC_COLOR_CHAT_DELIMITERS,
-                        IRC_COLOR_CHAT,
-                        server->nick2,
-                        IRC_COLOR_CHAT_DELIMITERS,
-                        IRC_COLOR_CHAT,
-                        server->nick3);
+        weechat_printf (NULL, "  server_nicks . . . . . . . : %s",
+                        server->nicks);
         weechat_printf (NULL, "  server_username  . . . . . : %s",
                         server->username);
         weechat_printf (NULL, "  server_realname  . . . . . : %s",

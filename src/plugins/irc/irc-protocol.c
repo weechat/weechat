@@ -5265,56 +5265,47 @@ irc_protocol_cmd_432 (struct t_irc_server *server, int argc, char **argv,
 {
     /* Note: this IRC command can not be ignored */
     
+    int i, nick_found, nick_to_use;
+    
     irc_protocol_cmd_error (server, argc, argv, argv_eol, ignore, highlight);
     
     if (!server->is_connected)
     {
-        if (strcmp (server->nick, server->nick1) == 0)
+        nick_found = -1;
+        nick_to_use = -1;
+        for (i = 0; i < server->nicks_count; i++)
         {
-            weechat_printf (server->buffer,
-                            _("%s%s: nickname \"%s\" is invalid, "
-                              "trying 2nd nickname \"%s\""),
-                            weechat_prefix ("info"), "irc", server->nick,
-                            server->nick2);
-            free (server->nick);
-            server->nick = strdup (server->nick2);
+            if (strcmp (server->nick, server->nicks_array[i]) == 0)
+            {
+                nick_found = i;
+                break;
+            }
         }
+        if (nick_found < 0)
+            nick_to_use = 0;
         else
         {
-            if (strcmp (server->nick, server->nick2) == 0)
-            {
-                weechat_printf (server->buffer,
-                                _("%s%s: nickname \"%s\" is invalid, "
-                                  "trying 3rd nickname \"%s\""),
-                                weechat_prefix ("info"), "irc", server->nick,
-                                server->nick3);
-                free (server->nick);
-                server->nick = strdup (server->nick3);
-            }
-            else
-            {
-                if (strcmp (server->nick, server->nick3) == 0)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: all declared nicknames are "
-                                      "already in use or invalid, closing "
-                                      "connection with server!"),
-                                    weechat_prefix ("error"), "irc");
-                    irc_server_disconnect (server, 1);
-                    return WEECHAT_RC_OK;
-                }
-                else
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: nickname \"%s\" is invalid, "
-                                      "trying 1st nickname \"%s\""),
-                                    weechat_prefix ("info"), "irc",
-                                    server->nick, server->nick1);
-                    free (server->nick);
-                    server->nick = strdup (server->nick1);
-                }
-            }
+            if (nick_found < server->nicks_count - 1)
+                nick_to_use = nick_found + 1;
         }
+        if (nick_to_use < 0)
+        {
+            weechat_printf (server->buffer,
+                            _("%s%s: all declared nicknames are "
+                              "already in use or invalid, closing "
+                              "connection with server"),
+                            weechat_prefix ("error"), "irc");
+            irc_server_disconnect (server, 1);
+            return WEECHAT_RC_OK;
+        }
+        
+        weechat_printf (server->buffer,
+                        _("%s%s: nickname \"%s\" is invalid, "
+                          "trying nickname #%d (\"%s\")"),
+                        weechat_prefix ("info"), "irc", server->nick,
+                        nick_to_use + 1, server->nicks_array[nick_to_use]);
+        free (server->nick);
+        server->nick = strdup (server->nicks_array[nick_to_use]);
         irc_server_sendf (server, "NICK %s", server->nick);
     }
     
@@ -5331,54 +5322,45 @@ irc_protocol_cmd_433 (struct t_irc_server *server, int argc, char **argv,
 {
     /* Note: this IRC command can not be ignored */
     
+    int i, nick_found, nick_to_use;
+    
     if (!server->is_connected)
     {
-        if (strcmp (server->nick, server->nick1) == 0)
+        nick_found = -1;
+        nick_to_use = -1;
+        for (i = 0; i < server->nicks_count; i++)
         {
-            weechat_printf (server->buffer,
-                            _("%s%s: nickname \"%s\" is already in use, "
-                              "trying 2nd nickname \"%s\""),
-                            weechat_prefix ("info"), "irc", server->nick,
-                            server->nick2);
-            free (server->nick);
-            server->nick = strdup (server->nick2);
+            if (strcmp (server->nick, server->nicks_array[i]) == 0)
+            {
+                nick_found = i;
+                break;
+            }
         }
+        if (nick_found < 0)
+            nick_to_use = 0;
         else
         {
-            if (strcmp (server->nick, server->nick2) == 0)
-            {
-                weechat_printf (server->buffer,
-                                _("%s%s: nickname \"%s\" is already in use, "
-                                  "trying 3rd nickname \"%s\""),
-                                weechat_prefix ("info"), "irc", server->nick,
-                                server->nick3);
-                free (server->nick);
-                server->nick = strdup (server->nick3);
-            }
-            else
-            {
-                if (strcmp (server->nick, server->nick3) == 0)
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: all declared nicknames are "
-                                      "already in use, closing connection "
-                                      "with server!"),
-                                    weechat_prefix ("error"), "irc");
-                    irc_server_disconnect (server, 1);
-                    return WEECHAT_RC_OK;
-                }
-                else
-                {
-                    weechat_printf (server->buffer,
-                                    _("%s%s: nickname \"%s\" is already in use, "
-                                      "trying 1st nickname \"%s\""),
-                                    weechat_prefix ("info"), "irc",
-                                    server->nick, server->nick1);
-                    free (server->nick);
-                    server->nick = strdup (server->nick1);
-                }
-            }
+            if (nick_found < server->nicks_count - 1)
+                nick_to_use = nick_found + 1;
         }
+        if (nick_to_use < 0)
+        {
+            weechat_printf (server->buffer,
+                            _("%s%s: all declared nicknames are "
+                              "already in use, closing "
+                              "connection with server"),
+                            weechat_prefix ("error"), "irc");
+            irc_server_disconnect (server, 1);
+            return WEECHAT_RC_OK;
+        }
+        
+        weechat_printf (server->buffer,
+                        _("%s%s: nickname \"%s\" is already in use, "
+                          "trying nickname #%d (\"%s\")"),
+                        weechat_prefix ("info"), "irc", server->nick,
+                        nick_to_use + 1, server->nicks_array[nick_to_use]);
+        free (server->nick);
+        server->nick = strdup (server->nicks_array[nick_to_use]);
         irc_server_sendf (server, "NICK %s", server->nick);
     }
     else

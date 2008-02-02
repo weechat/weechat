@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-29 15:15+0100\n"
-"PO-Revision-Date: 2008-01-29 15:20+0100\n"
+"POT-Creation-Date: 2008-02-02 23:26+0100\n"
+"PO-Revision-Date: 2008-02-02 23:28+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2515,16 +2515,10 @@ msgstr "liste, ajoute ou retire des serveurs"
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks "
-"nick1 nick2 nick3] [-username username] [-realname realname] [-command "
+"nick1,nick2,nick3,...] [-username username] [-realname realname] [-command "
 "command] [-autojoin channel[,channel]] ] | [copy servername newservername] | "
 "[rename servername newservername] | [keep servername] | [del servername]"
-msgstr ""
-"[list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom/IP [-"
-"port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-"
-"nicks pseudo1 pseudo2 pseudo3] [-username nom_utilisateur] [-realname "
-"nom_réel] [-command commande] [-autojoin canal[,canal]] ] | [copy "
-"nom_serveur nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] "
-"| [keep nom_serveur] | [del nom_serveur]"
+msgstr "[list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom/IP [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd mot_de_passe] [-nicks pseudo1,pseudo2,pseudo3,...] [-username nom_utilisateur] [-realname nom_réel] [-command commande] [-autojoin canal[,canal]] ] | [copy nom_serveur nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [keep nom_serveur] | [del nom_serveur]"
 
 msgid ""
 "      list: list servers (no parameter implies this list)\n"
@@ -2965,18 +2959,8 @@ msgstr "utiliser SSL pour la communication avec le serveur"
 msgid "password for IRC server"
 msgstr "mot de passe pour le serveur IRC"
 
-msgid "nickname to use on IRC server"
-msgstr "pseudo à utiliser sur le serveur IRC"
-
-msgid "alternate nickname to use on IRC server (if nickname is already used)"
-msgstr "pseudo alternatif pour le serveur IRC (si le pseudo est déjà utilisé)"
-
-msgid ""
-"2nd alternate nickname to use on IRC server (if alternate nickname is "
-"already used)"
-msgstr ""
-"2ème pseudo alternatif pour le serveur IRC (si le pseudo alternatif est déjà "
-"utilisé)"
+msgid "nicknames to use on IRC server (separated by comma)"
+msgstr "pseudos à utiliser sur le serveur IRC (séparés par des virgules)"
 
 msgid "user name to use on IRC server"
 msgstr "nom d'utilisateur pour le serveur IRC"
@@ -3244,10 +3228,6 @@ msgstr "%s%s: vous n'êtes pas connecté au serveur"
 #, c-format
 msgid "%s: this buffer is not a channel!"
 msgstr "%s: ce tampon n'est pas un canal !"
-
-#, c-format
-msgid "Not enough memory to write log file \"%s\"\n"
-msgstr "Pas assez de mémoire pour écrire le fichier log \"%s\"\n"
 
 msgid "error received from IRC server"
 msgstr "erreur reçue du serveur IRC"
@@ -3828,60 +3808,24 @@ msgid "%s%s[%s%s%s] %s%s%s banned"
 msgstr "%s%s[%s%s%s] %s%s%s banni"
 
 #, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 2nd nickname \"%s\""
-msgstr ""
-"%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le 2ème "
-"pseudo \"%s\""
-
-#, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
-msgstr ""
-"%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le 3ème "
-"pseudo \"%s\""
-
-#, c-format
 msgid ""
 "%s%s: all declared nicknames are already in use or invalid, closing "
-"connection with server!"
-msgstr ""
-"%s%s: tous les pseudos déclarés sont déjà en cours d'utilisation ou "
-"invalides, fermeture de la connexion avec le serveur !"
+"connection with server"
+msgstr "%s%s: tous les pseudos déclarés sont déjà en cours d'utilisation ou invalides, fermeture de la connexion avec le serveur"
 
 #, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
-msgstr ""
-"%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le 1er "
-"pseudo \"%s\""
-
-#, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\""
-msgstr ""
-"%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le 2ème "
-"pseudo \"%s\""
-
-#, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
-msgstr ""
-"%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le 3ème "
-"pseudo \"%s\""
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
+msgstr "%s%s: le pseudo \"%s\" est invalide, essai avec le pseudo n°%d (\"%s\")"
 
 #, c-format
 msgid ""
 "%s%s: all declared nicknames are already in use, closing connection with "
-"server!"
-msgstr ""
-"%s%s: tous les pseudos déclarés sont déjà en cours d'utilisation, fermeture "
-"de la connexion avec le serveur !"
+"server"
+msgstr "%s%s: tous les pseudos déclarés sont déjà en cours d'utilisation, fermeture de la connexion avec le serveur"
 
 #, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
-msgstr ""
-"%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le 1er "
-"pseudo \"%s\""
-
-#, c-format
-msgid "%s%s: error retrieving user's name: %s"
-msgstr "%s%s: erreur de lecture du nom de l'utilisateur: %s"
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgstr "%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le pseudo n°%d (\"%s\")"
 
 #, c-format
 msgid "%s%s: error when allocating new server"
@@ -4313,3 +4257,41 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\""
+
+#~ msgid ""
+#~ "alternate nickname to use on IRC server (if nickname is already used)"
+#~ msgstr ""
+#~ "pseudo alternatif pour le serveur IRC (si le pseudo est déjà utilisé)"
+
+#~ msgid ""
+#~ "2nd alternate nickname to use on IRC server (if alternate nickname is "
+#~ "already used)"
+#~ msgstr ""
+#~ "2ème pseudo alternatif pour le serveur IRC (si le pseudo alternatif est "
+#~ "déjà utilisé)"
+
+#~ msgid "Not enough memory to write log file \"%s\"\n"
+#~ msgstr "Pas assez de mémoire pour écrire le fichier log \"%s\"\n"
+
+#~ msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
+#~ msgstr ""
+#~ "%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le "
+#~ "3ème pseudo \"%s\""
+
+#~ msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
+#~ msgstr ""
+#~ "%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le 1er "
+#~ "pseudo \"%s\""
+
+#~ msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
+#~ msgstr ""
+#~ "%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le "
+#~ "3ème pseudo \"%s\""
+
+#~ msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
+#~ msgstr ""
+#~ "%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le 1er "
+#~ "pseudo \"%s\""
+
+#~ msgid "%s%s: error retrieving user's name: %s"
+#~ msgstr "%s%s: erreur de lecture du nom de l'utilisateur: %s"

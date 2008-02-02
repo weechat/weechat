@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-01-29 15:15+0100\n"
+"POT-Creation-Date: 2008-02-02 23:26+0100\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -909,8 +909,8 @@ msgstr "marca de tiempo para la fecha mostrada cuando el dÃ­a cambiÃ³"
 
 msgid "use a marker on servers/channels to show first unread line"
 msgstr ""
-"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea sin "
-"leer"
+"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea "
+"sin leer"
 
 #, c-format
 msgid ""
@@ -1433,8 +1433,8 @@ msgid ""
 "support.\n"
 "Be careful, private info may be in these files.\n"
 msgstr ""
-"Por favor, envÃ­a %s/%s, %s/%s y los mensajes de arriba a los desarrolladores "
-"de Weechat para el soporte.\n"
+"Por favor, envÃ­a %s/%s, %s/%s y los mensajes de arriba a los "
+"desarrolladores de Weechat para el soporte.\n"
 "SÃ© cuidadoso, puede que haya informaciÃ³n privada en estos ficheros.\n"
 
 #, c-format
@@ -2597,7 +2597,7 @@ msgstr "lista, aÃ±de o elimina servidores"
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks "
-"nick1 nick2 nick3] [-username username] [-realname realname] [-command "
+"nick1,nick2,nick3,...] [-username username] [-realname realname] [-command "
 "command] [-autojoin channel[,channel]] ] | [copy servername newservername] | "
 "[rename servername newservername] | [keep servername] | [del servername]"
 msgstr ""
@@ -3032,20 +3032,9 @@ msgstr "usar SSL para la comunicaciÃ³n del servidor"
 msgid "password for IRC server"
 msgstr "contraseÃ±a para el servidor IRC"
 
-msgid "nickname to use on IRC server"
+#, fuzzy
+msgid "nicknames to use on IRC server (separated by comma)"
 msgstr "nombre de usuario a utilizar en el servidor IRC"
-
-msgid "alternate nickname to use on IRC server (if nickname is already used)"
-msgstr ""
-"nombre de usuario alternativo para el servidor IRC (si el nombre de usuario "
-"ya estÃ¡ en uso)"
-
-msgid ""
-"2nd alternate nickname to use on IRC server (if alternate nickname is "
-"already used)"
-msgstr ""
-"segundo nombre de usuario alternativo a utilizar en el servidor IRC (si el "
-"nombre de usuario alternativo ya estÃ¡ en uso)"
 
 msgid "user name to use on IRC server"
 msgstr "nombre de usuario para el servidor IRC"
@@ -3315,11 +3304,6 @@ msgstr "%s Â¡no conectado al servidor \"%s\"!\n"
 #, fuzzy, c-format
 msgid "%s: this buffer is not a channel!"
 msgstr "Â¡Esta ventana no es un canal!\n"
-
-#, fuzzy, c-format
-msgid "Not enough memory to write log file \"%s\"\n"
-msgstr ""
-"No hay suficiente memoria para escribir un fichero de log para un bÃºfer\n"
 
 msgid "error received from IRC server"
 msgstr "error recibido del servidor IRC"
@@ -3906,60 +3890,32 @@ msgid "%s%s[%s%s%s] %s%s%s banned"
 msgstr "%s[%s%s%s] %s%s%s baneado\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 2nd nickname \"%s\""
-msgstr ""
-"%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 2 nombre de "
-"usuario \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
-msgstr ""
-"%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 3 nombre de "
-"usuario \"%s\"\n"
-
-#, fuzzy, c-format
 msgid ""
 "%s%s: all declared nicknames are already in use or invalid, closing "
-"connection with server!"
+"connection with server"
 msgstr ""
 "%s: todos los nombres de usuario declarados ya estÃ¡n en uso, Â¡cerrando la "
 "conexiÃ³n con el servidor!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
-msgstr ""
-"%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 1 nombre de "
-"usuario \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 2nd nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
 msgstr ""
 "%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 2 nombre de "
-"usuario \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
-msgstr ""
-"%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 3 nombre de "
 "usuario \"%s\"\n"
 
 #, fuzzy, c-format
 msgid ""
 "%s%s: all declared nicknames are already in use, closing connection with "
-"server!"
+"server"
 msgstr ""
 "%s: todos los nombres de usuario declarados ya estÃ¡n en uso, Â¡cerrando la "
 "conexiÃ³n con el servidor!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr ""
-"%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 1 nombre de "
+"%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 2 nombre de "
 "usuario \"%s\"\n"
-
-#, c-format
-msgid "%s%s: error retrieving user's name: %s"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
@@ -4378,6 +4334,48 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
+#~ msgid ""
+#~ "alternate nickname to use on IRC server (if nickname is already used)"
+#~ msgstr ""
+#~ "nombre de usuario alternativo para el servidor IRC (si el nombre de "
+#~ "usuario ya estÃ¡ en uso)"
+
+#~ msgid ""
+#~ "2nd alternate nickname to use on IRC server (if alternate nickname is "
+#~ "already used)"
+#~ msgstr ""
+#~ "segundo nombre de usuario alternativo a utilizar en el servidor IRC (si "
+#~ "el nombre de usuario alternativo ya estÃ¡ en uso)"
+
+#, fuzzy
+#~ msgid "Not enough memory to write log file \"%s\"\n"
+#~ msgstr ""
+#~ "No hay suficiente memoria para escribir un fichero de log para un bÃºfer\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
+#~ msgstr ""
+#~ "%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 3 nombre "
+#~ "de usuario \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
+#~ msgstr ""
+#~ "%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 1 nombre "
+#~ "de usuario \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
+#~ msgstr ""
+#~ "%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 3 nombre "
+#~ "de usuario \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
+#~ msgstr ""
+#~ "%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 1 nombre "
+#~ "de usuario \"%s\"\n"
+
 #~ msgid "[file]"
 #~ msgstr "[archivo]"
 
@@ -4663,8 +4661,8 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 #~ "maximum number of lines in history for one server/channel/private window "
 #~ "(0 = unlimited)"
 #~ msgstr ""
-#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/privado "
-#~ "(0 = ilimitado)"
+#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/"
+#~ "privado (0 = ilimitado)"
 
 #, fuzzy
 #~ msgid "log messages from plugins"
@@ -4865,8 +4863,8 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 #~ "max size for aligning nick and other messages (should be >= to "
 #~ "look_align_size)"
 #~ msgstr ""
-#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a ser "
-#~ ">= a look_align_size)"
+#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a "
+#~ "ser >= a look_align_size)"
 
 #~ msgid "server name not found"
 #~ msgstr "nombre de servidor no encontrado"
@@ -5711,7 +5709,8 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
 #~ msgid "color for chan owner symbol (specific to unrealircd)"
 #~ msgstr ""
-#~ "color para el sÃ­mbolo de propietario de canal (especificado en unrealircd)"
+#~ "color para el sÃ­mbolo de propietario de canal (especificado en "
+#~ "unrealircd)"
 
 #~ msgid "color for chan admin symbol"
 #~ msgstr "color para el sÃ­mbolo de administrador de canal"
