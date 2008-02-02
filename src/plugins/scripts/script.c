@@ -101,7 +101,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     
     /* add hook for config option */
     length = strlen (weechat_plugin->name) + 32;
-    string = (char *)malloc (length);
+    string = (char *)malloc (length * sizeof (char));
     if (string)
     {
         snprintf (string, length, "%s.%s",
@@ -114,7 +114,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     /* create directories in WeeChat home */
     weechat_mkdir_home (weechat_plugin->name, 0644);
     length = strlen (weechat_plugin->name) + strlen ("/autoload") + 1;
-    string = (char *)malloc (length);
+    string = (char *)malloc (length * sizeof (char));
     if (string)
     {
         snprintf (string, length, "%s/autoload", weechat_plugin->name);
@@ -124,7 +124,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     
     /* add command */
     length = strlen (completion) + strlen (weechat_plugin->name) + 16;
-    string = (char *)malloc (length);
+    string = (char *)malloc (length * sizeof (char));
     if (string)
     {
         snprintf (string, length, "%s|%%(%s_script)",
@@ -146,7 +146,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
 
     /* add completion */
     length = strlen (weechat_plugin->name) + 16;
-    string = (char *)malloc (length);
+    string = (char *)malloc (length * sizeof (char));
     if (string)
     {
         snprintf (string, length, "%s_script", weechat_plugin->name);
@@ -264,7 +264,7 @@ script_search_full_name (struct t_weechat_plugin *weechat_plugin,
         if (!dir_home)
             return NULL;
         length = strlen (dir_home) + strlen (filename + 1) + 1;
-        final_name = (char *)malloc (length);
+        final_name = (char *)malloc (length * sizeof (char));
         if (final_name)
         {
             snprintf (final_name, length, "%s%s", dir_home, filename + 1);
@@ -279,7 +279,7 @@ script_search_full_name (struct t_weechat_plugin *weechat_plugin,
         /* try WeeChat user's autoload dir */
         length = strlen (dir_home) + strlen (weechat_plugin->name) + 8 +
             strlen (filename) + 16;
-        final_name = (char *)malloc (length);
+        final_name = (char *)malloc (length * sizeof (char));
         if (final_name)
         {
             snprintf (final_name, length,
@@ -293,7 +293,7 @@ script_search_full_name (struct t_weechat_plugin *weechat_plugin,
         /* try WeeChat language user's dir */
         length = strlen (dir_home) + strlen (weechat_plugin->name) +
             strlen (filename) + 16;
-        final_name = (char *)malloc (length);
+        final_name = (char *)malloc (length * sizeof (char));
         if (final_name)
         {
             snprintf (final_name, length,
@@ -305,7 +305,7 @@ script_search_full_name (struct t_weechat_plugin *weechat_plugin,
         
         /* try WeeChat user's dir */
         length = strlen (dir_home) + strlen (filename) + 16;
-        final_name = (char *)malloc (length);
+        final_name = (char *)malloc (length * sizeof (char));
         if (final_name)
         {
             snprintf (final_name, length,
@@ -322,7 +322,7 @@ script_search_full_name (struct t_weechat_plugin *weechat_plugin,
     {
         length = strlen (dir_system) + strlen (weechat_plugin->name) +
             strlen (filename) + 16;
-        final_name = (char *)malloc (length);
+        final_name = (char *)malloc (length * sizeof (char));
         if (final_name)
         {
             snprintf (final_name,length,

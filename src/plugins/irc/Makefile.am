@@ -48,7 +48,6 @@ irc_la_SOURCES = irc.c \
 
 #                 irc-dcc.c \
 #                 irc-dcc.h \
-#                 irc-log.c
 
 irc_la_LDFLAGS = -module
 irc_la_LIBADD  = $(GNUTLS_LFLAGS)

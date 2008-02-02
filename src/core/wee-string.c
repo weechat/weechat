@@ -59,7 +59,7 @@ string_strndup (char *string, int length)
     if ((int)strlen (string) < length)
         return strdup (string);
     
-    result = (char *)malloc (length + 1);
+    result = (char *)malloc ((length + 1) * sizeof (char));
     if (!result)
         return NULL;
     
@@ -353,7 +353,7 @@ string_convert_hex_chars (char *string)
     int pos_output;
     long number;
 
-    output = (char *)malloc (strlen (string) + 1);
+    output = (char *)malloc ((strlen (string) + 1) * sizeof (char));
     if (output)
     {
         pos_output = 0;
@@ -547,11 +547,11 @@ string_split_command (char *command, char separator)
 	ptr = ++p;
     }
 
-    array = (char **)malloc ((nb_substr + 1) * sizeof(char *));
+    array = (char **)malloc ((nb_substr + 1) * sizeof (char *));
     if (!array)
 	return NULL;
     
-    buffer = (char *)malloc ( (strlen(command) + 1) * sizeof (char));
+    buffer = (char *)malloc ((strlen(command) + 1) * sizeof (char));
     if (!buffer)
     {
 	free (array);
@@ -652,7 +652,7 @@ string_iconv (int from_utf8, char *from_code, char *to_code, char *string)
             ptr_inbuf = inbuf;
             inbytesleft = strlen (inbuf);
             outbytesleft = inbytesleft * 4;
-            outbuf = (char *)malloc (outbytesleft + 2);
+            outbuf = (char *)malloc ((outbytesleft + 2) * sizeof (char));
             ptr_outbuf = outbuf;
             ptr_inbuf_shift = NULL;
             done = 0;

@@ -363,7 +363,7 @@ command_builtin (void *data, struct t_gui_buffer *buffer,
         else
         {
             length = strlen (argv_eol[1]) + 2;
-            command = (char *)malloc (length);
+            command = (char *)malloc (length * sizeof (char));
             if (command)
             {
                 snprintf (command, length, "/%s", argv_eol[1]);

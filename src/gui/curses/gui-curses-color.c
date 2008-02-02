@@ -228,7 +228,7 @@ gui_color_assign (t_gui_color **color, char *fg_and_bg)
         
         if (*color->string)
             free (*color->string);
-        *color->string = (char *)malloc (4);
+        *color->string = (char *)malloc (4 * sizeof (char));
         if (*color->string)
             snprintf (*color->string, 4,
                       "%s%02d",
@@ -278,7 +278,7 @@ gui_color_build (int number, int foreground, int background)
     new_color->foreground = gui_weechat_colors[foreground].foreground;
     new_color->background = gui_weechat_colors[background].foreground;
     new_color->attributes = gui_weechat_colors[foreground].attributes;
-    new_color->string = (char *)malloc (4);
+    new_color->string = (char *)malloc (4 * sizeof (char));
     if (new_color->string)
         snprintf (new_color->string, 4,
                   "%s%02d",

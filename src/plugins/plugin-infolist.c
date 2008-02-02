@@ -303,7 +303,7 @@ plugin_infolist_get_fields (struct t_plugin_infolist *list)
         length += strlen (ptr_var->name) + 3;
     }
     
-    list->ptr_item->fields = (char *)malloc (length + 1);
+    list->ptr_item->fields = (char *)malloc ((length + 1) * sizeof (char));
     if (!list->ptr_item->fields)
         return NULL;
     

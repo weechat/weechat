@@ -85,7 +85,7 @@ c_strndup (char *string, int length)
     if ((int)strlen (string) < length)
         return strdup (string);
     
-    result = (char *)malloc (length + 1);
+    result = (char *)malloc ((length + 1) * sizeof (char));
     if (!result)
         return NULL;
     

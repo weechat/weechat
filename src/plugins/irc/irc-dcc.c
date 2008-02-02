@@ -173,9 +173,9 @@ irc_dcc_find_filename (struct t_irc_dcc *ptr_dcc)
         return;
     }
     
-    ptr_dcc->local_filename = (char *)malloc (strlen (dir2) +
-                                              strlen (ptr_dcc->nick) +
-                                              strlen (ptr_dcc->filename) + 4);
+    ptr_dcc->local_filename = (char *)malloc ((strlen (dir2) +
+                                               strlen (ptr_dcc->nick) +
+                                               strlen (ptr_dcc->filename) + 4) * sizeof (char));
     if (!ptr_dcc->local_filename)
         return;
     
@@ -207,7 +207,7 @@ irc_dcc_find_filename (struct t_irc_dcc *ptr_dcc)
             return;
         }
         
-        filename2 = (char *)malloc (strlen (ptr_dcc->local_filename) + 16);
+        filename2 = (char *)malloc ((strlen (ptr_dcc->local_filename) + 16) * sizeof (char));
         if (!filename2)
         {
             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
@@ -983,8 +983,8 @@ irc_dcc_send_request (struct t_irc_server *server, int type, char *nick,
                 free (dir1);
                 return;
             }
-            filename2 = (char *)malloc (strlen (dir2) +
-                                        strlen (filename) + 4);
+            filename2 = (char *)malloc ((strlen (dir2) +
+                                         strlen (filename) + 4) * sizeof (char));
             if (!filename2)
             {
                 gui_chat_printf_error (server->buffer,
@@ -1268,8 +1268,8 @@ irc_dcc_chat_recv (struct t_irc_dcc *dcc)
         ptr_buf = buffer;
         if (dcc->unterminated_message)
         {
-            buf2 = (char *)malloc (strlen (dcc->unterminated_message) +
-                                   strlen (buffer) + 1);
+            buf2 = (char *)malloc ((strlen (dcc->unterminated_message) +
+                                    strlen (buffer) + 1) * sizeof (char));
             if (buf2)
             {
                 strcpy (buf2, dcc->unterminated_message);

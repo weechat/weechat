@@ -134,8 +134,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         new_buffer->input_callback_data = input_callback_data;
         new_buffer->input_nick = NULL;
         new_buffer->input_buffer_alloc = GUI_BUFFER_INPUT_BLOCK_SIZE;
-        new_buffer->input_buffer = (char *)malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
-        new_buffer->input_buffer_color_mask = (char *)malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
+        new_buffer->input_buffer = (char *)malloc (GUI_BUFFER_INPUT_BLOCK_SIZE * sizeof (char));
+        new_buffer->input_buffer_color_mask = (char *)malloc (GUI_BUFFER_INPUT_BLOCK_SIZE * sizeof (char));
         new_buffer->input_buffer[0] = '\0';
         new_buffer->input_buffer_color_mask[0] = '\0';
         new_buffer->input_buffer_size = 0;

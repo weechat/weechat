@@ -413,7 +413,7 @@ irc_channel_get_notify_level (struct t_irc_server *server,
         && (server_default_notify == 1))
         server_default_notify = 2;
     
-    name = (char *)malloc (strlen (channel->name) + 2);
+    name = (char *)malloc ((strlen (channel->name) + 2) * sizeof (char));
     strcpy (name, channel->name);
     strcat (name, ":");
     pos = strstr (server->notify_levels, name);

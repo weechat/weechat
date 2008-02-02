@@ -459,7 +459,7 @@ plugin_auto_load ()
             }
     
             /* auto-load plugins in WeeChat global lib dir */
-            dir_name = (char *)malloc (strlen (WEECHAT_LIBDIR) + 16);
+            dir_name = (char *)malloc ((strlen (WEECHAT_LIBDIR) + 16) * sizeof (char));
             if (dir_name)
             {
                 snprintf (dir_name, strlen (WEECHAT_LIBDIR) + 16,

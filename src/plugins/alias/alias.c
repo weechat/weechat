@@ -81,12 +81,12 @@ alias_add_word (char **alias, int *length, char *word)
     
     if (*alias == NULL)
     {
-        *alias = (char *)malloc (length_word + 1);
+        *alias = (char *)malloc ((length_word + 1) * sizeof (char));
         strcpy (*alias, word);
     }
     else
     {
-        *alias = realloc (*alias, strlen (*alias) + length_word + 1);
+        *alias = realloc (*alias, (strlen (*alias) + length_word + 1) * sizeof (char));
         strcat (*alias, word);
     }
     *length += length_word;
@@ -221,7 +221,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                         weechat_command (buffer, args_replaced);
                     else
                     {
-                        alias_command = (char *)malloc (1 + strlen(args_replaced) + 1);
+                        alias_command = (char *)malloc ((1 + strlen(args_replaced) + 1) * sizeof (char));
                         if (alias_command)
                         {
                             strcpy (alias_command, "/");
@@ -241,7 +241,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                         length1 = strlen (*ptr_cmd);
                         length2 = strlen (argv_eol[1]);
                         
-                        alias_command = (char *)malloc ( 1 + length1 + 1 + length2 + 1);
+                        alias_command = (char *)malloc ((1 + length1 + 1 + length2 + 1) * sizeof (char));
                         if (alias_command)
                         {
                             if (*ptr_cmd[0] != '/')
@@ -263,7 +263,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                             (void) weechat_command(buffer, *ptr_cmd);
                         else
                         {
-                            alias_command = (char *)malloc (1 + strlen (*ptr_cmd) + 1);
+                            alias_command = (char *)malloc ((1 + strlen (*ptr_cmd) + 1) * sizeof (char));
                             if (alias_command)
                             {
                                 strcpy (alias_command, "/");

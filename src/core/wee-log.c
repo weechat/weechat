@@ -204,7 +204,7 @@ log_crash_rename ()
     log_close ();
     
     length = strlen (weechat_home) + 128;
-    new_name = (char *)malloc (length);
+    new_name = (char *)malloc (length * sizeof (char));
     if (new_name)
     {
         time_now = time (NULL);

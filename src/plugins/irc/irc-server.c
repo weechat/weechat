@@ -238,7 +238,7 @@ irc_server_init_with_url (struct t_irc_server *server, char *irc_url)
             server->autojoin = strdup (pos_channel);
         else
         {
-            server->autojoin = (char *)malloc (strlen (pos_channel) + 2);
+            server->autojoin = (char *)malloc ((strlen (pos_channel) + 2) * sizeof (char));
             strcpy (server->autojoin, "#");
             strcat (server->autojoin, pos_channel);
         }
@@ -252,10 +252,10 @@ irc_server_init_with_url (struct t_irc_server *server, char *irc_url)
     /* some default values */
     if (server->port < 0)
         server->port = IRC_SERVER_DEFAULT_PORT;
-    server->nick2 = (char *)malloc (strlen (server->nick1) + 2);
+    server->nick2 = (char *)malloc ((strlen (server->nick1) + 2) * sizeof (char));
     strcpy (server->nick2, server->nick1);
     server->nick2 = strcat (server->nick2, "1");
-    server->nick3 = (char *)malloc (strlen (server->nick1) + 2);
+    server->nick3 = (char *)malloc ((strlen (server->nick1) + 2) * sizeof (char));
     strcpy (server->nick3, server->nick1);
     server->nick3 = strcat (server->nick3, "2");
     
@@ -1098,8 +1098,8 @@ irc_server_msgq_add_msg (struct t_irc_server *server, char *msg)
     message->server = server;
     if (server->unterminated_message)
     {
-        message->data = (char *)malloc (strlen (server->unterminated_message) +
-                                        strlen (msg) + 1);
+        message->data = (char *)malloc ((strlen (server->unterminated_message) +
+                                         strlen (msg) + 1) * sizeof (char));
         if (!message->data)
         {
             weechat_printf (server->buffer,
@@ -1145,8 +1145,8 @@ irc_server_msgq_add_unterminated (struct t_irc_server *server, char *string)
     {
         server->unterminated_message =
             (char *)realloc (server->unterminated_message,
-                             strlen (server->unterminated_message) +
-                             strlen (string) + 1);
+                             (strlen (server->unterminated_message) +
+                              strlen (string) + 1) * sizeof (char));
         if (!server->unterminated_message)
         {
             weechat_printf (server->buffer,
@@ -1283,7 +1283,7 @@ irc_server_msgq_flush ()
                         length = strlen (weechat_plugin->name) + 1 +
                             strlen (irc_recv_msgq->server->name) + 1 +
                             ((ptr_chan_nick) ? strlen (ptr_chan_nick) : 0) + 1;
-                        modifier_data = (char *)malloc (length);
+                        modifier_data = (char *)malloc (length * sizeof (char));
                         if (modifier_data)
                         {
                             if (ptr_chan_nick)

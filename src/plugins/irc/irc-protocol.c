@@ -1464,7 +1464,7 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *irc_message, char *hos
                     {
                         join_length = strlen (ptr_channel->name) + 1 +
                             strlen (ptr_channel->key) + 1;
-                        join_string = (char *)malloc (join_length);
+                        join_string = (char *)malloc (join_length * sizeof (char));
                         if (join_string)
                         {
                             snprintf (join_string, join_length, "%s %s",
@@ -3823,9 +3823,9 @@ irc_protocol_cmd_324 (struct t_irc_server *server, char *irc_message, char *host
                 {
                     if (ptr_channel->modes)
                         ptr_channel->modes = (char *)realloc (ptr_channel->modes,
-                                                              strlen (pos_modes) + 1);
+                                                              (strlen (pos_modes) + 1) * sizeof (char));
                     else
-                        ptr_channel->modes = (char *)malloc (strlen (pos_modes) + 1);
+                        ptr_channel->modes = (char *)malloc ((strlen (pos_modes) + 1) * sizeof (char));
                     strcpy (ptr_channel->modes, pos_modes);
                     irc_mode_channel_set (server, ptr_channel, pos_modes);
                 }
@@ -4719,7 +4719,7 @@ irc_protocol_cmd_352 (struct t_irc_server *server, char *irc_message, char *host
                                             if (ptr_nick->host)
                                                 free (ptr_nick->host);
                                             length = strlen (pos_user) + 1 + strlen (pos_host) + 1;
-                                            ptr_nick->host = (char *)malloc (length);
+                                            ptr_nick->host = (char *)malloc (length * sizeof (char));
                                             if (ptr_nick->host)
                                                 snprintf (ptr_nick->host, length, "%s@%s", pos_user, pos_host);
                                             irc_nick_set_away (ptr_channel, ptr_nick,

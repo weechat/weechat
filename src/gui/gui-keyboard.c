@@ -245,7 +245,7 @@ gui_keyboard_get_internal_code (char *key)
 {
     char *result;
     
-    if ((result = (char *)malloc (strlen (key) + 1)))
+    if ((result = (char *)malloc ((strlen (key) + 1) * sizeof (char))))
     {
         result[0] = '\0';
         while (key[0])
@@ -288,7 +288,7 @@ gui_keyboard_get_expanded_name (char *key)
 {
     char *result;
     
-    if ((result = (char *)malloc ((strlen (key) * 5) + 1)))
+    if ((result = (char *)malloc (((strlen (key) * 5) + 1) * sizeof (char))))
     {
         result[0] = '\0';
         while (key[0])
@@ -735,7 +735,7 @@ gui_keyboard_buffer_optimize ()
     if (gui_keyboard_buffer_alloc != optimal_size)
     {
         gui_keyboard_buffer_alloc = optimal_size;
-        gui_keyboard_buffer = realloc (gui_keyboard_buffer, optimal_size);
+        gui_keyboard_buffer = realloc (gui_keyboard_buffer, optimal_size * sizeof (char));
     }
 }
 

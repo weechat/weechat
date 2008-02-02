@@ -241,7 +241,7 @@ irc_mode_user_add (struct t_irc_server *server, char mode)
         if (!strchr (server->nick_modes, mode))
         {
             server->nick_modes = (char *)realloc (server->nick_modes,
-                                                  strlen (server->nick_modes) + 1 + 1);
+                                                  (strlen (server->nick_modes) + 1 + 1) * sizeof (char));
             strcat (server->nick_modes, str_mode);
             //gui_status_draw (gui_current_window->buffer, 1);
             //gui_input_draw (gui_current_window->buffer, 1);
@@ -249,7 +249,7 @@ irc_mode_user_add (struct t_irc_server *server, char mode)
     }
     else
     {
-        server->nick_modes = (char *)malloc (2);
+        server->nick_modes = (char *)malloc (2 * sizeof (char));
         strcpy (server->nick_modes, str_mode);
         //gui_status_draw (gui_current_window->buffer, 1);
         //gui_input_draw (gui_current_window->buffer, 1);
@@ -274,7 +274,7 @@ irc_mode_user_remove (struct t_irc_server *server, char mode)
             new_size = strlen (server->nick_modes);
             memmove (pos, pos + 1, strlen (pos + 1) + 1);
             server->nick_modes = (char *)realloc (server->nick_modes,
-                                                  new_size);
+                                                  new_size * sizeof (char));
             //gui_status_draw (gui_current_window->buffer, 1);
             //gui_input_draw (gui_current_window->buffer, 1);
         }

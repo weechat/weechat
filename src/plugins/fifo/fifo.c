@@ -243,8 +243,8 @@ fifo_read ()
         ptr_buf = buffer;
         if (fifo_unterminated)
         {
-            buf2 = (char *)malloc (strlen (fifo_unterminated) +
-                                   strlen (buffer) + 1);
+            buf2 = (char *)malloc ((strlen (fifo_unterminated) +
+                                    strlen (buffer) + 1) * sizeof (char));
             if (buf2)
             {
                 strcpy (buf2, fifo_unterminated);

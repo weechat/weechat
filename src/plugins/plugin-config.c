@@ -75,8 +75,8 @@ plugin_config_search (char *plugin_name, char *option_name)
     char *internal_option;
     struct t_config_option *ptr_option;
     
-    internal_option = (char *)malloc (strlen (plugin_name) +
-                                      strlen (option_name) + 2);
+    internal_option = (char *)malloc ((strlen (plugin_name) +
+                                       strlen (option_name) + 2) * sizeof (char));
     if (!internal_option)
         return NULL;
     
@@ -223,8 +223,8 @@ plugin_config_set (char *plugin_name, char *option_name, char *value)
     char *internal_option;
     int return_code;
     
-    internal_option = (char *)malloc (strlen (plugin_name) +
-                                      strlen (option_name) + 2);
+    internal_option = (char *)malloc ((strlen (plugin_name) +
+                                       strlen (option_name) + 2) * sizeof (char));
     if (!internal_option)
         return 0;
     

@@ -483,7 +483,7 @@ charset_get (char *type, char *name)
     int length;
 
     length = strlen (type) + 1 + strlen (name) + 1; 
-    option_name = (char *)malloc (length);
+    option_name = (char *)malloc (length * sizeof (char));
     if (option_name)
     {
         snprintf (option_name, length, "%s.%s",
@@ -582,7 +582,7 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
             && (weechat_strncasecmp (argv[1], "encode.", 7) != 0))
         {
             length = strlen (argv[1]) + strlen ("decode.") + 1;
-            option_name = (char *)malloc (length);
+            option_name = (char *)malloc (length * sizeof (char));
             if (option_name)
             {
                 rc = 1;
