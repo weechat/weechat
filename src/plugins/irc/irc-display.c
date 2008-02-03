@@ -357,10 +357,8 @@ irc_display_server (struct t_irc_server *server, int with_detail)
         weechat_printf (NULL, "  server_autoreconnect_delay : %d %s",
                         server->autoreconnect_delay,
                         NG_("second", "seconds", server->autoreconnect_delay));
-        weechat_printf (NULL, "  server_address . . . . . . : %s",
-                        server->address);
-        weechat_printf (NULL, "  server_port  . . . . . . . : %d",
-                        server->port);
+        weechat_printf (NULL, "  server_addresses . . . . . : %s",
+                        server->addresses);
         weechat_printf (NULL, "  server_ipv6  . . . . . . . : %s",
                         (server->ipv6) ? _("on") : _("off"));
         weechat_printf (NULL, "  server_ssl . . . . . . . . : %s",

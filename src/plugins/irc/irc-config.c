@@ -89,8 +89,7 @@ struct t_config_option *irc_config_server_name;
 struct t_config_option *irc_config_server_autoconnect;
 struct t_config_option *irc_config_server_autoreconnect;
 struct t_config_option *irc_config_server_autoreconnect_delay;
-struct t_config_option *irc_config_server_address;
-struct t_config_option *irc_config_server_port;
+struct t_config_option *irc_config_server_addresses;
 struct t_config_option *irc_config_server_ipv6;
 struct t_config_option *irc_config_server_ssl;
 struct t_config_option *irc_config_server_password;
@@ -361,8 +360,7 @@ irc_config_write_servers (void *data, struct t_config_file *config_file,
                                        (ptr_server->autoreconnect) ? "on" : "off");
             weechat_config_write_line (config_file, "server_autoreconnect_delay", "%d",
                                        ptr_server->autoreconnect_delay);
-            weechat_config_write_line (config_file, "server_address", "\"%s\"", ptr_server->address);
-            weechat_config_write_line (config_file, "server_port", "%d", ptr_server->port);
+            weechat_config_write_line (config_file, "server_addresses", "\"%s\"", ptr_server->addresses);
             weechat_config_write_line (config_file, "server_ipv6", "%s",
                                        (ptr_server->ipv6) ? "on" : "off");
             weechat_config_write_line (config_file, "server_ssl", "%s",
@@ -411,8 +409,7 @@ irc_config_write_server_default (void *data, struct t_config_file *config_file,
     weechat_config_write_line (config_file, "server_autoconnect", "%s", "off");
     weechat_config_write_line (config_file, "server_autoreconnect", "%s", "on");
     weechat_config_write_line (config_file, "server_autoreconnect_delay", "%s", "30");
-    weechat_config_write_line (config_file, "server_address", "%s", "\"irc.freenode.net\"");
-    weechat_config_write_line (config_file, "server_port", "%s", "6667");
+    weechat_config_write_line (config_file, "server_addresses", "%s", "\"irc.freenode.net/6667\"");
     weechat_config_write_line (config_file, "server_ipv6", "%s", "off");
     weechat_config_write_line (config_file, "server_ssl", "%s", "off");
     weechat_config_write_line (config_file, "server_password", "%s", "\"\"");
@@ -421,7 +418,9 @@ irc_config_write_server_default (void *data, struct t_config_file *config_file,
     if ((my_passwd = getpwuid (geteuid ())) != NULL)
     {
         weechat_config_write_line (config_file,
-                                   "server_nicks", "\"%s,%s1,%s2\"",
+                                   "server_nicks", "\"%s,%s1,%s2,%s3,%s4\"",
+                                   my_passwd->pw_name,
+                                   my_passwd->pw_name,
                                    my_passwd->pw_name,
                                    my_passwd->pw_name,
                                    my_passwd->pw_name);
@@ -734,16 +733,11 @@ irc_config_init ()
         "server_autoreconnect_delay", "integer",
         N_("delay (in seconds) before trying again to reconnect to server"),
         NULL, 0, 65535, "30", NULL, NULL);
-    irc_config_server_address = weechat_config_new_option (
+    irc_config_server_addresses = weechat_config_new_option (
         irc_config_file, ptr_section,
-        "server_address", "string",
-        N_("IP address or hostname of IRC server"),
+        "server_addresses", "string",
+        N_("list of IP/port or hostname/port for server (separated by comma)"),
         NULL, 0, 0, "", NULL, NULL);
-    irc_config_server_port = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "server_port", "integer",
-        N_("port for connecting to server"),
-        NULL, 0, 65535, "6667", NULL, NULL);
     irc_config_server_ipv6 = weechat_config_new_option (
         irc_config_file, ptr_section,
         "server_ipv6", "boolean",

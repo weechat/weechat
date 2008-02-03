@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-01-28
+ChangeLog - 2008-02-03
 
 
 Version 0.2.7 (under dev!):
+   * use of many addresses for one IRC server (auto-switch when a connexion
+     fails), nicks are now set with one option "nicks" (task #6088)
    * fixed bug when switching window, scrollback is now preserved (task #7680)
    * added group support in nicklist
    * added backlog option in logger plugin

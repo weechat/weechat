@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-02 23:26+0100\n"
+"POT-Creation-Date: 2008-02-03 13:17+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2609,11 +2609,11 @@ msgstr "szerverek listázása, hozzáadása vagy eltávolítása"
 
 #, fuzzy
 msgid ""
-"[list [servername]] | [listfull [servername]] | [add servername hostname [-"
-"port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks "
-"nick1,nick2,nick3,...] [-username username] [-realname realname] [-command "
-"command] [-autojoin channel[,channel]] ] | [copy servername newservername] | "
-"[rename servername newservername] | [keep servername] | [del servername]"
+"[list [servername]] | [listfull [servername]] | [add servername hostname[/"
+"port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1,"
+"nick2,...] [-username username] [-realname realname] [-command command] [-"
+"autojoin channel[,channel]] ] | [copy servername newservername] | [rename "
+"servername newservername] | [keep servername] | [del servername]"
 msgstr ""
 "[list [szervernév]] | [listfull [szervernév]] | [add szervernév gépnév [-"
 "port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd jelszó] [-nicks "
@@ -2621,22 +2621,21 @@ msgstr ""
 "parancs] [-autojoin szoba[,szoba]] ] | [copy szervernév újszervernév] | "
 "[rename szervernév újszervernév] | [keep szervernév] | [del szervernév]"
 
+#, fuzzy
 msgid ""
 "      list: list servers (no parameter implies this list)\n"
 "  listfull: list servers with detailed info for each server\n"
 "       add: create a new server\n"
 "servername: server name, for internal and display use\n"
-"  hostname: name or IP address of server\n"
-"      port: port for server (integer, default is 6667)\n"
+"  hostname: name or IP address of server, with optional port (default: "
+"6667)\n"
 "      temp: create temporary server (not saved in config file)\n"
 "      auto: automatically connect to server when WeeChat starts\n"
 "    noauto: do not connect to server when WeeChat starts (default)\n"
 "      ipv6: use IPv6 protocol\n"
 "       ssl: use SSL protocol\n"
 "  password: password for server\n"
-"     nick1: first nick for server\n"
-"     nick2: alternate nick for server\n"
-"     nick3: second alternate nick for server\n"
+"nick1,2,..: nicknames for server\n"
 "  username: user name\n"
 "  realname: real name of user\n"
 "      copy: duplicate a server\n"
@@ -3027,11 +3026,9 @@ msgstr "automatikus újracsatlakozás a szerverhez, ha lekapcsolódik"
 msgid "delay (in seconds) before trying again to reconnect to server"
 msgstr "két újracsatlakozási próba közti szünet (másodpercben)"
 
-msgid "IP address or hostname of IRC server"
-msgstr "IRC szerver IP-címe vagy hosztneve"
-
-msgid "port for connecting to server"
-msgstr "szerverhez csatlakozás portja"
+#, fuzzy
+msgid "list of IP/port or hostname/port for server (separated by comma)"
+msgstr "felhasználónév az IRC szerveren"
 
 msgid "use IPv6 protocol for server communication"
 msgstr "IPv6 protokoll használata a kapcsolathoz"
@@ -3967,6 +3964,10 @@ msgid "%s%s: reconnecting to server in %d %s"
 msgstr "%s: Újracsatlakozás a szerverhez %d másodperc múlva\n"
 
 #, fuzzy, c-format
+msgid "%s%s: switching address to %s/%d"
+msgstr "%s IP-cím nem található\n"
+
+#, fuzzy, c-format
 msgid "%s%s: GnuTLS handshake failed"
 msgstr "%s gnutls kézfogás sikertelen\n"
 
@@ -4014,23 +4015,23 @@ msgstr ""
 "támogatás nélkül lett fordítva\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s..."
+msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr ""
 "%s: csatlakozás a(z) %s:%d%s%s szerverhez %s proxy kiszolgálón keresztül: %s:"
 "%d%s...\n"
 
 #, fuzzy, c-format
-msgid "Connecting to server %s:%d%s%s via %s proxy %s:%d%s..."
+msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr ""
 "Csatlakozás a(z) %s:%d%s%s szerverhez %s proxy kiszolgálón keresztül: %s:%d%"
 "s...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connecting to server %s:%d%s%s..."
+msgid "%s%s: connecting to server %s/%d%s%s..."
 msgstr "%s: csatlakozás a(z) %s:%d%s%s szerverhez...\n"
 
 #, fuzzy, c-format
-msgid "%s: connecting to server %s:%d%s%s..."
+msgid "%s: connecting to server %s/%d%s%s..."
 msgstr "%s: csatlakozás a(z) %s:%d%s%s szerverhez...\n"
 
 #, fuzzy, c-format
@@ -4335,6 +4336,12 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
+
+#~ msgid "IP address or hostname of IRC server"
+#~ msgstr "IRC szerver IP-címe vagy hosztneve"
+
+#~ msgid "port for connecting to server"
+#~ msgstr "szerverhez csatlakozás portja"
 
 #~ msgid ""
 #~ "alternate nickname to use on IRC server (if nickname is already used)"

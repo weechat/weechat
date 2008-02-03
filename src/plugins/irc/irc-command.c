@@ -603,8 +603,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                 {
                     irc_server_init (&server_tmp);
                     server_tmp.name = strdup (argv[i]);
-                    server_tmp.address = strdup (argv[i]);
-                    server_tmp.port = port;
+                    server_tmp.addresses = strdup (argv[i]);
                     server_tmp.ipv6 = ipv6;
                     server_tmp.ssl = ssl;
                     ptr_server = irc_server_new (server_tmp.name,
@@ -612,8 +611,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                                                  server_tmp.autoreconnect,
                                                  server_tmp.autoreconnect_delay,
                                                  1, /* temp server */
-                                                 server_tmp.address,
-                                                 server_tmp.port,
+                                                 server_tmp.addresses,
                                                  server_tmp.ipv6,
                                                  server_tmp.ssl,
                                                  server_tmp.password,
@@ -2499,8 +2497,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
 {
     int i, detailed_list, one_server_found;
     struct t_irc_server server_tmp, *ptr_server, *server_found, *new_server;
-    char *server_name, *error;
-    long number;
+    char *server_name;
     
     /* make C compiler happy */
     (void) data;
@@ -2587,8 +2584,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             irc_server_init (&server_tmp);
             
             server_tmp.name = strdup (argv[2]);
-            server_tmp.address = strdup (argv[3]);
-            server_tmp.port = IRC_SERVER_DEFAULT_PORT;
+            server_tmp.addresses = strdup (argv[3]);
             
             /* parse arguments */
             for (i = 4; i < argc; i++)
@@ -2605,23 +2601,6 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         server_tmp.ipv6 = 1;
                     if (weechat_strcasecmp (argv[i], "-ssl") == 0)
                         server_tmp.ssl = 1;
-                    if (weechat_strcasecmp (argv[i], "-port") == 0)
-                    {
-                        if (i == (argc - 1))
-                        {
-                            weechat_printf (NULL,
-                                            _("%s%s: missing argument for "
-                                              "\"%s\" option"),
-                                            weechat_prefix ("error"), "irc",
-                                            "-port");
-                            irc_server_free_data (&server_tmp);
-                            return WEECHAT_RC_ERROR;
-                        }
-                        error = NULL;
-                        number = strtol (argv[++i], &error, 10);
-                        if (error && (error[0] == '\0'))
-                            server_tmp.port = number;
-                    }
                     if (weechat_strcasecmp (argv[i], "-pwd") == 0)
                     {
                         if (i == (argc - 1))
@@ -2715,8 +2694,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                                          server_tmp.autoreconnect,
                                          server_tmp.autoreconnect_delay,
                                          server_tmp.temp_server,
-                                         server_tmp.address,
-                                         server_tmp.port,
+                                         server_tmp.addresses,
                                          server_tmp.ipv6,
                                          server_tmp.ssl,
                                          server_tmp.password,
@@ -3846,15 +3824,14 @@ irc_command_init ()
     weechat_hook_command ("server",
                           N_("list, add or remove servers"),
                           N_("[list [servername]] | [listfull [servername]] | "
-                             "[add servername hostname [-port port] [-temp] "
+                             "[add servername hostname[/port] [-temp] "
                              "[-auto | -noauto] [-ipv6] [-ssl] [-pwd password] "
-                             "[-nicks nick1,nick2,nick3,...] "
-                             "[-username username] [-realname realname] "
-                             "[-command command] [-autojoin "
-                             "channel[,channel]] ] | [copy servername "
-                             "newservername] | [rename servername "
-                             "newservername] | [keep servername] | [del "
-                             "servername]"),
+                             "[-nicks nick1,nick2,...] [-username username] "
+                             "[-realname realname] [-command command] "
+                             "[-autojoin channel[,channel]] ] | "
+                             "[copy servername newservername] | "
+                             "[rename servername newservername] | "
+                             "[keep servername] | [del servername]"),
                           N_("      list: list servers (no parameter implies "
                              "this list)\n"
                              "  listfull: list servers with detailed info for "
@@ -3862,9 +3839,8 @@ irc_command_init ()
                              "       add: create a new server\n"
                              "servername: server name, for internal and "
                              "display use\n"
-                             "  hostname: name or IP address of server\n"
-                             "      port: port for server (integer, default "
-                             "is 6667)\n"
+                             "  hostname: name or IP address of server, with "
+                             "optional port (default: 6667)\n"
                              "      temp: create temporary server (not saved "
                              "in config file)\n"
                              "      auto: automatically connect to server "
@@ -3874,9 +3850,7 @@ irc_command_init ()
                              "      ipv6: use IPv6 protocol\n"
                              "       ssl: use SSL protocol\n"
                              "  password: password for server\n"
-                             "     nick1: first nick for server\n"
-                             "     nick2: alternate nick for server\n"
-                             "     nick3: second alternate nick for server\n"
+                             "nick1,2,..: nicknames for server\n"
                              "  username: user name\n"
                              "  realname: real name of user\n"
                              "      copy: duplicate a server\n"

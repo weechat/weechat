@@ -32,7 +32,8 @@
 
 #define IRC_SERVER_DEFAULT_PORT          6667
 #define IRC_SERVER_DEFAULT_PREFIXES_LIST "@%+~&!-"
-#define IRC_SERVER_DEFAULT_NICKS         "weechat1,weechat2,weechat3"
+#define IRC_SERVER_DEFAULT_NICKS         "weechat1,weechat2,weechat3,"  \
+    "weechat4,weechat5"
 
 #define irc_server_sendf_queued(server, fmt, argz...) \
     if (server) \
@@ -61,14 +62,11 @@ struct t_irc_server
     int autoreconnect;              /* = 1 if auto reco when disconnected    */
     int autoreconnect_delay;        /* delay before trying again reconnect   */
     int temp_server;                /* server is temporary (not saved!)      */
-    char *address;                  /* address of server (IP or name)        */
-    int port;                       /* port for server (6667 by default)     */
+    char *addresses;                /* server addresses (IP/name with port)  */
     int ipv6;                       /* use IPv6 protocol                     */
     int ssl;                        /* SSL protocol                          */
     char *password;                 /* password for server                   */
     char *nicks;                    /* nicknames as one string               */
-    int nicks_count;                /* number of nicknames                   */
-    char **nicks_array;             /* exploded nicknames                    */
     char *username;                 /* user name                             */
     char *realname;                 /* real name                             */
     char *hostname;                 /* custom hostname                       */
@@ -80,6 +78,10 @@ struct t_irc_server
     
     /* internal vars */
     int reloaded_from_config;       /* 1 if reloaded from config file        */
+    int addresses_count;            /* number of addresses                   */
+    char **addresses_array;         /* exploded addresses                    */
+    int *ports_array;               /* ports for addresses                   */
+    int current_address;            /* current address index in array        */
     pid_t child_pid;                /* pid of child process (connecting)     */
     int child_read;                 /* to read into child pipe               */
     int child_write;                /* to write into child pipe              */
@@ -91,6 +93,8 @@ struct t_irc_server
     gnutls_session gnutls_sess;     /* gnutls session (only if SSL is used)  */
 #endif
     char *unterminated_message;     /* beginning of a message in input buf   */
+    int nicks_count;                /* number of nicknames                   */
+    char **nicks_array;             /* exploded nicknames                    */
     char *nick;                     /* current nickname                      */
     char *nick_modes;               /* nick modes                            */
     char *prefix;                   /* nick prefix allowed (from msg 005)    */
@@ -146,8 +150,8 @@ extern void irc_server_free_all ();
 extern struct t_irc_server *irc_server_new (char *name, int autoconnect,
                                             int autoreconnect,
                                             int autoreconnect_delay,
-                                            int temp_server, char *address,
-                                            int port, int ipv6, int ssl,
+                                            int temp_server, char *addresses,
+                                            int ipv6, int ssl,
                                             char *password, char *nicks,
                                             char *username, char *realname,
                                             char *hostname, char *command,

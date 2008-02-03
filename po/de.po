@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-02 23:26+0100\n"
+"POT-Creation-Date: 2008-02-03 13:17+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2597,11 +2597,11 @@ msgstr "Auflisten, Hinzufügen oder Entfernen von Servern"
 
 #, fuzzy
 msgid ""
-"[list [servername]] | [listfull [servername]] | [add servername hostname [-"
-"port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks "
-"nick1,nick2,nick3,...] [-username username] [-realname realname] [-command "
-"command] [-autojoin channel[,channel]] ] | [copy servername newservername] | "
-"[rename servername newservername] | [keep servername] | [del servername]"
+"[list [servername]] | [listfull [servername]] | [add servername hostname[/"
+"port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1,"
+"nick2,...] [-username username] [-realname realname] [-command command] [-"
+"autojoin channel[,channel]] ] | [copy servername newservername] | [rename "
+"servername newservername] | [keep servername] | [del servername]"
 msgstr ""
 "[Servername] | [Servername Hostname Port [-auto | -noauto] [-ipv6] [-ssl] [-"
 "pwd Passwort] [-nicks Nick1 Nick2 Nick3] [-username Benutzername] [-realname "
@@ -2613,17 +2613,15 @@ msgid ""
 "  listfull: list servers with detailed info for each server\n"
 "       add: create a new server\n"
 "servername: server name, for internal and display use\n"
-"  hostname: name or IP address of server\n"
-"      port: port for server (integer, default is 6667)\n"
+"  hostname: name or IP address of server, with optional port (default: "
+"6667)\n"
 "      temp: create temporary server (not saved in config file)\n"
 "      auto: automatically connect to server when WeeChat starts\n"
 "    noauto: do not connect to server when WeeChat starts (default)\n"
 "      ipv6: use IPv6 protocol\n"
 "       ssl: use SSL protocol\n"
 "  password: password for server\n"
-"     nick1: first nick for server\n"
-"     nick2: alternate nick for server\n"
-"     nick3: second alternate nick for server\n"
+"nick1,2,..: nicknames for server\n"
 "  username: user name\n"
 "  realname: real name of user\n"
 "      copy: duplicate a server\n"
@@ -3012,11 +3010,9 @@ msgstr ""
 "Zeit in Sekunden, die gewartet wird, bevor ein Verbindungsneuaufbau versucht "
 "wird"
 
-msgid "IP address or hostname of IRC server"
-msgstr "IP-Adresse oder Hostname des IRC-Servers"
-
-msgid "port for connecting to server"
-msgstr "Port, auf dem der IRC-Server läuft"
+#, fuzzy
+msgid "list of IP/port or hostname/port for server (separated by comma)"
+msgstr "eigener Nickname, der auf dem IRC-Server benutzt werden soll"
 
 msgid "use IPv6 protocol for server communication"
 msgstr "Server über IPv6 ansprechen"
@@ -3955,6 +3951,10 @@ msgid "%s%s: reconnecting to server in %d %s"
 msgstr "%s: Neuverbinden in %d Sekunden\n"
 
 #, fuzzy, c-format
+msgid "%s%s: switching address to %s/%d"
+msgstr "%s IP-Adresse nicht gefunden\n"
+
+#, fuzzy, c-format
 msgid "%s%s: GnuTLS handshake failed"
 msgstr "%s gnutls-Handshake schlug fehl\n"
 
@@ -4002,19 +4002,19 @@ msgstr ""
 "kompiliert wurde\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connecting to server %s:%d%s%s via %s proxy %s:%d%s..."
+msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "%s: verbinden zu Server %s:%d%s%s via %s-Proxy %s:%d%s...\n"
 
 #, fuzzy, c-format
-msgid "Connecting to server %s:%d%s%s via %s proxy %s:%d%s..."
+msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "verbinden zu Server %s:%d%s%s via %s-Proxy %s:%d%s...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connecting to server %s:%d%s%s..."
+msgid "%s%s: connecting to server %s/%d%s%s..."
 msgstr "%s: verbinden zu Server %s:%d%s%s...\n"
 
 #, fuzzy, c-format
-msgid "%s: connecting to server %s:%d%s%s..."
+msgid "%s: connecting to server %s/%d%s%s..."
 msgstr "%s: verbinden zu Server %s:%d%s%s...\n"
 
 #, fuzzy, c-format
@@ -4321,6 +4321,12 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
+
+#~ msgid "IP address or hostname of IRC server"
+#~ msgstr "IP-Adresse oder Hostname des IRC-Servers"
+
+#~ msgid "port for connecting to server"
+#~ msgstr "Port, auf dem der IRC-Server läuft"
 
 #~ msgid ""
 #~ "alternate nickname to use on IRC server (if nickname is already used)"
