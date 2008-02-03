@@ -58,7 +58,7 @@ irc_completion_server_cb (void *data, char *completion,
 
 /*
  * irc_completion_server_nicks_cb: callback for completion with nicks
- *                                 of all IRC servers
+ *                                 of current IRC server
  */
 
 int
@@ -66,7 +66,6 @@ irc_completion_server_nicks_cb (void *data, char *completion,
                                 struct t_gui_buffer *buffer,
                                 struct t_weelist *list)
 {
-    struct t_irc_server *ptr_server2;
     struct t_irc_channel *ptr_channel2;
     struct t_irc_nick *ptr_nick;
     
@@ -77,38 +76,22 @@ irc_completion_server_nicks_cb (void *data, char *completion,
     (void) completion;
     (void) buffer;
 
-    if (ptr_server && ptr_channel)
+    if (ptr_server)
     {
-        for (ptr_server2 = irc_servers; ptr_server2;
-             ptr_server2 = ptr_server2->next_server)
+        for (ptr_channel2 = ptr_server->channels; ptr_channel2;
+             ptr_channel2 = ptr_channel2->next_channel)
         {
-            for (ptr_channel2 = ptr_server2->channels; ptr_channel2;
-                 ptr_channel2 = ptr_channel2->next_channel)
+            if (ptr_channel2->type == IRC_CHANNEL_TYPE_CHANNEL)
             {
-                if ((ptr_channel2 != ptr_channel)
-                    && (ptr_channel2->type == IRC_CHANNEL_TYPE_CHANNEL))
+                for (ptr_nick = ptr_channel2->nicks; ptr_nick;
+                     ptr_nick = ptr_nick->next_nick)
                 {
-                    for (ptr_nick = ptr_channel2->nicks; ptr_nick;
-                         ptr_nick = ptr_nick->next_nick)
-                    {
-                        weechat_list_add (list, ptr_nick->name,
-                                          WEECHAT_LIST_POS_SORT);
-                    }
+                    weechat_list_add (list, ptr_nick->name,
+                                      WEECHAT_LIST_POS_SORT);
                 }
             }
         }
         
-        /* add current channel nicks at beginning */
-        if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL))
-        {
-            for (ptr_nick = ptr_channel->nicks; ptr_nick;
-                 ptr_nick = ptr_nick->next_nick)
-            {
-                weechat_list_add (list, ptr_nick->name,
-                                  WEECHAT_LIST_POS_BEGINNING);
-            }
-        }
-
         /* add self nick at the end */
         weechat_list_add (list, ptr_server->nick, WEECHAT_LIST_POS_END);
     }
