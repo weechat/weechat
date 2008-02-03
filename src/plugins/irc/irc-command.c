@@ -2657,20 +2657,6 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         }
                         server_tmp.realname = strdup (argv[++i]);
                     }
-                    if (weechat_strcasecmp (argv[i], "-command") == 0)
-                    {
-                        if (i == (argc - 1))
-                        {
-                            weechat_printf (NULL,
-                                            _("%s%s: missing argument for "
-                                              "\"%s\" option"),
-                                            weechat_prefix ("error"), "irc",
-                                            "-command");
-                            irc_server_free_data (&server_tmp);
-                            return WEECHAT_RC_ERROR;
-                        }
-                        server_tmp.command = strdup (argv[++i]);
-                    }
                     if (weechat_strcasecmp (argv[i], "-autojoin") == 0)
                     {
                         if (i == (argc - 1))
@@ -3827,7 +3813,7 @@ irc_command_init ()
                              "[add servername hostname[/port] [-temp] "
                              "[-auto | -noauto] [-ipv6] [-ssl] [-pwd password] "
                              "[-nicks nick1,nick2,...] [-username username] "
-                             "[-realname realname] [-command command] "
+                             "[-realname realname] "
                              "[-autojoin channel[,channel]] ] | "
                              "[copy servername newservername] | "
                              "[rename servername newservername] | "
