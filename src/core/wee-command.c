@@ -655,7 +655,7 @@ command_history (void *data, struct t_gui_buffer *buffer,
  */
 
 void
-command_key_display (t_gui_key *key, int new_key)
+command_key_display (struct t_gui_key *key, int new_key)
 {
     char *expanded_name;
 
@@ -696,7 +696,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
 {
     char *args, *internal_code;
     int i;
-    t_gui_key *ptr_key;
+    struct t_gui_key *ptr_key;
     t_gui_key_func *ptr_function;
     
     /* make C compiler happy */

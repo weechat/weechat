@@ -465,7 +465,7 @@ void
 config_weechat_write_keys (void *data, struct t_config_file *config_file,
                            char *section_name)
 {
-    t_gui_key *ptr_key;
+    struct t_gui_key *ptr_key;
     char *expanded_name, *function_name;
     
     /* make C compiler happy */

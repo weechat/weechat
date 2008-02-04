@@ -176,7 +176,7 @@ weechat_display_key_functions ()
 void
 weechat_display_keys ()
 {
-    t_gui_key *ptr_key;
+    struct t_gui_key *ptr_key;
     char *expanded_name;
     
     string_iconv_fprintf (stdout,

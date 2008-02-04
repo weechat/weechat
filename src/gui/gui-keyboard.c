@@ -40,8 +40,8 @@
 #include "gui-window.h"
 
 
-t_gui_key *gui_keys = NULL;         /* key bindings                         */
-t_gui_key *last_gui_key = NULL;     /* last key binding                     */
+struct t_gui_key *gui_keys = NULL;     /* key bindings                      */
+struct t_gui_key *last_gui_key = NULL; /* last key binding                  */
 
 char gui_key_combo_buffer[128];     /* buffer used for combos               */
 int gui_key_grab = 0;               /* 1 if grab mode enabled (alt-k)       */
@@ -57,7 +57,7 @@ int gui_keyboard_paste_lines = 0;   /* number of lines for pending paste    */
 
 time_t gui_keyboard_last_activity_time = 0; /* last activity time (key)     */
 
-t_gui_key_function gui_key_functions[] =
+struct t_gui_key_function gui_key_functions[] =
 { { "return",                    gui_action_return,
     N_("terminate line") },
   { "tab",                       gui_action_tab,
@@ -325,10 +325,10 @@ gui_keyboard_get_expanded_name (char *key)
  * gui_keyboard_find_pos: find position for a key (for sorting keys list)
  */
 
-t_gui_key *
-gui_keyboard_find_pos (t_gui_key *key)
+struct t_gui_key *
+gui_keyboard_find_pos (struct t_gui_key *key)
 {
-    t_gui_key *ptr_key;
+    struct t_gui_key *ptr_key;
     
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
@@ -343,9 +343,9 @@ gui_keyboard_find_pos (t_gui_key *key)
  */
 
 void
-gui_keyboard_insert_sorted (t_gui_key *key)
+gui_keyboard_insert_sorted (struct t_gui_key *key)
 {
-    t_gui_key *pos_key;
+    struct t_gui_key *pos_key;
     
     if (gui_keys)
     {
@@ -384,14 +384,15 @@ gui_keyboard_insert_sorted (t_gui_key *key)
  * gui_keyboard_new: add a new key in keys list
  */
 
-t_gui_key *
-gui_keyboard_new (char *key, char *command, t_gui_key_func *function, char *args)
+struct t_gui_key *
+gui_keyboard_new (char *key, char *command, t_gui_key_func *function,
+                  char *args)
 {
-    t_gui_key *new_key;
+    struct t_gui_key *new_key;
     char *internal_code;
     int length;
     
-    if ((new_key = (t_gui_key *)malloc (sizeof (t_gui_key))))
+    if ((new_key = (struct t_gui_key *)malloc (sizeof (struct t_gui_key))))
     {
         internal_code = gui_keyboard_get_internal_code (key);
         new_key->key = (internal_code) ? strdup (internal_code) : strdup (key);
@@ -426,10 +427,10 @@ gui_keyboard_new (char *key, char *command, t_gui_key_func *function, char *args
  * gui_keyboard_search: search a key
  */
 
-t_gui_key *
+struct t_gui_key *
 gui_keyboard_search (char *key)
 {
-    t_gui_key *ptr_key;
+    struct t_gui_key *ptr_key;
 
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
@@ -463,10 +464,10 @@ gui_keyboard_cmp (char *key, char *search)
  * gui_keyboard_search_part: search a key (maybe part of string)
  */
 
-t_gui_key *
+struct t_gui_key *
 gui_keyboard_search_part (char *key)
 {
-    t_gui_key *ptr_key;
+    struct t_gui_key *ptr_key;
     
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
@@ -524,11 +525,11 @@ gui_keyboard_function_search_by_ptr (t_gui_key_func *function)
  * gui_keyboard_bind: bind a key to a function (command or special function)
  */
 
-t_gui_key *
+struct t_gui_key *
 gui_keyboard_bind (char *key, char *command)
 {
     t_gui_key_func *ptr_function;
-    t_gui_key *new_key;
+    struct t_gui_key *new_key;
     char *command2, *ptr_args;
     
     if (!key || !command)
@@ -589,7 +590,7 @@ gui_keyboard_bind (char *key, char *command)
 int
 gui_keyboard_unbind (char *key)
 {
-    t_gui_key *ptr_key;
+    struct t_gui_key *ptr_key;
     char *internal_code;
     
     internal_code = gui_keyboard_get_internal_code (key);
@@ -614,7 +615,7 @@ int
 gui_keyboard_pressed (char *key_str)
 {
     int first_key;
-    t_gui_key *ptr_key;
+    struct t_gui_key *ptr_key;
     char *buffer_before_key;
     char **commands, **ptr_cmd;
     
@@ -684,7 +685,7 @@ gui_keyboard_pressed (char *key_str)
  */
 
 void
-gui_keyboard_free (t_gui_key *key)
+gui_keyboard_free (struct t_gui_key *key)
 {
     /* free memory */
     if (key->key)
