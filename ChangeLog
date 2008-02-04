@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-02-03
+ChangeLog - 2008-02-04
 
 
 Version 0.2.7 (under dev!):
@@ -9,7 +9,7 @@ Version 0.2.7 (under dev!):
      fails), nicks are now set with one option "nicks" (task #6088)
    * fixed bug when switching window, scrollback is now preserved (task #7680)
    * added group support in nicklist
-   * added backlog option in logger plugin
+   * added "backlog" and "name_lower_case" options in logger plugin (bug #19522)
    * improved main loop: higher timout in select(), less CPU usage
    * added /reload command to reload WeeChat and plugins config files
      (signal SIGHUP is catched to reload config files)

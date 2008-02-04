@@ -47,12 +47,14 @@ WEECHAT_PLUGIN_LICENSE("GPL");
 
 struct t_weechat_plugin *weechat_logger_plugin = NULL;
 
-#define LOGGER_OPTION_PATH        "path"
-#define LOGGER_OPTION_TIME_FORMAT "time_format"
-#define LOGGER_OPTION_INFO_LINES  "info_lines"
-#define LOGGER_OPTION_BACKLOG     "backlog"
+#define LOGGER_OPTION_PATH            "path"
+#define LOGGER_OPTION_NAME_LOWER_CASE "name_lower_case"
+#define LOGGER_OPTION_TIME_FORMAT     "time_format"
+#define LOGGER_OPTION_INFO_LINES      "info_lines"
+#define LOGGER_OPTION_BACKLOG         "backlog"
 
 char *logger_option_path = NULL;
+int logger_option_name_lower_case;
 char *logger_option_time_format = NULL;
 int logger_option_info_lines;
 int logger_option_backlog;
@@ -76,6 +78,17 @@ logger_config_read ()
         weechat_config_set_plugin (LOGGER_OPTION_PATH, "%h/logs/");
         logger_option_path = weechat_config_get_plugin ("path");
     }
+    
+    string = weechat_config_get_plugin (LOGGER_OPTION_NAME_LOWER_CASE);
+    if (!string)
+    {
+        weechat_config_set_plugin (LOGGER_OPTION_NAME_LOWER_CASE, "on");
+        string = weechat_config_get_plugin (LOGGER_OPTION_NAME_LOWER_CASE);
+    }
+    if (string && (weechat_config_string_to_boolean (string) > 0))
+        logger_option_name_lower_case = 1;
+    else
+        logger_option_name_lower_case = 0;
     
     logger_option_time_format = weechat_config_get_plugin (LOGGER_OPTION_TIME_FORMAT);
     if (!logger_option_time_format)
@@ -209,11 +222,15 @@ logger_get_filename (struct t_gui_buffer *buffer)
                 strcpy (res, log_path2);
                 if (category2)
                 {
+                    if (logger_option_name_lower_case)
+                        weechat_string_tolower (category2);
                     strcat (res, category2);
                     strcat (res, ".");
                 }
                 if (name2)
                 {
+                    if (logger_option_name_lower_case)
+                        weechat_string_tolower (name2);
                     strcat (res, name2);
                     strcat (res, ".");
                 }
@@ -643,6 +660,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     weechat_hook_print (NULL, NULL, 1, &logger_print_cb, NULL);
     
     weechat_hook_config ("plugin", "logger." LOGGER_OPTION_PATH,
+                         &logger_config_cb, NULL);
+    weechat_hook_config ("plugin", "logger." LOGGER_OPTION_NAME_LOWER_CASE,
                          &logger_config_cb, NULL);
     weechat_hook_config ("plugin", "logger." LOGGER_OPTION_TIME_FORMAT,
                          &logger_config_cb, NULL);

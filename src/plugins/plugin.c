@@ -234,6 +234,8 @@ plugin_load (char *filename)
         new_plugin->gettext = &plugin_api_gettext;
         new_plugin->ngettext = &plugin_api_ngettext;
         new_plugin->strndup = &string_strndup;
+        new_plugin->string_tolower = &string_tolower;
+        new_plugin->string_toupper = &string_toupper;
         new_plugin->strcasecmp = &string_strcasecmp;
         new_plugin->strncasecmp = &string_strncasecmp;
         new_plugin->strcmp_ignore_chars = &string_strcmp_ignore_chars;

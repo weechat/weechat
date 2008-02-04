@@ -95,6 +95,8 @@ struct t_weechat_plugin
     char *(*gettext) (char *string);
     char *(*ngettext) (char *single, char *plural, int count);
     char *(*strndup) (char *string, int length);
+    void (*string_tolower) (char *string);
+    void (*string_toupper) (char *string);
     int (*strcasecmp) (char *string1, char *string2);
     int (*strncasecmp) (char *string1, char *string2, int max);
     int (*strcmp_ignore_chars) (char *string1, char *string2,
@@ -360,6 +362,10 @@ struct t_weechat_plugin
     weechat_plugin->ngettext(single, plural, number)
 #define weechat_strndup(__string, __length)     \
     weechat_plugin->strndup(__string, __length)
+#define weechat_string_tolower(__string)        \
+    weechat_plugin->string_tolower(__string)
+#define weechat_string_toupper(__string)        \
+    weechat_plugin->string_toupper(__string)
 #define weechat_strcasecmp(__string1, __string2)        \
     weechat_plugin->strcasecmp(__string1, __string2)
 #define weechat_strncasecmp(__string1, __string2, __max)        \
