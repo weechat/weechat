@@ -554,12 +554,12 @@ weechat_perl_completion_cb (void *data, char *completion,
 }
 
 /*
- * weechat_perl_dump_data_cb: dump Perl plugin data in WeeChat log file
+ * weechat_perl_debug_dump_cb: dump Perl plugin data in WeeChat log file
  */
 
 int
-weechat_perl_dump_data_cb (void *data, char *signal, char *type_data,
-                           void *signal_data)
+weechat_perl_debug_dump_cb (void *data, char *signal, char *type_data,
+                            void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -602,7 +602,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     script_init (weechat_perl_plugin,
                  &weechat_perl_command_cb,
                  &weechat_perl_completion_cb,
-                 &weechat_perl_dump_data_cb,
+                 &weechat_perl_debug_dump_cb,
                  &weechat_perl_load_cb);
     
     /* init ok */

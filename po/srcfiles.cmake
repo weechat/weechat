@@ -9,6 +9,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-config-file.c
 ./src/core/wee-config-file.h
 ./src/core/wee-config.h
+./src/core/wee-debug.c
+./src/core/wee-debug.h
 ./src/core/wee-hook.c
 ./src/core/wee-hook.h
 ./src/core/wee-input.c
@@ -82,6 +84,7 @@ SET(WEECHAT_SOURCES
 ./src/plugins/aspell/aspell.h
 ./src/plugins/charset/charset.c
 ./src/plugins/charset/charset.h
+./src/plugins/debug/debug.c
 ./src/plugins/demo/demo.c
 ./src/plugins/fifo/fifo.c
 ./src/plugins/irc/irc-buffer.c

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-03 16:29+0100\n"
-"PO-Revision-Date: 2008-02-03 16:29+0100\n"
+"POT-Creation-Date: 2008-02-21 07:54+0100\n"
+"PO-Revision-Date: 2008-02-21 07:55+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -487,26 +487,6 @@ msgid ""
 msgstr ""
 "commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est "
 "pas trouvé au début de la commande)"
-
-msgid "print debug messages"
-msgstr "affiche des messages de debogage"
-
-msgid "dump | buffer | windows | text"
-msgstr "dump | buffer | windows | texte"
-
-msgid ""
-"   dump: save memory dump in WeeChat log file (same dump is written when "
-"WeeChat crashes)\n"
-" buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
-msgstr ""
-"   dump: affiche les variables mémoire WeeChat dans le fichier log (les "
-"mêmes messages sont affichés lorsque WeeChat plante)\n"
-" buffer: affiche le contenu du tampon en valeurs hexadécimales dans le "
-"fichier log\n"
-"windows: affiche l'arbre des fenêtres<\n"
-"  texte: envoie le signal \"debug\" avec \"texte\" comme paramètre"
 
 msgid "display help about commands"
 msgstr "afficher l'aide sur les commandes"
@@ -1729,6 +1709,26 @@ msgstr ""
 "/charset decode.irc.freenode.#weechat => définit le charset de décodage à "
 "iso-8859-15 pour le canal IRC \"#weechat\" sur le serveur \"freenode\""
 
+msgid "print debug messages"
+msgstr "affiche des messages de debogage"
+
+msgid "dump | buffer | windows | text"
+msgstr "dump | buffer | windows | texte"
+
+msgid ""
+"   dump: save memory dump in WeeChat log file (same dump is written when "
+"WeeChat crashes)\n"
+" buffer: dump buffer content with hexadecimal values in log file\n"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
+msgstr ""
+"   dump: affiche les variables mémoire WeeChat dans le fichier log (les "
+"mêmes messages sont affichés lorsque WeeChat plante)\n"
+" buffer: affiche le contenu du tampon en valeurs hexadécimales dans le "
+"fichier log\n"
+"windows: affiche l'arbre des fenêtres<\n"
+"  texte: envoie le signal \"debug\" avec \"texte\" comme paramètre"
+
 msgid "demo message without prefix"
 msgstr "message de démonstration sans préfixe"
 
@@ -1848,6 +1848,14 @@ msgstr "%s%s: erreur en lecture du tube, fermeture"
 #, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s%s: erreur d'ouverture du fichier, fermeture"
+
+#, c-format
+msgid "%s: debug enabled"
+msgstr "%s: debug activé"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr "%s: debug désactivé"
 
 #, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -4266,6 +4274,15 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\""
+
+#~ msgid "debug command"
+#~ msgstr "commande debug"
+
+#~ msgid "[test]"
+#~ msgstr "[test]"
+
+#~ msgid "test: test"
+#~ msgstr "test: test"
 
 #~ msgid "IP address or hostname of IRC server"
 #~ msgstr "adresse IP ou nom du serveur IRC"

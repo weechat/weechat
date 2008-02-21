@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-03 16:29+0100\n"
+"POT-Creation-Date: 2008-02-21 07:54+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -521,27 +521,6 @@ msgid ""
 msgstr ""
 "команда: исполняемая команда ('/' автоматически добавляется в начало "
 "команды)\n"
-
-msgid "print debug messages"
-msgstr "выводить отладочные сообщения"
-
-#, fuzzy
-msgid "dump | buffer | windows | text"
-msgstr "dump | buffer | windows"
-
-#, fuzzy
-msgid ""
-"   dump: save memory dump in WeeChat log file (same dump is written when "
-"WeeChat crashes)\n"
-" buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
-msgstr ""
-"   dump: сохранить дамп памяти в журнал WeeChat (аналогично дампу при крахе "
-"WeeChat)\n"
-" buffer: сохранить содержимое буфера с шестнадцатеричными значениями в log-"
-"файл\n"
-"windows: отобразить дерево окон"
 
 msgid "display help about commands"
 msgstr "отобразить помощь по командам"
@@ -1824,6 +1803,27 @@ msgid ""
 "for IRC channel \"#weechat\" on server \"freenode\""
 msgstr ""
 
+msgid "print debug messages"
+msgstr "выводить отладочные сообщения"
+
+#, fuzzy
+msgid "dump | buffer | windows | text"
+msgstr "dump | buffer | windows"
+
+#, fuzzy
+msgid ""
+"   dump: save memory dump in WeeChat log file (same dump is written when "
+"WeeChat crashes)\n"
+" buffer: dump buffer content with hexadecimal values in log file\n"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
+msgstr ""
+"   dump: сохранить дамп памяти в журнал WeeChat (аналогично дампу при крахе "
+"WeeChat)\n"
+" buffer: сохранить содержимое буфера с шестнадцатеричными значениями в log-"
+"файл\n"
+"windows: отобразить дерево окон"
+
 msgid "demo message without prefix"
 msgstr ""
 
@@ -1948,6 +1948,14 @@ msgstr "%s ошибка чтения FIFO pipe, закрываю его\n"
 #, fuzzy, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s ошибка чтения FIFO pipe, закрываю его\n"
+
+#, fuzzy, c-format
+msgid "%s: debug enabled"
+msgstr "FIFO pipe открыт\n"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -4319,6 +4327,14 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
+#, fuzzy
+#~ msgid "debug command"
+#~ msgstr "команда"
+
+#, fuzzy
+#~ msgid "[test]"
+#~ msgstr "текст"
+
 #~ msgid "IP address or hostname of IRC server"
 #~ msgstr "IP адрес или хост IRC сервера"
 
@@ -4443,10 +4459,6 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 #, fuzzy
 #~ msgid "%s%s: loading Perl script \"%s\""
 #~ msgstr "сессия: загружаю сервер \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%s%s: plugin ended"
-#~ msgstr "FIFO pipe открыт\n"
 
 #~ msgid "%s cannot find nick for sending message\n"
 #~ msgstr "%s не могу найти адресата сообщения\n"

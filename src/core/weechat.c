@@ -1,18 +1,18 @@
-/* ############################################################################
- * ###          ___       __         ______________        _____            ###
- * ###          __ |     / /___________  ____/__  /_______ __  /_           ###
- * ###          __ | /| / /_  _ \  _ \  /    __  __ \  __ `/  __/           ###
- * ###          __ |/ |/ / /  __/  __/ /___  _  / / / /_/ // /_             ###
- * ###          ____/|__/  \___/\___/\____/  /_/ /_/\__,_/ \__/             ###
- * ###                                                                      ###
- * ###             WeeChat - Wee Enhanced Environment for Chat              ###
- * ###                 Fast & light environment for Chat                    ###
- * ###                                                                      ###
- * ###                By FlashCode <flashcode@flashtux.org>                 ###
- * ###                                                                      ###
- * ###                     http://weechat.flashtux.org                      ###
- * ###                                                                      ###
- * ############################################################################
+/* ##########################################################################
+ * ##          ___       __         ______________        _____            ##
+ * ##          __ |     / /___________  ____/__  /_______ __  /_           ##
+ * ##          __ | /| / /_  _ \  _ \  /    __  __ \  __ `/  __/           ##
+ * ##          __ |/ |/ / /  __/  __/ /___  _  / / / /_/ // /_             ##
+ * ##          ____/|__/  \___/\___/\____/  /_/ /_/\__,_/ \__/             ##
+ * ##                                                                      ##
+ * ##             WeeChat - Wee Enhanced Environment for Chat              ##
+ * ##                 Fast, light, extensible chat client                  ##
+ * ##                                                                      ##
+ * ##                By FlashCode <flashcode@flashtux.org>                 ##
+ * ##                                                                      ##
+ * ##                     http://weechat.flashtux.org                      ##
+ * ##                                                                      ##
+ * ##########################################################################
  *
  * Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
  * See README for License detail, AUTHORS for developers list.
@@ -54,19 +54,16 @@
 #include "wee-backtrace.h"
 #include "wee-command.h"
 #include "wee-config.h"
+#include "wee-debug.h"
 #include "wee-hook.h"
 #include "wee-log.h"
-#include "wee-upgrade.h"
 #include "wee-string.h"
 #include "wee-utf8.h"
 #include "wee-util.h"
-#include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
-#include "../gui/gui-hotlist.h"
 #include "../gui/gui-main.h"
 #include "../gui/gui-keyboard.h"
-#include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
 
 
@@ -483,52 +480,6 @@ weechat_shutdown (int return_code, int crash)
 }
 
 /*
- * weechat_dump: write dump to WeeChat log file
- */
-
-void
-weechat_dump (int crash)
-{
-    /* prevent reentrance */
-    if (sigsegv)
-        exit (EXIT_FAILURE);
-    
-    if (crash)
-    {
-        sigsegv = 1;
-        log_printf ("Very bad, WeeChat is crashing (SIGSEGV received)...");
-    }
-    
-    log_printf ("");
-    if (crash)
-    {
-        log_printf ("******             WeeChat CRASH DUMP              ******");
-        log_printf ("****** Please send this file to WeeChat developers ******");
-        log_printf ("******    and explain when this crash happened     ******");
-    }
-    else
-    {
-        log_printf ("******            WeeChat dump request             ******");
-    }
-
-    gui_window_print_log ();
-    gui_buffer_print_log ();
-    gui_hotlist_print_log ();
-    
-    hook_print_log ();
-    
-    config_file_print_log ();
-    
-    plugin_print_log ();
-    
-    hook_signal_send ("dump_data", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-    
-    log_printf ("");
-    log_printf ("******             End of WeeChat dump             ******");
-    log_printf ("");
-}
-
-/*
  * weechat_sigsegv: SIGSEGV handler: save crash log to
  *                  <weechat_home>/weechat.log and exit
  */
@@ -536,7 +487,7 @@ weechat_dump (int crash)
 void
 weechat_sigsegv ()
 {
-    weechat_dump (1);
+    debug_dump (1);
     unhook_all ();
     gui_main_end ();
 
@@ -588,6 +539,7 @@ main (int argc, char *argv[])
     util_catch_signal (SIGSEGV,
                        &weechat_sigsegv); /* crash dump for SIGSEGV signal  */
     hook_init ();                       /* initialize hooks                 */
+    debug_init ();                      /* hook signals for debug           */ 
     gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
     weechat_init_vars ();               /* initialize some variables        */
     command_init ();                    /* initialize WeeChat commands      */

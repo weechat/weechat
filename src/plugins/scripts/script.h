@@ -64,9 +64,10 @@ extern void script_init (struct t_weechat_plugin *weechat_plugin,
                          int (*callback_completion)(void *data, char *completion,
                                                     struct t_gui_buffer *buffer,
                                                     struct t_weelist *list),
-                         int (*callback_signal_dump)(void *data, char *signal,
-                                                     char *type_data,
-                                                     void *signal_data),
+                         int (*callback_signal_debug_dump)(void *data,
+                                                           char *signal,
+                                                           char *type_data,
+                                                           void *signal_data),
                          int (*callback_load_file)(void *data, char *filename));
 extern char *script_ptr2str (void *pointer);
 extern void *script_str2ptr (char *pointer_str);

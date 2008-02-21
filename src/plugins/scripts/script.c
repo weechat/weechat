@@ -88,9 +88,9 @@ script_init (struct t_weechat_plugin *weechat_plugin,
              int (*callback_completion)(void *data, char *completion,
                                         struct t_gui_buffer *buffer,
                                         struct t_weelist *list),
-             int (*callback_signal_dump)(void *data, char *signal,
-                                         char *type_data,
-                                         void *signal_data),
+             int (*callback_signal_debug_dump)(void *data, char *signal,
+                                               char *type_data,
+                                               void *signal_data),
              int (*callback_load_file)(void *data, char *filename))
 {
     char *string, *completion = "list|listfull|load|autoload|reload|unload %f";
@@ -154,8 +154,8 @@ script_init (struct t_weechat_plugin *weechat_plugin,
         free (string);
     }
     
-    /* add signal for "dump_data" */
-    weechat_hook_signal ("dump_data", callback_signal_dump, NULL);
+    /* add signal for "debug_dump" */
+    weechat_hook_signal ("debug_dump", callback_signal_debug_dump, NULL);
     
     /* autoload scripts */
     script_auto_load (weechat_plugin, callback_load_file);

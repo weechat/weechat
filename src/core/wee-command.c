@@ -32,6 +32,7 @@
 #include "wee-command.h"
 #include "wee-config.h"
 #include "wee-config-file.h"
+#include "wee-debug.h"
 #include "wee-hook.h"
 #include "wee-input.h"
 #include "wee-log.h"
@@ -372,97 +373,6 @@ command_builtin (void *data, struct t_gui_buffer *buffer,
             }
         }
     }
-    return WEECHAT_RC_OK;
-}
-
-/*
- * command_debug_display_windows: display tree of windows
- */
-
-void
-command_debug_display_windows (struct t_gui_window_tree *tree, int indent)
-{
-    char format[128];
-    
-    if (tree)
-    {
-        if (tree->window)
-        {
-            /* leaf */
-            snprintf (format,
-                      sizeof (format),
-                      "%%-%dsleaf: 0x%%X (parent:0x%%X), win=0x%%X, "
-                      "child1=0x%%X, child2=0x%%X, %%d,%%d %%dx%%d, "
-                      "%%d%%%%x%%d%%%%",
-                      indent * 2);
-            gui_chat_printf (NULL,
-                             format,
-                             " ", tree, tree->parent_node, tree->window,
-                             tree->child1, tree->child2,
-                             tree->window->win_x, tree->window->win_y,
-                             tree->window->win_width, tree->window->win_height,
-                             tree->window->win_width_pct,
-                             tree->window->win_height_pct);
-        }
-        else
-        {
-            /* node */
-            snprintf (format,
-                      sizeof (format),
-                      "%%-%dsnode: 0x%%X (parent:0x%%X), win=0x%%X, "
-                      "child1=0x%%X, child2=0x%%X)",
-                      indent * 2);
-            gui_chat_printf (NULL,
-                             format,
-                             " ", tree, tree->parent_node, tree->window,
-                             tree->child1, tree->child2);
-        }
-        
-        if (tree->child1)
-            command_debug_display_windows (tree->child1, indent + 1);
-        if (tree->child2)
-            command_debug_display_windows (tree->child2, indent + 1);
-    }
-}
-
-/*
- * command_debug: print debug messages
- */
-
-int
-command_debug (void *data, struct t_gui_buffer *buffer,
-               int argc, char **argv, char **argv_eol)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) argv_eol;
-
-    if (argc >= 2)
-    {
-        if (string_strcasecmp (argv[1], "dump") == 0)
-        {
-            weechat_dump (0);
-        }
-        else if (string_strcasecmp (argv[1], "buffer") == 0)
-        {
-            gui_buffer_dump_hexa (buffer);
-            gui_chat_printf (NULL,
-                             "DEBUG: buffer content written in WeeChat "
-                             "log file");
-        }
-        else if (string_strcasecmp (argv[1], "windows") == 0)
-        {
-            gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL, "DEBUG: windows tree:");
-            command_debug_display_windows (gui_windows_tree, 1);
-        }
-        else
-        {
-            hook_signal_send ("debug",
-                              WEECHAT_HOOK_SIGNAL_STRING, argv_eol[1]);
-        }
-    }
-    
     return WEECHAT_RC_OK;
 }
 
@@ -1995,7 +1905,7 @@ command_init ()
                      "   scroll 20 msgs up: /buffer scroll -20\n"
                      "    jump to #weechat: /buffer #weechat"),
                   "clear|move|close|list|notify|scroll|set|%b|%c %b|%c",
-                  command_buffer, NULL);
+                  &command_buffer, NULL);
     hook_command (NULL, "builtin",
                   N_("launch WeeChat builtin command (do not look at commands "
                      "hooked)"),
@@ -2003,32 +1913,20 @@ command_init ()
                   N_("command: command to execute (a '/' is automatically "
                      "added if not found at beginning of command)"),
                   "%w",
-                  command_builtin, NULL);
-    hook_command (NULL, "debug",
-                  N_("print debug messages"),
-                  N_("dump | buffer | windows | text"),
-                  N_("   dump: save memory dump in WeeChat log file (same "
-                     "dump is written when WeeChat crashes)\n"
-                     " buffer: dump buffer content with hexadecimal values "
-                     "in log file\n"
-                     "windows: display windows tree\n"
-                     "   text: send \"debug\" signal with \"text\" as "
-                     "argument"),
-                  "dump|buffer|windows",
-                  command_debug, NULL);
+                  &command_builtin, NULL);
     hook_command (NULL, "help",
                   N_("display help about commands"),
                   N_("[command]"),
                   N_("command: name of a WeeChat or IRC command"),
                   "%w|%h",
-                  command_help, NULL);
+                  &command_help, NULL);
     hook_command (NULL, "history",
                   N_("show buffer command history"),
                   N_("[clear | value]"),
                   N_("clear: clear history\n"
                      "value: number of history entries to show"),
                   "-clear",
-                  command_history, NULL);
+                  &command_history, NULL);
     hook_command (NULL, "key",
                   N_("bind/unbind keys"),
                   N_("[key [function/command]] [unbind key] [functions] "
@@ -2042,7 +1940,7 @@ command_init ()
                      "    reset: restore bindings to the default values and "
                      "delete ALL personal bindings (use carefully!)"),
                   "unbind|functions|call|reset %k",
-                  command_key, NULL);
+                  &command_key, NULL);
     hook_command (NULL, "plugin",
                   N_("list/load/unload plugins"),
                   N_("[list [name]] | [listfull [name]] | [load filename] | "
@@ -2057,12 +1955,12 @@ command_init ()
                      "  unload: unload one or all plugins\n\n"
                      "Without argument, /plugin command lists loaded plugins."),
                   "list|listfull|load|autoload|reload|unload %f|%p",
-                  command_plugin, NULL);
+                  &command_plugin, NULL);
     hook_command (NULL, "quit",
                   N_("quit WeeChat"),
                   "", "",
                   "%q",
-                  command_quit, NULL);
+                  &command_quit, NULL);
     hook_command (NULL, "reload",
                   N_("reload configuration files from disk"),
                   N_("[file [file...]]"),
@@ -2070,7 +1968,7 @@ command_init ()
                      "Without argument, all files (WeeChat and plugins) are "
                      "reloaded."),
                   "%C|%*",
-                  command_reload, NULL);
+                  &command_reload, NULL);
     hook_command (NULL, "save",
                   N_("save configuration files to disk"),
                   N_("[file [file...]]"),
@@ -2078,7 +1976,7 @@ command_init ()
                      "Without argument, all files (WeeChat and plugins) are "
                      "saved."),
                   "%C|%*",
-                  command_save, NULL);
+                  &command_save, NULL);
     hook_command (NULL, "set",
                   N_("set config options"),
                   N_("[option [ = value]]"),
@@ -2090,7 +1988,7 @@ command_init ()
                      "\"servername\" is an internal server name and \"xxx\" "
                      "an option for this server."),
                   "%o = %v",
-                  command_set, NULL);
+                  &command_set, NULL);
     hook_command (NULL, "setp",
                   N_("set plugin config options"),
                   N_("[option [ = value]]"),
@@ -2099,7 +1997,7 @@ command_init ()
                      "Option is format: plugin.option, example: "
                      "perl.myscript.item1"),
                   "%O = %V",
-                  command_setp, NULL);
+                  &command_setp, NULL);
     hook_command (NULL, "upgrade",
                   N_("upgrade WeeChat without disconnecting from servers"),
                   N_("[path_to_binary]"),
@@ -2109,13 +2007,13 @@ command_init ()
                      "have been compiled or installed with a package manager "
                      "before running this command."),
                   "%f",
-                  command_upgrade, NULL);
+                  &command_upgrade, NULL);
     hook_command (NULL, "uptime",
                   N_("show WeeChat uptime"),
                   N_("[-o]"),
                   N_("-o: send uptime on current channel as an IRC message"),
                   "-o",
-                  command_uptime, NULL);
+                  &command_uptime, NULL);
     hook_command (NULL, "window",
                   N_("manage windows"),
                   N_("[list | -1 | +1 | b# | up | down | left | right | "
@@ -2141,7 +2039,7 @@ command_init ()
                      "window as size reference. For example 25 means create a "
                      "new window with size = current_size / 4"),
                   "list|-1|+1|up|down|left|right|splith|splitv|resize|merge all",
-                  command_window, NULL);
+                  &command_window, NULL);
 }
 
 /*
@@ -2165,16 +2063,22 @@ command_print_stdout ()
                                   HOOK_COMMAND(ptr_hook, command));
             if (HOOK_COMMAND(ptr_hook, args)
                 && HOOK_COMMAND(ptr_hook, args)[0])
+            {
                 string_iconv_fprintf (stdout, "  %s\n\n",
                                       _(HOOK_COMMAND(ptr_hook, args)));
+            }
             else
+            {
                 string_iconv_fprintf (stdout, "\n\n");
+            }
             string_iconv_fprintf (stdout, "%s\n\n",
                                   _(HOOK_COMMAND(ptr_hook, description)));
             if (HOOK_COMMAND(ptr_hook, args_description)
                 && HOOK_COMMAND(ptr_hook, args_description)[0])
+            {
                 string_iconv_fprintf (stdout, "%s\n\n",
                                       _(HOOK_COMMAND(ptr_hook, args_description)));
+            }
         }
     }
 }

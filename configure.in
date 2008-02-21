@@ -91,47 +91,48 @@ AC_CHECK_FUNCS([gethostbyname gethostname getsockname gettimeofday inet_ntoa mem
 AH_VERBATIM([PREFIX], [#undef PREFIX])
 AH_VERBATIM([WEECHAT_LIBDIR], [#undef WEECHAT_LIBDIR])
 AH_VERBATIM([WEECHAT_SHAREDIR], [#undef WEECHAT_SHAREDIR])
-AH_VERBATIM([PLUGIN_IRC], [#undef PLUGIN_IRC])
 AH_VERBATIM([PLUGIN_ALIAS], [#undef PLUGIN_ALIAS])
 AH_VERBATIM([PLUGIN_ASPELL], [#undef PLUGIN_ASPELL])
 AH_VERBATIM([PLUGIN_CHARSET], [#undef PLUGIN_CHARSET])
+AH_VERBATIM([PLUGIN_DEBUG], [#undef PLUGIN_DEBUG])
+AH_VERBATIM([PLUGIN_DEMO], [#undef PLUGIN_DEMO])
 AH_VERBATIM([PLUGIN_FIFO], [#undef PLUGIN_FIFO])
+AH_VERBATIM([PLUGIN_IRC], [#undef PLUGIN_IRC])
 AH_VERBATIM([PLUGIN_LOGGER], [#undef PLUGIN_LOGGER])
 AH_VERBATIM([PLUGIN_TRIGGER], [#undef PLUGIN_TRIGGER])
 AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
 AH_VERBATIM([PLUGIN_PYTHON], [#undef PLUGIN_PYTHON])
 AH_VERBATIM([PLUGIN_RUBY], [#undef PLUGIN_RUBY])
 AH_VERBATIM([PLUGIN_LUA], [#undef PLUGIN_LUA])
-AH_VERBATIM([PLUGIN_DEMO], [#undef PLUGIN_DEMO])
 AH_VERBATIM([HAVE_GNUTLS], [#undef HAVE_GNUTLS])
 AH_VERBATIM([HAVE_FLOCK], [#undef HAVE_FLOCK])
-AH_VERBATIM([DEBUG], [#undef DEBUG])
 
 # Arguments for ./configure
 
-AC_ARG_ENABLE(ncurses,      [ --disable-ncurses         Turn off ncurses interface (default=compiled if found)],enable_ncurses=$enableval,enable_ncurses=yes)
-AC_ARG_ENABLE(wxwidgets,    [ --enable-wxwidgets        Turn on WxWidgets interface (default=off)],enable_wxwidgets=$enableval,enable_wxwidgets=no)
-AC_ARG_ENABLE(gtk,          [ --enable-gtk              Turn on Gtk interface (default=off)],enable_gtk=$enableval,enable_gtk=no)
-AC_ARG_ENABLE(qt,           [ --enable-qt               Turn on Qt interface (default=off)],enable_qt=$enableval,enable_qt=no)
-AC_ARG_ENABLE(gnutls,       [ --disable-gnutls          Turn off gnutls support (default=compiled if found)],enable_gnutls=$enableval,enable_gnutls=yes)
-AC_ARG_ENABLE(irc,          [ --disable-irc             Turn off IRC plugin (default=compiled)],enable_irc=$enableval,enable_irc=yes)
-AC_ARG_ENABLE(alias,        [ --disable-alias           Turn off Alias plugin (default=compiled)],enable_alias=$enableval,enable_alias=yes)
-AC_ARG_ENABLE(aspell,       [ --disable-aspell          Turn off Aspell plugin (default=compiled if found)],enable_aspell=$enableval,enable_aspell=yes)
-AC_ARG_ENABLE(charset,      [ --disable-charset         Turn off Charset plugin (default=compiled if found)],enable_charset=$enableval,enable_charset=yes)
-AC_ARG_ENABLE(fifo,         [ --disable-fifo            Turn off Fifo plugin (default=compiled)],enable_fifo=$enableval,enable_fifo=yes)
-AC_ARG_ENABLE(logger,       [ --disable-logger          Turn off Logger plugin (default=compiled)],enable_logger=$enableval,enable_logger=yes)
-AC_ARG_ENABLE(trigger,      [ --disable-trigger         Turn off Trigger plugin (default=compiled if found)],enable_trigger=$enableval,enable_trigger=yes)
-AC_ARG_ENABLE(scripts,      [ --disable-scripts         Turn off script plugins (default=compiled if found)],enable_scripts=$enableval,enable_scripts=yes)
-AC_ARG_ENABLE(perl,         [ --disable-perl            Turn off Perl script plugin (default=compiled if found)],enable_perl=$enableval,enable_perl=yes)
-AC_ARG_ENABLE(python,       [ --disable-python          Turn off Python script plugin (default=compiled if found)],enable_python=$enableval,enable_python=yes)
-AC_ARG_ENABLE(ruby,         [ --disable-ruby            Turn off Ruby script plugin (default=compiled if found)],enable_ruby=$enableval,enable_ruby=yes)
-AC_ARG_ENABLE(lua,          [ --disable-lua             Turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
-AC_ARG_WITH(lua-inc,        [ --with-lua-inc=DIR,       Lua include files are in DIR (default=autodetect)],lua_inc=$withval,lua_inc='')
-AC_ARG_WITH(lua-lib,        [ --with-lua-lib=DIR,       Lua library files are in DIR (default=autodetect)],lua_lib=$withval,lua_lib='')
-AC_ARG_WITH(lua-suffix,     [ --with-lua-suffix=ARG     Lua is suffixed with ARG (default=autodetect)],lua_suffix=$withval,lua_suffix='')
-AC_ARG_ENABLE(demo,         [ --enable-demo             Turn on Demo plugin (default=off)],enable_demo=$enableval,enable_demo=no)
-AC_ARG_WITH(doc_xsl_prefix, [ --with-doc-xsl-prefix=DIR Docbook html/chunk.xsl is in DIR (default=autodetect)],doc_xsl_prefix=$withval,doc_xsl_prefix='')
-AC_ARG_WITH(debug,          [ --with-debug              Debugging: 0=no debug, 1=debug compilation, 2=debug compilation + verbose msgs (default=1)],debug=$withval,debug=1)
+AC_ARG_ENABLE(ncurses,      [  --disable-ncurses       turn off ncurses interface (default=compiled if found)],enable_ncurses=$enableval,enable_ncurses=yes)
+AC_ARG_ENABLE(wxwidgets,    [  --enable-wxwidgets      turn on WxWidgets interface (default=off)],enable_wxwidgets=$enableval,enable_wxwidgets=no)
+AC_ARG_ENABLE(gtk,          [  --enable-gtk            turn on Gtk interface (default=off)],enable_gtk=$enableval,enable_gtk=no)
+AC_ARG_ENABLE(qt,           [  --enable-qt             turn on Qt interface (default=off)],enable_qt=$enableval,enable_qt=no)
+AC_ARG_ENABLE(gnutls,       [  --disable-gnutls        turn off gnutls support (default=compiled if found)],enable_gnutls=$enableval,enable_gnutls=yes)
+AC_ARG_ENABLE(alias,        [  --disable-alias         turn off Alias plugin (default=compiled)],enable_alias=$enableval,enable_alias=yes)
+AC_ARG_ENABLE(aspell,       [  --disable-aspell        turn off Aspell plugin (default=compiled if found)],enable_aspell=$enableval,enable_aspell=yes)
+AC_ARG_ENABLE(charset,      [  --disable-charset       turn off Charset plugin (default=compiled if found)],enable_charset=$enableval,enable_charset=yes)
+AC_ARG_ENABLE(debug,        [  --enable-debug          turn on Debug plugin (default=on)],enable_debug=$enableval,enable_debug=yes)
+AC_ARG_ENABLE(demo,         [  --enable-demo           turn on Demo plugin (default=off)],enable_demo=$enableval,enable_demo=no)
+AC_ARG_ENABLE(fifo,         [  --disable-fifo          turn off Fifo plugin (default=compiled)],enable_fifo=$enableval,enable_fifo=yes)
+AC_ARG_ENABLE(irc,          [  --disable-irc           turn off IRC plugin (default=compiled)],enable_irc=$enableval,enable_irc=yes)
+AC_ARG_ENABLE(logger,       [  --disable-logger        turn off Logger plugin (default=compiled)],enable_logger=$enableval,enable_logger=yes)
+AC_ARG_ENABLE(scripts,      [  --disable-scripts       turn off script plugins (default=compiled if found)],enable_scripts=$enableval,enable_scripts=yes)
+AC_ARG_ENABLE(perl,         [  --disable-perl          turn off Perl script plugin (default=compiled if found)],enable_perl=$enableval,enable_perl=yes)
+AC_ARG_ENABLE(python,       [  --disable-python        turn off Python script plugin (default=compiled if found)],enable_python=$enableval,enable_python=yes)
+AC_ARG_ENABLE(ruby,         [  --disable-ruby          turn off Ruby script plugin (default=compiled if found)],enable_ruby=$enableval,enable_ruby=yes)
+AC_ARG_ENABLE(lua,          [  --disable-lua           turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
+AC_ARG_ENABLE(trigger,      [  --disable-trigger       turn off Trigger plugin (default=compiled if found)],enable_trigger=$enableval,enable_trigger=yes)
+AC_ARG_WITH(lua-inc,        [  --with-lua-inc=DIR,     lua include files are in DIR (default=autodetect)],lua_inc=$withval,lua_inc='')
+AC_ARG_WITH(lua-lib,        [  --with-lua-lib=DIR,     lua library files are in DIR (default=autodetect)],lua_lib=$withval,lua_lib='')
+AC_ARG_WITH(lua-suffix,     [  --with-lua-suffix=ARG   lua is suffixed with ARG (default=autodetect)],lua_suffix=$withval,lua_suffix='')
+AC_ARG_WITH(doc_xsl_prefix, [  --with-doc-xsl-prefix=DIR docbook html/chunk.xsl is in DIR (default=autodetect)],doc_xsl_prefix=$withval,doc_xsl_prefix='')
+AC_ARG_WITH(debug,          [  --with-debug            debugging: 0=no debug, 1=debug compilation (default=1)],debug=$withval,debug=1)
 
 not_asked=""
 not_found=""
@@ -275,14 +276,6 @@ if test "x$enable_scripts" = "xno" ; then
     enable_lua="no"
 fi
 
-# ----------------------------------- irc --------------------------------------
-
-if test "x$enable_irc" = "xyes" ; then
-    AC_DEFINE(PLUGIN_IRC)
-else
-    not_asked="$not_asked irc"
-fi
-
 # ---------------------------------- alias -------------------------------------
 
 if test "x$enable_alias" = "xyes" ; then
@@ -339,6 +332,30 @@ else
     not_asked="$not_asked charset"
 fi
 
+# ---------------------------------- debug -------------------------------------
+
+if test "x$enable_debug" = "xyes" ; then
+    DEBUG_CFLAGS=""
+    DEBUG_LFLAGS=""
+    AC_SUBST(DEBUG_CFLAGS)
+    AC_SUBST(DEBUG_LFLAGS)
+    AC_DEFINE(PLUGIN_DEBUG)
+else
+    not_asked="$not_asked debug"
+fi
+
+# ---------------------------------- demo --------------------------------------
+
+if test "x$enable_demo" = "xyes" ; then
+    DEMO_CFLAGS=""
+    DEMO_LFLAGS=""
+    AC_SUBST(DEMO_CFLAGS)
+    AC_SUBST(DEMO_LFLAGS)
+    AC_DEFINE(PLUGIN_DEMO)
+else
+    not_asked="$not_asked demo"
+fi
+
 # ---------------------------------- fifo --------------------------------------
 
 if test "x$enable_fifo" = "xyes" ; then
@@ -351,6 +368,14 @@ else
     not_asked="$not_asked fifo"
 fi
 
+# ----------------------------------- irc --------------------------------------
+
+if test "x$enable_irc" = "xyes" ; then
+    AC_DEFINE(PLUGIN_IRC)
+else
+    not_asked="$not_asked irc"
+fi
+
 # --------------------------------- logger -------------------------------------
 
 if test "x$enable_logger" = "xyes" ; then
@@ -361,18 +386,6 @@ if test "x$enable_logger" = "xyes" ; then
     AC_DEFINE(PLUGIN_LOGGER)
 else
     not_asked="$not_asked logger"
-fi
-
-# --------------------------------- trigger ------------------------------------
-
-if test "x$enable_trigger" = "xyes" ; then
-    TRIGGER_CFLAGS=""
-    TRIGGER_LFLAGS=""
-    AC_SUBST(TRIGGER_CFLAGS)
-    AC_SUBST(TRIGGER_LFLAGS)
-    AC_DEFINE(PLUGIN_TRIGGER)
-else
-    not_asked="$not_asked trigger"
 fi
 
 # ---------------------------------- perl --------------------------------------
@@ -652,16 +665,16 @@ if test "x$enable_lua" = "xyes" ; then
     AC_DEFINE(PLUGIN_LUA)
 fi
 
-# ---------------------------------- demo --------------------------------------
+# --------------------------------- trigger ------------------------------------
 
-if test "x$enable_demo" = "xyes" ; then
-    DEMO_CFLAGS=""
-    DEMO_LFLAGS=""
-    AC_SUBST(DEMO_CFLAGS)
-    AC_SUBST(DEMO_LFLAGS)
-    AC_DEFINE(PLUGIN_DEMO)
+if test "x$enable_trigger" = "xyes" ; then
+    TRIGGER_CFLAGS=""
+    TRIGGER_LFLAGS=""
+    AC_SUBST(TRIGGER_CFLAGS)
+    AC_SUBST(TRIGGER_LFLAGS)
+    AC_DEFINE(PLUGIN_TRIGGER)
 else
-    not_asked="$not_asked demo"
+    not_asked="$not_asked trigger"
 fi
 
 # ------------------------------------------------------------------------------
@@ -801,14 +814,10 @@ else
 fi
 
 CFLAGS=`echo $CFLAGS | sed s/-g//g`
-if test "x$debug" = "x1" || test "x$debug" = "x2" ; then
-    CFLAGS="$COMMON_CFLAGS $CFLAGS -g -O0"
-else
+if test "x$debug" = "x0" ; then
     CFLAGS="$COMMON_CFLAGS $CFLAGS"
-fi
-
-if test "x$debug" = "x2" ; then
-    AC_DEFINE(DEBUG)
+else
+    CFLAGS="$COMMON_CFLAGS $CFLAGS -g -O0"
 fi
 
 LIBS="$LIBS $INTLLIBS"
@@ -846,18 +855,19 @@ AM_CONDITIONAL(GUI_NCURSES,    test "$enable_ncurses" = "yes")
 AM_CONDITIONAL(GUI_WXWIDGETS,  test "$enable_wxwidgets" = "yes")
 AM_CONDITIONAL(GUI_GTK,        test "$enable_gtk" = "yes")
 AM_CONDITIONAL(GUI_QT,         test "$enable_qt" = "yes")
-AM_CONDITIONAL(PLUGIN_IRC,     test "$enable_irc" = "yes")
 AM_CONDITIONAL(PLUGIN_ALIAS,   test "$enable_alias" = "yes")
 AM_CONDITIONAL(PLUGIN_ASPELL,  test "$enable_aspell" = "yes")
 AM_CONDITIONAL(PLUGIN_CHARSET, test "$enable_charset" = "yes")
+AM_CONDITIONAL(PLUGIN_DEBUG,   test "$enable_debug" = "yes")
+AM_CONDITIONAL(PLUGIN_DEMO,    test "$enable_demo" = "yes")
 AM_CONDITIONAL(PLUGIN_FIFO,    test "$enable_fifo" = "yes")
+AM_CONDITIONAL(PLUGIN_IRC,     test "$enable_irc" = "yes")
 AM_CONDITIONAL(PLUGIN_LOGGER,  test "$enable_logger" = "yes")
-AM_CONDITIONAL(PLUGIN_TRIGGER, test "$enable_trigger" = "yes")
 AM_CONDITIONAL(PLUGIN_PERL,    test "$enable_perl" = "yes")
 AM_CONDITIONAL(PLUGIN_PYTHON,  test "$enable_python" = "yes")
 AM_CONDITIONAL(PLUGIN_RUBY,    test "$enable_ruby" = "yes")
 AM_CONDITIONAL(PLUGIN_LUA,     test "$enable_lua" = "yes")
-AM_CONDITIONAL(PLUGIN_DEMO,    test "$enable_demo" = "yes")
+AM_CONDITIONAL(PLUGIN_TRIGGER, test "$enable_trigger" = "yes")
 AM_CONDITIONAL(HAVE_GNUTLS,    test "$enable_gnutls" = "yes")
 AM_CONDITIONAL(HAVE_FLOCK,     test "$enable_flock" = "yes")
 AM_CONDITIONAL(DBLATEX_FOUND,  test "$DBLATEX_FOUND" = "yes")
@@ -875,11 +885,13 @@ AC_OUTPUT([Makefile
            src/Makefile
            src/core/Makefile
            src/plugins/Makefile
-           src/plugins/irc/Makefile
            src/plugins/alias/Makefile
            src/plugins/aspell/Makefile
            src/plugins/charset/Makefile
+           src/plugins/debug/Makefile
+           src/plugins/demo/Makefile
            src/plugins/fifo/Makefile
+           src/plugins/irc/Makefile
            src/plugins/logger/Makefile
            src/plugins/trigger/Makefile
            src/plugins/scripts/Makefile
@@ -887,7 +899,6 @@ AC_OUTPUT([Makefile
            src/plugins/scripts/python/Makefile
            src/plugins/scripts/ruby/Makefile
            src/plugins/scripts/lua/Makefile
-           src/plugins/demo/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
            src/gui/wxwidgets/Makefile
@@ -921,9 +932,6 @@ if test "x$listgui" = "x" ; then
 fi
 
 listplugins=""
-if test "x$enable_irc" = "xyes" ; then
-    listplugins="$listplugins irc"
-fi
 if test "x$enable_alias" = "xyes"; then
     listplugins="$listplugins alias"
 fi
@@ -933,14 +941,20 @@ fi
 if test "x$enable_charset" = "xyes"; then
     listplugins="$listplugins charset"
 fi
+if test "x$enable_debug" = "xyes"; then
+    listplugins="$listplugins debug"
+fi
+if test "x$enable_demo" = "xyes"; then
+    listplugins="$listplugins demo"
+fi
 if test "x$enable_fifo" = "xyes"; then
     listplugins="$listplugins fifo"
 fi
+if test "x$enable_irc" = "xyes" ; then
+    listplugins="$listplugins irc"
+fi
 if test "x$enable_logger" = "xyes"; then
     listplugins="$listplugins logger"
-fi
-if test "x$enable_trigger" = "xyes"; then
-    listplugins="$listplugins trigger"
 fi
 if test "x$enable_perl" = "xyes"; then
     listplugins="$listplugins perl($PERL_VERSION)"
@@ -954,8 +968,8 @@ fi
 if test "x$enable_lua" = "xyes"; then
     listplugins="$listplugins lua($LUA_VERSION)"
 fi
-if test "x$enable_demo" = "xyes"; then
-    listplugins="$listplugins demo"
+if test "x$enable_trigger" = "xyes"; then
+    listplugins="$listplugins trigger"
 fi
 
 listoptional=""
@@ -970,11 +984,8 @@ if test "x$enable_backtrace" = "xyes"; then
 fi
 
 msg_debug="no"
-if test "x$debug" = "x1"; then
+if test "x$debug" != "x0"; then
     msg_debug="yes"
-fi
-if test "x$debug" = "x2" ; then
-    msg_debug="yes (with verbose messages)"
 fi
 
 if test "x$msg_doc" = "x"; then

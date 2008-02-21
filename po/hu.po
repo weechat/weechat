@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-03 16:29+0100\n"
+"POT-Creation-Date: 2008-02-21 07:54+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -526,26 +526,6 @@ msgid ""
 msgstr ""
 "parancs: futtatandó parancs (egy '/' autómatikusan hozzáadódik, ha nincs "
 "megadva a parancs elején)\n"
-
-msgid "print debug messages"
-msgstr "hibakereső üzenetek megjelenítése"
-
-#, fuzzy
-msgid "dump | buffer | windows | text"
-msgstr "dump | buffer | windows"
-
-#, fuzzy
-msgid ""
-"   dump: save memory dump in WeeChat log file (same dump is written when "
-"WeeChat crashes)\n"
-" buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
-msgstr ""
-"   dump: memóriatartalom mentése a WeeChat logba (ugyanez a tartalom íródik "
-"a WeeChat összeomlásakor)\n"
-" buffer: hexadecimális puffertartalom logba írása\n"
-"windows: ablakfa megjelenítése"
 
 msgid "display help about commands"
 msgstr "segítség megjelenítése a parancsokhoz"
@@ -1822,6 +1802,26 @@ msgid ""
 "for IRC channel \"#weechat\" on server \"freenode\""
 msgstr ""
 
+msgid "print debug messages"
+msgstr "hibakereső üzenetek megjelenítése"
+
+#, fuzzy
+msgid "dump | buffer | windows | text"
+msgstr "dump | buffer | windows"
+
+#, fuzzy
+msgid ""
+"   dump: save memory dump in WeeChat log file (same dump is written when "
+"WeeChat crashes)\n"
+" buffer: dump buffer content with hexadecimal values in log file\n"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
+msgstr ""
+"   dump: memóriatartalom mentése a WeeChat logba (ugyanez a tartalom íródik "
+"a WeeChat összeomlásakor)\n"
+" buffer: hexadecimális puffertartalom logba írása\n"
+"windows: ablakfa megjelenítése"
+
 msgid "demo message without prefix"
 msgstr ""
 
@@ -1946,6 +1946,14 @@ msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
 #, fuzzy, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
+
+#, fuzzy, c-format
+msgid "%s: debug enabled"
+msgstr "FIFO cső nyitva\n"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -4337,6 +4345,14 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
+#, fuzzy
+#~ msgid "debug command"
+#~ msgstr "parancs"
+
+#, fuzzy
+#~ msgid "[test]"
+#~ msgstr "szöveg"
+
 #~ msgid "IP address or hostname of IRC server"
 #~ msgstr "IRC szerver IP-címe vagy hosztneve"
 
@@ -4464,10 +4480,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 #, fuzzy
 #~ msgid "%s%s: loading Perl script \"%s\""
 #~ msgstr "folyamat: \"%s\" szerver betöltése\n"
-
-#, fuzzy
-#~ msgid "%s%s: plugin ended"
-#~ msgstr "FIFO cső nyitva\n"
 
 #~ msgid "%s cannot find nick for sending message\n"
 #~ msgstr "%s nem található név az üzenet küldéséhez\n"

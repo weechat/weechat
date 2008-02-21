@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-03 16:29+0100\n"
+"POT-Creation-Date: 2008-02-21 07:54+0100\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -510,25 +510,6 @@ msgid ""
 msgstr ""
 "comando: comando a ejecutar (se aÃ±ade un '/' automÃ¡ticamente si no se "
 "encuentra al principio del comando)\n"
-
-msgid "print debug messages"
-msgstr "imprime mensajes de depuraciÃ³n"
-
-#, fuzzy
-msgid "dump | buffer | windows | text"
-msgstr "volcar | ventanas"
-
-#, fuzzy
-msgid ""
-"   dump: save memory dump in WeeChat log file (same dump is written when "
-"WeeChat crashes)\n"
-" buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
-msgstr ""
-" volcar: guardar el volcado de memoria en el archivo de registro de Weechat "
-"(el mismo volcado se escribe cuando Weechat se cuelga)\n"
-"ventanas: mostrar Ã¡rbol de ventanas"
 
 msgid "display help about commands"
 msgstr "mostrar ayuda sobre los comandos"
@@ -1805,6 +1786,25 @@ msgid ""
 "for IRC channel \"#weechat\" on server \"freenode\""
 msgstr ""
 
+msgid "print debug messages"
+msgstr "imprime mensajes de depuraciÃ³n"
+
+#, fuzzy
+msgid "dump | buffer | windows | text"
+msgstr "volcar | ventanas"
+
+#, fuzzy
+msgid ""
+"   dump: save memory dump in WeeChat log file (same dump is written when "
+"WeeChat crashes)\n"
+" buffer: dump buffer content with hexadecimal values in log file\n"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
+msgstr ""
+" volcar: guardar el volcado de memoria en el archivo de registro de Weechat "
+"(el mismo volcado se escribe cuando Weechat se cuelga)\n"
+"ventanas: mostrar Ã¡rbol de ventanas"
+
 msgid "demo message without prefix"
 msgstr ""
 
@@ -1930,6 +1930,14 @@ msgstr "%s error al leer la tuberÃ­a FIFO, cerrÃ¡ndola\n"
 #, fuzzy, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s error al leer la tuberÃ­a FIFO, cerrÃ¡ndola\n"
+
+#, fuzzy, c-format
+msgid "%s: debug enabled"
+msgstr "La tuberÃ­a FIFO estÃ¡ abierta\n"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -4334,6 +4342,14 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
+#, fuzzy
+#~ msgid "debug command"
+#~ msgstr "comando"
+
+#, fuzzy
+#~ msgid "[test]"
+#~ msgstr "texto"
+
 #~ msgid "IP address or hostname of IRC server"
 #~ msgstr "direcciÃ³n IP o nombre de mÃ¡quina del servidor IRC"
 
@@ -4462,10 +4478,6 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 #, fuzzy
 #~ msgid "%s%s: loading Perl script \"%s\""
 #~ msgstr "sesiÃ³n: cargando servidor \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%s%s: plugin ended"
-#~ msgstr "La tuberÃ­a FIFO estÃ¡ abierta\n"
 
 #~ msgid "%s cannot find nick for sending message\n"
 #~ msgstr ""

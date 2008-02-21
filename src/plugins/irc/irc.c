@@ -60,12 +60,38 @@ gnutls_certificate_credentials gnutls_xcred; /* gnutls client credentials */
 
 
 /*
- * irc_signal_dump_data_cb: dump IRC data in WeeChat log file
+ * irc_signal_debug_cb: callback for "debug" signal
  */
 
 int
-irc_signal_dump_data_cb (void *data, char *signal, char *type_data,
-                         void *signal_data)
+irc_signal_debug_cb (void *data, char *signal, char *type_data,
+                     void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        if (weechat_strcasecmp ((char *)signal_data, "irc") == 0)
+            irc_debug ^= 1;
+    }
+    
+    if (irc_debug)
+        weechat_printf (NULL, _("%s: debug enabled"), "irc");
+    else
+        weechat_printf (NULL, _("%s: debug disabled"), "irc");
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_signal_debug_dump_cb: dump IRC data in WeeChat log file
+ */
+
+int
+irc_signal_debug_dump_cb (void *data, char *signal, char *type_data,
+                          void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -140,27 +166,6 @@ irc_signal_quit_cb (void *data, char *signal, char *type_data,
 }
 
 /*
- * irc_signal_debug_cb: callback for "debug" signal
- */
-
-int
-irc_signal_debug_cb (void *data, char *signal, char *type_data,
-                     void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-
-    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
-    {
-        if (weechat_strcasecmp ((char *)signal_data, "irc") == 0)
-            irc_debug ^= 1;
-    }
-    
-    return WEECHAT_RC_OK;
-}
-
-/*
  * weechat_plugin_init: initialize IRC plugin
  */
 
@@ -187,9 +192,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     irc_command_init ();
 
     /* hook some signals */
-    weechat_hook_signal ("dump_data", &irc_signal_dump_data_cb, NULL);
-    weechat_hook_signal ("quit", &irc_signal_quit_cb, NULL);
     weechat_hook_signal ("debug", &irc_signal_debug_cb, NULL);
+    weechat_hook_signal ("debug_dump", &irc_signal_debug_dump_cb, NULL);
+    weechat_hook_signal ("quit", &irc_signal_quit_cb, NULL);
     
     /* hook completions */
     irc_completion_init ();

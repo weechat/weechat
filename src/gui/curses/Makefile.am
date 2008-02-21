@@ -23,6 +23,7 @@ weechat_curses_LDADD = ../../core/weechat.o \
                        ../../core/wee-command.o \
                        ../../core/wee-config.o \
                        ../../core/wee-config-file.o \
+                       ../../core/wee-debug.o \
                        ../../core/wee-hook.o \
                        ../../core/wee-input.o \
                        ../../core/wee-list.o \

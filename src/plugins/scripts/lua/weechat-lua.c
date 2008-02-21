@@ -417,12 +417,12 @@ weechat_lua_completion_cb (void *data, char *completion,
 }
 
 /*
- * weechat_lua_dump_data_cb: dump Lua plugin data in WeeChat log file
+ * weechat_lua_debug_dump_cb: dump Lua plugin data in WeeChat log file
  */
 
 int
-weechat_lua_dump_data_cb (void *data, char *signal, char *type_data,
-                          void *signal_data)
+weechat_lua_debug_dump_cb (void *data, char *signal, char *type_data,
+                           void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -448,7 +448,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     script_init (weechat_lua_plugin,
                  &weechat_lua_command_cb,
                  &weechat_lua_completion_cb,
-                 &weechat_lua_dump_data_cb,
+                 &weechat_lua_debug_dump_cb,
                  &weechat_lua_load_cb);
     
     /* init ok */

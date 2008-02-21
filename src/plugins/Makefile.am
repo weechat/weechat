@@ -19,7 +19,7 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
 noinst_LIBRARIES = lib_weechat_plugins.a
 
 lib_weechat_plugins_a_SOURCES = weechat-plugin.h \
-				plugin.c \
+                                plugin.c \
                                 plugin.h \
                                 plugin-api.c \
                                 plugin-api.h \
@@ -27,10 +27,6 @@ lib_weechat_plugins_a_SOURCES = weechat-plugin.h \
                                 plugin-config.h \
                                 plugin-infolist.c \
                                 plugin-infolist.h
-
-if PLUGIN_IRC
-irc_dir = irc
-endif
 
 if PLUGIN_ALIAS
 alias_dir = alias
@@ -44,16 +40,24 @@ if PLUGIN_CHARSET
 charset_dir = charset
 endif
 
+if PLUGIN_DEBUG
+debug_dir = debug
+endif
+
+if PLUGIN_DEMO
+demo_dir = demo
+endif
+
 if PLUGIN_FIFO
 fifo_dir = fifo
 endif
 
-if PLUGIN_LOGGER
-logger_dir = logger
+if PLUGIN_IRC
+irc_dir = irc
 endif
 
-if PLUGIN_TRIGGER
-trigger_dir = trigger
+if PLUGIN_LOGGER
+logger_dir = logger
 endif
 
 if PLUGIN_PERL
@@ -72,9 +76,10 @@ if PLUGIN_LUA
 script_dir = scripts
 endif
 
-if PLUGIN_DEMO
-demo_dir = demo
+if PLUGIN_TRIGGER
+trigger_dir = trigger
 endif
 
-SUBDIRS = . $(irc_dir) $(alias_dir) $(aspell_dir) $(charset_dir) $(fifo_dir) \
-            $(logger_dir) $(trigger_dir) $(demo_dir) $(script_dir)
+SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(debug_dir) \
+            $(demo_dir) $(fifo_dir) $(irc_dir) $(logger_dir) $(script_dir) \
+            $(trigger_dir)
