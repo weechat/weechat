@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-02-04
+ChangeLog - 2008-02-21
 
 
 Version 0.2.7 (under dev!):
+   * removed kernel info in CTCP VERSION reply (IRC plugin) (task #7494)
    * use of many addresses for one IRC server (auto-switch when a connexion
      fails), nicks are now set with one option "nicks" (task #6088)
    * fixed bug when switching window, scrollback is now preserved (task #7680)

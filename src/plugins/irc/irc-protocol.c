@@ -39,7 +39,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <wctype.h>
-#include <sys/utsname.h>
 #include <sys/time.h>
 #include <time.h>
 
@@ -1571,7 +1570,6 @@ irc_protocol_reply_version (struct t_irc_server *server, struct t_irc_channel *c
                             char *nick, char *message, int ignore)
 {
     char *pos, *version, *date;
-    struct utsname *buf;
     struct t_gui_buffer *ptr_buffer;
     
     ptr_buffer = (channel) ? channel->buffer : server->buffer;
@@ -1593,24 +1591,10 @@ irc_protocol_reply_version (struct t_irc_server *server, struct t_irc_channel *c
         date = weechat_info_get ("date");
         if (version && date)
         {
-            buf = (struct utsname *)malloc (sizeof (struct utsname));
-            if (buf && (uname (buf) >= 0))
-            {
-                irc_server_sendf (server,
-                                  "NOTICE %s :%sVERSION %s v%s"
-                                  " compiled on %s, running "
-                                  "%s %s / %s%s",
-                                  nick, "\01", "WeeChat", version, date,
-                                  &buf->sysname,
-                                  &buf->release, &buf->machine, "\01");
-                free (buf);
-            }
-            else
-                irc_server_sendf (server,
-                                  "NOTICE %s :%sVERSION %s v%s"
-                                  " compiled on %s%s",
-                                  nick, "\01", "WeeChat", version, date,
-                                  "\01");
+            irc_server_sendf (server,
+                              "NOTICE %s :%sVERSION WeeChat %s (%s)%s",
+                              nick, "\01", version, date, "\01");
+            
             if (pos)
             {
                 weechat_printf (ptr_buffer,
