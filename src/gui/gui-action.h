@@ -59,7 +59,6 @@ extern void gui_action_nick_page_up (char *args);
 extern void gui_action_nick_page_down (char *args);
 extern void gui_action_jump_smart (char *args);
 extern void gui_action_jump_dcc (char *args);
-extern void gui_action_jump_raw_data (char *args);
 extern void gui_action_jump_last_buffer (char *args);
 extern void gui_action_jump_previous_buffer (char *args);
 extern void gui_action_jump_server (char *args);

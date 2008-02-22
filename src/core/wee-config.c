@@ -124,7 +124,9 @@ struct t_config_option *config_color_chat_read_marker_bg;
 struct t_config_option *config_color_status;
 struct t_config_option *config_color_status_bg;
 struct t_config_option *config_color_status_delimiters;
-struct t_config_option *config_color_status_channel;
+struct t_config_option *config_color_status_number;
+struct t_config_option *config_color_status_category;
+struct t_config_option *config_color_status_name;
 struct t_config_option *config_color_status_data_msg;
 struct t_config_option *config_color_status_data_private;
 struct t_config_option *config_color_status_data_highlight;
@@ -973,11 +975,21 @@ config_weechat_init ()
         "color_status_delimiters", "color",
         N_("text color for status bar delimiters"),
         NULL, GUI_COLOR_STATUS_DELIMITERS, 0, "cyan", &config_change_color, NULL);
-    config_color_status_channel = config_file_new_option (
+    config_color_status_number = config_file_new_option (
         weechat_config_file, ptr_section,
-        "color_status_channel", "color",
-        N_("text color for current channel in status bar"),
-        NULL, GUI_COLOR_STATUS_CHANNEL, 0, "white", &config_change_color, NULL);
+        "color_status_number", "color",
+        N_("text color for current buffer number in status bar"),
+        NULL, GUI_COLOR_STATUS_NUMBER, 0, "yellow", &config_change_color, NULL);
+    config_color_status_category = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "color_status_category", "color",
+        N_("text color for current buffer category in status bar"),
+        NULL, GUI_COLOR_STATUS_CATEGORY, 0, "lightgreen", &config_change_color, NULL);
+    config_color_status_name = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "color_status_name", "color",
+        N_("text color for current buffer name in status bar"),
+        NULL, GUI_COLOR_STATUS_NAME, 0, "white", &config_change_color, NULL);
     config_color_status_data_msg = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_status_data_msg", "color",

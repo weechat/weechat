@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-21 07:54+0100\n"
-"PO-Revision-Date: 2008-02-21 07:55+0100\n"
+"POT-Creation-Date: 2008-02-22 14:17+0100\n"
+"PO-Revision-Date: 2008-02-22 14:18+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1021,8 +1021,16 @@ msgstr "couleur du fond pour la barre de statut"
 msgid "text color for status bar delimiters"
 msgstr "couleur du texte pour les délimiteurs de la barre de statut"
 
-msgid "text color for current channel in status bar"
-msgstr "couleur du texte pour le canal courant dans la barre de statut"
+msgid "text color for current buffer number in status bar"
+msgstr ""
+"couleur du texte pour le numéro du tampon courant dans la barre de statut"
+
+msgid "text color for current buffer category in status bar"
+msgstr ""
+"couleur du texte pour la catégorie du tampon courant dans la barre de statut"
+
+msgid "text color for current buffer name in status bar"
+msgstr "couleur du texte pour le nom du tampon courant dans la barre de statut"
 
 msgid "text color for buffer with new messages (status bar)"
 msgstr ""
@@ -1503,9 +1511,6 @@ msgstr "sauter au tampon avec de l'activité"
 msgid "jump to DCC buffer"
 msgstr "sauter au tampon DCC"
 
-msgid "jump to raw IRC data buffer"
-msgstr "sauter au tampon IRC brut"
-
 msgid "jump to last buffer"
 msgstr "sauter au dernier tampon"
 
@@ -1848,14 +1853,6 @@ msgstr "%s%s: erreur en lecture du tube, fermeture"
 #, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s%s: erreur d'ouverture du fichier, fermeture"
-
-#, c-format
-msgid "%s: debug enabled"
-msgstr "%s: debug activé"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr "%s: debug désactivé"
 
 #, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -3197,6 +3194,17 @@ msgstr "%s DCC: impossible d'activer l'option 'nonblock' sur la socket\n"
 msgid "Aborting active DCC: \"%s\" from %s"
 msgstr "Abandon du DCC actif: \"%s\" de %s"
 
+msgid "IRC debug messages"
+msgstr "Messages de debug IRC"
+
+#, c-format
+msgid "%s: debug enabled"
+msgstr "%s: debug activé"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr "%s: debug désactivé"
+
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]"
 msgstr "%sServeur: %s%s %s[%s%s%s]"
@@ -3864,6 +3872,9 @@ msgstr ""
 msgid "%s%s: error sending data to IRC server (%s)"
 msgstr "%s%s: erreur d'envoi de données au serveur IRC (%s)"
 
+msgid "(message dropped)"
+msgstr "(message supprimé)"
+
 #, c-format
 msgid "%s%s: not enough memory for received IRC message"
 msgstr "%s%s: mémoire insuffisante pour un message IRC reçu"
@@ -4274,6 +4285,9 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\""
+
+#~ msgid "jump to raw IRC data buffer"
+#~ msgstr "sauter au tampon IRC brut"
 
 #~ msgid "debug command"
 #~ msgstr "commande debug"

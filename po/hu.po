@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-21 07:54+0100\n"
+"POT-Creation-Date: 2008-02-22 14:17+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1091,7 +1091,15 @@ msgid "text color for status bar delimiters"
 msgstr "státuszsor határolójel színe"
 
 #, fuzzy
-msgid "text color for current channel in status bar"
+msgid "text color for current buffer number in status bar"
+msgstr "aktuális szoba színe a státuszsorban"
+
+#, fuzzy
+msgid "text color for current buffer category in status bar"
+msgstr "aktuális szoba színe a státuszsorban"
+
+#, fuzzy
+msgid "text color for current buffer name in status bar"
 msgstr "aktuális szoba színe a státuszsorban"
 
 #, fuzzy
@@ -1603,9 +1611,6 @@ msgstr "ugrás aktív pufferre"
 msgid "jump to DCC buffer"
 msgstr "ugrás a DCC pufferre"
 
-msgid "jump to raw IRC data buffer"
-msgstr "ugrás a nyers IRC adat pufferre"
-
 msgid "jump to last buffer"
 msgstr "ugrás az utolsó pufferre"
 
@@ -1946,14 +1951,6 @@ msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
 #, fuzzy, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
-
-#, fuzzy, c-format
-msgid "%s: debug enabled"
-msgstr "FIFO cső nyitva\n"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -3283,6 +3280,18 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 msgid "Aborting active DCC: \"%s\" from %s"
 msgstr "\"%s\" aktív DCC megszakítása a következővel: %s\n"
 
+#, fuzzy
+msgid "IRC debug messages"
+msgstr "hibakereső üzenetek megjelenítése"
+
+#, fuzzy, c-format
+msgid "%s: debug enabled"
+msgstr "FIFO cső nyitva\n"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sServer: %s%s %s[%s%s%s]"
 msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
@@ -3941,6 +3950,9 @@ msgstr ""
 msgid "%s%s: error sending data to IRC server (%s)"
 msgstr "%s adatküldési hiba az IRC szerveren\n"
 
+msgid "(message dropped)"
+msgstr "(üzenet eldobva)"
+
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for received IRC message"
 msgstr "%s nincs elegendő memória a fogadott IRC üzenet számára\n"
@@ -4344,6 +4356,9 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
+
+#~ msgid "jump to raw IRC data buffer"
+#~ msgstr "ugrás a nyers IRC adat pufferre"
 
 #, fuzzy
 #~ msgid "debug command"
@@ -4819,9 +4834,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
 #~ msgid "Unable to get user's name"
 #~ msgstr "A felhasználónév meghatározása sikertelen"
-
-#~ msgid "(message dropped)"
-#~ msgstr "(üzenet eldobva)"
 
 #~ msgid "%s Command \"%s\" failed!\n"
 #~ msgstr "%s Parancs \"%s\" sikertelen!\n"

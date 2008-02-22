@@ -1928,25 +1928,13 @@ irc_command_names (void *data, struct t_gui_buffer *buffer, int argc,
 void
 irc_send_nick_server (struct t_irc_server *server, char *nickname)
 {
-    struct t_irc_channel *ptr_channel;
-    
     if (!server)
         return;
     
     if (server->is_connected)
         irc_server_sendf (server, "NICK %s", nickname);
     else
-    {
-        if (server->nick)
-            free (server->nick);
-        server->nick = strdup (nickname);
-        //gui_input_draw (server->buffer, 1);
-        for (ptr_channel = server->channels; ptr_channel;
-             ptr_channel = ptr_channel->next_channel)
-        {
-            //gui_input_draw (ptr_channel->buffer, 1);
-        }
-    }
+        irc_server_set_nick (server, nickname);
 }
 
 /*

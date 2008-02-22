@@ -102,6 +102,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-config.h
 ./src/plugins/irc/irc-dcc.c
 ./src/plugins/irc/irc-dcc.h
+./src/plugins/irc/irc-debug.c
+./src/plugins/irc/irc-debug.h
 ./src/plugins/irc/irc-display.c
 ./src/plugins/irc/irc-display.h
 ./src/plugins/irc/irc.h

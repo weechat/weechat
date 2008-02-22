@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-21 07:54+0100\n"
+"POT-Creation-Date: 2008-02-22 14:17+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1082,7 +1082,15 @@ msgid "text color for status bar delimiters"
 msgstr "Farbe der Statuszeilen-Separatoren"
 
 #, fuzzy
-msgid "text color for current channel in status bar"
+msgid "text color for current buffer number in status bar"
+msgstr "Farbe des aktuellen Channels in der Statuszeile"
+
+#, fuzzy
+msgid "text color for current buffer category in status bar"
+msgstr "Farbe des aktuellen Channels in der Statuszeile"
+
+#, fuzzy
+msgid "text color for current buffer name in status bar"
 msgstr "Farbe des aktuellen Channels in der Statuszeile"
 
 #, fuzzy
@@ -1600,9 +1608,6 @@ msgstr "zu nächstem aktiven Puffer springen"
 msgid "jump to DCC buffer"
 msgstr "zum DCC-Puffer springen"
 
-msgid "jump to raw IRC data buffer"
-msgstr "gehe zum IRC-Rohdaten-Puffer"
-
 msgid "jump to last buffer"
 msgstr "zum letzten Puffer springen"
 
@@ -1942,14 +1947,6 @@ msgstr "%s Fehler beim Lesen vom FIFO, FIFO wird geschlossen\n"
 #, fuzzy, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s Fehler beim Lesen vom FIFO, FIFO wird geschlossen\n"
-
-#, fuzzy, c-format
-msgid "%s: debug enabled"
-msgstr "FIFO ist offen\n"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -3265,6 +3262,18 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 msgid "Aborting active DCC: \"%s\" from %s"
 msgstr "Aktiver DCC wird abgebrochen: \"%s\" von %s\n"
 
+#, fuzzy
+msgid "IRC debug messages"
+msgstr "Debugging-Nachricht ausgeben"
+
+#, fuzzy, c-format
+msgid "%s: debug enabled"
+msgstr "FIFO ist offen\n"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sServer: %s%s %s[%s%s%s]"
 msgstr "%sServer: %s%s %s[%s%s%s]\n"
@@ -3930,6 +3939,9 @@ msgstr ""
 msgid "%s%s: error sending data to IRC server (%s)"
 msgstr "%s Fehler beim Senden von Daten an den IRC-Server\n"
 
+msgid "(message dropped)"
+msgstr "(Nachricht verworfen)"
+
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for received IRC message"
 msgstr "%s nicht genügend Speicher zum Empfangen der IRC-Nachricht vorhanden\n"
@@ -4329,6 +4341,9 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
+
+#~ msgid "jump to raw IRC data buffer"
+#~ msgstr "gehe zum IRC-Rohdaten-Puffer"
 
 #, fuzzy
 #~ msgid "debug command"
@@ -4816,9 +4831,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
 #~ msgid "Unable to get user's name"
 #~ msgstr "Username konnte nicht ermittelt werden"
-
-#~ msgid "(message dropped)"
-#~ msgstr "(Nachricht verworfen)"
 
 #~ msgid "%s Command \"%s\" failed!\n"
 #~ msgstr "%s der Befehl \"%s\" schlug fehl!\n"

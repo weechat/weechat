@@ -133,8 +133,6 @@ extern struct t_gui_buffer *gui_buffers;
 extern struct t_gui_buffer *last_gui_buffer;
 extern struct t_gui_buffer *gui_previous_buffer;
 extern struct t_gui_buffer *gui_buffer_before_dcc;
-extern struct t_gui_buffer *gui_buffer_raw_data;
-extern struct t_gui_buffer *gui_buffer_before_raw_data;
 
 /* buffer functions */
 
@@ -175,7 +173,6 @@ extern void gui_buffer_close (struct t_gui_buffer *buffer,
 extern void gui_buffer_switch_previous (struct t_gui_window *window);
 extern void gui_buffer_switch_next (struct t_gui_window *window);
 extern void gui_buffer_switch_dcc (struct t_gui_window *window);
-extern void gui_buffer_switch_raw_data (struct t_gui_window *window);
 extern void gui_buffer_switch_by_number (struct t_gui_window *window,
                                          int number);
 extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);

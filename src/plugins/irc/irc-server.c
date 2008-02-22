@@ -51,6 +51,7 @@
 #include "irc-channel.h"
 #include "irc-command.h"
 #include "irc-config.h"
+#include "irc-debug.h"
 #include "irc-nick.h"
 #include "irc-protocol.h"
 
@@ -352,6 +353,28 @@ irc_server_set_nicks (struct t_irc_server *server, char *nicks)
         server->nicks_array = weechat_string_explode (server->nicks,
                                                       ",", 0, 0,
                                                       &server->nicks_count);
+    }
+}
+
+/*
+ * irc_server_set_nick: set nickname for a server
+ */
+
+void
+irc_server_set_nick (struct t_irc_server *server, char *nick)
+{
+    struct t_irc_channel *ptr_channel;
+    
+    if (server->nick)
+        free (server->nick);
+    server->nick = (nick) ? strdup (nick) : NULL;
+    
+    weechat_buffer_set (server->buffer, "nick", nick);
+    
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        weechat_buffer_set (ptr_channel->buffer, "nick", nick);
     }
 }
 
@@ -944,8 +967,8 @@ irc_server_outqueue_send (struct t_irc_server *server)
                 pos = strchr (server->outqueue->message_before_mod, '\r');
                 if (pos)
                     pos[0] = '\0';
-                //gui_chat_printf_raw_data (server, 1, 0,
-                //                          server->outqueue->message_before_mod);
+                irc_debug_printf (server, 1, 0,
+                                  server->outqueue->message_before_mod);
                 if (pos)
                     pos[0] = '\r';
             }
@@ -954,8 +977,8 @@ irc_server_outqueue_send (struct t_irc_server *server)
                 pos = strchr (server->outqueue->message_after_mod, '\r');
                 if (pos)
                     pos[0] = '\0';
-                //gui_chat_printf_raw_data (server, 1, server->outqueue->modified,
-                //                          server->outqueue->message_after_mod);
+                irc_debug_printf (server, 1, server->outqueue->modified,
+                                  server->outqueue->message_after_mod);
                 if (pos)
                     pos[0] = '\r';
             }
@@ -980,13 +1003,7 @@ irc_server_send_one_msg (struct t_irc_server *server, char *message)
     time_t time_now;
     
     rc = 1;
-
-    if (irc_debug)
-    {
-        weechat_printf (server->buffer,
-                        "[DEBUG] Sending to server >>> %s",
-                        message);
-    }
+    
     /*new_msg = plugin_modifier_exec (PLUGIN_MODIFIER_IRC_OUT,
                                     server->name,
                                     message)
@@ -1034,10 +1051,10 @@ irc_server_send_one_msg (struct t_irc_server *server, char *message)
             }
             else
             {
-                //if (first_message)
-                //    gui_chat_printf_raw_data (server, 1, 0, message);
-                //if (new_msg)
-                //    gui_chat_printf_raw_data (server, 1, 1, ptr_msg);
+                if (first_message)
+                    irc_debug_printf (server, 1, 0, message);
+                if (new_msg)
+                    irc_debug_printf (server, 1, 1, ptr_msg);
                 if (irc_server_send (server, buffer, strlen (buffer)) <= 0)
                     rc = 0;
                 else
@@ -1057,8 +1074,8 @@ irc_server_send_one_msg (struct t_irc_server *server, char *message)
             first_message = 0;
         }
     }
-    //else
-    //    gui_chat_printf_raw_data (server, 1, 1, _("(message dropped)"));
+    else
+        irc_debug_printf (server, 1, 1, _("(message dropped)"));
     if (new_msg)
         free (new_msg);
     
@@ -1347,26 +1364,13 @@ irc_server_msgq_flush ()
     {
         if (irc_recv_msgq->data)
         {
-            if (irc_debug)
-            {
-                weechat_printf (irc_recv_msgq->server->buffer,
-                                "[DEBUG] %s",
-                                irc_recv_msgq->data);
-            }
             ptr_data = irc_recv_msgq->data;
             while (ptr_data[0] == ' ')
                 ptr_data++;
             
             if (ptr_data[0])
             {
-                //gui_chat_printf_raw_data (irc_recv_msgq->server, 0, 0,
-                //                          ptr_data);
-                if (irc_debug)
-                {
-                    weechat_printf (irc_recv_msgq->server->buffer,
-                                    "[DEBUG] data received from server: %s",
-                                    ptr_data);
-                }
+                irc_debug_printf (irc_recv_msgq->server, 0, 0, ptr_data);
                 /*new_msg = plugin_modifier_exec (PLUGIN_MODIFIER_IRC_IN,
                                                 irc_recv_msgq->server->name,
                                                 ptr_data);*/
@@ -1391,9 +1395,9 @@ irc_server_msgq_flush ()
                         if (pos)
                             pos[0] = '\0';
                         
-                        //if (new_msg)
-                        //    gui_chat_printf_raw_data (irc_recv_msgq->server,
-                        //                              0, 1, ptr_msg);
+                        if (new_msg)
+                            irc_debug_printf (irc_recv_msgq->server, 0, 1,
+                                              ptr_msg);
                         
                         irc_server_parse_message (ptr_msg, &nick, &host,
                                                   &command, &channel,
@@ -1474,9 +1478,9 @@ irc_server_msgq_flush ()
                             ptr_msg = NULL;
                     }
                 }
-                //else
-                //    gui_chat_printf_raw_data (irc_recv_msgq->server, 0, 1,
-                //                              _("(message dropped)"));
+                else
+                    irc_debug_printf (irc_recv_msgq->server, 0, 1,
+                                      _("(message dropped)"));
                 if (new_msg)
                     free (new_msg);
             }
@@ -1724,7 +1728,8 @@ irc_server_login (struct t_irc_server *server)
         irc_server_sendf (server, "PASS %s", server->password);
     
     if (!server->nick)
-        server->nick = strdup (server->nicks_array[0]);
+        irc_server_set_nick (server, server->nicks_array[0]);
+    
     irc_server_sendf (server,
                       "NICK %s\n"
                       "USER %s %s %s :%s",
@@ -2678,12 +2683,7 @@ irc_server_disconnect (struct t_irc_server *server, int reconnect)
     
     /* discard current nick if no reconnection asked */
     if (!reconnect && server->nick)
-    {
-        free (server->nick);
-        server->nick = NULL;
-    }
-    
-    //gui_window_redraw_buffer (weechat_current_buffer);
+        irc_server_set_nick (server, NULL);
 }
 
 /*

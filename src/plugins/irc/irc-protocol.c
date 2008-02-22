@@ -1140,17 +1140,7 @@ irc_protocol_cmd_nick (struct t_irc_server *server, char *irc_message, char *hos
     }
     
     if (strcmp (server->nick, nick) == 0)
-    {
-        free (server->nick);
-        server->nick = strdup (arguments);
-        
-        for (ptr_channel = server->channels; ptr_channel;
-             ptr_channel = ptr_channel->next_channel)
-        {
-            weechat_buffer_set (ptr_channel->buffer, "nick",
-                                server->nick);
-        }
-    }
+        irc_server_set_nick (server, arguments);
     
     return WEECHAT_RC_OK;
 }
@@ -2677,10 +2667,7 @@ irc_protocol_cmd_001 (struct t_irc_server *server, char *irc_message, char *host
     if (pos)
         pos[0] = '\0';
     if (strcmp (server->nick, arguments) != 0)
-    {
-        free (server->nick);
-        server->nick = strdup (arguments);
-    }
+        irc_server_set_nick (server, arguments);
     
     irc_protocol_cmd_server_msg (server, irc_message, host, nick, arguments,
                                  ignore, highlight);
@@ -5288,8 +5275,9 @@ irc_protocol_cmd_432 (struct t_irc_server *server, int argc, char **argv,
                           "trying nickname #%d (\"%s\")"),
                         weechat_prefix ("info"), "irc", server->nick,
                         nick_to_use + 1, server->nicks_array[nick_to_use]);
-        free (server->nick);
-        server->nick = strdup (server->nicks_array[nick_to_use]);
+        
+        irc_server_set_nick (server, server->nicks_array[nick_to_use]);
+        
         irc_server_sendf (server, "NICK %s", server->nick);
     }
     
@@ -5343,8 +5331,9 @@ irc_protocol_cmd_433 (struct t_irc_server *server, int argc, char **argv,
                           "trying nickname #%d (\"%s\")"),
                         weechat_prefix ("info"), "irc", server->nick,
                         nick_to_use + 1, server->nicks_array[nick_to_use]);
-        free (server->nick);
-        server->nick = strdup (server->nicks_array[nick_to_use]);
+        
+        irc_server_set_nick (server, server->nicks_array[nick_to_use]);
+        
         irc_server_sendf (server, "NICK %s", server->nick);
     }
     else

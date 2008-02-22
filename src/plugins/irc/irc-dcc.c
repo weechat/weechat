@@ -1216,13 +1216,7 @@ irc_dcc_chat_sendf (struct t_irc_dcc *dcc, char *format, ...)
     buffer[sizeof (buffer) - 1] = '\0';
     if ((size_buf < 0) || (size_buf > (int) (sizeof (buffer) - 1)))
         size_buf = strlen (buffer);
-#ifdef DEBUG
-    buffer[size_buf - 2] = '\0';
-    gui_chat_printf (dcc->server->buffer,
-                     "[DEBUG] Sending to remote host (DCC CHAT) >>> %s\n",
-                     buffer);
-    buffer[size_buf - 2] = '\r';
-#endif
+    
     if (irc_dcc_chat_send (dcc, buffer, strlen (buffer)) <= 0)
     {
         gui_chat_printf_error (dcc->server->buffer,

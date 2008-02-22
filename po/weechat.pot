@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-21 07:54+0100\n"
+"POT-Creation-Date: 2008-02-22 14:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -864,7 +864,13 @@ msgstr ""
 msgid "text color for status bar delimiters"
 msgstr ""
 
-msgid "text color for current channel in status bar"
+msgid "text color for current buffer number in status bar"
+msgstr ""
+
+msgid "text color for current buffer category in status bar"
+msgstr ""
+
+msgid "text color for current buffer name in status bar"
 msgstr ""
 
 msgid "text color for buffer with new messages (status bar)"
@@ -1313,9 +1319,6 @@ msgstr ""
 msgid "jump to DCC buffer"
 msgstr ""
 
-msgid "jump to raw IRC data buffer"
-msgstr ""
-
 msgid "jump to last buffer"
 msgstr ""
 
@@ -1619,14 +1622,6 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error opening file, closing it"
-msgstr ""
-
-#, c-format
-msgid "%s: debug enabled"
-msgstr ""
-
-#, c-format
-msgid "%s: debug disabled"
 msgstr ""
 
 #, c-format
@@ -2751,6 +2746,17 @@ msgstr ""
 msgid "Aborting active DCC: \"%s\" from %s"
 msgstr ""
 
+msgid "IRC debug messages"
+msgstr ""
+
+#, c-format
+msgid "%s: debug enabled"
+msgstr ""
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr ""
+
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]"
 msgstr ""
@@ -3401,6 +3407,9 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error sending data to IRC server (%s)"
+msgstr ""
+
+msgid "(message dropped)"
 msgstr ""
 
 #, c-format

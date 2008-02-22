@@ -1150,35 +1150,6 @@ gui_action_jump_dcc (char *args)
 }
 
 /*
- * gui_action_jump_raw_data: jump to raw IRC data buffer
- */
-
-void
-gui_action_jump_raw_data (char *args)
-{
-    /* make C compiler happy */
-    (void) args;
-
-    /*if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
-    {
-        if (gui_current_window->buffer->type == GUI_BUFFER_TYPE_RAW_DATA)
-        {
-            if (gui_buffer_before_raw_data)
-            {
-                gui_window_switch_to_buffer (window,
-                                             gui_buffer_before_raw_data);
-                gui_window_redraw_buffer (gui_current_window->buffer);
-            }
-        }
-        else
-        {
-            gui_buffer_before_raw_data = buffer;
-            gui_buffer_switch_raw_data (window);
-        }
-        }*/
-}
-
-/*
  * gui_action_jump_last_buffer: jump to last buffer
  */
 

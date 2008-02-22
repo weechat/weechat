@@ -63,8 +63,6 @@ extern int gui_chat_line_search (struct t_gui_line *line, char *text,
 extern void gui_chat_line_free (struct t_gui_line *line);
 extern void gui_chat_printf_date (struct t_gui_buffer *buffer, time_t date,
                                   char *message, ...);
-extern void gui_chat_printf_raw_data (void *server, int send, int modified,
-                                      char *message);
 
 /* chat functions (GUI dependent) */
 

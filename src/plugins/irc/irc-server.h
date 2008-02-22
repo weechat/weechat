@@ -139,6 +139,7 @@ extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
 
 extern void irc_server_init (struct t_irc_server *server);
 extern int irc_server_init_with_url (struct t_irc_server *server, char *irc_url);
+extern void irc_server_set_nick (struct t_irc_server *server, char *nick);
 extern void irc_server_init_with_config_options (struct t_irc_server *server,
                                                  struct t_config_section *section,
                                                  int config_reload);

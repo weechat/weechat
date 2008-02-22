@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-21 07:54+0100\n"
+"POT-Creation-Date: 2008-02-22 14:17+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1089,7 +1089,15 @@ msgid "text color for status bar delimiters"
 msgstr "barva děličů status barů"
 
 #, fuzzy
-msgid "text color for current channel in status bar"
+msgid "text color for current buffer number in status bar"
+msgstr "barva pro aktuální kanál v stavovém řádku"
+
+#, fuzzy
+msgid "text color for current buffer category in status bar"
+msgstr "barva pro aktuální kanál v stavovém řádku"
+
+#, fuzzy
+msgid "text color for current buffer name in status bar"
 msgstr "barva pro aktuální kanál v stavovém řádku"
 
 #, fuzzy
@@ -1599,9 +1607,6 @@ msgstr "skoč na buffer s aktivitou"
 msgid "jump to DCC buffer"
 msgstr "skoč na DCC buffer"
 
-msgid "jump to raw IRC data buffer"
-msgstr "skočit na čistý IRC data buffer"
-
 msgid "jump to last buffer"
 msgstr "skoč na poslední buffer"
 
@@ -1939,14 +1944,6 @@ msgstr "%s chyba při čtení FIFO roury, zavírám ji\n"
 #, fuzzy, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s chyba při čtení FIFO roury, zavírám ji\n"
-
-#, fuzzy, c-format
-msgid "%s: debug enabled"
-msgstr "FIFO roura je otevřena\n"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -3277,6 +3274,18 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 msgid "Aborting active DCC: \"%s\" from %s"
 msgstr "Ruším aktivní DCC: \"%s\" od %s\n"
 
+#, fuzzy
+msgid "IRC debug messages"
+msgstr "vypsat debug zprávy"
+
+#, fuzzy, c-format
+msgid "%s: debug enabled"
+msgstr "FIFO roura je otevřena\n"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sServer: %s%s %s[%s%s%s]"
 msgstr "%sServer: %s%s %s[%s%s%s]\n"
@@ -3939,6 +3948,9 @@ msgstr ""
 msgid "%s%s: error sending data to IRC server (%s)"
 msgstr "%s chyba při zasílání dat na IRC server\n"
 
+msgid "(message dropped)"
+msgstr "(zpráva zahozena)"
+
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for received IRC message"
 msgstr "%s nedostatek paměti pro získání IRC zprávy\n"
@@ -4336,6 +4348,9 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
+
+#~ msgid "jump to raw IRC data buffer"
+#~ msgstr "skočit na čistý IRC data buffer"
 
 #, fuzzy
 #~ msgid "debug command"
@@ -4821,9 +4836,6 @@ msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
 #~ msgid "Unable to get user's name"
 #~ msgstr "Nemůžu získat jméno uživatele"
-
-#~ msgid "(message dropped)"
-#~ msgstr "(zpráva zahozena)"
 
 #~ msgid "%s Command \"%s\" failed!\n"
 #~ msgstr "%s Příkaz \"%s\" selhal\n"

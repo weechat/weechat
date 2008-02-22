@@ -35,6 +35,7 @@
 #include "irc-command.h"
 #include "irc-completion.h"
 #include "irc-config.h"
+#include "irc-debug.h"
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
@@ -52,67 +53,10 @@ struct t_weechat_plugin *weechat_irc_plugin = NULL;
 struct t_hook *irc_hook_timer = NULL;
 struct t_hook *irc_hook_timer_check_away = NULL;
 
-int irc_debug = 0;
-
 #ifdef HAVE_GNUTLS
 gnutls_certificate_credentials gnutls_xcred; /* gnutls client credentials */
 #endif
 
-
-/*
- * irc_signal_debug_cb: callback for "debug" signal
- */
-
-int
-irc_signal_debug_cb (void *data, char *signal, char *type_data,
-                     void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-
-    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
-    {
-        if (weechat_strcasecmp ((char *)signal_data, "irc") == 0)
-            irc_debug ^= 1;
-    }
-    
-    if (irc_debug)
-        weechat_printf (NULL, _("%s: debug enabled"), "irc");
-    else
-        weechat_printf (NULL, _("%s: debug disabled"), "irc");
-    
-    return WEECHAT_RC_OK;
-}
-
-/*
- * irc_signal_debug_dump_cb: dump IRC data in WeeChat log file
- */
-
-int
-irc_signal_debug_dump_cb (void *data, char *signal, char *type_data,
-                          void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-    (void) type_data;
-    (void) signal_data;
-    
-    weechat_log_printf ("");
-    weechat_log_printf ("***** \"%s\" plugin dump *****",
-                        weechat_plugin->name);
-    
-    irc_server_print_log ();
-    
-    //irc_dcc_print_log ();
-    
-    weechat_log_printf ("");
-    weechat_log_printf ("***** End of \"%s\" plugin dump *****",
-                        weechat_plugin->name);
-    
-    return WEECHAT_RC_OK;
-}
 
 /*
  * irc_create_directories: create directories for IRC plugin
@@ -140,7 +84,7 @@ irc_create_directories ()
 }
 
 /*
- * irc_siangl_quit_cb: callback for "quit" signal
+ * irc_signal_quit_cb: callback for "quit" signal
  */
 
 int
@@ -192,8 +136,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     irc_command_init ();
 
     /* hook some signals */
-    weechat_hook_signal ("debug", &irc_signal_debug_cb, NULL);
-    weechat_hook_signal ("debug_dump", &irc_signal_debug_dump_cb, NULL);
+    irc_debug_init ();
     weechat_hook_signal ("quit", &irc_signal_quit_cb, NULL);
     
     /* hook completions */

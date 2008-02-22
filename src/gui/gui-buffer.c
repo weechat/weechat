@@ -56,8 +56,6 @@ struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
 struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
 struct t_gui_buffer *gui_previous_buffer = NULL;   /* previous buffer       */
 struct t_gui_buffer *gui_buffer_before_dcc = NULL; /* buffer before dcc     */
-struct t_gui_buffer *gui_buffer_raw_data = NULL;   /* buffer with raw data  */
-struct t_gui_buffer *gui_buffer_before_raw_data = NULL; /* buf. before raw  */
 
 
 /*
@@ -656,15 +654,6 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     if (gui_buffer_before_dcc == buffer)
         gui_buffer_before_dcc = NULL;
     
-    if (gui_buffer_before_raw_data == buffer)
-        gui_buffer_before_raw_data = NULL;
-    
-    if (buffer->type == GUI_BUFFER_TYPE_FREE)
-    {
-        // TODO: review this
-        gui_buffer_raw_data = NULL;
-    }
-    
     /* free title */
     if (buffer->title)
         free (buffer->title);
@@ -789,32 +778,6 @@ gui_buffer_switch_dcc (struct t_gui_window *window)
     else
         gui_buffer_new (window, weechat_protocols,
         NULL, NULL, GUI_BUFFER_TYPE_DCC, 1);*/
-}
-
-/*
- * gui_buffer_switch_raw_data: switch to rax IRC data buffer (create it if it does not exist)
- */
-
-void
-gui_buffer_switch_raw_data (struct t_gui_window *window)
-{
-    //struct t_gui_buffer *ptr_buffer;
-
-    (void) window;
-    /* check if raw IRC data buffer exists */
-    /*for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->type == GUI_BUFFER_TYPE_RAW_DATA)
-            break;
-    }
-    if (ptr_buffer)
-    {
-        gui_window_switch_to_buffer (window, ptr_buffer);
-        gui_window_redraw_buffer (ptr_buffer);
-    }
-    else
-        gui_buffer_new (window, weechat_protocols,
-        NULL, NULL, GUI_BUFFER_TYPE_RAW_DATA, 1);*/
 }
 
 /*

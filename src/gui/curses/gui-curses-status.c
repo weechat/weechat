@@ -77,41 +77,33 @@ gui_status_draw (int erase)
         wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
         
         /* display buffer plugin */
-        if (ptr_win->buffer->plugin)
-        {
-            wprintw (GUI_CURSES(ptr_win)->win_status, "[");
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          GUI_COLOR_STATUS);
-            wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
-                     ptr_win->buffer->plugin->name);
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          GUI_COLOR_STATUS_DELIMITERS);
-            wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
-        }
-        
-        /* display buffer category */
-        if (ptr_win->buffer->category)
-        {
-            wprintw (GUI_CURSES(ptr_win)->win_status, "[");
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          GUI_COLOR_STATUS);
-            wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
-                     ptr_win->buffer->category);
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          GUI_COLOR_STATUS_DELIMITERS);
-            wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
-        }
-        
-        /* display buffer name */
+        wprintw (GUI_CURSES(ptr_win)->win_status, "[");
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                       GUI_COLOR_STATUS);
+        wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
+                 (ptr_win->buffer->plugin) ?
+                 ptr_win->buffer->plugin->name : "core");
+        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                      GUI_COLOR_STATUS_DELIMITERS);
+        wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
+        
+        /* display buffer number/category/name */
+        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                      GUI_COLOR_STATUS_NUMBER);
         wprintw (GUI_CURSES(ptr_win)->win_status, "%d",
                  ptr_win->buffer->number);
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                       GUI_COLOR_STATUS_DELIMITERS);
         wprintw (GUI_CURSES(ptr_win)->win_status, ":");
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                      GUI_COLOR_STATUS_CHANNEL);
+                                      GUI_COLOR_STATUS_CATEGORY);
+        wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
+                 ptr_win->buffer->category);
+        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                      GUI_COLOR_STATUS_DELIMITERS);
+        wprintw (GUI_CURSES(ptr_win)->win_status, "/");
+        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                      GUI_COLOR_STATUS_NAME);
         gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, "%s ",
                             ptr_win->buffer->name);
         
