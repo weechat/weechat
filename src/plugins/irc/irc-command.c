@@ -3441,7 +3441,7 @@ int
 irc_command_whois (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
-    IRC_GET_SERVER(buffer);
+    IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
@@ -3453,7 +3453,12 @@ irc_command_whois (void *data, struct t_gui_buffer *buffer, int argc,
         irc_server_sendf (ptr_server, "WHOIS %s", argv_eol[1]);
     else
     {
-        IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "whois");
+        if (ptr_channel
+            && ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
+                || (ptr_channel->type == IRC_CHANNEL_TYPE_DCC_CHAT)))
+            irc_server_sendf (ptr_server, "WHOIS %s", ptr_channel->name);
+        else
+            IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "whois");
     }
     
     return WEECHAT_RC_OK;

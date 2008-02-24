@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-02-21
+ChangeLog - 2008-02-24
 
 
 Version 0.2.7 (under dev!):
+   * command /whois is now authorized in private without argument (task #7482)
    * removed kernel info in CTCP VERSION reply (IRC plugin) (task #7494)
    * use of many addresses for one IRC server (auto-switch when a connexion
      fails), nicks are now set with one option "nicks" (task #6088)
