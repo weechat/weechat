@@ -26,12 +26,15 @@
 #include <stdlib.h>
 
 #include "weechat.h"
+#include "wee-backtrace.h"
 #include "wee-config-file.h"
 #include "wee-log.h"
 #include "wee-hook.h"
+#include "wee-string.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-hotlist.h"
+#include "../gui/gui-main.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
 
@@ -99,6 +102,39 @@ debug_dump_cb (void *data, char *signal, char *type_data, void *signal_data)
     debug_dump (0);
     
     return WEECHAT_RC_OK;
+}
+
+/*
+ * debug_sigsegv: SIGSEGV handler: save crash log to
+ *                <weechat_home>/weechat.log and exit
+ */
+
+void
+debug_sigsegv ()
+{
+    debug_dump (1);
+    unhook_all ();
+    gui_main_end ();
+    
+    string_iconv_fprintf (stderr, "\n");
+    string_iconv_fprintf (stderr, "*** Very bad! WeeChat is crashing (SIGSEGV received)\n");
+    if (!log_crash_rename ())
+        string_iconv_fprintf (stderr,
+                              "*** Full crash dump was saved to %s/weechat.log file.\n",
+                              weechat_home);
+    string_iconv_fprintf (stderr, "***\n");
+    string_iconv_fprintf (stderr, "*** Please help WeeChat developers to fix this bug:\n");
+    string_iconv_fprintf (stderr, "***   1. If you have a core file, please run:  gdb weechat-curses core\n");
+    string_iconv_fprintf (stderr, "***      then issue \"bt\" command and send result to developers\n");
+    string_iconv_fprintf (stderr, "***      To enable core files with bash shell: ulimit -c 10000\n");
+    string_iconv_fprintf (stderr, "***   2. Otherwise send backtrace (below) and weechat.log\n");
+    string_iconv_fprintf (stderr, "***      (be careful, private info may be in this file since\n");
+    string_iconv_fprintf (stderr, "***      part of chats are displayed, so remove lines if needed)\n\n");
+    
+    weechat_backtrace ();
+    
+    /* shutdown with error code */
+    weechat_shutdown (EXIT_FAILURE, 1);
 }
 
 /*

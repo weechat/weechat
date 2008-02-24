@@ -51,7 +51,6 @@
 #endif
 
 #include "weechat.h"
-#include "wee-backtrace.h"
 #include "wee-command.h"
 #include "wee-config.h"
 #include "wee-debug.h"
@@ -480,39 +479,6 @@ weechat_shutdown (int return_code, int crash)
 }
 
 /*
- * weechat_sigsegv: SIGSEGV handler: save crash log to
- *                  <weechat_home>/weechat.log and exit
- */
-
-void
-weechat_sigsegv ()
-{
-    debug_dump (1);
-    unhook_all ();
-    gui_main_end ();
-
-    string_iconv_fprintf (stderr, "\n");
-    string_iconv_fprintf (stderr, "*** Very bad! WeeChat is crashing (SIGSEGV received)\n");
-    if (!log_crash_rename ())
-        string_iconv_fprintf (stderr,
-                              "*** Full crash dump was saved to %s/weechat.log file.\n",
-                              weechat_home);
-    string_iconv_fprintf (stderr, "***\n");
-    string_iconv_fprintf (stderr, "*** Please help WeeChat developers to fix this bug:\n");
-    string_iconv_fprintf (stderr, "***   1. If you have a core file, please run:  gdb weechat-curses core\n");
-    string_iconv_fprintf (stderr, "***      then issue \"bt\" command and send result to developers\n");
-    string_iconv_fprintf (stderr, "***      To enable core files with bash shell: ulimit -c 10000\n");
-    string_iconv_fprintf (stderr, "***   2. Otherwise send backtrace (below) and weechat.log\n");
-    string_iconv_fprintf (stderr, "***      (be careful, private info may be in this file since\n");
-    string_iconv_fprintf (stderr, "***      part of chats are displayed, so remove lines if needed)\n\n");
-    
-    weechat_backtrace ();
-    
-    /* shutdown with error code */
-    weechat_shutdown (EXIT_FAILURE, 1);
-}
-
-/*
  * main: WeeChat startup
  */
 
@@ -537,7 +503,7 @@ main (int argc, char *argv[])
     util_catch_signal (SIGQUIT, SIG_IGN); /* ignore SIGQUIT signal          */
     util_catch_signal (SIGPIPE, SIG_IGN); /* ignore SIGPIPE signal          */
     util_catch_signal (SIGSEGV,
-                       &weechat_sigsegv); /* crash dump for SIGSEGV signal  */
+                       &debug_sigsegv); /* crash dump for SIGSEGV signal  */
     hook_init ();                       /* initialize hooks                 */
     debug_init ();                      /* hook signals for debug           */ 
     gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
