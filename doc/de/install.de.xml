@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+
+WeeChat documentation (german version)
+
+Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+
+This manual is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<chapter id="chapInstallation">
+  <title>Installation</title>
+  
+  <para>
+    Dieses Kapitel erklärt die Installation von WeeChat.
+  </para>
+  
+  <section id="secBinaryPackages">
+    <title>Binäre Pakete</title>
+    
+    <para>
+      Binäre Pakete sind für die folgenden Distributionen verfügbar:
+      <itemizedlist>
+        <listitem>
+          <para>
+            Debian (oder Debian-kompatible):
+            <userinput>apt-get install weechat</userinput>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Mandriva/RedHat (oder jede RPM-kompatible Distribution):
+            <userinput>
+              rpm -i /chemin/weechat-x.y.z-1.i386.rpm
+            </userinput>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Gentoo:
+            <userinput>emerge weechat</userinput>
+          </para>
+        </listitem>
+      </itemizedlist>
+      FÜr andere Distributionen: sehen sie in die Dokumentation
+      für Installationsanweisungen.
+    </para>
+    
+  </section>
+  
+  <section id="secSourcePackage">
+    <title>Quellcode-Pakete</title>
+    
+    <para>
+      Alles was sie tun müssen, ist in einer Konsole oder einem Terminal
+      aufzurufen:
+<screen><prompt>$ </prompt><userinput>./configure</userinput>
+<prompt>$ </prompt><userinput>make</userinput></screen>
+    </para>
+    <para>
+      Dann root werden und WeeChat installieren:
+<screen><prompt>$ </prompt><userinput>su</userinput>
+(root-Passwort eingeben)
+<prompt># </prompt><userinput>make install</userinput></screen>
+    </para>
+    
+  </section>
+  
+  <section id="secGITSources">
+    <title>GIT Quellen</title>
+    
+    <para>
+      Warnung: GIT Quellen sind für fortgeschrittene Anwender, das
+      Übersetzen könnte fehlschlagen oder das Ergebnis nicht stabil sein.
+      Sie wurden gewarnt!
+    </para>
+    
+    <para>
+      Um die GIT Quellen zu bekommen, sind folgende Kommandos nötig:
+<screen><prompt>$ </prompt><userinput>git-clone git://git.sv.gnu.org/weechat.git</userinput></screen>
+    </para>
+    
+    <para>
+      Ausführen des folgenden Skripts:
+      <userinput>./autogen.sh</userinput>
+    </para>
+    
+    <para>
+      Dann folgen sie den Anweisungen zu den Quellpaketen
+      (siehe <xref linkend="secSourcePackage" />)
+    </para>
+    
+  </section>
+  
+</chapter>

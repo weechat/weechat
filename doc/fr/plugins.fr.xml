@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+
+WeeChat documentation (french version)
+
+Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+
+This manual is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<chapter id="chapExtensions">
+  <title>Extensions</title>
+  
+  <para>
+    Ce chapitre décrit l'interface des extensions (API) et les extensions
+    pour scripts (Perl, Python, Ruby, Lua), fournies avec WeeChat.
+  </para>
+  
+  <section id="secLesExtensionsDansWeeChat">
+    <title>Les extensions dans WeeChat</title>
+    
+    <para>
+      Une extension ("plugin" en anglais) est un programme écrit en C
+      qui peut appeler des fonctions de WeeChat définies dans une interface.
+    </para>
+    
+    <para>
+      Ce programme C n'a pas besoin des sources WeeChat pour être
+      compilé et peut être chargé/déchargé dynamiquement dans
+      WeeChat via la commande <command>/plugin</command>.
+    </para>
+    
+    <para>
+      L'extension doit être au format bibliothèque, chargeable
+      dynamiquement par le système d'exploitation.
+      Sous GNU/Linux, il s'agit d'un fichier ayant pour extension ".so",
+      sous Windows ".dll".
+    </para>
+    
+  </section>
+  
+  <section id="secEcrireUneExtension">
+    <title>Ecrire une extension</title>
+    
+    <para>
+      L'extension doit inclure le fichier "weechat-plugin.h"
+      (disponible dans les sources de WeeChat).
+      Ce fichier définit les structures et types dont l'extension aura
+      besoin pour communiquer avec WeeChat.
+    </para>
+    
+    <para>
+      L'extension doit comporter certaines variables et fonctions
+      obligatoires (sans quoi l'extension ne peut être chargée) :        
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Variable</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><literal>char plugin_name[]</literal></entry>
+              <entry>le nom de l'extension</entry>
+            </row>
+            <row>
+              <entry><literal>char plugin_version[]</literal></entry>
+              <entry>la version de l'extension</entry>
+            </row>
+            <row>
+              <entry><literal>char plugin_description[]</literal></entry>
+              <entry>une courte description de l'extension</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Fonction</entry>
+              <entry>Description</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><literal>int weechat_plugin_init (t_weechat_plugin *plugin)</literal></entry>
+              <entry>
+                fonction appelée au chargement de l'extension
+                qui doit renvoyer PLUGIN_RC_OK en cas de succès,
+                PLUGIN_RC_KO en cas d'erreur (si erreur, l'extension
+                ne sera PAS chargée)
+              </entry>
+            </row>
+            <row>
+              <entry><literal>void weechat_plugin_end (t_weechat_plugin *plugin)</literal></entry>
+              <entry>fonction appelée au déchargement de l'extension</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    
+    &plugin_api.fr.xml;
+    
+    <section id="secCompilerExtension">
+      <title>Compiler l'extension</title>
+      
+      <para>
+        La compilation ne nécessite pas les sources WeeChat, mais seulement
+        le fichier "<literal>weechat-plugin.h</literal>".
+      </para>
+      
+      <para>
+        Pour compiler une extension composée d'un fichier "toto.c" (sous
+        GNU/Linux) :
+<screen>
+<prompt>$ </prompt><userinput>gcc -fPIC -Wall -c toto.c</userinput>
+<prompt>$ </prompt><userinput>gcc -shared -fPIC -o libtoto.so toto.o</userinput>
+</screen>
+      </para>
+      
+    </section>
+    
+    <section id="secChargerExtension">
+      <title>Charger l'extension dans WeeChat</title>
+      
+      <para>
+        Copier le fichier "libtoto.so" dans le répertoire système des
+        extensions (par exemple
+        "<literal>/usr/local/lib/weechat/plugins)</literal>" ou bien dans
+        celui de l'utilisateur (par exemple
+        "<literal>/home/xxxxx/.weechat/plugins</literal>").
+      </para>
+      
+      <para>
+        Sous WeeChat :
+        <screen><userinput>/plugin load toto</userinput></screen>
+      </para>
+      
+    </section>
+    
+    <section id="secExempleExtension">
+      <title>Exemple d'extension</title>
+      
+      <para>
+        Un exemple complet d'extension, qui ajoute une commande /double
+        affichant deux fois les paramètres passés sur le canal courant
+        (d'accord ce n'est pas très utile mais ceci est un exemple !) :
+<screen>
+#include &lt;stdlib.h&gt;
+
+#include "weechat-plugin.h"
+
+char plugin_name[]        = "Double";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Plugin de test pour WeeChat";
+
+/* gestionnaire de commande "/double" */
+
+int double_cmd (t_weechat_plugin *plugin, int argc, char **argv,
+                char *handler_args, void *handler_pointer)
+{
+    if (argv[2] &amp;&amp; (argv[2][0] != '/'))
+    {
+        plugin->exec_command (plugin, NULL, NULL, argv[2]);
+        plugin->exec_command (plugin, NULL, NULL, argv[2]);
+    }
+    return PLUGIN_RC_OK;
+}
+
+int weechat_plugin_init (t_weechat_plugin *plugin)
+{
+    plugin->cmd_handler_add (plugin, "double",
+                             "Affiche deux fois un message",
+                             "msg",
+                             "msg: message a afficher deux fois",
+                             NULL,
+                             &amp;double_cmd,
+                             NULL, NULL);
+    return PLUGIN_RC_OK;
+}
+
+void weechat_plugin_end (t_weechat_plugin *plugin)
+{
+    /* on ne fait rien ici */
+}
+</screen>
+      </para>
+      
+    </section>
+    
+  </section>
+  
+  &plugin_charset.fr.xml;
+  
+  &plugin_scripts.fr.xml;
+  
+</chapter>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+
+WeeChat documentation (english version)
+
+Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+
+This manual is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<section id="secCharset">
+  <title>Charset plugin</title>
+  
+  <para>
+    Charset plugin lets you encode or decode data using charsets, with 3
+    levels: global, by server, or by channel.
+    This plugin is optional, but recommended: if it's not loaded, WeeChat
+    can only read/write UTF-8 data.
+  </para>
+  
+  <para>
+    Charset plugin should be autoloaded by WeeChat at startup.
+    To be sure plugin is loaded, try:
+    "<literal>/charset</literal>".
+    If command is not found, then load plugin with command:
+    <screen>/plugin load charset</screen>
+    If plugin is not found, then you should compile again WeeChat with
+    plugins and Charset support.
+  </para>
+  
+  <para>
+    When Charset plugin starts, it displays terminal and internal charsets.
+    Terminal charset depends on your locale, and internal is UTF-8.
+    For example :
+<screen>
+-P- Charset plugin starting, terminal charset: ISO-8859-15 (WeeChat internal: UTF-8)
+</screen>
+  </para>
+  
+  <section id="secCharsetSettings">
+    <title>Settings</title>
+    
+    <itemizedlist>
+      <listitem>
+        <para>
+          To set global decode and encode charsets, use
+          "<literal>/setp</literal>" command.
+          For example:
+<screen>
+/setp charset.global.decode = ISO-8859-15
+/setp charset.global.encode = ISO-8859-15
+</screen>
+          If global decode charset is not set (for example during first
+          load of Charset plugin), it will be automatically set to terminal
+          charset (if it's different from UTF-8), or by default to
+          "<literal>ISO-8859-1</literal>".
+          Default encode value is empty, so it sends by default with
+          internal charset (UTF-8).
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To set server charset, use "<literal>/charset</literal>" command
+          on server buffer.
+          If you give only charset, then it will set "decode" and "encode"
+          values.
+          For example:
+          <screen>/charset ISO-8859-15</screen>
+          It's equivalent to:
+<screen>
+/charset decode ISO-8859-15
+/charset encode ISO-8859-15
+</screen>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          To set channel (or private) charset, use same commands as server,
+          but on channel (or private) buffer.
+        </para>
+      </listitem>
+    </itemizedlist>
+    
+  </section>
+  
+  <section id="secCharsetFAQ">
+    <title>FAQ</title>
+    
+    <para>
+      If you have problems with chars or accents using Charset plugin:
+      <itemizedlist>
+        <listitem>
+          <para>
+            check that weechat-curses is linked to libncursesw (warning:
+            needed on most distributions but not all) :
+            <screen>ldd /path/to/weechat-curses</screen>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            check charset line (on server buffer), you should see
+            ISO-XXXXXX or UTF-8 for terminal charset. If you see
+            ANSI_X3.4-1968 or other values, probably your locale is wrong.
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            setup global decode value, for example:
+            <screen>/setp charset.global.decode = ISO-8859-15</screen>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    
+  </section>
+  
+</section>

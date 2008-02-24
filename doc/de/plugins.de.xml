@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+
+WeeChat documentation (german version)
+
+Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+
+This manual is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<chapter id="chapPlugins">
+  <title>Plugins</title>
+  
+  <para>
+    Dieses Kapitel beschreibt das Plugin-Interface (API) in WeeChat und die
+    Standard-Skriptplugins (Perl, Python, Ruby, Lua), die zu WeeChat gehören.
+  </para>
+  
+  <section id="secPluginsInWeeChat">
+    <title>Plugins in WeeChat</title>
+    
+    <para>
+      Ein Plugin ist ein C-Programm, dass WeeChat-Funktionen aufrufen kann,
+      die in einem Interface definiert sind.
+    </para>
+    
+    <para>
+      Dieses C-Programm braucht nicht den Quellcode von WeeChat (aber die 
+      API-Beschreibung) und kann dynamisch mit dem folgenden Kommando in 
+      WeeChat geladen werden
+      <command>/plugin</command>.
+    </para>
+    
+    <para>
+      Das Plugin muss in Form einer dynamischen Bibliothek vorliegen, 
+      damit es das Betriebssystem dynamisch laden kann.
+      Unter GNU/Linux besitzt die Datei die Endung ".so", unter
+      Windows ".dll".
+    </para>
+    
+  </section>
+  
+  <section id="secWriteAPlugin">
+    <title>Ein Plugin schreiben</title>
+    
+    <para>
+      Das Plugin muss die Datei "weechat-plugin.h" einbinden (verfügbar 
+      im WeeChat-Quellcode).
+      Diese Datei definiert die Strukturen und Typen um mit WeeChat
+      zu kommunizieren.
+    </para>
+    
+    <para>
+      Das Plugin muss einige Variablen und Funktionen besitzen
+      (nötig, sonst kann das Plugin nicht geladen werden):
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Variable</entry>
+              <entry>Beschreibung</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><literal>char plugin_name[]</literal></entry>
+              <entry>Plugin Name</entry>
+            </row>
+            <row>
+              <entry><literal>char plugin_version[]</literal></entry>
+              <entry>Plugin Version</entry>
+            </row>
+            <row>
+              <entry><literal>char plugin_description[]</literal></entry>
+              <entry>kurze Beschreibung des Plugins</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      
+      <informaltable colsep="0" frame="none">
+        <tgroup cols="2">
+          <thead>
+            <row>
+              <entry>Funktion</entry>
+              <entry>Beschreibung</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><literal>int weechat_plugin_init (t_weechat_plugin *plugin)</literal></entry>
+              <entry>
+                Die Funktion wird aufgerufen, wenn das Plugin geladen wird.
+                Sie muss bei Erfolg PLUGIN_RC_OK, bei Fehlschlag PLUGIN_RC_KO
+                zurückgeben. (Bei einem Fehler wird das Plugin nicht geladen)
+              </entry>
+            </row>
+            <row>
+              <entry><literal>void weechat_plugin_end (t_weechat_plugin *plugin)</literal></entry>
+              <entry>Funktion wird beim Abschalten aufgerufen</entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </para>
+    
+    &plugin_api.de.xml;
+    
+    <section id="secCompilePlugin">
+      <title>Übersetzen eines Plugins</title>
+      
+      <para>
+        Das Übersetzen braucht keine WeeChat-Quellen, aber die Datei "<literal>weechat-plugin.h</literal>".
+      </para>
+      
+      <para>
+        Um ein Plugin zu übersetzen, das aus einer Datei "toto.c" besteht
+        (unter GNU/Linux):
+<screen>
+<prompt>$ </prompt><userinput>gcc -fPIC -Wall -c toto.c</userinput>
+<prompt>$ </prompt><userinput>gcc -shared -fPIC -o libtoto.so toto.o</userinput>
+</screen>
+      </para>
+      
+    </section>
+    
+    <section id="secLoadPlugin">
+      <title>Laden des Plugins in WeeChat</title>
+      
+      <para>
+        Kopiere die Datei "libtoto.so" in das Plugin-Verzeichnis der
+        systemweiten Dateien WeeChats (zum Beispiel:
+        "<literal>/usr/local/lib/weechat/plugins</literal>") oder in das
+        Plugin-Verzeichnis des Users (zum Beispiel:
+        "<literal>/home/xxxxx/.weechat/plugins</literal>").
+      </para>
+      
+      <para>
+        In WeeChat:
+        <screen><userinput>/plugin load toto</userinput></screen>
+      </para>
+      
+    </section>
+    
+    <section id="secPluginExample">
+      <title>Plugin Beispiel</title>
+      
+      <para>
+        Vollständiges Beispiel eines Plugins, welches das Kommando /double
+        implementiert, dass seine Argumente im gegenwärtigen Channel doppelt
+        ausgibt (ok, das ist weniger nützlich, aber auch nur ein Beispiel!):
+<screen>
+#include &lt;stdlib.h&gt;
+
+#include "weechat-plugin.h"
+
+char plugin_name[]        = "Double";
+char plugin_version[]     = "0.1";
+char plugin_description[] = "Test plugin for WeeChat";
+
+/* "/double" command manager */
+
+int double_cmd (t_weechat_plugin *plugin, int argc, char **argv,
+                char *handler_args, void *handler_pointer)
+{
+    if (argv[2] &amp;&amp; (argv[2][0] != '/'))
+    {
+        plugin->exec_command (plugin, NULL, NULL, argv[2]);
+        plugin->exec_command (plugin, NULL, NULL, argv[2]);
+    }
+    return PLUGIN_RC_OK;
+}
+
+int weechat_plugin_init (t_weechat_plugin *plugin)
+{
+    plugin->cmd_handler_add (plugin, "double",
+                             "Display two times a message",
+                             "msg",
+                             "msg: message to display two times",
+                             NULL,
+                             &amp;double_cmd,
+                             NULL, NULL);
+    return PLUGIN_RC_OK;
+}
+
+void weechat_plugin_end (t_weechat_plugin *plugin)
+{
+    /* nothing done here */
+}
+</screen>
+      </para>
+      
+    </section>
+    
+  </section>
+  
+  &plugin_charset.de.xml;
+  
+  &plugin_scripts.de.xml;
+  
+</chapter>

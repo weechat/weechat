@@ -16,7 +16,12 @@
 
 LANGCODE = fr
 BOOK = weechat.$(LANGCODE)
-BOOK_INCLUDE = weechat_commands.xml irc_commands.xml key_functions.xml config.xml
+BOOK_INCLUDE = intro.$(LANGCODE).xml install.$(LANGCODE).xml \
+               usage.$(LANGCODE).xml plugins.$(LANGCODE).xml \
+               plugin_api.$(LANGCODE).xml plugin_charset.$(LANGCODE).xml \
+               plugin_scripts.$(LANGCODE).xml \
+               weechat_commands.xml irc_commands.xml key_functions.xml \
+               config.xml
 QUICKSTART = weechat_quickstart.$(LANGCODE).txt
 
 EXTRA_DIST = $(BOOK).xml $(BOOK_INCLUDE) $(QUICKSTART)

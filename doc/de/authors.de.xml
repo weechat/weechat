@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+
+WeeChat documentation (german version)
+
+Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+
+This manual is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<chapter id="chapAuthorsSupport">
+  <title>Autoren / Support</title>
+  
+  <para>
+    Dieses Kapitel listet Autoren und Beitragende für WeeChat auf, und
+    zeigt die Möglichkeiten um Support zu bekommen.
+  </para>
+  
+  <section id="secAuthors">
+    <title>Autoren</title>
+    
+    <para>
+      WeeChat wird entwickelt von:
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis>FlashCode (Sébastien Helleu)</emphasis>
+            <email>flashcode AT flashtux.org</email> -
+            Hauptentwickler
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>kolter (Emmanuel Bouthenot)</emphasis>
+            <email>kolter AT openics.org</email> -
+            Entwickler
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>Ptitlouis</emphasis>
+            <email>ptitlouis AT sysif.net</email> -
+            erzeugt Debian-Pakete
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    
+  </section>
+  
+  <section id="secContributors">
+    <title>Beitragende</title>
+    
+    <para>
+      Die folgenden Personen trugen zur Entwicklung von WeeChat bei:
+      <itemizedlist>
+        <listitem>
+          <para>
+            <emphasis>Jiri Golembiovsky</emphasis> -
+            Tschechische Übersetzung, Patches
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>Rudolf Polzer</emphasis> -
+            Patches
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>Jim Ramsay</emphasis> -
+            Patches
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>Odin</emphasis> -
+            SuSE RPM
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>Pistos</emphasis> -
+            Patches
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>Gwenn</emphasis> -
+            Patches
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>voroskoi</emphasis> -
+            Ungarische Übersetzung
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>Frank Zacharias</emphasis> -
+            Deutsche Übersetzung
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <emphasis>Pavel Shevchuk</emphasis> -
+            Russisch Übersetzung
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    
+  </section>
+  
+  <section id="secSupport">
+    <title>Support bekommen</title>
+    
+    <para>
+      Bevor Sie nach Support fragen, sollten Sie die Dokumentation und die FAQ
+      gelesen haben, die bei WeeChat angeboten wird. (Die Dokumentation
+      ist dieses Dokument, wenn Sie sie nicht bis zu dieser Zeile gelesen
+      haben, sollten Sie sie noch Mal lesen!)
+    </para>
+    
+    <para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            IRC: Server "<literal>irc.freenode.net</literal>",
+            Channel "<literal>#weechat</literal>"
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            WeeChat Forum:
+            <ulink url="http://forums.flashtux.org">
+              http://forums.flashtux.org
+            </ulink>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            Mailingliste:
+            <itemizedlist>
+              <listitem>
+                <para>
+                  Zum abonnieren:
+                  <ulink url="http://mail.nongnu.org/mailman/listinfo/weechat-support">
+                    http://mail.nongnu.org/mailman/listinfo/weechat-support
+                  </ulink>
+                </para>
+              </listitem>
+              <listitem>
+                <para>
+                  Um eine Mail an die Liste zu senden:
+                  <email>weechat-support@nongnu.org</email>
+                </para>
+              </listitem>
+            </itemizedlist>
+            Das Archiv der Mailingliste ist hier:  
+            <ulink url="http://mail.nongnu.org/archive/html/weechat-support">
+              http://mail.nongnu.org/archive/html/weechat-support
+            </ulink>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    
+  </section>
+  
+</chapter>
