@@ -610,7 +610,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
  * weechat_plugin_end: end Perl plugin
  */
 
-void
+int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
@@ -628,4 +628,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 	perl_main = NULL;
     }
 #endif
+    
+    return WEECHAT_RC_OK;
 }

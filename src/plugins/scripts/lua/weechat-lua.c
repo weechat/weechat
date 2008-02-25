@@ -459,7 +459,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
  * weechat_plugin_end: shutdown Lua interface
  */
 
-void
+int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
@@ -467,4 +467,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     
     /* unload all scripts */
     weechat_lua_unload_all ();
+    
+    return WEECHAT_RC_OK;
 }

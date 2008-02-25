@@ -701,7 +701,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
  * weechat_plugin_end: shutdown Ruby interface
  */
 
-void
+int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
@@ -711,4 +711,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     weechat_ruby_unload_all ();
     
     ruby_finalize();
+    
+    return WEECHAT_RC_OK;
 }

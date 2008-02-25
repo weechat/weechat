@@ -649,7 +649,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
  * weechat_plugin_end: shutdown Python interface
  */
 
-void
+int
 weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
@@ -674,4 +674,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
                         weechat_gettext ("%s%s: unable to free interpreter"),
                         weechat_prefix ("error"), "python");
     }
+    
+    return WEECHAT_RC_OK;
 }

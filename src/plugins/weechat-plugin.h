@@ -340,6 +340,9 @@ struct t_weechat_plugin
     /* WeeChat developers: ALWAYS add new functions at the end */
 };
 
+extern int weechat_plugin_init (struct t_weechat_plugin *plugin);
+extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
+
 /* macros for easy call to plugin API */
 
 /* strings */
