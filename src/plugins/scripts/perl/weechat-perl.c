@@ -117,7 +117,7 @@ weechat_perl_exec (struct t_plugin_script *script,
     dSP;
     
 #ifndef MULTIPLICITY
-    int length = strlen (script->interpreter) + strlen (function) + 3;
+    length = strlen (script->interpreter) + strlen (function) + 3;
     func = (char *)malloc (length * sizeof (char));
     if (!func)
 	return NULL;
@@ -247,9 +247,6 @@ weechat_perl_load (char *filename)
     perl_argv[0] = filename;
     perl_argv[1] = pkgname;
     perl_argv[2] = NULL;
-    eval = weechat_perl_exec (plugin, &tempscript, 
-			      WEECHAT_SCRIPT_EXEC_INT,
-			      "weechat_perl_load_eval_file", perl_argv);
 #else
     perl_current_interpreter = perl_alloc();
 
@@ -273,11 +270,11 @@ weechat_perl_load (char *filename)
     eval_pv (perl_weechat_code, TRUE);
     perl_argv[0] = filename;
     perl_argv[1] = NULL;
+#endif
     eval = weechat_perl_exec (&tempscript,
 			      WEECHAT_SCRIPT_EXEC_INT,
 			      "weechat_perl_load_eval_file",
                               perl_argv);
-#endif
     if (!eval)
     {
 	weechat_printf (NULL,
@@ -595,7 +592,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     }
     
     perl_construct (perl_main);
-    perl_parse (perl_main, weechat_perl_xs_init, 3, perl_args, NULL);
+    perl_parse (perl_main, weechat_perl_api_init, 3, perl_args, NULL);
     eval_pv (perl_weechat_code, TRUE);
 #endif
     

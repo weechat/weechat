@@ -2716,7 +2716,7 @@ static XS (XS_weechat_info_get)
 }
 
 /*
- * weechat_perl_xs_init: initialize subroutines
+ * weechat_perl_api_init: initialize subroutines
  */
 
 void
