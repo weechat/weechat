@@ -253,6 +253,9 @@ gui_buffer_set_category (struct t_gui_buffer *buffer, char *category)
         buffer->category = strdup (category);
     }
     gui_status_refresh_needed = 1;
+    
+    hook_signal_send ("buffer_renamed",
+                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -269,6 +272,9 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, char *name)
         buffer->name = strdup (name);
     }
     gui_status_refresh_needed = 1;
+    
+    hook_signal_send ("buffer_renamed",
+                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -625,7 +631,7 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
     
-    hook_signal_send ("buffer_close",
+    hook_signal_send ("buffer_closing",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     
     if (buffer->close_callback)
@@ -708,6 +714,8 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     
     if (gui_windows && gui_current_window && gui_current_window->buffer)
         gui_status_refresh_needed = 1;
+    
+    hook_signal_send ("buffer_closed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*
@@ -903,8 +911,9 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     snprintf (buf1_str, sizeof (buf1_str) - 1, "%d", buffer->number);
     argv[0] = buf1_str;
     argv[1] = buf2_str;
-    /* TODO: send buffer_move event */
-    /*plugin_event_handler_exec ("buffer_move", 2, argv);*/
+    
+    hook_signal_send ("buffer_moved",
+                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*

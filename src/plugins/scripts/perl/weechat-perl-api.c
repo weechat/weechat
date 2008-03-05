@@ -178,6 +178,7 @@ static XS (XS_weechat_iconv_to_internal)
     
     result = weechat_iconv_to_internal (SvPV (ST (0), PL_na), /* charset */
                                         SvPV (ST (1), PL_na)); /* string */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -208,6 +209,7 @@ static XS (XS_weechat_iconv_from_internal)
     
     result = weechat_iconv_from_internal (SvPV (ST (0), PL_na), /* charset */
                                           SvPV (ST (1), PL_na)); /* string */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -236,6 +238,7 @@ static XS (XS_weechat_gettext)
     }
     
     result = weechat_gettext (SvPV (ST (0), PL_na)); /* string */
+    
     PERL_RETURN_STRING(result);
 }
 
@@ -266,6 +269,7 @@ static XS (XS_weechat_ngettext)
     result = weechat_ngettext (SvPV (ST (0), PL_na), /* single */
                                SvPV (ST (1), PL_na), /* plural */
                                SvIV (ST (2))); /* count */
+    
     PERL_RETURN_STRING(result);
 }
 
@@ -349,6 +353,7 @@ static XS (XS_weechat_list_new)
     }
     
     result = script_ptr2str (weechat_list_new ());
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -379,6 +384,7 @@ static XS (XS_weechat_list_add)
     result = script_ptr2str (weechat_list_add (script_str2ptr (SvPV (ST (0), PL_na)), /* weelist */
                                                SvPV (ST (1), PL_na), /* data */
                                                SvPV (ST (2), PL_na))); /* where */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -408,6 +414,7 @@ static XS (XS_weechat_list_search)
     
     result = script_ptr2str (weechat_list_search (script_str2ptr (SvPV (ST (0), PL_na)), /* weelist */
                                                   SvPV (ST (1), PL_na))); /* data */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -437,6 +444,7 @@ static XS (XS_weechat_list_casesearch)
     
     result = script_ptr2str (weechat_list_casesearch (script_str2ptr (SvPV (ST (0), PL_na)), /* weelist */
                                                       SvPV (ST (1), PL_na))); /* data */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -466,6 +474,7 @@ static XS (XS_weechat_list_get)
     
     result = script_ptr2str (weechat_list_get (script_str2ptr (SvPV (ST (0), PL_na)), /* weelist */
                                                SvIV (ST (1)))); /* position */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -523,6 +532,7 @@ static XS (XS_weechat_list_next)
     }
     
     result = script_ptr2str (weechat_list_next (script_str2ptr (SvPV (ST (0), PL_na)))); /* item */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -551,6 +561,7 @@ static XS (XS_weechat_list_prev)
     }
     
     result = script_ptr2str (weechat_list_prev (script_str2ptr (SvPV (ST (0), PL_na)))); /* item */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -579,6 +590,7 @@ static XS (XS_weechat_list_string)
     }
     
     result = weechat_list_string (script_str2ptr (SvPV (ST (0), PL_na))); /* item */
+    
     PERL_RETURN_STRING(result);
 }
 
@@ -607,6 +619,7 @@ static XS (XS_weechat_list_size)
     }
     
     size = weechat_list_size (script_str2ptr (SvPV (ST (0), PL_na))); /* weelist */
+    
     PERL_RETURN_INT(size);
 }
 
@@ -764,6 +777,7 @@ static XS (XS_weechat_config_new)
                                                     SvPV (ST (0), PL_na), /* filename */
                                                     &weechat_perl_api_config_reload_cb,
                                                     SvPV (ST (1), PL_na))); /* perl function */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -902,6 +916,7 @@ static XS (XS_weechat_config_new_section)
                                                             SvPV (ST (3), PL_na), /* perl function (write cb) */
                                                             &weechat_perl_api_config_section_write_default_cb,
                                                             SvPV (ST (4), PL_na))); /* perl function (write default cb) */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -931,6 +946,7 @@ static XS (XS_weechat_config_search_section)
     
     result = script_ptr2str (weechat_config_search_section (script_str2ptr (SvPV (ST (0), PL_na)), /* config_file */
                                                             SvPV (ST (1), PL_na))); /* section_name */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -998,6 +1014,7 @@ static XS (XS_weechat_config_new_option)
                                                            SvPV (ST (8), PL_na), /* default_value */
                                                            &weechat_perl_api_config_option_change_cb,
                                                            SvPV (ST (9), PL_na))); /* perl function */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -1028,6 +1045,7 @@ static XS (XS_weechat_config_search_option)
     result = script_ptr2str (weechat_config_search_option (script_str2ptr (SvPV (ST (0), PL_na)), /* config_file */
                                                            script_str2ptr (SvPV (ST (1), PL_na)), /* section */
                                                            SvPV (ST (2), PL_na))); /* option_name */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -1056,6 +1074,7 @@ static XS (XS_weechat_config_string_to_boolean)
     }
     
     value = weechat_config_string_to_boolean (SvPV (ST (0), PL_na)); /* text */
+    
     PERL_RETURN_INT(value);
 }
 
@@ -1086,6 +1105,7 @@ static XS (XS_weechat_config_option_set)
     rc = weechat_config_option_set (script_str2ptr (SvPV (ST (0), PL_na)), /* option */
                                     SvPV (ST (1), PL_na), /* new_value */
                                     SvIV (ST (2))); /* run_callback */
+    
     PERL_RETURN_INT(rc);
 }
 
@@ -1114,6 +1134,7 @@ static XS (XS_weechat_config_boolean)
     }
     
     value = weechat_config_boolean (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    
     PERL_RETURN_INT(value);
 }
 
@@ -1142,6 +1163,7 @@ static XS (XS_weechat_config_integer)
     }
     
     value = weechat_config_integer (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    
     PERL_RETURN_INT(value);
 }
 
@@ -1170,6 +1192,7 @@ static XS (XS_weechat_config_string)
     }
     
     value = weechat_config_string (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    
     PERL_RETURN_STRING(value);
 }
 
@@ -1198,6 +1221,7 @@ static XS (XS_weechat_config_color)
     }
     
     value = weechat_config_color (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    
     PERL_RETURN_INT(value);
 }
 
@@ -1257,6 +1281,7 @@ static XS (XS_weechat_config_write)
     }
     
     rc = weechat_config_write (script_str2ptr (SvPV (ST (0), PL_na))); /* config_file */
+    
     PERL_RETURN_INT(rc);
 }
 
@@ -1285,6 +1310,7 @@ static XS (XS_weechat_config_read)
     }
     
     rc = weechat_config_read (script_str2ptr (SvPV (ST (0), PL_na))); /* config_file */
+    
     PERL_RETURN_INT(rc);
 }
 
@@ -1313,6 +1339,7 @@ static XS (XS_weechat_config_reload)
     }
     
     rc = weechat_config_reload (script_str2ptr (SvPV (ST (0), PL_na))); /* config_file */
+    
     PERL_RETURN_INT(rc);
 }
 
@@ -1371,6 +1398,7 @@ static XS (XS_weechat_prefix)
     }
     
     result = weechat_prefix (SvPV (ST (0), PL_na));
+    
     PERL_RETURN_STRING(result);
 }
 
@@ -1399,6 +1427,7 @@ static XS (XS_weechat_color)
     }
     
     result = weechat_color (SvPV (ST (0), PL_na));
+    
     PERL_RETURN_STRING(result);
 }
 
@@ -1590,6 +1619,7 @@ static XS (XS_weechat_hook_command)
                                                       SvPV (ST (4), PL_na), /* completion */
                                                       &weechat_perl_api_hook_command_cb,
                                                       SvPV (ST (5), PL_na))); /* perl function */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -1655,6 +1685,7 @@ static XS (XS_weechat_hook_timer)
                                                     SvIV (ST (2)), /* max_calls */
                                                     &weechat_perl_api_hook_timer_cb,
                                                     SvPV (ST (3), PL_na))); /* perl function */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -1721,6 +1752,7 @@ static XS (XS_weechat_hook_fd)
                                                  SvIV (ST (3)), /* exception */
                                                  &weechat_perl_api_hook_fd_cb,
                                                  SvPV (ST (4), PL_na))); /* perl function */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -1796,6 +1828,7 @@ static XS (XS_weechat_hook_print)
                                                     SvIV (ST (2)), /* strip_colors */
                                                     &weechat_perl_api_hook_print_cb,
                                                     SvPV (ST (3), PL_na))); /* perl function */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -1882,6 +1915,7 @@ static XS (XS_weechat_hook_signal)
                                                      SvPV (ST (0), PL_na), /* signal */
                                                      &weechat_perl_api_hook_signal_cb,
                                                      SvPV (ST (1), PL_na))); /* perl function */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -2002,6 +2036,7 @@ static XS (XS_weechat_hook_config)
                                                      SvPV (ST (1), PL_na), /* option */
                                                      &weechat_perl_api_hook_config_cb,
                                                      SvPV (ST (2), PL_na))); /* perl function */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -2074,6 +2109,7 @@ static XS (XS_weechat_hook_completion)
                                                          SvPV (ST (0), PL_na), /* completion */
                                                          &weechat_perl_api_hook_completion_cb,
                                                          SvPV (ST (1), PL_na))); /* perl function */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -2130,6 +2166,7 @@ static XS (XS_weechat_hook_modifier)
                                                        SvPV (ST (0), PL_na), /* modifier */
                                                        &weechat_perl_api_hook_modifier_cb,
                                                        SvPV (ST (1), PL_na))); /* perl function */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -2160,6 +2197,7 @@ static XS (XS_weechat_hook_modifier_exec)
     result = weechat_hook_modifier_exec (SvPV (ST (0), PL_na), /* modifier */
                                          SvPV (ST (1), PL_na), /* modifier_data */
                                          SvPV (ST (2), PL_na)); /* string */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -2316,6 +2354,7 @@ static XS (XS_weechat_buffer_new)
                                                     SvPV (ST (2), PL_na), /* function input */
                                                     &weechat_perl_api_close_cb,
                                                     SvPV (ST (3), PL_na))); /* function close */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -2345,6 +2384,7 @@ static XS (XS_weechat_buffer_search)
     
     result = script_ptr2str (weechat_buffer_search (SvPV (ST (0), PL_na), /* category */
                                                     SvPV (ST (1), PL_na))); /* name */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -2405,6 +2445,7 @@ static XS (XS_weechat_buffer_get)
     
     value = weechat_buffer_get (script_str2ptr (SvPV (ST (0), PL_na)), /* buffer */
                                 SvPV (ST (1), PL_na)); /* property */
+    
     PERL_RETURN_STRING(value);
 }
 
@@ -2467,6 +2508,7 @@ static XS (XS_weechat_nicklist_add_group)
                                                          SvPV (ST (2), PL_na), /* name */
                                                          SvPV (ST (3), PL_na), /* color */
                                                          SvIV (ST (4)))); /* visible */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -2497,6 +2539,7 @@ static XS (XS_weechat_nicklist_search_group)
     result = script_ptr2str (weechat_nicklist_search_group (script_str2ptr (SvPV (ST (0), PL_na)), /* buffer */
                                                             script_str2ptr (SvPV (ST (1), PL_na)), /* from_group */
                                                             SvPV (ST (2), PL_na))); /* name */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -2537,6 +2580,7 @@ static XS (XS_weechat_nicklist_add_nick)
                                                         char_prefix,
                                                         SvPV (ST (5), PL_na), /* prefix_color */
                                                         SvIV (ST (6)))); /* visible */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -2567,6 +2611,7 @@ static XS (XS_weechat_nicklist_search_nick)
     result = script_ptr2str (weechat_nicklist_search_nick (script_str2ptr (SvPV (ST (0), PL_na)), /* buffer */
                                                            script_str2ptr (SvPV (ST (1), PL_na)), /* from_group */
                                                            SvPV (ST (2), PL_na))); /* name */
+    
     PERL_RETURN_STRING_FREE(result);
 }
 
@@ -2657,6 +2702,280 @@ static XS (XS_weechat_nicklist_remove_all)
 }
 
 /*
+ * weechat::bar_item_search: search a bar item
+ */
+
+static XS (XS_weechat_bar_item_search)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_search");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_search");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_bar_item_search (SvPV (ST (0), PL_na))); /* name */
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_perl_api_bar_item_build_cb: callback for building bar item
+ */
+
+char *
+weechat_perl_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
+                                    struct t_gui_window *window,
+                                    int max_width)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[4], *ret;
+    static char buf[32];
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    snprintf (buf, sizeof (buf) - 1, "%d", max_width);
+    
+    perl_argv[0] = script_ptr2str (item);
+    perl_argv[1] = script_ptr2str (window);
+    perl_argv[2] = buf;
+    perl_argv[3] = NULL;
+    
+    ret = (char *)weechat_perl_exec (script_callback->script,
+                                     WEECHAT_SCRIPT_EXEC_STRING,
+                                     script_callback->function,
+                                     perl_argv);
+    
+    if (perl_argv[0])
+        free (perl_argv[0]);
+    if (perl_argv[1])
+        free (perl_argv[1]);
+    
+    return ret;
+}
+
+/*
+ * weechat::bar_item_new: add a new bar item
+ */
+
+static XS (XS_weechat_bar_item_new)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_new");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_new");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_bar_item_new (weechat_perl_plugin,
+                                                      perl_current_script,
+                                                      SvPV (ST (0), PL_na), /* name */
+                                                      &weechat_perl_api_bar_item_build_cb,
+                                                      SvPV (ST (1), PL_na))); /* function build */
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::bar_item_update: update a bar item on screen
+ */
+
+static XS (XS_weechat_bar_item_update)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_update");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_update");
+        PERL_RETURN_ERROR;
+    }
+    
+    weechat_bar_item_update (SvPV (ST (0), PL_na)); /* name */
+    
+    PERL_RETURN_OK;
+}
+
+/*
+ * weechat::bar_item_remove: remove a bar item
+ */
+
+static XS (XS_weechat_bar_item_remove)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_remove");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_remove");
+        PERL_RETURN_ERROR;
+    }
+    
+    script_api_bar_item_remove (weechat_perl_plugin,
+                                perl_current_script,
+                                script_str2ptr (SvPV (ST (0), PL_na))); /* item */
+    
+    PERL_RETURN_OK;
+}
+
+/*
+ * weechat::bar_search: search a bar
+ */
+
+static XS (XS_weechat_bar_search)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_search");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_search");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_bar_search (SvPV (ST (0), PL_na))); /* name */
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::bar_new: add a new bar
+ */
+
+static XS (XS_weechat_bar_new)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_new");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 6)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_bar_new (SvPV (ST (0), PL_na), /* name */
+                                              SvPV (ST (1), PL_na), /* type */
+                                              SvPV (ST (2), PL_na), /* position */
+                                              SvIV (ST (3)), /* size */
+                                              SvIV (ST (4)), /* separator */
+                                              SvPV (ST (5), PL_na))); /* items */
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::bar_update: update a bar on screen
+ */
+
+static XS (XS_weechat_bar_update)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_update");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_update");
+        PERL_RETURN_ERROR;
+    }
+    
+    weechat_bar_update (SvPV (ST (0), PL_na)); /* name */
+    
+    PERL_RETURN_OK;
+}
+
+/*
+ * weechat::bar_remove: remove a bar
+ */
+
+static XS (XS_weechat_bar_remove)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_remove");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_remove");
+        PERL_RETURN_ERROR;
+    }
+    
+    weechat_bar_remove (script_str2ptr (SvPV (ST (0), PL_na))); /* bar */
+    
+    PERL_RETURN_OK;
+}
+
+/*
  * weechat::command: execute a command on a buffer
  */
 
@@ -2712,7 +3031,276 @@ static XS (XS_weechat_info_get)
     }
     
     value = weechat_info_get (SvPV (ST (0), PL_na));
+    
     PERL_RETURN_STRING(value);
+}
+
+/*
+ * weechat::infolist_get: get list with infos
+ */
+
+static XS (XS_weechat_infolist_get)
+{
+    char *value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_get");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_get");
+        PERL_RETURN_EMPTY;
+    }
+    
+    value = script_ptr2str (weechat_infolist_get (SvPV (ST (0), PL_na), /* name */
+                                                  script_str2ptr (SvPV (ST (1), PL_na)))); /* pointer */
+    
+    PERL_RETURN_STRING_FREE(value);
+}
+
+/*
+ * weechat::infolist_next: move item pointer to next item in infolist
+ */
+
+static XS (XS_weechat_infolist_next)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_next");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_next");
+        PERL_RETURN_INT(0);
+    }
+    
+    value = weechat_infolist_next (script_str2ptr (SvPV (ST (0), PL_na))); /* infolist */
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::infolist_prev: move item pointer to previous item in infolist
+ */
+
+static XS (XS_weechat_infolist_prev)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_prev");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_prev");
+        PERL_RETURN_INT(0);
+    }
+    
+    value = weechat_infolist_prev (script_str2ptr (SvPV (ST (0), PL_na))); /* infolist */
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::infolist_fields: get list of fields for current item of infolist
+ */
+
+static XS (XS_weechat_infolist_fields)
+{
+    char *value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_fields");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_fields");
+        PERL_RETURN_EMPTY;
+    }
+    
+    value = weechat_infolist_fields (script_str2ptr (SvPV (ST (0), PL_na))); /* infolist */
+    
+    PERL_RETURN_STRING(value);
+}
+
+/*
+ * weechat::infolist_integer: get integer value of a variable in infolist
+ */
+
+static XS (XS_weechat_infolist_integer)
+{
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_integer");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_integer");
+        PERL_RETURN_INT(0);
+    }
+    
+    value = weechat_infolist_integer (script_str2ptr (SvPV (ST (0), PL_na)), /* infolist */
+                                      SvPV (ST (1), PL_na)); /* variable */
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
+ * weechat::infolist_string: get string value of a variable in infolist
+ */
+
+static XS (XS_weechat_infolist_string)
+{
+    char *value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_string");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    value = weechat_infolist_string (script_str2ptr (SvPV (ST (0), PL_na)), /* infolist */
+                                     SvPV (ST (1), PL_na)); /* variable */
+    
+    PERL_RETURN_STRING(value);
+}
+
+/*
+ * weechat::infolist_pointer: get pointer value of a variable in infolist
+ */
+
+static XS (XS_weechat_infolist_pointer)
+{
+    char *value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_pointer");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_pointer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    value = script_ptr2str (weechat_infolist_pointer (script_str2ptr (SvPV (ST (0), PL_na)), /* infolist */
+                                                      SvPV (ST (1), PL_na))); /* variable */
+    
+    PERL_RETURN_STRING_FREE(value);
+}
+
+/*
+ * weechat::infolist_time: get time value of a variable in infolist
+ */
+
+static XS (XS_weechat_infolist_time)
+{
+    time_t time;
+    char timebuffer[64], *value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_time");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_time");
+        PERL_RETURN_EMPTY;
+    }
+    
+    time = weechat_infolist_time (script_str2ptr (SvPV (ST (0), PL_na)), /* infolist */
+                                  SvPV (ST (1), PL_na)); /* variable */
+    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
+    value = strdup (timebuffer);
+    
+    PERL_RETURN_STRING_FREE(value);
+}
+
+/*
+ * weechat::infolist_free: free infolist
+ */
+
+static XS (XS_weechat_infolist_free)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_free");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_free");
+        PERL_RETURN_ERROR;
+    }
+    
+    weechat_infolist_free (script_str2ptr (SvPV (ST (0), PL_na))); /* infolist */
+    
+    PERL_RETURN_OK;
 }
 
 /*
@@ -2794,8 +3382,25 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::nicklist_remove_group", XS_weechat_nicklist_remove_group, "weechat");
     newXS ("weechat::nicklist_remove_nick", XS_weechat_nicklist_remove_nick, "weechat");
     newXS ("weechat::nicklist_remove_all", XS_weechat_nicklist_remove_all, "weechat");
+    newXS ("weechat::bar_item_search", XS_weechat_bar_item_search, "weechat");
+    newXS ("weechat::bar_item_new", XS_weechat_bar_item_new, "weechat");
+    newXS ("weechat::bar_item_update", XS_weechat_bar_item_update, "weechat");
+    newXS ("weechat::bar_item_remove", XS_weechat_bar_item_remove, "weechat");
+    newXS ("weechat::bar_search", XS_weechat_bar_search, "weechat");
+    newXS ("weechat::bar_new", XS_weechat_bar_new, "weechat");
+    newXS ("weechat::bar_update", XS_weechat_bar_update, "weechat");
+    newXS ("weechat::bar_remove", XS_weechat_bar_remove, "weechat");
     newXS ("weechat::command", XS_weechat_command, "weechat");
     newXS ("weechat::info_get", XS_weechat_info_get, "weechat");
+    newXS ("weechat::infolist_get", XS_weechat_infolist_get, "weechat");
+    newXS ("weechat::infolist_next", XS_weechat_infolist_next, "weechat");
+    newXS ("weechat::infolist_prev", XS_weechat_infolist_prev, "weechat");
+    newXS ("weechat::infolist_fields", XS_weechat_infolist_fields, "weechat");
+    newXS ("weechat::infolist_integer", XS_weechat_infolist_integer, "weechat");
+    newXS ("weechat::infolist_string", XS_weechat_infolist_string, "weechat");
+    newXS ("weechat::infolist_pointer", XS_weechat_infolist_pointer, "weechat");
+    newXS ("weechat::infolist_time", XS_weechat_infolist_time, "weechat");
+    newXS ("weechat::infolist_free", XS_weechat_infolist_free, "weechat");
     
     /* interface constants */
     stash = gv_stashpv ("weechat", TRUE);

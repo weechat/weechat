@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-22 14:17+0100\n"
-"PO-Revision-Date: 2008-02-22 14:18+0100\n"
+"POT-Creation-Date: 2008-03-05 14:04+0100\n"
+"PO-Revision-Date: 2008-03-05 14:04+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -107,12 +107,61 @@ msgstr "%sBienvenue dans %s%s%s, %s"
 msgid "compiled on"
 msgstr "compilé le"
 
-msgid "Buffers list:"
-msgstr "Liste des tampons:"
+msgid "List of bars:"
+msgstr "Liste des barres:"
+
+#, c-format
+msgid "  %d. %s: %s, %s, %s: %d, items: %s%s (plugin: %s)"
+msgstr "  %d. %s: %s, %s, %s: %d, objets: %s%s (extension: %s)"
+
+msgid "height"
+msgstr "hauteur"
+
+msgid "width"
+msgstr "largeur"
+
+msgid ", with separator"
+msgstr ", avec séparateur"
+
+msgid "No bar defined"
+msgstr "Pas de barre définie"
+
+msgid "List of bar items:"
+msgstr "Liste des objets de barres:"
+
+#, c-format
+msgid "  %s (plugin: %s)"
+msgstr "  %s (extension: %s)"
+
+msgid "No bar item defined"
+msgstr "Pas d'objet de barre défini"
 
 #, c-format
 msgid "%sError: missing arguments for \"%s\" command"
 msgstr "%sErreur: paramètres manquants pour la commande \"%s\""
+
+#, c-format
+msgid "%sError: wrong type \"%s\" for bar \"%s\""
+msgstr "%sErreur: type erroné \"%s\" pour la barre \"%s\""
+
+#, c-format
+msgid "%sError: wrong position \"%s\" for bar \"%s\""
+msgstr "%sErreur: position erronée \"%s\" pour la barre \"%s\""
+
+#, c-format
+msgid "%sBar \"%s\" created"
+msgstr "%sBarre \"%s\" créée"
+
+#, c-format
+msgid "%sError: failed to create bar \"%s\""
+msgstr "%sErreur: impossible de créer la barre \"%s\""
+
+#, c-format
+msgid "%sError: wrong size \"%s\" for bar \"%s\""
+msgstr "%sErreur: taille erronée \"%s\" pour la barre \"%s\""
+
+msgid "Buffers list:"
+msgstr "Liste des tampons:"
 
 #, c-format
 msgid "%sError: incorrect buffer number"
@@ -403,6 +452,32 @@ msgid ""
 msgstr ""
 "%sErreur: impossible de fusionner les fenêtres, aucun autre fenêtre avec la "
 "même taille à coté de la fenêtre actuelle"
+
+msgid "manage bars"
+msgstr "gestion des barres"
+
+msgid "[add name type position size [separator]] | [list]"
+msgstr "[add nom type position taille [separateur]] | [list]"
+
+msgid ""
+"      add: add a new bar\n"
+"     name: name of bar (must be unique)\n"
+"     type: \"root\" (outside windows), \"window_active\" (inside active "
+"window), or \"window_inactive\" (inside each inactive window)\n"
+" position: bottom, top, left or right\n"
+"     size: size of bar (in chars)\n"
+"separator: 1 for using separator (line), 0 or nothing means no separator\n"
+"     list: list all bars"
+msgstr ""
+"       add: ajoute une nouvelle barre\n"
+"       nom: nom de la barre (doit être unique)\n"
+"      type: \"root\" (en dehors des fenêtres), \"window_active\" (dans la "
+"fenêtre active), \"window_inactive\" (dans chaque fenêtre inactive)\n"
+"  position: bottom (bas), top (haut), left (gauche) ou right (droite)\n"
+"    taille: taille de la barre (en caractères)\n"
+"separateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie sans "
+"séparateur\n"
+"      list: liste toutes les barres"
 
 msgid "manage buffers"
 msgstr "gestion des tampons"
@@ -1390,6 +1465,9 @@ msgstr "-PLUS-"
 msgid "server"
 msgstr "serveur"
 
+msgid "(MORE)"
+msgstr "(PLUS)"
+
 #, c-format
 msgid "%sError: a buffer with same name already exists (%s / %s)"
 msgstr "%sErreur: un tampon avec le même nom existe déjà (%s / %s)"
@@ -1733,6 +1811,14 @@ msgstr ""
 "fichier log\n"
 "windows: affiche l'arbre des fenêtres<\n"
 "  texte: envoie le signal \"debug\" avec \"texte\" comme paramètre"
+
+#, c-format
+msgid "%s: debug enabled"
+msgstr "%s: debug activé"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr "%s: debug désactivé"
 
 msgid "demo message without prefix"
 msgstr "message de démonstration sans préfixe"
@@ -3196,14 +3282,6 @@ msgstr "Abandon du DCC actif: \"%s\" de %s"
 
 msgid "IRC debug messages"
 msgstr "Messages de debug IRC"
-
-#, c-format
-msgid "%s: debug enabled"
-msgstr "%s: debug activé"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr "%s: debug désactivé"
 
 #, c-format
 msgid "%sServer: %s%s %s[%s%s%s]"

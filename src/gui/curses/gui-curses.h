@@ -33,6 +33,18 @@
 
 #define GUI_CURSES(window) ((t_gui_curses_objects *)(window->gui_objects))
 
+struct t_gui_bar_window
+{
+    struct t_gui_bar *bar;          /* pointer to bar                       */
+    int x, y;                       /* position of window                   */
+    int width, height;              /* window size                          */
+    WINDOW *win_bar;                /* bar Curses window                    */
+    WINDOW *win_separator;          /* separator (optional)                 */
+    struct t_gui_bar_window *next_bar_window;
+                                    /* link to next bar window              */
+                                    /* (only used if bar is in windows)     */
+};
+
 typedef struct t_gui_curses_objects t_gui_curses_objects;
 
 struct t_gui_curses_objects
@@ -44,6 +56,7 @@ struct t_gui_curses_objects
     WINDOW *win_infobar;            /* info bar window                      */
     WINDOW *win_input;              /* input window                         */
     WINDOW *win_separator;          /* separation between 2 splited (V) win */
+    struct t_gui_bar_window *bar_windows; /* bar windows                    */
 };
 
 extern struct t_gui_color gui_weechat_colors[];
@@ -51,6 +64,10 @@ extern struct t_gui_color gui_weechat_colors[];
 /* color functions */
 extern int gui_color_get_pair (int num_color);
 extern void gui_color_init ();
+
+/* bar functions */
+extern void gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
+                                               struct t_gui_window *window);
 
 /* chat functions */
 extern void gui_chat_calculate_line_diff (struct t_gui_window *window,

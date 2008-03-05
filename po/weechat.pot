@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-22 14:17+0100\n"
+"POT-Creation-Date: 2008-03-05 14:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -90,11 +90,60 @@ msgstr ""
 msgid "compiled on"
 msgstr ""
 
-msgid "Buffers list:"
+msgid "List of bars:"
+msgstr ""
+
+#, c-format
+msgid "  %d. %s: %s, %s, %s: %d, items: %s%s (plugin: %s)"
+msgstr ""
+
+msgid "height"
+msgstr ""
+
+msgid "width"
+msgstr ""
+
+msgid ", with separator"
+msgstr ""
+
+msgid "No bar defined"
+msgstr ""
+
+msgid "List of bar items:"
+msgstr ""
+
+#, c-format
+msgid "  %s (plugin: %s)"
+msgstr ""
+
+msgid "No bar item defined"
 msgstr ""
 
 #, c-format
 msgid "%sError: missing arguments for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong type \"%s\" for bar \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong position \"%s\" for bar \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sBar \"%s\" created"
+msgstr ""
+
+#, c-format
+msgid "%sError: failed to create bar \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong size \"%s\" for bar \"%s\""
+msgstr ""
+
+msgid "Buffers list:"
 msgstr ""
 
 #, c-format
@@ -381,6 +430,23 @@ msgstr ""
 msgid ""
 "%sError: can not merge windows, there's no other window with same size near "
 "current one"
+msgstr ""
+
+msgid "manage bars"
+msgstr ""
+
+msgid "[add name type position size [separator]] | [list]"
+msgstr ""
+
+msgid ""
+"      add: add a new bar\n"
+"     name: name of bar (must be unique)\n"
+"     type: \"root\" (outside windows), \"window_active\" (inside active "
+"window), or \"window_inactive\" (inside each inactive window)\n"
+" position: bottom, top, left or right\n"
+"     size: size of bar (in chars)\n"
+"separator: 1 for using separator (line), 0 or nothing means no separator\n"
+"     list: list all bars"
 msgstr ""
 
 msgid "manage buffers"
@@ -1198,6 +1264,9 @@ msgstr ""
 msgid "server"
 msgstr ""
 
+msgid "(MORE)"
+msgstr ""
+
 #, c-format
 msgid "%sError: a buffer with same name already exists (%s / %s)"
 msgstr ""
@@ -1506,6 +1575,14 @@ msgid ""
 " buffer: dump buffer content with hexadecimal values in log file\n"
 "windows: display windows tree\n"
 "   text: send \"debug\" signal with \"text\" as argument"
+msgstr ""
+
+#, c-format
+msgid "%s: debug enabled"
+msgstr ""
+
+#, c-format
+msgid "%s: debug disabled"
 msgstr ""
 
 msgid "demo message without prefix"
@@ -2747,14 +2824,6 @@ msgid "Aborting active DCC: \"%s\" from %s"
 msgstr ""
 
 msgid "IRC debug messages"
-msgstr ""
-
-#, c-format
-msgid "%s: debug enabled"
-msgstr ""
-
-#, c-format
-msgid "%s: debug disabled"
 msgstr ""
 
 #, c-format

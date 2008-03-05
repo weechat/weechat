@@ -29,8 +29,10 @@
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
+#include "../../core/wee-hook.h"
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
+#include "../../plugins/plugin.h"
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
@@ -963,7 +965,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
     struct t_gui_line *ptr_line;
     /*t_irc_dcc *dcc_first, *dcc_selected, *ptr_dcc;*/
     char format_empty[32];
-    int i, line_pos, count;
+    int i, line_pos, count, old_scroll;
     /*int j, num_bars;
     unsigned long pct_complete;
     char *unit_name[] = { N_("bytes"), N_("KB"), N_("MB"), N_("GB") };
@@ -1173,6 +1175,8 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                     ptr_line = ptr_line->next_line;
                 }
                 
+                old_scroll = ptr_win->scroll;
+                
                 ptr_win->scroll = (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1);
                 
                 /* check if last line of buffer is entirely displayed and scrolling */
@@ -1181,6 +1185,12 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                 {
                     if (count == gui_chat_display_line (ptr_win, ptr_win->buffer->last_line, 0, 1))
                         ptr_win->scroll = 0;
+                }
+                
+                if (ptr_win->scroll != old_scroll)
+                {
+                    hook_signal_send ("window_scrolled",
+                                      WEECHAT_HOOK_SIGNAL_POINTER, ptr_win);
                 }
                 
                 if (!ptr_win->scroll && (ptr_win->start_line == ptr_win->buffer->lines))

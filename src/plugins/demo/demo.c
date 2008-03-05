@@ -44,6 +44,35 @@ WEECHAT_PLUGIN_LICENSE("GPL");
 struct t_weechat_plugin *weechat_demo_plugin = NULL;
 #define weechat_plugin weechat_demo_plugin
 
+int demo_debug = 0;
+
+
+/*
+ * demo_debug_signal_debug_cb: callback for "debug" signal
+ */
+
+int
+demo_debug_signal_debug_cb (void *data, char *signal, char *type_data,
+                            void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+    {
+        if (weechat_strcasecmp ((char *)signal_data, "demo") == 0)
+        {
+            demo_debug ^= 1;
+            if (demo_debug)
+                weechat_printf (NULL, _("%s: debug enabled"), "demo");
+            else
+                weechat_printf (NULL, _("%s: debug disabled"), "demo");
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
 
 /*
  * demo_printf_command_cb: demo command for printf
@@ -134,12 +163,15 @@ demo_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     /* make C compiler happy */
     (void) data;
-    
-    weechat_printf (NULL,
-                    "buffer_close_cb: buffer = %x (%s / %s)",
-                    buffer,
-                    weechat_buffer_get (buffer, "category"),
-                    weechat_buffer_get (buffer, "name"));
+
+    if (demo_debug)
+    {
+        weechat_printf (NULL,
+                        "buffer_close_cb: buffer = %x (%s / %s)",
+                        buffer,
+                        weechat_buffer_get (buffer, "category"),
+                        weechat_buffer_get (buffer, "name"));
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -243,7 +275,6 @@ demo_infolist_print (struct t_plugin_infolist *infolist, char *item_name)
                             break;
                     }
                 }
-
             }
             if (argv)
                 weechat_string_free_exploded (argv);
@@ -337,34 +368,37 @@ demo_signal_cb (void *data, char *signal, char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
-    
-    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+
+    if (demo_debug)
     {
-        weechat_printf (NULL,
-                        _("demo_signal: signal: %s, type_data: %s, "
-                          "signal_data: '%s'"),
-                        signal, type_data, (char *)signal_data);
-    }
-    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
-    {
-        weechat_printf (NULL,
-                        _("demo_signal: signal: %s, type_data: %s, "
-                          "signal_data: %d"),
-                        signal, type_data, *((int *)signal_data));
-    }
-    else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
-    {
-        weechat_printf (NULL,
-                        _("demo_signal: signal: %s, type_data: %s, "
-                          "signal_data: 0x%x"),
-                        signal, type_data, signal_data);
-    }
-    else
-    {
-        weechat_printf (NULL,
-                        _("demo_signal: signal: %s, type_data: %s, "
-                          "signal_data: 0x%x (unknown type)"),
-                        signal, type_data, signal_data);
+        if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
+        {
+            weechat_printf (NULL,
+                            _("demo_signal: signal: %s, type_data: %s, "
+                              "signal_data: '%s'"),
+                            signal, type_data, (char *)signal_data);
+        }
+        else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
+        {
+            weechat_printf (NULL,
+                            _("demo_signal: signal: %s, type_data: %s, "
+                              "signal_data: %d"),
+                            signal, type_data, *((int *)signal_data));
+        }
+        else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_POINTER) == 0)
+        {
+            weechat_printf (NULL,
+                            _("demo_signal: signal: %s, type_data: %s, "
+                              "signal_data: 0x%x"),
+                            signal, type_data, signal_data);
+        }
+        else
+        {
+            weechat_printf (NULL,
+                            _("demo_signal: signal: %s, type_data: %s, "
+                              "signal_data: 0x%x (unknown type)"),
+                            signal, type_data, signal_data);
+        }
     }
     
     return WEECHAT_RC_OK;
@@ -426,7 +460,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                           "weechat_sharedir|charset_terminal|charset_internal|"
                           "inactivity|input|input_mask|input_pos",
                           &demo_info_command_cb, NULL);
-
+    
+    weechat_hook_signal ("debug", &demo_debug_signal_debug_cb, NULL);
     weechat_hook_signal ("*", &demo_signal_cb, NULL);
     
     return WEECHAT_RC_OK;

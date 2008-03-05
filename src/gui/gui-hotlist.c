@@ -28,8 +28,10 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hook.h"
 #include "../core/wee-log.h"
 #include "../core/wee-util.h"
+#include "../plugins/plugin.h"
 #include "gui-hotlist.h"
 #include "gui-buffer.h"
 #include "gui-status.h"
@@ -178,6 +180,8 @@ gui_hotlist_add_hotlist (struct t_gui_hotlist **hotlist,
         *hotlist = new_hotlist;
         *last_hotlist = new_hotlist;
     }
+    
+    hook_signal_send ("hotlist_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*
@@ -312,6 +316,8 @@ gui_hotlist_free (struct t_gui_hotlist **hotlist,
     
     free (ptr_hotlist);
     *hotlist = new_hotlist;
+    
+    hook_signal_send ("hotlist_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*

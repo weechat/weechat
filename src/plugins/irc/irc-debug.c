@@ -116,13 +116,14 @@ irc_debug_signal_debug_cb (void *data, char *signal, char *type_data,
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
         if (weechat_strcasecmp ((char *)signal_data, "irc") == 0)
+        {
             irc_debug ^= 1;
+            if (irc_debug)
+                weechat_printf (NULL, _("%s: debug enabled"), "irc");
+            else
+                weechat_printf (NULL, _("%s: debug disabled"), "irc");
+        }
     }
-    
-    if (irc_debug)
-        weechat_printf (NULL, _("%s: debug enabled"), "irc");
-    else
-        weechat_printf (NULL, _("%s: debug disabled"), "irc");
     
     return WEECHAT_RC_OK;
 }

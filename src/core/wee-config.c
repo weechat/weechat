@@ -1015,7 +1015,7 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "color_status_more", "color",
         N_("text color for buffer with new data (status bar)"),
-        NULL, GUI_COLOR_STATUS_MORE, 0, "white", &config_change_color, NULL);
+        NULL, GUI_COLOR_STATUS_MORE, 0, "yellow", &config_change_color, NULL);
     /* infobar window */
     config_color_infobar = config_file_new_option (
         weechat_config_file, ptr_section,

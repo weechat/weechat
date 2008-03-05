@@ -31,6 +31,8 @@
 #include "wee-log.h"
 #include "wee-hook.h"
 #include "wee-string.h"
+#include "../gui/gui-bar.h"
+#include "../gui/gui-bar-item.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-hotlist.h"
@@ -73,6 +75,8 @@ debug_dump (int crash)
 
     gui_window_print_log ();
     gui_buffer_print_log ();
+    gui_bar_print_log ();
+    gui_bar_item_print_log ();
     gui_hotlist_print_log ();
     
     hook_print_log ();

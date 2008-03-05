@@ -37,7 +37,8 @@ weechat_curses_LDADD = ../../core/weechat.o \
                        $(PLUGINS_LFLAGS) \
                        $(NCURSES_LFLAGS)
 
-weechat_curses_SOURCES = gui-curses-chat.c \
+weechat_curses_SOURCES = gui-curses-bar.c \
+                         gui-curses-chat.c \
                          gui-curses-color.c \
                          gui-curses-infobar.c \
                          gui-curses-input.c \

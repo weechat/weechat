@@ -202,6 +202,7 @@ weechat_ruby_api_iconv_to_internal (VALUE class, VALUE charset, VALUE string)
     c_string = STR2CSTR (string);
     
     result = weechat_iconv_to_internal (c_charset, c_string);
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -241,6 +242,7 @@ weechat_ruby_api_iconv_from_internal (VALUE class, VALUE charset, VALUE string)
     c_string = STR2CSTR (string);
     
     result = weechat_iconv_from_internal (c_charset, c_string);
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -275,6 +277,7 @@ weechat_ruby_api_gettext (VALUE class, VALUE string)
     c_string = STR2CSTR (string);
     
     result = weechat_gettext (c_string);
+    
     RUBY_RETURN_STRING(result);
 }
 
@@ -317,6 +320,7 @@ weechat_ruby_api_ngettext (VALUE class, VALUE single, VALUE plural,
     c_count = FIX2INT (count);
     
     result = weechat_ngettext (c_single, c_plural, c_count);
+    
     RUBY_RETURN_STRING(result);
 }
 
@@ -419,6 +423,7 @@ weechat_ruby_api_list_new (VALUE class)
     }
     
     result = script_ptr2str (weechat_list_new ());
+    
     RUBY_RETURN_STRING(result);
 }
 
@@ -461,6 +466,7 @@ weechat_ruby_api_list_add (VALUE class, VALUE weelist, VALUE data, VALUE where)
     result = script_ptr2str (weechat_list_add (script_str2ptr(c_weelist),
                                                c_data,
                                                c_where));
+    
     RUBY_RETURN_STRING(result);
 }
 
@@ -499,6 +505,7 @@ weechat_ruby_api_list_search (VALUE class, VALUE weelist, VALUE data)
     
     result = script_ptr2str (weechat_list_search (script_str2ptr(c_weelist),
                                                   c_data));
+    
     RUBY_RETURN_STRING(result);
 }
 
@@ -537,6 +544,7 @@ weechat_ruby_api_list_casesearch (VALUE class, VALUE weelist, VALUE data)
     
     result = script_ptr2str (weechat_list_casesearch (script_str2ptr(c_weelist),
                                                       c_data));
+    
     RUBY_RETURN_STRING(result);
 }
 
@@ -576,6 +584,7 @@ weechat_ruby_api_list_get (VALUE class, VALUE weelist, VALUE position)
     
     result = script_ptr2str (weechat_list_get (script_str2ptr(c_weelist),
                                                c_position));
+    
     RUBY_RETURN_STRING(result);
 }
 
@@ -649,6 +658,7 @@ weechat_ruby_api_list_next (VALUE class, VALUE item)
     c_item = STR2CSTR (item);
     
     result = script_ptr2str (weechat_list_next (script_str2ptr(c_item)));
+    
     RUBY_RETURN_STRING(result);
 }
 
@@ -683,6 +693,7 @@ weechat_ruby_api_list_prev (VALUE class, VALUE item)
     c_item = STR2CSTR (item);
     
     result = script_ptr2str (weechat_list_prev (script_str2ptr(c_item)));
+    
     RUBY_RETURN_STRING(result);
 }
 
@@ -717,6 +728,7 @@ weechat_ruby_api_list_string (VALUE class, VALUE item)
     c_item = STR2CSTR (item);
     
     result = weechat_list_string (script_str2ptr(c_item));
+    
     RUBY_RETURN_STRING(result);
 }
 
@@ -752,6 +764,7 @@ weechat_ruby_api_list_size (VALUE class, VALUE weelist)
     c_weelist = STR2CSTR (weelist);
     
     size = weechat_list_size (script_str2ptr(c_weelist));
+    
     RUBY_RETURN_INT(size);
 }
 
@@ -943,6 +956,7 @@ weechat_ruby_api_config_new (VALUE class, VALUE filename, VALUE function)
                                                     c_filename,
                                                     &weechat_ruby_api_config_reload_cb,
                                                     c_function));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -1105,6 +1119,7 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
                                                             c_function_write,
                                                             &weechat_ruby_api_config_section_write_default_cb,
                                                             c_function_write_default));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -1145,6 +1160,7 @@ weechat_ruby_api_config_search_section (VALUE class, VALUE config_file,
     
     result = script_ptr2str (weechat_config_search_section (script_str2ptr (c_config_file),
                                                             c_section_name));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -1254,6 +1270,7 @@ weechat_ruby_api_config_new_option (VALUE class, VALUE config_file,
                                                            c_default_value,
                                                            &weechat_ruby_api_config_option_change_cb,
                                                            c_function));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -1298,6 +1315,7 @@ weechat_ruby_api_config_search_option (VALUE class, VALUE config_file,
     result = script_ptr2str (weechat_config_search_option (script_str2ptr (c_config_file),
                                                            script_str2ptr (c_section),
                                                            c_option_name));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -1333,6 +1351,7 @@ weechat_ruby_api_config_string_to_boolean (VALUE class, VALUE text)
     c_text = STR2CSTR (text);
     
     value = weechat_config_string_to_boolean (c_text);
+    
     RUBY_RETURN_INT(value);
 }
 
@@ -1377,6 +1396,7 @@ weechat_ruby_api_config_option_set (VALUE class, VALUE option, VALUE new_value,
     rc = weechat_config_option_set (script_str2ptr (c_option),
                                     c_new_value,
                                     c_run_callback);
+    
     RUBY_RETURN_INT(rc);
 }
 
@@ -1412,6 +1432,7 @@ weechat_ruby_api_config_boolean (VALUE class, VALUE option)
     c_option = STR2CSTR (option);
     
     value = weechat_config_boolean (script_str2ptr (c_option));
+    
     RUBY_RETURN_INT(value);
 }
 
@@ -1447,6 +1468,7 @@ weechat_ruby_api_config_integer (VALUE class, VALUE option)
     c_option = STR2CSTR (option);
     
     value = weechat_config_integer (script_str2ptr (c_option));
+    
     RUBY_RETURN_INT(value);
 }
 
@@ -1481,6 +1503,7 @@ weechat_ruby_api_config_string (VALUE class, VALUE option)
     c_option = STR2CSTR (option);
     
     value = weechat_config_string (script_str2ptr (c_option));
+    
     RUBY_RETURN_STRING(value);
 }
 
@@ -1516,6 +1539,7 @@ weechat_ruby_api_config_color (VALUE class, VALUE option)
     c_option = STR2CSTR (option);
     
     value = weechat_config_color (script_str2ptr (c_option));
+    
     RUBY_RETURN_INT(value);
 }
 
@@ -1596,6 +1620,7 @@ weechat_ruby_api_config_write (VALUE class, VALUE config_file)
     c_config_file = STR2CSTR (config_file);
     
     rc = weechat_config_write (script_str2ptr (c_config_file));
+    
     RUBY_RETURN_INT(rc);
 }
 
@@ -1631,6 +1656,7 @@ weechat_ruby_api_config_read (VALUE class, VALUE config_file)
     c_config_file = STR2CSTR (config_file);
     
     rc = weechat_config_read (script_str2ptr (c_config_file));
+    
     RUBY_RETURN_INT(rc);
 }
 
@@ -1666,6 +1692,7 @@ weechat_ruby_api_config_reload (VALUE class, VALUE config_file)
     c_config_file = STR2CSTR (config_file);
     
     rc = weechat_config_reload (script_str2ptr (c_config_file));
+    
     RUBY_RETURN_INT(rc);
 }
 
@@ -1737,6 +1764,7 @@ weechat_ruby_api_prefix (VALUE class, VALUE prefix)
     c_prefix = STR2CSTR (prefix);
     
     result = weechat_prefix (c_prefix);
+    
     RUBY_RETURN_STRING(result);
 }
 
@@ -1771,6 +1799,7 @@ weechat_ruby_api_color (VALUE class, VALUE color)
     c_color = STR2CSTR (color);
     
     result = weechat_color (c_color);
+    
     RUBY_RETURN_STRING(result);
 }
 
@@ -2031,6 +2060,7 @@ weechat_ruby_api_hook_command (VALUE class, VALUE command, VALUE description,
                                                       c_completion,
                                                       &weechat_ruby_api_hook_command_cb,
                                                       c_function));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -2115,6 +2145,7 @@ weechat_ruby_api_hook_timer (VALUE class, VALUE interval, VALUE align_second,
                                                     c_max_calls,
                                                     &weechat_ruby_api_hook_timer_cb,
                                                     c_function));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -2203,6 +2234,7 @@ weechat_ruby_api_hook_fd (VALUE class, VALUE fd, VALUE read, VALUE write,
                                                  c_exception,
                                                  &weechat_ruby_api_hook_fd_cb,
                                                  c_function));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -2297,6 +2329,7 @@ weechat_ruby_api_hook_print (VALUE class, VALUE buffer, VALUE message,
                                                     c_strip_colors,
                                                     &weechat_ruby_api_hook_print_cb,
                                                     c_function));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -2393,6 +2426,7 @@ weechat_ruby_api_hook_signal (VALUE class, VALUE signal, VALUE function)
                                                      c_signal,
                                                      &weechat_ruby_api_hook_signal_cb,
                                                      c_function));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -2537,6 +2571,7 @@ weechat_ruby_api_hook_config (VALUE class, VALUE type, VALUE option,
                                                      c_option,
                                                      &weechat_ruby_api_hook_config_cb,
                                                      c_function));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -2620,6 +2655,7 @@ weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
                                                          c_completion,
                                                          &weechat_ruby_api_hook_completion_cb,
                                                          c_function));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -2686,6 +2722,7 @@ weechat_ruby_api_hook_modifier (VALUE class, VALUE modifier, VALUE function)
                                                        c_modifier,
                                                        &weechat_ruby_api_hook_modifier_cb,
                                                        c_function));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -2728,6 +2765,7 @@ weechat_ruby_api_hook_modifier_exec (VALUE class, VALUE modifier,
     c_string = STR2CSTR (string);
 
     result = weechat_hook_modifier_exec (c_modifier, c_modifier_data, c_string);
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -2909,6 +2947,7 @@ weechat_ruby_api_buffer_new (VALUE class, VALUE category, VALUE name,
                                                     c_function_input,
                                                     &weechat_ruby_api_close_cb,
                                                     c_function_close));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -2947,6 +2986,7 @@ weechat_ruby_api_buffer_search (VALUE class, VALUE category, VALUE name)
     c_name = STR2CSTR (name);
     
     result = script_ptr2str (weechat_buffer_search (c_category, c_name));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -3025,6 +3065,7 @@ weechat_ruby_api_buffer_get (VALUE class, VALUE buffer, VALUE property)
 
     value = weechat_buffer_get (script_str2ptr (c_buffer),
                                 c_property);
+    
     RUBY_RETURN_STRING(value);
 }
 
@@ -3120,6 +3161,7 @@ weechat_ruby_api_nicklist_add_group (VALUE class, VALUE buffer,
                                                          c_name,
                                                          c_color,
                                                          c_visible));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -3164,6 +3206,7 @@ weechat_ruby_api_nicklist_search_group (VALUE class, VALUE buffer,
     result = script_ptr2str (weechat_nicklist_search_group (script_str2ptr (c_buffer),
                                                             script_str2ptr (c_from_group),
                                                             c_name));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -3233,6 +3276,7 @@ weechat_ruby_api_nicklist_add_nick (VALUE class, VALUE buffer, VALUE group,
                                                         char_prefix,
                                                         c_prefix_color,
                                                         c_visible));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -3277,6 +3321,7 @@ weechat_ruby_api_nicklist_search_nick (VALUE class, VALUE buffer,
     result = script_ptr2str (weechat_nicklist_search_nick (script_str2ptr (c_buffer),
                                                            script_str2ptr (c_from_group),
                                                            c_name));
+    
     RUBY_RETURN_STRING_FREE(result);
 }
 
@@ -3386,6 +3431,349 @@ weechat_ruby_api_nicklist_remove_all (VALUE class, VALUE buffer)
 }
 
 /*
+ * weechat_ruby_api_bar_item_search: search a bar item
+ */
+
+static VALUE
+weechat_ruby_api_bar_item_search (VALUE class, VALUE name)
+{
+    char *c_name, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_search");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_name = NULL;
+    
+    if (NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_search");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (name, T_STRING);
+    
+    c_name = STR2CSTR (name);
+    
+    result = script_ptr2str (weechat_bar_item_search (c_name));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_bar_item_build_cb: callback for building bar item
+ */
+
+char *
+weechat_ruby_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
+                                    struct t_gui_window *window,
+                                    int max_width)
+{
+    struct t_script_callback *script_callback;
+    char *ruby_argv[4], *ret;
+    static char buf[32];
+    
+    script_callback = (struct t_script_callback *)data;
+
+    snprintf (buf, sizeof (buf) - 1, "%d", max_width);
+    
+    ruby_argv[0] = script_ptr2str (item);
+    ruby_argv[1] = script_ptr2str (window);
+    ruby_argv[2] = buf;
+    ruby_argv[3] = NULL;
+    
+    ret = (char *)weechat_ruby_exec (script_callback->script,
+                                     WEECHAT_SCRIPT_EXEC_STRING,
+                                     script_callback->function,
+                                     ruby_argv);
+    
+    if (ruby_argv[0])
+        free (ruby_argv[0]);
+    if (ruby_argv[1])
+        free (ruby_argv[1]);
+    
+    return ret;
+}
+
+/*
+ * weechat_ruby_api_bar_item_new: add a new bar item
+ */
+
+static VALUE
+weechat_ruby_api_bar_item_new (VALUE class, VALUE name, VALUE function)
+{
+    char *c_name, *c_function, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_new");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_name = NULL;
+    c_function = NULL;
+    
+    if (NIL_P (name) || NIL_P (function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_new");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (name, T_STRING);
+    Check_Type (function, T_STRING);
+    
+    c_name = STR2CSTR (name);
+    c_function = STR2CSTR (function);
+    
+    result = script_ptr2str (script_api_bar_item_new (weechat_ruby_plugin,
+                                                      ruby_current_script,
+                                                      c_name,
+                                                      &weechat_ruby_api_bar_item_build_cb,
+                                                      c_function));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_bar_item_update: update a bar item on screen
+ */
+
+static VALUE
+weechat_ruby_api_bar_item_update (VALUE class, VALUE name)
+{
+    char *c_name;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_update");
+        RUBY_RETURN_ERROR;
+    }
+    
+    if (NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_update");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (name, T_STRING);
+    
+    c_name = STR2CSTR (name);
+    
+    weechat_bar_item_update (c_name);
+    
+    RUBY_RETURN_OK;
+}
+
+/*
+ * weechat_ruby_api_bar_item_remove: remove a bar item
+ */
+
+static VALUE
+weechat_ruby_api_bar_item_remove (VALUE class, VALUE item)
+{
+    char *c_item;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_item_remove");
+        RUBY_RETURN_ERROR;
+    }
+    
+    if (NIL_P (item))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_item_remove");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (item, T_STRING);
+    
+    c_item = STR2CSTR (item);
+    
+    script_api_bar_item_remove (weechat_ruby_plugin,
+                                ruby_current_script,
+                                script_str2ptr (c_item));
+    
+    RUBY_RETURN_OK;
+}
+
+/*
+ * weechat_ruby_api_bar_search: search a bar
+ */
+
+static VALUE
+weechat_ruby_api_bar_search (VALUE class, VALUE name)
+{
+    char *c_name, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_search");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_name = NULL;
+    
+    if (NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_search");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (name, T_STRING);
+    
+    c_name = STR2CSTR (name);
+    
+    result = script_ptr2str (weechat_bar_search (c_name));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_bar_new: add a new bar
+ */
+
+static VALUE
+weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE type, VALUE position,
+                          VALUE size, VALUE separator, VALUE items)
+{
+    char *c_name, *c_type, *c_position, *c_items, *result;
+    int c_size, c_separator;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_new");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_name = NULL;
+    c_type = NULL;
+    c_position = NULL;
+    c_size = 0;
+    c_separator = 0;
+    c_items = NULL;
+    
+    if (NIL_P (name) || NIL_P (type) || NIL_P (position) || NIL_P (size)
+        || NIL_P (separator) || NIL_P (items))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (name, T_STRING);
+    Check_Type (type, T_STRING);
+    Check_Type (position, T_STRING);
+    Check_Type (size, T_FIXNUM);
+    Check_Type (separator, T_FIXNUM);
+    Check_Type (items, T_STRING);
+    
+    c_name = STR2CSTR (name);
+    c_type = STR2CSTR (type);
+    c_position = STR2CSTR (position);
+    c_size = FIX2INT (size);
+    c_separator = FIX2INT (separator);
+    c_items = STR2CSTR (items);
+    
+    result = script_ptr2str (weechat_bar_new (c_name,
+                                              c_type,
+                                              c_position,
+                                              c_size,
+                                              c_separator,
+                                              c_items));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_bar_update: update a bar on screen
+ */
+
+static VALUE
+weechat_ruby_api_bar_update (VALUE class, VALUE name)
+{
+    char *c_name;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_update");
+        RUBY_RETURN_ERROR;
+    }
+    
+    if (NIL_P (name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_update");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (name, T_STRING);
+    
+    c_name = STR2CSTR (name);
+    
+    weechat_bar_update (c_name);
+    
+    RUBY_RETURN_OK;
+}
+
+/*
+ * weechat_ruby_api_bar_remove: remove a bar
+ */
+
+static VALUE
+weechat_ruby_api_bar_remove (VALUE class, VALUE bar)
+{
+    char *c_bar;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_remove");
+        RUBY_RETURN_ERROR;
+    }
+    
+    if (NIL_P (bar))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_remove");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (bar, T_STRING);
+    
+    c_bar = STR2CSTR (bar);
+    
+    weechat_bar_remove (script_str2ptr (c_bar));
+    
+    RUBY_RETURN_OK;
+}
+
+/*
  * weechat_ruby_api_command: send command to server
  */
 
@@ -3452,7 +3840,324 @@ weechat_ruby_api_info_get (VALUE class, VALUE info)
     c_info = STR2CSTR (info);
 
     value = weechat_info_get (c_info);
+    
     RUBY_RETURN_STRING(value);
+}
+
+/*
+ * weechat_ruby_api_infolist_get: get list with infos
+ */
+
+static VALUE
+weechat_ruby_api_infolist_get (VALUE class, VALUE name, VALUE pointer)
+{
+    char *c_name, *c_pointer, *value;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_get");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (name) || NIL_P (pointer))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_get");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (name, T_STRING);
+    Check_Type (pointer, T_STRING);
+    
+    c_name = STR2CSTR (name);
+    c_pointer = STR2CSTR (pointer);
+    
+    value = script_ptr2str (weechat_infolist_get (c_name, script_str2ptr (c_pointer)));
+    
+    RUBY_RETURN_STRING_FREE(value);
+}
+
+/*
+ * weechat_ruby_api_infolist_next: move item pointer to next item in infolist
+ */
+
+static VALUE
+weechat_ruby_api_infolist_next (VALUE class, VALUE infolist)
+{
+    char *c_infolist;
+    int value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_next");
+        RUBY_RETURN_INT(0);
+    }
+    
+    if (NIL_P (infolist))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_next");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (infolist, T_STRING);
+    
+    c_infolist = STR2CSTR (infolist);
+    
+    value = weechat_infolist_next (script_str2ptr (c_infolist));
+    
+    RUBY_RETURN_INT(value);
+}
+
+/*
+ * weechat_ruby_api_infolist_prev: move item pointer to previous item in infolist
+ */
+
+static VALUE
+weechat_ruby_api_infolist_prev (VALUE class, VALUE infolist)
+{
+    char *c_infolist;
+    int value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_prev");
+        RUBY_RETURN_INT(0);
+    }
+    
+    if (NIL_P (infolist))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_prev");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (infolist, T_STRING);
+    
+    c_infolist = STR2CSTR (infolist);
+    
+    value = weechat_infolist_prev (script_str2ptr (c_infolist));
+    
+    RUBY_RETURN_INT(value);
+}
+
+/*
+ * weechat_ruby_api_infolist_fields: get list of fields for current item of infolist
+ */
+
+static VALUE
+weechat_ruby_api_infolist_fields (VALUE class, VALUE infolist)
+{
+    char *c_infolist, *value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_fields");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (infolist))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_fields");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (infolist, T_STRING);
+    
+    c_infolist = STR2CSTR (infolist);
+    
+    value = weechat_infolist_fields (script_str2ptr (c_infolist));
+    
+    RUBY_RETURN_STRING(value);
+}
+
+/*
+ * weechat_ruby_api_infolist_integer: get integer value of a variable in infolist
+ */
+
+static VALUE
+weechat_ruby_api_infolist_integer (VALUE class, VALUE infolist, VALUE variable)
+{
+    char *c_infolist, *c_variable;
+    int value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_integer");
+        RUBY_RETURN_INT(0);
+    }
+    
+    if (NIL_P (infolist) || NIL_P (variable))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_integer");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (infolist, T_STRING);
+    Check_Type (variable, T_STRING);
+    
+    c_infolist = STR2CSTR (infolist);
+    c_variable = STR2CSTR (variable);
+    
+    value = weechat_infolist_integer (script_str2ptr (c_infolist), c_variable);
+    
+    RUBY_RETURN_INT(value);
+}
+
+/*
+ * weechat_ruby_api_infolist_string: get string value of a variable in infolist
+ */
+
+static VALUE
+weechat_ruby_api_infolist_string (VALUE class, VALUE infolist, VALUE variable)
+{
+    char *c_infolist, *c_variable, *value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_string");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (infolist) || NIL_P (variable))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_string");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (infolist, T_STRING);
+    Check_Type (variable, T_STRING);
+    
+    c_infolist = STR2CSTR (infolist);
+    c_variable = STR2CSTR (variable);
+    
+    value = weechat_infolist_string (script_str2ptr (c_infolist), c_variable);
+    
+    RUBY_RETURN_STRING(value);
+}
+
+/*
+ * weechat_ruby_api_infolist_pointer: get pointer value of a variable in infolist
+ */
+
+static VALUE
+weechat_ruby_api_infolist_pointer (VALUE class, VALUE infolist, VALUE variable)
+{
+    char *c_infolist, *c_variable, *value;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_pointer");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (infolist) || NIL_P (variable))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_pointer");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (infolist, T_STRING);
+    Check_Type (variable, T_STRING);
+    
+    c_infolist = STR2CSTR (infolist);
+    c_variable = STR2CSTR (variable);
+    
+    value = script_ptr2str (weechat_infolist_pointer (script_str2ptr (c_infolist), c_variable));
+    
+    RUBY_RETURN_STRING_FREE(value);
+}
+
+/*
+ * weechat_ruby_api_infolist_time: get time value of a variable in infolist
+ */
+
+static VALUE
+weechat_ruby_api_infolist_time (VALUE class, VALUE infolist, VALUE variable)
+{
+    char *c_infolist, *c_variable, timebuffer[64], *value;
+    time_t time;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_time");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    if (NIL_P (infolist) || NIL_P (variable))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_time");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (infolist, T_STRING);
+    Check_Type (variable, T_STRING);
+    
+    c_infolist = STR2CSTR (infolist);
+    c_variable = STR2CSTR (variable);
+    
+    time = weechat_infolist_time (script_str2ptr (c_infolist), c_variable);
+    strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
+    value = strdup (timebuffer);
+    
+    RUBY_RETURN_STRING_FREE(value);
+}
+
+/*
+ * weechat_ruby_api_infolist_free: free infolist
+ */
+
+static VALUE
+weechat_ruby_api_infolist_free (VALUE class, VALUE infolist)
+{
+    char *c_infolist;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_free");
+        RUBY_RETURN_ERROR;
+    }
+    
+    if (NIL_P (infolist))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_free");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (infolist, T_STRING);
+    
+    c_infolist = STR2CSTR (infolist);
+    
+    weechat_infolist_free (script_str2ptr (c_infolist));
+    
+    RUBY_RETURN_OK;
 }
 
 /*
@@ -3545,6 +4250,23 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "nicklist_remove_group", &weechat_ruby_api_nicklist_remove_group, 2);
     rb_define_module_function (ruby_mWeechat, "nicklist_remove_nick", &weechat_ruby_api_nicklist_remove_nick, 2);
     rb_define_module_function (ruby_mWeechat, "nicklist_remove_all", &weechat_ruby_api_nicklist_remove_all, 1);
+    rb_define_module_function (ruby_mWeechat, "bar_item_search", &weechat_ruby_api_bar_item_search, 1);
+    rb_define_module_function (ruby_mWeechat, "bar_item_new", &weechat_ruby_api_bar_item_new, 2);
+    rb_define_module_function (ruby_mWeechat, "bar_item_update", &weechat_ruby_api_bar_item_update, 1);
+    rb_define_module_function (ruby_mWeechat, "bar_item_remove", &weechat_ruby_api_bar_item_remove, 1);
+    rb_define_module_function (ruby_mWeechat, "bar_search", &weechat_ruby_api_bar_search, 1);
+    rb_define_module_function (ruby_mWeechat, "bar_new", &weechat_ruby_api_bar_new, 6);
+    rb_define_module_function (ruby_mWeechat, "bar_update", &weechat_ruby_api_bar_update, 1);
+    rb_define_module_function (ruby_mWeechat, "bar_remove", &weechat_ruby_api_bar_remove, 1);
     rb_define_module_function (ruby_mWeechat, "command", &weechat_ruby_api_command, 2);
     rb_define_module_function (ruby_mWeechat, "info_get", &weechat_ruby_api_info_get, 1);
+    rb_define_module_function (ruby_mWeechat, "infolist_get", &weechat_ruby_api_infolist_get, 2);
+    rb_define_module_function (ruby_mWeechat, "infolist_next", &weechat_ruby_api_infolist_next, 1);
+    rb_define_module_function (ruby_mWeechat, "infolist_prev", &weechat_ruby_api_infolist_prev, 1);
+    rb_define_module_function (ruby_mWeechat, "infolist_fields", &weechat_ruby_api_infolist_fields, 1);
+    rb_define_module_function (ruby_mWeechat, "infolist_integer", &weechat_ruby_api_infolist_integer, 2);
+    rb_define_module_function (ruby_mWeechat, "infolist_string", &weechat_ruby_api_infolist_string, 2);
+    rb_define_module_function (ruby_mWeechat, "infolist_pointer", &weechat_ruby_api_infolist_pointer, 2);
+    rb_define_module_function (ruby_mWeechat, "infolist_time", &weechat_ruby_api_infolist_time, 2);
+    rb_define_module_function (ruby_mWeechat, "infolist_free", &weechat_ruby_api_infolist_free, 1);
 }

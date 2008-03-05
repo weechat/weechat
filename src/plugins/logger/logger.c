@@ -440,12 +440,12 @@ logger_buffer_open_signal_cb (void *data, char *signal, char *type_data,
 }
 
 /*
- * logger_buffer_close_signal_cb: callback for "buffer_close" signal
+ * logger_buffer_closing_signal_cb: callback for "buffer_closing" signal
  */
 
 int
-logger_buffer_close_signal_cb (void *data, char *signal, char *type_data,
-                               void *signal_data)
+logger_buffer_closing_signal_cb (void *data, char *signal, char *type_data,
+                                 void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -652,7 +652,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     logger_start_buffer_all ();
     
     weechat_hook_signal ("buffer_open", &logger_buffer_open_signal_cb, NULL);
-    weechat_hook_signal ("buffer_close", &logger_buffer_close_signal_cb, NULL);
+    weechat_hook_signal ("buffer_closing", &logger_buffer_closing_signal_cb, NULL);
     weechat_hook_signal ("logger_backlog", &logger_backlog_signal_cb, NULL);
     weechat_hook_signal ("logger_start", &logger_start_signal_cb, NULL);
     weechat_hook_signal ("logger_stop", &logger_stop_signal_cb, NULL);

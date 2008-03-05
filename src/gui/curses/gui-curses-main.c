@@ -38,6 +38,7 @@
 #include "../../core/wee-util.h"
 #include "../../plugins/plugin.h"
 #include "../gui-main.h"
+#include "../gui-bar-item.h"
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
@@ -97,7 +98,10 @@ gui_main_init ()
     
     /* get time length */
     gui_chat_time_length = util_get_time_length (CONFIG_STRING(config_look_buffer_time_format));
-
+    
+    /* init bar items */
+    gui_bar_item_init ();
+    
     /* create new window/buffer */
     if (gui_window_new (NULL, 0, 0, COLS, LINES, 100, 100))
     {
@@ -243,6 +247,9 @@ gui_main_loop ()
 void
 gui_main_end ()
 {
+    /* remove bar items */
+    gui_bar_item_end ();
+    
     /* free clipboard buffer */
     if (gui_input_clipboard)
         free (gui_input_clipboard);

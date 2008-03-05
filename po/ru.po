@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-22 14:17+0100\n"
+"POT-Creation-Date: 2008-03-05 14:04+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -111,12 +111,67 @@ msgstr "%sДобро пожаловать в %s%s%s, %s\n"
 msgid "compiled on"
 msgstr "собран:"
 
-msgid "Buffers list:"
+#, fuzzy
+msgid "List of bars:"
+msgstr "Список сокращений:\n"
+
+#, c-format
+msgid "  %d. %s: %s, %s, %s: %d, items: %s%s (plugin: %s)"
 msgstr ""
+
+#, fuzzy
+msgid "height"
+msgstr "справа"
+
+msgid "width"
+msgstr ""
+
+#, fuzzy
+msgid ", with separator"
+msgstr "цвет разделителя времени"
+
+#, fuzzy
+msgid "No bar defined"
+msgstr "Сокращения не заданы.\n"
+
+#, fuzzy
+msgid "List of bar items:"
+msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "  %s (plugin: %s)"
+msgstr "  (нет pluginа)\n"
+
+#, fuzzy
+msgid "No bar item defined"
+msgstr "Сокращения не заданы.\n"
 
 #, fuzzy, c-format
 msgid "%sError: missing arguments for \"%s\" command"
 msgstr "%s нет аргументов для \"%s\" команды\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong type \"%s\" for bar \"%s\""
+msgstr "%s некорректное количество аргументов команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong position \"%s\" for bar \"%s\""
+msgstr "%s неизвестный параметр для команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sBar \"%s\" created"
+msgstr "Сокращение \"%s\" => \"%s\" создано\n"
+
+#, fuzzy, c-format
+msgid "%sError: failed to create bar \"%s\""
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong size \"%s\" for bar \"%s\""
+msgstr "%s некорректное количество аргументов команды \"%s\"\n"
+
+msgid "Buffers list:"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sError: incorrect buffer number"
@@ -437,6 +492,24 @@ msgid ""
 msgstr ""
 "%s не могу объединить окна, есть другое окно такого-же размера рядом с "
 "текущим.\n"
+
+#, fuzzy
+msgid "manage bars"
+msgstr "управление буферами"
+
+msgid "[add name type position size [separator]] | [list]"
+msgstr ""
+
+msgid ""
+"      add: add a new bar\n"
+"     name: name of bar (must be unique)\n"
+"     type: \"root\" (outside windows), \"window_active\" (inside active "
+"window), or \"window_inactive\" (inside each inactive window)\n"
+" position: bottom, top, left or right\n"
+"     size: size of bar (in chars)\n"
+"separator: 1 for using separator (line), 0 or nothing means no separator\n"
+"     list: list all bars"
+msgstr ""
 
 msgid "manage buffers"
 msgstr "управление буферами"
@@ -1488,6 +1561,10 @@ msgstr "-ДАЛЬШЕ-"
 msgid "server"
 msgstr "сервер"
 
+#, fuzzy
+msgid "(MORE)"
+msgstr "-ДАЛЬШЕ-"
+
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name already exists (%s / %s)"
 msgstr ""
@@ -1828,6 +1905,14 @@ msgstr ""
 " buffer: сохранить содержимое буфера с шестнадцатеричными значениями в log-"
 "файл\n"
 "windows: отобразить дерево окон"
+
+#, fuzzy, c-format
+msgid "%s: debug enabled"
+msgstr "FIFO pipe открыт\n"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr ""
 
 msgid "demo message without prefix"
 msgstr ""
@@ -3271,14 +3356,6 @@ msgstr "Отменяю активное DCC-сединение: \"%s\" от %s\n
 #, fuzzy
 msgid "IRC debug messages"
 msgstr "выводить отладочные сообщения"
-
-#, fuzzy, c-format
-msgid "%s: debug enabled"
-msgstr "FIFO pipe открыт\n"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%sServer: %s%s %s[%s%s%s]"
@@ -5505,9 +5582,6 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 #~ msgid "left"
 #~ msgstr "слева"
 
-#~ msgid "right"
-#~ msgstr "справа"
-
 #~ msgid "Open panels:\n"
 #~ msgstr "Открытые панели:\n"
 
@@ -5656,9 +5730,6 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 
 #~ msgid "if set, uses real white color"
 #~ msgstr "если установлено - использовать настоящий белый цвет"
-
-#~ msgid "color for time separator"
-#~ msgstr "цвет разделителя времени"
 
 #~ msgid "color for time separator (chat window)"
 #~ msgstr "цвет разделителя времени в окне чата"

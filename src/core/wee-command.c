@@ -40,6 +40,8 @@
 #include "wee-string.h"
 #include "wee-utf8.h"
 #include "wee-list.h"
+#include "../gui/gui-bar.h"
+#include "../gui/gui-bar-item.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
@@ -51,6 +53,162 @@
 #include "../plugins/plugin.h"
 #include "../plugins/plugin-config.h"
 
+
+/*
+ * command_bar: manage bars
+ */
+
+int
+command_bar (void *data, struct t_gui_buffer *buffer,
+             int argc, char **argv, char **argv_eol)
+{
+    int i, type, position, size, separator;
+    long number;
+    char *error;
+    struct t_gui_bar *ptr_bar;
+    struct t_gui_bar_item *ptr_item;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    (void) argc;
+    (void) argv;
+    (void) argv_eol;
+    
+    if ((argc == 1)
+        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    {
+        /* list of bars */
+        if (gui_bars)
+        {
+            gui_chat_printf (NULL, "");
+            gui_chat_printf (NULL, _("List of bars:"));
+            for (ptr_bar = gui_bars; ptr_bar;
+                 ptr_bar = ptr_bar->next_bar)
+            {
+                gui_chat_printf (NULL,
+                                 _("  %d. %s: %s, %s, %s: %d, items: %s%s (plugin: %s)"),
+                                 ptr_bar->number,
+                                 ptr_bar->name,
+                                 gui_bar_type_str[ptr_bar->type],
+                                 gui_bar_position_str[ptr_bar->position],
+                                 ((ptr_bar->position == GUI_BAR_POSITION_BOTTOM)
+                                  || (ptr_bar->position == GUI_BAR_POSITION_TOP)) ?
+                                 _("height") : _("width"),
+                                 ptr_bar->size,
+                                 (ptr_bar->items) ? ptr_bar->items : "-",
+                                 (ptr_bar->separator) ?
+                                 _(", with separator") : "",
+                                 (ptr_bar->plugin) ? ptr_bar->plugin->name : "-");
+            }
+        }
+        else
+            gui_chat_printf (NULL, _("No bar defined"));
+
+        /* list of bar items */
+        if (gui_bar_items)
+        {
+            gui_chat_printf (NULL, "");
+            gui_chat_printf (NULL, _("List of bar items:"));
+            for (ptr_item = gui_bar_items; ptr_item;
+                 ptr_item = ptr_item->next_item)
+            {
+                gui_chat_printf (NULL,
+                                 _("  %s (plugin: %s)"),
+                                 ptr_item->name,
+                                 (ptr_item->plugin) ? ptr_item->plugin->name : "-");
+            }
+        }
+        else
+            gui_chat_printf (NULL, _("No bar item defined"));
+    }
+    else
+    {
+        if (string_strcasecmp (argv[1], "add") == 0)
+        {
+            if (argc < 8)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: missing arguments for \"%s\" "
+                                   "command"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 "bar");
+                return WEECHAT_RC_ERROR;
+            }
+            type = -1;
+            for (i = 0; i < GUI_BAR_NUM_TYPES; i++)
+            {
+                if (string_strcasecmp (argv[3], gui_bar_type_str[i]) == 0)
+                {
+                    type = i;
+                    break;
+                }
+            }
+            if (type < 0)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: wrong type \"%s\" for bar "
+                                   "\"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[3], argv[2]);
+                return WEECHAT_RC_ERROR;
+            }
+            position = -1;
+            for (i = 0; i < GUI_BAR_NUM_POSITIONS; i++)
+            {
+                if (string_strcasecmp (argv[4], gui_bar_position_str[i]) == 0)
+                {
+                    position = i;
+                    break;
+                }
+            }
+            if (position < 0)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: wrong position \"%s\" for bar "
+                                   "\"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[4], argv[2]);
+                return WEECHAT_RC_ERROR;
+            }
+            error = NULL;
+            number = strtol (argv[5], &error, 10);
+            if (error && (error[0] == '\0'))
+            {
+                size = number;
+                separator = 0;
+                if (strcmp (argv[6], "0") != 0)
+                    separator = 1;
+
+                /* create bar */
+                if (gui_bar_new (NULL, argv[2], argv[3], argv[4], size,
+                                 separator, argv[7]))
+                    gui_chat_printf (NULL, _("%sBar \"%s\" created"),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                                     argv[2]);
+                else
+                    gui_chat_printf (NULL, _("%sError: failed to create bar "
+                                             "\"%s\""),
+                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                     argv[2]);
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: wrong size \"%s\" for bar "
+                                   "\"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[5], argv[2]);
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        else
+        {
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
 
 /*
  * command_buffer: manage buffers
@@ -1870,6 +2028,21 @@ command_window (void *data, struct t_gui_buffer *buffer,
 void
 command_init ()
 {
+    hook_command (NULL, "bar",
+                  N_("manage bars"),
+                  N_("[add name type position size [separator]] | [list]"),
+                  N_("      add: add a new bar\n"
+                     "     name: name of bar (must be unique)\n"
+                     "     type: \"root\" (outside windows), \"window_active\" "
+                     "(inside active window), or \"window_inactive\" (inside "
+                     "each inactive window)\n"
+                     " position: bottom, top, left or right\n"
+                     "     size: size of bar (in chars)\n"
+                     "separator: 1 for using separator (line), 0 or nothing "
+                     "means no separator\n"
+                     "     list: list all bars"),
+                  "list",
+                  &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
                   N_("[action [args] | number | [[server] [channel]]]"),

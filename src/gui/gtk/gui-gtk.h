@@ -54,6 +54,16 @@ struct t_gui_line;
 
 #define GUI_GTK(window) ((t_gui_gtk_objects *)(window->gui_objects))
 
+struct t_gui_bar_window
+{
+    struct t_gui_bar *bar;          /* pointer to bar                       */
+    int x, y;                       /* position of window                   */
+    int width, height;              /* window size                          */
+    struct t_gui_bar_window *next_bar_window;
+                                    /* link to next bar window              */
+                                    /* (only used if bar is in windows)     */
+};
+
 typedef struct t_gui_gtk_objects t_gui_gtk_objects;
 
 struct t_gui_gtk_objects
@@ -63,6 +73,7 @@ struct t_gui_gtk_objects
     GtkTextTag *texttag_chat;       /* texttag widget for chat              */
     GtkWidget *textview_nicklist;   /* textview widget for nicklist         */
     GtkTextBuffer *textbuffer_nicklist; /* textbuffer widget for nicklist   */
+    struct t_gui_bar_window *bar_windows; /* bar windows                    */
 };
 
 //extern t_gui_color gui_weechat_colors[];

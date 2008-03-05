@@ -14,9 +14,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(WEECHAT_CURSES_SRC gui-curses-chat.c gui-curses-color.c gui-curses-infobar.c
-gui-curses-input.c gui-curses-keyboard.c gui-curses-main.c gui-curses-nicklist.c
-gui-curses-status.c gui-curses-window.c gui-curses.h)
+SET(WEECHAT_CURSES_SRC gui-curses-bar.c gui-curses-chat.c gui-curses-color.c
+gui-curses-infobar.c gui-curses-input.c gui-curses-keyboard.c gui-curses-main.c
+gui-curses-nicklist.c gui-curses-status.c gui-curses-window.c gui-curses.h)
 
 SET(EXECUTABLE weechat-curses)
 

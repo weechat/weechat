@@ -345,7 +345,7 @@ gui_color_init_weechat ()
 {
     int i;
     
-    gui_color[GUI_COLOR_SEPARATOR] = gui_color_build (GUI_COLOR_SEPARATOR, CONFIG_COLOR(config_color_separator), CONFIG_COLOR(config_color_separator));
+    gui_color[GUI_COLOR_SEPARATOR] = gui_color_build (GUI_COLOR_SEPARATOR, CONFIG_COLOR(config_color_separator), CONFIG_COLOR(config_color_chat_bg));
     
     gui_color[GUI_COLOR_TITLE] = gui_color_build (GUI_COLOR_TITLE, CONFIG_COLOR(config_color_title), CONFIG_COLOR(config_color_title_bg));
     gui_color[GUI_COLOR_TITLE_MORE] = gui_color_build (GUI_COLOR_TITLE_MORE, CONFIG_COLOR(config_color_title_more), CONFIG_COLOR(config_color_title_bg));
@@ -378,8 +378,8 @@ gui_color_init_weechat ()
     
     gui_color[GUI_COLOR_STATUS] = gui_color_build (GUI_COLOR_STATUS, CONFIG_COLOR(config_color_status), CONFIG_COLOR(config_color_status_bg));
     gui_color[GUI_COLOR_STATUS_DELIMITERS] = gui_color_build (GUI_COLOR_STATUS_DELIMITERS, CONFIG_COLOR(config_color_status_delimiters), CONFIG_COLOR(config_color_status_bg));
-    gui_color[GUI_COLOR_STATUS_NUMBER] = gui_color_build (GUI_COLOR_STATUS_NAME, CONFIG_COLOR(config_color_status_number), CONFIG_COLOR(config_color_status_bg));
-    gui_color[GUI_COLOR_STATUS_CATEGORY] = gui_color_build (GUI_COLOR_STATUS_NAME, CONFIG_COLOR(config_color_status_category), CONFIG_COLOR(config_color_status_bg));
+    gui_color[GUI_COLOR_STATUS_NUMBER] = gui_color_build (GUI_COLOR_STATUS_NUMBER, CONFIG_COLOR(config_color_status_number), CONFIG_COLOR(config_color_status_bg));
+    gui_color[GUI_COLOR_STATUS_CATEGORY] = gui_color_build (GUI_COLOR_STATUS_CATEGORY, CONFIG_COLOR(config_color_status_category), CONFIG_COLOR(config_color_status_bg));
     gui_color[GUI_COLOR_STATUS_NAME] = gui_color_build (GUI_COLOR_STATUS_NAME, CONFIG_COLOR(config_color_status_name), CONFIG_COLOR(config_color_status_bg));
     gui_color[GUI_COLOR_STATUS_DATA_MSG] = gui_color_build (GUI_COLOR_STATUS_DATA_MSG, CONFIG_COLOR(config_color_status_data_msg), CONFIG_COLOR(config_color_status_bg));
     gui_color[GUI_COLOR_STATUS_DATA_PRIVATE] = gui_color_build (GUI_COLOR_STATUS_DATA_PRIVATE, CONFIG_COLOR(config_color_status_data_private), CONFIG_COLOR(config_color_status_bg));

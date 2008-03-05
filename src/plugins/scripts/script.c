@@ -416,10 +416,12 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
     for (ptr_script_callback = script->callbacks; ptr_script_callback;
          ptr_script_callback = ptr_script_callback->next_callback)
     {
+        /* unhook */
         if (ptr_script_callback->hook)
         {
             weechat_unhook (ptr_script_callback->hook);
         }
+        /* free config file */
         if (ptr_script_callback->config_file
             && !ptr_script_callback->config_section
             && !ptr_script_callback->config_option)
@@ -428,6 +430,9 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
                 weechat_config_write (ptr_script_callback->config_file);
             weechat_config_free (ptr_script_callback->config_file);
         }
+        /* remove bar item */
+        if (ptr_script_callback->bar_item)
+            weechat_bar_item_remove (ptr_script_callback->bar_item);
     }
     
     /* remove all callbacks created by this script */

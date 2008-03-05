@@ -76,6 +76,7 @@ gui_window_objects_init (struct t_gui_window *window)
         GUI_GTK(window)->texttag_chat = NULL;
         GUI_GTK(window)->textview_nicklist = NULL;
         GUI_GTK(window)->textbuffer_nicklist = NULL;
+        GUI_GTK(window)->bar_windows = NULL;
         return 1;
     }
     else
@@ -919,9 +920,23 @@ gui_window_title_reset ()
 void
 gui_window_objects_print_log (struct t_gui_window *window)
 {
+    struct t_gui_bar_window *ptr_bar_win;
+    
     log_printf ("  textview_chat . . . : 0x%x", GUI_GTK(window)->textview_chat);
     log_printf ("  textbuffer_chat . . : 0x%x", GUI_GTK(window)->textbuffer_chat);
     log_printf ("  texttag_chat. . . . : 0x%x", GUI_GTK(window)->texttag_chat);
     log_printf ("  textview_nicklist . : 0x%x", GUI_GTK(window)->textview_nicklist);
     log_printf ("  textbuffer_nicklist : 0x%x", GUI_GTK(window)->textbuffer_nicklist);
+    
+    for (ptr_bar_win = GUI_GTK(window)->bar_windows; ptr_bar_win;
+         ptr_bar_win = ptr_bar_win->next_bar_window)
+    {
+        log_printf ("");
+        log_printf ("  [window bar (addr:0x%x)]",   ptr_bar_win);
+        log_printf ("    bar . . . . . . . : 0x%x", ptr_bar_win->bar);
+        log_printf ("    x . . . . . . . . : %d",   ptr_bar_win->x);
+        log_printf ("    y . . . . . . . . : %d",   ptr_bar_win->y);
+        log_printf ("    width . . . . . . : %d",   ptr_bar_win->width);
+        log_printf ("    height. . . . . . : %d",   ptr_bar_win->height);
+    }
 }

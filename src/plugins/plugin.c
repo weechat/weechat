@@ -41,6 +41,8 @@
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "../core/wee-util.h"
+#include "../gui/gui-bar.h"
+#include "../gui/gui-bar-item.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-nicklist.h"
@@ -337,6 +339,15 @@ plugin_load (char *filename)
         new_plugin->nicklist_remove_nick = &gui_nicklist_remove_nick;
         new_plugin->nicklist_remove_all = &gui_nicklist_remove_all;
         
+        new_plugin->bar_item_search = &gui_bar_item_search;
+        new_plugin->bar_item_new = &gui_bar_item_new;
+        new_plugin->bar_item_update = &gui_bar_item_update;
+        new_plugin->bar_item_remove = &gui_bar_item_free;
+        new_plugin->bar_search = &gui_bar_search;
+        new_plugin->bar_new = &gui_bar_new;
+        new_plugin->bar_update = &gui_bar_update;
+        new_plugin->bar_remove = &gui_bar_free;
+        
         new_plugin->command = &plugin_api_command;
         
         new_plugin->info_get = &plugin_api_info_get;
@@ -522,6 +533,9 @@ plugin_remove (struct t_weechat_plugin *plugin)
     
     /* remove all hooks */
     unhook_all_plugin (plugin);
+    
+    /* remove all bar items */
+    gui_bar_item_free_all_plugin (plugin);
     
     /* remove pointer to this plugin on buffers */
     for (ptr_buffer = gui_buffers; ptr_buffer;

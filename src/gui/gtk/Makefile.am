@@ -37,7 +37,8 @@ weechat_gtk_LDADD = ../../core/weechat.o \
                     $(PLUGINS_LFLAGS) \
                     $(GTK_LFLAGS)
 
-weechat_gtk_SOURCES = gui-gtk-chat.c \
+weechat_gtk_SOURCES = gui-gtk-bar.c \
+                      gui-gtk-chat.c \
                       gui-gtk-color.c \
                       gui-gtk-infobar.c \
                       gui-gtk-input.c \

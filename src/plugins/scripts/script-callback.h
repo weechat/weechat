@@ -27,7 +27,8 @@ struct t_script_callback
     struct t_config_section *config_section; /* not NULL for config section */
     struct t_config_option *config_option;   /* not NULL for config option  */
     struct t_hook *hook;                     /* not NULL for hook           */
-    struct t_gui_buffer *buffer;             /* not NULL for buffer callback*/
+    struct t_gui_buffer *buffer;             /* not NULL for buffer         */
+    struct t_gui_bar_item *bar_item;         /* not NULL for bar item       */
     struct t_script_callback *prev_callback; /* link to next callback       */
     struct t_script_callback *next_callback; /* link to previous callback   */
 };

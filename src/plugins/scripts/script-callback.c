@@ -46,6 +46,7 @@ script_callback_alloc ()
         new_script_callback->config_option = NULL;
         new_script_callback->hook = NULL;
         new_script_callback->buffer = NULL;
+        new_script_callback->bar_item = NULL;
         return new_script_callback;
     }
     
@@ -85,7 +86,7 @@ script_callback_remove (struct t_plugin_script *script,
     if (script->callbacks == script_callback)
         script->callbacks = script_callback->next_callback;
     
-    /* unhook and free data */
+    /* free data */
     if (script_callback->function)
         free (script_callback->function);
     
@@ -117,8 +118,12 @@ script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
     weechat_log_printf ("[callback (addr:0x%x)]",       script_callback);
     weechat_log_printf ("  script. . . . . . . : 0x%x", script_callback->script);
     weechat_log_printf ("  function. . . . . . : '%s'", script_callback->function);
+    weechat_log_printf ("  config_file . . . . : '%s'", script_callback->config_file);
+    weechat_log_printf ("  config_section. . . : '%s'", script_callback->config_section);
+    weechat_log_printf ("  config_option . . . : '%s'", script_callback->config_option);
     weechat_log_printf ("  hook. . . . . . . . : 0x%x", script_callback->hook);
     weechat_log_printf ("  buffer. . . . . . . : 0x%x", script_callback->buffer);
+    weechat_log_printf ("  bar_item. . . . . . : 0x%x", script_callback->bar_item);
     weechat_log_printf ("  prev_callback . . . : 0x%x", script_callback->prev_callback);
     weechat_log_printf ("  next_callback . . . : 0x%x", script_callback->next_callback);
 }

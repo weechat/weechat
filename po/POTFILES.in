@@ -26,6 +26,7 @@
 ./src/core/wee-utf8.h
 ./src/core/wee-util.c
 ./src/core/wee-util.h
+./src/gui/curses/gui-curses-bar.c
 ./src/gui/curses/gui-curses-chat.c
 ./src/gui/curses/gui-curses-color.c
 ./src/gui/curses/gui-curses.h
@@ -36,6 +37,7 @@
 ./src/gui/curses/gui-curses-nicklist.c
 ./src/gui/curses/gui-curses-status.c
 ./src/gui/curses/gui-curses-window.c
+./src/gui/gtk/gui-gtk-bar.c
 ./src/gui/gtk/gui-gtk-chat.c
 ./src/gui/gtk/gui-gtk-color.c
 ./src/gui/gtk/gui-gtk.h
@@ -48,6 +50,10 @@
 ./src/gui/gtk/gui-gtk-window.c
 ./src/gui/gui-action.c
 ./src/gui/gui-action.h
+./src/gui/gui-bar.c
+./src/gui/gui-bar.h
+./src/gui/gui-bar-item.c
+./src/gui/gui-bar-item.h
 ./src/gui/gui-buffer.c
 ./src/gui/gui-buffer.h
 ./src/gui/gui-chat.c

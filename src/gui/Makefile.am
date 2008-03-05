@@ -20,6 +20,10 @@ noinst_LIBRARIES = lib_weechat_gui_common.a
 
 lib_weechat_gui_common_a_SOURCES = gui-action.c \
                                    gui-action.h \
+                                   gui-bar.c \
+                                   gui-bar.h \
+                                   gui-bar-item.c \
+                                   gui-bar-item.h \
                                    gui-buffer.c \
                                    gui-buffer.h \
                                    gui-chat.c \

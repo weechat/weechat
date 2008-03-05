@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-02-22 14:17+0100\n"
+"POT-Creation-Date: 2008-03-05 14:04+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -114,12 +114,67 @@ msgstr "%sWillkommen in %s%s%s, %s\n"
 msgid "compiled on"
 msgstr "kompiliert am"
 
-msgid "Buffers list:"
+#, fuzzy
+msgid "List of bars:"
+msgstr "Liste der Aliases:\n"
+
+#, c-format
+msgid "  %d. %s: %s, %s, %s: %d, items: %s%s (plugin: %s)"
 msgstr ""
+
+#, fuzzy
+msgid "height"
+msgstr "right"
+
+msgid "width"
+msgstr ""
+
+#, fuzzy
+msgid ", with separator"
+msgstr "Farbe für den Zeit-Separator"
+
+#, fuzzy
+msgid "No bar defined"
+msgstr "Keine Aliases definiert.\n"
+
+#, fuzzy
+msgid "List of bar items:"
+msgstr "Liste der Aliases:\n"
+
+#, fuzzy, c-format
+msgid "  %s (plugin: %s)"
+msgstr "  (kein Plugin)\n"
+
+#, fuzzy
+msgid "No bar item defined"
+msgstr "Keine Aliases definiert.\n"
 
 #, fuzzy, c-format
 msgid "%sError: missing arguments for \"%s\" command"
 msgstr "%s fehlende Argumente für den \"%s\"-Befehl\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong type \"%s\" for bar \"%s\""
+msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong position \"%s\" for bar \"%s\""
+msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
+
+#, fuzzy, c-format
+msgid "%sBar \"%s\" created"
+msgstr "Alias \"%s\" => \"%s\" angelegt\n"
+
+#, fuzzy, c-format
+msgid "%sError: failed to create bar \"%s\""
+msgstr "%s konnte die Plugin-Konfigurationsdatei nicht sichern\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong size \"%s\" for bar \"%s\""
+msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
+
+msgid "Buffers list:"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sError: incorrect buffer number"
@@ -443,6 +498,24 @@ msgid ""
 msgstr ""
 "%s kann Fenster nicht vereinigen, es ist kein Fenster mit der gleichen Größe "
 "in der Nähe des aktuellen Fensters.\n"
+
+#, fuzzy
+msgid "manage bars"
+msgstr "Puffer verwalten"
+
+msgid "[add name type position size [separator]] | [list]"
+msgstr ""
+
+msgid ""
+"      add: add a new bar\n"
+"     name: name of bar (must be unique)\n"
+"     type: \"root\" (outside windows), \"window_active\" (inside active "
+"window), or \"window_inactive\" (inside each inactive window)\n"
+" position: bottom, top, left or right\n"
+"     size: size of bar (in chars)\n"
+"separator: 1 for using separator (line), 0 or nothing means no separator\n"
+"     list: list all bars"
+msgstr ""
 
 msgid "manage buffers"
 msgstr "Puffer verwalten"
@@ -1482,6 +1555,10 @@ msgstr "-MEHR-"
 msgid "server"
 msgstr "Server"
 
+#, fuzzy
+msgid "(MORE)"
+msgstr "-MEHR-"
+
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name already exists (%s / %s)"
 msgstr ""
@@ -1822,6 +1899,14 @@ msgstr ""
 "dump: Speicherabbild im WeeChat-Logfile ablegen (wie nach einem "
 "Programmabsturz)\n"
 "windows: zeigt Fensterdaten an"
+
+#, fuzzy, c-format
+msgid "%s: debug enabled"
+msgstr "FIFO ist offen\n"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr ""
 
 msgid "demo message without prefix"
 msgstr ""
@@ -3265,14 +3350,6 @@ msgstr "Aktiver DCC wird abgebrochen: \"%s\" von %s\n"
 #, fuzzy
 msgid "IRC debug messages"
 msgstr "Debugging-Nachricht ausgeben"
-
-#, fuzzy, c-format
-msgid "%s: debug enabled"
-msgstr "FIFO ist offen\n"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%sServer: %s%s %s[%s%s%s]"
@@ -5509,9 +5586,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 #~ msgid "left"
 #~ msgstr "left"
 
-#~ msgid "right"
-#~ msgstr "right"
-
 #~ msgid "Open panels:\n"
 #~ msgstr "Offene Panel:\n"
 
@@ -5664,9 +5738,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
 #~ msgid "if set, uses real white color"
 #~ msgstr "wenn gesetzt, benutze echtes Weiß"
-
-#~ msgid "color for time separator"
-#~ msgstr "Farbe für den Zeit-Separator"
 
 #~ msgid "color for time separator (chat window)"
 #~ msgstr "Farbe für den Zeit-Separator im Chatfenster"

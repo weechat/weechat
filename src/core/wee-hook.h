@@ -34,7 +34,7 @@ enum t_hook_type
     HOOK_TYPE_SIGNAL,                  /* signal                            */
     HOOK_TYPE_CONFIG,                  /* config option                     */
     HOOK_TYPE_COMPLETION,              /* custom completions                */
-    HOOK_TYPE_MODIFIER,                /* stirng modifier                   */
+    HOOK_TYPE_MODIFIER,                /* string modifier                   */
     /* number of hook types */
     HOOK_NUM_TYPES,
 };

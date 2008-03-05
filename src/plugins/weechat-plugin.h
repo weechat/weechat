@@ -23,7 +23,10 @@
 
 #include <sys/types.h>
 
+struct t_gui_window;
 struct t_gui_buffer;
+struct t_gui_bar;
+struct t_gui_bar_item;
 struct t_weelist;
 
 /* macros for defining plugin infos */
@@ -318,6 +321,24 @@ struct t_weechat_plugin
     void (*nicklist_remove_nick) (struct t_gui_buffer *buffer,
                                   struct t_gui_nick *nick);
     void (*nicklist_remove_all) (struct t_gui_buffer *buffer);
+    
+    /* bars */
+    struct t_gui_bar_item *(*bar_item_search) (char *name);
+    struct t_gui_bar_item *(*bar_item_new) (struct t_weechat_plugin *plugin,
+                                            char *name,
+                                            char *(*build_callback)(void *data,
+                                                                    struct t_gui_bar_item *item,
+                                                                    struct t_gui_window *window,
+                                                                    int max_width),
+                                            void *build_callback_data);
+    void (*bar_item_update) (char *name);
+    void (*bar_item_remove) (struct t_gui_bar_item *item);
+    struct t_gui_bar *(*bar_search) (char *name);
+    struct t_gui_bar *(*bar_new) (struct t_weechat_plugin *plugin, char *name,
+                                  char *type, char *position, int size,
+                                  int separator, char *items);
+    void (*bar_update) (char *name);
+    void (*bar_remove) (struct t_gui_bar *bar);
     
     /* command */
     void (*command) (struct t_weechat_plugin *plugin,
@@ -628,6 +649,27 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->nicklist_remove_nick(__buffer, __nick)
 #define weechat_nicklist_remove_all(__buffer)           \
     weechat_plugin->nicklist_remove_all(__buffer)
+
+/* bars */
+#define weechat_bar_item_search(__name)         \
+    weechat_plugin->bar_item_search(__name)
+#define weechat_bar_item_new(__name, __build_callback, __data)          \
+    weechat_plugin->bar_item_new(weechat_plugin, __name,                \
+                                 __build_callback, __data)
+#define weechat_bar_item_update(__name)         \
+    weechat_plugin->bar_item_update(__name)
+#define weechat_bar_item_remove(__item)         \
+    weechat_plugin->bar_item_remove(__item)
+#define weechat_bar_search(__name)              \
+    weechat_plugin->bar_search(__name)
+#define weechat_bar_new(__name, __type, __position, __size,             \
+                        __separator, __items)                           \
+    weechat_plugin->bar_new(weechat_plugin, __name, __type, __position, \
+                            __size, __separator, __items)
+#define weechat_bar_update(__name)              \
+    weechat_plugin->bar_update(__name)
+#define weechat_bar_remove(__bar)               \
+    weechat_plugin->bar_remove(__bar)
 
 /* command */
 #define weechat_command(__buffer, __command)                            \

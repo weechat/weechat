@@ -815,6 +815,71 @@ script_api_buffer_close (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * script_api_bar_item_new: add a new bar item
+ */
+
+struct t_gui_bar_item *
+script_api_bar_item_new (struct t_weechat_plugin *weechat_plugin,
+                         struct t_plugin_script *script,
+                         char *name,
+                         char *(*build_callback)(void *data,
+                                                 struct t_gui_bar_item *item,
+                                                 struct t_gui_window *window,
+                                                 int remaining_space),
+                         char *function_build)
+{
+    struct t_script_callback *new_script_callback;
+    struct t_gui_bar_item *new_item;
+    
+    new_script_callback = script_callback_alloc ();
+    if (!new_script_callback)
+        return NULL;
+    
+    new_item = weechat_bar_item_new (name,
+                                     (function_build && function_build[0]) ?
+                                     build_callback : NULL,
+                                     (function_build && function_build[0]) ?
+                                     new_script_callback : NULL);
+    if (!new_item)
+    {
+        free (new_script_callback);
+        return NULL;
+    }
+    
+    new_script_callback->script = script;
+    new_script_callback->function = (function_build && function_build[0]) ?
+        strdup (function_build) : NULL;
+    new_script_callback->bar_item = new_item;
+    script_callback_add (script, new_script_callback);
+    
+    return new_item;
+}
+
+/*
+ * script_api_bar_item_remove: remove a bar item
+ */
+
+void
+script_api_bar_item_remove (struct t_weechat_plugin *weechat_plugin,
+                            struct t_plugin_script *script,
+                            struct t_gui_bar_item *item)
+{
+    struct t_script_callback *ptr_script_callback;
+    
+    if (!weechat_plugin || !script || !item)
+        return;
+    
+    weechat_bar_item_remove (item);
+    
+    for (ptr_script_callback = script->callbacks; ptr_script_callback;
+         ptr_script_callback = ptr_script_callback->next_callback)
+    {
+        if (ptr_script_callback->bar_item == item)
+            script_callback_remove (script, ptr_script_callback);
+    }
+}
+
+/*
  * script_api_command: execute a command (simulate user entry)
  */
 
