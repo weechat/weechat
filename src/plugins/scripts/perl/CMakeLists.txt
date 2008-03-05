@@ -14,7 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(perl MODULE perl.c)
+ADD_LIBRARY(perl MODULE weechat-perl.c weechat-perl.h weechat-perl-api.c
+weechat-perl-api.h)
 
 SET_TARGET_PROPERTIES(perl PROPERTIES PREFIX "")
 

@@ -14,7 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(python MODULE python.c)
+ADD_LIBRARY(python MODULE weechat-python.c weechat-python.h
+weechat-python-api.c weechat-python-api.h)
 
 SET_TARGET_PROPERTIES(python PROPERTIES PREFIX "")
 

@@ -14,7 +14,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(LIB_SCRIPTS_SRC script.c script.h)
+SET(LIB_SCRIPTS_SRC script.c script.h script-callback.c script-callback.h
+script-api.c script-api.h)
 
 ADD_DEFINITIONS(${CMAKE_SHARED_LIBRARY_C_FLAGS})
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})

@@ -114,6 +114,13 @@ IF(BUILD_HTML OR BUILD_PDF)
 	  COMMAND ${XSLTPROC} ARGS -o ${CMAKE_CURRENT_BINARY_DIR}/html-one/${dlang}/weechat.${dlang}.html ${CMAKE_CURRENT_BINARY_DIR}/weechat-html-one.xsl ${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}-build/weechat.${dlang}.xml
 	  DEPENDS
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/weechat.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/intro.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/install.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/usage.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugins.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_api.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_scripts.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/authors.${dlang}.xml
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/config.xml
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/irc_commands.xml
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/key_functions.xml
@@ -138,6 +145,14 @@ IF(BUILD_HTML OR BUILD_PDF)
 	ADD_CUSTOM_COMMAND(
 	  OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/weechat.${dlang}.pdf
 	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/weechat.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/intro.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/install.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/usage.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugins.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_api.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_charset.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_scripts.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/authors.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
 	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/config.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
 	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/irc_commands.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
 	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/key_functions.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
@@ -146,6 +161,13 @@ IF(BUILD_HTML OR BUILD_PDF)
 	  COMMAND ${DBLATEX} ARGS -c ${CMAKE_CURRENT_SOURCE_DIR}/dblatex.conf -o ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}/weechat.${dlang}.pdf ${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build/weechat.${dlang}.xml
 	  DEPENDS
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/weechat.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/intro.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/install.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/usage.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugins.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_api.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_scripts.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/authors.${dlang}.xml
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/config.xml
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/irc_commands.xml
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/key_functions.xml

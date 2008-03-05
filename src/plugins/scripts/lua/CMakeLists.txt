@@ -14,7 +14,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(lua MODULE lua.c)
+ADD_LIBRARY(lua MODULE weechat-lua.c weechat-lua.h weechat-lua-api.c
+weechat-lua-api.h)
+
 SET_TARGET_PROPERTIES(lua PROPERTIES PREFIX "")
 
 IF(LUA_FOUND)

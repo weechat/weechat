@@ -23,7 +23,8 @@ gui-bar-item.c gui-bar-item.h gui-buffer.c gui-buffer.h gui-chat.c gui-chat.h
 gui-color.c gui-color.h gui-completion.c gui-completion.h gui-history.c
 gui-history.h gui-hotlist.c gui-hotlist.h gui-infobar.c gui-infobar.h
 gui-input.c gui-input.h gui-keyboard.c gui-keyboard.h gui-main.h
-gui-nicklist.c gui-nicklist.h gui-status.h gui-window.c gui-window.h)
+gui-nicklist.c gui-nicklist.h gui-status.c gui-status.h gui-window.c
+gui-window.h)
 
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
 ADD_LIBRARY(weechat_gui_common STATIC ${LIB_GUI_COMMON_SRC})
