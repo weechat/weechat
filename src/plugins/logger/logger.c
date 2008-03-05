@@ -53,6 +53,12 @@ struct t_weechat_plugin *weechat_logger_plugin = NULL;
 #define LOGGER_OPTION_INFO_LINES      "info_lines"
 #define LOGGER_OPTION_BACKLOG         "backlog"
 
+#define LOGGER_DEFAULT_OPTION_PATH            "%h/logs/"
+#define LOGGER_DEFAULT_OPTION_NAME_LOWER_CASE "on"
+#define LOGGER_DEFAULT_OPTION_TIME_FORMAT     "%Y-%m-%d %H:%M:%S"
+#define LOGGER_DEFAULT_OPTION_INFO_LINES      "off"
+#define LOGGER_DEFAULT_OPTION_BACKLOG         "20"
+
 char *logger_option_path = NULL;
 int logger_option_name_lower_case;
 char *logger_option_time_format = NULL;
@@ -75,14 +81,16 @@ logger_config_read ()
     logger_option_path = weechat_config_get_plugin (LOGGER_OPTION_PATH);
     if (!logger_option_path)
     {
-        weechat_config_set_plugin (LOGGER_OPTION_PATH, "%h/logs/");
+        weechat_config_set_plugin (LOGGER_OPTION_PATH,
+                                   LOGGER_DEFAULT_OPTION_PATH);
         logger_option_path = weechat_config_get_plugin ("path");
     }
     
     string = weechat_config_get_plugin (LOGGER_OPTION_NAME_LOWER_CASE);
     if (!string)
     {
-        weechat_config_set_plugin (LOGGER_OPTION_NAME_LOWER_CASE, "on");
+        weechat_config_set_plugin (LOGGER_OPTION_NAME_LOWER_CASE,
+                                   LOGGER_DEFAULT_OPTION_NAME_LOWER_CASE);
         string = weechat_config_get_plugin (LOGGER_OPTION_NAME_LOWER_CASE);
     }
     if (string && (weechat_config_string_to_boolean (string) > 0))
@@ -94,14 +102,15 @@ logger_config_read ()
     if (!logger_option_time_format)
     {
         weechat_config_set_plugin (LOGGER_OPTION_TIME_FORMAT,
-                                   "%Y %b %d %H:%M:%S");
+                                   LOGGER_DEFAULT_OPTION_TIME_FORMAT);
         logger_option_time_format = weechat_config_get_plugin (LOGGER_OPTION_TIME_FORMAT);
     }
     
     string = weechat_config_get_plugin (LOGGER_OPTION_INFO_LINES);
     if (!string)
     {
-        weechat_config_set_plugin (LOGGER_OPTION_INFO_LINES, "off");
+        weechat_config_set_plugin (LOGGER_OPTION_INFO_LINES,
+                                   LOGGER_DEFAULT_OPTION_INFO_LINES);
         string = weechat_config_get_plugin (LOGGER_OPTION_INFO_LINES);
     }
     if (string && (weechat_config_string_to_boolean (string) > 0))
@@ -112,7 +121,8 @@ logger_config_read ()
     string = weechat_config_get_plugin (LOGGER_OPTION_BACKLOG);
     if (!string)
     {
-        weechat_config_set_plugin (LOGGER_OPTION_BACKLOG, "20");
+        weechat_config_set_plugin (LOGGER_OPTION_BACKLOG,
+                                   LOGGER_DEFAULT_OPTION_BACKLOG);
         string = weechat_config_get_plugin (LOGGER_OPTION_BACKLOG);
     }
     logger_option_backlog = 20;
