@@ -38,6 +38,7 @@
 #include "../../core/wee-util.h"
 #include "../../plugins/plugin.h"
 #include "../gui-main.h"
+#include "../gui-bar.h"
 #include "../gui-bar-item.h"
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
@@ -74,6 +75,7 @@ void
 gui_main_init ()
 {
     struct t_gui_buffer *ptr_buffer;
+    struct t_gui_bar *ptr_bar;
     
     initscr ();
     
@@ -122,6 +124,20 @@ gui_main_init ()
         
         if (CONFIG_BOOLEAN(config_look_set_title))
             gui_window_title_set ();
+    }
+    
+    if (gui_init_ok)
+    {
+        /* create bar windows for root bars (they were read from config,
+           but no window was created (GUI was not initialized) */
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+        {
+            if ((ptr_bar->type == GUI_BAR_TYPE_ROOT)
+                && (!ptr_bar->bar_window))
+            {
+                gui_bar_window_new (ptr_bar, NULL);
+            }
+        }
     }
 }
 

@@ -147,12 +147,16 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
 /*
  * gui_bar_window_new: create a new "window bar" for a bar, in screen or a window
  *                     if window is not NULL, bar window will be in this window
+ *                     return 1 if ok, 0 if error
  */
 
 int
 gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
 {
     struct t_gui_bar_window *new_bar_window;
+    
+    if (!gui_init_ok)
+        return 0;
     
     new_bar_window = (struct t_gui_bar_window *) malloc (sizeof (struct t_gui_bar_window));
     if (new_bar_window)

@@ -159,6 +159,7 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name, char *type,
             new_bar->items_count = 0;
             new_bar->items_array = NULL;
         }
+        new_bar->bar_window = NULL;
         
         if (type_value == GUI_BAR_TYPE_ROOT)
         {

@@ -41,6 +41,7 @@
 #include "wee-util.h"
 #include "wee-list.h"
 #include "wee-string.h"
+#include "../gui/gui-bar.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
@@ -431,6 +432,73 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
 }
 
 /*
+ * config_weechat_read_bar: read a bar in configuration file
+ */
+
+void
+config_weechat_read_bar (void *data, struct t_config_file *config_file,
+                         char *option_name, char *value)
+{
+    char **argv, *error;
+    int argc, size;
+    long number;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) config_file;
+    
+    if (option_name)
+    {
+        if (value && value[0])
+        {
+            argv = string_explode (value, ";", 0, 0, &argc);
+            if (argc == 5)
+            {
+                error = NULL;
+                number = strtol (argv[2], &error, 10);
+                if (error && (error[0] == '\0'))
+                {
+                    size = number;
+                    gui_bar_new (NULL, option_name, argv[0], argv[1], size,
+                                 (argv[3][0] == '0') ? 0 : 1,
+                                 argv[4]);
+                }
+            }
+        }
+    }
+}
+
+/*
+ * config_weechat_write_bars: write bars section in configuration file
+ *                            Return:  0 = successful
+ *                                    -1 = write error
+ */
+
+void
+config_weechat_write_bars (void *data, struct t_config_file *config_file,
+                           char *section_name)
+{
+    struct t_gui_bar *ptr_bar;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    config_file_write_line (config_file, section_name, NULL);
+    
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        config_file_write_line (config_file,
+                                ptr_bar->name,
+                                "%s;%s;%d;%d;%s",
+                                gui_bar_type_str[ptr_bar->type],
+                                gui_bar_position_str[ptr_bar->position],
+                                ptr_bar->size,
+                                ptr_bar->separator,
+                                ptr_bar->items);
+    }
+}
+
+/*
  * config_weechat_read_key: read a key in configuration file
  */
 
@@ -451,14 +519,14 @@ config_weechat_read_key (void *data, struct t_config_file *config_file,
         }
         else
         {
-            /* unbin key if no value given */
+            /* unbind key if no value given */
             gui_keyboard_unbind (option_name);
         }
     }
 }
 
 /*
- * config_weechat_write_keys: write alias section in configuration file
+ * config_weechat_write_keys: write keys section in configuration file
  *                            Return:  0 = successful
  *                                    -1 = write error
  */
@@ -1289,7 +1357,21 @@ config_weechat_init ()
         "plugins_save_config_on_unload", "boolean",
         N_("save configuration files when unloading plugins"),
         NULL, 0, 0, "on", NULL, NULL);
-        
+    
+    /* bars */
+    ptr_section = config_file_new_section (weechat_config_file, "bars",
+                                           &config_weechat_read_bar,
+                                           NULL,
+                                           &config_weechat_write_bars,
+                                           NULL,
+                                           &config_weechat_write_bars,
+                                           NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        return 0;
+    }
+    
     /* keys */
     ptr_section = config_file_new_section (weechat_config_file, "keys",
                                            &config_weechat_read_key,
