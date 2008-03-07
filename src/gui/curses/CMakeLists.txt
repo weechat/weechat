@@ -39,22 +39,9 @@ IF(${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
   LIST(APPEND EXTRA_LIBS "utf8")
 ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
 
-ADD_EXECUTABLE(${EXECUTABLE} ${WEECHAT_CURSES_SRC}
-../../core/weechat.o
-../../core/wee-backtrace.o
-../../core/wee-command.o
-../../core/wee-config.o
-../../core/wee-config-file.o
-../../core/wee-debug.o
-../../core/wee-hook.o
-../../core/wee-input.o
-../../core/wee-list.o
-../../core/wee-log.o
-../../core/wee-upgrade.o
-../../core/wee-string.o
-../../core/wee-utf8.o
-../../core/wee-util.o)
+ADD_EXECUTABLE(${EXECUTABLE} ${WEECHAT_CURSES_SRC})
+
 INCLUDE_DIRECTORIES(.. ../../core ../../plugins)
-TARGET_LINK_LIBRARIES(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS})
+TARGET_LINK_LIBRARIES(${EXECUTABLE} -lweechat_core ${STATIC_LIBS} ${EXTRA_LIBS})
 
 INSTALL(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)

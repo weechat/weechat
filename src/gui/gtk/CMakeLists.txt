@@ -31,22 +31,9 @@ IF(PKG_CONFIG_FOUND)
   ENDIF(GTK2_FOUND)
 ENDIF(PKG_CONFIG_FOUND)
 
-ADD_EXECUTABLE(${EXECUTABLE} ${WEECHAT_GTK_SRC}
-../../core/weechat.o
-../../core/wee-backtrace.o
-../../core/wee-command.o
-../../core/wee-config.o
-../../core/wee-config-file.o
-../../core/wee-debug.o
-../../core/wee-hook.o
-../../core/wee-input.o
-../../core/wee-list.o
-../../core/wee-log.o
-../../core/wee-upgrade.o
-../../core/wee-string.o
-../../core/wee-utf8.o
-../../core/wee-util.o)
+ADD_EXECUTABLE(${EXECUTABLE} ${WEECHAT_GTK_SRC})
+
 INCLUDE_DIRECTORIES(.. ../../core ../../plugins)
-TARGET_LINK_LIBRARIES(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS})
+TARGET_LINK_LIBRARIES(${EXECUTABLE} -lweechat_core ${STATIC_LIBS} ${EXTRA_LIBS})
 
 INSTALL(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)
