@@ -79,6 +79,7 @@ extern void gui_keyboard_default_bindings ();
 extern int gui_keyboard_read_cb (void *data);
 
 /* window functions */
+extern int gui_window_utf_char_valid (char *utf_char);
 extern void gui_window_wprintw (WINDOW *window, char *data, ...);
 extern void gui_window_curses_clear (WINDOW *window, int num_color);
 extern void gui_window_set_weechat_color (WINDOW *window, int num_color);

@@ -414,19 +414,17 @@ gui_chat_display_word_raw (struct t_gui_window *window, char *string,
         {
             memcpy (utf_char, string, next_char - string);
             utf_char[next_char - string] = '\0';
-            if ((((unsigned char)(utf_char[0]) == 146)
-                 || ((unsigned char)(utf_char[0]) == 0x7F))
-                && (!utf_char[1]))
-            {
-                wprintw (GUI_CURSES(window)->win_chat, ".");
-            }
-            else
+            if (gui_window_utf_char_valid (utf_char))
             {
                 output = string_iconv_from_internal (NULL, utf_char);
                 wprintw (GUI_CURSES(window)->win_chat,
                          "%s", (output) ? output : utf_char);
                 if (output)
                     free (output);
+            }
+            else
+            {
+                wprintw (GUI_CURSES(window)->win_chat, ".");
             }
         }
         

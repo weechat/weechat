@@ -109,7 +109,7 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, char *name,
                   char *(*build_callback)(void *data,
                                           struct t_gui_bar_item *item,
                                           struct t_gui_window *window,
-                                          int max_width),
+                                          int max_width, int max_height),
                   void *build_callback_data)
 {
     struct t_gui_bar_item *new_bar_item;
@@ -249,7 +249,7 @@ gui_bar_item_free_all_plugin (struct t_weechat_plugin *plugin)
 char *
 gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
                                    struct t_gui_window *window,
-                                   int max_width)
+                                   int max_width, int max_height)
 {
     char buf[64];
     
@@ -258,6 +258,7 @@ gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
     (void) item;
     (void) window;
     (void) max_width;
+    (void) max_height;
     
     snprintf (buf, sizeof (buf), "%s[%s%d%s] ",
               GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
@@ -275,7 +276,7 @@ gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
 char *
 gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
                                     struct t_gui_window *window,
-                                    int max_width)
+                                    int max_width, int max_height)
 {
     char buf[64];
     
@@ -283,6 +284,7 @@ gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
     (void) data;
     (void) item;
     (void) max_width;
+    (void) max_height;
     
     if (!window)
         return NULL;
@@ -303,7 +305,7 @@ gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
 char *
 gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
                                   struct t_gui_window *window,
-                                  int max_width)
+                                  int max_width, int max_height)
 {
     char buf[256];
     
@@ -311,6 +313,7 @@ gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
     (void) data;
     (void) item;
     (void) max_width;
+    (void) max_height;
     
     if (!window)
         return NULL;
@@ -336,7 +339,7 @@ gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
 char *
 gui_bar_item_default_nicklist_count (void *data, struct t_gui_bar_item *item,
                                      struct t_gui_window *window,
-                                     int max_width)
+                                     int max_width, int max_height)
 {
     char buf[64];
     
@@ -344,6 +347,7 @@ gui_bar_item_default_nicklist_count (void *data, struct t_gui_bar_item *item,
     (void) data;
     (void) item;
     (void) max_width;
+    (void) max_height;
     
     if (!window || !window->buffer->nicklist)
         return NULL;
@@ -364,7 +368,7 @@ gui_bar_item_default_nicklist_count (void *data, struct t_gui_bar_item *item,
 char *
 gui_bar_item_default_scroll (void *data, struct t_gui_bar_item *item,
                              struct t_gui_window *window,
-                             int max_width)
+                             int max_width, int max_height)
 {
     char buf[64];
     
@@ -372,6 +376,7 @@ gui_bar_item_default_scroll (void *data, struct t_gui_bar_item *item,
     (void) data;
     (void) item;
     (void) max_width;
+    (void) max_height;
     
     if (!window || !window->scroll)
         return NULL;
@@ -390,7 +395,7 @@ gui_bar_item_default_scroll (void *data, struct t_gui_bar_item *item,
 char *
 gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                               struct t_gui_window *window,
-                              int max_width)
+                              int max_width, int max_height)
 {
     char buf[1024], format[32];
     struct t_gui_hotlist *ptr_hotlist;
@@ -401,6 +406,7 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
     (void) item;
     (void) window;
     (void) max_width;
+    (void) max_height;
     
     if (!gui_hotlist)
         return NULL;

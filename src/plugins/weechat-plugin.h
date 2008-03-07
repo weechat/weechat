@@ -329,7 +329,7 @@ struct t_weechat_plugin
                                             char *(*build_callback)(void *data,
                                                                     struct t_gui_bar_item *item,
                                                                     struct t_gui_window *window,
-                                                                    int max_width),
+                                                                    int max_width, int max_height),
                                             void *build_callback_data);
     void (*bar_item_update) (char *name);
     void (*bar_item_remove) (struct t_gui_bar_item *item);

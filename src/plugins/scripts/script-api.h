@@ -157,7 +157,8 @@ extern struct t_gui_bar_item *script_api_bar_item_new (struct t_weechat_plugin *
                                                        char *(*build_callback)(void *data,
                                                                                struct t_gui_bar_item *item,
                                                                                struct t_gui_window *window,
-                                                                               int remaining_space),
+                                                                               int max_width,
+                                                                               int max_height),
                                                        char *function_build);
 extern void script_api_bar_item_remove (struct t_weechat_plugin *weechat_plugin,
                                         struct t_plugin_script *script,

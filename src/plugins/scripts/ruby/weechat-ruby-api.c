@@ -3473,20 +3473,22 @@ weechat_ruby_api_bar_item_search (VALUE class, VALUE name)
 char *
 weechat_ruby_api_bar_item_build_cb (void *data, struct t_gui_bar_item *item,
                                     struct t_gui_window *window,
-                                    int max_width)
+                                    int max_width, int max_height)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[4], *ret;
-    static char buf[32];
+    char *ruby_argv[5], *ret;
+    static char str_width[32], str_height[32];
     
     script_callback = (struct t_script_callback *)data;
 
-    snprintf (buf, sizeof (buf) - 1, "%d", max_width);
+    snprintf (str_width, sizeof (str_width), "%d", max_width);
+    snprintf (str_height, sizeof (str_height), "%d", max_height);
     
     ruby_argv[0] = script_ptr2str (item);
     ruby_argv[1] = script_ptr2str (window);
-    ruby_argv[2] = buf;
-    ruby_argv[3] = NULL;
+    ruby_argv[2] = str_width;
+    ruby_argv[3] = str_height;
+    ruby_argv[4] = NULL;
     
     ret = (char *)weechat_ruby_exec (script_callback->script,
                                      WEECHAT_SCRIPT_EXEC_STRING,

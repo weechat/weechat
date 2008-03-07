@@ -29,6 +29,8 @@
 
 #include "../../core/weechat.h"
 #include "../../core/wee-log.h"
+#include "../../core/wee-string.h"
+#include "../../core/wee-utf8.h"
 #include "../gui-bar.h"
 #include "../gui-bar-item.h"
 #include "../gui-chat.h"
@@ -213,44 +215,79 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
 }
 
 /*
- * gui_bar_window_print: print text on a bar window
+ * gui_bar_window_print_string: print a string text on a bar window
+ *                              return number of chars displayed on screen
  */
 
-void
-gui_bar_window_print (struct t_gui_bar_window *bar_win, char *text,
-                      int *max_width)
+int
+gui_bar_window_print_string (struct t_gui_bar_window *bar_win,
+                             char *string, int max_chars)
 {
-    int weechat_color;
-    char str_color[3];
-
+    int weechat_color, num_displayed, size_on_screen;
+    char str_color[3], utf_char[16], *next_char, *output;
+    
+    if (!string || !string[0])
+        return 0;
+    
     if ((bar_win->bar->position == GUI_BAR_POSITION_LEFT)
         || (bar_win->bar->position == GUI_BAR_POSITION_RIGHT))
         gui_window_set_weechat_color (bar_win->win_bar, GUI_COLOR_CHAT);
     else
         gui_window_set_weechat_color (bar_win->win_bar, GUI_COLOR_STATUS);
     
-    while (text && text[0])
+    num_displayed = 0;
+    
+    while (string && string[0])
     {
-        if (text[0] == GUI_COLOR_COLOR_CHAR)
+        if (string[0] == GUI_COLOR_COLOR_CHAR)
         {
-            text++;
-            if (isdigit (text[0]) && isdigit (text[1]))
+            string++;
+            if (isdigit (string[0]) && isdigit (string[1]))
             {
-                str_color[0] = text[0];
-                str_color[1] = text[1];
+                str_color[0] = string[0];
+                str_color[1] = string[1];
                 str_color[2] = '\0';
-                text += 2;
+                string += 2;
                 sscanf (str_color, "%d", &weechat_color);
                 gui_window_set_weechat_color (bar_win->win_bar, weechat_color);
             }
         }
         else
         {
-            wprintw (bar_win->win_bar, "%c", text[0]);
-            (*max_width)--;
-            text++;
+            next_char = utf8_next_char (string);
+            if (!next_char)
+                break;
+            
+            memcpy (utf_char, string, next_char - string);
+            utf_char[next_char - string] = '\0';
+            
+            if (gui_window_utf_char_valid (utf_char))
+            {
+                output = string_iconv_from_internal (NULL, utf_char);
+                wprintw (bar_win->win_bar, "%s",
+                         (output) ? output : utf_char);
+                size_on_screen = utf8_char_size_screen ((output) ?
+                                                        output : utf_char);
+                num_displayed += size_on_screen;
+                max_chars -= size_on_screen;
+                if (output)
+                    free (output);
+            }
+            else
+            {
+                wprintw (bar_win->win_bar,  ".");
+                num_displayed++;
+                max_chars--;
+            }
+            
+            string = next_char;
+            
+            if (max_chars <= 0)
+                break;
         }
     }
+    
+    return num_displayed;
 }
 
 /*
@@ -261,8 +298,8 @@ void
 gui_bar_window_draw (struct t_gui_window *window,
                      struct t_gui_bar_window *bar_win)
 {
-    int i, max_width;
-    char *item_value;
+    int x, y, i, max_width, max_height, items_count, num_lines, line;
+    char *item_value, *item_value2, **items;
     struct t_gui_bar_item *ptr_item;
     
     if ((bar_win->bar->position == GUI_BAR_POSITION_LEFT)
@@ -272,7 +309,12 @@ gui_bar_window_draw (struct t_gui_window *window,
         gui_window_curses_clear (bar_win->win_bar, GUI_COLOR_STATUS);
     
     max_width = bar_win->width;
+    max_height = bar_win->height;
     
+    x = 0;
+    y = 0;
+    
+    /* for each item of bar */
     for (i = 0; i < bar_win->bar->items_count; i++)
     {
         ptr_item = gui_bar_item_search (bar_win->bar->items_array[i]);
@@ -280,14 +322,32 @@ gui_bar_window_draw (struct t_gui_window *window,
         {
             item_value = (ptr_item->build_callback) (ptr_item->build_callback_data,
                                                      ptr_item, window,
-                                                     max_width);
+                                                     max_width, max_height);
             if (item_value)
             {
                 if (item_value[0])
                 {
-                    gui_bar_window_print (bar_win, item_value, &max_width);
-                    if (max_width < 0)
-                        max_width = 0;
+                    /* replace \n by spaces when height is 1 */
+                    item_value2 = (max_height == 1) ?
+                        string_replace (item_value, "\n", " ") : NULL;
+                    items = string_explode ((item_value2) ? item_value2 : item_value,
+                                            "\n", 0, 0,
+                                            &items_count);
+                    num_lines = (items_count <= max_height) ?
+                        items_count : max_height;
+                    for (line = 0; line < num_lines; line++)
+                    {
+                        wmove (bar_win->win_bar, y, x);
+                        x += gui_bar_window_print_string (bar_win, items[line],
+                                                          max_width);
+                        if (num_lines > 1)
+                        {
+                            x = 0;
+                            y++;
+                        }
+                    }
+                    if (item_value2)
+                        free (item_value2);
                 }
                 free (item_value);
             }

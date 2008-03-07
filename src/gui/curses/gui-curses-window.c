@@ -135,6 +135,24 @@ gui_window_objects_free (struct t_gui_window *window, int free_separator)
 }
 
 /*
+ * gui_window_utf_char_valid: return 1 if utf char is valid for screen
+ *                            otherwise return 0
+ */
+
+int
+gui_window_utf_char_valid (char *utf_char)
+{
+    /* 146 or 0x7F are not valid */
+    if ((((unsigned char)(utf_char[0]) == 146)
+         || ((unsigned char)(utf_char[0]) == 0x7F))
+        && (!utf_char[1]))
+        return 0;
+    
+    /* any other char is valid */
+    return 1;
+}
+
+/*
  * gui_window_wprintw: decode then display string with wprintw
  */
 

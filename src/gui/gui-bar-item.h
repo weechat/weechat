@@ -41,7 +41,7 @@ struct t_gui_bar_item
     char *(*build_callback)(void *data,
                             struct t_gui_bar_item *item,
                             struct t_gui_window *window,
-                            int max_width);
+                            int max_width, int max_height);
                                      /* callback called for building item   */
     void *build_callback_data;       /* data for callback                   */
     struct t_gui_bar_item *prev_item; /* link to previous bar item          */
@@ -61,7 +61,7 @@ extern struct t_gui_bar_item *gui_bar_item_new (struct t_weechat_plugin *plugin,
                                                 char *(*build_callback)(void *data,
                                                                         struct t_gui_bar_item *item,
                                                                         struct t_gui_window *window,
-                                                                        int max_width),
+                                                                        int max_width, int max_height),
                                                 void *build_callback_data);
 extern void gui_bar_item_update (char *name);
 extern void gui_bar_item_free (struct t_gui_bar_item *item);
