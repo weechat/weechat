@@ -34,6 +34,8 @@ ENDIF(PKG_CONFIG_FOUND)
 ADD_EXECUTABLE(${EXECUTABLE} ${WEECHAT_GTK_SRC})
 
 INCLUDE_DIRECTORIES(.. ../../core ../../plugins)
+
+# Because of a linker bug, we have to link 2 times with libweechat_core.a
 TARGET_LINK_LIBRARIES(${EXECUTABLE} -lweechat_core ${STATIC_LIBS} ${EXTRA_LIBS})
 
 INSTALL(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)

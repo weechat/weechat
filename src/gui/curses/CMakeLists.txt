@@ -42,6 +42,8 @@ ENDIF(${CMAKE_SYSTEM_NAME} MATCHES "OpenBSD")
 ADD_EXECUTABLE(${EXECUTABLE} ${WEECHAT_CURSES_SRC})
 
 INCLUDE_DIRECTORIES(.. ../../core ../../plugins)
+
+# Because of a linker bug, we have to link 2 times with libweechat_core.a
 TARGET_LINK_LIBRARIES(${EXECUTABLE} -lweechat_core ${STATIC_LIBS} ${EXTRA_LIBS})
 
 INSTALL(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)

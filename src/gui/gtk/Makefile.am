@@ -18,22 +18,12 @@ INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\" $(GTK_CFLAGS)
 
 bin_PROGRAMS = weechat-gtk
 
-weechat_gtk_LDADD = ../../core/weechat.o \
-                    ../../core/wee-backtrace.o \
-                    ../../core/wee-command.o \
-                    ../../core/wee-config.o \
-                    ../../core/wee-config-file.o \
-                    ../../core/wee-debug.o \
-                    ../../core/wee-hook.o \
-                    ../../core/wee-input.o \
-                    ../../core/wee-list.o \
-                    ../../core/wee-log.o \
-                    ../../core/wee-upgrade.o \
-                    ../../core/wee-string.o \
-                    ../../core/wee-utf8.o \
-                    ../../core/wee-util.o \
+# Because of a linker bug, we have to link 2 times with lib_weechat_core.a
+# (and it must be 2 different path/names to be keeped by linker)
+weechat_gtk_LDADD = ./../../core/lib_weechat_core.a \
                     ../../plugins/lib_weechat_plugins.a \
                     ../lib_weechat_gui_common.a \
+                    ../../core/lib_weechat_core.a \
                     $(PLUGINS_LFLAGS) \
                     $(GTK_LFLAGS)
 
