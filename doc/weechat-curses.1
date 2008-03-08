@@ -1,4 +1,4 @@
-.TH WEECHAT 1 "September 2007" "FlashCode"
+.TH WEECHAT 1 "March 2008" "FlashCode"
 
 .SH NAME
 weechat-curses \- Wee Enhanced Environment for Chat (Curses version)
@@ -11,11 +11,12 @@ or
 .br
 
 .SH DESCRIPTION
-Fast, light and extensible IRC client for many operating systems.
+Fast, light and extensible chat client for many operating systems.
 .br
 Everything can be done with a keyboard. It is customizable and extensible with scripts.
 Many GUIs are or will be available (Curses, Gtk and Qt).
-It is compliant with RFCs 1459, 2810, 2811, 2812, and 2813.
+.br
+It is compliant with IRC RFCs 1459, 2810, 2811, 2812, and 2813.
 
 .SH OPTIONS
 .TP
@@ -69,21 +70,50 @@ to an IRC server. These are in the following form:
 .TP
 .B irc[6][s]://[[nickname][:password]@]server[:port][/[#&+!]channel[,channel...]]
 .TP
-Exemple to join WeeChat channel support with nick "FlashCode":
-irc://FlashCode@irc.freenode.net/weechat
+Exemple to join WeeChat channel support with nick "MyNick":
+irc://MyNick@irc.freenode.net/weechat
 
 .SH FILES
 .TP
 .B $HOME/.weechat/weechat.rc
-configuration file for WeeChat
+main WeeChat configuration file
+.TP
+.B $HOME/.weechat/plugins.rc
+plugins configuration file
+.TP
+.B $HOME/.weechat/alias.rc
+configuration file for alias plugin
+.TP
+.B $HOME/.weechat/charset.rc
+configuration file for charset plugin
+.TP
+.B $HOME/.weechat/irc.rc
+configuration file for IRC plugin
 .TP
 .B $HOME/.weechat/weechat.log
 WeeChat log file
 
+.SH LICENSE
+Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+.br
+WeeChat is distributed under the GNU General Public License, version 3.
+Please read the COPYING file for more information.
+
+.SH BUGS
+Please report bugs or feature requests at Savannah website:
+.br
+Bugs:
+.UR
+http://savannah.nongnu.org/bugs/?group=weechat
+.br
+Feature requests:
+.UR
+http://savannah.nongnu.org/task/?group=weechat
+
 .SH AUTHOR
 WeeChat is written by FlashCode <flashcode@flashtux.org>
 .br
-WeeChat on the web:
+Web:
 .UR
 http://weechat.flashtux.org/
 .br
