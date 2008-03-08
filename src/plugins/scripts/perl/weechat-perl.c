@@ -576,11 +576,13 @@ weechat_perl_debug_dump_cb (void *data, char *signal, char *type_data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin)
 {
+#ifndef MULTIPLICITY
+    char *perl_args[] = { "", "-e", "0" };
+#endif
+    
     weechat_perl_plugin = plugin;
     
 #ifndef MULTIPLICITY
-    char *perl_args[] = { "", "-e", "0" };
-    
     perl_main = perl_alloc ();
     
     if (!perl_main)
