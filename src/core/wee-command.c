@@ -2030,7 +2030,8 @@ command_init ()
 {
     hook_command (NULL, "bar",
                   N_("manage bars"),
-                  N_("[add name type position size [separator]] | [list]"),
+                  N_("[add name type position size separator item1,item2,...] "
+                     "| [list]"),
                   N_("      add: add a new bar\n"
                      "     name: name of bar (must be unique)\n"
                      "     type: \"root\" (outside windows), \"window_active\" "
@@ -2040,6 +2041,7 @@ command_init ()
                      "     size: size of bar (in chars)\n"
                      "separator: 1 for using separator (line), 0 or nothing "
                      "means no separator\n"
+                     "item1,...: items for this bar\n"
                      "     list: list all bars"),
                   "list",
                   &command_bar, NULL);
