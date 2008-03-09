@@ -245,8 +245,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
                              (ptr_buffer->plugin) ?
-                             ptr_buffer->plugin->name :
-                             "weechat",
+                             ptr_buffer->plugin->name : "core",
                              ptr_buffer->category,
                              ptr_buffer->name);
         }
