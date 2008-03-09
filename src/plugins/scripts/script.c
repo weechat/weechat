@@ -112,13 +112,13 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     }
     
     /* create directories in WeeChat home */
-    weechat_mkdir_home (weechat_plugin->name, 0644);
+    weechat_mkdir_home (weechat_plugin->name, 0755);
     length = strlen (weechat_plugin->name) + strlen ("/autoload") + 1;
     string = (char *)malloc (length * sizeof (char));
     if (string)
     {
         snprintf (string, length, "%s/autoload", weechat_plugin->name);
-        weechat_mkdir_home (string, 0644);
+        weechat_mkdir_home (string, 0755);
         free (string);
     }
     
