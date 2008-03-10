@@ -52,7 +52,7 @@ struct t_gui_line;
 #define WEECHAT_COLOR_CYAN    COLOR_YELLOW
 #define WEECHAT_COLOR_WHITE   COLOR_WHITE
 
-#define GUI_GTK(window) ((t_gui_gtk_objects *)(window->gui_objects))
+#define GUI_GTK(window) ((struct t_gui_gtk_objects *)(window->gui_objects))
 
 struct t_gui_bar_window
 {
@@ -63,8 +63,6 @@ struct t_gui_bar_window
                                     /* link to next bar window              */
                                     /* (only used if bar is in windows)     */
 };
-
-typedef struct t_gui_gtk_objects t_gui_gtk_objects;
 
 struct t_gui_gtk_objects
 {

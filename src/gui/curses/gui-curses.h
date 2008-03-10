@@ -31,7 +31,7 @@
 #define WINDOW_MIN_WIDTH      10
 #define WINDOW_MIN_HEIGHT     5
 
-#define GUI_CURSES(window) ((t_gui_curses_objects *)(window->gui_objects))
+#define GUI_CURSES(window) ((struct t_gui_curses_objects *)(window->gui_objects))
 
 struct t_gui_bar_window
 {
@@ -44,8 +44,6 @@ struct t_gui_bar_window
                                     /* link to next bar window              */
                                     /* (only used if bar is in windows)     */
 };
-
-typedef struct t_gui_curses_objects t_gui_curses_objects;
 
 struct t_gui_curses_objects
 {
