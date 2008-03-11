@@ -410,7 +410,7 @@ weechat_init_vars ()
 void
 weechat_welcome_message ()
 {
-    if (CONFIG_BOOLEAN(config_look_startup_logo))
+    if (CONFIG_BOOLEAN(config_startup_logo))
     {
         gui_chat_printf (NULL,
                          "%s   ___       __         ______________        _____ \n"
@@ -428,27 +428,27 @@ weechat_welcome_message ()
         && CONFIG_STRING(config_look_weechat_slogan)[0])
     {
         gui_chat_printf (NULL, _("%sWelcome to %s%s%s, %s"),
-                         (CONFIG_BOOLEAN(config_look_startup_logo)) ?
+                         (CONFIG_BOOLEAN(config_startup_logo)) ?
                          "      " : "",
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                          PACKAGE_NAME,
                          GUI_NO_COLOR,
                          CONFIG_STRING(config_look_weechat_slogan));
     }
-    if (CONFIG_BOOLEAN(config_look_startup_version))
+    if (CONFIG_BOOLEAN(config_startup_version))
     {
         gui_chat_printf (NULL, "%s%s%s%s, %s %s %s",
-                         (CONFIG_BOOLEAN(config_look_startup_logo)) ?
+                         (CONFIG_BOOLEAN(config_startup_logo)) ?
                          "    " : "",
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                          PACKAGE_STRING,
                          GUI_NO_COLOR,
                          _("compiled on"), __DATE__, __TIME__);
     }
-    if (CONFIG_BOOLEAN(config_look_startup_logo) ||
+    if (CONFIG_BOOLEAN(config_startup_logo) ||
         (CONFIG_STRING(config_look_weechat_slogan)
          && CONFIG_STRING(config_look_weechat_slogan)[0]) ||
-        CONFIG_BOOLEAN(config_look_startup_version))
+        CONFIG_BOOLEAN(config_startup_version))
         gui_chat_printf (NULL,
                          "%s-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-",
                          GUI_COLOR(GUI_COLOR_CHAT_NICK));
@@ -521,7 +521,9 @@ main (int argc, char *argv[])
     //if (weechat_session)
         //session_load (weechat_session); /* load previous session if asked   */
     weechat_welcome_message ();         /* display WeeChat welcome message  */
+    command_startup (0);                /* command executed before plugins  */
     plugin_init (auto_load_plugins);    /* init plugin interface(s)         */
+    command_startup (1);                /* command executed after plugins   */
     gui_main_loop ();                   /* WeeChat main loop                */
     plugin_end ();                      /* end plugin interface(s)          */
     if (CONFIG_BOOLEAN(config_look_save_on_exit))

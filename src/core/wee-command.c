@@ -2217,6 +2217,36 @@ command_init ()
 }
 
 /*
+ * command_startup: execute command at startup
+ */
+
+void
+command_startup (int plugins_loaded)
+{
+    char *command, **commands, **ptr_cmd;
+    struct t_gui_buffer *weechat_buffer;
+    
+    if (plugins_loaded)
+        command = CONFIG_STRING(config_startup_command_before_plugins);
+    else
+        command = CONFIG_STRING(config_startup_command_after_plugins);
+    
+    if (command && command[0])
+    {
+        commands = string_split_command (command, ';');
+        if (commands)
+        {
+            weechat_buffer = gui_buffer_search_main ();
+            for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
+            {
+                input_data (weechat_buffer, *ptr_cmd, 0);
+            }
+            string_free_splitted_command (commands);
+        }
+    }
+}
+
+/*
  * command_print_stdout: print list of commands on standard output
  */
 

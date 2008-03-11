@@ -42,11 +42,14 @@
 
 extern struct t_config_file *weechat_config_file;
 
+extern struct t_config_option *config_startup_logo;
+extern struct t_config_option *config_startup_version;
+extern struct t_config_option *config_startup_command_before_plugins;
+extern struct t_config_option *config_startup_command_after_plugins;
+
 extern struct t_config_option *config_look_color_real_white;
 extern struct t_config_option *config_look_save_on_exit;
 extern struct t_config_option *config_look_set_title;
-extern struct t_config_option *config_look_startup_logo;
-extern struct t_config_option *config_look_startup_version;
 extern struct t_config_option *config_look_weechat_slogan;
 extern struct t_config_option *config_look_one_server_buffer;
 extern struct t_config_option *config_look_open_near_server;

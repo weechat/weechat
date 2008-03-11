@@ -56,13 +56,18 @@
 
 struct t_config_file *weechat_config_file = NULL;
 
+/* config, startup section */
+
+struct t_config_option *config_startup_logo;
+struct t_config_option *config_startup_version;
+struct t_config_option *config_startup_command_before_plugins;
+struct t_config_option *config_startup_command_after_plugins;
+
 /* config, look & feel section */
 
 struct t_config_option *config_look_color_real_white;
 struct t_config_option *config_look_save_on_exit;
 struct t_config_option *config_look_set_title;
-struct t_config_option *config_look_startup_logo;
-struct t_config_option *config_look_startup_version;
 struct t_config_option *config_look_weechat_slogan;
 struct t_config_option *config_look_scroll_amount;
 struct t_config_option *config_look_buffer_time_format;
@@ -588,6 +593,36 @@ config_weechat_init ()
     if (!weechat_config_file)
         return 0;
     
+    /* startup */
+    ptr_section = config_file_new_section (weechat_config_file, "startup",
+                                           NULL, NULL, NULL, NULL, NULL, NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        return 0;
+    }
+    
+    config_startup_logo = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "startup_logo", "boolean",
+        N_("display WeeChat logo at startup"),
+        NULL, 0, 0, "on", NULL, NULL);
+    config_startup_version = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "startup_version", "boolean",
+        N_("display WeeChat version at startup"),
+        NULL, 0, 0, "on", NULL, NULL);
+    config_startup_command_before_plugins = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "startup_command_before_plugins", "string",
+        N_("command executed when WeeChat starts, before loading plugins"),
+        NULL, 0, 0, "", NULL, NULL);
+    config_startup_command_after_plugins = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "startup_command_after_plugins", "string",
+        N_("command executed when WeeChat starts, after loading plugins"),
+        NULL, 0, 0, "", NULL, NULL);
+    
     /* look */
     ptr_section = config_file_new_section (weechat_config_file, "look",
                                            NULL, NULL, NULL, NULL, NULL, NULL);
@@ -617,16 +652,6 @@ config_weechat_init ()
         N_("set title for window (terminal for Curses GUI) with "
            "name and version"),
         NULL, 0, 0, "on", &config_change_title, NULL);
-    config_look_startup_logo = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "look_startup_logo", "boolean",
-        N_("display WeeChat logo at startup"),
-        NULL, 0, 0, "on", NULL, NULL);
-    config_look_startup_version = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "look_startup_version", "boolean",
-        N_("display WeeChat version at startup"),
-        NULL, 0, 0, "on", NULL, NULL);
     config_look_weechat_slogan = config_file_new_option (
         weechat_config_file, ptr_section,
         "look_weechat_slogan", "string",
