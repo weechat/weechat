@@ -2227,9 +2227,9 @@ command_startup (int plugins_loaded)
     struct t_gui_buffer *weechat_buffer;
     
     if (plugins_loaded)
-        command = CONFIG_STRING(config_startup_command_before_plugins);
-    else
         command = CONFIG_STRING(config_startup_command_after_plugins);
+    else
+        command = CONFIG_STRING(config_startup_command_before_plugins);
     
     if (command && command[0])
     {
