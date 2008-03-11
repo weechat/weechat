@@ -200,7 +200,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
     
     /* do not highlight current buffer */
     if ((buffer == gui_current_window->buffer)
-        && (!allow_current_buffer) && (!gui_buffer_is_scrolled (buffer)))
+        && (!allow_current_buffer || (!gui_buffer_is_scrolled (buffer))))
         return;
     
     if (priority < GUI_HOTLIST_MIN)
