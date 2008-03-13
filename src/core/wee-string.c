@@ -432,10 +432,10 @@ char **
 string_explode (char *string, char *separators, int keep_eol,
                 int num_items_max, int *num_items)
 {
-    int i, n_items;
+    int i, n_items, word_found, separator_found;
     char **array;
     char *ptr, *ptr1, *ptr2;
-
+    
     if (num_items != NULL)
         *num_items = 0;
     
@@ -445,15 +445,20 @@ string_explode (char *string, char *separators, int keep_eol,
     /* calculate number of items */
     ptr = string;
     i = 1;
+    word_found = 0;
+    separator_found = 0;
     while ((ptr = strpbrk (ptr, separators)))
     {
+        separator_found = 1;
         while (ptr[0] && (strchr (separators, ptr[0]) != NULL))
         {
             ptr++;
+            word_found = 1;
         }
-        if (ptr[0])
-            i++;
+        i++;
     }
+    if ((word_found == 0) && (separator_found == 1))
+        i = 0;
     n_items = i;
 
     if ((num_items_max != 0) && (n_items > num_items_max))
