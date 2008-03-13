@@ -1258,12 +1258,12 @@ irc_command_invite (void *data, struct t_gui_buffer *buffer, int argc,
     (void) argv_eol;
     
     if (argc > 2)
-        irc_server_sendf (ptr_server, "INVITE %s %s", argv[0], argv[1]);
+        irc_server_sendf (ptr_server, "INVITE %s %s", argv[1], argv[2]);
     else
     {
         if (ptr_channel && (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL))
             irc_server_sendf (ptr_server, "INVITE %s %s",
-                              argv[0], ptr_channel->name);
+                              argv[1], ptr_channel->name);
         else
         {
             weechat_printf (ptr_server->buffer,
@@ -1416,7 +1416,7 @@ int
 irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
                      char **argv, char **argv_eol)
 {
-    char *pos_channel, *pos_nick, *pos_comment;
+    char *pos_channel, *pos_nick, *nick_only, *pos_comment, *pos;
     
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
@@ -1458,15 +1458,28 @@ irc_command_kickban (void *data, struct t_gui_buffer *buffer, int argc,
                 return WEECHAT_RC_ERROR;
             }
         }
-        
+
+        /* set ban for nick(+host) on channel */
         irc_server_sendf (ptr_server, "MODE %s +b %s",
                           pos_channel, pos_nick);
-        if (pos_comment)
-            irc_server_sendf (ptr_server, "KICK %s %s :%s",
-                              pos_channel, pos_nick, pos_comment);
-        else
-            irc_server_sendf (ptr_server, "KICK %s %s",
-                              pos_channel, pos_nick);
+        
+        /* kick nick from channel */
+        nick_only = strdup (pos_nick);
+        if (nick_only)
+        {
+            pos = strchr (nick_only, '@');
+            if (pos)
+                pos[0] = '\0';
+            pos = strchr (nick_only, '!');
+            if (pos)
+                pos[0] = '\0';
+            irc_server_sendf (ptr_server, "KICK %s %s%s%s",
+                              pos_channel,
+                              nick_only,
+                              (pos_comment) ? " :" : "",
+                              (pos_comment) ? pos_comment : "");
+            free (nick_only);
+        }
     }
     else
     {
@@ -3639,7 +3652,7 @@ irc_command_init ()
                           N_(" channel: channel where user is\n"
                              "nickname: nickname to kick and ban\n"
                              " comment: comment for kick"),
-                          "%n %-", &irc_command_kickban, NULL);
+                          "%(irc_channel_nicks_hosts) %-", &irc_command_kickban, NULL);
     weechat_hook_command ("kill",
                           N_("close client-server connection"),
                           N_("nickname comment"),
