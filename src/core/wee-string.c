@@ -448,16 +448,18 @@ string_explode (char *string, char *separators, int keep_eol,
     while ((ptr = strpbrk (ptr, separators)))
     {
         while (ptr[0] && (strchr (separators, ptr[0]) != NULL))
+        {
             ptr++;
-        i++;
+        }
+        if (ptr[0])
+            i++;
     }
     n_items = i;
 
     if ((num_items_max != 0) && (n_items > num_items_max))
         n_items = num_items_max;
     
-    array =
-        (char **)malloc ((n_items + 1) * sizeof (char *));
+    array = (char **)malloc ((n_items + 1) * sizeof (char *));
     
     ptr1 = string;
     ptr2 = string;
@@ -465,11 +467,19 @@ string_explode (char *string, char *separators, int keep_eol,
     for (i = 0; i < n_items; i++)
     {
         while (ptr1[0] && (strchr (separators, ptr1[0]) != NULL))
+        {
             ptr1++;
+        }
         if (i == (n_items - 1) || (ptr2 = strpbrk (ptr1, separators)) == NULL)
+        {
             if ((ptr2 = strchr (ptr1, '\r')) == NULL)
+            {
                 if ((ptr2 = strchr (ptr1, '\n')) == NULL)
+                {
                     ptr2 = strchr (ptr1, '\0');
+                }
+            }
+        }
         
         if ((ptr1 == NULL) || (ptr2 == NULL))
         {
@@ -480,7 +490,9 @@ string_explode (char *string, char *separators, int keep_eol,
             if (ptr2 - ptr1 > 0)
             {
                 if (keep_eol)
+                {
                     array[i] = strdup (ptr1);
+                }
                 else
                 {
                     array[i] =
