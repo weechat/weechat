@@ -85,6 +85,9 @@ irc_mode_channel_set (struct t_irc_server *server,
     char *pos_args, *str_modes, set_flag, **argv, *pos, *ptr_arg;
     int argc, current_arg;
     
+    if (!server || !channel || !modes)
+        return;
+    
     argc = 0;
     argv = NULL;
     current_arg = 0;

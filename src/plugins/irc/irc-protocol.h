@@ -44,19 +44,15 @@
 
 struct t_irc_server;
 
-typedef int (t_irc_recv_func)(struct t_irc_server *server, char *irc_message,
-                              char *host, char *nick, char *arguments,
+typedef int (t_irc_recv_func)(struct t_irc_server *server, char *comand,
+                              int argc, char **argv, char **argv_eol,
                               int ignore, int highlight);
-typedef int (t_irc_recv_func2)(struct t_irc_server *server, char *comand,
-                               int argc, char **argv, char **argv_eol,
-                               int ignore, int highlight);
 
 struct t_irc_protocol_msg
 {
     char *name;                     /* IRC message name                      */
     char *description;              /* message description                   */
     t_irc_recv_func *recv_function; /* function called when msg is received  */
-    t_irc_recv_func2 *recv_function2; /* function called when msg is received  */
 };
 
 extern void irc_protocol_recv_command (struct t_irc_server *server,
