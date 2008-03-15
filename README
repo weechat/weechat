@@ -9,11 +9,11 @@ It is customizable and extensible with scripts.
 
 Features
 --------
-    * IRC chat client with multi-server connection
+    * chat client with multi-protocol/server connection
     * many GUI (curses, Gtk, Qt) (1)
     * small, fast and very light
     * customizable and extensible with plugins (C, Perl, Python, Ruby, Lua)
-    * compliant with RFC 1459,2810,2811,2812,2813
+    * compliant with IRC RFCs 1459, 2810, 2811, 2812 and 2813
     * developed from scratch
     * multi-platform (GNU/Linux, *BSD, Mac OS X, QNX, Windows & other) (2)
     * 100% GPL & free

@@ -1,13 +1,20 @@
 WeeChat - Installation instructions
 ===================================
 
-1) Run './configure'
-   (./configure --help so see options)
+You can build WeeChat with autotools or cmake.
 
-2) Run 'make'
+- with autotools:
+    ./autogen.sh     (for cloned git repository only)
+    ./configure      ("./configure --help" for options)
+    make
+    make install     (as root for installation in system directories)
 
-3) As root, run 'make install'
+- with cmake:
+    mkdir build
+    cd build
+    cmake ..         ("ccmake .." for options)
+    make
+    make install     (as root for installation in system directories)
 
-4) Enjoy !  :-)
 
 See AUTHORS for support, feel free to contact us for any problem.
