@@ -726,12 +726,12 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "look_prefix_network", "string",
         N_("prefix for network messages"),
-        NULL, 0, 0, "-@-", &config_change_prefix, NULL);
+        NULL, 0, 0, "--", &config_change_prefix, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_ACTION] = config_file_new_option (
         weechat_config_file, ptr_section,
         "look_prefix_action", "string",
         N_("prefix for action messages"),
-        NULL, 0, 0, "-*-", &config_change_prefix, NULL);
+        NULL, 0, 0, "*", &config_change_prefix, NULL);
     config_look_prefix[GUI_CHAT_PREFIX_JOIN] = config_file_new_option (
         weechat_config_file, ptr_section,
         "look_prefix_join", "string",
@@ -921,7 +921,7 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "color_chat_prefix_network", "color",
         N_("text color for network prefix"),
-        NULL, GUI_COLOR_CHAT_PREFIX_NETWORK, 0, "lightmagenta", &config_change_color, NULL);
+        NULL, GUI_COLOR_CHAT_PREFIX_NETWORK, 0, "magenta", &config_change_color, NULL);
     config_color_chat_prefix[GUI_CHAT_PREFIX_ACTION] = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_chat_prefix_action", "color",
