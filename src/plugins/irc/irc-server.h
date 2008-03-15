@@ -35,12 +35,12 @@
 #define IRC_SERVER_DEFAULT_NICKS         "weechat1,weechat2,weechat3,"  \
     "weechat4,weechat5"
 
-#define irc_server_sendf_queued(server, fmt, argz...) \
-    if (server) \
-    { \
-        server->queue_msg = 1; \
-        irc_server_sendf (server, fmt, ##argz); \
-        server->queue_msg = 0; \
+#define irc_server_sendf_queued(server, fmt, argz...)   \
+    if (server)                                         \
+    {                                                   \
+        server->queue_msg = 1;                          \
+        irc_server_sendf (server, fmt, ##argz);         \
+        server->queue_msg = 0;                          \
     }
 
 /* output queue of messages to server (for sending slowly to server) */
@@ -170,7 +170,7 @@ extern void irc_server_parse_message (char *message, char **nick,
                                       char **host, char **command,
                                       char **channel, char **arguments);
 extern int irc_server_recv_cb (void *arg_server);
-extern void irc_server_timer_cb (void *empty);
+extern int irc_server_timer_cb (void *data);
 extern void irc_server_timer_check_away (void *empty);
 extern int irc_server_child_read (void *arg_server);
 extern void irc_server_convbase64_8x3_to_6x4 (char *from, char *to);

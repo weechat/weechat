@@ -1431,36 +1431,14 @@ irc_server_msgq_flush ()
                                                                       ptr_msg);
                             free (modifier_data);
                         }
-                        switch (irc_protocol_recv_command (irc_recv_msgq->server,
-                                                           (msg_decoded) ?
-                                                           msg_decoded : ptr_msg,
-                                                           host, command,
-                                                           arguments))
-                        {
-                            case -1:
-                                weechat_printf (irc_recv_msgq->server->buffer,
-                                                _("%s%s: command \"%s\" "
-                                                  "failed"),
-                                                weechat_prefix ("error"),
-                                                "irc", command);
-                                break;
-                            case -2:
-                                weechat_printf (irc_recv_msgq->server->buffer,
-                                                _("%s%s: no command to "
-                                                  "execute"),
-                                                weechat_prefix ("error"),
-                                                "irc");
-                                break;
-                            case -3:
-                                weechat_printf (irc_recv_msgq->server->buffer,
-                                                _("%s%s: unknown command: "
-                                                  "cmd=\"%s\", "
-                                                  "host=\"%s\", "
-                                                  "arguments=\"%s\""),
-                                                weechat_prefix ("error"),
-                                                "irc", command, host, arguments);
-                                break;
-                        }
+                        
+                        /* parse and execute command */
+                        irc_protocol_recv_command (irc_recv_msgq->server,
+                                                   (msg_decoded) ?
+                                                   msg_decoded : ptr_msg,
+                                                   host,
+                                                   command,
+                                                   arguments);
                         
                         if (host)
                             free (host);
@@ -1543,7 +1521,7 @@ irc_server_recv_cb (void *arg_server)
  *                      on servers
  */
 
-void
+int
 irc_server_timer_cb (void *data)
 {
     struct t_irc_server *ptr_server;
@@ -1608,6 +1586,8 @@ irc_server_timer_cb (void *data)
             }
         }
     }
+    
+    return WEECHAT_RC_OK;
 }
 
 /*

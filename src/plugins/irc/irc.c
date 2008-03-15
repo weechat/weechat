@@ -144,15 +144,15 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     irc_server_auto_connect (1, 0);
     
+    irc_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
+                                         &irc_server_timer_cb, NULL);
+    
     /*
-    irc_timer = weechat_hook_timer (1 * 1000, 0,
-                                    &irc_server_timer,
-                                    NULL);
     if (irc_cfg_irc_away_check != 0)
-        irc_timer_check_away = weechat_hook_timer (irc_cfg_irc_away_check * 60 * 1000,
-                                                   0,
-                                                   &irc_server_timer_check_away,
-                                                   NULL);
+        irc_hook_timer_check_away = weechat_hook_timer (irc_cfg_irc_away_check * 60 * 1000,
+                                                        0,
+                                                        &irc_server_timer_check_away,
+                                                        NULL);
     */
     
     return WEECHAT_RC_OK;

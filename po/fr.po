@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-07 23:18+0100\n"
-"PO-Revision-Date: 2008-03-08 10:59+0100\n"
+"POT-Creation-Date: 2008-03-15 09:33+0100\n"
+"PO-Revision-Date: 2008-03-15 09:34+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -472,10 +472,12 @@ msgid ""
 msgstr ""
 "       add: ajoute une nouvelle barre\n"
 "       nom: nom de la barre (doit être unique)\n"
-"      type: \"root\" (en dehors des fenêtres), \"window_active\" (dans la fenêtre active), \"window_inactive\" (dans chaque fenêtre inactive)\n"
+"      type: \"root\" (en dehors des fenêtres), \"window_active\" (dans la "
+"fenêtre active), \"window_inactive\" (dans chaque fenêtre inactive)\n"
 "  position: bottom (bas), top (haut), left (gauche) ou right (droite)\n"
 "    taille: taille de la barre (en caractères)\n"
-"separateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie sans séparateur\n"
+"separateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie sans "
+"séparateur\n"
 "objet1,...: objets pour cette barre\n"
 "      list: liste toutes les barres"
 
@@ -798,6 +800,20 @@ msgstr ""
 msgid "\t\tDay changed to %s"
 msgstr "\t\tJour changé: %s"
 
+msgid "display WeeChat logo at startup"
+msgstr "afficher le logo WeeChat au démarrage"
+
+msgid "display WeeChat version at startup"
+msgstr "afficher la version de WeeChat au démarrage"
+
+msgid "command executed when WeeChat starts, before loading plugins"
+msgstr ""
+"commande exécutée quand WeeChat démarre, avant le chargement des extensions"
+
+msgid "command executed when WeeChat starts, after loading plugins"
+msgstr ""
+"commande exécutée quand WeeChat démarre, après le chargement des extensions"
+
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -815,12 +831,6 @@ msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "définit le titre de la fenêtre (terminal pour l'interface Curses) avec le "
 "nom et la version"
-
-msgid "display WeeChat logo at startup"
-msgstr "afficher le logo WeeChat au démarrage"
-
-msgid "display WeeChat version at startup"
-msgstr "afficher la version de WeeChat au démarrage"
 
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "slogan WeeChat (si vide, le slogan ne sera pas utilisé)"
@@ -3321,6 +3331,307 @@ msgstr "%s%s: vous n'êtes pas connecté au serveur"
 msgid "%s: this buffer is not a channel!"
 msgstr "%s: ce tampon n'est pas un canal !"
 
+#, c-format
+msgid "%sYou have been invited to %s%s%s by %s%s"
+msgstr "%sVous avez été invité sur %s%s%s par %s%s"
+
+#, c-format
+msgid "%s%s: cannot create new channel \"%s\""
+msgstr "%s%s: impossible de créer le nouveau canal \"%s\""
+
+#, c-format
+msgid "%s%s%s %s(%s%s%s)%s has joined %s%s"
+msgstr "%s%s%s %s(%s%s%s)%s a rejoint %s%s"
+
+#, c-format
+msgid "%s%s: channel \"%s\" not found for \"%s\" command"
+msgstr "%s%s: canal \"%s\" non trouvé pour la commande \"%s\""
+
+#, c-format
+msgid "%s%s%s%s has kicked %s%s%s from %s%s %s(%s%s%s)"
+msgstr "%s%s%s%s a poussé dehors %s%s%s de %s%s %s(%s%s%s)"
+
+#, c-format
+msgid "%s%s%s%s has kicked %s%s%s from %s%s"
+msgstr "%s%s%s%s a poussé dehors %s%s%s de %s%s"
+
+#, c-format
+msgid "%sYou were killed by %s%s %s(%s%s%s)"
+msgstr "%sVous avez été tué par %s%s %s(%s%s%s)"
+
+#, c-format
+msgid "%sYou were killed by %s%s"
+msgstr "%sVous avez été tué par %s%s"
+
+#, c-format
+msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
+msgstr "%sMode %s%s %s[%s%s%s]%s par %s%s"
+
+#, c-format
+msgid "%sUser mode %s[%s%s%s]%s by %s%s"
+msgstr "%sMode utilisateur %s[%s%s%s]%s par %s%s"
+
+#, c-format
+msgid "%sYou are now known as %s%s"
+msgstr "%sVous êtes maintenant connu sous le nom %s%s"
+
+#, c-format
+msgid "%s%s%s%s is now known as %s%s"
+msgstr "%s%s%s%s est maintenant connu sous le nom %s%s"
+
+#, c-format
+msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
+msgstr "%sCTCP %sVERSION%s réponse de %s%s%s: %s"
+
+#, c-format
+msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
+msgstr "%sCTCP %sPING%s réponse de %s%s%s: %ld.%ld %s"
+
+#, c-format
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
+msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s %s(%s%s%s)"
+
+#, c-format
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
+msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s"
+
+#, c-format
+msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
+msgstr "%sCTCP %sVERSION%s reçu de %s%s%s: %s"
+
+#, c-format
+msgid "%sCTCP %sVERSION%s received from %s%s"
+msgstr "%sCTCP %sVERSION%s reçu de %s%s"
+
+#, c-format
+msgid "Channel %s: * %s %s"
+msgstr "Canal %s: * %s %s"
+
+#, c-format
+msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
+msgstr "%sCTCP %sSOUND%s \"%s\" reçu de %s%s"
+
+#, c-format
+msgid "%sCTCP %sPING%s received from %s%s"
+msgstr "%sCTCP %sPING%s reçu de %s%s"
+
+#, c-format
+msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
+msgstr "%sCTCP inconnu %s%s%s reçu de %s%s%s: %s"
+
+#, c-format
+msgid "%sUnknown CTCP %s%s%s received from %s%s"
+msgstr "%sCTCP inconnu %s%s%s reçu de %s%s"
+
+#, c-format
+msgid "Channel %s: %s> %s"
+msgstr "Canal %s: %s> %s"
+
+#, c-format
+msgid "%s%s: cannot parse \"%s\" command"
+msgstr "%s%s: impossible d'analyser la commande \"%s\""
+
+#, c-format
+msgid "%s%s: not enough memory for \"%s\" command"
+msgstr "%s%s: pas assez de mémoire pour la commande \"%s\""
+
+#, c-format
+msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
+msgstr "%s%s: type de DCC CHAT inconnu reçu de %s%s%s: \"%s\""
+
+#, c-format
+msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
+msgstr "%s%s%s %s(%s%s%s)%s a quitté %s(%s%s%s)"
+
+#, c-format
+msgid "%s%s%s %s(%s%s%s)%s has quit"
+msgstr "%s%s%s %s(%s%s%s)%s a quitté"
+
+#, c-format
+msgid "%s%s: \"%s\" command received without channel"
+msgstr "%s%s: commande \"%s\" reçue sans canal"
+
+#, c-format
+msgid "%s%s%s%s has changed topic for %s%s%s to: \"%s%s\""
+msgstr "%s%s%s%s a changé le titre pour %s%s%s en: \"%s%s\""
+
+#, c-format
+msgid "%s%s%s%s has unset topic for %s%s"
+msgstr "%s%s%s%s a retiré le titre pour %s%s"
+
+#, c-format
+msgid "%sWallops from %s%s %s(%s%s%s)%s: %s"
+msgstr "%sWallops de %s%s %s(%s%s%s)%s: %s"
+
+#, c-format
+msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
+msgstr "%sMode utilisateur pour %s%s%s est %s[%s%s%s]"
+
+#, c-format
+msgid "%s%s%s%s is away: %s"
+msgstr "%s%s%s%s est absent: %s"
+
+#, c-format
+msgid "%sUsers online: %s%s"
+msgstr "%sUtilisateurs en ligne: %s%s"
+
+#, c-format
+msgid "%s%s%s %s(%s%s@%s%s)%s was %s"
+msgstr "%s%s%s %s(%s%s@%s%s)%s était %s"
+
+#, c-format
+msgid ""
+"%s%s[%s%s%s]%s idle: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon "
+"at: %s%s"
+msgstr ""
+"%s%s[%s%s%s]%s inactivité: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s, "
+"signé le: %s%s"
+
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "heure"
+msgstr[1] "heures"
+
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "minute"
+msgstr[1] "minutes"
+
+#, c-format
+msgid ""
+"%s%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
+msgstr ""
+"%s%s[%s%s%s]%s inactivité: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signé le: %s%"
+"s"
+
+#, c-format
+msgid "%sChannel created on %s"
+msgstr "%sCanal créé le %s"
+
+#, c-format
+msgid "%sChannel %s%s%s created on %s"
+msgstr "%sCanal %s%s%s créé le %s"
+
+#, c-format
+msgid "%sNo topic set for channel %s%s"
+msgstr "%sPas de titre défini pour le canal %s%s"
+
+#, c-format
+msgid "%sTopic for %s%s%s is: \"%s%s\""
+msgstr "%sLe titre pour %s%s%s est: \"%s%s\""
+
+#, c-format
+msgid "%sTopic set by %s%s%s on %s"
+msgstr "%sTitre défini par %s%s%s le %s"
+
+#, c-format
+msgid "%sTopic for %s%s%s set by %s%s%s on %s"
+msgstr "%sTitre pour %s%s%s défini par %s%s%s le %s"
+
+#, c-format
+msgid "%s%s%s%s has invited %s%s%s on %s%s"
+msgstr "%s%s%s%s a invité %s%s%s sur %s%s"
+
+#, c-format
+msgid "%s%s: cannot identify channel for \"%s\" command"
+msgstr "%s%s: impossible de déterminer le canal pour la commande \"%s\""
+
+#, c-format
+msgid "%s%s: cannot identify nickname for \"%s\" command"
+msgstr "%s%s: impossible de déterminer le pseudo pour la commande \"%s\""
+
+#, c-format
+msgid "%sChannel reop %s%s%s: %s%s"
+msgstr "%sReop canal %s%s%s: %s%s"
+
+#, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s"
+msgstr "%s%s[%s%s%s]%s exception %s%s%s"
+
+#, c-format
+msgid " by %s%s %s(%s%s%s)"
+msgstr " par %s%s %s(%s%s%s)"
+
+#, c-format
+msgid " by %s%s"
+msgstr " par %s%s"
+
+#, c-format
+msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
+msgstr "%s%s: impossible de créer le pseudo \"%s\" pour le canal \"%s\""
+
+#, c-format
+msgid "%sNicks %s%s%s: %s[%s%s%s]"
+msgstr "%sPseudos %s%s%s: %s[%s%s%s]"
+
+#, c-format
+msgid ""
+"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
+msgstr ""
+"%sCanal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
+
+msgid "nicks"
+msgstr "pseudos"
+
+msgid "nick"
+msgstr "pseudo"
+
+msgid "ops"
+msgstr "ops"
+
+msgid "op"
+msgstr "op"
+
+msgid "halfops"
+msgstr "halfops"
+
+msgid "halfop"
+msgstr "halfop"
+
+msgid "voices"
+msgstr "voices"
+
+msgid "voice"
+msgstr "voice"
+
+msgid "normal"
+msgstr "normal"
+
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by "
+msgstr "%s%s[%s%s%s] %s%s%s banni par "
+
+#, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
+msgstr "%s%s[%s%s%s] %s%s%s banni"
+
+#, c-format
+msgid ""
+"%s%s: all declared nicknames are already in use or invalid, closing "
+"connection with server"
+msgstr ""
+"%s%s: tous les pseudos déclarés sont déjà en cours d'utilisation ou "
+"invalides, fermeture de la connexion avec le serveur"
+
+#, c-format
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
+msgstr ""
+"%s%s: le pseudo \"%s\" est invalide, essai avec le pseudo n°%d (\"%s\")"
+
+#, c-format
+msgid ""
+"%s%s: all declared nicknames are already in use, closing connection with "
+"server"
+msgstr ""
+"%s%s: tous les pseudos déclarés sont déjà en cours d'utilisation, fermeture "
+"de la connexion avec le serveur"
+
+#, c-format
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgstr ""
+"%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le pseudo "
+"n°%d (\"%s\")"
+
 msgid "error received from IRC server"
 msgstr "erreur reçue du serveur IRC"
 
@@ -3338,9 +3649,6 @@ msgstr "chaîne de mode utilisateur"
 
 msgid "away message"
 msgstr "message d'absence"
-
-msgid "userhost"
-msgstr "nom d'hôte"
 
 msgid "ison"
 msgstr "est présent"
@@ -3370,7 +3678,7 @@ msgid "whowas"
 msgstr "whowas"
 
 msgid "end of /who list"
-msgstr "fin de /who list"
+msgstr "fin de la liste /who"
 
 msgid "whois (idle)"
 msgstr "whois (inactif)"
@@ -3390,8 +3698,9 @@ msgstr "/list début"
 msgid "channel (for /list)"
 msgstr "canal (pour /list)"
 
-msgid "/list end"
-msgstr "/list fin"
+#, fuzzy
+msgid "end of /list"
+msgstr "fin de /list"
 
 msgid "channel mode"
 msgstr "mode du canal"
@@ -3613,318 +3922,26 @@ msgid "whois (secure connection)"
 msgstr "whois (connexion sécurisée)"
 
 #, c-format
-msgid "You have been invited to %s%s%s by %s%s"
-msgstr "Vous avez été invité sur %s%s%s par %s%s"
+msgid "%s%s: command \"%s\" not found:"
+msgstr "%s%s: commande \"%s\" non trouvée:"
 
 #, c-format
-msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-msgstr "%s%s: canal \"%s\" non trouvé pour la commande \"%s\""
+msgid "%s%s: failed to parse command \"%s\" (please report to developers):"
+msgstr ""
+"%s%s: echec d'analyse de la commande \"%s\" (merci de reporter ce problème "
+"aux développeurs):"
+
+#, c-format
+msgid ""
+"%s%s: too few arguments received from IRC server for command \"%s"
+"\" (received: %d arguments, expected: at least %d)"
+msgstr ""
+"%s%s: trop peu de paramètres reçus du serveur IRC pour la commande \"%s"
+"\" (reçu: %d paramètres, attendu: au moins %d)"
 
 #, c-format
 msgid "%s%s: \"%s\" command received without host"
 msgstr "%s%s: commande \"%s\" reçue sans hôte"
-
-#, c-format
-msgid "%s%s: cannot create new channel \"%s\""
-msgstr "%s%s: impossible de créer le nouveau canal \"%s\""
-
-#, c-format
-msgid "%s%s%s %s(%s%s%s)%s has joined %s%s"
-msgstr "%s%s%s %s(%s%s%s)%s a rejoint %s%s"
-
-#, c-format
-msgid "%s%s%s%s has kicked %s%s%s from %s%s %s(%s%s%s)"
-msgstr "%s%s%s%s a poussé dehors %s%s%s de %s%s %s(%s%s%s)"
-
-#, c-format
-msgid "%s%s%s%s has kicked %s%s%s from %s%s"
-msgstr "%s%s%s%s a poussé dehors %s%s%s de %s%s"
-
-#, c-format
-msgid "%s%s%s%s has killed %s%s%s from server %s(%s%s%s)"
-msgstr "%s%s%s%s a tué %s%s%s du serveur %s(%s%s%s)"
-
-#, c-format
-msgid "%s%s%s%s has killed %s%s%s from server"
-msgstr "%s%s%s%s a tué %s%s%s du serveur"
-
-#, c-format
-msgid "%s%s: host not found for \"%s\" command"
-msgstr "%s%s: hôte non trouvé pour la commande \"%s\""
-
-#, c-format
-msgid "%s%s: \"%s\" command received without channel or nickname"
-msgstr "%s%s: commande \"%s\" reçue sans canal ou pseudo"
-
-#, c-format
-msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
-msgstr "%sMode %s%s %s[%s%s%s]%s par %s%s"
-
-#, c-format
-msgid "%sUser mode %s[%s%s%s]%s by %s%s"
-msgstr "%sMode utilisateur %s[%s%s%s]%s par %s%s"
-
-#, c-format
-msgid "%sYou are now known as %s%s"
-msgstr "%sVous êtes maintenant connu sous le nom %s%s"
-
-#, c-format
-msgid "%s%s%s%s is now known as %s%s"
-msgstr "%s%s%s%s est maintenant connu sous le nom %s%s"
-
-#, c-format
-msgid "%s%s: nickname not found for \"%s\" command"
-msgstr "%s%s: pseudo non trouvé pour la commande \"%s\""
-
-#, c-format
-msgid "CTCP %sVERSION%s reply from %s%s%s: %s"
-msgstr "CTCP %sVERSION%s réponse de %s%s%s: %s"
-
-#, c-format
-msgid "CTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
-msgstr "CTCP %sPING%s réponse de %s%s%s: %ld.%ld %s"
-
-#, c-format
-msgid "%s%s: \"%s\" command received without host or channel"
-msgstr "%s%s: commande \"%s\" reçue sans hôte ou canal"
-
-#, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
-msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s %s(%s%s%s)"
-
-#, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
-msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s"
-
-#, c-format
-msgid "CTCP %sVERSION%s received from %s%s%s: %s"
-msgstr "CTCP %sVERSION%s reçu de %s%s%s: %s"
-
-#, c-format
-msgid "CTCP %sVERSION%s received from %s%s"
-msgstr "CTCP %sVERSION%s reçu de %s%s"
-
-#, c-format
-msgid "Channel %s: * %s %s"
-msgstr "Canal %s: * %s %s"
-
-#, c-format
-msgid "Received a CTCP %sSOUND%s \"%s\" from %s%s"
-msgstr "CTCP %sSOUND%s \"%s\" reçu de %s%s"
-
-#, c-format
-msgid "CTCP %sPING%s received from %s%s"
-msgstr "CTCP %sPING%s reçu de %s%s"
-
-#, c-format
-msgid "Unknown CTCP %s%s%s received from %s%s%s: %s"
-msgstr "CTCP inconnu %s%s%s reçu de %s%s%s: %s"
-
-#, c-format
-msgid "Unknown CTCP %s%s%s received from %s%s"
-msgstr "CTCP inconnu %s%s%s reçu de %s%s"
-
-#, c-format
-msgid "Channel %s: %s> %s"
-msgstr "Canal %s: %s> %s"
-
-#, c-format
-msgid "%s%s: cannot parse \"%s\" command"
-msgstr "%s%s: impossible d'analyser la commande \"%s\""
-
-#, c-format
-msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
-msgstr "%s%s: type de DCC CHAT inconnu reçu de %s%s%s: \"%s\""
-
-#, c-format
-msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
-msgstr "%s%s%s %s(%s%s%s)%s a quitté %s(%s%s%s)"
-
-#, c-format
-msgid "%s%s: \"%s\" command received without channel"
-msgstr "%s%s: commande \"%s\" reçue sans canal"
-
-#, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s to: \"%s%s\""
-msgstr "%s%s%s%s a changé le titre pour %s%s%s en: \"%s%s\""
-
-#, c-format
-msgid "%s%s%s%s has unset topic for %s%s"
-msgstr "%s%s%s%s a retiré le titre pour %s%s"
-
-#, c-format
-msgid "WALLOPS from %s%s%s: %s"
-msgstr "WALLOPS de %s%s%s: %s"
-
-#, c-format
-msgid "User mode for %s%s%s is %s[%s%s%s]"
-msgstr "Mode utilisateur pour %s%s%s est %s[%s%s%s]"
-
-#, c-format
-msgid "%s%s%s%s is away: %s"
-msgstr "%s%s%s%s est absent: %s"
-
-msgid "Users online: "
-msgstr "Utilisateurs en ligne: "
-
-#, c-format
-msgid "%s[%s%s%s]%s help mode (+h)"
-msgstr "%s[%s%s%s]%s mode aide (+h)"
-
-#, c-format
-msgid "%s%s %s(%s%s@%s%s)%s was %s"
-msgstr "%s%s %s(%s%s@%s%s)%s était %s"
-
-#, c-format
-msgid ""
-"%s[%s%s%s]%s idle: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon "
-"at: %s%s"
-msgstr ""
-"%s[%s%s%s]%s inactivité: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s, "
-"signé le: %s%s"
-
-msgid "hour"
-msgid_plural "hours"
-msgstr[0] "heure"
-msgstr[1] "heures"
-
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] "minute"
-msgstr[1] "minutes"
-
-#, c-format
-msgid "%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
-msgstr ""
-"%s[%s%s%s]%s inactivité: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signé le: %s%s"
-
-#, c-format
-msgid "%s[%s%s%s]%s Channels: "
-msgstr "%s[%s%s%s]%s Canaux: "
-
-#, c-format
-msgid "%sChannel created on %s"
-msgstr "%sCanal créé le %s"
-
-#, c-format
-msgid "%s%s: cannot identify date/time for \"%s\" command"
-msgstr "%s%s: impossible d'identifier la date/heure pour la commande \"%s\""
-
-#, c-format
-msgid "%s%s: cannot identify channel for \"%s\" command"
-msgstr "%s%s: impossible de déterminer le canal pour la commande \"%s\""
-
-#, c-format
-msgid "%sNo topic set for %s%s"
-msgstr "%sPas de titre défini pour %s%s"
-
-#, c-format
-msgid "%sTopic for %s%s%s is: \"%s%s\""
-msgstr "%sLe titre pour %s%s%s est: \"%s%s\""
-
-#, c-format
-msgid "%sTopic set by %s%s%s, %s"
-msgstr "%sTitre défini par %s%s%s, %s"
-
-#, c-format
-msgid "%s%s%s has invited %s%s%s on %s%s"
-msgstr "%s%s%s a invité %s%s%s sur %s%s"
-
-#, c-format
-msgid "%s%s: cannot identify nickname for \"%s\" command"
-msgstr "%s%s: impossible de déterminer le pseudo pour la commande \"%s\""
-
-#, c-format
-msgid "Channel reop %s%s%s: %s%s"
-msgstr "Reop canal %s%s%s: %s%s"
-
-#, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s"
-msgstr "%s%s[%s%s%s]%s exception %s%s%s"
-
-#, c-format
-msgid " by %s%s %s(%s%s%s)"
-msgstr " par %s%s %s(%s%s%s)"
-
-#, c-format
-msgid " by %s%s"
-msgstr " par %s%s"
-
-#, c-format
-msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
-msgstr "%s%s%s sur %s%s%s %s %s %s%s@%s %s(%s%s%s)"
-
-#, c-format
-msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
-msgstr "%s%s: impossible de créer le pseudo \"%s\" pour le canal \"%s\""
-
-#, c-format
-msgid ""
-"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
-msgstr ""
-"%sCanal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
-
-msgid "nicks"
-msgstr "pseudos"
-
-msgid "nick"
-msgstr "pseudo"
-
-msgid "ops"
-msgstr "ops"
-
-msgid "op"
-msgstr "op"
-
-msgid "halfops"
-msgstr "halfops"
-
-msgid "halfop"
-msgstr "halfop"
-
-msgid "voices"
-msgstr "voices"
-
-msgid "voice"
-msgstr "voice"
-
-msgid "normal"
-msgstr "normal"
-
-#, c-format
-msgid "%s[%s%s%s] %s%s%s banned by "
-msgstr "%s[%s%s%s] %s%s%s banni par "
-
-#, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
-msgstr "%s%s[%s%s%s] %s%s%s banni"
-
-#, c-format
-msgid ""
-"%s%s: all declared nicknames are already in use or invalid, closing "
-"connection with server"
-msgstr ""
-"%s%s: tous les pseudos déclarés sont déjà en cours d'utilisation ou "
-"invalides, fermeture de la connexion avec le serveur"
-
-#, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
-msgstr ""
-"%s%s: le pseudo \"%s\" est invalide, essai avec le pseudo n°%d (\"%s\")"
-
-#, c-format
-msgid ""
-"%s%s: all declared nicknames are already in use, closing connection with "
-"server"
-msgstr ""
-"%s%s: tous les pseudos déclarés sont déjà en cours d'utilisation, fermeture "
-"de la connexion avec le serveur"
-
-#, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
-msgstr ""
-"%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le pseudo "
-"n°%d (\"%s\")"
 
 #, c-format
 msgid "%s%s: error when allocating new server"
@@ -3956,18 +3973,6 @@ msgstr "(message supprimé)"
 #, c-format
 msgid "%s%s: not enough memory for received IRC message"
 msgstr "%s%s: mémoire insuffisante pour un message IRC reçu"
-
-#, c-format
-msgid "%s%s: command \"%s\" failed"
-msgstr "%s%s: la commande \"%s\" a échoué"
-
-#, c-format
-msgid "%s%s: no command to execute"
-msgstr "%s%s: pas de commande à exécuter"
-
-#, c-format
-msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", arguments=\"%s\""
-msgstr "%s%s: commande inconnue: cmd=\"%s\", hôte=\"%s\", paramètres=\"%s\""
 
 #, c-format
 msgid "%s%s: cannot read data from socket, disconnecting from server..."
@@ -4363,6 +4368,54 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\""
+
+#~ msgid "/list end"
+#~ msgstr "/list fin"
+
+#~ msgid "userhost"
+#~ msgstr "nom d'hôte"
+
+#~ msgid "Notice from %s%s %s(%s%s%s)%s: %s"
+#~ msgstr "Notice de %s%s %s(%s%s%s)%s: %s"
+
+#~ msgid "Notice from %s%s%s: %s"
+#~ msgstr "Notice de %s%s%s: %s"
+
+#~ msgid "Notice: %s"
+#~ msgstr "Notice: %s"
+
+#~ msgid "%s[%s%s%s]%s help mode (+h)"
+#~ msgstr "%s[%s%s%s]%s mode aide (+h)"
+
+#~ msgid "%s[%s%s%s]%s Channels: "
+#~ msgstr "%s[%s%s%s]%s Canaux: "
+
+#~ msgid "%s%s: cannot identify date/time for \"%s\" command"
+#~ msgstr "%s%s: impossible d'identifier la date/heure pour la commande \"%s\""
+
+#~ msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
+#~ msgstr "%s%s%s sur %s%s%s %s %s %s%s@%s %s(%s%s%s)"
+
+#~ msgid "%s%s: command \"%s\" failed"
+#~ msgstr "%s%s: la commande \"%s\" a échoué"
+
+#~ msgid "%s%s: no command to execute"
+#~ msgstr "%s%s: pas de commande à exécuter"
+
+#~ msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", arguments=\"%s\""
+#~ msgstr "%s%s: commande inconnue: cmd=\"%s\", hôte=\"%s\", paramètres=\"%s\""
+
+#~ msgid "%s%s%s%s has killed %s%s%s"
+#~ msgstr "%s%s%s%s a tué %s%s%s"
+
+#~ msgid "%s%s: \"%s\" command received without channel or nickname"
+#~ msgstr "%s%s: commande \"%s\" reçue sans canal ou pseudo"
+
+#~ msgid "%s%s: nickname not found for \"%s\" command"
+#~ msgstr "%s%s: pseudo non trouvé pour la commande \"%s\""
+
+#~ msgid "%s%s: \"%s\" command received without host or channel"
+#~ msgstr "%s%s: commande \"%s\" reçue sans hôte ou canal"
 
 #~ msgid "jump to raw IRC data buffer"
 #~ msgstr "sauter au tampon IRC brut"

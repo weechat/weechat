@@ -147,8 +147,6 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, char *text)
 
 /*
  * irc_input_data_cb: callback for input data in a buffer
- *                    Return: PROTOCOL_RC_OK if ok
- *                            PROTOCOL_RC_KO if error
  */
 
 int

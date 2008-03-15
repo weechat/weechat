@@ -42,39 +42,14 @@ void
 irc_mode_channel_set_nick (struct t_irc_channel *channel, char *nick,
                            char set_flag, int flag)
 {
-    (void) channel;
-    (void) nick;
-    (void) set_flag;
-    (void) flag;
-    
-    /*
     struct t_irc_nick *ptr_nick;
-    struct t_gui_nick *ptr_gui_nick;
-    int sort_index, color_prefix;
-    char prefix;
     
     if (nick)
     {
         ptr_nick = irc_nick_search (channel, nick);
         if (ptr_nick)
-        {
-            IRC_NICK_SET_FLAG(ptr_nick, (set_flag == '+'), flag);
-            ptr_gui_nick = gui_nicklist_search (channel->buffer,
-                                                ptr_nick->nick);
-            if (ptr_gui_nick)
-            {
-                irc_nick_get_gui_infos (ptr_nick, &sort_index, &prefix,
-                                        &color_prefix);
-                gui_nicklist_update (channel->buffer, ptr_gui_nick, NULL,
-                                     sort_index,
-                                     ptr_gui_nick->color_nick,
-                                     prefix,
-                                     color_prefix);
-                gui_nicklist_draw (channel->buffer, 1, 1);
-            }
-        }
+            irc_nick_set (channel, ptr_nick, (set_flag == '+'), flag);
     }
-    */
 }
 
 /*
@@ -107,7 +82,7 @@ void
 irc_mode_channel_set (struct t_irc_server *server,
                       struct t_irc_channel *channel, char *modes)
 {
-    char *pos_args, set_flag, **argv, *pos, *ptr_arg;
+    char *pos_args, *str_modes, set_flag, **argv, *pos, *ptr_arg;
     int argc, current_arg;
     
     argc = 0;
@@ -116,7 +91,9 @@ irc_mode_channel_set (struct t_irc_server *server,
     pos_args = strchr (modes, ' ');
     if (pos_args)
     {
-        pos_args[0] = '\0';
+        str_modes = weechat_strndup (modes, pos_args - modes);
+        if (!str_modes)
+            return;
         pos_args++;
         while (pos_args[0] == ' ')
             pos_args++;
@@ -124,12 +101,18 @@ irc_mode_channel_set (struct t_irc_server *server,
         if (argc > 0)
             current_arg = argc - 1;
     }
+    else
+    {
+        str_modes = strdup (modes);
+        if (!str_modes)
+            return;
+    }
     
-    if (modes && modes[0])
+    if (str_modes && str_modes[0])
     {
         set_flag = '+';
-        pos = modes + strlen (modes) - 1;
-        while (pos >= modes)
+        pos = str_modes + strlen (str_modes) - 1;
+        while (pos >= str_modes)
         {
             switch (pos[0])
             {
@@ -139,7 +122,7 @@ irc_mode_channel_set (struct t_irc_server *server,
                 case '-':
                     break;
                 default:
-                    set_flag = irc_mode_channel_get_flag (modes, pos);
+                    set_flag = irc_mode_channel_get_flag (str_modes, pos);
                     switch (pos[0])
                     {
                         case 'a': /* channel admin (unrealircd specific flag) */
@@ -219,7 +202,9 @@ irc_mode_channel_set (struct t_irc_server *server,
             pos--;
         }
     }
-    
+
+    if (str_modes)
+        free (str_modes);
     if (argv)
         weechat_string_free_exploded (argv);
 }

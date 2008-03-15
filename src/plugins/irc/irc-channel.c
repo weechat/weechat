@@ -310,9 +310,8 @@ irc_channel_remove_away (struct t_irc_channel *channel)
     {
         for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
         {
-            IRC_NICK_SET_FLAG(ptr_nick, 0, IRC_NICK_AWAY);
+            irc_nick_set (channel, ptr_nick, 0, IRC_NICK_AWAY);
         }
-        //gui_nicklist_draw (channel->buffer, 0, 0);
     }
 }
 

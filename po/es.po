@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-07 23:18+0100\n"
+"POT-Creation-Date: 2008-03-15 09:33+0100\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -797,6 +797,18 @@ msgstr ""
 msgid "\t\tDay changed to %s"
 msgstr "DÃ­a cambiado a %s\n"
 
+msgid "display WeeChat logo at startup"
+msgstr "mostrar el logotipo de WeeChat en el arranque"
+
+msgid "display WeeChat version at startup"
+msgstr "mostrar la versiÃ³n de Weechat en el arranque"
+
+msgid "command executed when WeeChat starts, before loading plugins"
+msgstr ""
+
+msgid "command executed when WeeChat starts, after loading plugins"
+msgstr ""
+
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -815,12 +827,6 @@ msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "define el tÃ­tulo de la ventana (el terminal para la interfaz Curses) con el "
 "nombre y la versiÃ³n"
-
-msgid "display WeeChat logo at startup"
-msgstr "mostrar el logotipo de WeeChat en el arranque"
-
-msgid "display WeeChat version at startup"
-msgstr "mostrar la versiÃ³n de Weechat en el arranque"
 
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "eslÃ³gan de WeeChat (si estÃ¡ vacÃ­o, el eslÃ³gan no serÃ¡ utilizado)"
@@ -3395,6 +3401,307 @@ msgstr "%s Â¡no conectado al servidor \"%s\"!\n"
 msgid "%s: this buffer is not a channel!"
 msgstr "Â¡Esta ventana no es un canal!\n"
 
+#, fuzzy, c-format
+msgid "%sYou have been invited to %s%s%s by %s%s"
+msgstr "Usted ha sido invitado a %s%s%s por %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create new channel \"%s\""
+msgstr "%s no es posible crear un nuevo canal \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has joined %s%s"
+msgstr "%s%s %s(%s%s%s)%s se ha unido %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s: channel \"%s\" not found for \"%s\" command"
+msgstr "%s canal \"%s\" no encontrado para el comando \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has kicked %s%s%s from %s%s %s(%s%s%s)"
+msgstr "%s%s%s ha pateado a %s%s%s de %s%s"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has kicked %s%s%s from %s%s"
+msgstr "%s%s%s ha pateado a %s%s%s de %s%s"
+
+#, fuzzy, c-format
+msgid "%sYou were killed by %s%s %s(%s%s%s)"
+msgstr "%s%s%s ha expulsado a %s%s%s del servidor"
+
+#, fuzzy, c-format
+msgid "%sYou were killed by %s%s"
+msgstr "Usted es conocido ahora como %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
+msgstr "%s%s %s(%s%s@%s%s)%s estaba %s\n"
+
+#, fuzzy, c-format
+msgid "%sUser mode %s[%s%s%s]%s by %s%s"
+msgstr "Modo de usuario %s[%s%s%s/%s%s%s]\n"
+
+#, fuzzy, c-format
+msgid "%sYou are now known as %s%s"
+msgstr "Usted es conocido ahora como %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s is now known as %s%s"
+msgstr "%s%s%s es conocido ahora como %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
+msgstr "CTCP %sVERSION%s respuesta de %s%s%s: %s\n"
+
+#, fuzzy, c-format
+msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
+msgstr "CTCP %sPING%s respuesta de %s%s%s: %ld.%ld segundos\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
+msgstr "%s%s %s(%s%s%s)%s ha abandonado %s%s"
+
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
+msgstr "%s%s %s(%s%s%s)%s ha abandonado %s%s"
+
+#, fuzzy, c-format
+msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
+msgstr "CTCP %sVERSION%s recibido de %s%s"
+
+#, fuzzy, c-format
+msgid "%sCTCP %sVERSION%s received from %s%s"
+msgstr "CTCP %sVERSION%s recibido de %s%s"
+
+#, fuzzy, c-format
+msgid "Channel %s: * %s %s"
+msgstr "reop canal %s%s%s: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
+msgstr "Recibido un CTCP %sSOUND%s \"%s\" de %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sCTCP %sPING%s received from %s%s"
+msgstr "CTCP %sPING%s recibido de %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
+msgstr "CTCP desconocido %s%s%s recibido de %s%s"
+
+#, fuzzy, c-format
+msgid "%sUnknown CTCP %s%s%s received from %s%s"
+msgstr "CTCP desconocido %s%s%s recibido de %s%s"
+
+#, fuzzy, c-format
+msgid "Channel %s: %s> %s"
+msgstr "reop canal %s%s%s: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot parse \"%s\" command"
+msgstr "%s no es posible analizar el comando \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for \"%s\" command"
+msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
+msgstr "%s tipo DCC CHAT desconocido recibido de "
+
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
+msgstr "%s%s %s(%s%s%s)%s ha salido"
+
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has quit"
+msgstr "%s%s %s(%s%s%s)%s ha salido"
+
+#, fuzzy, c-format
+msgid "%s%s: \"%s\" command received without channel"
+msgstr "%s comando \"%s\" recibido sin canal\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has changed topic for %s%s%s to: \"%s%s\""
+msgstr "%s%s%s ha cambiado el tema para %s%s%s a:"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has unset topic for %s%s"
+msgstr "%s%s%s ha quitado el tema para %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sWallops from %s%s %s(%s%s%s)%s: %s"
+msgstr "%s%s %s(%s%s@%s%s)%s estaba %s\n"
+
+#, fuzzy, c-format
+msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
+msgstr "Modo de usuario %s[%s%s%s/%s%s%s]\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s is away: %s"
+msgstr "%s%s%s estÃ¡ ausente: %s\n"
+
+#, fuzzy, c-format
+msgid "%sUsers online: %s%s"
+msgstr "Usuarios conectados: "
+
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s@%s%s)%s was %s"
+msgstr "%s%s %s(%s%s@%s%s)%s estaba %s\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s[%s%s%s]%s idle: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon "
+"at: %s%s"
+msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, firmÃ³ en: %s%s"
+
+#, fuzzy
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "hora"
+msgstr[1] "hora"
+
+#, fuzzy
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "minuto"
+msgstr[1] "minuto"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
+msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, firmÃ³ en: %s%s"
+
+#, fuzzy, c-format
+msgid "%sChannel created on %s"
+msgstr "lista de excepciÃ³n de canal"
+
+#, fuzzy, c-format
+msgid "%sChannel %s%s%s created on %s"
+msgstr "lista de excepciÃ³n de canal"
+
+#, fuzzy, c-format
+msgid "%sNo topic set for channel %s%s"
+msgstr "Sin tema establecido para %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sTopic for %s%s%s is: \"%s%s\""
+msgstr "El tema para %s%s%s es: "
+
+#, fuzzy, c-format
+msgid "%sTopic set by %s%s%s on %s"
+msgstr "Tema establecido por %s%s%s, %s"
+
+#, fuzzy, c-format
+msgid "%sTopic for %s%s%s set by %s%s%s on %s"
+msgstr "Tema establecido por %s%s%s, %s"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has invited %s%s%s on %s%s"
+msgstr "%s%s%s ha invitado a %s%s%s en %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot identify channel for \"%s\" command"
+msgstr "%s no es posible identificar el canal para el comando \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot identify nickname for \"%s\" command"
+msgstr ""
+"%s no es posible determinar el nombre de usuario para el comando \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sChannel reop %s%s%s: %s%s"
+msgstr "reop canal %s%s%s: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s"
+msgstr "%s[%s%s%s] %s%s%s baneado\n"
+
+#, fuzzy, c-format
+msgid " by %s%s %s(%s%s%s)"
+msgstr "%s%s %s(%s%s%s)%s ha salido"
+
+#, c-format
+msgid " by %s%s"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
+msgstr "%s no es posible crear el usuario \"%s\" para el canal \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sNicks %s%s%s: %s[%s%s%s]"
+msgstr "%sServidor:%s%s %s[%s%s%s]\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
+msgstr ""
+"Canal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
+
+msgid "nicks"
+msgstr "usuarios"
+
+msgid "nick"
+msgstr "usuario"
+
+msgid "ops"
+msgstr "operadores"
+
+msgid "op"
+msgstr "operador"
+
+msgid "halfops"
+msgstr "semi-operadores"
+
+msgid "halfop"
+msgstr "semi-operador"
+
+msgid "voices"
+msgstr "voces"
+
+msgid "voice"
+msgstr "voz"
+
+msgid "normal"
+msgstr "normal"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by "
+msgstr "%s[%s%s%s] %s%s%s baneado por "
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
+msgstr "%s[%s%s%s] %s%s%s baneado\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: all declared nicknames are already in use or invalid, closing "
+"connection with server"
+msgstr ""
+"%s: todos los nombres de usuario declarados ya estÃ¡n en uso, Â¡cerrando la "
+"conexiÃ³n con el servidor!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
+msgstr ""
+"%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 2 nombre de "
+"usuario \"%s\"\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: all declared nicknames are already in use, closing connection with "
+"server"
+msgstr ""
+"%s: todos los nombres de usuario declarados ya estÃ¡n en uso, Â¡cerrando la "
+"conexiÃ³n con el servidor!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgstr ""
+"%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 2 nombre de "
+"usuario \"%s\"\n"
+
 msgid "error received from IRC server"
 msgstr "error recibido del servidor IRC"
 
@@ -3412,9 +3719,6 @@ msgstr "cadena de modo usuario"
 
 msgid "away message"
 msgstr "mensaje de ausencia"
-
-msgid "userhost"
-msgstr "nombre de la mÃ¡quina de usuario"
 
 msgid "ison"
 msgstr "estÃ¡ presente"
@@ -3465,8 +3769,9 @@ msgstr "/list inicio"
 msgid "channel (for /list)"
 msgstr "canal (para /list)"
 
-msgid "/list end"
-msgstr "/list fin"
+#, fuzzy
+msgid "end of /list"
+msgstr "fin de la lista /who"
 
 msgid "channel mode"
 msgstr "modo de canal"
@@ -3693,319 +3998,22 @@ msgid "whois (secure connection)"
 msgstr "quiÃ©n es (conexiÃ³n segura)"
 
 #, fuzzy, c-format
-msgid "You have been invited to %s%s%s by %s%s"
-msgstr "Usted ha sido invitado a %s%s%s por %s%s\n"
+msgid "%s%s: command \"%s\" not found:"
+msgstr "%s plugin \"%s\" no encontrado\n"
 
-#, fuzzy, c-format
-msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-msgstr "%s canal \"%s\" no encontrado para el comando \"%s\"\n"
+#, c-format
+msgid "%s%s: failed to parse command \"%s\" (please report to developers):"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: too few arguments received from IRC server for command \"%s"
+"\" (received: %d arguments, expected: at least %d)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: \"%s\" command received without host"
 msgstr "%s comando \"%s\" recibido sin host \n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create new channel \"%s\""
-msgstr "%s no es posible crear un nuevo canal \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has joined %s%s"
-msgstr "%s%s %s(%s%s%s)%s se ha unido %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has kicked %s%s%s from %s%s %s(%s%s%s)"
-msgstr "%s%s%s ha pateado a %s%s%s de %s%s"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has kicked %s%s%s from %s%s"
-msgstr "%s%s%s ha pateado a %s%s%s de %s%s"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has killed %s%s%s from server %s(%s%s%s)"
-msgstr "%s%s%s ha expulsado a %s%s%s del servidor"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has killed %s%s%s from server"
-msgstr "%s%s%s ha expulsado a %s%s%s del servidor"
-
-#, fuzzy, c-format
-msgid "%s%s: host not found for \"%s\" command"
-msgstr "%s anfitriÃ³n \"%s\" no encontrado para el comando \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: \"%s\" command received without channel or nickname"
-msgstr "%s comando \"%s\" recibido sin canal o usuario\n"
-
-#, fuzzy, c-format
-msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
-msgstr "%s%s %s(%s%s@%s%s)%s estaba %s\n"
-
-#, fuzzy, c-format
-msgid "%sUser mode %s[%s%s%s]%s by %s%s"
-msgstr "Modo de usuario %s[%s%s%s/%s%s%s]\n"
-
-#, fuzzy, c-format
-msgid "%sYou are now known as %s%s"
-msgstr "Usted es conocido ahora como %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s is now known as %s%s"
-msgstr "%s%s%s es conocido ahora como %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname not found for \"%s\" command"
-msgstr "%s nombre de usuario no encontrado para el comando \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "CTCP %sVERSION%s reply from %s%s%s: %s"
-msgstr "CTCP %sVERSION%s respuesta de %s%s%s: %s\n"
-
-#, fuzzy, c-format
-msgid "CTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
-msgstr "CTCP %sPING%s respuesta de %s%s%s: %ld.%ld segundos\n"
-
-#, fuzzy, c-format
-msgid "%s%s: \"%s\" command received without host or channel"
-msgstr "%s comando \"%s\" recibido sin host o canal\n"
-
-#, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
-msgstr "%s%s %s(%s%s%s)%s ha abandonado %s%s"
-
-#, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
-msgstr "%s%s %s(%s%s%s)%s ha abandonado %s%s"
-
-#, fuzzy, c-format
-msgid "CTCP %sVERSION%s received from %s%s%s: %s"
-msgstr "CTCP %sVERSION%s recibido de %s%s"
-
-#, c-format
-msgid "CTCP %sVERSION%s received from %s%s"
-msgstr "CTCP %sVERSION%s recibido de %s%s"
-
-#, fuzzy, c-format
-msgid "Channel %s: * %s %s"
-msgstr "reop canal %s%s%s: %s%s\n"
-
-#, fuzzy, c-format
-msgid "Received a CTCP %sSOUND%s \"%s\" from %s%s"
-msgstr "Recibido un CTCP %sSOUND%s \"%s\" de %s%s\n"
-
-#, fuzzy, c-format
-msgid "CTCP %sPING%s received from %s%s"
-msgstr "CTCP %sPING%s recibido de %s%s\n"
-
-#, fuzzy, c-format
-msgid "Unknown CTCP %s%s%s received from %s%s%s: %s"
-msgstr "CTCP desconocido %s%s%s recibido de %s%s"
-
-#, c-format
-msgid "Unknown CTCP %s%s%s received from %s%s"
-msgstr "CTCP desconocido %s%s%s recibido de %s%s"
-
-#, fuzzy, c-format
-msgid "Channel %s: %s> %s"
-msgstr "reop canal %s%s%s: %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot parse \"%s\" command"
-msgstr "%s no es posible analizar el comando \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
-msgstr "%s tipo DCC CHAT desconocido recibido de "
-
-#, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
-msgstr "%s%s %s(%s%s%s)%s ha salido"
-
-#, fuzzy, c-format
-msgid "%s%s: \"%s\" command received without channel"
-msgstr "%s comando \"%s\" recibido sin canal\n"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s to: \"%s%s\""
-msgstr "%s%s%s ha cambiado el tema para %s%s%s a:"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has unset topic for %s%s"
-msgstr "%s%s%s ha quitado el tema para %s%s\n"
-
-#, fuzzy, c-format
-msgid "WALLOPS from %s%s%s: %s"
-msgstr "CTCP %sVERSION%s respuesta de %s%s%s: %s\n"
-
-#, fuzzy, c-format
-msgid "User mode for %s%s%s is %s[%s%s%s]"
-msgstr "Modo de usuario %s[%s%s%s/%s%s%s]\n"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s is away: %s"
-msgstr "%s%s%s estÃ¡ ausente: %s\n"
-
-msgid "Users online: "
-msgstr "Usuarios conectados: "
-
-#, fuzzy, c-format
-msgid "%s[%s%s%s]%s help mode (+h)"
-msgstr "%s[%s%s%s]%s inactividad: "
-
-#, fuzzy, c-format
-msgid "%s%s %s(%s%s@%s%s)%s was %s"
-msgstr "%s%s %s(%s%s@%s%s)%s estaba %s\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s[%s%s%s]%s idle: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon "
-"at: %s%s"
-msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, firmÃ³ en: %s%s"
-
-#, fuzzy
-msgid "hour"
-msgid_plural "hours"
-msgstr[0] "hora"
-msgstr[1] "hora"
-
-#, fuzzy
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] "minuto"
-msgstr[1] "minuto"
-
-#, fuzzy, c-format
-msgid "%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
-msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, firmÃ³ en: %s%s"
-
-#, fuzzy, c-format
-msgid "%s[%s%s%s]%s Channels: "
-msgstr "%s[%s%s%s]%s inactividad: "
-
-#, fuzzy, c-format
-msgid "%sChannel created on %s"
-msgstr "lista de excepciÃ³n de canal"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot identify date/time for \"%s\" command"
-msgstr "%s no es posible identificar la fecha/hora para el comando \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot identify channel for \"%s\" command"
-msgstr "%s no es posible identificar el canal para el comando \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%sNo topic set for %s%s"
-msgstr "Sin tema establecido para %s%s\n"
-
-#, fuzzy, c-format
-msgid "%sTopic for %s%s%s is: \"%s%s\""
-msgstr "El tema para %s%s%s es: "
-
-#, fuzzy, c-format
-msgid "%sTopic set by %s%s%s, %s"
-msgstr "Tema establecido por %s%s%s, %s"
-
-#, fuzzy, c-format
-msgid "%s%s%s has invited %s%s%s on %s%s"
-msgstr "%s%s%s ha invitado a %s%s%s en %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot identify nickname for \"%s\" command"
-msgstr ""
-"%s no es posible determinar el nombre de usuario para el comando \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "Channel reop %s%s%s: %s%s"
-msgstr "reop canal %s%s%s: %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s"
-msgstr "%s[%s%s%s] %s%s%s baneado\n"
-
-#, fuzzy, c-format
-msgid " by %s%s %s(%s%s%s)"
-msgstr "%s%s %s(%s%s%s)%s ha salido"
-
-#, c-format
-msgid " by %s%s"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
-msgstr "%sen %s%s%s/%s%s%s:%s ignorando %s%s%s de %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
-msgstr "%s no es posible crear el usuario \"%s\" para el canal \"%s\"\n"
-
-#, fuzzy, c-format
-msgid ""
-"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
-msgstr ""
-"Canal %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
-
-msgid "nicks"
-msgstr "usuarios"
-
-msgid "nick"
-msgstr "usuario"
-
-msgid "ops"
-msgstr "operadores"
-
-msgid "op"
-msgstr "operador"
-
-msgid "halfops"
-msgstr "semi-operadores"
-
-msgid "halfop"
-msgstr "semi-operador"
-
-msgid "voices"
-msgstr "voces"
-
-msgid "voice"
-msgstr "voz"
-
-msgid "normal"
-msgstr "normal"
-
-#, c-format
-msgid "%s[%s%s%s] %s%s%s banned by "
-msgstr "%s[%s%s%s] %s%s%s baneado por "
-
-#, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
-msgstr "%s[%s%s%s] %s%s%s baneado\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: all declared nicknames are already in use or invalid, closing "
-"connection with server"
-msgstr ""
-"%s: todos los nombres de usuario declarados ya estÃ¡n en uso, Â¡cerrando la "
-"conexiÃ³n con el servidor!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
-msgstr ""
-"%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 2 nombre de "
-"usuario \"%s\"\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: all declared nicknames are already in use, closing connection with "
-"server"
-msgstr ""
-"%s: todos los nombres de usuario declarados ya estÃ¡n en uso, Â¡cerrando la "
-"conexiÃ³n con el servidor!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
-msgstr ""
-"%s: el nombre de usuario \"%s\" ya estÃ¡ en uso, probando con el 2 nombre de "
-"usuario \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
@@ -4034,18 +4042,6 @@ msgstr "mensaje recibido"
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for received IRC message"
 msgstr "%s memoria insuficiente para un mensaje IRC recibido\n"
-
-#, fuzzy, c-format
-msgid "%s%s: command \"%s\" failed"
-msgstr "%s el comando \"%s\" ha fallado\n"
-
-#, fuzzy, c-format
-msgid "%s%s: no command to execute"
-msgstr "%s Â¡NingÃºn comando para ejecutar!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", arguments=\"%s\""
-msgstr "%s Comando desconocido: cmd=\"%s\", host=\"%s\", params=\"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot read data from socket, disconnecting from server..."
@@ -4432,6 +4428,76 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
+#~ msgid "/list end"
+#~ msgstr "/list fin"
+
+#~ msgid "userhost"
+#~ msgstr "nombre de la mÃ¡quina de usuario"
+
+#, fuzzy
+#~ msgid "Notice from %s%s %s(%s%s%s)%s: %s"
+#~ msgstr "%s%s %s(%s%s@%s%s)%s estaba %s\n"
+
+#, fuzzy
+#~ msgid "Notice from %s%s%s: %s"
+#~ msgstr "Usuarios %s%s%s: %s["
+
+#, fuzzy
+#~ msgid "Notice: %s"
+#~ msgstr "voces"
+
+#, fuzzy
+#~ msgid "%s[%s%s%s]%s help mode (+h)"
+#~ msgstr "%s[%s%s%s]%s inactividad: "
+
+#, fuzzy
+#~ msgid "%s[%s%s%s]%s Channels: "
+#~ msgstr "%s[%s%s%s]%s inactividad: "
+
+#, fuzzy
+#~ msgid "%s%s: cannot identify date/time for \"%s\" command"
+#~ msgstr "%s no es posible identificar la fecha/hora para el comando \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
+#~ msgstr "%sen %s%s%s/%s%s%s:%s ignorando %s%s%s de %s%s\n"
+
+#, fuzzy
+#~ msgid "%s%s: command \"%s\" failed"
+#~ msgstr "%s el comando \"%s\" ha fallado\n"
+
+#, fuzzy
+#~ msgid "%s%s: no command to execute"
+#~ msgstr "%s Â¡NingÃºn comando para ejecutar!\n"
+
+#, fuzzy
+#~ msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", arguments=\"%s\""
+#~ msgstr "%s Comando desconocido: cmd=\"%s\", host=\"%s\", params=\"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s%s%s has killed %s%s%s"
+#~ msgstr "%s%s%s ha expulsado a %s%s%s del servidor"
+
+#, fuzzy
+#~ msgid "%s%s: \"%s\" command received without channel or nickname"
+#~ msgstr "%s comando \"%s\" recibido sin canal o usuario\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname not found for \"%s\" command"
+#~ msgstr "%s nombre de usuario no encontrado para el comando \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: \"%s\" command received without host or channel"
+#~ msgstr "%s comando \"%s\" recibido sin host o canal\n"
+
+#, fuzzy
+#~ msgid "WALLOPS from %s%s%s: %s"
+#~ msgstr "CTCP %sVERSION%s respuesta de %s%s%s: %s\n"
+
+#, fuzzy
+#~ msgid "%s%s: host not found for \"%s\" command"
+#~ msgstr "%s anfitriÃ³n \"%s\" no encontrado para el comando \"%s\"\n"
+
 #~ msgid "jump to raw IRC data buffer"
 #~ msgstr "saltar al bÃºfer de datos basura de IRC"
 
@@ -4549,10 +4615,6 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 #~ msgstr "[cargar fichero] | [autocargar] | [recargar] | [descargar]"
 
 #, fuzzy
-#~ msgid "%s%s: not enough memory for function \"%s\""
-#~ msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
-
-#, fuzzy
 #~ msgid "[load filename] | [autoload] | [reload] | [unload [script]]"
 #~ msgstr "[cargar fichero] | [autocargar] | [recargar] | [descargar]"
 
@@ -4575,9 +4637,6 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 #~ msgid "%s cannot find nick for sending message\n"
 #~ msgstr ""
 #~ "%s no ha sido posible encontrar el usuario al que enviar el mensaje\n"
-
-#~ msgid "Nicks %s%s%s: %s["
-#~ msgstr "Usuarios %s%s%s: %s["
 
 #, fuzzy
 #~ msgid "%s%s: error sending data to IRC server"

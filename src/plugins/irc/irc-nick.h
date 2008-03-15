@@ -65,6 +65,8 @@ extern struct t_irc_nick *irc_nick_new (struct t_irc_server *server,
 extern void irc_nick_change (struct t_irc_server *server,
                              struct t_irc_channel *channel,
                              struct t_irc_nick *nick, char *new_nick);
+extern void irc_nick_set (struct t_irc_channel *channel,
+                          struct t_irc_nick *nick, int set, int flag);
 extern void irc_nick_free (struct t_irc_channel *channel,
                            struct t_irc_nick *nick);
 extern void irc_nick_free_all (struct t_irc_channel *channel);

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-07 23:18+0100\n"
+"POT-Creation-Date: 2008-03-15 09:33+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -826,6 +826,18 @@ msgstr ""
 msgid "\t\tDay changed to %s"
 msgstr "A mai dátum: %s\n"
 
+msgid "display WeeChat logo at startup"
+msgstr "WeeChat logo mutatása induláskor"
+
+msgid "display WeeChat version at startup"
+msgstr "WeeChat verziójának mutatása induláskor"
+
+msgid "command executed when WeeChat starts, before loading plugins"
+msgstr ""
+
+msgid "command executed when WeeChat starts, after loading plugins"
+msgstr ""
+
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -844,12 +856,6 @@ msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "ablak címsorának beállítása (Curses GUI esetén a terminálé) a program nevére "
 "és verziójára"
-
-msgid "display WeeChat logo at startup"
-msgstr "WeeChat logo mutatása induláskor"
-
-msgid "display WeeChat version at startup"
-msgstr "WeeChat verziójának mutatása induláskor"
 
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "WeeChat szlogen (ha üres, akkor nem használja a program)"
@@ -3409,6 +3415,300 @@ msgstr "%s nincs csatlakozva szerverhez!\n"
 msgid "%s: this buffer is not a channel!"
 msgstr "Ez az ablak nem egy szoba!\n"
 
+#, fuzzy, c-format
+msgid "%sYou have been invited to %s%s%s by %s%s"
+msgstr "Meghívást kapott a %s%s%s szobába %s%s felhasználótól\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create new channel \"%s\""
+msgstr "%s nem sikerült új szobát nyitni \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has joined %s%s"
+msgstr "%s%s %s(%s%s%s)%s belépett a(z) %s%s szobába\n"
+
+#, fuzzy, c-format
+msgid "%s%s: channel \"%s\" not found for \"%s\" command"
+msgstr "%s a \"%s\" szoba nem található a \"%s\" parancshoz\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has kicked %s%s%s from %s%s %s(%s%s%s)"
+msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has kicked %s%s%s from %s%s"
+msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
+
+#, fuzzy, c-format
+msgid "%sYou were killed by %s%s %s(%s%s%s)"
+msgstr "%s%s%s eltávolította %s%s%s-t a szerverről"
+
+#, fuzzy, c-format
+msgid "%sYou were killed by %s%s"
+msgstr "Az új neved: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
+msgstr "A %s%s %s[%s%s%s]%s üzemmódot bekapcsolta: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sUser mode %s[%s%s%s]%s by %s%s"
+msgstr "A %s[%s%s%s]%s felhasználói üzemmódot bekapcsolta: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sYou are now known as %s%s"
+msgstr "Az új neved: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s is now known as %s%s"
+msgstr "%s%s%s mostantól: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sCTCP %sVERSION%s reply from %s%s%s: %s"
+msgstr "CTCP %sVERSION%s válasz %s%s%s felhasználótól: %s\n"
+
+#, fuzzy, c-format
+msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
+msgstr "CTCP %sPING%s válasz %s%s%s felhasználótól: %ld.%ld másodperc\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
+msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
+
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
+msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
+
+#, fuzzy, c-format
+msgid "%sCTCP %sVERSION%s received from %s%s%s: %s"
+msgstr "CTCP %sVERSION%s válasz innen: %s%s"
+
+#, fuzzy, c-format
+msgid "%sCTCP %sVERSION%s received from %s%s"
+msgstr "CTCP %sVERSION%s válasz innen: %s%s"
+
+#, c-format
+msgid "Channel %s: * %s %s"
+msgstr "%s szoba: * %s %s"
+
+#, fuzzy, c-format
+msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
+msgstr "CTCP %sSOUND%s (\"%s\") érkezett innen: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sCTCP %sPING%s received from %s%s"
+msgstr "CTCP %sPING%s érkezett innen: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%sUnknown CTCP %s%s%s received from %s%s%s: %s"
+msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
+
+#, fuzzy, c-format
+msgid "%sUnknown CTCP %s%s%s received from %s%s"
+msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
+
+#, c-format
+msgid "Channel %s: %s> %s"
+msgstr "%s szoba: %s> %s"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot parse \"%s\" command"
+msgstr "%s nem sikerült végrehajtani a \"%s\" parancsot\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for \"%s\" command"
+msgstr "%s nincs elegendő memória új DCC számára\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
+msgstr "%s usmeretlen DCC CHAT típus érkezett a következőtől:"
+
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
+msgstr "%s%s %s(%s%s%s)%s kilépett"
+
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s%s)%s has quit"
+msgstr "%s%s %s(%s%s%s)%s kilépett"
+
+#, fuzzy, c-format
+msgid "%s%s: \"%s\" command received without channel"
+msgstr "%s \"%s\" parancs érkezett szoba megadása nélkül\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has changed topic for %s%s%s to: \"%s%s\""
+msgstr "%s%s%s megváltoztatta a %s%s%s szoba témáját:"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has unset topic for %s%s"
+msgstr "%s%s%s törölte a %s%s szoba témáját\n"
+
+#, fuzzy, c-format
+msgid "%sWallops from %s%s %s(%s%s%s)%s: %s"
+msgstr "%s%s %s(%s%s@%s%s)%s neve %s volt\n"
+
+#, fuzzy, c-format
+msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
+msgstr "%s%s%s felhasználói módja: %s[%s%s%s]\n"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s is away: %s"
+msgstr "%s%s%s távol: %s\n"
+
+#, fuzzy, c-format
+msgid "%sUsers online: %s%s"
+msgstr "Online felhasználók: "
+
+#, fuzzy, c-format
+msgid "%s%s%s %s(%s%s@%s%s)%s was %s"
+msgstr "%s%s %s(%s%s@%s%s)%s neve %s volt\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s[%s%s%s]%s idle: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon "
+"at: %s%s"
+msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, bejelentkezett: %s%s"
+
+#, fuzzy
+msgid "hour"
+msgid_plural "hours"
+msgstr[0] "óra"
+msgstr[1] "óra"
+
+#, fuzzy
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] "perc"
+msgstr[1] "perc"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
+msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, bejelentkezett: %s%s"
+
+#, fuzzy, c-format
+msgid "%sChannel created on %s"
+msgstr "Szoba létrehozva: %s"
+
+#, fuzzy, c-format
+msgid "%sChannel %s%s%s created on %s"
+msgstr "Szoba létrehozva: %s"
+
+#, fuzzy, c-format
+msgid "%sNo topic set for channel %s%s"
+msgstr "Nincs téma beállítva a %s%s szobában\n"
+
+#, fuzzy, c-format
+msgid "%sTopic for %s%s%s is: \"%s%s\""
+msgstr "A %s%s%s szoba témája: "
+
+#, fuzzy, c-format
+msgid "%sTopic set by %s%s%s on %s"
+msgstr "A témát beállította: %s%s%s, %s"
+
+#, fuzzy, c-format
+msgid "%sTopic for %s%s%s set by %s%s%s on %s"
+msgstr "A témát beállította: %s%s%s, %s"
+
+#, fuzzy, c-format
+msgid "%s%s%s%s has invited %s%s%s on %s%s"
+msgstr "%s%s%s meghívta %s%s%s-t %s%s-kor\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot identify channel for \"%s\" command"
+msgstr "%s nem sikerült azonosítani a szobát a \"%s\" parancshoz\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot identify nickname for \"%s\" command"
+msgstr "%s nem sikerült a felhasználót meghatározni a \"%s\" parancshoz\n"
+
+#, fuzzy, c-format
+msgid "%sChannel reop %s%s%s: %s%s"
+msgstr "%s szoba: %s> %s"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s%s"
+msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
+
+#, c-format
+msgid " by %s%s %s(%s%s%s)"
+msgstr " a következőtől: %s%s %s(%s%s%s)"
+
+#, c-format
+msgid " by %s%s"
+msgstr " a következőtől: %s%s"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
+msgstr "%s nem sikerült a(z) \"%s\" nevet felvenni a \"%s\" szobában\n"
+
+#, fuzzy, c-format
+msgid "%sNicks %s%s%s: %s[%s%s%s]"
+msgstr "%s Szerver: %s%s %s[%s%s%s]\n"
+
+#, fuzzy, c-format
+msgid ""
+"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
+msgstr ""
+"%s%s%s szoba: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
+
+msgid "nicks"
+msgstr "név"
+
+msgid "nick"
+msgstr "név"
+
+msgid "ops"
+msgstr "operátor"
+
+msgid "op"
+msgstr "operátor"
+
+msgid "halfops"
+msgstr "féloperátor"
+
+msgid "halfop"
+msgstr "féloperátor"
+
+msgid "voices"
+msgstr "voice"
+
+msgid "voice"
+msgstr "voice"
+
+msgid "normal"
+msgstr "normál"
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned by "
+msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
+
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s] %s%s%s banned"
+msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: all declared nicknames are already in use or invalid, closing "
+"connection with server"
+msgstr ""
+"%s: minden megadott név foglalt vagy érvénytelen, kapcsolat bontása a "
+"szerverrel!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
+msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: all declared nicknames are already in use, closing connection with "
+"server"
+msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
+
+#, fuzzy, c-format
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
+
 msgid "error received from IRC server"
 msgstr "az IRC szerver hibát jelzett"
 
@@ -3426,9 +3726,6 @@ msgstr "felhasználói mód neve"
 
 msgid "away message"
 msgstr "távollét üzenet"
-
-msgid "userhost"
-msgstr "felhasználó gépe"
 
 msgid "ison"
 msgstr "fentvan"
@@ -3478,8 +3775,9 @@ msgstr "/list indítása"
 msgid "channel (for /list)"
 msgstr "szoba (a /list parancshoz)"
 
-msgid "/list end"
-msgstr "/list vége"
+#, fuzzy
+msgid "end of /list"
+msgstr "a /who lista vége"
 
 msgid "channel mode"
 msgstr "szoba mód"
@@ -3701,312 +3999,22 @@ msgid "whois (secure connection)"
 msgstr "kicsoda (titkosított kapcsolat)"
 
 #, fuzzy, c-format
-msgid "You have been invited to %s%s%s by %s%s"
-msgstr "Meghívást kapott a %s%s%s szobába %s%s felhasználótól\n"
+msgid "%s%s: command \"%s\" not found:"
+msgstr "%s a \"%s\" modul nem található\n"
 
-#, fuzzy, c-format
-msgid "%s%s: channel \"%s\" not found for \"%s\" command"
-msgstr "%s a \"%s\" szoba nem található a \"%s\" parancshoz\n"
+#, c-format
+msgid "%s%s: failed to parse command \"%s\" (please report to developers):"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: too few arguments received from IRC server for command \"%s"
+"\" (received: %d arguments, expected: at least %d)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: \"%s\" command received without host"
 msgstr "%s \"%s\" parancs érkezett hoszt megadása nélkül\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create new channel \"%s\""
-msgstr "%s nem sikerült új szobát nyitni \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has joined %s%s"
-msgstr "%s%s %s(%s%s%s)%s belépett a(z) %s%s szobába\n"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has kicked %s%s%s from %s%s %s(%s%s%s)"
-msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has kicked %s%s%s from %s%s"
-msgstr "%s%s%s kirúgta %s%s%s-t a(z) %s%s szobából"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has killed %s%s%s from server %s(%s%s%s)"
-msgstr "%s%s%s eltávolította %s%s%s-t a szerverről"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has killed %s%s%s from server"
-msgstr "%s%s%s eltávolította %s%s%s-t a szerverről"
-
-#, fuzzy, c-format
-msgid "%s%s: host not found for \"%s\" command"
-msgstr "a(z) %s gép nem található a(z) \"%s\" parancshoz\n"
-
-#, fuzzy, c-format
-msgid "%s%s: \"%s\" command received without channel or nickname"
-msgstr "%s \"%s\" parancs érkezett szoba vagy név megadása nélkül\n"
-
-#, fuzzy, c-format
-msgid "%sMode %s%s %s[%s%s%s]%s by %s%s"
-msgstr "A %s%s %s[%s%s%s]%s üzemmódot bekapcsolta: %s%s\n"
-
-#, fuzzy, c-format
-msgid "%sUser mode %s[%s%s%s]%s by %s%s"
-msgstr "A %s[%s%s%s]%s felhasználói üzemmódot bekapcsolta: %s%s\n"
-
-#, fuzzy, c-format
-msgid "%sYou are now known as %s%s"
-msgstr "Az új neved: %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s is now known as %s%s"
-msgstr "%s%s%s mostantól: %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname not found for \"%s\" command"
-msgstr "%s nem található név a \"%s\" parancshoz\n"
-
-#, fuzzy, c-format
-msgid "CTCP %sVERSION%s reply from %s%s%s: %s"
-msgstr "CTCP %sVERSION%s válasz %s%s%s felhasználótól: %s\n"
-
-#, fuzzy, c-format
-msgid "CTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
-msgstr "CTCP %sPING%s válasz %s%s%s felhasználótól: %ld.%ld másodperc\n"
-
-#, fuzzy, c-format
-msgid "%s%s: \"%s\" command received without host or channel"
-msgstr "%s \"%s\" parancs érkezett hoszt vagy szoba megadása nélkül\n"
-
-#, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
-msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
-
-#, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has left %s%s"
-msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
-
-#, fuzzy, c-format
-msgid "CTCP %sVERSION%s received from %s%s%s: %s"
-msgstr "CTCP %sVERSION%s válasz innen: %s%s"
-
-#, c-format
-msgid "CTCP %sVERSION%s received from %s%s"
-msgstr "CTCP %sVERSION%s válasz innen: %s%s"
-
-#, c-format
-msgid "Channel %s: * %s %s"
-msgstr "%s szoba: * %s %s"
-
-#, fuzzy, c-format
-msgid "Received a CTCP %sSOUND%s \"%s\" from %s%s"
-msgstr "CTCP %sSOUND%s (\"%s\") érkezett innen: %s%s\n"
-
-#, fuzzy, c-format
-msgid "CTCP %sPING%s received from %s%s"
-msgstr "CTCP %sPING%s érkezett innen: %s%s\n"
-
-#, fuzzy, c-format
-msgid "Unknown CTCP %s%s%s received from %s%s%s: %s"
-msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
-
-#, c-format
-msgid "Unknown CTCP %s%s%s received from %s%s"
-msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
-
-#, c-format
-msgid "Channel %s: %s> %s"
-msgstr "%s szoba: %s> %s"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot parse \"%s\" command"
-msgstr "%s nem sikerült végrehajtani a \"%s\" parancsot\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown DCC CHAT type received from %s%s%s: \"%s\""
-msgstr "%s usmeretlen DCC CHAT típus érkezett a következőtől:"
-
-#, fuzzy, c-format
-msgid "%s%s%s %s(%s%s%s)%s has quit %s(%s%s%s)"
-msgstr "%s%s %s(%s%s%s)%s kilépett"
-
-#, fuzzy, c-format
-msgid "%s%s: \"%s\" command received without channel"
-msgstr "%s \"%s\" parancs érkezett szoba megadása nélkül\n"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has changed topic for %s%s%s to: \"%s%s\""
-msgstr "%s%s%s megváltoztatta a %s%s%s szoba témáját:"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s has unset topic for %s%s"
-msgstr "%s%s%s törölte a %s%s szoba témáját\n"
-
-#, fuzzy, c-format
-msgid "WALLOPS from %s%s%s: %s"
-msgstr "%s%s%s WALLOP-ot küldött: %s\n"
-
-#, fuzzy, c-format
-msgid "User mode for %s%s%s is %s[%s%s%s]"
-msgstr "%s%s%s felhasználói módja: %s[%s%s%s]\n"
-
-#, fuzzy, c-format
-msgid "%s%s%s%s is away: %s"
-msgstr "%s%s%s távol: %s\n"
-
-msgid "Users online: "
-msgstr "Online felhasználók: "
-
-#, fuzzy, c-format
-msgid "%s[%s%s%s]%s help mode (+h)"
-msgstr "%s[%s%s%s]%s segítség mód (+h)\n"
-
-#, fuzzy, c-format
-msgid "%s%s %s(%s%s@%s%s)%s was %s"
-msgstr "%s%s %s(%s%s@%s%s)%s neve %s volt\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s[%s%s%s]%s idle: %s%d %s%s, %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon "
-"at: %s%s"
-msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, bejelentkezett: %s%s"
-
-#, fuzzy
-msgid "hour"
-msgid_plural "hours"
-msgstr[0] "óra"
-msgstr[1] "óra"
-
-#, fuzzy
-msgid "minute"
-msgid_plural "minutes"
-msgstr[0] "perc"
-msgstr[1] "perc"
-
-#, fuzzy, c-format
-msgid "%s[%s%s%s]%s idle: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signon at: %s%s"
-msgstr "%s%02d %s%s %s%02d %s%s %s%02d %s%s, bejelentkezett: %s%s"
-
-#, fuzzy, c-format
-msgid "%s[%s%s%s]%s Channels: "
-msgstr "%s[%s%s%s]%s tétlen: "
-
-#, fuzzy, c-format
-msgid "%sChannel created on %s"
-msgstr "Szoba létrehozva: %s"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot identify date/time for \"%s\" command"
-msgstr "%s nem sikerült a dátumot/időt meghatározni a \"%s\" parancshoz\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot identify channel for \"%s\" command"
-msgstr "%s nem sikerült azonosítani a szobát a \"%s\" parancshoz\n"
-
-#, fuzzy, c-format
-msgid "%sNo topic set for %s%s"
-msgstr "Nincs téma beállítva a %s%s szobában\n"
-
-#, fuzzy, c-format
-msgid "%sTopic for %s%s%s is: \"%s%s\""
-msgstr "A %s%s%s szoba témája: "
-
-#, fuzzy, c-format
-msgid "%sTopic set by %s%s%s, %s"
-msgstr "A témát beállította: %s%s%s, %s"
-
-#, fuzzy, c-format
-msgid "%s%s%s has invited %s%s%s on %s%s"
-msgstr "%s%s%s meghívta %s%s%s-t %s%s-kor\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot identify nickname for \"%s\" command"
-msgstr "%s nem sikerült a felhasználót meghatározni a \"%s\" parancshoz\n"
-
-#, fuzzy, c-format
-msgid "Channel reop %s%s%s: %s%s"
-msgstr "%s szoba: %s> %s"
-
-#, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s"
-msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
-
-#, c-format
-msgid " by %s%s %s(%s%s%s)"
-msgstr " a következőtől: %s%s %s(%s%s%s)"
-
-#, c-format
-msgid " by %s%s"
-msgstr " a következőtől: %s%s"
-
-#, fuzzy, c-format
-msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
-msgstr "%s %s%s%s/%s%s%s:%s %s%s%s mellőzése a következő(k)től: %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
-msgstr "%s nem sikerült a(z) \"%s\" nevet felvenni a \"%s\" szobában\n"
-
-#, fuzzy, c-format
-msgid ""
-"%sChannel %s%s%s: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)"
-msgstr ""
-"%s%s%s szoba: %s%d%s %s %s(%s%d%s %s, %s%d%s %s, %s%d%s %s, %s%d%s %s%s)\n"
-
-msgid "nicks"
-msgstr "név"
-
-msgid "nick"
-msgstr "név"
-
-msgid "ops"
-msgstr "operátor"
-
-msgid "op"
-msgstr "operátor"
-
-msgid "halfops"
-msgstr "féloperátor"
-
-msgid "halfop"
-msgstr "féloperátor"
-
-msgid "voices"
-msgstr "voice"
-
-msgid "voice"
-msgstr "voice"
-
-msgid "normal"
-msgstr "normál"
-
-#, c-format
-msgid "%s[%s%s%s] %s%s%s banned by "
-msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
-
-#, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
-msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: all declared nicknames are already in use or invalid, closing "
-"connection with server"
-msgstr ""
-"%s: minden megadott név foglalt vagy érvénytelen, kapcsolat bontása a "
-"szerverrel!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is invalid, trying nickname #%d (\"%s\")"
-msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
-
-#, fuzzy, c-format
-msgid ""
-"%s%s: all declared nicknames are already in use, closing connection with "
-"server"
-msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
-msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
@@ -4034,19 +4042,6 @@ msgstr "(üzenet eldobva)"
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for received IRC message"
 msgstr "%s nincs elegendő memória a fogadott IRC üzenet számára\n"
-
-#, fuzzy, c-format
-msgid "%s%s: command \"%s\" failed"
-msgstr "%s a \"%s\" parancs végrehajtása sikertelen\n"
-
-#, fuzzy, c-format
-msgid "%s%s: no command to execute"
-msgstr "%s A futtatandó parancs nem található!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", arguments=\"%s\""
-msgstr ""
-"%s Ismeretlen parancs: parancs=\"%s\", gépnév=\"%s\", argumentum=\"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot read data from socket, disconnecting from server..."
@@ -4435,6 +4430,77 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
+#~ msgid "/list end"
+#~ msgstr "/list vége"
+
+#~ msgid "userhost"
+#~ msgstr "felhasználó gépe"
+
+#, fuzzy
+#~ msgid "Notice from %s%s %s(%s%s%s)%s: %s"
+#~ msgstr "%s%s %s(%s%s@%s%s)%s neve %s volt\n"
+
+#, fuzzy
+#~ msgid "Notice from %s%s%s: %s"
+#~ msgstr "Felhasználók a %s%s%s szobában: %s["
+
+#, fuzzy
+#~ msgid "Notice: %s"
+#~ msgstr "voice"
+
+#, fuzzy
+#~ msgid "%s[%s%s%s]%s help mode (+h)"
+#~ msgstr "%s[%s%s%s]%s segítség mód (+h)\n"
+
+#, fuzzy
+#~ msgid "%s[%s%s%s]%s Channels: "
+#~ msgstr "%s[%s%s%s]%s tétlen: "
+
+#, fuzzy
+#~ msgid "%s%s: cannot identify date/time for \"%s\" command"
+#~ msgstr "%s nem sikerült a dátumot/időt meghatározni a \"%s\" parancshoz\n"
+
+#, fuzzy
+#~ msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
+#~ msgstr "%s %s%s%s/%s%s%s:%s %s%s%s mellőzése a következő(k)től: %s%s\n"
+
+#, fuzzy
+#~ msgid "%s%s: command \"%s\" failed"
+#~ msgstr "%s a \"%s\" parancs végrehajtása sikertelen\n"
+
+#, fuzzy
+#~ msgid "%s%s: no command to execute"
+#~ msgstr "%s A futtatandó parancs nem található!\n"
+
+#, fuzzy
+#~ msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", arguments=\"%s\""
+#~ msgstr ""
+#~ "%s Ismeretlen parancs: parancs=\"%s\", gépnév=\"%s\", argumentum=\"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s%s%s has killed %s%s%s"
+#~ msgstr "%s%s%s eltávolította %s%s%s-t a szerverről"
+
+#, fuzzy
+#~ msgid "%s%s: \"%s\" command received without channel or nickname"
+#~ msgstr "%s \"%s\" parancs érkezett szoba vagy név megadása nélkül\n"
+
+#, fuzzy
+#~ msgid "%s%s: nickname not found for \"%s\" command"
+#~ msgstr "%s nem található név a \"%s\" parancshoz\n"
+
+#, fuzzy
+#~ msgid "%s%s: \"%s\" command received without host or channel"
+#~ msgstr "%s \"%s\" parancs érkezett hoszt vagy szoba megadása nélkül\n"
+
+#, fuzzy
+#~ msgid "WALLOPS from %s%s%s: %s"
+#~ msgstr "%s%s%s WALLOP-ot küldött: %s\n"
+
+#, fuzzy
+#~ msgid "%s%s: host not found for \"%s\" command"
+#~ msgstr "a(z) %s gép nem található a(z) \"%s\" parancshoz\n"
+
 #~ msgid "jump to raw IRC data buffer"
 #~ msgstr "ugrás a nyers IRC adat pufferre"
 
@@ -4549,10 +4615,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 #~ "[név]] | [unload [név]]"
 
 #, fuzzy
-#~ msgid "%s%s: not enough memory for function \"%s\""
-#~ msgstr "%s nincs elegendő memória új DCC számára\n"
-
-#, fuzzy
 #~ msgid "[load filename] | [autoload] | [reload] | [unload [script]]"
 #~ msgstr ""
 #~ "[list [név]] | [listfull [név]] | [load fájlnév] | [autoload] | [reload "
@@ -4576,9 +4638,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
 #~ msgid "%s cannot find nick for sending message\n"
 #~ msgstr "%s nem található név az üzenet küldéséhez\n"
-
-#~ msgid "Nicks %s%s%s: %s["
-#~ msgstr "Felhasználók a %s%s%s szobában: %s["
 
 #, fuzzy
 #~ msgid "%s%s: error sending data to IRC server"

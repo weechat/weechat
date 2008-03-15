@@ -148,6 +148,14 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     ptr_nick = irc_nick_search (channel, nick_name);
     if (ptr_nick)
     {
+        /* remove old nick from nicklist */
+        irc_nick_get_gui_infos (channel->buffer, ptr_nick, &prefix,
+                                &prefix_color, &ptr_group);
+        weechat_nicklist_remove_nick (channel->buffer,
+                                      weechat_nicklist_search_nick (channel->buffer,
+                                                                    ptr_group,
+                                                                    ptr_nick->name));
+        
         /* update nick */
         IRC_NICK_SET_FLAG(ptr_nick, is_chanowner, IRC_NICK_CHANOWNER);
         IRC_NICK_SET_FLAG(ptr_nick, is_chanadmin, IRC_NICK_CHANADMIN);
@@ -157,12 +165,9 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         IRC_NICK_SET_FLAG(ptr_nick, has_voice, IRC_NICK_VOICE);
         IRC_NICK_SET_FLAG(ptr_nick, is_chanuser, IRC_NICK_CHANUSER);
         
+        /* add new nick in nicklist */
         irc_nick_get_gui_infos (channel->buffer, ptr_nick, &prefix,
                                 &prefix_color, &ptr_group);
-        weechat_nicklist_remove_nick (channel->buffer,
-                                      weechat_nicklist_search_nick (channel->buffer,
-                                                                    ptr_group,
-                                                                    ptr_nick->name));
         snprintf (str_prefix_color, sizeof (str_prefix_color),
                   "color_nicklist_prefix%d",
                   prefix_color);
@@ -264,6 +269,40 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
     snprintf (str_prefix_color, sizeof (str_prefix_color),
                   "color_nicklist_prefix%d",
                   prefix_color);
+    weechat_nicklist_add_nick (channel->buffer, ptr_group,
+                               nick->name, nick->color,
+                               prefix, str_prefix_color, 1);
+}
+
+/*
+ * irc_nick_set: set a flag for a nick
+ */
+
+void
+irc_nick_set (struct t_irc_channel *channel,
+              struct t_irc_nick *nick, int set, int flag)
+{
+    char prefix, str_prefix_color[64];
+    int prefix_color;
+    
+    struct t_gui_nick_group *ptr_group;
+    /* remove nick from nicklist */
+    irc_nick_get_gui_infos (channel->buffer, nick, &prefix,
+                            &prefix_color, &ptr_group);
+    weechat_nicklist_remove_nick (channel->buffer,
+                                  weechat_nicklist_search_nick (channel->buffer,
+                                                                ptr_group,
+                                                                nick->name));
+    
+    /* set flag */
+    IRC_NICK_SET_FLAG(nick, set, flag);
+    
+    /* add nick in nicklist */
+    irc_nick_get_gui_infos (channel->buffer, nick, &prefix,
+                            &prefix_color, &ptr_group);
+    snprintf (str_prefix_color, sizeof (str_prefix_color),
+              "color_nicklist_prefix%d",
+              prefix_color);
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                nick->name, nick->color,
                                prefix, str_prefix_color, 1);
