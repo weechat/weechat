@@ -30,6 +30,7 @@ extern int string_strcmp_ignore_chars (char *string1, char *string2,
 extern char *string_strcasestr (char *string, char *search);
 extern char *string_replace (char *string, char *search, char *replace);
 extern char *string_remove_quotes (char *string, char *quotes);
+extern char *string_strip (char *string, int left, int right, char *chars);
 extern char *string_convert_hex_chars (char *string);
 extern char **string_explode (char *string, char *separators, int keep_eol,
                               int num_items_max, int *num_items);

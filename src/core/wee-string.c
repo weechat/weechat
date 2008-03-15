@@ -343,6 +343,47 @@ string_remove_quotes (char *string, char *quotes)
 }
 
 /*
+ * string_strip: strip chars at beginning and/or end of string
+ */
+
+char *
+string_strip (char *string, int left, int right, char *chars)
+{
+    char *ptr_start, *ptr_end;
+    
+    if (!string)
+        return NULL;
+    
+    if (!string[0])
+        return strdup (string);
+    
+    ptr_start = string;
+    ptr_end = string + strlen (string) - 1;
+    
+    if (left)
+    {
+        while (ptr_start[0] && strchr (chars, ptr_start[0]))
+        {
+            ptr_start++;
+        }
+        if (!ptr_start[0])
+            return strdup (ptr_start);
+    }
+    
+    if (right)
+    {
+        while ((ptr_end >= ptr_start) && strchr (chars, ptr_end[0]))
+        {
+            ptr_end--;
+        }
+        if (ptr_end < ptr_start)
+            return strdup ("");
+    }
+    
+    return string_strndup (ptr_start, ptr_end - ptr_start + 1);
+}
+
+/*
  * string_convert_hex_chars: convert hex chars (\x??) to value
  */
 
@@ -432,8 +473,8 @@ char **
 string_explode (char *string, char *separators, int keep_eol,
                 int num_items_max, int *num_items)
 {
-    int i, n_items, word_found, separator_found;
-    char **array;
+    int i, n_items;
+    char *string2, **array;
     char *ptr, *ptr1, *ptr2;
     
     if (num_items != NULL)
@@ -442,32 +483,30 @@ string_explode (char *string, char *separators, int keep_eol,
     if (!string || !string[0] || !separators || !separators[0])
         return NULL;
     
+    string2 = string_strip (string, 1, 1, separators);
+    if (!string2)
+        return NULL;
+    
     /* calculate number of items */
-    ptr = string;
+    ptr = string2;
     i = 1;
-    word_found = 0;
-    separator_found = 0;
     while ((ptr = strpbrk (ptr, separators)))
     {
-        separator_found = 1;
         while (ptr[0] && (strchr (separators, ptr[0]) != NULL))
         {
             ptr++;
-            word_found = 1;
         }
         i++;
     }
-    if ((word_found == 0) && (separator_found == 1))
-        i = 0;
     n_items = i;
-
+    
     if ((num_items_max != 0) && (n_items > num_items_max))
         n_items = num_items_max;
     
     array = (char **)malloc ((n_items + 1) * sizeof (char *));
     
-    ptr1 = string;
-    ptr2 = string;
+    ptr1 = string2;
+    ptr2 = string2;
     
     for (i = 0; i < n_items; i++)
     {
@@ -475,13 +514,22 @@ string_explode (char *string, char *separators, int keep_eol,
         {
             ptr1++;
         }
-        if (i == (n_items - 1) || (ptr2 = strpbrk (ptr1, separators)) == NULL)
+        if (i == (n_items - 1))
         {
-            if ((ptr2 = strchr (ptr1, '\r')) == NULL)
+            ptr2 = strpbrk (ptr1, separators);
+            if (!ptr2)
+                ptr2 = strchr (ptr1, '\0');
+        }
+        else
+        {
+            if ((ptr2 = strpbrk (ptr1, separators)) == NULL)
             {
-                if ((ptr2 = strchr (ptr1, '\n')) == NULL)
+                if ((ptr2 = strchr (ptr1, '\r')) == NULL)
                 {
-                    ptr2 = strchr (ptr1, '\0');
+                    if ((ptr2 = strchr (ptr1, '\n')) == NULL)
+                    {
+                        ptr2 = strchr (ptr1, '\0');
+                    }
                 }
             }
         }

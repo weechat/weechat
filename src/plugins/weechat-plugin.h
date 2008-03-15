@@ -106,6 +106,8 @@ struct t_weechat_plugin
                                 char *chars_ignored, int case_sensitive);
     char *(*strcasestr) (char *string1, char *string2);
     char *(*string_replace) (char *string, char *search, char *replace);
+    char *(*string_remove_quotes) (char *string, char *quotes);
+    char *(*string_strip) (char *string, int left, int right, char *chars);
     char **(*string_explode) (char *string, char *separators, int keep_eol,
                               int num_items_max, int *num_items);
     void (*string_free_exploded) (char **exploded_string);
@@ -403,6 +405,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->strcasestr(__string1, __string2)
 #define weechat_string_replace(__string, __search, __replace)           \
     weechat_plugin->string_replace(__string, __search, __replace)
+#define weechat_string_remove_quotes(__string, __quotes)        \
+    weechat_plugin->string_remove_quotes(__string, __quotes)
+#define weechat_string_strip(__string, __left, __right, __chars)        \
+    weechat_plugin->string_strip(__string, __left, __right, __chars)
 #define weechat_string_explode(__string, __separator, __eol, __max,     \
                                __num_items)                             \
     weechat_plugin->string_explode(__string, __separator, __eol,        \
