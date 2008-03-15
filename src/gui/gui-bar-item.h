@@ -48,6 +48,12 @@ struct t_gui_bar_item
     struct t_gui_bar_item *next_item; /* link to next bar item              */
 };
 
+struct t_gui_bar_item_hook
+{
+    struct t_hook *hook;                   /* pointer to hook               */
+    struct t_gui_bar_item_hook *next_hook; /* next hook                     */
+};
+
 /* variables */
 
 extern struct t_gui_bar_item *gui_bar_items;

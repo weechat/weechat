@@ -120,25 +120,25 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
         case GUI_BAR_POSITION_BOTTOM:
             bar_window->x = x1 + add_left;
             bar_window->y = y2 - add_bottom - bar_window->bar->size + 1;
-            bar_window->width = x2 - add_right - x1 + 1;
-            bar_window->height = bar_window->bar->size - add_top - add_bottom;
+            bar_window->width = x2 - x1 + 1 - add_left - add_right;
+            bar_window->height = bar_window->bar->size;
             break;
         case GUI_BAR_POSITION_TOP:
             bar_window->x = x1 + add_left;
             bar_window->y = y1 + add_top;
-            bar_window->width = x2 - x1 + 1;
-            bar_window->height = bar_window->bar->size - add_left - add_right;
+            bar_window->width = x2 - x1 + 1 - add_left - add_right;
+            bar_window->height = bar_window->bar->size;
             break;
         case GUI_BAR_POSITION_LEFT:
             bar_window->x = x1 + add_left;
             bar_window->y = y1 + add_top;
-            bar_window->width = bar_window->bar->size - add_left - add_right;
+            bar_window->width = bar_window->bar->size;
             bar_window->height = y2 - add_top - add_bottom - y1 + 1;
             break;
         case GUI_BAR_POSITION_RIGHT:
             bar_window->x = x2 - add_right - bar_window->bar->size + 1;
             bar_window->y = y1 + add_top;
-            bar_window->width = bar_window->bar->size - add_left - add_right;
+            bar_window->width = bar_window->bar->size;
             bar_window->height = y2 - y1 + 1;
             break;
     }

@@ -28,8 +28,10 @@
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
+#include "../../core/wee-hook.h"
 #include "../../core/wee-log.h"
 #include "../../core/wee-string.h"
+#include "../../plugins/plugin.h"
 #include "../gui-window.h"
 #include "../gui-bar.h"
 #include "../gui-buffer.h"
@@ -567,6 +569,9 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     buffer->num_displayed++;
     
     gui_hotlist_remove_buffer (buffer);
+    
+    hook_signal_send ("buffer_switch",
+                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*

@@ -46,13 +46,7 @@ char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 { "buffer_count", "buffer_plugin", "buffer_name", "nicklist_count", "scroll",
   "hotlist"
 };
-struct t_hook *gui_bar_item_hook1 = NULL;
-struct t_hook *gui_bar_item_hook2 = NULL;
-struct t_hook *gui_bar_item_hook3 = NULL;
-struct t_hook *gui_bar_item_hook4 = NULL;
-struct t_hook *gui_bar_item_hook5 = NULL;
-struct t_hook *gui_bar_item_hook6 = NULL;
-struct t_hook *gui_bar_item_hook7 = NULL;
+struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 
 
 /*
@@ -287,7 +281,7 @@ gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
     (void) max_height;
     
     if (!window)
-        return NULL;
+        window = gui_current_window;
     
     snprintf (buf, sizeof (buf), "%s[%s%s%s] ",
               GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
@@ -316,7 +310,7 @@ gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
     (void) max_height;
     
     if (!window)
-        return NULL;
+        window = gui_current_window;
     
     snprintf (buf, sizeof (buf), "%s%d%s:%s%s%s/%s%s ",
               GUI_COLOR(GUI_COLOR_STATUS_NUMBER),
@@ -349,7 +343,10 @@ gui_bar_item_default_nicklist_count (void *data, struct t_gui_bar_item *item,
     (void) max_width;
     (void) max_height;
     
-    if (!window || !window->buffer->nicklist)
+    if (!window)
+        window = gui_current_window;
+    
+    if (!window->buffer->nicklist)
         return NULL;
     
     snprintf (buf, sizeof (buf), "%s[%s%d%s] ",
@@ -378,7 +375,10 @@ gui_bar_item_default_scroll (void *data, struct t_gui_bar_item *item,
     (void) max_width;
     (void) max_height;
     
-    if (!window || !window->scroll)
+    if (!window)
+        window = gui_current_window;
+    
+    if (!window->scroll)
         return NULL;
     
     snprintf (buf, sizeof (buf), "%s%s ",
@@ -497,6 +497,25 @@ gui_bar_item_signal_cb (void *data, char *signal,
 }
 
 /*
+ * gui_bar_item_hook: hook a signal to update bar items
+ */
+
+void
+gui_bar_item_hook (char *signal, char *item)
+{
+    struct t_gui_bar_item_hook *bar_item_hook;
+    
+    bar_item_hook = (struct t_gui_bar_item_hook *)malloc (sizeof (struct t_gui_bar_item_hook));
+    if (bar_item_hook)
+    {
+        bar_item_hook->hook = hook_signal (NULL, signal,
+                                           &gui_bar_item_signal_cb, item);
+        bar_item_hook->next_hook = gui_bar_item_hooks;
+        gui_bar_item_hooks = bar_item_hook;
+    }
+}
+
+/*
  * gui_bar_item_init: init default items in WeeChat
  */
 
@@ -507,52 +526,51 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_COUNT],
                       &gui_bar_item_default_buffer_count, NULL);
-    gui_bar_item_hook1 = hook_signal (NULL, "buffer_open",
-                                      &gui_bar_item_signal_cb,
-                                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_COUNT]);
-    gui_bar_item_hook2 = hook_signal (NULL, "buffer_closed",
-                                      &gui_bar_item_signal_cb,
-                                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_COUNT]);
+    gui_bar_item_hook ("buffer_open",
+                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_COUNT]);
+    gui_bar_item_hook ("buffer_closed",
+                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_COUNT]);
     
     /* buffer plugin */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_PLUGIN],
                       &gui_bar_item_default_buffer_plugin, NULL);
+    gui_bar_item_hook ("buffer_switch",
+                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_PLUGIN]);
     
     /* buffer name */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_NAME],
                       &gui_bar_item_default_buffer_name, NULL);
-    gui_bar_item_hook3 = hook_signal (NULL, "buffer_renamed",
-                                      &gui_bar_item_signal_cb,
-                                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_NAME]);
-    gui_bar_item_hook4 = hook_signal (NULL, "buffer_moved",
-                                      &gui_bar_item_signal_cb,
-                                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_NAME]);
+    gui_bar_item_hook ("buffer_switch",
+                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_NAME]);
+    gui_bar_item_hook ("buffer_renamed",
+                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_NAME]);
+    gui_bar_item_hook ("buffer_moved",
+                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_NAME]);
     
     /* nicklist count */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_NICKLIST_COUNT],
                       &gui_bar_item_default_nicklist_count, NULL);
-    gui_bar_item_hook5 = hook_signal (NULL, "nicklist_changed",
-                                      &gui_bar_item_signal_cb,
-                                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_NICKLIST_COUNT]);
+    gui_bar_item_hook ("buffer_switch",
+                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_NICKLIST_COUNT]);
+    gui_bar_item_hook ("nicklist_changed",
+                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_NICKLIST_COUNT]);
     
     /* scroll indicator */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_SCROLL],
                       &gui_bar_item_default_scroll, NULL);
-    gui_bar_item_hook6 = hook_signal (NULL, "window_scrolled",
-                                      &gui_bar_item_signal_cb,
-                                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_SCROLL]);
+    gui_bar_item_hook ("window_scrolled",
+                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_SCROLL]);
     
     /* hotlist */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_HOTLIST],
                       &gui_bar_item_default_hotlist, NULL);
-    gui_bar_item_hook7 = hook_signal (NULL, "hotlist_changed",
-                                      &gui_bar_item_signal_cb,
-                                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_HOTLIST]);
+    gui_bar_item_hook ("hotlist_changed",
+                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_HOTLIST]);
 }
 
 /*
@@ -562,14 +580,18 @@ gui_bar_item_init ()
 void
 gui_bar_item_end ()
 {
+    struct t_gui_bar_item_hook *next_bar_item_hook;
+    
     /* remove hooks */
-    unhook (gui_bar_item_hook1);
-    unhook (gui_bar_item_hook2);
-    unhook (gui_bar_item_hook3);
-    unhook (gui_bar_item_hook4);
-    unhook (gui_bar_item_hook5);
-    unhook (gui_bar_item_hook6);
-    unhook (gui_bar_item_hook7);
+    while (gui_bar_item_hooks)
+    {
+        next_bar_item_hook = gui_bar_item_hooks->next_hook;
+        
+        unhook (gui_bar_item_hooks->hook);
+        free (gui_bar_item_hooks);
+        
+        gui_bar_item_hooks = next_bar_item_hook;
+    }
     
     /* remove bar items */
     gui_bar_item_free_all ();
