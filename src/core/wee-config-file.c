@@ -845,7 +845,8 @@ config_file_write_internal (struct t_config_file *config_file,
     
     if (!config_file)
         return -1;
-    
+
+    /* build filename */
     filename_length = strlen (weechat_home) +
         strlen (config_file->filename) + 2;
     filename =
@@ -855,6 +856,8 @@ config_file_write_internal (struct t_config_file *config_file,
     snprintf (filename, filename_length, "%s%s%s",
               weechat_home, DIR_SEPARATOR, config_file->filename);
     
+    /* build temporary filename, this temp file will be renamed to filename
+       after write */
     filename2 = (char *)malloc ((filename_length + 32) * sizeof (char));
     if (!filename2)
     {
@@ -863,6 +866,7 @@ config_file_write_internal (struct t_config_file *config_file,
     }
     snprintf (filename2, filename_length + 32, "%s.weechattmp", filename);
     
+    /* open temp file in write mode */
     if ((config_file->file = fopen (filename2, "w")) == NULL)
     {
         gui_chat_printf (NULL,
@@ -874,6 +878,7 @@ config_file_write_internal (struct t_config_file *config_file,
         return -1;
     }
     
+    /* write header with version and date */
     current_time = time (NULL);
     string_iconv_fprintf (config_file->file,
                           _("#\n# %s configuration file, created by "
@@ -881,6 +886,7 @@ config_file_write_internal (struct t_config_file *config_file,
                           PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
                           ctime (&current_time));
     
+    /* write all sections */
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
@@ -910,12 +916,20 @@ config_file_write_internal (struct t_config_file *config_file,
             }
         }
     }
-    
+
+    /* close temp file */
     fclose (config_file->file);
     config_file->file = NULL;
+
+    /* update file mode */
     chmod (filename2, 0600);
+
+    /* remove target file */
     unlink (filename);
+
+    /* rename temp file to target file */
     rc = rename (filename2, filename);
+    
     free (filename);
     free (filename2);
     if (rc != 0)
@@ -955,6 +969,7 @@ config_file_read (struct t_config_file *config_file)
     if (!config_file)
         return -1;
     
+    /* build filename */
     filename_length = strlen (weechat_home) + strlen (config_file->filename) + 2;
     filename = (char *)malloc (filename_length * sizeof (char));
     if (!filename)
@@ -975,6 +990,7 @@ config_file_read (struct t_config_file *config_file)
         }
     }
     
+    /* read all lines */
     ptr_section = NULL;
     line_number = 0;
     while (!feof (config_file->file))

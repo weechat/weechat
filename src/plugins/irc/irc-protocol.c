@@ -1222,6 +1222,7 @@ irc_protocol_cmd_pong (struct t_irc_server *server, char *command,
         old_lag = server->lag;
         gettimeofday (&tv, NULL);
         server->lag = (int) weechat_timeval_diff (&(server->lag_check_time), &tv);
+        /* TODO: update lag indicator */
         //if (old_lag != server->lag)
         //    gui_status_draw (gui_current_window->buffer, 1);
         
@@ -1709,7 +1710,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                     pos--;
                 }
                 pos[1] = '\0';
-                
+
+                /* TODO: add DCC file */
                 //irc_dcc_add (server, IRC_DCC_FILE_RECV,
                 //             strtoul (pos_addr, NULL, 10),
                 //             atoi (pos_port), nick, -1, pos_file, NULL,
@@ -1798,7 +1800,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                     pos--;
                 }
                 pos[1] = '\0';
-                    
+                
+                /* TODO: accept DCC resume */
                 //irc_dcc_accept_resume (server, pos_file, atoi (pos_port),
                 //                       strtoul (pos_start_resume, NULL, 10));
                 
@@ -1886,6 +1889,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                 }
                 pos[1] = '\0';
                 
+                /* TODO: resume DCC */
                 //irc_dcc_start_resume (server, pos_file, atoi (pos_port),
                 //                      strtoul (pos_start_resume, NULL, 10));
                 
@@ -1985,6 +1989,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                     return WEECHAT_RC_ERROR;
                 }
                 
+                /* TODO: add DCC chat */
                 //irc_dcc_add (server, IRC_DCC_CHAT_RECV,
                 //             strtoul (pos_addr, NULL, 10),
                 //             atoi (pos_port), nick, -1, NULL, NULL, 0);
@@ -4618,7 +4623,8 @@ irc_protocol_recv_command (struct t_irc_server *server, char *entire_line,
         
         ignore = 0;
         highlight = 0;
-        
+
+        /* TODO: call an IRC message handler */
         //return_code = plugin_msg_handler_exec (server->name,
         //                                       cmd_name,
         //                                       dup_entire_line);

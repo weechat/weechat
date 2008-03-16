@@ -312,6 +312,7 @@ config_change_color ()
 void
 config_change_nicks_colors ()
 {
+    /* TODO: change nicks colors */
     /*
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_nick *ptr_nick;

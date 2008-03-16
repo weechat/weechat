@@ -45,7 +45,8 @@
 
 
 /*
- * weechat_backtrace_printf: display a backtrace line (on stderr and in WeeChat log)
+ * weechat_backtrace_printf: display a backtrace line (on stderr and in
+ *                           WeeChat log)
  */
 
 void
@@ -63,7 +64,8 @@ weechat_backtrace_printf (char *message, ...)
 }
 
 /*
- * weechat_backtrace_addr2line: display function name and line with a backtrace address
+ * weechat_backtrace_addr2line: display function name and line with a
+ *                              backtrace address
  */
 
 void
@@ -88,8 +90,10 @@ weechat_backtrace_addr2line (int number, void *address, char *symbol)
     
     addr = address;
     if (info.dli_fbase >= (const void *) 0x40000000)
-        addr = (void *)((unsigned long)((const char *) addr) - (unsigned long) info.dli_fbase);
-    
+        addr = (void *)((unsigned long)((const char *) addr) -
+                        (unsigned long) info.dli_fbase);
+
+    /* use addr2line to find symbols names */
     snprintf (cmd_line, sizeof (cmd_line),
               "addr2line --functions --demangle -e $(which %s) %p",
               info.dli_fname, addr);
@@ -139,6 +143,8 @@ weechat_backtrace_addr2line (int number, void *address, char *symbol)
     (void) number;
     (void) address;
     (void) symbol;
+
+    /* no backtrace possible, we display nothing */
 #endif
 }
 

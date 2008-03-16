@@ -71,8 +71,6 @@ command_bar (void *data, struct t_gui_buffer *buffer,
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argc;
-    (void) argv;
     (void) argv_eol;
     
     if ((argc == 1)
@@ -124,6 +122,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
     }
     else
     {
+        /* add a new bar */
         if (string_strcasecmp (argv[1], "add") == 0)
         {
             if (argc < 8)
@@ -179,18 +178,22 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                 separator = 0;
                 if (strcmp (argv[6], "0") != 0)
                     separator = 1;
-
+                
                 /* create bar */
                 if (gui_bar_new (NULL, argv[2], argv[3], argv[4], size,
                                  separator, argv[7]))
+                {
                     gui_chat_printf (NULL, _("%sBar \"%s\" created"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
                                      argv[2]);
+                }
                 else
+                {
                     gui_chat_printf (NULL, _("%sError: failed to create bar "
                                              "\"%s\""),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                      argv[2]);
+                }
             }
             else
             {
@@ -204,6 +207,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         }
         else
         {
+            /* TODO: remove/change bars... */
         }
     }
     
@@ -230,7 +234,6 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
     {
         /* list buffers */
-        
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, _("Buffers list:"));
         
@@ -254,6 +257,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     {
         if (string_strcasecmp (argv[1], "clear") == 0)
         {
+            /* clear content of buffer */
             if (argc > 2)
             {
                 if (string_strcasecmp (argv[2], "-all") == 0)
@@ -279,7 +283,6 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         else if (string_strcasecmp (argv[1], "move") == 0)
         {
             /* move buffer to another number in the list */
-            
             if (argc < 3)
             {
                 gui_chat_printf (NULL,
@@ -416,7 +419,6 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         else if (string_strcasecmp (argv[1], "set") == 0)
         {
             /* set a property on buffer */
-            
             if (argc < 4)
             {
                 gui_chat_printf (NULL,
@@ -434,7 +436,6 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         else
         {
             /* jump to buffer by number or server/channel name */
-            
             if (argv[1][0] == '-')
             {
                 /* relative jump '-' */
@@ -497,6 +498,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
             
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -517,7 +519,9 @@ command_builtin (void *data, struct t_gui_buffer *buffer,
     if (argc > 1)
     {
         if (argv[1][0] == '/')
+        {
             input_data (buffer, argv_eol[1], 1);
+        }
         else
         {
             length = strlen (argv_eol[1]) + 2;
@@ -530,6 +534,7 @@ command_builtin (void *data, struct t_gui_buffer *buffer,
             }
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -551,6 +556,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
     switch (argc)
     {
         case 1:
+            /* display help for all commands */
             gui_chat_printf (NULL, "");
             gui_chat_printf (NULL,
                              /* TRANSLATORS: %s is "WeeChat" */
@@ -612,6 +618,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
             }
             break;
         case 2:
+            /* display help about a command */
             for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
                  ptr_hook = ptr_hook->next_hook)
             {
@@ -659,6 +666,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
                              argv[1]);
             break;
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -728,6 +736,7 @@ command_key_display (struct t_gui_key *key, int new_key)
 
     expanded_name = gui_keyboard_get_expanded_name (key->key);
     if (new_key)
+    {
         gui_chat_printf (NULL,
                          _("%sNew key binding: %s%s => %s%s%s%s%s"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
@@ -739,7 +748,9 @@ command_key_display (struct t_gui_key *key, int new_key)
                          (key->args) ? " \"" : "",
                          (key->args) ? key->args : "",
                          (key->args) ? "\"" : "");
+    }
     else
+    {
         gui_chat_printf (NULL, "  %20s%s => %s%s%s%s%s",
                          (expanded_name) ? expanded_name : key->key,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
@@ -749,6 +760,7 @@ command_key_display (struct t_gui_key *key, int new_key)
                          (key->args) ? " \"" : "",
                          (key->args) ? key->args : "",
                          (key->args) ? "\"" : "");
+    }
     if (expanded_name)
         free (expanded_name);
 }
@@ -769,9 +781,10 @@ command_key (void *data, struct t_gui_buffer *buffer,
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-
+    
     if (argc == 1)
     {
+        /* display all key bindings */
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, _("Key bindings:"));
         for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
@@ -780,9 +793,10 @@ command_key (void *data, struct t_gui_buffer *buffer,
         }
         return WEECHAT_RC_OK;
     }
-
+    
     if (string_strcasecmp (argv[1], "functions") == 0)
     {
+        /* display key functions */
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, _("Internal key functions:"));
         i = 0;
@@ -799,6 +813,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
 
     if (string_strcasecmp (argv[1], "reset") == 0)
     {
+        /* reset keys (only with "-yes", for security reason) */
         if ((argc >= 3) && (string_strcasecmp (argv[2], "-yes") == 0))
         {
             gui_keyboard_free_all ();
@@ -820,6 +835,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
 
     if (string_strcasecmp (argv[1], "unbind") == 0)
     {
+        /* unbind a key */
         if (argc >= 3)
         {
             if (gui_keyboard_unbind (argv[2]))
@@ -843,6 +859,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
     
     if (string_strcasecmp (argv[1], "call") == 0)
     {
+        /* call a key function */
         if (argc >= 3)
         {
             ptr_function = gui_keyboard_function_search_by_name (argv[2]);
@@ -870,9 +887,9 @@ command_key (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
-    /* display a key */
     if (argc == 2)
     {
+        /* display a key */
         ptr_key = NULL;
         internal_code = gui_keyboard_get_internal_code (argv[1]);
         if (internal_code)
@@ -896,7 +913,9 @@ command_key (void *data, struct t_gui_buffer *buffer,
     /* bind new key */
     ptr_key = gui_keyboard_bind (argv[1], argv_eol[2]);
     if (ptr_key)
+    {
         command_key_display (ptr_key, 1);
+    }
     else
     {
         gui_chat_printf (NULL,
@@ -905,6 +924,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
                          argv[1]);
         return WEECHAT_RC_ERROR;
     }
+    
     return WEECHAT_RC_OK;
 }
 
@@ -1147,6 +1167,7 @@ command_plugin (void *data, struct t_gui_buffer *buffer,
     switch (argc)
     {
         case 1:
+            /* list all plugins */
             command_plugin_list (NULL, 0);
             break;
         case 2:
@@ -1206,14 +1227,15 @@ command_quit (void *data, struct t_gui_buffer *buffer,
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argc;
     (void) argv;
     
+    /* send quit signal (used by plugins to disconnect from servers,..) */
     hook_signal_send ("quit",
                       WEECHAT_HOOK_SIGNAL_STRING,
                       (argc > 1) ?
                       argv_eol[1] : CONFIG_STRING(config_look_default_msg_quit));
     
+    /* force end of main loop */
     quit_weechat = 1;
     
     return WEECHAT_RC_OK;
@@ -1226,8 +1248,8 @@ command_quit (void *data, struct t_gui_buffer *buffer,
 void
 command_reload_file (struct t_config_file *config_file)
 {
-    if ((int) (config_file->callback_reload) (config_file->callback_reload_data,
-                                              config_file) == 0)
+    if ((int) (config_file->callback_reload)
+        (config_file->callback_reload_data, config_file) == 0)
     {
         gui_chat_printf (NULL,
                          _("%sOptions reloaded from %s"),
@@ -1293,7 +1315,7 @@ command_reload (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * command_save_file: save a configuration file
+ * command_save_file: save a configuration file to disk
  */
 
 void
@@ -1316,7 +1338,7 @@ command_save_file (struct t_config_file *config_file)
 }
 
 /*
- * command_save: save WeeChat and plugins options to disk
+ * command_save: save configuration files to disk
  */
 
 int
@@ -1333,6 +1355,7 @@ command_save (void *data, struct t_gui_buffer *buffer,
 
     if (argc > 1)
     {
+        /* save configuration files asked by user */
         for (i = 1; i < argc; i++)
         {
             ptr_config_file = config_file_search (argv[i]);
@@ -1351,6 +1374,7 @@ command_save (void *data, struct t_gui_buffer *buffer,
     }
     else
     {
+        /* save all configuration files */
         for (ptr_config_file = config_files; ptr_config_file;
              ptr_config_file = ptr_config_file->next_config)
         {
@@ -1362,7 +1386,7 @@ command_save (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * command_set_display_option: display config option
+ * command_set_display_option: display configuration option
  */
 
 void
@@ -1385,6 +1409,7 @@ command_set_display_option (struct t_config_option *option, char *prefix,
             break;
         case CONFIG_OPTION_INTEGER:
             if (option->string_values)
+            {
                 gui_chat_printf (NULL, "%s%s%s%s = %s%s",
                                  prefix,
                                  (message) ? message : "  ",
@@ -1392,7 +1417,9 @@ command_set_display_option (struct t_config_option *option, char *prefix,
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                  GUI_COLOR(GUI_COLOR_CHAT_HOST),
                                  option->string_values[CONFIG_INTEGER(option)]);
+            }
             else
+            {
                 gui_chat_printf (NULL, "%s%s%s%s = %s%d",
                                  prefix,
                                  (message) ? message : "  ",
@@ -1400,6 +1427,7 @@ command_set_display_option (struct t_config_option *option, char *prefix,
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                  GUI_COLOR(GUI_COLOR_CHAT_HOST),
                                  CONFIG_INTEGER(option));
+            }
             break;
         case CONFIG_OPTION_STRING:
             gui_chat_printf (NULL, "%s%s%s%s = \"%s%s%s\"",
@@ -1888,8 +1916,7 @@ command_window (void *data, struct t_gui_buffer *buffer,
     if ((argc == 1)
         || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
     {
-        /* list open windows */
-        
+        /* list all windows */        
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, _("Windows list:"));
         
@@ -1956,6 +1983,7 @@ command_window (void *data, struct t_gui_buffer *buffer,
         }
         else if (string_strcasecmp (argv[1], "merge") == 0)
         {
+            /* merge windows */
             if (argc > 2)
             {
                 if (string_strcasecmp (argv[2], "all") == 0)
@@ -2017,11 +2045,12 @@ command_window (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_ERROR;
         }
     }
+    
     return WEECHAT_RC_OK;
 }
 
 /*
- * command_init: init WeeChat commands (create hooks)
+ * command_init: hook WeeChat commands
  */
 
 void
