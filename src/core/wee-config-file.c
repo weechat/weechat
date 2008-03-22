@@ -323,7 +323,7 @@ config_file_new_option (struct t_config_file *config_file,
                     new_option->max = max;
                     error = NULL;
                     number = strtol (default_value, &error, 10);
-                    if (!error || (error[0] != '\0'))
+                    if (!error || error[0])
                         number = 0;
                     new_option->default_value = malloc (sizeof (int));
                     *((int *)new_option->default_value) = number;
@@ -337,7 +337,7 @@ config_file_new_option (struct t_config_file *config_file,
                 new_option->max = max;
                 new_option->default_value = (default_value) ?
                     strdup (default_value) : NULL;
-                new_option->value = strdup (default_value) ?
+                new_option->value = (default_value) ?
                     strdup (default_value) : NULL;
                 break;
             case CONFIG_OPTION_COLOR:
@@ -558,7 +558,7 @@ config_file_option_set (struct t_config_option *option, char *new_value,
             {
                 error = NULL;
                 number = strtol (new_value, &error, 10);
-                if (error && (error[0] == '\0'))
+                if (error && !error[0])
                 {
                     if (number == *((int *)option->value))
                         return 1;
@@ -867,7 +867,8 @@ config_file_write_internal (struct t_config_file *config_file,
     snprintf (filename2, filename_length + 32, "%s.weechattmp", filename);
     
     /* open temp file in write mode */
-    if ((config_file->file = fopen (filename2, "w")) == NULL)
+    config_file->file = fopen (filename2, "w");
+    if (!config_file->file)
     {
         gui_chat_printf (NULL,
                          _("%sError: cannot create file \"%s\""),
@@ -976,10 +977,12 @@ config_file_read (struct t_config_file *config_file)
         return -2;
     snprintf (filename, filename_length, "%s%s%s",
               weechat_home, DIR_SEPARATOR, config_file->filename);
-    if ((config_file->file = fopen (filename, "r")) == NULL)
+    config_file->file = fopen (filename, "r");
+    if (!config_file->file)
     {
         config_file_write_internal (config_file, 1);
-        if ((config_file->file = fopen (filename, "r")) == NULL)
+        config_file->file = fopen (filename, "r");
+        if (!config_file->file)
         {
             gui_chat_printf (NULL,
                              _("%sWarning: config file \"%s\" not found"),
@@ -1018,7 +1021,7 @@ config_file_read (struct t_config_file *config_file)
                 if (ptr_line[0] == '[')
                 {
                     pos = strchr (line, ']');
-                    if (pos == NULL)
+                    if (!pos)
                     {
                         gui_chat_printf (NULL,
                                          _("%sWarning: %s, line %d: invalid "
@@ -1054,8 +1057,8 @@ config_file_read (struct t_config_file *config_file)
                 }
                 else
                 {
-                    pos = strchr (line, '=');
-                    if (pos == NULL)
+                    pos = strstr (line, " = ");
+                    if (!pos)
                     {
                         gui_chat_printf (NULL,
                                          _("%sWarning: %s, line %d: invalid "
@@ -1066,10 +1069,10 @@ config_file_read (struct t_config_file *config_file)
                     else
                     {
                         pos[0] = '\0';
-                        pos++;
+                        pos += 3;
                         
                         /* remove spaces before '=' */
-                        pos2 = pos - 2;
+                        pos2 = pos - 4;
                         while ((pos2 > line) && (pos2[0] == ' '))
                         {
                             pos2[0] = '\0';
@@ -1237,6 +1240,25 @@ config_file_reload (struct t_config_file *config_file)
 }
 
 /*
+ * config_file_option_free: free data in an option
+ */
+
+void
+config_file_option_free_data (struct t_config_option *option)
+{
+    if (option->name)
+        free (option->name);
+    if (option->description)
+        free (option->description);
+    if (option->string_values)
+        string_free_exploded (option->string_values);
+    if (option->default_value)
+        free (option->default_value);
+    if (option->value)
+        free (option->value);
+}
+
+/*
  * config_file_option_free: free an option
  */
 
@@ -1264,16 +1286,9 @@ config_file_option_free (struct t_config_section *section,
         (option->next_option)->prev_option = option->prev_option;
     
     /* free data */
-    if (option->name)
-        free (option->name);
-    if (option->description)
-        free (option->description);
-    if (option->string_values)
-        string_free_exploded (option->string_values);
-    if (option->default_value)
-        free (option->default_value);
-    if (option->value)
-        free (option->value);
+    config_file_option_free_data (option);
+    
+    free (option);
     
     section->options = new_options;
 }
@@ -1313,6 +1328,8 @@ config_file_section_free (struct t_config_file *config_file,
     if (section->name)
         free (section->name);
     
+    free (section);
+    
     config_file->sections = new_sections;
 }
 
@@ -1349,6 +1366,8 @@ config_file_free (struct t_config_file *config_file)
     }
     if (config_file->filename)
         free (config_file->filename);
+    
+    free (config_file);
     
     config_files = new_config_files;
 }

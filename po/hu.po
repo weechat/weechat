@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-15 09:33+0100\n"
+"POT-Creation-Date: 2008-03-22 23:32+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -209,6 +209,56 @@ msgstr ""
 
 msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr ""
+
+#, fuzzy
+msgid "Filters are enabled"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy
+msgid "Filters are disabled"
+msgstr "a felhasználók le lettek tiltva"
+
+msgid "Message filters:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s"
+msgstr "       (nincs üzenetkezelő)\n"
+
+#, fuzzy
+msgid "No message filter defined"
+msgstr "Nincs aliasz definiálva.\n"
+
+msgid "Filters enabled"
+msgstr ""
+
+#, fuzzy
+msgid "Filters disabled"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%sError: filter already exists"
+msgstr "%s az ignore már létezik\n"
+
+#, c-format
+msgid "%sError: you must specify at least tag(s) or regex for filter"
+msgstr ""
+
+#, fuzzy
+msgid "Filter added"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy
+msgid "Filter deleted"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%sError: filter not found"
+msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong filter number"
+msgstr "%s helytelen pufferszám\n"
 
 #. TRANSLATORS: %s is "WeeChat"
 #, fuzzy, c-format
@@ -600,6 +650,30 @@ msgid ""
 msgstr ""
 "parancs: futtatandó parancs (egy '/' autómatikusan hozzáadódik, ha nincs "
 "megadva a parancs elején)\n"
+
+msgid ""
+"filter messages in buffers, to hide/show them according to tags or regex"
+msgstr ""
+
+msgid ""
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number]"
+msgstr ""
+
+msgid ""
+"   list: list all filters\n"
+" enable: enable filters (filters are enabled by default)\n"
+"disable: disable filters\n"
+" toggle: toggle filters\n"
+"    add: add a filter\n"
+"    del: delete a filter\n"
+" number: number of filter to delete (look at list to find it)\n"
+" buffer: buffer where filter is active: it may be a name (category.name) or "
+"\"*\" for all buffers\n"
+"   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
+"irc_quit\"\n"
+"  regex: regular expression to search in line (use \t to separate prefix "
+"from message)"
+msgstr ""
 
 msgid "display help about commands"
 msgstr "segítség megjelenítése a parancsokhoz"
@@ -1487,10 +1561,6 @@ msgid "  . description: %s\n"
 msgstr "  . leírás : %s\n"
 
 #, fuzzy, c-format
-msgid "%sError: command \"%s\" failed"
-msgstr "%s a \"%s\" parancs végrehajtása sikertelen\n"
-
-#, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
 
@@ -1566,6 +1636,14 @@ msgstr "-TOVÁBB-"
 
 msgid "server"
 msgstr "szerver"
+
+#, fuzzy, c-format
+msgid "%s[%sF%s%s%s]"
+msgstr "%s[%s%s%s]%s tétlen: "
+
+#, fuzzy
+msgid "filtered"
+msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy
 msgid "(MORE)"
@@ -3552,7 +3630,7 @@ msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
 msgstr "%s%s%s felhasználói módja: %s[%s%s%s]\n"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s is away: %s"
+msgid "%s%s[%s%s%s]%s is away: %s"
 msgstr "%s%s%s távol: %s\n"
 
 #, fuzzy, c-format
@@ -3615,28 +3693,16 @@ msgid "%s%s%s%s has invited %s%s%s on %s%s"
 msgstr "%s%s%s meghívta %s%s%s-t %s%s-kor\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot identify channel for \"%s\" command"
-msgstr "%s nem sikerült azonosítani a szobát a \"%s\" parancshoz\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot identify nickname for \"%s\" command"
-msgstr "%s nem sikerült a felhasználót meghatározni a \"%s\" parancshoz\n"
-
-#, fuzzy, c-format
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%s szoba: %s> %s"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s"
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
 
-#, c-format
-msgid " by %s%s %s(%s%s%s)"
-msgstr " a következőtől: %s%s %s(%s%s%s)"
-
-#, c-format
-msgid " by %s%s"
-msgstr " a következőtől: %s%s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s"
+msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -3680,12 +3746,12 @@ msgid "normal"
 msgstr "normál"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by "
+msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
-msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+msgstr "%s[%s%s%s] %s%s%s-t kitiltotta "
 
 #, fuzzy, c-format
 msgid ""
@@ -4430,6 +4496,32 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
+#, fuzzy
+#~ msgid "%sError: wrong number \"%s\" for filter"
+#~ msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
+
+#, fuzzy
+#~ msgid "%sError: command \"%s\" failed"
+#~ msgstr "%s a \"%s\" parancs végrehajtása sikertelen\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot identify channel for \"%s\" command"
+#~ msgstr "%s nem sikerült azonosítani a szobát a \"%s\" parancshoz\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot identify nickname for \"%s\" command"
+#~ msgstr "%s nem sikerült a felhasználót meghatározni a \"%s\" parancshoz\n"
+
+#~ msgid " by %s%s %s(%s%s%s)"
+#~ msgstr " a következőtől: %s%s %s(%s%s%s)"
+
+#~ msgid " by %s%s"
+#~ msgstr " a következőtől: %s%s"
+
+#, fuzzy
+#~ msgid "%s%s[%s%s%s] %s%s%s banned"
+#~ msgstr "%s[%s%s%s] %s%s%s kitiltva\n"
+
 #~ msgid "/list end"
 #~ msgstr "/list vége"
 
@@ -4957,9 +5049,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 #~ msgid "%s cannot create new private window \"%s\"\n"
 #~ msgstr "%s nem sikerült új privát ablakot nyitni \"%s\"\n"
 
-#~ msgid "%s[%s%s%s]%s idle: "
-#~ msgstr "%s[%s%s%s]%s tétlen: "
-
 #~ msgid "%s: trying 2nd nickname \"%s\"\n"
 #~ msgstr "%s: próbálom a második nevet: \"%s\"\n"
 
@@ -5399,9 +5488,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
 #~ msgid "%s mask or type/command should be non generic value for ignore\n"
 #~ msgstr "%s maszk vagy típus/parancs nem általános érték az ignore-hoz\n"
-
-#~ msgid "%s ignore already exists\n"
-#~ msgstr "%s az ignore már létezik\n"
 
 #~ msgid "Removing ignore:"
 #~ msgstr "Ignore eltávolítása:"

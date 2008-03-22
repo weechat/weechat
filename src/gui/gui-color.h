@@ -147,6 +147,7 @@ extern struct t_gui_color *gui_color[GUI_NUM_COLORS];
 
 extern int gui_color_search_config (char *color_name);
 extern unsigned char *gui_color_decode (unsigned char *string);
+extern void gui_color_free (struct t_gui_color *color);
 
 /* color functions (GUI dependent) */
 

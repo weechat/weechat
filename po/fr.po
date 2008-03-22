@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-15 09:33+0100\n"
-"PO-Revision-Date: 2008-03-15 09:34+0100\n"
+"POT-Creation-Date: 2008-03-22 23:32+0100\n"
+"PO-Revision-Date: 2008-03-22 23:33+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -193,6 +193,52 @@ msgstr "(hotlist: highlights + messages)"
 
 msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr "(hotlist: highlights + messages + join/part (tous))"
+
+msgid "Filters are enabled"
+msgstr "Les filtres sont activés"
+
+msgid "Filters are disabled"
+msgstr "Les filtres sont désactivés"
+
+msgid "Message filters:"
+msgstr "Filtres de messages:"
+
+#, c-format
+msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s"
+msgstr "  %s[%s%d%s]%s tampon: %s%s%s / tags: %s / regex: %s"
+
+msgid "No message filter defined"
+msgstr "Pas de filtre de message défini"
+
+msgid "Filters enabled"
+msgstr "Filtres activés"
+
+msgid "Filters disabled"
+msgstr "Filtres désactivés"
+
+#, c-format
+msgid "%sError: filter already exists"
+msgstr "%sErreur: le filtre existe déjà"
+
+#, c-format
+msgid "%sError: you must specify at least tag(s) or regex for filter"
+msgstr ""
+"%sErreur: vous devez spécifier au moins un/plusieurs tags(s) ou une "
+"expression régulière pour filtrer"
+
+msgid "Filter added"
+msgstr "Filtre ajouté"
+
+msgid "Filter deleted"
+msgstr "Filtre supprimé"
+
+#, c-format
+msgid "%sError: filter not found"
+msgstr "%sErreur: filtre non trouvé"
+
+#, c-format
+msgid "%sError: wrong filter number"
+msgstr "%sErreur: numéro de filtre incorrect"
 
 #. TRANSLATORS: %s is "WeeChat"
 #, c-format
@@ -564,6 +610,43 @@ msgid ""
 msgstr ""
 "commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est "
 "pas trouvé au début de la commande)"
+
+msgid ""
+"filter messages in buffers, to hide/show them according to tags or regex"
+msgstr ""
+"filtre les messages dans les tampons, pour les cacher/afficher selon des "
+"tags ou expressions régulières"
+
+msgid ""
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number]"
+msgstr ""
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del numéro]"
+
+msgid ""
+"   list: list all filters\n"
+" enable: enable filters (filters are enabled by default)\n"
+"disable: disable filters\n"
+" toggle: toggle filters\n"
+"    add: add a filter\n"
+"    del: delete a filter\n"
+" number: number of filter to delete (look at list to find it)\n"
+" buffer: buffer where filter is active: it may be a name (category.name) or "
+"\"*\" for all buffers\n"
+"   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
+"irc_quit\"\n"
+"  regex: regular expression to search in line (use \t to separate prefix "
+"from message)"
+msgstr ""
+"   list: liste tous les filtres\n"
+" enable: active les filtres (par défaut les filtres sont activés)\n"
+"disable: désactive les filtres\n"
+" toggle: active/désactive les filtres\n"
+"    add: ajoute un filtre\n"
+"    del: supprime un filtre\n"
+" numéro: numéro du filtre à supprimer (voir la liste des filtres pour le trouver)\n"
+" buffer: tampon où le filtre est actif: cela peut être un nom (catégorie.nom) ou \"*\" pour tous les tampons\n"
+"   tags: liste de tags, séparés par des virgules, par exemple: \"irc_join,irc_part,irc_quit\"\n"
+"  regex: expressoin régulière à rechercher dans la ligne (utiliser \\t pour séparer le préfixe du message)"
 
 msgid "display help about commands"
 msgstr "afficher l'aide sur les commandes"
@@ -1392,10 +1475,6 @@ msgid "  . description: %s\n"
 msgstr "  . description: %s\n"
 
 #, c-format
-msgid "%sError: command \"%s\" failed"
-msgstr "%sErreur: la commande \"%s\" a échoué"
-
-#, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%sErreur: commande \"%s\" inconnue (tapez /help pour l'aide)"
 
@@ -1474,6 +1553,13 @@ msgstr "-PLUS-"
 
 msgid "server"
 msgstr "serveur"
+
+#, c-format
+msgid "%s[%sF%s%s%s]"
+msgstr "%s[%sF%s%s%s]"
+
+msgid "filtered"
+msgstr "filtré"
 
 msgid "(MORE)"
 msgstr "(PLUS)"
@@ -3468,8 +3554,8 @@ msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
 msgstr "%sMode utilisateur pour %s%s%s est %s[%s%s%s]"
 
 #, c-format
-msgid "%s%s%s%s is away: %s"
-msgstr "%s%s%s%s est absent: %s"
+msgid "%s%s[%s%s%s]%s is away: %s"
+msgstr "%s%s[%s%s%s]%s est absent: %s"
 
 #, c-format
 msgid "%sUsers online: %s%s"
@@ -3533,28 +3619,16 @@ msgid "%s%s%s%s has invited %s%s%s on %s%s"
 msgstr "%s%s%s%s a invité %s%s%s sur %s%s"
 
 #, c-format
-msgid "%s%s: cannot identify channel for \"%s\" command"
-msgstr "%s%s: impossible de déterminer le canal pour la commande \"%s\""
-
-#, c-format
-msgid "%s%s: cannot identify nickname for \"%s\" command"
-msgstr "%s%s: impossible de déterminer le pseudo pour la commande \"%s\""
-
-#, c-format
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "%sReop canal %s%s%s: %s%s"
 
 #, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s"
-msgstr "%s%s[%s%s%s]%s exception %s%s%s"
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
+msgstr "%s%s[%s%s%s]%s exception %s%s%s par %s%s %s(%s%s%s)%s le %s"
 
 #, c-format
-msgid " by %s%s %s(%s%s%s)"
-msgstr " par %s%s %s(%s%s%s)"
-
-#, c-format
-msgid " by %s%s"
-msgstr " par %s%s"
+msgid "%s%s[%s%s%s]%s exception %s%s"
+msgstr "%s%s[%s%s%s]%s exception %s%s"
 
 #, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -3598,12 +3672,12 @@ msgid "normal"
 msgstr "normal"
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by "
-msgstr "%s%s[%s%s%s] %s%s%s banni par "
+msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
+msgstr "%s%s[%s%s%s] %s%s%s banni par %s%s %s(%s%s%s)%s le %s"
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
-msgstr "%s%s[%s%s%s] %s%s%s banni"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+msgstr "%s%s[%s%s%s] %s%s%s banni par %s%s %s(%s%s%s)"
 
 #, c-format
 msgid ""
@@ -3698,7 +3772,6 @@ msgstr "/list début"
 msgid "channel (for /list)"
 msgstr "canal (pour /list)"
 
-#, fuzzy
 msgid "end of /list"
 msgstr "fin de /list"
 
@@ -4368,6 +4441,27 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\""
+
+#~ msgid "%s[%sfiltered%s]"
+#~ msgstr "%s[%sfiltré%s]"
+
+#~ msgid "%sError: wrong number \"%s\" for filter"
+#~ msgstr "%sErreur: numéro de filtre erroné"
+
+#~ msgid "%sError: command \"%s\" failed"
+#~ msgstr "%sErreur: la commande \"%s\" a échoué"
+
+#~ msgid "%s%s: cannot identify channel for \"%s\" command"
+#~ msgstr "%s%s: impossible de déterminer le canal pour la commande \"%s\""
+
+#~ msgid "%s%s: cannot identify nickname for \"%s\" command"
+#~ msgstr "%s%s: impossible de déterminer le pseudo pour la commande \"%s\""
+
+#~ msgid " by %s%s"
+#~ msgstr " par %s%s"
+
+#~ msgid "%s%s[%s%s%s] %s%s%s banned"
+#~ msgstr "%s%s[%s%s%s] %s%s%s banni"
 
 #~ msgid "/list end"
 #~ msgstr "/list fin"

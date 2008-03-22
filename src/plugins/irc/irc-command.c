@@ -568,7 +568,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
             }
             error = NULL;
             number = strtol (argv[++i], &error, 10);
-            if (error && (error[0] == '\0'))
+            if (error && !error[0])
                 port = number;
         }
     }

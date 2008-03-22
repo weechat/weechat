@@ -170,3 +170,18 @@ gui_color_init ()
     gui_color_init_pairs ();
     gui_color_init_weechat ();
 }
+
+/*
+ * gui_color_end: end GUI colors
+ */
+
+void
+gui_color_end ()
+{
+    int i;
+    
+    for (i = 0; i < GUI_NUM_COLORS; i++)
+    {
+        gui_color_free (gui_color[i]);
+    }
+}

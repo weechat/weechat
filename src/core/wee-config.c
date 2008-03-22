@@ -45,6 +45,7 @@
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
+#include "../gui/gui-filter.h"
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-infobar.h"
 #include "../gui/gui-keyboard.h"
@@ -434,6 +435,12 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     /* remove all keys */
     gui_keyboard_free_all ();
     
+    /* remove all bars */
+    gui_bar_free_all ();
+    
+    /* remove all filters */
+    gui_filter_free_all ();
+    
     return config_file_reload (weechat_config_file);
 }
 
@@ -458,17 +465,21 @@ config_weechat_read_bar (void *data, struct t_config_file *config_file,
         if (value && value[0])
         {
             argv = string_explode (value, ";", 0, 0, &argc);
-            if (argc == 5)
+            if (argv)
             {
-                error = NULL;
-                number = strtol (argv[2], &error, 10);
-                if (error && (error[0] == '\0'))
+                if (argc == 5)
                 {
-                    size = number;
-                    gui_bar_new (NULL, option_name, argv[0], argv[1], size,
-                                 (argv[3][0] == '0') ? 0 : 1,
-                                 argv[4]);
+                    error = NULL;
+                    number = strtol (argv[2], &error, 10);
+                    if (error && !error[0])
+                    {
+                        size = number;
+                        gui_bar_new (NULL, option_name, argv[0], argv[1], size,
+                                     (argv[3][0] == '0') ? 0 : 1,
+                                     argv[4]);
+                    }
                 }
+                string_free_exploded (argv);
             }
         }
     }
@@ -501,6 +512,68 @@ config_weechat_write_bars (void *data, struct t_config_file *config_file,
                                 ptr_bar->size,
                                 ptr_bar->separator,
                                 ptr_bar->items);
+    }
+}
+
+/*
+ * config_weechat_read_filter: read a filter in configuration file
+ */
+
+void
+config_weechat_read_filter (void *data, struct t_config_file *config_file,
+                            char *option_name, char *value)
+{
+    char **argv, **argv_eol;
+    int argc;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) config_file;
+    
+    if (option_name)
+    {
+        if (value && value[0])
+        {
+            argv = string_explode (value, ";", 0, 0, &argc);
+            argv_eol = string_explode (value, ";", 1, 0, NULL);
+            if (argv && argv_eol && (argc >= 3))
+            {
+                gui_filter_new (argv[0], argv[1], argv_eol[2]);
+            }
+            if (argv)
+                string_free_exploded (argv);
+            if (argv_eol)
+                string_free_exploded (argv_eol);
+        }
+    }
+}
+
+/*
+ * config_weechat_write_filters: write filters section in configuration file
+ *                               Return:  0 = successful
+ *                                       -1 = write error
+ */
+
+void
+config_weechat_write_filters (void *data, struct t_config_file *config_file,
+                              char *section_name)
+{
+    struct t_gui_filter *ptr_filter;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    config_file_write_line (config_file, section_name, NULL);
+    
+    for (ptr_filter = gui_filters; ptr_filter;
+         ptr_filter = ptr_filter->next_filter)
+    {
+        config_file_write_line (config_file,
+                                "filter",
+                                "%s;%s;%s",
+                                ptr_filter->buffer,
+                                ptr_filter->tags,
+                                ptr_filter->regex);
     }
 }
 
@@ -1391,6 +1464,20 @@ config_weechat_init ()
                                            &config_weechat_write_bars,
                                            NULL,
                                            &config_weechat_write_bars,
+                                           NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        return 0;
+    }
+    
+    /* filters */
+    ptr_section = config_file_new_section (weechat_config_file, "filters",
+                                           &config_weechat_read_filter,
+                                           NULL,
+                                           &config_weechat_write_filters,
+                                           NULL,
+                                           &config_weechat_write_filters,
                                            NULL);
     if (!ptr_section)
     {

@@ -1939,12 +1939,16 @@ weechat_python_api_hook_fd (PyObject *self, PyObject *args)
 
 int
 weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
-                                  time_t date, char *prefix, char *message)
+                                  time_t date, int tags_count, char **tags,
+                                  char *prefix, char *message)
 {
     struct t_script_callback *script_callback;
-    char *python_argv[5];
+    char *python_argv[6];
     static char timebuffer[64];
     int *rc, ret;
+    
+    /* make C compiler happy */
+    (void) tags_count;
     
     script_callback = (struct t_script_callback *)data;
     
@@ -1952,9 +1956,10 @@ weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     
     python_argv[0] = script_ptr2str (buffer);
     python_argv[1] = timebuffer;
-    python_argv[2] = prefix;
-    python_argv[3] = message;
-    python_argv[4] = NULL;
+    python_argv[2] = weechat_string_build_with_exploded (tags, ",");
+    python_argv[3] = prefix;
+    python_argv[4] = message;
+    python_argv[5] = NULL;
     
     rc = (int *) weechat_python_exec (script_callback->script,
                                       WEECHAT_SCRIPT_EXEC_INT,
@@ -1970,6 +1975,8 @@ weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     }
     if (python_argv[0])
         free (python_argv[0]);
+    if (python_argv[2])
+        free (python_argv[2]);
     
     return ret;
 }
@@ -1981,7 +1988,7 @@ weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
 static PyObject *
 weechat_python_api_hook_print (PyObject *self, PyObject *args)
 {
-    char *buffer, *message, *function, *result;
+    char *buffer, *tags, *message, *function, *result;
     int strip_colors;
     PyObject *object;
     
@@ -1995,12 +2002,13 @@ weechat_python_api_hook_print (PyObject *self, PyObject *args)
     }
     
     buffer = NULL;
+    tags = NULL;
     message = NULL;
     strip_colors = 0;
     function = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssis", &buffer, &message, &strip_colors,
-                           &function))
+    if (!PyArg_ParseTuple (args, "sssis", &buffer, &tags, &message,
+                           &strip_colors, &function))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_print");
         PYTHON_RETURN_EMPTY;
@@ -2009,6 +2017,7 @@ weechat_python_api_hook_print (PyObject *self, PyObject *args)
     result = script_ptr2str(script_api_hook_print (weechat_python_plugin,
                                                    python_current_script,
                                                    script_str2ptr (buffer),
+                                                   tags,
                                                    message,
                                                    strip_colors,
                                                    &weechat_python_api_hook_print_cb,
@@ -2146,7 +2155,7 @@ weechat_python_api_hook_signal_send (PyObject *self, PyObject *args)
     {
         error = NULL;
         number = (int)strtol (signal_data, &error, 10);
-        if (error && (error[0] == '\0'))
+        if (error && !error[0])
         {
             weechat_hook_signal_send (signal, type_data, &number);
         }
@@ -2645,11 +2654,11 @@ weechat_python_api_buffer_close (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat_python_api_buffer_get: get a buffer property
+ * weechat_python_api_buffer_get_string: get a buffer property as string
  */
 
 static PyObject *
-weechat_python_api_buffer_get (PyObject *self, PyObject *args)
+weechat_python_api_buffer_get_string (PyObject *self, PyObject *args)
 {
     char *buffer, *property, *value;
     
@@ -2658,7 +2667,7 @@ weechat_python_api_buffer_get (PyObject *self, PyObject *args)
     
     if (!python_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_string");
         PYTHON_RETURN_ERROR;
     }
     
@@ -2667,13 +2676,47 @@ weechat_python_api_buffer_get (PyObject *self, PyObject *args)
     
     if (!PyArg_ParseTuple (args, "ss", &buffer, &property))
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_string");
         PYTHON_RETURN_EMPTY;
     }
     
-    value = weechat_buffer_get (script_str2ptr (buffer), property);
+    value = weechat_buffer_get_string (script_str2ptr (buffer), property);
     
     PYTHON_RETURN_STRING(value);
+}
+
+/*
+ * weechat_python_api_buffer_get_pointer: get a buffer property as pointer
+ */
+
+static PyObject *
+weechat_python_api_buffer_get_pointer (PyObject *self, PyObject *args)
+{
+    char *buffer, *property, *value;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_pointer");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    property = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &buffer, &property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_pointer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    value = script_ptr2str (weechat_buffer_get_pointer (script_str2ptr (buffer),
+                                                        property));
+    
+    PYTHON_RETURN_STRING_FREE(value);
 }
 
 /*
@@ -3710,7 +3753,8 @@ PyMethodDef weechat_python_funcs[] =
     { "buffer_new", &weechat_python_api_buffer_new, METH_VARARGS, "" },
     { "buffer_search", &weechat_python_api_buffer_search, METH_VARARGS, "" },
     { "buffer_close", &weechat_python_api_buffer_close, METH_VARARGS, "" },
-    { "buffer_get", &weechat_python_api_buffer_get, METH_VARARGS, "" },
+    { "buffer_get_string", &weechat_python_api_buffer_get_string, METH_VARARGS, "" },
+    { "buffer_get_pointer", &weechat_python_api_buffer_get_pointer, METH_VARARGS, "" },
     { "buffer_set", &weechat_python_api_buffer_set, METH_VARARGS, "" },
     { "nicklist_add_group", &weechat_python_api_nicklist_add_group, METH_VARARGS, "" },
     { "nicklist_search_group", &weechat_python_api_nicklist_search_group, METH_VARARGS, "" },

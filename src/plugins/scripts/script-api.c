@@ -481,11 +481,12 @@ struct t_hook *
 script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
                        struct t_plugin_script *script,
                        struct t_gui_buffer *buffer,
-                       char *message, int strip_colors,
+                       char *tags, char *message, int strip_colors,
                        int (*callback)(void *data,
                                        struct t_gui_buffer *buffer,
-                                       time_t date, char *prefix,
-                                       char *message),
+                                       time_t date,
+                                       int tags_count, char **tags,
+                                       char *prefix, char *message),
                        char *function)
 {
     struct t_script_callback *new_script_callback;
@@ -495,7 +496,7 @@ script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
     if (!new_script_callback)
         return NULL;
     
-    new_hook = weechat_hook_print (buffer, message, strip_colors,
+    new_hook = weechat_hook_print (buffer, tags, message, strip_colors,
                                    callback, new_script_callback);
     if (!new_hook)
     {

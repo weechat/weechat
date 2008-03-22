@@ -147,8 +147,8 @@ demo_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
                     "buffer_input_data_cb: buffer = %x (%s / %s), "
                     "input_data = '%s'",
                     buffer,
-                    weechat_buffer_get (buffer, "category"),
-                    weechat_buffer_get (buffer, "name"),
+                    weechat_buffer_get_string (buffer, "category"),
+                    weechat_buffer_get_string (buffer, "name"),
                     input_data);
     
     return WEECHAT_RC_OK;
@@ -169,8 +169,8 @@ demo_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
         weechat_printf (NULL,
                         "buffer_close_cb: buffer = %x (%s / %s)",
                         buffer,
-                        weechat_buffer_get (buffer, "category"),
-                        weechat_buffer_get (buffer, "name"));
+                        weechat_buffer_get_string (buffer, "category"),
+                        weechat_buffer_get_string (buffer, "name"));
     }
     
     return WEECHAT_RC_OK;

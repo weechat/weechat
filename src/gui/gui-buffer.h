@@ -43,6 +43,9 @@ struct t_gui_line
     time_t date;                       /* date/time of line (may be past)   */
     time_t date_printed;               /* date/time when weechat print it   */
     char *str_time;                    /* time string (for display)         */
+    int tags_count;                    /* number of tags for line           */
+    char **tags_array;                 /* tags for line                     */
+    char displayed;                    /* 1 if line is displayed            */
     char *prefix;                      /* prefix for line (may be NULL)     */
     int prefix_length;                 /* prefix length (on screen)         */
     char *message;                     /* line content (after prefix)       */
@@ -78,6 +81,7 @@ struct t_gui_buffer
     struct t_gui_line *last_line;      /* last line of chat window          */
     struct t_gui_line *last_read_line; /* last read line before jump        */
     int lines_count;                   /* number of lines in the buffer     */
+    int lines_hidden;                  /* 1 if at least one line is hidden  */
     int prefix_max_length;             /* length for prefix align           */
     int chat_refresh_needed;           /* refresh for chat is needed ?      */
     
@@ -132,7 +136,6 @@ struct t_gui_buffer
 extern struct t_gui_buffer *gui_buffers;
 extern struct t_gui_buffer *last_gui_buffer;
 extern struct t_gui_buffer *gui_previous_buffer;
-extern struct t_gui_buffer *gui_buffer_before_dcc;
 
 /* buffer functions */
 
@@ -146,7 +149,10 @@ extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
                                                                   struct t_gui_buffer *buffer),
                                             void *close_callback_data);
 extern int gui_buffer_valid (struct t_gui_buffer *buffer);
-extern void *gui_buffer_get (struct t_gui_buffer *buffer, char *property);
+extern char *gui_buffer_get_string (struct t_gui_buffer *buffer,
+                                    char *property);
+extern void *gui_buffer_get_pointer (struct t_gui_buffer *buffer,
+                                     char *property);
 extern void gui_buffer_set_category (struct t_gui_buffer *buffer,
                                      char *category);
 extern void gui_buffer_set_name (struct t_gui_buffer *buffer, char *name);
@@ -165,6 +171,8 @@ extern struct t_gui_buffer *gui_buffer_search_by_category_name (char *category,
 extern struct t_gui_buffer *gui_buffer_search_by_number (int number);
 extern struct t_gui_window *gui_buffer_find_window (struct t_gui_buffer *buffer);
 extern int gui_buffer_is_scrolled (struct t_gui_buffer *buffer);
+extern int gui_buffer_match_category_name (struct t_gui_buffer *buffer,
+                                           char *mask, int case_sensitive);
 extern struct t_gui_buffer *gui_buffer_get_dcc (struct t_gui_window *window);
 extern void gui_buffer_clear (struct t_gui_buffer *buffer);
 extern void gui_buffer_clear_all ();

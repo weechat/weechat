@@ -62,6 +62,7 @@ extern struct t_gui_color gui_weechat_colors[];
 /* color functions */
 extern int gui_color_get_pair (int num_color);
 extern void gui_color_init ();
+extern void gui_color_end ();
 
 /* bar functions */
 extern void gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,

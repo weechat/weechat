@@ -32,6 +32,8 @@ lib_weechat_gui_common_a_SOURCES = gui-action.c \
                                    gui-color.h \
                                    gui-completion.c \
                                    gui-completion.h \
+                                   gui-filter.c \
+                                   gui-filter.h \
                                    gui-history.c \
                                    gui-history.h \
                                    gui-hotlist.c \

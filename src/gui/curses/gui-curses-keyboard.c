@@ -135,6 +135,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind (/* m-w,m-down    */ "meta-wmeta-meta2-B", "/window down");
     gui_keyboard_bind (/* m-w,m-left    */ "meta-wmeta-meta2-D", "/window left");
     gui_keyboard_bind (/* m-w,m-right   */ "meta-wmeta-meta2-C", "/window right");
+    gui_keyboard_bind (/* m-=           */ "meta-=",             "/filter toggle");
     gui_keyboard_bind (/* m-0           */ "meta-0",             "/buffer 10");
     gui_keyboard_bind (/* m-1           */ "meta-1",             "/buffer 1");
     gui_keyboard_bind (/* m-2           */ "meta-2",             "/buffer 2");

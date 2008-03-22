@@ -116,3 +116,16 @@ gui_color_decode (unsigned char *string)
     out[out_pos] = '\0';
     return out;
 }
+
+/*
+ * gui_color_free: free a color
+ */
+
+void
+gui_color_free (struct t_gui_color *color)
+{
+    if (color->string)
+        free (color->string);
+    
+    free (color);
+}

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-15 09:33+0100\n"
+"POT-Creation-Date: 2008-03-22 23:32+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -210,6 +210,56 @@ msgstr "(Hotlist: Hervorhebungen und Nachrichten)\n"
 #, fuzzy
 msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr "(Hotlist: Hervorhebungen, Nachrichten, Betreten und Verlassen)\n"
+
+#, fuzzy
+msgid "Filters are enabled"
+msgstr "/users wurde deaktiviert"
+
+#, fuzzy
+msgid "Filters are disabled"
+msgstr "/users wurde deaktiviert"
+
+msgid "Message filters:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s"
+msgstr "       (kein Message-Handler)\n"
+
+#, fuzzy
+msgid "No message filter defined"
+msgstr "Keine Aliases definiert.\n"
+
+msgid "Filters enabled"
+msgstr ""
+
+#, fuzzy
+msgid "Filters disabled"
+msgstr "/users wurde deaktiviert"
+
+#, fuzzy, c-format
+msgid "%sError: filter already exists"
+msgstr "%s diese /ignore-Regel existiert bereits\n"
+
+#, c-format
+msgid "%sError: you must specify at least tag(s) or regex for filter"
+msgstr ""
+
+#, fuzzy
+msgid "Filter added"
+msgstr "/users wurde deaktiviert"
+
+#, fuzzy
+msgid "Filter deleted"
+msgstr "/users wurde deaktiviert"
+
+#, fuzzy, c-format
+msgid "%sError: filter not found"
+msgstr "%s Plugin \"%s\" nicht gefunden\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong filter number"
+msgstr "%s falsche Puffernummer\n"
 
 #. TRANSLATORS: %s is "WeeChat"
 #, fuzzy, c-format
@@ -586,6 +636,30 @@ msgid ""
 msgstr ""
 "Befehl: auszuführender Befehl (falls nicht vorhanden wird automatisch ein "
 "'/' vorangestellt)\n"
+
+msgid ""
+"filter messages in buffers, to hide/show them according to tags or regex"
+msgstr ""
+
+msgid ""
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number]"
+msgstr ""
+
+msgid ""
+"   list: list all filters\n"
+" enable: enable filters (filters are enabled by default)\n"
+"disable: disable filters\n"
+" toggle: toggle filters\n"
+"    add: add a filter\n"
+"    del: delete a filter\n"
+" number: number of filter to delete (look at list to find it)\n"
+" buffer: buffer where filter is active: it may be a name (category.name) or "
+"\"*\" for all buffers\n"
+"   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
+"irc_quit\"\n"
+"  regex: regular expression to search in line (use \t to separate prefix "
+"from message)"
+msgstr ""
 
 msgid "display help about commands"
 msgstr "Hilfe zu Befehlen abfragen"
@@ -1477,10 +1551,6 @@ msgid "  . description: %s\n"
 msgstr "  . Beschreibung: %s\n"
 
 #, fuzzy, c-format
-msgid "%sError: command \"%s\" failed"
-msgstr "%s der Befehl \"%s\" schlug fehl\n"
-
-#, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%s Alias oder Befehl \"%s\" nicht gefunden\n"
 
@@ -1561,6 +1631,14 @@ msgstr "-MEHR-"
 
 msgid "server"
 msgstr "Server"
+
+#, fuzzy, c-format
+msgid "%s[%sF%s%s%s]"
+msgstr "%s[%s%s%s]%s idlet: "
+
+#, fuzzy
+msgid "filtered"
+msgstr "/users wurde deaktiviert"
 
 #, fuzzy
 msgid "(MORE)"
@@ -3534,7 +3612,7 @@ msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
 msgstr "Usermodus für %s%s%s ist %s[%s%s%s]\n"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s is away: %s"
+msgid "%s%s[%s%s%s]%s is away: %s"
 msgstr "%s%s%s ist abwesend: %s\n"
 
 #, fuzzy, c-format
@@ -3597,28 +3675,16 @@ msgid "%s%s%s%s has invited %s%s%s on %s%s"
 msgstr "%s%s%s hat %s%s%s in den Channel %s%s eingeladen\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot identify channel for \"%s\" command"
-msgstr "%s kann für den \"%s\"-Befehl keinen Channel identifizieren\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot identify nickname for \"%s\" command"
-msgstr "%s kann für den \"%s\"-Befehl keinen Nickname identifizieren\n"
-
-#, fuzzy, c-format
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "Channel-Reop %s%s%s: %s%s\n"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s"
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s gebannt\n"
 
-#, c-format
-msgid " by %s%s %s(%s%s%s)"
-msgstr " durch %s%s %s(%s%s%s)"
-
-#, c-format
-msgid " by %s%s"
-msgstr " durch %s%s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s"
+msgstr "%s[%s%s%s] %s%s%s gebannt\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -3662,12 +3728,12 @@ msgid "normal"
 msgstr "normal"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by "
+msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s wurde gebannt von "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
-msgstr "%s[%s%s%s] %s%s%s gebannt\n"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+msgstr "%s[%s%s%s] %s%s%s wurde gebannt von "
 
 #, fuzzy, c-format
 msgid ""
@@ -4415,6 +4481,32 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
+#, fuzzy
+#~ msgid "%sError: wrong number \"%s\" for filter"
+#~ msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
+
+#, fuzzy
+#~ msgid "%sError: command \"%s\" failed"
+#~ msgstr "%s der Befehl \"%s\" schlug fehl\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot identify channel for \"%s\" command"
+#~ msgstr "%s kann für den \"%s\"-Befehl keinen Channel identifizieren\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot identify nickname for \"%s\" command"
+#~ msgstr "%s kann für den \"%s\"-Befehl keinen Nickname identifizieren\n"
+
+#~ msgid " by %s%s %s(%s%s%s)"
+#~ msgstr " durch %s%s %s(%s%s%s)"
+
+#~ msgid " by %s%s"
+#~ msgstr " durch %s%s"
+
+#, fuzzy
+#~ msgid "%s%s[%s%s%s] %s%s%s banned"
+#~ msgstr "%s[%s%s%s] %s%s%s gebannt\n"
+
 #~ msgid "/list end"
 #~ msgstr "Ende von /list"
 
@@ -4954,9 +5046,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 #~ msgid "%s cannot create new private window \"%s\"\n"
 #~ msgstr "%s kann kein neues privates Fenster \"%s\" erzeugen\n"
 
-#~ msgid "%s[%s%s%s]%s idle: "
-#~ msgstr "%s[%s%s%s]%s idlet: "
-
 #~ msgid "%s: trying 2nd nickname \"%s\"\n"
 #~ msgstr "%s: versuche zweiten Nicknamen \"%s\"\n"
 
@@ -5399,9 +5488,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
 #~ msgid "%s mask or type/command should be non generic value for ignore\n"
 #~ msgstr "%s Maske und Typ/Befehl dürfen nicht beide allgemein sein\n"
-
-#~ msgid "%s ignore already exists\n"
-#~ msgstr "%s diese /ignore-Regel existiert bereits\n"
 
 #~ msgid "%s not enough memory to create ignore\n"
 #~ msgstr "%s nicht genug Speicher für neue /ignore-Regel\n"

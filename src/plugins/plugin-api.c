@@ -38,6 +38,7 @@
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
+#include "../gui/gui-filter.h"
 #include "../gui/gui-infobar.h"
 #include "../gui/gui-keyboard.h"
 #include "../gui/gui-window.h"
@@ -318,7 +319,7 @@ char *
 plugin_api_info_get (struct t_weechat_plugin *plugin, char *info)
 {
     time_t inactivity;
-    static char keyboard_inactivity[32];
+    static char value[32];
     
     if (!plugin || !info)
         return NULL;
@@ -361,9 +362,13 @@ plugin_api_info_get (struct t_weechat_plugin *plugin, char *info)
             inactivity = 0;
         else
             inactivity = time (NULL) - gui_keyboard_last_activity_time;
-        snprintf (keyboard_inactivity, sizeof (keyboard_inactivity),
-                  "%ld", (long int)inactivity);
-        return keyboard_inactivity;
+        snprintf (value, sizeof (value), "%ld", (long int)inactivity);
+        return value;
+    }
+    else if (string_strcasecmp (info, "filters_enabled") == 0)
+    {
+        snprintf (value, sizeof (value), "%d", gui_filters_enabled);
+        return value;
     }
     
     /* info not found */
@@ -401,6 +406,8 @@ plugin_api_infolist_get_add_buffer (struct t_plugin_infolist *infolist,
     if (!plugin_infolist_new_var_integer (ptr_item, "notify_level", buffer->notify_level))
         return 0;
     if (!plugin_infolist_new_var_integer (ptr_item, "num_displayed", buffer->num_displayed))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "lines_hidden", buffer->lines_hidden))
         return 0;
     if (!plugin_infolist_new_var_string (ptr_item, "title", buffer->title))
         return 0;

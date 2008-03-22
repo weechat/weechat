@@ -39,6 +39,7 @@
 #include "gui-window.h"
 #include "gui-buffer.h"
 #include "gui-chat.h"
+#include "gui-filter.h"
 #include "gui-input.h"
 #include "gui-hotlist.h"
 #include "gui-status.h"
@@ -280,7 +281,11 @@ gui_window_free (struct t_gui_window *window)
         window->buffer->num_displayed--;
     
     /* free data */
-    gui_window_objects_free (window, 1);
+    if (window->gui_objects)
+    {
+        gui_window_objects_free (window, 1);
+        free (window->gui_objects);
+    }
     
     /* remove window from windows list */
     if (window->prev_window)
@@ -448,7 +453,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
         number = 0;
         time_letter = ' ';
         
-        // search direction
+        /* search direction */
         if (scroll[0] == '-')
         {
             direction = -1;
@@ -460,7 +465,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
             scroll++;
         }
         
-        // search number and letter
+        /* search number and letter */
         char *pos = scroll;
         while (pos && pos[0] && isdigit (pos[0]))
         {
@@ -481,7 +486,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                 pos[0] = '\0';
                 error = NULL;
                 number = strtol (scroll, &error, 10);
-                if (!error || (error[0] != '\0'))
+                if (!error || error[0])
                     number = 0;
                 pos[0] = saved_char;
             }
@@ -491,15 +496,27 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
         if ((number == 0) && (time_letter == ' '))
             return;
         
-        // do the scroll!
+        /* do the scroll! */
         stop = 0;
         count_msg = 0;
         if (direction < 0)
+        {
             ptr_line = (window->start_line) ?
                 window->start_line : window->buffer->last_line;
+            while (ptr_line && !gui_chat_line_displayed (ptr_line))
+            {
+                ptr_line = ptr_line->prev_line;
+            }
+        }
         else
+        {
             ptr_line = (window->start_line) ?
                 window->start_line : window->buffer->lines;
+            while (ptr_line && !gui_chat_line_displayed (ptr_line))
+            {
+                ptr_line = ptr_line->next_line;
+            }
+        }
         
         old_date = ptr_line->date;
         date_tmp = localtime (&old_date);
@@ -507,7 +524,8 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
         
         while (ptr_line)
         {
-            ptr_line = (direction < 0) ? ptr_line->prev_line : ptr_line->next_line;
+            ptr_line = (direction < 0) ?
+                gui_chat_get_prev_line_displayed (ptr_line) : gui_chat_get_next_line_displayed (ptr_line);
             
             if (ptr_line)
             {
@@ -614,7 +632,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                     window->start_line = ptr_line;
                     window->start_line_pos = 0;
                     window->first_line_displayed =
-                        (window->start_line == window->buffer->lines);
+                        (window->start_line == gui_chat_get_first_line_displayed (window->buffer));
                     window->buffer->chat_refresh_needed = 1;
                     gui_status_refresh_needed = 1;
                     return;
@@ -644,6 +662,10 @@ gui_window_search_text (struct t_gui_window *window)
         {
             ptr_line = (window->start_line) ?
                 window->start_line->prev_line : window->buffer->last_line;
+            while (ptr_line && !gui_chat_line_displayed (ptr_line))
+            {
+                ptr_line = ptr_line->prev_line;
+            }
             while (ptr_line)
             {
                 if (gui_chat_line_search (ptr_line,
@@ -653,12 +675,12 @@ gui_window_search_text (struct t_gui_window *window)
                     window->start_line = ptr_line;
                     window->start_line_pos = 0;
                     window->first_line_displayed =
-                        (window->start_line == window->buffer->lines);
+                        (window->start_line == gui_chat_get_first_line_displayed (window->buffer));
                     window->buffer->chat_refresh_needed = 1;
                     gui_status_refresh_needed = 1;
                     return 1;
                 }
-                ptr_line = ptr_line->prev_line;
+                ptr_line = gui_chat_get_prev_line_displayed (ptr_line);
             }
         }
     }
@@ -669,6 +691,10 @@ gui_window_search_text (struct t_gui_window *window)
         {
             ptr_line = (window->start_line) ?
                 window->start_line->next_line : window->buffer->lines->next_line;
+            while (ptr_line && !gui_chat_line_displayed (ptr_line))
+            {
+                ptr_line = ptr_line->next_line;
+            }
             while (ptr_line)
             {
                 if (gui_chat_line_search (ptr_line,
@@ -683,7 +709,7 @@ gui_window_search_text (struct t_gui_window *window)
                     gui_status_refresh_needed = 1;
                     return 1;
                 }
-                ptr_line = ptr_line->next_line;
+                ptr_line = gui_chat_get_next_line_displayed (ptr_line);
             }
         }
     }

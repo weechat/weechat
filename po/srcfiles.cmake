@@ -63,6 +63,8 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-color.h
 ./src/gui/gui-completion.c
 ./src/gui/gui-completion.h
+./src/gui/gui-filter.c
+./src/gui/gui-filter.h
 ./src/gui/gui-history.c
 ./src/gui/gui-history.h
 ./src/gui/gui-hotlist.c

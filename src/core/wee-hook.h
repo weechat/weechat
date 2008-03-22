@@ -104,12 +104,16 @@ struct t_hook_fd
 };
 
 typedef int (t_hook_callback_print)(void *data, struct t_gui_buffer *buffer,
-                                    time_t date, char *prefix, char *message);
+                                    time_t date, int tags_count,
+                                    char **tags, char *prefix,
+                                    char *message);
 
 struct t_hook_print
 {
     t_hook_callback_print *callback;   /* print callback                    */
     struct t_gui_buffer *buffer;       /* buffer selected (NULL = all)      */
+    int tags_count;                    /* number of tags selected           */
+    char **tags_array;                 /* tags selected (NULL = any)        */
     char *message;                     /* part of message (NULL/empty = all)*/
     int strip_colors;                  /* strip colors in msg for callback? */
 };
@@ -120,7 +124,8 @@ typedef int (t_hook_callback_signal)(void *data, char *signal,
 struct t_hook_signal
 {
     t_hook_callback_signal *callback;  /* signal callback                   */
-    char *signal;                      /* signal selected ("*" = any signal)*/
+    char *signal;                      /* signal selected (may begin or end */
+                                       /* with "*", "*" == any signal)      */
 };
 
 typedef int (t_hook_callback_config)(void *data, char *type, char *option,
@@ -190,11 +195,14 @@ extern void hook_fd_exec (fd_set *read_fds, fd_set *write_fds,
                           fd_set *exception_fds);
 extern struct t_hook *hook_print (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
-                                  char *message, int strip_colors,
+                                  char *tags, char *message,
+                                  int strip_colors,
                                   t_hook_callback_print *callback,
                                   void *callback_data);
 extern void hook_print_exec (struct t_gui_buffer *buffer,
-                             time_t date, char *prefix, char *message);
+                             time_t date, int tags_count,
+                             char **tags_array, char *prefix,
+                             char *message);
 extern struct t_hook *hook_signal (struct t_weechat_plugin *plugin,
                                    char *signal,
                                    t_hook_callback_signal *callback,

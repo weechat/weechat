@@ -262,6 +262,27 @@ gui_completion_list_add_buffers_names (struct t_gui_completion *completion)
 }
 
 /*
+ * gui_completion_list_add_buffers_categories_names: add buffers categories
+ *                                                   and names to completion
+ *                                                   list
+ */
+
+void
+gui_completion_list_add_buffers_categories_names (struct t_gui_completion *completion)
+{
+    struct t_gui_buffer *ptr_buffer;
+    char name[256];
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        snprintf (name, sizeof (name), "%s.%s",
+                  ptr_buffer->category, ptr_buffer->name);
+        gui_completion_list_add (completion, name, 0, WEECHAT_LIST_POS_SORT);
+    }
+}
+
+/*
  * gui_completion_list_add_buffers_categories: add buffers categories to
  *                                             completion list
  */
@@ -727,6 +748,9 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                             break;
                         case 'b': /* buffers names */
                             gui_completion_list_add_buffers_names (completion);
+                            break;
+                        case 'B': /* buffers categories + names */
+                            gui_completion_list_add_buffers_categories_names (completion);
                             break;
                         case 'c': /* buffers categories */
                             gui_completion_list_add_buffers_categories (completion);

@@ -524,11 +524,15 @@ main (int argc, char *argv[])
     command_startup (0);                /* command executed before plugins  */
     plugin_init (auto_load_plugins);    /* init plugin interface(s)         */
     command_startup (1);                /* command executed after plugins   */
+    
     gui_main_loop ();                   /* WeeChat main loop                */
+    
     plugin_end ();                      /* end plugin interface(s)          */
     if (CONFIG_BOOLEAN(config_look_save_on_exit))
         (void) config_weechat_write (NULL); /* save WeeChat config file     */
     gui_main_end ();                    /* shut down WeeChat GUI            */
+    config_file_free_all ();            /* free all configuration files     */
+    gui_keyboard_end ();                /* end keyboard                     */
     unhook_all ();                      /* remove all hooks                 */
     weechat_shutdown (EXIT_SUCCESS, 0); /* quit WeeChat (oh no, why?)       */
     

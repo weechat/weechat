@@ -36,6 +36,7 @@
 #include "gui-bar.h"
 #include "gui-buffer.h"
 #include "gui-color.h"
+#include "gui-filter.h"
 #include "gui-hotlist.h"
 #include "gui-window.h"
 
@@ -43,8 +44,8 @@
 struct t_gui_bar_item *gui_bar_items = NULL;     /* first bar item          */
 struct t_gui_bar_item *last_gui_bar_item = NULL; /* last bar item           */
 char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
-{ "buffer_count", "buffer_plugin", "buffer_name", "nicklist_count", "scroll",
-  "hotlist"
+{ "buffer_count", "buffer_plugin", "buffer_name", "buffer_filter",
+  "nicklist_count", "scroll", "hotlist"
 };
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 
@@ -326,6 +327,40 @@ gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * gui_bar_item_default_buffer_filter: default item for buffer filter
+ */
+
+char *
+gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
+                                    struct t_gui_window *window,
+                                    int max_width, int max_height)
+{
+    char buf[256];
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) max_width;
+    (void) max_height;
+    
+    if (!window)
+        window = gui_current_window;
+    
+    if (!gui_filters_enabled)
+        return NULL;
+    
+    snprintf (buf, sizeof (buf),
+              _("%s[%sF%s%s%s]"),
+              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
+              GUI_COLOR(GUI_COLOR_STATUS_NAME),
+              (window->buffer->lines_hidden) ? "," : "",
+              (window->buffer->lines_hidden) ? _("filtered") : "",
+              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
+    
+    return strdup (buf);
+}
+
+/*
  * gui_bar_item_default_nicklist_count: default item for number of nicks in
  *                                      buffer nicklist
  */
@@ -548,6 +583,15 @@ gui_bar_item_init ()
                        gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_NAME]);
     gui_bar_item_hook ("buffer_moved",
                        gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_NAME]);
+    
+    /* buffer filter */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_FILTER],
+                      &gui_bar_item_default_buffer_filter, NULL);
+    gui_bar_item_hook ("buffer_lines_hidden",
+                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_FILTER]);
+    gui_bar_item_hook ("filters_*",
+                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_FILTER]);
     
     /* nicklist count */
     gui_bar_item_new (NULL,

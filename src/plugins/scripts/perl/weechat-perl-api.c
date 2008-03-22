@@ -1815,12 +1815,16 @@ static XS (XS_weechat_hook_fd)
 
 int
 weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
-                                time_t date, char *prefix, char *message)
+                                time_t date, int tags_count, char **tags,
+                                char *prefix, char *message)
 {
     struct t_script_callback *script_callback;
-    char *perl_argv[5];
+    char *perl_argv[6];
     static char timebuffer[64];
     int *rc, ret;
+    
+    /* make C compiler happy */
+    (void) tags_count;
     
     script_callback = (struct t_script_callback *)data;
     
@@ -1828,9 +1832,10 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     
     perl_argv[0] = script_ptr2str (buffer);
     perl_argv[1] = timebuffer;
-    perl_argv[2] = prefix;
-    perl_argv[3] = message;
-    perl_argv[4] = NULL;
+    perl_argv[2] = weechat_string_build_with_exploded (tags, ",");
+    perl_argv[3] = prefix;
+    perl_argv[4] = message;
+    perl_argv[5] = NULL;
     
     rc = (int *) weechat_perl_exec (script_callback->script,
                                     WEECHAT_SCRIPT_EXEC_INT,
@@ -1846,6 +1851,8 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     }
     if (perl_argv[0])
         free (perl_argv[0]);
+    if (perl_argv[2])
+        free (perl_argv[2]);
     
     return ret;
 }
@@ -1856,7 +1863,7 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
 
 static XS (XS_weechat_hook_print)
 {
-    char *result, *buffer, *message, *function;
+    char *result, *buffer, *tags, *message, *function;
     dXSARGS;
     
     /* make C compiler happy */
@@ -1868,20 +1875,22 @@ static XS (XS_weechat_hook_print)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 4)
+    if (items < 5)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_print");
         PERL_RETURN_EMPTY;
     }
  
     buffer = SvPV (ST (0), PL_na);
-    message = SvPV (ST (1), PL_na);
-    function = SvPV (ST (3), PL_na);
+    tags = SvPV (ST (1), PL_na);
+    message = SvPV (ST (2), PL_na);
+    function = SvPV (ST (4), PL_na);
     result = script_ptr2str (script_api_hook_print (weechat_perl_plugin,
                                                     perl_current_script,
                                                     script_str2ptr (buffer),
+                                                    tags,
                                                     message,
-                                                    SvIV (ST (2)), /* strip_colors */
+                                                    SvIV (ST (3)), /* strip_colors */
                                                     &weechat_perl_api_hook_print_cb,
                                                     function));
     
@@ -2492,10 +2501,10 @@ static XS (XS_weechat_buffer_close)
 }
 
 /*
- * weechat::buffer_get: get a buffer property
+ * weechat::buffer_get_string: get a buffer property as string
  */
 
-static XS (XS_weechat_buffer_get)
+static XS (XS_weechat_buffer_get_string)
 {
     char *value, *buffer, *property;
     dXSARGS;
@@ -2505,21 +2514,53 @@ static XS (XS_weechat_buffer_get)
     
     if (!perl_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_string");
 	PERL_RETURN_EMPTY;
     }
     
     if (items < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_string");
         PERL_RETURN_EMPTY;
     }
     
     buffer = SvPV (ST (0), PL_na);
     property = SvPV (ST (1), PL_na); 
-    value = weechat_buffer_get (script_str2ptr (buffer), property);
+    value = weechat_buffer_get_string (script_str2ptr (buffer), property);
     
     PERL_RETURN_STRING(value);
+}
+
+/*
+ * weechat::buffer_get_pointer: get a buffer property as pointer
+ */
+
+static XS (XS_weechat_buffer_get_pointer)
+{
+    char *value, *buffer, *property;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_pointer");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_pointer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    property = SvPV (ST (1), PL_na); 
+    value = script_ptr2str (weechat_buffer_get_pointer (script_str2ptr (buffer),
+                                                        property));
+    
+    PERL_RETURN_STRING_FREE(value);
 }
 
 /*
@@ -3489,7 +3530,8 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::buffer_new", XS_weechat_buffer_new, "weechat");
     newXS ("weechat::buffer_search", XS_weechat_buffer_search, "weechat");
     newXS ("weechat::buffer_close", XS_weechat_buffer_close, "weechat");
-    newXS ("weechat::buffer_get", XS_weechat_buffer_get, "weechat");
+    newXS ("weechat::buffer_get_string", XS_weechat_buffer_get_string, "weechat");
+    newXS ("weechat::buffer_get_pointer", XS_weechat_buffer_get_pointer, "weechat");
     newXS ("weechat::buffer_set", XS_weechat_buffer_set, "weechat");
     newXS ("weechat::nicklist_add_group", XS_weechat_nicklist_add_group, "weechat");
     newXS ("weechat::nicklist_search_group", XS_weechat_nicklist_search_group, "weechat");
@@ -3522,10 +3564,6 @@ weechat_perl_api_init (pTHX)
     stash = gv_stashpv ("weechat", TRUE);
     newCONSTSUB (stash, "weechat::WEECHAT_RC_OK", newSViv (WEECHAT_RC_OK));
     newCONSTSUB (stash, "weechat::WEECHAT_RC_ERROR", newSViv (WEECHAT_RC_ERROR));
-    newCONSTSUB (stash, "weechat::WEECHAT_RC_OK_IGNORE_WEECHAT", newSViv (WEECHAT_RC_OK_IGNORE_WEECHAT));
-    newCONSTSUB (stash, "weechat::WEECHAT_RC_OK_IGNORE_PLUGINS", newSViv (WEECHAT_RC_OK_IGNORE_PLUGINS));
-    newCONSTSUB (stash, "weechat::WEECHAT_RC_OK_IGNORE_ALL", newSViv (WEECHAT_RC_OK_IGNORE_ALL));
-    newCONSTSUB (stash, "weechat::WEECHAT_RC_OK_WITH_HIGHLIGHT", newSViv (WEECHAT_RC_OK_WITH_HIGHLIGHT));
     newCONSTSUB (stash, "weechat::WEECHAT_LIST_POS_SORT", newSVpv (WEECHAT_LIST_POS_SORT, PL_na));
     newCONSTSUB (stash, "weechat::WEECHAT_LIST_POS_BEGINNING", newSVpv (WEECHAT_LIST_POS_BEGINNING, PL_na));
     newCONSTSUB (stash, "weechat::WEECHAT_LIST_POS_END", newSVpv (WEECHAT_LIST_POS_END, PL_na));

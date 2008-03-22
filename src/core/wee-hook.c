@@ -718,7 +718,7 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
                     && (FD_ISSET(HOOK_FD(ptr_hook, fd), exception_fds)))))
         {
             ptr_hook->running = 1;
-            (HOOK_FD(ptr_hook, callback)) (ptr_hook->callback_data);
+            (void) (HOOK_FD(ptr_hook, callback)) (ptr_hook->callback_data);
             ptr_hook->running = 0;
         }
         
@@ -734,8 +734,8 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
 
 struct t_hook *
 hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
-            char *message, int strip_colors, t_hook_callback_print *callback,
-            void *callback_data)
+            char *tags, char *message, int strip_colors,
+            t_hook_callback_print *callback, void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_print *new_hook_print;
@@ -755,6 +755,16 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
     new_hook->hook_data = new_hook_print;
     new_hook_print->callback = callback;
     new_hook_print->buffer = buffer;
+    if (tags)
+    {
+        new_hook_print->tags_array = string_explode (tags, ",", 0, 0,
+                                                     &new_hook_print->tags_count);
+    }
+    else
+    {
+        new_hook_print->tags_count = 0;
+        new_hook_print->tags_array = NULL;
+    }
     new_hook_print->message = (message) ? strdup (message) : NULL;
     new_hook_print->strip_colors = strip_colors;
     
@@ -768,11 +778,12 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
  */
 
 void
-hook_print_exec (struct t_gui_buffer *buffer, time_t date, char *prefix,
-                 char *message)
+hook_print_exec (struct t_gui_buffer *buffer, time_t date, int tags_count,
+                 char **tags_array, char *prefix, char *message)
 {
     struct t_hook *ptr_hook, *next_hook;
     char *prefix_no_color, *message_no_color;
+    int tags_match, tag_found, i, j;
     
     if (!message || !message[0])
         return;
@@ -802,16 +813,58 @@ hook_print_exec (struct t_gui_buffer *buffer, time_t date, char *prefix,
                 || string_strcasestr (prefix_no_color, HOOK_PRINT(ptr_hook, message))
                 || string_strcasestr (message_no_color, HOOK_PRINT(ptr_hook, message))))
         {
-            ptr_hook->running = 1;
-            (void) (HOOK_PRINT(ptr_hook, callback))
-                (ptr_hook->callback_data, buffer, date,
-                 (HOOK_PRINT(ptr_hook, strip_colors)) ? prefix_no_color : prefix,
-                 (HOOK_PRINT(ptr_hook, strip_colors)) ? message_no_color : message);
-            ptr_hook->running = 0;
+            /* check if tags match */
+            if (HOOK_PRINT(ptr_hook, tags_array))
+            {
+                /* if there are tags in message printed */
+                if (tags_array)
+                {
+                    tags_match = 1;
+                    for (i = 0; i < HOOK_PRINT(ptr_hook, tags_count); i++)
+                    {
+                        /* search for tag in message */
+                        tag_found = 0;
+                        for (j = 0; j < tags_count; j++)
+                        {
+                            if (string_strcasecmp (HOOK_PRINT(ptr_hook, tags_array)[i],
+                                                   tags_array[j]) != 0)
+                            {
+                                tag_found = 1;
+                                break;
+                            }
+                        }
+                        /* tag was asked by hook but not found in message? */
+                        if (!tag_found)
+                        {
+                            tags_match = 0;
+                            break;
+                        }
+                    }
+                }
+                else
+                    tags_match = 0;
+            }
+            else
+                tags_match = 1;
+            
+            /* run callback */
+            if (tags_match)
+            {
+                ptr_hook->running = 1;
+                (void) (HOOK_PRINT(ptr_hook, callback))
+                    (ptr_hook->callback_data, buffer, date,
+                     tags_count, tags_array,
+                     (HOOK_PRINT(ptr_hook, strip_colors)) ? prefix_no_color : prefix,
+                     (HOOK_PRINT(ptr_hook, strip_colors)) ? message_no_color : message);
+                ptr_hook->running = 0;
+            }
         }
         
         ptr_hook = next_hook;
     }
+    
+    free (prefix_no_color);
+    free (message_no_color);
     
     hook_exec_end ();
 }
@@ -869,8 +922,7 @@ hook_signal_send (char *signal, char *type_data, void *signal_data)
         
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && ((string_strcasecmp (HOOK_SIGNAL(ptr_hook, signal), "*") == 0)
-                || (string_strcasecmp (HOOK_SIGNAL(ptr_hook, signal), signal) == 0)))
+            && (string_match (signal, HOOK_SIGNAL(ptr_hook, signal), 0)))
         {
             ptr_hook->running = 1;
             (void) (HOOK_SIGNAL(ptr_hook, callback))

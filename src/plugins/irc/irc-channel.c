@@ -169,12 +169,14 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
         free (channel->modes);
     if (channel->key)
         free (channel->key);
-    //irc_nick_free_all (channel);
+    irc_nick_free_all (channel);
     if (channel->away_message)
         free (channel->away_message);
     if (channel->nicks_speaking)
         weechat_list_free (channel->nicks_speaking);
+    
     free (channel);
+    
     server->channels = new_channels;
 }
 

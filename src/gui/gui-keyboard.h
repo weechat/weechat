@@ -76,6 +76,7 @@ extern void gui_keyboard_buffer_add (int key);
 extern int gui_keyboard_get_paste_lines ();
 extern void gui_keyboard_paste_accept ();
 extern void gui_keyboard_paste_cancel ();
+extern void gui_keyboard_end ();
 
 /* keyboard functions (GUI dependent) */
 

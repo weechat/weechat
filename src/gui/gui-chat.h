@@ -20,12 +20,14 @@
 #ifndef __WEECHAT_GUI_CHAT_H
 #define __WEECHAT_GUI_CHAT_H 1
 
+#include <regex.h>
+
 struct t_gui_window;
 struct t_gui_buffer;
 struct t_gui_line;
 
-#define gui_chat_printf(buffer, argz...)    \
-    gui_chat_printf_date(buffer, 0, ##argz) \
+#define gui_chat_printf(buffer, argz...)                        \
+    gui_chat_printf_date_tags(buffer, 0, NULL, ##argz)
 
 enum t_gui_prefix
 {
@@ -58,11 +60,22 @@ extern void gui_chat_change_time_format ();
 extern int gui_chat_get_line_align (struct t_gui_buffer *buffer,
                                     struct t_gui_line *line,
                                     int with_suffix);
+extern int gui_chat_line_displayed (struct t_gui_line *line);
+extern struct t_gui_line *gui_chat_get_first_line_displayed (struct t_gui_buffer *buffer);
+extern struct t_gui_line *gui_chat_get_last_line_displayed (struct t_gui_buffer *buffer);
+extern struct t_gui_line *gui_chat_get_prev_line_displayed (struct t_gui_line *line);
+extern struct t_gui_line *gui_chat_get_next_line_displayed (struct t_gui_line *line);
 extern int gui_chat_line_search (struct t_gui_line *line, char *text,
                                  int case_sensitive);
+extern int gui_chat_line_match_regex (struct t_gui_line *line,
+                                      regex_t *regex_prefix,
+                                      regex_t *regex_message);
+extern int gui_chat_line_match_tags (struct t_gui_line *line, int tags_count,
+                                     char **tags_array);
 extern void gui_chat_line_free (struct t_gui_line *line);
-extern void gui_chat_printf_date (struct t_gui_buffer *buffer, time_t date,
-                                  char *message, ...);
+extern void gui_chat_printf_date_tags (struct t_gui_buffer *buffer,
+                                       time_t date, char *tags,
+                                       char *message, ...);
 
 /* chat functions (GUI dependent) */
 

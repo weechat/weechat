@@ -98,7 +98,7 @@ weechat_trigger_list_del (char *pattern, char *commands,
     number = strtol (pattern, &error, 10);
     p = NULL;
     
-    if (error && (error[0] == '\0') && number > 0)
+    if (error && !error[0] && number > 0)
     {
 	l = weechat_trigger_list;
 	while (l && number >= 0)

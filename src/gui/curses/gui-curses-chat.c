@@ -837,7 +837,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
             {
                 /* display read marker if needed */
                 if (window->buffer->last_read_line &&
-                    (window->buffer->last_read_line == line->prev_line))
+                    (window->buffer->last_read_line == gui_chat_get_prev_line_displayed (line)))
                 {
                     gui_chat_set_weechat_color (window,
                                                 GUI_COLOR_CHAT_READ_MARKER);
@@ -874,7 +874,7 @@ gui_chat_calculate_line_diff (struct t_gui_window *window,
         /* if looking backward, start at last line of buffer */
         if (backward)
         {
-            *line = window->buffer->last_line;
+            *line = gui_chat_get_last_line_displayed (window->buffer);
             if (!(*line))
                 return;
             current_size = gui_chat_display_line (window, *line, 0, 1);
@@ -885,7 +885,7 @@ gui_chat_calculate_line_diff (struct t_gui_window *window,
         /* if looking forward, start at first line of buffer */
         else
         {
-            *line = window->buffer->lines;
+            *line = gui_chat_get_first_line_displayed (window->buffer);
             if (!(*line))
                 return;
             *line_pos = 0;
@@ -904,7 +904,7 @@ gui_chat_calculate_line_diff (struct t_gui_window *window,
                 (*line_pos)--;
             else
             {
-                *line = (*line)->prev_line;
+                *line = gui_chat_get_prev_line_displayed (*line);
                 if (*line)
                 {
                     current_size = gui_chat_display_line (window, *line, 0, 1);
@@ -922,7 +922,7 @@ gui_chat_calculate_line_diff (struct t_gui_window *window,
                 (*line_pos)++;
             else
             {
-                *line = (*line)->next_line;
+                *line = gui_chat_get_next_line_displayed (*line);
                 if (*line)
                 {
                     current_size = gui_chat_display_line (window, *line, 0, 1);
@@ -941,7 +941,7 @@ gui_chat_calculate_line_diff (struct t_gui_window *window,
         if (backward)
         {
             /* first line reached */
-            *line = window->buffer->lines;
+            *line = gui_chat_get_first_line_displayed (window->buffer);
             *line_pos = 0;
         }
         else
@@ -1158,19 +1158,19 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                                                                   ptr_line,
                                                                   0, 1) -
                                            line_pos, 0);
-                    ptr_line = ptr_line->next_line;
+                    ptr_line = gui_chat_get_next_line_displayed (ptr_line);
                     ptr_win->first_line_displayed = 0;
                 }
                 else
                     ptr_win->first_line_displayed =
-                        (ptr_line == ptr_win->buffer->lines);
+                        (ptr_line == gui_chat_get_first_line_displayed (ptr_win->buffer));
                 
                 /* display lines */
                 count = 0;
                 while (ptr_line && (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1))
                 {
                     count = gui_chat_display_line (ptr_win, ptr_line, 0, 0);
-                    ptr_line = ptr_line->next_line;
+                    ptr_line = gui_chat_get_next_line_displayed (ptr_line);
                 }
                 
                 old_scroll = ptr_win->scroll;
@@ -1191,7 +1191,8 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                                       WEECHAT_HOOK_SIGNAL_POINTER, ptr_win);
                 }
                 
-                if (!ptr_win->scroll && (ptr_win->start_line == ptr_win->buffer->lines))
+                if (!ptr_win->scroll
+                    && (ptr_win->start_line == gui_chat_get_first_line_displayed (ptr_win->buffer)))
                 {
                     ptr_win->start_line = NULL;
                     ptr_win->start_line_pos = 0;

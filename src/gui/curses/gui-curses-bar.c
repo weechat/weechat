@@ -352,6 +352,8 @@ gui_bar_window_draw (struct t_gui_window *window,
                     }
                     if (item_value2)
                         free (item_value2);
+                    if (items)
+                        string_free_exploded (items);
                 }
                 free (item_value);
             }

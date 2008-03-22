@@ -45,6 +45,7 @@
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
+#include "../gui/gui-filter.h"
 #include "../gui/gui-history.h"
 #include "../gui/gui-input.h"
 #include "../gui/gui-keyboard.h"
@@ -172,7 +173,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
             }
             error = NULL;
             number = strtol (argv[5], &error, 10);
-            if (error && (error[0] == '\0'))
+            if (error && !error[0])
             {
                 size = number;
                 separator = 0;
@@ -241,7 +242,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
              ptr_buffer = ptr_buffer->next_buffer)
         {
             gui_chat_printf (NULL,
-                             "%s[%s%d%s]%s (%s) %s / %s",
+                             "  %s[%s%d%s]%s (%s) %s / %s",
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
                              ptr_buffer->number,
@@ -268,7 +269,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                     {
                         error = NULL;
                         number = strtol (argv[i], &error, 10);
-                        if (error && (error[0] == '\0'))
+                        if (error && !error[0])
                         {
                             ptr_buffer = gui_buffer_search_by_number (number);
                             if (ptr_buffer)
@@ -297,7 +298,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
             number = strtol (((argv[2][0] == '+') || (argv[2][0] == '-')) ?
                              argv[2] + 1 : argv[2],
                              &error, 10);
-            if (error && (error[0] == '\0'))
+            if (error && !error[0])
             {
                 if (argv[2][0] == '+')
                     gui_buffer_move_to_number (buffer,
@@ -354,7 +355,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                 /* set notify level for buffer */
                 error = NULL;
                 number = strtol (argv[2], &error, 10);
-                if (error && (error[0] == '\0'))
+                if (error && !error[0])
                 {
                     if ((number < GUI_BUFFER_NOTIFY_LEVEL_MIN)
                         || (number > GUI_BUFFER_NOTIFY_LEVEL_MAX))
@@ -441,7 +442,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                 /* relative jump '-' */
                 error = NULL;
                 number = strtol (argv[1] + 1, &error, 10);
-                if (error && (error[0] == '\0'))
+                if (error && !error[0])
                 {
                     target_buffer = buffer->number - (int) number;
                     if (target_buffer < 1)
@@ -456,7 +457,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                 /* relative jump '+' */
                 error = NULL;
                 number = strtol (argv[1] + 1, &error, 10);
-                if (error && (error[0] == '\0'))
+                if (error && !error[0])
                 {
                     target_buffer = buffer->number + (int) number;
                     if (last_gui_buffer && target_buffer > last_gui_buffer->number)
@@ -470,7 +471,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                 /* absolute jump by number, or by category/name */
                 error = NULL;
                 number = strtol (argv[1], &error, 10);
-                if (error && (error[0] == '\0'))
+                if (error && !error[0])
                     gui_buffer_switch_by_number (gui_current_window,
                                                  (int) number);
                 else
@@ -532,6 +533,169 @@ command_builtin (void *data, struct t_gui_buffer *buffer,
                 input_data (buffer, command, 1);
                 free (command);
             }
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * command_filter: manage message filters
+ */
+
+int
+command_filter (void *data, struct t_gui_buffer *buffer,
+                int argc, char **argv, char **argv_eol)
+{
+    struct t_gui_filter *ptr_filter;
+    int i;
+    long number;
+    char *error;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    
+    if ((argc == 1)
+        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    {
+        /* display all key bindings */
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL, "%s",
+                         (gui_filters_enabled) ?
+                         _("Filters are enabled") : _("Filters are disabled"));
+        
+        if (gui_filters)
+        {
+            gui_chat_printf (NULL, _("Message filters:"));
+            i = 0;
+            for (ptr_filter = gui_filters; ptr_filter;
+                 ptr_filter = ptr_filter->next_filter)
+            {
+                i++;
+                gui_chat_printf (NULL,
+                                 _("  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / "
+                                   "regex: %s"),
+                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 i,
+                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                 ptr_filter->buffer,
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 ptr_filter->tags,
+                                 ptr_filter->regex);
+            }
+        }
+        else
+            gui_chat_printf (NULL, _("No message filter defined"));
+                             
+        return WEECHAT_RC_OK;
+    }
+    
+    /* enable filters */
+    if (string_strcasecmp (argv[1], "enable") == 0)
+    {
+        if (!gui_filters_enabled)
+        {
+            gui_filter_enable ();
+            gui_chat_printf (NULL, _("Filters enabled"));
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* disable filters */
+    if (string_strcasecmp (argv[1], "disable") == 0)
+    {
+        if (gui_filters_enabled)
+        {
+            gui_filter_disable ();
+            gui_chat_printf (NULL, _("Filters disabled"));
+        }
+        return WEECHAT_RC_OK;
+    }
+
+    /* toggle filters on/off */
+    if (string_strcasecmp (argv[1], "toggle") == 0)
+    {
+        if (gui_filters_enabled)
+            gui_filter_disable ();
+        else
+            gui_filter_enable ();
+        return WEECHAT_RC_OK;
+    }
+    
+    /* add filter */
+    if (string_strcasecmp (argv[1], "add") == 0)
+    {
+        if (argc < 5)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "filter add");
+            return WEECHAT_RC_ERROR;
+        }
+        if (gui_filter_search (argv[2], argv[3], argv_eol[4]))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: filter already exists"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_ERROR;
+        }
+        if ((strcmp (argv[3], "*") == 0) && (strcmp (argv_eol[4], "*") == 0))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: you must specify at least tag(s) or "
+                               "regex for filter"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_ERROR;
+        }
+        
+        gui_filter_new (argv[2], argv[3], argv_eol[4]);
+        gui_chat_printf (NULL, _("Filter added"));
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* delete filter */
+    if (string_strcasecmp (argv[1], "del") == 0)
+    {
+        if (argc < 3)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "filter del");
+            return WEECHAT_RC_ERROR;
+        }
+        error = NULL;
+        number = strtol (argv[2], &error, 10);
+        if (error && !error[0])
+        {
+            ptr_filter = gui_filter_search_by_number (number);
+            if (ptr_filter)
+            {
+                gui_filter_free (ptr_filter);
+                gui_chat_printf (NULL, _("Filter deleted"));
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: filter not found"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        else
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: wrong filter number"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_ERROR;
         }
     }
     
@@ -1948,7 +2112,7 @@ command_window (void *data, struct t_gui_buffer *buffer,
             {
                 error = NULL;
                 number = strtol (argv[2], &error, 10);
-                if (error && (error[0] == '\0')
+                if (error && !error[0]
                     && (number > 0) && (number < 100))
                     gui_window_split_horiz (gui_current_window, number);
             }
@@ -1962,7 +2126,7 @@ command_window (void *data, struct t_gui_buffer *buffer,
             {
                 error = NULL;
                 number = strtol (argv[2], &error, 10);
-                if (error && (error[0] == '\0')
+                if (error && !error[0]
                     && (number > 0) && (number < 100))
                     gui_window_split_vertic (gui_current_window, number);
             }
@@ -1976,7 +2140,7 @@ command_window (void *data, struct t_gui_buffer *buffer,
             {
                 error = NULL;
                 number = strtol (argv[2], &error, 10);
-                if (error && (error[0] == '\0')
+                if (error && !error[0]
                     && (number > 0) && (number < 100))
                     gui_window_resize (gui_current_window, number);
             }
@@ -2016,7 +2180,7 @@ command_window (void *data, struct t_gui_buffer *buffer,
             /* jump to window by buffer number */
             error = NULL;
             number = strtol (argv[1] + 1, &error, 10);
-            if (error && (error[0] == '\0'))
+            if (error && !error[0])
                 gui_window_switch_by_buffer (gui_current_window, number);
         }
         else if (string_strcasecmp (argv[1], "-1") == 0)
@@ -2117,6 +2281,29 @@ command_init ()
                      "added if not found at beginning of command)"),
                   "%w",
                   &command_builtin, NULL);
+    hook_command (NULL, "filter",
+                  N_("filter messages in buffers, to hide/show them according "
+                     "to tags or regex"),
+                  N_("[list] | [enable|disable|toggle] | "
+                     "[add buffer tags regex] | "
+                     "[del number]"),
+                  N_("   list: list all filters\n"
+                     " enable: enable filters (filters are enabled by "
+                      "default)\n"
+                     "disable: disable filters\n"
+                     " toggle: toggle filters\n"
+                     "    add: add a filter\n"
+                     "    del: delete a filter\n"
+                     " number: number of filter to delete (look at list to "
+                     "find it)\n"
+                     " buffer: buffer where filter is active: it may be "
+                     "a name (category.name) or \"*\" for all buffers\n"
+                     "   tags: comma separated list of tags, for "
+                     "example: \"irc_join,irc_part,irc_quit\"\n"
+                     "  regex: regular expression to search in "
+                     "line (use \t to separate prefix from message)"),
+                  "list|enable|disable|toggle|add|del",
+                  &command_filter, NULL);
     hook_command (NULL, "help",
                   N_("display help about commands"),
                   N_("[command]"),

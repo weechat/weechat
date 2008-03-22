@@ -88,6 +88,7 @@ plugin_load (char *filename)
     void *handle;
     char *name, *author, *description, *version, *license, *charset;
     t_weechat_init_func *init_func;
+    int rc;
     struct t_weechat_plugin *new_plugin;
     
     if (!filename)
@@ -242,6 +243,7 @@ plugin_load (char *filename)
         new_plugin->strncasecmp = &string_strncasecmp;
         new_plugin->strcmp_ignore_chars = &string_strcmp_ignore_chars;
         new_plugin->strcasestr = &string_strcasestr;
+        new_plugin->string_match = &string_match;
         new_plugin->string_replace = &string_replace;
         new_plugin->string_remove_quotes = &string_remove_quotes;
         new_plugin->string_strip = &string_strip;
@@ -309,7 +311,7 @@ plugin_load (char *filename)
 
         new_plugin->prefix = &plugin_api_prefix;
         new_plugin->color = &plugin_api_color;
-        new_plugin->printf_date = &gui_chat_printf_date;
+        new_plugin->printf_date_tags = &gui_chat_printf_date_tags;
         new_plugin->infobar_printf = &plugin_api_infobar_printf;
         new_plugin->infobar_remove = &plugin_api_infobar_remove;
         new_plugin->log_printf = &log_printf;
@@ -330,7 +332,8 @@ plugin_load (char *filename)
         new_plugin->buffer_new = &gui_buffer_new;
         new_plugin->buffer_search = &gui_buffer_search_by_category_name;
         new_plugin->buffer_close = &gui_buffer_close;
-        new_plugin->buffer_get = &gui_buffer_get;
+        new_plugin->buffer_get_string = &gui_buffer_get_string;
+        new_plugin->buffer_get_pointer = &gui_buffer_get_pointer;
         new_plugin->buffer_set = &gui_buffer_set;
 
         new_plugin->nicklist_add_group = &gui_nicklist_add_group;
@@ -374,7 +377,8 @@ plugin_load (char *filename)
         last_weechat_plugin = new_plugin;
         
         /* init plugin */
-        if (((t_weechat_init_func *)init_func) (new_plugin) < 0)
+        rc = ((t_weechat_init_func *)init_func) (new_plugin);
+        if (rc != WEECHAT_RC_OK)
         {
             gui_chat_printf (NULL,
                              _("%sError: unable to initialize plugin "
@@ -428,11 +432,14 @@ plugin_auto_load_file (void *plugin, char *filename)
         {
             if (string_strcasecmp (pos,
                                    CONFIG_STRING(config_plugins_extension)) == 0)
+            {
                 plugin_load (filename);
+            }
         }
     }
     else
         plugin_load (filename);
+    
     return 1;
 }
 
@@ -559,10 +566,15 @@ plugin_remove (struct t_weechat_plugin *plugin)
         free (plugin->name);
     if (plugin->description)
         free (plugin->description);
+    if (plugin->author)
+        free (plugin->author);
     if (plugin->version)
         free (plugin->version);
+    if (plugin->license)
+        free (plugin->license);
     if (plugin->charset)
         free (plugin->charset);
+    
     free (plugin);
     
     weechat_plugins = new_weechat_plugins;
@@ -578,11 +590,12 @@ plugin_unload (struct t_weechat_plugin *plugin)
     t_weechat_end_func *end_func;
     char *name;
     
-    name = (plugin->name) ? strdup (plugin->name) : strdup ("???");
+    name = (plugin->name) ? strdup (plugin->name) : NULL;
     
     end_func = dlsym (plugin->handle, "weechat_plugin_end");
     if (end_func)
         (void) (end_func) (plugin);
+    
     plugin_remove (plugin);
     
     gui_chat_printf (NULL,
@@ -622,7 +635,9 @@ void
 plugin_unload_all ()
 {
     while (weechat_plugins)
+    {
         plugin_unload (last_weechat_plugin);
+    }
 }
 
 /*
@@ -687,6 +702,9 @@ plugin_end ()
     
     /* unload all plugins */
     plugin_unload_all ();
+    
+    /* free all plugin options */
+    plugin_config_end ();
 }
 
 /*

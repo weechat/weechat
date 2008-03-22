@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-15 09:33+0100\n"
+"POT-Creation-Date: 2008-03-22 23:32+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -207,6 +207,56 @@ msgstr "(hotlist: подсвечивание + сообщения)\n"
 #, fuzzy
 msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr "(хотлист: подсвечивание + сообщения + входы/выходы (всё))\n"
+
+#, fuzzy
+msgid "Filters are enabled"
+msgstr "команда users отключена"
+
+#, fuzzy
+msgid "Filters are disabled"
+msgstr "команда users отключена"
+
+msgid "Message filters:"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s"
+msgstr "       (нет обработчика сообщений)\n"
+
+#, fuzzy
+msgid "No message filter defined"
+msgstr "Сокращения не заданы.\n"
+
+msgid "Filters enabled"
+msgstr ""
+
+#, fuzzy
+msgid "Filters disabled"
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "%sError: filter already exists"
+msgstr "%s игнорирование уже существует\n"
+
+#, c-format
+msgid "%sError: you must specify at least tag(s) or regex for filter"
+msgstr ""
+
+#, fuzzy
+msgid "Filter added"
+msgstr "команда users отключена"
+
+#, fuzzy
+msgid "Filter deleted"
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "%sError: filter not found"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong filter number"
+msgstr "%s неправильный номер буфера\n"
 
 #. TRANSLATORS: %s is "WeeChat"
 #, fuzzy, c-format
@@ -595,6 +645,30 @@ msgid ""
 msgstr ""
 "команда: исполняемая команда ('/' автоматически добавляется в начало "
 "команды)\n"
+
+msgid ""
+"filter messages in buffers, to hide/show them according to tags or regex"
+msgstr ""
+
+msgid ""
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number]"
+msgstr ""
+
+msgid ""
+"   list: list all filters\n"
+" enable: enable filters (filters are enabled by default)\n"
+"disable: disable filters\n"
+" toggle: toggle filters\n"
+"    add: add a filter\n"
+"    del: delete a filter\n"
+" number: number of filter to delete (look at list to find it)\n"
+" buffer: buffer where filter is active: it may be a name (category.name) or "
+"\"*\" for all buffers\n"
+"   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
+"irc_quit\"\n"
+"  regex: regular expression to search in line (use \t to separate prefix "
+"from message)"
+msgstr ""
 
 msgid "display help about commands"
 msgstr "отобразить помощь по командам"
@@ -1487,10 +1561,6 @@ msgid "  . description: %s\n"
 msgstr "  . описание: %s\n"
 
 #, fuzzy, c-format
-msgid "%sError: command \"%s\" failed"
-msgstr "%s команда \"%s\" не удалась\n"
-
-#, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%s сокращение или команда \"%s\" не найдены\n"
 
@@ -1567,6 +1637,14 @@ msgstr "-ДАЛЬШЕ-"
 
 msgid "server"
 msgstr "сервер"
+
+#, fuzzy, c-format
+msgid "%s[%sF%s%s%s]"
+msgstr "%s[%s%s%s]%s бездействует: "
+
+#, fuzzy
+msgid "filtered"
+msgstr "команда users отключена"
 
 #, fuzzy
 msgid "(MORE)"
@@ -3540,7 +3618,7 @@ msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
 msgstr "Режим пользователя %s%s%s - %s[%s%s%s]\n"
 
 #, fuzzy, c-format
-msgid "%s%s%s%s is away: %s"
+msgid "%s%s[%s%s%s]%s is away: %s"
 msgstr "%s%s%s отсутствует: %s\n"
 
 #, fuzzy, c-format
@@ -3603,28 +3681,16 @@ msgid "%s%s%s%s has invited %s%s%s on %s%s"
 msgstr "%s%s%s пригласил %s%s%s на канал %s%s\n"
 
 #, fuzzy, c-format
-msgid "%s%s: cannot identify channel for \"%s\" command"
-msgstr "%s не могу опознать канал для команды \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot identify nickname for \"%s\" command"
-msgstr "%s не могу опознать ник для команды \"%s\"\n"
-
-#, fuzzy, c-format
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr "Реоп канала %s%s%s: %s%s\n"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s"
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s забанен\n"
 
-#, c-format
-msgid " by %s%s %s(%s%s%s)"
-msgstr " пользователем %s%s %s(%s%s%s)"
-
-#, c-format
-msgid " by %s%s"
-msgstr " пользователем %s%s"
+#, fuzzy, c-format
+msgid "%s%s[%s%s%s]%s exception %s%s"
+msgstr "%s[%s%s%s] %s%s%s забанен\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create nick \"%s\" for channel \"%s\""
@@ -3668,12 +3734,12 @@ msgid "normal"
 msgstr "обычные"
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by "
+msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
 msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
-msgstr "%s[%s%s%s] %s%s%s забанен\n"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
+msgstr "%s[%s%s%s] %s%s%s забанен пользователем "
 
 #, fuzzy, c-format
 msgid ""
@@ -4412,6 +4478,32 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
+#, fuzzy
+#~ msgid "%sError: wrong number \"%s\" for filter"
+#~ msgstr "%s некорректное количество аргументов команды \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sError: command \"%s\" failed"
+#~ msgstr "%s команда \"%s\" не удалась\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot identify channel for \"%s\" command"
+#~ msgstr "%s не могу опознать канал для команды \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot identify nickname for \"%s\" command"
+#~ msgstr "%s не могу опознать ник для команды \"%s\"\n"
+
+#~ msgid " by %s%s %s(%s%s%s)"
+#~ msgstr " пользователем %s%s %s(%s%s%s)"
+
+#~ msgid " by %s%s"
+#~ msgstr " пользователем %s%s"
+
+#, fuzzy
+#~ msgid "%s%s[%s%s%s] %s%s%s banned"
+#~ msgstr "%s[%s%s%s] %s%s%s забанен\n"
+
 #~ msgid "/list end"
 #~ msgstr "конец /list"
 
@@ -4945,9 +5037,6 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 #~ msgid "%s cannot create new private window \"%s\"\n"
 #~ msgstr "%s не могу создать новое окно привата \"%s\"\n"
 
-#~ msgid "%s[%s%s%s]%s idle: "
-#~ msgstr "%s[%s%s%s]%s бездействует: "
-
 #~ msgid "%s: trying 2nd nickname \"%s\"\n"
 #~ msgstr "%s: пробую второй ник \"%s\"\n"
 
@@ -5399,9 +5488,6 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 #~ msgstr ""
 #~ "%s маска или тип/команда должны быть необычного значения для "
 #~ "игнорирования\n"
-
-#~ msgid "%s ignore already exists\n"
-#~ msgstr "%s игнорирование уже существует\n"
 
 #~ msgid "%s not enough memory to create ignore\n"
 #~ msgstr "%s недостаточно памяти для создания игнорирования\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-15 09:33+0100\n"
+"POT-Creation-Date: 2008-03-22 23:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -175,6 +175,50 @@ msgid "(hotlist: highlights + messages)"
 msgstr ""
 
 msgid "(hotlist: highlights + messages + join/part (all))"
+msgstr ""
+
+msgid "Filters are enabled"
+msgstr ""
+
+msgid "Filters are disabled"
+msgstr ""
+
+msgid "Message filters:"
+msgstr ""
+
+#, c-format
+msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s"
+msgstr ""
+
+msgid "No message filter defined"
+msgstr ""
+
+msgid "Filters enabled"
+msgstr ""
+
+msgid "Filters disabled"
+msgstr ""
+
+#, c-format
+msgid "%sError: filter already exists"
+msgstr ""
+
+#, c-format
+msgid "%sError: you must specify at least tag(s) or regex for filter"
+msgstr ""
+
+msgid "Filter added"
+msgstr ""
+
+msgid "Filter deleted"
+msgstr ""
+
+#, c-format
+msgid "%sError: filter not found"
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong filter number"
 msgstr ""
 
 #. TRANSLATORS: %s is "WeeChat"
@@ -499,6 +543,30 @@ msgstr ""
 msgid ""
 "command: command to execute (a '/' is automatically added if not found at "
 "beginning of command)"
+msgstr ""
+
+msgid ""
+"filter messages in buffers, to hide/show them according to tags or regex"
+msgstr ""
+
+msgid ""
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number]"
+msgstr ""
+
+msgid ""
+"   list: list all filters\n"
+" enable: enable filters (filters are enabled by default)\n"
+"disable: disable filters\n"
+" toggle: toggle filters\n"
+"    add: add a filter\n"
+"    del: delete a filter\n"
+" number: number of filter to delete (look at list to find it)\n"
+" buffer: buffer where filter is active: it may be a name (category.name) or "
+"\"*\" for all buffers\n"
+"   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
+"irc_quit\"\n"
+"  regex: regular expression to search in line (use \t to separate prefix "
+"from message)"
 msgstr ""
 
 msgid "display help about commands"
@@ -1198,10 +1266,6 @@ msgid "  . description: %s\n"
 msgstr ""
 
 #, c-format
-msgid "%sError: command \"%s\" failed"
-msgstr ""
-
-#, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr ""
 
@@ -1269,6 +1333,13 @@ msgid "-MORE-"
 msgstr ""
 
 msgid "server"
+msgstr ""
+
+#, c-format
+msgid "%s[%sF%s%s%s]"
+msgstr ""
+
+msgid "filtered"
 msgstr ""
 
 msgid "(MORE)"
@@ -3008,7 +3079,7 @@ msgid "%sUser mode for %s%s%s is %s[%s%s%s]"
 msgstr ""
 
 #, c-format
-msgid "%s%s%s%s is away: %s"
+msgid "%s%s[%s%s%s]%s is away: %s"
 msgstr ""
 
 #, c-format
@@ -3069,27 +3140,15 @@ msgid "%s%s%s%s has invited %s%s%s on %s%s"
 msgstr ""
 
 #, c-format
-msgid "%s%s: cannot identify channel for \"%s\" command"
-msgstr ""
-
-#, c-format
-msgid "%s%s: cannot identify nickname for \"%s\" command"
-msgstr ""
-
-#, c-format
 msgid "%sChannel reop %s%s%s: %s%s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s]%s exception %s%s%s"
+msgid "%s%s[%s%s%s]%s exception %s%s%s by %s%s %s(%s%s%s)%s on %s"
 msgstr ""
 
 #, c-format
-msgid " by %s%s %s(%s%s%s)"
-msgstr ""
-
-#, c-format
-msgid " by %s%s"
+msgid "%s%s[%s%s%s]%s exception %s%s"
 msgstr ""
 
 #, c-format
@@ -3133,11 +3192,11 @@ msgid "normal"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned by "
+msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)%s on %s"
 msgstr ""
 
 #, c-format
-msgid "%s%s[%s%s%s] %s%s%s banned"
+msgid "%s%s[%s%s%s] %s%s%s banned by %s%s %s(%s%s%s)"
 msgstr ""
 
 #, c-format

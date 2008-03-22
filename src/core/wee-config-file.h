@@ -156,6 +156,7 @@ extern void config_file_write_line (struct t_config_file *config_file,
 extern int config_file_write (struct t_config_file *config_files);
 extern int config_file_read (struct t_config_file *config_file);
 extern int config_file_reload (struct t_config_file *config_file);
+extern void config_file_option_free_data (struct t_config_option *option);
 extern void config_file_option_free (struct t_config_section *section,
                                      struct t_config_option *option);
 extern void config_file_section_free (struct t_config_file *config_file,

@@ -87,9 +87,16 @@ weechat_python_exec (struct t_plugin_script *script,
                 {
                     if (argv[4])
                     {
-                        rc = PyObject_CallFunction (evFunc, "sssss", argv[0],
-                                                    argv[1], argv[2], argv[3],
-                                                    argv[4]);
+                        if (argv[5])
+                        {
+                            rc = PyObject_CallFunction (evFunc, "ssssss", argv[0],
+                                                        argv[1], argv[2], argv[3],
+                                                        argv[4], argv[5]);
+                        }
+                        else
+                            rc = PyObject_CallFunction (evFunc, "sssss", argv[0],
+                                                        argv[1], argv[2], argv[3],
+                                                        argv[4]);
                     }
                     else
                         rc = PyObject_CallFunction (evFunc, "ssss", argv[0],
@@ -315,10 +322,6 @@ weechat_python_load (char *filename)
     weechat_dict = PyModule_GetDict(weechat_module);
     PyDict_SetItemString(weechat_dict, "WEECHAT_RC_OK", PyInt_FromLong((long) WEECHAT_RC_OK));
     PyDict_SetItemString(weechat_dict, "WEECHAT_RC_ERROR", PyInt_FromLong((long) WEECHAT_RC_ERROR));
-    PyDict_SetItemString(weechat_dict, "WEECHAT_RC_OK_IGNORE_WEECHAT", PyInt_FromLong((long) WEECHAT_RC_OK_IGNORE_WEECHAT));
-    PyDict_SetItemString(weechat_dict, "WEECHAT_RC_OK_IGNORE_PLUGINS", PyInt_FromLong((long) WEECHAT_RC_OK_IGNORE_PLUGINS));
-    PyDict_SetItemString(weechat_dict, "WEECHAT_RC_OK_IGNORE_ALL", PyInt_FromLong((long) WEECHAT_RC_OK_IGNORE_ALL));
-    PyDict_SetItemString(weechat_dict, "WEECHAT_RC_OK_WITH_HIGHLIGHT", PyInt_FromLong((long) WEECHAT_RC_OK_WITH_HIGHLIGHT));
     PyDict_SetItemString(weechat_dict, "WEECHAT_LIST_POS_SORT", PyString_FromString(WEECHAT_LIST_POS_SORT));
     PyDict_SetItemString(weechat_dict, "WEECHAT_LIST_POS_BEGINNING", PyString_FromString(WEECHAT_LIST_POS_BEGINNING));
     PyDict_SetItemString(weechat_dict, "WEECHAT_LIST_POS_END", PyString_FromString(WEECHAT_LIST_POS_END));

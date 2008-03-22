@@ -726,7 +726,7 @@ gui_window_scroll_top (struct t_gui_window *window)
     
     if (!window->first_line_displayed)
     {
-        window->start_line = window->buffer->lines;
+        window->start_line = gui_chat_get_first_line_displayed (window->buffer);
         window->start_line_pos = 0;
         gui_chat_draw (window->buffer, 0);
         if (!window->scroll)

@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-03-05
+ChangeLog - 2008-03-22
 
 
 Version 0.2.7 (under dev!):
+   * added tags for lines and custom filtering by tags or regex (task #7674)
    * added custom bars, with custom items
    * command /whois is now authorized in private without argument (task #7482)
    * removed kernel info in CTCP VERSION reply (IRC plugin) (task #7494)

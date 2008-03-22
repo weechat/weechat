@@ -55,7 +55,6 @@
 struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
 struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
 struct t_gui_buffer *gui_previous_buffer = NULL;   /* previous buffer       */
-struct t_gui_buffer *gui_buffer_before_dcc = NULL; /* buffer before dcc     */
 
 
 /*
@@ -89,7 +88,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
     }
     
     /* create new buffer */
-    if ((new_buffer = (struct t_gui_buffer *)(malloc (sizeof (struct t_gui_buffer)))))
+    new_buffer = (struct t_gui_buffer *)(malloc (sizeof (struct t_gui_buffer)));
+    if (new_buffer)
     {
         /* init buffer */
         new_buffer->plugin = plugin;
@@ -113,6 +113,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         new_buffer->last_line = NULL;
         new_buffer->last_read_line = NULL;
         new_buffer->lines_count = 0;
+        new_buffer->lines_hidden = 0;
         new_buffer->prefix_max_length = 0;
         new_buffer->chat_refresh_needed = 1;
         
@@ -219,14 +220,14 @@ gui_buffer_valid (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_buffer_get: get a buffer property
+ * gui_buffer_get_string: get a buffer property as string
  */
 
-void *
-gui_buffer_get (struct t_gui_buffer *buffer, char *property)
+char *
+gui_buffer_get_string (struct t_gui_buffer *buffer, char *property)
 {
-    if (string_strcasecmp (property, "plugin") == 0)
-        return buffer->plugin;
+    static char value[32];
+    
     if (string_strcasecmp (property, "category") == 0)
         return buffer->category;
     else if (string_strcasecmp (property, "name") == 0)
@@ -235,6 +236,24 @@ gui_buffer_get (struct t_gui_buffer *buffer, char *property)
         return buffer->title;
     else if (string_strcasecmp (property, "nick") == 0)
         return buffer->input_nick;
+    else if (string_strcasecmp (property, "lines_hidden") == 0)
+    {
+        snprintf (value, sizeof (value), "%d", buffer->lines_hidden);
+        return value;
+    }
+    
+    return NULL;
+}
+
+/*
+ * gui_buffer_get_pointer: get a buffer property as pointer
+ */
+
+void *
+gui_buffer_get_pointer (struct t_gui_buffer *buffer, char *property)
+{
+    if (string_strcasecmp (property, "plugin") == 0)
+        return buffer->plugin;
     
     return NULL;
 }
@@ -370,21 +389,21 @@ gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
     {
         error = NULL;
         number = strtol (value, &error, 10);
-        if (error && (error[0] == '\0'))
+        if (error && !error[0])
             gui_buffer_set_nicklist (buffer, number);
     }
     else if (string_strcasecmp (property, "nicklist_case_sensitive") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
-        if (error && (error[0] == '\0'))
+        if (error && !error[0])
             gui_buffer_set_nicklist_case_sensitive (buffer, number);
     }
     else if (string_strcasecmp (property, "nicklist_display_groups") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
-        if (error && (error[0] == '\0'))
+        if (error && !error[0])
             gui_buffer_set_nicklist_display_groups (buffer, number);
     }
     else if (string_strcasecmp (property, "nick") == 0)
@@ -401,7 +420,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
         {
             error = NULL;
             number = strtol (value, &error, 10);
-            if (error && (error[0] == '\0'))
+            if (error && !error[0])
                 gui_hotlist_add (buffer, number, NULL, 1);
         }
     }
@@ -533,6 +552,54 @@ gui_buffer_is_scrolled (struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_buffer_match_category_name: return 1 if buffer matches category.name
+ *                                 otherwise 0
+ *                                 category or name may begin or end with "*"
+ *                                 examples:
+ *                                     *.#weechat
+ *                                     freenode.*
+ *                                     freenode.#weechat*
+ *                                     freenode.*chat*
+ */
+
+int
+gui_buffer_match_category_name (struct t_gui_buffer *buffer, char *mask,
+                                int case_sensitive)
+{
+    char *pos_point, *category, *pos_name;
+    int rc;
+    
+    if (!mask || !mask[0])
+        return 0;
+    
+    pos_point = strchr (mask, '.');
+    if (pos_point)
+    {
+        category = string_strndup (mask, pos_point - mask);
+        pos_name = pos_point + 1;
+    }
+    else
+    {
+        category = NULL;
+        pos_name = mask;
+    }
+    
+    rc = 1;
+    
+    if (category && buffer->category
+        && !string_match (buffer->category, category, case_sensitive))
+        rc = 0;
+    
+    if (rc && !string_match (buffer->name, pos_name, case_sensitive))
+        rc = 0;
+    
+    if (category)
+        free (category);
+    
+    return rc;
+}
+
+/*
  * gui_buffer_get_dcc: get pointer to DCC buffer (DCC buffer created if not existing)
  */
 
@@ -657,13 +724,6 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     if (gui_previous_buffer == buffer)
         gui_previous_buffer = NULL;
     
-    if (gui_buffer_before_dcc == buffer)
-        gui_buffer_before_dcc = NULL;
-    
-    /* free title */
-    if (buffer->title)
-        free (buffer->title);
-    
     if (buffer->type == GUI_BUFFER_TYPE_FORMATED)
     {
         /* decrease buffer number for all next buffers */
@@ -681,7 +741,14 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
             buffer->lines = ptr_line;
         }
     }
-
+    
+    /* free some data */
+    if (buffer->title)
+        free (buffer->title);
+    if (buffer->category)
+        free (buffer->category);
+    if (buffer->name)
+        free (buffer->name);
     if (buffer->input_buffer)
         free (buffer->input_buffer);
     if (buffer->input_buffer_color_mask)
@@ -988,6 +1055,7 @@ gui_buffer_print_log ()
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
+    char *tags;
     int num;
     
     for (ptr_buffer = gui_buffers; ptr_buffer;
@@ -1007,6 +1075,7 @@ gui_buffer_print_log ()
         log_printf ("  last_line. . . . . . . : 0x%x", ptr_buffer->last_line);
         log_printf ("  last_read_line . . . . : 0x%x", ptr_buffer->last_read_line);
         log_printf ("  lines_count. . . . . . : %d",   ptr_buffer->lines_count);
+        log_printf ("  lines_hidden . . . . . : %d",   ptr_buffer->lines_hidden);
         log_printf ("  prefix_max_length. . . : %d",   ptr_buffer->prefix_max_length);
         log_printf ("  chat_refresh_needed. . : %d",   ptr_buffer->chat_refresh_needed);
         log_printf ("  nicklist . . . . . . . : %d",   ptr_buffer->nicklist);
@@ -1060,10 +1129,17 @@ gui_buffer_print_log ()
         while (ptr_line)
         {
             num--;
-            log_printf ("       line N-%05d: str_time:'%s', prefix:'%s'",
-                                num, ptr_line->str_time, ptr_line->prefix);
+            tags = string_build_with_exploded (ptr_line->tags_array, ",");
+            log_printf ("       line N-%05d: str_time:'%s', tags:'%s', "
+                        "displayed:%d, prefix:'%s'",
+                        num, ptr_line->str_time,
+                        (tags) ? tags  : "",
+                        (int)(ptr_line->displayed),
+                        ptr_line->prefix);
             log_printf ("                     data: '%s'",
-                                ptr_line->message);
+                        ptr_line->message);
+            if (tags)
+                free (tags);
             
             ptr_line = ptr_line->next_line;
         }

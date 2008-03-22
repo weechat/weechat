@@ -174,6 +174,7 @@ util_exec_on_files (char *directory, void *data,
     DIR *dir;
     struct dirent *entry;
     struct stat statbuf;
+    int rc;
     
     if (!directory || !callback)
         return;
@@ -188,7 +189,7 @@ util_exec_on_files (char *directory, void *data,
             lstat (complete_filename, &statbuf);
             if (!S_ISDIR(statbuf.st_mode))
             {
-                (int) (*callback) (data, complete_filename);
+                rc = (*callback) (data, complete_filename);
             }
         }
         closedir (dir);

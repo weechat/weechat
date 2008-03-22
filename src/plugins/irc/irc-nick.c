@@ -352,9 +352,10 @@ irc_nick_free (struct t_irc_channel *channel, struct t_irc_nick *nick)
         free (nick->name);
     if (nick->host)
         free (nick->host);
-    free (nick);
-    channel->nicks = new_nicks;
     
+    free (nick);
+    
+    channel->nicks = new_nicks;
     channel->nick_completion_reset = 1;
 }
 

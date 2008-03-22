@@ -261,12 +261,10 @@ plugin_config_free (struct t_config_option *option)
     if (option->next_option)
         (option->next_option)->prev_option = option->prev_option;
     
-    /* free data */
-    if (option->name)
-        free (option->name);
-    if (option->value)
-        free (option->value);
+    /* free option */
+    config_file_option_free_data (option);
     free (option);
+    
     plugin_options = new_plugin_options;
 }
 
@@ -278,7 +276,9 @@ void
 plugin_config_free_all ()
 {
     while (plugin_options)
+    {
         plugin_config_free (plugin_options);
+    }
 }
 
 /*
@@ -395,4 +395,15 @@ plugin_config_write ()
 {
     log_printf (_("Saving plugins configuration to disk"));
     return config_file_write (plugin_config);
+}
+
+/*
+ * plugin_config_end: end plugin config
+ */
+
+void
+plugin_config_end ()
+{
+    /* free all plugin config options */
+    plugin_config_free_all ();
 }

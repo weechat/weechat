@@ -27,6 +27,7 @@
 #include <string.h>
 #include <stdarg.h>
 #include <ctype.h>
+#include <regex.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
@@ -34,9 +35,11 @@
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
+#include "../plugins/plugin.h"
 #include "gui-chat.h"
 #include "gui-buffer.h"
 #include "gui-color.h"
+#include "gui-filter.h"
 #include "gui-hotlist.h"
 #include "gui-main.h"
 #include "gui-status.h"
@@ -375,6 +378,94 @@ gui_chat_get_line_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
 }
 
 /*
+ * gui_chat_line_displayed: return 1 if line is displayed (no filter on line,
+ *                          or filters disabled), 0 if line is hidden
+ */
+
+int
+gui_chat_line_displayed (struct t_gui_line *line)
+{
+    /* line is hidden if filters are enabled and flag "displayed" is not set */
+    if (gui_filters_enabled && !line->displayed)
+        return 0;
+    
+    /* in all other cases, line is displayed */
+    return 1;
+}
+
+/*
+ * gui_chat_get_first_line_displayed: get first line displayed of a buffer
+ */
+
+struct t_gui_line *
+gui_chat_get_first_line_displayed (struct t_gui_buffer *buffer)
+{
+    struct t_gui_line *ptr_line;
+    
+    ptr_line = buffer->lines;
+    while (ptr_line && !gui_chat_line_displayed (ptr_line))
+    {
+        ptr_line = ptr_line->next_line;
+    }
+    
+    return ptr_line;
+}
+
+/*
+ * gui_chat_get_last_line_displayed: get last line displayed of a buffer
+ */
+
+struct t_gui_line *
+gui_chat_get_last_line_displayed (struct t_gui_buffer *buffer)
+{
+    struct t_gui_line *ptr_line;
+    
+    ptr_line = buffer->last_line;
+    while (ptr_line && !gui_chat_line_displayed (ptr_line))
+    {
+        ptr_line = ptr_line->prev_line;
+    }
+    
+    return ptr_line;
+}
+
+/*
+ * gui_chat_get_prev_line_displayed: get previous line displayed
+ */
+
+struct t_gui_line *
+gui_chat_get_prev_line_displayed (struct t_gui_line *line)
+{
+    if (line)
+    {
+        line = line->prev_line;
+        while (line && !gui_chat_line_displayed (line))
+        {
+            line = line->prev_line;
+        }
+    }
+    return line;
+}
+
+/*
+ * gui_chat_get_next_line_displayed: get next line displayed
+ */
+
+struct t_gui_line *
+gui_chat_get_next_line_displayed (struct t_gui_line *line)
+{
+    if (line)
+    {
+        line = line->next_line;
+        while (line && !gui_chat_line_displayed (line))
+        {
+            line = line->next_line;
+        }
+    }
+    return line;
+}
+
+/*
  * gui_chat_line_search: search for text in a line
  */
 
@@ -400,6 +491,78 @@ gui_chat_line_search (struct t_gui_line *line, char *text, int case_sensitive)
 }
 
 /*
+ * gui_chat_line_match_regex: return 1 if message matches regex
+ *                            0 if it doesn't match
+ */
+
+int
+gui_chat_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
+                           regex_t *regex_message)
+{
+    char *prefix, *message;
+    int match_prefix, match_message;
+    
+    if (!line || (!regex_prefix && !regex_message))
+        return 0;
+    
+    match_prefix = 1;
+    match_message = 1;
+    
+    prefix = (char *)gui_color_decode ((unsigned char *)line->prefix);
+    if (prefix && regex_prefix)
+    {
+        if (regexec (regex_prefix, prefix, 0, NULL, 0) != 0)
+            match_prefix = 0;
+    }
+    
+    message = (char *)gui_color_decode ((unsigned char *)line->message);
+    if (message && regex_message)
+    {
+        if (regexec (regex_message, message, 0, NULL, 0) != 0)
+            match_message = 0;
+    }
+    
+    if (prefix)
+        free (prefix);
+    if (message)
+        free (message);
+    
+    return (match_prefix && match_message);
+}
+
+/*
+ * gui_chat_line_match_tags: return 1 if line matches tags
+ *                           0 if it doesn't match any tag in array
+ */
+
+int
+gui_chat_line_match_tags (struct t_gui_line *line, int tags_count,
+                          char **tags_array)
+{
+    int i, j;
+    
+    if (!line)
+        return 0;
+    
+    if (line->tags_count == 0)
+        return 0;
+    
+    for (i = 0; i < tags_count; i++)
+    {
+        for (j = 0; j < line->tags_count; j++)
+        {
+            /* check tag */
+            if (string_match (line->tags_array[j],
+                              tags_array[i],
+                              0))
+                return 1;
+        }
+    }
+    
+    return 0;
+}
+
+/*
  * gui_chat_line_free: delete a line from a buffer
  */
 
@@ -420,6 +583,8 @@ gui_chat_line_free (struct t_gui_line *line)
     }
     if (line->str_time)
         free (line->str_time);
+    if (line->tags_array)
+        string_free_exploded (line->tags_array);
     if (line->prefix)
         free (line->prefix);
     if (line->message)
@@ -433,7 +598,8 @@ gui_chat_line_free (struct t_gui_line *line)
 
 void
 gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
-                   time_t date_printed, char *prefix, char *message)
+                   time_t date_printed, char *tags,
+                   char *prefix, char *message)
 {
     struct t_gui_line *new_line, *ptr_line;
     
@@ -449,6 +615,16 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
     new_line->date_printed = date_printed;
     new_line->str_time = (date == 0) ?
         NULL : gui_chat_get_time_string (date);
+    if (tags)
+    {
+        new_line->tags_array = string_explode (tags, ",", 0, 0,
+                                               &new_line->tags_count);
+    }
+    else
+    {
+        new_line->tags_count = 0;
+        new_line->tags_array = NULL;
+    }
     new_line->prefix = (prefix) ?
         strdup (prefix) : ((date != 0) ? strdup ("") : NULL);
     new_line->prefix_length = (prefix) ?
@@ -465,6 +641,18 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
     buffer->last_line = new_line;
     buffer->lines_count++;
     
+    /* check if line is filtered or not */
+    new_line->displayed = gui_filter_check_line (buffer, new_line);
+    if (!new_line->displayed)
+    {
+        if (!buffer->lines_hidden)
+        {
+            buffer->lines_hidden = 1;
+            hook_signal_send ("buffer_lines_hidden",
+                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+        }
+    }
+    
     /* remove one line if necessary */
     if ((CONFIG_INTEGER(config_history_max_lines) > 0)
         && (buffer->lines_count > CONFIG_INTEGER(config_history_max_lines)))
@@ -480,12 +668,13 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
 }
 
 /*
- * gui_chat_printf_date: display a message in a buffer
+ * gui_chat_printf_date_tags: display a message in a buffer with optional
+ *                            date and tags
  */
 
 void
-gui_chat_printf_date (struct t_gui_buffer *buffer, time_t date,
-                      char *message, ...)
+gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
+                           char *tags, char *message, ...)
 {
     char buf[8192];
     time_t date_printed;
@@ -552,11 +741,15 @@ gui_chat_printf_date (struct t_gui_buffer *buffer, time_t date,
         {
             gui_chat_line_add (buffer, (display_time) ? date : 0,
                                (display_time) ? date_printed : 0,
-                               pos_prefix, pos);
+                               tags, pos_prefix, pos);
             if (buffer->last_line)
+            {
                 hook_print_exec (buffer, buffer->last_line->date,
+                                 buffer->last_line->tags_count,
+                                 buffer->last_line->tags_array,
                                  buffer->last_line->prefix,
                                  buffer->last_line->message);
+            }
         }
         else
         {

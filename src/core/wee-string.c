@@ -244,6 +244,90 @@ string_strcasestr (char *string, char *search)
 }
 
 /*
+ * string_match: return 1 if string matches a mask
+ *               mask can begin or end with "*", no other "*" are allowed
+ *               inside mask
+ */
+
+int
+string_match (char *string, char *mask, int case_sensitive)
+{
+    char last, *mask2;
+    int len_string, len_mask, rc;
+    
+    if (!mask || !mask[0])
+        return 0;
+    
+    /* if mask is "*", then any string matches */
+    if (strcmp (mask, "*") == 0)
+        return 1;
+    
+    len_string = strlen (string);
+    len_mask = strlen (mask);
+    
+    last = mask[len_mask - 1];
+    
+    /* mask begins with "*" */
+    if ((mask[0] == '*') && (last != '*'))
+    {
+        /* not enough chars in string to match */
+        if (len_string < len_mask - 1)
+            return 0;
+        /* check if end of string matches */
+        if ((case_sensitive && (strcmp (string + len_string - (len_mask - 1),
+                                        mask + 1) == 0))
+            || (!case_sensitive && (string_strcasecmp (string + len_string - (len_mask - 1),
+                                                       mask + 1) == 0)))
+            return 1;
+        /* no match */
+        return 0;
+    }
+    
+    /* mask ends with "*" */
+    if ((mask[0] != '*') && (last == '*'))
+    {
+        /* not enough chars in string to match */
+        if (len_string < len_mask - 1)
+            return 0;
+        /* check if beginning of string matches */
+        if ((case_sensitive && (strncmp (string, mask, len_mask - 1) == 0))
+            || (!case_sensitive && (string_strncasecmp (string,
+                                                        mask,
+                                                        len_mask - 1) == 0)))
+            return 1;
+        /* no match */
+        return 0;
+    }
+    
+    /* mask begins and ends with "*" */
+    if ((mask[0] == '*') && (last == '*'))
+    {
+        /* not enough chars in string to match */
+        if (len_string < len_mask - 1)
+            return 0;
+        /* keep only relevant chars in mask for searching string */
+        mask2 = string_strndup (mask + 1, len_mask - 2);
+        if (!mask2)
+            return 0;
+        /* search string */
+        rc = ((case_sensitive && strstr (string, mask2))
+              || (!case_sensitive && string_strcasestr (string, mask2))) ?
+            1 : 0;
+        /* free and return */
+        free (mask2);
+        return rc;
+    }
+    
+    /* no "*" at all, compare strings */
+    if ((case_sensitive && (strcmp (string, mask) == 0))
+        || (!case_sensitive && (string_strcasecmp (string, mask) == 0)))
+        return 1;
+    
+    /* no match */
+    return 0;
+}
+
+/*
  * string_replace: replace a string by new one in a string
  *                 note: returned value has to be free() after use
  */
@@ -417,7 +501,7 @@ string_convert_hex_chars (char *string)
                             snprintf (hex_str, sizeof (hex_str),
                                       "0x%c%c", string[1], string[2]);
                             number = strtol (hex_str, &error, 16);
-                            if (error && (error[0] == '\0'))
+                            if (error && !error[0])
                             {
                                 output[pos_output++] = number;
                                 string += 3;
@@ -550,7 +634,7 @@ string_explode (char *string, char *separators, int keep_eol,
                 {
                     array[i] =
                         (char *)malloc ((ptr2 - ptr1 + 1) * sizeof (char));
-                    array[i] = strncpy (array[i], ptr1, ptr2 - ptr1);
+                    strncpy (array[i], ptr1, ptr2 - ptr1);
                     array[i][ptr2 - ptr1] = '\0';
                 }
                 ptr1 = ++ptr2;
@@ -565,6 +649,8 @@ string_explode (char *string, char *separators, int keep_eol,
     array[i] = NULL;
     if (num_items != NULL)
         *num_items = i;
+    
+    free (string2);
     
     return array;
 }
@@ -584,6 +670,41 @@ string_free_exploded (char **exploded_string)
             free (exploded_string[i]);
         free (exploded_string);
     }
+}
+
+/*
+ * string_build_with_exploded: build a string with exploded string
+ *                             note: returned value has to be free() after use
+ */
+
+char *
+string_build_with_exploded (char **exploded_string, char *separator)
+{
+    int i, length, length_separator;
+    char *result;
+    
+    if (!exploded_string || !separator)
+        return NULL;
+    
+    length = 0;
+    length_separator = strlen (separator);
+    
+    for (i = 0; exploded_string[i]; i++)
+    {
+        length += strlen (exploded_string[i]) + length_separator;
+    }
+    
+    result = (char *)malloc ((length + 1) * sizeof (char));
+    result[0] = '\0';
+    
+    for (i = 0; exploded_string[i]; i++)
+    {
+        strcat (result, exploded_string[i]);
+        if (exploded_string[i + 1])
+            strcat (result, separator);
+    }
+    
+    return result;
 }
 
 /*

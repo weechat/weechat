@@ -714,7 +714,9 @@ void
 gui_keyboard_free_all ()
 {
     while (gui_keys)
+    {
         gui_keyboard_free (gui_keys);
+    }
 }
 
 /*
@@ -826,4 +828,19 @@ gui_keyboard_paste_cancel ()
 {
     gui_keyboard_buffer_reset ();
     gui_keyboard_paste_pending = 0;
+}
+
+/*
+ * gui_keyboard_end: end keyboard (free some data) 
+ */
+
+void
+gui_keyboard_end ()
+{
+    /* free keyboard buffer */
+    if (gui_keyboard_buffer)
+        free (gui_keyboard_buffer);
+    
+    /* free all keys */
+    gui_keyboard_free_all ();
 }

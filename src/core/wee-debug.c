@@ -35,6 +35,7 @@
 #include "../gui/gui-bar-item.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
+#include "../gui/gui-filter.h"
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-main.h"
 #include "../gui/gui-window.h"
@@ -75,6 +76,7 @@ debug_dump (int crash)
 
     gui_window_print_log ();
     gui_buffer_print_log ();
+    gui_filter_print_log ();
     gui_bar_print_log ();
     gui_bar_item_print_log ();
     gui_hotlist_print_log ();

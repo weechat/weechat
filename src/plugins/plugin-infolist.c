@@ -476,6 +476,8 @@ plugin_infolist_var_free (struct t_plugin_infolist_item *item,
         free (var->value);
     }
     
+    free (var);
+    
     item->vars = new_vars;
 }
 
@@ -511,6 +513,8 @@ plugin_infolist_item_free (struct t_plugin_infolist *list,
     if (item->fields)
         free (item->fields);
     
+    free (item);
+    
     list->items = new_items;
 }
 
@@ -542,6 +546,8 @@ plugin_infolist_free (struct t_plugin_infolist *list)
     {
         plugin_infolist_item_free (list, list->items);
     }
+    
+    free (list);
     
     plugin_infolists = new_plugin_infolists;
 }

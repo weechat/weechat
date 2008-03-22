@@ -2208,12 +2208,16 @@ weechat_lua_api_hook_fd (lua_State *L)
 
 int
 weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
-                               time_t date, char *prefix, char *message)
+                               time_t date, int tags_count, char **tags,
+                               char *prefix, char *message)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[5];
+    char *lua_argv[6];
     static char timebuffer[64];
     int *rc, ret;
+    
+    /* make C compiler happy */
+    (void) tags_count;
     
     script_callback = (struct t_script_callback *)data;
 
@@ -2221,9 +2225,10 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     
     lua_argv[0] = script_ptr2str (buffer);
     lua_argv[1] = timebuffer;
-    lua_argv[2] = prefix;
-    lua_argv[3] = message;
-    lua_argv[4] = NULL;
+    lua_argv[2] = weechat_string_build_with_exploded (tags, ",");
+    lua_argv[3] = prefix;
+    lua_argv[4] = message;
+    lua_argv[5] = NULL;
     
     rc = (int *) weechat_lua_exec (script_callback->script,
                                    WEECHAT_SCRIPT_EXEC_INT,
@@ -2237,6 +2242,10 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
         ret = *rc;
         free (rc);
     }
+    if (lua_argv[0])
+        free (lua_argv[0]);
+    if (lua_argv[2])
+        free (lua_argv[2]);
     
     return ret;
 }
@@ -2248,7 +2257,7 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
 static int
 weechat_lua_api_hook_print (lua_State *L)
 {
-    const char *buffer, *message, *function;
+    const char *buffer, *tags, *message, *function;
     char *result;
     int n, strip_colors;
     
@@ -2262,6 +2271,7 @@ weechat_lua_api_hook_print (lua_State *L)
     }
     
     buffer = NULL;
+    tags = NULL;
     message = NULL;
     strip_colors = 0;
     function = NULL;
@@ -2274,7 +2284,8 @@ weechat_lua_api_hook_print (lua_State *L)
         LUA_RETURN_EMPTY;
     }
     
-    buffer = lua_tostring (lua_current_interpreter, -4);
+    buffer = lua_tostring (lua_current_interpreter, -5);
+    tags = lua_tostring (lua_current_interpreter, -4);
     message = lua_tostring (lua_current_interpreter, -3);
     strip_colors = lua_tonumber (lua_current_interpreter, -2);
     function = lua_tostring (lua_current_interpreter, -1);
@@ -2282,6 +2293,7 @@ weechat_lua_api_hook_print (lua_State *L)
     result = script_ptr2str (script_api_hook_print (weechat_lua_plugin,
                                                     lua_current_script,
                                                     script_str2ptr ((char *)buffer),
+                                                    (char *)tags,
                                                     (char *)message,
                                                     strip_colors,
                                                     &weechat_lua_api_hook_print_cb,
@@ -2979,11 +2991,11 @@ weechat_lua_api_buffer_close (lua_State *L)
 }
 
 /*
- * weechat_lua_api_buffer_get: get a buffer property
+ * weechat_lua_api_buffer_get_string: get a buffer property as string
  */
 
 static int
-weechat_lua_api_buffer_get (lua_State *L)
+weechat_lua_api_buffer_get_string (lua_State *L)
 {
     const char *buffer, *property;
     char *value;
@@ -2994,7 +3006,7 @@ weechat_lua_api_buffer_get (lua_State *L)
         
     if (!lua_current_script)
     {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get");
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_string");
         LUA_RETURN_EMPTY;
     }
     
@@ -3005,17 +3017,57 @@ weechat_lua_api_buffer_get (lua_State *L)
     
     if (n < 2)
     {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get");
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_string");
         LUA_RETURN_EMPTY;
     }
     
     buffer = lua_tostring (lua_current_interpreter, -2);
     property = lua_tostring (lua_current_interpreter, -1);
     
-    value = weechat_buffer_get (script_str2ptr ((char *)buffer),
-                                (char *)property);
+    value = weechat_buffer_get_string (script_str2ptr ((char *)buffer),
+                                       (char *)property);
     
     LUA_RETURN_STRING(value);
+}
+
+/*
+ * weechat_lua_api_buffer_get_pointer: get a buffer property as pointer
+ */
+
+static int
+weechat_lua_api_buffer_get_pointer (lua_State *L)
+{
+    const char *buffer, *property;
+    char *value;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_pointer");
+        LUA_RETURN_EMPTY;
+    }
+    
+    buffer = NULL;
+    property = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_pointer");
+        LUA_RETURN_EMPTY;
+    }
+    
+    buffer = lua_tostring (lua_current_interpreter, -2);
+    property = lua_tostring (lua_current_interpreter, -1);
+    
+    value = script_ptr2str (weechat_buffer_get_string (script_str2ptr ((char *)buffer),
+                                                       (char *)property));
+    
+    LUA_RETURN_STRING_FREE(value);
 }
 
 /*
@@ -4170,46 +4222,6 @@ weechat_lua_api_constant_weechat_rc_error (lua_State *L)
 }
     
 static int
-weechat_lua_api_constant_weechat_rc_ok_ignore_weechat (lua_State *L)
-{
-    /* make C compiler happy */
-    (void) L;
-    
-    lua_pushnumber (lua_current_interpreter, WEECHAT_RC_OK_IGNORE_WEECHAT);
-    return 1;
-}
-
-static int
-weechat_lua_api_constant_weechat_rc_ok_ignore_plugins (lua_State *L)
-{
-    /* make C compiler happy */
-    (void) L;
-    
-    lua_pushnumber (lua_current_interpreter, WEECHAT_RC_OK_IGNORE_PLUGINS);
-    return 1;
-}
-
-static int
-weechat_lua_api_constant_weechat_rc_ok_ignore_all (lua_State *L)
-{
-    /* make C compiler happy */
-    (void) L;
-    
-    lua_pushnumber (lua_current_interpreter, WEECHAT_RC_OK_IGNORE_ALL);
-    return 1;
-}
-
-static int
-weechat_lua_api_constant_weechat_rc_ok_with_highlight (lua_State *L)
-{
-    /* make C compiler happy */
-    (void) L;
-    
-    lua_pushnumber (lua_current_interpreter, WEECHAT_RC_OK_WITH_HIGHLIGHT);
-    return 1;
-}
-
-static int
 weechat_lua_api_constant_weechat_list_pos_sort (lua_State *L)
 {
     /* make C compiler happy */
@@ -4372,7 +4384,8 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "buffer_new", &weechat_lua_api_buffer_new },
     { "buffer_search", &weechat_lua_api_buffer_search },
     { "buffer_close", &weechat_lua_api_buffer_close },
-    { "buffer_get", &weechat_lua_api_buffer_get },
+    { "buffer_get_string", &weechat_lua_api_buffer_get_string },
+    { "buffer_get_pointer", &weechat_lua_api_buffer_get_pointer },
     { "buffer_set", &weechat_lua_api_buffer_set },
     { "nicklist_add_group", &weechat_lua_api_nicklist_add_group },
     { "nicklist_search_group", &weechat_lua_api_nicklist_search_group },
@@ -4403,10 +4416,6 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     /* define constants as function which returns values */
     { "WEECHAT_RC_OK", &weechat_lua_api_constant_weechat_rc_ok },
     { "WEECHAT_RC_ERROR", &weechat_lua_api_constant_weechat_rc_error },
-    { "WEECHAT_RC_OK_IGNORE_WEECHAT", &weechat_lua_api_constant_weechat_rc_ok_ignore_weechat },
-    { "WEECHAT_RC_OK_IGNORE_PLUGINS", &weechat_lua_api_constant_weechat_rc_ok_ignore_plugins },
-    { "WEECHAT_RC_OK_IGNORE_ALL", &weechat_lua_api_constant_weechat_rc_ok_ignore_all },
-    { "WEECHAT_RC_OK_WITH_HIGHLIGHT", &weechat_lua_api_constant_weechat_rc_ok_with_highlight },
     { "WEECHAT_LIST_POS_SORT", &weechat_lua_api_constant_weechat_list_pos_sort },
     { "WEECHAT_LIST_POS_BEGINNING", &weechat_lua_api_constant_weechat_list_pos_beginning },
     { "WEECHAT_LIST_POS_END", &weechat_lua_api_constant_weechat_list_pos_end },

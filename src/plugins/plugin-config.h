@@ -35,5 +35,6 @@ extern void plugin_config_init ();
 extern int plugin_config_read ();
 extern int plugin_config_reload ();
 extern int plugin_config_write ();
+extern void plugin_config_end ();
 
 #endif /* plugin-config.h */

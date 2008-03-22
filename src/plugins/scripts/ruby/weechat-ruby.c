@@ -124,13 +124,25 @@ weechat_ruby_exec (struct t_plugin_script *script,
                 {
                     if (argv[4])
                     {
-                        rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
-                                                 &ruby_error, 5,
-                                                 rb_str_new2(argv[0]),
-                                                 rb_str_new2(argv[1]),
-                                                 rb_str_new2(argv[2]),
-                                                 rb_str_new2(argv[3]),
-                                                 rb_str_new2(argv[4]));
+                        if (argv[5])
+                        {
+                            rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
+                                                     &ruby_error, 6,
+                                                     rb_str_new2(argv[0]),
+                                                     rb_str_new2(argv[1]),
+                                                     rb_str_new2(argv[2]),
+                                                     rb_str_new2(argv[3]),
+                                                     rb_str_new2(argv[4]),
+                                                     rb_str_new2(argv[5]));
+                        }
+                        else
+                            rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
+                                                     &ruby_error, 5,
+                                                     rb_str_new2(argv[0]),
+                                                     rb_str_new2(argv[1]),
+                                                     rb_str_new2(argv[2]),
+                                                     rb_str_new2(argv[3]),
+                                                     rb_str_new2(argv[4]));
                     }
                     else
                         rc = rb_protect_funcall ((VALUE) script->interpreter, rb_intern(function),
