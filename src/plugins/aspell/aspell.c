@@ -18,6 +18,7 @@
 
 /* aspell.c: Aspell plugin support for WeeChat */
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,7 +32,8 @@
 WEECHAT_PLUGIN_NAME("aspell");
 WEECHAT_PLUGIN_DESCRIPTION("Aspell plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
-WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
+WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
 WEECHAT_LICENSE("GPL");
 
 struct t_weechat_plugin *weechat_aspell_plugin = NULL;

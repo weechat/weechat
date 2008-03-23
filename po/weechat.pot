@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-22 23:32+0100\n"
+"POT-Creation-Date: 2008-03-23 11:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3685,6 +3685,12 @@ msgid ""
 msgstr ""
 
 #, c-format
+msgid ""
+"%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
+"version %s, failed to load"
+msgstr ""
+
+#, c-format
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 
@@ -3697,7 +3703,7 @@ msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
 msgstr ""
 
 #, c-format
-msgid "%sPlugin \"%s\" %s loaded"
+msgid "%sPlugin \"%s\" loaded"
 msgstr ""
 
 #, c-format

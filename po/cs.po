@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-22 23:32+0100\n"
+"POT-Creation-Date: 2008-03-23 11:39+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4246,6 +4246,14 @@ msgstr ""
 "%s nemohu načíst plugin \"%s\": plugin se stejným jménem již existuje\n"
 
 #, fuzzy, c-format
+msgid ""
+"%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
+"version %s, failed to load"
+msgstr ""
+"%s funkce \"weechat_plugin_init\" nebyla v pluginu \"%s\" nalezena, načtení "
+"selhalo\n"
+
+#, fuzzy, c-format
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%s funkce \"weechat_plugin_init\" nebyla v pluginu \"%s\" nalezena, načtení "
@@ -4260,8 +4268,8 @@ msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
 msgstr "%s nemohu načíst plugin \"%s\" (nedostatek paměti)\n"
 
 #, fuzzy, c-format
-msgid "%sPlugin \"%s\" %s loaded"
-msgstr "Plugin \"%s\" (%s) načten.\n"
+msgid "%sPlugin \"%s\" loaded"
+msgstr "Plugin \"%s\" odebrán.\n"
 
 #, fuzzy, c-format
 msgid "%sPlugin \"%s\" unloaded"
@@ -4488,6 +4496,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sPlugin \"%s\" %s loaded"
+#~ msgstr "Plugin \"%s\" (%s) načten.\n"
 
 #, fuzzy
 #~ msgid "%sError: wrong number \"%s\" for filter"

@@ -19,8 +19,8 @@
 /* logger.c: Logger plugin for WeeChat */
 
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE 1
 #endif
 
 #include <stdlib.h>
@@ -42,7 +42,8 @@
 WEECHAT_PLUGIN_NAME("logger");
 WEECHAT_PLUGIN_DESCRIPTION("Logger plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
-WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
+WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE("GPL");
 
 struct t_weechat_plugin *weechat_logger_plugin = NULL;

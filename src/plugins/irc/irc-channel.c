@@ -19,10 +19,6 @@
 /* irc-channel.c: manages a chat (channel or private chat) */
 
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>

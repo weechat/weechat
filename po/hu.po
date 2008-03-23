@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-22 23:32+0100\n"
+"POT-Creation-Date: 2008-03-23 11:39+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4253,6 +4253,14 @@ msgid ""
 msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\n"
 
 #, fuzzy, c-format
+msgid ""
+"%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
+"version %s, failed to load"
+msgstr ""
+"%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
+"betöltés sikertelen\n"
+
+#, fuzzy, c-format
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%s a \"weechat_plugin_init\" függvény nem található a \"%s\" modulban, "
@@ -4267,8 +4275,8 @@ msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
 msgstr "%s nem sikerült a modult betölteni \"%s\" (nincs elég memória)\n"
 
 #, fuzzy, c-format
-msgid "%sPlugin \"%s\" %s loaded"
-msgstr "A \"%s\" (%s) modul betöltve.\n"
+msgid "%sPlugin \"%s\" loaded"
+msgstr "A \"%s\" modul eltávolítva.\n"
 
 #, fuzzy, c-format
 msgid "%sPlugin \"%s\" unloaded"
@@ -4495,6 +4503,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
+
+#, fuzzy
+#~ msgid "%sPlugin \"%s\" %s loaded"
+#~ msgstr "A \"%s\" (%s) modul betöltve.\n"
 
 #, fuzzy
 #~ msgid "%sError: wrong number \"%s\" for filter"

@@ -38,6 +38,8 @@ struct t_weelist;
     char weechat_plugin_description[] = __desc;
 #define WEECHAT_PLUGIN_VERSION(__version)       \
     char weechat_plugin_version[] = __version;
+#define WEECHAT_PLUGIN_WEECHAT_VERSION(__version)       \
+    char weechat_plugin_weechat_version[] = __version;
 #define WEECHAT_PLUGIN_LICENSE(__license)       \
     char weechat_plugin_license[] = __license;
 
@@ -69,7 +71,8 @@ struct t_weechat_plugin
     char *name;                        /* short name                        */
     char *description;                 /* description                       */
     char *author;                      /* author                            */
-    char *version;                     /* version                           */
+    char *version;                     /* plugin version                    */
+    char *weechat_version;             /* weechat version required          */
     char *license;                     /* license                           */
     char *charset;                     /* charset used by plugin            */
     struct t_weechat_plugin *prev_plugin; /* link to previous plugin        */

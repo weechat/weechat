@@ -86,7 +86,8 @@ plugin_load (char *filename)
 {
     char *full_name;
     void *handle;
-    char *name, *author, *description, *version, *license, *charset;
+    char *name, *author, *description, *version, *weechat_version, *license;
+    char *charset;
     t_weechat_init_func *init_func;
     int rc;
     struct t_weechat_plugin *new_plugin;
@@ -114,13 +115,13 @@ plugin_load (char *filename)
     name = dlsym (handle, "weechat_plugin_name");
     if (!name)
     {
-        dlclose (handle);
         gui_chat_printf (NULL,
                          _("%sError: symbol \"%s\" not found in "
                            "plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_name",
                          full_name);
+        dlclose (handle);
         free (full_name);
         return NULL;
     }
@@ -128,12 +129,12 @@ plugin_load (char *filename)
     /* check for plugin with same name */
     if (plugin_search (name))
     {
-        dlclose (handle);
         gui_chat_printf (NULL,
                          _("%sError: unable to load plugin \"%s\": a plugin "
                            "with same name already exists"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          full_name);
+        dlclose (handle);
         free (full_name);
         return NULL;
     }
@@ -142,13 +143,13 @@ plugin_load (char *filename)
     description = dlsym (handle, "weechat_plugin_description");
     if (!description)
     {
-        dlclose (handle);
         gui_chat_printf (NULL,
                          _("%sError: symbol \"%s\" not found "
                            "in plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_description",
                          full_name);
+        dlclose (handle);
         free (full_name);
         return NULL;
     }
@@ -157,13 +158,13 @@ plugin_load (char *filename)
     author = dlsym (handle, "weechat_plugin_author");
     if (!author)
     {
-        dlclose (handle);
         gui_chat_printf (NULL,
                          _("%sError: symbol \"%s\" not found "
                            "in plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_author",
                          full_name);
+        dlclose (handle);
         free (full_name);
         return NULL;
     }
@@ -172,28 +173,57 @@ plugin_load (char *filename)
     version = dlsym (handle, "weechat_plugin_version");
     if (!version)
     {
-        dlclose (handle);
         gui_chat_printf (NULL,
                          _("%sError: symbol \"%s\" not found in "
                            "plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_version",
                          full_name);
+        dlclose (handle);
+        free (full_name);
+        return NULL;
+    }
+    
+    /* look for WeeChat version required for plugin */
+    weechat_version = dlsym (handle, "weechat_plugin_weechat_version");
+    if (!weechat_version)
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: symbol \"%s\" not found in "
+                           "plugin \"%s\", failed to load"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         "weechat_plugin_weechat_version",
+                         full_name);
+        dlclose (handle);
         free (full_name);
         return NULL;
     }
 
+    if (util_weechat_version_cmp (PACKAGE_VERSION, weechat_version) != 0)
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: plugin \"%s\" is compiled for WeeChat "
+                           "%s and you are running version %s, failed to "
+                           "load"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         full_name,
+                         weechat_version, PACKAGE_VERSION);
+        dlclose (handle);
+        free (full_name);
+        return NULL;
+    }
+    
     /* look for plugin license */
     license = dlsym (handle, "weechat_plugin_license");
     if (!license)
     {
-        dlclose (handle);
         gui_chat_printf (NULL,
                          _("%sError: symbol \"%s\" not found in "
                            "plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_license",
                          full_name);
+        dlclose (handle);
         free (full_name);
         return NULL;
     }
@@ -205,13 +235,13 @@ plugin_load (char *filename)
     init_func = dlsym (handle, "weechat_plugin_init");
     if (!init_func)
     {
-        dlclose (handle);
         gui_chat_printf (NULL,
                          _("%sError: function \"%s\" not "
                            "found in plugin \"%s\", failed to load"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          "weechat_plugin_init",
                          full_name);
+        dlclose (handle);
         free (full_name);
         return NULL;
     }
@@ -227,6 +257,7 @@ plugin_load (char *filename)
         new_plugin->description = strdup (description);
         new_plugin->author = strdup (author);
         new_plugin->version = strdup (version);
+        new_plugin->weechat_version = strdup (weechat_version);
         new_plugin->license = strdup (license);
         new_plugin->charset = (charset) ? strdup (charset) : NULL;
         
@@ -397,14 +428,15 @@ plugin_load (char *filename)
                            "(not enough memory)"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          full_name);
+        dlclose (handle);
         free (full_name);
         return NULL;
     }
     
     gui_chat_printf (NULL,
-                     _("%sPlugin \"%s\" %s loaded"),
+                     _("%sPlugin \"%s\" loaded"),
                      gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
-                     name, new_plugin->version);
+                     name);
     
     free (full_name);
     
@@ -570,6 +602,8 @@ plugin_remove (struct t_weechat_plugin *plugin)
         free (plugin->author);
     if (plugin->version)
         free (plugin->version);
+    if (plugin->weechat_version)
+        free (plugin->weechat_version);
     if (plugin->license)
         free (plugin->license);
     if (plugin->charset)

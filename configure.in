@@ -692,6 +692,7 @@ if test "x$enable_gnutls" = "xyes" ; then
         AC_SUBST(GNUTLS_CFLAGS)
         AC_SUBST(GNUTLS_LFLAGS)
         AC_DEFINE(HAVE_GNUTLS)
+        CFLAGS="$CFLAGS -DHAVE_GNUTLS"
     else
         enable_gnutls="no"
         not_found="$not_found gnutls"
@@ -846,6 +847,8 @@ gnu*)
 *)
         ;;
 esac
+
+CFLAGS="$CFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\""
 
 # ------------------------------------------------------------------------------
 #                                output Makefiles

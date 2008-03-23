@@ -19,10 +19,6 @@
 /* fifo.c: FIFO pipe plugin for WeeChat remote control */
 
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
@@ -37,7 +33,8 @@
 WEECHAT_PLUGIN_NAME("fifo");
 WEECHAT_PLUGIN_DESCRIPTION("Fifo plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
-WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
+WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE("GPL");
 
 struct t_weechat_plugin *weechat_fifo_plugin = NULL;

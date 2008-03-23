@@ -30,6 +30,7 @@
 #include <sys/stat.h>
 #include <dirent.h>
 #include <signal.h>
+#include <ctype.h>
 
 #include "weechat.h"
 #include "wee-util.h"
@@ -267,4 +268,100 @@ util_search_full_lib_name (char *filename, char *sys_directory)
     free (final_name);
 
     return name_with_ext;
+}
+
+/*
+ * util_weechat_version_cmp: compare 2 weechat versions
+ *                           return -1 if version1 < version2
+ *                                  +1 if version1 > version2
+ *                                   0 if version1 = version2
+ */
+
+int
+util_weechat_version_cmp (char *version1, char *version2)
+{
+    char *v1, *v2, *ptr_v1, *ptr_v2, *pos1, *pos2, *next1, *next2;
+    char *error1, *error2;
+    int rc;
+    long number1, number2;
+    
+    if (!version1 && !version2)
+        return 0;
+    if (!version1 && version2)
+        return -1;
+    if (version1 && !version2)
+        return 1;
+    
+    v1 = strdup (version1);
+    v2 = strdup (version2);
+    
+    rc = 0;
+    
+    if (v1 && v2)
+    {
+        ptr_v1 = v1;
+        ptr_v2 = v2;
+        while (ptr_v1 && ptr_v1[0] && ptr_v2 && ptr_v2[0])
+        {
+            pos1 = ptr_v1;
+            while (pos1[0] && isdigit (pos1[0]))
+            {
+                pos1++;
+            }
+            pos2 = ptr_v2;
+            while (pos2[0] && isdigit (pos2[0]))
+            {
+                pos2++;
+            }
+            next1 = (pos1[0] == '\0') ? NULL : pos1 + 1;
+            next2 = (pos2[0] == '\0') ? NULL : pos2 + 1;
+            pos1[0] = '\0';
+            pos2[0] = '\0';
+            
+            error1 = NULL;
+            number1 = strtol (ptr_v1, &error1, 10);
+            error2 = NULL;
+            number2 = strtol (ptr_v2, &error2, 10);
+            if (error1 && !error1[0] && (!error2 || error2[0]))
+            {
+                rc = 1;
+                break;
+            }
+            if (error2 && !error2[0] && (!error1 || error1[0]))
+            {
+                rc = 1;
+                break;
+            }
+            if (error1 && !error1[0] && error2 && !error2[0])
+            {
+                if (number1 > number2)
+                {
+                    rc = 1;
+                    break;
+                }
+                if (number1 < number2)
+                {
+                    rc = -1;
+                    break;
+                }
+            }
+            ptr_v1 = next1;
+            while (ptr_v1[0] && !isdigit (ptr_v1[0]))
+            {
+                ptr_v1++;
+            }
+            ptr_v2 = next2;
+            while (ptr_v2[0] && !isdigit (ptr_v2[0]))
+            {
+                ptr_v2++;
+            }
+        }
+    }
+    
+    if (v1)
+        free (v1);
+    if (v2)
+        free (v2);
+    
+    return rc;
 }

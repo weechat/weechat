@@ -19,10 +19,6 @@
 /* irc-input.c: IRC input data (read from user) */
 
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <stdlib.h>
 #include <string.h>
 

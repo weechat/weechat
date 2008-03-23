@@ -20,10 +20,6 @@
                    2811 2812 */
 
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #ifndef __USE_XOPEN
 #define __USE_XOPEN
 #endif

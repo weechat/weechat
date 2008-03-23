@@ -21,7 +21,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#ifndef __USE_GNU
 #define __USE_GNU
+#endif
 #include <string.h>
 #include <iconv.h>
 
@@ -32,7 +34,8 @@
 WEECHAT_PLUGIN_NAME("charset");
 WEECHAT_PLUGIN_DESCRIPTION("Charset plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
-WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
+WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_LICENSE("GPL");
 
 struct t_weechat_plugin *weechat_charset_plugin = NULL;

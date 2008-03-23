@@ -29,5 +29,6 @@ extern int util_create_dir (char *directory, int permissions);
 extern void util_exec_on_files (char *directory, void *data,
                                 int (*callback)(void *data, char *filename));
 extern char *util_search_full_lib_name (char *filename, char *sys_directory);
+extern int util_weechat_version_cmp (char *version1, char *version2);
 
 #endif /* wee-util.h */

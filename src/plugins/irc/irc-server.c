@@ -19,10 +19,6 @@
 /* irc-server.c: connection and communication with IRC server */
 
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>

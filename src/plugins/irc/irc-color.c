@@ -19,10 +19,6 @@
 /* irc-color.c: IRC color decoding/encidong in messages */
 
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>

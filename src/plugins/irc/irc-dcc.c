@@ -19,10 +19,6 @@
 /* irc-dcc.c: Direct Client-to-Client (DCC) communication (files & chat) */
 
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>

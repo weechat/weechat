@@ -19,10 +19,6 @@
 /* irc-nick.c: manages nick list for channels */
 
 
-#ifdef HAVE_CONFIG_H
-#include "config.h"
-#endif
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

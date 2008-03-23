@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-22 23:32+0100\n"
+"POT-Creation-Date: 2008-03-23 11:39+0100\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4250,6 +4250,14 @@ msgstr ""
 "ya existe\n"
 
 #, fuzzy, c-format
+msgid ""
+"%sError: plugin \"%s\" is compiled for WeeChat %s and you are running "
+"version %s, failed to load"
+msgstr ""
+"%s funciÃ³n \"weechat_plugin_init\" no encontrada en el plugin \"%s\", "
+"fallÃ³ al cargar\n"
+
+#, fuzzy, c-format
 msgid "%sError: function \"%s\" not found in plugin \"%s\", failed to load"
 msgstr ""
 "%s funciÃ³n \"weechat_plugin_init\" no encontrada en el plugin \"%s\", "
@@ -4265,8 +4273,8 @@ msgstr ""
 "%s no ha sido posible cargar el plugin \"%s\" (no hay suficiente memoria)\n"
 
 #, fuzzy, c-format
-msgid "%sPlugin \"%s\" %s loaded"
-msgstr "Plugin \"%s\" (%s) cargado.\n"
+msgid "%sPlugin \"%s\" loaded"
+msgstr "Plugin \"%s\" descargado.\n"
 
 #, fuzzy, c-format
 msgid "%sPlugin \"%s\" unloaded"
@@ -4492,6 +4500,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sPlugin \"%s\" %s loaded"
+#~ msgstr "Plugin \"%s\" (%s) cargado.\n"
 
 #, fuzzy
 #~ msgid "%sError: wrong number \"%s\" for filter"
