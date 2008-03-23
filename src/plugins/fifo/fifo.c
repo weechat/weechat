@@ -78,8 +78,7 @@ fifo_create ()
             if (!fifo_filename)
             {
                 filename_length = strlen (weechat_home) + 64;
-                fifo_filename = (char *)malloc (filename_length *
-                                                sizeof (char));
+                fifo_filename = malloc (filename_length);
                 snprintf (fifo_filename, filename_length,
                           "%s/weechat_fifo_%d",
                           weechat_home, (int) getpid());
@@ -240,8 +239,8 @@ fifo_read ()
         ptr_buf = buffer;
         if (fifo_unterminated)
         {
-            buf2 = (char *)malloc ((strlen (fifo_unterminated) +
-                                    strlen (buffer) + 1) * sizeof (char));
+            buf2 = malloc (strlen (fifo_unterminated) +
+                           strlen (buffer) + 1);
             if (buf2)
             {
                 strcpy (buf2, fifo_unterminated);

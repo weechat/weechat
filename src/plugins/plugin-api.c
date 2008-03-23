@@ -99,8 +99,7 @@ plugin_api_mkdir_home (char *directory, int mode)
     
     /* build directory, adding WeeChat home */
     dir_length = strlen (weechat_home) + strlen (directory) + 2;
-    dir_name =
-        (char *)malloc (dir_length * sizeof (char));
+    dir_name = malloc (dir_length);
     if (!dir_name)
         return 0;
     

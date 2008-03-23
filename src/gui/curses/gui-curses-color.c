@@ -159,7 +159,7 @@ gui_color_assign (t_gui_color **color, char *fg_and_bg)
     
     if (!(*color))
     {
-        *color = (t_gui_color *)malloc (sizeof (t_gui_color));
+        *color = malloc (sizeof (**color));
         if (!(*color))
             return;
         *color->foreground = 0;
@@ -228,7 +228,7 @@ gui_color_assign (t_gui_color **color, char *fg_and_bg)
         
         if (*color->string)
             free (*color->string);
-        *color->string = (char *)malloc (4 * sizeof (char));
+        *color->string = malloc (4);
         if (*color->string)
             snprintf (*color->string, 4,
                       "%s%02d",
@@ -271,14 +271,14 @@ gui_color_build (int number, int foreground, int background)
 {
     struct t_gui_color *new_color;
     
-    new_color = (struct t_gui_color *)malloc (sizeof (struct t_gui_color));
+    new_color = malloc (sizeof (*new_color));
     if (!new_color)
         return NULL;
     
     new_color->foreground = gui_weechat_colors[foreground].foreground;
     new_color->background = gui_weechat_colors[background].foreground;
     new_color->attributes = gui_weechat_colors[foreground].attributes;
-    new_color->string = (char *)malloc (4 * sizeof (char));
+    new_color->string = malloc (4);
     if (new_color->string)
         snprintf (new_color->string, 4,
                   "%s%02d",

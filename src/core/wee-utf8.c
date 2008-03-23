@@ -300,7 +300,7 @@ utf8_strlen_screen (char *string)
         return utf8_strlen (string);
     
     num_char = mbstowcs (NULL, string, 0) + 1;
-    wstring = (wchar_t *)malloc ((num_char + 1) * sizeof (wchar_t));
+    wstring = malloc ((num_char + 1) * sizeof (wstring[0]));
     if (!wstring)
         return utf8_strlen (string);
     

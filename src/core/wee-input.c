@@ -122,9 +122,9 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
             /*if (cfg_irc_send_unknown_commands)
             {
                 if (ptr_args)
-                    unknown_command = (char *)malloc ((strlen (command + 1) + 1 + strlen (ptr_args) + 1) * sizeof (char));
+                    unknown_command = malloc (strlen (command + 1) + 1 + strlen (ptr_args) + 1);
                 else
-                    unknown_command = (char *)malloc ((strlen (command + 1) + 1) * sizeof (char));
+                    unknown_command = malloc (strlen (command + 1) + 1);
                 
                 if (unknown_command)
                 {

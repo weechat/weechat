@@ -56,9 +56,9 @@ gui_input_optimize_size (struct t_gui_buffer *buffer)
         if (buffer->input_buffer_alloc != optimal_size)
         {
             buffer->input_buffer_alloc = optimal_size;
-            buffer->input_buffer = realloc (buffer->input_buffer, optimal_size * sizeof (char));
+            buffer->input_buffer = realloc (buffer->input_buffer, optimal_size);
             buffer->input_buffer_color_mask = realloc (buffer->input_buffer_color_mask,
-                                                       optimal_size * sizeof (char));
+                                                       optimal_size);
         }
     }
 }
@@ -150,7 +150,7 @@ gui_input_insert_string (struct t_gui_buffer *buffer, char *string, int pos)
         
         buffer->input_buffer_pos += length;
         
-        string2 = (char *)malloc ((size + 2) * sizeof (char));
+        string2 = malloc (size + 2);
         if (string2)
         {
             snprintf (string2, size + 2, "*%s", string);

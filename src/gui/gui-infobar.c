@@ -59,7 +59,7 @@ gui_infobar_printf (int delay, int color, char *message, ...)
     vsnprintf (buf, sizeof (buf) - 1, message, argptr);
     va_end (argptr);
     
-    ptr_infobar = (struct t_gui_infobar *)malloc (sizeof (struct t_gui_infobar));
+    ptr_infobar = malloc (sizeof (*ptr_infobar));
     if (ptr_infobar)
     {
         buf2 = (char *)gui_color_decode ((unsigned char *)buf);

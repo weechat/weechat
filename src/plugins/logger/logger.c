@@ -227,7 +227,7 @@ logger_get_filename (struct t_gui_buffer *buffer)
             if (name2)
                 length += strlen (name2);
             length += 16;
-            res = (char *)malloc (length * sizeof (char));
+            res = malloc (length);
             if (res)
             {
                 strcpy (res, log_path2);

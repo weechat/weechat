@@ -137,7 +137,7 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name, char *type,
         return NULL;
     
     /* create bar */
-    new_bar = (struct t_gui_bar *) malloc (sizeof (struct t_gui_bar));
+    new_bar = malloc (sizeof (*new_bar));
     if (new_bar)
     {
         new_bar->plugin = plugin;

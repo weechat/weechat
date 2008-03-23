@@ -110,7 +110,7 @@ charset_new (char *name, char *charset)
 	return ptr_charset;
     }
     
-    new_charset = (struct t_charset *)malloc (sizeof (struct t_charset));
+    new_charset = malloc (sizeof (*new_charset));
     {
         new_charset->name = strdup (name);
         new_charset->charset = strdup (charset);
@@ -486,7 +486,7 @@ charset_get (char *type, char *name)
     int length;
 
     length = strlen (type) + 1 + strlen (name) + 1; 
-    option_name = (char *)malloc (length * sizeof (char));
+    option_name = malloc (length);
     if (option_name)
     {
         snprintf (option_name, length, "%s.%s",
@@ -585,7 +585,7 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
             && (weechat_strncasecmp (argv[1], "encode.", 7) != 0))
         {
             length = strlen (argv[1]) + strlen ("decode.") + 1;
-            option_name = (char *)malloc (length * sizeof (char));
+            option_name = malloc (length);
             if (option_name)
             {
                 rc = 1;

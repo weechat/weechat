@@ -75,7 +75,7 @@ gui_window_objects_init (struct t_gui_window *window)
 {
     struct t_gui_curses_objects *new_objects;
 
-    if ((new_objects = (struct t_gui_curses_objects *)malloc (sizeof (struct t_gui_curses_objects))))
+    if ((new_objects = malloc (sizeof (*new_objects))))
     {
         window->gui_objects = new_objects;
         GUI_CURSES(window)->win_title = NULL;

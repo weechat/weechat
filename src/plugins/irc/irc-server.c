@@ -239,7 +239,7 @@ irc_server_init_with_url (struct t_irc_server *server, char *irc_url)
             server->autojoin = strdup (pos_channel);
         else
         {
-            server->autojoin = (char *)malloc ((strlen (pos_channel) + 2) * sizeof (char));
+            server->autojoin = malloc (strlen (pos_channel) + 2);
             strcpy (server->autojoin, "#");
             strcat (server->autojoin, pos_channel);
         }
@@ -253,10 +253,10 @@ irc_server_init_with_url (struct t_irc_server *server, char *irc_url)
     // some default values
     if (server->port < 0)
         server->port = IRC_SERVER_DEFAULT_PORT;
-    server->nick2 = (char *)malloc ((strlen (server->nick1) + 2) * sizeof (char));
+    server->nick2 = malloc (strlen (server->nick1) + 2);
     strcpy (server->nick2, server->nick1);
     server->nick2 = strcat (server->nick2, "1");
-    server->nick3 = (char *)malloc ((strlen (server->nick1) + 2) * sizeof (char));
+    server->nick3 = malloc (strlen (server->nick1) + 2);
     strcpy (server->nick3, server->nick1);
     server->nick3 = strcat (server->nick3, "2");
     
@@ -300,8 +300,7 @@ irc_server_set_addresses (struct t_irc_server *server, char *addresses)
         server->addresses_array = weechat_string_explode (server->addresses,
                                                           ",", 0, 0,
                                                           &server->addresses_count);
-        server->ports_array = (int *)malloc (server->addresses_count *
-                                             sizeof (int *));
+        server->ports_array = malloc (server->addresses_count * sizeof (server->ports_array[0]));
         for (i = 0; i < server->addresses_count; i++)
         {
             pos = strchr (server->addresses_array[i], '/');
@@ -572,7 +571,7 @@ irc_server_alloc ()
     struct t_irc_server *new_server;
     
     /* alloc memory for new server */
-    if ((new_server = (struct t_irc_server *)malloc (sizeof (struct t_irc_server))) == NULL)
+    if ((new_server = malloc (sizeof (*new_server))) == NULL)
     {
         weechat_printf (NULL,
                         _("%s%s: error when allocating new server"),
@@ -606,7 +605,7 @@ irc_server_outqueue_add (struct t_irc_server *server, char *msg1, char *msg2,
 {
     struct t_irc_outqueue *new_outqueue;
 
-    new_outqueue = (struct t_irc_outqueue *)malloc (sizeof (struct t_irc_outqueue));
+    new_outqueue = malloc (sizeof (*new_outqueue));
     if (new_outqueue)
     {
         new_outqueue->message_before_mod = (msg1) ? strdup (msg1) : NULL;
@@ -1288,7 +1287,7 @@ irc_server_msgq_add_msg (struct t_irc_server *server, char *msg)
     if (!server->unterminated_message && !msg[0])
         return;
     
-    message = (struct t_irc_message *)malloc (sizeof (struct t_irc_message));
+    message = malloc (sizeof (*message));
     if (!message)
     {
         weechat_printf (server->buffer,
@@ -1300,8 +1299,8 @@ irc_server_msgq_add_msg (struct t_irc_server *server, char *msg)
     message->server = server;
     if (server->unterminated_message)
     {
-        message->data = (char *)malloc ((strlen (server->unterminated_message) +
-                                         strlen (msg) + 1) * sizeof (char));
+        message->data = malloc (strlen (server->unterminated_message) +
+                                strlen (msg) + 1);
         if (!message->data)
         {
             weechat_printf (server->buffer,
@@ -1346,9 +1345,9 @@ irc_server_msgq_add_unterminated (struct t_irc_server *server, char *string)
     if (server->unterminated_message)
     {
         server->unterminated_message =
-            (char *)realloc (server->unterminated_message,
-                             (strlen (server->unterminated_message) +
-                              strlen (string) + 1) * sizeof (char));
+            realloc (server->unterminated_message,
+                     (strlen (server->unterminated_message) +
+                      strlen (string) + 1));
         if (!server->unterminated_message)
         {
             weechat_printf (server->buffer,
@@ -2210,7 +2209,7 @@ irc_server_pass_socks5proxy (int sock, char *address, int port)
     /* authentication successful then giving address/port to connect */
     addr_len = strlen(address);
     addr_buffer_len = 4 + 1 + addr_len + 2;
-    addr_buffer = (unsigned char *)malloc (addr_buffer_len * sizeof(*addr_buffer));
+    addr_buffer = malloc (addr_buffer_len * sizeof(*addr_buffer));
     if (!addr_buffer)
         return 1;
     addr_buffer[0] = 5;   /* version 5 */

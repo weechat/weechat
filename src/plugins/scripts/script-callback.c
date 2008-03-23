@@ -36,7 +36,7 @@ script_callback_alloc ()
 {
     struct t_script_callback *new_script_callback;
     
-    new_script_callback = (struct t_script_callback *)malloc (sizeof (struct t_script_callback));
+    new_script_callback = malloc (sizeof (*new_script_callback));
     if (new_script_callback)
     {
         new_script_callback->script = NULL;

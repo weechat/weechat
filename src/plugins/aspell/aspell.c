@@ -53,7 +53,7 @@ weechat_aspell_new_speller (void)
 {
     aspell_speller_t *s;
     
-    s = (aspell_speller_t *)malloc (sizeof (aspell_speller_t));    
+    s = malloc (sizeof (*s));
     if (!s)
     {
 	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
@@ -208,7 +208,7 @@ weechat_aspell_new_config (void)
 {
     aspell_config_t *c;
     
-    c = (aspell_config_t *)malloc (sizeof (aspell_config_t));    
+    c = malloc (sizeof (*c));
     if (!c)
     {
 	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
@@ -833,7 +833,7 @@ weechat_aspell_config_save (void)
 		if (found == 0)
 		{
 		    n = strlen (servers) + strlen (p->server) + 2;
-		    servers = (char *)realloc (servers, n * sizeof (char));
+		    servers = realloc (servers, n);
 		    strcat (servers, " ");
 		    strcat (servers, p->server);
 		    weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, "servers", servers);
@@ -853,13 +853,13 @@ weechat_aspell_config_save (void)
 		else
 		{
 		    n = strlen (channels) + strlen (q->channel) + 2;
-		    channels = (char *)realloc (channels, n * sizeof (char));
+		    channels = realloc (channels, n);
 		    strcat (channels, " ");
 		    strcat (channels, q->channel);
 		}
 		
 		n = 7 + strlen (p->server) + strlen (q->channel);
-		option = (char *)malloc (n * sizeof (char));
+		option = malloc (n);
 		snprintf (option, n, "lang_%s_%s", p->server, q->channel);
 		weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, option, q->speller->lang);
 		free (option);
@@ -869,7 +869,7 @@ weechat_aspell_config_save (void)
 	if (channels)
 	{
 	    n = 10 + strlen (p->server);
-	    option = (char *)malloc (n * sizeof (char));
+	    option = malloc (n);
 	    snprintf (option, n, "channels_%s", p->server);
 	    weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, option, channels);
 	    free (option);
@@ -904,7 +904,7 @@ weechat_aspell_config_load(void)
 	for (i=0; i<s; i++)
 	{
 	    n = 10 + strlen (servers_list[i]);
-	    option_s = (char *)malloc (n * sizeof (char));
+	    option_s = malloc (n);
 	    snprintf (option_s, n, "channels_%s", servers_list[i]);
 	    
 	    channels = weechat_aspell_plugin->get_plugin_config (weechat_aspell_plugin, option_s);
@@ -916,7 +916,7 @@ weechat_aspell_config_load(void)
 		    for (j=0; j<c; j++)
 		    {
 			n = 7 + strlen (servers_list[i]) + strlen (channels_list[j]);
-			option_l = (char *)malloc (n * sizeof (char));
+			option_l = malloc (n);
 			snprintf (option_l, n, "lang_%s_%s", servers_list[i], channels_list[j]);
 			
 			lang = weechat_aspell_plugin->get_plugin_config (weechat_aspell_plugin, option_l);
@@ -1179,7 +1179,7 @@ weechat_aspell_clean_word (char *word, int *offset)
 	return NULL;
     }
     
-    w = (char *)malloc ((len+1) * sizeof(char));
+    w = malloc (len+1);
 
     if (w) {
 	memcpy (w, buffer + *offset, len);

@@ -122,7 +122,7 @@ logger_tail_file (char *filename, int n_lines)
                     pos_eol[0] = '\0';
                     pos_eol++;
                 }
-                new_line = (struct t_logger_line *)malloc (sizeof (struct t_logger_line));
+                new_line = malloc (sizeof (*new_line));
                 if (!new_line)
                 {
                     logger_tail_free (ptr_line);
@@ -131,8 +131,8 @@ logger_tail_file (char *filename, int n_lines)
                 }
                 if (part_of_line)
                 {
-                    new_line->data = (char *)malloc ((strlen (pos_eol) +
-                                                      strlen (part_of_line) + 1) * sizeof (char));
+                    new_line->data = malloc ((strlen (pos_eol) +
+                                              strlen (part_of_line) + 1));
                     if (!new_line->data)
                     {
                         free (part_of_line);
@@ -161,8 +161,7 @@ logger_tail_file (char *filename, int n_lines)
                    add string to part_of_line, we'll use that later */
                 if (part_of_line)
                 {
-                    new_part_of_line = (char *)malloc ((strlen (buf) +
-                                                        strlen (part_of_line) + 1) * sizeof (char));
+                    new_part_of_line = malloc (strlen (buf) + strlen (part_of_line) + 1);
                     if (!new_part_of_line)
                     {
                         free (part_of_line);
@@ -177,7 +176,7 @@ logger_tail_file (char *filename, int n_lines)
                 }
                 else
                 {
-                    part_of_line = (char *)malloc ((strlen (buf) + 1) * sizeof (char));
+                    part_of_line = malloc (strlen (buf) + 1);
                     strcpy (part_of_line, buf);
                 }
                 ptr_buf = NULL;

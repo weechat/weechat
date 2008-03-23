@@ -330,10 +330,10 @@ hook_command (struct t_weechat_plugin *plugin, char *command, char *description,
         }
     }
     
-    new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
+    new_hook = malloc (sizeof (*new_hook));
     if (!new_hook)
         return NULL;
-    new_hook_command = (struct t_hook_command *)malloc (sizeof (struct t_hook_command));
+    new_hook_command = malloc (sizeof (*new_hook_command));
     if (!new_hook_command)
     {
         free (new_hook);
@@ -441,10 +441,10 @@ hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
     struct t_hook_timer *new_hook_timer;
     struct timezone tz;
     
-    new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
+    new_hook = malloc (sizeof (*new_hook));
     if (!new_hook)
         return NULL;
-    new_hook_timer = (struct t_hook_timer *)malloc (sizeof (struct t_hook_timer));
+    new_hook_timer = malloc (sizeof (*new_hook_timer));
     if (!new_hook_timer)
     {
         free (new_hook);
@@ -623,10 +623,10 @@ hook_fd (struct t_weechat_plugin *plugin, int fd, int flag_read,
     if ((fd < 0) || hook_search_fd (fd))
         return NULL;
     
-    new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
+    new_hook = malloc (sizeof (*new_hook));
     if (!new_hook)
         return NULL;
-    new_hook_fd = (struct t_hook_fd *)malloc (sizeof (struct t_hook_fd));
+    new_hook_fd = malloc (sizeof (*new_hook_fd));
     if (!new_hook_fd)
     {
         free (new_hook);
@@ -740,10 +740,10 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
     struct t_hook *new_hook;
     struct t_hook_print *new_hook_print;
     
-    new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
+    new_hook = malloc (sizeof (*new_hook));
     if (!new_hook)
         return NULL;
-    new_hook_print = (struct t_hook_print *)malloc (sizeof (struct t_hook_print));
+    new_hook_print = malloc (sizeof (*new_hook_print));
     if (!new_hook_print)
     {
         free (new_hook);
@@ -883,10 +883,10 @@ hook_signal (struct t_weechat_plugin *plugin, char *signal,
     if (!signal || !signal[0])
         return NULL;
     
-    new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
+    new_hook = malloc (sizeof (*new_hook));
     if (!new_hook)
         return NULL;
-    new_hook_signal = (struct t_hook_signal *)malloc (sizeof (struct t_hook_signal));
+    new_hook_signal = malloc (sizeof (*new_hook_signal));
     if (!new_hook_signal)
     {
         free (new_hook);
@@ -947,10 +947,10 @@ hook_config (struct t_weechat_plugin *plugin, char *type, char *option,
     struct t_hook *new_hook;
     struct t_hook_config *new_hook_config;
     
-    new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
+    new_hook = malloc (sizeof (*new_hook));
     if (!new_hook)
         return NULL;
-    new_hook_config = (struct t_hook_config *)malloc (sizeof (struct t_hook_config));
+    new_hook_config = malloc (sizeof (*new_hook_config));
     if (!new_hook_config)
     {
         free (new_hook);
@@ -1020,10 +1020,10 @@ hook_completion (struct t_weechat_plugin *plugin, char *completion,
     if (!completion || !completion[0] || strchr (completion, ' '))
         return NULL;
     
-    new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
+    new_hook = malloc (sizeof (*new_hook));
     if (!new_hook)
         return NULL;
-    new_hook_completion = (struct t_hook_completion *)malloc (sizeof (struct t_hook_completion));
+    new_hook_completion = malloc (sizeof (*new_hook_completion));
     if (!new_hook_completion)
     {
         free (new_hook);
@@ -1092,10 +1092,10 @@ hook_modifier (struct t_weechat_plugin *plugin, char *modifier,
     if (!modifier || !modifier[0])
         return NULL;
     
-    new_hook = (struct t_hook *)malloc (sizeof (struct t_hook));
+    new_hook = malloc (sizeof (*new_hook));
     if (!new_hook)
         return NULL;
-    new_hook_modifier = (struct t_hook_modifier *)malloc (sizeof (struct t_hook_modifier));
+    new_hook_modifier = malloc (sizeof (*new_hook_modifier));
     if (!new_hook_modifier)
     {
         free (new_hook);

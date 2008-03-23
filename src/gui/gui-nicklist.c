@@ -157,7 +157,7 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     if (!name || gui_nicklist_search_group (buffer, parent_group, name))
         return NULL;
     
-    new_group = (struct t_gui_nick_group *)malloc (sizeof (struct t_gui_nick_group));
+    new_group = malloc (sizeof (*new_group));
     if (!new_group)
         return NULL;
 
@@ -304,7 +304,7 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
     if (!name || gui_nicklist_search_nick (buffer, NULL, name))
         return NULL;
     
-    new_nick = (struct t_gui_nick *)malloc (sizeof (struct t_gui_nick));
+    new_nick = malloc (sizeof (*new_nick));
     if (!new_nick)
         return NULL;
 

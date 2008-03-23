@@ -45,7 +45,7 @@ plugin_infolist_new ()
 {
     struct t_plugin_infolist *new_infolist;
 
-    new_infolist = (struct t_plugin_infolist *)malloc (sizeof (struct t_plugin_infolist));
+    new_infolist = malloc (sizeof (*new_infolist));
     if (new_infolist)
     {
         new_infolist->items = NULL;
@@ -73,7 +73,7 @@ plugin_infolist_new_item (struct t_plugin_infolist *list)
 {
     struct t_plugin_infolist_item *new_item;
 
-    new_item = (struct t_plugin_infolist_item *)malloc (sizeof (struct t_plugin_infolist_item));
+    new_item = malloc (sizeof (*new_item));
     if (new_item)
     {
         new_item->vars = NULL;
@@ -105,7 +105,7 @@ plugin_infolist_new_var_integer (struct t_plugin_infolist_item *item,
     if (!item || !name || !name[0])
         return NULL;
     
-    new_var = (struct t_plugin_infolist_var *)malloc (sizeof (struct t_plugin_infolist_var));
+    new_var = malloc (sizeof (*new_var));
     if (new_var)
     {
         new_var->name = strdup (name);
@@ -138,7 +138,7 @@ plugin_infolist_new_var_string (struct t_plugin_infolist_item *item,
     if (!item || !name || !name[0])
         return NULL;
     
-    new_var = (struct t_plugin_infolist_var *)malloc (sizeof (struct t_plugin_infolist_var));
+    new_var = malloc (sizeof (*new_var));
     if (new_var)
     {
         new_var->name = strdup (name);
@@ -170,7 +170,7 @@ plugin_infolist_new_var_pointer (struct t_plugin_infolist_item *item,
     if (!item || !name || !name[0])
         return NULL;
     
-    new_var = (struct t_plugin_infolist_var *)malloc (sizeof (struct t_plugin_infolist_var));
+    new_var = malloc (sizeof (*new_var));
     if (new_var)
     {
         new_var->name = strdup (name);
@@ -202,7 +202,7 @@ plugin_infolist_new_var_time (struct t_plugin_infolist_item *item,
     if (!item || !name || !name[0])
         return NULL;
     
-    new_var = (struct t_plugin_infolist_var *)malloc (sizeof (struct t_plugin_infolist_var));
+    new_var = malloc (sizeof (*new_var));
     if (new_var)
     {
         new_var->name = strdup (name);
@@ -303,7 +303,7 @@ plugin_infolist_get_fields (struct t_plugin_infolist *list)
         length += strlen (ptr_var->name) + 3;
     }
     
-    list->ptr_item->fields = (char *)malloc ((length + 1) * sizeof (char));
+    list->ptr_item->fields = malloc (length + 1);
     if (!list->ptr_item->fields)
         return NULL;
     

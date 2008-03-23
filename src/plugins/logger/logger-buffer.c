@@ -46,7 +46,7 @@ logger_buffer_add (struct t_gui_buffer *buffer, char *log_filename)
     if (!buffer || !log_filename)
         return NULL;
     
-    new_logger_buffer = (struct t_logger_buffer *)malloc (sizeof (struct t_logger_buffer));
+    new_logger_buffer = malloc (sizeof (*new_logger_buffer));
     if (new_logger_buffer)
     {
         new_logger_buffer->buffer = buffer;

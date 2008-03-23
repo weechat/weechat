@@ -47,7 +47,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     struct t_gui_buffer *new_buffer;
     
     /* alloc memory for new channel */
-    if ((new_channel = (struct t_irc_channel *)malloc (sizeof (struct t_irc_channel))) == NULL)
+    if ((new_channel = malloc (sizeof (*new_channel))) == NULL)
     {
         weechat_printf (NULL,
                         _("%s%s: cannot allocate new channel"),
@@ -411,7 +411,7 @@ irc_channel_get_notify_level (struct t_irc_server *server,
         && (server_default_notify == 1))
         server_default_notify = 2;
     
-    name = (char *)malloc ((strlen (channel->name) + 2) * sizeof (char));
+    name = malloc (strlen (channel->name) + 2);
     strcpy (name, channel->name);
     strcat (name, ":");
     pos = strstr (server->notify_levels, name);

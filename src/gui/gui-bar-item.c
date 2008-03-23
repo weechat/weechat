@@ -117,7 +117,7 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, char *name,
         return NULL;
     
     /* create bar item */
-    new_bar_item = (struct t_gui_bar_item *) malloc (sizeof (struct t_gui_bar_item));
+    new_bar_item =  malloc (sizeof (*new_bar_item));
     if (new_bar_item)
     {
         new_bar_item->plugin = plugin;
@@ -540,7 +540,7 @@ gui_bar_item_hook (char *signal, char *item)
 {
     struct t_gui_bar_item_hook *bar_item_hook;
     
-    bar_item_hook = (struct t_gui_bar_item_hook *)malloc (sizeof (struct t_gui_bar_item_hook));
+    bar_item_hook = malloc (sizeof (*bar_item_hook));
     if (bar_item_hook)
     {
         bar_item_hook->hook = hook_signal (NULL, signal,

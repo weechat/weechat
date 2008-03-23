@@ -42,7 +42,7 @@ weelist_new ()
 {
     struct t_weelist *new_weelist;
 
-    new_weelist = (struct t_weelist *)malloc (sizeof (struct t_weelist));
+    new_weelist = malloc (sizeof (*new_weelist));
     if (new_weelist)
     {
         new_weelist->items = NULL;
@@ -146,7 +146,8 @@ weelist_add (struct t_weelist *weelist, char *data, char *where)
     if (!weelist || !data || !data[0] || !where || !where[0])
         return NULL;
     
-    if ((new_item = ((struct t_weelist_item *)malloc (sizeof (struct t_weelist_item)))))
+    new_item = malloc (sizeof (*new_item));
+    if (new_item)
     {
         new_item->data = strdup (data);
         weelist_insert (weelist, new_item, where);

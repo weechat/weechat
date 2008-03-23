@@ -232,7 +232,7 @@ irc_completion_channel_nicks_hosts_cb (void *data, char *completion,
                 {
                     length = strlen (ptr_nick->name) + 1 +
                         strlen (ptr_nick->host) + 1;
-                    buf = (char *)malloc (length * sizeof (char));
+                    buf = malloc (length);
                     if (buf)
                     {
                         snprintf (buf, length, "%s!%s",

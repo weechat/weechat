@@ -217,7 +217,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
         gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, ptr_hotlist);
     }
     
-    new_hotlist = (struct t_gui_hotlist *)malloc (sizeof (struct t_gui_hotlist));
+    new_hotlist = malloc (sizeof (*new_hotlist));
     if (!new_hotlist)
     {
         log_printf (_("Error: not enough memory to add a buffer to "
@@ -249,7 +249,7 @@ gui_hotlist_dup (struct t_gui_hotlist *hotlist)
 {
     struct t_gui_hotlist *new_hotlist;
     
-    new_hotlist = (struct t_gui_hotlist *)malloc (sizeof (struct t_gui_hotlist));
+    new_hotlist = malloc (sizeof (*new_hotlist));
     if (new_hotlist)
     {
         new_hotlist->priority = hotlist->priority;

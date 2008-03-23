@@ -169,9 +169,9 @@ irc_dcc_find_filename (struct t_irc_dcc *ptr_dcc)
         return;
     }
     
-    ptr_dcc->local_filename = (char *)malloc ((strlen (dir2) +
-                                               strlen (ptr_dcc->nick) +
-                                               strlen (ptr_dcc->filename) + 4) * sizeof (char));
+    ptr_dcc->local_filename = malloc (strlen (dir2) +
+                                      strlen (ptr_dcc->nick) +
+                                      strlen (ptr_dcc->filename) + 4);
     if (!ptr_dcc->local_filename)
         return;
     
@@ -203,7 +203,7 @@ irc_dcc_find_filename (struct t_irc_dcc *ptr_dcc)
             return;
         }
         
-        filename2 = (char *)malloc ((strlen (ptr_dcc->local_filename) + 16) * sizeof (char));
+        filename2 = malloc (strlen (ptr_dcc->local_filename) + 16);
         if (!filename2)
         {
             irc_dcc_close (ptr_dcc, IRC_DCC_FAILED);
@@ -722,7 +722,7 @@ irc_dcc_alloc ()
     struct t_irc_dcc *new_dcc;
     
     /* create new DCC struct */
-    if ((new_dcc = (struct t_irc_dcc *)malloc (sizeof (struct t_irc_dcc))) == NULL)
+    if ((new_dcc = malloc (sizeof (*new_dcc))) == NULL)
         return NULL;
     
     /* default values */
@@ -979,8 +979,7 @@ irc_dcc_send_request (struct t_irc_server *server, int type, char *nick,
                 free (dir1);
                 return;
             }
-            filename2 = (char *)malloc ((strlen (dir2) +
-                                         strlen (filename) + 4) * sizeof (char));
+            filename2 = malloc (strlen (dir2) + strlen (filename) + 4);
             if (!filename2)
             {
                 gui_chat_printf_error (server->buffer,
@@ -1258,8 +1257,8 @@ irc_dcc_chat_recv (struct t_irc_dcc *dcc)
         ptr_buf = buffer;
         if (dcc->unterminated_message)
         {
-            buf2 = (char *)malloc ((strlen (dcc->unterminated_message) +
-                                    strlen (buffer) + 1) * sizeof (char));
+            buf2 = malloc (strlen (dcc->unterminated_message) +
+                                   strlen (buffer) + 1);
             if (buf2)
             {
                 strcpy (buf2, dcc->unterminated_message);

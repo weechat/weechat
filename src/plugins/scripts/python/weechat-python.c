@@ -137,7 +137,7 @@ weechat_python_exec (struct t_plugin_script *script,
     else if (PyInt_Check (rc) && (ret_type == WEECHAT_SCRIPT_EXEC_INT))
     {
 	
-	ret_i = (int *)malloc (sizeof (int));
+	ret_i = malloc (sizeof (*ret_i));
 	if (ret_i)
 	    *ret_i = (int) PyInt_AsLong(rc);
 	ret_value = ret_i;
@@ -277,8 +277,8 @@ weechat_python_load (char *filename)
                                          "sub-interpreter"),
                         weechat_prefix ("error"), "python");
         fclose (fp);
-	/* PyEval_ReleaseLock (); */
-	return 0;
+        /* PyEval_ReleaseLock (); */
+        return 0;
     }
     
     /* PyThreadState_Swap (python_current_interpreter); */
@@ -293,10 +293,10 @@ weechat_python_load (char *filename)
                         weechat_prefix ("error"), "python");
         fclose (fp);
 	
-	Py_EndInterpreter (python_current_interpreter);
+        Py_EndInterpreter (python_current_interpreter);
         /* PyEval_ReleaseLock (); */
-        
-	return 0;
+
+        return 0;
     }
 
     /* adding $weechat_dir/python in $PYTHONPATH */    
@@ -304,19 +304,19 @@ weechat_python_load (char *filename)
     w_home = weechat_info_get ("weechat_dir");
     if (w_home)
     {
-	len = strlen (w_home) + 1 + strlen("python") + 1;
-	p_home = (char *)malloc (len * sizeof (char));
-	if (p_home)
-	{
-	    snprintf (p_home, len, "%s/python", w_home);
-	    path = PyString_FromString (p_home);
-	    if (path != NULL)
-	    {
-		PyList_Insert (python_path, 0, path);
-		Py_DECREF (path);
-	    }
-	    free (p_home);
-	}
+        len = strlen (w_home) + 1 + strlen("python") + 1;
+        p_home = malloc (len);
+        if (p_home)
+        {
+            snprintf (p_home, len, "%s/python", w_home);
+            path = PyString_FromString (p_home);
+            if (path != NULL)
+            {
+                PyList_Insert (python_path, 0, path);
+                Py_DECREF (path);
+            }
+            free (p_home);
+        }
     }
     
     /* define some constants */
@@ -344,15 +344,15 @@ weechat_python_load (char *filename)
     }
     else
     {
-	if (PySys_SetObject("stdout", weechat_outputs) == -1)
+        if (PySys_SetObject("stdout", weechat_outputs) == -1)
         {
-	    weechat_printf (NULL,
+            weechat_printf (NULL,
                             weechat_gettext ("%s%s: unable to redirect stdout"),
                             weechat_prefix ("error"), "python");
         }
-	if (PySys_SetObject("stderr", weechat_outputs) == -1)
+        if (PySys_SetObject("stderr", weechat_outputs) == -1)
         {
-	    weechat_printf (NULL,
+            weechat_printf (NULL,
                             weechat_gettext ("%s%s: unable to redirect stderr"),
                             weechat_prefix ("error"), "python");
         }
@@ -365,22 +365,22 @@ weechat_python_load (char *filename)
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to parse file \"%s\""),
                         weechat_prefix ("error"), "python", filename);
-	fclose (fp);
-	
-	if (PyErr_Occurred ()) PyErr_Print ();
-	Py_EndInterpreter (python_current_interpreter);
-	/* PyEval_ReleaseLock (); */
-        
-	/* if script was registered, removing from list */
-	if (python_current_script != NULL)
-        {
-	    script_remove (weechat_python_plugin, &python_scripts,
-                           python_current_script);
-        }
+        fclose (fp);
+
+        if (PyErr_Occurred ())
+            PyErr_Print ();
+        Py_EndInterpreter (python_current_interpreter);
+        /* PyEval_ReleaseLock (); */
+
+        /* if script was registered, removing from list */
+        if (python_current_script != NULL)
+            script_remove (weechat_python_plugin, &python_scripts,
+                    python_current_script);
         return 0;
     }
 
-    if (PyErr_Occurred ()) PyErr_Print ();
+    if (PyErr_Occurred ())
+        PyErr_Print ();
 
     fclose (fp);
     
@@ -391,11 +391,12 @@ weechat_python_load (char *filename)
                                          "found (or failed) in file \"%s\""),
                         weechat_prefix ("error"), "python", filename);
 	
-	if (PyErr_Occurred ()) PyErr_Print ();
-	Py_EndInterpreter (python_current_interpreter);
-	/* PyEval_ReleaseLock (); */
-        
-	return 0;
+        if (PyErr_Occurred ())
+            PyErr_Print ();
+        Py_EndInterpreter (python_current_interpreter);
+        /* PyEval_ReleaseLock (); */
+
+        return 0;
     }
     
     python_current_script->interpreter = (PyThreadState *) python_current_interpreter;

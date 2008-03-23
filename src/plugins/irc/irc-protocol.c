@@ -1162,7 +1162,7 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *command,
                     {
                         join_length = strlen (ptr_channel->name) + 1 +
                             strlen (ptr_channel->key) + 1;
-                        join_string = (char *)malloc (join_length * sizeof (char));
+                        join_string = malloc (join_length);
                         if (join_string)
                         {
                             snprintf (join_string, join_length, "%s %s",
@@ -3826,7 +3826,7 @@ irc_protocol_cmd_352 (struct t_irc_server *server, char *command,
                 if (ptr_nick->host)
                     free (ptr_nick->host);
                 length = strlen (argv[4]) + 1 + strlen (argv[5]) + 1;
-                ptr_nick->host = (char *)malloc (length * sizeof (char));
+                ptr_nick->host = malloc (length);
                 if (ptr_nick->host)
                     snprintf (ptr_nick->host, length, "%s@%s", argv[4], argv[5]);
                 if (pos_attr)

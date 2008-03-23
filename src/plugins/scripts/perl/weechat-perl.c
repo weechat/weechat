@@ -119,9 +119,9 @@ weechat_perl_exec (struct t_plugin_script *script,
     
 #ifndef MULTIPLICITY
     length = strlen (script->interpreter) + strlen (function) + 3;
-    func = (char *)malloc (length * sizeof (char));
+    func = malloc (length);
     if (!func)
-	return NULL;
+        return NULL;
     snprintf (func, length, "%s::%s", (char *) script->interpreter, function);
 #else
     (void) length;
@@ -135,7 +135,7 @@ weechat_perl_exec (struct t_plugin_script *script,
     
     /* are we loading the script file ? */
     if (strcmp (function, "weechat_perl_load_eval_file") != 0)
-	perl_current_script = script;
+        perl_current_script = script;
     
     count = perl_call_argv (func, G_EVAL | G_SCALAR, argv);
     ret_value = NULL;
@@ -149,42 +149,42 @@ weechat_perl_exec (struct t_plugin_script *script,
                         weechat_gettext ("%s%s: error: %s"),
                         weechat_prefix ("error"), "perl", SvPV_nolen (ERRSV));
         (void) POPs; /* poping the 'undef' */	
-	mem_err = 0;
+        mem_err = 0;
     }
     else
     {
         if (count != 1)
-	{
+        {
             weechat_printf (NULL,
                             weechat_gettext ("%s%s: function \"%s\" must "
                                              "return one valid value (%d)"),
                             weechat_prefix ("error"), "perl", function, count);
-	    mem_err = 0;
-	}
+            mem_err = 0;
+        }
         else
-	{
-	    if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
-	    {
-		ret_s = newSVsv(POPs);
-		ret_value = strdup (SvPV_nolen (ret_s));
-		SvREFCNT_dec (ret_s);
-	    }
-	    else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
-	    {
-		ret_i = (int *)malloc (sizeof (int));
-		if (ret_i)
-		    *ret_i = POPi;
-		ret_value = ret_i;
-	    }
-	    else
-	    {
-		weechat_printf (NULL,
+        {
+            if (ret_type == WEECHAT_SCRIPT_EXEC_STRING)
+            {
+                ret_s = newSVsv(POPs);
+                ret_value = strdup (SvPV_nolen (ret_s));
+                SvREFCNT_dec (ret_s);
+            }
+            else if (ret_type == WEECHAT_SCRIPT_EXEC_INT)
+            {
+                ret_i = malloc (sizeof (*ret_i));
+                if (ret_i)
+                    *ret_i = POPi;
+                ret_value = ret_i;
+            }
+            else
+            {
+                weechat_printf (NULL,
                                 weechat_gettext ("%s%s: function \"%s\" is "
                                                  "internally misused"),
                                 weechat_prefix ("error"), "perl", function);
-		mem_err = 0;
-	    }
-	}
+                mem_err = 0;
+            }
+        }
     }
     
     PUTBACK;
@@ -197,11 +197,11 @@ weechat_perl_exec (struct t_plugin_script *script,
 
     if (!ret_value && (mem_err == 1))
     {
-	weechat_printf (NULL,
+        weechat_printf (NULL,
                         weechat_gettext ("%s%s: not enough memory in function "
                                          "\"%s\""),
                         weechat_prefix ("error"), "perl", function);
-	return NULL;
+        return NULL;
     }
     
     return ret_value;

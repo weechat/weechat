@@ -52,7 +52,7 @@ irc_color_decode (unsigned char *string, int keep_irc_colors,
     return NULL;
     
     /*out_length = (strlen ((char *)string) * 2) + 1;
-    out = (unsigned char *)malloc (out_length * sizeof (unsigned char));
+    out = malloc (out_length);
     if (!out)
         return NULL;
     
@@ -209,7 +209,7 @@ irc_color_decode_for_user_entry (unsigned char *string)
     return NULL;
     
     /*out_length = (strlen ((char *)string) * 2) + 1;
-    out = (unsigned char *)malloc (out_length * sizeof (unsigned char));
+    out = malloc (out_length);
     if (!out)
         return NULL;
     
@@ -278,7 +278,7 @@ irc_color_encode (unsigned char *string, int keep_colors)
     return NULL;
     
     /*out_length = (strlen ((char *)string) * 2) + 1;
-    out = (unsigned char *)malloc (out_length * sizeof (unsigned char));
+    out = malloc (out_length);
     if (!out)
         return NULL;
     

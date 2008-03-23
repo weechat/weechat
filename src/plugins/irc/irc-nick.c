@@ -175,7 +175,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     }
     
     /* alloc memory for new nick */
-    if ((new_nick = (struct t_irc_nick *)malloc (sizeof (struct t_irc_nick))) == NULL)
+    if ((new_nick = malloc (sizeof (*new_nick))) == NULL)
         return NULL;
     
     /* initialize new nick */

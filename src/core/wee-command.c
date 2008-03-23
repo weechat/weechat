@@ -526,7 +526,7 @@ command_builtin (void *data, struct t_gui_buffer *buffer,
         else
         {
             length = strlen (argv_eol[1]) + 2;
-            command = (char *)malloc (length * sizeof (char));
+            command = malloc (length);
             if (command)
             {
                 snprintf (command, length, "/%s", argv_eol[1]);
@@ -1950,7 +1950,7 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
     }
     
     filename_length = strlen (weechat_home) + strlen (WEECHAT_SESSION_NAME) + 2;
-    filename = (char *)malloc (filename_length * sizeof (char));
+    filename = malloc (filename_length);
     if (!filename)
         return -2;
     snprintf (filename, filename_length, "%s%s" WEECHAT_SESSION_NAME,

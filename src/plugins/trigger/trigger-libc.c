@@ -85,7 +85,7 @@ c_strndup (char *string, int length)
     if ((int)strlen (string) < length)
         return strdup (string);
     
-    result = (char *)malloc ((length + 1) * sizeof (char));
+    result = malloc (length + 1);
     if (!result)
         return NULL;
     
@@ -159,7 +159,7 @@ c_weechat_strreplace (char *string, char *search, char *replace)
     length_new = strlen (string) - (count * length1) + (count * length2) + 1;
     
     /* allocate new string */
-    new_string = (char *)malloc (length_new * sizeof (char));
+    new_string = malloc (length_new);
     if (!new_string)
         return strdup (string);
     
@@ -215,9 +215,8 @@ c_explode_string (char *string, char *separators, int num_items_max,
         n_items = i;
     }
 
-    array =
-        (char **)malloc ((num_items_max ? n_items : n_items + 1) *
-                         sizeof (char *));
+    array = malloc ((num_items_max ? n_items : n_items + 1) *
+                         sizeof (array[0]));
 
     ptr1 = string;
     ptr2 = string;
@@ -239,8 +238,7 @@ c_explode_string (char *string, char *separators, int num_items_max,
         {
             if (ptr2 - ptr1 > 0)
             {
-                array[i] =
-                    (char *)malloc ((ptr2 - ptr1 + 1) * sizeof (char));
+                array[i] = malloc (ptr2 - ptr1 + 1);
                 array[i] = strncpy (array[i], ptr1, ptr2 - ptr1);
                 array[i][ptr2 - ptr1] = '\0';
                 ptr1 = ++ptr2;
@@ -309,11 +307,11 @@ c_split_multi_command (char *command, char sep)
 	ptr = ++p;
     }
 
-    array = (char **)malloc ((nb_substr + 1) * sizeof(char *));
+    array = malloc ((nb_substr + 1) * sizeof(array[0]));
     if (!array)
 	return NULL;
     
-    buffer = (char *)malloc ((strlen(command) + 1) * sizeof (char));
+    buffer = malloc ((strlen(command) + 1));
     if (!buffer)
     {
 	free (array);
@@ -363,7 +361,7 @@ c_split_multi_command (char *command, char sep)
 
     free (buffer);
 
-    array = (char **)realloc (array, (arr_idx + 1) * sizeof(char *));
+    array = realloc (array, (arr_idx + 1) * sizeof(array[0]));
 
     return array;
 }
@@ -405,7 +403,7 @@ c_join_string(char **list, char *sep)
 	    len += strlen (list[i]);
 	
 	len += i*strlen (sep) + 1;
-	str = (char *)malloc (len * sizeof(char));
+	str = malloc (len);
 	if (str)
 	{
 	    for (i = 0; list[i]; i++)

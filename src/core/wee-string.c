@@ -59,7 +59,7 @@ string_strndup (char *string, int length)
     if ((int)strlen (string) < length)
         return strdup (string);
     
-    result = (char *)malloc ((length + 1) * sizeof (char));
+    result = malloc (length + 1);
     if (!result)
         return NULL;
     
@@ -361,7 +361,7 @@ string_replace (char *string, char *search, char *replace)
     length_new = strlen (string) - (count * length1) + (count * length2) + 1;
     
     /* allocate new string */
-    new_string = (char *)malloc (length_new * sizeof (char));
+    new_string = malloc (length_new);
     if (!new_string)
         return strdup (string);
     
@@ -478,7 +478,7 @@ string_convert_hex_chars (char *string)
     int pos_output;
     long number;
 
-    output = (char *)malloc ((strlen (string) + 1) * sizeof (char));
+    output = malloc (strlen (string) + 1);
     if (output)
     {
         pos_output = 0;
@@ -587,7 +587,7 @@ string_explode (char *string, char *separators, int keep_eol,
     if ((num_items_max != 0) && (n_items > num_items_max))
         n_items = num_items_max;
     
-    array = (char **)malloc ((n_items + 1) * sizeof (char *));
+    array = malloc ((n_items + 1) * sizeof (array[0]));
     
     ptr1 = string2;
     ptr2 = string2;
@@ -632,8 +632,7 @@ string_explode (char *string, char *separators, int keep_eol,
                 }
                 else
                 {
-                    array[i] =
-                        (char *)malloc ((ptr2 - ptr1 + 1) * sizeof (char));
+                    array[i] = malloc (ptr2 - ptr1 + 1);
                     strncpy (array[i], ptr1, ptr2 - ptr1);
                     array[i][ptr2 - ptr1] = '\0';
                 }
@@ -694,7 +693,7 @@ string_build_with_exploded (char **exploded_string, char *separator)
         length += strlen (exploded_string[i]) + length_separator;
     }
     
-    result = (char *)malloc ((length + 1) * sizeof (char));
+    result = malloc (length + 1);
     result[0] = '\0';
     
     for (i = 0; exploded_string[i]; i++)
@@ -733,11 +732,11 @@ string_split_command (char *command, char separator)
 	ptr = ++p;
     }
 
-    array = (char **)malloc ((nb_substr + 1) * sizeof (char *));
+    array = malloc ((nb_substr + 1) * sizeof (array[0]));
     if (!array)
 	return NULL;
     
-    buffer = (char *)malloc ((strlen(command) + 1) * sizeof (char));
+    buffer = malloc (strlen(command) + 1);
     if (!buffer)
     {
 	free (array);
@@ -787,7 +786,7 @@ string_split_command (char *command, char separator)
 
     free (buffer);
 
-    array = (char **)realloc (array, (arr_idx + 1) * sizeof(char *));
+    array = realloc (array, (arr_idx + 1) * sizeof(array[0]));
 
     return array;
 }
@@ -838,7 +837,7 @@ string_iconv (int from_utf8, char *from_code, char *to_code, char *string)
             ptr_inbuf = inbuf;
             inbytesleft = strlen (inbuf);
             outbytesleft = inbytesleft * 4;
-            outbuf = (char *)malloc ((outbytesleft + 2) * sizeof (char));
+            outbuf = malloc (outbytesleft + 2);
             ptr_outbuf = outbuf;
             ptr_inbuf_shift = NULL;
             done = 0;

@@ -1738,7 +1738,7 @@ char *adder (t_weechat_plugin *plugin, int argc, char **argv,
              char *modifier_args, void *modifier_pointer)
 {
     char *string;
-    string = (char *)malloc (strlen (argv[1]) + 16);
+    string = malloc (strlen (argv[1]) + 16);
     strcpy (string, argv[1]);
     strcat (string, "test");
     return string;

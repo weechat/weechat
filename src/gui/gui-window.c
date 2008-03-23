@@ -64,7 +64,7 @@ struct t_gui_window_tree *gui_windows_tree = NULL; /* windows tree          */
 int
 gui_window_tree_init (struct t_gui_window *window)
 {
-    gui_windows_tree = (struct t_gui_window_tree *)malloc (sizeof (struct t_gui_window_tree));
+    gui_windows_tree = malloc (sizeof (*gui_windows_tree));
     if (!gui_windows_tree)
         return 0;
     gui_windows_tree->parent_node = NULL;
@@ -137,10 +137,10 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
     
     if (parent)
     {
-        child1 = (struct t_gui_window_tree *)malloc (sizeof (struct t_gui_window_tree));
+        child1 = malloc (sizeof (*child1));
         if (!child1)
             return NULL;
-        child2 = (struct t_gui_window_tree *)malloc (sizeof (struct t_gui_window_tree));
+        child2 = malloc (sizeof (*child2));
         if (!child2)
         {
             free (child1);
@@ -186,7 +186,7 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         ptr_leaf = gui_windows_tree;
     }
     
-    if ((new_window = (struct t_gui_window *)(malloc (sizeof (struct t_gui_window)))))
+    if ((new_window = (malloc (sizeof (*new_window)))))
     {
         if (!gui_window_objects_init (new_window))
         {

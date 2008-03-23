@@ -357,8 +357,7 @@ weechat_create_home_dirs ()
             weechat_shutdown (EXIT_FAILURE, 0);
         }
         dir_length = strlen (ptr_home) + 10;
-        weechat_home =
-            (char *)malloc (dir_length * sizeof (char));
+        weechat_home = malloc (dir_length);
         if (!weechat_home)
         {
             string_iconv_fprintf (stderr,

@@ -266,7 +266,7 @@ irc_msg *irc_parse_msg (char *msg)
     char *spc1, *spc2;
     irc_msg_type *it;
    
-    m = (irc_msg *) malloc(sizeof(irc_msg));
+    m =  malloc(sizeof(*m));
     
     if (m)
     {

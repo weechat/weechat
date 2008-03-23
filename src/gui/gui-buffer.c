@@ -88,7 +88,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
     }
     
     /* create new buffer */
-    new_buffer = (struct t_gui_buffer *)(malloc (sizeof (struct t_gui_buffer)));
+    new_buffer = malloc (sizeof (*new_buffer));
     if (new_buffer)
     {
         /* init buffer */
@@ -133,8 +133,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         new_buffer->input_callback_data = input_callback_data;
         new_buffer->input_nick = NULL;
         new_buffer->input_buffer_alloc = GUI_BUFFER_INPUT_BLOCK_SIZE;
-        new_buffer->input_buffer = (char *)malloc (GUI_BUFFER_INPUT_BLOCK_SIZE * sizeof (char));
-        new_buffer->input_buffer_color_mask = (char *)malloc (GUI_BUFFER_INPUT_BLOCK_SIZE * sizeof (char));
+        new_buffer->input_buffer = malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
+        new_buffer->input_buffer_color_mask = malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
         new_buffer->input_buffer[0] = '\0';
         new_buffer->input_buffer_color_mask[0] = '\0';
         new_buffer->input_buffer_size = 0;
@@ -144,7 +144,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         new_buffer->input_refresh_needed = 1;
         
         /* init completion */
-        new_completion = (struct t_gui_completion *)malloc (sizeof (struct t_gui_completion));
+        new_completion = malloc (sizeof (*new_completion));
         if (new_completion)
         {
             new_buffer->completion = new_completion;

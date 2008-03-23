@@ -45,7 +45,7 @@ t_weechat_trigger *weechat_trigger_alloc (char *pattern, char *domain, char *com
 {
     t_weechat_trigger *new;
     
-    new = (t_weechat_trigger *)malloc (sizeof (t_weechat_trigger));
+    new = malloc (sizeof (*new));
     if (new)
     {
 	new->pattern = strdup (pattern);
@@ -733,7 +733,7 @@ weechat_trigger_edit (t_weechat_plugin *plugin, int todo)
 	return -1;
     
     len = strlen (weechat_dir) + strlen(DIR_SEP) + strlen(CONF_FILE) + 1;
-    triggerrc = (char *)malloc (len * sizeof(char));
+    triggerrc = malloc (len);
     if (!triggerrc)
 	return -1;
 

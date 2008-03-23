@@ -198,7 +198,7 @@ weechat_ruby_exec (struct t_plugin_script *script,
     }
     else if ((TYPE(rc) == T_FIXNUM) && (ret_type == WEECHAT_SCRIPT_EXEC_INT))
     {
-	ret_i = (int *)malloc (sizeof (int));
+	ret_i = malloc (sizeof (*ret_i));
 	if (ret_i)
 	    *ret_i = NUM2INT(rc);
 	ret_value = ret_i;

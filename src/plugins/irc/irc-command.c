@@ -119,7 +119,7 @@ irc_command_mode_nicks (struct t_irc_server *server, char *channel,
     for (i = 1; i < argc; i++)
         length += strlen (argv[i]) + 1;
     length += strlen (channel) + (argc * strlen (mode)) + 32;
-    command = (char *)malloc (length * sizeof (char));
+    command = malloc (length);
     if (command)
     {
         snprintf (command, length, "MODE %s %s", channel, set);
@@ -258,7 +258,7 @@ irc_command_away_server (struct t_irc_server *server, char *arguments)
     {
         if (server->away_message)
             free (server->away_message);
-        server->away_message = (char *)malloc ((strlen (arguments) + 1) * sizeof (char));
+        server->away_message = malloc (strlen (arguments) + 1);
         if (server->away_message)
             strcpy (server->away_message, arguments);
 
@@ -1566,7 +1566,7 @@ irc_command_list (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (argc > 1)
     {
-	ptr_server->cmd_list_regexp = (regex_t *)malloc (sizeof (regex_t));
+	ptr_server->cmd_list_regexp = malloc (sizeof (*ptr_server->cmd_list_regexp));
 	if (ptr_server->cmd_list_regexp)
 	{
 	    if ((ret = regcomp (ptr_server->cmd_list_regexp,

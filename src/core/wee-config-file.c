@@ -86,7 +86,7 @@ config_file_new (struct t_weechat_plugin *plugin, char *filename,
     if (config_file_search (filename))
         return NULL;
     
-    new_config_file = (struct t_config_file *)malloc (sizeof (struct t_config_file));
+    new_config_file = malloc (sizeof (*new_config_file));
     if (new_config_file)
     {
         new_config_file->plugin = plugin;
@@ -157,7 +157,7 @@ config_file_new_section (struct t_config_file *config_file, char *name,
     if (!config_file || !name)
         return NULL;
     
-    new_section = (struct t_config_section *)malloc (sizeof (struct t_config_section));
+    new_section = malloc (sizeof (*new_section));
     if (new_section)
     {
         new_section->name = strdup (name);
@@ -275,7 +275,7 @@ config_file_new_option (struct t_config_file *config_file,
         return NULL;
     }
     
-    new_option = (struct t_config_option *)malloc (sizeof (struct t_config_option));
+    new_option = malloc (sizeof (*new_option));
     if (new_option)
     {
         new_option->name = strdup (name);
@@ -849,8 +849,7 @@ config_file_write_internal (struct t_config_file *config_file,
     /* build filename */
     filename_length = strlen (weechat_home) +
         strlen (config_file->filename) + 2;
-    filename =
-        (char *)malloc (filename_length * sizeof (char));
+    filename = malloc (filename_length);
     if (!filename)
         return -2;
     snprintf (filename, filename_length, "%s%s%s",
@@ -858,7 +857,7 @@ config_file_write_internal (struct t_config_file *config_file,
     
     /* build temporary filename, this temp file will be renamed to filename
        after write */
-    filename2 = (char *)malloc ((filename_length + 32) * sizeof (char));
+    filename2 = malloc (filename_length + 32);
     if (!filename2)
     {
         free (filename);
@@ -972,7 +971,7 @@ config_file_read (struct t_config_file *config_file)
     
     /* build filename */
     filename_length = strlen (weechat_home) + strlen (config_file->filename) + 2;
-    filename = (char *)malloc (filename_length * sizeof (char));
+    filename = malloc (filename_length);
     if (!filename)
         return -2;
     snprintf (filename, filename_length, "%s%s%s",

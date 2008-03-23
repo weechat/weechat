@@ -243,7 +243,7 @@ gui_keyboard_get_internal_code (char *key)
 {
     char *result;
     
-    if ((result = (char *)malloc ((strlen (key) + 1) * sizeof (char))))
+    if ((result = malloc (strlen (key) + 1)))
     {
         result[0] = '\0';
         while (key[0])
@@ -286,7 +286,7 @@ gui_keyboard_get_expanded_name (char *key)
 {
     char *result;
     
-    if ((result = (char *)malloc (((strlen (key) * 5) + 1) * sizeof (char))))
+    if ((result = malloc ((strlen (key) * 5) + 1)))
     {
         result[0] = '\0';
         while (key[0])
@@ -390,7 +390,7 @@ gui_keyboard_new (char *key, char *command, t_gui_key_func *function,
     char *internal_code;
     int length;
     
-    if ((new_key = (struct t_gui_key *)malloc (sizeof (struct t_gui_key))))
+    if ((new_key = malloc (sizeof (*new_key))))
     {
         internal_code = gui_keyboard_get_internal_code (key);
         new_key->key = (internal_code) ? strdup (internal_code) : strdup (key);
@@ -736,7 +736,7 @@ gui_keyboard_buffer_optimize ()
     if (gui_keyboard_buffer_alloc != optimal_size)
     {
         gui_keyboard_buffer_alloc = optimal_size;
-        gui_keyboard_buffer = realloc (gui_keyboard_buffer, optimal_size * sizeof (char));
+        gui_keyboard_buffer = realloc (gui_keyboard_buffer, optimal_size);
     }
 }
 
@@ -752,7 +752,7 @@ gui_keyboard_buffer_reset ()
     {
         gui_keyboard_buffer_alloc = GUI_KEYBOARD_BUFFER_BLOCK_SIZE;
         gui_keyboard_buffer_size = 0;
-        gui_keyboard_buffer = (int *)malloc (gui_keyboard_buffer_alloc);
+        gui_keyboard_buffer = malloc (gui_keyboard_buffer_alloc);
     }
     else
     {

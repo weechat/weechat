@@ -247,7 +247,7 @@ plugin_load (char *filename)
     }
     
     /* create new plugin */
-    new_plugin = (struct t_weechat_plugin *)malloc (sizeof (struct t_weechat_plugin));
+    new_plugin = malloc (sizeof (*new_plugin));
     if (new_plugin)
     {
         /* variables */
@@ -513,7 +513,7 @@ plugin_auto_load ()
             }
     
             /* auto-load plugins in WeeChat global lib dir */
-            dir_name = (char *)malloc ((strlen (WEECHAT_LIBDIR) + 16) * sizeof (char));
+            dir_name = malloc (strlen (WEECHAT_LIBDIR) + 16);
             if (dir_name)
             {
                 snprintf (dir_name, strlen (WEECHAT_LIBDIR) + 16,

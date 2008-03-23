@@ -63,8 +63,7 @@ log_open (char *filename, char *mode)
     else
     {
         filename_length = strlen (weechat_home) + 64;
-        weechat_log_filename =
-            (char *)malloc (filename_length * sizeof (char));
+        weechat_log_filename = malloc (filename_length);
         snprintf (weechat_log_filename, filename_length,
                   "%s/%s", weechat_home, WEECHAT_LOG_NAME);
     }
@@ -204,7 +203,7 @@ log_crash_rename ()
     log_close ();
     
     length = strlen (weechat_home) + 128;
-    new_name = (char *)malloc (length * sizeof (char));
+    new_name = malloc (length);
     if (new_name)
     {
         time_now = time (NULL);

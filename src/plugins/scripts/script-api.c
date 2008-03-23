@@ -911,8 +911,8 @@ script_api_config_get_plugin (struct t_weechat_plugin *weechat_plugin,
 {
     char *option_fullname, *return_value;
     
-    option_fullname = (char *)malloc ((strlen (script->name) +
-                                       strlen (option) + 2) * sizeof (char));
+    option_fullname = malloc ((strlen (script->name) +
+                               strlen (option) + 2));
     if (!option_fullname)
         return NULL;
     
@@ -939,8 +939,8 @@ script_api_config_set_plugin (struct t_weechat_plugin *weechat_plugin,
     char *option_fullname;
     int return_code;
     
-    option_fullname = (char *)malloc ((strlen (script->name) +
-                                       strlen (option) + 2) * sizeof (char));
+    option_fullname = malloc ((strlen (script->name) +
+                               strlen (option) + 2));
     if (!option_fullname)
         return 0;
     

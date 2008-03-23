@@ -271,7 +271,7 @@ gui_filter_new (char *buffer, char *tags, char *regex)
         if (!regex_prefix)
             return NULL;
         
-        regex1 = (regex_t *)malloc (sizeof (regex_t));
+        regex1 = malloc (sizeof (*regex1));
         if (regex1)
         {
             if (regcomp (regex1, regex_prefix,
@@ -283,7 +283,7 @@ gui_filter_new (char *buffer, char *tags, char *regex)
             }
         }
         
-        regex2 = (regex_t *)malloc (sizeof (regex_t));
+        regex2 = malloc (sizeof (*regex2));
         if (regex2)
         {
             if (regcomp (regex2, pos_regex_message,
@@ -301,7 +301,7 @@ gui_filter_new (char *buffer, char *tags, char *regex)
     }
     
     /* create new filter */
-    new_filter = (struct t_gui_filter *)(malloc (sizeof (struct t_gui_filter)));
+    new_filter = (malloc (sizeof (*new_filter)));
     if (new_filter)
     {
         /* init filter */

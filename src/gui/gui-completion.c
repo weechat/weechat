@@ -179,7 +179,7 @@ gui_completion_strdup_alphanum (char *string)
 {
     char *result, *pos;
     
-    result = (char *)malloc ((strlen (string) + 1) * sizeof (char));
+    result = malloc (strlen (string) + 1);
     pos = result;
     while (string[0])
     {
@@ -334,7 +334,7 @@ gui_completion_list_add_filename (struct t_gui_completion *completion)
     char home[3] = { '~', DIR_SEPARATOR_CHAR, '\0' };
     
     buffer_len = PATH_MAX;
-    buffer = (char *)malloc (buffer_len * sizeof (char));
+    buffer = malloc (buffer_len);
     if (!buffer)
 	return;
     
@@ -971,7 +971,7 @@ gui_completion_find_context (struct t_gui_completion *completion, char *data,
         if (pos_start <= pos_end)
         {
             completion->position_replace = pos_start;
-            completion->base_word = (char *)malloc ((pos_end - pos_start + 2) * sizeof (char));
+            completion->base_word = malloc (pos_end - pos_start + 2);
             for (i = pos_start; i <= pos_end; i++)
                 completion->base_word[i - pos_start] = data[i];
             completion->base_word[pos_end - pos_start + 1] = '\0';
@@ -996,7 +996,7 @@ gui_completion_find_context (struct t_gui_completion *completion, char *data,
             if (data[pos_end] == ' ')
                 pos_end--;
             
-            completion->base_command = (char *)malloc ((pos_end - pos_start + 2) * sizeof (char));
+            completion->base_command = malloc (pos_end - pos_start + 2);
             for (i = pos_start; i <= pos_end; i++)
                 completion->base_command[i - pos_start] = data[i];
             completion->base_command[pos_end - pos_start + 1] = '\0';

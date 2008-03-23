@@ -55,7 +55,7 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, char *string)
         || (buffer->history
             && (strcmp (buffer->history->text, string) != 0)))
     {	
-	new_history = (struct t_gui_history *)malloc (sizeof (struct t_gui_history));
+	new_history = malloc (sizeof (*new_history));
 	if (new_history)
 	{
 	    new_history->text = strdup (string);
@@ -105,7 +105,7 @@ gui_history_global_add (char *string)
         || (history_global
             && (strcmp (history_global->text, string) != 0)))
     {
-	new_history = (struct t_gui_history *)malloc (sizeof (struct t_gui_history));
+	new_history = malloc (sizeof (*new_history));
 	if (new_history)
 	{
 	    new_history->text = strdup (string);
