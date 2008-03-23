@@ -1487,10 +1487,9 @@ irc_server_msgq_flush ()
                         else
                         {
                             snprintf (modifier_data, sizeof (modifier_data),
-                                      "%s.%s.%s",
+                                      "%s.%s",
                                       weechat_plugin->name,
-                                      irc_recv_msgq->server->name,
-                                      ptr_chan_nick);
+                                      irc_recv_msgq->server->name);
                         }
                         msg_decoded = weechat_hook_modifier_exec ("charset_decode",
                                                                   modifier_data,
