@@ -493,14 +493,12 @@ alias_config_write_default_aliases (void *data,
     
     weechat_config_write_line (config_file, section_name, NULL);
     
-    weechat_config_write_line (config_file, "SAY", "%s", "\"msg *\"");
     weechat_config_write_line (config_file, "BYE", "%s", "\"quit\"");
-    weechat_config_write_line (config_file, "EXIT", "%s", "\"quit\"");
-    weechat_config_write_line (config_file, "SIGNOFF", "%s", "\"quit\"");
     weechat_config_write_line (config_file, "C", "%s", "\"buffer clear\"");
     weechat_config_write_line (config_file, "CL", "%s", "\"buffer clear\"");
     weechat_config_write_line (config_file, "CLOSE", "%s", "\"buffer close\"");
     weechat_config_write_line (config_file, "CHAT", "%s", "\"dcc chat\"");
+    weechat_config_write_line (config_file, "EXIT", "%s", "\"quit\"");
     weechat_config_write_line (config_file, "IG", "%s", "\"ignore\"");
     weechat_config_write_line (config_file, "J", "%s", "\"join\"");
     weechat_config_write_line (config_file, "K", "%s", "\"kick\"");
@@ -510,6 +508,9 @@ alias_config_write_default_aliases (void *data,
     weechat_config_write_line (config_file, "MUB", "%s", "\"unban *\"");
     weechat_config_write_line (config_file, "N", "%s", "\"names\"");
     weechat_config_write_line (config_file, "Q", "%s", "\"query\"");
+    weechat_config_write_line (config_file, "REDRAW", "%s", "\"key call refresh\"");
+    weechat_config_write_line (config_file, "SAY", "%s", "\"msg *\"");
+    weechat_config_write_line (config_file, "SIGNOFF", "%s", "\"quit\"");
     weechat_config_write_line (config_file, "T", "%s", "\"topic\"");
     weechat_config_write_line (config_file, "UB", "%s", "\"unban\"");
     weechat_config_write_line (config_file, "UNIG", "%s", "\"unignore\"");
