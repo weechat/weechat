@@ -80,11 +80,6 @@ struct t_gui_window
     /* GUI specific objects */
     void *gui_objects;                 /* pointer to a GUI specific struct  */
     
-    int current_style_fg;              /* current color used for foreground */
-    int current_style_bg;              /* current color used for background */
-    int current_style_attr;            /* current attributes (bold, ..)     */
-    int current_color_attr;            /* attr sum of last color(s) used    */
-    
     /* DCC */
     void *dcc_first;                   /* first dcc displayed               */
     void *dcc_selected;                /* selected dcc                      */

@@ -218,7 +218,8 @@ gui_main_loop ()
             /* refresh chat if needed */
             if (ptr_buffer->chat_refresh_needed)
             {
-                gui_chat_draw (ptr_buffer, 1);
+                gui_chat_draw (ptr_buffer,
+                               (ptr_buffer->chat_refresh_needed) > 1 ? 1 : 0);
                 ptr_buffer->chat_refresh_needed = 0;
             }
             /* refresh nicklist if needed */

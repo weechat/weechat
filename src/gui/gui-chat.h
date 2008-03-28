@@ -72,10 +72,14 @@ extern int gui_chat_line_match_regex (struct t_gui_line *line,
                                       regex_t *regex_message);
 extern int gui_chat_line_match_tags (struct t_gui_line *line, int tags_count,
                                      char **tags_array);
-extern void gui_chat_line_free (struct t_gui_line *line);
+extern void gui_chat_line_free (struct t_gui_buffer *buffer,
+                                struct t_gui_line *line);
+extern void gui_chat_line_free_all (struct t_gui_buffer *buffer);
 extern void gui_chat_printf_date_tags (struct t_gui_buffer *buffer,
                                        time_t date, char *tags,
                                        char *message, ...);
+extern void gui_chat_printf_y (struct t_gui_buffer *buffer, int y,
+                               char *message, ...);
 
 /* chat functions (GUI dependent) */
 

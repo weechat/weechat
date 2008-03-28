@@ -339,10 +339,11 @@ plugin_load (char *filename)
         new_plugin->config_get_weechat = &plugin_api_config_get_weechat;
         new_plugin->config_get_plugin = &plugin_api_config_get_plugin;
         new_plugin->config_set_plugin = &plugin_api_config_set_plugin;
-
+        
         new_plugin->prefix = &plugin_api_prefix;
         new_plugin->color = &plugin_api_color;
         new_plugin->printf_date_tags = &gui_chat_printf_date_tags;
+        new_plugin->printf_y = &gui_chat_printf_y;
         new_plugin->infobar_printf = &plugin_api_infobar_printf;
         new_plugin->infobar_remove = &plugin_api_infobar_remove;
         new_plugin->log_printf = &log_printf;

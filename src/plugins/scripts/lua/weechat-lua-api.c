@@ -1832,6 +1832,98 @@ weechat_lua_api_print (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_print_date_tags: print message in a buffer with optional
+ *                                  date and tags
+ */
+
+static int
+weechat_lua_api_print_date_tags (lua_State *L)
+{
+    const char *buffer, *tags, *message;
+    int n, date;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print_date_tags");
+        LUA_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    date = 0;
+    tags = NULL;
+    message = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print_date_tags");
+        LUA_RETURN_ERROR;
+    }
+    
+    buffer = lua_tostring (lua_current_interpreter, -4);
+    date = lua_tonumber (lua_current_interpreter, -3);
+    tags = lua_tostring (lua_current_interpreter, -2);
+    message = lua_tostring (lua_current_interpreter, -1);
+    
+    script_api_printf_date_tags (weechat_lua_plugin,
+                                 lua_current_script,
+                                 script_str2ptr ((char *)buffer),
+                                 date,
+                                 (char *)tags,
+                                 "%s", (char *)message);
+    
+    LUA_RETURN_OK;
+}
+
+/*
+ * weechat_lua_api_print_y: print message in a buffer with free content
+ */
+
+static int
+weechat_lua_api_print_y (lua_State *L)
+{
+    const char *buffer, *message;
+    int n, y;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print_y");
+        LUA_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    y = 0;
+    message = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print_y");
+        LUA_RETURN_ERROR;
+    }
+    
+    buffer = lua_tostring (lua_current_interpreter, -3);
+    y = lua_tonumber (lua_current_interpreter, -2);
+    message = lua_tostring (lua_current_interpreter, -1);
+    
+    script_api_printf_y (weechat_lua_plugin,
+                         lua_current_script,
+                         script_str2ptr ((char *)buffer),
+                         y,
+                         "%s", (char *)message);
+    
+    LUA_RETURN_OK;
+}
+
+/*
  * weechat_lua_api_infobar_print: print message to infobar
  */
 
@@ -4366,6 +4458,8 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "prefix", &weechat_lua_api_prefix },
     { "color", &weechat_lua_api_color },
     { "print", &weechat_lua_api_print },
+    { "print_date_tags", &weechat_lua_api_print_date_tags },
+    { "print_y", &weechat_lua_api_print_y },
     { "infobar_print", &weechat_lua_api_infobar_print },
     { "infobar_remove", &weechat_lua_api_infobar_remove },
     { "log_print", &weechat_lua_api_log_print },

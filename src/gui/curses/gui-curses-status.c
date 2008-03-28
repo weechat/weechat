@@ -209,38 +209,42 @@ gui_status_draw (int erase)
             x = ptr_win->win_status_width - utf8_strlen (str_nicks) - 4;
         }
         else*/
-            x = ptr_win->win_status_width - 2;
+            x = ptr_win->win_status_width - 1;
         more = strdup (_("-MORE-"));
-        x -= utf8_strlen (more) - 1;
-        if (x < 0)
-            x = 0;
-        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                      GUI_COLOR_STATUS_MORE);
-        if (ptr_win->scroll)
+        if (more)
         {
-            wmove (GUI_CURSES(ptr_win)->win_status, 0, x);
-            gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, "%s", more);
+            x -= utf8_strlen (more) - 1;
+            if (x < 0)
+                x = 0;
+            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                          GUI_COLOR_STATUS_MORE);
+            if (ptr_win->scroll)
+            {
+                wmove (GUI_CURSES(ptr_win)->win_status, 0, x);
+                gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, "%s", more);
+            }
+            else
+            {
+                /*snprintf (format, sizeof (format) - 1,
+                  "%%-%ds", (int)(utf8_strlen (more)));
+                  wmove (GUI_CURSES(ptr_win)->win_status, 0, x);
+                  gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, format, " ");
+                */
+            }
+            /*if (ptr_win->buffer->attribs & GUI_BUFFER_ATTRIB_NICKLIST)
+            {
+                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                              GUI_COLOR_STATUS_DELIMITERS);
+                wprintw (GUI_CURSES(ptr_win)->win_status, " [");
+                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                              GUI_COLOR_STATUS);
+                wprintw (GUI_CURSES(ptr_win)->win_status, "%s", str_nicks);
+                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
+                                              GUI_COLOR_STATUS_DELIMITERS);
+                wprintw (GUI_CURSES(ptr_win)->win_status, "]");
+            }*/
+            free (more);
         }
-        else
-        {
-            snprintf (format, sizeof (format) - 1,
-                      "%%-%ds", (int)(utf8_strlen (more)));
-            wmove (GUI_CURSES(ptr_win)->win_status, 0, x);
-            gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, format, " ");
-        }
-        /*if (ptr_win->buffer->attribs & GUI_BUFFER_ATTRIB_NICKLIST)
-        {
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          GUI_COLOR_STATUS_DELIMITERS);
-            wprintw (GUI_CURSES(ptr_win)->win_status, " [");
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          GUI_COLOR_STATUS);
-            wprintw (GUI_CURSES(ptr_win)->win_status, "%s", str_nicks);
-            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                          GUI_COLOR_STATUS_DELIMITERS);
-            wprintw (GUI_CURSES(ptr_win)->win_status, "]");
-        }*/
-        free (more);
         
         wnoutrefresh (GUI_CURSES(ptr_win)->win_status);
         refresh ();

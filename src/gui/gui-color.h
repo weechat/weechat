@@ -151,6 +151,7 @@ extern void gui_color_free (struct t_gui_color *color);
 
 /* color functions (GUI dependent) */
 
+extern int gui_color_search (char *color_name);
 extern int gui_color_assign (int *color, char *color_name);
 extern char *gui_color_get_name (int num_color);
 extern void gui_color_init_pairs ();

@@ -421,6 +421,7 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
         {
             weechat_unhook (ptr_script_callback->hook);
         }
+        
         /* free config file */
         if (ptr_script_callback->config_file
             && !ptr_script_callback->config_section
@@ -430,6 +431,7 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
                 weechat_config_write (ptr_script_callback->config_file);
             weechat_config_free (ptr_script_callback->config_file);
         }
+        
         /* remove bar item */
         if (ptr_script_callback->bar_item)
             weechat_bar_item_remove (ptr_script_callback->bar_item);

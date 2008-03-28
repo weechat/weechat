@@ -216,6 +216,8 @@ struct t_weechat_plugin
     char *(*color) (char *color_name);
     void (*printf_date_tags) (struct t_gui_buffer *buffer, time_t date,
                               char *tags, char *message, ...);
+    void (*printf_y) (struct t_gui_buffer *buffer, int y,
+                      char *message, ...);
     void (*infobar_printf) (struct t_weechat_plugin *plugin, int delay,
                             char *color_name, char *format, ...);
     void (*infobar_remove) (int how_many);
@@ -567,6 +569,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_printf(__buffer, __message, __argz...)                  \
     weechat_plugin->printf_date_tags(__buffer, 0, NULL, __message,      \
                                      ##__argz)
+#define weechat_printf_y(__buffer, __y, __message, __argz...)     \
+    weechat_plugin->printf_y(__buffer, __y, __message, ##__argz)
 #define weechat_printf_date(__buffer, __date, __message, __argz...)     \
     weechat_plugin->printf_date_tags(__buffer, __date, NULL,            \
                                      __message, ##__argz)

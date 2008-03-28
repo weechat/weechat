@@ -220,16 +220,66 @@ plugin_api_prefix (char *prefix)
 char *
 plugin_api_color (char *color_name)
 {
-    int num_color;
+    int num_color, fg, bg;
+    static char color[20][16];
+    static int index_color = 0;
+    char *pos_comma, *str_fg, *pos_bg;
     
     if (!color_name)
         return GUI_NO_COLOR;
-
+    
+    /* name is a weechat color option ? => then return this color */
     num_color = gui_color_search_config (color_name);
     if (num_color >= 0)
         return GUI_COLOR(num_color);
     
-    return GUI_NO_COLOR;
+    /* custom color name (GUI dependent) */
+    pos_comma = strchr (color_name, ',');
+    if (pos_comma)
+    {
+        if (pos_comma == color_name)
+            str_fg = NULL;
+        else
+            str_fg = string_strndup (color_name, pos_comma - color_name);
+        pos_bg = pos_comma + 1;
+    }
+    else
+    {
+        str_fg = strdup (color_name);
+        pos_bg = NULL;
+    }
+    
+    index_color = (index_color + 1) % 20;
+    
+    color[index_color][0] = '\0';
+    
+    if (str_fg && pos_bg)
+    {
+        fg = gui_color_search (str_fg);
+        bg = gui_color_search (pos_bg);
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%s*%02d,%02d",
+                  GUI_COLOR_COLOR_STR, fg, bg);
+    }
+    else if (str_fg && !pos_bg)
+    {
+        fg = gui_color_search (str_fg);
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%sF%02d",
+                  GUI_COLOR_COLOR_STR, fg);
+    }
+    else if (!str_fg && pos_bg)
+    {
+        bg = gui_color_search (pos_bg);
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%sB%02d",
+                  GUI_COLOR_COLOR_STR, bg);
+    }
+    
+    if (str_fg)
+        free (str_fg);
+    
+    return color[index_color];
 }
 
 /*

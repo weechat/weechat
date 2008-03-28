@@ -36,7 +36,7 @@
 #include "gui-curses.h"
 
 
-struct t_gui_color gui_weechat_colors[] =
+struct t_gui_color gui_weechat_colors[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
 { { -1,            0, 0,        "default"      },
   { COLOR_BLACK,   0, 0,        "black"        },
   { COLOR_RED,     0, 0,        "red"          },

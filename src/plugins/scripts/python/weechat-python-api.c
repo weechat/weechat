@@ -1599,6 +1599,85 @@ weechat_python_api_prnt (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_prnt_date_tags: print message in a buffer with optional
+ *                                    date and tags
+ */
+
+static PyObject *
+weechat_python_api_prnt_date_tags (PyObject *self, PyObject *args)
+{
+    char *buffer, *tags, *message;
+    int date;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("prnt_date_tags");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    date = 0;
+    tags = NULL;
+    message = NULL;
+    
+    if (!PyArg_ParseTuple (args, "siss", &buffer, &time, &tags, &message))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("prnt_date_tags");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    script_api_printf_date_tags (weechat_python_plugin,
+                                 python_current_script,
+                                 script_str2ptr (buffer),
+                                 date,
+                                 tags,
+                                 "%s", message);
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
+ * weechat_python_api_prnt_y: print message in a buffer with free content
+ */
+
+static PyObject *
+weechat_python_api_prnt_y (PyObject *self, PyObject *args)
+{
+    char *buffer, *message;
+    int y;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("prnt_y");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    y = 0;
+    message = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sis", &buffer, &y, &message))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("prnt_y");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    script_api_printf_y (weechat_python_plugin,
+                          python_current_script,
+                          script_str2ptr (buffer),
+                          y,
+                          "%s", message);
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
  * weechat_python_api_infobar_print: print message to infobar
  */
 
@@ -3735,6 +3814,8 @@ PyMethodDef weechat_python_funcs[] =
     { "prefix", &weechat_python_api_prefix, METH_VARARGS, "" },
     { "color", &weechat_python_api_color, METH_VARARGS, "" },
     { "prnt", &weechat_python_api_prnt, METH_VARARGS, "" },
+    { "prnt_date_tags", &weechat_python_api_prnt_date_tags, METH_VARARGS, "" },
+    { "prnt_y", &weechat_python_api_prnt_y, METH_VARARGS, "" },
     { "infobar_print", &weechat_python_api_infobar_print, METH_VARARGS, "" },
     { "infobar_remove", &weechat_python_api_infobar_remove, METH_VARARGS, "" },
     { "log_print", &weechat_python_api_log_print, METH_VARARGS, "" },

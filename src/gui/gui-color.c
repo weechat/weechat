@@ -92,8 +92,23 @@ gui_color_decode (unsigned char *string)
         {
             case GUI_COLOR_COLOR_CHAR:
                 string++;
-                if (isdigit (string[0]) && isdigit (string[1]))
-                    string += 2;
+                switch (string[0])
+                {
+                    case 'F':
+                    case 'B':
+                        if (string[1] && string[2])
+                            string += 3;
+                        break;
+                    case '*':
+                        if (string[1] && string[2] && (string[3] == ',')
+                            && string[4] && string[5])
+                            string += 6;
+                        break;
+                    default:
+                        if (isdigit (string[0]) && isdigit (string[1]))
+                            string += 2;
+                        break;
+                }
                 break;
             case GUI_COLOR_SET_CHAR:
             case GUI_COLOR_REMOVE_CHAR:

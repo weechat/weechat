@@ -1845,6 +1845,104 @@ weechat_ruby_api_print (VALUE class, VALUE buffer, VALUE message)
 }
 
 /*
+ * weechat_ruby_api_print_date_tags: print message in a buffer with optional
+ *                                   date and tags
+ */
+
+static VALUE
+weechat_ruby_api_print_date_tags (VALUE class, VALUE buffer, VALUE date,
+                                  VALUE tags, VALUE message)
+{
+    char *c_buffer, *c_tags, *c_message;
+    int c_date;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print_date_tags");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_buffer = NULL;
+    c_date = 0;
+    c_tags = NULL;
+    c_message = NULL;
+    
+    if (NIL_P (buffer) || NIL_P (date) || NIL_P (tags) || NIL_P (message))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print_date_tags");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (date, T_FIXNUM);
+    Check_Type (tags, T_STRING);
+    Check_Type (message, T_STRING);
+    
+    c_buffer = STR2CSTR (buffer);
+    c_date = FIX2INT (date);
+    c_tags = STR2CSTR (tags);
+    c_message = STR2CSTR (message);
+    
+    script_api_printf_date_tags (weechat_ruby_plugin,
+                                 ruby_current_script,
+                                 script_str2ptr (c_buffer),
+                                 c_date,
+                                 c_tags,
+                                 "%s", c_message);
+    
+    RUBY_RETURN_OK;
+}
+
+/*
+ * weechat_ruby_api_print_y: print message in a buffer with free content
+ */
+
+static VALUE
+weechat_ruby_api_print_y (VALUE class, VALUE buffer, VALUE y, VALUE message)
+{
+    char *c_buffer, *c_message;
+    int c_y;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print_y");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_buffer = NULL;
+    c_y = 0;
+    c_message = NULL;
+    
+    if (NIL_P (buffer) || NIL_P (message))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print_y");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (y, T_FIXNUM);
+    Check_Type (message, T_STRING);
+    
+    c_buffer = STR2CSTR (buffer);
+    c_y = FIX2INT (y);
+    c_message = STR2CSTR (message);
+    
+    script_api_printf_y (weechat_ruby_plugin,
+                         ruby_current_script,
+                         script_str2ptr (c_buffer),
+                         c_y,
+                         "%s", c_message);
+    
+    RUBY_RETURN_OK;
+}
+
+/*
  * weechat_ruby_api_infobar_print: print message to infobar
  */
 
@@ -4269,6 +4367,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "prefix", &weechat_ruby_api_prefix, 1);
     rb_define_module_function (ruby_mWeechat, "color", &weechat_ruby_api_color, 1);
     rb_define_module_function (ruby_mWeechat, "print", &weechat_ruby_api_print, 2);
+    rb_define_module_function (ruby_mWeechat, "print_date_tags", &weechat_ruby_api_print_date_tags, 4);
+    rb_define_module_function (ruby_mWeechat, "print_y", &weechat_ruby_api_print_y, 3);
     rb_define_module_function (ruby_mWeechat, "infobar_print", &weechat_ruby_api_infobar_print, 3);
     rb_define_module_function (ruby_mWeechat, "infobar_remove", &weechat_ruby_api_infobar_remove, -1);
     rb_define_module_function (ruby_mWeechat, "log_print", &weechat_ruby_api_log_print, 1);

@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-03-22
+ChangeLog - 2008-03-28
 
 
 Version 0.2.7 (under dev!):
+   * added new type of buffer, with free content
    * added tags for lines and custom filtering by tags or regex (task #7674)
    * added custom bars, with custom items
    * command /whois is now authorized in private without argument (task #7482)

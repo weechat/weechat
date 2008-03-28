@@ -1506,6 +1506,79 @@ static XS (XS_weechat_print)
 }
 
 /*
+ * weechat::print_date_tags: print message in a buffer with optional date and
+ *                           tags
+ */
+
+static XS (XS_weechat_print_date_tags)
+{
+    char *buffer, *tags, *message;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print_date_tags");
+        PERL_RETURN_ERROR;
+    }
+    
+    if (items < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print_date_tags");
+        PERL_RETURN_ERROR;
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    tags = SvPV (ST (2), PL_na);
+    message = SvPV (ST (3), PL_na);
+    script_api_printf_date_tags (weechat_perl_plugin,
+                                 perl_current_script,
+                                 script_str2ptr (buffer),
+                                 SvIV (ST (1)),
+                                 tags,
+                                 "%s", message);
+    
+    PERL_RETURN_OK;
+}
+
+/*
+ * weechat::print_y: print message in a buffer with free content
+ */
+
+static XS (XS_weechat_print_y)
+{
+    char *buffer, *message;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print_y");
+        PERL_RETURN_ERROR;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print_y");
+        PERL_RETURN_ERROR;
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    message = SvPV (ST (2), PL_na);
+    script_api_printf_y (weechat_perl_plugin,
+                         perl_current_script,
+                         script_str2ptr (buffer),
+                         SvIV (ST (1)),
+                         "%s", message);
+    
+    PERL_RETURN_OK;
+}
+
+/*
  * weechat::infobar_print: print message to infobar
  */
 
@@ -2413,7 +2486,7 @@ static XS (XS_weechat_buffer_new)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_new");
-	PERL_RETURN_EMPTY;
+        PERL_RETURN_EMPTY;
     }
     
     if (items < 4)
@@ -3512,6 +3585,8 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::prefix", XS_weechat_prefix, "weechat");
     newXS ("weechat::color", XS_weechat_color, "weechat");
     newXS ("weechat::print", XS_weechat_print, "weechat");
+    newXS ("weechat::print_date_tags", XS_weechat_print_date_tags, "weechat");
+    newXS ("weechat::print_y", XS_weechat_print_y, "weechat");
     newXS ("weechat::infobar_print", XS_weechat_infobar_print, "weechat");
     newXS ("weechat::infobar_remove", XS_weechat_infobar_remove, "weechat");
     newXS ("weechat::log_print", XS_weechat_log_print, "weechat");

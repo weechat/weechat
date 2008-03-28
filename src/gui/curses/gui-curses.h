@@ -31,6 +31,8 @@
 #define WINDOW_MIN_WIDTH      10
 #define WINDOW_MIN_HEIGHT     5
 
+#define GUI_CURSES_NUM_WEECHAT_COLORS 15
+
 #define GUI_CURSES(window) ((struct t_gui_curses_objects *)(window->gui_objects))
 
 struct t_gui_bar_window
@@ -55,6 +57,10 @@ struct t_gui_curses_objects
     WINDOW *win_input;              /* input window                         */
     WINDOW *win_separator;          /* separation between 2 splited (V) win */
     struct t_gui_bar_window *bar_windows; /* bar windows                    */
+    int current_style_fg;           /* current foreground color             */
+    int current_style_bg;           /* current background color             */
+    int current_style_attr;         /* current attributes (bold, ..)        */
+    int current_color_attr;         /* attr sum of last color(s) used       */
 };
 
 extern struct t_gui_color gui_weechat_colors[];

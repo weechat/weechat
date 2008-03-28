@@ -197,7 +197,7 @@ gui_window_curses_clear (WINDOW *window, int num_color)
 void
 gui_window_set_weechat_color (WINDOW *window, int num_color)
 {
-    if ((num_color >= 0) && (num_color <= GUI_NUM_COLORS - 1))
+    if ((num_color >= 0) && (num_color < GUI_NUM_COLORS))
     {
         wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
         wattron (window, COLOR_PAIR(gui_color_get_pair (num_color)) |

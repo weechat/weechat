@@ -72,6 +72,10 @@ struct t_gui_gtk_objects
     GtkWidget *textview_nicklist;   /* textview widget for nicklist         */
     GtkTextBuffer *textbuffer_nicklist; /* textbuffer widget for nicklist   */
     struct t_gui_bar_window *bar_windows; /* bar windows                    */
+    int current_style_fg;           /* current foreground color             */
+    int current_style_bg;           /* current background color             */
+    int current_style_attr;         /* current attributes (bold, ..)        */
+    int current_color_attr;         /* attr sum of last color(s) used       */
 };
 
 //extern t_gui_color gui_weechat_colors[];

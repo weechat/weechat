@@ -58,6 +58,26 @@ struct t_gui_color *gui_color[GUI_NUM_COLORS];
 
 
 /*
+ * gui_color_search: search a color by name
+ *                   Return: number of color in WeeChat colors table
+ */
+
+int
+gui_color_search (char *color_name)
+{
+    int i;
+    
+    for (i = 0; gui_weechat_colors[i].string; i++)
+    {
+        if (string_strcasecmp (gui_weechat_colors[i].string, color_name) == 0)
+            return i;
+    }
+    
+    /* color not found */
+    return -1;
+}
+
+/*
  * gui_color_assign: assign a WeeChat color (read from config)
  */
 

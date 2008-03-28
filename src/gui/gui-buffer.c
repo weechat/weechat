@@ -108,7 +108,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         new_buffer->title = NULL;
         new_buffer->title_refresh_needed = 1;
         
-        /* chat lines */
+        /* chat lines (formated) */
         new_buffer->lines = NULL;
         new_buffer->last_line = NULL;
         new_buffer->last_read_line = NULL;
@@ -297,6 +297,29 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, char *name)
 }
 
 /*
+ * gui_buffer_set_type: set buffer type
+ */
+
+void
+gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
+{
+    if (buffer->type == type)
+        return;
+    
+    gui_chat_line_free_all (buffer);
+    
+    switch (type)
+    {
+        case GUI_BUFFER_TYPE_FORMATED:
+            break;
+        case GUI_BUFFER_TYPE_FREE:
+            break;
+    }
+    buffer->type = type;
+    buffer->chat_refresh_needed = 1;
+}
+
+/*
  * gui_buffer_set_title: set title for a buffer
  */
 
@@ -367,6 +390,9 @@ gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
 {
     long number;
     char *error;
+
+    if (!buffer || !property || !value)
+        return;
     
     if (string_strcasecmp (property, "display") == 0)
     {
@@ -380,6 +406,13 @@ gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
     else if (string_strcasecmp (property, "name") == 0)
     {
         gui_buffer_set_name (buffer, value);
+    }
+    else if (string_strcasecmp (property, "type") == 0)
+    {
+        if (string_strcasecmp (value, "formated") == 0)
+            gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FORMATED);
+        else if (string_strcasecmp (value, "free") == 0)
+            gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FREE);
     }
     else if (string_strcasecmp (property, "title") == 0)
     {
@@ -600,30 +633,6 @@ gui_buffer_match_category_name (struct t_gui_buffer *buffer, char *mask,
 }
 
 /*
- * gui_buffer_get_dcc: get pointer to DCC buffer (DCC buffer created if not existing)
- */
-
-struct t_gui_buffer *
-gui_buffer_get_dcc (struct t_gui_window *window)
-{
-    //struct t_gui_buffer *ptr_buffer;
-
-    (void) window;
-    /* check if dcc buffer exists */
-    /*for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->type == GUI_BUFFER_TYPE_DCC)
-            break;
-    }
-    if (ptr_buffer)
-        return ptr_buffer;
-    else
-        return gui_buffer_new (window, weechat_protocols,
-        NULL, NULL, GUI_BUFFER_TYPE_DCC, 0);*/
-    return NULL;
-}
-
-/*
  * gui_buffer_clear: clear buffer content
  */
 
@@ -631,33 +640,15 @@ void
 gui_buffer_clear (struct t_gui_buffer *buffer)
 {
     struct t_gui_window *ptr_win;
-    struct t_gui_line *ptr_line;
-
+    
     if (!buffer)
         return;
-
-    if (buffer->type == GUI_BUFFER_TYPE_FREE)
-    {
-        /* TODO: clear buffer with free content */
-        return;
-    }
     
     /* remove buffer from hotlist */
     gui_hotlist_remove_buffer (buffer);
     
-    /* remove lines from buffer */
-    while (buffer->lines)
-    {
-        ptr_line = buffer->lines->next_line;
-        if (buffer->lines->message)
-            free (buffer->lines->message);
-        free (buffer->lines);
-        buffer->lines = ptr_line;
-    }
-    
-    buffer->lines = NULL;
-    buffer->last_line = NULL;
-    buffer->lines_count = 0;
+    /* remove all lines */
+    gui_chat_line_free_all (buffer);
     
     /* remove any scroll for buffer */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
@@ -696,7 +687,6 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
 {
     struct t_gui_window *ptr_window;
     struct t_gui_buffer *ptr_buffer;
-    struct t_gui_line *ptr_line;
     
     hook_signal_send ("buffer_closing",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
@@ -733,13 +723,8 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
             ptr_buffer->number--;
         }
         
-        /* free lines and messages */
-        while (buffer->lines)
-        {
-            ptr_line = buffer->lines->next_line;
-            gui_chat_line_free (buffer->lines);
-            buffer->lines = ptr_line;
-        }
+        /* free all lines */
+        gui_chat_line_free_all (buffer);
     }
     
     /* free some data */
@@ -827,32 +812,6 @@ gui_buffer_switch_next (struct t_gui_window *window)
         gui_window_switch_to_buffer (window, gui_buffers);
     
     gui_window_redraw_buffer (window->buffer);
-}
-
-/*
- * gui_buffer_switch_dcc: switch to dcc buffer (create it if it does not exist)
- */
-
-void
-gui_buffer_switch_dcc (struct t_gui_window *window)
-{
-    //struct t_gui_buffer *ptr_buffer;
-
-    (void) window;
-    /* check if dcc buffer exists */
-    /*for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->type == GUI_BUFFER_TYPE_DCC)
-            break;
-    }
-    if (ptr_buffer)
-    {
-        gui_window_switch_to_buffer (window, ptr_buffer);
-        gui_window_redraw_buffer (ptr_buffer);
-    }
-    else
-        gui_buffer_new (window, weechat_protocols,
-        NULL, NULL, GUI_BUFFER_TYPE_DCC, 1);*/
 }
 
 /*
@@ -1130,11 +1089,12 @@ gui_buffer_print_log ()
         {
             num--;
             tags = string_build_with_exploded (ptr_line->tags_array, ",");
-            log_printf ("       line N-%05d: str_time:'%s', tags:'%s', "
-                        "displayed:%d, prefix:'%s'",
-                        num, ptr_line->str_time,
+            log_printf ("       line N-%05d: y:%d, str_time:'%s', tags:'%s', "
+                        "displayed:%d, refresh_needed:%d, prefix:'%s'",
+                        num, ptr_line->y, ptr_line->str_time,
                         (tags) ? tags  : "",
                         (int)(ptr_line->displayed),
+                        (int)(ptr_line->refresh_needed),
                         ptr_line->prefix);
             log_printf ("                     data: '%s'",
                         ptr_line->message);

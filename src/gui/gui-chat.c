@@ -563,14 +563,15 @@ gui_chat_line_match_tags (struct t_gui_line *line, int tags_count,
 }
 
 /*
- * gui_chat_line_free: delete a line from a buffer
+ * gui_chat_line_free: delete a formated line from a buffer
  */
 
 void
-gui_chat_line_free (struct t_gui_line *line)
+gui_chat_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     struct t_gui_window *ptr_win;
     
+    /* reset scroll for any window starting with this line */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if (ptr_win->start_line == line)
@@ -581,6 +582,8 @@ gui_chat_line_free (struct t_gui_line *line)
             gui_status_refresh_needed = 1;
         }
     }
+    
+    /* free data */
     if (line->str_time)
         free (line->str_time);
     if (line->tags_array)
@@ -589,7 +592,37 @@ gui_chat_line_free (struct t_gui_line *line)
         free (line->prefix);
     if (line->message)
         free (line->message);
+    
+    /* remove line from lines list */
+    if (line->prev_line)
+        line->prev_line->next_line = line->next_line;
+    if (line->next_line)
+        line->next_line->prev_line = line->prev_line;
+    if (buffer->lines == line)
+        buffer->lines = line->next_line;
+    if (buffer->last_line == line)
+        buffer->last_line = line->prev_line;
+    
     free (line);
+    
+    buffer->lines_count--;
+}
+
+/*
+ * gui_chat_line_free_all: delete all formated lines from a buffer
+ */
+
+void
+gui_chat_line_free_all (struct t_gui_buffer *buffer)
+{
+    struct t_gui_line *next_line;
+    
+    while (buffer->lines)
+    {
+        next_line = buffer->lines->next_line;
+        gui_chat_line_free (buffer, buffer->lines);
+        buffer->lines = next_line;
+    }
 }
 
 /*
@@ -601,7 +634,7 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
                    time_t date_printed, char *tags,
                    char *prefix, char *message)
 {
-    struct t_gui_line *new_line, *ptr_line;
+    struct t_gui_line *new_line;
     
     new_line = malloc (sizeof (*new_line));
     if (!new_line)
@@ -610,7 +643,8 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
         return;
     }
     
-    /* add new line */
+    /* fill data in new line */
+    new_line->y = 0;
     new_line->date = date;
     new_line->date_printed = date_printed;
     new_line->str_time = (date == 0) ?
@@ -625,6 +659,7 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
         new_line->tags_count = 0;
         new_line->tags_array = NULL;
     }
+    new_line->refresh_needed = 0;
     new_line->prefix = (prefix) ?
         strdup (prefix) : ((date != 0) ? strdup ("") : NULL);
     new_line->prefix_length = (prefix) ?
@@ -632,6 +667,8 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
     if (new_line->prefix_length > buffer->prefix_max_length)
         buffer->prefix_max_length = new_line->prefix_length;
     new_line->message = (message) ? strdup (message) : strdup ("");
+    
+    /* add line to lines list */
     if (!buffer->lines)
         buffer->lines = new_line;
     else
@@ -657,19 +694,105 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
     if ((CONFIG_INTEGER(config_history_max_lines) > 0)
         && (buffer->lines_count > CONFIG_INTEGER(config_history_max_lines)))
     {
-        if (buffer->last_line == buffer->lines)
-            buffer->last_line = NULL;
-        ptr_line = buffer->lines->next_line;
-        gui_chat_line_free (buffer->lines);
-        buffer->lines = ptr_line;
-        ptr_line->prev_line = NULL;
-        buffer->lines_count--;
+        gui_chat_line_free (buffer, buffer->lines);
     }
+}
+
+/*
+ * gui_chat_line_add_y: add or update a line for a buffer with free content
+ */
+
+void
+gui_chat_line_add_y (struct t_gui_buffer *buffer, int y, char *message)
+{
+    struct t_gui_line *ptr_line, *new_line;
+    
+    if (!message || !message[0])
+        return;
+    
+    /* search if line exists for "y" */
+    for (ptr_line = buffer->lines; ptr_line;
+         ptr_line = ptr_line->next_line)
+    {
+        if (ptr_line->y >= y)
+            break;
+    }
+    
+    if (!ptr_line || (ptr_line->y > y))
+    {
+        new_line = malloc (sizeof (*new_line));
+        if (!new_line)
+        {
+            log_printf (_("Not enough memory for new line"));
+            return;
+        }
+        
+        buffer->lines_count++;
+        
+        /* fill data in new line */
+        new_line->y = y;
+        new_line->date = 0;
+        new_line->date_printed = 0;
+        new_line->str_time = NULL;
+        new_line->tags_count = 0;
+        new_line->tags_array = NULL;
+        new_line->refresh_needed = 1;
+        new_line->prefix = NULL;
+        new_line->prefix_length = 0;
+        new_line->message = NULL;
+        
+        /* add line to lines list */
+        if (ptr_line)
+        {
+            /* add before line found */
+            new_line->prev_line = ptr_line->prev_line;
+            new_line->next_line = ptr_line;
+            if (ptr_line->prev_line)
+                (ptr_line->prev_line)->next_line = new_line;
+            else
+                buffer->lines = new_line;
+            ptr_line->prev_line = new_line;
+        }
+        else
+        {
+            /* add at end of list */
+            new_line->prev_line = buffer->last_line;
+            if (buffer->lines)
+                buffer->last_line->next_line = new_line;
+            else
+                buffer->lines = new_line;
+            buffer->last_line = new_line;
+            new_line->next_line = NULL;
+        }
+
+        ptr_line = new_line;
+    }
+    
+    /* check if line is filtered or not */
+    ptr_line->displayed = gui_filter_check_line (buffer, ptr_line);
+    if (!ptr_line->displayed)
+    {
+        if (!buffer->lines_hidden)
+        {
+            buffer->lines_hidden = 1;
+            hook_signal_send ("buffer_lines_hidden",
+                              WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+        }
+    }
+    
+    /* set message for line */
+    if (ptr_line->message)
+        free (ptr_line->message);
+    ptr_line->message = strdup (message);
+    
+    ptr_line->refresh_needed = 1;
 }
 
 /*
  * gui_chat_printf_date_tags: display a message in a buffer with optional
  *                            date and tags
+ *                            Info: this function works only with formated
+ *                            buffers (not buffers with free content)
  */
 
 void
@@ -677,21 +800,24 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                            char *tags, char *message, ...)
 {
     char buf[8192];
+    va_list argptr;
     time_t date_printed;
     int display_time;
     char *pos, *pos_prefix, *pos_tab, *pos_end;
-    va_list argptr;
     struct t_gui_line *ptr_line;
+    
+    if (!message)
+        return;
     
     if (gui_init_ok)
     {
-        if (buffer == NULL)
+        if (!buffer)
             buffer = gui_buffer_search_main ();
         
-        if (buffer->type == GUI_BUFFER_TYPE_FREE)
+        if (buffer->type != GUI_BUFFER_TYPE_FORMATED)
             buffer = gui_buffers;
         
-        if (buffer->type == GUI_BUFFER_TYPE_FREE)
+        if (buffer->type != GUI_BUFFER_TYPE_FORMATED)
             return;
     }
     
@@ -771,5 +897,67 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
             gui_hotlist_add (buffer, 0, NULL, 1);
             gui_status_refresh_needed = 1;
         }
+    }
+}
+
+/*
+ * gui_chat_printf_y: display a message on a line in a buffer with free content
+ *                    Info: this function works only with free content
+ *                    buffers (not formated buffers)
+ */
+
+void
+gui_chat_printf_y (struct t_gui_buffer *buffer, int y, char *message, ...)
+{
+    char buf[8192];
+    va_list argptr;
+    struct t_gui_line *ptr_line;
+    
+    if (gui_init_ok)
+    {
+        if (!buffer)
+            buffer = gui_buffer_search_main ();
+        
+        if (buffer->type != GUI_BUFFER_TYPE_FREE)
+            buffer = gui_buffers;
+        
+        if (buffer->type != GUI_BUFFER_TYPE_FREE)
+            return;
+    }
+    
+    /* no message: delete line */
+    if (!message)
+    {
+        if (gui_init_ok)
+        {
+            for (ptr_line = buffer->lines; ptr_line;
+                 ptr_line = ptr_line->next_line)
+            {
+                if (ptr_line->y >= y)
+                    break;
+            }
+            if (ptr_line && (ptr_line->y == y))
+            {
+                gui_chat_line_free (buffer, ptr_line);
+                buffer->chat_refresh_needed = 2;
+            }
+        }
+    }
+    else
+    {
+        /* with message: create line or merge content with existing line */
+        va_start (argptr, message);
+        vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+        va_end (argptr);
+        
+        utf8_normalize (buf, '?');
+        
+        if (gui_init_ok)
+        {
+            gui_chat_line_add_y (buffer, y, buf);
+            buffer->chat_refresh_needed = 1;
+        }
+        else
+            string_iconv_fprintf (stdout, "%s\n", buf);
     }
 }

@@ -63,6 +63,15 @@ extern void script_api_printf (struct t_weechat_plugin *weechat_plugin,
                                struct t_plugin_script *script,
                                struct t_gui_buffer *buffer,
                                char *format, ...);
+extern void script_api_printf_date_tags (struct t_weechat_plugin *weechat_plugin,
+                                         struct t_plugin_script *script,
+                                         struct t_gui_buffer *buffer,
+                                         time_t date, char *tags,
+                                         char *format, ...);
+extern void script_api_printf_y (struct t_weechat_plugin *weechat_plugin,
+                                 struct t_plugin_script *script,
+                                 struct t_gui_buffer *buffer,
+                                 int y, char *format, ...);
 extern void script_api_infobar_printf (struct t_weechat_plugin *weechat_plugin,
                                        struct t_plugin_script *script,
                                        int delay, char *color_name,

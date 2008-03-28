@@ -71,8 +71,8 @@ gui_chat_remove_style (struct t_gui_window *window, int style)
 void
 gui_chat_toggle_style (struct t_gui_window *window, int style)
 {
-    window->current_style_attr ^= style;
-    if (window->current_style_attr & style)
+    GUI_CURSES(window)->current_style_attr ^= style;
+    if (GUI_CURSES(window)->current_style_attr & style)
         gui_chat_set_style (window, style);
     else
         gui_chat_remove_style (window, style);
@@ -86,10 +86,10 @@ gui_chat_toggle_style (struct t_gui_window *window, int style)
 void
 gui_chat_reset_style (struct t_gui_window *window)
 {
-    window->current_style_fg = -1;
-    window->current_style_bg = -1;
-    window->current_style_attr = 0;
-    window->current_color_attr = 0;
+    GUI_CURSES(window)->current_style_fg = -1;
+    GUI_CURSES(window)->current_style_bg = -1;
+    GUI_CURSES(window)->current_style_attr = 0;
+    GUI_CURSES(window)->current_color_attr = 0;
     
     gui_window_set_weechat_color (GUI_CURSES(window)->win_chat, GUI_COLOR_CHAT);
     gui_chat_remove_style (window,
@@ -103,7 +103,7 @@ gui_chat_reset_style (struct t_gui_window *window)
 void
 gui_chat_set_color_style (struct t_gui_window *window, int style)
 {
-    window->current_color_attr |= style;
+    GUI_CURSES(window)->current_color_attr |= style;
     wattron (GUI_CURSES(window)->win_chat, style);
 }
 
@@ -114,7 +114,7 @@ gui_chat_set_color_style (struct t_gui_window *window, int style)
 void
 gui_chat_remove_color_style (struct t_gui_window *window, int style)
 {
-    window->current_color_attr &= !style;
+    GUI_CURSES(window)->current_color_attr &= !style;
     wattroff (GUI_CURSES(window)->win_chat, style);
 }
 
@@ -125,8 +125,9 @@ gui_chat_remove_color_style (struct t_gui_window *window, int style)
 void
 gui_chat_reset_color_style (struct t_gui_window *window)
 {
-    wattroff (GUI_CURSES(window)->win_chat, window->current_color_attr);
-    window->current_color_attr = 0;
+    wattroff (GUI_CURSES(window)->win_chat,
+              GUI_CURSES(window)->current_color_attr);
+    GUI_CURSES(window)->current_color_attr = 0;
 }
 
 /*
@@ -136,6 +137,9 @@ gui_chat_reset_color_style (struct t_gui_window *window)
 void
 gui_chat_set_color (struct t_gui_window *window, int fg, int bg)
 {
+    GUI_CURSES(window)->current_style_fg = fg;
+    GUI_CURSES(window)->current_style_bg = bg;
+    
     if (((fg == -1) || (fg == 99))
         && ((bg == -1) || (bg == 99)))
         wattron (GUI_CURSES(window)->win_chat, COLOR_PAIR(63));
@@ -156,12 +160,81 @@ gui_chat_set_color (struct t_gui_window *window, int fg, int bg)
 void
 gui_chat_set_weechat_color (struct t_gui_window *window, int weechat_color)
 {
-    gui_chat_reset_style (window);
-    gui_chat_set_style (window,
-                        gui_color[weechat_color]->attributes);
-    gui_chat_set_color (window,
-                        gui_color[weechat_color]->foreground,
-                        gui_color[weechat_color]->background);
+    if ((weechat_color >= 0) && (weechat_color < GUI_NUM_COLORS))
+    {
+        gui_chat_reset_style (window);
+        gui_chat_set_style (window,
+                            gui_color[weechat_color]->attributes);
+        gui_chat_set_color (window,
+                            gui_color[weechat_color]->foreground,
+                            gui_color[weechat_color]->background);
+    }
+}
+
+/*
+ * gui_chat_set_custom_color_fg_bg: set a custom color for a chat window
+ *                                  (foreground and background)
+ */
+
+void
+gui_chat_set_custom_color_fg_bg (struct t_gui_window *window, int fg, int bg)
+{
+    if ((fg >= 0) && (fg < GUI_CURSES_NUM_WEECHAT_COLORS)
+        && (bg >= 0) && (bg < GUI_CURSES_NUM_WEECHAT_COLORS))
+    {
+        gui_chat_reset_style (window);
+        gui_chat_set_style (window,
+                            gui_weechat_colors[fg].attributes);
+        gui_chat_set_color (window,
+                            gui_weechat_colors[fg].foreground,
+                            gui_weechat_colors[bg].foreground);
+    }
+}
+
+/*
+ * gui_chat_set_custom_color_fg: set a custom color for a chat window
+ *                               (foreground only)
+ */
+
+void
+gui_chat_set_custom_color_fg (struct t_gui_window *window, int fg)
+{
+    int current_attr, current_bg;
+    
+    if ((fg >= 0) && (fg < GUI_CURSES_NUM_WEECHAT_COLORS))
+    {
+        current_attr = GUI_CURSES(window)->current_style_attr;
+        current_bg = GUI_CURSES(window)->current_style_bg;
+        gui_chat_reset_style (window);
+        gui_chat_set_color_style (window, current_attr);
+        gui_chat_remove_color_style (window, A_BOLD);
+        gui_chat_set_color_style (window, gui_weechat_colors[fg].attributes);
+        gui_chat_set_color (window,
+                            gui_weechat_colors[fg].foreground,
+                            current_bg);
+    }
+}
+
+/*
+ * gui_chat_set_custom_color_bg: set a custom color for a chat window
+ *                               (background only)
+ */
+
+void
+gui_chat_set_custom_color_bg (struct t_gui_window *window, int bg)
+{
+    int current_attr, current_fg;
+    
+    if ((bg >= 0) && (bg < GUI_CURSES_NUM_WEECHAT_COLORS))
+    {
+        current_attr = GUI_CURSES(window)->current_style_attr;
+        current_fg = GUI_CURSES(window)->current_style_fg;
+        gui_chat_reset_style (window);
+        gui_chat_set_color_style (window, current_attr);
+        gui_chat_set_color (window,
+                            current_fg,
+                            gui_weechat_colors[bg].foreground);
+    }
 }
 
 /*
@@ -295,8 +368,8 @@ char *
 gui_chat_string_next_char (struct t_gui_window *window, unsigned char *string,
                            int apply_style)
 {
-    char str_fg[3];
-    int weechat_color;
+    char str_fg[3], str_bg[3];
+    int weechat_color, fg, bg;
     
     while (string[0])
     {
@@ -309,17 +382,69 @@ gui_chat_string_next_char (struct t_gui_window *window, unsigned char *string,
                 break;
             case GUI_COLOR_COLOR_CHAR:
                 string++;
-                if (isdigit (string[0]) && isdigit (string[1]))
+                switch (string[0])
                 {
-                    str_fg[0] = string[0];
-                    str_fg[1] = string[1];
-                    str_fg[2] = '\0';
-                    string += 2;
-                    if (apply_style)
-                    {
-                        sscanf (str_fg, "%d", &weechat_color);
-                        gui_chat_set_weechat_color (window, weechat_color);
-                    }
+                    case 'F':
+                        if (string[1] && string[2])
+                        {
+                            if (apply_style)
+                            {
+                                str_fg[0] = string[1];
+                                str_fg[1] = string[2];
+                                str_fg[2] = '\0';
+                                sscanf (str_fg, "%d", &fg);
+                                gui_chat_set_custom_color_fg (window, fg);
+                            }
+                            string += 3;
+                        }
+                        break;
+                    case 'B':
+                        if (string[1] && string[2])
+                        {
+                            if (apply_style)
+                            {
+                                str_bg[0] = string[1];
+                                str_bg[1] = string[2];
+                                str_bg[2] = '\0';
+                                sscanf (str_bg, "%d", &bg);
+                                gui_chat_set_custom_color_bg (window, bg);
+                            }
+                            string += 3;
+                        }
+                        break;
+                    case '*':
+                        if (string[1] && string[2] && (string[3] == ',')
+                            && string[4] && string[5])
+                        {
+                            if (apply_style)
+                            {
+                                str_fg[0] = string[1];
+                                str_fg[1] = string[2];
+                                str_fg[2] = '\0';
+                                str_bg[0] = string[4];
+                                str_bg[1] = string[5];
+                                str_bg[2] = '\0';
+                                sscanf (str_fg, "%d", &fg);
+                                sscanf (str_bg, "%d", &bg);
+                                gui_chat_set_custom_color_fg_bg (window, fg, bg);
+                            }
+                            string += 6;
+                        }
+                        break;
+                    default:
+                        if (isdigit (string[0]) && isdigit (string[1]))
+                        {
+                            if (apply_style)
+                            {
+                                str_fg[0] = string[0];
+                                str_fg[1] = string[1];
+                                str_fg[2] = '\0';
+                                sscanf (str_fg, "%d", &weechat_color);
+                                gui_chat_set_weechat_color (window, weechat_color);
+                            }
+                            string += 2;
+                        }
+                        break;
                 }
                 break;
             case GUI_COLOR_SET_CHAR:
@@ -853,6 +978,29 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
 }
 
 /*
+ * gui_chat_display_line_y: display a line in the chat window (for a buffer
+ *                          with free content)
+ */
+
+void
+gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
+                         int y)
+{
+    /* reset color & style for a new line */
+    gui_chat_reset_style (window);
+    
+    window->win_chat_cursor_x = 0;
+    window->win_chat_cursor_y = y;
+    
+    wmove (GUI_CURSES(window)->win_chat,
+           window->win_chat_cursor_y,
+           window->win_chat_cursor_x);
+    wclrtoeol (GUI_CURSES(window)->win_chat);
+    
+    gui_chat_display_word_raw (window, line->message, 1);
+}
+
+/*
  * gui_chat_calculate_line_diff: returns pointer to line & offset for a
  *                               difference with given line
  */
@@ -963,7 +1111,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
     struct t_gui_line *ptr_line;
     /*t_irc_dcc *dcc_first, *dcc_selected, *ptr_dcc;*/
     char format_empty[32];
-    int i, line_pos, count, old_scroll;
+    int i, line_pos, count, old_scroll, y_start, y_end;
     /*int j, num_bars;
     unsigned long pct_complete;
     char *unit_name[] = { N_("bytes"), N_("KB"), N_("MB"), N_("GB") };
@@ -978,7 +1126,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        if ((ptr_win->buffer == buffer) && (buffer->num_displayed > 0))
+        if (ptr_win->buffer == buffer)
         {
             if (erase)
             {
@@ -1134,79 +1282,116 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
             {
                 ptr_win->win_chat_cursor_x = 0;
                 ptr_win->win_chat_cursor_y = 0;
-                
-                /* display at position of scrolling */
-                if (ptr_win->start_line)
-                {
-                    ptr_line = ptr_win->start_line;
-                    line_pos = ptr_win->start_line_pos;
-                }
-                else
-                {
-                    /* look for first line to display, starting from last line */
-                    ptr_line = NULL;
-                    line_pos = 0;
-                    gui_chat_calculate_line_diff (ptr_win, &ptr_line, &line_pos,
-                                                  (-1) * (ptr_win->win_chat_height - 1));
-                }
 
-                if (line_pos > 0)
+                switch (ptr_win->buffer->type)
                 {
-                    /* display end of first line at top of screen */
-                    gui_chat_display_line (ptr_win, ptr_line,
-                                           gui_chat_display_line (ptr_win,
-                                                                  ptr_line,
-                                                                  0, 1) -
-                                           line_pos, 0);
-                    ptr_line = gui_chat_get_next_line_displayed (ptr_line);
-                    ptr_win->first_line_displayed = 0;
-                }
-                else
-                    ptr_win->first_line_displayed =
-                        (ptr_line == gui_chat_get_first_line_displayed (ptr_win->buffer));
-                
-                /* display lines */
-                count = 0;
-                while (ptr_line && (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1))
-                {
-                    count = gui_chat_display_line (ptr_win, ptr_line, 0, 0);
-                    ptr_line = gui_chat_get_next_line_displayed (ptr_line);
-                }
-                
-                old_scroll = ptr_win->scroll;
-                
-                ptr_win->scroll = (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1);
-                
-                /* check if last line of buffer is entirely displayed and scrolling */
-                /* if so, disable scroll indicator */
-                if (!ptr_line && ptr_win->scroll)
-                {
-                    if (count == gui_chat_display_line (ptr_win, ptr_win->buffer->last_line, 0, 1))
-                        ptr_win->scroll = 0;
-                }
-                
-                if (ptr_win->scroll != old_scroll)
-                {
-                    hook_signal_send ("window_scrolled",
-                                      WEECHAT_HOOK_SIGNAL_POINTER, ptr_win);
-                }
-                
-                if (!ptr_win->scroll
-                    && (ptr_win->start_line == gui_chat_get_first_line_displayed (ptr_win->buffer)))
-                {
-                    ptr_win->start_line = NULL;
-                    ptr_win->start_line_pos = 0;
-                }
-                
-                /* cursor is below end line of chat window? */
-                if (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1)
-                {
-                    ptr_win->win_chat_cursor_x = 0;
-                    ptr_win->win_chat_cursor_y = ptr_win->win_chat_height - 1;
+                    case GUI_BUFFER_TYPE_FORMATED:
+                        /* display at position of scrolling */
+                        if (ptr_win->start_line)
+                        {
+                            ptr_line = ptr_win->start_line;
+                            line_pos = ptr_win->start_line_pos;
+                        }
+                        else
+                        {
+                            /* look for first line to display, starting from last line */
+                            ptr_line = NULL;
+                            line_pos = 0;
+                            gui_chat_calculate_line_diff (ptr_win, &ptr_line, &line_pos,
+                                                          (-1) * (ptr_win->win_chat_height - 1));
+                        }
+                        
+                        if (line_pos > 0)
+                        {
+                            /* display end of first line at top of screen */
+                            gui_chat_display_line (ptr_win, ptr_line,
+                                                   gui_chat_display_line (ptr_win,
+                                                                          ptr_line,
+                                                                          0, 1) -
+                                                   line_pos, 0);
+                            ptr_line = gui_chat_get_next_line_displayed (ptr_line);
+                            ptr_win->first_line_displayed = 0;
+                        }
+                        else
+                            ptr_win->first_line_displayed =
+                                (ptr_line == gui_chat_get_first_line_displayed (ptr_win->buffer));
+                        
+                        /* display lines */
+                        count = 0;
+                        while (ptr_line && (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1))
+                        {
+                            count = gui_chat_display_line (ptr_win, ptr_line, 0, 0);
+                            ptr_line = gui_chat_get_next_line_displayed (ptr_line);
+                        }
+                        
+                        old_scroll = ptr_win->scroll;
+                        
+                        ptr_win->scroll = (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1);
+                        
+                        /* check if last line of buffer is entirely displayed and scrolling */
+                        /* if so, disable scroll indicator */
+                        if (!ptr_line && ptr_win->scroll)
+                        {
+                            if (count == gui_chat_display_line (ptr_win, ptr_win->buffer->last_line, 0, 1))
+                                ptr_win->scroll = 0;
+                        }
+                        
+                        if (ptr_win->scroll != old_scroll)
+                        {
+                            hook_signal_send ("window_scrolled",
+                                              WEECHAT_HOOK_SIGNAL_POINTER, ptr_win);
+                        }
+                        
+                        if (!ptr_win->scroll
+                            && (ptr_win->start_line == gui_chat_get_first_line_displayed (ptr_win->buffer)))
+                        {
+                            ptr_win->start_line = NULL;
+                            ptr_win->start_line_pos = 0;
+                        }
+                        
+                        /* cursor is below end line of chat window? */
+                        if (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1)
+                        {
+                            ptr_win->win_chat_cursor_x = 0;
+                            ptr_win->win_chat_cursor_y = ptr_win->win_chat_height - 1;
+                        }
+                        break;
+                    case GUI_BUFFER_TYPE_FREE:
+                        /* display at position of scrolling */
+                        ptr_line = (ptr_win->start_line) ?
+                            ptr_win->start_line : buffer->lines;
+                        if (ptr_line)
+                        {
+                            if (!ptr_line->displayed)
+                                ptr_line = gui_chat_get_next_line_displayed (ptr_line);
+                            if (ptr_line)
+                            {
+                                y_start = (ptr_win->start_line) ? ptr_line->y : 0;
+                                y_end = y_start + ptr_win->win_chat_height - 1;
+                                while (ptr_line && (ptr_line->y <= y_end))
+                                {
+                                    if (ptr_line->refresh_needed || erase)
+                                    {
+                                        gui_chat_display_line_y (ptr_win, ptr_line,
+                                                                 ptr_line->y - y_start);
+                                    }
+                                    ptr_line = gui_chat_get_next_line_displayed (ptr_line);
+                                }
+                            }
+                        }
                 }
             }
             wnoutrefresh (GUI_CURSES(ptr_win)->win_chat);
             refresh ();
+
+            if (buffer->type == GUI_BUFFER_TYPE_FREE)
+            {
+                for (ptr_line = buffer->lines; ptr_line;
+                     ptr_line = ptr_line->next_line)
+                {
+                    ptr_line->refresh_needed = 0;
+                }
+            }
         }
     }
 }

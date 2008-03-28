@@ -40,12 +40,14 @@ enum t_gui_buffer_type
 
 struct t_gui_line
 {
+    int y;                             /* line position (for free buffer)   */
     time_t date;                       /* date/time of line (may be past)   */
     time_t date_printed;               /* date/time when weechat print it   */
     char *str_time;                    /* time string (for display)         */
     int tags_count;                    /* number of tags for line           */
     char **tags_array;                 /* tags for line                     */
     char displayed;                    /* 1 if line is displayed            */
+    char refresh_needed;               /* 1 if refresh asked (free buffer)  */
     char *prefix;                      /* prefix for line (may be NULL)     */
     int prefix_length;                 /* prefix length (on screen)         */
     char *message;                     /* line content (after prefix)       */

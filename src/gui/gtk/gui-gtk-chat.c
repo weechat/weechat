@@ -74,8 +74,8 @@ gui_chat_remove_style (struct t_gui_window *window, int style)
 void
 gui_chat_toggle_style (struct t_gui_window *window, int style)
 {
-    window->current_style_attr ^= style;
-    if (window->current_style_attr & style)
+    GUI_GTK(window)->current_style_attr ^= style;
+    if (GUI_GTK(window)->current_style_attr & style)
         gui_chat_set_style (window, style);
     else
         gui_chat_remove_style (window, style);
@@ -89,10 +89,10 @@ gui_chat_toggle_style (struct t_gui_window *window, int style)
 void
 gui_chat_reset_style (struct t_gui_window *window)
 {
-    window->current_style_fg = -1;
-    window->current_style_bg = -1;
-    window->current_style_attr = 0;
-    window->current_color_attr = 0;
+    GUI_GTK(window)->current_style_fg = -1;
+    GUI_GTK(window)->current_style_bg = -1;
+    GUI_GTK(window)->current_style_attr = 0;
+    GUI_GTK(window)->current_color_attr = 0;
     
     /* TODO: change following function call */
     /*gui_window_set_weechat_color (window->win_chat, COLOR_WIN_CHAT);*/
@@ -107,7 +107,7 @@ gui_chat_reset_style (struct t_gui_window *window)
 void
 gui_chat_set_color_style (struct t_gui_window *window, int style)
 {
-    window->current_color_attr |= style;
+    GUI_GTK(window)->current_color_attr |= style;
     /* TODO: change following function call */
     /*wattron (window->win_chat, style);*/
 }
@@ -119,7 +119,7 @@ gui_chat_set_color_style (struct t_gui_window *window, int style)
 void
 gui_chat_remove_color_style (struct t_gui_window *window, int style)
 {
-    window->current_color_attr &= !style;
+    GUI_GTK(window)->current_color_attr &= !style;
     /* TODO: change following function call */
     /*wattroff (window->win_chat, style);*/
 }
@@ -133,7 +133,7 @@ gui_chat_reset_color_style (struct t_gui_window *window)
 {
     /* TODO: change following function call */
     /*wattroff (window->win_chat, window->current_color_attr);*/
-    window->current_color_attr = 0;
+    GUI_GTK(window)->current_color_attr = 0;
 }
 
 /*
