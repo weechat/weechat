@@ -73,6 +73,7 @@ extern void gui_color_end ();
 /* bar functions */
 extern void gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
                                                struct t_gui_window *window);
+extern void gui_bar_window_create_win (struct t_gui_bar_window *bar_window);
 
 /* chat functions */
 extern void gui_chat_calculate_line_diff (struct t_gui_window *window,

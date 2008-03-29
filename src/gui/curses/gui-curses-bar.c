@@ -145,6 +145,53 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
 }
 
 /*
+ * gui_bar_window_create_win: create curses window for bar
+ */
+
+void
+gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
+{
+    if (bar_window->win_bar)
+        delwin (bar_window->win_bar);
+    
+    bar_window->win_bar = newwin (bar_window->height,
+                                  bar_window->width,
+                                  bar_window->y,
+                                  bar_window->x);
+    bar_window->win_separator = NULL;
+    if (bar_window->bar->separator)
+    {
+        switch (bar_window->bar->position)
+        {
+            case GUI_BAR_POSITION_BOTTOM:
+                bar_window->win_separator = newwin (bar_window->height,
+                                                    bar_window->width,
+                                                    bar_window->y - 1,
+                                                    bar_window->x);
+                break;
+            case GUI_BAR_POSITION_TOP:
+                bar_window->win_separator = newwin (bar_window->height,
+                                                    bar_window->width,
+                                                    bar_window->y + bar_window->height,
+                                                    bar_window->x);
+                break;
+            case GUI_BAR_POSITION_LEFT:
+                bar_window->win_separator = newwin (bar_window->height,
+                                                    bar_window->width,
+                                                    bar_window->y,
+                                                    bar_window->x + bar_window->width);
+                break;
+            case GUI_BAR_POSITION_RIGHT:
+                bar_window->win_separator = newwin (bar_window->height,
+                                                    bar_window->width,
+                                                    bar_window->y,
+                                                    bar_window->x - 1);
+                break;
+        }
+    }
+}
+
+/*
  * gui_bar_window_new: create a new "window bar" for a bar, in screen or a window
  *                     if window is not NULL, bar window will be in this window
  *                     return 1 if ok, 0 if error
@@ -175,42 +222,8 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
         }
         
         gui_bar_window_calculate_pos_size (new_bar_window, window);
+        gui_bar_window_create_win (new_bar_window);
         
-        new_bar_window->win_bar = newwin (new_bar_window->height,
-                                          new_bar_window->width,
-                                          new_bar_window->y,
-                                          new_bar_window->x);
-        new_bar_window->win_separator = NULL;
-        if (new_bar_window->bar->separator)
-        {
-            switch (bar->position)
-            {
-                case GUI_BAR_POSITION_BOTTOM:
-                    new_bar_window->win_separator = newwin (1,
-                                                            new_bar_window->width,
-                                                            new_bar_window->y - 1,
-                                                            new_bar_window->x);
-                    break;
-                case GUI_BAR_POSITION_TOP:
-                    new_bar_window->win_separator = newwin (1,
-                                                            new_bar_window->width,
-                                                            new_bar_window->y + new_bar_window->height,
-                                                            new_bar_window->x);
-                    break;
-                case GUI_BAR_POSITION_LEFT:
-                    new_bar_window->win_separator = newwin (new_bar_window->height,
-                                                            1,
-                                                            new_bar_window->y,
-                                                            new_bar_window->x + new_bar_window->width);
-                    break;
-                case GUI_BAR_POSITION_RIGHT:
-                    new_bar_window->win_separator = newwin (new_bar_window->height,
-                                                            1,
-                                                            new_bar_window->y,
-                                                            new_bar_window->x - 1);
-                    break;
-            }
-        }
         return 1;
     }
     

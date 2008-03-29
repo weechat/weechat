@@ -972,6 +972,7 @@ gui_window_refresh_windows ()
         if (ptr_bar->type == GUI_BAR_TYPE_ROOT)
         {
             gui_bar_window_calculate_pos_size (ptr_bar->bar_window, NULL);
+            gui_bar_window_create_win (ptr_bar->bar_window);
             gui_bar_draw (ptr_bar);
         }
     }
