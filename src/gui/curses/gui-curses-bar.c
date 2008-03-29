@@ -152,38 +152,46 @@ void
 gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
 {
     if (bar_window->win_bar)
+    {
         delwin (bar_window->win_bar);
+        bar_window->win_bar = NULL;
+    }
+    if (bar_window->win_separator)
+    {
+        delwin (bar_window->win_separator);
+        bar_window->win_separator = NULL;
+    }
     
     bar_window->win_bar = newwin (bar_window->height,
                                   bar_window->width,
                                   bar_window->y,
                                   bar_window->x);
-    bar_window->win_separator = NULL;
+    
     if (bar_window->bar->separator)
     {
         switch (bar_window->bar->position)
         {
             case GUI_BAR_POSITION_BOTTOM:
-                bar_window->win_separator = newwin (bar_window->height,
+                bar_window->win_separator = newwin (1,
                                                     bar_window->width,
                                                     bar_window->y - 1,
                                                     bar_window->x);
                 break;
             case GUI_BAR_POSITION_TOP:
-                bar_window->win_separator = newwin (bar_window->height,
+                bar_window->win_separator = newwin (1,
                                                     bar_window->width,
                                                     bar_window->y + bar_window->height,
                                                     bar_window->x);
                 break;
             case GUI_BAR_POSITION_LEFT:
                 bar_window->win_separator = newwin (bar_window->height,
-                                                    bar_window->width,
+                                                    1,
                                                     bar_window->y,
                                                     bar_window->x + bar_window->width);
                 break;
             case GUI_BAR_POSITION_RIGHT:
                 bar_window->win_separator = newwin (bar_window->height,
-                                                    bar_window->width,
+                                                    1,
                                                     bar_window->y,
                                                     bar_window->x - 1);
                 break;
@@ -220,6 +228,8 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
             bar->bar_window = new_bar_window;
             new_bar_window->next_bar_window = NULL;
         }
+        new_bar_window->win_bar = NULL;
+        new_bar_window->win_separator = NULL;
         
         gui_bar_window_calculate_pos_size (new_bar_window, window);
         gui_bar_window_create_win (new_bar_window);
