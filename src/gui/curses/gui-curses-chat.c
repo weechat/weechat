@@ -518,14 +518,16 @@ gui_chat_string_next_char (struct t_gui_window *window, unsigned char *string,
 
 void
 gui_chat_display_word_raw (struct t_gui_window *window, char *string,
-                           int display)
+                           int max_chars_on_screen, int display)
 {
-    char *next_char, *output, utf_char[16];
+    char *next_char, *output, utf_char[16], chars_displayed, size_screen;
     
     if (display)
         wmove (GUI_CURSES(window)->win_chat,
                window->win_chat_cursor_y,
                window->win_chat_cursor_x);
+    
+    chars_displayed = 0;
     
     while (string && string[0])
     {
@@ -539,6 +541,13 @@ gui_chat_display_word_raw (struct t_gui_window *window, char *string,
         {
             memcpy (utf_char, string, next_char - string);
             utf_char[next_char - string] = '\0';
+            if (max_chars_on_screen > 0)
+            {
+                size_screen = utf8_strlen_screen (utf_char);
+                if (chars_displayed + size_screen > max_chars_on_screen)
+                    return;
+                chars_displayed += size_screen;
+            }
             if (gui_window_utf_char_valid (utf_char))
             {
                 output = string_iconv_from_internal (NULL, utf_char);
@@ -613,9 +622,11 @@ gui_chat_display_word (struct t_gui_window *window,
                     && CONFIG_STRING(config_look_prefix_suffix)[0]))
             {
                 gui_chat_set_weechat_color (window, GUI_COLOR_CHAT_PREFIX_SUFFIX);
-                gui_chat_display_word_raw (window, CONFIG_STRING(config_look_prefix_suffix), 1);
+                gui_chat_display_word_raw (window,
+                                           CONFIG_STRING(config_look_prefix_suffix),
+                                           0, 1);
                 window->win_chat_cursor_x += gui_chat_strlen_screen (CONFIG_STRING(config_look_prefix_suffix));
-                gui_chat_display_word_raw (window, str_space, 1);
+                gui_chat_display_word_raw (window, str_space, 0, 1);
                 window->win_chat_cursor_x += gui_chat_strlen_screen (str_space);
                 gui_chat_set_weechat_color (window, GUI_COLOR_CHAT);
             }
@@ -633,9 +644,9 @@ gui_chat_display_word (struct t_gui_window *window,
                 saved_char = data[pos_saved_char];
                 data[pos_saved_char] = '\0';
                 if ((count == 0) || (*lines_displayed >= num_lines - count))
-                    gui_chat_display_word_raw (window, data, 1);
+                    gui_chat_display_word_raw (window, data, 0, 1);
                 else
-                    gui_chat_display_word_raw (window, data, 0);
+                    gui_chat_display_word_raw (window, data, 0, 0);
                 data[pos_saved_char] = saved_char;
             }
             data += pos_saved_char;
@@ -646,9 +657,9 @@ gui_chat_display_word (struct t_gui_window *window,
             if (!simulate)
             {
                 if ((count == 0) || (*lines_displayed >= num_lines - count))
-                    gui_chat_display_word_raw (window, data, 1);
+                    gui_chat_display_word_raw (window, data, 0, 1);
                 else
-                    gui_chat_display_word_raw (window, data, 0);
+                    gui_chat_display_word_raw (window, data, 0, 0);
             }
             data += strlen (data);
         }
@@ -997,7 +1008,8 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
            window->win_chat_cursor_x);
     wclrtoeol (GUI_CURSES(window)->win_chat);
     
-    gui_chat_display_word_raw (window, line->message, 1);
+    gui_chat_display_word_raw (window, line->message,
+                               window->win_chat_width, 1);
 }
 
 /*
