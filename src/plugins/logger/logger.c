@@ -504,13 +504,13 @@ logger_backlog (struct t_gui_buffer *buffer, char *filename, int lines)
         if (pos_message)
         {
             if (datetime != 0)
-                weechat_printf_date (buffer, datetime, pos_message + 1);
+                weechat_printf_date (buffer, datetime, "%s", pos_message + 1);
             else
-                weechat_printf (buffer, ptr_lines->data);
+                weechat_printf (buffer, "%s", ptr_lines->data);
         }
         else
         {
-            weechat_printf (buffer, ptr_lines->data);
+            weechat_printf (buffer, "%s", ptr_lines->data);
         }
         num_lines++;
         ptr_lines = ptr_lines->next_line;
