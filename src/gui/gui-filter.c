@@ -43,68 +43,6 @@ int gui_filters_enabled = 1;                       /* filters enabled?      */
 
 
 /*
- * gui_filter_enable: enable filters
- */
-
-void
-gui_filter_enable ()
-{
-    struct t_gui_buffer *ptr_buffer;
-    
-    if (!gui_filters_enabled)
-    {
-        gui_filters_enabled = 1;
-        
-        /* ask refresh for buffer with hidden lines */
-        for (ptr_buffer = gui_buffers; ptr_buffer;
-             ptr_buffer = ptr_buffer->next_buffer)
-        {
-            if (ptr_buffer->lines_hidden)
-            {
-                hook_signal_send ("buffer_lines_hidden",
-                                  WEECHAT_HOOK_SIGNAL_POINTER, ptr_buffer);
-            }
-            if (ptr_buffer->lines_hidden)
-                ptr_buffer->chat_refresh_needed = 1;
-        }
-    }
-    
-    hook_signal_send ("filters_enabled",
-                      WEECHAT_HOOK_SIGNAL_STRING, NULL);
-}
-
-/*
- * gui_filter_disable: disable filters
- */
-
-void
-gui_filter_disable ()
-{
-    struct t_gui_buffer *ptr_buffer;
-    
-    if (gui_filters_enabled)
-    {
-        gui_filters_enabled = 0;
-        
-        /* ask refresh for buffer with hidden lines */
-        for (ptr_buffer = gui_buffers; ptr_buffer;
-             ptr_buffer = ptr_buffer->next_buffer)
-        {
-            if (ptr_buffer->lines_hidden)
-            {
-                hook_signal_send ("buffer_lines_hidden",
-                                  WEECHAT_HOOK_SIGNAL_POINTER, ptr_buffer);
-            }
-            if (ptr_buffer->lines_hidden)
-                ptr_buffer->chat_refresh_needed = 1;
-        }
-    }
-    
-    hook_signal_send ("filters_disabled",
-                      WEECHAT_HOOK_SIGNAL_STRING, NULL);
-}
-
-/*
  * gui_filter_check_line: return 1 if a line should be displayed, or
  *                        0 if line is hidden (tag or regex found)
  */
@@ -117,6 +55,10 @@ gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
     /* make C compiler happy */
     (void) buffer;
     
+    /* line is always displayed if filters are disabled */
+    if (!gui_filters_enabled)
+        return 1;
+    
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
     {
@@ -124,17 +66,20 @@ gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
         if (gui_buffer_match_category_name (buffer,
                                             ptr_filter->buffer, 0))
         {
-            /* check line with regex */
-            if (gui_chat_line_match_regex (line,
-                                           ptr_filter->regex_prefix,
-                                           ptr_filter->regex_message))
-                return 0;
-            
-            if ((strcmp (ptr_filter->tags, "*") != 0)
-                && (gui_chat_line_match_tags (line,
+            if ((strcmp (ptr_filter->tags, "*") == 0)
+                || (gui_chat_line_match_tags (line,
                                               ptr_filter->tags_count,
                                               ptr_filter->tags_array)))
-                return 0;
+            {
+                /* check line with regex */
+                if (!ptr_filter->regex_prefix && !ptr_filter->regex_message)
+                    return 0;
+                
+                if (gui_chat_line_match_regex (line,
+                                               ptr_filter->regex_prefix,
+                                               ptr_filter->regex_message))
+                    return 0;
+            }
         }
     }
     
@@ -161,7 +106,7 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
         
         /* force chat refresh if at least one line changed */
         if (ptr_line->displayed != line_displayed)
-            buffer->chat_refresh_needed = 1;
+            buffer->chat_refresh_needed = 2;
         
         ptr_line->displayed = line_displayed;
         
@@ -190,6 +135,38 @@ gui_filter_all_buffers ()
          ptr_buffer = ptr_buffer->next_buffer)
     {
         gui_filter_buffer (ptr_buffer);
+    }
+}
+
+/*
+ * gui_filter_enable: enable filters
+ */
+
+void
+gui_filter_enable ()
+{
+    if (!gui_filters_enabled)
+    {
+        gui_filters_enabled = 1;
+        gui_filter_all_buffers ();
+        hook_signal_send ("filters_enabled",
+                          WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    }
+}
+
+/*
+ * gui_filter_disable: disable filters
+ */
+
+void
+gui_filter_disable ()
+{
+    if (gui_filters_enabled)
+    {
+        gui_filters_enabled = 0;
+        gui_filter_all_buffers ();
+        hook_signal_send ("filters_disabled",
+                          WEECHAT_HOOK_SIGNAL_STRING, NULL);
     }
 }
 
@@ -264,22 +241,22 @@ gui_filter_new (char *buffer, char *tags, char *regex)
         }
         else
         {
-            regex_prefix = strdup (regex);
+            regex_prefix = NULL;
             pos_regex_message = regex;
         }
-
-        if (!regex_prefix)
-            return NULL;
         
-        regex1 = malloc (sizeof (*regex1));
-        if (regex1)
+        if (regex_prefix)
         {
-            if (regcomp (regex1, regex_prefix,
-                         REG_NOSUB | REG_ICASE) != 0)
+            regex1 = malloc (sizeof (*regex1));
+            if (regex1)
             {
-                free (regex_prefix);
-                free (regex1);
-                return NULL;
+                if (regcomp (regex1, regex_prefix,
+                             REG_NOSUB | REG_ICASE) != 0)
+                {
+                    free (regex_prefix);
+                    free (regex1);
+                    return NULL;
+                }
             }
         }
         
@@ -289,7 +266,8 @@ gui_filter_new (char *buffer, char *tags, char *regex)
             if (regcomp (regex2, pos_regex_message,
                          REG_NOSUB | REG_ICASE) != 0)
             {
-                free (regex_prefix);
+                if (regex_prefix)
+                    free (regex_prefix);
                 if (regex1)
                     free (regex1);
                 free (regex2);
@@ -297,7 +275,8 @@ gui_filter_new (char *buffer, char *tags, char *regex)
             }
         }
         
-        free (regex_prefix);
+        if (regex_prefix)
+            free (regex_prefix);
     }
     
     /* create new filter */
