@@ -78,7 +78,8 @@ irc_command_me_channel (struct t_irc_server *server,
     string = (arguments && arguments[0]) ?
         (char *)irc_color_decode ((unsigned char *)arguments, 1, 0) : NULL;
     weechat_printf (channel->buffer,
-                    "%s%s %s%s",
+                    "%s%s%s %s%s",
+                    weechat_prefix ("action"),
                     IRC_COLOR_CHAT_NICK,
                     server->nick,
                     IRC_COLOR_CHAT,

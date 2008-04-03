@@ -49,7 +49,7 @@ irc_color_decode (unsigned char *string, int keep_irc_colors,
     (void) keep_irc_colors;
     (void) keep_weechat_attr;
 
-    return NULL;
+    return (unsigned char *)strdup ((char *)string);
     
     /*out_length = (strlen ((char *)string) * 2) + 1;
     out = malloc (out_length);
@@ -206,7 +206,7 @@ irc_color_decode_for_user_entry (unsigned char *string)
 
     (void) string;
 
-    return NULL;
+    return (unsigned char *)strdup ((char *)string);
     
     /*out_length = (strlen ((char *)string) * 2) + 1;
     out = malloc (out_length);
