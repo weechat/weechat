@@ -510,9 +510,9 @@ gui_bar_window_add_missing_bars (struct t_gui_window *window)
 
 int
 gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
-                             char *string, int max_chars)
+                             char *string, int max_chars_on_screen)
 {
-    int weechat_color, num_displayed, size_on_screen;
+    int weechat_color, chars_displayed, size_on_screen;
     char str_color[3], utf_char[16], *next_char, *output;
     
     if (!string || !string[0])
@@ -524,7 +524,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
     else
         gui_window_set_weechat_color (bar_window->win_bar, GUI_COLOR_STATUS);
     
-    num_displayed = 0;
+    chars_displayed = 0;
     
     while (string && string[0])
     {
@@ -552,31 +552,29 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
             
             if (gui_window_utf_char_valid (utf_char))
             {
+                size_on_screen = utf8_char_size_screen (utf_char);
+                if (chars_displayed + size_on_screen > max_chars_on_screen)
+                    return chars_displayed;
+                chars_displayed += size_on_screen;
                 output = string_iconv_from_internal (NULL, utf_char);
                 wprintw (bar_window->win_bar, "%s",
                          (output) ? output : utf_char);
-                size_on_screen = utf8_char_size_screen ((output) ?
-                                                        output : utf_char);
-                num_displayed += size_on_screen;
-                max_chars -= size_on_screen;
                 if (output)
                     free (output);
             }
             else
             {
+                if (chars_displayed + 1 > max_chars_on_screen)
+                    return chars_displayed;
+                chars_displayed++;
                 wprintw (bar_window->win_bar,  ".");
-                num_displayed++;
-                max_chars--;
             }
             
             string = next_char;
-            
-            if (max_chars <= 0)
-                break;
         }
     }
     
-    return num_displayed;
+    return chars_displayed;
 }
 
 /*

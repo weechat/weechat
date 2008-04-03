@@ -115,7 +115,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         new_buffer->lines_count = 0;
         new_buffer->lines_hidden = 0;
         new_buffer->prefix_max_length = 0;
-        new_buffer->chat_refresh_needed = 1;
+        new_buffer->chat_refresh_needed = 2;
         
         /* nicklist */
         new_buffer->nicklist = 0;
@@ -317,7 +317,7 @@ gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
             break;
     }
     buffer->type = type;
-    buffer->chat_refresh_needed = 1;
+    buffer->chat_refresh_needed = 2;
 }
 
 /*
@@ -662,7 +662,7 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
         }
     }
     
-    buffer->chat_refresh_needed = 1;
+    buffer->chat_refresh_needed = 2;
     gui_status_refresh_needed = 1;
 }
 
@@ -859,12 +859,12 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     if (gui_buffers == last_gui_buffer)
         return;
     
+    if (number < 1)
+        number = 1;
+    
     /* buffer number is already ok ? */
     if (number == buffer->number)
         return;
-    
-    if (number < 1)
-        number = 1;
     
     snprintf (buf2_str, sizeof (buf2_str) - 1, "%d", buffer->number);
     
@@ -923,7 +923,6 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
             last_gui_buffer->next_buffer = buffer;
             last_gui_buffer = buffer;
         }
-        
     }
     
     /* assign new number to all buffers */

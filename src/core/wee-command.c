@@ -73,12 +73,11 @@ command_bar (void *data, struct t_gui_buffer *buffer,
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argv_eol;
     
+    /* list of bars */
     if ((argc == 1)
         || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
     {
-        /* list of bars */
         if (gui_bars)
         {
             gui_chat_printf (NULL, "");
@@ -107,8 +106,14 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         }
         else
             gui_chat_printf (NULL, _("No bar defined"));
-
-        /* list of bar items */
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* list of bar items */
+    if ((argc == 1)
+        || ((argc == 2) && (string_strcasecmp (argv[1], "listitems") == 0)))
+    {
         if (gui_bar_items)
         {
             gui_chat_printf (NULL, "");
@@ -2299,8 +2304,8 @@ command_init ()
     hook_command (NULL, "bar",
                   N_("manage bars"),
                   N_("[add barname type position size separator item1,item2,...] "
-                     "| [del barname] | [set barname name|type|position|size|"
-                     "separator|items value] | [list]"),
+                     "| [del barname] | [set barname name|number|position|"
+                     "size|separator|items value] | [list] | [listitems]"),
                   N_("      add: add a new bar\n"
                      "  barname: name of bar (must be unique)\n"
                      "     type: \"root\" (outside windows), \"window_active\" "
@@ -2313,9 +2318,10 @@ command_init ()
                      "item1,...: items for this bar\n"
                      "      del: delete a bar\n"
                      "      set: set a value for a bar property\n"
-                     "     list: list all bars"),
-                  "add|del|set|list %r name|type|position|size|separator|"
-                  "items",
+                     "     list: list all bars\n"
+                     "listitems: list all bar items"),
+                  "add|del|set|list|listitems %r name|number|position|size|"
+                  "separator|items",
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),

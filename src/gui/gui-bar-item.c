@@ -350,7 +350,7 @@ gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
         return NULL;
     
     snprintf (buf, sizeof (buf),
-              "%s[%sF%s%s%s]",
+              "%s[%sF%s%s%s] ",
               GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
               GUI_COLOR(GUI_COLOR_STATUS),
               (window->buffer->lines_hidden) ? "," : "",

@@ -91,6 +91,8 @@ extern void gui_bar_print_log ();
 
 /* functions (GUI dependent) */
 
+extern struct t_gui_bar_window *gui_bar_window_search_bar (struct t_gui_window *window,
+                                                           struct t_gui_bar *bar);
 extern int gui_bar_window_get_size (struct t_gui_bar *bar,
                                     struct t_gui_window *window,
                                     enum t_gui_bar_position position);

@@ -520,7 +520,7 @@ void
 gui_chat_display_word_raw (struct t_gui_window *window, char *string,
                            int max_chars_on_screen, int display)
 {
-    char *next_char, *output, utf_char[16], chars_displayed, size_screen;
+    char *next_char, *output, utf_char[16], chars_displayed, size_on_screen;
     
     if (display)
         wmove (GUI_CURSES(window)->win_chat,
@@ -541,15 +541,15 @@ gui_chat_display_word_raw (struct t_gui_window *window, char *string,
         {
             memcpy (utf_char, string, next_char - string);
             utf_char[next_char - string] = '\0';
-            if (max_chars_on_screen > 0)
-            {
-                size_screen = utf8_strlen_screen (utf_char);
-                if (chars_displayed + size_screen > max_chars_on_screen)
-                    return;
-                chars_displayed += size_screen;
-            }
             if (gui_window_utf_char_valid (utf_char))
             {
+                if (max_chars_on_screen > 0)
+                {
+                    size_on_screen = utf8_strlen_screen (utf_char);
+                    if (chars_displayed + size_on_screen > max_chars_on_screen)
+                        return;
+                    chars_displayed += size_on_screen;
+                }
                 output = string_iconv_from_internal (NULL, utf_char);
                 wprintw (GUI_CURSES(window)->win_chat,
                          "%s", (output) ? output : utf_char);
@@ -558,6 +558,12 @@ gui_chat_display_word_raw (struct t_gui_window *window, char *string,
             }
             else
             {
+                if (max_chars_on_screen > 0)
+                {
+                    if (chars_displayed + 1 > max_chars_on_screen)
+                        return;
+                    chars_displayed++;
+                }
                 wprintw (GUI_CURSES(window)->win_chat, ".");
             }
         }

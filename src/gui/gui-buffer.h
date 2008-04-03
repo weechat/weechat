@@ -86,6 +86,7 @@ struct t_gui_buffer
     int lines_hidden;                  /* 1 if at least one line is hidden  */
     int prefix_max_length;             /* length for prefix align           */
     int chat_refresh_needed;           /* refresh for chat is needed ?      */
+                                       /* (1=refresh, 2=erase+refresh)      */
     
     /* nicklist */ 
     int nicklist;                      /* = 1 if nicklist is enabled        */

@@ -1370,7 +1370,7 @@ gui_action_scroll_unread (char *args)
             gui_current_window->start_line_pos = 0;
             gui_current_window->first_line_displayed =
                 (gui_current_window->start_line == gui_chat_get_first_line_displayed (gui_current_window->buffer));
-            gui_current_window->buffer->chat_refresh_needed = 1;
+            gui_current_window->buffer->chat_refresh_needed = 2;
             gui_status_refresh_needed = 1;
         }
     }

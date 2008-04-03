@@ -132,6 +132,25 @@ gui_bar_search (char *name)
 }
 
 /*
+ * gui_bar_search_by_number: search a bar by number
+ */
+
+struct t_gui_bar *
+gui_bar_search_by_number (int number)
+{
+    struct t_gui_bar *ptr_bar;
+    
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        if (ptr_bar->number == number)
+            return ptr_bar;
+    }
+    
+    /* bar not found */
+    return NULL;
+}
+
+/*
  * gui_bar_new: create a new bar
  */
 
@@ -220,6 +239,27 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name, char *type,
 }
 
 /*
+ * gui_bar_refresh: ask for bar refresh on screen (for all windows where bar is)
+ */
+
+void
+gui_bar_refresh (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_win;
+    
+    if (bar->type == GUI_BAR_TYPE_ROOT)
+        gui_window_refresh_needed = 1;
+    else
+    {
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            if (gui_bar_window_search_bar (ptr_win, bar))
+                ptr_win->refresh_needed = 1;
+        }
+    }
+}
+
+/*
  * gui_bar_set_name: set name for a bar
  */
 
@@ -235,21 +275,111 @@ gui_bar_set_name (struct t_gui_bar *bar, char *name)
 }
 
 /*
- * gui_bar_set_type: set type for a bar
+ * gui_bar_set_number: set number for a bar
  */
 
 void
-gui_bar_set_type (struct t_gui_bar *bar, char *type)
+gui_bar_set_number (struct t_gui_bar *bar, int number)
 {
-    int type_value;
+    struct t_gui_bar *ptr_bar;
+    struct t_gui_window *ptr_win;
+    int i;
+
+    if (number < 1)
+        number = 1;
     
-    (void) bar;
+    /* bar number is already ok? */
+    if (number == bar->number)
+        return;
     
-    if (type && type[0])
+    /* remove bar from list */
+    if (bar == gui_bars)
     {
-        type_value = gui_bar_get_type (type);
-        if (type_value >= 0)
+        gui_bars = bar->next_bar;
+        gui_bars->prev_bar = NULL;
+    }
+    if (bar == last_gui_bar)
+    {
+        last_gui_bar = bar->prev_bar;
+        last_gui_bar->next_bar = NULL;
+    }
+    if (bar->prev_bar)
+        (bar->prev_bar)->next_bar = bar->next_bar;
+    if (bar->next_bar)
+        (bar->next_bar)->prev_bar = bar->prev_bar;
+
+    if (number == 1)
+    {
+        gui_bars->prev_bar = bar;
+        bar->prev_bar = NULL;
+        bar->next_bar = gui_bars;
+        gui_bars = bar;
+    }
+    else
+    {
+        /* assign new number to all bars */
+        i = 1;
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
+            ptr_bar->number = i++;
+        }
+        
+        ptr_bar = gui_bar_search_by_number (number);
+        if (ptr_bar)
+        {
+            /* add bar before ptr_bar */
+            bar->prev_bar = ptr_bar->prev_bar;
+            bar->next_bar = ptr_bar;
+            if (ptr_bar->prev_bar)
+                (ptr_bar->prev_bar)->next_bar = bar;
+            ptr_bar->prev_bar = bar;
+        }
+        else
+        {
+            /* add to end of list */
+            bar->prev_bar = last_gui_bar;
+            bar->next_bar = NULL;
+            last_gui_bar->next_bar = bar;
+            last_gui_bar = bar;
+        }
+    }
+    
+    /* assign new number to all bars */
+    i = 1;
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        ptr_bar->number = i++;
+        gui_bar_free_bar_windows (ptr_bar);
+    }
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+        {
+            if (ptr_bar->type != GUI_BAR_TYPE_ROOT)
+                gui_bar_window_new (ptr_bar, ptr_win);
+        }
+    }
+    
+    gui_window_refresh_needed = 1;
+}
+
+/*
+ * gui_bar_set_position: set position for a bar
+ */
+
+void
+gui_bar_set_position (struct t_gui_bar *bar, char *position)
+{
+    int position_value;
+    
+    if (position && position[0])
+    {
+        position_value = gui_bar_get_position (position);
+        if ((position_value >= 0) && ((int)bar->position != position_value))
+        {
+            bar->position = position_value;
+            gui_bar_refresh (bar);
         }
     }
 }
@@ -270,6 +400,8 @@ gui_bar_set_size (struct t_gui_bar *bar, int size)
         
         bar->size = size;
         bar->current_size = (size == 0) ? 1 : size;
+        
+        gui_bar_refresh (bar);
     }
 }
 
@@ -316,13 +448,16 @@ gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
     {
         gui_bar_set_name (bar, value);
     }
-    else if (string_strcasecmp (property, "type") == 0)
+    if (string_strcasecmp (property, "number") == 0)
     {
-        gui_bar_set_type (bar, value);
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+            gui_bar_set_number (bar, number);
     }
     else if (string_strcasecmp (property, "position") == 0)
     {
-        
+        gui_bar_set_position (bar, value);
     }
     else if (string_strcasecmp (property, "size") == 0)
     {
@@ -334,10 +469,12 @@ gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
     else if (string_strcasecmp (property, "separator") == 0)
     {
         bar->separator = (string_strcasecmp (value, "1") == 0) ? 1 : 0;
+        gui_bar_refresh (bar);
     }
     else if (string_strcasecmp (property, "items") == 0)
     {
         gui_bar_set_items (bar, value);
+        gui_bar_draw (bar);
     }
 }
 
