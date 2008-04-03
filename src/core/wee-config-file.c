@@ -28,6 +28,7 @@
 #include <stdarg.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <time.h>
 
 #include "weechat.h"
 #include "wee-config-file.h"

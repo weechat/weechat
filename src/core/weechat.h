@@ -27,10 +27,6 @@
 #include <stdio.h>
 #include <sys/time.h>
 
-#ifdef HAVE_GNUTLS
-#include <gnutls/gnutls.h>
-#endif
-
 #include <locale.h>
 
 #if defined(ENABLE_NLS) && !defined(_)

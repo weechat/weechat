@@ -68,6 +68,8 @@ extern struct t_hook *irc_hook_timer_check_away;
 
 extern int irc_debug;
 
+#ifdef HAVE_GNUTLS
 extern gnutls_certificate_credentials gnutls_xcred;
+#endif
 
 #endif /* irc.h */

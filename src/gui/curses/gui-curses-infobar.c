@@ -25,6 +25,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
