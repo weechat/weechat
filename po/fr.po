@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-23 11:39+0100\n"
-"PO-Revision-Date: 2008-03-23 11:39+0100\n"
+"POT-Creation-Date: 2008-04-03 15:11+0200\n"
+"PO-Revision-Date: 2008-04-03 15:11+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -111,14 +111,17 @@ msgid "List of bars:"
 msgstr "Liste des barres:"
 
 #, c-format
-msgid "  %d. %s: %s, %s, %s: %d, items: %s%s (plugin: %s)"
-msgstr "  %d. %s: %s, %s, %s: %d, objets: %s%s (extension: %s)"
+msgid "  %d. %s: %s, %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
+msgstr "  %d. %s: %s, %s, %s: %s%s%d%s, objets: %s%s (extension: %s)"
 
 msgid "height"
 msgstr "hauteur"
 
 msgid "width"
 msgstr "largeur"
+
+msgid "auto"
+msgstr "auto"
 
 msgid ", with separator"
 msgstr ", avec séparateur"
@@ -149,8 +152,8 @@ msgid "%sError: wrong position \"%s\" for bar \"%s\""
 msgstr "%sErreur: position erronée \"%s\" pour la barre \"%s\""
 
 #, c-format
-msgid "%sBar \"%s\" created"
-msgstr "%sBarre \"%s\" créée"
+msgid "Bar \"%s\" created"
+msgstr "Barre \"%s\" créée"
 
 #, c-format
 msgid "%sError: failed to create bar \"%s\""
@@ -159,6 +162,17 @@ msgstr "%sErreur: impossible de créer la barre \"%s\""
 #, c-format
 msgid "%sError: wrong size \"%s\" for bar \"%s\""
 msgstr "%sErreur: taille erronée \"%s\" pour la barre \"%s\""
+
+#, c-format
+msgid "%sError: unknown bar \"%s\""
+msgstr "%sErreur: barre \"%s\" inconnue"
+
+msgid "Bar deleted"
+msgstr "Barre supprimée"
+
+#, c-format
+msgid "%sError: unknown option for \"%s\" command"
+msgstr "%sErreur: option inconnue pour la commande \"%s\""
 
 msgid "Buffers list:"
 msgstr "Liste des tampons:"
@@ -384,10 +398,6 @@ msgid "  (no plugin)"
 msgstr "  (aucune extension)"
 
 #, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr "%sErreur: option inconnue pour la commande \"%s\""
-
-#, c-format
 msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%sErreur: nombre de paramètres erroné pour la commande \"%s\""
 
@@ -502,22 +512,29 @@ msgstr ""
 msgid "manage bars"
 msgstr "gestion des barres"
 
-msgid "[add name type position size separator item1,item2,...] | [list]"
-msgstr "[add nom type position taille separateur objet1,objet2,...] | [list]"
+msgid ""
+"[add barname type position size separator item1,item2,...] | [del barname] | "
+"[set barname name|type|position|size|separator|items value] | [list]"
+msgstr ""
+"[add nombarre type position taille separateur objet1,objet2,...] | [del "
+"nombarre] | [set nombarre name|type|position|size|separator|items valeur] | "
+"[list]"
 
 msgid ""
 "      add: add a new bar\n"
-"     name: name of bar (must be unique)\n"
+"  barname: name of bar (must be unique)\n"
 "     type: \"root\" (outside windows), \"window_active\" (inside active "
 "window), or \"window_inactive\" (inside each inactive window)\n"
 " position: bottom, top, left or right\n"
 "     size: size of bar (in chars)\n"
 "separator: 1 for using separator (line), 0 or nothing means no separator\n"
 "item1,...: items for this bar\n"
+"      del: delete a bar\n"
+"      set: set a value for a bar property\n"
 "     list: list all bars"
 msgstr ""
 "       add: ajoute une nouvelle barre\n"
-"       nom: nom de la barre (doit être unique)\n"
+"  nombarre: nom de la barre (doit être unique)\n"
 "      type: \"root\" (en dehors des fenêtres), \"window_active\" (dans la "
 "fenêtre active), \"window_inactive\" (dans chaque fenêtre inactive)\n"
 "  position: bottom (bas), top (haut), left (gauche) ou right (droite)\n"
@@ -525,6 +542,8 @@ msgstr ""
 "separateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie sans "
 "séparateur\n"
 "objet1,...: objets pour cette barre\n"
+"       del: supprime une barre\n"
+"       set: changer la valeur d'une propriété de la barre\n"
 "      list: liste toutes les barres"
 
 msgid "manage buffers"
@@ -634,7 +653,7 @@ msgid ""
 "\"*\" for all buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
 "irc_quit\"\n"
-"  regex: regular expression to search in line (use \t to separate prefix "
+"  regex: regular expression to search in line (use \\t to separate prefix "
 "from message)"
 msgstr ""
 "   list: liste tous les filtres\n"
@@ -1384,12 +1403,15 @@ msgstr ""
 "sauvegarder les fichiers de configuration lors du déchargement des extensions"
 
 #, c-format
-msgid "Saving WeeChat configuration to disk (%s)"
-msgstr "Sauvegarde de la configuration WeeChat sur disque (%s)"
-
-#, c-format
 msgid "%sError: cannot create file \"%s\""
 msgstr "%sErreur: impossible de créer le fichier \"%s\""
+
+#, c-format
+msgid "Writing configuration file %s %s"
+msgstr "Ecriture du fichier de configuration %s %s"
+
+msgid "(default options)"
+msgstr "(options par défaut)"
 
 #, c-format
 msgid ""
@@ -1402,6 +1424,10 @@ msgstr ""
 #, c-format
 msgid "%sWarning: config file \"%s\" not found"
 msgstr "%sAttention: fichier de configuration \"%s\" non trouvé."
+
+#, c-format
+msgid "Reading configuration file %s"
+msgstr "Lecture du fichier de configuration %s"
 
 #, c-format
 msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
@@ -1427,6 +1453,10 @@ msgstr "%sAttention: %s, ligne %d: option \"%s\" inconnue (hors d'une section)"
 #, c-format
 msgid "%sWarning: %s, line %d: invalid value for option \"%s\""
 msgstr "%sAttention: %s, ligne %d: valeur invalide pour l'option \"%s\""
+
+#, c-format
+msgid "Reloading configuration file %s"
+msgstr "Rechargement du fichier de configuration %s"
 
 msgid "  . type: boolean\n"
 msgstr "  . type: booléen\n"
@@ -1557,10 +1587,6 @@ msgstr "-PLUS-"
 
 msgid "server"
 msgstr "serveur"
-
-#, c-format
-msgid "%s[%sF%s%s%s]"
-msgstr "%s[%sF%s%s%s]"
 
 msgid "filtered"
 msgstr "filtré"
@@ -4223,9 +4249,6 @@ msgstr "%sExtension \"%s\" chargée"
 msgid "%sPlugin \"%s\" unloaded"
 msgstr "%sExtension \"%s\" déchargée"
 
-msgid "Saving plugins configuration to disk"
-msgstr "Sauvegarde de la configuration des extensions sur disque"
-
 #, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
@@ -4453,131 +4476,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\""
-
-#~ msgid "%sPlugin \"%s\" %s loaded"
-#~ msgstr "%sExtension \"%s\" %s chargée"
-
-#~ msgid "%s[%sfiltered%s]"
-#~ msgstr "%s[%sfiltré%s]"
-
-#~ msgid "%sError: wrong number \"%s\" for filter"
-#~ msgstr "%sErreur: numéro de filtre erroné"
-
-#~ msgid "%sError: command \"%s\" failed"
-#~ msgstr "%sErreur: la commande \"%s\" a échoué"
-
-#~ msgid "%s%s: cannot identify channel for \"%s\" command"
-#~ msgstr "%s%s: impossible de déterminer le canal pour la commande \"%s\""
-
-#~ msgid "%s%s: cannot identify nickname for \"%s\" command"
-#~ msgstr "%s%s: impossible de déterminer le pseudo pour la commande \"%s\""
-
-#~ msgid " by %s%s"
-#~ msgstr " par %s%s"
-
-#~ msgid "%s%s[%s%s%s] %s%s%s banned"
-#~ msgstr "%s%s[%s%s%s] %s%s%s banni"
-
-#~ msgid "/list end"
-#~ msgstr "/list fin"
-
-#~ msgid "userhost"
-#~ msgstr "nom d'hôte"
-
-#~ msgid "Notice from %s%s %s(%s%s%s)%s: %s"
-#~ msgstr "Notice de %s%s %s(%s%s%s)%s: %s"
-
-#~ msgid "Notice from %s%s%s: %s"
-#~ msgstr "Notice de %s%s%s: %s"
-
-#~ msgid "Notice: %s"
-#~ msgstr "Notice: %s"
-
-#~ msgid "%s[%s%s%s]%s help mode (+h)"
-#~ msgstr "%s[%s%s%s]%s mode aide (+h)"
-
-#~ msgid "%s[%s%s%s]%s Channels: "
-#~ msgstr "%s[%s%s%s]%s Canaux: "
-
-#~ msgid "%s%s: cannot identify date/time for \"%s\" command"
-#~ msgstr "%s%s: impossible d'identifier la date/heure pour la commande \"%s\""
-
-#~ msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
-#~ msgstr "%s%s%s sur %s%s%s %s %s %s%s@%s %s(%s%s%s)"
-
-#~ msgid "%s%s: command \"%s\" failed"
-#~ msgstr "%s%s: la commande \"%s\" a échoué"
-
-#~ msgid "%s%s: no command to execute"
-#~ msgstr "%s%s: pas de commande à exécuter"
-
-#~ msgid "%s%s: unknown command: cmd=\"%s\", host=\"%s\", arguments=\"%s\""
-#~ msgstr "%s%s: commande inconnue: cmd=\"%s\", hôte=\"%s\", paramètres=\"%s\""
-
-#~ msgid "%s%s%s%s has killed %s%s%s"
-#~ msgstr "%s%s%s%s a tué %s%s%s"
-
-#~ msgid "%s%s: \"%s\" command received without channel or nickname"
-#~ msgstr "%s%s: commande \"%s\" reçue sans canal ou pseudo"
-
-#~ msgid "%s%s: nickname not found for \"%s\" command"
-#~ msgstr "%s%s: pseudo non trouvé pour la commande \"%s\""
-
-#~ msgid "%s%s: \"%s\" command received without host or channel"
-#~ msgstr "%s%s: commande \"%s\" reçue sans hôte ou canal"
-
-#~ msgid "jump to raw IRC data buffer"
-#~ msgstr "sauter au tampon IRC brut"
-
-#~ msgid "debug command"
-#~ msgstr "commande debug"
-
-#~ msgid "[test]"
-#~ msgstr "[test]"
-
-#~ msgid "test: test"
-#~ msgstr "test: test"
-
-#~ msgid "IP address or hostname of IRC server"
-#~ msgstr "adresse IP ou nom du serveur IRC"
-
-#~ msgid "port for connecting to server"
-#~ msgstr "port pour se connecter au serveur"
-
-#~ msgid ""
-#~ "alternate nickname to use on IRC server (if nickname is already used)"
-#~ msgstr ""
-#~ "pseudo alternatif pour le serveur IRC (si le pseudo est déjà utilisé)"
-
-#~ msgid ""
-#~ "2nd alternate nickname to use on IRC server (if alternate nickname is "
-#~ "already used)"
-#~ msgstr ""
-#~ "2ème pseudo alternatif pour le serveur IRC (si le pseudo alternatif est "
-#~ "déjà utilisé)"
-
-#~ msgid "Not enough memory to write log file \"%s\"\n"
-#~ msgstr "Pas assez de mémoire pour écrire le fichier log \"%s\"\n"
-
-#~ msgid "%s%s: nickname \"%s\" is invalid, trying 3rd nickname \"%s\""
-#~ msgstr ""
-#~ "%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le "
-#~ "3ème pseudo \"%s\""
-
-#~ msgid "%s%s: nickname \"%s\" is invalid, trying 1st nickname \"%s\""
-#~ msgstr ""
-#~ "%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le 1er "
-#~ "pseudo \"%s\""
-
-#~ msgid "%s%s: nickname \"%s\" is already in use, trying 3rd nickname \"%s\""
-#~ msgstr ""
-#~ "%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le "
-#~ "3ème pseudo \"%s\""
-
-#~ msgid "%s%s: nickname \"%s\" is already in use, trying 1st nickname \"%s\""
-#~ msgstr ""
-#~ "%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le 1er "
-#~ "pseudo \"%s\""
-
-#~ msgid "%s%s: error retrieving user's name: %s"
-#~ msgstr "%s%s: erreur de lecture du nom de l'utilisateur: %s"

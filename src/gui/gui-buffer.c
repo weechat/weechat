@@ -289,11 +289,12 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, char *name)
         if (buffer->name)
             free (buffer->name);
         buffer->name = strdup (name);
+        
+        gui_status_refresh_needed = 1;
+        
+        hook_signal_send ("buffer_renamed",
+                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
-    gui_status_refresh_needed = 1;
-    
-    hook_signal_send ("buffer_renamed",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*

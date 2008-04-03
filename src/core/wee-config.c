@@ -1533,7 +1533,5 @@ config_weechat_read ()
 int
 config_weechat_write ()
 {
-    log_printf (_("Saving WeeChat configuration to disk (%s)"),
-                weechat_config_file->filename);
     return config_file_write (weechat_config_file);
 }

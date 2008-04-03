@@ -160,7 +160,7 @@ gui_chat_set_color (struct t_gui_window *window, int fg, int bg)
 void
 gui_chat_set_weechat_color (struct t_gui_window *window, int weechat_color)
 {
-    if ((weechat_color >= 0) && (weechat_color < GUI_NUM_COLORS))
+    if ((weechat_color >= 0) && (weechat_color < GUI_COLOR_NUM_COLORS))
     {
         gui_chat_reset_style (window);
         gui_chat_set_style (window,
@@ -1394,7 +1394,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
             }
             wnoutrefresh (GUI_CURSES(ptr_win)->win_chat);
             refresh ();
-
+            
             if (buffer->type == GUI_BUFFER_TYPE_FREE)
             {
                 for (ptr_line = buffer->lines; ptr_line;

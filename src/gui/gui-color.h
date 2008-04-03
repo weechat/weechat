@@ -103,7 +103,8 @@ enum t_gui_color_enum
     GUI_COLOR_INFO_FAILED,
     GUI_COLOR_INFO_ABORTED,
     
-    GUI_NUM_COLORS,
+    /* number of colors */
+    GUI_COLOR_NUM_COLORS,
 };
 
 /* WeeChat internal color attributes (should never be in protocol messages) */
@@ -141,7 +142,7 @@ struct t_gui_color
 
 /* color variables */
 
-extern struct t_gui_color *gui_color[GUI_NUM_COLORS];
+extern struct t_gui_color *gui_color[];
 
 /* color functions */
 

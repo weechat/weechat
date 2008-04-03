@@ -26,6 +26,7 @@ struct t_gui_window;
 enum t_gui_bar_type
 {
     GUI_BAR_TYPE_ROOT = 0,
+    GUI_BAR_TYPE_WINDOW,
     GUI_BAR_TYPE_WINDOW_ACTIVE,
     GUI_BAR_TYPE_WINDOW_INACTIVE,
     /* number of bar types */
@@ -45,22 +46,23 @@ enum t_gui_bar_position
 struct t_gui_bar
 {
     /* user choices */
-    struct t_weechat_plugin *plugin; /* plugin                              */
-    int number;                      /* bar number                          */
-    char *name;                      /* bar name                            */
-    int type;                        /* type (root or window)               */
-    int position;                    /* position (bottom, top, left, right) */
-    int size;                        /* size of bar (in chars)              */
-    int separator;                   /* 1 if separator (line) displayed     */
-    char *items;                     /* bar items                           */
+    struct t_weechat_plugin *plugin;   /* plugin                            */
+    int number;                        /* bar number                        */
+    char *name;                        /* bar name                          */
+    int type;                          /* type (root or window)             */
+    enum t_gui_bar_position position;  /* bottom, top, left, right          */
+    int size;                          /* size of bar (in chars, 0 = auto)  */
+    int separator;                     /* 1 if separator (line) displayed   */
+    char *items;                       /* bar items                         */
     
     /* internal vars */
-    int items_count;                 /* number of bar items                 */
-    char **items_array;              /* exploded bar items                  */
+    int current_size;                  /* current bar size (strictly > 0)   */
+    int items_count;                   /* number of bar items               */
+    char **items_array;                /* exploded bar items                */
     struct t_gui_bar_window *bar_window; /* pointer to bar window           */
-                                     /* (for type root only)                */
-    struct t_gui_bar *prev_bar;      /* link to previous bar                */
-    struct t_gui_bar *next_bar;      /* link to next bar                    */
+                                       /* (for type root only)              */
+    struct t_gui_bar *prev_bar;        /* link to previous bar              */
+    struct t_gui_bar *next_bar;        /* link to next bar                  */
 };
 
 /* variables */
@@ -72,11 +74,15 @@ extern struct t_gui_bar *last_gui_bar;
 
 /* functions */
 
-extern int gui_bar_root_get_size (struct t_gui_bar *bar, int position);
+extern int gui_bar_get_type (char *type);
+extern int gui_bar_get_position (char *position);
+extern int gui_bar_root_get_size (struct t_gui_bar *bar,
+                                  enum t_gui_bar_position position);
 extern struct t_gui_bar *gui_bar_search (char *name);
 extern struct t_gui_bar *gui_bar_new (struct t_weechat_plugin *plugin,
                                       char *name, char *type, char *position,
                                       int size, int separator, char *items);
+extern void gui_bar_set (struct t_gui_bar *bar, char *property, char *value);
 extern void gui_bar_update (char *name);
 extern void gui_bar_free (struct t_gui_bar *bar);
 extern void gui_bar_free_all ();
@@ -86,10 +92,14 @@ extern void gui_bar_print_log ();
 /* functions (GUI dependent) */
 
 extern int gui_bar_window_get_size (struct t_gui_bar *bar,
-                                    struct t_gui_window *window, int position);
+                                    struct t_gui_window *window,
+                                    enum t_gui_bar_position position);
+extern int gui_bar_check_size_add (struct t_gui_bar *bar, int add_size);
 extern int gui_bar_window_new (struct t_gui_bar *bar,
                                struct t_gui_window *window);
-extern void gui_bar_window_free (struct t_gui_bar_window *bar_window);
+extern void gui_bar_window_free (struct t_gui_bar_window *bar_window,
+                                 struct t_gui_window *window);
+extern void gui_bar_free_bar_windows (struct t_gui_bar *bar);
 extern void gui_bar_draw (struct t_gui_bar *bar);
 extern void gui_bar_window_print_log (struct t_gui_bar_window *bar_window);
 

@@ -74,8 +74,9 @@ int
 gui_window_objects_init (struct t_gui_window *window)
 {
     struct t_gui_curses_objects *new_objects;
-
-    if ((new_objects = malloc (sizeof (*new_objects))))
+    
+    new_objects = malloc (sizeof (*new_objects));
+    if (new_objects)
     {
         window->gui_objects = new_objects;
         GUI_CURSES(window)->win_title = NULL;
@@ -86,10 +87,10 @@ gui_window_objects_init (struct t_gui_window *window)
         GUI_CURSES(window)->win_input = NULL;
         GUI_CURSES(window)->win_separator = NULL;
         GUI_CURSES(window)->bar_windows = NULL;
+        GUI_CURSES(window)->last_bar_window = NULL;
         return 1;
     }
-    else
-        return 0;
+    return 0;
 }
 
 /*
@@ -97,7 +98,8 @@ gui_window_objects_init (struct t_gui_window *window)
  */
 
 void
-gui_window_objects_free (struct t_gui_window *window, int free_separator)
+gui_window_objects_free (struct t_gui_window *window, int free_separator,
+                         int free_bar_windows)
 {
     if (GUI_CURSES(window)->win_title)
     {
@@ -133,6 +135,13 @@ gui_window_objects_free (struct t_gui_window *window, int free_separator)
     {
         delwin (GUI_CURSES(window)->win_separator);
         GUI_CURSES(window)->win_separator = NULL;
+    }
+    if (free_bar_windows)
+    {
+        while (GUI_CURSES(window)->bar_windows)
+        {
+            gui_bar_window_free (GUI_CURSES(window)->bar_windows, window);
+        }
     }
 }
 
@@ -197,7 +206,7 @@ gui_window_curses_clear (WINDOW *window, int num_color)
 void
 gui_window_set_weechat_color (WINDOW *window, int num_color)
 {
-    if ((num_color >= 0) && (num_color < GUI_NUM_COLORS))
+    if ((num_color >= 0) && (num_color < GUI_COLOR_NUM_COLORS))
     {
         wattroff (window, A_BOLD | A_UNDERLINE | A_REVERSE);
         wattron (window, COLOR_PAIR(gui_color_get_pair (num_color)) |
@@ -213,11 +222,18 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
 int
 gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
 {
+    struct t_gui_bar_window *ptr_bar_win;
     int max_length, max_height, lines, width_used;
     int add_top, add_bottom, add_left, add_right;
     
     if (!gui_ok)
         return 0;
+    
+    for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
+         ptr_bar_win = ptr_bar_win->next_bar_window)
+    {
+        gui_bar_window_calculate_pos_size (ptr_bar_win, window);
+    }
     
     add_bottom = gui_bar_window_get_size (NULL, window, GUI_BAR_POSITION_BOTTOM);
     add_top = gui_bar_window_get_size (NULL, window, GUI_BAR_POSITION_TOP);
@@ -486,16 +502,52 @@ gui_window_redraw_all_buffers ()
 }
 
 /*
- * gui_window_switch_to_buffer: switch to another buffer
+ * gui_window_switch: switch to another window
+ */
+
+void
+gui_window_switch (struct t_gui_window *window)
+{
+    struct t_gui_window *old_window;
+    int changes;
+    
+    if (gui_current_window == window)
+        return;
+    
+    old_window = gui_current_window;
+    
+    gui_current_window = window;
+    changes = gui_bar_window_remove_unused_bars (old_window)
+        || gui_bar_window_add_missing_bars (old_window);
+    if (changes)
+    {
+        gui_current_window = old_window;
+        gui_window_switch_to_buffer (gui_current_window,
+                                     gui_current_window->buffer);
+        gui_current_window = window;
+    }
+    
+    gui_bar_window_remove_unused_bars (gui_current_window);
+    gui_bar_window_add_missing_bars (gui_current_window);
+    gui_window_switch_to_buffer (gui_current_window,
+                                 gui_current_window->buffer);
+    
+    gui_window_redraw_buffer (gui_current_window->buffer);
+}
+
+/*
+ * gui_window_switch_to_buffer: switch to another buffer in a window
  */
 
 void
 gui_window_switch_to_buffer (struct t_gui_window *window,
                              struct t_gui_buffer *buffer)
 {
+    struct t_gui_bar_window *ptr_bar_win;
+    
     if (!gui_ok)
         return;
-
+    
     if (window->buffer->num_displayed > 0)
         window->buffer->num_displayed--;
     
@@ -512,9 +564,16 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     window->win_nick_start = 0;
     
     gui_window_calculate_pos_size (window, 1);
+
+    /* create bar windows */
+    for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
+         ptr_bar_win = ptr_bar_win->next_bar_window)
+    {
+        gui_bar_window_create_win (ptr_bar_win);
+    }
     
     /* destroy Curses windows */
-    gui_window_objects_free (window, 0);
+    gui_window_objects_free (window, 0, 0);
     
     /* create Curses windows */
     GUI_CURSES(window)->win_title = newwin (window->win_title_height,
@@ -569,6 +628,13 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     buffer->num_displayed++;
     
     gui_hotlist_remove_buffer (buffer);
+    
+    /* redraw bars in window */
+    for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
+         ptr_bar_win = ptr_bar_win->next_bar_window)
+    {
+        gui_bar_draw (ptr_bar_win->bar);
+    }
     
     hook_signal_send ("buffer_switch",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
@@ -911,7 +977,7 @@ gui_window_auto_resize (struct t_gui_window_tree *tree,
     {
         if (tree->window)
         {
-            if ((width < WINDOW_MIN_WIDTH) || (height < WINDOW_MIN_HEIGHT))
+            if ((width < GUI_WINDOW_MIN_WIDTH) || (height < GUI_WINDOW_MIN_HEIGHT))
                 return -1;
             if (!simulate)
             {
@@ -986,12 +1052,15 @@ gui_window_refresh_windows ()
                                 gui_window_get_width () - add_left - add_right,
                                 gui_window_get_height () - add_top - add_bottom,
                                 0) < 0)
+    {
         gui_window_merge_all (gui_current_window);
+    }
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         gui_window_switch_to_buffer (ptr_win, ptr_win->buffer);
         gui_window_draw_separator (ptr_win);
+        ptr_win->refresh_needed = 0;
     }
     
     for (ptr_buffer = gui_buffers; ptr_buffer;
@@ -1019,7 +1088,7 @@ gui_window_split_horiz (struct t_gui_window *window, int pourcentage)
     height1 = (window->win_height * pourcentage) / 100;
     height2 = window->win_height - height1;
     
-    if ((height1 >= WINDOW_MIN_HEIGHT) && (height2 >= WINDOW_MIN_HEIGHT)
+    if ((height1 >= GUI_WINDOW_MIN_HEIGHT) && (height2 >= GUI_WINDOW_MIN_HEIGHT)
         && (pourcentage > 0) && (pourcentage <= 100))
     {
         if ((new_window = gui_window_new (window,
@@ -1037,10 +1106,8 @@ gui_window_split_horiz (struct t_gui_window *window, int pourcentage)
             new_window->buffer->num_displayed++;
             
             gui_window_switch_to_buffer (window, window->buffer);
-            
-            gui_current_window = new_window;
-            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
-            gui_window_redraw_buffer (gui_current_window->buffer);
+
+            gui_window_switch (new_window);
         }
     }
 }
@@ -1061,7 +1128,7 @@ gui_window_split_vertic (struct t_gui_window *window, int pourcentage)
     width1 = (window->win_width * pourcentage) / 100;
     width2 = window->win_width - width1 - 1;
     
-    if ((width1 >= WINDOW_MIN_WIDTH) && (width2 >= WINDOW_MIN_WIDTH)
+    if ((width1 >= GUI_WINDOW_MIN_WIDTH) && (width2 >= GUI_WINDOW_MIN_WIDTH)
         && (pourcentage > 0) && (pourcentage <= 100))
     {
         if ((new_window = gui_window_new (window,
@@ -1079,9 +1146,7 @@ gui_window_split_vertic (struct t_gui_window *window, int pourcentage)
             
             gui_window_switch_to_buffer (window, window->buffer);
             
-            gui_current_window = new_window;
-            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
-            gui_window_redraw_buffer (gui_current_window->buffer);
+            gui_window_switch (new_window);
             
             /* create & draw separator */
             gui_window_draw_separator (gui_current_window);
@@ -1294,9 +1359,7 @@ gui_window_switch_up (struct t_gui_window *window)
         if ((ptr_win != window) &&
             (gui_window_side_by_side (window, ptr_win) == 1))
         {
-            gui_current_window = ptr_win;
-            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
-            gui_window_redraw_buffer (gui_current_window->buffer);
+            gui_window_switch (ptr_win);
             return;
         }
     }
@@ -1320,9 +1383,7 @@ gui_window_switch_down (struct t_gui_window *window)
         if ((ptr_win != window) &&
             (gui_window_side_by_side (window, ptr_win) == 3))
         {
-            gui_current_window = ptr_win;
-            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
-            gui_window_redraw_buffer (gui_current_window->buffer);
+            gui_window_switch (ptr_win);
             return;
         }
     }
@@ -1346,9 +1407,7 @@ gui_window_switch_left (struct t_gui_window *window)
         if ((ptr_win != window) &&
             (gui_window_side_by_side (window, ptr_win) == 4))
         {
-            gui_current_window = ptr_win;
-            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
-            gui_window_redraw_buffer (gui_current_window->buffer);
+            gui_window_switch (ptr_win);
             return;
         }
     }
@@ -1372,9 +1431,7 @@ gui_window_switch_right (struct t_gui_window *window)
         if ((ptr_win != window) &&
             (gui_window_side_by_side (window, ptr_win) == 2))
         {
-            gui_current_window = ptr_win;
-            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
-            gui_window_redraw_buffer (gui_current_window->buffer);
+            gui_window_switch (ptr_win);
             return;
         }
     }
@@ -1400,7 +1457,8 @@ gui_window_refresh_screen (int force)
         
         getmaxyx (stdscr, new_height, new_width);
         
-        gui_ok = ((new_width > WINDOW_MIN_WIDTH) && (new_height > WINDOW_MIN_HEIGHT));
+        gui_ok = ((new_width > GUI_WINDOW_MIN_WIDTH)
+                  && (new_height > GUI_WINDOW_MIN_HEIGHT));
         
         if (gui_ok)
         {
@@ -1514,8 +1572,9 @@ void
 gui_window_objects_print_log (struct t_gui_window *window)
 {
     struct t_gui_bar_window *ptr_bar_win;
-
+    
     log_printf ("");
+    log_printf ("  window specific objects:");
     log_printf ("  win_title . . . . . : 0x%x", GUI_CURSES(window)->win_title);
     log_printf ("  win_chat. . . . . . : 0x%x", GUI_CURSES(window)->win_chat);
     log_printf ("  win_nick. . . . . . : 0x%x", GUI_CURSES(window)->win_nick);
@@ -1523,6 +1582,12 @@ gui_window_objects_print_log (struct t_gui_window *window)
     log_printf ("  win_infobar . . . . : 0x%x", GUI_CURSES(window)->win_infobar);
     log_printf ("  win_input . . . . . : 0x%x", GUI_CURSES(window)->win_input);
     log_printf ("  win_separator . . . : 0x%x", GUI_CURSES(window)->win_separator);
+    log_printf ("  bar_windows . . . . : 0x%x", GUI_CURSES(window)->bar_windows);
+    log_printf ("  last_bar_windows. . : 0x%x", GUI_CURSES(window)->last_bar_window);
+    log_printf ("  current_style_fg. . : %d",   GUI_CURSES(window)->current_style_fg);
+    log_printf ("  current_style_bg. . : %d",   GUI_CURSES(window)->current_style_bg);
+    log_printf ("  current_style_attr. : %d",   GUI_CURSES(window)->current_style_attr);
+    log_printf ("  current_color_attr. : %d",   GUI_CURSES(window)->current_color_attr);
     
     for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
          ptr_bar_win = ptr_bar_win->next_bar_window)

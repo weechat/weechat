@@ -63,7 +63,7 @@ int
 command_bar (void *data, struct t_gui_buffer *buffer,
              int argc, char **argv, char **argv_eol)
 {
-    int i, type, position, size, separator;
+    int type, position, size, separator;
     long number;
     char *error;
     struct t_gui_bar *ptr_bar;
@@ -86,7 +86,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                  ptr_bar = ptr_bar->next_bar)
             {
                 gui_chat_printf (NULL,
-                                 _("  %d. %s: %s, %s, %s: %d, items: %s%s (plugin: %s)"),
+                                 _("  %d. %s: %s, %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"),
                                  ptr_bar->number,
                                  ptr_bar->name,
                                  gui_bar_type_str[ptr_bar->type],
@@ -94,7 +94,10 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                                  ((ptr_bar->position == GUI_BAR_POSITION_BOTTOM)
                                   || (ptr_bar->position == GUI_BAR_POSITION_TOP)) ?
                                  _("height") : _("width"),
-                                 ptr_bar->size,
+                                 (ptr_bar->size == 0) ? _("auto") : "",
+                                 (ptr_bar->size == 0) ? " (" : "",
+                                 ptr_bar->current_size,
+                                 (ptr_bar->size == 0) ? ")" : "",
                                  (ptr_bar->items) ? ptr_bar->items : "-",
                                  (ptr_bar->separator) ?
                                  _(", with separator") : "",
@@ -120,99 +123,138 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         }
         else
             gui_chat_printf (NULL, _("No bar item defined"));
+        
+        return WEECHAT_RC_OK;
     }
-    else
+    
+    /* add a new bar */
+    if (string_strcasecmp (argv[1], "add") == 0)
     {
-        /* add a new bar */
-        if (string_strcasecmp (argv[1], "add") == 0)
+        if (argc < 8)
         {
-            if (argc < 8)
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "bar");
+            return WEECHAT_RC_ERROR;
+        }
+        type = gui_bar_get_type (argv[3]);
+        if (type < 0)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: wrong type \"%s\" for bar "
+                               "\"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[3], argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        position = gui_bar_get_position (argv[4]);
+        if (position < 0)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: wrong position \"%s\" for bar "
+                               "\"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[4], argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        error = NULL;
+        number = strtol (argv[5], &error, 10);
+        if (error && !error[0])
+        {
+            size = number;
+            separator = 0;
+            if (strcmp (argv[6], "0") != 0)
+                separator = 1;
+            
+            /* create bar */
+            if (gui_bar_new (NULL, argv[2], argv[3], argv[4], size,
+                             separator, argv[7]))
             {
-                gui_chat_printf (NULL,
-                                 _("%sError: missing arguments for \"%s\" "
-                                   "command"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 "bar");
-                return WEECHAT_RC_ERROR;
-            }
-            type = -1;
-            for (i = 0; i < GUI_BAR_NUM_TYPES; i++)
-            {
-                if (string_strcasecmp (argv[3], gui_bar_type_str[i]) == 0)
-                {
-                    type = i;
-                    break;
-                }
-            }
-            if (type < 0)
-            {
-                gui_chat_printf (NULL,
-                                 _("%sError: wrong type \"%s\" for bar "
-                                   "\"%s\""),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[3], argv[2]);
-                return WEECHAT_RC_ERROR;
-            }
-            position = -1;
-            for (i = 0; i < GUI_BAR_NUM_POSITIONS; i++)
-            {
-                if (string_strcasecmp (argv[4], gui_bar_position_str[i]) == 0)
-                {
-                    position = i;
-                    break;
-                }
-            }
-            if (position < 0)
-            {
-                gui_chat_printf (NULL,
-                                 _("%sError: wrong position \"%s\" for bar "
-                                   "\"%s\""),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[4], argv[2]);
-                return WEECHAT_RC_ERROR;
-            }
-            error = NULL;
-            number = strtol (argv[5], &error, 10);
-            if (error && !error[0])
-            {
-                size = number;
-                separator = 0;
-                if (strcmp (argv[6], "0") != 0)
-                    separator = 1;
-                
-                /* create bar */
-                if (gui_bar_new (NULL, argv[2], argv[3], argv[4], size,
-                                 separator, argv[7]))
-                {
-                    gui_chat_printf (NULL, _("%sBar \"%s\" created"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
-                                     argv[2]);
-                }
-                else
-                {
-                    gui_chat_printf (NULL, _("%sError: failed to create bar "
-                                             "\"%s\""),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     argv[2]);
-                }
+                gui_chat_printf (NULL, _("Bar \"%s\" created"),
+                                 argv[2]);
             }
             else
             {
-                gui_chat_printf (NULL,
-                                 _("%sError: wrong size \"%s\" for bar "
-                                   "\"%s\""),
+                gui_chat_printf (NULL, _("%sError: failed to create bar "
+                                         "\"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[5], argv[2]);
-                return WEECHAT_RC_ERROR;
+                                 argv[2]);
             }
         }
         else
         {
-            /* TODO: remove/change bars... */
+            gui_chat_printf (NULL,
+                             _("%sError: wrong size \"%s\" for bar "
+                               "\"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[5], argv[2]);
+            return WEECHAT_RC_ERROR;
         }
+
+        return WEECHAT_RC_OK;
     }
     
-    return WEECHAT_RC_OK;
+    /* delete a bar */
+    if (string_strcasecmp (argv[1], "del") == 0)
+    {
+        if (argc < 3)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "bar");
+            return WEECHAT_RC_ERROR;
+        }
+        ptr_bar = gui_bar_search (argv[2]);
+        if (!ptr_bar)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unknown bar \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        gui_bar_free (ptr_bar);
+        gui_chat_printf (NULL, _("Bar deleted"));
+
+        return WEECHAT_RC_OK;
+    }
+    
+    /* set a bar property */
+    if (string_strcasecmp (argv[1], "set") == 0)
+    {
+        if (argc < 5)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "bar");
+            return WEECHAT_RC_ERROR;
+        }
+        ptr_bar = gui_bar_search (argv[2]);
+        if (!ptr_bar)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unknown bar \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        gui_bar_set (ptr_bar, argv[3], argv_eol[4]);
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    gui_chat_printf (NULL,
+                     _("%sError: unknown option for \"%s\" "
+                       "command"),
+                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                     "bar");
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -253,250 +295,265 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                              ptr_buffer->category,
                              ptr_buffer->name);
         }
+        
+        return WEECHAT_RC_OK;
     }
-    else
+    
+    /* clear content of buffer */
+    if (string_strcasecmp (argv[1], "clear") == 0)
     {
-        if (string_strcasecmp (argv[1], "clear") == 0)
+        if (argc > 2)
         {
-            /* clear content of buffer */
-            if (argc > 2)
+            if (string_strcasecmp (argv[2], "-all") == 0)
+                gui_buffer_clear_all ();
+            else
             {
-                if (string_strcasecmp (argv[2], "-all") == 0)
-                    gui_buffer_clear_all ();
-                else
+                for (i = 2; i < argc; i++)
                 {
-                    for (i = 2; i < argc; i++)
+                    error = NULL;
+                    number = strtol (argv[i], &error, 10);
+                    if (error && !error[0])
                     {
-                        error = NULL;
-                        number = strtol (argv[i], &error, 10);
-                        if (error && !error[0])
-                        {
-                            ptr_buffer = gui_buffer_search_by_number (number);
-                            if (ptr_buffer)
-                                gui_buffer_clear (ptr_buffer);
-                        }
+                        ptr_buffer = gui_buffer_search_by_number (number);
+                        if (ptr_buffer)
+                            gui_buffer_clear (ptr_buffer);
                     }
                 }
             }
-            else
-                gui_buffer_clear (buffer);
         }
-        else if (string_strcasecmp (argv[1], "move") == 0)
+        else
+            gui_buffer_clear (buffer);
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* move buffer to another number in the list */
+    if (string_strcasecmp (argv[1], "move") == 0)
+    {
+        if (argc < 3)
         {
-            /* move buffer to another number in the list */
-            if (argc < 3)
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "buffer");
+            return WEECHAT_RC_ERROR;
+        }
+        
+        error = NULL;
+        number = strtol (((argv[2][0] == '+') || (argv[2][0] == '-')) ?
+                         argv[2] + 1 : argv[2],
+                         &error, 10);
+        if (error && !error[0])
+        {
+            if (argv[2][0] == '+')
+                gui_buffer_move_to_number (buffer,
+                                           buffer->number + ((int) number));
+            else if (argv[2][0] == '-')
+                gui_buffer_move_to_number (buffer,
+                                           buffer->number - ((int) number));
+            else
+                gui_buffer_move_to_number (buffer, (int) number);
+        }
+        else
+        {
+            /* invalid number */
+            gui_chat_printf (NULL,
+                             _("%sError: incorrect buffer number"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_ERROR;
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* close buffer */
+    if (string_strcasecmp (argv[1], "close") == 0)
+    {
+        if (!buffer->plugin)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: WeeChat main buffer can't be "
+                               "closed"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_ERROR;
+        }
+        gui_buffer_close (buffer, 1);
+        gui_status_refresh_needed = 1;
+        gui_current_window->buffer->input_refresh_needed = 1;
+        
+        return WEECHAT_RC_OK;
+    }
+
+    /* display/change buffer notify */
+    if (string_strcasecmp (argv[1], "notify") == 0)
+    {
+        if (argc < 3)
+        {
+            /* display notify level for all buffers */
+            gui_chat_printf (NULL, "");
+            gui_chat_printf (NULL, _("Notify levels:"));
+            for (ptr_buffer = gui_buffers; ptr_buffer;
+                 ptr_buffer = ptr_buffer->next_buffer)
             {
                 gui_chat_printf (NULL,
-                                 _("%sError: missing arguments for \"%s\" "
-                                   "command"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 "buffer");
-                return WEECHAT_RC_ERROR;
+                                 "  %d.%s: %d",
+                                 ptr_buffer->number,
+                                 ptr_buffer->name,
+                                 ptr_buffer->notify_level); 
             }
-            
+            gui_chat_printf (NULL, "");
+        }
+        else
+        {
+            /* set notify level for buffer */
             error = NULL;
-            number = strtol (((argv[2][0] == '+') || (argv[2][0] == '-')) ?
-                             argv[2] + 1 : argv[2],
-                             &error, 10);
+            number = strtol (argv[2], &error, 10);
             if (error && !error[0])
             {
-                if (argv[2][0] == '+')
-                    gui_buffer_move_to_number (buffer,
-                                               buffer->number + ((int) number));
-                else if (argv[2][0] == '-')
-                    gui_buffer_move_to_number (buffer,
-                                               buffer->number - ((int) number));
-                else
-                    gui_buffer_move_to_number (buffer, (int) number);
-            }
-            else
-            {
-                /* invalid number */
-                gui_chat_printf (NULL,
-                                 _("%sError: incorrect buffer number"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                return WEECHAT_RC_ERROR;
-            }
-        }
-        else if (string_strcasecmp (argv[1], "close") == 0)
-        {
-            if (!buffer->plugin)
-            {
-                gui_chat_printf (NULL,
-                                 _("%sError: WeeChat main buffer can't be "
-                                   "closed"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                return WEECHAT_RC_ERROR;
-            }
-            gui_buffer_close (buffer, 1);
-            gui_status_refresh_needed = 1;
-            gui_current_window->buffer->input_refresh_needed = 1;
-        }
-        else if (string_strcasecmp (argv[1], "notify") == 0)
-        {
-            if (argc < 3)
-            {
-                /* display notify level for all buffers */
-                gui_chat_printf (NULL, "");
-                gui_chat_printf (NULL, _("Notify levels:"));
-                for (ptr_buffer = gui_buffers; ptr_buffer;
-                     ptr_buffer = ptr_buffer->next_buffer)
+                if ((number < GUI_BUFFER_NOTIFY_LEVEL_MIN)
+                    || (number > GUI_BUFFER_NOTIFY_LEVEL_MAX))
                 {
+                    /* invalid highlight level */
                     gui_chat_printf (NULL,
-                                     "  %d.%s: %d",
-                                     ptr_buffer->number,
-                                     ptr_buffer->name,
-                                     ptr_buffer->notify_level); 
-                }
-                gui_chat_printf (NULL, "");
-            }
-            else
-            {
-                /* set notify level for buffer */
-                error = NULL;
-                number = strtol (argv[2], &error, 10);
-                if (error && !error[0])
-                {
-                    if ((number < GUI_BUFFER_NOTIFY_LEVEL_MIN)
-                        || (number > GUI_BUFFER_NOTIFY_LEVEL_MAX))
-                    {
-                        /* invalid highlight level */
-                        gui_chat_printf (NULL,
-                                         _("%sError: incorrect notify level "
-                                           "(must be between %d and %d)"),
-                                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                         GUI_BUFFER_NOTIFY_LEVEL_MIN,
-                                         GUI_BUFFER_NOTIFY_LEVEL_MAX);
-                        return WEECHAT_RC_ERROR;
-                    }
-                    gui_chat_printf (NULL,
-                                     _("%sNew notify level for %s%s%s: "
-                                       "%d %s"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
-                                     GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                     buffer->name,
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     number,
-                                     GUI_COLOR(GUI_COLOR_CHAT));
-                    switch (number)
-                    {
-                        case 0:
-                            gui_chat_printf (NULL,
-                                             _("(hotlist: never)"));
-                            break;
-                        case 1:
-                            gui_chat_printf (NULL,
-                                             _("(hotlist: highlights)"));
-                            break;
-                        case 2:
-                            gui_chat_printf (NULL,
-                                             _("(hotlist: highlights + "
-                                               "messages)"));
-                            break;
-                        case 3:
-                            gui_chat_printf (NULL,
-                                             _("(hotlist: highlights + "
-                                               "messages + join/part "
-                                               "(all))"));
-                            break;
-                        default:
-                            gui_chat_printf (NULL, "");
-                            break;
-                    }
-                }
-                else
-                {
-                    /* invalid number */
-                    gui_chat_printf (NULL,
-                                     _("%sError: incorrect notify level (must "
-                                       "be between %d and %d)"),
+                                     _("%sError: incorrect notify level "
+                                       "(must be between %d and %d)"),
                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                      GUI_BUFFER_NOTIFY_LEVEL_MIN,
                                      GUI_BUFFER_NOTIFY_LEVEL_MAX);
                     return WEECHAT_RC_ERROR;
                 }
-            }
-        }
-        else if (string_strcasecmp (argv[1], "set") == 0)
-        {
-            /* set a property on buffer */
-            if (argc < 4)
-            {
                 gui_chat_printf (NULL,
-                                 _("%sError: missing arguments for \"%s\" "
-                                   "command"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 "buffer");
-                return WEECHAT_RC_ERROR;
-            }
-            value = string_remove_quotes (argv_eol[3], "'\"");
-            gui_buffer_set (buffer, argv[2], (value) ? value : argv_eol[3]);
-            if (value)
-                free (value);
-        }
-        else
-        {
-            /* jump to buffer by number or server/channel name */
-            if (argv[1][0] == '-')
-            {
-                /* relative jump '-' */
-                error = NULL;
-                number = strtol (argv[1] + 1, &error, 10);
-                if (error && !error[0])
+                                 _("%sNew notify level for %s%s%s: "
+                                   "%d %s"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                 buffer->name,
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 number,
+                                 GUI_COLOR(GUI_COLOR_CHAT));
+                switch (number)
                 {
-                    target_buffer = buffer->number - (int) number;
-                    if (target_buffer < 1)
-                        target_buffer = (last_gui_buffer) ?
-                            last_gui_buffer->number + target_buffer : 1;
-                    gui_buffer_switch_by_number (gui_current_window,
-                                                 target_buffer);
-                }
-            }
-            else if (argv[1][0] == '+')
-            {
-                /* relative jump '+' */
-                error = NULL;
-                number = strtol (argv[1] + 1, &error, 10);
-                if (error && !error[0])
-                {
-                    target_buffer = buffer->number + (int) number;
-                    if (last_gui_buffer && target_buffer > last_gui_buffer->number)
-                        target_buffer -= last_gui_buffer->number;
-                    gui_buffer_switch_by_number (gui_current_window,
-                                                 target_buffer);
+                    case 0:
+                        gui_chat_printf (NULL,
+                                         _("(hotlist: never)"));
+                        break;
+                    case 1:
+                        gui_chat_printf (NULL,
+                                         _("(hotlist: highlights)"));
+                        break;
+                    case 2:
+                        gui_chat_printf (NULL,
+                                         _("(hotlist: highlights + "
+                                           "messages)"));
+                        break;
+                    case 3:
+                        gui_chat_printf (NULL,
+                                         _("(hotlist: highlights + "
+                                           "messages + join/part "
+                                           "(all))"));
+                        break;
+                    default:
+                        gui_chat_printf (NULL, "");
+                        break;
                 }
             }
             else
             {
-                /* absolute jump by number, or by category/name */
-                error = NULL;
-                number = strtol (argv[1], &error, 10);
-                if (error && !error[0])
-                    gui_buffer_switch_by_number (gui_current_window,
-                                                 (int) number);
-                else
-                {
-                    ptr_buffer = NULL;
-                    if (argc > 2)
-                        ptr_buffer = gui_buffer_search_by_category_name (argv[1],
-                                                                         argv[2]);
-                    else
-                    {
-                        ptr_buffer = gui_buffer_search_by_category_name (argv[1],
-                                                                         NULL);
-                        if (!ptr_buffer)
-                            ptr_buffer = gui_buffer_search_by_category_name (NULL,
-                                                                             argv[1]);
-                    }
-                    if (ptr_buffer)
-                    {
-                        gui_window_switch_to_buffer (gui_current_window,
-                                                     ptr_buffer);
-                        gui_window_redraw_buffer (ptr_buffer);
-                    }
-                }
+                /* invalid number */
+                gui_chat_printf (NULL,
+                                 _("%sError: incorrect notify level (must "
+                                   "be between %d and %d)"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 GUI_BUFFER_NOTIFY_LEVEL_MIN,
+                                 GUI_BUFFER_NOTIFY_LEVEL_MAX);
+                return WEECHAT_RC_ERROR;
             }
-            
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* set a property on buffer */
+    if (string_strcasecmp (argv[1], "set") == 0)
+    {
+        if (argc < 4)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "buffer");
+            return WEECHAT_RC_ERROR;
+        }
+        value = string_remove_quotes (argv_eol[3], "'\"");
+        gui_buffer_set (buffer, argv[2], (value) ? value : argv_eol[3]);
+        if (value)
+            free (value);
+        
+        return WEECHAT_RC_OK;
+    }
+
+    /* relative jump '-' */
+    if (argv[1][0] == '-')
+    {
+        error = NULL;
+        number = strtol (argv[1] + 1, &error, 10);
+        if (error && !error[0])
+        {
+            target_buffer = buffer->number - (int) number;
+            if (target_buffer < 1)
+                target_buffer = (last_gui_buffer) ?
+                    last_gui_buffer->number + target_buffer : 1;
+            gui_buffer_switch_by_number (gui_current_window,
+                                         target_buffer);
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* relative jump '+' */
+    if (argv[1][0] == '+')
+    {
+        error = NULL;
+        number = strtol (argv[1] + 1, &error, 10);
+        if (error && !error[0])
+        {
+            target_buffer = buffer->number + (int) number;
+            if (last_gui_buffer && target_buffer > last_gui_buffer->number)
+                target_buffer -= last_gui_buffer->number;
+            gui_buffer_switch_by_number (gui_current_window,
+                                         target_buffer);
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+
+    /* jump to buffer by number or server/channel name */
+    error = NULL;
+    number = strtol (argv[1], &error, 10);
+    if (error && !error[0])
+        gui_buffer_switch_by_number (gui_current_window,
+                                     (int) number);
+    else
+    {
+        ptr_buffer = NULL;
+        if (argc > 2)
+            ptr_buffer = gui_buffer_search_by_category_name (argv[1],
+                                                             argv[2]);
+        else
+        {
+            ptr_buffer = gui_buffer_search_by_category_name (argv[1],
+                                                             NULL);
+            if (!ptr_buffer)
+                ptr_buffer = gui_buffer_search_by_category_name (NULL,
+                                                                 argv[1]);
+        }
+        if (ptr_buffer)
+        {
+            gui_window_switch_to_buffer (gui_current_window,
+                                         ptr_buffer);
+            gui_window_redraw_buffer (ptr_buffer);
         }
     }
     
@@ -697,9 +754,17 @@ command_filter (void *data, struct t_gui_buffer *buffer,
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_ERROR;
         }
+        
+        return WEECHAT_RC_OK;
     }
     
-    return WEECHAT_RC_OK;
+    gui_chat_printf (NULL,
+                     _("%sError: unknown option for \"%s\" "
+                       "command"),
+                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                     "filter");
+    return WEECHAT_RC_ERROR;
+
 }
 
 /*
@@ -717,119 +782,119 @@ command_help (void *data, struct t_gui_buffer *buffer,
     (void) buffer;
     (void) argv_eol;
     
-    switch (argc)
+    /* display help for all commands */
+    if (argc == 1)
     {
-        case 1:
-            /* display help for all commands */
-            gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL,
-                             /* TRANSLATORS: %s is "WeeChat" */
-                             _("%s internal commands:"),
-                             PACKAGE_NAME);
-            for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
-                 ptr_hook = ptr_hook->next_hook)
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL,
+                         /* TRANSLATORS: %s is "WeeChat" */
+                         _("%s internal commands:"),
+                         PACKAGE_NAME);
+        for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if (!ptr_hook->deleted
+                && !ptr_hook->plugin
+                && HOOK_COMMAND(ptr_hook, command)
+                && HOOK_COMMAND(ptr_hook, command)[0])
             {
-                if (!ptr_hook->deleted
-                    && !ptr_hook->plugin
-                    && HOOK_COMMAND(ptr_hook, command)
-                    && HOOK_COMMAND(ptr_hook, command)[0])
-                {
-                    gui_chat_printf (NULL, "   %s%s%s%s%s%s%s%s",
-                                     GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                     (HOOK_COMMAND(ptr_hook, level) > 0) ?
-                                     "(" : "",
-                                     HOOK_COMMAND(ptr_hook, command),
-                                     (HOOK_COMMAND(ptr_hook, level) > 0) ?
-                                     ")" : "",
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     (HOOK_COMMAND(ptr_hook, description)
-                                      && HOOK_COMMAND(ptr_hook, description)[0]) ?
-                                     " - " : "",
-                                     (HOOK_COMMAND(ptr_hook, description)
-                                      && HOOK_COMMAND(ptr_hook, description)[0]) ?
-                                     _(HOOK_COMMAND(ptr_hook, description)) : "",
-                                     (HOOK_COMMAND(ptr_hook, level) > 0) ?
-                                     _("  (used by a plugin)") : "");
-                }
+                gui_chat_printf (NULL, "   %s%s%s%s%s%s%s%s",
+                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                 (HOOK_COMMAND(ptr_hook, level) > 0) ?
+                                 "(" : "",
+                                 HOOK_COMMAND(ptr_hook, command),
+                                 (HOOK_COMMAND(ptr_hook, level) > 0) ?
+                                 ")" : "",
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 (HOOK_COMMAND(ptr_hook, description)
+                                  && HOOK_COMMAND(ptr_hook, description)[0]) ?
+                                 " - " : "",
+                                 (HOOK_COMMAND(ptr_hook, description)
+                                  && HOOK_COMMAND(ptr_hook, description)[0]) ?
+                                 _(HOOK_COMMAND(ptr_hook, description)) : "",
+                                 (HOOK_COMMAND(ptr_hook, level) > 0) ?
+                                 _("  (used by a plugin)") : "");
             }
-            gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL, _("Other commands:"));
-            for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
-                 ptr_hook = ptr_hook->next_hook)
+        }
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL, _("Other commands:"));
+        for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if (!ptr_hook->deleted
+                && ptr_hook->plugin
+                && HOOK_COMMAND(ptr_hook, command)
+                && HOOK_COMMAND(ptr_hook, command)[0])
             {
-                if (!ptr_hook->deleted
-                    && ptr_hook->plugin
-                    && HOOK_COMMAND(ptr_hook, command)
-                    && HOOK_COMMAND(ptr_hook, command)[0])
-                {
-                    gui_chat_printf (NULL, "   %s%s%s%s%s%s%s%s",
-                                     GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                     (HOOK_COMMAND(ptr_hook, level) > 0) ?
-                                     "(" : "",
-                                     HOOK_COMMAND(ptr_hook, command),
-                                     (HOOK_COMMAND(ptr_hook, level) > 0) ?
-                                     ")" : "",
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     (HOOK_COMMAND(ptr_hook, description)
-                                      && HOOK_COMMAND(ptr_hook, description)[0]) ?
-                                     " - " : "",
-                                     (HOOK_COMMAND(ptr_hook, description)
-                                      && HOOK_COMMAND(ptr_hook, description)[0]) ?
-                                     _(HOOK_COMMAND(ptr_hook, description)) : "",
-                                     (HOOK_COMMAND(ptr_hook, level) > 0) ?
-                                     _("  (masked by a plugin)") : "");
-                }
+                gui_chat_printf (NULL, "   %s%s%s%s%s%s%s%s",
+                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                 (HOOK_COMMAND(ptr_hook, level) > 0) ?
+                                 "(" : "",
+                                 HOOK_COMMAND(ptr_hook, command),
+                                 (HOOK_COMMAND(ptr_hook, level) > 0) ?
+                                 ")" : "",
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 (HOOK_COMMAND(ptr_hook, description)
+                                  && HOOK_COMMAND(ptr_hook, description)[0]) ?
+                                 " - " : "",
+                                 (HOOK_COMMAND(ptr_hook, description)
+                                  && HOOK_COMMAND(ptr_hook, description)[0]) ?
+                                 _(HOOK_COMMAND(ptr_hook, description)) : "",
+                                 (HOOK_COMMAND(ptr_hook, level) > 0) ?
+                                 _("  (masked by a plugin)") : "");
             }
-            break;
-        case 2:
-            /* display help about a command */
-            for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
-                 ptr_hook = ptr_hook->next_hook)
-            {
-                if (!ptr_hook->deleted
-                    && HOOK_COMMAND(ptr_hook, command)
-                    && HOOK_COMMAND(ptr_hook, command)[0]
-                    && (HOOK_COMMAND(ptr_hook, level) == 0)
-                    && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
-                                           argv[1]) == 0))
-                {
-                    gui_chat_printf (NULL, "");
-                    gui_chat_printf (NULL,
-                                     "[%s%s]  %s/%s  %s%s",
-                                     (ptr_hook->plugin) ?
-                                     _("plugin:") : "weechat",
-                                     (ptr_hook->plugin) ?
-                                     ptr_hook->plugin->name : "",
-                                     GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                     HOOK_COMMAND(ptr_hook, command),
-                                     GUI_COLOR(GUI_COLOR_CHAT),
-                                     (HOOK_COMMAND(ptr_hook, args)
-                                      && HOOK_COMMAND(ptr_hook, args)[0]) ?
-                                     _(HOOK_COMMAND(ptr_hook, args)) : "");
-                    if (HOOK_COMMAND(ptr_hook, description)
-                        && HOOK_COMMAND(ptr_hook, description)[0])
-                    {
-                        gui_chat_printf (NULL, "");
-                        gui_chat_printf (NULL, "%s",
-                                         _(HOOK_COMMAND(ptr_hook, description)));
-                    }
-                    if (HOOK_COMMAND(ptr_hook, args_description)
-                        && HOOK_COMMAND(ptr_hook, args_description)[0])
-                    {
-                        gui_chat_printf (NULL, "");
-                        gui_chat_printf (NULL, "%s",
-                                         _(HOOK_COMMAND(ptr_hook, args_description)));
-                    }
-                    return WEECHAT_RC_OK;
-                }
-            }
-            gui_chat_printf (NULL,
-                             _("%sNo help available, \"%s\" is an "
-                               "unknown command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[1]);
-            break;
+        }
+        
+        return WEECHAT_RC_OK;
     }
+    
+    /* display help about a command */
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
+    {
+        if (!ptr_hook->deleted
+            && HOOK_COMMAND(ptr_hook, command)
+            && HOOK_COMMAND(ptr_hook, command)[0]
+            && (HOOK_COMMAND(ptr_hook, level) == 0)
+            && (string_strcasecmp (HOOK_COMMAND(ptr_hook, command),
+                                   argv[1]) == 0))
+        {
+            gui_chat_printf (NULL, "");
+            gui_chat_printf (NULL,
+                             "[%s%s]  %s/%s  %s%s",
+                             (ptr_hook->plugin) ?
+                             _("plugin:") : "weechat",
+                             (ptr_hook->plugin) ?
+                             ptr_hook->plugin->name : "",
+                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                             HOOK_COMMAND(ptr_hook, command),
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             (HOOK_COMMAND(ptr_hook, args)
+                              && HOOK_COMMAND(ptr_hook, args)[0]) ?
+                             _(HOOK_COMMAND(ptr_hook, args)) : "");
+            if (HOOK_COMMAND(ptr_hook, description)
+                && HOOK_COMMAND(ptr_hook, description)[0])
+            {
+                gui_chat_printf (NULL, "");
+                gui_chat_printf (NULL, "%s",
+                                 _(HOOK_COMMAND(ptr_hook, description)));
+            }
+            if (HOOK_COMMAND(ptr_hook, args_description)
+                && HOOK_COMMAND(ptr_hook, args_description)[0])
+            {
+                gui_chat_printf (NULL, "");
+                gui_chat_printf (NULL, "%s",
+                                 _(HOOK_COMMAND(ptr_hook, args_description)));
+            }
+            return WEECHAT_RC_OK;
+        }
+    }
+    
+    gui_chat_printf (NULL,
+                     _("%sNo help available, \"%s\" is an "
+                       "unknown command"),
+                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                     argv[1]);
     
     return WEECHAT_RC_OK;
 }
@@ -946,9 +1011,9 @@ command_key (void *data, struct t_gui_buffer *buffer,
     (void) data;
     (void) buffer;
     
+    /* display all key bindings */
     if (argc == 1)
     {
-        /* display all key bindings */
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, _("Key bindings:"));
         for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
@@ -958,9 +1023,9 @@ command_key (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
+    /* display key functions */
     if (string_strcasecmp (argv[1], "functions") == 0)
     {
-        /* display key functions */
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL, _("Internal key functions:"));
         i = 0;
@@ -974,10 +1039,10 @@ command_key (void *data, struct t_gui_buffer *buffer,
         }
         return WEECHAT_RC_OK;
     }
-
+    
+    /* reset keys (only with "-yes", for security reason) */
     if (string_strcasecmp (argv[1], "reset") == 0)
     {
-        /* reset keys (only with "-yes", for security reason) */
         if ((argc >= 3) && (string_strcasecmp (argv[2], "-yes") == 0))
         {
             gui_keyboard_free_all ();
@@ -996,10 +1061,10 @@ command_key (void *data, struct t_gui_buffer *buffer,
         }
         return WEECHAT_RC_OK;
     }
-
+    
+    /* unbind a key */
     if (string_strcasecmp (argv[1], "unbind") == 0)
     {
-        /* unbind a key */
         if (argc >= 3)
         {
             if (gui_keyboard_unbind (argv[2]))
@@ -1021,9 +1086,9 @@ command_key (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
+    /* call a key function */
     if (string_strcasecmp (argv[1], "call") == 0)
     {
-        /* call a key function */
         if (argc >= 3)
         {
             ptr_function = gui_keyboard_function_search_by_name (argv[2]);
@@ -1051,9 +1116,9 @@ command_key (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
+    /* display a key */
     if (argc == 2)
     {
-        /* display a key */
         ptr_key = NULL;
         internal_code = gui_keyboard_get_internal_code (argv[1]);
         if (internal_code)
@@ -2102,112 +2167,122 @@ command_window (void *data, struct t_gui_buffer *buffer,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
             i++;
         }
+
+        return WEECHAT_RC_OK;
     }
-    else
+    
+    /* split window horizontally */
+    if (string_strcasecmp (argv[1], "splith") == 0)
     {
-        if (string_strcasecmp (argv[1], "splith") == 0)
+        if (argc > 2)
         {
-            /* split window horizontally */
-            if (argc > 2)
-            {
-                error = NULL;
-                number = strtol (argv[2], &error, 10);
-                if (error && !error[0]
-                    && (number > 0) && (number < 100))
-                    gui_window_split_horiz (gui_current_window, number);
-            }
-            else
-                gui_window_split_horiz (gui_current_window, 50);
-        }
-        else if (string_strcasecmp (argv[1], "splitv") == 0)
-        {
-            /* split window vertically */
-            if (argc > 2)
-            {
-                error = NULL;
-                number = strtol (argv[2], &error, 10);
-                if (error && !error[0]
-                    && (number > 0) && (number < 100))
-                    gui_window_split_vertic (gui_current_window, number);
-            }
-            else
-                gui_window_split_vertic (gui_current_window, 50);
-        }
-        else if (string_strcasecmp (argv[1], "resize") == 0)
-        {
-            /* resize window */
-            if (argc > 2)
-            {
-                error = NULL;
-                number = strtol (argv[2], &error, 10);
-                if (error && !error[0]
-                    && (number > 0) && (number < 100))
-                    gui_window_resize (gui_current_window, number);
-            }
-        }
-        else if (string_strcasecmp (argv[1], "merge") == 0)
-        {
-            /* merge windows */
-            if (argc > 2)
-            {
-                if (string_strcasecmp (argv[2], "all") == 0)
-                    gui_window_merge_all (gui_current_window);
-                else
-                {
-                    gui_chat_printf (NULL,
-                                     _("%sError: unknown option for \"%s\" "
-                                       "command"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     "window merge");
-                    return WEECHAT_RC_ERROR;
-                }
-            }
-            else
-            {
-                if (!gui_window_merge (gui_current_window))
-                {
-                    gui_chat_printf (NULL,
-                                     _("%sError: can not merge windows, "
-                                       "there's no other window with same "
-                                       "size near current one"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                    return WEECHAT_RC_ERROR;
-                }
-            }
-        }
-        else if (string_strncasecmp (argv[1], "b", 1) == 0)
-        {
-            /* jump to window by buffer number */
             error = NULL;
-            number = strtol (argv[1] + 1, &error, 10);
-            if (error && !error[0])
-                gui_window_switch_by_buffer (gui_current_window, number);
+            number = strtol (argv[2], &error, 10);
+            if (error && !error[0]
+                && (number > 0) && (number < 100))
+                gui_window_split_horiz (gui_current_window, number);
         }
-        else if (string_strcasecmp (argv[1], "-1") == 0)
-            gui_window_switch_previous (gui_current_window);
-        else if (string_strcasecmp (argv[1], "+1") == 0)
-            gui_window_switch_next (gui_current_window);
-        else if (string_strcasecmp (argv[1], "up") == 0)
-            gui_window_switch_up (gui_current_window);
-        else if (string_strcasecmp (argv[1], "down") == 0)
-            gui_window_switch_down (gui_current_window);
-        else if (string_strcasecmp (argv[1], "left") == 0)
-            gui_window_switch_left (gui_current_window);
-        else if (string_strcasecmp (argv[1], "right") == 0)
-            gui_window_switch_right (gui_current_window);
-        else if (string_strcasecmp (argv[1], "scroll") == 0)
+        else
+            gui_window_split_horiz (gui_current_window, 50);
+
+        return WEECHAT_RC_OK;
+    }
+    
+    /* split window vertically */
+    if (string_strcasecmp (argv[1], "splitv") == 0)
+    {
+        if (argc > 2)
         {
-            if (argc > 2)
-                gui_window_scroll (gui_current_window, argv[2]);
+            error = NULL;
+            number = strtol (argv[2], &error, 10);
+            if (error && !error[0]
+                && (number > 0) && (number < 100))
+                gui_window_split_vertic (gui_current_window, number);
+        }
+        else
+            gui_window_split_vertic (gui_current_window, 50);
+
+        return WEECHAT_RC_OK;
+    }
+    
+    /* resize window */
+    if (string_strcasecmp (argv[1], "resize") == 0)
+    {
+        if (argc > 2)
+        {
+            error = NULL;
+            number = strtol (argv[2], &error, 10);
+            if (error && !error[0]
+                && (number > 0) && (number < 100))
+                gui_window_resize (gui_current_window, number);
+        }
+        return WEECHAT_RC_OK;
+    }
+    
+    /* merge windows */
+    if (string_strcasecmp (argv[1], "merge") == 0)
+    {
+        if (argc > 2)
+        {
+            if (string_strcasecmp (argv[2], "all") == 0)
+                gui_window_merge_all (gui_current_window);
+            else
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: unknown option for \"%s\" "
+                                   "command"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 "window merge");
+                return WEECHAT_RC_ERROR;
+            }
         }
         else
         {
-            gui_chat_printf (NULL,
-                             _("%sError: unknown option for \"%s\" command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "window");
-            return WEECHAT_RC_ERROR;
+            if (!gui_window_merge (gui_current_window))
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: can not merge windows, "
+                                   "there's no other window with same "
+                                   "size near current one"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                return WEECHAT_RC_ERROR;
+            }
         }
+        return WEECHAT_RC_OK;
+    }
+    
+    /* jump to window by buffer number */
+    if (string_strncasecmp (argv[1], "b", 1) == 0)
+    {
+        error = NULL;
+        number = strtol (argv[1] + 1, &error, 10);
+        if (error && !error[0])
+            gui_window_switch_by_buffer (gui_current_window, number);
+    }
+    else if (string_strcasecmp (argv[1], "-1") == 0)
+        gui_window_switch_previous (gui_current_window);
+    else if (string_strcasecmp (argv[1], "+1") == 0)
+        gui_window_switch_next (gui_current_window);
+    else if (string_strcasecmp (argv[1], "up") == 0)
+        gui_window_switch_up (gui_current_window);
+    else if (string_strcasecmp (argv[1], "down") == 0)
+        gui_window_switch_down (gui_current_window);
+    else if (string_strcasecmp (argv[1], "left") == 0)
+        gui_window_switch_left (gui_current_window);
+    else if (string_strcasecmp (argv[1], "right") == 0)
+        gui_window_switch_right (gui_current_window);
+    else if (string_strcasecmp (argv[1], "scroll") == 0)
+    {
+        if (argc > 2)
+            gui_window_scroll (gui_current_window, argv[2]);
+    }
+    else
+    {
+        gui_chat_printf (NULL,
+                         _("%sError: unknown option for \"%s\" command"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                         "window");
+        return WEECHAT_RC_ERROR;
     }
     
     return WEECHAT_RC_OK;
@@ -2222,10 +2297,11 @@ command_init ()
 {
     hook_command (NULL, "bar",
                   N_("manage bars"),
-                  N_("[add name type position size separator item1,item2,...] "
-                     "| [list]"),
+                  N_("[add barname type position size separator item1,item2,...] "
+                     "| [del barname] | [set barname name|type|position|size|"
+                     "separator|items value] | [list]"),
                   N_("      add: add a new bar\n"
-                     "     name: name of bar (must be unique)\n"
+                     "  barname: name of bar (must be unique)\n"
                      "     type: \"root\" (outside windows), \"window_active\" "
                      "(inside active window), or \"window_inactive\" (inside "
                      "each inactive window)\n"
@@ -2234,8 +2310,11 @@ command_init ()
                      "separator: 1 for using separator (line), 0 or nothing "
                      "means no separator\n"
                      "item1,...: items for this bar\n"
+                     "      del: delete a bar\n"
+                     "      set: set a value for a bar property\n"
                      "     list: list all bars"),
-                  "list",
+                  "add|del|set|list %r name|type|position|size|separator|"
+                  "items",
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
@@ -2301,7 +2380,7 @@ command_init ()
                      "   tags: comma separated list of tags, for "
                      "example: \"irc_join,irc_part,irc_quit\"\n"
                      "  regex: regular expression to search in "
-                     "line (use \t to separate prefix from message)"),
+                     "line (use \\t to separate prefix from message)"),
                   "list|enable|disable|toggle|add|del",
                   &command_filter, NULL);
     hook_command (NULL, "help",

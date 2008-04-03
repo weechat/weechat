@@ -391,7 +391,6 @@ plugin_config_read ()
 int
 plugin_config_write ()
 {
-    log_printf (_("Saving plugins configuration to disk"));
     return config_file_write (plugin_config);
 }
 

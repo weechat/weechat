@@ -382,6 +382,7 @@ plugin_load (char *filename)
         new_plugin->bar_item_remove = &gui_bar_item_free;
         new_plugin->bar_search = &gui_bar_search;
         new_plugin->bar_new = &gui_bar_new;
+        new_plugin->bar_set = &gui_bar_set;
         new_plugin->bar_update = &gui_bar_update;
         new_plugin->bar_remove = &gui_bar_free;
         

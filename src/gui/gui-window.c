@@ -37,6 +37,7 @@
 #include "../core/wee-log.h"
 #include "../core/wee-utf8.h"
 #include "gui-window.h"
+#include "gui-bar.h"
 #include "gui-buffer.h"
 #include "gui-chat.h"
 #include "gui-filter.h"
@@ -129,6 +130,7 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
 {
     struct t_gui_window *new_window;
     struct t_gui_window_tree *ptr_tree, *child1, *child2, *ptr_leaf;
+    struct t_gui_bar *ptr_bar;
     
 #ifdef DEBUG
     log_printf ("Creating new window (x:%d, y:%d, width:%d, height:%d)",
@@ -188,11 +190,13 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
     
     if ((new_window = (malloc (sizeof (*new_window)))))
     {
+        /* create window objects */
         if (!gui_window_objects_init (new_window))
         {
             free (new_window);
             return NULL;
         }
+        
         new_window->win_x = x;
         new_window->win_y = y;
         new_window->win_width = width;
@@ -241,6 +245,8 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         new_window->win_input_height = 0;
         new_window->win_input_cursor_x = 0;
         
+        new_window->refresh_needed = 0;
+        
         new_window->dcc_first = NULL;
         new_window->dcc_selected = NULL;
         new_window->dcc_last_displayed = NULL;
@@ -263,6 +269,13 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
             gui_windows = new_window;
         last_gui_window = new_window;
         new_window->next_window = NULL;
+        
+        /* create bar windows */
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+        {
+            if (ptr_bar->type != GUI_BAR_TYPE_ROOT)
+                gui_bar_window_new (ptr_bar, new_window);
+        }
     }
     else
         return NULL;
@@ -283,7 +296,7 @@ gui_window_free (struct t_gui_window *window)
     /* free data */
     if (window->gui_objects)
     {
-        gui_window_objects_free (window, 1);
+        gui_window_objects_free (window, 1, 1);
         free (window->gui_objects);
     }
     
@@ -381,12 +394,8 @@ gui_window_switch_previous (struct t_gui_window *window)
     if (!gui_ok)
         return;
     
-    /* if only one window then return */
-    if (gui_windows == last_gui_window)
-        return;
-    
-    gui_current_window = (window->prev_window) ? window->prev_window : last_gui_window;
-    gui_window_redraw_buffer (gui_current_window->buffer);
+    gui_window_switch ((window->prev_window) ?
+                       window->prev_window : last_gui_window);
 }
 
 /*
@@ -399,12 +408,8 @@ gui_window_switch_next (struct t_gui_window *window)
     if (!gui_ok)
         return;
     
-    /* if only one window then return */
-    if (gui_windows == last_gui_window)
-        return;
-    
-    gui_current_window = (window->next_window) ? window->next_window : gui_windows;
-    gui_window_redraw_buffer (gui_current_window->buffer);
+    gui_window_switch ((window->next_window) ?
+                       window->next_window : gui_windows);
 }
 
 /*
@@ -424,8 +429,7 @@ gui_window_switch_by_buffer (struct t_gui_window *window, int buffer_number)
     {
         if (ptr_win->buffer->number == buffer_number)
         {
-            gui_current_window = ptr_win;
-            gui_window_redraw_buffer (gui_current_window->buffer);
+            gui_window_switch (ptr_win);
             return;
         }
         ptr_win = (ptr_win->next_window) ? ptr_win->next_window : gui_windows;
@@ -836,7 +840,6 @@ gui_window_print_log ()
         log_printf ("  win_input_width . . : %d",   ptr_window->win_input_width);
         log_printf ("  win_input_height. . : %d",   ptr_window->win_input_height);
         log_printf ("  win_input_cursor_x. : %d",   ptr_window->win_input_cursor_x);
-        gui_window_objects_print_log (ptr_window);
         log_printf ("  dcc_first . . . . . : 0x%x", ptr_window->dcc_first);
         log_printf ("  dcc_selected. . . . : 0x%x", ptr_window->dcc_selected);
         log_printf ("  dcc_last_displayed. : 0x%x", ptr_window->dcc_last_displayed);
@@ -846,5 +849,6 @@ gui_window_print_log ()
         log_printf ("  start_line_pos. . . : %d",   ptr_window->start_line_pos);
         log_printf ("  prev_window . . . . : 0x%x", ptr_window->prev_window);
         log_printf ("  next_window . . . . : 0x%x", ptr_window->next_window);
+        gui_window_objects_print_log (ptr_window);
     }
 }

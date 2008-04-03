@@ -878,6 +878,10 @@ config_file_write_internal (struct t_config_file *config_file,
         return -1;
     }
     
+    log_printf (_("Writing configuration file %s %s"),
+                config_file->filename,
+                (default_options) ? _("(default options)") : "");
+    
     /* write header with version and date */
     current_time = time (NULL);
     string_iconv_fprintf (config_file->file,
@@ -951,14 +955,15 @@ config_file_write (struct t_config_file *config_file)
 }
 
 /*
- * config_file_read: read a configuration file
- *                   return:  0 = successful
- *                           -1 = config file file not found
- *                           -2 = error in config file
+ * config_file_read_internal: read a configuration file
+ *                            (should not be called directly)
+ *                            return:  0 = successful
+ *                                    -1 = config file file not found
+ *                                    -2 = error in config file
  */
 
 int
-config_file_read (struct t_config_file *config_file)
+config_file_read_internal (struct t_config_file *config_file, int reload)
 {
     int filename_length, line_number, rc;
     char *filename;
@@ -991,6 +996,9 @@ config_file_read (struct t_config_file *config_file)
             return -1;
         }
     }
+    
+    if (!reload)
+        log_printf (_("Reading configuration file %s"), config_file->filename);
     
     /* read all lines */
     ptr_section = NULL;
@@ -1178,6 +1186,19 @@ config_file_read (struct t_config_file *config_file)
 }
 
 /*
+ * config_file_read: read a configuration file
+ *                   return:  0 = successful
+ *                           -1 = config file file not found
+ *                           -2 = error in config file
+ */
+
+int
+config_file_read (struct t_config_file *config_file)
+{
+    return config_file_read_internal (config_file, 0);
+}
+
+/*
  * config_file_reload: reload a configuration file
  *                     return:  0 = successful
  *                             -1 = config file file not found
@@ -1194,6 +1215,8 @@ config_file_reload (struct t_config_file *config_file)
     if (!config_file)
         return -1;
     
+    log_printf (_("Reloading configuration file %s"), config_file->filename);
+    
     /* init "loaded" flag for all options */
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
@@ -1209,7 +1232,7 @@ config_file_reload (struct t_config_file *config_file)
     }
     
     /* read configuration file */
-    rc = config_file_read (config_file);
+    rc = config_file_read_internal (config_file, 1);
     
     /* reset options not found in configuration file */
     for (ptr_section = config_file->sections; ptr_section;

@@ -451,9 +451,6 @@ weechat_welcome_message ()
         gui_chat_printf (NULL,
                          "%s-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-",
                          GUI_COLOR(GUI_COLOR_CHAT_NICK));
-    
-    log_printf ("%s (%s %s %s)",
-                PACKAGE_STRING, _("compiled on"), __DATE__, __TIME__);
 }
 
 /*

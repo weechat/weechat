@@ -30,6 +30,7 @@
 #include "../../core/wee-config.h"
 #include "../../core/wee-log.h"
 #include "../gui-window.h"
+#include "../gui-bar.h"
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-hotlist.h"
@@ -67,7 +68,7 @@ int
 gui_window_objects_init (struct t_gui_window *window)
 {
     struct t_gui_gtk_objects *new_objects;
-
+    
     if ((new_objects = malloc (sizeof (*new_objects))))
     {
         window->gui_objects = new_objects;
@@ -77,10 +78,10 @@ gui_window_objects_init (struct t_gui_window *window)
         GUI_GTK(window)->textview_nicklist = NULL;
         GUI_GTK(window)->textbuffer_nicklist = NULL;
         GUI_GTK(window)->bar_windows = NULL;
+        GUI_GTK(window)->last_bar_window = NULL;
         return 1;
     }
-    else
-        return 0;
+    return 0;
 }
 
 /*
@@ -88,11 +89,13 @@ gui_window_objects_init (struct t_gui_window *window)
  */
 
 void
-gui_window_objects_free (struct t_gui_window *window, int free_separator)
+gui_window_objects_free (struct t_gui_window *window, int free_separator,
+                         int free_bar_windows)
 {
     /* TODO: write this function for Gtk */
     (void) window;
     (void) free_separator;
+    (void) free_bar_windows;
 }
 
 /*
@@ -169,6 +172,26 @@ void
 gui_window_redraw_all_buffers ()
 {
     /* TODO: write this function for Gtk */
+}
+
+/*
+ * gui_window_switch: switch to another window
+ */
+
+void
+gui_window_switch (struct t_gui_window *window)
+{
+    if (gui_current_window == window)
+        return;
+    
+    /* remove unused bars from current window */
+    /* ... */
+    
+    gui_current_window = window;
+    
+    gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+    
+    gui_window_redraw_buffer (gui_current_window->buffer);
 }
 
 /*
@@ -927,6 +950,12 @@ gui_window_objects_print_log (struct t_gui_window *window)
     log_printf ("  texttag_chat. . . . : 0x%x", GUI_GTK(window)->texttag_chat);
     log_printf ("  textview_nicklist . : 0x%x", GUI_GTK(window)->textview_nicklist);
     log_printf ("  textbuffer_nicklist : 0x%x", GUI_GTK(window)->textbuffer_nicklist);
+    log_printf ("  bar_windows . . . . : 0x%x", GUI_GTK(window)->bar_windows);
+    log_printf ("  last_bar_windows. . : 0x%x", GUI_GTK(window)->last_bar_window);
+    log_printf ("  current_style_fg. . : %d",   GUI_GTK(window)->current_style_fg);
+    log_printf ("  current_style_bg. . : %d",   GUI_GTK(window)->current_style_bg);
+    log_printf ("  current_style_attr. : %d",   GUI_GTK(window)->current_style_attr);
+    log_printf ("  current_color_attr. : %d",   GUI_GTK(window)->current_color_attr);
     
     for (ptr_bar_win = GUI_GTK(window)->bar_windows; ptr_bar_win;
          ptr_bar_win = ptr_bar_win->next_bar_window)

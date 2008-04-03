@@ -108,6 +108,8 @@ log_init ()
                                 "with another home using \"--dir\" command line option.\n"));
         exit (1);
     }
+    log_printf ("%s (%s %s %s)",
+                PACKAGE_STRING, _("compiled on"), __DATE__, __TIME__);
 }
 
 /*

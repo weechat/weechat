@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-23 11:39+0100\n"
+"POT-Creation-Date: 2008-04-03 15:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,13 +94,16 @@ msgid "List of bars:"
 msgstr ""
 
 #, c-format
-msgid "  %d. %s: %s, %s, %s: %d, items: %s%s (plugin: %s)"
+msgid "  %d. %s: %s, %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
 msgstr ""
 
 msgid "height"
 msgstr ""
 
 msgid "width"
+msgstr ""
+
+msgid "auto"
 msgstr ""
 
 msgid ", with separator"
@@ -132,7 +135,7 @@ msgid "%sError: wrong position \"%s\" for bar \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sBar \"%s\" created"
+msgid "Bar \"%s\" created"
 msgstr ""
 
 #, c-format
@@ -141,6 +144,17 @@ msgstr ""
 
 #, c-format
 msgid "%sError: wrong size \"%s\" for bar \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown bar \"%s\""
+msgstr ""
+
+msgid "Bar deleted"
+msgstr ""
+
+#, c-format
+msgid "%sError: unknown option for \"%s\" command"
 msgstr ""
 
 msgid "Buffers list:"
@@ -363,10 +377,6 @@ msgid "  (no plugin)"
 msgstr ""
 
 #, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr ""
-
-#, c-format
 msgid "%sError: wrong argument count for \"%s\" command"
 msgstr ""
 
@@ -479,18 +489,22 @@ msgstr ""
 msgid "manage bars"
 msgstr ""
 
-msgid "[add name type position size separator item1,item2,...] | [list]"
+msgid ""
+"[add barname type position size separator item1,item2,...] | [del barname] | "
+"[set barname name|type|position|size|separator|items value] | [list]"
 msgstr ""
 
 msgid ""
 "      add: add a new bar\n"
-"     name: name of bar (must be unique)\n"
+"  barname: name of bar (must be unique)\n"
 "     type: \"root\" (outside windows), \"window_active\" (inside active "
 "window), or \"window_inactive\" (inside each inactive window)\n"
 " position: bottom, top, left or right\n"
 "     size: size of bar (in chars)\n"
 "separator: 1 for using separator (line), 0 or nothing means no separator\n"
 "item1,...: items for this bar\n"
+"      del: delete a bar\n"
+"      set: set a value for a bar property\n"
 "     list: list all bars"
 msgstr ""
 
@@ -565,7 +579,7 @@ msgid ""
 "\"*\" for all buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
 "irc_quit\"\n"
-"  regex: regular expression to search in line (use \t to separate prefix "
+"  regex: regular expression to search in line (use \\t to separate prefix "
 "from message)"
 msgstr ""
 
@@ -1174,11 +1188,14 @@ msgid "save configuration files when unloading plugins"
 msgstr ""
 
 #, c-format
-msgid "Saving WeeChat configuration to disk (%s)"
+msgid "%sError: cannot create file \"%s\""
 msgstr ""
 
 #, c-format
-msgid "%sError: cannot create file \"%s\""
+msgid "Writing configuration file %s %s"
+msgstr ""
+
+msgid "(default options)"
 msgstr ""
 
 #, c-format
@@ -1189,6 +1206,10 @@ msgstr ""
 
 #, c-format
 msgid "%sWarning: config file \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "Reading configuration file %s"
 msgstr ""
 
 #, c-format
@@ -1213,6 +1234,10 @@ msgstr ""
 
 #, c-format
 msgid "%sWarning: %s, line %d: invalid value for option \"%s\""
+msgstr ""
+
+#, c-format
+msgid "Reloading configuration file %s"
 msgstr ""
 
 msgid "  . type: boolean\n"
@@ -1333,10 +1358,6 @@ msgid "-MORE-"
 msgstr ""
 
 msgid "server"
-msgstr ""
-
-#, c-format
-msgid "%s[%sF%s%s%s]"
 msgstr ""
 
 msgid "filtered"
@@ -3708,9 +3729,6 @@ msgstr ""
 
 #, c-format
 msgid "%sPlugin \"%s\" unloaded"
-msgstr ""
-
-msgid "Saving plugins configuration to disk"
 msgstr ""
 
 #, c-format

@@ -28,8 +28,11 @@
 #include <curses.h>
 #endif
 
-#define WINDOW_MIN_WIDTH      10
-#define WINDOW_MIN_HEIGHT     5
+#define GUI_WINDOW_MIN_WIDTH          10
+#define GUI_WINDOW_MIN_HEIGHT         5
+
+#define GUI_WINDOW_CHAT_MIN_WIDTH     5
+#define GUI_WINDOW_CHAT_MIN_HEIGHT    2
 
 #define GUI_CURSES_NUM_WEECHAT_COLORS 15
 
@@ -42,9 +45,10 @@ struct t_gui_bar_window
     int width, height;              /* window size                          */
     WINDOW *win_bar;                /* bar Curses window                    */
     WINDOW *win_separator;          /* separator (optional)                 */
-    struct t_gui_bar_window *next_bar_window;
-                                    /* link to next bar window              */
-                                    /* (only used if bar is in windows)     */
+    struct t_gui_bar_window *prev_bar_window; /* link to previous bar win   */
+                                              /* (only for non-root bars)   */
+    struct t_gui_bar_window *next_bar_window; /* link to next bar win       */
+                                              /* (only for non-root bars)   */
 };
 
 struct t_gui_curses_objects
@@ -56,7 +60,8 @@ struct t_gui_curses_objects
     WINDOW *win_infobar;            /* info bar window                      */
     WINDOW *win_input;              /* input window                         */
     WINDOW *win_separator;          /* separation between 2 splited (V) win */
-    struct t_gui_bar_window *bar_windows; /* bar windows                    */
+    struct t_gui_bar_window *bar_windows;     /* bar windows                */
+    struct t_gui_bar_window *last_bar_window; /* last bar window            */
     int current_style_fg;           /* current foreground color             */
     int current_style_bg;           /* current background color             */
     int current_style_attr;         /* current attributes (bold, ..)        */
@@ -67,6 +72,7 @@ extern struct t_gui_color gui_weechat_colors[];
 
 /* color functions */
 extern int gui_color_get_pair (int num_color);
+extern void gui_color_pre_init ();
 extern void gui_color_init ();
 extern void gui_color_end ();
 
@@ -74,6 +80,8 @@ extern void gui_color_end ();
 extern void gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
                                                struct t_gui_window *window);
 extern void gui_bar_window_create_win (struct t_gui_bar_window *bar_window);
+extern int gui_bar_window_remove_unused_bars (struct t_gui_window *window);
+extern int gui_bar_window_add_missing_bars (struct t_gui_window *window);
 
 /* chat functions */
 extern void gui_chat_calculate_line_diff (struct t_gui_window *window,

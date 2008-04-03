@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-23 11:39+0100\n"
+"POT-Creation-Date: 2008-04-03 15:11+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -119,7 +119,7 @@ msgid "List of bars:"
 msgstr "Liste der Aliases:\n"
 
 #, c-format
-msgid "  %d. %s: %s, %s, %s: %d, items: %s%s (plugin: %s)"
+msgid "  %d. %s: %s, %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
 msgstr ""
 
 #, fuzzy
@@ -127,6 +127,9 @@ msgid "height"
 msgstr "right"
 
 msgid "width"
+msgstr ""
+
+msgid "auto"
 msgstr ""
 
 #, fuzzy
@@ -162,7 +165,7 @@ msgid "%sError: wrong position \"%s\" for bar \"%s\""
 msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
 
 #, fuzzy, c-format
-msgid "%sBar \"%s\" created"
+msgid "Bar \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" angelegt\n"
 
 #, fuzzy, c-format
@@ -172,6 +175,18 @@ msgstr "%s konnte die Plugin-Konfigurationsdatei nicht sichern\n"
 #, fuzzy, c-format
 msgid "%sError: wrong size \"%s\" for bar \"%s\""
 msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
+
+#, fuzzy, c-format
+msgid "%sError: unknown bar \"%s\""
+msgstr "%s unbekannte Tasten-Funktion \"%s\"\n"
+
+#, fuzzy
+msgid "Bar deleted"
+msgstr "/users wurde deaktiviert"
+
+#, fuzzy, c-format
+msgid "%sError: unknown option for \"%s\" command"
+msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
 
 msgid "Buffers list:"
 msgstr ""
@@ -428,10 +443,6 @@ msgid "  (no plugin)"
 msgstr "  (kein Plugin)\n"
 
 #, fuzzy, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
-
-#, fuzzy, c-format
 msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
 
@@ -553,18 +564,22 @@ msgstr ""
 msgid "manage bars"
 msgstr "Puffer verwalten"
 
-msgid "[add name type position size separator item1,item2,...] | [list]"
+msgid ""
+"[add barname type position size separator item1,item2,...] | [del barname] | "
+"[set barname name|type|position|size|separator|items value] | [list]"
 msgstr ""
 
 msgid ""
 "      add: add a new bar\n"
-"     name: name of bar (must be unique)\n"
+"  barname: name of bar (must be unique)\n"
 "     type: \"root\" (outside windows), \"window_active\" (inside active "
 "window), or \"window_inactive\" (inside each inactive window)\n"
 " position: bottom, top, left or right\n"
 "     size: size of bar (in chars)\n"
 "separator: 1 for using separator (line), 0 or nothing means no separator\n"
 "item1,...: items for this bar\n"
+"      del: delete a bar\n"
+"      set: set a value for a bar property\n"
 "     list: list all bars"
 msgstr ""
 
@@ -657,7 +672,7 @@ msgid ""
 "\"*\" for all buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
 "irc_quit\"\n"
-"  regex: regular expression to search in line (use \t to separate prefix "
+"  regex: regular expression to search in line (use \\t to separate prefix "
 "from message)"
 msgstr ""
 
@@ -1454,12 +1469,15 @@ msgid "save configuration files when unloading plugins"
 msgstr "Konfiguration beim Verlassen abspeichern"
 
 #, fuzzy, c-format
-msgid "Saving WeeChat configuration to disk (%s)"
-msgstr "Konfiguration wird gespeichert\n"
-
-#, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
 msgstr "%s kann die Datei \"%s\" nicht anlegen\n"
+
+#, fuzzy, c-format
+msgid "Writing configuration file %s %s"
+msgstr "Konfiguration beim Verlassen abspeichern"
+
+msgid "(default options)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -1472,6 +1490,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%sWarning: config file \"%s\" not found"
 msgstr "%s Konfigurationsdatei \"%s\" nicht gefunden.\n"
+
+#, fuzzy, c-format
+msgid "Reading configuration file %s"
+msgstr "den Server dazu bringen, seine Konfigurationsdatei neu zu laden"
 
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
@@ -1496,6 +1518,10 @@ msgstr "%s %s, Zeile %d: unbekannte Sektion \"%s\"\n"
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: invalid value for option \"%s\""
 msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Reloading configuration file %s"
+msgstr "Konfiguration wird gespeichert\n"
 
 msgid "  . type: boolean\n"
 msgstr "  . Typ: Boolean\n"
@@ -1631,10 +1657,6 @@ msgstr "-MEHR-"
 
 msgid "server"
 msgstr "Server"
-
-#, fuzzy, c-format
-msgid "%s[%sF%s%s%s]"
-msgstr "%s[%s%s%s]%s idlet: "
 
 #, fuzzy
 msgid "filtered"
@@ -4267,10 +4289,6 @@ msgstr "Plugin \"%s\" entladen.\n"
 msgid "%sPlugin \"%s\" unloaded"
 msgstr "Plugin \"%s\" entladen.\n"
 
-#, fuzzy
-msgid "Saving plugins configuration to disk"
-msgstr "Konfiguration wird gespeichert\n"
-
 #, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
@@ -4490,6 +4508,18 @@ msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
 #, fuzzy
+#~ msgid "%s[%sF%s%s%s]"
+#~ msgstr "%s[%s%s%s]%s idlet: "
+
+#, fuzzy
+#~ msgid "Saving WeeChat configuration to disk (%s)"
+#~ msgstr "Konfiguration wird gespeichert\n"
+
+#, fuzzy
+#~ msgid "Saving plugins configuration to disk"
+#~ msgstr "Konfiguration wird gespeichert\n"
+
+#, fuzzy
 #~ msgid "%sPlugin \"%s\" %s loaded"
 #~ msgstr "Plugin \"%s\" (%s) geladen.\n"
 
@@ -4655,10 +4685,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 #, fuzzy
 #~ msgid "save WeeChat and plugins configuration files to disk"
 #~ msgstr "Konfiguration abspeichern"
-
-#, fuzzy
-#~ msgid "file: configuration file to save"
-#~ msgstr "Konfiguration beim Verlassen abspeichern"
 
 #, fuzzy
 #~ msgid "%sWeeChat configuration file reloaded"

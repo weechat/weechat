@@ -3343,6 +3343,41 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_bar_set: set a bar property
+ */
+
+static PyObject *
+weechat_python_api_bar_set (PyObject *self, PyObject *args)
+{
+    char *bar, *property, *value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_set");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    bar = NULL;
+    property = NULL;
+    value = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &bar, &property, &value))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_set");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_buffer_set (script_str2ptr (bar),
+                        property,
+                        value);
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
  * weechat_python_api_bar_update: update a bar on screen
  */
 
@@ -3850,6 +3885,7 @@ PyMethodDef weechat_python_funcs[] =
     { "bar_item_remove", &weechat_python_api_bar_item_remove, METH_VARARGS, "" },
     { "bar_search", &weechat_python_api_bar_search, METH_VARARGS, "" },
     { "bar_new", &weechat_python_api_bar_new, METH_VARARGS, "" },
+    { "bar_set", &weechat_python_api_bar_set, METH_VARARGS, "" },
     { "bar_update", &weechat_python_api_bar_update, METH_VARARGS, "" },
     { "bar_remove", &weechat_python_api_bar_remove, METH_VARARGS, "" },
     { "command", &weechat_python_api_command, METH_VARARGS, "" },

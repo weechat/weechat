@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-23 11:39+0100\n"
+"POT-Creation-Date: 2008-04-03 15:11+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -116,7 +116,7 @@ msgid "List of bars:"
 msgstr "Список сокращений:\n"
 
 #, c-format
-msgid "  %d. %s: %s, %s, %s: %d, items: %s%s (plugin: %s)"
+msgid "  %d. %s: %s, %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
 msgstr ""
 
 #, fuzzy
@@ -124,6 +124,9 @@ msgid "height"
 msgstr "справа"
 
 msgid "width"
+msgstr ""
+
+msgid "auto"
 msgstr ""
 
 #, fuzzy
@@ -159,7 +162,7 @@ msgid "%sError: wrong position \"%s\" for bar \"%s\""
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%sBar \"%s\" created"
+msgid "Bar \"%s\" created"
 msgstr "Сокращение \"%s\" => \"%s\" создано\n"
 
 #, fuzzy, c-format
@@ -169,6 +172,18 @@ msgstr "%s не могу сохранить конфигурационный ф�
 #, fuzzy, c-format
 msgid "%sError: wrong size \"%s\" for bar \"%s\""
 msgstr "%s некорректное количество аргументов команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sError: unknown bar \"%s\""
+msgstr "%s неизвестная функция клавиши \"%s\"\n"
+
+#, fuzzy
+msgid "Bar deleted"
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "%sError: unknown option for \"%s\" command"
+msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 msgid "Buffers list:"
 msgstr ""
@@ -424,10 +439,6 @@ msgid "  (no plugin)"
 msgstr "  (нет pluginа)\n"
 
 #, fuzzy, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr "%s неизвестный параметр для команды \"%s\"\n"
-
-#, fuzzy, c-format
 msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s некорректное количество аргументов команды \"%s\"\n"
 
@@ -547,18 +558,22 @@ msgstr ""
 msgid "manage bars"
 msgstr "управление буферами"
 
-msgid "[add name type position size separator item1,item2,...] | [list]"
+msgid ""
+"[add barname type position size separator item1,item2,...] | [del barname] | "
+"[set barname name|type|position|size|separator|items value] | [list]"
 msgstr ""
 
 msgid ""
 "      add: add a new bar\n"
-"     name: name of bar (must be unique)\n"
+"  barname: name of bar (must be unique)\n"
 "     type: \"root\" (outside windows), \"window_active\" (inside active "
 "window), or \"window_inactive\" (inside each inactive window)\n"
 " position: bottom, top, left or right\n"
 "     size: size of bar (in chars)\n"
 "separator: 1 for using separator (line), 0 or nothing means no separator\n"
 "item1,...: items for this bar\n"
+"      del: delete a bar\n"
+"      set: set a value for a bar property\n"
 "     list: list all bars"
 msgstr ""
 
@@ -666,7 +681,7 @@ msgid ""
 "\"*\" for all buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
 "irc_quit\"\n"
-"  regex: regular expression to search in line (use \t to separate prefix "
+"  regex: regular expression to search in line (use \\t to separate prefix "
 "from message)"
 msgstr ""
 
@@ -1466,12 +1481,15 @@ msgid "save configuration files when unloading plugins"
 msgstr "сохранять конфигурационный файл при выходе"
 
 #, fuzzy, c-format
-msgid "Saving WeeChat configuration to disk (%s)"
-msgstr "Сохраняю конфигурацию\n"
-
-#, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
 msgstr "%s не могу создать файл \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Writing configuration file %s %s"
+msgstr "сохранять конфигурационный файл при выходе"
+
+msgid "(default options)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -1484,6 +1502,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%sWarning: config file \"%s\" not found"
 msgstr "%s конфигурационынй файл \"%s\" не найден.\n"
+
+#, fuzzy, c-format
+msgid "Reading configuration file %s"
+msgstr "перезагрузить конфигурационный файл сервера"
 
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
@@ -1508,6 +1530,10 @@ msgstr "%s %s, строка %d: неизвестный идентификато�
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: invalid value for option \"%s\""
 msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Reloading configuration file %s"
+msgstr "Сохраняю конфигурацию\n"
 
 msgid "  . type: boolean\n"
 msgstr "  . тип: булевый\n"
@@ -1637,10 +1663,6 @@ msgstr "-ДАЛЬШЕ-"
 
 msgid "server"
 msgstr "сервер"
-
-#, fuzzy, c-format
-msgid "%s[%sF%s%s%s]"
-msgstr "%s[%s%s%s]%s бездействует: "
 
 #, fuzzy
 msgid "filtered"
@@ -4264,10 +4286,6 @@ msgstr "Plugin \"%s\" выгружен.\n"
 msgid "%sPlugin \"%s\" unloaded"
 msgstr "Plugin \"%s\" выгружен.\n"
 
-#, fuzzy
-msgid "Saving plugins configuration to disk"
-msgstr "Сохраняю конфигурацию\n"
-
 #, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
@@ -4487,6 +4505,18 @@ msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
 #, fuzzy
+#~ msgid "%s[%sF%s%s%s]"
+#~ msgstr "%s[%s%s%s]%s бездействует: "
+
+#, fuzzy
+#~ msgid "Saving WeeChat configuration to disk (%s)"
+#~ msgstr "Сохраняю конфигурацию\n"
+
+#, fuzzy
+#~ msgid "Saving plugins configuration to disk"
+#~ msgstr "Сохраняю конфигурацию\n"
+
+#, fuzzy
 #~ msgid "%sPlugin \"%s\" %s loaded"
 #~ msgstr "Plugin \"%s\" (%s) загружен.\n"
 
@@ -4642,10 +4672,6 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 #, fuzzy
 #~ msgid "save WeeChat and plugins configuration files to disk"
 #~ msgstr "сохранить конфигурацию"
-
-#, fuzzy
-#~ msgid "file: configuration file to save"
-#~ msgstr "сохранять конфигурационный файл при выходе"
 
 #, fuzzy
 #~ msgid "%sWeeChat configuration file reloaded"

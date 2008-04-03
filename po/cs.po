@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-03-23 11:39+0100\n"
+"POT-Creation-Date: 2008-04-03 15:11+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -114,7 +114,7 @@ msgid "List of bars:"
 msgstr "Seznam pro aliasy:\n"
 
 #, c-format
-msgid "  %d. %s: %s, %s, %s: %d, items: %s%s (plugin: %s)"
+msgid "  %d. %s: %s, %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
 msgstr ""
 
 #, fuzzy
@@ -122,6 +122,9 @@ msgid "height"
 msgstr "vpravo"
 
 msgid "width"
+msgstr ""
+
+msgid "auto"
 msgstr ""
 
 #, fuzzy
@@ -157,7 +160,7 @@ msgid "%sError: wrong position \"%s\" for bar \"%s\""
 msgstr "%s neznámá volba pro příkaz \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%sBar \"%s\" created"
+msgid "Bar \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" vytvořen\n"
 
 #, fuzzy, c-format
@@ -167,6 +170,18 @@ msgstr "%s selhalo uložení nastavení pluginů\n"
 #, fuzzy, c-format
 msgid "%sError: wrong size \"%s\" for bar \"%s\""
 msgstr "%s špatný počet parametrů pro příkaz \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sError: unknown bar \"%s\""
+msgstr "%s neznámá klávesová funkce \"%s\"\n"
+
+#, fuzzy
+msgid "Bar deleted"
+msgstr "uživatel byl zablokován"
+
+#, fuzzy, c-format
+msgid "%sError: unknown option for \"%s\" command"
+msgstr "%s neznámá volba pro příkaz \"%s\"\n"
 
 msgid "Buffers list:"
 msgstr ""
@@ -422,10 +437,6 @@ msgid "  (no plugin)"
 msgstr "  (není plugin)\n"
 
 #, fuzzy, c-format
-msgid "%sError: unknown option for \"%s\" command"
-msgstr "%s neznámá volba pro příkaz \"%s\"\n"
-
-#, fuzzy, c-format
 msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s špatný počet parametrů pro příkaz \"%s\"\n"
 
@@ -545,18 +556,22 @@ msgstr ""
 msgid "manage bars"
 msgstr "řídit buffery"
 
-msgid "[add name type position size separator item1,item2,...] | [list]"
+msgid ""
+"[add barname type position size separator item1,item2,...] | [del barname] | "
+"[set barname name|type|position|size|separator|items value] | [list]"
 msgstr ""
 
 msgid ""
 "      add: add a new bar\n"
-"     name: name of bar (must be unique)\n"
+"  barname: name of bar (must be unique)\n"
 "     type: \"root\" (outside windows), \"window_active\" (inside active "
 "window), or \"window_inactive\" (inside each inactive window)\n"
 " position: bottom, top, left or right\n"
 "     size: size of bar (in chars)\n"
 "separator: 1 for using separator (line), 0 or nothing means no separator\n"
 "item1,...: items for this bar\n"
+"      del: delete a bar\n"
+"      set: set a value for a bar property\n"
 "     list: list all bars"
 msgstr ""
 
@@ -665,7 +680,7 @@ msgid ""
 "\"*\" for all buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
 "irc_quit\"\n"
-"  regex: regular expression to search in line (use \t to separate prefix "
+"  regex: regular expression to search in line (use \\t to separate prefix "
 "from message)"
 msgstr ""
 
@@ -1462,12 +1477,15 @@ msgid "save configuration files when unloading plugins"
 msgstr "uložit soubor s nastavením při ukončení"
 
 #, fuzzy, c-format
-msgid "Saving WeeChat configuration to disk (%s)"
-msgstr "Ukládám konfiguraci na disk\n"
-
-#, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
 msgstr "%s nemohu vytvořit soubor \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Writing configuration file %s %s"
+msgstr "uložit soubor s nastavením při ukončení"
+
+msgid "(default options)"
+msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -1480,6 +1498,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%sWarning: config file \"%s\" not found"
 msgstr "%s konfigurační soubor \"%s\" nenalezen\n"
+
+#, fuzzy, c-format
+msgid "Reading configuration file %s"
+msgstr "říct serveru, aby znovu načetl svůj konfigurační soubor"
 
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: invalid syntax, missing \"]\""
@@ -1504,6 +1526,10 @@ msgstr "%s %s, řádek %d: neznámý identifikátor sekce (\"%s\")\n"
 #, fuzzy, c-format
 msgid "%sWarning: %s, line %d: invalid value for option \"%s\""
 msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "Reloading configuration file %s"
+msgstr "Ukládám konfiguraci na disk\n"
 
 msgid "  . type: boolean\n"
 msgstr "  . typ: boolean\n"
@@ -1631,10 +1657,6 @@ msgstr "-VÍCE-"
 
 msgid "server"
 msgstr "server"
-
-#, fuzzy, c-format
-msgid "%s[%sF%s%s%s]"
-msgstr "%s[%s%s%s]%s nečinný: "
 
 #, fuzzy
 msgid "filtered"
@@ -4275,10 +4297,6 @@ msgstr "Plugin \"%s\" odebrán.\n"
 msgid "%sPlugin \"%s\" unloaded"
 msgstr "Plugin \"%s\" odebrán.\n"
 
-#, fuzzy
-msgid "Saving plugins configuration to disk"
-msgstr "Ukládám konfiguraci na disk\n"
-
 #, c-format
 msgid ""
 "%s%s: unable to register script \"%s\" (another script already exists with "
@@ -4498,6 +4516,18 @@ msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
 #, fuzzy
+#~ msgid "%s[%sF%s%s%s]"
+#~ msgstr "%s[%s%s%s]%s nečinný: "
+
+#, fuzzy
+#~ msgid "Saving WeeChat configuration to disk (%s)"
+#~ msgstr "Ukládám konfiguraci na disk\n"
+
+#, fuzzy
+#~ msgid "Saving plugins configuration to disk"
+#~ msgstr "Ukládám konfiguraci na disk\n"
+
+#, fuzzy
 #~ msgid "%sPlugin \"%s\" %s loaded"
 #~ msgstr "Plugin \"%s\" (%s) načten.\n"
 
@@ -4660,10 +4690,6 @@ msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 #, fuzzy
 #~ msgid "save WeeChat and plugins configuration files to disk"
 #~ msgstr "uloží nastavení na disk"
-
-#, fuzzy
-#~ msgid "file: configuration file to save"
-#~ msgstr "uložit soubor s nastavením při ukončení"
 
 #, fuzzy
 #~ msgid "%sWeeChat configuration file reloaded"

@@ -59,9 +59,10 @@ struct t_gui_bar_window
     struct t_gui_bar *bar;          /* pointer to bar                       */
     int x, y;                       /* position of window                   */
     int width, height;              /* window size                          */
-    struct t_gui_bar_window *next_bar_window;
-                                    /* link to next bar window              */
-                                    /* (only used if bar is in windows)     */
+    struct t_gui_bar_window *prev_bar_window; /* link to previous bar win   */
+                                              /* (only for non-root bars)   */
+    struct t_gui_bar_window *next_bar_window; /* link to next bar win       */
+                                              /* (only for non-root bars)   */
 };
 
 struct t_gui_gtk_objects
@@ -71,7 +72,8 @@ struct t_gui_gtk_objects
     GtkTextTag *texttag_chat;       /* texttag widget for chat              */
     GtkWidget *textview_nicklist;   /* textview widget for nicklist         */
     GtkTextBuffer *textbuffer_nicklist; /* textbuffer widget for nicklist   */
-    struct t_gui_bar_window *bar_windows; /* bar windows                    */
+    struct t_gui_bar_window *bar_windows;     /* bar windows                */
+    struct t_gui_bar_window *last_bar_window; /* last bar window            */
     int current_style_fg;           /* current foreground color             */
     int current_style_bg;           /* current background color             */
     int current_style_attr;         /* current attributes (bold, ..)        */
@@ -95,6 +97,7 @@ extern GtkWidget *gui_gtk_label1;
 
 /* color functions */
 extern int gui_color_get_pair (int num_color);
+extern void gui_color_pre_init ();
 extern void gui_color_init ();
 extern void gui_color_end ();
 

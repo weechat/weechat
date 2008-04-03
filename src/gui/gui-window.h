@@ -77,6 +77,9 @@ struct t_gui_window
     int win_input_height;              /* height of input window            */
     int win_input_cursor_x;            /* position of cursor in input win   */
     
+    /* refresh */
+    int refresh_needed;                /* 1 if refresh needed for window    */
+    
     /* GUI specific objects */
     void *gui_objects;                 /* pointer to a GUI specific struct  */
     
@@ -146,11 +149,13 @@ extern int gui_window_get_width ();
 extern int gui_window_get_height ();
 extern int gui_window_objects_init (struct t_gui_window *window);
 extern void gui_window_objects_free (struct t_gui_window *window,
-                                     int free_separator);
+                                     int free_separator,
+                                     int free_bar_windows);
 extern int gui_window_calculate_pos_size (struct t_gui_window *window,
                                           int force_calculate);
 extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
 extern void gui_window_redraw_all_buffers ();
+extern void gui_window_switch (struct t_gui_window *window);
 extern void gui_window_switch_to_buffer (struct t_gui_window *window,
                                          struct t_gui_buffer *buffer);
 extern void gui_window_page_up (struct t_gui_window *window);

@@ -63,6 +63,9 @@ GtkWidget *gui_gtk_label1;
 void
 gui_main_pre_init (int *argc, char **argv[])
 {
+    /* pre-init colors */
+    gui_color_pre_init ();
+    
     /* build empty prefixes (before reading config) */
     gui_chat_prefix_build_empty ();
     

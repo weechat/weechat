@@ -40,6 +40,7 @@
 #include "../plugins/plugin.h"
 #include "../plugins/plugin-config.h"
 #include "gui-completion.h"
+#include "gui-bar.h"
 #include "gui-buffer.h"
 #include "gui-color.h"
 #include "gui-keyboard.h"
@@ -241,6 +242,22 @@ gui_completion_list_add (struct t_gui_completion *completion, char *word,
                                                      strlen (completion->base_word)) == 0)))
     {
         weelist_add (completion->completion_list, word, where);
+    }
+}
+
+/*
+ * gui_completion_list_add_bars_names: add buffers names to completion list
+ */
+
+void
+gui_completion_list_add_bars_names (struct t_gui_completion *completion)
+{
+    struct t_gui_bar *ptr_bar;
+
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        gui_completion_list_add (completion, ptr_bar->name,
+                                 0, WEECHAT_LIST_POS_SORT);
     }
 }
 
@@ -784,6 +801,9 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                             break;
                         case 'q': /* quit message */
                             gui_completion_list_add_quit (completion);
+                            break;
+                        case 'r': /* bar names */
+                            gui_completion_list_add_bars_names (completion);
                             break;
                         case 'v': /* value of config option */
                             gui_completion_list_add_option_value (completion);

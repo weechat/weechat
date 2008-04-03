@@ -35,14 +35,34 @@
 
 
 /*
- * gui_bar_windows_get_size: get total bar size (window bars) for a position
- *                           bar is optional, if not NULL, size is computed
- *                           from bar 1 to bar # - 1
+ * gui_bar_window_search_bar: search a reference to a bar in a window
+ */
+
+struct t_gui_bar_window *
+gui_bar_window_search_bar (struct t_gui_window *window, struct t_gui_bar *bar)
+{
+    struct t_gui_bar_window *ptr_bar_win;
+
+    for (ptr_bar_win = GUI_GTK(window)->bar_windows; ptr_bar_win;
+         ptr_bar_win = ptr_bar_win->next_bar_window)
+    {
+        if (ptr_bar_win->bar == bar)
+            return ptr_bar_win;
+    }
+    
+    /* bar window not found for window */
+    return NULL;
+}
+
+/*
+ * gui_bar_window_get_size: get total bar size (window bars) for a position
+ *                          bar is optional, if not NULL, size is computed
+ *                          from bar 1 to bar # - 1
  */
 
 int
 gui_bar_window_get_size (struct t_gui_bar *bar, struct t_gui_window *window,
-                         int position)
+                         enum t_gui_bar_position position)
 {
     (void) bar;
     (void) window;
@@ -50,6 +70,69 @@ gui_bar_window_get_size (struct t_gui_bar *bar, struct t_gui_window *window,
     
     /* TODO: write this function for Gtk */
     return 0;
+}
+
+/*
+ * gui_bar_check_size_add: check if "add_size" is ok for bar
+ *                         return 1 if new size is ok
+ *                                0 if new size is too big
+ */
+
+int
+gui_bar_check_size_add (struct t_gui_bar *bar, int add_size)
+{
+    (void) bar;
+    (void) add_size;
+    
+    /* TODO: write this function for Gtk */
+    return 1;
+}
+
+/*
+ * gui_bar_window_calculate_pos_size: calculate position and size of a bar
+ */
+
+void
+gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
+                                   struct t_gui_window *window)
+{
+    (void) bar_window;
+    (void) window;
+    
+    /* TODO: write this function for Gtk */
+}
+
+/*
+ * gui_bar_window_create_win: create curses window for bar
+ */
+
+void
+gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
+{
+    (void) bar_window;
+    
+    /* TODO: write this function for Gtk */
+}
+
+/*
+ * gui_bar_window_find_pos: find position for bar window (keeping list sorted
+ *                          by bar number)
+ */
+
+struct t_gui_bar_window *
+gui_bar_window_find_pos (struct t_gui_bar *bar, struct t_gui_window *window)
+{
+    struct t_gui_bar_window *ptr_bar_window;
+    
+    for (ptr_bar_window = GUI_GTK(window)->bar_windows; ptr_bar_window;
+         ptr_bar_window = ptr_bar_window->next_bar_window)
+    {
+        if (ptr_bar_window->bar->number > bar->number)
+            return ptr_bar_window;
+    }
+    
+    /* position not found, best position is at the end */
+    return NULL;
 }
 
 /*
@@ -68,6 +151,142 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
 }
 
 /*
+ * gui_bar_window_free: free a bar window
+ */
+
+void
+gui_bar_window_free (struct t_gui_bar_window *bar_window,
+                     struct t_gui_window *window)
+{
+    (void) bar_window;
+    (void) window;
+    
+    /* TODO: write this function for Gtk */
+}
+
+/*
+ * gui_bar_free_bar_windows: free bar windows for a bar
+ */
+
+void
+gui_bar_free_bar_windows (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win, *next_bar_win;
+    
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        ptr_bar_win = GUI_GTK(gui_windows)->bar_windows;
+        while (ptr_bar_win)
+        {
+            next_bar_win = ptr_bar_win->next_bar_window;
+            
+            if (ptr_bar_win->bar == bar)
+                gui_bar_window_free (ptr_bar_win, ptr_win);
+            
+            ptr_bar_win = next_bar_win;
+        }
+    }
+}
+
+/*
+ * gui_bar_window_remove_unused_bars: remove unused bars for a window
+ *                                    return 1 if at least one bar was removed
+ *                                           0 if no bar was removed
+ */
+
+int
+gui_bar_window_remove_unused_bars (struct t_gui_window *window)
+{
+    int rc;
+    struct t_gui_bar_window *ptr_bar_win, *next_bar_win;
+    
+    rc = 0;
+
+    ptr_bar_win = GUI_GTK(window)->bar_windows;
+    while (ptr_bar_win)
+    {
+        next_bar_win = ptr_bar_win->next_bar_window;
+        
+        if (((ptr_bar_win->bar->type == GUI_BAR_TYPE_WINDOW_ACTIVE)
+             && (window != gui_current_window))
+            || ((ptr_bar_win->bar->type == GUI_BAR_TYPE_WINDOW_INACTIVE)
+                && (window == gui_current_window)))
+        {
+            gui_bar_window_free (ptr_bar_win, window);
+            rc = 1;
+        }
+        
+        ptr_bar_win = next_bar_win;
+    }
+    
+    return rc;
+}
+
+/*
+ * gui_bar_window_add_missing_bars: add missing bars for a window
+ *                                  return 1 if at least one bar was created
+ *                                         0 if no bar was created
+ */
+
+int
+gui_bar_window_add_missing_bars (struct t_gui_window *window)
+{
+    int rc;
+    struct t_gui_bar *ptr_bar;
+    
+    rc = 0;
+    
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        if (((ptr_bar->type == GUI_BAR_TYPE_WINDOW_ACTIVE)
+             && (window == gui_current_window))
+            || ((ptr_bar->type == GUI_BAR_TYPE_WINDOW_INACTIVE)
+                && (window != gui_current_window)))
+        {
+            if (!gui_bar_window_search_bar (window, ptr_bar))
+            {
+                gui_bar_window_new (ptr_bar, window);
+                rc = 1;
+            }
+        }
+    }
+    
+    return rc;
+}
+
+/*
+ * gui_bar_window_print_string: print a string text on a bar window
+ *                              return number of chars displayed on screen
+ */
+
+int
+gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
+                             char *string, int max_chars)
+{
+    (void) bar_window;
+    (void) string;
+    (void) max_chars;
+    
+    /* TODO: write this function for Gtk */
+    return 0;
+}
+
+/*
+ * gui_bar_window_draw: draw a bar for a window
+ */
+
+void
+gui_bar_window_draw (struct t_gui_bar_window *bar_window,
+                     struct t_gui_window *window)
+{
+    (void) bar_window;
+    (void) window;
+    
+    /* TODO: write this function for Gtk */
+}
+
+/*
  * gui_bar_draw: draw a bar
  */
 
@@ -77,19 +296,6 @@ gui_bar_draw (struct t_gui_bar *bar)
     (void) bar;
 
     /* TODO: write this function for Gtk */
-}
-
-/*
- * gui_bar_window_free: delete an bar window
- */
-
-void
-gui_bar_window_free (struct t_gui_bar_window *bar_window)
-{
-    /* TODO: complete this function for Gtk */
-    
-    /* free bar window */
-    free (bar_window);
 }
 
 /*
@@ -106,4 +312,6 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
     log_printf ("    y . . . . . . . . : %d",   bar_window->y);
     log_printf ("    width . . . . . . : %d",   bar_window->width);
     log_printf ("    height. . . . . . : %d",   bar_window->height);
+    log_printf ("    prev_bar_window . : 0x%x", bar_window->prev_bar_window);
+    log_printf ("    next_bar_window . : 0x%x", bar_window->next_bar_window);
 }

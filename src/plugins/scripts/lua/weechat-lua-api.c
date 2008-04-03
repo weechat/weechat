@@ -3793,6 +3793,47 @@ weechat_lua_api_bar_new (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_bar_set: set a bar property
+ */
+
+static int
+weechat_lua_api_bar_set (lua_State *L)
+{
+    const char *bar, *property, *value;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_set");
+        LUA_RETURN_ERROR;
+    }
+    
+    bar = NULL;
+    property = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_set");
+        LUA_RETURN_ERROR;
+    }
+    
+    bar = lua_tostring (lua_current_interpreter, -3);
+    property = lua_tostring (lua_current_interpreter, -2);
+    value = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_buffer_set (script_str2ptr ((char *)bar),
+                        (char *)property,
+                        (char *)value);
+    
+    LUA_RETURN_OK;
+}
+
+/*
  * weechat_lua_api_bar_update: update a bar on screen
  */
 
@@ -4494,6 +4535,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "bar_item_remove", &weechat_lua_api_bar_item_remove },
     { "bar_search", &weechat_lua_api_bar_search },
     { "bar_new", &weechat_lua_api_bar_new },
+    { "bar_set", &weechat_lua_api_bar_set },
     { "bar_update", &weechat_lua_api_bar_update },
     { "bar_remove", &weechat_lua_api_bar_remove },
     { "command", &weechat_lua_api_command },

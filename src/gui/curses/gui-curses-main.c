@@ -62,7 +62,10 @@ gui_main_pre_init (int *argc, char **argv[])
     /* make C compiler happy */
     (void) argc;
     (void) argv;
-
+    
+    /* pre-init colors */
+    gui_color_pre_init ();
+    
     /* build empty prefixes (before reading config) */
     gui_chat_prefix_build_empty ();
 }
@@ -76,6 +79,7 @@ gui_main_init ()
 {
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_bar *ptr_bar;
+    struct t_gui_bar_window *ptr_bar_win;
     
     initscr ();
     
@@ -91,7 +95,7 @@ gui_main_init ()
     
     gui_infobar = NULL;
     
-    gui_ok = ((COLS > WINDOW_MIN_WIDTH) && (LINES > WINDOW_MIN_HEIGHT));
+    gui_ok = ((COLS > GUI_WINDOW_MIN_WIDTH) && (LINES > GUI_WINDOW_MIN_HEIGHT));
 
     refresh ();
     
@@ -132,11 +136,14 @@ gui_main_init ()
            but no window was created (GUI was not initialized) */
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
-            if ((ptr_bar->type == GUI_BAR_TYPE_ROOT)
-                && (!ptr_bar->bar_window))
-            {
+            if ((ptr_bar->type == GUI_BAR_TYPE_ROOT) && (!ptr_bar->bar_window))
                 gui_bar_window_new (ptr_bar, NULL);
-            }
+        }
+        for (ptr_bar_win = GUI_CURSES(gui_windows)->bar_windows;
+             ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
+        {
+            gui_bar_window_calculate_pos_size (ptr_bar_win, gui_windows);
+            gui_bar_window_create_win (ptr_bar_win);
         }
     }
 }
@@ -169,6 +176,7 @@ void
 gui_main_loop ()
 {
     struct t_hook *hook_fd_keyboard;
+    struct t_gui_window *ptr_win;
     struct t_gui_buffer *ptr_buffer;
     struct timeval tv_timeout;
     fd_set read_fds, write_fds, except_fds;
@@ -198,12 +206,22 @@ gui_main_loop ()
         /* refresh window if needed */
         if (gui_window_refresh_needed)
             gui_window_refresh_screen (0);
-
+        
         /* refresh status bar if needed */
         if (gui_status_refresh_needed)
         {
             gui_status_draw (1);
             gui_status_refresh_needed = 0;
+        }
+        
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            if (ptr_win->refresh_needed)
+            {
+                gui_window_switch_to_buffer (ptr_win, ptr_win->buffer);
+                gui_window_redraw_buffer (ptr_win->buffer);
+                ptr_win->refresh_needed = 0;
+            }
         }
         
         for (ptr_buffer = gui_buffers; ptr_buffer;

@@ -39,6 +39,9 @@
 #include "gui-color.h"
 
 
+struct t_gui_color *gui_color[GUI_COLOR_NUM_COLORS]; /* GUI colors          */
+
+
 /*
  * gui_color_search_config: search a color with configuration option name
  *                          return color found (number >= 0), -1 if not found

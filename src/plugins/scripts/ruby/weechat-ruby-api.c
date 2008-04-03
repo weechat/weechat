@@ -3856,6 +3856,45 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE type, VALUE position,
 }
 
 /*
+ * weechat_ruby_api_bar_set: set a bar property
+ */
+
+static VALUE
+weechat_ruby_api_bar_set (VALUE class, VALUE bar, VALUE property, VALUE value)
+{
+    char *c_bar, *c_property, *c_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_set");
+        RUBY_RETURN_ERROR;
+    }
+    
+    if (NIL_P (bar) || NIL_P (property) || NIL_P (value))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_set");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (bar, T_STRING);
+    Check_Type (property, T_STRING);
+    Check_Type (value, T_STRING);
+    
+    c_bar = STR2CSTR (bar);
+    c_property = STR2CSTR (property);
+    c_value = STR2CSTR (value);
+    
+    weechat_buffer_set (script_str2ptr (c_bar),
+                        c_property,
+                        c_value);
+    
+    RUBY_RETURN_OK;
+}
+
+/*
  * weechat_ruby_api_bar_update: update a bar on screen
  */
 
@@ -4403,6 +4442,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "bar_item_remove", &weechat_ruby_api_bar_item_remove, 1);
     rb_define_module_function (ruby_mWeechat, "bar_search", &weechat_ruby_api_bar_search, 1);
     rb_define_module_function (ruby_mWeechat, "bar_new", &weechat_ruby_api_bar_new, 6);
+    rb_define_module_function (ruby_mWeechat, "bar_set", &weechat_ruby_api_bar_set, 3);
     rb_define_module_function (ruby_mWeechat, "bar_update", &weechat_ruby_api_bar_update, 1);
     rb_define_module_function (ruby_mWeechat, "bar_remove", &weechat_ruby_api_bar_remove, 1);
     rb_define_module_function (ruby_mWeechat, "command", &weechat_ruby_api_command, 2);

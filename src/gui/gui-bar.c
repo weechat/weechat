@@ -34,7 +34,7 @@
 
 
 char *gui_bar_type_str[GUI_BAR_NUM_TYPES] =
-{ "root", "window_active", "window_inactive" };
+{ "root", "window", "window_active", "window_inactive" };
 char *gui_bar_position_str[GUI_BAR_NUM_POSITIONS] =
 { "bottom", "top", "left", "right" };
 
@@ -43,11 +43,51 @@ struct t_gui_bar *last_gui_bar = NULL;           /* last bar                */
 
 
 /*
+ * gui_bar_get_type: get type number with string
+ *                   return -1 if type is not found
+ */
+
+int
+gui_bar_get_type (char *type)
+{
+    int i;
+    
+    for (i = 0; i < GUI_BAR_NUM_TYPES; i++)
+    {
+        if (string_strcasecmp (type, gui_bar_type_str[i]) == 0)
+            return i;
+    }
+    
+    /* type not found */
+    return -1;
+}
+
+/*
+ * gui_bar_get_position: get position number with string
+ *                       return -1 if type is not found
+ */
+
+int
+gui_bar_get_position (char *position)
+{
+    int i;
+    
+    for (i = 0; i < GUI_BAR_NUM_POSITIONS; i++)
+    {
+        if (string_strcasecmp (position, gui_bar_position_str[i]) == 0)
+            return i;
+    }
+    
+    /* position not found */
+    return -1;
+}
+
+/*
  * gui_bar_root_get_size: get total bar size ("root" type) for a position
  */
 
 int
-gui_bar_root_get_size (struct t_gui_bar *bar, int position)
+gui_bar_root_get_size (struct t_gui_bar *bar, enum t_gui_bar_position position)
 {
     struct t_gui_bar *ptr_bar;
     int total_size;
@@ -61,7 +101,7 @@ gui_bar_root_get_size (struct t_gui_bar *bar, int position)
         if ((ptr_bar->type == GUI_BAR_TYPE_ROOT)
             && (ptr_bar->position == position))
         {
-            total_size += ptr_bar->size;
+            total_size += ptr_bar->current_size;
             if (ptr_bar->separator)
                 total_size++;
         }
@@ -101,7 +141,7 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name, char *type,
 {
     struct t_gui_bar *new_bar;
     struct t_gui_window *ptr_win;
-    int i, type_value, position_value;
+    int type_value, position_value;
     
     if (!name || !name[0])
         return NULL;
@@ -111,28 +151,12 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name, char *type,
         return NULL;
     
     /* look for type */
-    type_value = -1;
-    for (i = 0; i < GUI_BAR_NUM_TYPES; i++)
-    {
-        if (string_strcasecmp (type, gui_bar_type_str[i]) == 0)
-        {
-            type_value = i;
-            break;
-        }
-    }
+    type_value = gui_bar_get_type (type);
     if (type_value < 0)
         return NULL;
     
     /* look for position */
-    position_value = -1;
-    for (i = 0; i < GUI_BAR_NUM_POSITIONS; i++)
-    {
-        if (string_strcasecmp (position, gui_bar_position_str[i]) == 0)
-        {
-            position_value = i;
-            break;
-        }
-    }
+    position_value = gui_bar_get_position (position);
     if (position_value < 0)
         return NULL;
     
@@ -146,6 +170,7 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name, char *type,
         new_bar->type = type_value;
         new_bar->position = position_value;
         new_bar->size = size;
+        new_bar->current_size = (size == 0) ? 1 : size;
         new_bar->separator = separator;
         if (items && items[0])
         {
@@ -161,10 +186,21 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name, char *type,
         }
         new_bar->bar_window = NULL;
         
+        /* add bar to bars queue */
+        new_bar->prev_bar = last_gui_bar;
+        if (gui_bars)
+            last_gui_bar->next_bar = new_bar;
+        else
+            gui_bars = new_bar;
+        last_gui_bar = new_bar;
+        new_bar->next_bar = NULL;
+        
+        /* add window bar */
         if (type_value == GUI_BAR_TYPE_ROOT)
         {
             /* create only one window for bar */
             gui_bar_window_new (new_bar, NULL);
+            gui_window_refresh_needed = 1;
         }
         else
         {
@@ -176,22 +212,133 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name, char *type,
             }
         }
         
-        /* add bar to bars queue */
-        new_bar->prev_bar = last_gui_bar;
-        if (gui_bars)
-            last_gui_bar->next_bar = new_bar;
-        else
-            gui_bars = new_bar;
-        last_gui_bar = new_bar;
-        new_bar->next_bar = NULL;
-        
-        gui_window_refresh_needed = 1;
-        
         return new_bar;
     }
     
     /* failed to create bar */
     return NULL;
+}
+
+/*
+ * gui_bar_set_name: set name for a bar
+ */
+
+void
+gui_bar_set_name (struct t_gui_bar *bar, char *name)
+{
+    if (name && name[0])
+    {
+        if (bar->name)
+            free (bar->name);
+        bar->name = strdup (name);
+    }
+}
+
+/*
+ * gui_bar_set_type: set type for a bar
+ */
+
+void
+gui_bar_set_type (struct t_gui_bar *bar, char *type)
+{
+    int type_value;
+    
+    (void) bar;
+    
+    if (type && type[0])
+    {
+        type_value = gui_bar_get_type (type);
+        if (type_value >= 0)
+        {
+        }
+    }
+}
+
+/*
+ * gui_bar_set_size: set size for a bar
+ */
+
+void
+gui_bar_set_size (struct t_gui_bar *bar, int size)
+{
+    if (size >= 0)
+    {
+        /* check if new size is ok */
+        if (size > bar->current_size
+            && !gui_bar_check_size_add (bar, size - bar->current_size))
+            return;
+        
+        bar->size = size;
+        bar->current_size = (size == 0) ? 1 : size;
+    }
+}
+
+/*
+ * gui_bar_set_items: set items for a bar
+ */
+
+void
+gui_bar_set_items (struct t_gui_bar *bar, char *items)
+{
+    if (bar->items)
+        free (bar->items);
+    if (bar->items_array)
+        string_free_exploded (bar->items_array);
+    
+    if (items && items[0])
+    {
+        bar->items = strdup (items);
+        bar->items_array = string_explode (items, ",", 0, 0,
+                                           &bar->items_count);
+    }
+    else
+    {
+        bar->items = NULL;
+        bar->items_count = 0;
+        bar->items_array = NULL;
+    }
+}
+
+/*
+ * gui_bar_set: set a property for bar
+ */
+
+void
+gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
+{
+    long number;
+    char *error;
+    
+    if (!bar || !property || !value)
+        return;
+    
+    if (string_strcasecmp (property, "name") == 0)
+    {
+        gui_bar_set_name (bar, value);
+    }
+    else if (string_strcasecmp (property, "type") == 0)
+    {
+        gui_bar_set_type (bar, value);
+    }
+    else if (string_strcasecmp (property, "position") == 0)
+    {
+        
+    }
+    else if (string_strcasecmp (property, "size") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0])
+            gui_bar_set_size (bar, number);
+    }
+    else if (string_strcasecmp (property, "separator") == 0)
+    {
+        bar->separator = (string_strcasecmp (value, "1") == 0) ? 1 : 0;
+    }
+    else if (string_strcasecmp (property, "items") == 0)
+    {
+        gui_bar_set_items (bar, value);
+    }
 }
 
 /*
@@ -217,11 +364,20 @@ gui_bar_update (char *name)
 void
 gui_bar_free (struct t_gui_bar *bar)
 {
+    /* remove bar window(s) */
+    if (bar->bar_window)
+    {
+        gui_bar_window_free (bar->bar_window, NULL);
+        gui_window_refresh_needed = 1;
+    }
+    else
+        gui_bar_free_bar_windows (bar);
+    
     /* remove bar from bars list */
     if (bar->prev_bar)
-        bar->prev_bar->next_bar = bar->next_bar;
+        (bar->prev_bar)->next_bar = bar->next_bar;
     if (bar->next_bar)
-        bar->next_bar->prev_bar = bar->prev_bar;
+        (bar->next_bar)->prev_bar = bar->prev_bar;
     if (gui_bars == bar)
         gui_bars = bar->next_bar;
     if (last_gui_bar == bar)
@@ -230,16 +386,12 @@ gui_bar_free (struct t_gui_bar *bar)
     /* free data */
     if (bar->name)
         free (bar->name);
-    if (bar->bar_window)
-        gui_bar_window_free (bar->bar_window);
     if (bar->items)
         free (bar->items);
     if (bar->items_array)
         string_free_exploded (bar->items_array);
     
     free (bar);
-    
-    gui_window_refresh_needed = 1;
 }
 
 /*
@@ -299,6 +451,7 @@ gui_bar_print_log ()
                     ptr_bar->position,
                     gui_bar_position_str[ptr_bar->position]);
         log_printf ("  size . . . . . . . . . : %d",   ptr_bar->size);
+        log_printf ("  current_size . . . . . : %d",   ptr_bar->current_size);
         log_printf ("  separator. . . . . . . : %d",   ptr_bar->separator);
         log_printf ("  items. . . . . . . . . : '%s'", ptr_bar->items);
         log_printf ("  items_count. . . . . . : %d",   ptr_bar->items_count);

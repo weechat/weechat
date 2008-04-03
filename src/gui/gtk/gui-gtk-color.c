@@ -54,8 +54,6 @@ struct t_gui_color gui_weechat_colors[] =
   { 0,                     0, 0,        NULL           }
 };
 
-struct t_gui_color *gui_color[GUI_NUM_COLORS];
-
 
 /*
  * gui_color_search: search a color by name
@@ -121,7 +119,7 @@ gui_color_get_pair (int num_color)
 {
     int fg, bg;
     
-    if ((num_color < 0) || (num_color > GUI_NUM_COLORS - 1))
+    if ((num_color < 0) || (num_color > GUI_COLOR_NUM_COLORS - 1))
         return WEECHAT_COLOR_WHITE;
     
     fg = gui_color[num_color]->foreground;
@@ -167,7 +165,7 @@ gui_color_rebuild_weechat ()
 {
     int i;
     
-    for (i = 0; i < GUI_NUM_COLORS; i++)
+    for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
     {
         if (gui_color[i])
         {
@@ -178,6 +176,21 @@ gui_color_rebuild_weechat ()
         }
     }
     gui_color_init_weechat ();
+}
+
+/*
+ * gui_color_pre_init: pre-init colors
+ */
+
+void
+gui_color_pre_init ()
+{
+    int i;
+    
+    for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
+    {
+        gui_color[i] = NULL;
+    }
 }
 
 /*
@@ -200,7 +213,7 @@ gui_color_end ()
 {
     int i;
     
-    for (i = 0; i < GUI_NUM_COLORS; i++)
+    for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
     {
         gui_color_free (gui_color[i]);
     }

@@ -341,6 +341,7 @@ struct t_weechat_plugin
     struct t_gui_bar *(*bar_new) (struct t_weechat_plugin *plugin, char *name,
                                   char *type, char *position, int size,
                                   int separator, char *items);
+    void (*bar_set) (struct t_gui_bar *bar, char *property, char *value);
     void (*bar_update) (char *name);
     void (*bar_remove) (struct t_gui_bar *bar);
     
@@ -694,6 +695,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                         __separator, __items)                           \
     weechat_plugin->bar_new(weechat_plugin, __name, __type, __position, \
                             __size, __separator, __items)
+#define weechat_bar_set(__bar, __property, __value)     \
+    weechat_plugin->bar_set(__bar, __property, __value)
 #define weechat_bar_update(__name)              \
     weechat_plugin->bar_update(__name)
 #define weechat_bar_remove(__bar)               \

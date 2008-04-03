@@ -3139,6 +3139,38 @@ static XS (XS_weechat_bar_new)
 }
 
 /*
+ * weechat::bar_set: set a bar property
+ */
+
+static XS (XS_weechat_bar_set)
+{
+    char *bar, *property, *value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("bar_set");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_set");
+        PERL_RETURN_ERROR;
+    }
+    
+    bar = SvPV (ST (0), PL_na);
+    property = SvPV (ST (1), PL_na);
+    value = SvPV (ST (2), PL_na);
+    weechat_bar_set (script_str2ptr (bar), property, value);
+    
+    PERL_RETURN_OK;
+}
+
+/*
  * weechat::bar_update: update a bar on screen
  */
 
@@ -3621,6 +3653,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::bar_item_remove", XS_weechat_bar_item_remove, "weechat");
     newXS ("weechat::bar_search", XS_weechat_bar_search, "weechat");
     newXS ("weechat::bar_new", XS_weechat_bar_new, "weechat");
+    newXS ("weechat::bar_set", XS_weechat_bar_set, "weechat");
     newXS ("weechat::bar_update", XS_weechat_bar_update, "weechat");
     newXS ("weechat::bar_remove", XS_weechat_bar_remove, "weechat");
     newXS ("weechat::command", XS_weechat_command, "weechat");
