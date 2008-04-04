@@ -82,6 +82,7 @@ extern struct t_gui_bar *gui_bar_search (char *name);
 extern struct t_gui_bar *gui_bar_new (struct t_weechat_plugin *plugin,
                                       char *name, char *type, char *position,
                                       int size, int separator, char *items);
+extern void gui_bar_set_current_size (struct t_gui_bar *bar, int current_size);
 extern void gui_bar_set (struct t_gui_bar *bar, char *property, char *value);
 extern void gui_bar_update (char *name);
 extern void gui_bar_free (struct t_gui_bar *bar);

@@ -381,6 +381,40 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
 }
 
 /*
+ * gui_bar_window_recreate_bar_windows: recreate bar windows for all windows
+ */
+
+void
+gui_bar_window_recreate_bar_windows (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
+
+    if (bar->type == GUI_BAR_TYPE_ROOT)
+    {
+        gui_bar_window_calculate_pos_size (bar->bar_window, NULL);
+        gui_bar_window_create_win (bar->bar_window);
+        gui_window_refresh_needed = 1;
+    }
+    else
+    {
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            for (ptr_bar_win = GUI_CURSES(ptr_win)->bar_windows;
+                 ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
+            {
+                if (ptr_bar_win->bar == bar)
+                {
+                    gui_bar_window_calculate_pos_size (ptr_bar_win, ptr_win);
+                    gui_bar_window_create_win (ptr_bar_win);
+                    ptr_win->refresh_needed = 1;
+                }
+            }
+        }
+    }
+}
+
+/*
  * gui_bar_window_free: free a bar window
  */
 
@@ -585,8 +619,9 @@ void
 gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                      struct t_gui_window *window)
 {
-    int x, y, i, max_width, max_height, items_count, num_lines, line;
-    char *item_value, *item_value2, **items;
+    int x, y, i, items_count, num_lines, line;
+    char *content, *item_value, *item_value2, **items;
+    int content_length, length, max_length;
     struct t_gui_bar_item *ptr_item;
     
     if ((bar_window->bar->position == GUI_BAR_POSITION_LEFT)
@@ -595,55 +630,151 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     else
         gui_window_curses_clear (bar_window->win_bar, GUI_COLOR_STATUS);
     
-    max_width = bar_window->width;
-    max_height = bar_window->height;
-    
-    x = 0;
-    y = 0;
-    
-    /* for each item of bar */
-    for (i = 0; i < bar_window->bar->items_count; i++)
+    if (bar_window->bar->size == 0)
     {
-        ptr_item = gui_bar_item_search (bar_window->bar->items_array[i]);
-        if (ptr_item && ptr_item->build_callback)
+        content = NULL;
+        content_length = 1;
+        for (i = 0; i < bar_window->bar->items_count; i++)
         {
-            item_value = (ptr_item->build_callback) (ptr_item->build_callback_data,
-                                                     ptr_item, window,
-                                                     max_width, max_height);
-            if (item_value)
+            ptr_item = gui_bar_item_search (bar_window->bar->items_array[i]);
+            if (ptr_item && ptr_item->build_callback)
             {
-                if (item_value[0])
+                item_value = (ptr_item->build_callback) (ptr_item->build_callback_data,
+                                                         ptr_item, window,
+                                                         0, 0);
+                if (item_value)
                 {
-                    /* replace \n by spaces when height is 1 */
-                    item_value2 = (max_height == 1) ?
-                        string_replace (item_value, "\n", " ") : NULL;
-                    items = string_explode ((item_value2) ? item_value2 : item_value,
-                                            "\n", 0, 0,
-                                            &items_count);
-                    num_lines = (items_count <= max_height) ?
-                        items_count : max_height;
-                    for (line = 0; line < num_lines; line++)
+                    if (item_value[0])
                     {
-                        wmove (bar_window->win_bar, y, x);
-                        x += gui_bar_window_print_string (bar_window,
-                                                          items[line],
-                                                          max_width);
-                        if (num_lines > 1)
+                        if (!content)
                         {
-                            x = 0;
-                            y++;
+                            content_length += strlen (item_value);
+                            content = strdup (item_value);
+                        }
+                        else
+                        {
+                            content_length += 1 + strlen (item_value);
+                            content = realloc (content, content_length);
+                            if ((bar_window->bar->position == GUI_BAR_POSITION_LEFT)
+                                || (bar_window->bar->position == GUI_BAR_POSITION_RIGHT))
+                            {
+                                strcat (content, "\n");
+                            }
+                            strcat (content, item_value);
                         }
                     }
-                    if (item_value2)
-                        free (item_value2);
-                    if (items)
-                        string_free_exploded (items);
+                    free (item_value);
                 }
-                free (item_value);
+            }
+        }
+        if (content)
+        {
+            items = string_explode (content, "\n", 0, 0, &items_count);
+            if (items_count == 0)
+            {
+                gui_bar_set_current_size (bar_window->bar, 1);
+            }
+            else
+            {
+                switch (bar_window->bar->position)
+                {
+                    case GUI_BAR_POSITION_BOTTOM:
+                    case GUI_BAR_POSITION_TOP:
+                        if (bar_window->bar->current_size != items_count)
+                        {
+                            gui_bar_set_current_size (bar_window->bar, items_count);
+                            gui_bar_window_recreate_bar_windows (bar_window->bar);
+                        }
+                        break;
+                    case GUI_BAR_POSITION_LEFT:
+                    case GUI_BAR_POSITION_RIGHT:
+                        /* search longer line */
+                        max_length = 0;
+                        for (line = 0; line < items_count; line++)
+                        {
+                            length = gui_chat_strlen_screen (items[line]);
+                            if (length > max_length)
+                                max_length = length;
+                        }
+                        if (max_length == 0)
+                            max_length = 1;
+                        if (bar_window->bar->current_size != max_length)
+                        {
+                            gui_bar_set_current_size (bar_window->bar,
+                                                      max_length);
+                            gui_bar_window_recreate_bar_windows (bar_window->bar);
+                        }
+                        break;
+                    case GUI_BAR_NUM_POSITIONS:
+                        /* make C compiler happy */
+                        break;
+                }
+                x = 0;
+                y = 0;
+                for (line = 0; line < items_count; line++)
+                {
+                    wmove (bar_window->win_bar, y, x);
+                    x += gui_bar_window_print_string (bar_window,
+                                                      items[line],
+                                                      bar_window->width);
+                    x = 0;
+                    y++;
+                }
+            }
+            if (items)
+                string_free_exploded (items);
+            free (content);
+        }
+    }
+    else
+    {
+        x = 0;
+        y = 0;
+        
+        for (i = 0; i < bar_window->bar->items_count; i++)
+        {
+            ptr_item = gui_bar_item_search (bar_window->bar->items_array[i]);
+            if (ptr_item && ptr_item->build_callback)
+            {
+                item_value = (ptr_item->build_callback) (ptr_item->build_callback_data,
+                                                         ptr_item, window,
+                                                         bar_window->width,
+                                                         bar_window->height);
+                if (item_value)
+                {
+                    if (item_value[0])
+                    {
+                        /* replace \n by spaces when height is 1 */
+                        item_value2 = (bar_window->height == 1) ?
+                            string_replace (item_value, "\n", " ") : NULL;
+                        items = string_explode ((item_value2) ? item_value2 : item_value,
+                                                "\n", 0, 0,
+                                                &items_count);
+                        num_lines = (items_count <= bar_window->height) ?
+                            items_count : bar_window->height;
+                        for (line = 0; line < num_lines; line++)
+                        {
+                            wmove (bar_window->win_bar, y, x);
+                            x += gui_bar_window_print_string (bar_window,
+                                                              items[line],
+                                                              bar_window->width);
+                            if (num_lines > 1)
+                            {
+                                x = 0;
+                                y++;
+                            }
+                        }
+                        if (item_value2)
+                            free (item_value2);
+                        if (items)
+                            string_free_exploded (items);
+                    }
+                    free (item_value);
+                }
             }
         }
     }
-    
+        
     wnoutrefresh (bar_window->win_bar);
     
     if (bar_window->bar->separator)
@@ -680,7 +811,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
         }
         wnoutrefresh (bar_window->win_separator);
     }
-
+    
     refresh ();
 }
 

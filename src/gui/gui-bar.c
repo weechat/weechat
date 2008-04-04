@@ -266,12 +266,12 @@ gui_bar_refresh (struct t_gui_bar *bar)
 void
 gui_bar_set_name (struct t_gui_bar *bar, char *name)
 {
-    if (name && name[0])
-    {
-        if (bar->name)
-            free (bar->name);
-        bar->name = strdup (name);
-    }
+    if (!name || !name[0])
+        return;
+    
+    if (bar->name)
+        free (bar->name);
+    bar->name = strdup (name);
 }
 
 /*
@@ -360,8 +360,6 @@ gui_bar_set_number (struct t_gui_bar *bar, int number)
                 gui_bar_window_new (ptr_bar, ptr_win);
         }
     }
-    
-    gui_window_refresh_needed = 1;
 }
 
 /*
@@ -373,15 +371,35 @@ gui_bar_set_position (struct t_gui_bar *bar, char *position)
 {
     int position_value;
     
-    if (position && position[0])
+    if (!position || !position[0])
+        return;
+    
+    position_value = gui_bar_get_position (position);
+    if ((position_value >= 0) && ((int)bar->position != position_value))
     {
-        position_value = gui_bar_get_position (position);
-        if ((position_value >= 0) && ((int)bar->position != position_value))
-        {
-            bar->position = position_value;
-            gui_bar_refresh (bar);
-        }
+        bar->position = position_value;
     }
+}
+
+/*
+ * gui_bar_set_current_size: set current size for a bar
+ */
+
+void
+gui_bar_set_current_size (struct t_gui_bar *bar, int current_size)
+{
+    if (current_size < 0)
+        return;
+    
+    if (current_size == 0)
+        current_size = 1;
+    
+    /* check if new size is ok if it's more than before */
+    if (current_size > bar->current_size
+        && !gui_bar_check_size_add (bar, current_size - bar->current_size))
+        return;
+    
+    bar->current_size = current_size;
 }
 
 /*
@@ -391,18 +409,16 @@ gui_bar_set_position (struct t_gui_bar *bar, char *position)
 void
 gui_bar_set_size (struct t_gui_bar *bar, int size)
 {
-    if (size >= 0)
-    {
-        /* check if new size is ok */
-        if (size > bar->current_size
-            && !gui_bar_check_size_add (bar, size - bar->current_size))
-            return;
-        
-        bar->size = size;
-        bar->current_size = (size == 0) ? 1 : size;
-        
-        gui_bar_refresh (bar);
-    }
+    if (size < 0)
+        return;
+    
+    /* check if new size is ok if it's more than before */
+    if (size > bar->current_size
+        && !gui_bar_check_size_add (bar, size - bar->current_size))
+        return;
+    
+    bar->size = size;
+    bar->current_size = (size == 0) ? 1 : size;
 }
 
 /*
@@ -440,6 +456,7 @@ gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
 {
     long number;
     char *error;
+    int new_size;
     
     if (!bar || !property || !value)
         return;
@@ -453,18 +470,35 @@ gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
         error = NULL;
         number = strtol (value, &error, 10);
         if (error && !error[0])
+        {
             gui_bar_set_number (bar, number);
+            gui_window_refresh_needed = 1;
+        }
     }
     else if (string_strcasecmp (property, "position") == 0)
     {
         gui_bar_set_position (bar, value);
+        gui_bar_refresh (bar);
     }
     else if (string_strcasecmp (property, "size") == 0)
     {
         error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
-            gui_bar_set_size (bar, number);
+        number = strtol (((value[0] == '+') || (value[0] == '-')) ?
+                         value + 1 : value,
+                         &error,
+                         10);
+        if (!error || error[0])
+            return;
+        if (value[0] == '+')
+            new_size = bar->current_size + number;
+        else if (value[0] == '-')
+            new_size = bar->current_size - number;
+        else
+            new_size = number;
+        if ((value[0] == '-') && (new_size < 1))
+            return;
+        gui_bar_set_size (bar, new_size);
+        gui_bar_refresh (bar);
     }
     else if (string_strcasecmp (property, "separator") == 0)
     {
