@@ -119,10 +119,9 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
     if (ruby_current_script)
     {
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s: registered script \"%s\", "
+                        weechat_gettext ("%s: registered script \"%s\", "
                                          "version %s (%s)"),
-                        weechat_prefix ("info"), "ruby",
-                        c_name, c_version, c_description);
+                        "ruby", c_name, c_version, c_description);
     }
     else
     {
@@ -922,9 +921,9 @@ weechat_ruby_api_config_reload_cb (void *data,
  */
 
 static VALUE
-weechat_ruby_api_config_new (VALUE class, VALUE filename, VALUE function)
+weechat_ruby_api_config_new (VALUE class, VALUE name, VALUE function)
 {
-    char *c_filename, *c_function, *result;
+    char *c_name, *c_function, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -936,24 +935,24 @@ weechat_ruby_api_config_new (VALUE class, VALUE filename, VALUE function)
         RUBY_RETURN_EMPTY;
     }
     
-    c_filename = NULL;
+    c_name = NULL;
     c_function = NULL;
     
-    if (NIL_P (filename) || NIL_P (function))
+    if (NIL_P (name) || NIL_P (function))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new");
         RUBY_RETURN_EMPTY;
     }
     
-    Check_Type (filename, T_STRING);
+    Check_Type (name, T_STRING);
     Check_Type (function, T_STRING);
     
-    c_filename = STR2CSTR (filename);
+    c_name = STR2CSTR (name);
     c_function = STR2CSTR (function);
     
     result = script_ptr2str (script_api_config_new (weechat_ruby_plugin,
                                                     ruby_current_script,
-                                                    c_filename,
+                                                    c_name,
                                                     &weechat_ruby_api_config_reload_cb,
                                                     c_function));
     
@@ -1062,6 +1061,54 @@ weechat_ruby_api_config_section_write_default_cb (void *data,
 }
 
 /*
+ * weechat_ruby_api_config_section_create_option_cb: callback to create an option
+ */
+
+int
+weechat_ruby_api_config_section_create_option_cb (void *data,
+                                                  struct t_config_file *config_file,
+                                                  struct t_config_section *section,
+                                                  char *option_name,
+                                                  char *value)
+{
+    struct t_script_callback *script_callback;
+    char *ruby_argv[5];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback->function && script_callback->function[0])
+    {
+        ruby_argv[0] = script_ptr2str (config_file);
+        ruby_argv[1] = script_ptr2str (section);
+        ruby_argv[2] = option_name;
+        ruby_argv[3] = value;
+        ruby_argv[4] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (ruby_argv[0])
+            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
+        
+        return ret;
+    }
+    
+    return 0;
+}
+
+/*
  * weechat_ruby_api_config_new_section: create a new section in configuration file
  */
 
@@ -1069,10 +1116,12 @@ static VALUE
 weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
                                      VALUE name, VALUE function_read,
                                      VALUE function_write,
-                                     VALUE function_write_default)
+                                     VALUE function_write_default,
+                                     VALUE function_create_option)
 {
     char *c_config_file, *c_name, *c_function_read, *c_function_write;
-    char *c_function_write_default, *result;
+    char *c_function_write_default, *c_function_create_option;
+    char *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -1089,9 +1138,11 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
     c_function_read = NULL;
     c_function_write = NULL;
     c_function_write_default = NULL;
+    c_function_create_option = NULL;
     
     if (NIL_P (config_file) || NIL_P (name) || NIL_P (function_read)
-        || NIL_P (function_write) || NIL_P (function_write_default))
+        || NIL_P (function_write) || NIL_P (function_write_default)
+        || NIL_P (function_create_option))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
         RUBY_RETURN_EMPTY;
@@ -1102,12 +1153,14 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
     Check_Type (function_read, T_STRING);
     Check_Type (function_write, T_STRING);
     Check_Type (function_write_default, T_STRING);
+    Check_Type (function_create_option, T_STRING);
     
     c_config_file = STR2CSTR (config_file);
     c_name = STR2CSTR (name);
     c_function_read = STR2CSTR (function_read);
     c_function_write = STR2CSTR (function_write);
     c_function_write_default = STR2CSTR (function_write_default);
+    c_function_create_option = STR2CSTR (function_create_option);
     
     result = script_ptr2str (script_api_config_new_section (weechat_ruby_plugin,
                                                             ruby_current_script,
@@ -1118,7 +1171,9 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
                                                             &weechat_ruby_api_config_section_write_cb,
                                                             c_function_write,
                                                             &weechat_ruby_api_config_section_write_default_cb,
-                                                            c_function_write_default));
+                                                            c_function_write_default,
+                                                            &weechat_ruby_api_config_section_create_option_cb,
+                                                            c_function_create_option));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -2606,19 +2661,17 @@ weechat_ruby_api_hook_signal_send (VALUE class, VALUE signal, VALUE type_data,
  */
 
 int
-weechat_ruby_api_hook_config_cb (void *data, char *type, char *option,
-                                 char *value)
+weechat_ruby_api_hook_config_cb (void *data, char *option, char *value)
 {
     struct t_script_callback *script_callback;
-    char *ruby_argv[4];
+    char *ruby_argv[3];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
-    ruby_argv[0] = type;
-    ruby_argv[1] = option;
-    ruby_argv[2] = value;
-    ruby_argv[3] = NULL;
+    ruby_argv[0] = option;
+    ruby_argv[1] = value;
+    ruby_argv[2] = NULL;
     
     rc = (int *) weechat_ruby_exec (script_callback->script,
                                     WEECHAT_SCRIPT_EXEC_INT,
@@ -2641,10 +2694,9 @@ weechat_ruby_api_hook_config_cb (void *data, char *type, char *option,
  */
 
 static VALUE
-weechat_ruby_api_hook_config (VALUE class, VALUE type, VALUE option,
-                              VALUE function)
+weechat_ruby_api_hook_config (VALUE class, VALUE option, VALUE function)
 {
-    char *c_type, *c_option, *c_function, *result;
+    char *c_option, *c_function, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -2656,27 +2708,23 @@ weechat_ruby_api_hook_config (VALUE class, VALUE type, VALUE option,
         RUBY_RETURN_EMPTY;
     }
     
-    c_type = NULL;
     c_option = NULL;
     c_function = NULL;
     
-    if (NIL_P (type) || NIL_P (option) || NIL_P (function))
+    if (NIL_P (option) || NIL_P (function))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_config");
         RUBY_RETURN_EMPTY;
     }
     
-    Check_Type (type, T_STRING);
     Check_Type (option, T_STRING);
     Check_Type (function, T_STRING);
     
-    c_type = STR2CSTR (type);
     c_option = STR2CSTR (option);
     c_function = STR2CSTR (function);
     
     result = script_ptr2str (script_api_hook_config (weechat_ruby_plugin,
                                                      ruby_current_script,
-                                                     c_type,
                                                      c_option,
                                                      &weechat_ruby_api_hook_config_cb,
                                                      c_function));
@@ -4388,7 +4436,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "list_remove_all", &weechat_ruby_api_list_remove_all, 1);
     rb_define_module_function (ruby_mWeechat, "list_free", &weechat_ruby_api_list_free, 1);
     rb_define_module_function (ruby_mWeechat, "config_new", &weechat_ruby_api_config_new, 2);
-    rb_define_module_function (ruby_mWeechat, "config_new_section", &weechat_ruby_api_config_new_section, 5);
+    rb_define_module_function (ruby_mWeechat, "config_new_section", &weechat_ruby_api_config_new_section, 6);
     rb_define_module_function (ruby_mWeechat, "config_search_section", &weechat_ruby_api_config_search_section, 2);
     rb_define_module_function (ruby_mWeechat, "config_new_option", &weechat_ruby_api_config_new_option, 10);
     rb_define_module_function (ruby_mWeechat, "config_search_option", &weechat_ruby_api_config_search_option, 3);
@@ -4417,7 +4465,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "hook_print", &weechat_ruby_api_hook_print, 5);
     rb_define_module_function (ruby_mWeechat, "hook_signal", &weechat_ruby_api_hook_signal, 2);
     rb_define_module_function (ruby_mWeechat, "hook_signal_send", &weechat_ruby_api_hook_signal_send, 3);
-    rb_define_module_function (ruby_mWeechat, "hook_config", &weechat_ruby_api_hook_config, 3);
+    rb_define_module_function (ruby_mWeechat, "hook_config", &weechat_ruby_api_hook_config, 2);
     rb_define_module_function (ruby_mWeechat, "hook_completion", &weechat_ruby_api_hook_completion, 2);
     rb_define_module_function (ruby_mWeechat, "hook_modifier", &weechat_ruby_api_hook_modifier, 2);
     rb_define_module_function (ruby_mWeechat, "hook_modifier_exec", &weechat_ruby_api_hook_modifier_exec, 3);

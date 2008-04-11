@@ -51,7 +51,7 @@ irc_nick_find_color (struct t_irc_nick *nick)
              weechat_config_integer (weechat_config_get_weechat ("look_color_nicks_number")));
 
     snprintf (color_name, sizeof (color_name),
-              "color_chat_nick_color%d", color);
+              "chat_nick_color%d", color);
     
     return weechat_color (color_name);
 }
@@ -165,7 +165,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         irc_nick_get_gui_infos (channel->buffer, ptr_nick, &prefix,
                                 &prefix_color, &ptr_group);
         snprintf (str_prefix_color, sizeof (str_prefix_color),
-                  "color_nicklist_prefix%d",
+                  "nicklist_prefix%d",
                   prefix_color);
         weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                    ptr_nick->name, ptr_nick->color,
@@ -211,7 +211,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     irc_nick_get_gui_infos (channel->buffer, new_nick, &prefix, &prefix_color,
                             &ptr_group);
     snprintf (str_prefix_color, sizeof (str_prefix_color),
-              "color_nicklist_prefix%d",
+              "nicklist_prefix%d",
               prefix_color);
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                new_nick->name, new_nick->color,
@@ -263,7 +263,7 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
     irc_nick_get_gui_infos (channel->buffer, nick, &prefix, &prefix_color,
                             &ptr_group);
     snprintf (str_prefix_color, sizeof (str_prefix_color),
-                  "color_nicklist_prefix%d",
+                  "nicklist_prefix%d",
                   prefix_color);
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                nick->name, nick->color,
@@ -280,8 +280,8 @@ irc_nick_set (struct t_irc_channel *channel,
 {
     char prefix, str_prefix_color[64];
     int prefix_color;
-    
     struct t_gui_nick_group *ptr_group;
+    
     /* remove nick from nicklist */
     irc_nick_get_gui_infos (channel->buffer, nick, &prefix,
                             &prefix_color, &ptr_group);
@@ -297,7 +297,7 @@ irc_nick_set (struct t_irc_channel *channel,
     irc_nick_get_gui_infos (channel->buffer, nick, &prefix,
                             &prefix_color, &ptr_group);
     snprintf (str_prefix_color, sizeof (str_prefix_color),
-              "color_nicklist_prefix%d",
+              "nicklist_prefix%d",
               prefix_color);
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                nick->name, nick->color,
@@ -481,20 +481,20 @@ irc_nick_as_prefix (struct t_irc_nick *nick, char *nickname, char *force_color)
     static char result[256];
     
     snprintf (result, sizeof (result), "%s%s%s%s%s%s\t",
-              (weechat_config_string (irc_config_irc_nick_prefix)
-               && weechat_config_string (irc_config_irc_nick_prefix)[0]) ?
+              (weechat_config_string (irc_config_look_nick_prefix)
+               && weechat_config_string (irc_config_look_nick_prefix)[0]) ?
               IRC_COLOR_CHAT_DELIMITERS : "",
-              (weechat_config_string (irc_config_irc_nick_prefix)
-               && weechat_config_string (irc_config_irc_nick_prefix)[0]) ?
-              weechat_config_string (irc_config_irc_nick_prefix) : "",
+              (weechat_config_string (irc_config_look_nick_prefix)
+               && weechat_config_string (irc_config_look_nick_prefix)[0]) ?
+              weechat_config_string (irc_config_look_nick_prefix) : "",
               (force_color) ? force_color : ((nick) ? nick->color : IRC_COLOR_CHAT_NICK),
               (nick) ? nick->name : nickname,
-              (weechat_config_string (irc_config_irc_nick_suffix)
-               && weechat_config_string (irc_config_irc_nick_suffix)[0]) ?
+              (weechat_config_string (irc_config_look_nick_suffix)
+               && weechat_config_string (irc_config_look_nick_suffix)[0]) ?
               IRC_COLOR_CHAT_DELIMITERS : "",
-              (weechat_config_string (irc_config_irc_nick_suffix)
-               && weechat_config_string (irc_config_irc_nick_suffix)[0]) ?
-              weechat_config_string (irc_config_irc_nick_suffix) : "");
+              (weechat_config_string (irc_config_look_nick_suffix)
+               && weechat_config_string (irc_config_look_nick_suffix)[0]) ?
+              weechat_config_string (irc_config_look_nick_suffix) : "");
     
     return result;
 }

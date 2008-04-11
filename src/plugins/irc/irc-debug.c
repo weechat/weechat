@@ -83,12 +83,12 @@ irc_debug_printf (struct t_irc_server *server, int send, int modified,
     
     weechat_printf (irc_debug_buffer,
                     "%s%s%s%s%s\t%s",
-                    (server) ? weechat_color ("color_chat_server") : "",
+                    (server) ? weechat_color ("chat_server") : "",
                     (server) ? server->name : "",
                     (server) ? " " : "",
                     (send) ?
-                    weechat_color ("color_chat_prefix_quit") :
-                    weechat_color ("color_chat_prefix_join"),
+                    weechat_color ("chat_prefix_quit") :
+                    weechat_color ("chat_prefix_join"),
                     (send) ?
                     ((modified) ? IRC_DEBUG_PREFIX_SEND_MOD : IRC_DEBUG_PREFIX_SEND) :
                     ((modified) ? IRC_DEBUG_PREFIX_RECV_MOD : IRC_DEBUG_PREFIX_RECV),

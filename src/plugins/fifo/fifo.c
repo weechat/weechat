@@ -35,7 +35,7 @@ WEECHAT_PLUGIN_DESCRIPTION("Fifo plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
-WEECHAT_PLUGIN_LICENSE("GPL");
+WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_fifo_plugin = NULL;
 #define weechat_plugin weechat_fifo_plugin
@@ -94,8 +94,8 @@ fifo_create ()
                                      O_RDONLY | O_NONBLOCK)) != -1)
                 {
                     weechat_printf (NULL,
-                                    _("%s%s: pipe open"),
-                                    weechat_prefix ("info"), "fifo"),
+                                    _("%s: pipe open"),
+                                    "fifo"),
                     rc = 1;
                 }
                 else
@@ -148,8 +148,8 @@ fifo_remove ()
     }
     
     weechat_printf (NULL,
-                    _("%s%s: pipe closed"),
-                    weechat_prefix ("info"), "fifo");
+                    _("%s: pipe closed"),
+                    "fifo");
 }
 
 /*
@@ -320,11 +320,10 @@ fifo_read ()
  */
 
 int
-fifo_config_cb (void *data, char *type, char *option, char *value)
+fifo_config_cb (void *data, char *option, char *value)
 {
     /* make C compiler happy */
     (void) data;
-    (void) type;
     (void) option;
     
     if (weechat_strcasecmp (value, "on") == 0)
@@ -354,7 +353,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
         fifo_fd_hook = weechat_hook_fd (fifo_fd, 1, 0, 0,
                                         &fifo_read, NULL);
     
-    weechat_hook_config ("plugin", "fifo.fifo", &fifo_config_cb, NULL);
+    weechat_hook_config ("plugins.var.fifo.fifo", &fifo_config_cb, NULL);
     
     return WEECHAT_RC_OK;
 }

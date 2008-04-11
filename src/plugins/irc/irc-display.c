@@ -344,31 +344,31 @@ irc_display_server (struct t_irc_server *server, int with_detail)
                         _("connected") : _("not connected"),
                         IRC_COLOR_CHAT_DELIMITERS);
         
-        weechat_printf (NULL, "  server_autoconnect . . . . : %s%s",
+        weechat_printf (NULL, "  autoconnect . . . . : %s%s",
                         (server->autoconnect) ? _("on") : _("off"),
                         (server->temp_server) ?
                         _(" (temporary server, will not be saved)") : "");
-        weechat_printf (NULL, "  server_autoreconnect . . . : %s",
+        weechat_printf (NULL, "  autoreconnect . . . : %s",
                         (server->autoreconnect) ? _("on") : _("off"));
-        weechat_printf (NULL, "  server_autoreconnect_delay : %d %s",
+        weechat_printf (NULL, "  autoreconnect_delay : %d %s",
                         server->autoreconnect_delay,
                         NG_("second", "seconds", server->autoreconnect_delay));
-        weechat_printf (NULL, "  server_addresses . . . . . : %s",
+        weechat_printf (NULL, "  addresses . . . . . : %s",
                         server->addresses);
-        weechat_printf (NULL, "  server_ipv6  . . . . . . . : %s",
+        weechat_printf (NULL, "  ipv6  . . . . . . . : %s",
                         (server->ipv6) ? _("on") : _("off"));
-        weechat_printf (NULL, "  server_ssl . . . . . . . . : %s",
+        weechat_printf (NULL, "  ssl . . . . . . . . : %s",
                         (server->ssl) ? _("on") : _("off"));
-        weechat_printf (NULL, "  server_password  . . . . . : %s",
+        weechat_printf (NULL, "  password  . . . . . : %s",
                         (server->password && server->password[0]) ?
                         _("(hidden)") : "");
-        weechat_printf (NULL, "  server_nicks . . . . . . . : %s",
+        weechat_printf (NULL, "  nicks . . . . . . . : %s",
                         server->nicks);
-        weechat_printf (NULL, "  server_username  . . . . . : %s",
+        weechat_printf (NULL, "  username  . . . . . : %s",
                         server->username);
-        weechat_printf (NULL, "  server_realname  . . . . . : %s",
+        weechat_printf (NULL, "  realname  . . . . . : %s",
                         server->realname);
-        weechat_printf (NULL, "  server_hostname  . . . . . : %s",
+        weechat_printf (NULL, "  hostname  . . . . . : %s",
                         (server->hostname) ? server->hostname : "");
         if (server->command && server->command[0])
             string = strdup (server->command);
@@ -378,21 +378,21 @@ irc_display_server (struct t_irc_server *server, int with_detail)
         {
             if (weechat_config_boolean (irc_config_log_hide_nickserv_pwd))
                 irc_display_hide_password (string, 1);
-            weechat_printf (NULL, "  server_command . . . . . . : %s",
+            weechat_printf (NULL, "  command . . . . . . : %s",
                             string);
             free (string);
         }
         else
-            weechat_printf (NULL, "  server_command . . . . . . : %s",
+            weechat_printf (NULL, "  command . . . . . . : %s",
                             (server->command && server->command[0]) ?
                             server->command : "");
-        weechat_printf (NULL, "  server_command_delay . . . : %d %s",
+        weechat_printf (NULL, "  command_delay . . . : %d %s",
                         server->command_delay,
                         NG_("second", "seconds", server->command_delay));
-        weechat_printf (NULL, "  server_autojoin  . . . . . : %s",
+        weechat_printf (NULL, "  autojoin  . . . . . : %s",
                         (server->autojoin && server->autojoin[0]) ?
                         server->autojoin : "");
-        weechat_printf (NULL, "  server_notify_levels . . . : %s",
+        weechat_printf (NULL, "  notify_levels . . . : %s",
                         (server->notify_levels && server->notify_levels[0]) ?
                         server->notify_levels : "");
     }

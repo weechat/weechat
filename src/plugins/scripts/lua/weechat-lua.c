@@ -37,7 +37,7 @@ WEECHAT_PLUGIN_DESCRIPTION("Lua plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
-WEECHAT_PLUGIN_LICENSE("GPL");
+WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_lua_plugin;
 
@@ -142,8 +142,8 @@ weechat_lua_load (char *filename)
     }
     
     weechat_printf (NULL,
-                    weechat_gettext ("%s%s: loading script \"%s\""),
-                    weechat_prefix ("info"), "lua", filename);
+                    weechat_gettext ("%s: loading script \"%s\""),
+                    "lua", filename);
     
     lua_current_script = NULL;
     
@@ -259,8 +259,8 @@ weechat_lua_unload (struct t_plugin_script *script)
     char *lua_argv[1] = { NULL };
     
     weechat_printf (NULL,
-                    weechat_gettext ("%s%s: unloading script \"%s\""),
-                    weechat_prefix ("info"), "lua", script->name);
+                    weechat_gettext ("%s: unloading script \"%s\""),
+                    "lua", script->name);
     
     if (script->shutdown_func && script->shutdown_func[0])
     {
@@ -291,8 +291,8 @@ weechat_lua_unload_name (char *name)
     {
         weechat_lua_unload (ptr_script);
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s: script \"%s\" unloaded"),
-                        weechat_prefix ("info"), "lua", name);
+                        weechat_gettext ("%s: script \"%s\" unloaded"),
+                        "lua", name);
     }
     else
     {

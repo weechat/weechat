@@ -122,7 +122,7 @@ void
 weechat_display_config_options ()
 {
     string_iconv_fprintf (stdout,
-                          /* TRANSLATORS: %s is "WeeChat" */
+                          /* TRANSLATORS: %s is "weechat" */
                           _("%s configuration options:\n"),
                           PACKAGE_NAME);
     config_file_print_stdout (weechat_config_file);
@@ -136,7 +136,7 @@ void
 weechat_display_commands ()
 {
     string_iconv_fprintf (stdout,
-                          /* TRANSLATORS: %s is "WeeChat" */
+                          /* TRANSLATORS: %s is "weechat" */
                            _("%s internal commands:\n"),
                           PACKAGE_NAME);
     string_iconv_fprintf (stdout, "\n");
@@ -176,7 +176,7 @@ weechat_display_keys ()
     char *expanded_name;
     
     string_iconv_fprintf (stdout,
-                          /* TRANSLATORS: %s is "WeeChat" */
+                          /* TRANSLATORS: %s is "weechat" */
                           _("%s default keys:\n"),
                           PACKAGE_NAME);
     string_iconv_fprintf (stdout, "\n");
@@ -409,7 +409,7 @@ weechat_init_vars ()
 void
 weechat_welcome_message ()
 {
-    if (CONFIG_BOOLEAN(config_startup_logo))
+    if (CONFIG_BOOLEAN(config_startup_display_logo))
     {
         gui_chat_printf (NULL,
                          "%s   ___       __         ______________        _____ \n"
@@ -423,31 +423,31 @@ weechat_welcome_message ()
                          GUI_COLOR(GUI_COLOR_CHAT_NICK),
                          GUI_COLOR(GUI_COLOR_CHAT_NICK));
     }
-    if (CONFIG_STRING(config_look_weechat_slogan)
-        && CONFIG_STRING(config_look_weechat_slogan)[0])
+    if (CONFIG_STRING(config_startup_weechat_slogan)
+        && CONFIG_STRING(config_startup_weechat_slogan)[0])
     {
         gui_chat_printf (NULL, _("%sWelcome to %s%s%s, %s"),
-                         (CONFIG_BOOLEAN(config_startup_logo)) ?
+                         (CONFIG_BOOLEAN(config_startup_display_logo)) ?
                          "      " : "",
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                          PACKAGE_NAME,
                          GUI_NO_COLOR,
-                         CONFIG_STRING(config_look_weechat_slogan));
+                         CONFIG_STRING(config_startup_weechat_slogan));
     }
-    if (CONFIG_BOOLEAN(config_startup_version))
+    if (CONFIG_BOOLEAN(config_startup_display_version))
     {
         gui_chat_printf (NULL, "%s%s%s%s, %s %s %s",
-                         (CONFIG_BOOLEAN(config_startup_logo)) ?
+                         (CONFIG_BOOLEAN(config_startup_display_logo)) ?
                          "    " : "",
                          GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                          PACKAGE_STRING,
                          GUI_NO_COLOR,
                          _("compiled on"), __DATE__, __TIME__);
     }
-    if (CONFIG_BOOLEAN(config_startup_logo) ||
-        (CONFIG_STRING(config_look_weechat_slogan)
-         && CONFIG_STRING(config_look_weechat_slogan)[0]) ||
-        CONFIG_BOOLEAN(config_startup_version))
+    if (CONFIG_BOOLEAN(config_startup_display_logo) ||
+        (CONFIG_STRING(config_startup_weechat_slogan)
+         && CONFIG_STRING(config_startup_weechat_slogan)[0]) ||
+        CONFIG_BOOLEAN(config_startup_display_version))
         gui_chat_printf (NULL,
                          "%s-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-",
                          GUI_COLOR(GUI_COLOR_CHAT_NICK));

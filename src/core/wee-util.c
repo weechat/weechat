@@ -220,17 +220,17 @@ util_search_full_lib_name (char *filename, char *sys_directory)
         return strdup (filename);
     
     length = strlen (filename) + 16;
-    if (CONFIG_STRING(config_plugins_extension)
-        && CONFIG_STRING(config_plugins_extension)[0])
-        length += strlen (CONFIG_STRING(config_plugins_extension));
+    if (CONFIG_STRING(config_plugin_extension)
+        && CONFIG_STRING(config_plugin_extension)[0])
+        length += strlen (CONFIG_STRING(config_plugin_extension));
     name_with_ext = malloc (length);
     if (!name_with_ext)
         return strdup (filename);
     strcpy (name_with_ext, filename);
     if (!strchr (filename, '.')
-        && CONFIG_STRING(config_plugins_extension)
-        && CONFIG_STRING(config_plugins_extension)[0])
-        strcat (name_with_ext, CONFIG_STRING(config_plugins_extension));
+        && CONFIG_STRING(config_plugin_extension)
+        && CONFIG_STRING(config_plugin_extension)[0])
+        strcat (name_with_ext, CONFIG_STRING(config_plugin_extension));
     
     /* try WeeChat user's dir */
     length = strlen (weechat_home) + strlen (name_with_ext) +

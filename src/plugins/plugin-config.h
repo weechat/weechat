@@ -20,7 +20,7 @@
 #ifndef __WEECHAT_PLUGIN_CONFIG_H
 #define __WEECHAT_PLUGIN_CONFIG_H 1
 
-#define PLUGIN_CONFIG_FILENAME "plugins.rc"
+#define PLUGIN_CONFIG_NAME "plugins"
 
 extern struct t_config_file *plugin_config;
 extern struct t_config_option *plugin_options;

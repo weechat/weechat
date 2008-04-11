@@ -47,8 +47,8 @@
 #include "gui-window.h"
 
 
-char *gui_chat_prefix[GUI_CHAT_PREFIX_NUMBER]; /* prefixes                  */
-char gui_chat_prefix_empty[] = "";             /* empty prefix              */
+char *gui_chat_prefix[GUI_CHAT_NUM_PREFIXES]; /* prefixes                   */
+char gui_chat_prefix_empty[] = "";            /* empty prefix               */
 int gui_chat_time_length = 0;    /* length of time for each line (in chars) */
 
 
@@ -60,7 +60,6 @@ int gui_chat_time_length = 0;    /* length of time for each line (in chars) */
 void
 gui_chat_prefix_build_empty ()
 {
-    gui_chat_prefix[GUI_CHAT_PREFIX_INFO] = strdup (gui_chat_prefix_empty);
     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR] = strdup (gui_chat_prefix_empty);
     gui_chat_prefix[GUI_CHAT_PREFIX_NETWORK] = strdup (gui_chat_prefix_empty);
     gui_chat_prefix[GUI_CHAT_PREFIX_ACTION] = strdup (gui_chat_prefix_empty);
@@ -79,7 +78,7 @@ gui_chat_prefix_build ()
     char prefix[128];
     int i;
     
-    for (i = 0; i < GUI_CHAT_PREFIX_NUMBER; i++)
+    for (i = 0; i < GUI_CHAT_NUM_PREFIXES; i++)
     {
         if (gui_chat_prefix[i])
         {
@@ -87,11 +86,6 @@ gui_chat_prefix_build ()
             gui_chat_prefix[i] = NULL;
         }
     }
-    
-    snprintf (prefix, sizeof (prefix), "%s%s\t",
-              GUI_COLOR(GUI_COLOR_CHAT_PREFIX_INFO),
-              CONFIG_STRING(config_look_prefix[GUI_CHAT_PREFIX_INFO]));
-    gui_chat_prefix[GUI_CHAT_PREFIX_INFO] = strdup (prefix);
     
     snprintf (prefix, sizeof (prefix), "%s%s\t",
               GUI_COLOR(GUI_COLOR_CHAT_PREFIX_ERROR),
@@ -806,6 +800,9 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     int display_time;
     char *pos, *pos_prefix, *pos_tab, *pos_end;
     struct t_gui_line *ptr_line;
+    
+    if (!gui_buffer_valid (buffer))
+        return;
     
     if (!message)
         return;

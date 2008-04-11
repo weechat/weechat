@@ -94,7 +94,6 @@ gui_bar_window_get_size (struct t_gui_bar *bar, struct t_gui_window *window,
                     total_size += ptr_bar_window->width;
                     break;
                 case GUI_BAR_NUM_POSITIONS:
-                    /* make C compiler happy */
                     break;
             }
             if (ptr_bar_window->bar->separator)
@@ -209,7 +208,6 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
             bar_window->height = y2 - y1 + 1;
             break;
         case GUI_BAR_NUM_POSITIONS:
-            /* make C compiler happy */
             break;
     }
 }
@@ -266,7 +264,6 @@ gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
                                                     bar_window->x - 1);
                 break;
             case GUI_BAR_NUM_POSITIONS:
-                /* make C compiler happy */
                 break;
         }
     }
@@ -706,7 +703,6 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         }
                         break;
                     case GUI_BAR_NUM_POSITIONS:
-                        /* make C compiler happy */
                         break;
                 }
                 x = 0;
@@ -806,7 +802,6 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                           bar_window->height);
                 break;
             case GUI_BAR_NUM_POSITIONS:
-                /* make C compiler happy */
                 break;
         }
         wnoutrefresh (bar_window->win_separator);

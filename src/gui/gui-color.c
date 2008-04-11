@@ -52,11 +52,11 @@ gui_color_search_config (char *color_name)
 {
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-
+    
     if (color_name)
     {
         ptr_section = config_file_search_section (weechat_config_file,
-                                                  "colors");
+                                                  "color");
         if (ptr_section)
         {
             for (ptr_option = ptr_section->options; ptr_option;

@@ -63,10 +63,9 @@ script_config_read (struct t_weechat_plugin *weechat_plugin)
  */
 
 int
-script_config_cb (void *data, char *type, char *option, char *value)
+script_config_cb (void *data, char *option, char *value)
 {
     /* make C compiler happy */
-    (void) type;
     (void) option;
     (void) value;
     
@@ -100,14 +99,13 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     script_config_read (weechat_plugin);
     
     /* add hook for config option */
-    length = strlen (weechat_plugin->name) + 32;
+    length = strlen (weechat_plugin->name) + 64;
     string = malloc (length);
     if (string)
     {
-        snprintf (string, length, "%s.%s",
+        snprintf (string, length, "plugins.var.%s.%s",
                   weechat_plugin->name, SCRIPT_OPTION_CHECK_LICENSE);
-        weechat_hook_config ("plugin", string,
-                             &script_config_cb, weechat_plugin);
+        weechat_hook_config (string, &script_config_cb, weechat_plugin);
         free (string);
     }
     
@@ -427,7 +425,7 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
             && !ptr_script_callback->config_section
             && !ptr_script_callback->config_option)
         {
-            if (weechat_config_boolean (weechat_config_get_weechat ("plugins_save_config_on_unload")))
+            if (weechat_config_boolean (weechat_config_get_weechat ("plugin_save_config_on_unload")))
                 weechat_config_write (ptr_script_callback->config_file);
             weechat_config_free (ptr_script_callback->config_file);
         }
@@ -509,9 +507,9 @@ script_display_list (struct t_weechat_plugin *weechat_plugin,
             {
                 weechat_printf (NULL,
                                 "  %s%s%s v%s - %s",
-                                weechat_color ("color_chat_buffer"),
+                                weechat_color ("chat_buffer"),
                                 ptr_script->name,
-                                weechat_color ("color_chat"),
+                                weechat_color ("chat"),
                                 ptr_script->version,
                                 ptr_script->description);
                 if (full)

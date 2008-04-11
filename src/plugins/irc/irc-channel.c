@@ -70,15 +70,15 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
         weechat_buffer_set (new_buffer, "nicklist", "1");
         weechat_buffer_set (new_buffer, "nicklist_display_groups", "0");
         weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_OP,
-                                    "color_nicklist_group", 1);
+                                    "nicklist_group", 1);
         weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_HALFOP,
-                                    "color_nicklist_group", 1);
+                                    "nicklist_group", 1);
         weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_VOICE,
-                                    "color_nicklist_group", 1);
+                                    "nicklist_group", 1);
         weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_CHANUSER,
-                                    "color_nicklist_group", 1);
+                                    "nicklist_group", 1);
         weechat_nicklist_add_group (new_buffer, NULL, IRC_NICK_GROUP_NORMAL,
-                                    "color_nicklist_group", 1);
+                                    "nicklist_group", 1);
     }
     
     /* initialize new channel */
@@ -324,8 +324,8 @@ irc_channel_check_away (struct t_irc_server *server,
     if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
         if (force
-            || (weechat_config_integer (irc_config_irc_away_check_max_nicks) == 0)
-            || (channel->nicks_count <= weechat_config_integer (irc_config_irc_away_check_max_nicks)))
+            || (weechat_config_integer (irc_config_network_away_check_max_nicks) == 0)
+            || (channel->nicks_count <= weechat_config_integer (irc_config_network_away_check_max_nicks)))
         {
             channel->checking_away++;
             irc_server_sendf (server, "WHO %s", channel->name);

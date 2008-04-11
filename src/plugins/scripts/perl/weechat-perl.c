@@ -35,7 +35,7 @@ WEECHAT_PLUGIN_DESCRIPTION("Perl plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
-WEECHAT_PLUGIN_LICENSE("GPL");
+WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_perl_plugin = NULL;
 
@@ -236,8 +236,8 @@ weechat_perl_load (char *filename)
     }
     
     weechat_printf (NULL,
-                    weechat_gettext ("%s%s: loading script \"%s\""),
-                    weechat_prefix ("info"), "perl", filename);
+                    weechat_gettext ("%s: loading script \"%s\""),
+                    "perl", filename);
     
     perl_current_script = NULL;
     
@@ -381,8 +381,8 @@ weechat_perl_unload (struct t_plugin_script *script)
     char *perl_argv[1] = { NULL };
     
     weechat_printf (NULL,
-                    weechat_gettext ("%s%s: unloading script \"%s\""),
-                    weechat_prefix ("info"), "perl", script->name);
+                    weechat_gettext ("%s: unloading script \"%s\""),
+                    "perl", script->name);
     
 #ifdef MULTIPLICITY
     PERL_SET_CONTEXT (script->interpreter);
@@ -425,8 +425,8 @@ weechat_perl_unload_name (char *name)
     {
         weechat_perl_unload (ptr_script);
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s: script \"%s\" unloaded"),
-                        weechat_prefix ("info"), "perl", name);
+                        weechat_gettext ("%s: script \"%s\" unloaded"),
+                        "perl", name);
     }
     else
     {

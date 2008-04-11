@@ -138,11 +138,19 @@ extern const int gnutls_prot_prio[];
 extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
 
 
+extern void irc_server_set_addresses (struct t_irc_server *server,
+                                      char *addresses);
+extern void irc_server_set_nicks (struct t_irc_server *server, char *nicks);
+extern void irc_server_set_with_option (struct t_irc_server *server,
+                                        int index_option,
+                                        struct t_config_option *option);
 extern void irc_server_init (struct t_irc_server *server);
-extern struct t_irc_server *irc_server_alloc ();
-extern void irc_server_init_with_config_options (struct t_irc_server *server,
+extern struct t_irc_server *irc_server_alloc (char *name);
+
+/*extern void irc_server_init_with_config_options (struct t_irc_server *server,
                                                  struct t_config_section *section,
                                                  int config_reload);
+*/
 extern struct t_irc_server *irc_server_new (char *name, int autoconnect,
                                             int autoreconnect,
                                             int autoreconnect_delay,

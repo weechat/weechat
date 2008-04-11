@@ -33,7 +33,7 @@ WEECHAT_PLUGIN_DESCRIPTION("Python plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
-WEECHAT_PLUGIN_LICENSE("GPL");
+WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_python_plugin = NULL;
 
@@ -261,8 +261,8 @@ weechat_python_load (char *filename)
     }
     
     weechat_printf (NULL,
-                    weechat_gettext ("%s%s: loading script \"%s\""),
-                    weechat_prefix ("info"), "python", filename);
+                    weechat_gettext ("%s: loading script \"%s\""),
+                    "python", filename);
     
     python_current_script = NULL;
     
@@ -428,8 +428,8 @@ weechat_python_unload (struct t_plugin_script *script)
     int *r;
     
     weechat_printf (NULL,
-                    weechat_gettext ("%s%s: unloading script \"%s\""),
-                    weechat_prefix ("info"), "python", script->name);
+                    weechat_gettext ("%s: unloading script \"%s\""),
+                    "python", script->name);
     
     if (script->shutdown_func && script->shutdown_func[0])
     {
@@ -459,8 +459,8 @@ weechat_python_unload_name (char *name)
     {
         weechat_python_unload (ptr_script);
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s: script \"%s\" unloaded"),
-                        weechat_prefix ("info"), "python", name);
+                        weechat_gettext ("%s: script \"%s\" unloaded"),
+                        "python", name);
     }
     else
     {

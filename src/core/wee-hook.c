@@ -941,7 +941,7 @@ hook_signal_send (char *signal, char *type_data, void *signal_data)
  */
 
 struct t_hook *
-hook_config (struct t_weechat_plugin *plugin, char *type, char *option,
+hook_config (struct t_weechat_plugin *plugin, char *option,
              t_hook_callback_config *callback, void *callback_data)
 {
     struct t_hook *new_hook;
@@ -961,7 +961,6 @@ hook_config (struct t_weechat_plugin *plugin, char *type, char *option,
     
     new_hook->hook_data = new_hook_config;
     new_hook_config->callback = callback;
-    new_hook_config->type = (type) ? strdup (type) : strdup ("");
     new_hook_config->option = (option) ? strdup (option) : strdup ("");
     
     hook_add_to_list (new_hook);
@@ -974,7 +973,7 @@ hook_config (struct t_weechat_plugin *plugin, char *type, char *option,
  */
 
 void
-hook_config_exec (char *type, char *option, char *value)
+hook_config_exec (char *option, char *value)
 {
     struct t_hook *ptr_hook, *next_hook;
     
@@ -987,16 +986,13 @@ hook_config_exec (char *type, char *option, char *value)
         
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (!HOOK_CONFIG(ptr_hook, type)
-                || (string_strcasecmp (HOOK_CONFIG(ptr_hook, type),
-                                       type) == 0))
             && (!HOOK_CONFIG(ptr_hook, option)
                 || (string_strcasecmp (HOOK_CONFIG(ptr_hook, option),
                                        option) == 0)))
         {
             ptr_hook->running = 1;
             (void) (HOOK_CONFIG(ptr_hook, callback))
-                (ptr_hook->callback_data, type, option, value);
+                (ptr_hook->callback_data, option, value);
             ptr_hook->running = 0;
         }
         
@@ -1236,8 +1232,6 @@ unhook (struct t_hook *hook)
                 free ((struct t_hook_signal *)hook->hook_data);
                 break;
             case HOOK_TYPE_CONFIG:
-                if (HOOK_CONFIG(hook, type))
-                    free (HOOK_CONFIG(hook, type));
                 if (HOOK_CONFIG(hook, option))
                     free (HOOK_CONFIG(hook, option));
                 free ((struct t_hook_config *)hook->hook_data);
@@ -1422,7 +1416,6 @@ hook_print_log ()
                     {
                         log_printf ("  config data:");
                         log_printf ("    callback . . . . . . : 0x%x", HOOK_CONFIG(ptr_hook, callback));
-                        log_printf ("    type . . . . . . . . : '%s'", HOOK_CONFIG(ptr_hook, type));
                         log_printf ("    option . . . . . . . : '%s'", HOOK_CONFIG(ptr_hook, option));
                     }
                     break;

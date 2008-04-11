@@ -32,6 +32,7 @@
 
 #include "weechat.h"
 #include "wee-config-file.h"
+#include "wee-hook.h"
 #include "wee-log.h"
 #include "wee-string.h"
 #include "../gui/gui-color.h"
@@ -41,6 +42,8 @@
 struct t_config_file *config_files = NULL;
 struct t_config_file *last_config_file = NULL;
 
+char *config_option_type_str[CONFIG_NUM_OPTION_TYPES] =
+{ "boolean", "integer", "string", "color" };
 char *config_boolean_true[] = { "on", "yes", "y", "true", "t", "1", NULL };
 char *config_boolean_false[] = { "off", "no", "n", "false", "f", "0", NULL };
 
@@ -50,17 +53,17 @@ char *config_boolean_false[] = { "off", "no", "n", "false", "f", "0", NULL };
  */
 
 struct t_config_file *
-config_file_search (char *filename)
+config_file_search (char *name)
 {
     struct t_config_file *ptr_config;
     
-    if (!filename)
+    if (!name)
         return NULL;
     
     for (ptr_config = config_files; ptr_config;
          ptr_config = ptr_config->next_config)
     {
-        if (strcmp (ptr_config->filename, filename) == 0)
+        if (string_strcasecmp (ptr_config->name, name) == 0)
             return ptr_config;
     }
     
@@ -73,24 +76,30 @@ config_file_search (char *filename)
  */
 
 struct t_config_file *
-config_file_new (struct t_weechat_plugin *plugin, char *filename,
+config_file_new (struct t_weechat_plugin *plugin, char *name,
                  int (*callback_reload)(void *data,
                                         struct t_config_file *config_file),
                  void *callback_reload_data)
 {
     struct t_config_file *new_config_file;
+    char *filename;
+    int length;
     
-    if (!filename)
+    if (!name)
         return NULL;
     
     /* it's NOT authorized to create two config files with same filename */
-    if (config_file_search (filename))
+    if (config_file_search (name))
         return NULL;
     
     new_config_file = malloc (sizeof (*new_config_file));
     if (new_config_file)
     {
         new_config_file->plugin = plugin;
+        new_config_file->name = strdup (name);
+        length = strlen (name) + 8 + 1;
+        filename = malloc (length);
+        snprintf (filename, length, "%s.conf", name);
         new_config_file->filename = strdup (filename);
         new_config_file->file = NULL;
         new_config_file->callback_reload = callback_reload;
@@ -140,9 +149,11 @@ config_file_valid_for_plugin (struct t_weechat_plugin *plugin,
 
 struct t_config_section *
 config_file_new_section (struct t_config_file *config_file, char *name,
-                         void (*callback_read)(void *data,
-                                               struct t_config_file *config_file,
-                                               char *option_name, char *value),
+                         int (*callback_read)(void *data,
+                                              struct t_config_file *config_file,
+                                              struct t_config_section *section,
+                                              char *option_name,
+                                              char *value),
                          void *callback_read_data,
                          void (*callback_write)(void *data,
                                                 struct t_config_file *config_file,
@@ -151,7 +162,13 @@ config_file_new_section (struct t_config_file *config_file, char *name,
                          void (*callback_write_default)(void *data,
                                                         struct t_config_file *config_file,
                                                         char *section_name),
-                         void *callback_write_default_data)
+                         void *callback_write_default_data,
+                         int (*callback_create_option)(void *data,
+                                                       struct t_config_file *config_file,
+                                                       struct t_config_section *section,
+                                                       char *option_name,
+                                                       char *value),
+                         void *callback_create_option_data)
 {
     struct t_config_section *new_section;
     
@@ -168,6 +185,8 @@ config_file_new_section (struct t_config_file *config_file, char *name,
         new_section->callback_write_data = callback_write_data;
         new_section->callback_write_default = callback_write_default;
         new_section->callback_write_default_data = callback_write_default_data;
+        new_section->callback_create_option = callback_create_option;
+        new_section->callback_create_option_data = callback_create_option_data;
         new_section->options = NULL;
         new_section->last_option = NULL;
         
@@ -239,35 +258,64 @@ config_file_section_valid_for_plugin (struct t_weechat_plugin *plugin,
 }
 
 /*
- * config_file_new_option: create a new option in a config section
+ * config_file_option_find_pos: find position for an option in section
+ *                              (for sorting options)
+ */
+
+struct t_config_option *
+config_file_option_find_pos (struct t_config_section *section, char *name)
+{
+    struct t_config_option *ptr_option;
+    
+    for (ptr_option = section->options; ptr_option;
+         ptr_option = ptr_option->next_option)
+    {
+        if (string_strcasecmp (name, ptr_option->name) < 0)
+            return ptr_option;
+    }
+    
+    /* position not found (we will add to the end of list) */
+    return NULL;
+}
+
+/*
+ * config_file_new_option: create a new option
  */
 
 struct t_config_option *
 config_file_new_option (struct t_config_file *config_file,
                         struct t_config_section *section, char *name,
-                        char *type, char *description, char *string_values,
-                        int min, int max, char *default_value,
-                        void (*callback_change)(),
-                        void *callback_change_data)
+                        char *type, char *description,
+                        char *string_values, int min, int max,
+                        char *default_value,
+                        int (*callback_check_value)(void *data,
+                                                    struct t_config_option *option,
+                                                    char *value),
+                        void *callback_check_value_data,
+                        void (*callback_change)(void *data,
+                                                struct t_config_option *option),
+                        void *callback_change_data,
+                        void (*callback_delete)(void *data,
+                                                struct t_config_option *option),
+                        void *callback_delete_data)
 {
-    struct t_config_option *new_option;
+    struct t_config_option *new_option, *pos_option;
     int var_type, int_value, argc, i, index_value;
     long number;
     char *error;
     
-    if (!config_file || !section || !name)
+    if (!name)
         return NULL;
     
     var_type = -1;
-    if (string_strcasecmp (type, "boolean") == 0)
-        var_type = CONFIG_OPTION_BOOLEAN;
-    if (string_strcasecmp (type, "integer") == 0)
-        var_type = CONFIG_OPTION_INTEGER;
-    if (string_strcasecmp (type, "string") == 0)
-        var_type = CONFIG_OPTION_STRING;
-    if (string_strcasecmp (type, "color") == 0)
-        var_type = CONFIG_OPTION_COLOR;
-    
+    for (i = 0; i < CONFIG_NUM_OPTION_TYPES; i++)
+    {
+        if (string_strcasecmp (type, config_option_type_str[i]) == 0)
+        {
+            var_type = i;
+            break;
+        }
+    }
     if (var_type < 0)
     {
         gui_chat_printf (NULL, "%sError: unknown option type \"%s\"",
@@ -279,13 +327,15 @@ config_file_new_option (struct t_config_file *config_file,
     new_option = malloc (sizeof (*new_option));
     if (new_option)
     {
+        new_option->config_file = config_file;
+        new_option->section = section;
         new_option->name = strdup (name);
         new_option->type = var_type;
         new_option->description = (description) ? strdup (description) : NULL;
         argc = 0;
         switch (var_type)
         {
-            case CONFIG_OPTION_BOOLEAN:
+            case CONFIG_OPTION_TYPE_BOOLEAN:
                 new_option->string_values = NULL;
                 new_option->min = CONFIG_BOOLEAN_FALSE;
                 new_option->max = CONFIG_BOOLEAN_TRUE;
@@ -295,7 +345,7 @@ config_file_new_option (struct t_config_file *config_file,
                 new_option->value = malloc (sizeof (int));
                 *((int *)new_option->value) = int_value;
                 break;
-            case CONFIG_OPTION_INTEGER:
+            case CONFIG_OPTION_TYPE_INTEGER:
                 new_option->string_values = (string_values) ?
                     string_explode (string_values, "|", 0, 0, &argc) : NULL;
                 if (new_option->string_values)
@@ -332,7 +382,7 @@ config_file_new_option (struct t_config_file *config_file,
                     *((int *)new_option->value) = number;
                 }
                 break;
-            case CONFIG_OPTION_STRING:
+            case CONFIG_OPTION_TYPE_STRING:
                 new_option->string_values = NULL;
                 new_option->min = min;
                 new_option->max = max;
@@ -341,7 +391,7 @@ config_file_new_option (struct t_config_file *config_file,
                 new_option->value = (default_value) ?
                     strdup (default_value) : NULL;
                 break;
-            case CONFIG_OPTION_COLOR:
+            case CONFIG_OPTION_TYPE_COLOR:
                 new_option->string_values = NULL;
                 new_option->min = min;
                 new_option->max = min;
@@ -351,18 +401,56 @@ config_file_new_option (struct t_config_file *config_file,
                 new_option->value = malloc (sizeof (int));
                 *((int *)new_option->value) = *((int *)new_option->default_value);
                 break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
         }
+        new_option->callback_check_value = callback_check_value;
+        new_option->callback_check_value_data = callback_check_value_data;
         new_option->callback_change = callback_change;
         new_option->callback_change_data = callback_change_data;
+        new_option->callback_delete = callback_delete;
+        new_option->callback_delete_data = callback_delete_data;
         new_option->loaded = 0;
-        
-        new_option->prev_option = section->last_option;
-        new_option->next_option = NULL;
-        if (section->options)
-            section->last_option->next_option = new_option;
+
+        if (section)
+        {
+            if (section->options)
+            {
+                pos_option = config_file_option_find_pos (section, name);
+                if (pos_option)
+                {
+                    /* insert option into the list (before option found) */
+                    new_option->prev_option = pos_option->prev_option;
+                    new_option->next_option = pos_option;
+                    if (pos_option->prev_option)
+                        (pos_option->prev_option)->next_option = new_option;
+                    else
+                        section->options = new_option;
+                    pos_option->prev_option = new_option;
+                }
+                else
+                {
+                    /* add option to end of section */
+                    new_option->prev_option = section->last_option;
+                    new_option->next_option = NULL;
+                    section->last_option->next_option = new_option;
+                    section->last_option = new_option;
+                }
+            }
+            else
+            {
+                /* first option for section */
+                new_option->prev_option = NULL;
+                new_option->next_option = NULL;
+                section->options = new_option;
+                section->last_option = new_option;
+            }
+        }
         else
-            section->options = new_option;
-        section->last_option = new_option;
+        {
+            new_option->prev_option = NULL;
+            new_option->next_option = NULL;
+        }
     }
     
     return new_option;
@@ -405,6 +493,130 @@ config_file_search_option (struct t_config_file *config_file,
     
     /* option not found */
     return NULL;
+}
+
+/*
+ * config_file_search_section_option: search an option in a config or section
+ *                                    and return section/option
+ */
+
+void
+config_file_search_section_option (struct t_config_file *config_file,
+                                   struct t_config_section *section,
+                                   char *option_name,
+                                   struct t_config_section **section_found,
+                                   struct t_config_option **option_found)
+{
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
+    
+    *section_found = NULL;
+    *option_found = NULL;
+    
+    if (section)
+    {
+        for (ptr_option = section->options; ptr_option;
+             ptr_option = ptr_option->next_option)
+        {
+            if (string_strcasecmp (ptr_option->name, option_name) == 0)
+            {
+                *section_found = section;
+                *option_found = ptr_option;
+                return;
+            }
+        }
+    }
+    else if (config_file)
+    {
+        for (ptr_section = config_file->sections; ptr_section;
+             ptr_section = ptr_section->next_section)
+        {
+            for (ptr_option = ptr_section->options; ptr_option;
+                 ptr_option = ptr_option->next_option)
+            {
+                if (string_strcasecmp (ptr_option->name, option_name) == 0)
+                {
+                    *section_found = ptr_section;
+                    *option_found = ptr_option;
+                }
+            }
+        }
+    }
+}
+
+/*
+ * config_file_search_with_string: search file/section/option for
+ *                                 an option with full string
+ *                                 (file.section.option)
+ */
+
+void
+config_file_search_with_string (char *option_name,
+                                struct t_config_file **config_file,
+                                struct t_config_section **section,
+                                struct t_config_option **option,
+                                char **pos_option_name)
+{
+    struct t_config_file *ptr_config;
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
+    char *file_name, *pos_section, *section_name, *pos_option;
+
+    if (config_file)
+        *config_file = NULL;
+    if (section)
+        *section = NULL;
+    if (option)
+        *option = NULL;
+    if (pos_option_name)
+        *pos_option_name = NULL;
+    
+    ptr_config = NULL;
+    ptr_section = NULL;
+    ptr_option = NULL;
+    
+    file_name = NULL;
+    section_name = NULL;
+    pos_option = NULL;
+    
+    pos_section = strchr (option_name, '.');
+    pos_option = (pos_section) ? strchr (pos_section + 1, '.') : NULL;
+    if (pos_section && pos_option)
+    {
+        file_name = string_strndup (option_name, pos_section - option_name);
+        section_name = string_strndup (pos_section + 1,
+                                       pos_option - pos_section - 1);
+        pos_option++;
+    }
+    if (file_name && section_name && pos_option)
+    {
+        if (pos_option_name)
+            *pos_option_name = pos_option;
+        ptr_config = config_file_search (file_name);
+        if (ptr_config)
+        {
+            ptr_section = config_file_search_section (ptr_config,
+                                                      section_name);
+            if (ptr_section)
+            {
+                ptr_option = config_file_search_option (ptr_config,
+                                                        ptr_section,
+                                                        pos_option);
+            }
+        }
+    }
+    
+    if (file_name)
+        free (file_name);
+    if (section_name)
+        free (section_name);
+    
+    if (config_file)
+        *config_file = ptr_config;
+    if (section)
+        *section = ptr_section;
+    if (option)
+        *option = ptr_option;
 }
 
 /*
@@ -494,125 +706,6 @@ config_file_string_to_boolean (char *text)
 }
 
 /*
- * config_file_option_set: set value for an option
- *                         return: 2 if ok (value changed)
- *                                 1 if ok (value is the same)
- *                                 0 if failed
- */
-
-int
-config_file_option_set (struct t_config_option *option, char *new_value,
-                        int run_callback)
-{
-    int new_value_int, i, rc;
-    long number;
-    char *error;
-    
-    if (!option)
-        return 0;
-    
-    switch (option->type)
-    {
-        case CONFIG_OPTION_BOOLEAN:
-            if (!new_value)
-                return 0;
-            if (!config_file_string_boolean_is_valid (new_value))
-                return 0;
-            new_value_int = config_file_string_to_boolean (new_value);
-            if (new_value_int == *((int *)option->value))
-                return 1;
-            *((int *)option->value) = new_value_int;
-            if (run_callback && option->callback_change)
-            {
-                (void) (option->callback_change)
-                    (option->callback_change_data);
-            }
-            return 2;
-        case CONFIG_OPTION_INTEGER:
-            if (!new_value)
-                return 0;
-            if (option->string_values)
-            {
-                new_value_int = -1;
-                for (i = 0; option->string_values[i]; i++)
-                {
-                    if (string_strcasecmp (option->string_values[i],
-                                           new_value) == 0)
-                    {
-                        new_value_int = i;
-                        break;
-                    }
-                }
-                if (new_value_int < 0)
-                    return 0;
-                if (new_value_int == *((int *)option->value))
-                    return 1;
-                *((int *)option->value) = new_value_int;
-                if (run_callback && option->callback_change)
-                {
-                    (void) (option->callback_change)
-                        (option->callback_change_data);
-                }
-                return 2;
-            }
-            else
-            {
-                error = NULL;
-                number = strtol (new_value, &error, 10);
-                if (error && !error[0])
-                {
-                    if (number == *((int *)option->value))
-                        return 1;
-                    *((int *)option->value) = number;
-                    if (run_callback && option->callback_change)
-                    {
-                        (void) (option->callback_change)
-                            (option->callback_change_data);
-                    }
-                    return 2;
-                }
-            }
-            break;
-        case CONFIG_OPTION_STRING:
-            rc = 1;
-            if ((!option->value && new_value)
-                || (option->value && !new_value)
-                || (strcmp ((char *)option->value, new_value) != 0))
-                rc = 2;
-            if (option->value)
-                free (option->value);
-            if (new_value)
-            {
-                option->value = strdup (new_value);
-                if (!option->value)
-                    return 0;
-            }
-            else
-                option->value = NULL;
-            if (run_callback && (rc == 2) && option->callback_change)
-            {
-                (void) (option->callback_change)
-                    (option->callback_change_data);
-            }
-            return rc;
-        case CONFIG_OPTION_COLOR:
-            if (!gui_color_assign (&new_value_int, new_value))
-                return 0;
-            if (new_value_int == *((int *)option->value))
-                return 1;
-            *((int *)option->value) = new_value_int;
-            if (run_callback && option->callback_change)
-            {
-                (void) (option->callback_change)
-                    (option->callback_change_data);
-            }
-            return 2;
-    }
-    
-    return 0;
-}
-
-/*
  * config_file_option_reset: set default value for an option
  *                           return: 2 if ok (value changed)
  *                                   1 if ok (value is the same)
@@ -620,26 +713,36 @@ config_file_option_set (struct t_config_option *option, char *new_value,
  */
 
 int
-config_file_option_reset (struct t_config_option *option)
+config_file_option_reset (struct t_config_option *option, int run_callback)
 {
     int rc;
     
     if (!option)
         return 0;
     
+    rc = 0;
+    
     switch (option->type)
     {
-        case CONFIG_OPTION_BOOLEAN:
+        case CONFIG_OPTION_TYPE_BOOLEAN:
             if (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_DEFAULT(option))
-                return 1;
-            CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_DEFAULT(option);
-            return 2;
-        case CONFIG_OPTION_INTEGER:
+                rc = 1;
+            else
+            {
+                CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_DEFAULT(option);
+                rc = 2;
+            }
+            break;
+        case CONFIG_OPTION_TYPE_INTEGER:
             if (CONFIG_INTEGER(option) == CONFIG_INTEGER_DEFAULT(option))
-                return 1;
-            CONFIG_INTEGER(option) = CONFIG_INTEGER_DEFAULT(option);
-            return 2;
-        case CONFIG_OPTION_STRING:
+                rc = 1;
+            else
+            {
+                CONFIG_INTEGER(option) = CONFIG_INTEGER_DEFAULT(option);
+                rc = 2;
+            }
+            break;
+        case CONFIG_OPTION_TYPE_STRING:
             rc = 1;
             if ((!option->value && option->default_value)
                 || (option->value && !option->default_value)
@@ -652,19 +755,308 @@ config_file_option_reset (struct t_config_option *option)
             {
                 option->value = strdup ((char *)option->default_value);
                 if (!option->value)
-                    return 0;
+                    rc = 0;
             }
             else
                 option->value = NULL;
-            return rc;
-        case CONFIG_OPTION_COLOR:
+            break;
+        case CONFIG_OPTION_TYPE_COLOR:
             if (CONFIG_COLOR(option) == CONFIG_COLOR_DEFAULT(option))
-                return 1;
-            CONFIG_COLOR(option) = CONFIG_COLOR_DEFAULT(option);
-            return 2;
+                rc = 1;
+            else
+            {
+                CONFIG_COLOR(option) = CONFIG_COLOR_DEFAULT(option);
+                rc = 2;
+            }
+            break;
+        case CONFIG_NUM_OPTION_TYPES:
+            break;
+    }
+    
+    if ((rc == 2) && run_callback && option->callback_change)
+    {
+        (void)(option->callback_change)(option->callback_change_data, option);
     }
     
     return 0;
+}
+
+/*
+ * config_file_option_set: set value for an option
+ *                         if value is NULL, then default value for option is set
+ *                         return: 2 if ok (value changed)
+ *                                 1 if ok (value is the same)
+ *                                 0 if failed
+ */
+
+int
+config_file_option_set (struct t_config_option *option, char *value,
+                        int run_callback)
+{
+    int value_int, i, rc, length_option;
+    long number;
+    char *error, *option_full_name;
+    
+    if (!option)
+        return 0;
+    
+    rc = 0;
+    
+    if (value && option->callback_check_value)
+    {
+        if (!(int)(option->callback_check_value)
+            (option->callback_check_value_data,
+             option,
+             value))
+            return 0;
+    }
+    
+    switch (option->type)
+    {
+        case CONFIG_OPTION_TYPE_BOOLEAN:
+            if (value)
+            {
+                if (config_file_string_boolean_is_valid (value))
+                {
+                    value_int = config_file_string_to_boolean (value);
+                    if (value_int == *((int *)option->value))
+                        rc = 1;
+                    else
+                    {
+                        *((int *)option->value) = value_int;
+                        rc = 2;
+                    }
+                }
+            }
+            break;
+        case CONFIG_OPTION_TYPE_INTEGER:
+            if (value)
+            {
+                if (option->string_values)
+                {
+                    value_int = -1;
+                    for (i = 0; option->string_values[i]; i++)
+                    {
+                        if (string_strcasecmp (option->string_values[i],
+                                               value) == 0)
+                        {
+                            value_int = i;
+                            break;
+                        }
+                    }
+                    if (value_int >= 0)
+                    {
+                        if (value_int == *((int *)option->value))
+                            rc = 1;
+                        else
+                        {
+                            *((int *)option->value) = value_int;
+                            rc = 2;
+                        }
+                    }
+                }
+                else
+                {
+                    error = NULL;
+                    number = strtol (value, &error, 10);
+                    if (error && !error[0])
+                    {
+                        if (number == *((int *)option->value))
+                            rc = 1;
+                        else
+                        {
+                            *((int *)option->value) = number;
+                            rc = 2;
+                        }
+                    }
+                }
+            }
+            break;
+        case CONFIG_OPTION_TYPE_STRING:
+            rc = 1;
+            if ((!option->value && value)
+                || (option->value && !value)
+                || (strcmp ((char *)option->value, value) != 0))
+                rc = 2;
+            if (option->value)
+                free (option->value);
+            if (value)
+            {
+                option->value = strdup (value);
+                if (!option->value)
+                    rc = 0;
+            }
+            else
+                option->value = NULL;
+            break;
+        case CONFIG_OPTION_TYPE_COLOR:
+            if (gui_color_assign (&value_int, value))
+            {
+                if (value_int == *((int *)option->value))
+                    rc = 1;
+                else
+                {
+                    *((int *)option->value) = value_int;
+                    rc = 2;
+                }
+            }
+            break;
+        case CONFIG_NUM_OPTION_TYPES:
+            break;
+    }
+    
+    if ((rc == 2) && run_callback && option->callback_change)
+    {
+        (void)(option->callback_change)(option->callback_change_data, option);
+    }
+    
+    if (rc > 0)
+    {
+        if (option->config_file && option->section)
+        {
+            length_option = strlen (option->config_file->name) + 1 +
+                strlen (option->section->name) + 1 + strlen (option->name) + 1;
+            option_full_name = malloc (length_option);
+            if (option_full_name)
+            {
+                snprintf (option_full_name, length_option,
+                          "%s.%s.%s",
+                          option->config_file->name,
+                          option->section->name,
+                          option->name);
+                hook_config_exec (option_full_name, value);
+                free (option_full_name);
+            }
+        }
+    }
+    
+    return rc;
+}
+
+/*
+ * config_file_option_get_pointer: get a pointer of an option property
+ */
+
+void *
+config_file_option_get_pointer (struct t_config_option *option, char *property)
+{
+    if (string_strcasecmp (property, "config_file") == 0)
+        return option->config_file;
+    else if (string_strcasecmp (property, "section") == 0)
+        return option->section;
+    else if (string_strcasecmp (property, "name") == 0)
+        return option->name;
+    else if (string_strcasecmp (property, "type") == 0)
+        return &option->type;
+    else if (string_strcasecmp (property, "description") == 0)
+        return option->description;
+    else if (string_strcasecmp (property, "string_values") == 0)
+        return option->string_values;
+    else if (string_strcasecmp (property, "min") == 0)
+        return &option->min;
+    else if (string_strcasecmp (property, "max") == 0)
+        return &option->max;
+    else if (string_strcasecmp (property, "default_value") == 0)
+        return option->default_value;
+    else if (string_strcasecmp (property, "value") == 0)
+        return option->value;
+    else if (string_strcasecmp (property, "prev_option") == 0)
+        return option->prev_option;
+    else if (string_strcasecmp (property, "next_option") == 0)
+        return option->next_option;
+    
+    return NULL;
+}
+
+/*
+ * config_file_option_set_with_string: set value for an option (with a string
+ *                                     for name of option)
+ *                                     return: 2 if ok (value changed)
+ *                                             1 if ok (value is the same)
+ *                                             0 if failed to set option
+ *                                            -1 if option is not found
+ */
+
+int
+config_file_option_set_with_string (char *option_name, char *value)
+{
+    int rc;
+    struct t_config_file *ptr_config;
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
+    char *pos_option;
+    
+    rc = 0;
+    
+    config_file_search_with_string (option_name, &ptr_config, &ptr_section,
+                                    &ptr_option, &pos_option);
+    
+    if (ptr_config && ptr_section)
+    {
+        if (ptr_option)
+            rc = config_file_option_set (ptr_option, value, 1);
+        else
+        {
+            if (ptr_section->callback_create_option)
+            {
+                rc = (int)(ptr_section->callback_create_option)
+                    (ptr_section->callback_create_option_data,
+                     ptr_config,
+                     ptr_section,
+                     pos_option,
+                     value);
+                if (rc > 0)
+                    hook_config_exec (option_name, value);
+            }
+        }
+    }
+    
+    return rc;
+}
+
+/*
+ * config_file_unset_with_string: unset/reset option
+ *                                return: 0 if failed
+ *                                        1 if option reset
+ *                                        2 if option removed
+ */
+
+int
+config_file_unset_with_string (char *option_name)
+{
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
+    int rc;
+    
+    rc = 0;
+    
+    config_file_search_with_string (option_name, NULL, &ptr_section,
+                                    &ptr_option, NULL);
+    
+    /* delete option */
+    if (ptr_section && ptr_option)
+    {
+        if (ptr_section->callback_create_option)
+        {
+            /* removing option */
+            if (ptr_option->callback_delete)
+            {
+                (void)(ptr_option->callback_delete)
+                    (ptr_option->callback_delete_data,
+                     ptr_option);
+            }
+            config_file_option_free (ptr_section, ptr_option);
+            rc = 2;
+        }
+        else
+        {
+            /* reset value */
+            config_file_option_reset (ptr_option, 1);
+            rc = 1;
+        }
+    }
+    
+    return rc;
 }
 
 /*
@@ -677,7 +1069,7 @@ config_file_option_boolean (struct t_config_option *option)
     if (!option)
         return 0;
     
-    if (option->type == CONFIG_OPTION_BOOLEAN)
+    if (option->type == CONFIG_OPTION_TYPE_BOOLEAN)
         return CONFIG_BOOLEAN(option);
     else
         return 0;
@@ -695,16 +1087,18 @@ config_file_option_integer (struct t_config_option *option)
     
     switch (option->type)
     {
-        case CONFIG_OPTION_BOOLEAN:
+        case CONFIG_OPTION_TYPE_BOOLEAN:
             if (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE)
                 return 1;
             else
                 return 0;
-        case CONFIG_OPTION_INTEGER:
-        case CONFIG_OPTION_COLOR:
+        case CONFIG_OPTION_TYPE_INTEGER:
+        case CONFIG_OPTION_TYPE_COLOR:
             return CONFIG_INTEGER(option);
-        case CONFIG_OPTION_STRING:
+        case CONFIG_OPTION_TYPE_STRING:
             return 0;
+        case CONFIG_NUM_OPTION_TYPES:
+            break;
     }
     return 0;
 }
@@ -721,13 +1115,17 @@ config_file_option_string (struct t_config_option *option)
     
     switch (option->type)
     {
-        case CONFIG_OPTION_STRING:
-            return CONFIG_STRING(option);
-        case CONFIG_OPTION_INTEGER:
+        case CONFIG_OPTION_TYPE_BOOLEAN:
+            return NULL;
+        case CONFIG_OPTION_TYPE_INTEGER:
             if (option->string_values)
                 return option->string_values[CONFIG_INTEGER(option)];
             return NULL;
-        default:
+        case CONFIG_OPTION_TYPE_STRING:
+            return CONFIG_STRING(option);
+        case CONFIG_OPTION_TYPE_COLOR:
+            return NULL;
+        case CONFIG_NUM_OPTION_TYPES:
             return NULL;
     }
     return NULL;
@@ -743,7 +1141,7 @@ config_file_option_color (struct t_config_option *option)
     if (!option)
         return 0;
     
-    if (option->type == CONFIG_OPTION_COLOR)
+    if (option->type == CONFIG_OPTION_TYPE_COLOR)
         return CONFIG_COLOR(option);
     else
         return 0;
@@ -767,13 +1165,13 @@ config_file_write_option (struct t_config_file *config_file,
     
     switch (option->type)
     {
-        case CONFIG_OPTION_BOOLEAN:
+        case CONFIG_OPTION_TYPE_BOOLEAN:
             string_iconv_fprintf (config_file->file, "%s = %s\n",
                                   option->name,
                                   (*((int *)value)) == CONFIG_BOOLEAN_TRUE ?
                                   "on" : "off");
             break;
-        case CONFIG_OPTION_INTEGER:
+        case CONFIG_OPTION_TYPE_INTEGER:
             if (option->string_values)
                 string_iconv_fprintf (config_file->file, "%s = %s\n",
                                       option->name,
@@ -783,15 +1181,17 @@ config_file_write_option (struct t_config_file *config_file,
                                       option->name,
                                       *((int *)value));
             break;
-        case CONFIG_OPTION_STRING:
+        case CONFIG_OPTION_TYPE_STRING:
             string_iconv_fprintf (config_file->file, "%s = \"%s\"\n",
                                   option->name,
                                   (char *)value);
             break;
-        case CONFIG_OPTION_COLOR:
+        case CONFIG_OPTION_TYPE_COLOR:
             string_iconv_fprintf (config_file->file, "%s = %s\n",
                                   option->name,
                                   gui_color_get_name (*((int *)value)));
+            break;
+        case CONFIG_NUM_OPTION_TYPES:
             break;
     }
 }
@@ -885,10 +1285,10 @@ config_file_write_internal (struct t_config_file *config_file,
     
     /* write header with version and date */
     current_time = time (NULL);
+    string_iconv_fprintf (config_file->file, "#\n");
     string_iconv_fprintf (config_file->file,
-                          _("#\n# %s configuration file, created by "
-                            "%s v%s on %s#\n"),
-                          PACKAGE_NAME, PACKAGE_NAME, PACKAGE_VERSION,
+                          "# %s -- %s v%s, %s#\n",
+                          config_file->filename, PACKAGE_NAME, PACKAGE_VERSION,
                           ctime (&current_time));
     
     /* write all sections */
@@ -1043,16 +1443,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         pos = ptr_line + 1;
                         ptr_section = config_file_search_section (config_file,
                                                                   pos);
-                        if (ptr_section)
-                        {
-                            if (ptr_section->callback_read)
-                            {
-                                (void) (ptr_section->callback_read) (ptr_section->callback_read_data,
-                                                                     config_file,
-                                                                     NULL, NULL);
-                            }
-                        }
-                        else
+                        if (!ptr_section)
                         {
                             gui_chat_printf (NULL,
                                              _("%sWarning: %s, line %d: unknown "
@@ -1121,14 +1512,16 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                                 pos++;
                             }
                         }
-
+                        
                         if (ptr_section && ptr_section->callback_read)
                         {
                             ptr_option = NULL;
-                            (void) (ptr_section->callback_read) (ptr_section->callback_read_data,
-                                                                 config_file,
-                                                                 line, pos);
-                            rc = 1;
+                            rc = (ptr_section->callback_read)
+                                (ptr_section->callback_read_data,
+                                 config_file,
+                                 ptr_section,
+                                 line,
+                                 pos);
                         }
                         else
                         {
@@ -1140,6 +1533,19 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                             {
                                 rc = config_file_option_set (ptr_option, pos, 1);
                                 ptr_option->loaded = 1;
+                            }
+                            else
+                            {
+                                if (ptr_section
+                                    && ptr_section->callback_create_option)
+                                {
+                                    rc = (int)(ptr_section->callback_create_option)
+                                        (ptr_section->callback_create_option_data,
+                                         config_file,
+                                         ptr_section,
+                                         line,
+                                         pos);
+                                }
                             }
                         }
                         
@@ -1222,13 +1628,10 @@ config_file_reload (struct t_config_file *config_file)
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
-        if (!ptr_section->callback_read)
+        for (ptr_option = ptr_section->options; ptr_option;
+             ptr_option = ptr_option->next_option)
         {
-            for (ptr_option = ptr_section->options; ptr_option;
-                 ptr_option = ptr_option->next_option)
-            {
-                ptr_option->loaded = 0;
-            }
+            ptr_option->loaded = 0;
         }
     }
     
@@ -1239,23 +1642,11 @@ config_file_reload (struct t_config_file *config_file)
     for (ptr_section = config_file->sections; ptr_section;
          ptr_section = ptr_section->next_section)
     {
-        if (!ptr_section->callback_read)
+        for (ptr_option = ptr_section->options; ptr_option;
+             ptr_option = ptr_option->next_option)
         {
-            for (ptr_option = ptr_section->options; ptr_option;
-                 ptr_option = ptr_option->next_option)
-            {
-                if (!ptr_option->loaded)
-                {
-                    if (config_file_option_reset (ptr_option) == 2)
-                    {
-                        if (ptr_option->callback_change)
-                        {
-                            (void) (ptr_option->callback_change)
-                                (ptr_option->callback_change_data);
-                        }
-                    }
-                }
-            }
+            if (!ptr_option->loaded)
+                config_file_option_reset (ptr_option, 1);
         }
     }
     
@@ -1291,29 +1682,48 @@ config_file_option_free (struct t_config_section *section,
 {
     struct t_config_option *new_options;
     
-    if (!section || !option)
+    if (!option)
         return;
     
-    /* remove option */
-    if (section->last_option == option)
-        section->last_option = option->prev_option;
-    if (option->prev_option)
+    /* remove option from section */
+    if (section)
     {
-        (option->prev_option)->next_option = option->next_option;
-        new_options = section->options;
+        if (section->last_option == option)
+            section->last_option = option->prev_option;
+        if (option->prev_option)
+        {
+            (option->prev_option)->next_option = option->next_option;
+            new_options = section->options;
+        }
+        else
+            new_options = option->next_option;
+        if (option->next_option)
+            (option->next_option)->prev_option = option->prev_option;
     }
-    else
-        new_options = option->next_option;
-    
-    if (option->next_option)
-        (option->next_option)->prev_option = option->prev_option;
     
     /* free data */
     config_file_option_free_data (option);
     
     free (option);
     
-    section->options = new_options;
+    if (section)
+        section->options = new_options;
+}
+
+/*
+ * config_file_section_free_options: free options in a section
+ */
+
+void
+config_file_section_free_options (struct t_config_section *section)
+{
+    if (!section)
+        return;
+    
+    while (section->options)
+    {
+        config_file_option_free (section, section->options);
+    }
 }
 
 /*
@@ -1344,10 +1754,7 @@ config_file_section_free (struct t_config_file *config_file,
         (section->next_section)->prev_section = section->prev_section;
     
     /* free data */
-    while (section->options)
-    {
-        config_file_option_free (section, section->options);
-    }
+    config_file_section_free_options (section);
     if (section->name)
         free (section->name);
     
@@ -1387,6 +1794,8 @@ config_file_free (struct t_config_file *config_file)
     {
         config_file_section_free (config_file, config_file->sections);
     }
+    if (config_file->name)
+        free (config_file->name);
     if (config_file->filename)
         free (config_file->filename);
     
@@ -1452,14 +1861,14 @@ config_file_print_stdout (struct t_config_file *config_file)
                                   ptr_option->name);
             switch (ptr_option->type)
             {
-                case CONFIG_OPTION_BOOLEAN:
+                case CONFIG_OPTION_TYPE_BOOLEAN:
                     string_iconv_fprintf (stdout, _("  . type: boolean\n"));
                     string_iconv_fprintf (stdout, _("  . values: 'on' or 'off'\n"));
                     string_iconv_fprintf (stdout, _("  . default value: '%s'\n"),
                                           (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
                                           "on" : "off");
                     break;
-                case CONFIG_OPTION_INTEGER:
+                case CONFIG_OPTION_TYPE_INTEGER:
                     if (ptr_option->string_values)
                     {
                         string_iconv_fprintf (stdout, _("  . type: string\n"));
@@ -1487,7 +1896,7 @@ config_file_print_stdout (struct t_config_file *config_file)
                                               CONFIG_INTEGER_DEFAULT(ptr_option));
                     }
                     break;
-                case CONFIG_OPTION_STRING:
+                case CONFIG_OPTION_TYPE_STRING:
                     switch (ptr_option->max)
                     {
                         case 0:
@@ -1507,12 +1916,14 @@ config_file_print_stdout (struct t_config_file *config_file)
                     string_iconv_fprintf (stdout, _("  . default value: '%s'\n"),
                                           CONFIG_STRING_DEFAULT(ptr_option));
                     break;
-                case CONFIG_OPTION_COLOR:
+                case CONFIG_OPTION_TYPE_COLOR:
                     color_name = gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option));
                     string_iconv_fprintf (stdout, _("  . type: color\n"));
                     string_iconv_fprintf (stdout, _("  . values: color (depends on GUI used)\n"));
                     string_iconv_fprintf (stdout, _("  . default value: '%s'\n"),
                                           color_name);
+                    break;
+                case CONFIG_NUM_OPTION_TYPES:
                     break;
             }
             string_iconv_fprintf (stdout, _("  . description: %s\n"),
@@ -1539,8 +1950,11 @@ config_file_print_log ()
         log_printf ("");
         log_printf ("[config (addr:0x%x)]", ptr_config_file);
         log_printf ("  plugin . . . . . . . . : 0x%x", ptr_config_file->plugin);
+        log_printf ("  name . . . . . . . . . : '%s'", ptr_config_file->name);
         log_printf ("  filename . . . . . . . : '%s'", ptr_config_file->filename);
         log_printf ("  file . . . . . . . . . : 0x%x", ptr_config_file->file);
+        log_printf ("  callback_reload. . . . : 0x%x", ptr_config_file->callback_reload);
+        log_printf ("  callback_reload_data . : 0x%x", ptr_config_file->callback_reload_data);
         log_printf ("  sections . . . . . . . : 0x%x", ptr_config_file->sections);
         log_printf ("  last_section . . . . . : 0x%x", ptr_config_file->last_section);
         log_printf ("  prev_config. . . . . . : 0x%x", ptr_config_file->prev_config);
@@ -1551,20 +1965,27 @@ config_file_print_log ()
         {
             log_printf ("");
             log_printf ("    [section (addr:0x%x)]", ptr_section);
-            log_printf ("      name . . . . . . . . . : '%s'", ptr_section->name);
-            log_printf ("      callback_read. . . . . : 0x%x", ptr_section->callback_read);
-            log_printf ("      callback_write . . . . : 0x%x", ptr_section->callback_write);
-            log_printf ("      callback_write_default : 0x%x", ptr_section->callback_write_default);
-            log_printf ("      options. . . . . . . . : 0x%x", ptr_section->options);
-            log_printf ("      last_option. . . . . . : 0x%x", ptr_section->last_option);
-            log_printf ("      prev_section . . . . . : 0x%x", ptr_section->prev_section);
-            log_printf ("      next_section . . . . . : 0x%x", ptr_section->next_section);
+            log_printf ("      name . . . . . . . . . . . : '%s'", ptr_section->name);
+            log_printf ("      callback_read. . . . . . . : 0x%x", ptr_section->callback_read);
+            log_printf ("      callback_read_data . . . . : 0x%x", ptr_section->callback_read_data);
+            log_printf ("      callback_write . . . . . . : 0x%x", ptr_section->callback_write);
+            log_printf ("      callback_write_data. . . . : 0x%x", ptr_section->callback_write_data);
+            log_printf ("      callback_write_default . . : 0x%x", ptr_section->callback_write_default);
+            log_printf ("      callback_write_default_data: 0x%x", ptr_section->callback_write_default_data);
+            log_printf ("      callback_create_option. . .: 0x%x", ptr_section->callback_create_option);
+            log_printf ("      callback_create_option_data: 0x%x", ptr_section->callback_create_option_data);
+            log_printf ("      options. . . . . . . . . . : 0x%x", ptr_section->options);
+            log_printf ("      last_option. . . . . . . . : 0x%x", ptr_section->last_option);
+            log_printf ("      prev_section . . . . . . . : 0x%x", ptr_section->prev_section);
+            log_printf ("      next_section . . . . . . . : 0x%x", ptr_section->next_section);
             
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {
                 log_printf ("");
                 log_printf ("      [option (addr:0x%x)]", ptr_option);
+                log_printf ("        config_file. . . . . : 0x%x", ptr_option->config_file);
+                log_printf ("        section. . . . . . . : 0x%x", ptr_option->section);
                 log_printf ("        name . . . . . . . . : '%s'", ptr_option->name);
                 log_printf ("        type . . . . . . . . : %d",   ptr_option->type);
                 log_printf ("        description. . . . . : '%s'", ptr_option->description);
@@ -1573,15 +1994,15 @@ config_file_print_log ()
                 log_printf ("        max. . . . . . . . . : %d",   ptr_option->max);
                 switch (ptr_option->type)
                 {
-                    case CONFIG_OPTION_BOOLEAN:
+                    case CONFIG_OPTION_TYPE_BOOLEAN:
                         log_printf ("        default value. . . . : %s",
                                     (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
-                                    "true" : "false");
+                                    "on" : "off");
                         log_printf ("        value (boolean). . . : %s",
                                     (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
-                                    "true" : "false");
+                                    "on" : "off");
                         break;
-                    case CONFIG_OPTION_INTEGER:
+                    case CONFIG_OPTION_TYPE_INTEGER:
                         if (ptr_option->string_values)
                         {
                             log_printf ("        default value. . . . : '%s'",
@@ -1591,21 +2012,27 @@ config_file_print_log ()
                         }
                         else
                         {
-                            log_printf ("        default value. . . . : %d", CONFIG_INTEGER_DEFAULT(ptr_option));
-                            log_printf ("        value (integer). . . : %d", CONFIG_INTEGER(ptr_option));
+                            log_printf ("        default value. . . . : %d",
+                                        CONFIG_INTEGER_DEFAULT(ptr_option));
+                            log_printf ("        value (integer). . . : %d",
+                                        CONFIG_INTEGER(ptr_option));
                         }
                         break;
-                    case CONFIG_OPTION_STRING:
-                        log_printf ("        default value. . . . : '%s'", CONFIG_STRING_DEFAULT(ptr_option));
-                        log_printf ("        value (string) . . . : '%s'", CONFIG_STRING(ptr_option));
+                    case CONFIG_OPTION_TYPE_STRING:
+                        log_printf ("        default value. . . . : '%s'",
+                                    CONFIG_STRING_DEFAULT(ptr_option));
+                        log_printf ("        value (string) . . . : '%s'",
+                                    CONFIG_STRING(ptr_option));
                         break;
-                    case CONFIG_OPTION_COLOR:
+                    case CONFIG_OPTION_TYPE_COLOR:
                         log_printf ("        default value. . . . : %d ('%s')",
                                     CONFIG_COLOR_DEFAULT(ptr_option),
                                     gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option)));
                         log_printf ("        value (color). . . . : %d ('%s')",
                                     CONFIG_COLOR(ptr_option),
                                     gui_color_get_name (CONFIG_COLOR(ptr_option)));
+                        break;
+                    case CONFIG_NUM_OPTION_TYPES:
                         break;
                 }
                 log_printf ("        callback_change. . . : 0x%x", ptr_option->callback_change);

@@ -119,10 +119,9 @@ weechat_lua_api_register (lua_State *L)
     if (lua_current_script)
     {
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s: registered script \"%s\", "
+                        weechat_gettext ("%s: registered script \"%s\", "
                                          "version %s (%s)"),
-                        weechat_prefix ("info"), "lua",
-                        name, version, description);
+                        "lua", name, version, description);
     }
     else
     {
@@ -934,7 +933,7 @@ weechat_lua_api_config_reload_cb (void *data,
 static int
 weechat_lua_api_config_new (lua_State *L)
 {
-    const char *filename, *function;
+    const char *name, *function;
     char *result;
     int n;
     
@@ -947,7 +946,7 @@ weechat_lua_api_config_new (lua_State *L)
         LUA_RETURN_EMPTY;
     }
     
-    filename = NULL;
+    name = NULL;
     function = NULL;
     
     n = lua_gettop (lua_current_interpreter);
@@ -958,12 +957,12 @@ weechat_lua_api_config_new (lua_State *L)
         LUA_RETURN_EMPTY;
     }
     
-    filename = lua_tostring (lua_current_interpreter, -2);
+    name = lua_tostring (lua_current_interpreter, -2);
     function = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_config_new (weechat_lua_plugin,
                                                     lua_current_script,
-                                                    (char *)filename,
+                                                    (char *)name,
                                                     &weechat_lua_api_config_reload_cb,
                                                     (char *)function));
     
@@ -1072,6 +1071,54 @@ weechat_lua_api_config_section_write_default_cb (void *data,
 }
 
 /*
+ * weechat_lua_api_config_section_create_option_cb: callback to create an option
+ */
+
+int
+weechat_lua_api_config_section_create_option_cb (void *data,
+                                                 struct t_config_file *config_file,
+                                                 struct t_config_section *section,
+                                                 char *option_name,
+                                                 char *value)
+{
+    struct t_script_callback *script_callback;
+    char *lua_argv[5];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        lua_argv[0] = script_ptr2str (config_file);
+        lua_argv[1] = script_ptr2str (section);
+        lua_argv[2] = option_name;
+        lua_argv[3] = value;
+        lua_argv[4] = NULL;
+        
+        rc = (int *) weechat_lua_exec (script_callback->script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       lua_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (lua_argv[0])
+            free (lua_argv[0]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
+        
+        return ret;
+    }
+    
+    return 0;
+}
+
+/*
  * weechat_lua_api_config_new_section: create a new section in configuration file
  */
 
@@ -1079,7 +1126,7 @@ static int
 weechat_lua_api_config_new_section (lua_State *L)
 {
     const char *config_file, *name, *function_read, *function_write;
-    const char *function_write_default;
+    const char *function_write_default, *function_create_option;
     char *result;
     int n;
     
@@ -1097,20 +1144,22 @@ weechat_lua_api_config_new_section (lua_State *L)
     function_read = NULL;
     function_write = NULL;
     function_write_default = NULL;
+    function_create_option = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 5)
+    if (n < 6)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
         LUA_RETURN_EMPTY;
     }
     
-    config_file = lua_tostring (lua_current_interpreter, -5);
-    name = lua_tostring (lua_current_interpreter, -4);
-    function_read = lua_tostring (lua_current_interpreter, -3);
-    function_write = lua_tostring (lua_current_interpreter, -2);
-    function_write_default = lua_tostring (lua_current_interpreter, -1);
+    config_file = lua_tostring (lua_current_interpreter, -6);
+    name = lua_tostring (lua_current_interpreter, -5);
+    function_read = lua_tostring (lua_current_interpreter, -4);
+    function_write = lua_tostring (lua_current_interpreter, -3);
+    function_write_default = lua_tostring (lua_current_interpreter, -2);
+    function_create_option = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_config_new_section (weechat_lua_plugin,
                                                             lua_current_script,
@@ -1120,8 +1169,10 @@ weechat_lua_api_config_new_section (lua_State *L)
                                                             (char *)function_read,
                                                             &weechat_lua_api_config_section_write_cb,
                                                             (char *)function_write,
-                                                            &weechat_lua_api_config_section_write_cb,
-                                                            (char *)function_write_default));
+                                                            &weechat_lua_api_config_section_write_default_cb,
+                                                            (char *)function_write_default,
+                                                            &weechat_lua_api_config_section_create_option_cb,
+                                                            (char *)function_create_option));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -2553,19 +2604,17 @@ weechat_lua_api_hook_signal_send (lua_State *L)
  */
 
 int
-weechat_lua_api_hook_config_cb (void *data, char *type, char *option,
-                                char *value)
+weechat_lua_api_hook_config_cb (void *data, char *option, char *value)
 {
     struct t_script_callback *script_callback;
-    char *lua_argv[4];
+    char *lua_argv[3];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
-    lua_argv[0] = type;
-    lua_argv[1] = option;
-    lua_argv[2] = value;
-    lua_argv[3] = NULL;
+    lua_argv[0] = option;
+    lua_argv[1] = value;
+    lua_argv[2] = NULL;
     
     rc = (int *) weechat_lua_exec (script_callback->script,
                                    WEECHAT_SCRIPT_EXEC_INT,
@@ -2596,7 +2645,7 @@ weechat_lua_api_hook_config (lua_State *L)
     
     /* make C compiler happy */
     (void) L;
-        
+    
     if (!lua_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_config");
@@ -2609,19 +2658,17 @@ weechat_lua_api_hook_config (lua_State *L)
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 3)
+    if (n < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_config");
         LUA_RETURN_EMPTY;
     }
     
-    type = lua_tostring (lua_current_interpreter, -3);
     option = lua_tostring (lua_current_interpreter, -2);
     function = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_config (weechat_lua_plugin,
                                                      lua_current_script,
-                                                     (char *)type,
                                                      (char *)option,
                                                      &weechat_lua_api_hook_config_cb,
                                                      (char *)function));

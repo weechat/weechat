@@ -44,7 +44,7 @@ WEECHAT_PLUGIN_DESCRIPTION("Logger plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
-WEECHAT_PLUGIN_LICENSE("GPL");
+WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_logger_plugin = NULL;
 
@@ -642,11 +642,10 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
  */
 
 int
-logger_config_cb (void *data, char *type, char *option, char *value)
+logger_config_cb (void *data, char *option, char *value)
 {
     /* make C compiler happy */
     (void) data;
-    (void) type;
     (void) option;
     (void) value;
     
@@ -679,16 +678,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     weechat_hook_print (NULL, NULL, NULL, 1, &logger_print_cb, NULL);
     
-    weechat_hook_config ("plugin", "logger." LOGGER_OPTION_PATH,
-                         &logger_config_cb, NULL);
-    weechat_hook_config ("plugin", "logger." LOGGER_OPTION_NAME_LOWER_CASE,
-                         &logger_config_cb, NULL);
-    weechat_hook_config ("plugin", "logger." LOGGER_OPTION_TIME_FORMAT,
-                         &logger_config_cb, NULL);
-    weechat_hook_config ("plugin", "logger." LOGGER_OPTION_INFO_LINES,
-                         &logger_config_cb, NULL);
-    weechat_hook_config ("plugin", "logger." LOGGER_OPTION_BACKLOG,
-                         &logger_config_cb, NULL);
+    weechat_hook_config ("plugins.var.logger.*", &logger_config_cb, NULL);
     
     return WEECHAT_RC_OK;
 }

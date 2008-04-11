@@ -36,7 +36,7 @@ WEECHAT_PLUGIN_DESCRIPTION("Demo plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
-WEECHAT_PLUGIN_LICENSE("GPL");
+WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_demo_plugin = NULL;
 #define weechat_plugin weechat_demo_plugin
@@ -91,19 +91,16 @@ demo_printf_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         weechat_printf (buffer,
                         _("demo message without prefix"));
         weechat_printf (buffer,
-                        _("%sdemo message with info prefix"),
-                        weechat_prefix ("info"));
-        weechat_printf (buffer,
                         _("%sdemo message with error prefix"),
                         weechat_prefix ("error"));
         weechat_printf (buffer,
                         _("colors: %s buffer %s nick1 %s nick2 %s nick3 "
                           "%s nick4"),
-                        weechat_color ("color_chat_buffer"),
-                        weechat_color ("color_chat_nick_color1"),
-                        weechat_color ("color_chat_nick_color2"),
-                        weechat_color ("color_chat_nick_color3"),
-                        weechat_color ("color_chat_nick_color4"));
+                        weechat_color ("chat_buffer"),
+                        weechat_color ("chat_nick_color1"),
+                        weechat_color ("chat_nick_color2"),
+                        weechat_color ("chat_nick_color3"),
+                        weechat_color ("chat_nick_color4"));
     }
     
     return WEECHAT_RC_OK;
@@ -342,8 +339,7 @@ demo_info_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     (void) argv_eol;
     
     if (argc > 1)
-        weechat_printf (NULL, "%sinfo \"%s\" = \"%s\"",
-                        weechat_prefix ("info"),
+        weechat_printf (NULL, "info \"%s\" = \"%s\"",
                         argv[1],
                         weechat_info_get (argv[1]));
     else

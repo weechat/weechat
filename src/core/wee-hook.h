@@ -128,13 +128,11 @@ struct t_hook_signal
                                        /* with "*", "*" == any signal)      */
 };
 
-typedef int (t_hook_callback_config)(void *data, char *type, char *option,
-                                     char *value);
+typedef int (t_hook_callback_config)(void *data, char *option, char *value);
 
 struct t_hook_config
 {
     t_hook_callback_config *callback;  /* config callback                   */
-    char *type;                        /* "weechat" or "plugin"             */
     char *option;                      /* config option for hook            */
                                        /* (NULL = hook for all options)     */
 };
@@ -209,11 +207,10 @@ extern struct t_hook *hook_signal (struct t_weechat_plugin *plugin,
                                    void *callback_data);
 extern void hook_signal_send (char *signal, char *type_data,
                               void *signal_data);
-extern struct t_hook *hook_config (struct t_weechat_plugin *, char *type,
-                                   char *option,
+extern struct t_hook *hook_config (struct t_weechat_plugin *, char *option,
                                    t_hook_callback_config *callback,
                                    void *callback_data);
-extern void hook_config_exec (char *type, char *option, char *value);
+extern void hook_config_exec (char *option, char *value);
 extern struct t_hook *hook_completion (struct t_weechat_plugin *plugin,
                                        char *completion,
                                        t_hook_callback_completion *callback,

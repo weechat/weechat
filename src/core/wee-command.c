@@ -430,9 +430,8 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                     return WEECHAT_RC_ERROR;
                 }
                 gui_chat_printf (NULL,
-                                 _("%sNew notify level for %s%s%s: "
+                                 _("New notify level for %s%s%s: "
                                    "%d %s"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  buffer->name,
                                  GUI_COLOR(GUI_COLOR_CHAT),
@@ -567,7 +566,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * command_builtin: launch WeeChat/IRC builtin command
+ * command_builtin: launch WeeChat builtin command
  */
 
 int
@@ -782,6 +781,9 @@ command_help (void *data, struct t_gui_buffer *buffer,
               int argc, char **argv, char **argv_eol)
 {
     struct t_hook *ptr_hook;
+    struct t_config_option *ptr_option;
+    int i, length;
+    char *string;
     
     /* make C compiler happy */
     (void) data;
@@ -793,7 +795,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
     {
         gui_chat_printf (NULL, "");
         gui_chat_printf (NULL,
-                         /* TRANSLATORS: %s is "WeeChat" */
+                         /* TRANSLATORS: %s is "weechat" */
                          _("%s internal commands:"),
                          PACKAGE_NAME);
         for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
@@ -854,7 +856,7 @@ command_help (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
-    /* display help about a command */
+    /* look for command */
     for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
          ptr_hook = ptr_hook->next_hook)
     {
@@ -896,9 +898,117 @@ command_help (void *data, struct t_gui_buffer *buffer,
         }
     }
     
+    /* look for option */
+    config_file_search_with_string (argv[1], NULL, NULL, &ptr_option, NULL);
+    if (ptr_option)
+    {
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL,
+                         _("Option \"%s%s%s\": %s"),
+                         GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
+                         argv[1],
+                         GUI_COLOR(GUI_COLOR_CHAT),
+                         ptr_option->description);
+        switch (ptr_option->type)
+        {
+            case CONFIG_OPTION_TYPE_BOOLEAN:
+                gui_chat_printf (NULL, _("  type: boolean ('on' or 'off')"));
+                gui_chat_printf (NULL, _("  value: %s%s%s (default: %s)"),
+                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                 (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
+                                 "on" : "off",
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
+                                 "on" : "off");
+                break;
+            case CONFIG_OPTION_TYPE_INTEGER:
+                if (ptr_option->string_values)
+                {
+                    length = 0;
+                    i = 0;
+                    while (ptr_option->string_values[i])
+                    {
+                        length += strlen (ptr_option->string_values[i]) + 5;
+                        i++;
+                    }
+                    string = malloc (length);
+                    if (string)
+                    {
+                        string[0] = '\0';
+                        i = 0;
+                        while (ptr_option->string_values[i])
+                        {
+                            strcat (string, "'");
+                            strcat (string, ptr_option->string_values[i]);
+                            strcat (string, "'");
+                            if (ptr_option->string_values[i + 1])
+                                strcat (string, ", ");
+                            i++;
+                        }
+                        gui_chat_printf (NULL,
+                                         _("  type: string (%s)"),
+                                         string);
+                        gui_chat_printf (NULL,
+                                         _("  value: '%s%s%s' (default: '%s')"),
+                                         GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                         ptr_option->string_values[CONFIG_INTEGER(ptr_option)],
+                                         GUI_COLOR(GUI_COLOR_CHAT),
+                                         ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]);
+                        free (string);
+                    }
+                }
+                else
+                {
+                    gui_chat_printf (NULL, _("  type: integer (between %d and %d)"),
+                                     ptr_option->min,
+                                     ptr_option->max);
+                    gui_chat_printf (NULL, _("  value: %s%d%s (default: %d)"),
+                                     GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                     CONFIG_INTEGER(ptr_option),
+                                     GUI_COLOR(GUI_COLOR_CHAT),
+                                     CONFIG_INTEGER_DEFAULT(ptr_option));
+                }
+                break;
+            case CONFIG_OPTION_TYPE_STRING:
+                switch (ptr_option->max)
+                {
+                    case 0:
+                        gui_chat_printf (NULL, _("  type: string (any string)"));
+                        break;
+                    case 1:
+                        gui_chat_printf (NULL, _("  type: char (any char)"));
+                        break;
+                    default:
+                        gui_chat_printf (NULL, _("  type: string (limit: %d chars)"),
+                                         ptr_option->max);
+                        break;
+                }
+                gui_chat_printf (NULL,
+                                 _("  value: '%s%s%s' (default: '%s')"),
+                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                 CONFIG_STRING(ptr_option),
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 CONFIG_STRING_DEFAULT(ptr_option));
+                break;
+            case CONFIG_OPTION_TYPE_COLOR:
+                gui_chat_printf (NULL,
+                                 _("  type: color (values depend on GUI used)"));
+                gui_chat_printf (NULL,
+                                 _("  value: %s%s%s (default: %s)"),
+                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                 gui_color_get_name (CONFIG_COLOR(ptr_option)),
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option)));
+                break;
+            case CONFIG_NUM_OPTION_TYPES:
+                break;
+        }
+        return WEECHAT_RC_OK;
+    }
+    
     gui_chat_printf (NULL,
-                     _("%sNo help available, \"%s\" is an "
-                       "unknown command"),
+                     _("%sNo help available, \"%s\" is not a command or an "
+                       "option"),
                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                      argv[1]);
     
@@ -973,8 +1083,7 @@ command_key_display (struct t_gui_key *key, int new_key)
     if (new_key)
     {
         gui_chat_printf (NULL,
-                         _("%sNew key binding: %s%s => %s%s%s%s%s"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                         _("New key binding: %s%s => %s%s%s%s%s"),
                          (expanded_name) ? expanded_name : key->key,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT),
@@ -1054,8 +1163,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
             gui_keyboard_free_all ();
             gui_keyboard_init ();
             gui_chat_printf (NULL,
-                             _("%sDefault key bindings restored"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_INFO]);
+                             _("Default key bindings restored"));
         }
         else
         {
@@ -1076,8 +1184,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
             if (gui_keyboard_unbind (argv[2]))
             {
                 gui_chat_printf (NULL,
-                                 _("%sKey \"%s\" unbound"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                                 _("Key \"%s\" unbound"),
                                  argv[2]);
             }
             else
@@ -1333,9 +1440,7 @@ command_plugin_list (char *name, int full)
                                                "hooked:"));
                         hook_found = 1;
                         gui_chat_printf (NULL,
-                                         "      (%s) %s",
-                                         HOOK_CONFIG(ptr_hook, type) ?
-                                         HOOK_CONFIG(ptr_hook, type) : "*",
+                                         "      %s",
                                          HOOK_CONFIG(ptr_hook, option) ?
                                          HOOK_CONFIG(ptr_hook, option) : "*");
                     }
@@ -1467,8 +1572,7 @@ command_quit (void *data, struct t_gui_buffer *buffer,
     /* send quit signal (used by plugins to disconnect from servers,..) */
     hook_signal_send ("quit",
                       WEECHAT_HOOK_SIGNAL_STRING,
-                      (argc > 1) ?
-                      argv_eol[1] : CONFIG_STRING(config_look_default_msg_quit));
+                      (argc > 1) ? argv_eol[1] : NULL);
     
     /* force end of main loop */
     quit_weechat = 1;
@@ -1487,8 +1591,7 @@ command_reload_file (struct t_config_file *config_file)
         (config_file->callback_reload_data, config_file) == 0)
     {
         gui_chat_printf (NULL,
-                         _("%sOptions reloaded from %s"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                         _("Options reloaded from %s"),
                          config_file->filename);
     }
     else
@@ -1528,8 +1631,7 @@ command_reload (void *data, struct t_gui_buffer *buffer,
             else
             {
                 gui_chat_printf (NULL,
-                                 _("%sUnknown configuration file \"%s\""),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                                 _("Unknown configuration file \"%s\""),
                                  argv[i]);
             }
         }
@@ -1559,8 +1661,7 @@ command_save_file (struct t_config_file *config_file)
     if (config_file_write (config_file) == 0)
     {
         gui_chat_printf (NULL,
-                         _("%sOptions saved to %s"),
-                         gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                         _("Options saved to %s"),
                          config_file->filename);
     }
     else
@@ -1601,8 +1702,7 @@ command_save (void *data, struct t_gui_buffer *buffer,
             else
             {
                 gui_chat_printf (NULL,
-                                 _("%sUnknown configuration file \"%s\""),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                                 _("Unknown configuration file \"%s\""),
                                  argv[i]);
             }
         }
@@ -1621,33 +1721,55 @@ command_save (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * command_set_display_section: display configuration section
+ */
+
+void
+command_set_display_section (struct t_config_file *config_file,
+                             struct t_config_section *section)
+{
+    gui_chat_printf (NULL, "");
+    gui_chat_printf (NULL, "%s[%s%s%s]%s (%s)",
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                     section->name,
+                     GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                     GUI_COLOR(GUI_COLOR_CHAT),
+                     config_file->filename);
+}
+    
+/*
  * command_set_display_option: display configuration option
  */
 
 void
-command_set_display_option (struct t_config_option *option, char *prefix,
+command_set_display_option (struct t_config_file *config_file,
+                            struct t_config_section *section,
+                            struct t_config_option *option,
                             char *message)
 {
     char *color_name;
     
     switch (option->type)
     {
-        case CONFIG_OPTION_BOOLEAN:
-            gui_chat_printf (NULL, "%s%s%s%s = %s%s",
-                             prefix,
+        case CONFIG_OPTION_TYPE_BOOLEAN:
+            gui_chat_printf (NULL, "%s%s.%s.%s%s = %s%s",
                              (message) ? message : "  ",
+                             config_file->name,
+                             section->name,
                              option->name,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT_HOST),
                              (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_TRUE) ?
-                             "ON" : "OFF");
+                             "on" : "off");
             break;
-        case CONFIG_OPTION_INTEGER:
+        case CONFIG_OPTION_TYPE_INTEGER:
             if (option->string_values)
             {
-                gui_chat_printf (NULL, "%s%s%s%s = %s%s",
-                                 prefix,
+                gui_chat_printf (NULL, "%s%s.%s.%s%s = %s%s",
                                  (message) ? message : "  ",
+                                 config_file->name,
+                                 section->name,
                                  option->name,
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                  GUI_COLOR(GUI_COLOR_CHAT_HOST),
@@ -1655,34 +1777,40 @@ command_set_display_option (struct t_config_option *option, char *prefix,
             }
             else
             {
-                gui_chat_printf (NULL, "%s%s%s%s = %s%d",
-                                 prefix,
+                gui_chat_printf (NULL, "%s%s.%s.%s%s = %s%d",
                                  (message) ? message : "  ",
+                                 config_file->name,
+                                 section->name,
                                  option->name,
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                  GUI_COLOR(GUI_COLOR_CHAT_HOST),
                                  CONFIG_INTEGER(option));
             }
             break;
-        case CONFIG_OPTION_STRING:
-            gui_chat_printf (NULL, "%s%s%s%s = \"%s%s%s\"",
-                             prefix,
+        case CONFIG_OPTION_TYPE_STRING:
+            gui_chat_printf (NULL, "%s%s.%s.%s%s = \"%s%s%s\"",
                              (message) ? message : "  ",
+                             config_file->name,
+                             section->name,
                              option->name,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT_HOST),
                              (option->value) ? CONFIG_STRING(option) : "",
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
             break;
-        case CONFIG_OPTION_COLOR:
+        case CONFIG_OPTION_TYPE_COLOR:
             color_name = gui_color_get_name (CONFIG_COLOR(option));
-            gui_chat_printf (NULL, "%s%s%s%s = %s%s",
-                             prefix,
+            gui_chat_printf (NULL, "%s%s.%s.%s%s = %s%s",
                              (message) ? message : "  ",
+                             config_file->name,
+                             section->name,
                              option->name,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT_HOST),
                              (color_name) ? color_name : _("(unknown)"));
+            break;
+        case CONFIG_NUM_OPTION_TYPES:
+            /* make C compiler happy */
             break;
     }
 }
@@ -1693,43 +1821,51 @@ command_set_display_option (struct t_config_option *option, char *prefix,
  */
 
 int
-command_set_display_option_list (struct t_config_file *config_file,
-                                 char *message, char *search)
+command_set_display_option_list (char *message, char *search)
 {
-    int number_found, section_displayed;
+    int number_found, section_displayed, length;
+    char *option_full_name;
+    struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
     
-    if (!config_file)
-        return 0;
-    
     number_found = 0;
     
-    for (ptr_section = config_file->sections; ptr_section;
-         ptr_section = ptr_section->next_section)
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
     {
-        if (ptr_section->options)
+        for (ptr_section = ptr_config->sections; ptr_section;
+             ptr_section = ptr_section->next_section)
         {
             section_displayed = 0;
+            
             for (ptr_option = ptr_section->options; ptr_option;
                  ptr_option = ptr_option->next_option)
             {
-                if ((!search) ||
-                    ((search) && (search[0])
-                     && (string_strcasestr (ptr_option->name, search))))
+                length = strlen (ptr_config->name) + 1
+                    + strlen (ptr_section->name) + 1
+                    + strlen (ptr_option->name) + 1;
+                option_full_name = malloc (length);
+                if (option_full_name)
                 {
-                    if (!section_displayed)
+                    snprintf (option_full_name, length, "%s.%s.%s",
+                              ptr_config->name, ptr_section->name,
+                              ptr_option->name);
+                    if ((!search) ||
+                        (search && search[0] && option_full_name
+                         && (string_match (option_full_name, search, 0))))
                     {
-                        gui_chat_printf (NULL, "");
-                        gui_chat_printf (NULL, "%s[%s%s%s]",
-                                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                         GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                         ptr_section->name,
-                                         GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-                        section_displayed = 1;
+                        if (!section_displayed)
+                        {
+                            command_set_display_section (ptr_config,
+                                                         ptr_section);
+                            section_displayed = 1;
+                        }
+                        command_set_display_option (ptr_config, ptr_section,
+                                                    ptr_option, message);
+                        number_found++;
                     }
-                    command_set_display_option (ptr_option, "", message);
-                    number_found++;
+                    free (option_full_name);
                 }
             }
         }
@@ -1737,7 +1873,7 @@ command_set_display_option_list (struct t_config_file *config_file,
     
     return number_found;
 }
-
+    
 /*
  * command_set: set config options
  */
@@ -1747,7 +1883,6 @@ command_set (void *data, struct t_gui_buffer *buffer,
              int argc, char **argv, char **argv_eol)
 {
     char *value;
-    struct t_config_option *ptr_option;
     int number_found, rc;
     
     /* make C compiler happy */
@@ -1759,8 +1894,7 @@ command_set (void *data, struct t_gui_buffer *buffer,
     {
         number_found = 0;
         
-        number_found += command_set_display_option_list (weechat_config_file,
-                                                         NULL,
+        number_found += command_set_display_option_list (NULL,
                                                          (argc == 2) ?
                                                          argv[1] : NULL);
         
@@ -1768,8 +1902,10 @@ command_set (void *data, struct t_gui_buffer *buffer,
         {
             if (argc == 2)
                 gui_chat_printf (NULL,
-                                 _("No configuration option found with "
-                                   "\"%s\""),
+                                 _("%sOption \"%s\" not found (tip: you can use "
+                                   "\"*\" at beginning and/or end of option to "
+                                   "see a sublist)"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[1]);
             else
                 gui_chat_printf (NULL,
@@ -1780,10 +1916,10 @@ command_set (void *data, struct t_gui_buffer *buffer,
             gui_chat_printf (NULL, "");
             if (argc == 2)
                 gui_chat_printf (NULL,
-                                 NG_("%s%d%s configuration option found with "
-                                     "\"%s\"",
-                                     "%s%d%s configuration options found with "
-                                     "\"%s\"",
+                                 NG_("%s%d%s configuration option found "
+                                     "matching with \"%s\"",
+                                     "%s%d%s configuration options found "
+                                     "matching with \"%s\"",
                                      number_found),
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  number_found,
@@ -1804,41 +1940,29 @@ command_set (void *data, struct t_gui_buffer *buffer,
     /* set option value */
     if ((argc >= 4) && (string_strcasecmp (argv[2], "=") == 0))
     {
-        ptr_option = config_file_search_option (weechat_config_file, NULL, argv[1]);
-        if (!ptr_option)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: configuration option \"%s\" not "
-                               "found"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[1]);
-            return WEECHAT_RC_ERROR;
-        }
         value = string_remove_quotes (argv_eol[3], "'\"");
-        rc = config_file_option_set (ptr_option,
-                                     (value) ? value : argv_eol[3],
-                                     0);
+        rc = config_file_option_set_with_string (argv[1],
+                                                 (value) ? value : argv_eol[3]);
         if (value)
             free (value);
-        if (rc > 0)
+        switch (rc)
         {
-            command_set_display_option (ptr_option,
-                                        gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
-                                        _("Option changed: "));
-            if ((rc == 2) && (ptr_option->callback_change))
-            {
-                (void) (ptr_option->callback_change)
-                    (ptr_option->callback_change_data);
-            }
-        }
-        else
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: incorrect value for "
-                               "option \"%s\""),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[1]);
-            return WEECHAT_RC_ERROR;
+            case 0:
+                gui_chat_printf (NULL,
+                                 _("%sError: failed to set option \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[1]);
+                return WEECHAT_RC_ERROR;
+            case -1:
+                gui_chat_printf (NULL,
+                                 _("%sError: configuration option \"%s\" not "
+                                   "found"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[1]);
+                return WEECHAT_RC_ERROR;
+            default:
+                gui_chat_printf (NULL, _("Option changed"));
+                break;
         }
     }
     
@@ -1846,125 +1970,33 @@ command_set (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * command_setp: set plugin options
+ * command_unset: unset/reset config options
  */
 
 int
-command_setp (void *data, struct t_gui_buffer *buffer,
-              int argc, char **argv, char **argv_eol)
+command_unset (void *data, struct t_gui_buffer *buffer,
+               int argc, char **argv, char **argv_eol)
 {
-    char *pos, *ptr_name, *value;
-    struct t_config_option *ptr_option;
-    int number_found;
-    
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argc;
     (void) argv;
-
-    if (argc < 3)
+    
+    if (argc >= 2)
     {
-        number_found = 0;
-        for (ptr_option = plugin_options; ptr_option;
-             ptr_option = ptr_option->next_option)
+        switch (config_file_unset_with_string (argv_eol[1]))
         {
-            if ((argc == 1) ||
-                (strstr (ptr_option->name, argv[1])))
-            {
-                if (number_found == 0)
-                    gui_chat_printf (NULL, "");
-                gui_chat_printf (NULL, "  %s%s = \"%s%s%s\"",
-                                 ptr_option->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                 (char *)ptr_option->value,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-                number_found++;
-            }
-        }
-        if (number_found == 0)
-        {
-            if (argc == 2)
-                gui_chat_printf (NULL,
-                                 _("No plugin option found with \"%s\""),
-                                 argv[1]);
-            else
-                gui_chat_printf (NULL, _("No plugin option found"));
-        }
-        else
-        {
-            gui_chat_printf (NULL, "");
-            if (argc == 2)
-                gui_chat_printf (NULL,
-                                 NG_("%s%d%s plugin option found with \"%s\"",
-                                     "%s%d%s plugin options found with \"%s\"",
-                                     number_found),
-                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                 number_found,
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 argv[1]);
-            else
-                gui_chat_printf (NULL,
-                                 NG_("%s%d%s plugin option found",
-                                     "%s%d%s plugin options found",
-                                     number_found),
-                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                 number_found,
-                                 GUI_COLOR(GUI_COLOR_CHAT));
-        }
-    }
-
-    if ((argc >= 4) && (string_strcasecmp (argv[2], "=") == 0))
-    {
-        ptr_name = NULL;
-        ptr_option = plugin_config_search_internal (argv[1]);
-        if (ptr_option)
-            ptr_name = ptr_option->name;
-        else
-        {
-            pos = strchr (argv[1], '.');
-            if (pos)
-                pos[0] = '\0';
-            if (!pos || !pos[1] || (!plugin_search (argv[1])))
-            {
-                gui_chat_printf (NULL,
-                                 _("%sError: plugin \"%s\" not found"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[1]);
-                if (pos)
-                    pos[0] = '.';
-                return WEECHAT_RC_ERROR;
-            }
-            else
-                ptr_name = argv[1];
-            if (pos)
-                pos[0] = '.';
-        }
-        if (ptr_name)
-        {
-            value = string_remove_quotes (argv_eol[3], "'\"");
-            if (plugin_config_set_internal (ptr_name, (value) ? value : argv_eol[3]))
-                gui_chat_printf (NULL,
-                                 _("Plugin option changed: %s%s = \"%s%s%s\""),
-                                 ptr_name,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                 value,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS));
-            else
-            {
-                gui_chat_printf (NULL,
-                                 _("%sError: incorrect value for plugin "
-                                   "option \"%s\""),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 ptr_name);
-                if (value)
-                    free (value);
-                return WEECHAT_RC_ERROR;
-            }
-            if (value)
-                free (value);
+            case 0:
+                gui_chat_printf (NULL, _("%sOption not found"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                break;
+            case 1:
+                gui_chat_printf (NULL, _("Option reset"));
+                break;
+            case 2:
+                gui_chat_printf (NULL, _("Option removed"));
+                break;
+                                                 
         }
     }
     
@@ -2391,10 +2423,11 @@ command_init ()
                   "list|enable|disable|toggle|add|del",
                   &command_filter, NULL);
     hook_command (NULL, "help",
-                  N_("display help about commands"),
-                  N_("[command]"),
-                  N_("command: name of a WeeChat or IRC command"),
-                  "%w|%h",
+                  N_("display help about commands and options"),
+                  N_("[command | option]"),
+                  N_("command: a command name\n"
+                     " option: an option name (use /set to see list)"),
+                  "%h|%o",
                   &command_help, NULL);
     hook_command (NULL, "history",
                   N_("show buffer command history"),
@@ -2435,7 +2468,7 @@ command_init ()
     hook_command (NULL, "quit",
                   N_("quit WeeChat"),
                   "", "",
-                  "%q",
+                  "",
                   &command_quit, NULL);
     hook_command (NULL, "reload",
                   N_("reload configuration files from disk"),
@@ -2456,24 +2489,18 @@ command_init ()
     hook_command (NULL, "set",
                   N_("set config options"),
                   N_("[option [ = value]]"),
-                  N_("option: name of an option (if name is full "
-                     "and no value is given, then help is displayed on "
-                     "option)\n"
-                     " value: value for option\n\n"
-                     "Option may be: servername.server_xxx where "
-                     "\"servername\" is an internal server name and \"xxx\" "
-                     "an option for this server."),
+                  N_("option: name of an option\n"
+                     " value: value for option"),
                   "%o = %v",
                   &command_set, NULL);
-    hook_command (NULL, "setp",
-                  N_("set plugin config options"),
-                  N_("[option [ = value]]"),
-                  N_("option: name of a plugin option\n"
-                     " value: value for option\n\n"
-                     "Option is format: plugin.option, example: "
-                     "perl.myscript.item1"),
-                  "%O = %V",
-                  &command_setp, NULL);
+    hook_command (NULL, "unset",
+                  N_("unset/reset config options"),
+                  N_("[option]"),
+                  N_("option: name of an option\n\n"
+                     "According to option, it's reset (for standard options) "
+                     "or removed (for optional settings, like server values)."),
+                  "%o",
+                  &command_unset, NULL);
     hook_command (NULL, "upgrade",
                   N_("upgrade WeeChat without disconnecting from servers"),
                   N_("[path_to_binary]"),

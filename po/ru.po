@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-03 18:09+0200\n"
+"POT-Creation-Date: 2008-04-11 18:29+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -62,12 +62,12 @@ msgstr ""
 "  -v, --version           отобразить версию WeeChat\n"
 "  -w, --weechat-commands  отобразить команды WeeChat\n"
 
-#. TRANSLATORS: %s is "WeeChat"
+#. TRANSLATORS: %s is "weechat"
 #, fuzzy, c-format
 msgid "%s configuration options:\n"
 msgstr "настроить параметры конфигурации"
 
-#. TRANSLATORS: %s is "WeeChat"
+#. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Внутренние команды %s:\n"
@@ -75,7 +75,7 @@ msgstr "Внутренние команды %s:\n"
 msgid "Internal key functions:\n"
 msgstr "Встроенные функции клавиш:\n"
 
-#. TRANSLATORS: %s is "WeeChat"
+#. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s клавиши по умолчанию:\n"
@@ -204,7 +204,7 @@ msgid "%sError: incorrect notify level (must be between %d and %d)"
 msgstr "%s некорректный уровень уведомления (должен быть от %d до %d)\n"
 
 #, fuzzy, c-format
-msgid "%sNew notify level for %s%s%s: %d %s"
+msgid "New notify level for %s%s%s: %d %s"
 msgstr "Новый уровень уведомления для %s%s%s: %s%d %s"
 
 #, fuzzy
@@ -273,7 +273,7 @@ msgstr "%s plugin \"%s\" не найден\n"
 msgid "%sError: wrong filter number"
 msgstr "%s неправильный номер буфера\n"
 
-#. TRANSLATORS: %s is "WeeChat"
+#. TRANSLATORS: %s is "weechat"
 #, fuzzy, c-format
 msgid "%s internal commands:"
 msgstr "Внутренние команды %s:\n"
@@ -295,7 +295,51 @@ msgid "plugin:"
 msgstr "  (нет pluginа)\n"
 
 #, fuzzy, c-format
-msgid "%sNo help available, \"%s\" is an unknown command"
+msgid "Option \"%s%s%s\": %s"
+msgstr "Ники %s%s%s: %s["
+
+#, fuzzy
+msgid "  type: boolean ('on' or 'off')"
+msgstr "  . булевый тип (значения: 'on' или 'off')\n"
+
+#, c-format
+msgid "  value: %s%s%s (default: %s)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "  type: string (%s)"
+msgstr "  . тип: строка\n"
+
+#, c-format
+msgid "  value: '%s%s%s' (default: '%s')"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "  type: integer (between %d and %d)"
+msgstr "  . целочисленное значение (значения: от %d до %d)\n"
+
+#, c-format
+msgid "  value: %s%d%s (default: %d)"
+msgstr ""
+
+#, fuzzy
+msgid "  type: string (any string)"
+msgstr "  . строковой тип (любая строка)\n"
+
+#, fuzzy
+msgid "  type: char (any char)"
+msgstr "  . тип: символ (любой символ)\n"
+
+#, fuzzy, c-format
+msgid "  type: string (limit: %d chars)"
+msgstr "  . строковой тип (любая строка, ограничение: %d символов)\n"
+
+#, fuzzy
+msgid "  type: color (values depend on GUI used)"
+msgstr "  . значения: от %d до %d\n"
+
+#, fuzzy, c-format
+msgid "%sNo help available, \"%s\" is not a command or an option"
 msgstr "Справка недоступна, \"%s\" не является командой\n"
 
 #, fuzzy
@@ -303,7 +347,7 @@ msgid "Buffer command history:"
 msgstr "показать историю буфера команд"
 
 #, fuzzy, c-format
-msgid "%sNew key binding: %s%s => %s%s%s%s%s"
+msgid "New key binding: %s%s => %s%s%s%s%s"
 msgstr "Новая комбинация клавиш:  %s"
 
 #, fuzzy
@@ -314,8 +358,8 @@ msgstr "Комбинации клавиш:\n"
 msgid "Internal key functions:"
 msgstr "Встроенные функции клавиш:\n"
 
-#, fuzzy, c-format
-msgid "%sDefault key bindings restored"
+#, fuzzy
+msgid "Default key bindings restored"
 msgstr "Комбинации клавиш по умолчанию восстановлены\n"
 
 #, fuzzy, c-format
@@ -324,7 +368,7 @@ msgstr ""
 "%s аргумент \"-yes\" необходим для сброса ключей (в целях безопасности)\n"
 
 #, fuzzy, c-format
-msgid "%sKey \"%s\" unbound"
+msgid "Key \"%s\" unbound"
 msgstr "Клавиша \"%s\" не привязана\n"
 
 #, fuzzy, c-format
@@ -443,7 +487,7 @@ msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s некорректное количество аргументов команды \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%sOptions reloaded from %s"
+msgid "Options reloaded from %s"
 msgstr "Настройки pluginов сохранены\n"
 
 #, fuzzy, c-format
@@ -451,11 +495,11 @@ msgid "%sError: failed to reload options from %s"
 msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
 #, fuzzy, c-format
-msgid "%sUnknown configuration file \"%s\""
+msgid "Unknown configuration file \"%s\""
 msgstr "перезагрузить конфигурационный файл сервера"
 
 #, fuzzy, c-format
-msgid "%sOptions saved to %s"
+msgid "Options saved to %s"
 msgstr "Настройки pluginов сохранены\n"
 
 #, fuzzy, c-format
@@ -465,17 +509,19 @@ msgstr "%s не могу сохранить конфигурационный ф�
 msgid "(unknown)"
 msgstr "(неизвестен)"
 
-#, fuzzy, c-format
-msgid "No configuration option found with \"%s\""
-msgstr "Не найден параметр с \"%s\"\n"
+#, c-format
+msgid ""
+"%sOption \"%s\" not found (tip: you can use \"*\" at beginning and/or end of "
+"option to see a sublist)"
+msgstr ""
 
 #, fuzzy
 msgid "No configuration option found"
 msgstr "Не найден параметр\n"
 
 #, fuzzy, c-format
-msgid "%s%d%s configuration option found with \"%s\""
-msgid_plural "%s%d%s configuration options found with \"%s\""
+msgid "%s%d%s configuration option found matching with \"%s\""
+msgid_plural "%s%d%s configuration options found matching with \"%s\""
 msgstr[0] "параметров с \"%s\" найдено\n"
 msgstr[1] "параметров с \"%s\" найдено\n"
 
@@ -486,48 +532,28 @@ msgstr[0] "параметров найдено\n"
 msgstr[1] "параметров найдено\n"
 
 #, fuzzy, c-format
+msgid "%sError: failed to set option \"%s\""
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
+
+#, fuzzy, c-format
 msgid "%sError: configuration option \"%s\" not found"
 msgstr "%s параметр конфигурации \"%s\" не найден\n"
 
 #, fuzzy
-msgid "Option changed: "
+msgid "Option changed"
 msgstr "не на канале"
 
 #, fuzzy, c-format
-msgid "%sError: incorrect value for option \"%s\""
-msgstr "%s некорректное значение параметра \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "No plugin option found with \"%s\""
-msgstr "Не найден параметр pluginа с \"%s\"\n"
-
-#, fuzzy
-msgid "No plugin option found"
-msgstr "Не найден параметр pluginа\n"
-
-#, fuzzy, c-format
-msgid "%s%d%s plugin option found with \"%s\""
-msgid_plural "%s%d%s plugin options found with \"%s\""
-msgstr[0] "Не найден параметр pluginа с \"%s\"\n"
-msgstr[1] "Не найден параметр pluginа с \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%d%s plugin option found"
-msgid_plural "%s%d%s plugin options found"
-msgstr[0] "Не найден параметр pluginа\n"
-msgstr[1] "Не найден параметр pluginа\n"
-
-#, fuzzy, c-format
-msgid "%sError: plugin \"%s\" not found"
+msgid "%sOption not found"
 msgstr "%s plugin \"%s\" не найден\n"
 
-#, fuzzy, c-format
-msgid "Plugin option changed: %s%s = \"%s%s%s\""
-msgstr "Не найден параметр pluginа с \"%s\"\n"
+#, fuzzy
+msgid "Option reset"
+msgstr "Настройки pluginов сохранены\n"
 
-#, fuzzy, c-format
-msgid "%sError: incorrect value for plugin option \"%s\""
-msgstr "%s некорректное значение параметра \"%s\" pluginа\n"
+#, fuzzy
+msgid "Option removed"
+msgstr "не на канале"
 
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
@@ -687,13 +713,18 @@ msgid ""
 "from message)"
 msgstr ""
 
-msgid "display help about commands"
+#, fuzzy
+msgid "display help about commands and options"
 msgstr "отобразить помощь по командам"
 
-msgid "[command]"
+#, fuzzy
+msgid "[command | option]"
 msgstr "[команда]"
 
-msgid "command: name of a WeeChat or IRC command"
+#, fuzzy
+msgid ""
+"command: a command name\n"
+" option: an option name (use /set to see list)"
 msgstr "команда: название команды WeeChat или IRC"
 
 msgid "show buffer command history"
@@ -801,33 +832,24 @@ msgid "[option [ = value]]"
 msgstr "[параметр [ = значение]]"
 
 msgid ""
-"option: name of an option (if name is full and no value is given, then help "
-"is displayed on option)\n"
-" value: value for option\n"
-"\n"
-"Option may be: servername.server_xxx where \"servername\" is an internal "
-"server name and \"xxx\" an option for this server."
+"option: name of an option\n"
+" value: value for option"
 msgstr ""
-"параметр: название параметра (если название полное, а значение не указано, "
-"выводит справку)\n"
-"значение: значение параметра\n"
-"\n"
-"Параметром может быть: servername.server_xxx где \"servername\" - имя "
-"сервера, а \"xxx\" - параметр сервера"
 
-msgid "set plugin config options"
-msgstr "настроить параметры pluginов"
+#, fuzzy
+msgid "unset/reset config options"
+msgstr "настроить параметры конфигурации"
+
+#, fuzzy
+msgid "[option]"
+msgstr "[команда]"
 
 msgid ""
-"option: name of a plugin option\n"
-" value: value for option\n"
+"option: name of an option\n"
 "\n"
-"Option is format: plugin.option, example: perl.myscript.item1"
+"According to option, it's reset (for standard options) or removed (for "
+"optional settings, like server values)."
 msgstr ""
-"параметр: название параметра pluginа\n"
-"значение: значение параметра\n"
-"\n"
-"Формат параметров: plugin.параметр, например: perl.myscript.item1"
 
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "обновить WeeChat не отключаясь от серверов"
@@ -925,6 +947,9 @@ msgstr ""
 msgid "command executed when WeeChat starts, after loading plugins"
 msgstr ""
 
+msgid "WeeChat slogan (if empty, slogan is not used)"
+msgstr "слоган WeeChat (если пусто - используется слоган по умолчанию)"
+
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -943,9 +968,6 @@ msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "устанавливать заголовок окна (терминала при интерфейсе Curses) с именем и "
 "версией"
-
-msgid "WeeChat slogan (if empty, slogan is not used)"
-msgstr "слоган WeeChat (если пусто - используется слоган по умолчанию)"
 
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "количество проматываемых кнопками PageUp и PageDown строк"
@@ -989,10 +1011,6 @@ msgstr "отображать режим ника (op/voice) перед кажд�
 
 msgid "display space if nick mode is not (half)op/voice"
 msgstr "оставлять пробел, если ник не op/voice"
-
-#, fuzzy
-msgid "prefix for info messages"
-msgstr "цвет  текущего окна с сообщениями"
 
 #, fuzzy
 msgid "prefix for error messages"
@@ -1099,10 +1117,6 @@ msgstr ""
 "максимальное количество строк, вставляемых без подтверждения (0 = отключить "
 "подтверждение)"
 
-msgid ""
-"default quit message ('%v' will be replaced by WeeChat version in string)"
-msgstr "сообщение о выходе по-умолчанию ('%v' будет заменён на версию WeeChat)"
-
 #, fuzzy
 msgid "background color for window separators (when splited)"
 msgstr "цвет разделителей окна (при разбитом экране)"
@@ -1134,10 +1148,6 @@ msgstr "цвет времени в окне чата"
 #, fuzzy
 msgid "text color for time delimiters"
 msgstr "цвет разделителей информационной панели"
-
-#, fuzzy
-msgid "text color for info prefix"
-msgstr "цвет текста информационной панели"
 
 #, fuzzy
 msgid "text color for error prefix"
@@ -1492,14 +1502,6 @@ msgstr "сохранять конфигурационный файл при вы
 
 msgid "(default options)"
 msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"#\n"
-"# %s configuration file, created by %s v%s on %s#\n"
-msgstr ""
-"#\n"
-"# %s конфигурационный файл, созданный пользователем %s v%s, %s"
 
 #, fuzzy, c-format
 msgid "%sWarning: config file \"%s\" not found"
@@ -1867,15 +1869,15 @@ msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 #, fuzzy, c-format
-msgid "%sAlias \"%s\" => \"%s\" created"
+msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Сокращение \"%s\" => \"%s\" создано\n"
 
 #, fuzzy
 msgid "Alias:"
 msgstr "Сокращение:\n"
 
-#, fuzzy, c-format
-msgid "%sNo alias found."
+#, fuzzy
+msgid "No alias found"
 msgstr "Сокращения не найдены.\n"
 
 #, fuzzy
@@ -1891,7 +1893,7 @@ msgid "%sAlias \"%s\" not found"
 msgstr "%s адрес \"%s\" не найден\n"
 
 #, fuzzy, c-format
-msgid "%sAlias \"%s\" removed"
+msgid "Alias \"%s\" removed"
 msgstr "Сокращение \"%s\" удалено\n"
 
 msgid "create an alias for a command"
@@ -1931,67 +1933,63 @@ msgid "alias_name: name of alias to remove"
 msgstr "сокращение: удаляемое сокращение"
 
 #, fuzzy, c-format
+msgid "%s: debug enabled"
+msgstr "FIFO pipe открыт\n"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr ""
+
+#, fuzzy, c-format
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
+msgid "global decoding charset"
+msgstr ""
+
+msgid "global encoding charset"
+msgstr ""
+
 #, fuzzy, c-format
-msgid "%sCharset \"%s\" => \"%s\""
+msgid "Charset: %s, %s => %s"
 msgstr "Сокращение \"%s\" => \"%s\" создано\n"
 
 #, fuzzy, c-format
-msgid "%s%s: charset \"%s\" not found"
-msgstr "%s сервер \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%sCharset \"%s\" removed"
+msgid "Charset: %s, %s: removed"
 msgstr "Сокращение \"%s\" удалено\n"
 
-#, fuzzy
-msgid "List of charsets:"
-msgstr "Список сокращений:\n"
+#, fuzzy, c-format
+msgid "%s%s: missing parameters"
+msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, c-format
+msgid "%s%s: wrong charset type (decode or encode expected)"
+msgstr ""
 
 #, fuzzy, c-format
-msgid "List of charsets with \"%s\":"
-msgstr "Список сокращений:\n"
-
-#, fuzzy
-msgid "No charset found"
-msgstr "Клавиши не найдены.\n"
-
-#, fuzzy
-msgid "No charset defined"
-msgstr "Сокращения не заданы.\n"
+msgid "%s%s: invalid charset: \"%s\""
+msgstr "Не могу записать лог-файл \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: terminal: %s, internal: %s"
+msgid "%s: terminal: %s, internal: %s"
 msgstr "%s plugin \"%s\" не найден\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error creating configuration file \"%s\""
+msgid "%s%s: error creating configuration file"
 msgstr "перезагрузить конфигурационный файл сервера"
 
 #, fuzzy
-msgid "manage charsets"
-msgstr "управление буферами"
+msgid "change charset for current buffer"
+msgstr "не найдено имя канала для буфера"
 
-msgid "[[type.]plugin.string [= charset]]"
+msgid "[[decode | encode] charset] | [reset]"
 msgstr ""
 
 msgid ""
-"   type: \"decode\" or \"encode\" (if type is omitted, then both \"decode\" "
-"and \"encode\" are set)\n"
-" plugin: plugin name\n"
-" string: string specific to plugin (for example a server name or server."
-"channel for IRC plugin)\n"
-"charset: charset to use (if empty, then charset is removed)\n"
-"\n"
-"Examples :\n"
-"/charset decode iso-8859-15 => set global decode charset to iso-8859-15\n"
-"/charset encode iso-8859-15 => set global encode charset to iso-8859-15\n"
-"/charset decode.irc.freenode => set decode charset to iso-8859-15 for IRC "
-"server \"freenode\" (all channels)\n"
-"/charset decode.irc.freenode.#weechat => set decode charset to iso-8859-15 "
-"for IRC channel \"#weechat\" on server \"freenode\""
+" decode: change decoding charset\n"
+" encode: change encoding charset\n"
+"charset: new charset for current buffer\n"
+"  reset: reset charsets for current buffer"
 msgstr ""
 
 msgid "print debug messages"
@@ -2015,19 +2013,7 @@ msgstr ""
 "файл\n"
 "windows: отобразить дерево окон"
 
-#, fuzzy, c-format
-msgid "%s: debug enabled"
-msgstr "FIFO pipe открыт\n"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr ""
-
 msgid "demo message without prefix"
-msgstr ""
-
-#, c-format
-msgid "%sdemo message with info prefix"
 msgstr ""
 
 #, c-format
@@ -2117,7 +2103,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: pipe open"
+msgid "%s: pipe open"
 msgstr "FIFO pipe открыт\n"
 
 #, fuzzy, c-format
@@ -2129,7 +2115,7 @@ msgid "%s%s: unable to create pipe for remote control (%s)"
 msgstr "%s не могу создать FIFO pipe для удалённого управления (%s)\n"
 
 #, fuzzy, c-format
-msgid "%s%s: pipe closed"
+msgid "%s: pipe closed"
 msgstr "FIFO pipe закрыт\n"
 
 #, fuzzy, c-format
@@ -2157,11 +2143,11 @@ msgid "%s%s: cannot find nick for sending message"
 msgstr "%s не могу найти адресата сообщения\n"
 
 #, fuzzy, c-format
-msgid "%s%s: future away on %s%s%s: %s"
+msgid "%s: future away on %s%s%s: %s"
 msgstr "Планирование статуса на %s%s%s: %s\n"
 
 #, fuzzy, c-format
-msgid "%s%s: future away on %s%s%s removed"
+msgid "%s: future away on %s%s%s removed"
 msgstr "Планирование статуса на %s%s%s удалено.\n"
 
 #, fuzzy, c-format
@@ -2181,7 +2167,7 @@ msgid "%s%s: missing argument for \"%s\" option"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server %s%s%s created (temporary server, NOT SAVED!)"
+msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "Сервер %s%s%s создан (временный сервер, НЕ СОХРАНЁН!\n"
 
 #, fuzzy, c-format
@@ -2201,7 +2187,7 @@ msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s не подключен к серверу \"%s\"!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: auto-reconnection is cancelled"
+msgid "%s: auto-reconnection is cancelled"
 msgstr "Авто-переподключение отменено\n"
 
 #, fuzzy, c-format
@@ -2251,7 +2237,7 @@ msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server %s%s%s created"
+msgid "%s: server %s%s%s created"
 msgstr "Сервер %s%s%s создан\n"
 
 #, fuzzy, c-format
@@ -2267,11 +2253,11 @@ msgid "%s%s: server \"%s\" already exists for \"%s\" command"
 msgstr "%s сервер \"%s\" уже существует для команды \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: Server %s%s%s has been copied to %s%s"
+msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "Сервер %s%s%s скопирован в %s%s\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server %s%s%s has been renamed to %s%s"
+msgid "%s: server %s%s%s has been renamed to %s%s"
 msgstr "Сервер %s%s%s переименован в %s%s\n"
 
 #, fuzzy, c-format
@@ -2279,7 +2265,7 @@ msgid "%s%s: server \"%s\" is not a temporary server"
 msgstr "%s сервер \"%s\" не является временным сервером\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server %s%s%s is not temporary any more"
+msgid "%s: server %s%s%s is not temporary any more"
 msgstr "Сервер %s%s%s больше не временный\n"
 
 #, fuzzy, c-format
@@ -2291,12 +2277,12 @@ msgstr ""
 "Попробуйте отключиться (/disconnect) %s перед удалением.\n"
 
 #, fuzzy, c-format
-msgid "%s%s: Server %s%s%s has been deleted"
+msgid "%s: Server %s%s%s has been deleted"
 msgstr "Сервер %s%s%s удалён\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s%s: messages outqueue DELETED for all servers. Some messages from you or "
+"%s: messages outqueue DELETED for all servers. Some messages from you or "
 "WeeChat may have been lost!"
 msgstr ""
 "Исходящая очередь сообщений УДАЛЕНА на всех серверах. Некоторые исходящие "
@@ -3049,23 +3035,97 @@ msgstr ""
 msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
+#, fuzzy, c-format
+msgid "%s%s: error creating server \"%s\""
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating option \"%s\" for server \"%s\" (server not found)"
+msgstr "%s параметр конфигурации \"%s\" не найден\n"
+
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: value \"%s\" is invalid for option \"%s\""
-msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
+msgid "automatically connect to server when WeeChat is starting"
+msgstr "подключаться к серверу автоматически при запуске WeeChat"
+
+msgid "automatically reconnect to server when disconnected"
+msgstr "автоматически переподключаться к серверу при обрыве связи"
+
+msgid "delay (in seconds) before trying again to reconnect to server"
+msgstr "задержка (в секундах) перед повторным соединением с сервером"
+
+#, fuzzy
+msgid "list of IP/port or hostname/port for server (separated by comma)"
+msgstr "ник, используемый на IRC сервере"
+
+msgid "use IPv6 protocol for server communication"
+msgstr "использовать IPv6 при связи с сервером"
+
+msgid "use SSL for server communication"
+msgstr "использовать SSL при связи с сервером"
+
+msgid "password for IRC server"
+msgstr "пароль, используемый при подключении к IRC серверу"
+
+#, fuzzy
+msgid "nicknames to use on IRC server (separated by comma)"
+msgstr "ник, используемый на IRC сервере"
+
+msgid "user name to use on IRC server"
+msgstr "имя пользователя, используемое на IRC сервере"
+
+msgid "real name to use on IRC server"
+msgstr "настоящее имя, используемое на IRC сервере"
+
+msgid ""
+"custom hostname/IP for server (optional, if empty local hostname is used)"
+msgstr ""
+"другой ip/хост для сервера (опционально, если не задано - используется "
+"локальный хост)"
+
+msgid ""
+"command(s) to run when connected to server (many commands should be "
+"separated by ';', use '\\;' for a semicolon, special variables $nick, "
+"$channel and $server are replaced by their value)"
+msgstr ""
+"команды, выполняемые при подключении к серверу (несколько команд должны быть "
+"разделены символом ';', используйте '\\;' вместо обычной точки с запятой, "
+"специальные переменные $nick, $channel и $server заменяются на "
+"соответствующие значения)"
+
+msgid ""
+"delay (in seconds) after command was executed (example: give some time for "
+"authentication)"
+msgstr ""
+"задержка (в секундах) перед выполнением команды (например, нужно время для "
+"аутентификации)"
+
+msgid ""
+"comma separated list of channels to join when connected to server (example: "
+"\"#chan1,#chan2,#chan3 key1,key2\")"
+msgstr ""
+"разделённый запятыми список каналов, на которые заходить при подключении к "
+"серверу (например, \"#chan1,#chan2,#chan3 key1,key2\")"
+
+msgid "automatically rejoin channels when kicked"
+msgstr "автоматически перезаходить на каналы после кика"
+
+msgid ""
+"comma separated list of notify levels for channels of this server (format: "
+"#channel:1,..), a channel name '*' is reserved for server default notify "
+"level"
+msgstr ""
+"разделённый запятыми список уровней уведомления этого сервера (формат: "
+"#канал:1,..), название канала '*' зарезервировано для уровня уведомления "
+"сервера"
 
 #, fuzzy, c-format
-msgid "%s%s: option \"%s\" not found"
-msgstr "%s plugin \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error creating server for reading configuration file"
-msgstr "перезагрузить конфигурационный файл сервера"
+msgid "%s%s: error creating server option \"%s\""
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 msgid "use same buffer for all servers"
 msgstr "один буфер для всех серверов"
@@ -3088,13 +3148,26 @@ msgstr "показывать сообщение во все каналы при 
 msgid "show remote away message only once in private"
 msgstr "отображать уведомление об отсутствии единожды в привате"
 
+msgid "display notices as private messages"
+msgstr "отображать notice'ы в виде личных сообщений"
+
+msgid ""
+"comma separated list of words to highlight (case insensitive comparison, "
+"words may begin or end with \"*\" for partial match)"
+msgstr ""
+"разделённый запятыми список подсвечиваемых слов (регистр учитывается, слова "
+"могут начинаться или кончаться \"*\" для неполного соответствия)"
+
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
 "version in string)"
 msgstr "сообщение покидания канала ('%v' будет заменён на версию WeeChat)"
 
-msgid "display notices as private messages"
-msgstr "отображать notice'ы в виде личных сообщений"
+#, fuzzy
+msgid ""
+"default quit message (disconnecting from server) ('%v' will be replaced by "
+"WeeChat version in string)"
+msgstr "сообщение о выходе по-умолчанию ('%v' будет заменён на версию WeeChat)"
 
 msgid "interval between two checks for away (in minutes, 0 = never check)"
 msgstr ""
@@ -3120,13 +3193,6 @@ msgstr ""
 
 msgid "anti-flood: # seconds between two user messages (0 = no anti-flood)"
 msgstr "анти-флуд; интервал отправки сообщений в секундах (0 = без анти-флуда)"
-
-msgid ""
-"comma separated list of words to highlight (case insensitive comparison, "
-"words may begin or end with \"*\" for partial match)"
-msgstr ""
-"разделённый запятыми список подсвечиваемых слов (регистр учитывается, слова "
-"могут начинаться или кончаться \"*\" для неполного соответствия)"
 
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr "когда выключено, цвета в исходящих сообщениях игнорируются"
@@ -3207,83 +3273,6 @@ msgstr "автоматически журналировать приваты"
 
 msgid "hide password displayed by nickserv"
 msgstr "скрывать пароль, отображаемый nickserv'ом"
-
-msgid "name associated to IRC server (for display only)"
-msgstr "имя IRC сервера (для внутреннего пользования)"
-
-msgid "automatically connect to server when WeeChat is starting"
-msgstr "подключаться к серверу автоматически при запуске WeeChat"
-
-msgid "automatically reconnect to server when disconnected"
-msgstr "автоматически переподключаться к серверу при обрыве связи"
-
-msgid "delay (in seconds) before trying again to reconnect to server"
-msgstr "задержка (в секундах) перед повторным соединением с сервером"
-
-#, fuzzy
-msgid "list of IP/port or hostname/port for server (separated by comma)"
-msgstr "ник, используемый на IRC сервере"
-
-msgid "use IPv6 protocol for server communication"
-msgstr "использовать IPv6 при связи с сервером"
-
-msgid "use SSL for server communication"
-msgstr "использовать SSL при связи с сервером"
-
-msgid "password for IRC server"
-msgstr "пароль, используемый при подключении к IRC серверу"
-
-#, fuzzy
-msgid "nicknames to use on IRC server (separated by comma)"
-msgstr "ник, используемый на IRC сервере"
-
-msgid "user name to use on IRC server"
-msgstr "имя пользователя, используемое на IRC сервере"
-
-msgid "real name to use on IRC server"
-msgstr "настоящее имя, используемое на IRC сервере"
-
-msgid ""
-"custom hostname/IP for server (optional, if empty local hostname is used)"
-msgstr ""
-"другой ip/хост для сервера (опционально, если не задано - используется "
-"локальный хост)"
-
-msgid ""
-"command(s) to run when connected to server (many commands should be "
-"separated by ';', use '\\;' for a semicolon, special variables $nick, "
-"$channel and $server are replaced by their value)"
-msgstr ""
-"команды, выполняемые при подключении к серверу (несколько команд должны быть "
-"разделены символом ';', используйте '\\;' вместо обычной точки с запятой, "
-"специальные переменные $nick, $channel и $server заменяются на "
-"соответствующие значения)"
-
-msgid ""
-"delay (in seconds) after command was executed (example: give some time for "
-"authentication)"
-msgstr ""
-"задержка (в секундах) перед выполнением команды (например, нужно время для "
-"аутентификации)"
-
-msgid ""
-"comma separated list of channels to join when connected to server (example: "
-"\"#chan1,#chan2,#chan3 key1,key2\")"
-msgstr ""
-"разделённый запятыми список каналов, на которые заходить при подключении к "
-"серверу (например, \"#chan1,#chan2,#chan3 key1,key2\")"
-
-msgid "automatically rejoin channels when kicked"
-msgstr "автоматически перезаходить на каналы после кика"
-
-msgid ""
-"comma separated list of notify levels for channels of this server (format: "
-"#channel:1,..), a channel name '*' is reserved for server default notify "
-"level"
-msgstr ""
-"разделённый запятыми список уровней уведомления этого сервера (формат: "
-"#канал:1,..), название канала '*' зарезервировано для уровня уведомления "
-"сервера"
 
 msgid "Waiting"
 msgstr "Ожидание"
@@ -3783,7 +3772,7 @@ msgid ""
 msgstr "%s: все предложенные ники заняты, отключаюсь от сервера!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr "%s: ник \"%s\" уже используется, пробую второй ник \"%s\"\n"
 
 msgid "error received from IRC server"
@@ -4125,15 +4114,15 @@ msgid "%s%s: cannot read data from socket, disconnecting from server..."
 msgstr "%s невозможно прочитать данные из сокета, отключаюсь от сервера...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: lag is high, disconnecting from server..."
+msgid "%s: lag is high, disconnecting from server..."
 msgstr "%s задержка слишком высокая, отключаюсь от сервера...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: reconnecting to server in %d %s"
+msgid "%s: reconnecting to server in %d %s"
 msgstr "%s: Повторное подключение к серверу через %d секунд\n"
 
 #, fuzzy, c-format
-msgid "%s%s: switching address to %s/%d"
+msgid "%s: switching address to %s/%d"
 msgstr "%s IP адрес не найден\n"
 
 #, fuzzy, c-format
@@ -4176,6 +4165,14 @@ msgstr ""
 msgid "%s%s: unable to set local hostname/IP"
 msgstr "%s не могу установить локальный хост/IP\n"
 
+#, c-format
+msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: nicks not defined for server \"%s\", cannot connect"
+msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
+
 #, fuzzy, c-format
 msgid ""
 "%s%s: cannot connect with SSL since WeeChat was not built with GnuTLS support"
@@ -4184,16 +4181,12 @@ msgstr ""
 "поддержки GNUtls\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
+msgid "%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "%s: подключение к серверу %s:%d%s%s через %s proxy %s:%d%s...\n"
 
 #, fuzzy, c-format
 msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "Подключаюсь к серверу %s:%d%s%s через %s proxy %s:%d%s...\n"
-
-#, fuzzy, c-format
-msgid "%s%s: connecting to server %s/%d%s%s..."
-msgstr "%s: поключаюсь к серверу %s:%d%s%s...\n"
 
 #, fuzzy, c-format
 msgid "%s: connecting to server %s/%d%s%s..."
@@ -4220,11 +4213,11 @@ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
 msgstr "%s не могу установить настройку сокета \"SO_KEEPALIVE\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: reconnecting to server..."
+msgid "%s: reconnecting to server..."
 msgstr "%s: Повторное соединение...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: disconnected from server"
+msgid "%s: disconnected from server"
 msgstr "Отключен от сервера!\n"
 
 #, fuzzy, c-format
@@ -4281,12 +4274,16 @@ msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
 msgstr "%s не могу загрузить plugin \"%s\" (недостаточно памяти)\n"
 
 #, fuzzy, c-format
-msgid "%sPlugin \"%s\" loaded"
+msgid "Plugin \"%s\" loaded"
 msgstr "Plugin \"%s\" выгружен.\n"
 
 #, fuzzy, c-format
-msgid "%sPlugin \"%s\" unloaded"
+msgid "Plugin \"%s\" unloaded"
 msgstr "Plugin \"%s\" выгружен.\n"
+
+#, fuzzy, c-format
+msgid "%sError: plugin \"%s\" not found"
+msgstr "%s plugin \"%s\" не найден\n"
 
 #, c-format
 msgid ""
@@ -4295,7 +4292,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s%s: registered script \"%s\", version %s (%s)"
+msgid "%s: registered script \"%s\", version %s (%s)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -4311,7 +4308,7 @@ msgid "%s%s: script \"%s\" not found"
 msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy, c-format
-msgid "%s%s: loading script \"%s\""
+msgid "%s: loading script \"%s\""
 msgstr "сессия: загружаю сервер \"%s\"\n"
 
 #, fuzzy, c-format
@@ -4337,11 +4334,11 @@ msgstr ""
 "удалась\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unloading script \"%s\""
+msgid "%s: unloading script \"%s\""
 msgstr "сессия: загружаю сервер \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: script \"%s\" unloaded"
+msgid "%s: script \"%s\" unloaded"
 msgstr "Plugin \"%s\" выгружен.\n"
 
 #, fuzzy, c-format
@@ -4507,6 +4504,132 @@ msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
 #, fuzzy
+#~ msgid "# %s, created by %s v%s on %s#\n"
+#~ msgstr ""
+#~ "#\n"
+#~ "# %s конфигурационный файл, созданный пользователем %s v%s, %s"
+
+#, fuzzy
+#~ msgid "No configuration option found with \"%s\""
+#~ msgstr "Не найден параметр с \"%s\"\n"
+
+#~ msgid ""
+#~ "option: name of an option (if name is full and no value is given, then "
+#~ "help is displayed on option)\n"
+#~ " value: value for option\n"
+#~ "\n"
+#~ "Option may be: servername.server_xxx where \"servername\" is an internal "
+#~ "server name and \"xxx\" an option for this server."
+#~ msgstr ""
+#~ "параметр: название параметра (если название полное, а значение не "
+#~ "указано, выводит справку)\n"
+#~ "значение: значение параметра\n"
+#~ "\n"
+#~ "Параметром может быть: servername.server_xxx где \"servername\" - имя "
+#~ "сервера, а \"xxx\" - параметр сервера"
+
+#, fuzzy
+#~ msgid "%s%s: error creating charset (%s) \"%s\" => \"%s\""
+#~ msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, fuzzy
+#~ msgid "%sCharset \"%s\" not found"
+#~ msgstr "%s сервер \"%s\" не найден\n"
+
+#, fuzzy
+#~ msgid "List of charsets:"
+#~ msgstr "Список сокращений:\n"
+
+#, fuzzy
+#~ msgid "List of charsets with \"%s\":"
+#~ msgstr "Список сокращений:\n"
+
+#, fuzzy
+#~ msgid "No charset found"
+#~ msgstr "Клавиши не найдены.\n"
+
+#, fuzzy
+#~ msgid "No charset defined"
+#~ msgstr "Сокращения не заданы.\n"
+
+#, fuzzy
+#~ msgid "manage charsets"
+#~ msgstr "управление буферами"
+
+#, fuzzy
+#~ msgid "%s%s: value \"%s\" is invalid for option \"%s\""
+#~ msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: error creating server for reading configuration file"
+#~ msgstr "перезагрузить конфигурационный файл сервера"
+
+#~ msgid "name associated to IRC server (for display only)"
+#~ msgstr "имя IRC сервера (для внутреннего пользования)"
+
+#, fuzzy
+#~ msgid "Option changed: "
+#~ msgstr "не на канале"
+
+#, fuzzy
+#~ msgid "%sError: incorrect value for option \"%s\""
+#~ msgstr "%s некорректное значение параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "No plugin option found with \"%s\""
+#~ msgstr "Не найден параметр pluginа с \"%s\"\n"
+
+#, fuzzy
+#~ msgid "No plugin option found"
+#~ msgstr "Не найден параметр pluginа\n"
+
+#, fuzzy
+#~ msgid "%s%d%s plugin option found with \"%s\""
+#~ msgid_plural "%s%d%s plugin options found with \"%s\""
+#~ msgstr[0] "Не найден параметр pluginа с \"%s\"\n"
+#~ msgstr[1] "Не найден параметр pluginа с \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%d%s plugin option found"
+#~ msgid_plural "%s%d%s plugin options found"
+#~ msgstr[0] "Не найден параметр pluginа\n"
+#~ msgstr[1] "Не найден параметр pluginа\n"
+
+#, fuzzy
+#~ msgid "Plugin option changed: %s%s = \"%s%s%s\""
+#~ msgstr "Не найден параметр pluginа с \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sError: incorrect value for plugin option \"%s\""
+#~ msgstr "%s некорректное значение параметра \"%s\" pluginа\n"
+
+#~ msgid "set plugin config options"
+#~ msgstr "настроить параметры pluginов"
+
+#~ msgid ""
+#~ "option: name of a plugin option\n"
+#~ " value: value for option\n"
+#~ "\n"
+#~ "Option is format: plugin.option, example: perl.myscript.item1"
+#~ msgstr ""
+#~ "параметр: название параметра pluginа\n"
+#~ "значение: значение параметра\n"
+#~ "\n"
+#~ "Формат параметров: plugin.параметр, например: perl.myscript.item1"
+
+#, fuzzy
+#~ msgid "prefix for info messages"
+#~ msgstr "цвет  текущего окна с сообщениями"
+
+#, fuzzy
+#~ msgid "text color for info prefix"
+#~ msgstr "цвет текста информационной панели"
+
+#, fuzzy
+#~ msgid "%s%s: connecting to server %s/%d%s%s..."
+#~ msgstr "%s: поключаюсь к серверу %s:%d%s%s...\n"
+
+#, fuzzy
 #~ msgid "%s[%sF%s%s%s]"
 #~ msgstr "%s[%s%s%s]%s бездействует: "
 
@@ -4557,10 +4680,6 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 #, fuzzy
 #~ msgid "Notice from %s%s %s(%s%s%s)%s: %s"
 #~ msgstr "%s%s %s(%s%s@%s%s)%s был %s\n"
-
-#, fuzzy
-#~ msgid "Notice from %s%s%s: %s"
-#~ msgstr "Ники %s%s%s: %s["
 
 #, fuzzy
 #~ msgid "Notice: %s"
@@ -5230,9 +5349,6 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 #~ msgid "server name not found for buffer"
 #~ msgstr "не найдено имя сервера для буфера"
 
-#~ msgid "channel name not found for buffer"
-#~ msgstr "не найдено имя канала для буфера"
-
 #~ msgid "buffer type not found"
 #~ msgstr "тип буфера не найден"
 
@@ -5783,26 +5899,11 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 #~ msgid "%sDetail:\n"
 #~ msgstr "%sПодробности:\n"
 
-#~ msgid "  . type boolean (values: 'on' or 'off')\n"
-#~ msgstr "  . булевый тип (значения: 'on' или 'off')\n"
-
-#~ msgid "  . type integer (values: between %d and %d)\n"
-#~ msgstr "  . целочисленное значение (значения: от %d до %d)\n"
-
 #~ msgid "  . type string (values: "
 #~ msgstr "  . строковой тип (значения: "
 
 #~ msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 #~ msgstr "  . цветовой тип (цвет Curses или Gtk, см. документацию WeeChat)\n"
-
-#~ msgid "  . type string (any string)\n"
-#~ msgstr "  . строковой тип (любая строка)\n"
-
-#~ msgid "  . type: char (any char)\n"
-#~ msgstr "  . тип: символ (любой символ)\n"
-
-#~ msgid "  . type string (any string, limit: %d chars)\n"
-#~ msgstr "  . строковой тип (любая строка, ограничение: %d символов)\n"
 
 #~ msgid "%s%d%s ignore was removed.\n"
 #~ msgid_plural "%s%d%s ignore were removed.\n"

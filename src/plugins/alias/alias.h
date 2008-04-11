@@ -20,8 +20,6 @@
 #ifndef __WEECHAT_ALIAS_H
 #define __WEECHAT_ALIAS_H 1
 
-#define ALIAS_CONFIG_FILENAME "alias.rc"
-
 struct t_alias
 {
     struct t_hook *hook;               /* command hook                      */

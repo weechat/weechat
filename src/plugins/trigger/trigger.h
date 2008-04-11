@@ -35,7 +35,7 @@ typedef struct t_weechat_trigger
     struct t_weechat_trigger *next_trigger;
 } t_weechat_trigger;
 
-#define CONF_FILE "trigger.rc"
+#define CONF_FILE "trigger.conf"
 #define CONF_SAVE 1
 #define CONF_LOAD 2
 #define DIR_SEP "/"

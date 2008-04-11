@@ -227,8 +227,10 @@ char *
 gui_buffer_get_string (struct t_gui_buffer *buffer, char *property)
 {
     static char value[32];
-    
-    if (string_strcasecmp (property, "category") == 0)
+
+    if (string_strcasecmp (property, "plugin") == 0)
+        return (buffer->plugin) ? buffer->plugin->name : NULL;
+    else if (string_strcasecmp (property, "category") == 0)
         return buffer->category;
     else if (string_strcasecmp (property, "name") == 0)
         return buffer->name;

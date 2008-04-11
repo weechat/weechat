@@ -231,14 +231,14 @@ weelist_get (struct t_weelist *weelist, int position)
  */
 
 void
-weelist_set (struct t_weelist_item *item, char *new_value)
+weelist_set (struct t_weelist_item *item, char *value)
 {
-    if (!item || !new_value)
+    if (!item || !value)
         return;
 
     if (item->data)
         free (item->data);
-    item->data = strdup (new_value);
+    item->data = strdup (value);
 }
 
 /*

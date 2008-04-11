@@ -22,7 +22,7 @@
 
 #include "wee-config-file.h"
 
-#define WEECHAT_CONFIG_FILENAME "weechat.rc"
+#define WEECHAT_CONFIG_NAME "weechat"
 
 #define CONFIG_LOOK_NICKLIST_LEFT   0
 #define CONFIG_LOOK_NICKLIST_RIGHT  1
@@ -42,15 +42,15 @@
 
 extern struct t_config_file *weechat_config_file;
 
-extern struct t_config_option *config_startup_logo;
-extern struct t_config_option *config_startup_version;
+extern struct t_config_option *config_startup_display_logo;
+extern struct t_config_option *config_startup_display_version;
 extern struct t_config_option *config_startup_command_before_plugins;
 extern struct t_config_option *config_startup_command_after_plugins;
+extern struct t_config_option *config_startup_weechat_slogan;
 
 extern struct t_config_option *config_look_color_real_white;
 extern struct t_config_option *config_look_save_on_exit;
 extern struct t_config_option *config_look_set_title;
-extern struct t_config_option *config_look_weechat_slogan;
 extern struct t_config_option *config_look_one_server_buffer;
 extern struct t_config_option *config_look_open_near_server;
 extern struct t_config_option *config_look_scroll_amount;
@@ -166,10 +166,10 @@ extern struct t_config_option *config_proxy_port;
 extern struct t_config_option *config_proxy_username;
 extern struct t_config_option *config_proxy_password;
 
-extern struct t_config_option *config_plugins_path;
-extern struct t_config_option *config_plugins_autoload;
-extern struct t_config_option *config_plugins_extension;
-extern struct t_config_option *config_plugins_save_config_on_unload;
+extern struct t_config_option *config_plugin_path;
+extern struct t_config_option *config_plugin_autoload;
+extern struct t_config_option *config_plugin_extension;
+extern struct t_config_option *config_plugin_save_config_on_unload;
 
 extern int config_weechat_init ();
 extern int config_weechat_read ();

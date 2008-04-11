@@ -171,7 +171,7 @@ irc_completion_channel_nicks_cb (void *data, char *completion,
             }
             
             /* add nicks speaking recently on this channel */
-            if (weechat_config_boolean (irc_config_irc_nick_completion_smart))
+            if (weechat_config_boolean (irc_config_look_nick_completion_smart))
             {
                 list_size = weechat_list_size (ptr_channel->nicks_speaking);
                 for (i = 0; i < list_size; i++)
@@ -320,11 +320,11 @@ irc_completion_msg_part_cb (void *data, char *completion,
     (void) completion;
     (void) buffer;
 
-    if (weechat_config_string (irc_config_irc_default_msg_part)
-        && weechat_config_string (irc_config_irc_default_msg_part)[0])
+    if (weechat_config_string (irc_config_network_default_msg_part)
+        && weechat_config_string (irc_config_network_default_msg_part)[0])
     {
         weechat_list_add (list,
-                          weechat_config_string (irc_config_irc_default_msg_part),
+                          weechat_config_string (irc_config_network_default_msg_part),
                           WEECHAT_LIST_POS_SORT);
     }
     

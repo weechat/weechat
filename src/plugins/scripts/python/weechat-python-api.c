@@ -101,10 +101,9 @@ weechat_python_api_register (PyObject *self, PyObject *args)
     if (python_current_script)
     {
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s: registered script \"%s\", "
+                        weechat_gettext ("%s: registered script \"%s\", "
                                          "version %s (%s)"),
-                        weechat_prefix ("info"), "python",
-                        name, version, description);
+                        "python", name, version, description);
     }
     else
     {
@@ -811,7 +810,7 @@ weechat_python_api_config_reload_cb (void *data,
 static PyObject *
 weechat_python_api_config_new (PyObject *self, PyObject *args)
 {
-    char *filename, *function, *result;
+    char *name, *function, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -823,10 +822,10 @@ weechat_python_api_config_new (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    filename = NULL;
+    name = NULL;
     function = NULL;
     
-    if (!PyArg_ParseTuple (args, "ss", &filename, &function))
+    if (!PyArg_ParseTuple (args, "ss", &name, &function))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new");
         PYTHON_RETURN_EMPTY;
@@ -834,7 +833,7 @@ weechat_python_api_config_new (PyObject *self, PyObject *args)
     
     result = script_ptr2str (script_api_config_new (weechat_python_plugin,
                                                     python_current_script,
-                                                    filename,
+                                                    name,
                                                     &weechat_python_api_config_reload_cb,
                                                     function));
     
@@ -943,6 +942,54 @@ weechat_python_api_config_section_write_default_cb (void *data,
 }
 
 /*
+ * weechat_python_api_config_section_create_option_cb: callback to create an option
+ */
+
+int
+weechat_python_api_config_section_create_option_cb (void *data,
+                                                    struct t_config_file *config_file,
+                                                    struct t_config_section *section,
+                                                    char *option_name,
+                                                    char *value)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[5];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        python_argv[0] = script_ptr2str (config_file);
+        python_argv[1] = script_ptr2str (section);
+        python_argv[2] = option_name;
+        python_argv[3] = value;
+        python_argv[4] = NULL;
+
+        rc = (int *) weechat_python_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          script_callback->function,
+                                          python_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (python_argv[0])
+            free (python_argv[0]);
+        if (python_argv[1])
+            free (python_argv[1]);
+        
+        return ret;
+    }
+    
+    return 0;
+}
+
+/*
  * weechat_python_api_config_new_section: create a new section in configuration file
  */
 
@@ -950,7 +997,8 @@ static PyObject *
 weechat_python_api_config_new_section (PyObject *self, PyObject *args)
 {
     char *config_file, *name, *function_read, *function_write;
-    char *function_write_default, *result;
+    char *function_write_default, *function_create_option;
+    char *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -967,9 +1015,11 @@ weechat_python_api_config_new_section (PyObject *self, PyObject *args)
     function_read = NULL;
     function_write = NULL;
     function_write_default = NULL;
+    function_create_option = NULL;
     
-    if (!PyArg_ParseTuple (args, "sssss", &config_file, &name, &function_read,
-                           &function_write, &function_write_default))
+    if (!PyArg_ParseTuple (args, "ssssss", &config_file, &name,
+                           &function_read, &function_write,
+                           &function_write_default, &function_create_option))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
         PYTHON_RETURN_EMPTY;
@@ -984,7 +1034,9 @@ weechat_python_api_config_new_section (PyObject *self, PyObject *args)
                                                             &weechat_python_api_config_section_write_cb,
                                                             function_write,
                                                             &weechat_python_api_config_section_write_default_cb,
-                                                            function_write_default));
+                                                            function_write_default,
+                                                            &weechat_python_api_config_section_create_option_cb,
+                                                            function_create_option));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -2255,19 +2307,17 @@ weechat_python_api_hook_signal_send (PyObject *self, PyObject *args)
  */
 
 int
-weechat_python_api_hook_config_cb (void *data, char *type, char *option,
-                                   char *value)
+weechat_python_api_hook_config_cb (void *data, char *option, char *value)
 {
     struct t_script_callback *script_callback;
-    char *python_argv[4];
+    char *python_argv[3];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
-    python_argv[0] = type;
-    python_argv[1] = option;
-    python_argv[2] = value;
-    python_argv[3] = NULL;
+    python_argv[0] = option;
+    python_argv[1] = value;
+    python_argv[2] = NULL;
     
     rc = (int *) weechat_python_exec (script_callback->script,
                                       WEECHAT_SCRIPT_EXEC_INT,
@@ -2292,7 +2342,7 @@ weechat_python_api_hook_config_cb (void *data, char *type, char *option,
 static PyObject *
 weechat_python_api_hook_config (PyObject *self, PyObject *args)
 {
-    char *type, *option, *function, *result;
+    char *option, *function, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -2304,11 +2354,10 @@ weechat_python_api_hook_config (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    type = NULL;
     option = NULL;
     function = NULL;
     
-    if (!PyArg_ParseTuple (args, "sss", &type, &option, &function))
+    if (!PyArg_ParseTuple (args, "ss", &option, &function))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_config");
         PYTHON_RETURN_EMPTY;
@@ -2316,7 +2365,6 @@ weechat_python_api_hook_config (PyObject *self, PyObject *args)
     
     result = script_ptr2str(script_api_hook_config (weechat_python_plugin,
                                                     python_current_script,
-                                                    type,
                                                     option,
                                                     &weechat_python_api_hook_config_cb,
                                                     function));

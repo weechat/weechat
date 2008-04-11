@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-03 18:09+0200\n"
+"POT-Creation-Date: 2008-04-11 18:29+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -65,12 +65,12 @@ msgstr ""
 "  -v, --version           zeigt die WeeChat-Version an\n"
 "  -w, --weechat-commands  zeigt die WeeChat-Befehle an\n"
 
-#. TRANSLATORS: %s is "WeeChat"
+#. TRANSLATORS: %s is "weechat"
 #, fuzzy, c-format
 msgid "%s configuration options:\n"
 msgstr "Konfigurationsparameter setzen"
 
-#. TRANSLATORS: %s is "WeeChat"
+#. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "%s interne Befehle:\n"
@@ -78,7 +78,7 @@ msgstr "%s interne Befehle:\n"
 msgid "Internal key functions:\n"
 msgstr "Interne Tastenfunktionen:\n"
 
-#. TRANSLATORS: %s is "WeeChat"
+#. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s Standardtastenbelegungen:\n"
@@ -207,7 +207,7 @@ msgid "%sError: incorrect notify level (must be between %d and %d)"
 msgstr "%s ungültige Notify-Ebene (muss zwischen %d und %d liegen)\n"
 
 #, fuzzy, c-format
-msgid "%sNew notify level for %s%s%s: %d %s"
+msgid "New notify level for %s%s%s: %d %s"
 msgstr "Neue Notify-Ebenen für: %s%s%s: %s%d %s"
 
 #, fuzzy
@@ -276,7 +276,7 @@ msgstr "%s Plugin \"%s\" nicht gefunden\n"
 msgid "%sError: wrong filter number"
 msgstr "%s falsche Puffernummer\n"
 
-#. TRANSLATORS: %s is "WeeChat"
+#. TRANSLATORS: %s is "weechat"
 #, fuzzy, c-format
 msgid "%s internal commands:"
 msgstr "%s interne Befehle:\n"
@@ -298,7 +298,51 @@ msgid "plugin:"
 msgstr "  (kein Plugin)\n"
 
 #, fuzzy, c-format
-msgid "%sNo help available, \"%s\" is an unknown command"
+msgid "Option \"%s%s%s\": %s"
+msgstr "Nicks %s%s%s: %s["
+
+#, fuzzy
+msgid "  type: boolean ('on' or 'off')"
+msgstr "  . boolesche Werte ('on' or 'off')\n"
+
+#, c-format
+msgid "  value: %s%s%s (default: %s)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "  type: string (%s)"
+msgstr "  . Typ: Zeichenfolge\n"
+
+#, c-format
+msgid "  value: '%s%s%s' (default: '%s')"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "  type: integer (between %d and %d)"
+msgstr "  . Ganzzahl (Werte zwischen %d und %d)\n"
+
+#, c-format
+msgid "  value: %s%d%s (default: %d)"
+msgstr ""
+
+#, fuzzy
+msgid "  type: string (any string)"
+msgstr "  . Zeichenfolge (beliebig)\n"
+
+#, fuzzy
+msgid "  type: char (any char)"
+msgstr "  . Zeichenfolge (beliebig)\n"
+
+#, fuzzy, c-format
+msgid "  type: string (limit: %d chars)"
+msgstr "  . Zeichenfolge (beliebig)\n"
+
+#, fuzzy
+msgid "  type: color (values depend on GUI used)"
+msgstr "  . Werte: zwischen %d und %d\n"
+
+#, fuzzy, c-format
+msgid "%sNo help available, \"%s\" is not a command or an option"
 msgstr "Keine Hilfe verfügbar, der Befehl \"%s\" ist unbekannt\n"
 
 #, fuzzy
@@ -306,7 +350,7 @@ msgid "Buffer command history:"
 msgstr "zeigt Befehlsverlauf des Puffers"
 
 #, fuzzy, c-format
-msgid "%sNew key binding: %s%s => %s%s%s%s%s"
+msgid "New key binding: %s%s => %s%s%s%s%s"
 msgstr "Neue Tastenbelegung:  %s"
 
 #, fuzzy
@@ -317,8 +361,8 @@ msgstr "Tastenbelegungen:\n"
 msgid "Internal key functions:"
 msgstr "Interne Tastenfunktionen:\n"
 
-#, fuzzy, c-format
-msgid "%sDefault key bindings restored"
+#, fuzzy
+msgid "Default key bindings restored"
 msgstr "Standardtastenbelegungen wiederhergestellt\n"
 
 #, fuzzy, c-format
@@ -328,7 +372,7 @@ msgstr ""
 "notwendig\n"
 
 #, fuzzy, c-format
-msgid "%sKey \"%s\" unbound"
+msgid "Key \"%s\" unbound"
 msgstr "Tastenbelegung \"%s\" gelöscht\n"
 
 #, fuzzy, c-format
@@ -447,7 +491,7 @@ msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
 
 #, fuzzy, c-format
-msgid "%sOptions reloaded from %s"
+msgid "Options reloaded from %s"
 msgstr "Plugin-Optionen gesichert\n"
 
 #, fuzzy, c-format
@@ -455,11 +499,11 @@ msgid "%sError: failed to reload options from %s"
 msgstr "%s konnte die Plugin-Konfigurationsdatei nicht sichern\n"
 
 #, fuzzy, c-format
-msgid "%sUnknown configuration file \"%s\""
+msgid "Unknown configuration file \"%s\""
 msgstr "den Server dazu bringen, seine Konfigurationsdatei neu zu laden"
 
 #, fuzzy, c-format
-msgid "%sOptions saved to %s"
+msgid "Options saved to %s"
 msgstr "Plugin-Optionen gesichert\n"
 
 #, fuzzy, c-format
@@ -469,17 +513,19 @@ msgstr "%s konnte die Plugin-Konfigurationsdatei nicht sichern\n"
 msgid "(unknown)"
 msgstr "(unbekannt)"
 
-#, fuzzy, c-format
-msgid "No configuration option found with \"%s\""
-msgstr "Keine Konfigurationsoptionen mit \"%s\" gefunden\n"
+#, c-format
+msgid ""
+"%sOption \"%s\" not found (tip: you can use \"*\" at beginning and/or end of "
+"option to see a sublist)"
+msgstr ""
 
 #, fuzzy
 msgid "No configuration option found"
 msgstr "Keine Konfigurationsoption gefunden\n"
 
 #, fuzzy, c-format
-msgid "%s%d%s configuration option found with \"%s\""
-msgid_plural "%s%d%s configuration options found with \"%s\""
+msgid "%s%d%s configuration option found matching with \"%s\""
+msgid_plural "%s%d%s configuration options found matching with \"%s\""
 msgstr[0] "Konfigurationsoption(en) gefunden mit \"%s\"\n"
 msgstr[1] "Konfigurationsoption(en) gefunden mit \"%s\"\n"
 
@@ -490,48 +536,28 @@ msgstr[0] "Konfigurationsoption(en) gefunden\n"
 msgstr[1] "Konfigurationsoption(en) gefunden\n"
 
 #, fuzzy, c-format
+msgid "%sError: failed to set option \"%s\""
+msgstr "%s konnte die Plugin-Konfigurationsdatei nicht sichern\n"
+
+#, fuzzy, c-format
 msgid "%sError: configuration option \"%s\" not found"
 msgstr "%s Konfigurationsoption \"%s\" nicht gefunden\n"
 
 #, fuzzy
-msgid "Option changed: "
+msgid "Option changed"
 msgstr "Sie sind nicht im Channel"
 
 #, fuzzy, c-format
-msgid "%sError: incorrect value for option \"%s\""
-msgstr "%s ungültiger Wert für die Option \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "No plugin option found with \"%s\""
-msgstr "Keine Plugin-Optionen mit \"%s\" gefunden\n"
-
-#, fuzzy
-msgid "No plugin option found"
-msgstr "Keine Plugin-Option gefunden\n"
-
-#, fuzzy, c-format
-msgid "%s%d%s plugin option found with \"%s\""
-msgid_plural "%s%d%s plugin options found with \"%s\""
-msgstr[0] "Keine Plugin-Optionen mit \"%s\" gefunden\n"
-msgstr[1] "Keine Plugin-Optionen mit \"%s\" gefunden\n"
-
-#, fuzzy, c-format
-msgid "%s%d%s plugin option found"
-msgid_plural "%s%d%s plugin options found"
-msgstr[0] "Keine Plugin-Option gefunden\n"
-msgstr[1] "Keine Plugin-Option gefunden\n"
-
-#, fuzzy, c-format
-msgid "%sError: plugin \"%s\" not found"
+msgid "%sOption not found"
 msgstr "%s Plugin \"%s\" nicht gefunden\n"
 
-#, fuzzy, c-format
-msgid "Plugin option changed: %s%s = \"%s%s%s\""
-msgstr "Keine Plugin-Optionen mit \"%s\" gefunden\n"
+#, fuzzy
+msgid "Option reset"
+msgstr "Plugin-Optionen gesichert\n"
 
-#, fuzzy, c-format
-msgid "%sError: incorrect value for plugin option \"%s\""
-msgstr "%s ungültiger Wert für die Plugin-Option \"%s\"\n"
+#, fuzzy
+msgid "Option removed"
+msgstr "Sie sind nicht im Channel"
 
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
@@ -678,13 +704,18 @@ msgid ""
 "from message)"
 msgstr ""
 
-msgid "display help about commands"
+#, fuzzy
+msgid "display help about commands and options"
 msgstr "Hilfe zu Befehlen abfragen"
 
-msgid "[command]"
+#, fuzzy
+msgid "[command | option]"
 msgstr "[Befehl]"
 
-msgid "command: name of a WeeChat or IRC command"
+#, fuzzy
+msgid ""
+"command: a command name\n"
+" option: an option name (use /set to see list)"
 msgstr "Befehl: Name eines WeeChat- oder IRC-Befehls"
 
 msgid "show buffer command history"
@@ -792,33 +823,24 @@ msgid "[option [ = value]]"
 msgstr "[Option [ = Wert]]"
 
 msgid ""
-"option: name of an option (if name is full and no value is given, then help "
-"is displayed on option)\n"
-" value: value for option\n"
-"\n"
-"Option may be: servername.server_xxx where \"servername\" is an internal "
-"server name and \"xxx\" an option for this server."
+"option: name of an option\n"
+" value: value for option"
 msgstr ""
-"Option: Name einer Option (wenn der Name vorhanden ist, aber kein Wert, dann "
-"wird eine Hilfe zur Option ausgegeben\n"
-" Wert: Wert der Option\n"
-"\n"
-"Option kann Servername.server_xxx lauten, wobei \"Servername\" der interne "
-"Servername ist und \"xxx\" eine Option für diesen Server."
 
-msgid "set plugin config options"
-msgstr "Konfigurationsparameter für Plugin setzen"
+#, fuzzy
+msgid "unset/reset config options"
+msgstr "Konfigurationsparameter setzen"
+
+#, fuzzy
+msgid "[option]"
+msgstr "[Befehl]"
 
 msgid ""
-"option: name of a plugin option\n"
-" value: value for option\n"
+"option: name of an option\n"
 "\n"
-"Option is format: plugin.option, example: perl.myscript.item1"
+"According to option, it's reset (for standard options) or removed (for "
+"optional settings, like server values)."
 msgstr ""
-"Option: Name einer Plugin-Option\n"
-" Wert: Wert für Option\n"
-"\n"
-"Option wird wie folgt formatiert: Plugin.Option, z.B. perl.myscript.item1"
 
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "aktualisiert WeeChat ohne die Verbindung zum Server zu trennen"
@@ -918,6 +940,9 @@ msgstr ""
 msgid "command executed when WeeChat starts, after loading plugins"
 msgstr ""
 
+msgid "WeeChat slogan (if empty, slogan is not used)"
+msgstr "WeeChat-Slogan (wenn leer, wird keiner benutzt)"
+
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -935,9 +960,6 @@ msgstr "Konfiguration beim Verlassen abspeichern"
 msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "Fenstertitel setzen (oder Terminaltitel im Curses-GUI) mit Name und Version"
-
-msgid "WeeChat slogan (if empty, slogan is not used)"
-msgstr "WeeChat-Slogan (wenn leer, wird keiner benutzt)"
 
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "Anzahl der zu scrollenden Zeilen bei Bild-Hoch- und Bild-Runter-Taste"
@@ -981,10 +1003,6 @@ msgstr "Nickmode (@%+) vorm Nickname anzeigen"
 
 msgid "display space if nick mode is not (half)op/voice"
 msgstr "Leerzeichen anzeigen wenn Nickmode nicht @%+ ist"
-
-#, fuzzy
-msgid "prefix for info messages"
-msgstr "Farbe eines Fensters mit neuen Messages"
 
 #, fuzzy
 msgid "prefix for error messages"
@@ -1086,11 +1104,6 @@ msgid ""
 "max number of lines for paste without asking user (0 = disable this feature)"
 msgstr "maximale Nick-Anzahl für Abwesenheitsüberprüfung"
 
-msgid ""
-"default quit message ('%v' will be replaced by WeeChat version in string)"
-msgstr ""
-"Standardnachricht beim Beenden ('%v' wird durch die WeeChat-Version ersetzt)"
-
 #, fuzzy
 msgid "background color for window separators (when splited)"
 msgstr ""
@@ -1123,10 +1136,6 @@ msgstr "Farbe der Zeit im Chatfenster"
 #, fuzzy
 msgid "text color for time delimiters"
 msgstr "Farbe der Infobar-Trennzeichen"
-
-#, fuzzy
-msgid "text color for info prefix"
-msgstr "Farbe des Infobar-Textes"
 
 #, fuzzy
 msgid "text color for error prefix"
@@ -1480,14 +1489,6 @@ msgstr "Konfiguration beim Verlassen abspeichern"
 
 msgid "(default options)"
 msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"#\n"
-"# %s configuration file, created by %s v%s on %s#\n"
-msgstr ""
-"#\n"
-"# %s Konfigurationsdatei, erstellt von %s v%s auf %s "
 
 #, fuzzy, c-format
 msgid "%sWarning: config file \"%s\" not found"
@@ -1863,15 +1864,15 @@ msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
 
 #, fuzzy, c-format
-msgid "%sAlias \"%s\" => \"%s\" created"
+msgid "Alias \"%s\" => \"%s\" created"
 msgstr "Alias \"%s\" => \"%s\" angelegt\n"
 
 #, fuzzy
 msgid "Alias:"
 msgstr "Alias:\n"
 
-#, fuzzy, c-format
-msgid "%sNo alias found."
+#, fuzzy
+msgid "No alias found"
 msgstr "Keine Aliases gefunden.\n"
 
 #, fuzzy
@@ -1887,7 +1888,7 @@ msgid "%sAlias \"%s\" not found"
 msgstr "%s Adresse \"%s\" nicht gefunden\n"
 
 #, fuzzy, c-format
-msgid "%sAlias \"%s\" removed"
+msgid "Alias \"%s\" removed"
 msgstr "Alias \"%s\" entfernt\n"
 
 msgid "create an alias for a command"
@@ -1927,67 +1928,63 @@ msgid "alias_name: name of alias to remove"
 msgstr "Aliasname: Name des zu löschenden Aliases"
 
 #, fuzzy, c-format
+msgid "%s: debug enabled"
+msgstr "FIFO ist offen\n"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr ""
+
+#, fuzzy, c-format
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
 msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
 
+msgid "global decoding charset"
+msgstr ""
+
+msgid "global encoding charset"
+msgstr ""
+
 #, fuzzy, c-format
-msgid "%sCharset \"%s\" => \"%s\""
+msgid "Charset: %s, %s => %s"
 msgstr "Alias \"%s\" => \"%s\" angelegt\n"
 
 #, fuzzy, c-format
-msgid "%s%s: charset \"%s\" not found"
-msgstr "%s Server \"%s\" nicht gefunden\n"
-
-#, fuzzy, c-format
-msgid "%sCharset \"%s\" removed"
+msgid "Charset: %s, %s: removed"
 msgstr "Alias \"%s\" entfernt\n"
 
-#, fuzzy
-msgid "List of charsets:"
-msgstr "Liste der Aliases:\n"
+#, fuzzy, c-format
+msgid "%s%s: missing parameters"
+msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, c-format
+msgid "%s%s: wrong charset type (decode or encode expected)"
+msgstr ""
 
 #, fuzzy, c-format
-msgid "List of charsets with \"%s\":"
-msgstr "Liste der Aliases:\n"
-
-#, fuzzy
-msgid "No charset found"
-msgstr "Keine Taste gefunden.\n"
-
-#, fuzzy
-msgid "No charset defined"
-msgstr "Keine Aliases definiert.\n"
+msgid "%s%s: invalid charset: \"%s\""
+msgstr "Kann das Logfile nicht schreiben\n"
 
 #, fuzzy, c-format
-msgid "%s%s: terminal: %s, internal: %s"
+msgid "%s: terminal: %s, internal: %s"
 msgstr "%s Plugin \"%s\" nicht gefunden\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error creating configuration file \"%s\""
+msgid "%s%s: error creating configuration file"
 msgstr "den Server dazu bringen, seine Konfigurationsdatei neu zu laden"
 
 #, fuzzy
-msgid "manage charsets"
-msgstr "Puffer verwalten"
+msgid "change charset for current buffer"
+msgstr "Channelnamen für den Puffer nicht gefunden"
 
-msgid "[[type.]plugin.string [= charset]]"
+msgid "[[decode | encode] charset] | [reset]"
 msgstr ""
 
 msgid ""
-"   type: \"decode\" or \"encode\" (if type is omitted, then both \"decode\" "
-"and \"encode\" are set)\n"
-" plugin: plugin name\n"
-" string: string specific to plugin (for example a server name or server."
-"channel for IRC plugin)\n"
-"charset: charset to use (if empty, then charset is removed)\n"
-"\n"
-"Examples :\n"
-"/charset decode iso-8859-15 => set global decode charset to iso-8859-15\n"
-"/charset encode iso-8859-15 => set global encode charset to iso-8859-15\n"
-"/charset decode.irc.freenode => set decode charset to iso-8859-15 for IRC "
-"server \"freenode\" (all channels)\n"
-"/charset decode.irc.freenode.#weechat => set decode charset to iso-8859-15 "
-"for IRC channel \"#weechat\" on server \"freenode\""
+" decode: change decoding charset\n"
+" encode: change encoding charset\n"
+"charset: new charset for current buffer\n"
+"  reset: reset charsets for current buffer"
 msgstr ""
 
 msgid "print debug messages"
@@ -2009,19 +2006,7 @@ msgstr ""
 "Programmabsturz)\n"
 "windows: zeigt Fensterdaten an"
 
-#, fuzzy, c-format
-msgid "%s: debug enabled"
-msgstr "FIFO ist offen\n"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr ""
-
 msgid "demo message without prefix"
-msgstr ""
-
-#, c-format
-msgid "%sdemo message with info prefix"
 msgstr ""
 
 #, c-format
@@ -2111,7 +2096,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: pipe open"
+msgid "%s: pipe open"
 msgstr "FIFO ist offen\n"
 
 #, fuzzy, c-format
@@ -2123,7 +2108,7 @@ msgid "%s%s: unable to create pipe for remote control (%s)"
 msgstr "%s kann die FIFO-Pipe zur Fernsteuerung nicht anlegen (%s)\n"
 
 #, fuzzy, c-format
-msgid "%s%s: pipe closed"
+msgid "%s: pipe closed"
 msgstr "FIFO geschlossen\n"
 
 #, fuzzy, c-format
@@ -2152,11 +2137,11 @@ msgstr ""
 "%s kann keinen Nickname finden, an den die Nachricht gesendet werden soll\n"
 
 #, fuzzy, c-format
-msgid "%s%s: future away on %s%s%s: %s"
+msgid "%s: future away on %s%s%s: %s"
 msgstr "/ignore-Regel entfernt.\n"
 
 #, fuzzy, c-format
-msgid "%s%s: future away on %s%s%s removed"
+msgid "%s: future away on %s%s%s removed"
 msgstr "/ignore-Regel entfernt.\n"
 
 #, fuzzy, c-format
@@ -2176,7 +2161,7 @@ msgid "%s%s: missing argument for \"%s\" option"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server %s%s%s created (temporary server, NOT SAVED!)"
+msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "%s Server \"%s\" nicht gefunden\n"
 
 #, fuzzy, c-format
@@ -2196,7 +2181,7 @@ msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s keine Verbindung zum Server \"%s\"!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: auto-reconnection is cancelled"
+msgid "%s: auto-reconnection is cancelled"
 msgstr "Automatisches Neuverbinden abgebrochen\n"
 
 #, fuzzy, c-format
@@ -2249,7 +2234,7 @@ msgstr ""
 "werden!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server %s%s%s created"
+msgid "%s: server %s%s%s created"
 msgstr "Server %s%s%s angelegt\n"
 
 #, fuzzy, c-format
@@ -2265,11 +2250,11 @@ msgid "%s%s: server \"%s\" already exists for \"%s\" command"
 msgstr "%s Server \"%s\" nicht gefunden für den \"%s\"-Befehl\n"
 
 #, fuzzy, c-format
-msgid "%s%s: Server %s%s%s has been copied to %s%s"
+msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "Server %s%s%s wurde gelöscht\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server %s%s%s has been renamed to %s%s"
+msgid "%s: server %s%s%s has been renamed to %s%s"
 msgstr "Server %s%s%s wurde gelöscht\n"
 
 #, fuzzy, c-format
@@ -2277,7 +2262,7 @@ msgid "%s%s: server \"%s\" is not a temporary server"
 msgstr "%s Server \"%s\" nicht gefunden\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server %s%s%s is not temporary any more"
+msgid "%s: server %s%s%s is not temporary any more"
 msgstr "%s Server \"%s\" nicht gefunden\n"
 
 #, fuzzy, c-format
@@ -2289,12 +2274,12 @@ msgstr ""
 "sind. Probieren Sie /disconnect %s vorher.\n"
 
 #, fuzzy, c-format
-msgid "%s%s: Server %s%s%s has been deleted"
+msgid "%s: Server %s%s%s has been deleted"
 msgstr "Server %s%s%s wurde gelöscht\n"
 
 #, c-format
 msgid ""
-"%s%s: messages outqueue DELETED for all servers. Some messages from you or "
+"%s: messages outqueue DELETED for all servers. Some messages from you or "
 "WeeChat may have been lost!"
 msgstr ""
 
@@ -3024,23 +3009,99 @@ msgstr ""
 msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
+#, fuzzy, c-format
+msgid "%s%s: error creating server \"%s\""
+msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating option \"%s\" for server \"%s\" (server not found)"
+msgstr "%s Konfigurationsoption \"%s\" nicht gefunden\n"
+
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: value \"%s\" is invalid for option \"%s\""
-msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
+msgid "automatically connect to server when WeeChat is starting"
+msgstr "automatisch mit dem Server verbinden, wenn WeeChat gestartet wird"
+
+msgid "automatically reconnect to server when disconnected"
+msgstr "die Verbindung nach Trennung automatisch wiederherstellen"
+
+msgid "delay (in seconds) before trying again to reconnect to server"
+msgstr ""
+"Zeit in Sekunden, die gewartet wird, bevor ein Verbindungsneuaufbau versucht "
+"wird"
+
+#, fuzzy
+msgid "list of IP/port or hostname/port for server (separated by comma)"
+msgstr "eigener Nickname, der auf dem IRC-Server benutzt werden soll"
+
+msgid "use IPv6 protocol for server communication"
+msgstr "Server über IPv6 ansprechen"
+
+msgid "use SSL for server communication"
+msgstr "Server über SSL ansprechen"
+
+msgid "password for IRC server"
+msgstr "Passwort für den IRC-Server"
+
+#, fuzzy
+msgid "nicknames to use on IRC server (separated by comma)"
+msgstr "eigener Nickname, der auf dem IRC-Server benutzt werden soll"
+
+msgid "user name to use on IRC server"
+msgstr "Benutzername, der an den Server übermittelt werden soll"
+
+msgid "real name to use on IRC server"
+msgstr "voller Name, der an den Server übermittelt werden soll"
+
+msgid ""
+"custom hostname/IP for server (optional, if empty local hostname is used)"
+msgstr ""
+"angepasster Hostname oder angepasste IP-Adresse für den Server (wenn nichts "
+"eingetragen ist, wird der lokale Hostname verwendet)"
+
+msgid ""
+"command(s) to run when connected to server (many commands should be "
+"separated by ';', use '\\;' for a semicolon, special variables $nick, "
+"$channel and $server are replaced by their value)"
+msgstr ""
+"Befehle, die nach der Verbindung zum Server ausgeführt werden sollen "
+"(mehrere Befehle müssen mit einem Semikolon getrennt werden, um ein "
+"Semikolon zu schreiben, muss man '\\;' verwenden, die spezielllen Variablen "
+"$nick, $channel und $server werden dabei durch den jeweiligen Wert ersetzt)"
+
+msgid ""
+"delay (in seconds) after command was executed (example: give some time for "
+"authentication)"
+msgstr ""
+"Wartezeit in Sekunden nach Ausführung des Befehls, um z.B. eine "
+"Authentifizierung zu ermöglichen"
+
+msgid ""
+"comma separated list of channels to join when connected to server (example: "
+"\"#chan1,#chan2,#chan3 key1,key2\")"
+msgstr ""
+"durch Kommata getrennte Liste der Channels, die beim Verbinden zum Server "
+"betreten werden sollen (Beispiel: \"#chan1,#chan2,#chan3 key1,key2\")"
+
+msgid "automatically rejoin channels when kicked"
+msgstr "Channels nach Kick automatisch wieder betreten, falls möglich"
+
+msgid ""
+"comma separated list of notify levels for channels of this server (format: "
+"#channel:1,..), a channel name '*' is reserved for server default notify "
+"level"
+msgstr ""
+"durch Kommata getrennte Liste der Notify-Levels für die Channels auf diesem "
+"Server (Format: #channel:1,...), der Channelname '*' ist für den Default-"
+"Server-Notify-Level"
 
 #, fuzzy, c-format
-msgid "%s%s: option \"%s\" not found"
-msgstr "%s Plugin \"%s\" nicht gefunden\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error creating server for reading configuration file"
-msgstr "den Server dazu bringen, seine Konfigurationsdatei neu zu laden"
+msgid "%s%s: error creating server option \"%s\""
+msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
 
 msgid "use same buffer for all servers"
 msgstr "benutze den gleichen Puffer für alle Server"
@@ -3066,6 +3127,17 @@ msgid "show remote away message only once in private"
 msgstr ""
 "in privaten Unterhaltungen nur einmalig eine Abwesenheitsnachricht anzeigen"
 
+msgid "display notices as private messages"
+msgstr "NOTICEs als Queries anzeigen"
+
+msgid ""
+"comma separated list of words to highlight (case insensitive comparison, "
+"words may begin or end with \"*\" for partial match)"
+msgstr ""
+"durch Kommata getrennte Liste der hervorzuhebenden Wörter (Groß-/"
+"Kleinschreibung wird nicht beachtet, die Wörter können mit \"*\" als Joker "
+"beginnen oder enden)"
+
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
 "version in string)"
@@ -3073,8 +3145,12 @@ msgstr ""
 "Standardnachricht beim Verlasseb eines Channels ('%v' wird durch die WeeChat-"
 "Version ersetzt)"
 
-msgid "display notices as private messages"
-msgstr "NOTICEs als Queries anzeigen"
+#, fuzzy
+msgid ""
+"default quit message (disconnecting from server) ('%v' will be replaced by "
+"WeeChat version in string)"
+msgstr ""
+"Standardnachricht beim Beenden ('%v' wird durch die WeeChat-Version ersetzt)"
 
 msgid "interval between two checks for away (in minutes, 0 = never check)"
 msgstr "Intervall zwischen zwei Away-Checks (in Minuten, 0 = nie überprüfen)"
@@ -3100,14 +3176,6 @@ msgid "anti-flood: # seconds between two user messages (0 = no anti-flood)"
 msgstr ""
 "anti-flood: # Sekunden zwischen zwei Benutzernachrichten (0 = kein anti-"
 "flood)"
-
-msgid ""
-"comma separated list of words to highlight (case insensitive comparison, "
-"words may begin or end with \"*\" for partial match)"
-msgstr ""
-"durch Kommata getrennte Liste der hervorzuhebenden Wörter (Groß-/"
-"Kleinschreibung wird nicht beachtet, die Wörter können mit \"*\" als Joker "
-"beginnen oder enden)"
 
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr ""
@@ -3194,85 +3262,6 @@ msgstr "Automatisches Logging von Queries"
 
 msgid "hide password displayed by nickserv"
 msgstr "Von NickServ angezeigte Passwörter verstecken"
-
-msgid "name associated to IRC server (for display only)"
-msgstr "mit dem IRC-Server assoziierter eindeutiger Name (nur zur Anzeige)"
-
-msgid "automatically connect to server when WeeChat is starting"
-msgstr "automatisch mit dem Server verbinden, wenn WeeChat gestartet wird"
-
-msgid "automatically reconnect to server when disconnected"
-msgstr "die Verbindung nach Trennung automatisch wiederherstellen"
-
-msgid "delay (in seconds) before trying again to reconnect to server"
-msgstr ""
-"Zeit in Sekunden, die gewartet wird, bevor ein Verbindungsneuaufbau versucht "
-"wird"
-
-#, fuzzy
-msgid "list of IP/port or hostname/port for server (separated by comma)"
-msgstr "eigener Nickname, der auf dem IRC-Server benutzt werden soll"
-
-msgid "use IPv6 protocol for server communication"
-msgstr "Server über IPv6 ansprechen"
-
-msgid "use SSL for server communication"
-msgstr "Server über SSL ansprechen"
-
-msgid "password for IRC server"
-msgstr "Passwort für den IRC-Server"
-
-#, fuzzy
-msgid "nicknames to use on IRC server (separated by comma)"
-msgstr "eigener Nickname, der auf dem IRC-Server benutzt werden soll"
-
-msgid "user name to use on IRC server"
-msgstr "Benutzername, der an den Server übermittelt werden soll"
-
-msgid "real name to use on IRC server"
-msgstr "voller Name, der an den Server übermittelt werden soll"
-
-msgid ""
-"custom hostname/IP for server (optional, if empty local hostname is used)"
-msgstr ""
-"angepasster Hostname oder angepasste IP-Adresse für den Server (wenn nichts "
-"eingetragen ist, wird der lokale Hostname verwendet)"
-
-msgid ""
-"command(s) to run when connected to server (many commands should be "
-"separated by ';', use '\\;' for a semicolon, special variables $nick, "
-"$channel and $server are replaced by their value)"
-msgstr ""
-"Befehle, die nach der Verbindung zum Server ausgeführt werden sollen "
-"(mehrere Befehle müssen mit einem Semikolon getrennt werden, um ein "
-"Semikolon zu schreiben, muss man '\\;' verwenden, die spezielllen Variablen "
-"$nick, $channel und $server werden dabei durch den jeweiligen Wert ersetzt)"
-
-msgid ""
-"delay (in seconds) after command was executed (example: give some time for "
-"authentication)"
-msgstr ""
-"Wartezeit in Sekunden nach Ausführung des Befehls, um z.B. eine "
-"Authentifizierung zu ermöglichen"
-
-msgid ""
-"comma separated list of channels to join when connected to server (example: "
-"\"#chan1,#chan2,#chan3 key1,key2\")"
-msgstr ""
-"durch Kommata getrennte Liste der Channels, die beim Verbinden zum Server "
-"betreten werden sollen (Beispiel: \"#chan1,#chan2,#chan3 key1,key2\")"
-
-msgid "automatically rejoin channels when kicked"
-msgstr "Channels nach Kick automatisch wieder betreten, falls möglich"
-
-msgid ""
-"comma separated list of notify levels for channels of this server (format: "
-"#channel:1,..), a channel name '*' is reserved for server default notify "
-"level"
-msgstr ""
-"durch Kommata getrennte Liste der Notify-Levels für die Channels auf diesem "
-"Server (Format: #channel:1,...), der Channelname '*' ist für den Default-"
-"Server-Notify-Level"
 
 msgid "Waiting"
 msgstr "warten"
@@ -3781,7 +3770,7 @@ msgstr ""
 "getrennt!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr ""
 "%s: Nickname \"%s\" wird bereits verwendet, versuche 2. Nickname \"%s\"\n"
 
@@ -4126,15 +4115,15 @@ msgid "%s%s: cannot read data from socket, disconnecting from server..."
 msgstr "%s Socket-Lesefehler, die Serververbindung wird getrennt...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: lag is high, disconnecting from server..."
+msgid "%s: lag is high, disconnecting from server..."
 msgstr "%s der Lag ist hoch, die Verbindung wird getrennt...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: reconnecting to server in %d %s"
+msgid "%s: reconnecting to server in %d %s"
 msgstr "%s: Neuverbinden in %d Sekunden\n"
 
 #, fuzzy, c-format
-msgid "%s%s: switching address to %s/%d"
+msgid "%s: switching address to %s/%d"
 msgstr "%s IP-Adresse nicht gefunden\n"
 
 #, fuzzy, c-format
@@ -4177,6 +4166,14 @@ msgstr ""
 msgid "%s%s: unable to set local hostname/IP"
 msgstr "%s kann lokalen Hostname/lokale IP nicht festlegen\n"
 
+#, c-format
+msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: nicks not defined for server \"%s\", cannot connect"
+msgstr "%s Nickname \"%s\" für den \"%s\"-Befehl nicht gefunden\n"
+
 #, fuzzy, c-format
 msgid ""
 "%s%s: cannot connect with SSL since WeeChat was not built with GnuTLS support"
@@ -4185,16 +4182,12 @@ msgstr ""
 "kompiliert wurde\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
+msgid "%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "%s: verbinden zu Server %s:%d%s%s via %s-Proxy %s:%d%s...\n"
 
 #, fuzzy, c-format
 msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "verbinden zu Server %s:%d%s%s via %s-Proxy %s:%d%s...\n"
-
-#, fuzzy, c-format
-msgid "%s%s: connecting to server %s/%d%s%s..."
-msgstr "%s: verbinden zu Server %s:%d%s%s...\n"
 
 #, fuzzy, c-format
 msgid "%s: connecting to server %s/%d%s%s..."
@@ -4221,11 +4214,11 @@ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
 msgstr "%s Fehler beim Setzen der Socketoption \"SO_KEEPALIVE\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: reconnecting to server..."
+msgid "%s: reconnecting to server..."
 msgstr "%s: Neuverbinden zum Server...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: disconnected from server"
+msgid "%s: disconnected from server"
 msgstr "Vom Server getrennt!\n"
 
 #, fuzzy, c-format
@@ -4284,12 +4277,16 @@ msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
 msgstr "%s kann das Plugin \"%s\" nicht laden (Speichermangel)\n"
 
 #, fuzzy, c-format
-msgid "%sPlugin \"%s\" loaded"
+msgid "Plugin \"%s\" loaded"
 msgstr "Plugin \"%s\" entladen.\n"
 
 #, fuzzy, c-format
-msgid "%sPlugin \"%s\" unloaded"
+msgid "Plugin \"%s\" unloaded"
 msgstr "Plugin \"%s\" entladen.\n"
+
+#, fuzzy, c-format
+msgid "%sError: plugin \"%s\" not found"
+msgstr "%s Plugin \"%s\" nicht gefunden\n"
 
 #, c-format
 msgid ""
@@ -4298,7 +4295,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s%s: registered script \"%s\", version %s (%s)"
+msgid "%s: registered script \"%s\", version %s (%s)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -4314,7 +4311,7 @@ msgid "%s%s: script \"%s\" not found"
 msgstr "%s Server \"%s\" nicht gefunden\n"
 
 #, fuzzy, c-format
-msgid "%s%s: loading script \"%s\""
+msgid "%s: loading script \"%s\""
 msgstr "Sitzung: Lade Server \"%s\"\n"
 
 #, fuzzy, c-format
@@ -4340,11 +4337,11 @@ msgstr ""
 "gescheitert\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unloading script \"%s\""
+msgid "%s: unloading script \"%s\""
 msgstr "Sitzung: Lade Server \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: script \"%s\" unloaded"
+msgid "%s: script \"%s\" unloaded"
 msgstr "Plugin \"%s\" entladen.\n"
 
 #, fuzzy, c-format
@@ -4510,6 +4507,132 @@ msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
 #, fuzzy
+#~ msgid "# %s, created by %s v%s on %s#\n"
+#~ msgstr ""
+#~ "#\n"
+#~ "# %s Konfigurationsdatei, erstellt von %s v%s auf %s "
+
+#, fuzzy
+#~ msgid "No configuration option found with \"%s\""
+#~ msgstr "Keine Konfigurationsoptionen mit \"%s\" gefunden\n"
+
+#~ msgid ""
+#~ "option: name of an option (if name is full and no value is given, then "
+#~ "help is displayed on option)\n"
+#~ " value: value for option\n"
+#~ "\n"
+#~ "Option may be: servername.server_xxx where \"servername\" is an internal "
+#~ "server name and \"xxx\" an option for this server."
+#~ msgstr ""
+#~ "Option: Name einer Option (wenn der Name vorhanden ist, aber kein Wert, "
+#~ "dann wird eine Hilfe zur Option ausgegeben\n"
+#~ " Wert: Wert der Option\n"
+#~ "\n"
+#~ "Option kann Servername.server_xxx lauten, wobei \"Servername\" der "
+#~ "interne Servername ist und \"xxx\" eine Option für diesen Server."
+
+#, fuzzy
+#~ msgid "%s%s: error creating charset (%s) \"%s\" => \"%s\""
+#~ msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
+
+#, fuzzy
+#~ msgid "%sCharset \"%s\" not found"
+#~ msgstr "%s Server \"%s\" nicht gefunden\n"
+
+#, fuzzy
+#~ msgid "List of charsets:"
+#~ msgstr "Liste der Aliases:\n"
+
+#, fuzzy
+#~ msgid "List of charsets with \"%s\":"
+#~ msgstr "Liste der Aliases:\n"
+
+#, fuzzy
+#~ msgid "No charset found"
+#~ msgstr "Keine Taste gefunden.\n"
+
+#, fuzzy
+#~ msgid "No charset defined"
+#~ msgstr "Keine Aliases definiert.\n"
+
+#, fuzzy
+#~ msgid "manage charsets"
+#~ msgstr "Puffer verwalten"
+
+#, fuzzy
+#~ msgid "%s%s: value \"%s\" is invalid for option \"%s\""
+#~ msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: error creating server for reading configuration file"
+#~ msgstr "den Server dazu bringen, seine Konfigurationsdatei neu zu laden"
+
+#~ msgid "name associated to IRC server (for display only)"
+#~ msgstr "mit dem IRC-Server assoziierter eindeutiger Name (nur zur Anzeige)"
+
+#, fuzzy
+#~ msgid "Option changed: "
+#~ msgstr "Sie sind nicht im Channel"
+
+#, fuzzy
+#~ msgid "%sError: incorrect value for option \"%s\""
+#~ msgstr "%s ungültiger Wert für die Option \"%s\"\n"
+
+#, fuzzy
+#~ msgid "No plugin option found with \"%s\""
+#~ msgstr "Keine Plugin-Optionen mit \"%s\" gefunden\n"
+
+#, fuzzy
+#~ msgid "No plugin option found"
+#~ msgstr "Keine Plugin-Option gefunden\n"
+
+#, fuzzy
+#~ msgid "%s%d%s plugin option found with \"%s\""
+#~ msgid_plural "%s%d%s plugin options found with \"%s\""
+#~ msgstr[0] "Keine Plugin-Optionen mit \"%s\" gefunden\n"
+#~ msgstr[1] "Keine Plugin-Optionen mit \"%s\" gefunden\n"
+
+#, fuzzy
+#~ msgid "%s%d%s plugin option found"
+#~ msgid_plural "%s%d%s plugin options found"
+#~ msgstr[0] "Keine Plugin-Option gefunden\n"
+#~ msgstr[1] "Keine Plugin-Option gefunden\n"
+
+#, fuzzy
+#~ msgid "Plugin option changed: %s%s = \"%s%s%s\""
+#~ msgstr "Keine Plugin-Optionen mit \"%s\" gefunden\n"
+
+#, fuzzy
+#~ msgid "%sError: incorrect value for plugin option \"%s\""
+#~ msgstr "%s ungültiger Wert für die Plugin-Option \"%s\"\n"
+
+#~ msgid "set plugin config options"
+#~ msgstr "Konfigurationsparameter für Plugin setzen"
+
+#~ msgid ""
+#~ "option: name of a plugin option\n"
+#~ " value: value for option\n"
+#~ "\n"
+#~ "Option is format: plugin.option, example: perl.myscript.item1"
+#~ msgstr ""
+#~ "Option: Name einer Plugin-Option\n"
+#~ " Wert: Wert für Option\n"
+#~ "\n"
+#~ "Option wird wie folgt formatiert: Plugin.Option, z.B. perl.myscript.item1"
+
+#, fuzzy
+#~ msgid "prefix for info messages"
+#~ msgstr "Farbe eines Fensters mit neuen Messages"
+
+#, fuzzy
+#~ msgid "text color for info prefix"
+#~ msgstr "Farbe des Infobar-Textes"
+
+#, fuzzy
+#~ msgid "%s%s: connecting to server %s/%d%s%s..."
+#~ msgstr "%s: verbinden zu Server %s:%d%s%s...\n"
+
+#, fuzzy
 #~ msgid "%s[%sF%s%s%s]"
 #~ msgstr "%s[%s%s%s]%s idlet: "
 
@@ -4560,10 +4683,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 #, fuzzy
 #~ msgid "Notice from %s%s %s(%s%s%s)%s: %s"
 #~ msgstr "%s%s %s(%s%s@%s%s)%s war %s\n"
-
-#, fuzzy
-#~ msgid "Notice from %s%s%s: %s"
-#~ msgstr "Nicks %s%s%s: %s["
 
 #, fuzzy
 #~ msgid "Notice: %s"
@@ -5232,9 +5351,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 #~ msgid "server name not found for buffer"
 #~ msgstr "Servername für den Puffer nicht gefunden"
 
-#~ msgid "channel name not found for buffer"
-#~ msgstr "Channelnamen für den Puffer nicht gefunden"
-
 #~ msgid "buffer type not found"
 #~ msgstr "Puffertyp nicht gefunden"
 
@@ -5788,28 +5904,11 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 #~ msgid "%sDetail:\n"
 #~ msgstr "%sDetail:\n"
 
-#~ msgid "  . type boolean (values: 'on' or 'off')\n"
-#~ msgstr "  . boolesche Werte ('on' or 'off')\n"
-
-#~ msgid "  . type integer (values: between %d and %d)\n"
-#~ msgstr "  . Ganzzahl (Werte zwischen %d und %d)\n"
-
 #~ msgid "  . type string (values: "
 #~ msgstr "  . Zeichenfolge (Werte: "
 
 #~ msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 #~ msgstr "  . Farbe (Curses- or Gtk-color, siehe WeeChat-Dokumentation)\n"
-
-#~ msgid "  . type string (any string)\n"
-#~ msgstr "  . Zeichenfolge (beliebig)\n"
-
-#, fuzzy
-#~ msgid "  . type: char (any char)\n"
-#~ msgstr "  . Zeichenfolge (beliebig)\n"
-
-#, fuzzy
-#~ msgid "  . type string (any string, limit: %d chars)\n"
-#~ msgstr "  . Zeichenfolge (beliebig)\n"
 
 #, fuzzy
 #~ msgid "%s%d%s ignore was removed.\n"

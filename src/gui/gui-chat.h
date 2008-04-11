@@ -31,17 +31,16 @@ struct t_gui_line;
 
 enum t_gui_prefix
 {
-    GUI_CHAT_PREFIX_INFO = 0,
-    GUI_CHAT_PREFIX_ERROR,
+    GUI_CHAT_PREFIX_ERROR = 0,
     GUI_CHAT_PREFIX_NETWORK,
     GUI_CHAT_PREFIX_ACTION,
     GUI_CHAT_PREFIX_JOIN,
     GUI_CHAT_PREFIX_QUIT,
     
-    GUI_CHAT_PREFIX_NUMBER,
+    GUI_CHAT_NUM_PREFIXES,
 };
 
-extern char *gui_chat_prefix[GUI_CHAT_PREFIX_NUMBER];
+extern char *gui_chat_prefix[GUI_CHAT_NUM_PREFIXES];
 extern char gui_chat_prefix_empty[];
 extern int gui_chat_time_length;
 

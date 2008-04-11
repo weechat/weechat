@@ -198,8 +198,6 @@ plugin_api_prefix (char *prefix)
     if (!prefix)
         return gui_chat_prefix_empty;
     
-    if (string_strcasecmp (prefix, "info") == 0)
-        return gui_chat_prefix[GUI_CHAT_PREFIX_INFO];
     if (string_strcasecmp (prefix, "error") == 0)
         return gui_chat_prefix[GUI_CHAT_PREFIX_ERROR];
     if (string_strcasecmp (prefix, "network") == 0)
@@ -504,6 +502,77 @@ plugin_api_infolist_get_add_buffer_line (struct t_plugin_infolist *infolist,
 }
 
 /*
+ * plugin_api_infolist_get_add_options: add config options in a list
+ *                                          return 1 if ok, 0 if error
+ */
+
+int
+plugin_api_infolist_get_add_options (struct t_plugin_infolist *infolist,
+                                     char *option_name)
+{
+    struct t_config_file *ptr_config;
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
+    struct t_plugin_infolist_item *ptr_item;
+    int length;
+    char *option_full_name;
+    
+    if (!infolist)
+        return 0;
+    
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        for (ptr_section = ptr_config->sections; ptr_section;
+             ptr_section = ptr_section->next_section)
+        {
+            for (ptr_option = ptr_section->options; ptr_option;
+                 ptr_option = ptr_option->next_option)
+            {
+                length = strlen (ptr_config->name) + 1 +
+                    strlen (ptr_section->name) + 1 +
+                    strlen (ptr_option->name) + 1;
+                option_full_name = malloc (length);
+                if (option_full_name)
+                {
+                    snprintf (option_full_name, length, "%s.%s.%s",
+                              ptr_config->name,
+                              ptr_section->name,
+                              ptr_option->name);
+                    if (!option_name || !option_name[0]
+                        || string_match (option_full_name, option_name, 0))
+                    {
+                        ptr_item = plugin_infolist_new_item (infolist);
+                        if (!ptr_item)
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        if (!plugin_infolist_new_var_string (ptr_item,
+                                                             "full_name",
+                                                             option_full_name))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        if (!plugin_infolist_new_var_string (ptr_item,
+                                                             "name",
+                                                             ptr_option->name))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                    }
+                    free (option_full_name);
+                }
+            }
+        }
+    }
+    
+    return 1;
+}
+
+/*
  * plugin_api_infolist_get: get list with infos about WeeChat structures
  *                          WARNING: caller has to free string returned
  *                          by this function after use, with weechat_infolist_free()
@@ -578,6 +647,19 @@ plugin_api_infolist_get (char *name, void *pointer)
                     plugin_infolist_free (ptr_infolist);
                     return NULL;
                 }
+            }
+            return ptr_infolist;
+        }
+    }
+    else if (string_strcasecmp (name, "options") == 0)
+    {
+        ptr_infolist = plugin_infolist_new ();
+        if (ptr_infolist)
+        {
+            if (!plugin_api_infolist_get_add_options (ptr_infolist, pointer))
+            {
+                plugin_infolist_free (ptr_infolist);
+                return NULL;
             }
             return ptr_infolist;
         }

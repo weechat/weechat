@@ -20,6 +20,7 @@
 
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "../weechat-plugin.h"
@@ -31,12 +32,16 @@ WEECHAT_PLUGIN_DESCRIPTION("Alias plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
-WEECHAT_PLUGIN_LICENSE("GPL");
+WEECHAT_PLUGIN_LICENSE("GPL3");
+
+#define ALIAS_CONFIG_NAME "alias"
 
 struct t_weechat_plugin *weechat_alias_plugin = NULL;
 #define weechat_plugin weechat_alias_plugin
 
 struct t_config_file *alias_config_file = NULL;
+struct t_config_section *alias_config_section_cmd = NULL;
+
 struct t_alias *alias_list = NULL;
 struct t_alias *last_alias = NULL;
 
@@ -280,15 +285,34 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
 }
 
 /*
+ * alias_find_pos: find position for an alias (for sorting aliases)
+ */
+
+struct t_alias *
+alias_find_pos (char *name)
+{
+    struct t_alias *ptr_alias;
+    
+    for (ptr_alias = alias_list; ptr_alias; ptr_alias = ptr_alias->next_alias)
+    {
+        if (weechat_strcasecmp (name, ptr_alias->name) < 0)
+            return ptr_alias;
+    }
+    
+    /* position not found (we will add to the end of list) */
+    return NULL;
+}
+
+/*
  * alias_new: create new alias and add it to alias list
  */
 
 struct t_alias *
 alias_new (char *name, char *command)
 {
-    struct t_alias *new_alias, *ptr_alias;
+    struct t_alias *new_alias, *ptr_alias, *pos_alias;
     struct t_hook *new_hook;
-
+    
     if (!name || !name[0] || !command || !command[0])
         return NULL;
     
@@ -321,14 +345,37 @@ alias_new (char *name, char *command)
         new_alias->name = strdup (name);
         new_alias->command = strdup (command);
 	new_alias->running = 0;
-        
-        new_alias->prev_alias = last_alias;
-        new_alias->next_alias = NULL;
+
         if (alias_list)
-            last_alias->next_alias = new_alias;
+        {
+            pos_alias = alias_find_pos (name);
+            if (pos_alias)
+            {
+                /* insert alias into the list (before alias found) */
+                new_alias->prev_alias = pos_alias->prev_alias;
+                new_alias->next_alias = pos_alias;
+                if (pos_alias->prev_alias)
+                    (pos_alias->prev_alias)->next_alias = new_alias;
+                else
+                    alias_list = new_alias;
+                pos_alias->prev_alias = new_alias;
+            }
+            else
+            {
+                /* add alias to end of list */
+                new_alias->prev_alias = last_alias;
+                new_alias->next_alias = NULL;
+                last_alias->next_alias = new_alias;
+                last_alias = new_alias;
+            }
+        }
         else
+        {
+            new_alias->prev_alias = NULL;
+            new_alias->next_alias = NULL;
             alias_list = new_alias;
-        last_alias = new_alias;
+            last_alias = new_alias;
+        }
     }
     
     return new_alias;
@@ -375,7 +422,7 @@ void
 alias_free (struct t_alias *alias)
 {
     struct t_alias *new_alias_list;
-
+    
     /* remove alias from list */
     if (last_alias == alias)
         last_alias = alias->prev_alias;
@@ -409,11 +456,49 @@ void
 alias_free_all ()
 {
     while (alias_list)
+    {
         alias_free (alias_list);
+    }
 }
 
 /*
- * alias_config_reaload: reload alias configuration file
+ * alias_config_change_cb: callback called when alias option is modified
+ */
+
+void
+alias_config_change_cb (void *data, struct t_config_option *option)
+{
+    struct t_alias *ptr_alias;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    ptr_alias = alias_search (weechat_config_option_get_pointer (option, "name"));
+    if (ptr_alias)
+        alias_free (ptr_alias);
+    alias_new (weechat_config_option_get_pointer (option, "name"),
+               weechat_config_option_get_pointer (option, "value"));
+}
+
+/*
+ * alias_config_delete_cb: callback called when alias option is deleted
+ */
+
+void
+alias_config_delete_cb (void *data, struct t_config_option *option)
+{
+    struct t_alias *ptr_alias;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    ptr_alias = alias_search (weechat_config_option_get_pointer (option, "name"));
+    if (ptr_alias)
+        alias_free (ptr_alias);
+}
+
+/*
+ * alias_config_reload: reload alias configuration file
  */
 
 int
@@ -421,72 +506,21 @@ alias_config_reload (void *data, struct t_config_file *config_file)
 {
     /* make C compiler happy */
     (void) data;
-    (void) config_file;
-    
+
+    weechat_config_section_free_options (alias_config_section_cmd);
     alias_free_all ();
-    return weechat_config_reload (alias_config_file);
+    
+    return weechat_config_reload (config_file);
 }
 
 /*
- * alias_config_read_line: read an alias in configuration file
+ * alias_config_write_default: write default aliases in configuration file
  */
 
 void
-alias_config_read_line (void *data, struct t_config_file *config_file,
-                        char *option_name, char *value)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) config_file;
-
-    if (option_name && value)
-    {
-        /* create new alias */
-        if (!alias_new (option_name, value))
-        {
-            weechat_printf (NULL,
-                            "%s%s: error creating alias \"%s\" => \"%s\"",
-                            weechat_prefix ("error"), "alias",
-                            option_name, value);
-        }
-    }
-}
-
-/*
- * alias_config_write_section: write alias section in configuration file
- *                             Return:  0 = successful
- *                                     -1 = write error
- */
-
-void
-alias_config_write_section (void *data, struct t_config_file *config_file,
+alias_config_write_default (void *data,
+                            struct t_config_file *config_file,
                             char *section_name)
-{
-    struct t_alias *ptr_alias;
-    
-    /* make C compiler happy */
-    (void) data;
-    
-    weechat_config_write_line (config_file, section_name, NULL);
-    
-    for (ptr_alias = alias_list; ptr_alias;
-         ptr_alias = ptr_alias->next_alias)
-    {
-        weechat_config_write_line (config_file,
-                                   ptr_alias->name,
-                                   "\"%s\"",
-                                   ptr_alias->command);
-    }
-}
-
-/*
- * alias_config_write_default_aliases: write default aliases in configuration file
- */
-
-void
-alias_config_write_default_aliases (void *data,
-                                    struct t_config_file *config_file,
-                                    char *section_name)
 {
     /* make C compiler happy */
     (void) data;
@@ -521,6 +555,51 @@ alias_config_write_default_aliases (void *data,
 }
 
 /*
+ * alias_config_create_option: create an alias
+ */
+
+int
+alias_config_create_option (void *data, struct t_config_file *config_file,
+                            struct t_config_section *section,
+                            char *option_name, char *value)
+{
+    struct t_alias *ptr_alias;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    rc = 0;
+    
+    /* create config option */
+    weechat_config_new_option (
+        config_file, section,
+        option_name, "string", NULL,
+        NULL, 0, 0, value, NULL, NULL,
+        &alias_config_change_cb, NULL,
+        &alias_config_delete_cb, NULL);
+    
+    /* create alias */
+    ptr_alias = alias_search (option_name);
+    if (ptr_alias)
+        alias_free (ptr_alias);
+    if (value && value[0])
+        rc = (alias_new (option_name, value)) ? 1 : 0;
+    else
+        rc = 1;
+    
+    if (rc == 0)
+    {
+        weechat_printf (NULL,
+                        "%s%s: error creating alias \"%s\" => \"%s\"",
+                        weechat_prefix ("error"), "alias",
+                        option_name, value);
+    }
+    
+    return rc;
+}
+
+/*
  * alias_config_init: init alias configuration file
  *                    return: 1 if ok, 0 if error
  */
@@ -530,23 +609,23 @@ alias_config_init ()
 {
     struct t_config_section *ptr_section;
     
-    alias_config_file = weechat_config_new (ALIAS_CONFIG_FILENAME,
+    alias_config_file = weechat_config_new (ALIAS_CONFIG_NAME,
                                             &alias_config_reload, NULL);
     if (!alias_config_file)
         return 0;
     
-    ptr_section = weechat_config_new_section (alias_config_file, "alias",
-                                              &alias_config_read_line,
-                                              NULL,
-                                              &alias_config_write_section,
-                                              NULL,
-                                              &alias_config_write_default_aliases,
-                                              NULL);
+    ptr_section = weechat_config_new_section (alias_config_file, "cmd",
+                                              NULL, NULL,
+                                              NULL, NULL,
+                                              &alias_config_write_default, NULL,
+                                              &alias_config_create_option, NULL);
     if (!ptr_section)
     {
         weechat_config_free (alias_config_file);
         return 0;
     }
+    
+    alias_config_section_cmd = ptr_section;
     
     return 1;
 }
@@ -601,9 +680,17 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                                 alias_name, argv_eol[2]);
                 return WEECHAT_RC_ERROR;
             }
+            
+            /* create config option */
+            weechat_config_new_option (
+                alias_config_file, alias_config_section_cmd,
+                alias_name, "string", NULL,
+                NULL, 0, 0, argv_eol[2], NULL, NULL,
+                &alias_config_change_cb, NULL,
+                &alias_config_delete_cb, NULL);
+            
             weechat_printf (NULL,
-                            _("%sAlias \"%s\" => \"%s\" created"),
-                            weechat_prefix ("info"),
+                            _("Alias \"%s\" => \"%s\" created"),
                             alias_name, argv_eol[2]);
         }
         else
@@ -616,14 +703,13 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 		weechat_printf (NULL, _("Alias:"));
 		weechat_printf (NULL, "  %s %s=>%s %s",
                                 ptr_alias->name,
-                                weechat_color ("color_chat_delimiters"),
-                                weechat_color ("color_chat"),
+                                weechat_color ("chat_delimiters"),
+                                weechat_color ("chat"),
                                 ptr_alias->command);
 	    }
             else
                 weechat_printf (NULL,
-                                _("%sNo alias found."),
-                                weechat_prefix ("info"));
+                                _("No alias found"));
         }
     }
     else
@@ -639,8 +725,8 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                 weechat_printf (NULL,
                                 "  %s %s=>%s %s",
                                 ptr_alias->name,
-                                weechat_color ("color_chat_delimiters"),
-                                weechat_color ("color_chat"),
+                                weechat_color ("chat_delimiters"),
+                                weechat_color ("chat"),
                                 ptr_alias->command);
             }
         }
@@ -661,6 +747,7 @@ unalias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 {
     char *alias_name;
     struct t_alias *ptr_alias;
+    struct t_config_option *ptr_option;
     
     /* make C compiler happy */
     (void) data;
@@ -677,15 +764,24 @@ unalias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                             _("%sAlias \"%s\" not found"),
                             weechat_prefix ("error"),
                             alias_name);
-            return -1;
+            return WEECHAT_RC_ERROR;
         }
+        
+        /* remove alias */
         alias_free (ptr_alias);
+        
+        /* remove option */
+        ptr_option = weechat_config_search_option (alias_config_file,
+                                                   alias_config_section_cmd,
+                                                   alias_name);
+        if (ptr_option)
+            weechat_config_option_free (alias_config_section_cmd, ptr_option);
+        
         weechat_printf (NULL,
-                        _("%sAlias \"%s\" removed"),
-                        weechat_prefix ("info"),
+                        _("Alias \"%s\" removed"),
                         alias_name);
     }
-    return 0;
+    return WEECHAT_RC_OK;
 }
 
 /*
@@ -724,9 +820,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     if (!alias_config_init ())
     {
         weechat_printf (NULL,
-                        "%s%s: error creating configuration file \"%s\"",
-                        weechat_prefix("error"), "alias",
-                        ALIAS_CONFIG_FILENAME);
+                        "%s%s: error creating configuration file",
+                        weechat_prefix("error"), "alias");
         return WEECHAT_RC_ERROR;
     }
     alias_config_read ();

@@ -110,10 +110,9 @@ static XS (XS_weechat_register)
     if (perl_current_script)
     {
         weechat_printf (NULL,
-                        weechat_gettext ("%s%s: registered script \"%s\", "
+                        weechat_gettext ("%s: registered script \"%s\", "
                                          "version %s (%s)"),
-                        weechat_prefix ("info"), "perl",
-                        name, version, description);
+                        "perl", name, version, description);
     }
     else
     {
@@ -768,7 +767,7 @@ weechat_perl_api_config_reload_cb (void *data,
 
 static XS (XS_weechat_config_new)
 {
-    char *result, *filename, *function;
+    char *result, *name, *function;
     dXSARGS;
     
     /* make C compiler happy */
@@ -786,11 +785,11 @@ static XS (XS_weechat_config_new)
         PERL_RETURN_EMPTY;
     }
     
-    filename = SvPV (ST (0), PL_na);
+    name = SvPV (ST (0), PL_na);
     function = SvPV (ST (1), PL_na);
     result = script_ptr2str (script_api_config_new (weechat_perl_plugin,
                                                     perl_current_script,
-                                                    filename,
+                                                    name,
                                                     &weechat_perl_api_config_reload_cb,
                                                     function));
     
@@ -899,12 +898,61 @@ weechat_perl_api_config_section_write_default_cb (void *data,
 }
 
 /*
+ * weechat_perl_api_config_section_create_option_cb: callback to create an option
+ */
+
+int
+weechat_perl_api_config_section_create_option_cb (void *data,
+                                                  struct t_config_file *config_file,
+                                                  struct t_config_section *section,
+                                                  char *option_name,
+                                                  char *value)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[5];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        perl_argv[0] = script_ptr2str (config_file);
+        perl_argv[1] = script_ptr2str (section);
+        perl_argv[2] = option_name;
+        perl_argv[3] = value;
+        perl_argv[4] = NULL;
+        
+        rc = (int *) weechat_perl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        perl_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (perl_argv[0])
+            free (perl_argv[0]);
+        if (perl_argv[1])
+            free (perl_argv[1]);
+        
+        return ret;
+    }
+    
+    return 0;
+}
+
+/*
  * weechat::config_new_section: create a new section in configuration file
  */
 
 static XS (XS_weechat_config_new_section)
 {
-    char *result, *cfg_file, *name, *read_cb, *write_cb, *write_default_db;
+    char *result, *cfg_file, *name, *function_read, *function_write;
+    char *function_write_default, *function_create_option;
     dXSARGS;
     
     /* make C compiler happy */
@@ -916,7 +964,7 @@ static XS (XS_weechat_config_new_section)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 5)
+    if (items < 6)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
         PERL_RETURN_EMPTY;
@@ -924,19 +972,22 @@ static XS (XS_weechat_config_new_section)
     
     cfg_file = SvPV (ST (0), PL_na);
     name = SvPV (ST (1), PL_na);
-    read_cb = SvPV (ST (2), PL_na);
-    write_cb = SvPV (ST (3), PL_na);
-    write_default_db = SvPV (ST (4), PL_na);
+    function_read = SvPV (ST (2), PL_na);
+    function_write = SvPV (ST (3), PL_na);
+    function_write_default = SvPV (ST (4), PL_na);
+    function_create_option = SvPV (ST (5), PL_na);
     result = script_ptr2str (script_api_config_new_section (weechat_perl_plugin,
                                                             perl_current_script,
                                                             script_str2ptr (cfg_file),
                                                             name,
                                                             &weechat_perl_api_config_section_read_cb,
-                                                            read_cb,
+                                                            function_read,
                                                             &weechat_perl_api_config_section_write_cb,
-                                                            write_cb,
+                                                            function_write,
                                                             &weechat_perl_api_config_section_write_default_cb,
-                                                            write_default_db));
+                                                            function_write_default,
+                                                            &weechat_perl_api_config_section_create_option_cb,
+                                                            function_create_option));
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -2117,19 +2168,17 @@ static XS (XS_weechat_hook_signal_send)
  */
 
 int
-weechat_perl_api_hook_config_cb (void *data, char *type, char *option,
-                                 char *value)
+weechat_perl_api_hook_config_cb (void *data, char *option, char *value)
 {
     struct t_script_callback *script_callback;
-    char *perl_argv[4];
+    char *perl_argv[3];
     int *rc, ret;
     
     script_callback = (struct t_script_callback *)data;
     
-    perl_argv[0] = type;
-    perl_argv[1] = option;
-    perl_argv[2] = value;
-    perl_argv[3] = NULL;
+    perl_argv[0] = option;
+    perl_argv[1] = value;
+    perl_argv[2] = NULL;
     
     rc = (int *) weechat_perl_exec (script_callback->script,
                                     WEECHAT_SCRIPT_EXEC_INT,
@@ -2153,7 +2202,7 @@ weechat_perl_api_hook_config_cb (void *data, char *type, char *option,
 
 static XS (XS_weechat_hook_config)
 {
-    char *result, *type, *option, *function;
+    char *result, *option, *function;
     dXSARGS;
     
     /* make C compiler happy */
@@ -2165,18 +2214,16 @@ static XS (XS_weechat_hook_config)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 3)
+    if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_config");
         PERL_RETURN_EMPTY;
     }
     
-    type = SvPV (ST (0), PL_na);
-    option = SvPV (ST (1), PL_na);
-    function = SvPV (ST (2), PL_na);
+    option = SvPV (ST (0), PL_na);
+    function = SvPV (ST (1), PL_na);
     result = script_ptr2str (script_api_hook_config (weechat_perl_plugin,
                                                      perl_current_script,
-                                                     type,
                                                      option,
                                                      &weechat_perl_api_hook_config_cb,
                                                      function));

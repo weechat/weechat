@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-03 18:09+0200\n"
+"POT-Creation-Date: 2008-04-11 18:29+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -66,12 +66,12 @@ msgstr ""
 "  -v, --version           WeeChat verziójának mutatása\n"
 "  -w, --weechat-commands  WeeChat parancsok mutatása\n"
 
-#. TRANSLATORS: %s is "WeeChat"
+#. TRANSLATORS: %s is "weechat"
 #, fuzzy, c-format
 msgid "%s configuration options:\n"
 msgstr "konfigurációs paraméterek beállítása"
 
-#. TRANSLATORS: %s is "WeeChat"
+#. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "%s belső parancsok:\n"
@@ -79,7 +79,7 @@ msgstr "%s belső parancsok:\n"
 msgid "Internal key functions:\n"
 msgstr "Belső billentyűfunkciók:\n"
 
-#. TRANSLATORS: %s is "WeeChat"
+#. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s alapértelmezett billentyűk:\n"
@@ -209,7 +209,7 @@ msgstr ""
 "%s helytelen értesítési szint (az értéknek %d és %d között kell lennie)\n"
 
 #, fuzzy, c-format
-msgid "%sNew notify level for %s%s%s: %d %s"
+msgid "New notify level for %s%s%s: %d %s"
 msgstr "A %s%s%s új értesítési szintje: %s%d %s"
 
 #, fuzzy
@@ -275,7 +275,7 @@ msgstr "%s a \"%s\" modul nem található\n"
 msgid "%sError: wrong filter number"
 msgstr "%s helytelen pufferszám\n"
 
-#. TRANSLATORS: %s is "WeeChat"
+#. TRANSLATORS: %s is "weechat"
 #, fuzzy, c-format
 msgid "%s internal commands:"
 msgstr "%s belső parancsok:\n"
@@ -297,7 +297,51 @@ msgid "plugin:"
 msgstr "  (nem található bővítőmodul)\n"
 
 #, fuzzy, c-format
-msgid "%sNo help available, \"%s\" is an unknown command"
+msgid "Option \"%s%s%s\": %s"
+msgstr "Felhasználók a %s%s%s szobában: %s["
+
+#, fuzzy
+msgid "  type: boolean ('on' or 'off')"
+msgstr "  . típus logikai (értékek: 'on' vagy 'off')\n"
+
+#, c-format
+msgid "  value: %s%s%s (default: %s)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "  type: string (%s)"
+msgstr "  . típus: szöveg\n"
+
+#, c-format
+msgid "  value: '%s%s%s' (default: '%s')"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "  type: integer (between %d and %d)"
+msgstr "  . típus szám (értékek: %d és %d között)\n"
+
+#, c-format
+msgid "  value: %s%d%s (default: %d)"
+msgstr ""
+
+#, fuzzy
+msgid "  type: string (any string)"
+msgstr "  . típus szöveg (bármilyen szöveg)\n"
+
+#, fuzzy
+msgid "  type: char (any char)"
+msgstr "  . típus: karakter (bármilyen karakter)\n"
+
+#, fuzzy, c-format
+msgid "  type: string (limit: %d chars)"
+msgstr "  . típus szöveg (bármilyen szöveg, korlát: %d karakter)\n"
+
+#, fuzzy
+msgid "  type: color (values depend on GUI used)"
+msgstr "  . értékek: %d és %d között\n"
+
+#, fuzzy, c-format
+msgid "%sNo help available, \"%s\" is not a command or an option"
 msgstr "Nem érhető el segítség, a \"%s\" ismeretlen parancs\n"
 
 #, fuzzy
@@ -305,7 +349,7 @@ msgid "Buffer command history:"
 msgstr "a pufferben kiadott parancsok előzményének mutatása"
 
 #, fuzzy, c-format
-msgid "%sNew key binding: %s%s => %s%s%s%s%s"
+msgid "New key binding: %s%s => %s%s%s%s%s"
 msgstr "Új billentyűparancs: %s"
 
 #, fuzzy
@@ -316,8 +360,8 @@ msgstr "Billentyűparancsok:\n"
 msgid "Internal key functions:"
 msgstr "Belső billentyűfunkciók:\n"
 
-#, fuzzy, c-format
-msgid "%sDefault key bindings restored"
+#, fuzzy
+msgid "Default key bindings restored"
 msgstr "Alapértelmezett billentyűparancsok visszaállítva\n"
 
 #, fuzzy, c-format
@@ -327,7 +371,7 @@ msgstr ""
 "visszaállításához (biztonsági okokból)\n"
 
 #, fuzzy, c-format
-msgid "%sKey \"%s\" unbound"
+msgid "Key \"%s\" unbound"
 msgstr "A(z) \"%s\" billentyűparancs visszavonva\n"
 
 #, fuzzy, c-format
@@ -446,7 +490,7 @@ msgid "%sError: wrong argument count for \"%s\" command"
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
-msgid "%sOptions reloaded from %s"
+msgid "Options reloaded from %s"
 msgstr "Modul beállítások elmentve\n"
 
 #, fuzzy, c-format
@@ -454,11 +498,11 @@ msgid "%sError: failed to reload options from %s"
 msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy, c-format
-msgid "%sUnknown configuration file \"%s\""
+msgid "Unknown configuration file \"%s\""
 msgstr "szerver konfigurációs fájljának újraolvastatása"
 
 #, fuzzy, c-format
-msgid "%sOptions saved to %s"
+msgid "Options saved to %s"
 msgstr "Modul beállítások elmentve\n"
 
 #, fuzzy, c-format
@@ -468,17 +512,19 @@ msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 msgid "(unknown)"
 msgstr "(ismeretlen)"
 
-#, fuzzy, c-format
-msgid "No configuration option found with \"%s\""
-msgstr "Nem találtam beállítási lehetőséget a \"%s\" szóhoz\n"
+#, c-format
+msgid ""
+"%sOption \"%s\" not found (tip: you can use \"*\" at beginning and/or end of "
+"option to see a sublist)"
+msgstr ""
 
 #, fuzzy
 msgid "No configuration option found"
 msgstr "Nem található az opció\n"
 
 #, fuzzy, c-format
-msgid "%s%d%s configuration option found with \"%s\""
-msgid_plural "%s%d%s configuration options found with \"%s\""
+msgid "%s%d%s configuration option found matching with \"%s\""
+msgid_plural "%s%d%s configuration options found matching with \"%s\""
 msgstr[0] "a \"%s\" kifejezéshez tartozó opciót találtam\n"
 msgstr[1] "a \"%s\" kifejezéshez tartozó opciót találtam\n"
 
@@ -489,48 +535,28 @@ msgstr[0] "megtalált opciók\n"
 msgstr[1] "megtalált opciók\n"
 
 #, fuzzy, c-format
+msgid "%sError: failed to set option \"%s\""
+msgstr "%s nem sikerült a modul opciókat elmenteni\n"
+
+#, fuzzy, c-format
 msgid "%sError: configuration option \"%s\" not found"
 msgstr "%s a \"%s\" opció nem található\n"
 
 #, fuzzy
-msgid "Option changed: "
+msgid "Option changed"
 msgstr "nincs a szobában"
 
 #, fuzzy, c-format
-msgid "%sError: incorrect value for option \"%s\""
-msgstr "%s helytelen érték a \"%s\" paraméternek\n"
-
-#, fuzzy, c-format
-msgid "No plugin option found with \"%s\""
-msgstr "A(z) \"%s\" kifejezéshez nem található modul opció\n"
-
-#, fuzzy
-msgid "No plugin option found"
-msgstr "Nem található modul opció\n"
-
-#, fuzzy, c-format
-msgid "%s%d%s plugin option found with \"%s\""
-msgid_plural "%s%d%s plugin options found with \"%s\""
-msgstr[0] "A(z) \"%s\" kifejezéshez nem található modul opció\n"
-msgstr[1] "A(z) \"%s\" kifejezéshez nem található modul opció\n"
-
-#, fuzzy, c-format
-msgid "%s%d%s plugin option found"
-msgid_plural "%s%d%s plugin options found"
-msgstr[0] "Nem található modul opció\n"
-msgstr[1] "Nem található modul opció\n"
-
-#, fuzzy, c-format
-msgid "%sError: plugin \"%s\" not found"
+msgid "%sOption not found"
 msgstr "%s a \"%s\" modul nem található\n"
 
-#, fuzzy, c-format
-msgid "Plugin option changed: %s%s = \"%s%s%s\""
-msgstr "A(z) \"%s\" kifejezéshez nem található modul opció\n"
+#, fuzzy
+msgid "Option reset"
+msgstr "Modul beállítások elmentve\n"
 
-#, fuzzy, c-format
-msgid "%sError: incorrect value for plugin option \"%s\""
-msgstr "%s helytelen érték a(z) \"%s\" modul paraméternek\n"
+#, fuzzy
+msgid "Option removed"
+msgstr "nincs a szobában"
 
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
@@ -692,13 +718,18 @@ msgid ""
 "from message)"
 msgstr ""
 
-msgid "display help about commands"
+#, fuzzy
+msgid "display help about commands and options"
 msgstr "segítség megjelenítése a parancsokhoz"
 
-msgid "[command]"
+#, fuzzy
+msgid "[command | option]"
 msgstr "[parancs]"
 
-msgid "command: name of a WeeChat or IRC command"
+#, fuzzy
+msgid ""
+"command: a command name\n"
+" option: an option name (use /set to see list)"
 msgstr "parancs: WeeChat vagy IRC parancs neve"
 
 msgid "show buffer command history"
@@ -805,33 +836,24 @@ msgid "[option [ = value]]"
 msgstr "[opció [ = érték]]"
 
 msgid ""
-"option: name of an option (if name is full and no value is given, then help "
-"is displayed on option)\n"
-" value: value for option\n"
-"\n"
-"Option may be: servername.server_xxx where \"servername\" is an internal "
-"server name and \"xxx\" an option for this server."
+"option: name of an option\n"
+" value: value for option"
 msgstr ""
-"opció: az opció neve (ha a név teljes és nincs érték megadva, akkor "
-"megjeleníti az opcióhoz tartozó segítséget\n"
-"érték: az opcióhoz tartozó érték\n"
-"\n"
-"A opció lehet: szervernév.szerver_xxx, ahol a \"szervernév\" egy belső "
-"szervernév és az \"xxx\" a szerver egyik opciója."
 
-msgid "set plugin config options"
-msgstr "modul opcióinak beállítása"
+#, fuzzy
+msgid "unset/reset config options"
+msgstr "konfigurációs paraméterek beállítása"
+
+#, fuzzy
+msgid "[option]"
+msgstr "[parancs]"
 
 msgid ""
-"option: name of a plugin option\n"
-" value: value for option\n"
+"option: name of an option\n"
 "\n"
-"Option is format: plugin.option, example: perl.myscript.item1"
+"According to option, it's reset (for standard options) or removed (for "
+"optional settings, like server values)."
 msgstr ""
-"opció: modul opció neve\n"
-"érték: az opció értéke\n"
-"\n"
-"Az opció formája: modul.opció, például: perl.azénszkriptem.azénopcióm"
 
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "WeeChat frissítése a szerverekről való lecsatlakozás nélkül"
@@ -929,6 +951,9 @@ msgstr ""
 msgid "command executed when WeeChat starts, after loading plugins"
 msgstr ""
 
+msgid "WeeChat slogan (if empty, slogan is not used)"
+msgstr "WeeChat szlogen (ha üres, akkor nem használja a program)"
+
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
 "background (if you never use white background, you should turn on this "
@@ -947,9 +972,6 @@ msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 "ablak címsorának beállítása (Curses GUI esetén a terminálé) a program nevére "
 "és verziójára"
-
-msgid "WeeChat slogan (if empty, slogan is not used)"
-msgstr "WeeChat szlogen (ha üres, akkor nem használja a program)"
 
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "a scroll_up és scroll_down hány sort görgessen"
@@ -992,10 +1014,6 @@ msgstr "a felhasználó módjának ((fél)operátor/voice) mutatása a név elő
 
 msgid "display space if nick mode is not (half)op/voice"
 msgstr "szóköz megjelenítése, ha a mód nem (fél)operátor/voice"
-
-#, fuzzy
-msgid "prefix for info messages"
-msgstr "új üzenetet tartalmazó ablak színe"
 
 #, fuzzy
 msgid "prefix for error messages"
@@ -1095,12 +1113,6 @@ msgstr ""
 "maximálisan beilleszthető sorok száma a felhasználó megkérdezése nélkül (0 = "
 "szolgáltatás kikapcsolása)"
 
-msgid ""
-"default quit message ('%v' will be replaced by WeeChat version in string)"
-msgstr ""
-"alapértelmezett kilépő üzenet (a '%v' változó a WeeChat verziójára "
-"cserélődik)"
-
 #, fuzzy
 msgid "background color for window separators (when splited)"
 msgstr "ablakelválasztó színe (ha meg van osztva)"
@@ -1132,10 +1144,6 @@ msgstr "idő színe a beszédablakban"
 #, fuzzy
 msgid "text color for time delimiters"
 msgstr "információs pult határolóinak színe"
-
-#, fuzzy
-msgid "text color for info prefix"
-msgstr "információs pult szövegének színe"
 
 #, fuzzy
 msgid "text color for error prefix"
@@ -1492,14 +1500,6 @@ msgstr "beállítások mentése kilépéskor"
 
 msgid "(default options)"
 msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"#\n"
-"# %s configuration file, created by %s v%s on %s#\n"
-msgstr ""
-"#\n"
-"# %s konfigurációs fájl, készítette: %s v%s - %s"
 
 #, fuzzy, c-format
 msgid "%sWarning: config file \"%s\" not found"
@@ -1865,15 +1865,15 @@ msgid "%s%s: error creating alias \"%s\" => \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 #, fuzzy, c-format
-msgid "%sAlias \"%s\" => \"%s\" created"
+msgid "Alias \"%s\" => \"%s\" created"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
 #, fuzzy
 msgid "Alias:"
 msgstr "Aliasz:\n"
 
-#, fuzzy, c-format
-msgid "%sNo alias found."
+#, fuzzy
+msgid "No alias found"
 msgstr "Nem találtam aliaszt.\n"
 
 #, fuzzy
@@ -1889,7 +1889,7 @@ msgid "%sAlias \"%s\" not found"
 msgstr "%s cím \"%s\" nem található\n"
 
 #, fuzzy, c-format
-msgid "%sAlias \"%s\" removed"
+msgid "Alias \"%s\" removed"
 msgstr "A \"%s\" aliasz eltávolítva\n"
 
 msgid "create an alias for a command"
@@ -1930,67 +1930,63 @@ msgid "alias_name: name of alias to remove"
 msgstr "alias_név: az eltávolítandó alias neve"
 
 #, fuzzy, c-format
+msgid "%s: debug enabled"
+msgstr "FIFO cső nyitva\n"
+
+#, c-format
+msgid "%s: debug disabled"
+msgstr ""
+
+#, fuzzy, c-format
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
+msgid "global decoding charset"
+msgstr ""
+
+msgid "global encoding charset"
+msgstr ""
+
 #, fuzzy, c-format
-msgid "%sCharset \"%s\" => \"%s\""
+msgid "Charset: %s, %s => %s"
 msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 
 #, fuzzy, c-format
-msgid "%s%s: charset \"%s\" not found"
-msgstr "%s a \"%s\" szerver nem található\n"
-
-#, fuzzy, c-format
-msgid "%sCharset \"%s\" removed"
+msgid "Charset: %s, %s: removed"
 msgstr "A \"%s\" aliasz eltávolítva\n"
 
-#, fuzzy
-msgid "List of charsets:"
-msgstr "Aliaszok listája:\n"
+#, fuzzy, c-format
+msgid "%s%s: missing parameters"
+msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, c-format
+msgid "%s%s: wrong charset type (decode or encode expected)"
+msgstr ""
 
 #, fuzzy, c-format
-msgid "List of charsets with \"%s\":"
-msgstr "Aliaszok listája:\n"
-
-#, fuzzy
-msgid "No charset found"
-msgstr "Nem találtam billentyűt.\n"
-
-#, fuzzy
-msgid "No charset defined"
-msgstr "Nincs aliasz definiálva.\n"
+msgid "%s%s: invalid charset: \"%s\""
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: terminal: %s, internal: %s"
+msgid "%s: terminal: %s, internal: %s"
 msgstr "%s a \"%s\" modul nem található\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error creating configuration file \"%s\""
+msgid "%s%s: error creating configuration file"
 msgstr "szerver konfigurációs fájljának újraolvastatása"
 
 #, fuzzy
-msgid "manage charsets"
-msgstr "pufferek kezelése"
+msgid "change charset for current buffer"
+msgstr "szobanév nem található a pufferhez"
 
-msgid "[[type.]plugin.string [= charset]]"
+msgid "[[decode | encode] charset] | [reset]"
 msgstr ""
 
 msgid ""
-"   type: \"decode\" or \"encode\" (if type is omitted, then both \"decode\" "
-"and \"encode\" are set)\n"
-" plugin: plugin name\n"
-" string: string specific to plugin (for example a server name or server."
-"channel for IRC plugin)\n"
-"charset: charset to use (if empty, then charset is removed)\n"
-"\n"
-"Examples :\n"
-"/charset decode iso-8859-15 => set global decode charset to iso-8859-15\n"
-"/charset encode iso-8859-15 => set global encode charset to iso-8859-15\n"
-"/charset decode.irc.freenode => set decode charset to iso-8859-15 for IRC "
-"server \"freenode\" (all channels)\n"
-"/charset decode.irc.freenode.#weechat => set decode charset to iso-8859-15 "
-"for IRC channel \"#weechat\" on server \"freenode\""
+" decode: change decoding charset\n"
+" encode: change encoding charset\n"
+"charset: new charset for current buffer\n"
+"  reset: reset charsets for current buffer"
 msgstr ""
 
 msgid "print debug messages"
@@ -2013,19 +2009,7 @@ msgstr ""
 " buffer: hexadecimális puffertartalom logba írása\n"
 "windows: ablakfa megjelenítése"
 
-#, fuzzy, c-format
-msgid "%s: debug enabled"
-msgstr "FIFO cső nyitva\n"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr ""
-
 msgid "demo message without prefix"
-msgstr ""
-
-#, c-format
-msgid "%sdemo message with info prefix"
 msgstr ""
 
 #, c-format
@@ -2115,7 +2099,7 @@ msgid ""
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s%s: pipe open"
+msgid "%s: pipe open"
 msgstr "FIFO cső nyitva\n"
 
 #, fuzzy, c-format
@@ -2127,7 +2111,7 @@ msgid "%s%s: unable to create pipe for remote control (%s)"
 msgstr "%s nem sikerült a FIFO csövet létrehozni a távoli felügyelethez (%s)\n"
 
 #, fuzzy, c-format
-msgid "%s%s: pipe closed"
+msgid "%s: pipe closed"
 msgstr "FIFO cső bezárva\n"
 
 #, fuzzy, c-format
@@ -2155,11 +2139,11 @@ msgid "%s%s: cannot find nick for sending message"
 msgstr "%s nem található név az üzenet küldéséhez\n"
 
 #, fuzzy, c-format
-msgid "%s%s: future away on %s%s%s: %s"
+msgid "%s: future away on %s%s%s: %s"
 msgstr "CTCP %sVERSION%s válasz %s%s%s felhasználótól: %s\n"
 
 #, fuzzy, c-format
-msgid "%s%s: future away on %s%s%s removed"
+msgid "%s: future away on %s%s%s removed"
 msgstr "%s%d%s mellőzés eltávolítva.\n"
 
 #, fuzzy, c-format
@@ -2179,7 +2163,7 @@ msgid "%s%s: missing argument for \"%s\" option"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server %s%s%s created (temporary server, NOT SAVED!)"
+msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 msgstr "A(z) %s%s%s szerver létrehozva (ideiglenes szerver, NINCS MENTVE!)\n"
 
 #, fuzzy, c-format
@@ -2199,7 +2183,7 @@ msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s nincs csatlakozva a \"%s\" szerverhez!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: auto-reconnection is cancelled"
+msgid "%s: auto-reconnection is cancelled"
 msgstr "automata újracsatlakozás megszakítva\n"
 
 #, fuzzy, c-format
@@ -2248,7 +2232,7 @@ msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server %s%s%s created"
+msgid "%s: server %s%s%s created"
 msgstr "A %s%s%s szerver létrehozva\n"
 
 #, fuzzy, c-format
@@ -2264,11 +2248,11 @@ msgid "%s%s: server \"%s\" already exists for \"%s\" command"
 msgstr "%s a \"%s\" szerver már létezik a(z) \"%s\" parancshoz\n"
 
 #, fuzzy, c-format
-msgid "%s%s: Server %s%s%s has been copied to %s%s"
+msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "A %s%s%s szerver másolva lett %s%s néven\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server %s%s%s has been renamed to %s%s"
+msgid "%s: server %s%s%s has been renamed to %s%s"
 msgstr "A %s%s%s szerver mostantól: %s%s\n"
 
 #, fuzzy, c-format
@@ -2276,7 +2260,7 @@ msgid "%s%s: server \"%s\" is not a temporary server"
 msgstr "%s a \"%s\" szerver nem ideiglenes\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server %s%s%s is not temporary any more"
+msgid "%s: server %s%s%s is not temporary any more"
 msgstr "A(z) %s%s%s szerver mostantól nem ideiglenes\n"
 
 #, fuzzy, c-format
@@ -2288,12 +2272,12 @@ msgstr ""
 "a /disconnect %s parancsot előbb.\n"
 
 #, fuzzy, c-format
-msgid "%s%s: Server %s%s%s has been deleted"
+msgid "%s: Server %s%s%s has been deleted"
 msgstr "A %s%s%s szerver törölve\n"
 
 #, fuzzy, c-format
 msgid ""
-"%s%s: messages outqueue DELETED for all servers. Some messages from you or "
+"%s: messages outqueue DELETED for all servers. Some messages from you or "
 "WeeChat may have been lost!"
 msgstr ""
 "Minden szerver kimenő üzenetlistája TÖRÖLVE. Néhány üzenete vagy WeeChat "
@@ -3058,23 +3042,97 @@ msgstr ""
 msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
+#, fuzzy, c-format
+msgid "%s%s: error creating server \"%s\""
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating option \"%s\" for server \"%s\" (server not found)"
+msgstr "%s a \"%s\" opció nem található\n"
+
 #, c-format
 msgid ""
 "%s%s: warning: server \"%s\" not found in configuration file, not deleted in "
 "memory because it's currently used"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: value \"%s\" is invalid for option \"%s\""
-msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
+msgid "automatically connect to server when WeeChat is starting"
+msgstr "automatikus csatlakozás a szerverhez a WeeChat indulásakor"
+
+msgid "automatically reconnect to server when disconnected"
+msgstr "automatikus újracsatlakozás a szerverhez, ha lekapcsolódik"
+
+msgid "delay (in seconds) before trying again to reconnect to server"
+msgstr "két újracsatlakozási próba közti szünet (másodpercben)"
+
+#, fuzzy
+msgid "list of IP/port or hostname/port for server (separated by comma)"
+msgstr "felhasználónév az IRC szerveren"
+
+msgid "use IPv6 protocol for server communication"
+msgstr "IPv6 protokoll használata a kapcsolathoz"
+
+msgid "use SSL for server communication"
+msgstr "SSL használata a a kapcsolathoz"
+
+msgid "password for IRC server"
+msgstr "jelszó az IRC szerveren"
+
+#, fuzzy
+msgid "nicknames to use on IRC server (separated by comma)"
+msgstr "felhasználónév az IRC szerveren"
+
+msgid "user name to use on IRC server"
+msgstr "használni kívánt felhasználónév az IRC szerveren"
+
+msgid "real name to use on IRC server"
+msgstr "az IRC szerveren használt valódi név"
+
+msgid ""
+"custom hostname/IP for server (optional, if empty local hostname is used)"
+msgstr ""
+"szokásos hosztnév/IP a szerveren (tetszőleges, ha üres akkor a helyi "
+"hosztnevet használja)"
+
+msgid ""
+"command(s) to run when connected to server (many commands should be "
+"separated by ';', use '\\;' for a semicolon, special variables $nick, "
+"$channel and $server are replaced by their value)"
+msgstr ""
+"szerverre csatlakozáskor futtatandó parancs(ok) (több parancs esetén azokat "
+"';'-vel kell elválasztani, használja a '\\;' sorozatot, ha "
+"pontosvesszőtszeretne írni, a $nick, $channel és $server szavak helyére azok "
+"értéke kerül)"
+
+msgid ""
+"delay (in seconds) after command was executed (example: give some time for "
+"authentication)"
+msgstr ""
+"szünet (másodpercben) a parancs futtatása után (például: hagyni némi időt az "
+"azonosításra)"
+
+msgid ""
+"comma separated list of channels to join when connected to server (example: "
+"\"#chan1,#chan2,#chan3 key1,key2\")"
+msgstr ""
+"szobák vesszővel elválasztott listája ahová be akarunk lépni csatlakozás "
+"után (például: \"#szoba1,#szoba2,#szoba3 kulcs1,kulcs2\")"
+
+msgid "automatically rejoin channels when kicked"
+msgstr "automatikus visszalépés a szobába kirúgáskor"
+
+msgid ""
+"comma separated list of notify levels for channels of this server (format: "
+"#channel:1,..), a channel name '*' is reserved for server default notify "
+"level"
+msgstr ""
+"vesszővel elválasztott emlékeztetési szintek ezen szerver szobáira (forma: "
+"#szoba:1,...), a '*' szobanév a szerver alapértelmezett értesítési "
+"szintjének van fenntartva"
 
 #, fuzzy, c-format
-msgid "%s%s: option \"%s\" not found"
-msgstr "%s a \"%s\" modul nem található\n"
-
-#, fuzzy, c-format
-msgid "%s%s: error creating server for reading configuration file"
-msgstr "szerver konfigurációs fájljának újraolvastatása"
+msgid "%s%s: error creating server option \"%s\""
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
 msgid "use same buffer for all servers"
 msgstr "ugyanazon puffer használata minden szerverhez"
@@ -3097,6 +3155,16 @@ msgstr "üzenet mutatása távollétkor/visszatéréskor"
 msgid "show remote away message only once in private"
 msgstr "privát beszélgetésben a másik fél távollétét csak egyszer jelezze"
 
+msgid "display notices as private messages"
+msgstr "figyelmeztetések privát üzenetként való mutatása"
+
+msgid ""
+"comma separated list of words to highlight (case insensitive comparison, "
+"words may begin or end with \"*\" for partial match)"
+msgstr ""
+"kiemelendő szavak vesszővel elválasztott listája (kis/nagybetűtől független "
+"összehasonlítás, a szavak végére/elejére \"*\"-ot illesztve részleges keresés"
+
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
 "version in string)"
@@ -3104,8 +3172,13 @@ msgstr ""
 "alapértelmezett távozó üzenet (szoba elhagyásakor) (a '%v' változó a WeeChat "
 "verziójára cserélődik)"
 
-msgid "display notices as private messages"
-msgstr "figyelmeztetések privát üzenetként való mutatása"
+#, fuzzy
+msgid ""
+"default quit message (disconnecting from server) ('%v' will be replaced by "
+"WeeChat version in string)"
+msgstr ""
+"alapértelmezett kilépő üzenet (a '%v' változó a WeeChat verziójára "
+"cserélődik)"
 
 msgid "interval between two checks for away (in minutes, 0 = never check)"
 msgstr "két távollétellenőrzés közti idő (percben, 0 = nincs ellenőrzés)"
@@ -3127,13 +3200,6 @@ msgstr "lekapcsolódás túl nagy késés esetén (percben, 0 = nincs lecsatlako
 
 msgid "anti-flood: # seconds between two user messages (0 = no anti-flood)"
 msgstr "anti-flood: # másodperc két üzenet között (0 = anti-flood kikapcsolva)"
-
-msgid ""
-"comma separated list of words to highlight (case insensitive comparison, "
-"words may begin or end with \"*\" for partial match)"
-msgstr ""
-"kiemelendő szavak vesszővel elválasztott listája (kis/nagybetűtől független "
-"összehasonlítás, a szavak végére/elejére \"*\"-ot illesztve részleges keresés"
 
 msgid "when off, colors codes are ignored in incoming messages"
 msgstr "ha ki van kapcsolva, "
@@ -3212,83 +3278,6 @@ msgstr "személyes beszélgetése automatikus naplózása"
 
 msgid "hide password displayed by nickserv"
 msgstr "a nickserv által mutatott jelszó elrejtése"
-
-msgid "name associated to IRC server (for display only)"
-msgstr "az IRC szerverhez rendelt név (csak megjelenítéshez)"
-
-msgid "automatically connect to server when WeeChat is starting"
-msgstr "automatikus csatlakozás a szerverhez a WeeChat indulásakor"
-
-msgid "automatically reconnect to server when disconnected"
-msgstr "automatikus újracsatlakozás a szerverhez, ha lekapcsolódik"
-
-msgid "delay (in seconds) before trying again to reconnect to server"
-msgstr "két újracsatlakozási próba közti szünet (másodpercben)"
-
-#, fuzzy
-msgid "list of IP/port or hostname/port for server (separated by comma)"
-msgstr "felhasználónév az IRC szerveren"
-
-msgid "use IPv6 protocol for server communication"
-msgstr "IPv6 protokoll használata a kapcsolathoz"
-
-msgid "use SSL for server communication"
-msgstr "SSL használata a a kapcsolathoz"
-
-msgid "password for IRC server"
-msgstr "jelszó az IRC szerveren"
-
-#, fuzzy
-msgid "nicknames to use on IRC server (separated by comma)"
-msgstr "felhasználónév az IRC szerveren"
-
-msgid "user name to use on IRC server"
-msgstr "használni kívánt felhasználónév az IRC szerveren"
-
-msgid "real name to use on IRC server"
-msgstr "az IRC szerveren használt valódi név"
-
-msgid ""
-"custom hostname/IP for server (optional, if empty local hostname is used)"
-msgstr ""
-"szokásos hosztnév/IP a szerveren (tetszőleges, ha üres akkor a helyi "
-"hosztnevet használja)"
-
-msgid ""
-"command(s) to run when connected to server (many commands should be "
-"separated by ';', use '\\;' for a semicolon, special variables $nick, "
-"$channel and $server are replaced by their value)"
-msgstr ""
-"szerverre csatlakozáskor futtatandó parancs(ok) (több parancs esetén azokat "
-"';'-vel kell elválasztani, használja a '\\;' sorozatot, ha "
-"pontosvesszőtszeretne írni, a $nick, $channel és $server szavak helyére azok "
-"értéke kerül)"
-
-msgid ""
-"delay (in seconds) after command was executed (example: give some time for "
-"authentication)"
-msgstr ""
-"szünet (másodpercben) a parancs futtatása után (például: hagyni némi időt az "
-"azonosításra)"
-
-msgid ""
-"comma separated list of channels to join when connected to server (example: "
-"\"#chan1,#chan2,#chan3 key1,key2\")"
-msgstr ""
-"szobák vesszővel elválasztott listája ahová be akarunk lépni csatlakozás "
-"után (például: \"#szoba1,#szoba2,#szoba3 kulcs1,kulcs2\")"
-
-msgid "automatically rejoin channels when kicked"
-msgstr "automatikus visszalépés a szobába kirúgáskor"
-
-msgid ""
-"comma separated list of notify levels for channels of this server (format: "
-"#channel:1,..), a channel name '*' is reserved for server default notify "
-"level"
-msgstr ""
-"vesszővel elválasztott emlékeztetési szintek ezen szerver szobáira (forma: "
-"#szoba:1,...), a '*' szobanév a szerver alapértelmezett értesítési "
-"szintjének van fenntartva"
 
 msgid "Waiting"
 msgstr "Várakozás"
@@ -3796,7 +3785,7 @@ msgid ""
 msgstr "%s: minden megadott név foglalt, kapcsolat bontása a szerverrel!\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr "%s: a(z) \"%s\" név már foglalt, próbálom a második nevet: \"%s\"\n"
 
 msgid "error received from IRC server"
@@ -4139,15 +4128,15 @@ msgstr ""
 "%s nem sikerült adatot olvasni a csatornából, kilépés a szerverről...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: lag is high, disconnecting from server..."
+msgid "%s: lag is high, disconnecting from server..."
 msgstr "%s túl nagy a késés(lag), lecsatlakozás a szerverről...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: reconnecting to server in %d %s"
+msgid "%s: reconnecting to server in %d %s"
 msgstr "%s: Újracsatlakozás a szerverhez %d másodperc múlva\n"
 
 #, fuzzy, c-format
-msgid "%s%s: switching address to %s/%d"
+msgid "%s: switching address to %s/%d"
 msgstr "%s IP-cím nem található\n"
 
 #, fuzzy, c-format
@@ -4190,6 +4179,14 @@ msgstr ""
 msgid "%s%s: unable to set local hostname/IP"
 msgstr "%s nem sikerült a helyi hosztnevet/IP-t beállítani\n"
 
+#, c-format
+msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: nicks not defined for server \"%s\", cannot connect"
+msgstr "%s név \"%s\" nem található a \"%s\" parancshoz\n"
+
 #, fuzzy, c-format
 msgid ""
 "%s%s: cannot connect with SSL since WeeChat was not built with GnuTLS support"
@@ -4198,7 +4195,7 @@ msgstr ""
 "támogatás nélkül lett fordítva\n"
 
 #, fuzzy, c-format
-msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
+msgid "%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr ""
 "%s: csatlakozás a(z) %s:%d%s%s szerverhez %s proxy kiszolgálón keresztül: %s:"
 "%d%s...\n"
@@ -4208,10 +4205,6 @@ msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr ""
 "Csatlakozás a(z) %s:%d%s%s szerverhez %s proxy kiszolgálón keresztül: %s:%d%"
 "s...\n"
-
-#, fuzzy, c-format
-msgid "%s%s: connecting to server %s/%d%s%s..."
-msgstr "%s: csatlakozás a(z) %s:%d%s%s szerverhez...\n"
 
 #, fuzzy, c-format
 msgid "%s: connecting to server %s/%d%s%s..."
@@ -4238,11 +4231,11 @@ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
 msgstr "%s nem sikerült a \"SO_KEEPALIVE\" csatornaopciót beállítani\n"
 
 #, fuzzy, c-format
-msgid "%s%s: reconnecting to server..."
+msgid "%s: reconnecting to server..."
 msgstr "%s: Újracsatlakozás a szerverhez...\n"
 
 #, fuzzy, c-format
-msgid "%s%s: disconnected from server"
+msgid "%s: disconnected from server"
 msgstr "Lekapcsolódott a szerverről!\n"
 
 #, fuzzy, c-format
@@ -4299,12 +4292,16 @@ msgid "%sError: unable to load plugin \"%s\" (not enough memory)"
 msgstr "%s nem sikerült a modult betölteni \"%s\" (nincs elég memória)\n"
 
 #, fuzzy, c-format
-msgid "%sPlugin \"%s\" loaded"
+msgid "Plugin \"%s\" loaded"
 msgstr "A \"%s\" modul eltávolítva.\n"
 
 #, fuzzy, c-format
-msgid "%sPlugin \"%s\" unloaded"
+msgid "Plugin \"%s\" unloaded"
 msgstr "A \"%s\" modul eltávolítva.\n"
+
+#, fuzzy, c-format
+msgid "%sError: plugin \"%s\" not found"
+msgstr "%s a \"%s\" modul nem található\n"
 
 #, c-format
 msgid ""
@@ -4313,7 +4310,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%s%s: registered script \"%s\", version %s (%s)"
+msgid "%s: registered script \"%s\", version %s (%s)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -4329,7 +4326,7 @@ msgid "%s%s: script \"%s\" not found"
 msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy, c-format
-msgid "%s%s: loading script \"%s\""
+msgid "%s: loading script \"%s\""
 msgstr "folyamat: \"%s\" szerver betöltése\n"
 
 #, fuzzy, c-format
@@ -4355,11 +4352,11 @@ msgstr ""
 "betöltés sikertelen\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unloading script \"%s\""
+msgid "%s: unloading script \"%s\""
 msgstr "folyamat: \"%s\" szerver betöltése\n"
 
 #, fuzzy, c-format
-msgid "%s%s: script \"%s\" unloaded"
+msgid "%s: script \"%s\" unloaded"
 msgstr "A \"%s\" modul eltávolítva.\n"
 
 #, fuzzy, c-format
@@ -4525,6 +4522,132 @@ msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
 #, fuzzy
+#~ msgid "# %s, created by %s v%s on %s#\n"
+#~ msgstr ""
+#~ "#\n"
+#~ "# %s konfigurációs fájl, készítette: %s v%s - %s"
+
+#, fuzzy
+#~ msgid "No configuration option found with \"%s\""
+#~ msgstr "Nem találtam beállítási lehetőséget a \"%s\" szóhoz\n"
+
+#~ msgid ""
+#~ "option: name of an option (if name is full and no value is given, then "
+#~ "help is displayed on option)\n"
+#~ " value: value for option\n"
+#~ "\n"
+#~ "Option may be: servername.server_xxx where \"servername\" is an internal "
+#~ "server name and \"xxx\" an option for this server."
+#~ msgstr ""
+#~ "opció: az opció neve (ha a név teljes és nincs érték megadva, akkor "
+#~ "megjeleníti az opcióhoz tartozó segítséget\n"
+#~ "érték: az opcióhoz tartozó érték\n"
+#~ "\n"
+#~ "A opció lehet: szervernév.szerver_xxx, ahol a \"szervernév\" egy belső "
+#~ "szervernév és az \"xxx\" a szerver egyik opciója."
+
+#, fuzzy
+#~ msgid "%s%s: error creating charset (%s) \"%s\" => \"%s\""
+#~ msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
+#, fuzzy
+#~ msgid "%sCharset \"%s\" not found"
+#~ msgstr "%s a \"%s\" szerver nem található\n"
+
+#, fuzzy
+#~ msgid "List of charsets:"
+#~ msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+#~ msgid "List of charsets with \"%s\":"
+#~ msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+#~ msgid "No charset found"
+#~ msgstr "Nem találtam billentyűt.\n"
+
+#, fuzzy
+#~ msgid "No charset defined"
+#~ msgstr "Nincs aliasz definiálva.\n"
+
+#, fuzzy
+#~ msgid "manage charsets"
+#~ msgstr "pufferek kezelése"
+
+#, fuzzy
+#~ msgid "%s%s: value \"%s\" is invalid for option \"%s\""
+#~ msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: error creating server for reading configuration file"
+#~ msgstr "szerver konfigurációs fájljának újraolvastatása"
+
+#~ msgid "name associated to IRC server (for display only)"
+#~ msgstr "az IRC szerverhez rendelt név (csak megjelenítéshez)"
+
+#, fuzzy
+#~ msgid "Option changed: "
+#~ msgstr "nincs a szobában"
+
+#, fuzzy
+#~ msgid "%sError: incorrect value for option \"%s\""
+#~ msgstr "%s helytelen érték a \"%s\" paraméternek\n"
+
+#, fuzzy
+#~ msgid "No plugin option found with \"%s\""
+#~ msgstr "A(z) \"%s\" kifejezéshez nem található modul opció\n"
+
+#, fuzzy
+#~ msgid "No plugin option found"
+#~ msgstr "Nem található modul opció\n"
+
+#, fuzzy
+#~ msgid "%s%d%s plugin option found with \"%s\""
+#~ msgid_plural "%s%d%s plugin options found with \"%s\""
+#~ msgstr[0] "A(z) \"%s\" kifejezéshez nem található modul opció\n"
+#~ msgstr[1] "A(z) \"%s\" kifejezéshez nem található modul opció\n"
+
+#, fuzzy
+#~ msgid "%s%d%s plugin option found"
+#~ msgid_plural "%s%d%s plugin options found"
+#~ msgstr[0] "Nem található modul opció\n"
+#~ msgstr[1] "Nem található modul opció\n"
+
+#, fuzzy
+#~ msgid "Plugin option changed: %s%s = \"%s%s%s\""
+#~ msgstr "A(z) \"%s\" kifejezéshez nem található modul opció\n"
+
+#, fuzzy
+#~ msgid "%sError: incorrect value for plugin option \"%s\""
+#~ msgstr "%s helytelen érték a(z) \"%s\" modul paraméternek\n"
+
+#~ msgid "set plugin config options"
+#~ msgstr "modul opcióinak beállítása"
+
+#~ msgid ""
+#~ "option: name of a plugin option\n"
+#~ " value: value for option\n"
+#~ "\n"
+#~ "Option is format: plugin.option, example: perl.myscript.item1"
+#~ msgstr ""
+#~ "opció: modul opció neve\n"
+#~ "érték: az opció értéke\n"
+#~ "\n"
+#~ "Az opció formája: modul.opció, például: perl.azénszkriptem.azénopcióm"
+
+#, fuzzy
+#~ msgid "prefix for info messages"
+#~ msgstr "új üzenetet tartalmazó ablak színe"
+
+#, fuzzy
+#~ msgid "text color for info prefix"
+#~ msgstr "információs pult szövegének színe"
+
+#, fuzzy
+#~ msgid "%s%s: connecting to server %s/%d%s%s..."
+#~ msgstr "%s: csatlakozás a(z) %s:%d%s%s szerverhez...\n"
+
+#, fuzzy
 #~ msgid "%s[%sF%s%s%s]"
 #~ msgstr "%s[%s%s%s]%s tétlen: "
 
@@ -4575,10 +4698,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 #, fuzzy
 #~ msgid "Notice from %s%s %s(%s%s%s)%s: %s"
 #~ msgstr "%s%s %s(%s%s@%s%s)%s neve %s volt\n"
-
-#, fuzzy
-#~ msgid "Notice from %s%s%s: %s"
-#~ msgstr "Felhasználók a %s%s%s szobában: %s["
 
 #, fuzzy
 #~ msgid "Notice: %s"
@@ -5234,9 +5353,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 #~ msgid "server name not found for buffer"
 #~ msgstr "szervernév nem található a pufferhez"
 
-#~ msgid "channel name not found for buffer"
-#~ msgstr "szobanév nem található a pufferhez"
-
 #~ msgid "buffer type not found"
 #~ msgstr "a puffer típusa nem található"
 
@@ -5784,26 +5900,11 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 #~ msgid "%sDetail:\n"
 #~ msgstr "%sRészletek:\n"
 
-#~ msgid "  . type boolean (values: 'on' or 'off')\n"
-#~ msgstr "  . típus logikai (értékek: 'on' vagy 'off')\n"
-
-#~ msgid "  . type integer (values: between %d and %d)\n"
-#~ msgstr "  . típus szám (értékek: %d és %d között)\n"
-
 #~ msgid "  . type string (values: "
 #~ msgstr "  . típus szöveg (értékek: "
 
 #~ msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 #~ msgstr "  . típus szín (Curses vagy Gtk szín, lásd WeeChat dokumentáció)\n"
-
-#~ msgid "  . type string (any string)\n"
-#~ msgstr "  . típus szöveg (bármilyen szöveg)\n"
-
-#~ msgid "  . type: char (any char)\n"
-#~ msgstr "  . típus: karakter (bármilyen karakter)\n"
-
-#~ msgid "  . type string (any string, limit: %d chars)\n"
-#~ msgstr "  . típus szöveg (bármilyen szöveg, korlát: %d karakter)\n"
 
 #~ msgid "%s no ignore found\n"
 #~ msgstr "%s nem található ilyen mellőzés\n"

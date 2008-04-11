@@ -269,14 +269,14 @@ irc_protocol_is_highlight (char *message, char *nick)
     }
     
     /* no highlight by nickname and "irc_highlight" is empty */
-    if (!weechat_config_string (irc_config_irc_highlight)
-        || !weechat_config_string (irc_config_irc_highlight)[0])
+    if (!weechat_config_string (irc_config_look_highlight)
+        || !weechat_config_string (irc_config_look_highlight)[0])
         return 0;
     
     /* convert both strings to lower case */
     if ((msg = strdup (message)) == NULL)
         return 0;
-    highlight = strdup (weechat_config_string (irc_config_irc_highlight));
+    highlight = strdup (weechat_config_string (irc_config_look_highlight));
     if (!highlight)
     {
         free (msg);
@@ -955,7 +955,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *command,
         }
         else
         {
-            if (nick && weechat_config_boolean (irc_config_irc_notice_as_pv))
+            if (nick && weechat_config_boolean (irc_config_look_notice_as_pv))
             {
                 ptr_channel = irc_channel_search (server, nick);
                 if (!ptr_channel)
@@ -1251,7 +1251,7 @@ irc_protocol_cmd_pong (struct t_irc_server *server, char *command,
         server->lag_check_time.tv_sec = 0;
         server->lag_check_time.tv_usec = 0;
         server->lag_next_check = time (NULL) +
-            weechat_config_integer (irc_config_irc_lag_check);
+            weechat_config_integer (irc_config_network_lag_check);
     }
     
     return WEECHAT_RC_OK;
@@ -1380,7 +1380,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                     if ((look_infobar_delay_highlight > 0)
                         && (ptr_channel->buffer != weechat_current_buffer))
                         weechat_infobar_printf (look_infobar_delay_highlight,
-                                                "color_infobar_highlight",
+                                                "infobar_highlight",
                                                 _("Channel %s: * %s %s"),
                                                 ptr_channel->name,
                                                 nick,
@@ -1546,7 +1546,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                 if ((look_infobar_delay_highlight > 0)
                     && (ptr_channel->buffer != weechat_current_buffer))
                     weechat_infobar_printf (look_infobar_delay_highlight,
-                                            "color_infobar_highlight",
+                                            "infobar_highlight",
                                             _("Channel %s: %s> %s"),
                                             ptr_channel->name,
                                             nick,
@@ -2184,7 +2184,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                     if ((look_infobar_delay_highlight > 0)
                         && (ptr_channel->buffer != weechat_current_buffer))
                         weechat_infobar_printf (look_infobar_delay_highlight,
-                                                "color_infobar_highlight",
+                                                "infobar_highlight",
                                                 _("Private %s> %s"),
                                                 nick, pos_args);
                     highlight_displayed = 1;
@@ -2517,7 +2517,7 @@ irc_protocol_cmd_001 (struct t_irc_server *server, char *command,
     /* connection to IRC server is ok! */
     server->is_connected = 1;
     server->lag_next_check = time (NULL) +
-        weechat_config_integer (irc_config_irc_lag_check);
+        weechat_config_integer (irc_config_network_lag_check);
     
     /* set away message if user was away (before disconnection for example) */
     if (server->away_message && server->away_message[0])
@@ -2670,7 +2670,7 @@ irc_protocol_cmd_301 (struct t_irc_server *server, char *command,
         
         /* look for private buffer to display message */
         ptr_channel = irc_channel_search (server, argv[3]);
-        if (!weechat_config_boolean (irc_config_irc_show_away_once)
+        if (!weechat_config_boolean (irc_config_look_show_away_once)
             || !ptr_channel
             || !(ptr_channel->away_message)
             || (strcmp (ptr_channel->away_message, pos_away_msg) != 0))
@@ -4284,9 +4284,9 @@ irc_protocol_cmd_433 (struct t_irc_server *server, char *command,
         }
         
         weechat_printf (server->buffer,
-                        _("%s%s: nickname \"%s\" is already in use, "
+                        _("%s: nickname \"%s\" is already in use, "
                           "trying nickname #%d (\"%s\")"),
-                        weechat_prefix ("info"), "irc", server->nick,
+                        "irc", server->nick,
                         nick_to_use + 1, server->nicks_array[nick_to_use]);
         
         irc_server_set_nick (server, server->nicks_array[nick_to_use]);

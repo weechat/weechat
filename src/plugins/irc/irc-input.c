@@ -158,7 +158,7 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer, char *input_data)
     if (ptr_channel)
     {
         data_with_colors = (char *)irc_color_encode ((unsigned char *)input_data,
-                                                     weechat_config_boolean (irc_config_irc_colors_send));
+                                                     weechat_config_boolean (irc_config_network_colors_send));
         
         if (ptr_channel->dcc_chat)
         {

@@ -34,7 +34,7 @@ WEECHAT_PLUGIN_DESCRIPTION("Trigger plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
-WEECHAT_PLUGIN_LICENSE("GPL");
+WEECHAT_PLUGIN_LICENSE("GPL3");
 
 t_weechat_trigger *weechat_trigger_list = NULL;
 t_weechat_trigger *weechat_trigger_last = NULL;

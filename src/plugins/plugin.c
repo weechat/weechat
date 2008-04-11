@@ -325,7 +325,11 @@ plugin_load (char *filename)
         new_plugin->config_search_section = &config_file_search_section;
         new_plugin->config_new_option = &config_file_new_option;
         new_plugin->config_search_option = &config_file_search_option;
+        new_plugin->config_search_section_option = &config_file_search_section_option;
+        new_plugin->config_search_with_string = &config_file_search_with_string;
+        new_plugin->config_option_reset = &config_file_option_reset;
         new_plugin->config_option_set = &config_file_option_set;
+        new_plugin->config_option_get_pointer = &config_file_option_get_pointer;
         new_plugin->config_string_to_boolean = &config_file_string_to_boolean;
         new_plugin->config_boolean = &config_file_option_boolean;
         new_plugin->config_integer = &config_file_option_integer;
@@ -335,6 +339,9 @@ plugin_load (char *filename)
         new_plugin->config_write = &config_file_write;
         new_plugin->config_read = &config_file_read;
         new_plugin->config_reload = &config_file_reload;
+        new_plugin->config_option_free = &config_file_option_free;
+        new_plugin->config_section_free_options = &config_file_section_free_options;
+        new_plugin->config_section_free = &config_file_section_free;
         new_plugin->config_free = &config_file_free;
         new_plugin->config_get_weechat = &plugin_api_config_get_weechat;
         new_plugin->config_get_plugin = &plugin_api_config_get_plugin;
@@ -436,8 +443,7 @@ plugin_load (char *filename)
     }
     
     gui_chat_printf (NULL,
-                     _("%sPlugin \"%s\" loaded"),
-                     gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                     _("Plugin \"%s\" loaded"),
                      name);
     
     free (full_name);
@@ -458,14 +464,14 @@ plugin_auto_load_file (void *plugin, char *filename)
     /* make C compiler happy */
     (void) plugin;
     
-    if (CONFIG_STRING(config_plugins_extension)
-        && CONFIG_STRING(config_plugins_extension)[0])
+    if (CONFIG_STRING(config_plugin_extension)
+        && CONFIG_STRING(config_plugin_extension)[0])
     {
-        pos = strstr (filename, CONFIG_STRING(config_plugins_extension));
+        pos = strstr (filename, CONFIG_STRING(config_plugin_extension));
         if (pos)
         {
             if (string_strcasecmp (pos,
-                                   CONFIG_STRING(config_plugins_extension)) == 0)
+                                   CONFIG_STRING(config_plugin_extension)) == 0)
             {
                 plugin_load (filename);
             }
@@ -484,34 +490,34 @@ plugin_auto_load_file (void *plugin, char *filename)
 void
 plugin_auto_load ()
 {
-    char *ptr_home, *dir_name, *plugins_path, *plugins_path2;
+    char *ptr_home, *dir_name, *plugin_path, *plugin_path2;
     char *list_plugins, *pos, *pos2;
     
-    if (CONFIG_STRING(config_plugins_autoload)
-        && CONFIG_STRING(config_plugins_autoload)[0])
+    if (CONFIG_STRING(config_plugin_autoload)
+        && CONFIG_STRING(config_plugin_autoload)[0])
     {
-        if (string_strcasecmp (CONFIG_STRING(config_plugins_autoload),
+        if (string_strcasecmp (CONFIG_STRING(config_plugin_autoload),
                                "*") == 0)
         {
             /* auto-load plugins in WeeChat home dir */
-            if (CONFIG_STRING(config_plugins_path)
-                && CONFIG_STRING(config_plugins_path)[0])
+            if (CONFIG_STRING(config_plugin_path)
+                && CONFIG_STRING(config_plugin_path)[0])
             {
                 ptr_home = getenv ("HOME");
-                plugins_path = string_replace (CONFIG_STRING(config_plugins_path),
-                                               "~", ptr_home);
-                plugins_path2 = string_replace ((plugins_path) ?
-                                                plugins_path : CONFIG_STRING(config_plugins_path),
-                                                "%h", weechat_home);
-                util_exec_on_files ((plugins_path2) ?
-                                    plugins_path2 : ((plugins_path) ?
-                                                     plugins_path : CONFIG_STRING(config_plugins_path)),
+                plugin_path = string_replace (CONFIG_STRING(config_plugin_path),
+                                              "~", ptr_home);
+                plugin_path2 = string_replace ((plugin_path) ?
+                                               plugin_path : CONFIG_STRING(config_plugin_path),
+                                               "%h", weechat_home);
+                util_exec_on_files ((plugin_path2) ?
+                                    plugin_path2 : ((plugin_path) ?
+                                                    plugin_path : CONFIG_STRING(config_plugin_path)),
                                     NULL,
                                     &plugin_auto_load_file);
-                if (plugins_path)
-                    free (plugins_path);
-                if (plugins_path2)
-                    free (plugins_path2);
+                if (plugin_path)
+                    free (plugin_path);
+                if (plugin_path2)
+                    free (plugin_path2);
             }
     
             /* auto-load plugins in WeeChat global lib dir */
@@ -526,7 +532,7 @@ plugin_auto_load ()
         }
         else
         {
-            list_plugins = strdup (CONFIG_STRING(config_plugins_autoload));
+            list_plugins = strdup (CONFIG_STRING(config_plugin_autoload));
             if (list_plugins)
             {
                 pos = list_plugins;
@@ -635,8 +641,7 @@ plugin_unload (struct t_weechat_plugin *plugin)
     plugin_remove (plugin);
     
     gui_chat_printf (NULL,
-                     _("%sPlugin \"%s\" unloaded"),
-                     gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                     _("Plugin \"%s\" unloaded"),
                      (name) ? name : "???");
     if (name)
         free (name);
@@ -694,8 +699,7 @@ plugin_reload_name (char *name)
         {
             plugin_unload (ptr_plugin);
             gui_chat_printf (NULL,
-                             _("%sPlugin \"%s\" unloaded"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_INFO],
+                             _("Plugin \"%s\" unloaded"),
                              name);
             plugin_load (filename);
             free (filename);

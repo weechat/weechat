@@ -351,7 +351,6 @@ gui_color_init_weechat ()
     gui_color[GUI_COLOR_CHAT] = gui_color_build (GUI_COLOR_CHAT, CONFIG_COLOR(config_color_chat), CONFIG_COLOR(config_color_chat_bg));
     gui_color[GUI_COLOR_CHAT_TIME] = gui_color_build (GUI_COLOR_CHAT_TIME, CONFIG_COLOR(config_color_chat_time), CONFIG_COLOR(config_color_chat_bg));
     gui_color[GUI_COLOR_CHAT_TIME_DELIMITERS] = gui_color_build (GUI_COLOR_CHAT_TIME_DELIMITERS, CONFIG_COLOR(config_color_chat_time_delimiters), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_PREFIX_INFO] = gui_color_build (GUI_COLOR_CHAT_PREFIX_INFO, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_INFO]), CONFIG_COLOR(config_color_chat_bg));
     gui_color[GUI_COLOR_CHAT_PREFIX_ERROR] = gui_color_build (GUI_COLOR_CHAT_PREFIX_ERROR, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_ERROR]), CONFIG_COLOR(config_color_chat_bg));
     gui_color[GUI_COLOR_CHAT_PREFIX_NETWORK] = gui_color_build (GUI_COLOR_CHAT_PREFIX_NETWORK, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_NETWORK]), CONFIG_COLOR(config_color_chat_bg));
     gui_color[GUI_COLOR_CHAT_PREFIX_ACTION] = gui_color_build (GUI_COLOR_CHAT_PREFIX_ACTION, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_ACTION]), CONFIG_COLOR(config_color_chat_bg));

@@ -329,7 +329,7 @@ gui_completion_list_add_config_files (struct t_gui_completion *completion)
     for (ptr_config_file = config_files; ptr_config_file;
          ptr_config_file = ptr_config_file->next_config)
     {
-        gui_completion_list_add (completion, ptr_config_file->filename,
+        gui_completion_list_add (completion, ptr_config_file->name,
                                  0, WEECHAT_LIST_POS_SORT);
     }
 }
@@ -529,36 +529,37 @@ gui_completion_list_add_nicks (struct t_gui_completion *completion)
 void
 gui_completion_list_add_option (struct t_gui_completion *completion)
 {
+    struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
-
-    for (ptr_section = weechat_config_file->sections; ptr_section;
-         ptr_section = ptr_section->next_section)
-    {
-        for (ptr_option = ptr_section->options; ptr_option;
-             ptr_option = ptr_option->next_option)
-        {
-            gui_completion_list_add (completion,
-                                     ptr_option->name,
-                                     0, WEECHAT_LIST_POS_SORT);
-        }
-    }
-}
-
-/*
- * gui_completion_list_add_plugin_option: add plugin option to completion list
- */
-
-void
-gui_completion_list_add_plugin_option (struct t_gui_completion *completion)
-{
-    struct t_config_option *ptr_option;
+    int length;
+    char *option_full_name;
     
-    for (ptr_option = plugin_options; ptr_option;
-         ptr_option = ptr_option->next_option)
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
     {
-        gui_completion_list_add (completion, ptr_option->name,
-                                 0, WEECHAT_LIST_POS_SORT);
+        for (ptr_section = ptr_config->sections; ptr_section;
+             ptr_section = ptr_section->next_section)
+        {
+            for (ptr_option = ptr_section->options; ptr_option;
+                 ptr_option = ptr_option->next_option)
+            {
+                length = strlen (ptr_config->name) + 1
+                    + strlen (ptr_section->name) + 1
+                    + strlen (ptr_option->name) + 1;
+                option_full_name = malloc (length);
+                if (option_full_name)
+                {
+                    snprintf (option_full_name, length, "%s.%s.%s",
+                              ptr_config->name, ptr_section->name,
+                              ptr_option->name);
+                    gui_completion_list_add (completion,
+                                             option_full_name,
+                                             0, WEECHAT_LIST_POS_SORT);
+                    free (option_full_name);
+                }
+            }
+        }
     }
 }
 
@@ -580,104 +581,124 @@ gui_completion_list_add_plugin (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_list_add_quit: add quit message to completion list
- */
-
-void
-gui_completion_list_add_quit (struct t_gui_completion *completion)
-{
-    if (CONFIG_STRING(config_look_default_msg_quit)
-        && CONFIG_STRING(config_look_default_msg_quit)[0])
-        gui_completion_list_add (completion,
-                                 CONFIG_STRING(config_look_default_msg_quit),
-                                 0, WEECHAT_LIST_POS_SORT);
-}
-
-/*
  * gui_completion_list_add_option_value: add option value to completion list
  */
 
 void
 gui_completion_list_add_option_value (struct t_gui_completion *completion)
 {
-    char *pos, *color_name, option_string[2048];
-    struct t_config_option *ptr_option;
+    char *pos_space, *option_full_name, *color_name, *pos_section, *pos_option;
+    char *file, *section, *value_string;
+    int length;
+    struct t_config_file *ptr_config;
+    struct t_config_section *ptr_section, *section_found;
+    struct t_config_option *option_found;
     
     if (completion->args)
     {
-        pos = strchr (completion->args, ' ');
-        if (pos)
-            pos[0] = '\0';
-        ptr_option = config_file_search_option (weechat_config_file,
-                                                NULL,
-                                                completion->args);
-        if (ptr_option)
+        pos_space = strchr (completion->args, ' ');
+        if (pos_space)
+            option_full_name = string_strndup (completion->args,
+                                               pos_space - completion->args);
+        else
+            option_full_name = strdup (completion->args);
+        
+        if (option_full_name)
         {
-            switch (ptr_option->type)
+            file = NULL;
+            section = NULL;
+            pos_option = NULL;
+            
+            pos_section = strchr (option_full_name, '.');
+            pos_option = (pos_section) ? strchr (pos_section + 1, '.') : NULL;
+            
+            if (pos_section && pos_option)
             {
-                case CONFIG_OPTION_BOOLEAN:
-                    if (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE)
-                        gui_completion_list_add (completion, "on",
-                                                 0, WEECHAT_LIST_POS_SORT);
-                    else
-                        gui_completion_list_add (completion, "off",
-                                                 0, WEECHAT_LIST_POS_SORT);
-                    break;
-                case CONFIG_OPTION_INTEGER:
-                    if (ptr_option->string_values)
-                        snprintf (option_string, sizeof (option_string) - 1,
-                                  "%s",
-                                  ptr_option->string_values[CONFIG_INTEGER(ptr_option)]);
-                    else
-                        snprintf (option_string, sizeof (option_string) - 1,
-                                  "%d", CONFIG_INTEGER(ptr_option));
-                    gui_completion_list_add (completion, option_string,
-                                             0, WEECHAT_LIST_POS_SORT);
-                    break;
-                case CONFIG_OPTION_STRING:
-                    snprintf (option_string, sizeof (option_string) - 1,
-                              "\"%s\"",
-                              CONFIG_STRING(ptr_option));
-                    gui_completion_list_add (completion, option_string,
-                                             0, WEECHAT_LIST_POS_SORT);
-                    break;
-                case CONFIG_OPTION_COLOR:
-                    color_name = gui_color_get_name (CONFIG_INTEGER(ptr_option));
-                    if (color_name)
-                        gui_completion_list_add (completion,
-                                                 color_name,
-                                                 0, WEECHAT_LIST_POS_SORT);
-                    break;
+                file = string_strndup (option_full_name,
+                                       pos_section - option_full_name);
+                section = string_strndup (pos_section + 1,
+                                          pos_option - pos_section - 1);
+                pos_option++;
             }
+            if (file && section && pos_option)
+            {
+                ptr_config = config_file_search (file);
+                if (ptr_config)
+                {
+                    ptr_section = config_file_search_section (ptr_config,
+                                                              section);
+                    if (ptr_section)
+                    {
+                        config_file_search_section_option (ptr_config,
+                                                           ptr_section,
+                                                           pos_option,
+                                                           &section_found,
+                                                           &option_found);
+                        if (option_found)
+                        {
+                            switch (option_found->type)
+                            {
+                                case CONFIG_OPTION_TYPE_BOOLEAN:
+                                    if (CONFIG_BOOLEAN(option_found) == CONFIG_BOOLEAN_TRUE)
+                                        gui_completion_list_add (completion, "on",
+                                                                 0, WEECHAT_LIST_POS_SORT);
+                                    else
+                                        gui_completion_list_add (completion, "off",
+                                                                 0, WEECHAT_LIST_POS_SORT);
+                                    break;
+                                case CONFIG_OPTION_TYPE_INTEGER:
+                                    length = 64;
+                                    value_string = malloc (length);
+                                    if (value_string)
+                                    {
+                                        if (option_found->string_values)
+                                            snprintf (value_string, length,
+                                                      "%s",
+                                                      option_found->string_values[CONFIG_INTEGER(option_found)]);
+                                        else
+                                            snprintf (value_string, length,
+                                                      "%d", CONFIG_INTEGER(option_found));
+                                        gui_completion_list_add (completion,
+                                                                 value_string,
+                                                                 0, WEECHAT_LIST_POS_SORT);
+                                        free (value_string);
+                                    }
+                                    break;
+                                case CONFIG_OPTION_TYPE_STRING:
+                                    length = strlen (CONFIG_STRING(option_found)) + 2 + 1;
+                                    value_string = malloc (length);
+                                    if (value_string)
+                                    {
+                                        snprintf (value_string, length,
+                                                  "\"%s\"",
+                                                  CONFIG_STRING(option_found));
+                                        gui_completion_list_add (completion,
+                                                                 value_string,
+                                                                 0, WEECHAT_LIST_POS_SORT);
+                                        free (value_string);
+                                    }
+                                    break;
+                                case CONFIG_OPTION_TYPE_COLOR:
+                                    color_name = gui_color_get_name (CONFIG_INTEGER(option_found));
+                                    if (color_name)
+                                    {
+                                        gui_completion_list_add (completion,
+                                                                 color_name,
+                                                                 0, WEECHAT_LIST_POS_SORT);
+                                    }
+                                    break;
+                                case CONFIG_NUM_OPTION_TYPES:
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            if (file)
+                free (file);
+            if (section)
+                free (section);
         }
-        if (pos)
-            pos[0] = ' ';
-    }
-}
-
-/*
- * gui_completion_list_add_plugin_option_value: add plugin option value to completion list
- */
-
-void
-gui_completion_list_add_plugin_option_value (struct t_gui_completion *completion)
-{
-    char *pos;
-    struct t_config_option *ptr_option;
-    
-    if (completion->args)
-    {
-        pos = strchr (completion->args, ' ');
-        if (pos)
-            pos[0] = '\0';
-        
-        ptr_option = plugin_config_search_internal (completion->args);
-        if (ptr_option)
-            gui_completion_list_add (completion, ptr_option->value,
-                                     0, WEECHAT_LIST_POS_SORT);
-        
-        if (pos)
-            pos[0] = ' ';
     }
 }
 
@@ -793,23 +814,14 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                         case 'o': /* config option */
                             gui_completion_list_add_option (completion);
                             break;
-                        case 'O': /* plugin option */
-                            gui_completion_list_add_plugin_option (completion);
-                            break;
                         case 'p': /* plugin name */
                             gui_completion_list_add_plugin (completion);
-                            break;
-                        case 'q': /* quit message */
-                            gui_completion_list_add_quit (completion);
                             break;
                         case 'r': /* bar names */
                             gui_completion_list_add_bars_names (completion);
                             break;
                         case 'v': /* value of config option */
                             gui_completion_list_add_option_value (completion);
-                            break;
-                        case 'V': /* value of plugin option */
-                            gui_completion_list_add_plugin_option_value (completion);
                             break;
                         case 'w': /* WeeChat commands */
                             gui_completion_list_add_weechat_cmd (completion);
