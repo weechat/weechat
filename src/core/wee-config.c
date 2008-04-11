@@ -244,7 +244,8 @@ config_change_buffers ()
 void
 config_change_buffer_content ()
 {
-    gui_window_redraw_buffer (gui_current_window->buffer);
+    if (gui_ok)
+        gui_window_redraw_buffer (gui_current_window->buffer);
 }
 
 /*
@@ -256,7 +257,8 @@ config_change_buffer_time_format ()
 {
     gui_chat_time_length = util_get_time_length (CONFIG_STRING(config_look_buffer_time_format));
     gui_chat_change_time_format ();
-    gui_window_redraw_buffer (gui_current_window->buffer);
+    if (gui_ok)
+        gui_window_redraw_buffer (gui_current_window->buffer);
 }
 
 /*
@@ -1077,55 +1079,55 @@ config_weechat_init ()
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_colors[0] = config_file_new_option (
         weechat_config_file, ptr_section,
-        "chat_nick_color1", "color",
+        "chat_nick_color01", "color",
         N_("text color #1 for nick"),
         NULL, GUI_COLOR_CHAT_NICK1, 0, "cyan",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_colors[1] = config_file_new_option (
         weechat_config_file, ptr_section,
-        "chat_nick_color2", "color",
+        "chat_nick_color02", "color",
         N_("text color #2 for nick"),
         NULL, GUI_COLOR_CHAT_NICK2, 0, "magenta",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_colors[2] = config_file_new_option (
         weechat_config_file, ptr_section,
-        "chat_nick_color3", "color",
+        "chat_nick_color03", "color",
         N_("text color #3 for nick"),
         NULL, GUI_COLOR_CHAT_NICK3, 0, "green",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_colors[3] = config_file_new_option (
         weechat_config_file, ptr_section,
-        "chat_nick_color4", "color",
+        "chat_nick_color04", "color",
         N_("text color #4 for nick"),
         NULL, GUI_COLOR_CHAT_NICK4, 0, "brown",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_colors[4] = config_file_new_option (
         weechat_config_file, ptr_section,
-        "chat_nick_color5", "color",
+        "chat_nick_color05", "color",
         N_("text color #5 for nick"),
         NULL, GUI_COLOR_CHAT_NICK5, 0, "lightblue",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_colors[5] = config_file_new_option (
         weechat_config_file, ptr_section,
-        "chat_nick_color6", "color",
+        "chat_nick_color06", "color",
         N_("text color #6 for nick"),
         NULL, GUI_COLOR_CHAT_NICK6, 0, "default",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_colors[6] = config_file_new_option (
         weechat_config_file, ptr_section,
-        "chat_nick_color7", "color",
+        "chat_nick_color07", "color",
         N_("text color #7 for nick"),
         NULL, GUI_COLOR_CHAT_NICK7, 0, "lightcyan",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_colors[7] = config_file_new_option (
         weechat_config_file, ptr_section,
-        "chat_nick_color8", "color",
+        "chat_nick_color08", "color",
         N_("text color #8 for nick"),
         NULL, GUI_COLOR_CHAT_NICK8, 0, "lightmagenta",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_nick_colors[8] = config_file_new_option (
         weechat_config_file, ptr_section,
-        "chat_nick_color9", "color",
+        "chat_nick_color09", "color",
         N_("text color #9 for nick"),
         NULL, GUI_COLOR_CHAT_NICK9, 0, "lightgreen",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);

@@ -51,7 +51,7 @@ irc_nick_find_color (struct t_irc_nick *nick)
              weechat_config_integer (weechat_config_get ("weechat.look.color_nicks_number")));
 
     snprintf (color_name, sizeof (color_name),
-              "chat_nick_color%d", color);
+              "chat_nick_color%02d", color + 1);
     
     return weechat_color (color_name);
 }

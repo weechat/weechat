@@ -54,7 +54,7 @@ gui_nicklist_find_pos_group (struct t_gui_nick_group *groups,
     
     for (ptr_group = groups; ptr_group; ptr_group = ptr_group->next_group)
     {
-        if (strcmp (group->name, ptr_group->name) < 0)
+        if (string_strcasecmp (group->name, ptr_group->name) < 0)
             return ptr_group;
     }
     
@@ -215,7 +215,7 @@ gui_nicklist_find_pos_nick (struct t_gui_nick_group *group,
     
     for (ptr_nick = group->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
-        if (strcmp (nick->name, ptr_nick->name) < 0)
+        if (string_strcasecmp (nick->name, ptr_nick->name) < 0)
             return ptr_nick;
     }
     
