@@ -194,7 +194,7 @@ logger_get_filename (struct t_gui_buffer *buffer)
     struct t_plugin_infolist *ptr_infolist;
     char *res;
     char *dir_separator, *weechat_dir, *log_path, *log_path2;
-    char *category, *category2, *name, *name2;
+    char *plugin_name, *plugin_name2, *category, *category2, *name, *name2;
     int length;
     
     res = NULL;
@@ -214,6 +214,9 @@ logger_get_filename (struct t_gui_buffer *buffer)
             name2 = NULL;
             if (weechat_infolist_next (ptr_infolist))
             {
+                plugin_name = weechat_infolist_string (ptr_infolist, "plugin_name");
+                plugin_name2 = (plugin_name) ?
+                    weechat_string_replace (plugin_name, dir_separator, "_") : NULL;
                 category = weechat_infolist_string (ptr_infolist, "category");
                 category2 = (category) ?
                     weechat_string_replace (category, dir_separator, "_") : NULL;
@@ -222,15 +225,24 @@ logger_get_filename (struct t_gui_buffer *buffer)
                     weechat_string_replace (name, dir_separator, "_") : NULL;
             }
             length = strlen (log_path2);
+            if (plugin_name2)
+                length += strlen (plugin_name2) + 1;
             if (category2)
-                length += strlen (category2);
+                length += strlen (category2) + 1;
             if (name2)
-                length += strlen (name2);
+                length += strlen (name2) + 1;
             length += 16;
             res = malloc (length);
             if (res)
             {
                 strcpy (res, log_path2);
+                if (plugin_name2)
+                {
+                    if (logger_option_name_lower_case)
+                        weechat_string_tolower (plugin_name2);
+                    strcat (res, plugin_name2);
+                    strcat (res, ".");
+                }
                 if (category2)
                 {
                     if (logger_option_name_lower_case)

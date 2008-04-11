@@ -446,6 +446,12 @@ plugin_api_infolist_get_add_buffer (struct t_plugin_infolist *infolist,
 
     if (!plugin_infolist_new_var_pointer (ptr_item, "pointer", buffer))
         return 0;
+    if (!plugin_infolist_new_var_pointer (ptr_item, "plugin", buffer->plugin))
+        return 0;
+    if (!plugin_infolist_new_var_string (ptr_item, "plugin_name",
+                                         (buffer->plugin) ?
+                                         buffer->plugin->name : NULL))
+        return 0;
     if (!plugin_infolist_new_var_integer (ptr_item, "number", buffer->number))
         return 0;
     if (!plugin_infolist_new_var_string (ptr_item, "category", buffer->category))
