@@ -343,7 +343,7 @@ plugin_load (char *filename)
         new_plugin->config_section_free_options = &config_file_section_free_options;
         new_plugin->config_section_free = &config_file_section_free;
         new_plugin->config_free = &config_file_free;
-        new_plugin->config_get_weechat = &plugin_api_config_get_weechat;
+        new_plugin->config_get = &plugin_api_config_get;
         new_plugin->config_get_plugin = &plugin_api_config_get_plugin;
         new_plugin->config_set_plugin = &plugin_api_config_set_plugin;
         

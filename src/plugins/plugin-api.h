@@ -31,7 +31,7 @@ extern int plugin_api_mkdir_home (char *directory, int mode);
 extern int plugin_api_mkdir (char *directory, int mode);
 
 /* config */
-extern struct t_config_option *plugin_api_config_get_weechat (char *option_name);
+extern struct t_config_option *plugin_api_config_get (char *option_name);
 extern char *plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
                                            char *option_name);
 extern int plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,

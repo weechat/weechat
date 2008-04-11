@@ -885,7 +885,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *command,
     }
     
     look_infobar_delay_highlight = weechat_config_integer (
-        weechat_config_get_weechat ("look_infobar_delay_highlight"));
+        weechat_config_get ("weechat.look.infobar_delay_highlight"));
     
     if (nick && strncmp (pos_args, "\01VERSION", 8) == 0)
     {
@@ -1346,7 +1346,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
     IRC_PROTOCOL_CHECK_HOST;
     
     look_infobar_delay_highlight = weechat_config_integer (
-        weechat_config_get_weechat ("look_infobar_delay_highlight"));
+        weechat_config_get ("weechat.look.infobar_delay_highlight"));
     
     nick = irc_protocol_get_nick_from_host (argv[0]);
     host = irc_protocol_get_address_from_host (argv[0]);

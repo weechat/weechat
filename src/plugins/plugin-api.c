@@ -140,14 +140,17 @@ plugin_api_mkdir (char *directory, int mode)
 }
 
 /*
- * plugin_api_config_get_weechat: get value of a WeeChat config option
+ * plugin_api_config_get: get value of an option
  */
 
 struct t_config_option *
-plugin_api_config_get_weechat (char *option_name)
+plugin_api_config_get (char *option_name)
 {
-    return config_file_search_option (weechat_config_file, NULL,
-                                      option_name);
+    struct t_config_option *ptr_option;
+    
+    config_file_search_with_string (option_name, NULL, NULL, &ptr_option, NULL);
+    
+    return ptr_option;
 }
 
 /*

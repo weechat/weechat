@@ -100,28 +100,31 @@ irc_server_set_addresses (struct t_irc_server *server, char *addresses)
     }
     
     /* set new address */
-    server->addresses = strdup (addresses);
-    if (server->addresses)
+    if (addresses && addresses[0])
     {
-        server->addresses_array = weechat_string_explode (server->addresses,
-                                                          ",", 0, 0,
-                                                          &server->addresses_count);
-        server->ports_array = malloc (server->addresses_count * sizeof (server->ports_array[0]));
-        for (i = 0; i < server->addresses_count; i++)
+        server->addresses = strdup (addresses);
+        if (server->addresses)
         {
-            pos = strchr (server->addresses_array[i], '/');
-            if (pos)
+            server->addresses_array = weechat_string_explode (server->addresses,
+                                                              ",", 0, 0,
+                                                              &server->addresses_count);
+            server->ports_array = malloc (server->addresses_count * sizeof (server->ports_array[0]));
+            for (i = 0; i < server->addresses_count; i++)
             {
-                pos[0] = 0;
-                pos++;
-                error = NULL;
-                number = strtol (pos, &error, 10);
-                server->ports_array[i] = (error && !error[0]) ?
-                    number : IRC_SERVER_DEFAULT_PORT;
-            }
-            else
-            {
-                server->ports_array[i] = IRC_SERVER_DEFAULT_PORT;
+                pos = strchr (server->addresses_array[i], '/');
+                if (pos)
+                {
+                    pos[0] = 0;
+                    pos++;
+                    error = NULL;
+                    number = strtol (pos, &error, 10);
+                    server->ports_array[i] = (error && !error[0]) ?
+                        number : IRC_SERVER_DEFAULT_PORT;
+                }
+                else
+                {
+                    server->ports_array[i] = IRC_SERVER_DEFAULT_PORT;
+                }
             }
         }
     }
@@ -1972,7 +1975,7 @@ irc_server_child_read_cb (void *arg_server)
     if (num_read > 0)
     {
         config_proxy_use = weechat_config_boolean (
-            weechat_config_get_weechat ("proxy_use"));
+            weechat_config_get ("weechat.proxy.use"));
         switch (buffer[0])
         {
             /* connection OK */
@@ -2134,9 +2137,9 @@ irc_server_pass_httpproxy (int sock, char *address, int port)
     int n, m;
 
     config_proxy_username = weechat_config_string (
-        weechat_config_get_weechat ("proxy_username"));
+        weechat_config_get ("weechat.proxy.username"));
     config_proxy_username = weechat_config_string (
-        weechat_config_get_weechat ("proxy_password"));
+        weechat_config_get ("weechat.proxy.password"));
     
     if (config_proxy_username && config_proxy_username[0])
     {
@@ -2290,9 +2293,9 @@ irc_server_pass_socks5proxy (int sock, char *address, int port)
     socks5.nmethods = 1;
     
     config_proxy_username = weechat_config_string (
-        weechat_config_get_weechat ("proxy_username"));
+        weechat_config_get ("weechat.proxy.username"));
     config_proxy_username = weechat_config_string (
-        weechat_config_get_weechat ("proxy_password"));
+        weechat_config_get ("weechat.proxy.password"));
     
     if (config_proxy_username && config_proxy_username[0])
         socks5.method = 2; /* with authentication */
@@ -2423,7 +2426,7 @@ irc_server_pass_proxy (int sock, char *address, int port, char *username)
     char *config_proxy_type;
     
     config_proxy_type = weechat_config_string (
-        weechat_config_get_weechat ("proxy_type"));
+        weechat_config_get ("weechat.proxy.type"));
     
     rc = 1;
     if (config_proxy_type)
@@ -2454,13 +2457,13 @@ irc_server_child (struct t_irc_server *server)
     res_local = NULL;
 
     config_proxy_use = weechat_config_boolean (
-        weechat_config_get_weechat ("proxy_use"));
+        weechat_config_get ("weechat.proxy.use"));
     config_proxy_ipv6 = weechat_config_integer (
-        weechat_config_get_weechat ("proxy_ipv6"));
+        weechat_config_get ("weechat.proxy.ipv6"));
     config_proxy_port = weechat_config_integer (
-        weechat_config_get_weechat ("proxy_port"));
+        weechat_config_get ("weechat.proxy.port"));
     config_proxy_address = weechat_config_string (
-        weechat_config_get_weechat ("proxy_address"));
+        weechat_config_get ("weechat.proxy.address"));
     
     if (config_proxy_use)
     {
@@ -2624,15 +2627,15 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
     }
     
     config_proxy_use = weechat_config_boolean (
-        weechat_config_get_weechat ("proxy_use"));
+        weechat_config_get ("weechat.proxy.use"));
     config_proxy_ipv6 = weechat_config_boolean (
-        weechat_config_get_weechat ("proxy_ipv6"));
+        weechat_config_get ("weechat.proxy.ipv6"));
     config_proxy_type = weechat_config_string (
-        weechat_config_get_weechat ("proxy_type"));
+        weechat_config_get ("weechat.proxy.type"));
     config_proxy_address = weechat_config_string (
-        weechat_config_get_weechat ("proxy_address"));
+        weechat_config_get ("weechat.proxy.address"));
     config_proxy_port = weechat_config_integer (
-        weechat_config_get_weechat ("proxy_port"));
+        weechat_config_get ("weechat.proxy.port"));
     
     if (!server->buffer)
     {

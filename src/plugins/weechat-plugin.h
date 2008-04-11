@@ -239,7 +239,7 @@ struct t_weechat_plugin
     void (*config_section_free) (struct t_config_file *config_file,
                                  struct t_config_section *section);
     void (*config_free) (struct t_config_file *config_file);
-    struct t_config_option *(*config_get_weechat) (char *option_name);
+    struct t_config_option *(*config_get) (char *option_name);
     char *(*config_get_plugin) (struct t_weechat_plugin *plugin,
                                 char *option_name);
     int (*config_set_plugin) (struct t_weechat_plugin *plugin,
@@ -623,8 +623,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->config_section_free(__config, __section)
 #define weechat_config_free(__config)           \
     weechat_plugin->config_free(__config)
-#define weechat_config_get_weechat(__option)            \
-    weechat_plugin->config_get_weechat(__option)
+#define weechat_config_get(__option)            \
+    weechat_plugin->config_get(__option)
 #define weechat_config_get_plugin(__option)                     \
     weechat_plugin->config_get_plugin(weechat_plugin, __option)
 #define weechat_config_set_plugin(__option, __value)                    \

@@ -425,7 +425,7 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
             && !ptr_script_callback->config_section
             && !ptr_script_callback->config_option)
         {
-            if (weechat_config_boolean (weechat_config_get_weechat ("plugin_save_config_on_unload")))
+            if (weechat_config_boolean (weechat_config_get ("weechat.plugin.save_config_on_unload")))
                 weechat_config_write (ptr_script_callback->config_file);
             weechat_config_free (ptr_script_callback->config_file);
         }
