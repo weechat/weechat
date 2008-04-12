@@ -524,7 +524,7 @@ plugin_api_infolist_get_add_options (struct t_plugin_infolist *infolist,
     struct t_config_option *ptr_option;
     struct t_plugin_infolist_item *ptr_item;
     int length;
-    char *option_full_name;
+    char *option_full_name, value[128];
     
     if (!infolist)
         return 0;
@@ -570,6 +570,107 @@ plugin_api_infolist_get_add_options (struct t_plugin_infolist *infolist,
                         {
                             free (option_full_name);
                             return 0;
+                        }
+                        switch (ptr_option->type)
+                        {
+                            case CONFIG_OPTION_TYPE_BOOLEAN:
+                                if (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE)
+                                    snprintf (value, sizeof (value), "on");
+                                else
+                                    snprintf (value, sizeof (value), "off");
+                                if (!plugin_infolist_new_var_string (ptr_item,
+                                                                     "value",
+                                                                     value))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                if (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE)
+                                    snprintf (value, sizeof (value), "on");
+                                else
+                                    snprintf (value, sizeof (value), "off");
+                                if (!plugin_infolist_new_var_string (ptr_item,
+                                                                     "default_value",
+                                                                     value))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                break;
+                            case CONFIG_OPTION_TYPE_INTEGER:
+                                if (ptr_option->string_values)
+                                {
+                                    if (!plugin_infolist_new_var_string (ptr_item,
+                                                                         "value",
+                                                                         ptr_option->string_values[CONFIG_INTEGER(ptr_option)]))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
+                                    if (!plugin_infolist_new_var_string (ptr_item,
+                                                                         "default_value",
+                                                                         ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
+                                }
+                                else
+                                {
+                                    snprintf (value, sizeof (value), "%d",
+                                              CONFIG_INTEGER(ptr_option));
+                                    if (!plugin_infolist_new_var_string (ptr_item,
+                                                                         "value",
+                                                                         value))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
+                                    snprintf (value, sizeof (value), "%d",
+                                              CONFIG_INTEGER_DEFAULT(ptr_option));
+                                    if (!plugin_infolist_new_var_string (ptr_item,
+                                                                         "default_value",
+                                                                         value))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
+                                }
+                                break;
+                            case CONFIG_OPTION_TYPE_STRING:
+                                if (!plugin_infolist_new_var_string (ptr_item,
+                                                                     "value",
+                                                                     CONFIG_STRING(ptr_option)))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                if (!plugin_infolist_new_var_string (ptr_item,
+                                                                     "default_value",
+                                                                     CONFIG_STRING_DEFAULT(ptr_option)))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                break;
+                            case CONFIG_OPTION_TYPE_COLOR:
+                                if (!plugin_infolist_new_var_string (ptr_item,
+                                                                     "value",
+                                                                     gui_color_get_name (CONFIG_COLOR(ptr_option))))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                if (!plugin_infolist_new_var_string (ptr_item,
+                                                                     "default_value",
+                                                                     gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option))))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                break;
+                            case CONFIG_NUM_OPTION_TYPES:
+                                break;
                         }
                     }
                     free (option_full_name);
