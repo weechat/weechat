@@ -76,6 +76,7 @@ extern struct t_config_option *config_look_infobar;
 extern struct t_config_option *config_look_infobar_time_format;
 extern struct t_config_option *config_look_infobar_seconds;
 extern struct t_config_option *config_look_infobar_delay_highlight;
+extern struct t_config_option *config_look_item_time_format;
 extern struct t_config_option *config_look_hotlist_names_count;
 extern struct t_config_option *config_look_hotlist_names_level;
 extern struct t_config_option *config_look_hotlist_names_length;

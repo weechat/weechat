@@ -463,7 +463,10 @@ hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
     
     if ((interval >= 1000) && (align_second > 0))
     {
-        new_hook_timer->last_exec.tv_usec = 0;
+        /* here we should use 0, but with this value timer is sometimes called
+           before second has changed, so for displaying time, it may display
+           2 times the same second, that's why we use 1000 micro seconds */
+        new_hook_timer->last_exec.tv_usec = 1000;
         new_hook_timer->last_exec.tv_sec =
             new_hook_timer->last_exec.tv_sec -
             ((new_hook_timer->last_exec.tv_sec - (tz.tz_minuteswest * 60)) %

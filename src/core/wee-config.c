@@ -92,6 +92,7 @@ struct t_config_option *config_look_infobar;
 struct t_config_option *config_look_infobar_time_format;
 struct t_config_option *config_look_infobar_seconds;
 struct t_config_option *config_look_infobar_delay_highlight;
+struct t_config_option *config_look_item_time_format;
 struct t_config_option *config_look_hotlist_names_count;
 struct t_config_option *config_look_hotlist_names_level;
 struct t_config_option *config_look_hotlist_names_length;
@@ -204,8 +205,12 @@ struct t_hook *config_day_change_timer = NULL;
  */
 
 void
-config_change_save_on_exit ()
+config_change_save_on_exit (void *data, struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     if (!config_look_save_on_exit)
     {
         gui_chat_printf (NULL,
@@ -219,8 +224,12 @@ config_change_save_on_exit ()
  */
 
 void
-config_change_title ()
+config_change_title (void *data, struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     if (config_look_set_title)
 	gui_window_title_set ();
     else
@@ -232,8 +241,12 @@ config_change_title ()
  */
 
 void
-config_change_buffers ()
+config_change_buffers (void *data, struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     gui_window_refresh_windows ();
 }
 
@@ -242,8 +255,12 @@ config_change_buffers ()
  */
 
 void
-config_change_buffer_content ()
+config_change_buffer_content (void *data, struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     if (gui_ok)
         gui_window_redraw_buffer (gui_current_window->buffer);
 }
@@ -253,8 +270,12 @@ config_change_buffer_content ()
  */
 
 void
-config_change_buffer_time_format ()
+config_change_buffer_time_format (void *data, struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     gui_chat_time_length = util_get_time_length (CONFIG_STRING(config_look_buffer_time_format));
     gui_chat_change_time_format ();
     if (gui_ok)
@@ -266,8 +287,12 @@ config_change_buffer_time_format ()
  */
 
 void
-config_change_hotlist ()
+config_change_hotlist (void *data, struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     gui_hotlist_resort ();
     gui_status_refresh_needed = 1;
 }
@@ -277,8 +302,12 @@ config_change_hotlist ()
  */
 
 void
-config_change_read_marker ()
+config_change_read_marker (void *data, struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     gui_window_redraw_all_buffers ();
 }
 
@@ -287,8 +316,12 @@ config_change_read_marker ()
  */
 
 void
-config_change_prefix ()
+config_change_prefix (void *data, struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     gui_chat_prefix_build ();
 }
 
@@ -297,8 +330,12 @@ config_change_prefix ()
  */
 
 void
-config_change_color ()
+config_change_color (void *data, struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     if (gui_ok)
     {
         gui_color_init_pairs ();
@@ -312,8 +349,12 @@ config_change_color ()
  */
 
 void
-config_change_nicks_colors ()
+config_change_nicks_colors (void *data, struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     /* TODO: change nicks colors */
     /*
     struct t_gui_buffer *ptr_buffer;
@@ -339,8 +380,34 @@ config_change_nicks_colors ()
  */
 
 void
-config_change_infobar_seconds ()
+config_change_infobar_seconds (void *data, struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    int seconds;
+    
+    if (gui_infobar_refresh_timer)
+        unhook (gui_infobar_refresh_timer);
+    
+    seconds = (CONFIG_BOOLEAN(config_look_infobar_seconds)) ? 1 : 60;
+    gui_infobar_refresh_timer = hook_timer (NULL, seconds * 1000, seconds, 0,
+                                            gui_infobar_refresh_timer_cb, NULL);
+    (void) gui_infobar_refresh_timer_cb ("force");
+}
+
+/*
+ * config_change_item_time_format: called when time format for time item changed
+ */
+
+void
+config_change_item_time_format (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     int seconds;
     
     if (gui_infobar_refresh_timer)
@@ -397,8 +464,12 @@ config_day_change_timer_cb (void *data)
  */
 
 void
-config_change_day_change ()
+config_change_day_change (void *data, struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     if (CONFIG_BOOLEAN(config_look_day_change))
     {
         if (!config_day_change_timer)
@@ -882,6 +953,11 @@ config_weechat_init ()
            "infobar (0 = disable highlight notifications in "
            "infobar)"),
         NULL, 0, INT_MAX, "7", NULL, NULL, NULL, NULL, NULL, NULL);
+    config_look_item_time_format = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "item_time_format", "string",
+        N_("time format for time item"),
+        NULL, 0, 0, "%H:%M", NULL, NULL, &config_change_item_time_format, NULL, NULL, NULL);
     config_look_hotlist_names_count = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_names_count", "integer",
@@ -1595,8 +1671,8 @@ config_weechat_read ()
     rc = config_file_read (weechat_config_file);
     if (rc == 0)
     {
-        config_change_infobar_seconds ();
-        config_change_day_change ();
+        config_change_infobar_seconds (NULL, NULL);
+        config_change_day_change (NULL, NULL);
     }
     
     return rc;

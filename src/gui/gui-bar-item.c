@@ -25,6 +25,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
@@ -44,10 +45,11 @@
 struct t_gui_bar_item *gui_bar_items = NULL;     /* first bar item          */
 struct t_gui_bar_item *last_gui_bar_item = NULL; /* last bar item           */
 char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
-{ "buffer_count", "buffer_plugin", "buffer_name", "buffer_filter",
+{ "time", "buffer_count", "buffer_plugin", "buffer_name", "buffer_filter",
   "nicklist_count", "scroll", "hotlist"
 };
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
+struct t_hook *gui_bar_item_timer = NULL;
 
 
 /*
@@ -235,6 +237,42 @@ gui_bar_item_free_all_plugin (struct t_weechat_plugin *plugin)
         
         ptr_item = next_item;
     }
+}
+
+/*
+ * gui_bar_item_default_time: default item for time
+ */
+
+char *
+gui_bar_item_default_time (void *data, struct t_gui_bar_item *item,
+                           struct t_gui_window *window,
+                           int max_width, int max_height)
+{
+    time_t date;
+    struct tm *local_time;
+    char text_time[128], buf[512];
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) max_width;
+    (void) max_height;
+    
+    date = time (NULL);
+    local_time = localtime (&date);
+    if (strftime (text_time, sizeof (text_time),
+                  CONFIG_STRING(config_look_item_time_format),
+                  local_time) == 0)
+        return NULL;
+    
+    snprintf (buf, sizeof (buf), "%s[%s%s%s] ",
+              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
+              GUI_COLOR(GUI_COLOR_STATUS),
+              text_time,
+              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
+    
+    return strdup (buf);
 }
 
 /*
@@ -513,6 +551,35 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * gui_bar_item_timer_cb: timer callback
+ */
+
+int
+gui_bar_item_timer_cb (void *data)
+{
+    time_t date;
+    struct tm *local_time;
+    static char item_time_text[128] = { '\0' };
+    char new_item_time_text[128];
+    
+    date = time (NULL);
+    local_time = localtime (&date);
+    if (strftime (new_item_time_text, sizeof (new_item_time_text),
+                  CONFIG_STRING(config_look_item_time_format),
+                  local_time) == 0)
+        return WEECHAT_RC_OK;
+    
+    if (strcmp (new_item_time_text, item_time_text) != 0)
+    {
+        snprintf (item_time_text, sizeof (item_time_text),
+                  "%s", new_item_time_text);
+        gui_bar_item_update ((char *)data);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * gui_bar_item_signal_cb: callback when a signal is received, for rebuilding
  *                         an item
  */
@@ -557,64 +624,71 @@ gui_bar_item_hook (char *signal, char *item)
 void
 gui_bar_item_init ()
 {
+    /* time */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_TIME],
+                      &gui_bar_item_default_time, NULL);
+    gui_bar_item_timer = hook_timer (NULL, 1000, 1, 0, &gui_bar_item_timer_cb,
+                                     gui_bar_item_names[GUI_BAR_ITEM_TIME]);
+    
     /* buffer count */
     gui_bar_item_new (NULL,
-                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_COUNT],
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT],
                       &gui_bar_item_default_buffer_count, NULL);
     gui_bar_item_hook ("buffer_open",
-                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_COUNT]);
+                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT]);
     gui_bar_item_hook ("buffer_closed",
-                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_COUNT]);
+                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT]);
     
     /* buffer plugin */
     gui_bar_item_new (NULL,
-                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_PLUGIN],
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN],
                       &gui_bar_item_default_buffer_plugin, NULL);
     gui_bar_item_hook ("buffer_switch",
-                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_PLUGIN]);
+                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN]);
     
     /* buffer name */
     gui_bar_item_new (NULL,
-                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_NAME],
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME],
                       &gui_bar_item_default_buffer_name, NULL);
     gui_bar_item_hook ("buffer_switch",
-                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_NAME]);
+                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
     gui_bar_item_hook ("buffer_renamed",
-                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_NAME]);
+                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
     gui_bar_item_hook ("buffer_moved",
-                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_NAME]);
+                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
     
     /* buffer filter */
     gui_bar_item_new (NULL,
-                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_FILTER],
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER],
                       &gui_bar_item_default_buffer_filter, NULL);
     gui_bar_item_hook ("buffer_lines_hidden",
-                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_FILTER]);
+                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
     gui_bar_item_hook ("filters_*",
-                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_BUFFER_FILTER]);
+                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
     
     /* nicklist count */
     gui_bar_item_new (NULL,
-                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_NICKLIST_COUNT],
+                      gui_bar_item_names[GUI_BAR_ITEM_NICKLIST_COUNT],
                       &gui_bar_item_default_nicklist_count, NULL);
     gui_bar_item_hook ("buffer_switch",
-                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_NICKLIST_COUNT]);
+                       gui_bar_item_names[GUI_BAR_ITEM_NICKLIST_COUNT]);
     gui_bar_item_hook ("nicklist_changed",
-                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_NICKLIST_COUNT]);
+                       gui_bar_item_names[GUI_BAR_ITEM_NICKLIST_COUNT]);
     
     /* scroll indicator */
     gui_bar_item_new (NULL,
-                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_SCROLL],
+                      gui_bar_item_names[GUI_BAR_ITEM_SCROLL],
                       &gui_bar_item_default_scroll, NULL);
     gui_bar_item_hook ("window_scrolled",
-                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_SCROLL]);
+                       gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
     
     /* hotlist */
     gui_bar_item_new (NULL,
-                      gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_HOTLIST],
+                      gui_bar_item_names[GUI_BAR_ITEM_HOTLIST],
                       &gui_bar_item_default_hotlist, NULL);
     gui_bar_item_hook ("hotlist_changed",
-                       gui_bar_item_names[GUI_BAR_ITEM_WEECHAT_HOTLIST]);
+                       gui_bar_item_names[GUI_BAR_ITEM_HOTLIST]);
 }
 
 /*
