@@ -781,13 +781,13 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "nicklist_min_size", "integer",
         N_("min size for nicklist (width or height, depending on "
-           "look_nicklist_position (0 = no min size))"),
+           "nicklist_position (0 = no min size))"),
         NULL, 0, 100, "0", NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_nicklist_max_size = config_file_new_option (
         weechat_config_file, ptr_section,
         "nicklist_max_size", "integer",
         N_("max size for nicklist (width or height, depending on "
-           "look_nicklist_position (0 = no max size; if min = max "
+           "nicklist_position (0 = no max size; if min = max "
            "and > 0, then size is fixed))"),
         NULL, 0, 100, "0", NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
     config_look_nicklist_separator = config_file_new_option (
