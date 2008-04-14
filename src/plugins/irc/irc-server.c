@@ -1244,6 +1244,7 @@ irc_server_parse_message (char *message, char **nick, char **host,
 
 /*
  * irc_server_send_one_msg: send one message to IRC server
+ *                          return: 1 if ok, 0 if error
  */
 
 int
@@ -1382,8 +1383,8 @@ irc_server_sendf (struct t_irc_server *server, char *format, ...)
 {
     va_list args;
     static char buffer[4096];
-    char *ptr_buf, *pos;
-    int rc;
+    char **items;
+    int i, items_count;
     
     if (!server)
         return;
@@ -1391,27 +1392,15 @@ irc_server_sendf (struct t_irc_server *server, char *format, ...)
     va_start (args, format);
     vsnprintf (buffer, sizeof (buffer) - 1, format, args);
     va_end (args);    
-    
-    ptr_buf = buffer;
-    while (ptr_buf && ptr_buf[0])
+
+    items = weechat_string_explode (buffer, "\n", 0, 0, &items_count);
+    for (i = 0; i < items_count; i++)
     {
-        pos = strchr (ptr_buf, '\n');
-        if (pos)
-            pos[0] = '\0';
-        
-        rc = irc_server_send_one_msg (server, ptr_buf);
-        
-        if (pos)
-        {
-            pos[0] = '\n';
-            ptr_buf = pos + 1;
-        }
-        else
-            ptr_buf = NULL;
-        
-        if (!rc)
-            ptr_buf = NULL;
+        if (!irc_server_send_one_msg (server, items[i]))
+            break;
     }
+    if (items)
+        weechat_string_free_exploded (items);
 }
 
 /*
