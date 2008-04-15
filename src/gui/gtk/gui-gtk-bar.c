@@ -26,6 +26,7 @@
 #include <stdlib.h>
 
 #include "../../core/weechat.h"
+#include "../../core/wee-config.h"
 #include "../../core/wee-log.h"
 #include "../gui-bar.h"
 #include "../gui-chat.h"
@@ -208,9 +209,9 @@ gui_bar_window_remove_unused_bars (struct t_gui_window *window)
     {
         next_bar_win = ptr_bar_win->next_bar_window;
         
-        if (((ptr_bar_win->bar->type == GUI_BAR_TYPE_WINDOW_ACTIVE)
+        if (((CONFIG_INTEGER(ptr_bar_win->bar->type) == GUI_BAR_TYPE_WINDOW_ACTIVE)
              && (window != gui_current_window))
-            || ((ptr_bar_win->bar->type == GUI_BAR_TYPE_WINDOW_INACTIVE)
+            || ((CONFIG_INTEGER(ptr_bar_win->bar->type) == GUI_BAR_TYPE_WINDOW_INACTIVE)
                 && (window == gui_current_window)))
         {
             gui_bar_window_free (ptr_bar_win, window);
@@ -239,9 +240,9 @@ gui_bar_window_add_missing_bars (struct t_gui_window *window)
     
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        if (((ptr_bar->type == GUI_BAR_TYPE_WINDOW_ACTIVE)
+        if (((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_WINDOW_ACTIVE)
              && (window == gui_current_window))
-            || ((ptr_bar->type == GUI_BAR_TYPE_WINDOW_INACTIVE)
+            || ((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_WINDOW_INACTIVE)
                 && (window != gui_current_window)))
         {
             if (!gui_bar_window_search_bar (window, ptr_bar))

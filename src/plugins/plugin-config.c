@@ -185,7 +185,7 @@ plugin_config_init ()
     if (plugin_config_file)
     {
         plugin_config_section_var = config_file_new_section (
-            plugin_config_file, "var",
+            plugin_config_file, "var", 0, 0,
             NULL, NULL,
             NULL, NULL,
             NULL, NULL,

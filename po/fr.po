@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-12 09:39+0200\n"
-"PO-Revision-Date: 2008-04-12 09:40+0200\n"
+"POT-Creation-Date: 2008-04-15 13:49+0200\n"
+"PO-Revision-Date: 2008-04-14 18:43+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -981,8 +981,8 @@ msgstr ""
 
 msgid "nicklist position (top, left, right (default), bottom)"
 msgstr ""
-"position de la fenêtre des pseudos (haut (top), gauche (left), droite "
-"(right, par défaut), bas (bottom))"
+"position de la fenêtre des pseudos (top (haut), left (gauche), right "
+"(droite, par défaut), bottom (bas)"
 
 msgid ""
 "min size for nicklist (width or height, depending on nicklist_position (0 = "
@@ -1056,6 +1056,9 @@ msgid ""
 msgstr ""
 "délai (en secondes) pour la notification des messages dans la barre d'infos "
 "(0 = désactiver les notifications dans la barre d'infos)"
+
+msgid "time format for \"time\" bar item"
+msgstr "format de date/heure pour l'objet de barre \"time\""
 
 msgid ""
 "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
@@ -1591,6 +1594,31 @@ msgstr "-PLUS-"
 
 msgid "server"
 msgstr "serveur"
+
+#, c-format
+msgid ""
+"%sUnable to change bar type: you must delete bar and create another to do "
+"that"
+msgstr ""
+"%sImpossible de changer le type de barre: vous devez supprimer la barre et "
+"en recréer une autre pour faire cela"
+
+msgid "bar type (root, window, window_active, window_inactive)"
+msgstr "type de barre (root, window, window_active, window_inactive)"
+
+msgid "bar position (bottom, top, left, right)"
+msgstr ""
+"position de la barre (bottom (bas), top (haut), left (gauche), right "
+"(droite))"
+
+msgid "bar size in chars (0 = auto size)"
+msgstr "taille de la barre en caractères (0 = taille automatique)"
+
+msgid "separator line between bar and other bars/windows"
+msgstr "ligne de séparation entre la barre et les autres barres/fenêtres"
+
+msgid "items of bar"
+msgstr "objets de la barre"
 
 msgid "filtered"
 msgstr "filtré"
@@ -2143,6 +2171,18 @@ msgid "No server found with \"%s\""
 msgstr "Pas de serveur trouvé avec \"%s\""
 
 #, c-format
+msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgstr "%s%s: le serveur \"%s\" n'existe pas pour la commande \"%s\""
+
+#, c-format
+msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgstr "%s%s: le serveur \"%s\" existe déjà pour la commande \"%s\""
+
+#, c-format
+msgid "%s: server %s%s%s has been renamed to %s%s"
+msgstr "%s: le serveur %s%s%s a été renommé en %s%s"
+
+#, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s%s: le serveur \"%s\" existe déjà, impossible de le créer !"
 
@@ -2155,20 +2195,8 @@ msgid "%s%s: unable to create server"
 msgstr "%s%s: impossible de créer le serveur"
 
 #, c-format
-msgid "%s%s: server \"%s\" not found for \"%s\" command"
-msgstr "%s%s: le serveur \"%s\" n'existe pas pour la commande \"%s\""
-
-#, c-format
-msgid "%s%s: server \"%s\" already exists for \"%s\" command"
-msgstr "%s%s: le serveur \"%s\" existe déjà pour la commande \"%s\""
-
-#, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "%s: le serveur %s%s%s a été copié vers %s%s"
-
-#, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
-msgstr "%s: le serveur %s%s%s a été renommé en %s%s"
 
 #, c-format
 msgid "%s%s: server \"%s\" is not a temporary server"

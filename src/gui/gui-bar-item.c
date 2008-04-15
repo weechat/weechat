@@ -135,7 +135,7 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, char *name,
             gui_bar_items = new_bar_item;
         last_gui_bar_item = new_bar_item;
         new_bar_item->next_item = NULL;
-
+        
         return new_bar_item;
     }
     
@@ -173,7 +173,7 @@ void
 gui_bar_item_update (char *name)
 {
     struct t_gui_bar *ptr_bar;
-
+    
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (gui_bar_contains_item (ptr_bar, name))

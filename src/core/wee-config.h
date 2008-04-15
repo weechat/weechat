@@ -41,6 +41,7 @@
 #define CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC       5
 
 extern struct t_config_file *weechat_config_file;
+extern struct t_config_section *weechat_config_section_bar;
 
 extern struct t_config_option *config_startup_display_logo;
 extern struct t_config_option *config_startup_display_version;

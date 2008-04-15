@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-12 09:39+0200\n"
+"POT-Creation-Date: 2008-04-15 13:49+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1073,6 +1073,10 @@ msgstr ""
 "kihagyás (másodpercben) az üzenetek kiemelésére az információs pulton (0 = "
 "kiemelt üzenetek tiltása az információs pulton)"
 
+#, fuzzy
+msgid "time format for \"time\" bar item"
+msgstr "időbélyeg a információs pult idejéhez"
+
 msgid ""
 "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
 msgstr ""
@@ -1666,6 +1670,30 @@ msgstr "-TOVÁBB-"
 msgid "server"
 msgstr "szerver"
 
+#, c-format
+msgid ""
+"%sUnable to change bar type: you must delete bar and create another to do "
+"that"
+msgstr ""
+
+msgid "bar type (root, window, window_active, window_inactive)"
+msgstr ""
+
+#, fuzzy
+msgid "bar position (bottom, top, left, right)"
+msgstr "névlista helye (top, left, right (alapértelmezett), bottom)"
+
+msgid "bar size in chars (0 = auto size)"
+msgstr ""
+
+#, fuzzy
+msgid "separator line between bar and other bars/windows"
+msgstr "a névlista és a beszélgetőablak közti elválasztó"
+
+#, fuzzy
+msgid "items of bar"
+msgstr "Aliaszok listája:\n"
+
 #, fuzzy
 msgid "filtered"
 msgstr "a felhasználók le lettek tiltva"
@@ -2229,6 +2257,18 @@ msgid "No server found with \"%s\""
 msgstr "Nem található '%s' szerver.\n"
 
 #, fuzzy, c-format
+msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgstr "%s a \"%s\" szerver nem található a \"%s\" parancshoz\n"
+
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgstr "%s a \"%s\" szerver már létezik a(z) \"%s\" parancshoz\n"
+
+#, fuzzy, c-format
+msgid "%s: server %s%s%s has been renamed to %s%s"
+msgstr "A %s%s%s szerver mostantól: %s%s\n"
+
+#, fuzzy, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s a \"%s\" szerver már létezik, nem hozhatja létre!\n"
 
@@ -2241,20 +2281,8 @@ msgid "%s%s: unable to create server"
 msgstr "%s nem sikerült a szervert létrehozni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server \"%s\" not found for \"%s\" command"
-msgstr "%s a \"%s\" szerver nem található a \"%s\" parancshoz\n"
-
-#, fuzzy, c-format
-msgid "%s%s: server \"%s\" already exists for \"%s\" command"
-msgstr "%s a \"%s\" szerver már létezik a(z) \"%s\" parancshoz\n"
-
-#, fuzzy, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "A %s%s%s szerver másolva lett %s%s néven\n"
-
-#, fuzzy, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
-msgstr "A %s%s%s szerver mostantól: %s%s\n"
 
 #, fuzzy, c-format
 msgid "%s%s: server \"%s\" is not a temporary server"

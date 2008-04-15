@@ -56,6 +56,7 @@
 
 
 struct t_config_file *weechat_config_file = NULL;
+struct t_config_section *weechat_config_section_bar = NULL;
 
 /* config, startup section */
 
@@ -500,6 +501,8 @@ config_change_day_change (void *data, struct t_config_option *option)
 int
 config_weechat_reload (void *data, struct t_config_file *config_file)
 {
+    int rc;
+    
     /* make C compiler happy */
     (void) data;
     (void) config_file;
@@ -513,7 +516,14 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     /* remove all filters */
     gui_filter_free_all ();
     
-    return config_file_reload (weechat_config_file);
+    rc = config_file_reload (weechat_config_file);
+    
+    if (rc == 0)
+    {
+        gui_bar_use_temp_bars ();
+    }
+    
+    return rc;
 }
 
 /*
@@ -526,9 +536,10 @@ config_weechat_bar_read (void *data, struct t_config_file *config_file,
                          struct t_config_section *section,
                          char *option_name, char *value)
 {
-    char **argv, *error;
-    int argc, size;
-    long number;
+    char *pos_option, *bar_name;
+    struct t_gui_bar *ptr_temp_bar;
+    struct t_config_option *ptr_option;
+    int index_option;
     
     /* make C compiler happy */
     (void) data;
@@ -537,24 +548,72 @@ config_weechat_bar_read (void *data, struct t_config_file *config_file,
     
     if (option_name)
     {
-        if (value && value[0])
+        pos_option = strchr (option_name, '.');
+        if (pos_option)
         {
-            argv = string_explode (value, ";", 0, 0, &argc);
-            if (argv)
+            bar_name = string_strndup (option_name, pos_option - option_name);
+            if (bar_name)
             {
-                if (argc == 5)
+                pos_option++;
+                for (ptr_temp_bar = gui_temp_bars; ptr_temp_bar;
+                     ptr_temp_bar = ptr_temp_bar->next_bar)
                 {
-                    error = NULL;
-                    number = strtol (argv[2], &error, 10);
-                    if (error && !error[0])
+                    if (strcmp (ptr_temp_bar->name, bar_name) == 0)
+                        break;
+                }
+                if (!ptr_temp_bar)
+                {
+                    /* create new temp bar */
+                    ptr_temp_bar = gui_bar_alloc (bar_name);
+                    if (ptr_temp_bar)
                     {
-                        size = number;
-                        gui_bar_new (NULL, option_name, argv[0], argv[1], size,
-                                     (argv[3][0] == '0') ? 0 : 1,
-                                     argv[4]);
+                        /* add new temp bar at end of queue */
+                        ptr_temp_bar->prev_bar = last_gui_temp_bar;
+                        ptr_temp_bar->next_bar = NULL;
+                        
+                        if (!gui_temp_bars)
+                            gui_temp_bars = ptr_temp_bar;
+                        else
+                            last_gui_temp_bar->next_bar = ptr_temp_bar;
+                        last_gui_temp_bar = ptr_temp_bar;
                     }
                 }
-                string_free_exploded (argv);
+                
+                if (ptr_temp_bar)
+                {
+                    index_option = gui_bar_search_option (pos_option);
+                    if (index_option >= 0)
+                    {
+                        ptr_option = gui_bar_create_option (ptr_temp_bar->name,
+                                                            index_option,
+                                                            value);
+                        if (ptr_option)
+                        {
+                            log_printf ("createion pour index %d, ptr = %x",
+                                        index_option, ptr_temp_bar);
+                            switch (index_option)
+                            {
+                                case GUI_BAR_OPTION_TYPE:
+                                    ptr_temp_bar->type = ptr_option;
+                                    break;
+                                case GUI_BAR_OPTION_POSITION:
+                                    ptr_temp_bar->position = ptr_option;
+                                    break;
+                                case GUI_BAR_OPTION_SIZE:
+                                    ptr_temp_bar->size = ptr_option;
+                                    break;
+                                case GUI_BAR_OPTION_SEPARATOR:
+                                    ptr_temp_bar->separator = ptr_option;
+                                    break;
+                                case GUI_BAR_OPTION_ITEMS:
+                                    ptr_temp_bar->items = ptr_option;
+                                    break;
+                            }
+                        }
+                    }
+                }
+                
+                free (bar_name);
             }
         }
     }
@@ -584,11 +643,11 @@ config_weechat_bar_write (void *data, struct t_config_file *config_file,
         config_file_write_line (config_file,
                                 ptr_bar->name,
                                 "%s;%s;%d;%d;%s",
-                                gui_bar_type_str[ptr_bar->type],
-                                gui_bar_position_str[ptr_bar->position],
-                                ptr_bar->size,
-                                ptr_bar->separator,
-                                ptr_bar->items);
+                                gui_bar_type_str[CONFIG_INTEGER(ptr_bar->type)],
+                                gui_bar_position_str[CONFIG_INTEGER(ptr_bar->position)],
+                                CONFIG_INTEGER(ptr_bar->size),
+                                CONFIG_INTEGER(ptr_bar->separator),
+                                CONFIG_STRING(ptr_bar->items));
     }
 }
 
@@ -757,6 +816,7 @@ config_weechat_init ()
     
     /* startup */
     ptr_section = config_file_new_section (weechat_config_file, "startup",
+                                           0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
                                            NULL, NULL);
     if (!ptr_section)
@@ -793,6 +853,7 @@ config_weechat_init ()
     
     /* look */
     ptr_section = config_file_new_section (weechat_config_file, "look",
+                                           0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
                                            NULL, NULL);
     if (!ptr_section)
@@ -956,7 +1017,7 @@ config_weechat_init ()
     config_look_item_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "item_time_format", "string",
-        N_("time format for time item"),
+        N_("time format for \"time\" bar item"),
         NULL, 0, 0, "%H:%M", NULL, NULL, &config_change_item_time_format, NULL, NULL, NULL);
     config_look_hotlist_names_count = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -1016,6 +1077,7 @@ config_weechat_init ()
     
     /* colors */
     ptr_section = config_file_new_section (weechat_config_file, "color",
+                                           0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
                                            NULL, NULL);
     if (!ptr_section)
@@ -1502,6 +1564,7 @@ config_weechat_init ()
 
     /* history */
     ptr_section = config_file_new_section (weechat_config_file, "history",
+                                           0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
                                            NULL, NULL);
     if (!ptr_section)
@@ -1531,6 +1594,7 @@ config_weechat_init ()
 
     /* proxy */
     ptr_section = config_file_new_section (weechat_config_file, "proxy",
+                                           0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
                                            NULL, NULL);
     if (!ptr_section)
@@ -1577,6 +1641,7 @@ config_weechat_init ()
             
     /* plugin */
     ptr_section = config_file_new_section (weechat_config_file, "plugin",
+                                           0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
                                            NULL, NULL);
     if (!ptr_section)
@@ -1619,9 +1684,10 @@ config_weechat_init ()
     
     /* bars */
     ptr_section = config_file_new_section (weechat_config_file, "bar",
+                                           0, 0,
                                            &config_weechat_bar_read, NULL,
-                                           &config_weechat_bar_write, NULL,
-                                           &config_weechat_bar_write, NULL,
+                                           NULL, NULL,
+                                           NULL, NULL,
                                            NULL, NULL);
     if (!ptr_section)
     {
@@ -1629,8 +1695,11 @@ config_weechat_init ()
         return 0;
     }
     
+    weechat_config_section_bar = ptr_section;
+    
     /* filters */
     ptr_section = config_file_new_section (weechat_config_file, "filter",
+                                           0, 0,
                                            &config_weechat_filter_read, NULL,
                                            &config_weechat_filter_write, NULL,
                                            &config_weechat_filter_write, NULL,
@@ -1643,6 +1712,7 @@ config_weechat_init ()
     
     /* keys */
     ptr_section = config_file_new_section (weechat_config_file, "key",
+                                           0, 0,
                                            &config_weechat_key_read, NULL,
                                            &config_weechat_key_write, NULL,
                                            &config_weechat_key_write, NULL,
@@ -1673,6 +1743,7 @@ config_weechat_read ()
     {
         config_change_infobar_seconds (NULL, NULL);
         config_change_day_change (NULL, NULL);
+        gui_bar_use_temp_bars ();
     }
     
     return rc;

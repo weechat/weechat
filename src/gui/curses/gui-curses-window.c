@@ -1035,7 +1035,7 @@ gui_window_refresh_windows ()
 
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        if (ptr_bar->type == GUI_BAR_TYPE_ROOT)
+        if (CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_ROOT)
         {
             gui_bar_window_calculate_pos_size (ptr_bar->bar_window, NULL);
             gui_bar_window_create_win (ptr_bar->bar_window);

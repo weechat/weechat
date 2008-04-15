@@ -615,6 +615,7 @@ alias_config_init ()
         return 0;
     
     ptr_section = weechat_config_new_section (alias_config_file, "cmd",
+                                              1, 1,
                                               NULL, NULL,
                                               NULL, NULL,
                                               &alias_config_write_default, NULL,
@@ -775,7 +776,7 @@ unalias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                                                    alias_config_section_cmd,
                                                    alias_name);
         if (ptr_option)
-            weechat_config_option_free (alias_config_section_cmd, ptr_option);
+            weechat_config_option_free (ptr_option);
         
         weechat_printf (NULL,
                         _("Alias \"%s\" removed"),

@@ -57,6 +57,8 @@ struct t_config_file
 struct t_config_section
 {
     char *name;                            /* section name                  */
+    int user_can_add_options;              /* user can add with /set ?      */
+    int user_can_delete_options;           /* user can del with /unset ?    */
     int (*callback_read)                   /* called to read a line from    */
     (void *data,                           /* config file (only for some    */
      struct t_config_file *config_file,    /* special sections)             */
@@ -138,6 +140,8 @@ extern int config_file_valid_for_plugin (struct t_weechat_plugin *plugin,
                                          struct t_config_file *config_file);
 extern struct t_config_section *config_file_new_section (struct t_config_file *config_file,
                                                          char *name,
+                                                         int user_can_add_options,
+                                                         int user_can_delete_options,
                                                          int (*callback_read)(void *data,
                                                                               struct t_config_file *config_file,
                                                                               struct t_config_section *section,
@@ -199,6 +203,8 @@ extern int config_file_option_reset (struct t_config_option *option,
                                      int run_callback);
 extern int config_file_option_set (struct t_config_option *option,
                                    char *value, int run_callback);
+extern void config_file_option_rename (struct t_config_option *option,
+                                       char *new_name);
 extern void *config_file_option_get_pointer (struct t_config_option *option,
                                              char *property);
 extern int config_file_option_set_with_string (char *option_name, char *value);
@@ -213,9 +219,7 @@ extern void config_file_write_line (struct t_config_file *config_file,
 extern int config_file_write (struct t_config_file *config_files);
 extern int config_file_read (struct t_config_file *config_file);
 extern int config_file_reload (struct t_config_file *config_file);
-extern void config_file_option_free_data (struct t_config_option *option);
-extern void config_file_option_free (struct t_config_section *section,
-                                     struct t_config_option *option);
+extern void config_file_option_free (struct t_config_option *option);
 extern void config_file_section_free_options (struct t_config_section *section);
 extern void config_file_section_free (struct t_config_file *config_file,
                                       struct t_config_section *section);

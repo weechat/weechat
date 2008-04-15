@@ -999,6 +999,7 @@ weechat_python_api_config_new_section (PyObject *self, PyObject *args)
     char *config_file, *name, *function_read, *function_write;
     char *function_write_default, *function_create_option;
     char *result;
+    int user_can_add_options, user_can_delete_options;
     PyObject *object;
     
     /* make C compiler happy */
@@ -1012,12 +1013,15 @@ weechat_python_api_config_new_section (PyObject *self, PyObject *args)
     
     config_file = NULL;
     name = NULL;
+    user_can_add_options = 0;
+    user_can_delete_options = 0;
     function_read = NULL;
     function_write = NULL;
     function_write_default = NULL;
     function_create_option = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssssss", &config_file, &name,
+    if (!PyArg_ParseTuple (args, "ssiissss", &config_file, &name,
+                           &user_can_add_options, &user_can_delete_options,
                            &function_read, &function_write,
                            &function_write_default, &function_create_option))
     {
@@ -1029,6 +1033,8 @@ weechat_python_api_config_new_section (PyObject *self, PyObject *args)
                                                             python_current_script,
                                                             script_str2ptr (config_file),
                                                             name,
+                                                            user_can_add_options,
+                                                            user_can_delete_options,
                                                             &weechat_python_api_config_read_cb,
                                                             function_read,
                                                             &weechat_python_api_config_section_write_cb,
@@ -1226,6 +1232,40 @@ weechat_python_api_config_string_to_boolean (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_config_option_reset: reset an option with default value
+ */
+
+static PyObject *
+weechat_python_api_config_option_reset (PyObject *self, PyObject *args)
+{
+    char *option;
+    int run_callback, rc;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_reset");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    run_callback = 0;
+    
+    if (!PyArg_ParseTuple (args, "si", &option, &run_callback))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_reset");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    rc = weechat_config_option_reset (script_str2ptr (option),
+                                      run_callback);
+    
+    PYTHON_RETURN_INT(rc);
+}
+
+/*
  * weechat_python_api_config_option_set: set new value for option
  */
 
@@ -1259,6 +1299,39 @@ weechat_python_api_config_option_set (PyObject *self, PyObject *args)
                                     run_callback);
     
     PYTHON_RETURN_INT(rc);
+}
+
+/*
+ * weechat_python_api_config_option_rename: rename an option
+ */
+
+static PyObject *
+weechat_python_api_config_option_rename (PyObject *self, PyObject *args)
+{
+    char *option, *new_name;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_rename");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    option = NULL;
+    new_name = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &option, &new_name))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_rename");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_config_option_rename (script_str2ptr (option),
+                                  new_name);
+    
+    PYTHON_RETURN_OK;
 }
 
 /*
@@ -3353,8 +3426,7 @@ weechat_python_api_bar_search (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_bar_new (PyObject *self, PyObject *args)
 {
-    char *name, *type, *position, *items, *result;
-    int size, separator;
+    char *name, *type, *position, *size, *separator, *items, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -3369,11 +3441,11 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
     name = NULL;
     type = NULL;
     position = NULL;
-    size = 0;
-    separator = 0;
+    size = NULL;
+    separator = NULL;
     items = NULL;
     
-    if (!PyArg_ParseTuple (args, "sssiis", &name, &type, &position, &size,
+    if (!PyArg_ParseTuple (args, "ssssss", &name, &type, &position, &size,
                            &separator, &items))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
@@ -3704,7 +3776,7 @@ weechat_python_api_infolist_integer (PyObject *self, PyObject *args)
     infolist = NULL;
     variable = NULL;
     
-    if (!PyArg_ParseTuple (args, "s&", &infolist, &variable))
+    if (!PyArg_ParseTuple (args, "ss", &infolist, &variable))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_integer");
         PYTHON_RETURN_INT(0);
@@ -3884,7 +3956,9 @@ PyMethodDef weechat_python_funcs[] =
     { "config_new_option", &weechat_python_api_config_new_option, METH_VARARGS, "" },
     { "config_search_option", &weechat_python_api_config_search_option, METH_VARARGS, "" },
     { "config_string_to_boolean", &weechat_python_api_config_string_to_boolean, METH_VARARGS, "" },
+    { "config_option_reset", &weechat_python_api_config_option_reset, METH_VARARGS, "" },
     { "config_option_set", &weechat_python_api_config_option_set, METH_VARARGS, "" },
+    { "config_option_rename", &weechat_python_api_config_option_rename, METH_VARARGS, "" },
     { "config_boolean", &weechat_python_api_config_boolean, METH_VARARGS, "" },
     { "config_integer", &weechat_python_api_config_integer, METH_VARARGS, "" },
     { "config_string", &weechat_python_api_config_string, METH_VARARGS, "" },

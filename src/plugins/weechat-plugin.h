@@ -165,6 +165,8 @@ struct t_weechat_plugin
                                          void *callback_reload_data);
     struct t_config_section *(*config_new_section) (struct t_config_file *config_file,
                                                     char *name,
+                                                    int user_can_add_options,
+                                                    int user_can_delete_options,
                                                     int (*callback_read)(void *data,
                                                                          struct t_config_file *config_file,
                                                                          struct t_config_section *section,
@@ -222,6 +224,8 @@ struct t_weechat_plugin
                                 int run_callback);
     int (*config_option_set) (struct t_config_option *option, char *value,
                               int run_callback);
+    void (*config_option_rename) (struct t_config_option *option,
+                                  char *new_name);
     void *(*config_option_get_pointer) (struct t_config_option *option,
                                         char *property);
     int (*config_boolean) (struct t_config_option *option);
@@ -233,8 +237,7 @@ struct t_weechat_plugin
     int (*config_write) (struct t_config_file *config_file);
     int (*config_read) (struct t_config_file *config_file);
     int (*config_reload) (struct t_config_file *config_file);
-    void (*config_option_free) (struct t_config_section *section,
-                                struct t_config_option *option);
+    void (*config_option_free) (struct t_config_option *option);
     void (*config_section_free_options) (struct t_config_section *section);
     void (*config_section_free) (struct t_config_file *config_file,
                                  struct t_config_section *section);
@@ -373,8 +376,8 @@ struct t_weechat_plugin
     void (*bar_item_remove) (struct t_gui_bar_item *item);
     struct t_gui_bar *(*bar_search) (char *name);
     struct t_gui_bar *(*bar_new) (struct t_weechat_plugin *plugin, char *name,
-                                  char *type, char *position, int size,
-                                  int separator, char *items);
+                                  char *type, char *position, char *size,
+                                  char *separator, char *items);
     void (*bar_set) (struct t_gui_bar *bar, char *property, char *value);
     void (*bar_update) (char *name);
     void (*bar_remove) (struct t_gui_bar *bar);
@@ -544,12 +547,16 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                __callback_reload,                       \
                                __callback_reload_data)
 #define weechat_config_new_section(__config, __name,                    \
+                                   __user_can_add_options,              \
+                                   __user_can_delete_options,           \
                                    __cb_read, __cb_read_data,           \
                                    __cb_write_std, __cb_write_std_data, \
                                    __cb_write_def, __cb_write_def_data, \
                                    __cb_create_option,                  \
                                    __cb_create_option_data)             \
     weechat_plugin->config_new_section(__config, __name,                \
+                                       __user_can_add_options,          \
+                                       __user_can_delete_options,       \
                                        __cb_read, __cb_read_data,       \
                                        __cb_write_std,                  \
                                        __cb_write_std_data,             \
@@ -592,9 +599,13 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                               __pos_option);
 #define weechat_config_string_to_boolean(__string)      \
     weechat_plugin->config_string_to_boolean(__string)
+#define weechat_config_option_reset(__option, __run_callback)           \
+    weechat_plugin->config_option_reset(__option, __run_callback)
 #define weechat_config_option_set(__option, __value, __run_callback)    \
     weechat_plugin->config_option_set(__option, __value,                \
                                       __run_callback)
+#define weechat_config_option_rename(__option, __new_name)      \
+    weechat_plugin->config_option_rename(__option, __new_name)
 #define weechat_config_option_get_pointer(__option, __property)         \
     weechat_plugin->config_option_get_pointer(__option, __property)
 #define weechat_config_boolean(__option)        \
@@ -615,8 +626,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->config_read(__config)
 #define weechat_config_reload(__config)         \
     weechat_plugin->config_reload(__config)
-#define weechat_config_option_free(__section, __option)         \
-    weechat_plugin->config_option_free(__section, __option)
+#define weechat_config_option_free(__option)            \
+    weechat_plugin->config_option_free(__option)
 #define weechat_config_section_free_options(__section)          \
     weechat_plugin->config_section_free_options(__section)
 #define weechat_config_section_free(__config, __section)        \

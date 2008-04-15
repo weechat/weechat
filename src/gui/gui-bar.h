@@ -23,6 +23,17 @@
 struct t_weechat_plugin;
 struct t_gui_window;
 
+enum t_gui_bar_option
+{
+    GUI_BAR_OPTION_TYPE = 0,
+    GUI_BAR_OPTION_POSITION,
+    GUI_BAR_OPTION_SIZE,
+    GUI_BAR_OPTION_SEPARATOR,
+    GUI_BAR_OPTION_ITEMS,
+    /* number of bar types */
+    GUI_BAR_NUM_OPTIONS,
+};
+
 enum t_gui_bar_type
 {
     GUI_BAR_TYPE_ROOT = 0,
@@ -49,11 +60,11 @@ struct t_gui_bar
     struct t_weechat_plugin *plugin;   /* plugin                            */
     int number;                        /* bar number                        */
     char *name;                        /* bar name                          */
-    int type;                          /* type (root or window)             */
-    enum t_gui_bar_position position;  /* bottom, top, left, right          */
-    int size;                          /* size of bar (in chars, 0 = auto)  */
-    int separator;                     /* 1 if separator (line) displayed   */
-    char *items;                       /* bar items                         */
+    struct t_config_option *type;      /* type (root or window)             */
+    struct t_config_option *position;  /* bottom, top, left, right          */
+    struct t_config_option *size;      /* size of bar (in chars, 0 = auto)  */
+    struct t_config_option *separator; /* true if separator line displayed  */
+    struct t_config_option *items;     /* bar items                         */
     
     /* internal vars */
     int current_size;                  /* current bar size (strictly > 0)   */
@@ -71,19 +82,27 @@ extern char *gui_bar_type_str[];
 extern char *gui_bar_position_str[];
 extern struct t_gui_bar *gui_bars;
 extern struct t_gui_bar *last_gui_bar;
+extern struct t_gui_bar *gui_temp_bars;
+extern struct t_gui_bar *last_gui_temp_bar;
 
 /* functions */
 
-extern int gui_bar_get_type (char *type);
-extern int gui_bar_get_position (char *position);
+extern int gui_bar_search_option (char *option_name);
+extern int gui_bar_search_type (char *type);
+extern int gui_bar_search_position (char *position);
 extern int gui_bar_root_get_size (struct t_gui_bar *bar,
                                   enum t_gui_bar_position position);
 extern struct t_gui_bar *gui_bar_search (char *name);
-extern struct t_gui_bar *gui_bar_new (struct t_weechat_plugin *plugin,
-                                      char *name, char *type, char *position,
-                                      int size, int separator, char *items);
 extern void gui_bar_set_current_size (struct t_gui_bar *bar, int current_size);
 extern void gui_bar_set (struct t_gui_bar *bar, char *property, char *value);
+extern struct t_gui_bar *gui_bar_alloc (char *name);
+extern struct t_config_option *gui_bar_create_option (char *bar_name,
+                                                      int index_option,
+                                                      char *value);
+extern struct t_gui_bar *gui_bar_new (struct t_weechat_plugin *plugin,
+                                      char *name, char *type, char *position,
+                                      char *size, char *separator, char *items);
+extern void gui_bar_use_temp_bars ();
 extern void gui_bar_update (char *name);
 extern void gui_bar_free (struct t_gui_bar *bar);
 extern void gui_bar_free_all ();

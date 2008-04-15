@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-12 09:39+0200\n"
+"POT-Creation-Date: 2008-04-15 13:49+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1064,6 +1064,10 @@ msgstr ""
 "podržet (v sekundách) zvýrazněnou zprávu v infobaru (0 = zakázat zvýrazněnou "
 "notifikaci v infobaru)"
 
+#, fuzzy
+msgid "time format for \"time\" bar item"
+msgstr "časová značka pro čas v infobaru"
+
 msgid ""
 "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
 msgstr ""
@@ -1662,6 +1666,30 @@ msgstr "-VÍCE-"
 msgid "server"
 msgstr "server"
 
+#, c-format
+msgid ""
+"%sUnable to change bar type: you must delete bar and create another to do "
+"that"
+msgstr ""
+
+msgid "bar type (root, window, window_active, window_inactive)"
+msgstr ""
+
+#, fuzzy
+msgid "bar position (bottom, top, left, right)"
+msgstr "pozice seznamu přezdívek (top, left, right (výchozí), bottom)"
+
+msgid "bar size in chars (0 = auto size)"
+msgstr ""
+
+#, fuzzy
+msgid "separator line between bar and other bars/windows"
+msgstr "oddělovač mezi rozhovorem a seznamem přezdívek"
+
+#, fuzzy
+msgid "items of bar"
+msgstr "Seznam pro aliasy:\n"
+
 #, fuzzy
 msgid "filtered"
 msgstr "uživatel byl zablokován"
@@ -2225,6 +2253,18 @@ msgid "No server found with \"%s\""
 msgstr "Žádný server s '%s' nenalezen.\n"
 
 #, fuzzy, c-format
+msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgstr "%s server \"%s\" nenalezen pro příkaz \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgstr "%s server \"%s\" pro příkaz \"%s\" již existuje\n"
+
+#, fuzzy, c-format
+msgid "%s: server %s%s%s has been renamed to %s%s"
+msgstr "Server %s%s%s byl přejmenován na %s%s\n"
+
+#, fuzzy, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s server \"%s\" již existuje, nemohu jej vytvořít!\n"
 
@@ -2237,20 +2277,8 @@ msgid "%s%s: unable to create server"
 msgstr "%s nemohu vytvořit server\n"
 
 #, fuzzy, c-format
-msgid "%s%s: server \"%s\" not found for \"%s\" command"
-msgstr "%s server \"%s\" nenalezen pro příkaz \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: server \"%s\" already exists for \"%s\" command"
-msgstr "%s server \"%s\" pro příkaz \"%s\" již existuje\n"
-
-#, fuzzy, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "Server %s%s%s byl zkopírován do %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
-msgstr "Server %s%s%s byl přejmenován na %s%s\n"
 
 #, fuzzy, c-format
 msgid "%s%s: server \"%s\" is not a temporary server"

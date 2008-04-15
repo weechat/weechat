@@ -124,7 +124,7 @@ charset_config_create_option (void *data, struct t_config_file *config_file,
                 rc = weechat_config_option_set (ptr_option, value, 1);
             else
             {
-                weechat_config_option_free (section, ptr_option);
+                weechat_config_option_free (ptr_option);
                 rc = 1;
             }
         }
@@ -170,6 +170,7 @@ charset_config_init ()
         return 0;
     
     ptr_section = weechat_config_new_section (charset_config_file, "default",
+                                              0, 0,
                                               NULL, NULL,
                                               NULL, NULL,
                                               NULL, NULL,
@@ -198,6 +199,7 @@ charset_config_init ()
         NULL, NULL, NULL, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (charset_config_file, "decode",
+                                              1, 1,
                                               NULL, NULL,
                                               NULL, NULL,
                                               NULL, NULL,
@@ -211,6 +213,7 @@ charset_config_init ()
     charset_config_section_decode = ptr_section;
     
     ptr_section = weechat_config_new_section (charset_config_file, "encode",
+                                              1, 1,
                                               NULL, NULL,
                                               NULL, NULL,
                                               NULL, NULL,

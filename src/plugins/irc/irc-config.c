@@ -859,6 +859,7 @@ irc_config_init ()
         return 0;
     
     ptr_section = weechat_config_new_section (irc_config_file, "look",
+                                              0, 0,
                                               NULL, NULL, NULL, NULL,
                                               NULL, NULL, NULL, NULL);
     if (!ptr_section)
@@ -915,6 +916,7 @@ irc_config_init ()
         NULL, 0, 0, "", NULL, NULL, NULL, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (irc_config_file, "network",
+                                              0, 0,
                                               NULL, NULL, NULL, NULL,
                                               NULL, NULL, NULL, NULL);
     if (!ptr_section)
@@ -989,6 +991,7 @@ irc_config_init ()
         NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (irc_config_file, "dcc",
+                                              0, 0,
                                               NULL, NULL, NULL, NULL,
                                               NULL, NULL, NULL, NULL);
     if (!ptr_section)
@@ -1065,6 +1068,7 @@ irc_config_init ()
         NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (irc_config_file, "log",
+                                              0, 0,
                                               NULL, NULL, NULL, NULL,
                                               NULL, NULL, NULL, NULL);
     if (!ptr_section)
@@ -1095,6 +1099,7 @@ irc_config_init ()
         NULL, 0, 0, "on", NULL, NULL, &irc_config_change_log, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (irc_config_file, "server_default",
+                                              0, 0,
                                               NULL, NULL, NULL, NULL,
                                               NULL, NULL, NULL, NULL);
     if (!ptr_section)
@@ -1108,6 +1113,7 @@ irc_config_init ()
     irc_config_server_create_default_options (ptr_section);
     
     ptr_section = weechat_config_new_section (irc_config_file, "server",
+                                              1, 1,
                                               NULL, NULL,
                                               NULL, NULL,
                                               &irc_config_server_write_default, NULL,

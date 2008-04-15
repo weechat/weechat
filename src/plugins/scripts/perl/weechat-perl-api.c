@@ -964,7 +964,7 @@ static XS (XS_weechat_config_new_section)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 6)
+    if (items < 8)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
         PERL_RETURN_EMPTY;
@@ -972,14 +972,16 @@ static XS (XS_weechat_config_new_section)
     
     cfg_file = SvPV (ST (0), PL_na);
     name = SvPV (ST (1), PL_na);
-    function_read = SvPV (ST (2), PL_na);
-    function_write = SvPV (ST (3), PL_na);
-    function_write_default = SvPV (ST (4), PL_na);
-    function_create_option = SvPV (ST (5), PL_na);
+    function_read = SvPV (ST (4), PL_na);
+    function_write = SvPV (ST (5), PL_na);
+    function_write_default = SvPV (ST (6), PL_na);
+    function_create_option = SvPV (ST (7), PL_na);
     result = script_ptr2str (script_api_config_new_section (weechat_perl_plugin,
                                                             perl_current_script,
                                                             script_str2ptr (cfg_file),
                                                             name,
+                                                            SvIV (ST (2)), /* user_can_add_options */
+                                                            SvIV (ST (3)), /* user_can_delete_options */
                                                             &weechat_perl_api_config_section_read_cb,
                                                             function_read,
                                                             &weechat_perl_api_config_section_write_cb,
@@ -1165,6 +1167,38 @@ static XS (XS_weechat_config_string_to_boolean)
 }
 
 /*
+ * weechat::config_option_reset: reset an option with default value
+ */
+
+static XS (XS_weechat_config_option_reset)
+{
+    int rc;
+    char *option;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_reset");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_reset");
+        PERL_RETURN_INT(0);
+    }
+    
+    option = SvPV (ST (0), PL_na);
+    rc = weechat_config_option_reset (script_str2ptr (option),
+                                      SvIV (ST (1))); /* run_callback */
+    
+    PERL_RETURN_INT(rc);
+}
+
+/*
  * weechat::config_option_set: set new value for option
  */
 
@@ -1196,6 +1230,38 @@ static XS (XS_weechat_config_option_set)
                                     SvIV (ST (2))); /* run_callback */
     
     PERL_RETURN_INT(rc);
+}
+
+/*
+ * weechat::config_option_rename: rename an option
+ */
+
+static XS (XS_weechat_config_option_rename)
+{
+    char *option, *new_name;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_rename");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_rename");
+        PERL_RETURN_ERROR;
+    }
+    
+    option = SvPV (ST (0), PL_na);
+    new_name = SvPV (ST (1), PL_na);
+    weechat_config_option_rename (script_str2ptr (option),
+                                  new_name);
+    
+    PERL_RETURN_OK;
 }
 
 /*
@@ -3153,7 +3219,7 @@ static XS (XS_weechat_bar_search)
 
 static XS (XS_weechat_bar_new)
 {
-    char *result, *name, *type, *position, *bar_items;
+    char *result, *name, *type, *position, *size, *separator, *bar_items;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3174,12 +3240,14 @@ static XS (XS_weechat_bar_new)
     name = SvPV (ST (0), PL_na);
     type = SvPV (ST (1), PL_na);
     position = SvPV (ST (2), PL_na);
+    size = SvPV (ST (3), PL_na);
+    separator = SvPV (ST (4), PL_na);
     bar_items = SvPV (ST (5), PL_na);
     result = script_ptr2str (weechat_bar_new (name,
                                               type,
                                               position,
-                                              SvIV (ST (3)), /* size */
-                                              SvIV (ST (4)), /* separator */
+                                              size,
+                                              separator,
                                               bar_items));
     
     PERL_RETURN_STRING_FREE(result);
@@ -3651,7 +3719,9 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::config_new_option", XS_weechat_config_new_option, "weechat");
     newXS ("weechat::config_search_option", XS_weechat_config_search_option, "weechat");
     newXS ("weechat::config_string_to_boolean", XS_weechat_config_string_to_boolean, "weechat");
+    newXS ("weechat::config_option_reset", XS_weechat_config_option_reset, "weechat");
     newXS ("weechat::config_option_set", XS_weechat_config_option_set, "weechat");
+    newXS ("weechat::config_option_rename", XS_weechat_config_option_rename, "weechat");
     newXS ("weechat::config_boolean", XS_weechat_config_boolean, "weechat");
     newXS ("weechat::config_integer", XS_weechat_config_integer, "weechat");
     newXS ("weechat::config_string", XS_weechat_config_string, "weechat");

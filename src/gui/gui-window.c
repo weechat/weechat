@@ -273,7 +273,7 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         /* create bar windows */
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
-            if (ptr_bar->type != GUI_BAR_TYPE_ROOT)
+            if (CONFIG_INTEGER(ptr_bar->type) != GUI_BAR_TYPE_ROOT)
                 gui_bar_window_new (ptr_bar, new_window);
         }
     }

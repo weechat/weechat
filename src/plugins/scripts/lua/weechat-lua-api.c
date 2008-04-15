@@ -1128,7 +1128,7 @@ weechat_lua_api_config_new_section (lua_State *L)
     const char *config_file, *name, *function_read, *function_write;
     const char *function_write_default, *function_create_option;
     char *result;
-    int n;
+    int n, user_can_add_options, user_can_delete_options;
     
     /* make C compiler happy */
     (void) L;
@@ -1141,6 +1141,8 @@ weechat_lua_api_config_new_section (lua_State *L)
     
     config_file = NULL;
     name = NULL;
+    user_can_add_options = 0;
+    user_can_delete_options = 0;
     function_read = NULL;
     function_write = NULL;
     function_write_default = NULL;
@@ -1148,14 +1150,16 @@ weechat_lua_api_config_new_section (lua_State *L)
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 6)
+    if (n < 8)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
         LUA_RETURN_EMPTY;
     }
     
-    config_file = lua_tostring (lua_current_interpreter, -6);
-    name = lua_tostring (lua_current_interpreter, -5);
+    config_file = lua_tostring (lua_current_interpreter, -8);
+    name = lua_tostring (lua_current_interpreter, -7);
+    user_can_add_options = lua_tonumber (lua_current_interpreter, -6);
+    user_can_delete_options = lua_tonumber (lua_current_interpreter, -5);
     function_read = lua_tostring (lua_current_interpreter, -4);
     function_write = lua_tostring (lua_current_interpreter, -3);
     function_write_default = lua_tostring (lua_current_interpreter, -2);
@@ -1165,6 +1169,8 @@ weechat_lua_api_config_new_section (lua_State *L)
                                                             lua_current_script,
                                                             script_str2ptr ((char *)config_file),
                                                             (char *)name,
+                                                            user_can_add_options,
+                                                            user_can_delete_options,
                                                             &weechat_lua_api_config_read_cb,
                                                             (char *)function_read,
                                                             &weechat_lua_api_config_section_write_cb,
@@ -1392,6 +1398,45 @@ weechat_lua_api_config_string_to_boolean (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_config_option_reset: reset option with default value
+ */
+
+static int
+weechat_lua_api_config_option_reset (lua_State *L)
+{
+    const char *option;
+    int n, run_callback, rc;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_reset");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    run_callback = 0;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_reset");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -2);
+    run_callback = lua_tonumber (lua_current_interpreter, -1);
+    
+    rc = weechat_config_option_reset (script_str2ptr ((char *)option),
+                                      run_callback);
+    
+    LUA_RETURN_INT(rc);
+}
+
+/*
  * weechat_lua_api_config_option_set: set new value for option
  */
 
@@ -1431,6 +1476,45 @@ weechat_lua_api_config_option_set (lua_State *L)
                                     run_callback);
     
     LUA_RETURN_INT(rc);
+}
+
+/*
+ * weechat_lua_api_config_option_rename: rename an option
+ */
+
+static int
+weechat_lua_api_config_option_rename (lua_State *L)
+{
+    const char *option, *new_name;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_rename");;
+        LUA_RETURN_ERROR;
+    }
+    
+    option = NULL;
+    new_name = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_rename");
+        LUA_RETURN_ERROR;
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -2);
+    new_name = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_config_option_rename (script_str2ptr ((char *)option),
+                                  (char *)new_name);
+    
+    LUA_RETURN_OK;
 }
 
 /*
@@ -3794,9 +3878,9 @@ weechat_lua_api_bar_search (lua_State *L)
 static int
 weechat_lua_api_bar_new (lua_State *L)
 {
-    const char *name, *type, *position, *items;
+    const char *name, *type, *position, *items, *size, *separator;
     char *result;
-    int n, size, separator;
+    int n;
     
     /* make C compiler happy */
     (void) L;
@@ -3810,8 +3894,8 @@ weechat_lua_api_bar_new (lua_State *L)
     name = NULL;
     type = NULL;
     position = NULL;
-    size = 0;
-    separator = 0;
+    size = NULL;
+    separator = NULL;
     items = NULL;
     
     n = lua_gettop (lua_current_interpreter);
@@ -3825,15 +3909,15 @@ weechat_lua_api_bar_new (lua_State *L)
     name = lua_tostring (lua_current_interpreter, -6);
     type = lua_tostring (lua_current_interpreter, -5);
     position = lua_tostring (lua_current_interpreter, -4);
-    size = lua_tonumber (lua_current_interpreter, -3);
-    separator = lua_tonumber (lua_current_interpreter, -2);
+    size = lua_tostring (lua_current_interpreter, -3);
+    separator = lua_tostring (lua_current_interpreter, -2);
     items = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (weechat_bar_new ((char *)name,
                                               (char *)type,
                                               (char *)position,
-                                              size,
-                                              separator,
+                                              (char *)size,
+                                              (char *)separator,
                                               (char *)items));
     
     LUA_RETURN_STRING_FREE(result);
@@ -4533,7 +4617,9 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "config_new_option", &weechat_lua_api_config_new_option },
     { "config_search_option", &weechat_lua_api_config_search_option },
     { "config_string_to_boolean", &weechat_lua_api_config_string_to_boolean },
+    { "config_option_reset", &weechat_lua_api_config_option_reset },
     { "config_option_set", &weechat_lua_api_config_option_set },
+    { "config_option_rename", &weechat_lua_api_config_option_rename },
     { "config_boolean", &weechat_lua_api_config_boolean },
     { "config_integer", &weechat_lua_api_config_integer },
     { "config_string", &weechat_lua_api_config_string },

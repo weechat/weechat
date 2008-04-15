@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-12 09:39+0200\n"
+"POT-Creation-Date: 2008-04-15 13:49+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -879,6 +879,9 @@ msgid ""
 "notifications in infobar)"
 msgstr ""
 
+msgid "time format for \"time\" bar item"
+msgstr ""
+
 msgid ""
 "max number of names in hotlist (0 = no name displayed, only buffer numbers)"
 msgstr ""
@@ -1365,6 +1368,27 @@ msgid "-MORE-"
 msgstr ""
 
 msgid "server"
+msgstr ""
+
+#, c-format
+msgid ""
+"%sUnable to change bar type: you must delete bar and create another to do "
+"that"
+msgstr ""
+
+msgid "bar type (root, window, window_active, window_inactive)"
+msgstr ""
+
+msgid "bar position (bottom, top, left, right)"
+msgstr ""
+
+msgid "bar size in chars (0 = auto size)"
+msgstr ""
+
+msgid "separator line between bar and other bars/windows"
+msgstr ""
+
+msgid "items of bar"
 msgstr ""
 
 msgid "filtered"
@@ -1889,6 +1913,18 @@ msgid "No server found with \"%s\""
 msgstr ""
 
 #, c-format
+msgid "%s%s: server \"%s\" not found for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: server \"%s\" already exists for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s: server %s%s%s has been renamed to %s%s"
+msgstr ""
+
+#, c-format
 msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr ""
 
@@ -1901,19 +1937,7 @@ msgid "%s%s: unable to create server"
 msgstr ""
 
 #, c-format
-msgid "%s%s: server \"%s\" not found for \"%s\" command"
-msgstr ""
-
-#, c-format
-msgid "%s%s: server \"%s\" already exists for \"%s\" command"
-msgstr ""
-
-#, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
-msgstr ""
-
-#, c-format
-msgid "%s: server %s%s%s has been renamed to %s%s"
 msgstr ""
 
 #, c-format

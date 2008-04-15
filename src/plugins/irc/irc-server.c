@@ -994,6 +994,7 @@ irc_server_rename (struct t_irc_server *server, char *new_name)
     int length;
     char *option_name, *name, *pos_option;
     struct t_plugin_infolist *infolist;
+    struct t_config_option *ptr_option;
     
     /* check if another server exists with this name */
     if (irc_server_search (new_name))
@@ -1009,18 +1010,25 @@ irc_server_rename (struct t_irc_server *server, char *new_name)
     free (option_name);
     while (weechat_infolist_next (infolist))
     {
-        name = weechat_infolist_string (infolist, "name");
-        pos_option = strchr (name, '.');
-        if (pos_option)
+        weechat_config_search_with_string (weechat_infolist_string (infolist,
+                                                                    "full_name"),
+                                           NULL, NULL, &ptr_option,
+                                           NULL);
+        if (ptr_option)
         {
-            pos_option++;
-            length = strlen (new_name) + 1 + strlen (pos_option) + 1;
-            option_name = malloc (length);
-            if (option_name)
+            name = weechat_infolist_string (infolist, "name");
+            pos_option = strchr (name, '.');
+            if (pos_option)
             {
-                snprintf (option_name, length, "%s.%s", new_name, pos_option);
-                /* TODO: complete this function */
-                free (option_name);
+                pos_option++;
+                length = strlen (new_name) + 1 + strlen (pos_option) + 1;
+                option_name = malloc (length);
+                if (option_name)
+                {
+                    snprintf (option_name, length, "%s.%s", new_name, pos_option);
+                    weechat_config_option_rename (ptr_option, option_name);
+                    free (option_name);
+                }
             }
         }
     }

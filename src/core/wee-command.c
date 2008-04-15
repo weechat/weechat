@@ -64,7 +64,7 @@ int
 command_bar (void *data, struct t_gui_buffer *buffer,
              int argc, char **argv, char **argv_eol)
 {
-    int type, position, size, separator;
+    int type, position;
     long number;
     char *error;
     struct t_gui_bar *ptr_bar;
@@ -89,17 +89,17 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                                  _("  %d. %s: %s, %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"),
                                  ptr_bar->number,
                                  ptr_bar->name,
-                                 gui_bar_type_str[ptr_bar->type],
-                                 gui_bar_position_str[ptr_bar->position],
-                                 ((ptr_bar->position == GUI_BAR_POSITION_BOTTOM)
-                                  || (ptr_bar->position == GUI_BAR_POSITION_TOP)) ?
+                                 gui_bar_type_str[CONFIG_INTEGER(ptr_bar->type)],
+                                 gui_bar_position_str[CONFIG_INTEGER(ptr_bar->position)],
+                                 ((CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_BOTTOM)
+                                  || (CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_TOP)) ?
                                  _("height") : _("width"),
-                                 (ptr_bar->size == 0) ? _("auto") : "",
-                                 (ptr_bar->size == 0) ? " (" : "",
+                                 (CONFIG_INTEGER(ptr_bar->size) == 0) ? _("auto") : "",
+                                 (CONFIG_INTEGER(ptr_bar->size) == 0) ? " (" : "",
                                  ptr_bar->current_size,
-                                 (ptr_bar->size == 0) ? ")" : "",
-                                 (ptr_bar->items) ? ptr_bar->items : "-",
-                                 (ptr_bar->separator) ?
+                                 (CONFIG_INTEGER(ptr_bar->size) == 0) ? ")" : "",
+                                 (CONFIG_STRING(ptr_bar->items)) ? CONFIG_STRING(ptr_bar->items) : "-",
+                                 (CONFIG_INTEGER(ptr_bar->separator)) ?
                                  _(", with separator") : "",
                                  (ptr_bar->plugin) ? ptr_bar->plugin->name : "-");
             }
@@ -145,7 +145,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                              "bar");
             return WEECHAT_RC_ERROR;
         }
-        type = gui_bar_get_type (argv[3]);
+        type = gui_bar_search_type (argv[3]);
         if (type < 0)
         {
             gui_chat_printf (NULL,
@@ -155,7 +155,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                              argv[3], argv[2]);
             return WEECHAT_RC_ERROR;
         }
-        position = gui_bar_get_position (argv[4]);
+        position = gui_bar_search_position (argv[4]);
         if (position < 0)
         {
             gui_chat_printf (NULL,
@@ -169,14 +169,9 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         number = strtol (argv[5], &error, 10);
         if (error && !error[0])
         {
-            size = number;
-            separator = 0;
-            if (strcmp (argv[6], "0") != 0)
-                separator = 1;
-            
             /* create bar */
-            if (gui_bar_new (NULL, argv[2], argv[3], argv[4], size,
-                             separator, argv[7]))
+            if (gui_bar_new (NULL, argv[2], argv[3], argv[4], argv[5],
+                             argv[6], argv_eol[7]))
             {
                 gui_chat_printf (NULL, _("Bar \"%s\" created"),
                                  argv[2]);

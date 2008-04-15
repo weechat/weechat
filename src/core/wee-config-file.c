@@ -149,6 +149,7 @@ config_file_valid_for_plugin (struct t_weechat_plugin *plugin,
 
 struct t_config_section *
 config_file_new_section (struct t_config_file *config_file, char *name,
+                         int user_can_add_options, int user_can_delete_options,
                          int (*callback_read)(void *data,
                                               struct t_config_file *config_file,
                                               struct t_config_section *section,
@@ -175,10 +176,15 @@ config_file_new_section (struct t_config_file *config_file, char *name,
     if (!config_file || !name)
         return NULL;
     
+    if (config_file_search_section (config_file, name))
+        return NULL;
+    
     new_section = malloc (sizeof (*new_section));
     if (new_section)
     {
         new_section->name = strdup (name);
+        new_section->user_can_add_options = user_can_add_options;
+        new_section->user_can_delete_options = user_can_delete_options;
         new_section->callback_read = callback_read;
         new_section->callback_read_data = callback_read_data;
         new_section->callback_write = callback_write;
@@ -279,6 +285,53 @@ config_file_option_find_pos (struct t_config_section *section, char *name)
 }
 
 /*
+ * config_file_option_insert_in_section: insert option in section (for sorting
+ *                                       options)
+ */
+
+void
+config_file_option_insert_in_section (struct t_config_option *option)
+{
+    struct t_config_option *pos_option;
+    
+    if (!option->section)
+        return;
+    
+    if (option->section->options)
+    {
+        pos_option = config_file_option_find_pos (option->section,
+                                                  option->name);
+        if (pos_option)
+        {
+            /* insert option into the list (before option found) */
+            option->prev_option = pos_option->prev_option;
+            option->next_option = pos_option;
+            if (pos_option->prev_option)
+                (pos_option->prev_option)->next_option = option;
+            else
+                (option->section)->options = option;
+            pos_option->prev_option = option;
+        }
+        else
+        {
+            /* add option to end of section */
+            option->prev_option = (option->section)->last_option;
+            option->next_option = NULL;
+            (option->section)->last_option->next_option = option;
+            (option->section)->last_option = option;
+        }
+    }
+    else
+    {
+        /* first option for section */
+        option->prev_option = NULL;
+        option->next_option = NULL;
+        (option->section)->options = option;
+        (option->section)->last_option = option;
+    }
+}
+
+/*
  * config_file_new_option: create a new option
  */
 
@@ -299,12 +352,16 @@ config_file_new_option (struct t_config_file *config_file,
                                                 struct t_config_option *option),
                         void *callback_delete_data)
 {
-    struct t_config_option *new_option, *pos_option;
+    struct t_config_option *new_option;
     int var_type, int_value, argc, i, index_value;
     long number;
     char *error;
     
     if (!name)
+        return NULL;
+    
+    if (config_file && section
+        && config_file_search_option (config_file, section, name))
         return NULL;
     
     var_type = -1;
@@ -414,37 +471,7 @@ config_file_new_option (struct t_config_file *config_file,
 
         if (section)
         {
-            if (section->options)
-            {
-                pos_option = config_file_option_find_pos (section, name);
-                if (pos_option)
-                {
-                    /* insert option into the list (before option found) */
-                    new_option->prev_option = pos_option->prev_option;
-                    new_option->next_option = pos_option;
-                    if (pos_option->prev_option)
-                        (pos_option->prev_option)->next_option = new_option;
-                    else
-                        section->options = new_option;
-                    pos_option->prev_option = new_option;
-                }
-                else
-                {
-                    /* add option to end of section */
-                    new_option->prev_option = section->last_option;
-                    new_option->next_option = NULL;
-                    section->last_option->next_option = new_option;
-                    section->last_option = new_option;
-                }
-            }
-            else
-            {
-                /* first option for section */
-                new_option->prev_option = NULL;
-                new_option->next_option = NULL;
-                section->options = new_option;
-                section->last_option = new_option;
-            }
+            config_file_option_insert_in_section (new_option);
         }
         else
         {
@@ -934,6 +961,39 @@ config_file_option_set (struct t_config_option *option, char *value,
 }
 
 /*
+ * config_file_option_rename: rename an option
+ */
+
+void
+config_file_option_rename (struct t_config_option *option, char *new_name)
+{
+    if (!new_name || !new_name[0])
+        return;
+    
+    /* remove option from list */
+    if (option->section)
+    {
+        if (option->prev_option)
+            (option->prev_option)->next_option = option->next_option;
+        if (option->next_option)
+            (option->next_option)->prev_option = option->prev_option;
+        if (option->section->options == option)
+            (option->section)->options = option->next_option;
+        if (option->section->last_option == option)
+            (option->section)->last_option = option->prev_option;
+    }
+    
+    /* rename option */
+    if (option->name)
+        free (option->name);
+    option->name = strdup (new_name);
+
+    /* re-insert option in section */
+    if (option->section)
+        config_file_option_insert_in_section (option);
+}
+
+/*
  * config_file_option_get_pointer: get a pointer of an option property
  */
 
@@ -997,7 +1057,8 @@ config_file_option_set_with_string (char *option_name, char *value)
             rc = config_file_option_set (ptr_option, value, 1);
         else
         {
-            if (ptr_section->callback_create_option)
+            if (ptr_section->user_can_add_options
+                && ptr_section->callback_create_option)
             {
                 rc = (int)(ptr_section->callback_create_option)
                     (ptr_section->callback_create_option_data,
@@ -1036,7 +1097,7 @@ config_file_unset_with_string (char *option_name)
     /* delete option */
     if (ptr_section && ptr_option)
     {
-        if (ptr_section->callback_create_option)
+        if (ptr_section->user_can_delete_options)
         {
             /* removing option */
             if (ptr_option->callback_delete)
@@ -1045,7 +1106,7 @@ config_file_unset_with_string (char *option_name)
                     (ptr_option->callback_delete_data,
                      ptr_option);
             }
-            config_file_option_free (ptr_section, ptr_option);
+            config_file_option_free (ptr_option);
             rc = 2;
         }
         else
@@ -1654,7 +1715,7 @@ config_file_reload (struct t_config_file *config_file)
 }
 
 /*
- * config_file_option_free: free data in an option
+ * config_file_option_free_data: free data in an option
  */
 
 void
@@ -1677,23 +1738,25 @@ config_file_option_free_data (struct t_config_option *option)
  */
 
 void
-config_file_option_free (struct t_config_section *section,
-                         struct t_config_option *option)
+config_file_option_free (struct t_config_option *option)
 {
+    struct t_config_section *ptr_section;
     struct t_config_option *new_options;
     
     if (!option)
         return;
+
+    ptr_section = option->section;
     
     /* remove option from section */
-    if (section)
+    if (ptr_section)
     {
-        if (section->last_option == option)
-            section->last_option = option->prev_option;
+        if (ptr_section->last_option == option)
+            ptr_section->last_option = option->prev_option;
         if (option->prev_option)
         {
             (option->prev_option)->next_option = option->next_option;
-            new_options = section->options;
+            new_options = ptr_section->options;
         }
         else
             new_options = option->next_option;
@@ -1706,8 +1769,8 @@ config_file_option_free (struct t_config_section *section,
     
     free (option);
     
-    if (section)
-        section->options = new_options;
+    if (ptr_section)
+        ptr_section->options = new_options;
 }
 
 /*
@@ -1722,7 +1785,7 @@ config_file_section_free_options (struct t_config_section *section)
     
     while (section->options)
     {
-        config_file_option_free (section, section->options);
+        config_file_option_free (section->options);
     }
 }
 

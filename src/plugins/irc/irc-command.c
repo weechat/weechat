@@ -2553,6 +2553,55 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_OK;
     }
     
+    if (weechat_strcasecmp (argv[1], "rename") == 0)
+    {
+        if (argc < 4)
+        {
+            IRC_COMMAND_TOO_FEW_ARGUMENTS(NULL, "server rename");
+        }
+        
+        /* look for server by name */
+        server_found = irc_server_search (argv[2]);
+        if (!server_found)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: server \"%s\" not found for "
+                              "\"%s\" command"),
+                            weechat_prefix ("error"), "irc",
+                            argv[2], "server rename");
+            return WEECHAT_RC_ERROR;
+        }
+        
+        /* check if target name already exists */
+        if (irc_server_search (argv[3]))
+        {
+            weechat_printf (NULL,
+                            _("%s%s: server \"%s\" already exists for "
+                              "\"%s\" command"),
+                            weechat_prefix ("error"), "irc",
+                            argv[3], "server rename");
+            return WEECHAT_RC_ERROR;
+        }
+        
+        /* rename server */
+        if (irc_server_rename (server_found, argv[3]))
+        {
+            weechat_printf (NULL,
+                            _("%s: server %s%s%s has been renamed to "
+                              "%s%s"),
+                            "irc",
+                            IRC_COLOR_CHAT_SERVER,
+                            argv[2],
+                            IRC_COLOR_CHAT,
+                            IRC_COLOR_CHAT_SERVER,
+                            argv[3]);
+            //gui_window_redraw_all_buffers ();
+            return WEECHAT_RC_OK;
+        }
+        
+        return WEECHAT_RC_ERROR;
+    }
+    
     /* TODO: fix server command */
     weechat_printf (NULL,
                     "%sSome server options are temporarirly disabled in "
@@ -2751,55 +2800,6 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         {
             weechat_printf (NULL,
                             _("%s: server %s%s%s has been copied to "
-                              "%s%s"),
-                            "irc",
-                            IRC_COLOR_CHAT_SERVER,
-                            argv[2],
-                            IRC_COLOR_CHAT,
-                            IRC_COLOR_CHAT_SERVER,
-                            argv[3]);
-            //gui_window_redraw_all_buffers ();
-            return WEECHAT_RC_OK;
-        }
-        
-        return WEECHAT_RC_ERROR;
-    }
-    
-    if (weechat_strcasecmp (argv[1], "rename") == 0)
-    {
-        if (argc < 4)
-        {
-            IRC_COMMAND_TOO_FEW_ARGUMENTS(NULL, "server rename");
-        }
-        
-        /* look for server by name */
-        server_found = irc_server_search (argv[2]);
-        if (!server_found)
-        {
-            weechat_printf (NULL,
-                            _("%s%s: server \"%s\" not found for "
-                              "\"%s\" command"),
-                            weechat_prefix ("error"), "irc",
-                            argv[2], "server rename");
-            return WEECHAT_RC_ERROR;
-        }
-        
-        /* check if target name already exists */
-        if (irc_server_search (argv[3]))
-        {
-            weechat_printf (NULL,
-                            _("%s%s: server \"%s\" already exists for "
-                              "\"%s\" command"),
-                            weechat_prefix ("error"), "irc",
-                            argv[3], "server rename");
-            return WEECHAT_RC_ERROR;
-        }
-        
-        /* rename server */
-        if (irc_server_rename (server_found, argv[3]))
-        {
-            weechat_printf (NULL,
-                            _("%s: server %s%s%s has been renamed to "
                               "%s%s"),
                             "irc",
                             IRC_COLOR_CHAT_SERVER,
