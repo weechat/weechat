@@ -324,11 +324,11 @@ gui_keyboard_get_expanded_name (char *key)
  */
 
 struct t_gui_key *
-gui_keyboard_find_pos (struct t_gui_key *key)
+gui_keyboard_find_pos (struct t_gui_key *keys, struct t_gui_key *key)
 {
     struct t_gui_key *ptr_key;
     
-    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+    for (ptr_key = keys; ptr_key; ptr_key = ptr_key->next_key)
     {
         if (string_strcasecmp (key->key, ptr_key->key) < 0)
             return ptr_key;
@@ -341,13 +341,14 @@ gui_keyboard_find_pos (struct t_gui_key *key)
  */
 
 void
-gui_keyboard_insert_sorted (struct t_gui_key *key)
+gui_keyboard_insert_sorted (struct t_gui_key **keys, struct t_gui_key **last_key,
+                            struct t_gui_key *key)
 {
     struct t_gui_key *pos_key;
     
-    if (gui_keys)
+    if (*keys)
     {
-        pos_key = gui_keyboard_find_pos (key);
+        pos_key = gui_keyboard_find_pos (*keys, key);
         
         if (pos_key)
         {
@@ -357,33 +358,36 @@ gui_keyboard_insert_sorted (struct t_gui_key *key)
             if (pos_key->prev_key)
                 pos_key->prev_key->next_key = key;
             else
-                gui_keys = key;
+                *keys = key;
             pos_key->prev_key = key;
         }
         else
         {
             /* add key to the end */
-            key->prev_key = last_gui_key;
+            key->prev_key = *last_key;
             key->next_key = NULL;
-            last_gui_key->next_key = key;
-            last_gui_key = key;
+            (*last_key)->next_key = key;
+            *last_key = key;
         }
     }
     else
     {
         key->prev_key = NULL;
         key->next_key = NULL;
-        gui_keys = key;
-        last_gui_key = key;
+        *keys = key;
+        *last_key = key;
     }
 }
 
 /*
  * gui_keyboard_new: add a new key in keys list
+ *                   if buffer is not null, then key is specific to buffer
+ *                   otherwise it's general key (for most keys)
  */
 
 struct t_gui_key *
-gui_keyboard_new (char *key, char *command, t_gui_key_func *function,
+gui_keyboard_new (struct t_gui_buffer *buffer,
+                  char *key, char *command, t_gui_key_func *function,
                   char *args)
 {
     struct t_gui_key *new_key;
@@ -413,7 +417,11 @@ gui_keyboard_new (char *key, char *command, t_gui_key_func *function,
         }
         else
             new_key->args = NULL;
-        gui_keyboard_insert_sorted (new_key);
+
+        if (buffer)
+            gui_keyboard_insert_sorted (&buffer->keys, &buffer->last_key, new_key);
+        else
+            gui_keyboard_insert_sorted (&gui_keys, &last_gui_key, new_key);
     }
     else
         return NULL;
@@ -426,11 +434,12 @@ gui_keyboard_new (char *key, char *command, t_gui_key_func *function,
  */
 
 struct t_gui_key *
-gui_keyboard_search (char *key)
+gui_keyboard_search (struct t_gui_buffer *buffer, char *key)
 {
     struct t_gui_key *ptr_key;
 
-    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+    for (ptr_key = (buffer) ? buffer->keys : gui_keys; ptr_key;
+         ptr_key = ptr_key->next_key)
     {
         if (string_strcasecmp (ptr_key->key, key) == 0)
             return ptr_key;
@@ -463,11 +472,12 @@ gui_keyboard_cmp (char *key, char *search)
  */
 
 struct t_gui_key *
-gui_keyboard_search_part (char *key)
+gui_keyboard_search_part (struct t_gui_buffer *buffer, char *key)
 {
     struct t_gui_key *ptr_key;
     
-    for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
+    for (ptr_key = (buffer) ? buffer->keys : gui_keys; ptr_key;
+         ptr_key = ptr_key->next_key)
     {
         if (gui_keyboard_cmp (ptr_key->key, key) == 0)
             return ptr_key;
@@ -521,10 +531,12 @@ gui_keyboard_function_search_by_ptr (t_gui_key_func *function)
 
 /*
  * gui_keyboard_bind: bind a key to a function (command or special function)
+ *                    if buffer is not null, then key is specific to buffer
+ *                    otherwise it's general key (for most keys)
  */
 
 struct t_gui_key *
-gui_keyboard_bind (char *key, char *command)
+gui_keyboard_bind (struct t_gui_buffer *buffer, char *key, char *command)
 {
     t_gui_key_func *ptr_function;
     struct t_gui_key *new_key;
@@ -566,9 +578,10 @@ gui_keyboard_bind (char *key, char *command)
         }
     }
     
-    gui_keyboard_unbind (key);
+    gui_keyboard_unbind (buffer, key);
     
-    new_key = gui_keyboard_new (key,
+    new_key = gui_keyboard_new (buffer,
+                                key,
                                 (ptr_function) ? NULL : command,
                                 ptr_function,
                                 ptr_args);
@@ -586,16 +599,21 @@ gui_keyboard_bind (char *key, char *command)
  */
 
 int
-gui_keyboard_unbind (char *key)
+gui_keyboard_unbind (struct t_gui_buffer *buffer, char *key)
 {
     struct t_gui_key *ptr_key;
     char *internal_code;
     
     internal_code = gui_keyboard_get_internal_code (key);
     
-    ptr_key = gui_keyboard_search ((internal_code) ? internal_code : key);
+    ptr_key = gui_keyboard_search (buffer, (internal_code) ? internal_code : key);
     if (ptr_key)
-        gui_keyboard_free (ptr_key);
+    {
+        if (buffer)
+            gui_keyboard_free (&buffer->keys, &buffer->last_key, ptr_key);
+        else
+            gui_keyboard_free (&gui_keys, &last_gui_key, ptr_key);
+    }
     
     if (internal_code)
         free (internal_code);
@@ -628,8 +646,14 @@ gui_keyboard_pressed (char *key_str)
         return 0;
     }
     
-    /* look for key combo in key table */
-    ptr_key = gui_keyboard_search_part (gui_key_combo_buffer);
+    /* look for key combo in key table for current buffer */
+    ptr_key = gui_keyboard_search_part (gui_current_window->buffer,
+                                        gui_key_combo_buffer);
+    /* if key is not found for buffer, then look in general table */
+    if (!ptr_key)
+        ptr_key = gui_keyboard_search_part (NULL, gui_key_combo_buffer);
+    
+    /* if key is found, then execute action */
     if (ptr_key)
     {
         if (string_strcasecmp (ptr_key->key, gui_key_combo_buffer) == 0)
@@ -683,7 +707,8 @@ gui_keyboard_pressed (char *key_str)
  */
 
 void
-gui_keyboard_free (struct t_gui_key *key)
+gui_keyboard_free (struct t_gui_key **keys, struct t_gui_key **last_key,
+                   struct t_gui_key *key)
 {
     /* free memory */
     if (key->key)
@@ -695,13 +720,13 @@ gui_keyboard_free (struct t_gui_key *key)
     
     /* remove key from keys list */
     if (key->prev_key)
-        key->prev_key->next_key = key->next_key;
+        (key->prev_key)->next_key = key->next_key;
     if (key->next_key)
-        key->next_key->prev_key = key->prev_key;
-    if (gui_keys == key)
-        gui_keys = key->next_key;
-    if (last_gui_key == key)
-        last_gui_key = key->prev_key;
+        (key->next_key)->prev_key = key->prev_key;
+    if (*keys == key)
+        *keys = key->next_key;
+    if (*last_key == key)
+        *last_key = key->prev_key;
     
     free (key);
 }
@@ -711,11 +736,11 @@ gui_keyboard_free (struct t_gui_key *key)
  */
 
 void
-gui_keyboard_free_all ()
+gui_keyboard_free_all (struct t_gui_key **keys, struct t_gui_key **last_key)
 {
-    while (gui_keys)
+    while (*keys)
     {
-        gui_keyboard_free (gui_keys);
+        gui_keyboard_free (keys, last_key, *keys);
     }
 }
 
@@ -842,5 +867,31 @@ gui_keyboard_end ()
         free (gui_keyboard_buffer);
     
     /* free all keys */
-    gui_keyboard_free_all ();
+    gui_keyboard_free_all (&gui_keys, &last_gui_key);
+}
+
+/*
+ * gui_keyboard_print_log: print key infos in log (usually for crash dump)
+ */
+
+void
+gui_keyboard_print_log (struct t_gui_buffer *buffer)
+{
+    struct t_gui_key *ptr_key;
+    char prefix[32];
+    
+    snprintf (prefix, sizeof (prefix), "%s", (buffer) ? "    " : "");
+    
+    for (ptr_key = (buffer) ? buffer->keys : gui_keys; ptr_key;
+         ptr_key = ptr_key->next_key)
+    {
+        log_printf ("");
+        log_printf ("%s[key (addr:0x%x)]", prefix, ptr_key);
+        log_printf ("%skey. . . . . . . . . : '%s'", prefix, ptr_key->key);
+        log_printf ("%scommand. . . . . . . : '%s'", prefix, ptr_key->command);
+        log_printf ("%sfunction . . . . . . : 0x%x", prefix, ptr_key->function);
+        log_printf ("%sargs . . . . . . . . : '%s'", prefix, ptr_key->args);
+        log_printf ("%sprev_key . . . . . . : 0x%x", prefix, ptr_key->prev_key);
+        log_printf ("%snext_key . . . . . . : 0x%x", prefix, ptr_key->next_key);
+    }
 }

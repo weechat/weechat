@@ -129,6 +129,10 @@ struct t_gui_buffer
     int text_search_found;             /* 1 if text found, otherwise 0      */
     char *text_search_input;           /* input saved before text search    */
     
+    /* keys associated to buffer */
+    struct t_gui_key *keys;            /* keys specific to buffer           */
+    struct t_gui_key *last_key;        /* last key for buffer               */
+    
     /* link to previous/next buffer */
     struct t_gui_buffer *prev_buffer;  /* link to previous buffer           */
     struct t_gui_buffer *next_buffer;  /* link to next buffer               */

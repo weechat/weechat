@@ -1002,6 +1002,8 @@ void
 gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
                          int y)
 {
+    int pair;
+    
     /* reset color & style for a new line */
     gui_chat_reset_style (window);
     
@@ -1015,6 +1017,11 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
     
     gui_chat_display_word_raw (window, line->message,
                                window->win_chat_width, 1);
+    
+    pair = (GUI_CURSES(window)->current_style_bg < 0) ?
+        63 : GUI_CURSES(window)->current_style_bg * 8;
+    wbkgdset (GUI_CURSES(window)->win_chat, ' ' | COLOR_PAIR (pair));
+    wclrtoeol (GUI_CURSES(window)->win_chat);
 }
 
 /*

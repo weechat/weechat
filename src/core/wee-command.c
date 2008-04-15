@@ -1155,7 +1155,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
     {
         if ((argc >= 3) && (string_strcasecmp (argv[2], "-yes") == 0))
         {
-            gui_keyboard_free_all ();
+            gui_keyboard_free_all (&gui_keys, &last_gui_key);
             gui_keyboard_init ();
             gui_chat_printf (NULL,
                              _("Default key bindings restored"));
@@ -1176,7 +1176,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
     {
         if (argc >= 3)
         {
-            if (gui_keyboard_unbind (argv[2]))
+            if (gui_keyboard_unbind (NULL, argv[2]))
             {
                 gui_chat_printf (NULL,
                                  _("Key \"%s\" unbound"),
@@ -1230,7 +1230,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
         ptr_key = NULL;
         internal_code = gui_keyboard_get_internal_code (argv[1]);
         if (internal_code)
-            ptr_key = gui_keyboard_search (internal_code);
+            ptr_key = gui_keyboard_search (NULL, internal_code);
         if (ptr_key)
         {
             gui_chat_printf (NULL, "");
@@ -1248,7 +1248,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
     }
 
     /* bind new key */
-    ptr_key = gui_keyboard_bind (argv[1], argv_eol[2]);
+    ptr_key = gui_keyboard_bind (NULL, argv[1], argv_eol[2]);
     if (ptr_key)
     {
         command_key_display (ptr_key, 1);

@@ -63,20 +63,26 @@ extern void gui_keyboard_grab_init ();
 extern void gui_keyboard_grab_end ();
 extern char *gui_keyboard_get_internal_code (char *key);
 extern char *gui_keyboard_get_expanded_name (char *key);
-extern struct t_gui_key *gui_keyboard_search (char *key);
+extern struct t_gui_key *gui_keyboard_search (struct t_gui_buffer *buffer,
+                                              char *key);
 extern t_gui_key_func *gui_keyboard_function_search_by_name (char *name);
 extern char *gui_keyboard_function_search_by_ptr (t_gui_key_func *function);
-extern struct t_gui_key *gui_keyboard_bind (char *key, char *command);
-extern int gui_keyboard_unbind (char *key);
+extern struct t_gui_key *gui_keyboard_bind (struct t_gui_buffer *buffer,
+                                            char *key, char *command);
+extern int gui_keyboard_unbind (struct t_gui_buffer *buffer, char *key);
 extern int gui_keyboard_pressed (char *key_str);
-extern void gui_keyboard_free (struct t_gui_key *key);
-extern void gui_keyboard_free_all ();
+extern void gui_keyboard_free (struct t_gui_key **keys,
+                               struct t_gui_key **last_key,
+                               struct t_gui_key *key);
+extern void gui_keyboard_free_all (struct t_gui_key **keys,
+                                   struct t_gui_key **last_key);
 extern void gui_keyboard_buffer_reset ();
 extern void gui_keyboard_buffer_add (int key);
 extern int gui_keyboard_get_paste_lines ();
 extern void gui_keyboard_paste_accept ();
 extern void gui_keyboard_paste_cancel ();
 extern void gui_keyboard_end ();
+extern void gui_keyboard_print_log (struct t_gui_buffer *buffer);
 
 /* keyboard functions (GUI dependent) */
 

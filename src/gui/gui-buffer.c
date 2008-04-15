@@ -46,6 +46,7 @@
 #include "gui-history.h"
 #include "gui-hotlist.h"
 #include "gui-input.h"
+#include "gui-keyboard.h"
 #include "gui-main.h"
 #include "gui-nicklist.h"
 #include "gui-status.h"
@@ -162,6 +163,10 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         new_buffer->text_search_exact = 0;
         new_buffer->text_search_found = 0;
         new_buffer->text_search_input = NULL;
+        
+        /* keys */
+        new_buffer->keys = NULL;
+        new_buffer->last_key = NULL;
         
         /* add buffer to buffers list */
         new_buffer->prev_buffer = last_gui_buffer;
@@ -460,6 +465,17 @@ gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
                 gui_hotlist_add (buffer, number, NULL, 1);
         }
     }
+    else if (string_strncasecmp (property, "key_bind_", 9) == 0)
+    {
+        gui_keyboard_bind (buffer, property + 9, value);
+    }
+    else if (string_strncasecmp (property, "key_unbind_", 11) == 0)
+    {
+        if (strcmp (property + 11, "*") == 0)
+            gui_keyboard_free_all (&buffer->keys, &buffer->last_key);
+        else
+            gui_keyboard_unbind (buffer, property + 11);
+    }
 }
 
 /*
@@ -747,6 +763,7 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     if (buffer->text_search_input)
         free (buffer->text_search_input);
     gui_nicklist_remove_all (buffer);
+    gui_keyboard_free_all (&buffer->keys, &buffer->last_key);
     
     /* remove buffer from buffers list */
     if (buffer->prev_buffer)
@@ -1072,6 +1089,14 @@ gui_buffer_print_log ()
         log_printf ("");
         log_printf ("  => nicklist_root (addr:0x%x):", ptr_buffer->nicklist_root);
         gui_nicklist_print_log (ptr_buffer->nicklist_root, 0);
+
+        if (ptr_buffer->keys)
+        {
+            log_printf ("");
+            log_printf ("  => keys = 0x%x, last_key = 0x%x:",
+                        ptr_buffer->keys, ptr_buffer->last_key);
+            gui_keyboard_print_log (ptr_buffer);
+        }
         
         log_printf ("");
         log_printf ("  => last 100 lines:");

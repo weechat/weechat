@@ -194,7 +194,7 @@ gui_window_curses_clear (WINDOW *window, int num_color)
     if (!gui_ok)
         return;
     
-    wbkgdset(window, ' ' | COLOR_PAIR (gui_color_get_pair (num_color)));
+    wbkgdset (window, ' ' | COLOR_PAIR (gui_color_get_pair (num_color)));
     werase (window);
     wmove (window, 0, 0);
 }

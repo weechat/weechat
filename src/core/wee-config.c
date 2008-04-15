@@ -508,7 +508,7 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     (void) config_file;
     
     /* remove all keys */
-    gui_keyboard_free_all ();
+    gui_keyboard_free_all (&gui_keys, &last_gui_key);
     
     /* remove all bars */
     gui_bar_free_all ();
@@ -589,8 +589,6 @@ config_weechat_bar_read (void *data, struct t_config_file *config_file,
                                                             value);
                         if (ptr_option)
                         {
-                            log_printf ("createion pour index %d, ptr = %x",
-                                        index_option, ptr_temp_bar);
                             switch (index_option)
                             {
                                 case GUI_BAR_OPTION_TYPE:
@@ -739,12 +737,12 @@ config_weechat_key_read (void *data, struct t_config_file *config_file,
         if (value && value[0])
         {
             /* bind key (overwrite any binding with same key) */
-            gui_keyboard_bind (option_name, value);
+            gui_keyboard_bind (NULL, option_name, value);
         }
         else
         {
             /* unbind key if no value given */
-            gui_keyboard_unbind (option_name);
+            gui_keyboard_unbind (NULL, option_name);
         }
     }
     

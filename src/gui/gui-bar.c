@@ -901,12 +901,10 @@ gui_bar_use_temp_bars ()
     for (ptr_temp_bar = gui_temp_bars; ptr_temp_bar;
          ptr_temp_bar = ptr_temp_bar->next_bar)
     {
-        log_printf ("use temp bar");
         if (ptr_temp_bar->type && ptr_temp_bar->position
             && ptr_temp_bar->size && ptr_temp_bar->separator
             && ptr_temp_bar->items)
         {
-            log_printf ("creation barre %s", ptr_temp_bar->name);
             gui_bar_new_with_options (NULL, ptr_temp_bar->name,
                                       ptr_temp_bar->type,
                                       ptr_temp_bar->position,

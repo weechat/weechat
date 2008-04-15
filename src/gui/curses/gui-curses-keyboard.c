@@ -52,108 +52,108 @@ gui_keyboard_default_bindings ()
     char key_str[32], command[32];
     
     /* keys bound with internal functions */
-    gui_keyboard_bind (/* RC            */ "ctrl-M",             "return");
-    gui_keyboard_bind (/* RC            */ "ctrl-J",             "return");
-    gui_keyboard_bind (/* tab           */ "ctrl-I",             "tab");
-    gui_keyboard_bind (/* s-tab         */ "meta2-Z",            "tab_previous");
-    gui_keyboard_bind (/* basckpace     */ "ctrl-H",             "backspace");
-    gui_keyboard_bind (/* basckpace     */ "ctrl-?",             "backspace");
-    gui_keyboard_bind (/* del           */ "meta2-3~",           "delete");
-    gui_keyboard_bind (/* ^D            */ "ctrl-D",             "delete");
-    gui_keyboard_bind (/* ^K            */ "ctrl-K",             "delete_end_line");
-    gui_keyboard_bind (/* ^U            */ "ctrl-U",             "delete_beginning_line");
-    gui_keyboard_bind (/* ^W            */ "ctrl-W",             "delete_previous_word");
-    gui_keyboard_bind (/* ^Y            */ "ctrl-Y",             "clipboard_paste");
-    gui_keyboard_bind (/* ^T            */ "ctrl-T",             "transpose_chars");
-    gui_keyboard_bind (/* home          */ "meta2-1~",           "home");
-    gui_keyboard_bind (/* home          */ "meta2-H",            "home");
-    gui_keyboard_bind (/* home          */ "meta2-7~",           "home");
-    gui_keyboard_bind (/* ^A            */ "ctrl-A",             "home");
-    gui_keyboard_bind (/* end           */ "meta2-4~",           "end");
-    gui_keyboard_bind (/* end           */ "meta2-F",            "end");
-    gui_keyboard_bind (/* end           */ "meta2-8~",           "end");
-    gui_keyboard_bind (/* ^E            */ "ctrl-E",             "end");
-    gui_keyboard_bind (/* left          */ "meta2-D",            "left");
-    gui_keyboard_bind (/* ^B            */ "ctrl-B",             "left");
-    gui_keyboard_bind (/* right         */ "meta2-C",            "right");
-    gui_keyboard_bind (/* ^F            */ "ctrl-F",             "right");
-    gui_keyboard_bind (/* up            */ "meta2-A",            "up");
-    gui_keyboard_bind (/* ^up           */ "meta-Oa",            "up_global");
-    gui_keyboard_bind (/* down          */ "meta2-B",            "down");
-    gui_keyboard_bind (/* ^down         */ "meta-Ob",            "down_global");
-    gui_keyboard_bind (/* pgup          */ "meta2-5~",           "page_up");
-    gui_keyboard_bind (/* pgup          */ "meta2-I",            "page_up");
-    gui_keyboard_bind (/* pgdn          */ "meta2-6~",           "page_down");
-    gui_keyboard_bind (/* pgdn          */ "meta2-G",            "page_down");
-    gui_keyboard_bind (/* m-pgup        */ "meta-meta2-5~",      "scroll_up");
-    gui_keyboard_bind (/* m-pgdn        */ "meta-meta2-6~",      "scroll_down");
-    gui_keyboard_bind (/* m-home        */ "meta-meta2-1~",      "scroll_top");
-    gui_keyboard_bind (/* m-end         */ "meta-meta2-4~",      "scroll_bottom");
-    gui_keyboard_bind (/* F9            */ "meta2-20~",          "scroll_topic_left");
-    gui_keyboard_bind (/* F10           */ "meta2-21~",          "scroll_topic_right");
-    gui_keyboard_bind (/* F11           */ "meta2-23~",          "nick_page_up");
-    gui_keyboard_bind (/* F12           */ "meta2-24~",          "nick_page_down");
-    gui_keyboard_bind (/* m-F11         */ "meta-meta2-23~",     "nick_beginning");
-    gui_keyboard_bind (/* m-F12         */ "meta-meta2-24~",     "nick_end");
-    gui_keyboard_bind (/* ^L            */ "ctrl-L",             "refresh");
-    gui_keyboard_bind (/* m-a           */ "meta-a",             "jump_smart");
-    gui_keyboard_bind (/* m-b           */ "meta-b",             "previous_word");
-    gui_keyboard_bind (/* ^left         */ "meta-Od",            "previous_word");
-    gui_keyboard_bind (/* m-d           */ "meta-d",             "delete_next_word");
-    gui_keyboard_bind (/* m-f           */ "meta-f",             "next_word");
-    gui_keyboard_bind (/* ^right        */ "meta-Oc",            "next_word");
-    gui_keyboard_bind (/* m-h           */ "meta-h",             "hotlist_clear");
-    gui_keyboard_bind (/* m-i           */ "meta-i"   ,          "infobar_clear");
-    gui_keyboard_bind (/* m-j,m-d       */ "meta-jmeta-d",       "jump_dcc");
-    gui_keyboard_bind (/* m-j,m-l       */ "meta-jmeta-l",       "jump_last_buffer");
-    gui_keyboard_bind (/* m-j,m-p       */ "meta-jmeta-p",       "jump_previous_buffer");
-    gui_keyboard_bind (/* m-j,m-s       */ "meta-jmeta-s",       "jump_server");
-    gui_keyboard_bind (/* m-j,m-x       */ "meta-jmeta-x",       "jump_next_server");
-    gui_keyboard_bind (/* m-k           */ "meta-k",             "grab_key");
-    gui_keyboard_bind (/* m-n           */ "meta-n",             "scroll_next_highlight");
-    gui_keyboard_bind (/* m-p           */ "meta-p",             "scroll_previous_highlight");
-    gui_keyboard_bind (/* m-r           */ "meta-r",             "delete_line");
-    gui_keyboard_bind (/* m-s           */ "meta-s",             "switch_server");
-    gui_keyboard_bind (/* m-u           */ "meta-u",             "scroll_unread");
-    gui_keyboard_bind (/* ^S^U          */ "ctrl-Sctrl-U",       "set_unread");
-    gui_keyboard_bind (/* ^R            */ "ctrl-R",             "search_text");
-    gui_keyboard_bind (/* ^Cb           */ "ctrl-Cb",            "insert \\x02");
-    gui_keyboard_bind (/* ^Cc           */ "ctrl-Cc",            "insert \\x03");
-    gui_keyboard_bind (/* ^Co           */ "ctrl-Co",            "insert \\x0F");
-    gui_keyboard_bind (/* ^Cr           */ "ctrl-Cr",            "insert \\x12");
-    gui_keyboard_bind (/* ^Cu           */ "ctrl-Cu",            "insert \\x15");
+    gui_keyboard_bind (NULL, /* RC            */ "ctrl-M",             "return");
+    gui_keyboard_bind (NULL, /* RC            */ "ctrl-J",             "return");
+    gui_keyboard_bind (NULL, /* tab           */ "ctrl-I",             "tab");
+    gui_keyboard_bind (NULL, /* s-tab         */ "meta2-Z",            "tab_previous");
+    gui_keyboard_bind (NULL, /* basckpace     */ "ctrl-H",             "backspace");
+    gui_keyboard_bind (NULL, /* basckpace     */ "ctrl-?",             "backspace");
+    gui_keyboard_bind (NULL, /* del           */ "meta2-3~",           "delete");
+    gui_keyboard_bind (NULL, /* ^D            */ "ctrl-D",             "delete");
+    gui_keyboard_bind (NULL, /* ^K            */ "ctrl-K",             "delete_end_line");
+    gui_keyboard_bind (NULL, /* ^U            */ "ctrl-U",             "delete_beginning_line");
+    gui_keyboard_bind (NULL, /* ^W            */ "ctrl-W",             "delete_previous_word");
+    gui_keyboard_bind (NULL, /* ^Y            */ "ctrl-Y",             "clipboard_paste");
+    gui_keyboard_bind (NULL, /* ^T            */ "ctrl-T",             "transpose_chars");
+    gui_keyboard_bind (NULL, /* home          */ "meta2-1~",           "home");
+    gui_keyboard_bind (NULL, /* home          */ "meta2-H",            "home");
+    gui_keyboard_bind (NULL, /* home          */ "meta2-7~",           "home");
+    gui_keyboard_bind (NULL, /* ^A            */ "ctrl-A",             "home");
+    gui_keyboard_bind (NULL, /* end           */ "meta2-4~",           "end");
+    gui_keyboard_bind (NULL, /* end           */ "meta2-F",            "end");
+    gui_keyboard_bind (NULL, /* end           */ "meta2-8~",           "end");
+    gui_keyboard_bind (NULL, /* ^E            */ "ctrl-E",             "end");
+    gui_keyboard_bind (NULL, /* left          */ "meta2-D",            "left");
+    gui_keyboard_bind (NULL, /* ^B            */ "ctrl-B",             "left");
+    gui_keyboard_bind (NULL, /* right         */ "meta2-C",            "right");
+    gui_keyboard_bind (NULL, /* ^F            */ "ctrl-F",             "right");
+    gui_keyboard_bind (NULL, /* up            */ "meta2-A",            "up");
+    gui_keyboard_bind (NULL, /* ^up           */ "meta-Oa",            "up_global");
+    gui_keyboard_bind (NULL, /* down          */ "meta2-B",            "down");
+    gui_keyboard_bind (NULL, /* ^down         */ "meta-Ob",            "down_global");
+    gui_keyboard_bind (NULL, /* pgup          */ "meta2-5~",           "page_up");
+    gui_keyboard_bind (NULL, /* pgup          */ "meta2-I",            "page_up");
+    gui_keyboard_bind (NULL, /* pgdn          */ "meta2-6~",           "page_down");
+    gui_keyboard_bind (NULL, /* pgdn          */ "meta2-G",            "page_down");
+    gui_keyboard_bind (NULL, /* m-pgup        */ "meta-meta2-5~",      "scroll_up");
+    gui_keyboard_bind (NULL, /* m-pgdn        */ "meta-meta2-6~",      "scroll_down");
+    gui_keyboard_bind (NULL, /* m-home        */ "meta-meta2-1~",      "scroll_top");
+    gui_keyboard_bind (NULL, /* m-end         */ "meta-meta2-4~",      "scroll_bottom");
+    gui_keyboard_bind (NULL, /* F9            */ "meta2-20~",          "scroll_topic_left");
+    gui_keyboard_bind (NULL, /* F10           */ "meta2-21~",          "scroll_topic_right");
+    gui_keyboard_bind (NULL, /* F11           */ "meta2-23~",          "nick_page_up");
+    gui_keyboard_bind (NULL, /* F12           */ "meta2-24~",          "nick_page_down");
+    gui_keyboard_bind (NULL, /* m-F11         */ "meta-meta2-23~",     "nick_beginning");
+    gui_keyboard_bind (NULL, /* m-F12         */ "meta-meta2-24~",     "nick_end");
+    gui_keyboard_bind (NULL, /* ^L            */ "ctrl-L",             "refresh");
+    gui_keyboard_bind (NULL, /* m-a           */ "meta-a",             "jump_smart");
+    gui_keyboard_bind (NULL, /* m-b           */ "meta-b",             "previous_word");
+    gui_keyboard_bind (NULL, /* ^left         */ "meta-Od",            "previous_word");
+    gui_keyboard_bind (NULL, /* m-d           */ "meta-d",             "delete_next_word");
+    gui_keyboard_bind (NULL, /* m-f           */ "meta-f",             "next_word");
+    gui_keyboard_bind (NULL, /* ^right        */ "meta-Oc",            "next_word");
+    gui_keyboard_bind (NULL, /* m-h           */ "meta-h",             "hotlist_clear");
+    gui_keyboard_bind (NULL, /* m-i           */ "meta-i"   ,          "infobar_clear");
+    gui_keyboard_bind (NULL, /* m-j,m-d       */ "meta-jmeta-d",       "jump_dcc");
+    gui_keyboard_bind (NULL, /* m-j,m-l       */ "meta-jmeta-l",       "jump_last_buffer");
+    gui_keyboard_bind (NULL, /* m-j,m-p       */ "meta-jmeta-p",       "jump_previous_buffer");
+    gui_keyboard_bind (NULL, /* m-j,m-s       */ "meta-jmeta-s",       "jump_server");
+    gui_keyboard_bind (NULL, /* m-j,m-x       */ "meta-jmeta-x",       "jump_next_server");
+    gui_keyboard_bind (NULL, /* m-k           */ "meta-k",             "grab_key");
+    gui_keyboard_bind (NULL, /* m-n           */ "meta-n",             "scroll_next_highlight");
+    gui_keyboard_bind (NULL, /* m-p           */ "meta-p",             "scroll_previous_highlight");
+    gui_keyboard_bind (NULL, /* m-r           */ "meta-r",             "delete_line");
+    gui_keyboard_bind (NULL, /* m-s           */ "meta-s",             "switch_server");
+    gui_keyboard_bind (NULL, /* m-u           */ "meta-u",             "scroll_unread");
+    gui_keyboard_bind (NULL, /* ^S^U          */ "ctrl-Sctrl-U",       "set_unread");
+    gui_keyboard_bind (NULL, /* ^R            */ "ctrl-R",             "search_text");
+    gui_keyboard_bind (NULL, /* ^Cb           */ "ctrl-Cb",            "insert \\x02");
+    gui_keyboard_bind (NULL, /* ^Cc           */ "ctrl-Cc",            "insert \\x03");
+    gui_keyboard_bind (NULL, /* ^Co           */ "ctrl-Co",            "insert \\x0F");
+    gui_keyboard_bind (NULL, /* ^Cr           */ "ctrl-Cr",            "insert \\x12");
+    gui_keyboard_bind (NULL, /* ^Cu           */ "ctrl-Cu",            "insert \\x15");
     
     /* keys bound with commands */
-    gui_keyboard_bind (/* m-left        */ "meta-meta2-D",       "/buffer -1");
-    gui_keyboard_bind (/* m-left (kde)  */ "meta2-1;3D",         "/buffer -1");
-    gui_keyboard_bind (/* F5            */ "meta2-15~",          "/buffer -1");
-    gui_keyboard_bind (/* m-right       */ "meta-meta2-C",       "/buffer +1");
-    gui_keyboard_bind (/* m-right (kde) */ "meta2-1;3C",         "/buffer +1");
-    gui_keyboard_bind (/* F6            */ "meta2-17~",          "/buffer +1");
-    gui_keyboard_bind (/* F7            */ "meta2-18~",          "/window -1");
-    gui_keyboard_bind (/* F8            */ "meta2-19~",          "/window +1");
-    gui_keyboard_bind (/* m-w,m-up      */ "meta-wmeta-meta2-A", "/window up");
-    gui_keyboard_bind (/* m-w,m-down    */ "meta-wmeta-meta2-B", "/window down");
-    gui_keyboard_bind (/* m-w,m-left    */ "meta-wmeta-meta2-D", "/window left");
-    gui_keyboard_bind (/* m-w,m-right   */ "meta-wmeta-meta2-C", "/window right");
-    gui_keyboard_bind (/* m-=           */ "meta-=",             "/filter toggle");
-    gui_keyboard_bind (/* m-0           */ "meta-0",             "/buffer 10");
-    gui_keyboard_bind (/* m-1           */ "meta-1",             "/buffer 1");
-    gui_keyboard_bind (/* m-2           */ "meta-2",             "/buffer 2");
-    gui_keyboard_bind (/* m-3           */ "meta-3",             "/buffer 3");
-    gui_keyboard_bind (/* m-4           */ "meta-4",             "/buffer 4");
-    gui_keyboard_bind (/* m-5           */ "meta-5",             "/buffer 5");
-    gui_keyboard_bind (/* m-6           */ "meta-6",             "/buffer 6");
-    gui_keyboard_bind (/* m-7           */ "meta-7",             "/buffer 7");
-    gui_keyboard_bind (/* m-8           */ "meta-8",             "/buffer 8");
-    gui_keyboard_bind (/* m-9           */ "meta-9",             "/buffer 9");
+    gui_keyboard_bind (NULL, /* m-left        */ "meta-meta2-D",       "/buffer -1");
+    gui_keyboard_bind (NULL, /* m-left (kde)  */ "meta2-1;3D",         "/buffer -1");
+    gui_keyboard_bind (NULL, /* F5            */ "meta2-15~",          "/buffer -1");
+    gui_keyboard_bind (NULL, /* m-right       */ "meta-meta2-C",       "/buffer +1");
+    gui_keyboard_bind (NULL, /* m-right (kde) */ "meta2-1;3C",         "/buffer +1");
+    gui_keyboard_bind (NULL, /* F6            */ "meta2-17~",          "/buffer +1");
+    gui_keyboard_bind (NULL, /* F7            */ "meta2-18~",          "/window -1");
+    gui_keyboard_bind (NULL, /* F8            */ "meta2-19~",          "/window +1");
+    gui_keyboard_bind (NULL, /* m-w,m-up      */ "meta-wmeta-meta2-A", "/window up");
+    gui_keyboard_bind (NULL, /* m-w,m-down    */ "meta-wmeta-meta2-B", "/window down");
+    gui_keyboard_bind (NULL, /* m-w,m-left    */ "meta-wmeta-meta2-D", "/window left");
+    gui_keyboard_bind (NULL, /* m-w,m-right   */ "meta-wmeta-meta2-C", "/window right");
+    gui_keyboard_bind (NULL, /* m-=           */ "meta-=",             "/filter toggle");
+    gui_keyboard_bind (NULL, /* m-0           */ "meta-0",             "/buffer 10");
+    gui_keyboard_bind (NULL, /* m-1           */ "meta-1",             "/buffer 1");
+    gui_keyboard_bind (NULL, /* m-2           */ "meta-2",             "/buffer 2");
+    gui_keyboard_bind (NULL, /* m-3           */ "meta-3",             "/buffer 3");
+    gui_keyboard_bind (NULL, /* m-4           */ "meta-4",             "/buffer 4");
+    gui_keyboard_bind (NULL, /* m-5           */ "meta-5",             "/buffer 5");
+    gui_keyboard_bind (NULL, /* m-6           */ "meta-6",             "/buffer 6");
+    gui_keyboard_bind (NULL, /* m-7           */ "meta-7",             "/buffer 7");
+    gui_keyboard_bind (NULL, /* m-8           */ "meta-8",             "/buffer 8");
+    gui_keyboard_bind (NULL, /* m-9           */ "meta-9",             "/buffer 9");
     
     /* bind meta-j + {01..99} to switch to buffers # > 10 */
     for (i = 1; i < 100; i++)
     {
         sprintf (key_str, "meta-j%02d", i);
         sprintf (command, "/buffer %d", i);
-        gui_keyboard_bind (key_str, command);
+        gui_keyboard_bind (NULL, key_str, command);
     }
 }
 
@@ -173,9 +173,6 @@ gui_keyboard_flush ()
     {
         if (gui_keyboard_buffer_size > 0)
             gui_keyboard_last_activity_time = time (NULL);
-        
-        if (gui_key_grab && (gui_key_grab_count > 0))
-            gui_keyboard_grab_end ();
         
         for (i = 0; i < gui_keyboard_buffer_size; i++)
         {
@@ -331,6 +328,9 @@ gui_keyboard_flush ()
             if (input_old)
                 free (input_old);
         }
+        
+        if (gui_key_grab && (gui_key_grab_count > 0))
+            gui_keyboard_grab_end ();
         
         gui_keyboard_buffer_reset ();
     }
