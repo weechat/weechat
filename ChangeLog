@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-04-11
+ChangeLog - 2008-04-15
 
 
 Version 0.2.7 (under dev!):
+   * fixed bug with alias, use current buffer to run commands (bug #22876)
    * new names for config files (*.conf instead of *.rc)
    * improved /set command, new command /unset
    * added new type of buffer, with free content
