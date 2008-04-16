@@ -46,10 +46,10 @@ void
 gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
 {
     struct t_gui_window *ptr_win;
-    struct t_gui_nick_group *ptr_group;
-    struct t_gui_nick *ptr_nick;
+    struct t_gui_nick_group *ptr_group, *save_ptr_group;
+    struct t_gui_nick *ptr_nick, *save_ptr_nick;
     int i, j, k, x, y, x2, max_y, column, max_length, max_chars;
-    int nicks_displayed, chars_left;
+    int nicks_displayed, num_to_display, chars_left;
     char format_empty[32], *buf, *ptr_buf, *ptr_next, saved_char;
     
     if (!gui_ok || (!buffer->nicklist))
@@ -176,6 +176,21 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                     i++;
                 gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
             }
+
+            save_ptr_group = ptr_group;
+            save_ptr_nick = ptr_nick;
+            while (ptr_group || ptr_nick)
+            {
+                if ((ptr_nick && ptr_nick->visible)
+                    || (ptr_group && buffer->nicklist_display_groups))
+                {
+                    num_to_display++;
+                }
+                gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+            }
+            ptr_group = save_ptr_group;
+            ptr_nick = save_ptr_nick;
+            
             i = 0;
             while ((ptr_group || ptr_nick) && (i < nicks_displayed))
             {
@@ -183,7 +198,6 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                     || (ptr_group && buffer->nicklist_display_groups
                         && ptr_group->visible))
                 {
-                    i++;
                     switch (CONFIG_INTEGER(config_look_nicklist_position))
                     {
                         case CONFIG_LOOK_NICKLIST_LEFT:
@@ -197,15 +211,17 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                             x = column;
                             break;
                     }
-                    if ( ((i == 0) && (ptr_win->win_nick_start > 0))
-                         || ((i == nicks_displayed - 1) && (ptr_nick->next_nick)) )
+                    if (((i == 0) && (ptr_win->win_nick_start > 0))
+                        || ((i == nicks_displayed - 1) && (i < num_to_display - 1)))
                     {
                         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
                                                       GUI_COLOR_NICKLIST_MORE);
                         j = (max_length + 1) >= 4 ? 4 : max_length + 1;
                         for (x2 = 1; x2 <= j; x2++)
+                        {
                             mvwprintw (GUI_CURSES(ptr_win)->win_nick,
                                        y, x + x2, "+");
+                        }
                     }
                     else
                     {
@@ -281,6 +297,7 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                         }
                     }
                     y++;
+                    i++;
                     if ((CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_TOP) ||
                         (CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_BOTTOM))
                     {
