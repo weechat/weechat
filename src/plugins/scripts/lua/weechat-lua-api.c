@@ -3013,12 +3013,12 @@ weechat_lua_api_unhook_all (lua_State *L)
 }
 
 /*
- * weechat_lua_api_input_data_cb: callback for input data in a buffer
+ * weechat_lua_api_buffer_input_data_cb: callback for input data in a buffer
  */
 
 int
-weechat_lua_api_input_data_cb (void *data, struct t_gui_buffer *buffer,
-                               char *input_data)
+weechat_lua_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
+                                      char *input_data)
 {
     struct t_script_callback *script_callback;
     char *lua_argv[3];
@@ -3049,11 +3049,11 @@ weechat_lua_api_input_data_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * weechat_lua_api_close_cb: callback for buffer closed
+ * weechat_lua_api_buffer_close_cb: callback for buffer closed
  */
 
 int
-weechat_lua_api_close_cb (void *data, struct t_gui_buffer *buffer)
+weechat_lua_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     struct t_script_callback *script_callback;
     char *lua_argv[2];
@@ -3124,9 +3124,9 @@ weechat_lua_api_buffer_new (lua_State *L)
                                                     lua_current_script,
                                                     (char *)category,
                                                     (char *)name,
-                                                    &weechat_lua_api_input_data_cb,
+                                                    &weechat_lua_api_buffer_input_data_cb,
                                                     (char *)function_input,
-                                                    &weechat_lua_api_close_cb,
+                                                    &weechat_lua_api_buffer_close_cb,
                                                     (char *)function_close));
     
     LUA_RETURN_STRING_FREE(result);
@@ -4121,7 +4121,7 @@ weechat_lua_api_info_get (lua_State *L)
 static int
 weechat_lua_api_infolist_get (lua_State *L)
 {
-    const char *name, *pointer;
+    const char *name, *pointer, *arguments;
     char *value;
     int n;
     
@@ -4136,20 +4136,23 @@ weechat_lua_api_infolist_get (lua_State *L)
     
     name = NULL;
     pointer = NULL;
+    arguments = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 2)
+    if (n < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_get");
         LUA_RETURN_EMPTY;
     }
     
-    name = lua_tostring (lua_current_interpreter, -2);
-    pointer = lua_tostring (lua_current_interpreter, -1);
+    name = lua_tostring (lua_current_interpreter, -3);
+    pointer = lua_tostring (lua_current_interpreter, -2);
+    arguments = lua_tostring (lua_current_interpreter, -1);
     
     value = script_ptr2str (weechat_infolist_get ((char *)name,
-                                                  script_str2ptr ((char *)pointer)));
+                                                  script_str2ptr ((char *)pointer),
+                                                  (char *)arguments));
     
     LUA_RETURN_STRING_FREE(value);
 }

@@ -296,7 +296,7 @@ demo_infolist_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     {
         if (weechat_strcasecmp (argv[1], "buffer") == 0)
         {
-            infolist = weechat_infolist_get ("buffer", NULL);
+            infolist = weechat_infolist_get ("buffer", NULL, NULL);
             if (infolist)
             {
                 demo_infolist_print (infolist, "buffer");
@@ -306,7 +306,7 @@ demo_infolist_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         }
         if (weechat_strcasecmp (argv[1], "buffer_lines") == 0)
         {
-            infolist = weechat_infolist_get ("buffer_lines", NULL);
+            infolist = weechat_infolist_get ("buffer_lines", NULL, NULL);
             if (infolist)
             {
                 demo_infolist_print (infolist, "buffer_line");

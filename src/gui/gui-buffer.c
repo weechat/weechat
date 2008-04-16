@@ -266,6 +266,50 @@ gui_buffer_get_pointer (struct t_gui_buffer *buffer, char *property)
 }
 
 /*
+ * gui_buffer_ask_title_refresh: set "title_refresh_needed" flag
+ */
+
+void
+gui_buffer_ask_title_refresh (struct t_gui_buffer *buffer, int refresh)
+{
+    if (refresh > buffer->title_refresh_needed)
+        buffer->title_refresh_needed = refresh;
+}
+
+/*
+ * gui_buffer_ask_chat_refresh: set "chat_refresh_needed" flag
+ */
+
+void
+gui_buffer_ask_chat_refresh (struct t_gui_buffer *buffer, int refresh)
+{
+    if (refresh > buffer->chat_refresh_needed)
+        buffer->chat_refresh_needed = refresh;
+}
+
+/*
+ * gui_buffer_ask_nicklist_refresh: set "nicklist_refresh_needed" flag
+ */
+
+void
+gui_buffer_ask_nicklist_refresh (struct t_gui_buffer *buffer, int refresh)
+{
+    if (refresh > buffer->nicklist_refresh_needed)
+        buffer->nicklist_refresh_needed = refresh;
+}
+
+/*
+ * gui_buffer_ask_input_refresh: set "input_refresh_needed" flag
+ */
+
+void
+gui_buffer_ask_input_refresh (struct t_gui_buffer *buffer, int refresh)
+{
+    if (refresh > buffer->input_refresh_needed)
+        buffer->input_refresh_needed = refresh;
+}
+
+/*
  * gui_buffer_set_category: set category for a buffer
  */
 
@@ -324,7 +368,7 @@ gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
             break;
     }
     buffer->type = type;
-    buffer->chat_refresh_needed = 2;
+    gui_buffer_ask_chat_refresh (buffer, 2);
 }
 
 /*
@@ -337,7 +381,7 @@ gui_buffer_set_title (struct t_gui_buffer *buffer, char *new_title)
     if (buffer->title)
         free (buffer->title);
     buffer->title = (new_title && new_title[0]) ? strdup (new_title) : NULL;
-    buffer->title_refresh_needed = 1;
+    gui_buffer_ask_title_refresh (buffer, 1);
 }
 
 /*
@@ -373,7 +417,7 @@ gui_buffer_set_nicklist_display_groups (struct t_gui_buffer *buffer,
     buffer->nicklist_display_groups = (display_groups) ? 1 : 0;
     buffer->nicklist_visible_count = 0;
     gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
-    buffer->nicklist_refresh_needed = 1;
+    gui_buffer_ask_nicklist_refresh (buffer, 1);
 }
 
 /*
@@ -386,7 +430,7 @@ gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick)
     if (buffer->input_nick)
         free (buffer->input_nick);
     buffer->input_nick = (new_nick && new_nick[0]) ? strdup (new_nick) : NULL;
-    buffer->input_refresh_needed = 1;
+    gui_buffer_ask_input_refresh (buffer, 1);
 }
 
 /*
@@ -680,7 +724,7 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
         }
     }
     
-    buffer->chat_refresh_needed = 2;
+    gui_buffer_ask_chat_refresh (buffer, 2);
     gui_status_refresh_needed = 1;
 }
 
@@ -694,7 +738,9 @@ gui_buffer_clear_all ()
     struct t_gui_buffer *ptr_buffer;
     
     for (ptr_buffer = gui_buffers; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
+    {
         gui_buffer_clear (ptr_buffer);
+    }
 }
 
 /*

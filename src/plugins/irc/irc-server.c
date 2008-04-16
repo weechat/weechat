@@ -1006,7 +1006,7 @@ irc_server_rename (struct t_irc_server *server, char *new_name)
     if (!option_name)
         return 0;
     snprintf (option_name, length, "irc.server.%s.*", server->name);
-    infolist = weechat_infolist_get ("options", option_name);
+    infolist = weechat_infolist_get ("options", NULL, option_name);
     free (option_name);
     while (weechat_infolist_next (infolist))
     {

@@ -2673,12 +2673,12 @@ weechat_python_api_unhook_all (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat_python_api_input_data_cb: callback for input data in a buffer
+ * weechat_python_api_buffer_input_data_cb: callback for input data in a buffer
  */
 
 int
-weechat_python_api_input_data_cb (void *data, struct t_gui_buffer *buffer,
-                                  char *input_data)
+weechat_python_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
+                                         char *input_data)
 {
     struct t_script_callback *script_callback;
     char *python_argv[3];
@@ -2708,11 +2708,11 @@ weechat_python_api_input_data_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * weechat_python_api_close_cb: callback for buffer closed
+ * weechat_python_api_buffer_close_cb: callback for buffer closed
  */
 
 int
-weechat_python_api_close_cb (void *data, struct t_gui_buffer *buffer)
+weechat_python_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     struct t_script_callback *script_callback;
     char *python_argv[2];
@@ -2775,9 +2775,9 @@ weechat_python_api_buffer_new (PyObject *self, PyObject *args)
                                                     python_current_script,
                                                     category,
                                                     name,
-                                                    &weechat_python_api_input_data_cb,
+                                                    &weechat_python_api_buffer_input_data_cb,
                                                     function_input,
-                                                    &weechat_python_api_close_cb,
+                                                    &weechat_python_api_buffer_close_cb,
                                                     function_close));
     
     PYTHON_RETURN_STRING_FREE(result);
@@ -3632,7 +3632,7 @@ weechat_python_api_info_get (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_infolist_get (PyObject *self, PyObject *args)
 {
-    char *name, *pointer, *value;
+    char *name, *pointer, *arguments, *value;
     PyObject *object;
     
     /* make C compiler happy */
@@ -3646,15 +3646,17 @@ weechat_python_api_infolist_get (PyObject *self, PyObject *args)
     
     name = NULL;
     pointer = NULL;
+    arguments = NULL;
     
-    if (!PyArg_ParseTuple (args, "ss", &name, &pointer))
+    if (!PyArg_ParseTuple (args, "sss", &name, &pointer, &arguments))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_get");
         PYTHON_RETURN_EMPTY;
     }
     
     value = script_ptr2str (weechat_infolist_get (name,
-                                                  script_str2ptr (pointer)));
+                                                  script_str2ptr (pointer),
+                                                  arguments));
     
     PYTHON_RETURN_STRING_FREE(value);
 }

@@ -2517,12 +2517,12 @@ static XS (XS_weechat_unhook_all)
 }
 
 /*
- * weechat_perl_api_input_data_cb: callback for input data in a buffer
+ * weechat_perl_api_buffer_input_data_cb: callback for input data in a buffer
  */
 
 int
-weechat_perl_api_input_data_cb (void *data, struct t_gui_buffer *buffer,
-                                char *input_data)
+weechat_perl_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
+                                       char *input_data)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[3];
@@ -2552,11 +2552,11 @@ weechat_perl_api_input_data_cb (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * weechat_perl_api_close_cb: callback for buffer closed
+ * weechat_perl_api_buffer_close_cb: callback for buffer closed
  */
 
 int
-weechat_perl_api_close_cb (void *data, struct t_gui_buffer *buffer)
+weechat_perl_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[2];
@@ -2616,9 +2616,9 @@ static XS (XS_weechat_buffer_new)
                                                     perl_current_script,
                                                     category,
                                                     name,
-                                                    &weechat_perl_api_input_data_cb,
+                                                    &weechat_perl_api_buffer_input_data_cb,
                                                     function_input,
-                                                    &weechat_perl_api_close_cb,
+                                                    &weechat_perl_api_buffer_close_cb,
                                                     function_close));
     
     PERL_RETURN_STRING_FREE(result);
@@ -3410,7 +3410,7 @@ static XS (XS_weechat_info_get)
 
 static XS (XS_weechat_infolist_get)
 {
-    char *value, *name, *pointer;
+    char *value, *name, *pointer, *arguments;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3422,7 +3422,7 @@ static XS (XS_weechat_infolist_get)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 2)
+    if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_get");
         PERL_RETURN_EMPTY;
@@ -3430,7 +3430,10 @@ static XS (XS_weechat_infolist_get)
     
     name = SvPV (ST (0), PL_na);
     pointer = SvPV (ST (1), PL_na);
-    value = script_ptr2str (weechat_infolist_get (name, script_str2ptr (pointer)));
+    arguments = SvPV (ST (2), PL_na);
+    value = script_ptr2str (weechat_infolist_get (name,
+                                                  script_str2ptr (pointer),
+                                                  arguments));
     
     PERL_RETURN_STRING_FREE(value);
 }

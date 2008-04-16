@@ -381,7 +381,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         }
         gui_buffer_close (buffer, 1);
         gui_status_refresh_needed = 1;
-        gui_current_window->buffer->input_refresh_needed = 1;
+        gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
         
         return WEECHAT_RC_OK;
     }

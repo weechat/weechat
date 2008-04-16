@@ -54,7 +54,8 @@ extern char *plugin_api_info_get (struct t_weechat_plugin *plugin, char *info);
 
 /* infolists */
 extern struct t_plugin_infolist *plugin_api_infolist_get (char *name,
-                                                          void *pointer);
+                                                          void *pointer,
+                                                          char *arguments);
 extern int plugin_api_infolist_next (struct t_plugin_infolist *infolist);
 extern int plugin_api_infolist_prev (struct t_plugin_infolist *infolist);
 extern char *plugin_api_infolist_fields (struct t_plugin_infolist *infolist);

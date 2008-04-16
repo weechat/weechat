@@ -574,6 +574,13 @@ plugin_api_infolist_get_add_options (struct t_plugin_infolist *infolist,
                         switch (ptr_option->type)
                         {
                             case CONFIG_OPTION_TYPE_BOOLEAN:
+                                if (!plugin_infolist_new_var_string (ptr_item,
+                                                                     "type",
+                                                                     "boolean"))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
                                 if (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE)
                                     snprintf (value, sizeof (value), "on");
                                 else
@@ -598,6 +605,13 @@ plugin_api_infolist_get_add_options (struct t_plugin_infolist *infolist,
                                 }
                                 break;
                             case CONFIG_OPTION_TYPE_INTEGER:
+                                if (!plugin_infolist_new_var_string (ptr_item,
+                                                                     "type",
+                                                                     "integer"))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
                                 if (ptr_option->string_values)
                                 {
                                     if (!plugin_infolist_new_var_string (ptr_item,
@@ -639,6 +653,13 @@ plugin_api_infolist_get_add_options (struct t_plugin_infolist *infolist,
                                 break;
                             case CONFIG_OPTION_TYPE_STRING:
                                 if (!plugin_infolist_new_var_string (ptr_item,
+                                                                     "type",
+                                                                     "string"))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                if (!plugin_infolist_new_var_string (ptr_item,
                                                                      "value",
                                                                      CONFIG_STRING(ptr_option)))
                                 {
@@ -654,6 +675,13 @@ plugin_api_infolist_get_add_options (struct t_plugin_infolist *infolist,
                                 }
                                 break;
                             case CONFIG_OPTION_TYPE_COLOR:
+                                if (!plugin_infolist_new_var_string (ptr_item,
+                                                                     "type",
+                                                                     "color"))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
                                 if (!plugin_infolist_new_var_string (ptr_item,
                                                                      "value",
                                                                      gui_color_get_name (CONFIG_COLOR(ptr_option))))
@@ -689,7 +717,7 @@ plugin_api_infolist_get_add_options (struct t_plugin_infolist *infolist,
  */
 
 struct t_plugin_infolist *
-plugin_api_infolist_get (char *name, void *pointer)
+plugin_api_infolist_get (char *name, void *pointer, char *arguments)
 {
     struct t_plugin_infolist *ptr_infolist;
     struct t_gui_buffer *ptr_buffer;
@@ -766,7 +794,7 @@ plugin_api_infolist_get (char *name, void *pointer)
         ptr_infolist = plugin_infolist_new ();
         if (ptr_infolist)
         {
-            if (!plugin_api_infolist_get_add_options (ptr_infolist, pointer))
+            if (!plugin_api_infolist_get_add_options (ptr_infolist, arguments))
             {
                 plugin_infolist_free (ptr_infolist);
                 return NULL;

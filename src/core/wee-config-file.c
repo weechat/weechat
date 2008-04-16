@@ -843,15 +843,25 @@ config_file_option_set (struct t_config_option *option, char *value,
         case CONFIG_OPTION_TYPE_BOOLEAN:
             if (value)
             {
-                if (config_file_string_boolean_is_valid (value))
+                if (string_strcasecmp (value, "toggle") == 0)
                 {
-                    value_int = config_file_string_to_boolean (value);
-                    if (value_int == *((int *)option->value))
-                        rc = 1;
-                    else
+                    *((int *)option->value) =
+                        (*((int *)option->value) == CONFIG_BOOLEAN_TRUE) ?
+                        CONFIG_BOOLEAN_FALSE : CONFIG_BOOLEAN_TRUE;
+                    rc = 2;
+                }
+                else
+                {
+                    if (config_file_string_boolean_is_valid (value))
                     {
-                        *((int *)option->value) = value_int;
-                        rc = 2;
+                        value_int = config_file_string_to_boolean (value);
+                        if (value_int == *((int *)option->value))
+                            rc = 1;
+                        else
+                        {
+                            *((int *)option->value) = value_int;
+                            rc = 2;
+                        }
                     }
                 }
             }

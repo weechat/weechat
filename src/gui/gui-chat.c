@@ -573,7 +573,7 @@ gui_chat_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
         {
             ptr_win->start_line = ptr_win->start_line->next_line;
             ptr_win->start_line_pos = 0;
-            ptr_win->buffer->chat_refresh_needed = 2;
+            gui_buffer_ask_chat_refresh (buffer, 2);
             gui_status_refresh_needed = 1;
         }
     }
@@ -887,7 +887,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     
     if (gui_init_ok)
     {
-        buffer->chat_refresh_needed = 1;
+        gui_buffer_ask_chat_refresh (buffer, 1);
         if (gui_add_hotlist
             && ((buffer->num_displayed == 0)
                 || (gui_buffer_is_scrolled (buffer))))
@@ -937,7 +937,7 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, char *message, ...)
             if (ptr_line && (ptr_line->y == y))
             {
                 gui_chat_line_free (buffer, ptr_line);
-                buffer->chat_refresh_needed = 2;
+                gui_buffer_ask_chat_refresh (buffer, 2);
             }
         }
     }
@@ -953,7 +953,7 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, char *message, ...)
         if (gui_init_ok)
         {
             gui_chat_line_add_y (buffer, y, buf);
-            buffer->chat_refresh_needed = 1;
+            gui_buffer_ask_chat_refresh (buffer, 1);
         }
         else
             string_iconv_fprintf (stdout, "%s\n", buf);

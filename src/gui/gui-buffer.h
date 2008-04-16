@@ -160,6 +160,14 @@ extern char *gui_buffer_get_string (struct t_gui_buffer *buffer,
                                     char *property);
 extern void *gui_buffer_get_pointer (struct t_gui_buffer *buffer,
                                      char *property);
+extern void gui_buffer_ask_title_refresh (struct t_gui_buffer *buffer,
+                                          int refresh);
+extern void gui_buffer_ask_chat_refresh (struct t_gui_buffer *buffer,
+                                         int refresh);
+extern void gui_buffer_ask_nicklist_refresh (struct t_gui_buffer *buffer,
+                                             int refresh);
+extern void gui_buffer_ask_input_refresh (struct t_gui_buffer *buffer,
+                                          int refresh);
 extern void gui_buffer_set_category (struct t_gui_buffer *buffer,
                                      char *category);
 extern void gui_buffer_set_name (struct t_gui_buffer *buffer, char *name);

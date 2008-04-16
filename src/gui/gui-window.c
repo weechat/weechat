@@ -637,7 +637,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                     window->start_line_pos = 0;
                     window->first_line_displayed =
                         (window->start_line == gui_chat_get_first_line_displayed (window->buffer));
-                    window->buffer->chat_refresh_needed = 2;
+                    gui_buffer_ask_chat_refresh (window->buffer, 2);
                     gui_status_refresh_needed = 1;
                     return;
                 }
@@ -680,7 +680,7 @@ gui_window_search_text (struct t_gui_window *window)
                     window->start_line_pos = 0;
                     window->first_line_displayed =
                         (window->start_line == gui_chat_get_first_line_displayed (window->buffer));
-                    window->buffer->chat_refresh_needed = 2;
+                    gui_buffer_ask_chat_refresh (window->buffer, 2);
                     gui_status_refresh_needed = 1;
                     return 1;
                 }
@@ -709,7 +709,7 @@ gui_window_search_text (struct t_gui_window *window)
                     window->start_line_pos = 0;
                     window->first_line_displayed =
                         (window->start_line == window->buffer->lines);
-                    window->buffer->chat_refresh_needed = 2;
+                    gui_buffer_ask_chat_refresh (window->buffer, 2);
                     gui_status_refresh_needed = 1;
                     return 1;
                 }
@@ -740,7 +740,7 @@ gui_window_search_start (struct t_gui_window *window)
             strdup (window->buffer->input_buffer);
     gui_input_delete_line (window->buffer);
     gui_status_refresh_needed = 1;
-    window->buffer->input_refresh_needed = 1;
+    gui_buffer_ask_input_refresh (window->buffer, 1);
 }
 
 /*
@@ -759,7 +759,7 @@ gui_window_search_restart (struct t_gui_window *window)
         window->buffer->text_search_found = 1;
     else
     {
-        window->buffer->chat_refresh_needed = 2;
+        gui_buffer_ask_chat_refresh (window->buffer, 2);
         gui_status_refresh_needed = 1;
     }
 }
@@ -784,9 +784,9 @@ gui_window_search_stop (struct t_gui_window *window)
     window->start_line = NULL;
     window->start_line_pos = 0;
     gui_hotlist_remove_buffer (window->buffer);
-    window->buffer->chat_refresh_needed = 2;
+    gui_buffer_ask_chat_refresh (window->buffer, 2);
     gui_status_refresh_needed = 1;
-    window->buffer->input_refresh_needed = 1;
+    gui_buffer_ask_input_refresh (window->buffer, 1);
 }
 
 /*

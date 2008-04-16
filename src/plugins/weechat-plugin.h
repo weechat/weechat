@@ -390,7 +390,8 @@ struct t_weechat_plugin
     char *(*info_get) (struct t_weechat_plugin *plugin, char *info);
     
     /* infolists */
-    struct t_plugin_infolist *(*infolist_get) (char *name, void *pointer);
+    struct t_plugin_infolist *(*infolist_get) (char *name, void *pointer,
+                                               char *arguments);
     int (*infolist_next) (struct t_plugin_infolist *infolist);
     int (*infolist_prev) (struct t_plugin_infolist *infolist);
     char *(*infolist_fields) (struct t_plugin_infolist *infolist);
@@ -790,8 +791,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->info_get(weechat_plugin, __name)
 
 /* infolists */
-#define weechat_infolist_get(__name, __pointer)         \
-    weechat_plugin->infolist_get(__name, __pointer)
+#define weechat_infolist_get(__name, __pointer, __arguments)            \
+    weechat_plugin->infolist_get(__name, __pointer, __arguments)
 #define weechat_infolist_next(__list)           \
     weechat_plugin->infolist_next(__list)
 #define weechat_infolist_prev(__list)           \

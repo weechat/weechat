@@ -195,7 +195,7 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     
     if (buffer->nicklist_display_groups && visible)
     {
-        buffer->nicklist_refresh_needed = 1;
+        gui_buffer_ask_nicklist_refresh (buffer, 1);
         buffer->nicklist_visible_count++;
         gui_status_refresh_needed = 1;
     }
@@ -337,7 +337,7 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
     
     if (visible)
     {
-        buffer->nicklist_refresh_needed = 1;
+        gui_buffer_ask_nicklist_refresh (buffer, 1);
         buffer->nicklist_visible_count++;
         gui_status_refresh_needed = 1;
     }
@@ -372,7 +372,7 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
     
     if (nick->visible)
     {
-        buffer->nicklist_refresh_needed = 1;
+        gui_buffer_ask_nicklist_refresh (buffer, 1);
         if (buffer->nicklist_visible_count > 0)
             buffer->nicklist_visible_count--;
         gui_status_refresh_needed = 1;
@@ -427,7 +427,7 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
     
     if (group->visible)
     {
-        buffer->nicklist_refresh_needed = 1;
+        gui_buffer_ask_nicklist_refresh (buffer, 1);
         if (buffer->nicklist_display_groups
             && (buffer->nicklist_visible_count > 0))
             buffer->nicklist_visible_count--;

@@ -293,6 +293,9 @@ gui_bar_config_check_size (void *data, struct t_config_option *option,
         number = strtol (value, &error, 10);
         if (error && !error[0])
         {
+            if (number < 0)
+                return 0;
+            
             if (number <= ptr_bar->current_size
                 || gui_bar_check_size_add (ptr_bar,
                                            number - ptr_bar->current_size))

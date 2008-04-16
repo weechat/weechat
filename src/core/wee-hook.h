@@ -68,7 +68,7 @@ struct t_hook
     struct t_hook *next_hook;          /* link to next hook                 */
 };
 
-typedef int (t_hook_callback_command)(void *data, struct t_gui_buffer *,
+typedef int (t_hook_callback_command)(void *data, struct t_gui_buffer *buffer,
                                       int argc, char **argv, char **argv_eol);
 
 struct t_hook_command

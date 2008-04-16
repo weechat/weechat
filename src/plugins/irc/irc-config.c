@@ -348,7 +348,7 @@ irc_config_reload_servers_from_config ()
     char *name, *full_name, *server_name, *pos_option;
     int i, index_option;
     
-    infolist = weechat_infolist_get ("options", "irc.server.*");
+    infolist = weechat_infolist_get ("options", NULL, "irc.server.*");
     while (weechat_infolist_next (infolist))
     {
         name = weechat_infolist_string (infolist, "name");

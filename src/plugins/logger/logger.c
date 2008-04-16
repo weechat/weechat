@@ -207,7 +207,7 @@ logger_get_filename (struct t_gui_buffer *buffer)
     
     if (dir_separator && weechat_dir && log_path && log_path2)
     {
-        ptr_infolist = weechat_infolist_get ("buffer", buffer);
+        ptr_infolist = weechat_infolist_get ("buffer", buffer, NULL);
         if (ptr_infolist)
         {
             category2 = NULL;
@@ -386,7 +386,7 @@ logger_start_buffer_all ()
 {
     struct t_plugin_infolist *ptr_infolist;
     
-    ptr_infolist = weechat_infolist_get ("buffer", NULL);
+    ptr_infolist = weechat_infolist_get ("buffer", NULL, NULL);
     if (ptr_infolist)
     {
         while (weechat_infolist_next (ptr_infolist))

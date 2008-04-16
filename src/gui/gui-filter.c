@@ -106,7 +106,7 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
         
         /* force chat refresh if at least one line changed */
         if (ptr_line->displayed != line_displayed)
-            buffer->chat_refresh_needed = 2;
+            gui_buffer_ask_chat_refresh (buffer, 2);
         
         ptr_line->displayed = line_displayed;
         

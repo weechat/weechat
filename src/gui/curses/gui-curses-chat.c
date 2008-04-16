@@ -1133,17 +1133,8 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
 {
     struct t_gui_window *ptr_win;
     struct t_gui_line *ptr_line;
-    /*t_irc_dcc *dcc_first, *dcc_selected, *ptr_dcc;*/
     char format_empty[32];
     int i, line_pos, count, old_scroll, y_start, y_end;
-    /*int j, num_bars;
-    unsigned long pct_complete;
-    char *unit_name[] = { N_("bytes"), N_("KB"), N_("MB"), N_("GB") };
-    char *unit_format[] = { "%.0f", "%.1f", "%.02f", "%.02f" };
-    float unit_divide[] = { 1, 1024, 1024*1024, 1024*1024*1024 };
-    int num_unit;
-    char format[32], date[128], *buf;
-    struct tm *date_tmp;*/
     
     if (!gui_ok)
         return;
@@ -1168,254 +1159,119 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
             gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
                                           GUI_COLOR_CHAT);
             
-            /*if (buffer->type == GUI_BUFFER_TYPE_DCC)
+            ptr_win->win_chat_cursor_x = 0;
+            ptr_win->win_chat_cursor_y = 0;
+            
+            switch (ptr_win->buffer->type)
             {
-                i = 0;
-                dcc_first = (ptr_win->dcc_first) ? (t_irc_dcc *) ptr_win->dcc_first : irc_dcc_list;
-                dcc_selected = (ptr_win->dcc_selected) ? (t_irc_dcc *) ptr_win->dcc_selected : irc_dcc_list;
-                for (ptr_dcc = dcc_first; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
-                {
-                    if (i >= ptr_win->win_chat_height - 1)
-                        break;
-                    
-                    // nickname and filename
-                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
-                                                  (ptr_dcc == dcc_selected) ?
-                                                  GUI_COLOR_DCC_SELECTED : GUI_COLOR_WIN_CHAT);
-                    mvwprintw (GUI_CURSES(ptr_win)->win_chat, i, 0, "%s %-16s ",
-                               (ptr_dcc == dcc_selected) ? "***" : "   ",
-                               ptr_dcc->nick);
-                    buf = weechat_iconv_from_internal (NULL,
-                                                       (IRC_DCC_IS_CHAT(ptr_dcc->type)) ?
-                                                       _(ptr_dcc->filename) : ptr_dcc->filename);
-                    wprintw (GUI_CURSES(ptr_win)->win_chat, "%s",
-                             (buf) ? buf : ((IRC_DCC_IS_CHAT(ptr_dcc->type)) ?
-                             _(ptr_dcc->filename) : ptr_dcc->filename));
-                    if (buf)
-                        free (buf);
-                    if (IRC_DCC_IS_FILE(ptr_dcc->type))
+                case GUI_BUFFER_TYPE_FORMATED:
+                    /* display at position of scrolling */
+                    if (ptr_win->start_line)
                     {
-                        if (ptr_dcc->filename_suffix > 0)
-                            wprintw (GUI_CURSES(ptr_win)->win_chat, " (.%d)",
-                                     ptr_dcc->filename_suffix);
-                    }
-                    
-                    // status
-                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
-                                                  (ptr_dcc == dcc_selected) ?
-                                                  GUI_COLOR_DCC_SELECTED : GUI_COLOR_WIN_CHAT);
-                    mvwprintw (GUI_CURSES(ptr_win)->win_chat, i + 1, 0, "%s %s ",
-                               (ptr_dcc == dcc_selected) ? "***" : "   ",
-                               (IRC_DCC_IS_RECV(ptr_dcc->type)) ? "-->>" : "<<--");
-                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
-                                                  GUI_COLOR_DCC_WAITING + ptr_dcc->status);
-                    buf = weechat_iconv_from_internal (NULL, _(irc_dcc_status_string[ptr_dcc->status]));
-                    wprintw (GUI_CURSES(ptr_win)->win_chat, "%-10s",
-                             (buf) ? buf : _(irc_dcc_status_string[ptr_dcc->status]));
-                    if (buf)
-                        free (buf);
-                    
-                    // other infos
-                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_chat,
-                                                  (ptr_dcc == dcc_selected) ?
-                                                  GUI_COLOR_DCC_SELECTED : GUI_COLOR_WIN_CHAT);
-                    if (IRC_DCC_IS_FILE(ptr_dcc->type))
-                    {
-                        wprintw (GUI_CURSES(ptr_win)->win_chat, "  [");
-                        if (ptr_dcc->size == 0)
-                        {
-                            if (ptr_dcc->status == IRC_DCC_DONE)
-                                num_bars = 10;
-                            else
-                                num_bars = 0;
-                        }
-                        else
-                            num_bars = (int)((((float)(ptr_dcc->pos)/(float)(ptr_dcc->size))*100) / 10);
-                        for (j = 0; j < num_bars - 1; j++)
-                            wprintw (GUI_CURSES(ptr_win)->win_chat, "=");
-                        if (num_bars > 0)
-                            wprintw (GUI_CURSES(ptr_win)->win_chat, ">");
-                        for (j = 0; j < 10 - num_bars; j++)
-                            wprintw (GUI_CURSES(ptr_win)->win_chat, " ");
-                        
-                        if (ptr_dcc->size < 1024*10)
-                            num_unit = 0;
-                        else if (ptr_dcc->size < 1024*1024)
-                            num_unit = 1;
-                        else if (ptr_dcc->size < 1024*1024*1024)
-                            num_unit = 2;
-                        else
-                            num_unit = 3;
-                        if (ptr_dcc->size == 0)
-                        {
-                            if (ptr_dcc->status == IRC_DCC_DONE)
-                                pct_complete = 100;
-                            else
-                                pct_complete = 0;
-                        }
-                        else
-                            pct_complete = (unsigned long)(((float)(ptr_dcc->pos)/(float)(ptr_dcc->size))*100);
-                        wprintw (GUI_CURSES(ptr_win)->win_chat, "] %3lu%%   ",
-                                 pct_complete);
-                        sprintf (format, "%s %%s / %s %%s",
-                                 unit_format[num_unit],
-                                 unit_format[num_unit]);
-                        wprintw (GUI_CURSES(ptr_win)->win_chat, format,
-                                 ((float)(ptr_dcc->pos)) / ((float)(unit_divide[num_unit])),
-                                 unit_name[num_unit],
-                                 ((float)(ptr_dcc->size)) / ((float)(unit_divide[num_unit])),
-                                 unit_name[num_unit]);
-                        
-                        if (ptr_dcc->bytes_per_sec < 1024*1024)
-                            num_unit = 1;
-                        else if (ptr_dcc->bytes_per_sec < 1024*1024*1024)
-                            num_unit = 2;
-                        else
-                            num_unit = 3;
-                        wprintw (GUI_CURSES(ptr_win)->win_chat, "  (");
-                        if (ptr_dcc->status == IRC_DCC_ACTIVE)
-                        {
-                            wprintw (GUI_CURSES(ptr_win)->win_chat, _("ETA"));
-                            wprintw (GUI_CURSES(ptr_win)->win_chat, ": %.2lu:%.2lu:%.2lu - ",
-                                     ptr_dcc->eta / 3600,
-                                     (ptr_dcc->eta / 60) % 60,
-                                     ptr_dcc->eta % 60);
-                        }
-                        sprintf (format, "%s %%s/s)", unit_format[num_unit]);
-                        buf = weechat_iconv_from_internal (NULL, unit_name[num_unit]);
-                        wprintw (GUI_CURSES(ptr_win)->win_chat, format,
-                                 ((float)ptr_dcc->bytes_per_sec) / ((float)(unit_divide[num_unit])),
-                                 (buf) ? buf : unit_name[num_unit]);
-                        if (buf)
-                            free (buf);
+                        ptr_line = ptr_win->start_line;
+                        line_pos = ptr_win->start_line_pos;
                     }
                     else
                     {
-                        date_tmp = localtime (&(ptr_dcc->start_time));
-                        strftime (date, sizeof (date) - 1, "%a, %d %b %Y %H:%M:%S", date_tmp);
-                        wprintw (GUI_CURSES(ptr_win)->win_chat, "  %s", date);
+                        /* look for first line to display, starting from last line */
+                        ptr_line = NULL;
+                        line_pos = 0;
+                        gui_chat_calculate_line_diff (ptr_win, &ptr_line, &line_pos,
+                                                      (-1) * (ptr_win->win_chat_height - 1));
                     }
                     
-                    wclrtoeol (GUI_CURSES(ptr_win)->win_chat);
+                    if (line_pos > 0)
+                    {
+                        /* display end of first line at top of screen */
+                        gui_chat_display_line (ptr_win, ptr_line,
+                                               gui_chat_display_line (ptr_win,
+                                                                      ptr_line,
+                                                                      0, 1) -
+                                               line_pos, 0);
+                        ptr_line = gui_chat_get_next_line_displayed (ptr_line);
+                        ptr_win->first_line_displayed = 0;
+                    }
+                    else
+                        ptr_win->first_line_displayed =
+                            (ptr_line == gui_chat_get_first_line_displayed (ptr_win->buffer));
                     
-                    ptr_win->dcc_last_displayed = ptr_dcc;
-                    i += 2;
-                }
-            }
-            else*/
-            {
-                ptr_win->win_chat_cursor_x = 0;
-                ptr_win->win_chat_cursor_y = 0;
-
-                switch (ptr_win->buffer->type)
-                {
-                    case GUI_BUFFER_TYPE_FORMATED:
-                        /* display at position of scrolling */
-                        if (ptr_win->start_line)
-                        {
-                            ptr_line = ptr_win->start_line;
-                            line_pos = ptr_win->start_line_pos;
-                        }
-                        else
-                        {
-                            /* look for first line to display, starting from last line */
-                            ptr_line = NULL;
-                            line_pos = 0;
-                            gui_chat_calculate_line_diff (ptr_win, &ptr_line, &line_pos,
-                                                          (-1) * (ptr_win->win_chat_height - 1));
-                        }
-                        
-                        if (line_pos > 0)
-                        {
-                            /* display end of first line at top of screen */
-                            gui_chat_display_line (ptr_win, ptr_line,
-                                                   gui_chat_display_line (ptr_win,
-                                                                          ptr_line,
-                                                                          0, 1) -
-                                                   line_pos, 0);
+                    /* display lines */
+                    count = 0;
+                    while (ptr_line && (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1))
+                    {
+                        count = gui_chat_display_line (ptr_win, ptr_line, 0, 0);
+                        ptr_line = gui_chat_get_next_line_displayed (ptr_line);
+                    }
+                    
+                    old_scroll = ptr_win->scroll;
+                    
+                    ptr_win->scroll = (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1);
+                    
+                    /* check if last line of buffer is entirely displayed and scrolling */
+                    /* if so, disable scroll indicator */
+                    if (!ptr_line && ptr_win->scroll)
+                    {
+                        if (count == gui_chat_display_line (ptr_win, ptr_win->buffer->last_line, 0, 1))
+                            ptr_win->scroll = 0;
+                    }
+                    
+                    if (ptr_win->scroll != old_scroll)
+                    {
+                        hook_signal_send ("window_scrolled",
+                                          WEECHAT_HOOK_SIGNAL_POINTER, ptr_win);
+                    }
+                    
+                    if (!ptr_win->scroll
+                        && (ptr_win->start_line == gui_chat_get_first_line_displayed (ptr_win->buffer)))
+                    {
+                        ptr_win->start_line = NULL;
+                        ptr_win->start_line_pos = 0;
+                    }
+                    
+                    /* cursor is below end line of chat window? */
+                    if (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1)
+                    {
+                        ptr_win->win_chat_cursor_x = 0;
+                        ptr_win->win_chat_cursor_y = ptr_win->win_chat_height - 1;
+                    }
+                    break;
+                case GUI_BUFFER_TYPE_FREE:
+                    /* display at position of scrolling */
+                    ptr_line = (ptr_win->start_line) ?
+                        ptr_win->start_line : buffer->lines;
+                    if (ptr_line)
+                    {
+                        if (!ptr_line->displayed)
                             ptr_line = gui_chat_get_next_line_displayed (ptr_line);
-                            ptr_win->first_line_displayed = 0;
-                        }
-                        else
-                            ptr_win->first_line_displayed =
-                                (ptr_line == gui_chat_get_first_line_displayed (ptr_win->buffer));
-                        
-                        /* display lines */
-                        count = 0;
-                        while (ptr_line && (ptr_win->win_chat_cursor_y <= ptr_win->win_chat_height - 1))
-                        {
-                            count = gui_chat_display_line (ptr_win, ptr_line, 0, 0);
-                            ptr_line = gui_chat_get_next_line_displayed (ptr_line);
-                        }
-                        
-                        old_scroll = ptr_win->scroll;
-                        
-                        ptr_win->scroll = (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1);
-                        
-                        /* check if last line of buffer is entirely displayed and scrolling */
-                        /* if so, disable scroll indicator */
-                        if (!ptr_line && ptr_win->scroll)
-                        {
-                            if (count == gui_chat_display_line (ptr_win, ptr_win->buffer->last_line, 0, 1))
-                                ptr_win->scroll = 0;
-                        }
-                        
-                        if (ptr_win->scroll != old_scroll)
-                        {
-                            hook_signal_send ("window_scrolled",
-                                              WEECHAT_HOOK_SIGNAL_POINTER, ptr_win);
-                        }
-                        
-                        if (!ptr_win->scroll
-                            && (ptr_win->start_line == gui_chat_get_first_line_displayed (ptr_win->buffer)))
-                        {
-                            ptr_win->start_line = NULL;
-                            ptr_win->start_line_pos = 0;
-                        }
-                        
-                        /* cursor is below end line of chat window? */
-                        if (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1)
-                        {
-                            ptr_win->win_chat_cursor_x = 0;
-                            ptr_win->win_chat_cursor_y = ptr_win->win_chat_height - 1;
-                        }
-                        break;
-                    case GUI_BUFFER_TYPE_FREE:
-                        /* display at position of scrolling */
-                        ptr_line = (ptr_win->start_line) ?
-                            ptr_win->start_line : buffer->lines;
                         if (ptr_line)
                         {
-                            if (!ptr_line->displayed)
-                                ptr_line = gui_chat_get_next_line_displayed (ptr_line);
-                            if (ptr_line)
+                            y_start = (ptr_win->start_line) ? ptr_line->y : 0;
+                            y_end = y_start + ptr_win->win_chat_height - 1;
+                            while (ptr_line && (ptr_line->y <= y_end))
                             {
-                                y_start = (ptr_win->start_line) ? ptr_line->y : 0;
-                                y_end = y_start + ptr_win->win_chat_height - 1;
-                                while (ptr_line && (ptr_line->y <= y_end))
+                                if (ptr_line->refresh_needed || erase)
                                 {
-                                    if (ptr_line->refresh_needed || erase)
-                                    {
-                                        gui_chat_display_line_y (ptr_win, ptr_line,
-                                                                 ptr_line->y - y_start);
-                                    }
-                                    ptr_line = gui_chat_get_next_line_displayed (ptr_line);
+                                    gui_chat_display_line_y (ptr_win, ptr_line,
+                                                             ptr_line->y - y_start);
                                 }
+                                ptr_line = gui_chat_get_next_line_displayed (ptr_line);
                             }
                         }
-                }
+                    }
+                    break;
             }
             wnoutrefresh (GUI_CURSES(ptr_win)->win_chat);
-            refresh ();
-            
-            if (buffer->type == GUI_BUFFER_TYPE_FREE)
-            {
-                for (ptr_line = buffer->lines; ptr_line;
-                     ptr_line = ptr_line->next_line)
-                {
-                    ptr_line->refresh_needed = 0;
-                }
-            }
+        }
+    }
+    
+    refresh ();
+    
+    if (buffer->type == GUI_BUFFER_TYPE_FREE)
+    {
+        for (ptr_line = buffer->lines; ptr_line;
+             ptr_line = ptr_line->next_line)
+        {
+            ptr_line->refresh_needed = 0;
         }
     }
 }
