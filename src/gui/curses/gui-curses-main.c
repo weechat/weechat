@@ -95,8 +95,9 @@ gui_main_init ()
     
     gui_infobar = NULL;
     
-    gui_ok = ((COLS > GUI_WINDOW_MIN_WIDTH) && (LINES > GUI_WINDOW_MIN_HEIGHT));
-
+    gui_ok = ((COLS >= GUI_WINDOW_MIN_WIDTH)
+              && (LINES >= GUI_WINDOW_MIN_HEIGHT));
+    
     refresh ();
     
     /* init clipboard buffer */

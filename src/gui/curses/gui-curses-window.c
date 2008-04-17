@@ -1447,9 +1447,6 @@ gui_window_refresh_screen (int force)
 {
     int new_height, new_width;
     
-    if (!gui_ok)
-        return;
-    
     if (force || (gui_window_refresh_needed == 1))
     {
         endwin ();
@@ -1457,8 +1454,8 @@ gui_window_refresh_screen (int force)
         
         getmaxyx (stdscr, new_height, new_width);
         
-        gui_ok = ((new_width > GUI_WINDOW_MIN_WIDTH)
-                  && (new_height > GUI_WINDOW_MIN_HEIGHT));
+        gui_ok = ((new_width >= GUI_WINDOW_MIN_WIDTH)
+                  && (new_height >= GUI_WINDOW_MIN_HEIGHT));
         
         if (gui_ok)
         {
