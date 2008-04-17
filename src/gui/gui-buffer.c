@@ -122,7 +122,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         new_buffer->nicklist = 0;
         new_buffer->nicklist_case_sensitive = 0;
         new_buffer->nicklist_root = NULL;
-        new_buffer->nicklist_max_length = -1;
+        new_buffer->nicklist_max_length = 0;
         new_buffer->nicklist_display_groups = 1;
         new_buffer->nicklist_visible_count = 0;
         new_buffer->nicklist_refresh_needed = 1;
