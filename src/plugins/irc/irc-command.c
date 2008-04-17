@@ -211,9 +211,6 @@ irc_command_amsg (void *data, struct t_gui_buffer *buffer, int argc,
                                                     ptr_server->nick);
                         if (ptr_nick)
                         {
-                            /*irc_display_nick (ptr_channel->buffer, ptr_nick,
-                                              NULL, GUI_MSG_TYPE_NICK, 1,
-                                              NULL, 0);*/
                             string = (char *)irc_color_decode (
                                 (unsigned char *)argv_eol[1], 1, 0);
                             weechat_printf (ptr_channel->buffer, "%s%s",
@@ -477,7 +474,7 @@ irc_command_ban (void *data, struct t_gui_buffer *buffer, int argc,
 
 /*
  * irc_command_connect_one_server: connect to one server
- *                             return 0 if error, 1 if ok
+ *                                 return 0 if error, 1 if ok
  */
 
 int
@@ -508,7 +505,6 @@ irc_command_connect_one_server (struct t_irc_server *server, int no_join)
     {
         server->reconnect_start = 0;
         server->reconnect_join = (server->channels) ? 1 : 0;
-        //gui_status_draw (server->buffer, 1);
     }
     
     /* connect ok */
@@ -1110,7 +1106,6 @@ irc_command_disconnect_one_server (struct t_irc_server *server)
     }
     irc_command_quit_server (server, NULL);
     irc_server_disconnect (server, 0);
-    //gui_status_draw (server->buffer, 1);
     
     /* disconnect ok */
     return 1;
@@ -2273,14 +2268,13 @@ irc_command_query (void *data, struct t_gui_buffer *buffer, int argc,
         /* display text if given */
         if (argv_eol[2])
         {
-            //irc_display_nick (ptr_channel->buffer, NULL, ptr_server->nick,
-            //                  GUI_MSG_TYPE_NICK, 1,
-            //                  GUI_COLOR(GIU_COLOR_CHAT_NICK_SELF), 0);
             string = (char *)irc_color_decode ((unsigned char *)argv_eol[2],
                                                1, 0);
             weechat_printf (ptr_channel->buffer,
                             "%s%s",
-                            IRC_COLOR_CHAT,
+                            irc_nick_as_prefix (NULL,
+                                                ptr_server->nick,
+                                                IRC_COLOR_CHAT_NICK_SELF),
                             (string) ? string : argv_eol[2]);
             if (string)
                 free (string);
@@ -2305,13 +2299,13 @@ irc_command_quote (void *data, struct t_gui_buffer *buffer, int argc,
                    char **argv, char **argv_eol)
 {
     IRC_GET_SERVER(buffer);
-    if (!ptr_server)// || !ptr_server->is_connected)
+    if (!ptr_server)
         return WEECHAT_RC_ERROR;
     
     /* make C compiler happy */
     (void) data;
     (void) argv;
-
+    
     if (argc > 1)
         irc_server_sendf (ptr_server, "%s", argv_eol[1]);
     else
@@ -2347,7 +2341,6 @@ irc_command_reconnect_one_server (struct t_irc_server *server, int no_join)
         server->reconnect_start = 0;
         server->reconnect_join = (server->channels) ? 1 : 0;    
     }
-    //gui_status_draw (server->buffer, 1);
     
     /* reconnect ok */
     return 1;
