@@ -34,8 +34,10 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hook.h"
 #include "../core/wee-log.h"
 #include "../core/wee-utf8.h"
+#include "../plugins/plugin.h"
 #include "gui-window.h"
 #include "gui-bar.h"
 #include "gui-buffer.h"
@@ -281,6 +283,31 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         return NULL;
     
     return new_window;
+}
+
+/*
+ * gui_window_valid: check if a buffer pointer exists
+ *                   return 1 if buffer exists
+ *                          0 if buffer is not found
+ */
+
+int
+gui_window_valid (struct t_gui_window *window)
+{
+    struct t_gui_window *ptr_window;
+    
+    if (!window)
+        return 0;
+    
+    for (ptr_window = gui_windows; ptr_window;
+         ptr_window = ptr_window->next_window)
+    {
+        if (ptr_window == window)
+            return 1;
+    }
+    
+    /* window not found */
+    return 0;
 }
 
 /*
@@ -646,7 +673,10 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
         if (direction < 0)
             gui_window_scroll_top (window);
         else
-            gui_window_scroll_bottom (window);
+        {
+            if (window->buffer->type == GUI_BUFFER_TYPE_FORMATED)
+                gui_window_scroll_bottom (window);
+        }
     }
 }
 

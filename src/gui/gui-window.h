@@ -129,6 +129,7 @@ extern void gui_window_tree_free (struct t_gui_window_tree **tree);
 extern struct t_gui_window *gui_window_new (struct t_gui_window *parent,
                                             int x, int y, int width, int height,
                                             int width_pct, int height_pct);
+extern int gui_window_valid (struct t_gui_window *window);
 extern void gui_window_free (struct t_gui_window *window);
 extern struct t_gui_window *gui_window_search_by_buffer (struct t_gui_buffer *buffer);
 extern void gui_window_switch_server (struct t_gui_window *window);

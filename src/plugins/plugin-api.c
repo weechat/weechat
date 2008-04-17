@@ -511,6 +511,101 @@ plugin_api_infolist_get_add_buffer_line (struct t_plugin_infolist *infolist,
 }
 
 /*
+ * plugin_api_infolist_get_add_window: add a window in a list
+ *                                     return 1 if ok, 0 if error
+ */
+
+int
+plugin_api_infolist_get_add_window (struct t_plugin_infolist *infolist,
+                                    struct t_gui_window *window)
+{
+    struct t_plugin_infolist_item *ptr_item;
+    
+    if (!infolist || !window)
+        return 0;
+    
+    ptr_item = plugin_infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!plugin_infolist_new_var_pointer (ptr_item, "pointer", window))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "x", window->win_x))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "y", window->win_y))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "width", window->win_width))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "height", window->win_height))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "width_pct", window->win_width_pct))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "height_pct", window->win_height_pct))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "chat_x", window->win_chat_x))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "chat_y", window->win_chat_y))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "chat_width", window->win_chat_width))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "chat_height", window->win_chat_height))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "nick_x", window->win_nick_x))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "nick_y", window->win_nick_y))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "nick_width", window->win_nick_width))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "nick_height", window->win_nick_height))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "nick_start", window->win_nick_start))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "title_x", window->win_title_x))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "title_y", window->win_title_y))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "title_width", window->win_title_width))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "title_start", window->win_title_start))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "status_x", window->win_status_x))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "status_y", window->win_status_y))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "status_width", window->win_status_width))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "status_height", window->win_status_height))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "infobar_x", window->win_infobar_x))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "infobar_y", window->win_infobar_y))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "infobar_width", window->win_infobar_width))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "infobar_height", window->win_infobar_height))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "input_x", window->win_input_x))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "input_y", window->win_input_y))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "input_width", window->win_input_width))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "input_height", window->win_input_height))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "input_cursor_x", window->win_input_cursor_x))
+        return 0;
+    if (!plugin_infolist_new_var_pointer (ptr_item, "buffer", window->buffer))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "start_line_y",
+                                          ((window->buffer->type == GUI_BUFFER_TYPE_FREE)
+                                           && (window->start_line)) ?
+                                          window->start_line->y : 0))
+        return 0;
+    
+    return 1;
+}
+
+/*
  * plugin_api_infolist_get_add_options: add config options in a list
  *                                          return 1 if ok, 0 if error
  */
@@ -722,6 +817,7 @@ plugin_api_infolist_get (char *name, void *pointer, char *arguments)
     struct t_plugin_infolist *ptr_infolist;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
+    struct t_gui_window *ptr_window;
     
     if (!name || !name[0])
         return NULL;
@@ -787,6 +883,42 @@ plugin_api_infolist_get (char *name, void *pointer, char *arguments)
                 }
             }
             return ptr_infolist;
+        }
+    }
+    if (string_strcasecmp (name, "window") == 0)
+    {
+        /* invalid window pointer ? */
+        if (pointer && (!gui_window_valid (pointer)))
+            return NULL;
+        
+        ptr_infolist = plugin_infolist_new ();
+        if (ptr_infolist)
+        {
+            if (pointer)
+            {
+                /* build list with only one window */
+                if (!plugin_api_infolist_get_add_window (ptr_infolist, pointer))
+                {
+                    plugin_infolist_free (ptr_infolist);
+                    return NULL;
+                }
+                return ptr_infolist;
+            }
+            else
+            {
+                /* build list with all windows */
+                for (ptr_window = gui_windows; ptr_window;
+                     ptr_window = ptr_window->next_window)
+                {
+                    if (!plugin_api_infolist_get_add_window (ptr_infolist,
+                                                             ptr_window))
+                    {
+                        plugin_infolist_free (ptr_infolist);
+                        return NULL;
+                    }
+                }
+                return ptr_infolist;
+            }
         }
     }
     else if (string_strcasecmp (name, "options") == 0)

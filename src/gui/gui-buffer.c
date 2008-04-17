@@ -360,13 +360,6 @@ gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
     
     gui_chat_line_free_all (buffer);
     
-    switch (type)
-    {
-        case GUI_BUFFER_TYPE_FORMATED:
-            break;
-        case GUI_BUFFER_TYPE_FREE:
-            break;
-    }
     buffer->type = type;
     gui_buffer_ask_chat_refresh (buffer, 2);
 }
@@ -519,6 +512,12 @@ gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
             gui_keyboard_free_all (&buffer->keys, &buffer->last_key);
         else
             gui_keyboard_unbind (buffer, property + 11);
+    }
+    else if (string_strcasecmp (property, "input") == 0)
+    {
+        gui_input_delete_line (buffer);
+        gui_input_insert_string (buffer, value, 0);
+        gui_buffer_ask_input_refresh (buffer, 1);
     }
 }
 

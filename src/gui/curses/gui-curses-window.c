@@ -553,6 +553,8 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     
     if (window->buffer != buffer)
     {
+        window->start_line = NULL;
+        window->start_line_pos = 0;
         window->buffer->last_read_line = window->buffer->last_line;
         if (buffer->last_read_line == buffer->last_line)
             buffer->last_read_line = NULL;
@@ -622,9 +624,6 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
                                              window->win_status_y,
                                              window->win_status_x);
     
-    window->start_line = NULL;
-    window->start_line_pos = 0;
-
     buffer->num_displayed++;
     
     gui_hotlist_remove_buffer (buffer);
@@ -647,23 +646,42 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
 void
 gui_window_page_up (struct t_gui_window *window)
 {
+    char scroll[32];
+    
     if (!gui_ok)
         return;
     
-    if (!window->first_line_displayed)
+    switch (window->buffer->type)
     {
-        gui_chat_calculate_line_diff (window, &window->start_line,
-                                      &window->start_line_pos,
-                                      (window->start_line) ?
-                                      (-1) * (window->win_chat_height - 1) :
-                                      (-1) * ((window->win_chat_height - 1) * 2));
-        gui_chat_draw (window->buffer, 0);
-        if (!window->scroll)
-        {
-            window->start_line = NULL;
-            window->start_line_pos = 0;
-        }
-        gui_status_refresh_needed = 1;
+        case GUI_BUFFER_TYPE_FORMATED:
+            if (!window->first_line_displayed)
+            {
+                gui_chat_calculate_line_diff (window, &window->start_line,
+                                              &window->start_line_pos,
+                                              (window->start_line) ?
+                                              (-1) * (window->win_chat_height - 1) :
+                                              (-1) * ((window->win_chat_height - 1) * 2));
+                gui_chat_draw (window->buffer, 0);
+                if (!window->scroll)
+                {
+                    window->start_line = NULL;
+                    window->start_line_pos = 0;
+                }
+                gui_status_refresh_needed = 1;
+            }
+            break;
+        case GUI_BUFFER_TYPE_FREE:
+            if (window->start_line)
+            {
+                snprintf (scroll, sizeof (scroll), "-%d",
+                          window->win_chat_height);
+                gui_window_scroll (window, scroll);
+                hook_signal_send ("window_scrolled",
+                                  WEECHAT_HOOK_SIGNAL_POINTER, window);
+            }
+            break;
+        case GUI_BUFFER_NUM_TYPES:
+            break;
     }
 }
 
@@ -676,36 +694,51 @@ gui_window_page_down (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
     int line_pos;
+    char scroll[32];
     
     if (!gui_ok)
         return;
     
-    if (window->start_line)
+    switch (window->buffer->type)
     {
-        gui_chat_calculate_line_diff (window, &window->start_line,
-                                      &window->start_line_pos,
-                                      window->win_chat_height - 1);
-        
-        /* check if we can display all */
-        ptr_line = window->start_line;
-        line_pos = window->start_line_pos;
-        gui_chat_calculate_line_diff (window, &ptr_line,
-                                      &line_pos,
-                                      window->win_chat_height - 1);
-        if (!ptr_line)
-        {
-            window->start_line = NULL;
-            window->start_line_pos = 0;
-        }
-        
-        gui_chat_draw (window->buffer, 0);
-        if (!window->scroll)
-        {
-            window->start_line = NULL;
-            window->start_line_pos = 0;
-            gui_hotlist_remove_buffer (window->buffer);
-        }
-        gui_status_refresh_needed = 1;
+        case GUI_BUFFER_TYPE_FORMATED:
+            if (window->start_line)
+            {
+                gui_chat_calculate_line_diff (window, &window->start_line,
+                                              &window->start_line_pos,
+                                              window->win_chat_height - 1);
+                
+                /* check if we can display all */
+                ptr_line = window->start_line;
+                line_pos = window->start_line_pos;
+                gui_chat_calculate_line_diff (window, &ptr_line,
+                                              &line_pos,
+                                              window->win_chat_height - 1);
+                if (!ptr_line)
+                {
+                    window->start_line = NULL;
+                    window->start_line_pos = 0;
+                }
+                
+                gui_chat_draw (window->buffer, 0);
+                if (!window->scroll)
+                {
+                    window->start_line = NULL;
+                    window->start_line_pos = 0;
+                    gui_hotlist_remove_buffer (window->buffer);
+                }
+                gui_status_refresh_needed = 1;
+            }
+            break;
+        case GUI_BUFFER_TYPE_FREE:
+            snprintf (scroll, sizeof (scroll), "+%d",
+                      window->win_chat_height);
+            gui_window_scroll (window, scroll);
+            hook_signal_send ("window_scrolled",
+                              WEECHAT_HOOK_SIGNAL_POINTER, window);
+            break;
+        case GUI_BUFFER_NUM_TYPES:
+            break;
     }
 }
 
@@ -716,25 +749,44 @@ gui_window_page_down (struct t_gui_window *window)
 void
 gui_window_scroll_up (struct t_gui_window *window)
 {
+    char scroll[32];
+    
     if (!gui_ok)
         return;
-    
-    if (!window->first_line_displayed)
+
+    switch (window->buffer->type)
     {
-        gui_chat_calculate_line_diff (window, &window->start_line,
-                                      &window->start_line_pos,
-                                      (window->start_line) ?
-                                      (-1) * CONFIG_INTEGER(config_look_scroll_amount) :
-                                      (-1) * ( (window->win_chat_height - 1) +
-                                               CONFIG_INTEGER(config_look_scroll_amount)));
-        gui_chat_draw (window->buffer, 0);
-        if (!window->scroll)
-        {
-            window->start_line = NULL;
-            window->start_line_pos = 0;
-        }
-        gui_status_refresh_needed = 1;
-    }
+        case GUI_BUFFER_TYPE_FORMATED:
+            if (!window->first_line_displayed)
+            {
+                gui_chat_calculate_line_diff (window, &window->start_line,
+                                              &window->start_line_pos,
+                                              (window->start_line) ?
+                                              (-1) * CONFIG_INTEGER(config_look_scroll_amount) :
+                                              (-1) * ( (window->win_chat_height - 1) +
+                                                       CONFIG_INTEGER(config_look_scroll_amount)));
+                gui_chat_draw (window->buffer, 0);
+                if (!window->scroll)
+                {
+                    window->start_line = NULL;
+                    window->start_line_pos = 0;
+                }
+                gui_status_refresh_needed = 1;
+            }
+            break;
+        case GUI_BUFFER_TYPE_FREE:
+            if (window->start_line)
+            {
+                snprintf (scroll, sizeof (scroll), "-%d",
+                          CONFIG_INTEGER(config_look_scroll_amount));
+                gui_window_scroll (window, scroll);
+                hook_signal_send ("window_scrolled",
+                                  WEECHAT_HOOK_SIGNAL_POINTER, window);
+            }
+            break;
+        case GUI_BUFFER_NUM_TYPES:
+            break;
+    }   
 }
 
 /*
@@ -746,37 +798,52 @@ gui_window_scroll_down (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
     int line_pos;
+    char scroll[32];
     
     if (!gui_ok)
         return;
     
-    if (window->start_line)
+    switch (window->buffer->type)
     {
-        gui_chat_calculate_line_diff (window, &window->start_line,
-                                      &window->start_line_pos,
-                                      CONFIG_INTEGER(config_look_scroll_amount));
-        
-        /* check if we can display all */
-        ptr_line = window->start_line;
-        line_pos = window->start_line_pos;
-        gui_chat_calculate_line_diff (window, &ptr_line,
-                                      &line_pos,
-                                      window->win_chat_height - 1);
-        
-        if (!ptr_line)
-        {
-            window->start_line = NULL;
-            window->start_line_pos = 0;
-        }
-        
-        gui_chat_draw (window->buffer, 0);
-        if (!window->scroll)
-        {
-            window->start_line = NULL;
-            window->start_line_pos = 0;
-            gui_hotlist_remove_buffer (window->buffer);
-        }
-        gui_status_refresh_needed = 1;
+        case GUI_BUFFER_TYPE_FORMATED:
+            if (window->start_line)
+            {
+                gui_chat_calculate_line_diff (window, &window->start_line,
+                                              &window->start_line_pos,
+                                              CONFIG_INTEGER(config_look_scroll_amount));
+                
+                /* check if we can display all */
+                ptr_line = window->start_line;
+                line_pos = window->start_line_pos;
+                gui_chat_calculate_line_diff (window, &ptr_line,
+                                              &line_pos,
+                                              window->win_chat_height - 1);
+                
+                if (!ptr_line)
+                {
+                    window->start_line = NULL;
+                    window->start_line_pos = 0;
+                }
+                
+                gui_chat_draw (window->buffer, 0);
+                if (!window->scroll)
+                {
+                    window->start_line = NULL;
+                    window->start_line_pos = 0;
+                    gui_hotlist_remove_buffer (window->buffer);
+                }
+                gui_status_refresh_needed = 1;
+            }
+            break;
+        case GUI_BUFFER_TYPE_FREE:
+            snprintf (scroll, sizeof (scroll), "+%d",
+                      CONFIG_INTEGER(config_look_scroll_amount));
+            gui_window_scroll (window, scroll);
+            hook_signal_send ("window_scrolled",
+                              WEECHAT_HOOK_SIGNAL_POINTER, window);
+            break;
+        case GUI_BUFFER_NUM_TYPES:
+            break;
     }
 }
 
@@ -790,17 +857,33 @@ gui_window_scroll_top (struct t_gui_window *window)
     if (!gui_ok)
         return;
     
-    if (!window->first_line_displayed)
+    switch (window->buffer->type)
     {
-        window->start_line = gui_chat_get_first_line_displayed (window->buffer);
-        window->start_line_pos = 0;
-        gui_chat_draw (window->buffer, 0);
-        if (!window->scroll)
-        {
-            window->start_line = NULL;
-            window->start_line_pos = 0;
-        }
-        gui_status_refresh_needed = 1;
+        case GUI_BUFFER_TYPE_FORMATED:
+            if (!window->first_line_displayed)
+            {
+                window->start_line = gui_chat_get_first_line_displayed (window->buffer);
+                window->start_line_pos = 0;
+                gui_chat_draw (window->buffer, 0);
+                if (!window->scroll)
+                {
+                    window->start_line = NULL;
+                    window->start_line_pos = 0;
+                }
+                gui_status_refresh_needed = 1;
+            }
+            break;
+        case GUI_BUFFER_TYPE_FREE:
+            if (window->start_line)
+            {
+                window->start_line = NULL;
+                gui_buffer_ask_chat_refresh (window->buffer, 2);
+                hook_signal_send ("window_scrolled",
+                                  WEECHAT_HOOK_SIGNAL_POINTER, window);
+            }
+            break;
+        case GUI_BUFFER_NUM_TYPES:
+            break;
     }
 }
 
@@ -811,21 +894,46 @@ gui_window_scroll_top (struct t_gui_window *window)
 void
 gui_window_scroll_bottom (struct t_gui_window *window)
 {
+    char scroll[32];
+    
     if (!gui_ok)
         return;
-    
-    if (window->start_line)
+
+    switch (window->buffer->type)
     {
-        window->start_line = NULL;
-        window->start_line_pos = 0;
-        gui_chat_draw (window->buffer, 0);
-        if (!window->scroll)
-        {
+        case GUI_BUFFER_TYPE_FORMATED:
+            if (window->start_line)
+            {
+                window->start_line = NULL;
+                window->start_line_pos = 0;
+                gui_chat_draw (window->buffer, 0);
+                if (!window->scroll)
+                {
+                    window->start_line = NULL;
+                    window->start_line_pos = 0;
+                    gui_hotlist_remove_buffer (window->buffer);
+                }
+                gui_status_refresh_needed = 1;
+            }
+            break;
+        case GUI_BUFFER_TYPE_FREE:
             window->start_line = NULL;
-            window->start_line_pos = 0;
-            gui_hotlist_remove_buffer (window->buffer);
-        }
-        gui_status_refresh_needed = 1;
+            if (window->buffer->lines_count > window->win_chat_height)
+            {
+                snprintf (scroll, sizeof (scroll), "-%d",
+                          window->win_chat_height - 1);
+                gui_window_scroll (window, scroll);
+            }
+            else
+            {
+                gui_buffer_ask_chat_refresh (window->buffer, 2);
+                gui_status_refresh_needed = 1;
+            }
+            hook_signal_send ("window_scrolled",
+                              WEECHAT_HOOK_SIGNAL_POINTER, window);
+            break;
+        case GUI_BUFFER_NUM_TYPES:
+            break;
     }
 }
 

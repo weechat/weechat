@@ -24,6 +24,8 @@ enum t_gui_buffer_type
 {
     GUI_BUFFER_TYPE_FORMATED = 0,
     GUI_BUFFER_TYPE_FREE,
+    /* number of buffer types */
+    GUI_BUFFER_NUM_TYPES,
 };
 
 #define GUI_BUFFER_NOTIFY_LEVEL_MIN     0

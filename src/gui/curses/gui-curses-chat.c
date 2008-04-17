@@ -1259,6 +1259,8 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                         }
                     }
                     break;
+                case GUI_BUFFER_NUM_TYPES:
+                    break;
             }
             wnoutrefresh (GUI_CURSES(ptr_win)->win_chat);
         }

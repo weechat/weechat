@@ -990,8 +990,7 @@ hook_config_exec (char *option, char *value)
         if (!ptr_hook->deleted
             && !ptr_hook->running
             && (!HOOK_CONFIG(ptr_hook, option)
-                || (string_strcasecmp (HOOK_CONFIG(ptr_hook, option),
-                                       option) == 0)))
+                || (string_match (option, HOOK_CONFIG(ptr_hook, option), 0))))
         {
             ptr_hook->running = 1;
             (void) (HOOK_CONFIG(ptr_hook, callback))
