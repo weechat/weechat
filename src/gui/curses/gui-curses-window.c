@@ -969,11 +969,58 @@ gui_window_scroll_topic_right (struct t_gui_window *window)
 }
 
 /*
- * gui_window_nick_beginning: go to beginning of nicklist
+ * gui_window_nicklist_page_up: scroll one page up in nicklist
  */
 
 void
-gui_window_nick_beginning (struct t_gui_window *window)
+gui_window_nicklist_page_up (struct t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    if (window->buffer->nicklist)
+    {
+        if (window->win_nick_start > 0)
+        {
+            window->win_nick_start -= (window->win_nick_num_max - 1);
+            if (window->win_nick_start <= 1)
+                window->win_nick_start = 0;
+            gui_buffer_ask_nicklist_refresh (window->buffer, 1);
+        }
+    }
+}
+
+/*
+ * gui_window_nicklist_page_down: scroll one page down in nicklist
+ */
+
+void
+gui_window_nicklist_page_down (struct t_gui_window *window)
+{
+    if (!gui_ok)
+        return;
+    
+    if (window->buffer->nicklist)
+    {
+        if ((window->buffer->nicklist_visible_count > window->win_nick_num_max)
+            && (window->win_nick_start + window->win_nick_num_max - 1
+                < window->buffer->nicklist_visible_count))
+        {
+            if (window->win_nick_start == 0)
+                window->win_nick_start += (window->win_nick_num_max - 1);
+            else
+                window->win_nick_start += (window->win_nick_num_max - 2);
+            gui_buffer_ask_nicklist_refresh (window->buffer, 1);
+        }
+    }
+}
+
+/*
+ * gui_window_nicklist_beginning: go to beginning of nicklist
+ */
+
+void
+gui_window_nicklist_beginning (struct t_gui_window *window)
 {
     if (!gui_ok)
         return;
@@ -989,11 +1036,11 @@ gui_window_nick_beginning (struct t_gui_window *window)
 }
 
 /*
- * gui_window_nick_end: go to the end of nicklist
+ * gui_window_nicklist_end: go to the end of nicklist
  */
 
 void
-gui_window_nick_end (struct t_gui_window *window)
+gui_window_nicklist_end (struct t_gui_window *window)
 {
     int new_start;
     
@@ -1012,53 +1059,6 @@ gui_window_nick_end (struct t_gui_window *window)
         if (new_start != window->win_nick_start)
         {
             window->win_nick_start = new_start;
-            gui_buffer_ask_nicklist_refresh (window->buffer, 1);
-        }
-    }
-}
-
-/*
- * gui_window_nick_page_up: scroll one page up in nicklist
- */
-
-void
-gui_window_nick_page_up (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    if (window->buffer->nicklist)
-    {
-        if (window->win_nick_start > 0)
-        {
-            window->win_nick_start -= (window->win_nick_num_max - 1);
-            if (window->win_nick_start <= 1)
-                window->win_nick_start = 0;
-            gui_buffer_ask_nicklist_refresh (window->buffer, 1);
-        }
-    }
-}
-
-/*
- * gui_window_nick_page_down: scroll one page down in nicklist
- */
-
-void
-gui_window_nick_page_down (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    if (window->buffer->nicklist)
-    {
-        if ((window->buffer->nicklist_visible_count > window->win_nick_num_max)
-            && (window->win_nick_start + window->win_nick_num_max - 1
-                < window->buffer->nicklist_visible_count))
-        {
-            if (window->win_nick_start == 0)
-                window->win_nick_start += (window->win_nick_num_max - 1);
-            else
-                window->win_nick_start += (window->win_nick_num_max - 2);
             gui_buffer_ask_nicklist_refresh (window->buffer, 1);
         }
     }

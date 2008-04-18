@@ -138,6 +138,8 @@ extern void gui_window_switch_next (struct t_gui_window *window);
 extern void gui_window_switch_by_buffer (struct t_gui_window *window,
                                          int buffer_number);
 extern void gui_window_scroll (struct t_gui_window *window, char *scroll);
+extern void gui_window_scroll_previous_highlight (struct t_gui_window *window);
+extern void gui_window_scroll_next_highlight (struct t_gui_window *window);
 extern void gui_window_search_start (struct t_gui_window *window);
 extern void gui_window_search_restart (struct t_gui_window *window);
 extern void gui_window_search_stop (struct t_gui_window *window);
@@ -167,10 +169,10 @@ extern void gui_window_scroll_top (struct t_gui_window *window);
 extern void gui_window_scroll_bottom (struct t_gui_window *window);
 extern void gui_window_scroll_topic_left (struct t_gui_window *window);
 extern void gui_window_scroll_topic_right (struct t_gui_window *window);
-extern void gui_window_nick_beginning (struct t_gui_window *window);
-extern void gui_window_nick_end (struct t_gui_window *window);
-extern void gui_window_nick_page_up (struct t_gui_window *window);
-extern void gui_window_nick_page_down (struct t_gui_window *window);
+extern void gui_window_nicklist_page_up (struct t_gui_window *window);
+extern void gui_window_nicklist_page_down (struct t_gui_window *window);
+extern void gui_window_nicklist_beginning (struct t_gui_window *window);
+extern void gui_window_nicklist_end (struct t_gui_window *window);
 extern void gui_window_init_subwindows (struct t_gui_window *window);
 extern void gui_window_refresh_windows ();
 extern void gui_window_split_horiz (struct t_gui_window *window,

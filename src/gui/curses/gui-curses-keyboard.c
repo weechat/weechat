@@ -81,21 +81,6 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind (NULL, /* ^up           */ "meta-Oa",            "up_global");
     gui_keyboard_bind (NULL, /* down          */ "meta2-B",            "down");
     gui_keyboard_bind (NULL, /* ^down         */ "meta-Ob",            "down_global");
-    gui_keyboard_bind (NULL, /* pgup          */ "meta2-5~",           "page_up");
-    gui_keyboard_bind (NULL, /* pgup          */ "meta2-I",            "page_up");
-    gui_keyboard_bind (NULL, /* pgdn          */ "meta2-6~",           "page_down");
-    gui_keyboard_bind (NULL, /* pgdn          */ "meta2-G",            "page_down");
-    gui_keyboard_bind (NULL, /* m-pgup        */ "meta-meta2-5~",      "scroll_up");
-    gui_keyboard_bind (NULL, /* m-pgdn        */ "meta-meta2-6~",      "scroll_down");
-    gui_keyboard_bind (NULL, /* m-home        */ "meta-meta2-1~",      "scroll_top");
-    gui_keyboard_bind (NULL, /* m-end         */ "meta-meta2-4~",      "scroll_bottom");
-    gui_keyboard_bind (NULL, /* F9            */ "meta2-20~",          "scroll_topic_left");
-    gui_keyboard_bind (NULL, /* F10           */ "meta2-21~",          "scroll_topic_right");
-    gui_keyboard_bind (NULL, /* F11           */ "meta2-23~",          "nick_page_up");
-    gui_keyboard_bind (NULL, /* F12           */ "meta2-24~",          "nick_page_down");
-    gui_keyboard_bind (NULL, /* m-F11         */ "meta-meta2-23~",     "nick_beginning");
-    gui_keyboard_bind (NULL, /* m-F12         */ "meta-meta2-24~",     "nick_end");
-    gui_keyboard_bind (NULL, /* ^L            */ "ctrl-L",             "refresh");
     gui_keyboard_bind (NULL, /* m-a           */ "meta-a",             "jump_smart");
     gui_keyboard_bind (NULL, /* m-b           */ "meta-b",             "previous_word");
     gui_keyboard_bind (NULL, /* ^left         */ "meta-Od",            "previous_word");
@@ -110,8 +95,6 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind (NULL, /* m-j,m-s       */ "meta-jmeta-s",       "jump_server");
     gui_keyboard_bind (NULL, /* m-j,m-x       */ "meta-jmeta-x",       "jump_next_server");
     gui_keyboard_bind (NULL, /* m-k           */ "meta-k",             "grab_key");
-    gui_keyboard_bind (NULL, /* m-n           */ "meta-n",             "scroll_next_highlight");
-    gui_keyboard_bind (NULL, /* m-p           */ "meta-p",             "scroll_previous_highlight");
     gui_keyboard_bind (NULL, /* m-r           */ "meta-r",             "delete_line");
     gui_keyboard_bind (NULL, /* m-s           */ "meta-s",             "switch_server");
     gui_keyboard_bind (NULL, /* m-u           */ "meta-u",             "scroll_unread");
@@ -130,6 +113,23 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind (NULL, /* m-right       */ "meta-meta2-C",       "/buffer +1");
     gui_keyboard_bind (NULL, /* m-right (kde) */ "meta2-1;3C",         "/buffer +1");
     gui_keyboard_bind (NULL, /* F6            */ "meta2-17~",          "/buffer +1");
+    gui_keyboard_bind (NULL, /* pgup          */ "meta2-5~",           "/window page_up");
+    gui_keyboard_bind (NULL, /* pgup          */ "meta2-I",            "/winfow page_up");
+    gui_keyboard_bind (NULL, /* pgdn          */ "meta2-6~",           "/window page_down");
+    gui_keyboard_bind (NULL, /* pgdn          */ "meta2-G",            "/window page_down");
+    gui_keyboard_bind (NULL, /* m-pgup        */ "meta-meta2-5~",      "/window scroll_up");
+    gui_keyboard_bind (NULL, /* m-pgdn        */ "meta-meta2-6~",      "/window scroll_down");
+    gui_keyboard_bind (NULL, /* m-home        */ "meta-meta2-1~",      "/window scroll_top");
+    gui_keyboard_bind (NULL, /* m-end         */ "meta-meta2-4~",      "/window scroll_bottom");
+    gui_keyboard_bind (NULL, /* m-n           */ "meta-n",             "/window scroll_next_highlight");
+    gui_keyboard_bind (NULL, /* m-p           */ "meta-p",             "/window scroll_previous_highlight");
+    gui_keyboard_bind (NULL, /* F9            */ "meta2-20~",          "/window scroll_topic_left");
+    gui_keyboard_bind (NULL, /* F10           */ "meta2-21~",          "/window scroll_topic_right");
+    gui_keyboard_bind (NULL, /* F11           */ "meta2-23~",          "/window nicklist_page_up");
+    gui_keyboard_bind (NULL, /* F12           */ "meta2-24~",          "/window nicklist_page_down");
+    gui_keyboard_bind (NULL, /* m-F11         */ "meta-meta2-23~",     "/window nicklist_beginning");
+    gui_keyboard_bind (NULL, /* m-F12         */ "meta-meta2-24~",     "/window nicklist_end");
+    gui_keyboard_bind (NULL, /* ^L            */ "ctrl-L",             "/window refresh");
     gui_keyboard_bind (NULL, /* F7            */ "meta2-18~",          "/window -1");
     gui_keyboard_bind (NULL, /* F8            */ "meta2-19~",          "/window +1");
     gui_keyboard_bind (NULL, /* m-w,m-up      */ "meta-wmeta-meta2-A", "/window up");
@@ -295,22 +295,11 @@ gui_keyboard_flush ()
                 if (strcmp (key_str, "^^") == 0)
                     key_str[1] = '\0';
                 
-                /*switch (gui_current_window->buffer->type)
-                {
-                    case GUI_BUFFER_TYPE_STANDARD:*/
-                        gui_input_insert_string (gui_current_window->buffer,
-                                                 key_str, -1);
-                        if (gui_current_window->buffer->completion)
-                            gui_current_window->buffer->completion->position = -1;
-                        input_draw = 1;
-                        //break;
-                    /*case GUI_BUFFER_TYPE_DCC:
-                        gui_exec_action_dcc (gui_current_window, key_str);
-                        break;
-                    case GUI_BUFFER_TYPE_RAW_DATA:
-                        gui_exec_action_raw_data (gui_current_window, key_str);
-                        break;
-                }*/
+                gui_input_insert_string (gui_current_window->buffer,
+                                         key_str, -1);
+                if (gui_current_window->buffer->completion)
+                    gui_current_window->buffer->completion->position = -1;
+                input_draw = 1;
             }
             
             /* incremental text search in buffer */

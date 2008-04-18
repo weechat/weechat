@@ -2204,6 +2204,111 @@ command_window (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
+    /* page up in current window */
+    if (string_strcasecmp (argv[1], "page_up") == 0)
+    {
+        gui_window_page_up (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* page down in current window */
+    if (string_strcasecmp (argv[1], "page_down") == 0)
+    {
+        gui_window_page_down (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll up current window */
+    if (string_strcasecmp (argv[1], "scroll_up") == 0)
+    {
+        gui_window_scroll_up (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll down current window */
+    if (string_strcasecmp (argv[1], "scroll_down") == 0)
+    {
+        gui_window_scroll_down (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll to top of current window */
+    if (string_strcasecmp (argv[1], "scroll_top") == 0)
+    {
+        gui_window_scroll_top (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll to bottom of current window */
+    if (string_strcasecmp (argv[1], "scroll_bottom") == 0)
+    {
+        gui_window_scroll_bottom (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll to previous highlight of current window */
+    if (string_strcasecmp (argv[1], "scroll_previous_highlight") == 0)
+    {
+        gui_window_scroll_previous_highlight (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll to next highlight of current window */
+    if (string_strcasecmp (argv[1], "scroll_next_highlight") == 0)
+    {
+        gui_window_scroll_next_highlight (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll topic left for current window */
+    if (string_strcasecmp (argv[1], "scroll_topic_left") == 0)
+    {
+        gui_window_scroll_topic_left (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll topic right for current window */
+    if (string_strcasecmp (argv[1], "scroll_topic_right") == 0)
+    {
+        gui_window_scroll_topic_right (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* page up for nicklist in current window */
+    if (string_strcasecmp (argv[1], "nicklist_page_up") == 0)
+    {
+        gui_window_nicklist_page_up (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* page down for nicklist in current window */
+    if (string_strcasecmp (argv[1], "nicklist_page_down") == 0)
+    {
+        gui_window_nicklist_page_down (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* beginning of nicklist for current window */
+    if (string_strcasecmp (argv[1], "nicklist_beginning") == 0)
+    {
+        gui_window_nicklist_beginning (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* end of nicklist for current window */
+    if (string_strcasecmp (argv[1], "nicklist_end") == 0)
+    {
+        gui_window_nicklist_end (gui_current_window);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* refresh screen */
+    if (string_strcasecmp (argv[1], "refresh") == 0)
+    {
+        gui_window_refresh_screen (1);
+        return WEECHAT_RC_OK;
+    }
+    
     /* split window horizontally */
     if (string_strcasecmp (argv[1], "splith") == 0)
     {
