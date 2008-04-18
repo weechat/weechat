@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-15 13:49+0200\n"
-"PO-Revision-Date: 2008-04-14 18:43+0200\n"
+"POT-Creation-Date: 2008-04-18 15:36+0200\n"
+"PO-Revision-Date: 2008-04-18 15:36+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -207,6 +207,10 @@ msgstr "(hotlist: highlights + messages)"
 
 msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr "(hotlist: highlights + messages + join/part (tous))"
+
+#, c-format
+msgid "%sPlugin \"%s\" not found"
+msgstr "%sExtension \"%s\" non trouvée"
 
 msgid "Filters are enabled"
 msgstr "Les filtres sont activés"
@@ -494,18 +498,25 @@ msgstr "%sErreur: impossible de modifier l'option \"%s\""
 msgid "%sError: configuration option \"%s\" not found"
 msgstr "%sErreur: option de configuration \"%s\" non trouvée"
 
+msgid "Option changed: "
+msgstr "Option modifiée: "
+
 msgid "Option changed"
 msgstr "Option modifiée"
 
 #, c-format
-msgid "%sOption not found"
-msgstr "%sOption non trouvée"
+msgid "%sOption \"%s\" not found"
+msgstr "%sOption \"%s\" non trouvée"
+
+msgid "Option reset: "
+msgstr "Option réinitialisée: "
 
 msgid "Option reset"
 msgstr "Option réinitialisée"
 
-msgid "Option removed"
-msgstr "Option supprimée"
+#, c-format
+msgid "Option \"%s\" removed"
+msgstr "Option \"%s\" supprimée"
 
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
@@ -641,18 +652,19 @@ msgstr ""
 "défiler 20 msgs haut: /buffer scroll -20\n"
 "  aller sur #weechat: /buffer #weechat"
 
-msgid "launch WeeChat builtin command (do not look at commands hooked)"
-msgstr ""
-"lance une commande WeeChat interne (sans regarder les commandes accrochées)"
+msgid "launch explicit WeeChat or plugin command"
+msgstr "lancer explicitement une commande WeeChat ou d'une extension"
 
-msgid "command"
-msgstr "commande"
+msgid "plugin command"
+msgstr "extension commande"
 
 msgid ""
+" plugin: plugin name ('weechat' for WeeChat internal command)\n"
 "command: command to execute (a '/' is automatically added if not found at "
 "beginning of command)"
 msgstr ""
-"commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est "
+"extension: nom de l'extension ('weechat' pour une commande interne WeeChat)\n"
+" commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est "
 "pas trouvé au début de la commande)"
 
 msgid ""
@@ -1705,42 +1717,6 @@ msgstr "appeler la commande suivante dans l'historique"
 msgid "call next command in global history"
 msgstr "appeler la commande suivante dans l'historique global"
 
-msgid "scroll one page up"
-msgstr "faire défiler d'une page vers le haut"
-
-msgid "scroll one page down"
-msgstr "faire défiler d'une page vers le bas"
-
-msgid "scroll a few lines up"
-msgstr "faire défiler de quelques lignes vers le haut"
-
-msgid "scroll a few lines down"
-msgstr "faire défiler de quelques lignes vers le bas"
-
-msgid "scroll to top of buffer"
-msgstr "faire défiler jusqu'au début du tampon"
-
-msgid "scroll to bottom of buffer"
-msgstr "faire défiler jusqu'à la fin du tampon"
-
-msgid "scroll left topic"
-msgstr "faire défiler le titre vers la gauche"
-
-msgid "scroll right topic"
-msgstr "faire défiler le titre vers la droite"
-
-msgid "display beginning of nicklist"
-msgstr "afficher le début de la liste des pseudos"
-
-msgid "display end of nicklist"
-msgstr "afficher la fin de la liste des pseudos"
-
-msgid "scroll nicklist one page up"
-msgstr "faire défiler la liste des pseudos d'une page vers le haut"
-
-msgid "scroll nicklist one page down"
-msgstr "faire défiler la liste des pseudos d'une page vers le bas"
-
 msgid "jump to buffer with activity"
 msgstr "sauter au tampon avec de l'activité"
 
@@ -1762,12 +1738,6 @@ msgstr "sauter au prochain serveur"
 msgid "switch active server on servers buffer"
 msgstr "bascule de serveur actif sur le tampon des serveurs"
 
-msgid "scroll to previous highlight in buffer"
-msgstr "faire défiler jusqu'au highlight précédent du tampon"
-
-msgid "scroll to next highlight in buffer"
-msgstr "faire défiler jusqu'au highlight suivant du tampon"
-
 msgid "scroll to first unread line in buffer"
 msgstr "faire défiler jusqu'à la première ligne non lue du tampon"
 
@@ -1779,9 +1749,6 @@ msgstr "effacer la liste d'activité"
 
 msgid "clear infobar"
 msgstr "effacer la barre d'infos"
-
-msgid "refresh screen"
-msgstr "rafraîchir l'écran"
 
 msgid "grab a key"
 msgstr "capturer une touche"
@@ -4495,3 +4462,11 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\""
+
+#~ msgid "launch WeeChat builtin command (do not look at commands hooked)"
+#~ msgstr ""
+#~ "lance une commande WeeChat interne (sans regarder les commandes "
+#~ "accrochées)"
+
+#~ msgid "command"
+#~ msgstr "commande"

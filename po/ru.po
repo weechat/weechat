@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-15 13:49+0200\n"
+"POT-Creation-Date: 2008-04-18 15:36+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -222,6 +222,10 @@ msgstr "(hotlist: подсвечивание + сообщения)\n"
 #, fuzzy
 msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr "(хотлист: подсвечивание + сообщения + входы/выходы (всё))\n"
+
+#, fuzzy, c-format
+msgid "%sPlugin \"%s\" not found"
+msgstr "%s адрес \"%s\" не найден\n"
 
 #, fuzzy
 msgid "Filters are enabled"
@@ -540,19 +544,27 @@ msgid "%sError: configuration option \"%s\" not found"
 msgstr "%s параметр конфигурации \"%s\" не найден\n"
 
 #, fuzzy
+msgid "Option changed: "
+msgstr "не на канале"
+
+#, fuzzy
 msgid "Option changed"
 msgstr "не на канале"
 
 #, fuzzy, c-format
-msgid "%sOption not found"
+msgid "%sOption \"%s\" not found"
 msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy
+msgid "Option reset: "
+msgstr "Настройки pluginов сохранены\n"
 
 #, fuzzy
 msgid "Option reset"
 msgstr "Настройки pluginов сохранены\n"
 
-#, fuzzy
-msgid "Option removed"
+#, fuzzy, c-format
+msgid "Option \"%s\" removed"
 msgstr "не на канале"
 
 #, c-format
@@ -673,16 +685,16 @@ msgstr ""
 " отмотать 20 сообщений: /buffer scroll -20\n"
 "    перейти к #weechat: /buffer #weechat"
 
-#, fuzzy
-msgid "launch WeeChat builtin command (do not look at commands hooked)"
+msgid "launch explicit WeeChat or plugin command"
 msgstr ""
-"вызвать встроенную команду WeeChat/IRC (не использовать pluginы и сокращения)"
 
-msgid "command"
-msgstr "команда"
+#, fuzzy
+msgid "plugin command"
+msgstr "Команды Plugin'ов:\n"
 
 #, fuzzy
 msgid ""
+" plugin: plugin name ('weechat' for WeeChat internal command)\n"
 "command: command to execute (a '/' is automatically added if not found at "
 "beginning of command)"
 msgstr ""
@@ -1789,42 +1801,6 @@ msgstr "вызвать следующую команду из истории"
 msgid "call next command in global history"
 msgstr "вызвать следующую команду из глобальной истории"
 
-msgid "scroll one page up"
-msgstr "промотать 1 страницу вверх"
-
-msgid "scroll one page down"
-msgstr "промотать 1 страницу вниз"
-
-msgid "scroll a few lines up"
-msgstr "промотать на несколько строк вверх"
-
-msgid "scroll a few lines down"
-msgstr "промотать на несколько строк вниз"
-
-msgid "scroll to top of buffer"
-msgstr "перемотать на начало буфера"
-
-msgid "scroll to bottom of buffer"
-msgstr "перемотать на конец буфера"
-
-msgid "scroll left topic"
-msgstr "перемотать тему влево"
-
-msgid "scroll right topic"
-msgstr "перемотать тему вправо"
-
-msgid "display beginning of nicklist"
-msgstr "показать начало списка ников"
-
-msgid "display end of nicklist"
-msgstr "показать конец списка ников"
-
-msgid "scroll nicklist one page up"
-msgstr "промотать список ников на 1 страницу вверх"
-
-msgid "scroll nicklist one page down"
-msgstr "промотать список ников на 1 страницу вниз"
-
 msgid "jump to buffer with activity"
 msgstr "перейти к буферу с активностью:"
 
@@ -1846,12 +1822,6 @@ msgstr "перейти к следующему буферу"
 msgid "switch active server on servers buffer"
 msgstr "перейти к активному серверу в буфере серверов"
 
-msgid "scroll to previous highlight in buffer"
-msgstr "промотать буфер до предыдущей подсветки"
-
-msgid "scroll to next highlight in buffer"
-msgstr "промотать буфер до следующей подсветки"
-
 msgid "scroll to first unread line in buffer"
 msgstr "перейти к первой непрочитанной строчке буфера"
 
@@ -1863,9 +1833,6 @@ msgstr "очистить хотлист"
 
 msgid "clear infobar"
 msgstr "очистить информационную панель"
-
-msgid "refresh screen"
-msgstr "обновить экран"
 
 msgid "grab a key"
 msgstr "захватить клавишу"
@@ -4534,6 +4501,60 @@ msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
 #, fuzzy
+#~ msgid "launch WeeChat builtin command (do not look at commands hooked)"
+#~ msgstr ""
+#~ "вызвать встроенную команду WeeChat/IRC (не использовать pluginы и "
+#~ "сокращения)"
+
+#~ msgid "command"
+#~ msgstr "команда"
+
+#~ msgid "scroll one page up"
+#~ msgstr "промотать 1 страницу вверх"
+
+#~ msgid "scroll one page down"
+#~ msgstr "промотать 1 страницу вниз"
+
+#~ msgid "scroll a few lines up"
+#~ msgstr "промотать на несколько строк вверх"
+
+#~ msgid "scroll a few lines down"
+#~ msgstr "промотать на несколько строк вниз"
+
+#~ msgid "scroll to top of buffer"
+#~ msgstr "перемотать на начало буфера"
+
+#~ msgid "scroll to bottom of buffer"
+#~ msgstr "перемотать на конец буфера"
+
+#~ msgid "scroll left topic"
+#~ msgstr "перемотать тему влево"
+
+#~ msgid "scroll right topic"
+#~ msgstr "перемотать тему вправо"
+
+#~ msgid "display beginning of nicklist"
+#~ msgstr "показать начало списка ников"
+
+#~ msgid "display end of nicklist"
+#~ msgstr "показать конец списка ников"
+
+#~ msgid "scroll nicklist one page up"
+#~ msgstr "промотать список ников на 1 страницу вверх"
+
+#~ msgid "scroll nicklist one page down"
+#~ msgstr "промотать список ников на 1 страницу вниз"
+
+#~ msgid "scroll to previous highlight in buffer"
+#~ msgstr "промотать буфер до предыдущей подсветки"
+
+#~ msgid "scroll to next highlight in buffer"
+#~ msgstr "промотать буфер до следующей подсветки"
+
+#~ msgid "refresh screen"
+#~ msgstr "обновить экран"
+
+#, fuzzy
 #~ msgid "# %s, created by %s v%s on %s#\n"
 #~ msgstr ""
 #~ "#\n"
@@ -4596,10 +4617,6 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 
 #~ msgid "name associated to IRC server (for display only)"
 #~ msgstr "имя IRC сервера (для внутреннего пользования)"
-
-#, fuzzy
-#~ msgid "Option changed: "
-#~ msgstr "не на канале"
 
 #, fuzzy
 #~ msgid "%sError: incorrect value for option \"%s\""
@@ -5475,10 +5492,6 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 #, fuzzy
 #~ msgid "Configuration options for protocol \"%s\":\n"
 #~ msgstr "параметров с \"%s\" найдено\n"
-
-#, fuzzy
-#~ msgid "Plugin commands:"
-#~ msgstr "Команды Plugin'ов:\n"
 
 #, fuzzy
 #~ msgid "       (no command handler)"

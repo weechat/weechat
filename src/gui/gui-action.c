@@ -128,7 +128,7 @@ gui_action_return (char *args)
             gui_current_window->buffer->ptr_history = NULL;
             gui_input_optimize_size (gui_current_window->buffer);
             gui_input_draw (gui_current_window->buffer, 0);
-            input_data (gui_current_window->buffer, command, 0);
+            input_data (gui_current_window->buffer, command);
             free (command);
         }
     }

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-15 13:49+0200\n"
+"POT-Creation-Date: 2008-04-18 15:36+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -221,6 +221,10 @@ msgstr "(hotlist: resaltados + mensajes)\n"
 #, fuzzy
 msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr "(hotlist: resaltados + mensajes + join/part (todos))\n"
+
+#, fuzzy, c-format
+msgid "%sPlugin \"%s\" not found"
+msgstr "%s direcciÃ³n \"%s\" no encontrada\n"
 
 #, fuzzy
 msgid "Filters are enabled"
@@ -539,19 +543,27 @@ msgid "%sError: configuration option \"%s\" not found"
 msgstr "%s opciÃ³n de configuraciÃ³n \"%s\" no encontrada\n"
 
 #, fuzzy
+msgid "Option changed: "
+msgstr "no presente en el canal"
+
+#, fuzzy
 msgid "Option changed"
 msgstr "no presente en el canal"
 
 #, fuzzy, c-format
-msgid "%sOption not found"
+msgid "%sOption \"%s\" not found"
 msgstr "%s plugin \"%s\" no encontrado\n"
+
+#, fuzzy
+msgid "Option reset: "
+msgstr "opciÃ³n/opciones de plugin encontrada(s)\n"
 
 #, fuzzy
 msgid "Option reset"
 msgstr "opciÃ³n/opciones de plugin encontrada(s)\n"
 
-#, fuzzy
-msgid "Option removed"
+#, fuzzy, c-format
+msgid "Option \"%s\" removed"
 msgstr "no presente en el canal"
 
 #, c-format
@@ -660,17 +672,16 @@ msgstr ""
 "   canal: saltar al bÃºfer por el nombre del servidor o canal\n"
 "  nÃºmero: saltar al bÃºfer por nÃºmero"
 
-#, fuzzy
-msgid "launch WeeChat builtin command (do not look at commands hooked)"
+msgid "launch explicit WeeChat or plugin command"
 msgstr ""
-"lanzar el comando de construcciÃ³n de Weechat/IRC (no mira los manejadores "
-"de plugins ni los alias)"
 
-msgid "command"
-msgstr "comando"
+#, fuzzy
+msgid "plugin command"
+msgstr "Comandos de plugin:\n"
 
 #, fuzzy
 msgid ""
+" plugin: plugin name ('weechat' for WeeChat internal command)\n"
 "command: command to execute (a '/' is automatically added if not found at "
 "beginning of command)"
 msgstr ""
@@ -1768,43 +1779,6 @@ msgstr "llamar al comando siguiente en el historial"
 msgid "call next command in global history"
 msgstr "llamar al comando siguiente en el historial global"
 
-msgid "scroll one page up"
-msgstr "desplazarse una pÃ¡gina hacia arriba"
-
-msgid "scroll one page down"
-msgstr "desplazarse una pÃ¡gina hacia abajo"
-
-msgid "scroll a few lines up"
-msgstr "desplazarse unas pÃ¡ginas hacia arriba"
-
-msgid "scroll a few lines down"
-msgstr "desplazarse unas pÃ¡ginas hacia abajo"
-
-msgid "scroll to top of buffer"
-msgstr "desplazarse al principio del bÃºfer"
-
-msgid "scroll to bottom of buffer"
-msgstr "desplazarse al final del bÃºfer"
-
-#, fuzzy
-msgid "scroll left topic"
-msgstr "desplazarse al principio del bÃºfer"
-
-msgid "scroll right topic"
-msgstr ""
-
-msgid "display beginning of nicklist"
-msgstr "mostrar el principio de la lista de nicks"
-
-msgid "display end of nicklist"
-msgstr "mostrar el final de la lista de nicks"
-
-msgid "scroll nicklist one page up"
-msgstr "desplazar la lista de nicks una pÃ¡gina hacia arriba"
-
-msgid "scroll nicklist one page down"
-msgstr "desplazar la lista de nicks una pÃ¡gina hacia abajo"
-
 msgid "jump to buffer with activity"
 msgstr "saltar al bÃºfer con actividad"
 
@@ -1827,12 +1801,6 @@ msgstr "saltar al servidor siguiente"
 msgid "switch active server on servers buffer"
 msgstr "seleccionar servidor activo en el bÃºfer de servidores"
 
-msgid "scroll to previous highlight in buffer"
-msgstr "desplazarse al resaltado anterior en el bÃºfer"
-
-msgid "scroll to next highlight in buffer"
-msgstr "desplazarse al resaltado siguiente en el bÃºfer"
-
 msgid "scroll to first unread line in buffer"
 msgstr "desplazarse a la primera lÃ­nea sin leer en el bÃºfer"
 
@@ -1845,9 +1813,6 @@ msgstr "limpiar hotlist"
 
 msgid "clear infobar"
 msgstr "limpiar barra de informaciÃ³n"
-
-msgid "refresh screen"
-msgstr "recargar la pantalla"
 
 msgid "grab a key"
 msgstr "capturar una clave"
@@ -4549,6 +4514,58 @@ msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
 #, fuzzy
+#~ msgid "launch WeeChat builtin command (do not look at commands hooked)"
+#~ msgstr ""
+#~ "lanzar el comando de construcciÃ³n de Weechat/IRC (no mira los "
+#~ "manejadores de plugins ni los alias)"
+
+#~ msgid "command"
+#~ msgstr "comando"
+
+#~ msgid "scroll one page up"
+#~ msgstr "desplazarse una pÃ¡gina hacia arriba"
+
+#~ msgid "scroll one page down"
+#~ msgstr "desplazarse una pÃ¡gina hacia abajo"
+
+#~ msgid "scroll a few lines up"
+#~ msgstr "desplazarse unas pÃ¡ginas hacia arriba"
+
+#~ msgid "scroll a few lines down"
+#~ msgstr "desplazarse unas pÃ¡ginas hacia abajo"
+
+#~ msgid "scroll to top of buffer"
+#~ msgstr "desplazarse al principio del bÃºfer"
+
+#~ msgid "scroll to bottom of buffer"
+#~ msgstr "desplazarse al final del bÃºfer"
+
+#, fuzzy
+#~ msgid "scroll left topic"
+#~ msgstr "desplazarse al principio del bÃºfer"
+
+#~ msgid "display beginning of nicklist"
+#~ msgstr "mostrar el principio de la lista de nicks"
+
+#~ msgid "display end of nicklist"
+#~ msgstr "mostrar el final de la lista de nicks"
+
+#~ msgid "scroll nicklist one page up"
+#~ msgstr "desplazar la lista de nicks una pÃ¡gina hacia arriba"
+
+#~ msgid "scroll nicklist one page down"
+#~ msgstr "desplazar la lista de nicks una pÃ¡gina hacia abajo"
+
+#~ msgid "scroll to previous highlight in buffer"
+#~ msgstr "desplazarse al resaltado anterior en el bÃºfer"
+
+#~ msgid "scroll to next highlight in buffer"
+#~ msgstr "desplazarse al resaltado siguiente en el bÃºfer"
+
+#~ msgid "refresh screen"
+#~ msgstr "recargar la pantalla"
+
+#, fuzzy
 #~ msgid "# %s, created by %s v%s on %s#\n"
 #~ msgstr ""
 #~ "#\n"
@@ -4613,10 +4630,6 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
 #~ msgid "name associated to IRC server (for display only)"
 #~ msgstr "nombre asociado al servidor IRC (para mostrar solamente)"
-
-#, fuzzy
-#~ msgid "Option changed: "
-#~ msgstr "no presente en el canal"
 
 #, fuzzy
 #~ msgid "%sError: incorrect value for option \"%s\""
@@ -5501,10 +5514,6 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 #, fuzzy
 #~ msgid "Configuration options for protocol \"%s\":\n"
 #~ msgstr "opciÃ³n/opciones de configuraciÃ³n encontrada(s) con \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Plugin commands:"
-#~ msgstr "Comandos de plugin:\n"
 
 #, fuzzy
 #~ msgid "       (no command handler)"

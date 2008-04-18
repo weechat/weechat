@@ -173,8 +173,8 @@ extern struct t_hook *hook_command (struct t_weechat_plugin *plugin,
                                     char *completion,
                                     t_hook_callback_command *callback,
                                     void *callback_data);
-extern int hook_command_exec (struct t_gui_buffer *buffer, char *string,
-                              int only_builtin);
+extern int hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
+                              struct t_weechat_plugin *plugin, char *string);
 extern struct t_hook *hook_timer (struct t_weechat_plugin *plugin,
                                   long interval, int align_second,
                                   int max_calls,

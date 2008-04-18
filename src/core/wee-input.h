@@ -21,8 +21,12 @@
 #define __WEECHAT_INPUT_H 1
 
 struct t_gui_buffer;
+struct t_weechat_plugin;
 
-extern void input_data (struct t_gui_buffer *buffer, char *data,
-                        int only_builtin);
+extern int input_exec_command (struct t_gui_buffer *buffer,
+                               int any_plugin,
+                               struct t_weechat_plugin *plugin,
+                               char *string);
+extern void input_data (struct t_gui_buffer *buffer, char *data);
 
 #endif /* wee-input.h */

@@ -561,33 +561,46 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
- * command_builtin: launch WeeChat builtin command
+ * command_command: launch explicit WeeChat or plugin command
  */
 
 int
-command_builtin (void *data, struct t_gui_buffer *buffer,
+command_command (void *data, struct t_gui_buffer *buffer,
                  int argc, char **argv, char **argv_eol)
 {
-    char *command;
     int length;
+    char *command;
+    struct t_weechat_plugin *ptr_plugin;
     
     /* make C compiler happy */
     (void) data;
     
-    if (argc > 1)
+    if (argc > 2)
     {
-        if (argv[1][0] == '/')
+        ptr_plugin = NULL;
+        if (string_strcasecmp (argv[1], "weechat") != 0)
         {
-            input_data (buffer, argv_eol[1], 1);
+            ptr_plugin = plugin_search (argv[1]);
+            if (!ptr_plugin)
+            {
+                gui_chat_printf (NULL, _("%sPlugin \"%s\" not found"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[1]);
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        if (argv_eol[2][0] == '/')
+        {
+            input_exec_command (buffer, 0, ptr_plugin, argv_eol[2]);
         }
         else
         {
-            length = strlen (argv_eol[1]) + 2;
+            length = strlen (argv_eol[2]) + 2;
             command = malloc (length);
             if (command)
             {
-                snprintf (command, length, "/%s", argv_eol[1]);
-                input_data (buffer, command, 1);
+                snprintf (command, length, "/%s", argv_eol[2]);
+                input_exec_command (buffer, 0, ptr_plugin, command);
                 free (command);
             }
         }
@@ -2142,7 +2155,7 @@ command_uptime (void *data, struct t_gui_buffer *buffer,
                   sec,
                   ctime (&weechat_start_time));
         string[strlen (string) - 1] = '\0';
-        input_data (buffer, string, 0);
+        input_data (buffer, string);
     }
     else
     {
@@ -2504,14 +2517,15 @@ command_init ()
                      "    jump to #weechat: /buffer #weechat"),
                   "clear|move|close|list|notify|scroll|set|%b|%c %b|%c",
                   &command_buffer, NULL);
-    hook_command (NULL, "builtin",
-                  N_("launch WeeChat builtin command (do not look at commands "
-                     "hooked)"),
-                  N_("command"),
-                  N_("command: command to execute (a '/' is automatically "
+    hook_command (NULL, "command",
+                  N_("launch explicit WeeChat or plugin command"),
+                  N_("plugin command"),
+                  N_(" plugin: plugin name ('weechat' for WeeChat internal "
+                     "command)\n"
+                     "command: command to execute (a '/' is automatically "
                      "added if not found at beginning of command)"),
-                  "%w",
-                  &command_builtin, NULL);
+                  "%p|weechat %P",
+                  &command_command, NULL);
     hook_command (NULL, "filter",
                   N_("filter messages in buffers, to hide/show them according "
                      "to tags or regex"),
@@ -2681,7 +2695,7 @@ command_startup (int plugins_loaded)
             weechat_buffer = gui_buffer_search_main ();
             for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
             {
-                input_data (weechat_buffer, *ptr_cmd, 0);
+                input_data (weechat_buffer, *ptr_cmd);
             }
             string_free_splitted_command (commands);
         }

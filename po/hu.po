@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-15 13:49+0200\n"
+"POT-Creation-Date: 2008-04-18 15:36+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -224,6 +224,10 @@ msgstr ""
 
 msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%sPlugin \"%s\" not found"
+msgstr "%s cím \"%s\" nem található\n"
 
 #, fuzzy
 msgid "Filters are enabled"
@@ -543,19 +547,27 @@ msgid "%sError: configuration option \"%s\" not found"
 msgstr "%s a \"%s\" opció nem található\n"
 
 #, fuzzy
+msgid "Option changed: "
+msgstr "nincs a szobában"
+
+#, fuzzy
 msgid "Option changed"
 msgstr "nincs a szobában"
 
 #, fuzzy, c-format
-msgid "%sOption not found"
+msgid "%sOption \"%s\" not found"
 msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy
+msgid "Option reset: "
+msgstr "Modul beállítások elmentve\n"
 
 #, fuzzy
 msgid "Option reset"
 msgstr "Modul beállítások elmentve\n"
 
-#, fuzzy
-msgid "Option removed"
+#, fuzzy, c-format
+msgid "Option \"%s\" removed"
 msgstr "nincs a szobában"
 
 #, c-format
@@ -677,17 +689,16 @@ msgstr ""
 "    ugrás 20 sorral feljebb: /buffer scroll -20\n"
 "   ugrás a #weechat szobára: /buffer #weechat"
 
-#, fuzzy
-msgid "launch WeeChat builtin command (do not look at commands hooked)"
+msgid "launch explicit WeeChat or plugin command"
 msgstr ""
-"WeeChat/IRC beépített parancs indítása (ne keressen a modulkezelők vagy "
-"aliaszok között)"
 
-msgid "command"
-msgstr "parancs"
+#, fuzzy
+msgid "plugin command"
+msgstr "Modul parancsok:\n"
 
 #, fuzzy
 msgid ""
+" plugin: plugin name ('weechat' for WeeChat internal command)\n"
 "command: command to execute (a '/' is automatically added if not found at "
 "beginning of command)"
 msgstr ""
@@ -1784,42 +1795,6 @@ msgstr "kövezkező parancs hívása az előzményekből"
 msgid "call next command in global history"
 msgstr "következő parancs hívása a globális előzményekből"
 
-msgid "scroll one page up"
-msgstr "ugrás egy oldallal feljebb"
-
-msgid "scroll one page down"
-msgstr "ugrás egy oldallal lejjebb"
-
-msgid "scroll a few lines up"
-msgstr "ugrás néhány sorral feljebb"
-
-msgid "scroll a few lines down"
-msgstr "ugrás néhány sorral lejjebb"
-
-msgid "scroll to top of buffer"
-msgstr "ugrás a puffer tetejére"
-
-msgid "scroll to bottom of buffer"
-msgstr "ugrás a puffer végére"
-
-msgid "scroll left topic"
-msgstr "téma görgetése balra"
-
-msgid "scroll right topic"
-msgstr "téma görgetése jobbra"
-
-msgid "display beginning of nicklist"
-msgstr "névlista elejének mutatása"
-
-msgid "display end of nicklist"
-msgstr "névlista végének mutatása"
-
-msgid "scroll nicklist one page up"
-msgstr "névlista görgetése egy oldallal feljebb"
-
-msgid "scroll nicklist one page down"
-msgstr "névlista görgetése egy oldallal lejjebb"
-
 msgid "jump to buffer with activity"
 msgstr "ugrás aktív pufferre"
 
@@ -1841,12 +1816,6 @@ msgstr "ugrás a következő szerverre"
 msgid "switch active server on servers buffer"
 msgstr "aktív szerverek változtatása a szerver pufferben"
 
-msgid "scroll to previous highlight in buffer"
-msgstr "ugrás az előző kiemelésre a pufferben"
-
-msgid "scroll to next highlight in buffer"
-msgstr "ugrás a következő kiemelésre a pufferben"
-
 msgid "scroll to first unread line in buffer"
 msgstr "ugrás az első olvasatlan sorra a pufferben"
 
@@ -1858,9 +1827,6 @@ msgstr "hotlist törlése"
 
 msgid "clear infobar"
 msgstr "információs pult törlése"
-
-msgid "refresh screen"
-msgstr "képernyő frissítése"
 
 msgid "grab a key"
 msgstr "vállasszon billentyűt"
@@ -4551,6 +4517,60 @@ msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
 #, fuzzy
+#~ msgid "launch WeeChat builtin command (do not look at commands hooked)"
+#~ msgstr ""
+#~ "WeeChat/IRC beépített parancs indítása (ne keressen a modulkezelők vagy "
+#~ "aliaszok között)"
+
+#~ msgid "command"
+#~ msgstr "parancs"
+
+#~ msgid "scroll one page up"
+#~ msgstr "ugrás egy oldallal feljebb"
+
+#~ msgid "scroll one page down"
+#~ msgstr "ugrás egy oldallal lejjebb"
+
+#~ msgid "scroll a few lines up"
+#~ msgstr "ugrás néhány sorral feljebb"
+
+#~ msgid "scroll a few lines down"
+#~ msgstr "ugrás néhány sorral lejjebb"
+
+#~ msgid "scroll to top of buffer"
+#~ msgstr "ugrás a puffer tetejére"
+
+#~ msgid "scroll to bottom of buffer"
+#~ msgstr "ugrás a puffer végére"
+
+#~ msgid "scroll left topic"
+#~ msgstr "téma görgetése balra"
+
+#~ msgid "scroll right topic"
+#~ msgstr "téma görgetése jobbra"
+
+#~ msgid "display beginning of nicklist"
+#~ msgstr "névlista elejének mutatása"
+
+#~ msgid "display end of nicklist"
+#~ msgstr "névlista végének mutatása"
+
+#~ msgid "scroll nicklist one page up"
+#~ msgstr "névlista görgetése egy oldallal feljebb"
+
+#~ msgid "scroll nicklist one page down"
+#~ msgstr "névlista görgetése egy oldallal lejjebb"
+
+#~ msgid "scroll to previous highlight in buffer"
+#~ msgstr "ugrás az előző kiemelésre a pufferben"
+
+#~ msgid "scroll to next highlight in buffer"
+#~ msgstr "ugrás a következő kiemelésre a pufferben"
+
+#~ msgid "refresh screen"
+#~ msgstr "képernyő frissítése"
+
+#, fuzzy
 #~ msgid "# %s, created by %s v%s on %s#\n"
 #~ msgstr ""
 #~ "#\n"
@@ -4613,10 +4633,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
 #~ msgid "name associated to IRC server (for display only)"
 #~ msgstr "az IRC szerverhez rendelt név (csak megjelenítéshez)"
-
-#, fuzzy
-#~ msgid "Option changed: "
-#~ msgstr "nincs a szobában"
 
 #, fuzzy
 #~ msgid "%sError: incorrect value for option \"%s\""
@@ -5470,10 +5486,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 #, fuzzy
 #~ msgid "Configuration options for protocol \"%s\":\n"
 #~ msgstr "a \"%s\" kifejezéshez tartozó opciót találtam\n"
-
-#, fuzzy
-#~ msgid "Plugin commands:"
-#~ msgstr "Modul parancsok:\n"
 
 #, fuzzy
 #~ msgid "       (no command handler)"

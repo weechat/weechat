@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-15 13:49+0200\n"
+"POT-Creation-Date: 2008-04-18 15:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -189,6 +189,10 @@ msgid "(hotlist: highlights + messages)"
 msgstr ""
 
 msgid "(hotlist: highlights + messages + join/part (all))"
+msgstr ""
+
+#, c-format
+msgid "%sPlugin \"%s\" not found"
 msgstr ""
 
 msgid "Filters are enabled"
@@ -471,17 +475,24 @@ msgstr ""
 msgid "%sError: configuration option \"%s\" not found"
 msgstr ""
 
+msgid "Option changed: "
+msgstr ""
+
 msgid "Option changed"
 msgstr ""
 
 #, c-format
-msgid "%sOption not found"
+msgid "%sOption \"%s\" not found"
+msgstr ""
+
+msgid "Option reset: "
 msgstr ""
 
 msgid "Option reset"
 msgstr ""
 
-msgid "Option removed"
+#, c-format
+msgid "Option \"%s\" removed"
 msgstr ""
 
 #, c-format
@@ -570,13 +581,14 @@ msgid ""
 "    jump to #weechat: /buffer #weechat"
 msgstr ""
 
-msgid "launch WeeChat builtin command (do not look at commands hooked)"
+msgid "launch explicit WeeChat or plugin command"
 msgstr ""
 
-msgid "command"
+msgid "plugin command"
 msgstr ""
 
 msgid ""
+" plugin: plugin name ('weechat' for WeeChat internal command)\n"
 "command: command to execute (a '/' is automatically added if not found at "
 "beginning of command)"
 msgstr ""
@@ -1476,42 +1488,6 @@ msgstr ""
 msgid "call next command in global history"
 msgstr ""
 
-msgid "scroll one page up"
-msgstr ""
-
-msgid "scroll one page down"
-msgstr ""
-
-msgid "scroll a few lines up"
-msgstr ""
-
-msgid "scroll a few lines down"
-msgstr ""
-
-msgid "scroll to top of buffer"
-msgstr ""
-
-msgid "scroll to bottom of buffer"
-msgstr ""
-
-msgid "scroll left topic"
-msgstr ""
-
-msgid "scroll right topic"
-msgstr ""
-
-msgid "display beginning of nicklist"
-msgstr ""
-
-msgid "display end of nicklist"
-msgstr ""
-
-msgid "scroll nicklist one page up"
-msgstr ""
-
-msgid "scroll nicklist one page down"
-msgstr ""
-
 msgid "jump to buffer with activity"
 msgstr ""
 
@@ -1533,12 +1509,6 @@ msgstr ""
 msgid "switch active server on servers buffer"
 msgstr ""
 
-msgid "scroll to previous highlight in buffer"
-msgstr ""
-
-msgid "scroll to next highlight in buffer"
-msgstr ""
-
 msgid "scroll to first unread line in buffer"
 msgstr ""
 
@@ -1549,9 +1519,6 @@ msgid "clear hotlist"
 msgstr ""
 
 msgid "clear infobar"
-msgstr ""
-
-msgid "refresh screen"
 msgstr ""
 
 msgid "grab a key"

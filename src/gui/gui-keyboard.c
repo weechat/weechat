@@ -641,7 +641,7 @@ gui_keyboard_pressed (char *key_str)
                     for (ptr_cmd = commands; *ptr_cmd; ptr_cmd++)
                     {
                         input_data (gui_current_window->buffer,
-                                    *ptr_cmd, 0);
+                                    *ptr_cmd);
                     }
                     string_free_splitted_command (commands);
                 }

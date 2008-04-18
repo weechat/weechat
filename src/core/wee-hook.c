@@ -366,14 +366,21 @@ hook_command (struct t_weechat_plugin *plugin, char *command, char *description,
  *                    return:  0 if command executed and failed
  *                             1 if command executed successfully
  *                            -1 if command not found
+ *                            -2 if command is ambigous (same command exists
+ *                               for another plugin, and we don't know which
+ *                               one to run)
  */
 
 int
-hook_command_exec (struct t_gui_buffer *buffer, char *string, int only_builtin)
+hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
+                   struct t_weechat_plugin *plugin, char *string)
 {
     struct t_hook *ptr_hook, *next_hook;
+    struct t_hook *hook_for_plugin, *hook_for_other_plugin;
     char **argv, **argv_eol;
     int argc, rc;
+    
+    rc = -1;
     
     if (!buffer || !string || !string[0])
         return -1;
@@ -388,6 +395,8 @@ hook_command_exec (struct t_gui_buffer *buffer, char *string, int only_builtin)
     
     hook_exec_start ();
     
+    hook_for_plugin = NULL;
+    hook_for_other_plugin = NULL;
     ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND];
     while (ptr_hook)
     {
@@ -395,28 +404,48 @@ hook_command_exec (struct t_gui_buffer *buffer, char *string, int only_builtin)
         
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (HOOK_COMMAND(ptr_hook, level) == 0)
-            && (!only_builtin || !ptr_hook->plugin)
-            /*&& (!ptr_hook->plugin
-                || !buffer->plugin
-                || (buffer->plugin == ptr_hook->plugin))*/
+            && ((!any_plugin || HOOK_COMMAND(ptr_hook, level) == 0))
             && (string_strcasecmp (argv[0] + 1,
                                    HOOK_COMMAND(ptr_hook, command)) == 0))
         {
-            ptr_hook->running = 1;
-            rc = (int) (HOOK_COMMAND(ptr_hook, callback))
-                (ptr_hook->callback_data, buffer, argc, argv, argv_eol);
-            ptr_hook->running = 0;
-            string_free_exploded (argv);
-            string_free_exploded (argv_eol);
-            hook_exec_end ();
-            if (rc == WEECHAT_RC_ERROR)
-                return 0;
+            if (ptr_hook->plugin == plugin)
+            {
+                if (!hook_for_plugin)
+                    hook_for_plugin = ptr_hook;
+            }
             else
-                return 1;
+            {
+                if (!hook_for_other_plugin)
+                    hook_for_other_plugin = ptr_hook;
+            }
         }
         
         ptr_hook = next_hook;
+    }
+    
+    /* ambiguous: command found for current plugin and other one, we don't know
+       which one to run! */
+    if (any_plugin && hook_for_plugin && hook_for_other_plugin)
+        rc = -2;
+    else
+    {
+        if (any_plugin || hook_for_plugin)
+        {
+            ptr_hook = (hook_for_plugin) ?
+                hook_for_plugin : hook_for_other_plugin;
+            
+            if (ptr_hook)
+            {
+                ptr_hook->running = 1;
+                rc = (int) (HOOK_COMMAND(ptr_hook, callback))
+                    (ptr_hook->callback_data, buffer, argc, argv, argv_eol);
+                ptr_hook->running = 0;
+                if (rc == WEECHAT_RC_ERROR)
+                    rc = 0;
+                else
+                    rc = 1;
+            }
+        }
     }
     
     string_free_exploded (argv);
@@ -424,8 +453,7 @@ hook_command_exec (struct t_gui_buffer *buffer, char *string, int only_builtin)
     
     hook_exec_end ();
     
-    /* no hook found */
-    return -1;
+    return rc;
 }
 
 /*

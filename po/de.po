@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-15 13:49+0200\n"
+"POT-Creation-Date: 2008-04-18 15:36+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -225,6 +225,10 @@ msgstr "(Hotlist: Hervorhebungen und Nachrichten)\n"
 #, fuzzy
 msgid "(hotlist: highlights + messages + join/part (all))"
 msgstr "(Hotlist: Hervorhebungen, Nachrichten, Betreten und Verlassen)\n"
+
+#, fuzzy, c-format
+msgid "%sPlugin \"%s\" not found"
+msgstr "%s Adresse \"%s\" nicht gefunden\n"
 
 #, fuzzy
 msgid "Filters are enabled"
@@ -544,19 +548,27 @@ msgid "%sError: configuration option \"%s\" not found"
 msgstr "%s Konfigurationsoption \"%s\" nicht gefunden\n"
 
 #, fuzzy
+msgid "Option changed: "
+msgstr "Sie sind nicht im Channel"
+
+#, fuzzy
 msgid "Option changed"
 msgstr "Sie sind nicht im Channel"
 
 #, fuzzy, c-format
-msgid "%sOption not found"
+msgid "%sOption \"%s\" not found"
 msgstr "%s Plugin \"%s\" nicht gefunden\n"
+
+#, fuzzy
+msgid "Option reset: "
+msgstr "Plugin-Optionen gesichert\n"
 
 #, fuzzy
 msgid "Option reset"
 msgstr "Plugin-Optionen gesichert\n"
 
-#, fuzzy
-msgid "Option removed"
+#, fuzzy, c-format
+msgid "Option \"%s\" removed"
 msgstr "Sie sind nicht im Channel"
 
 #, c-format
@@ -664,16 +676,16 @@ msgstr ""
 "Channel: gehe zum Puffer mit Servernamen oder Channelnamen\n"
 " Nummer: gehe zu Puffer mit dieser Nummer"
 
-#, fuzzy
-msgid "launch WeeChat builtin command (do not look at commands hooked)"
+msgid "launch explicit WeeChat or plugin command"
 msgstr ""
-"starte eingebauten WeeChat/IRC-Befehl (ohne Plugin-Handler oder Aliase)"
 
-msgid "command"
-msgstr "Befehl"
+#, fuzzy
+msgid "plugin command"
+msgstr "Plugin-Befehle:\n"
 
 #, fuzzy
 msgid ""
+" plugin: plugin name ('weechat' for WeeChat internal command)\n"
 "command: command to execute (a '/' is automatically added if not found at "
 "beginning of command)"
 msgstr ""
@@ -1781,42 +1793,6 @@ msgstr "nächsten Befehl aus dem Verlauf abfragen"
 msgid "call next command in global history"
 msgstr "nächsten Befehl aus dem globalen Verlauf abfragen"
 
-msgid "scroll one page up"
-msgstr "eine Seite hochscrollen"
-
-msgid "scroll one page down"
-msgstr "eine Seite herunterscrollen"
-
-msgid "scroll a few lines up"
-msgstr "einige Zeilen hochscrollen"
-
-msgid "scroll a few lines down"
-msgstr "einige Zeilen herunterscrollen"
-
-msgid "scroll to top of buffer"
-msgstr "nach ganz oben scrollen"
-
-msgid "scroll to bottom of buffer"
-msgstr "nach ganz unten scrollen"
-
-msgid "scroll left topic"
-msgstr "Topic nach links scrollen"
-
-msgid "scroll right topic"
-msgstr "Topic nach rechts scrollen"
-
-msgid "display beginning of nicklist"
-msgstr "zum Anfang der Nicklist gehen"
-
-msgid "display end of nicklist"
-msgstr "zum Ende der Nicklist gehen"
-
-msgid "scroll nicklist one page up"
-msgstr "Nickliste eine Seite hochscrollen"
-
-msgid "scroll nicklist one page down"
-msgstr "Nickliste eine Seite herunterscrollen"
-
 msgid "jump to buffer with activity"
 msgstr "zu nächstem aktiven Puffer springen"
 
@@ -1839,12 +1815,6 @@ msgstr "zum nächsten Server springen"
 msgid "switch active server on servers buffer"
 msgstr "wechsel den aktiven Server im Server-Puffer"
 
-msgid "scroll to previous highlight in buffer"
-msgstr "scrolle zur vorherigen hervorhebung im Puffer"
-
-msgid "scroll to next highlight in buffer"
-msgstr "scrolle zur nächsten Hervorhebung im Puffer"
-
 msgid "scroll to first unread line in buffer"
 msgstr "scrolle zur ersten, ungelesenen Zeile im Puffer"
 
@@ -1857,9 +1827,6 @@ msgstr "Hotlist leeren"
 
 msgid "clear infobar"
 msgstr "Infobar leeren"
-
-msgid "refresh screen"
-msgstr "Bild neu aufbauen"
 
 msgid "grab a key"
 msgstr "Tastencode ermitteln und einfügen"
@@ -4535,6 +4502,59 @@ msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
 #, fuzzy
+#~ msgid "launch WeeChat builtin command (do not look at commands hooked)"
+#~ msgstr ""
+#~ "starte eingebauten WeeChat/IRC-Befehl (ohne Plugin-Handler oder Aliase)"
+
+#~ msgid "command"
+#~ msgstr "Befehl"
+
+#~ msgid "scroll one page up"
+#~ msgstr "eine Seite hochscrollen"
+
+#~ msgid "scroll one page down"
+#~ msgstr "eine Seite herunterscrollen"
+
+#~ msgid "scroll a few lines up"
+#~ msgstr "einige Zeilen hochscrollen"
+
+#~ msgid "scroll a few lines down"
+#~ msgstr "einige Zeilen herunterscrollen"
+
+#~ msgid "scroll to top of buffer"
+#~ msgstr "nach ganz oben scrollen"
+
+#~ msgid "scroll to bottom of buffer"
+#~ msgstr "nach ganz unten scrollen"
+
+#~ msgid "scroll left topic"
+#~ msgstr "Topic nach links scrollen"
+
+#~ msgid "scroll right topic"
+#~ msgstr "Topic nach rechts scrollen"
+
+#~ msgid "display beginning of nicklist"
+#~ msgstr "zum Anfang der Nicklist gehen"
+
+#~ msgid "display end of nicklist"
+#~ msgstr "zum Ende der Nicklist gehen"
+
+#~ msgid "scroll nicklist one page up"
+#~ msgstr "Nickliste eine Seite hochscrollen"
+
+#~ msgid "scroll nicklist one page down"
+#~ msgstr "Nickliste eine Seite herunterscrollen"
+
+#~ msgid "scroll to previous highlight in buffer"
+#~ msgstr "scrolle zur vorherigen hervorhebung im Puffer"
+
+#~ msgid "scroll to next highlight in buffer"
+#~ msgstr "scrolle zur nächsten Hervorhebung im Puffer"
+
+#~ msgid "refresh screen"
+#~ msgstr "Bild neu aufbauen"
+
+#, fuzzy
 #~ msgid "# %s, created by %s v%s on %s#\n"
 #~ msgstr ""
 #~ "#\n"
@@ -4597,10 +4617,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
 #~ msgid "name associated to IRC server (for display only)"
 #~ msgstr "mit dem IRC-Server assoziierter eindeutiger Name (nur zur Anzeige)"
-
-#, fuzzy
-#~ msgid "Option changed: "
-#~ msgstr "Sie sind nicht im Channel"
 
 #, fuzzy
 #~ msgid "%sError: incorrect value for option \"%s\""
@@ -5472,10 +5488,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 #, fuzzy
 #~ msgid "Configuration options for protocol \"%s\":\n"
 #~ msgstr "Konfigurationsoption(en) gefunden mit \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Plugin commands:"
-#~ msgstr "Plugin-Befehle:\n"
 
 #, fuzzy
 #~ msgid "       (no command handler)"

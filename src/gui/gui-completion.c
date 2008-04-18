@@ -581,6 +581,57 @@ gui_completion_list_add_plugin (struct t_gui_completion *completion)
 }
 
 /*
+ * gui_completion_list_add_plugin_commands: add plugin commands to completion
+ *                                          list (plugin name is previous
+ *                                          argument)
+ */
+
+void
+gui_completion_list_add_plugin_commands (struct t_gui_completion *completion)
+{
+    char *pos_space, *plugin_name;
+    struct t_weechat_plugin *ptr_plugin;
+    struct t_hook *ptr_hook;
+    
+    if (completion->args)
+    {
+        pos_space = strchr (completion->args, ' ');
+        if (pos_space)
+            plugin_name = string_strndup (completion->args,
+                                          pos_space - completion->args);
+        else
+            plugin_name = strdup (completion->args);
+        
+        if (plugin_name)
+        {
+            ptr_plugin = NULL;
+            if (string_strcasecmp (plugin_name, "weechat") != 0)
+            {
+                /* plugin name is different from "weechat", then search it in
+                   plugin list */
+                ptr_plugin = plugin_search (plugin_name);
+                if (!ptr_plugin)
+                    return;
+            }
+            for (ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND]; ptr_hook;
+                 ptr_hook = ptr_hook->next_hook)
+            {
+                if (!ptr_hook->deleted
+                    && (ptr_hook->plugin == ptr_plugin)
+                    && HOOK_COMMAND(ptr_hook, command)
+                    && HOOK_COMMAND(ptr_hook, command)[0])
+                {
+                    gui_completion_list_add (completion,
+                                             HOOK_COMMAND(ptr_hook, command),
+                                             0, WEECHAT_LIST_POS_SORT);
+                }
+            }
+            free (plugin_name);
+        }
+    }
+}
+
+/*
  * gui_completion_list_add_option_value: add option value to completion list
  */
 
@@ -816,6 +867,9 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                             break;
                         case 'p': /* plugin name */
                             gui_completion_list_add_plugin (completion);
+                            break;
+                        case 'P': /* plugin commands */
+                            gui_completion_list_add_plugin_commands (completion);
                             break;
                         case 'r': /* bar names */
                             gui_completion_list_add_bars_names (completion);

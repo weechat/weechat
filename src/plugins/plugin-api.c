@@ -357,7 +357,7 @@ plugin_api_command (struct t_weechat_plugin *plugin,
     command2 = string_iconv_to_internal (plugin->charset, command);
     if (!buffer)
         buffer = gui_current_window->buffer;
-    input_data (buffer, (command2) ? command2 : command, 0);
+    input_data (buffer, (command2) ? command2 : command);
     if (command2)
         free (command2);
 }

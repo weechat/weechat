@@ -66,17 +66,20 @@ input_is_command (char *line)
  */
 
 int
-input_exec_command (struct t_gui_buffer *buffer, char *string,
-                    int only_builtin)
+input_exec_command (struct t_gui_buffer *buffer,
+                    int any_plugin,
+                    struct t_weechat_plugin *plugin,
+                    char *string)
 {
-    int rc, argc;
+    int rc;
     char *command, *pos, *ptr_args;
-    char **argv, **argv_eol;
     
     if ((!string) || (!string[0]) || (string[0] != '/'))
         return 0;
     
     command = strdup (string);
+    if (!command)
+        return 0;
     
     /* look for end of command */
     ptr_args = NULL;
@@ -89,12 +92,7 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
         pos[1] = '\0';
     }
     
-    rc = hook_command_exec (buffer, command, only_builtin);
-    /*vars_replaced = alias_replace_vars (window, ptr_args);
-      rc = plugin_cmd_handler_exec (window->buffer->protocol, command + 1,
-      (vars_replaced) ? vars_replaced : ptr_args);
-      if (vars_replaced)
-      free (vars_replaced);*/
+    rc = hook_command_exec (buffer, any_plugin, plugin, command);
     
     pos = strchr (command, ' ');
     if (pos)
@@ -115,57 +113,23 @@ input_exec_command (struct t_gui_buffer *buffer, char *string,
         case 1: /* command hooked, OK (executed) */
             break;
         default: /* no command hooked */
-            argv = string_explode (ptr_args, " ", 0, 0, &argc);
-            argv_eol = string_explode (ptr_args, " ", 1, 0, NULL);
-            
-            /* should we send unknown command to IRC server? */
-            /*if (cfg_irc_send_unknown_commands)
-            {
-                if (ptr_args)
-                    unknown_command = malloc (strlen (command + 1) + 1 + strlen (ptr_args) + 1);
-                else
-                    unknown_command = malloc (strlen (command + 1) + 1);
-                
-                if (unknown_command)
-                {
-                    strcpy (unknown_command, command + 1);
-                    if (ptr_args)
-                    {
-                        strcat (unknown_command, " ");
-                        strcat (unknown_command, ptr_args);
-                    }
-                    irc_send_cmd_quote (server, channel, unknown_command);
-                    free (unknown_command);
-                }
-            }
-            else
-            {
-                gui_chat_printf_error (NULL,
-                                       _("Error: unknown command \"%s\" (type /help for help). "
-                                         "To send unknown commands to IRC server, enable option "
-                                         "irc_send_unknown_commands."),
-                                       command + 1);
-            }*/
-
             gui_chat_printf (NULL,
                              _("%sError: unknown command \"%s\" (type /help "
                                "for help)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              command + 1);
-            
-            string_free_exploded (argv);
-            string_free_exploded (argv_eol);
+            break;
     }
     free (command);
     return 0;
 }
 
 /*
- * input_data: read user input and send data to protocol
+ * input_data: read user input and send data to buffer callback
  */
 
 void
-input_data (struct t_gui_buffer *buffer, char *data, int only_builtin)
+input_data (struct t_gui_buffer *buffer, char *data)
 {
     char *new_data, *ptr_data, *pos;
     
@@ -199,15 +163,14 @@ input_data (struct t_gui_buffer *buffer, char *data, int only_builtin)
             if (input_is_command (ptr_data))
             {
                 /* WeeChat or plugin command */
-                (void) input_exec_command (buffer, ptr_data,
-                                           only_builtin);
+                (void) input_exec_command (buffer, 1, buffer->plugin, ptr_data);
             }
             else
             {
                 if ((ptr_data[0] == '/') && (ptr_data[1] == '/'))
                     ptr_data++;
-
-                hook_command_exec (buffer, ptr_data, 0);
+                
+                hook_command_exec (buffer, 1, buffer->plugin, ptr_data);
                 
                 if (buffer->input_callback)
                 {
