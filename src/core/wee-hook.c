@@ -405,8 +405,8 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
         if (!ptr_hook->deleted
             && !ptr_hook->running
             && ((!any_plugin || HOOK_COMMAND(ptr_hook, level) == 0))
-            && (string_strcasecmp (argv[0] + 1,
-                                   HOOK_COMMAND(ptr_hook, command)) == 0))
+            && ((argv[0][0] == '/') && (string_strcasecmp (argv[0] + 1,
+                                                           HOOK_COMMAND(ptr_hook, command)) == 0)))
         {
             if (ptr_hook->plugin == plugin)
             {
