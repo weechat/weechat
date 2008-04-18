@@ -1738,9 +1738,7 @@ command_set_display_section (struct t_config_file *config_file,
  */
 
 void
-command_set_display_option (struct t_config_file *config_file,
-                            struct t_config_section *section,
-                            struct t_config_option *option,
+command_set_display_option (struct t_config_option *option,
                             char *message)
 {
     char *color_name;
@@ -1750,8 +1748,8 @@ command_set_display_option (struct t_config_file *config_file,
         case CONFIG_OPTION_TYPE_BOOLEAN:
             gui_chat_printf (NULL, "%s%s.%s.%s%s = %s%s",
                              (message) ? message : "  ",
-                             config_file->name,
-                             section->name,
+                             option->config_file->name,
+                             option->section->name,
                              option->name,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT_HOST),
@@ -1763,8 +1761,8 @@ command_set_display_option (struct t_config_file *config_file,
             {
                 gui_chat_printf (NULL, "%s%s.%s.%s%s = %s%s",
                                  (message) ? message : "  ",
-                                 config_file->name,
-                                 section->name,
+                                 option->config_file->name,
+                                 option->section->name,
                                  option->name,
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                  GUI_COLOR(GUI_COLOR_CHAT_HOST),
@@ -1774,8 +1772,8 @@ command_set_display_option (struct t_config_file *config_file,
             {
                 gui_chat_printf (NULL, "%s%s.%s.%s%s = %s%d",
                                  (message) ? message : "  ",
-                                 config_file->name,
-                                 section->name,
+                                 option->config_file->name,
+                                 option->section->name,
                                  option->name,
                                  GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                  GUI_COLOR(GUI_COLOR_CHAT_HOST),
@@ -1785,8 +1783,8 @@ command_set_display_option (struct t_config_file *config_file,
         case CONFIG_OPTION_TYPE_STRING:
             gui_chat_printf (NULL, "%s%s.%s.%s%s = \"%s%s%s\"",
                              (message) ? message : "  ",
-                             config_file->name,
-                             section->name,
+                             option->config_file->name,
+                             option->section->name,
                              option->name,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT_HOST),
@@ -1797,8 +1795,8 @@ command_set_display_option (struct t_config_file *config_file,
             color_name = gui_color_get_name (CONFIG_COLOR(option));
             gui_chat_printf (NULL, "%s%s.%s.%s%s = %s%s",
                              (message) ? message : "  ",
-                             config_file->name,
-                             section->name,
+                             option->config_file->name,
+                             option->section->name,
                              option->name,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT_HOST),
@@ -1856,8 +1854,7 @@ command_set_display_option_list (char *message, char *search)
                                                          ptr_section);
                             section_displayed = 1;
                         }
-                        command_set_display_option (ptr_config, ptr_section,
-                                                    ptr_option, message);
+                        command_set_display_option (ptr_option, message);
                         number_found++;
                     }
                     free (option_full_name);
@@ -1879,6 +1876,7 @@ command_set (void *data, struct t_gui_buffer *buffer,
 {
     char *value;
     int number_found, rc;
+    struct t_config_option *ptr_option;
     
     /* make C compiler happy */
     (void) data;
@@ -1956,7 +1954,13 @@ command_set (void *data, struct t_gui_buffer *buffer,
                                  argv[1]);
                 return WEECHAT_RC_ERROR;
             default:
-                gui_chat_printf (NULL, _("Option changed"));
+                config_file_search_with_string (argv[1], NULL, NULL,
+                                                &ptr_option, NULL);
+                if (ptr_option)
+                    command_set_display_option (ptr_option,
+                                                _("Option changed: "));
+                else
+                    gui_chat_printf (NULL, _("Option changed"));
                 break;
         }
     }
@@ -1972,6 +1976,8 @@ int
 command_unset (void *data, struct t_gui_buffer *buffer,
                int argc, char **argv, char **argv_eol)
 {
+    struct t_config_option *ptr_option;
+    
     /* make C compiler happy */
     (void) data;
     (void) buffer;
@@ -1982,16 +1988,23 @@ command_unset (void *data, struct t_gui_buffer *buffer,
         switch (config_file_unset_with_string (argv_eol[1]))
         {
             case 0:
-                gui_chat_printf (NULL, _("%sOption not found"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                gui_chat_printf (NULL, _("%sOption \"%s\" not found"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv_eol[1]);
                 break;
             case 1:
-                gui_chat_printf (NULL, _("Option reset"));
+                config_file_search_with_string (argv[1], NULL, NULL,
+                                                &ptr_option, NULL);
+                if (ptr_option)
+                    command_set_display_option (ptr_option,
+                                                _("Option reset: "));
+                else
+                    gui_chat_printf (NULL, _("Option reset"));
                 break;
             case 2:
-                gui_chat_printf (NULL, _("Option removed"));
+                gui_chat_printf (NULL, _("Option \"%s\" removed"),
+                                 argv_eol[1]);
                 break;
-                                                 
         }
     }
     
