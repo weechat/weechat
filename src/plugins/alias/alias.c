@@ -546,7 +546,7 @@ alias_config_write_default (void *data,
     weechat_config_write_line (config_file, "MUB", "%s", "\"unban *\"");
     weechat_config_write_line (config_file, "N", "%s", "\"names\"");
     weechat_config_write_line (config_file, "Q", "%s", "\"query\"");
-    weechat_config_write_line (config_file, "REDRAW", "%s", "\"key call refresh\"");
+    weechat_config_write_line (config_file, "REDRAW", "%s", "\"window refresh\"");
     weechat_config_write_line (config_file, "SAY", "%s", "\"msg *\"");
     weechat_config_write_line (config_file, "SIGNOFF", "%s", "\"quit\"");
     weechat_config_write_line (config_file, "T", "%s", "\"topic\"");
