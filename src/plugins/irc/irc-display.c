@@ -86,185 +86,6 @@ irc_display_hide_password (char *string, int look_for_nickserv)
 }
 
 /*
- * irc_display_nick: display nick in chat window
- */
-
-void
-irc_display_nick (struct t_gui_buffer *buffer, struct t_irc_nick *nick,
-                  char *nickname, int type, int display_around,
-                  char *force_color, int no_nickmode)
-{
-    (void) buffer;
-    (void) nick;
-    (void) nickname;
-    (void) type;
-    (void) display_around;
-    (void) force_color;
-    (void) no_nickmode;
-    
-    /*
-    char format[32], *ptr_nickname;
-    t_irc_server *ptr_server;
-    t_irc_channel *ptr_channel;
-    int is_private, max_align, i, nickname_length, external_nick;
-    int length, spaces, disable_prefix_suffix;
-    
-    max_align = (cfg_look_align_size_max >= cfg_look_align_size) ?
-        cfg_look_align_size_max : cfg_look_align_size;
-
-    ptr_server = irc_server_search (buffer->category);
-    ptr_channel = irc_channel_search (ptr_server, buffer->name);
-    is_private = (ptr_channel && (ptr_channel->type != IRC_CHANNEL_TYPE_CHANNEL));
-    
-    ptr_nickname = strdup ((nick) ? nick->nick : nickname);
-    if (!ptr_nickname)
-        return;
-    nickname_length = utf8_width_screen (ptr_nickname); 
-    external_nick = (!nick && !is_private);
-    disable_prefix_suffix = ((cfg_look_align_nick != CFG_LOOK_ALIGN_NICK_NONE)
-                             && ((int)strlen (cfg_look_nick_prefix) +
-                                 (int)strlen (cfg_look_nick_suffix) > max_align - 4));
-    
-    // calculate length to display, to truncate it if too long
-    length = nickname_length;
-    if (!disable_prefix_suffix && cfg_look_nick_prefix)
-        length += strlen (cfg_look_nick_prefix);
-    if (external_nick)
-        length += 2;
-    if (nick && cfg_look_nickmode)
-    {
-        if (nick->flags & (IRC_NICK_CHANOWNER | IRC_NICK_CHANADMIN |
-                           IRC_NICK_CHANADMIN2 | IRC_NICK_OP | IRC_NICK_HALFOP |
-                           IRC_NICK_VOICE | IRC_NICK_CHANUSER))
-            length += 1;
-        else if (cfg_look_nickmode_empty && !no_nickmode)
-            length += 1;
-    }
-    if (!disable_prefix_suffix && cfg_look_nick_suffix)
-        length += strlen (cfg_look_nick_suffix);
-    
-    // calculate number of spaces to insert before or after nick
-    spaces = 0;
-    if (cfg_look_align_nick != CFG_LOOK_ALIGN_NICK_NONE)
-    {
-        if (length > max_align)
-            spaces = max_align - length;
-        else if (length > cfg_look_align_size)
-            spaces = 0;
-        else
-            spaces = cfg_look_align_size - length;
-    }
-    
-    // display prefix
-    if (display_around && !disable_prefix_suffix
-        && cfg_look_nick_prefix && cfg_look_nick_prefix[0])
-        gui_chat_printf_type (buffer, type, NULL, -1,
-                              "%s%s",
-                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                              cfg_look_nick_prefix);
-    
-    // display spaces before nick, if needed
-    if (display_around
-        && (cfg_look_align_nick == CFG_LOOK_ALIGN_NICK_RIGHT)
-        && (spaces > 0))
-    {
-        snprintf (format, 32, "%%-%ds", spaces);
-        gui_chat_printf_type (buffer, type, NULL, -1, format, " ");
-    }
-    
-    // display nick mode
-    if (nick && cfg_look_nickmode)
-    {
-        if (nick->flags & IRC_NICK_CHANOWNER)
-            gui_chat_printf_type (buffer, type, NULL, -1, "%s~",
-                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX1));
-        else if (nick->flags & IRC_NICK_CHANADMIN)
-            gui_chat_printf_type (buffer, type, NULL, -1, "%s&",
-                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX1));
-        else if (nick->flags & IRC_NICK_CHANADMIN2)
-            gui_chat_printf_type (buffer, type, NULL, -1, "%s!",
-                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX1));
-        else if (nick->flags & IRC_NICK_OP)
-            gui_chat_printf_type (buffer, type, NULL, -1, "%s@",
-                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX1));
-        else if (nick->flags & IRC_NICK_HALFOP)
-            gui_chat_printf_type (buffer, type, NULL, -1, "%s%%",
-                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX2));
-        else if (nick->flags & IRC_NICK_VOICE)
-            gui_chat_printf_type (buffer, type, NULL, -1, "%s+",
-                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX3));
-        else if (nick->flags & IRC_NICK_CHANUSER)
-            gui_chat_printf_type (buffer, type, NULL, -1, "%s-",
-                                  GUI_COLOR(GUI_COLOR_NICKLIST_PREFIX4));
-        else if (cfg_look_nickmode_empty && !no_nickmode)
-            gui_chat_printf_type (buffer, type, NULL, -1, "%s ",
-                                  GUI_COLOR(GUI_COLOR_CHAT));
-    }
-    
-    // display nick
-    if (external_nick)
-        gui_chat_printf_type (buffer, type, NULL, -1, "%s%s",
-                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                              "(");
-    if (display_around && (spaces < 0))
-    {
-        i = nickname_length + spaces - 1;
-        if (i < 3)
-        {
-            if (nickname_length < 3)
-                i = nickname_length;
-            else
-                i = 3;
-        }
-        ptr_nickname[i] = '\0';
-    }
-    if (display_around)
-        gui_chat_printf_type_nick (buffer, type,
-                                   (nick) ? nick->nick : nickname,
-                                   NULL, -1,
-                                   "%s%s",
-                                   (force_color) ? force_color :
-                                   GUI_COLOR((nick) ?
-                                             nick->color : cfg_col_chat),
-                                   ptr_nickname);
-    else
-        gui_chat_printf_type (buffer, type, NULL, -1,
-                              "%s%s",
-                              (force_color) ? force_color :
-                              GUI_COLOR((nick) ? nick->color : cfg_col_chat),
-                              ptr_nickname);
-    if (display_around && (spaces < 0))
-        gui_chat_printf_type (buffer, type, NULL, -1, "%s+",
-                              GUI_COLOR(GUI_COLOR_NICKLIST_MORE));
-    if (external_nick)
-        gui_chat_printf_type (buffer, type, NULL, -1, "%s%s",
-                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                         ")");
-    
-    // display spaces after nick, if needed
-    if (display_around
-        && (cfg_look_align_nick == CFG_LOOK_ALIGN_NICK_LEFT)
-        && (spaces > 0))
-    {
-        snprintf (format, 32, "%%-%ds", spaces);
-        gui_chat_printf_type (buffer, type, NULL, -1, format, " ");
-    }
-    
-    // display suffix
-    if (display_around && !disable_prefix_suffix
-        && cfg_look_nick_suffix && cfg_look_nick_suffix[0])
-        gui_chat_printf_type (buffer, type, NULL, -1, "%s%s",
-                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                              cfg_look_nick_suffix);
-    
-    gui_chat_printf_type (buffer, type, NULL, -1, "%s%s",
-                          GUI_NO_COLOR,
-                          (display_around) ? " " : "");
-    free (ptr_nickname);
-    */
-}
-
-/*
  * irc_display_away: display away on all channels of all servers
  */
 
@@ -354,7 +175,8 @@ irc_display_server (struct t_irc_server *server, int with_detail)
                         server->autoreconnect_delay,
                         NG_("second", "seconds", server->autoreconnect_delay));
         weechat_printf (NULL, "  addresses . . . . . : %s",
-                        server->addresses);
+                        (server->addresses && server->addresses[0]) ?
+                        server->addresses : "");
         weechat_printf (NULL, "  ipv6  . . . . . . . : %s",
                         (server->ipv6) ? _("on") : _("off"));
         weechat_printf (NULL, "  ssl . . . . . . . . : %s",
@@ -363,13 +185,17 @@ irc_display_server (struct t_irc_server *server, int with_detail)
                         (server->password && server->password[0]) ?
                         _("(hidden)") : "");
         weechat_printf (NULL, "  nicks . . . . . . . : %s",
-                        server->nicks);
+                        (server->nicks && server->nicks[0]) ?
+                        server->nicks : "");
         weechat_printf (NULL, "  username  . . . . . : %s",
-                        server->username);
+                        (server->username && server->username[0]) ?
+                        server->username : "");
         weechat_printf (NULL, "  realname  . . . . . : %s",
-                        server->realname);
+                        (server->realname && server->realname[0]) ?
+                        server->realname : "");
         weechat_printf (NULL, "  hostname  . . . . . : %s",
-                        (server->hostname) ? server->hostname : "");
+                        (server->hostname && server->hostname[0]) ?
+                        server->hostname : "");
         if (server->command && server->command[0])
             string = strdup (server->command);
         else
@@ -383,9 +209,11 @@ irc_display_server (struct t_irc_server *server, int with_detail)
             free (string);
         }
         else
+        {
             weechat_printf (NULL, "  command . . . . . . : %s",
                             (server->command && server->command[0]) ?
                             server->command : "");
+        }
         weechat_printf (NULL, "  command_delay . . . : %d %s",
                         server->command_delay,
                         NG_("second", "seconds", server->command_delay));

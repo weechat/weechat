@@ -317,9 +317,10 @@ irc_config_server_change_cb (void *data, struct t_config_option *option)
 void
 irc_config_server_delete_cb (void *data, struct t_config_option *option)
 {
-    int index_option;
-    char *name;
+    int i, index_option, length;
+    char *name, *mask;
     struct t_irc_server *ptr_server;
+    struct t_plugin_infolist *infolist;
     
     index_option = irc_config_search_server_option (data);
     if (index_option >= 0)
@@ -330,6 +331,28 @@ irc_config_server_delete_cb (void *data, struct t_config_option *option)
         {
             irc_server_set_with_option (ptr_server, index_option,
                                         irc_config_server_default[index_option]);
+            
+            /* look if we should remove server (no more option for server) */
+            if (!ptr_server->is_connected)
+            {
+                length = strlen (ptr_server->name) + 64;
+                mask = malloc (length);
+                if (mask)
+                {
+                    snprintf (mask, length, "irc.server.%s.*",
+                              ptr_server->name);
+                    infolist = weechat_infolist_get ("options", NULL, mask);
+                    i = 0;
+                    while (weechat_infolist_next (infolist))
+                    {
+                        i++;
+                    }
+                    if (i <= 1)
+                        irc_server_free (ptr_server);
+                    weechat_infolist_free (infolist);
+                    free (mask);
+                }
+            }
         }
     }
 }
