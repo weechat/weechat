@@ -56,10 +56,6 @@ struct t_irc_nick
     struct t_irc_nick *next_nick;   /* link to next nick on channel          */
 };
 
-extern void irc_nick_get_gui_infos (struct t_gui_buffer *buffer,
-                                    struct t_irc_nick *nick,
-                                    char *prefix, int *color_prefix,
-                                    struct t_gui_nick_group **group);
 extern struct t_irc_nick *irc_nick_new (struct t_irc_server *server,
                                         struct t_irc_channel *channel,
                                         char *nick_name, int is_chanowner,

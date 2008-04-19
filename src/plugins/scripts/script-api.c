@@ -522,7 +522,7 @@ script_api_printf_y (struct t_weechat_plugin *weechat_plugin,
         return;
     
     va_start (argptr, format);
-    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
+    vsnprintf (buf, 128 * 1024, format, argptr);
     va_end (argptr);
     
     buf2 = (script->charset && script->charset[0]) ?
@@ -569,16 +569,19 @@ script_api_log_printf (struct t_weechat_plugin *weechat_plugin,
                        char *format, ...)
 {
     va_list argptr;
-    char buf[1024];
-    char *buf2;
+    char *buf, *buf2;
+
+    buf = malloc (128 * 1024);
     
     va_start (argptr, format);
-    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
+    vsnprintf (buf, 128 * 1024, format, argptr);
     va_end (argptr);
     
     buf2 = (script->charset && script->charset[0]) ?
         weechat_iconv_to_internal (script->charset, buf) : NULL;
     weechat_log_printf ("%s", (buf2) ? buf2 : buf);
+    
+    free (buf);
     if (buf2)
         free (buf2);
 }
