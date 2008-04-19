@@ -1123,10 +1123,10 @@ irc_server_outqueue_send (struct t_irc_server *server)
                                   server->outqueue->message_after_mod);
                 if (pos)
                     pos[0] = '\r';
+                irc_server_send (server, server->outqueue->message_after_mod,
+                                 strlen (server->outqueue->message_after_mod));
+                server->last_user_message = time_now;
             }
-            irc_server_send (server, server->outqueue->message_after_mod,
-                             strlen (server->outqueue->message_after_mod));
-            server->last_user_message = time_now;
             irc_server_outqueue_free (server, server->outqueue);
         }
     }
@@ -1687,11 +1687,10 @@ int
 irc_server_recv_cb (void *arg_server)
 {
     struct t_irc_server *server;
-
-    server = (struct t_irc_server *)arg_server;
-    
     static char buffer[4096 + 2];
     int num_read;
+    
+    server = (struct t_irc_server *)arg_server;
     
     if (!server)
         return WEECHAT_RC_ERROR;

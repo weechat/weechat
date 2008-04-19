@@ -794,7 +794,7 @@ void
 gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                            char *tags, char *message, ...)
 {
-    char buf[8192];
+    char *buf;
     va_list argptr;
     time_t date_printed;
     int display_time;
@@ -819,8 +819,12 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
             return;
     }
     
+    buf = malloc (GUI_CHAT_BUFFER_PRINTF_SIZE);
+    if (!buf)
+        return;
+    
     va_start (argptr, message);
-    vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+    vsnprintf (buf, GUI_CHAT_BUFFER_PRINTF_SIZE, message, argptr);
     va_end (argptr);
     
     utf8_normalize (buf, '?');
@@ -896,6 +900,8 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
             gui_status_refresh_needed = 1;
         }
     }
+    
+    free (buf);
 }
 
 /*
@@ -907,7 +913,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 void
 gui_chat_printf_y (struct t_gui_buffer *buffer, int y, char *message, ...)
 {
-    char buf[8192];
+    char *buf;
     va_list argptr;
     struct t_gui_line *ptr_line;
     
@@ -944,8 +950,12 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, char *message, ...)
     else
     {
         /* with message: create line or merge content with existing line */
+        buf = malloc (GUI_CHAT_BUFFER_PRINTF_SIZE);
+        if (!buf)
+            return;
+        
         va_start (argptr, message);
-        vsnprintf (buf, sizeof (buf) - 1, message, argptr);
+        vsnprintf (buf, GUI_CHAT_BUFFER_PRINTF_SIZE, message, argptr);
         va_end (argptr);
         
         utf8_normalize (buf, '?');
@@ -957,5 +967,7 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, char *message, ...)
         }
         else
             string_iconv_fprintf (stdout, "%s\n", buf);
+        
+        free (buf);
     }
 }

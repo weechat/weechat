@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-18 15:36+0200\n"
-"PO-Revision-Date: 2008-04-18 15:36+0200\n"
+"POT-Creation-Date: 2008-04-19 10:27+0200\n"
+"PO-Revision-Date: 2008-04-19 10:28+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3644,6 +3644,10 @@ msgstr "%s%s: impossible de créer le pseudo \"%s\" pour le canal \"%s\""
 #, c-format
 msgid "%sNicks %s%s%s: %s[%s%s%s]"
 msgstr "%sPseudos %s%s%s: %s[%s%s%s]"
+
+#, c-format
+msgid "%sNicks %s%s%s: %s[%s%s]"
+msgstr "%sPseudos %s%s%s: %s[%s%s]"
 
 #, c-format
 msgid ""

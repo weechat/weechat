@@ -163,7 +163,7 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
 
     if (color)
     {
-        num_color = gui_color_search_config (color);
+        num_color = gui_color_search_config_int (color);
         if (num_color < 0)
             num_color = GUI_COLOR_NICKLIST;
     }
@@ -310,7 +310,7 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
 
     if (color)
     {
-        num_color = gui_color_search_config (color);
+        num_color = gui_color_search_config_int (color);
         if (num_color < 0)
             num_color = GUI_COLOR_NICKLIST;
     }
@@ -319,7 +319,7 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
 
     if (prefix_color)
     {
-        num_color_prefix = gui_color_search_config (prefix_color);
+        num_color_prefix = gui_color_search_config_int (prefix_color);
         if (num_color_prefix < 0)
             num_color_prefix = GUI_COLOR_NICKLIST;
     }

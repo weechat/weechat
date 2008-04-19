@@ -283,7 +283,7 @@ void
 logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
 {
     va_list argptr;
-    char buf[4096], *charset, *message;
+    char *buf, *charset, *message;
     time_t seconds;
     struct tm *date_tmp;
     char buf_time[256];
@@ -304,9 +304,10 @@ logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
                                 logger_buffer->log_filename);
                 free (logger_buffer->log_filename);
                 logger_buffer->log_filename = NULL;
+                free (buf);
                 return;
             }
-
+            
             if (logger_option_info_lines)
             {
                 seconds = time (NULL);
@@ -326,19 +327,25 @@ logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
                     free (message);
             }
         }
-        
-        va_start (argptr, format);
-        vsnprintf (buf, sizeof (buf) - 1, format, argptr);
-        va_end (argptr);
-        
-        message = (charset) ?
-            weechat_iconv_from_internal (charset, buf) : NULL;
-        
-        fprintf (logger_buffer->log_file,
-                 "%s\n", (message) ? message : buf);
-        fflush (logger_buffer->log_file);
-        if (message)
-            free (message);
+
+        buf = malloc (128 * 1024);
+        if (buf)
+        {
+            va_start (argptr, format);
+            vsnprintf (buf, 128 * 1024, format, argptr);
+            va_end (argptr);
+            
+            message = (charset) ?
+                weechat_iconv_from_internal (charset, buf) : NULL;
+            
+            fprintf (logger_buffer->log_file,
+                     "%s\n", (message) ? message : buf);
+            fflush (logger_buffer->log_file);
+            if (message)
+                free (message);
+            
+            free (buf);
+        }
     }
 }
 

@@ -43,12 +43,12 @@ struct t_gui_color *gui_color[GUI_COLOR_NUM_COLORS]; /* GUI colors          */
 
 
 /*
- * gui_color_search_config: search a color with configuration option name
- *                          return color found (number >= 0), -1 if not found
+ * gui_color_search_config_int: search a color with configuration option name
+ *                              return color found (number >= 0), -1 if not found
  */
 
 int
-gui_color_search_config (char *color_name)
+gui_color_search_config_int (char *color_name)
 {
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
@@ -70,6 +70,33 @@ gui_color_search_config (char *color_name)
     
     /* color not found */
     return -1;
+}
+
+/*
+ * gui_color_search_config_str: search a color configuration name with number
+ *                              return color configuration name, NULL if not found
+ */
+
+char *
+gui_color_search_config_str (int color_number)
+{
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
+    
+    ptr_section = config_file_search_section (weechat_config_file,
+                                              "color");
+    if (ptr_section)
+    {
+        for (ptr_option = ptr_section->options; ptr_option;
+             ptr_option = ptr_option->next_option)
+        {
+            if (ptr_option->min == color_number)
+                return ptr_option->name;
+        }
+    }
+    
+    /* color not found */
+    return NULL;
 }
 
 /*

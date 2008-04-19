@@ -992,15 +992,20 @@ void
 string_iconv_fprintf (FILE *file, char *data, ...)
 {
     va_list argptr;
-    static char buf[4096];
-    char *buf2;
+    char *buf, *buf2;
+
+    buf = malloc (128 * 1024);
+    if (!buf)
+        return;
     
     va_start (argptr, data);
-    vsnprintf (buf, sizeof (buf) - 1, data, argptr);
+    vsnprintf (buf, 128 * 1024, data, argptr);
     va_end (argptr);
     
     buf2 = string_iconv_from_internal (NULL, buf);
     fprintf (file, "%s", (buf2) ? buf2 : buf);
+    
+    free (buf);
     if (buf2)
         free (buf2);
 }

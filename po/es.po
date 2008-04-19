@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-18 15:36+0200\n"
+"POT-Creation-Date: 2008-04-19 10:27+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3704,6 +3704,10 @@ msgstr "%s no es posible crear el usuario \"%s\" para el canal \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%sNicks %s%s%s: %s[%s%s%s]"
+msgstr "%sServidor:%s%s %s[%s%s%s]\n"
+
+#, fuzzy, c-format
+msgid "%sNicks %s%s%s: %s[%s%s]"
 msgstr "%sServidor:%s%s %s[%s%s%s]\n"
 
 #, fuzzy, c-format

@@ -42,6 +42,7 @@
 #include "../gui/gui-filter.h"
 #include "../gui/gui-infobar.h"
 #include "../gui/gui-keyboard.h"
+#include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
 #include "plugin.h"
 #include "plugin-config.h"
@@ -231,7 +232,7 @@ plugin_api_color (char *color_name)
         return GUI_NO_COLOR;
     
     /* name is a weechat color option ? => then return this color */
-    num_color = gui_color_search_config (color_name);
+    num_color = gui_color_search_config_int (color_name);
     if (num_color >= 0)
         return GUI_COLOR(num_color);
     
@@ -307,7 +308,7 @@ plugin_api_infobar_printf (struct t_weechat_plugin *plugin, int delay,
     buf2 = string_iconv_to_internal (plugin->charset, buf);
     if (color_name && color_name[0])
     {
-        num_color = gui_color_search_config (color_name);
+        num_color = gui_color_search_config_int (color_name);
         if (num_color < 0)
             num_color = GUI_COLOR_INFOBAR;
     }
@@ -506,6 +507,71 @@ plugin_api_infolist_get_add_buffer_line (struct t_plugin_infolist *infolist,
         return 0;
     if (!plugin_infolist_new_var_string (ptr_item, "message", line->message))
         return 0;
+    
+    return 1;
+}
+
+/*
+ * plugin_api_infolist_get_add_nicklist: add a nicklist
+ *                                       return 1 if ok, 0 if error
+ */
+
+int
+plugin_api_infolist_get_add_nicklist (struct t_plugin_infolist *infolist,
+                                      struct t_gui_buffer *buffer)
+{
+    struct t_plugin_infolist_item *ptr_item;
+    struct t_gui_nick_group *ptr_group;
+    struct t_gui_nick *ptr_nick;
+    char prefix[2];
+    
+    if (!infolist || !buffer)
+        return 0;
+    
+    ptr_group = NULL;
+    ptr_nick = NULL;
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    while (ptr_group || ptr_nick)
+    {
+        ptr_item = plugin_infolist_new_item (infolist);
+        if (!ptr_item)
+            return 0;
+        
+        if (ptr_nick)
+        {
+            if (!plugin_infolist_new_var_string (ptr_item, "type", "nick"))
+                return 0;
+            if (!plugin_infolist_new_var_string (ptr_item, "name", ptr_nick->name))
+                return 0;
+            if (!plugin_infolist_new_var_string (ptr_item, "color",
+                                                 gui_color_search_config_str (ptr_nick->color)))
+                return 0;
+            prefix[0] = ptr_nick->prefix;
+            prefix[1] = '\0';
+            if (!plugin_infolist_new_var_string (ptr_item, "prefix", prefix))
+                return 0;
+            if (!plugin_infolist_new_var_string (ptr_item, "prefix_color",
+                                                 gui_color_search_config_str (ptr_nick->prefix_color)))
+                return 0;
+            if (!plugin_infolist_new_var_integer (ptr_item, "visible", ptr_nick->visible))
+                return 0;
+        }
+        else
+        {
+            if (!plugin_infolist_new_var_string (ptr_item, "type", "group"))
+                return 0;
+            if (!plugin_infolist_new_var_string (ptr_item, "name", ptr_group->name))
+                return 0;
+            if (!plugin_infolist_new_var_string (ptr_item, "color",
+                                                 gui_color_search_config_str (ptr_group->color)))
+                return 0;
+            if (!plugin_infolist_new_var_integer (ptr_item, "visible", ptr_group->visible))
+                return 0;
+            if (!plugin_infolist_new_var_integer (ptr_item, "level", ptr_group->level))
+                return 0;
+        }
+        gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    }
     
     return 1;
 }
@@ -885,7 +951,24 @@ plugin_api_infolist_get (char *name, void *pointer, char *arguments)
             return ptr_infolist;
         }
     }
-    if (string_strcasecmp (name, "window") == 0)
+    else if (string_strcasecmp (name, "nicklist") == 0)
+    {
+        /* invalid buffer pointer ? */
+        if (!pointer || (!gui_buffer_valid (pointer)))
+            return NULL;
+        
+        ptr_infolist = plugin_infolist_new ();
+        if (ptr_infolist)
+        {
+            if (!plugin_api_infolist_get_add_nicklist (ptr_infolist, pointer))
+            {
+                plugin_infolist_free (ptr_infolist);
+                return NULL;
+            }
+            return ptr_infolist;
+        }
+    }
+    else if (string_strcasecmp (name, "window") == 0)
     {
         /* invalid window pointer ? */
         if (pointer && (!gui_window_valid (pointer)))

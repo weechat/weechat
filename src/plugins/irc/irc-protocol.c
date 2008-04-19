@@ -3975,20 +3975,22 @@ irc_protocol_cmd_353 (struct t_irc_server *server, char *command,
             }
         }
     }
-    
-    weechat_printf_tags ((ptr_channel && ptr_channel->nicks) ?
-                         ptr_channel->buffer : server->buffer,
-                         irc_protocol_tags (command, "irc_numeric"),
-                         _("%sNicks %s%s%s: %s[%s%s%s]"),
-                         weechat_prefix ("network"),
-                         IRC_COLOR_CHAT_CHANNEL,
-                         pos_channel,
-                         IRC_COLOR_CHAT,
-                         IRC_COLOR_CHAT_DELIMITERS,
-                         IRC_COLOR_CHAT,
-                         (argv_eol[args][0] == ':') ?
-                         argv_eol[args] + 1 : argv_eol[args],
-                         IRC_COLOR_CHAT_DELIMITERS);
+
+    if (!ptr_channel)
+    {
+        weechat_printf_tags (server->buffer,
+                             irc_protocol_tags (command, "irc_numeric"),
+                             _("%sNicks %s%s%s: %s[%s%s%s]"),
+                             weechat_prefix ("network"),
+                             IRC_COLOR_CHAT_CHANNEL,
+                             pos_channel,
+                             IRC_COLOR_CHAT,
+                             IRC_COLOR_CHAT_DELIMITERS,
+                             IRC_COLOR_CHAT,
+                             (argv_eol[args][0] == ':') ?
+                             argv_eol[args] + 1 : argv_eol[args],
+                             IRC_COLOR_CHAT_DELIMITERS);
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -4003,7 +4005,9 @@ irc_protocol_cmd_366 (struct t_irc_server *server, char *command,
                       int highlight)
 {
     struct t_irc_channel *ptr_channel;
-    int num_nicks, num_op, num_halfop, num_voice, num_normal;
+    struct t_plugin_infolist *infolist;
+    int num_nicks, num_op, num_halfop, num_voice, num_normal, length, i;
+    char *string, *prefix;
     
     /* 366 message looks like:
        :server 366 mynick #channel :End of /NAMES list.
@@ -4017,6 +4021,63 @@ irc_protocol_cmd_366 (struct t_irc_server *server, char *command,
     ptr_channel = irc_channel_search (server, argv[3]);
     if (ptr_channel && ptr_channel->nicks)
     {
+        /* display users on channel */
+        infolist = weechat_infolist_get ("nicklist", ptr_channel->buffer, NULL);
+        if (infolist)
+        {
+            length = 0;
+            while (weechat_infolist_next (infolist))
+            {
+                if (strcmp (weechat_infolist_string (infolist, "type"),
+                            "nick") == 0)
+                {
+                    length +=
+                        strlen (weechat_infolist_string (infolist, "prefix_color")) +
+                        strlen (weechat_infolist_string (infolist, "prefix")) +
+                        strlen (IRC_COLOR_CHAT) +
+                        strlen (weechat_infolist_string (infolist, "name")) + 1;
+                }
+            }
+            string = malloc (length);
+            if (string)
+            {
+                string[0] = '\0';
+                i = 0;
+                while (weechat_infolist_next (infolist))
+                {
+                    if (strcmp (weechat_infolist_string (infolist, "type"),
+                            "nick") == 0)
+                    {
+                        if (i > 0)
+                            strcat (string, " ");
+                        prefix = weechat_infolist_string (infolist, "prefix");
+                        if (prefix[0] && (prefix[0] != ' '))
+                        {
+                            strcat (string,
+                                    weechat_color (weechat_infolist_string (infolist,
+                                                                            "prefix_color")));
+                            strcat (string, prefix);
+                        }
+                        strcat (string, IRC_COLOR_CHAT);
+                        strcat (string, weechat_infolist_string (infolist, "name"));
+                        i++;
+                    }
+                }
+                weechat_printf_tags (ptr_channel->buffer,
+                                     irc_protocol_tags (command, "irc_numeric"),
+                                     _("%sNicks %s%s%s: %s[%s%s]"),
+                                     weechat_prefix ("network"),
+                                     IRC_COLOR_CHAT_CHANNEL,
+                                     ptr_channel->name,
+                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_CHAT_DELIMITERS,
+                                     string,
+                                     IRC_COLOR_CHAT_DELIMITERS);
+                free (string);
+            }
+            weechat_infolist_free (infolist);
+        }
+        
         /* display number of nicks, ops, halfops & voices on the channel */
         irc_nick_count (ptr_channel, &num_nicks, &num_op, &num_halfop,
                         &num_voice, &num_normal);
