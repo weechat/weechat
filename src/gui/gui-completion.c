@@ -499,23 +499,20 @@ gui_completion_list_add_nicks (struct t_gui_completion *completion)
     {
         /* no plugin overrides nick completion, then we use default nick */
         /* completion, wich nicks of nicklist, in order of nicklist */
-        if (completion->buffer->nicklist)
+        ptr_group = NULL;
+        ptr_nick = NULL;
+        gui_nicklist_get_next_item (completion->buffer,
+                                    &ptr_group, &ptr_nick);
+        while (ptr_group || ptr_nick)
         {
-            ptr_group = NULL;
-            ptr_nick = NULL;
+            if (ptr_nick && ptr_nick->visible)
+            {
+                gui_completion_list_add (completion,
+                                         ptr_nick->name,
+                                         1, WEECHAT_LIST_POS_END);
+            }
             gui_nicklist_get_next_item (completion->buffer,
                                         &ptr_group, &ptr_nick);
-            while (ptr_group || ptr_nick)
-            {
-                if (ptr_nick && ptr_nick->visible)
-                {
-                    gui_completion_list_add (completion,
-                                             ptr_nick->name,
-                                             1, WEECHAT_LIST_POS_END);
-                }
-                gui_nicklist_get_next_item (completion->buffer,
-                                            &ptr_group, &ptr_nick);
-            }
         }
     }
     
@@ -1375,7 +1372,7 @@ gui_completion_auto (struct t_gui_completion *completion)
     }
     
     /* default: nick completion (if there's a nicklist) */
-    if (completion->buffer->nicklist)
+    if (completion->buffer->nicklist_root)
         gui_completion_nick (completion);
     else
         completion->context = GUI_COMPLETION_NULL;
