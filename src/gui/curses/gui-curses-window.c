@@ -594,13 +594,10 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
                                                window->win_chat_width,
                                                window->win_chat_y,
                                                window->win_chat_x);
-        if (CONFIG_BOOLEAN(config_look_nicklist))
-            GUI_CURSES(window)->win_nick = newwin (window->win_nick_height,
-                                                   window->win_nick_width,
-                                                   window->win_nick_y,
-                                                   window->win_nick_x);
-        else
-            GUI_CURSES(window)->win_nick = NULL;
+        GUI_CURSES(window)->win_nick = newwin (window->win_nick_height,
+                                               window->win_nick_width,
+                                               window->win_nick_y,
+                                               window->win_nick_x);
     }
     else
     {
