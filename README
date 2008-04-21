@@ -9,15 +9,14 @@ It is customizable and extensible with scripts.
 
 Features
 --------
-    * chat client with multi-protocol/server connection
+    * chat client with multi-protocols/servers connection
     * many GUI (curses, Gtk, Qt) (1)
     * small, fast and very light
-    * extensible with C plugins and scripts
     * customizable and extensible with plugins (C, Perl, Python, Ruby, Lua)
     * compliant with IRC RFCs 1459, 2810, 2811, 2812 and 2813
     * developed from scratch
     * multi-platform (GNU/Linux, *BSD, Mac OS X, QNX, Windows & other) (2)
-    * 100% GPL & free
+    * free software, released under GPLv3
 
 
 Copyright
