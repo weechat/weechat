@@ -158,9 +158,9 @@ extern int gui_window_calculate_pos_size (struct t_gui_window *window,
                                           int force_calculate);
 extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
 extern void gui_window_redraw_all_buffers ();
-extern void gui_window_switch (struct t_gui_window *window);
 extern void gui_window_switch_to_buffer (struct t_gui_window *window,
                                          struct t_gui_buffer *buffer);
+extern void gui_window_switch (struct t_gui_window *window);
 extern void gui_window_page_up (struct t_gui_window *window);
 extern void gui_window_page_down (struct t_gui_window *window);
 extern void gui_window_scroll_up (struct t_gui_window *window);

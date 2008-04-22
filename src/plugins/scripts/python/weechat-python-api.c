@@ -3426,7 +3426,8 @@ weechat_python_api_bar_search (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_bar_new (PyObject *self, PyObject *args)
 {
-    char *name, *type, *position, *size, *separator, *items, *result;
+    char *name, *type, *conditions, *position, *size, *size_max, *separator;
+    char *items, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -3440,13 +3441,15 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
     
     name = NULL;
     type = NULL;
+    conditions = NULL;
     position = NULL;
     size = NULL;
+    size_max = NULL;
     separator = NULL;
     items = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssssss", &name, &type, &position, &size,
-                           &separator, &items))
+    if (!PyArg_ParseTuple (args, "ssssssss", &name, &conditions, &type,
+                           &position, &size, &size_max, &separator, &items))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         PYTHON_RETURN_EMPTY;
@@ -3454,8 +3457,10 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
     
     result = script_ptr2str (weechat_bar_new (name,
                                               type,
+                                              conditions,
                                               position,
                                               size,
+                                              size_max,
                                               separator,
                                               items));
     

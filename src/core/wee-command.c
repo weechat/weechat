@@ -66,7 +66,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
 {
     int type, position;
     long number;
-    char *error;
+    char *error, *str_type, *pos_condition;
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_item *ptr_item;
     
@@ -86,10 +86,14 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                  ptr_bar = ptr_bar->next_bar)
             {
                 gui_chat_printf (NULL,
-                                 _("  %d. %s: %s, %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"),
+                                 _("  %d. %s: %s (cond: %s), %s, %s: "
+                                   "%s%s%d%s, items: %s%s (plugin: %s)"),
                                  ptr_bar->number,
                                  ptr_bar->name,
                                  gui_bar_type_str[CONFIG_INTEGER(ptr_bar->type)],
+                                 (CONFIG_STRING(ptr_bar->conditions)
+                                  && CONFIG_STRING(ptr_bar->conditions)[0]) ?
+                                 CONFIG_STRING(ptr_bar->conditions) : "-",
                                  gui_bar_position_str[CONFIG_INTEGER(ptr_bar->position)],
                                  ((CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_BOTTOM)
                                   || (CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_TOP)) ?
@@ -145,14 +149,32 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                              "bar");
             return WEECHAT_RC_ERROR;
         }
-        type = gui_bar_search_type (argv[3]);
+        pos_condition = strchr (argv[3], ',');
+        if (pos_condition)
+        {
+            str_type = string_strndup (argv[3], pos_condition - argv[3]);
+            pos_condition++;
+        }
+        else
+        {
+            str_type = strdup (argv[3]);
+        }
+        if (!str_type)
+        {
+            gui_chat_printf (NULL,
+                             _("%sNot enough memory"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            return WEECHAT_RC_ERROR; 
+        }
+        type = gui_bar_search_type (str_type);
         if (type < 0)
         {
             gui_chat_printf (NULL,
                              _("%sError: wrong type \"%s\" for bar "
                                "\"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[3], argv[2]);
+                             str_type, argv[2]);
+            free (str_type);
             return WEECHAT_RC_ERROR;
         }
         position = gui_bar_search_position (argv[4]);
@@ -163,6 +185,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                                "\"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[4], argv[2]);
+            free (str_type);
             return WEECHAT_RC_ERROR;
         }
         error = NULL;
@@ -170,8 +193,8 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         if (error && !error[0])
         {
             /* create bar */
-            if (gui_bar_new (NULL, argv[2], argv[3], argv[4], argv[5],
-                             argv[6], argv_eol[7]))
+            if (gui_bar_new (NULL, argv[2], str_type, pos_condition, argv[4],
+                             argv[5], "0", argv[6], argv_eol[7]))
             {
                 gui_chat_printf (NULL, _("Bar \"%s\" created"),
                                  argv[2]);
@@ -191,8 +214,10 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                                "\"%s\""),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[5], argv[2]);
+            free (str_type);
             return WEECHAT_RC_ERROR;
         }
+        free (str_type);
 
         return WEECHAT_RC_OK;
     }
@@ -245,7 +270,15 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                              argv[2]);
             return WEECHAT_RC_ERROR;
         }
-        gui_bar_set (ptr_bar, argv[3], argv_eol[4]);
+        if (!gui_bar_set (ptr_bar, argv[3], argv_eol[4]))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unable to set option \"%s\" for "
+                               "bar \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[3], argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
         
         return WEECHAT_RC_OK;
     }
@@ -2331,7 +2364,7 @@ command_window (void *data, struct t_gui_buffer *buffer,
     /* refresh screen */
     if (string_strcasecmp (argv[1], "refresh") == 0)
     {
-        gui_window_refresh_screen (1);
+        gui_window_refresh_needed = 1;
         return WEECHAT_RC_OK;
     }
     
@@ -2461,14 +2494,21 @@ command_init ()
 {
     hook_command (NULL, "bar",
                   N_("manage bars"),
-                  N_("[add barname type position size separator item1,item2,...] "
-                     "| [del barname] | [set barname name|number|position|"
-                     "size|separator|items value] | [list] | [listitems]"),
+                  N_("[add barname type[,cond1,cond2,...] position size "
+                     "separator item1,item2,...] | [del barname] | "
+                     "[set barname name|number|condition|position|size|"
+                     "separator|items value] | [list] | [listitems]"),
                   N_("      add: add a new bar\n"
                      "  barname: name of bar (must be unique)\n"
-                     "     type: \"root\" (outside windows), \"window_active\" "
-                     "(inside active window), or \"window_inactive\" (inside "
-                     "each inactive window)\n"
+                     "     type:   root: outside windows),\n"
+                     "           window: inside windows, with optional "
+                     "conditions (see below)\n"
+                     "cond1,...: condition(s) for displaying bar (only for "
+                     "type \"window\"):\n"
+                     "             active: on active window\n"
+                     "           inactive: on inactive windows\n"
+                     "           nicklist: on windows with nicklist\n"
+                     "           without condition, bar is always displayed\n"
                      " position: bottom, top, left or right\n"
                      "     size: size of bar (in chars)\n"
                      "separator: 1 for using separator (line), 0 or nothing "
@@ -2478,8 +2518,8 @@ command_init ()
                      "      set: set a value for a bar property\n"
                      "     list: list all bars\n"
                      "listitems: list all bar items"),
-                  "add|del|set|list|listitems %r name|number|position|size|"
-                  "separator|items",
+                  "add|del|set|list|listitems %r name|number|conditions|"
+                  "position|size|separator|items",
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),

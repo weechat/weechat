@@ -206,14 +206,11 @@ gui_main_loop ()
         
         /* refresh window if needed */
         if (gui_window_refresh_needed)
-            gui_window_refresh_screen (0);
+            gui_window_refresh_screen ();
         
         /* refresh status bar if needed */
         if (gui_status_refresh_needed)
-        {
             gui_status_draw (1);
-            gui_status_refresh_needed = 0;
-        }
         
         for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         {
@@ -230,29 +227,22 @@ gui_main_loop ()
         {
             /* refresh title if needed */
             if (ptr_buffer->title_refresh_needed)
-            {
                 gui_chat_draw_title (ptr_buffer, 1);
-                ptr_buffer->title_refresh_needed = 0;
-            }
+            
             /* refresh chat if needed */
             if (ptr_buffer->chat_refresh_needed)
             {
                 gui_chat_draw (ptr_buffer,
                                (ptr_buffer->chat_refresh_needed) > 1 ? 1 : 0);
-                ptr_buffer->chat_refresh_needed = 0;
             }
+            
             /* refresh nicklist if needed */
             if (ptr_buffer->nicklist_refresh_needed)
-            {
                 gui_nicklist_draw (ptr_buffer, 1);
-                ptr_buffer->nicklist_refresh_needed = 0;
-            }
+            
             /* refresh input if needed */
             if (ptr_buffer->input_refresh_needed)
-            {
                 gui_input_draw (ptr_buffer, 1);
-                ptr_buffer->input_refresh_needed = 0;
-            }
         }
         
         /* wait for keyboard or network activity */

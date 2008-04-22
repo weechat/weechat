@@ -502,40 +502,6 @@ gui_window_redraw_all_buffers ()
 }
 
 /*
- * gui_window_switch: switch to another window
- */
-
-void
-gui_window_switch (struct t_gui_window *window)
-{
-    struct t_gui_window *old_window;
-    int changes;
-    
-    if (gui_current_window == window)
-        return;
-    
-    old_window = gui_current_window;
-    
-    gui_current_window = window;
-    changes = gui_bar_window_remove_unused_bars (old_window)
-        || gui_bar_window_add_missing_bars (old_window);
-    if (changes)
-    {
-        gui_current_window = old_window;
-        gui_window_switch_to_buffer (gui_current_window,
-                                     gui_current_window->buffer);
-        gui_current_window = window;
-    }
-    
-    gui_bar_window_remove_unused_bars (gui_current_window);
-    gui_bar_window_add_missing_bars (gui_current_window);
-    gui_window_switch_to_buffer (gui_current_window,
-                                 gui_current_window->buffer);
-    
-    gui_window_redraw_buffer (gui_current_window->buffer);
-}
-
-/*
  * gui_window_switch_to_buffer: switch to another buffer in a window
  */
 
@@ -544,12 +510,15 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
                              struct t_gui_buffer *buffer)
 {
     struct t_gui_bar_window *ptr_bar_win;
+    struct t_gui_buffer *old_buffer;
     
     if (!gui_ok)
         return;
     
     if (window->buffer->num_displayed > 0)
         window->buffer->num_displayed--;
+    
+    old_buffer = window->buffer;
     
     if (window->buffer != buffer)
     {
@@ -565,8 +534,14 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     window->win_title_start = 0;
     window->win_nick_start = 0;
     
+    if (old_buffer == buffer)
+    {
+        gui_bar_window_remove_unused_bars (window);
+        gui_bar_window_add_missing_bars (window);
+    }
+    
     gui_window_calculate_pos_size (window, 1);
-
+    
     /* create bar windows */
     for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
          ptr_bar_win = ptr_bar_win->next_bar_window)
@@ -624,6 +599,12 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     buffer->num_displayed++;
     
     gui_hotlist_remove_buffer (buffer);
+
+    if (buffer != old_buffer)
+    {
+        gui_bar_window_remove_unused_bars (window);
+        gui_bar_window_add_missing_bars (window);
+    }
     
     /* redraw bars in window */
     for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
@@ -634,6 +615,38 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     
     hook_signal_send ("buffer_switch",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+}
+
+/*
+ * gui_window_switch: switch to another window
+ */
+
+void
+gui_window_switch (struct t_gui_window *window)
+{
+    struct t_gui_window *old_window;
+    int changes;
+    
+    if (gui_current_window == window)
+        return;
+    
+    old_window = gui_current_window;
+    
+    gui_current_window = window;
+    changes = gui_bar_window_remove_unused_bars (old_window)
+        || gui_bar_window_add_missing_bars (old_window);
+    if (changes)
+    {
+        gui_current_window = old_window;
+        gui_window_switch_to_buffer (gui_current_window,
+                                     gui_current_window->buffer);
+        gui_current_window = window;
+    }
+    
+    gui_window_switch_to_buffer (gui_current_window,
+                                 gui_current_window->buffer);
+    
+    gui_window_redraw_buffer (gui_current_window->buffer);
 }
 
 /*
@@ -1548,29 +1561,25 @@ gui_window_switch_right (struct t_gui_window *window)
  */
 
 void
-gui_window_refresh_screen (int force)
+gui_window_refresh_screen ()
 {
     int new_height, new_width;
     
-    if (force || (gui_window_refresh_needed == 1))
+    endwin ();
+    refresh ();
+    
+    getmaxyx (stdscr, new_height, new_width);
+    
+    gui_ok = ((new_width >= GUI_WINDOW_MIN_WIDTH)
+              && (new_height >= GUI_WINDOW_MIN_HEIGHT));
+    
+    if (gui_ok)
     {
-        endwin ();
         refresh ();
-        
-        getmaxyx (stdscr, new_height, new_width);
-        
-        gui_ok = ((new_width >= GUI_WINDOW_MIN_WIDTH)
-                  && (new_height >= GUI_WINDOW_MIN_HEIGHT));
-        
-        if (gui_ok)
-        {
-            refresh ();
-            gui_window_refresh_windows ();
-        }
+        gui_window_refresh_windows ();
     }
     
-    if (gui_window_refresh_needed > 0)
-        gui_window_refresh_needed = 0;
+    gui_window_refresh_needed = 0;    
 }
 
 /*
@@ -1581,7 +1590,6 @@ void
 gui_window_refresh_screen_sigwinch ()
 {
     gui_window_refresh_needed = 1;
-    //gui_window_refresh_screen (0);
 }
 
 /*

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-19 10:27+0200\n"
+"POT-Creation-Date: 2008-04-22 18:08+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -119,9 +119,9 @@ msgstr "lefordítva:"
 msgid "List of bars:"
 msgstr "Aliaszok listája:\n"
 
-#, c-format
-msgid "  %d. %s: %s, %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
-msgstr ""
+#, fuzzy, c-format
+msgid "  %d. %s: %s (cond: %s), %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
+msgstr "%s %s%s%s/%s%s%s:%s %s%s%s mellőzése a következő(k)től: %s%s\n"
 
 #, fuzzy
 msgid "height"
@@ -158,6 +158,10 @@ msgid "%sError: missing arguments for \"%s\" command"
 msgstr "%s hiányzó argumentum a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
+msgid "%sNot enough memory"
+msgstr "Nincs elég memória az új sorhoz\n"
+
+#, fuzzy, c-format
 msgid "%sError: wrong type \"%s\" for bar \"%s\""
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
@@ -184,6 +188,10 @@ msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
 #, fuzzy
 msgid "Bar deleted"
 msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%sError: unable to set option \"%s\" for bar \"%s\""
+msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
 msgid "%sError: unknown option for \"%s\" command"
@@ -601,16 +609,21 @@ msgid "manage bars"
 msgstr "pufferek kezelése"
 
 msgid ""
-"[add barname type position size separator item1,item2,...] | [del barname] | "
-"[set barname name|number|position|size|separator|items value] | [list] | "
-"[listitems]"
+"[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
+"| [del barname] | [set barname name|number|condition|position|size|separator|"
+"items value] | [list] | [listitems]"
 msgstr ""
 
 msgid ""
 "      add: add a new bar\n"
 "  barname: name of bar (must be unique)\n"
-"     type: \"root\" (outside windows), \"window_active\" (inside active "
-"window), or \"window_inactive\" (inside each inactive window)\n"
+"     type:   root: outside windows),\n"
+"           window: inside windows, with optional conditions (see below)\n"
+"cond1,...: condition(s) for displaying bar (only for type \"window\"):\n"
+"             active: on active window\n"
+"           inactive: on inactive windows\n"
+"           nicklist: on windows with nicklist\n"
+"           without condition, bar is always displayed\n"
 " position: bottom, top, left or right\n"
 "     size: size of bar (in chars)\n"
 "separator: 1 for using separator (line), 0 or nothing means no separator\n"
@@ -1690,11 +1703,17 @@ msgstr ""
 msgid "bar type (root, window, window_active, window_inactive)"
 msgstr ""
 
+msgid "condition(s) for displaying bar (for bars of type \"window\")"
+msgstr ""
+
 #, fuzzy
 msgid "bar position (bottom, top, left, right)"
 msgstr "névlista helye (top, left, right (alapértelmezett), bottom)"
 
 msgid "bar size in chars (0 = auto size)"
+msgstr ""
+
+msgid "max bar size in chars (0 = no limit)"
 msgstr ""
 
 #, fuzzy
@@ -4763,10 +4782,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 #, fuzzy
 #~ msgid "%s%s: cannot identify date/time for \"%s\" command"
 #~ msgstr "%s nem sikerült a dátumot/időt meghatározni a \"%s\" parancshoz\n"
-
-#, fuzzy
-#~ msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
-#~ msgstr "%s %s%s%s/%s%s%s:%s %s%s%s mellőzése a következő(k)től: %s%s\n"
 
 #, fuzzy
 #~ msgid "%s%s: command \"%s\" failed"

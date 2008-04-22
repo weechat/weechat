@@ -3942,11 +3942,12 @@ weechat_ruby_api_bar_search (VALUE class, VALUE name)
  */
 
 static VALUE
-weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE type, VALUE position,
-                          VALUE size, VALUE separator, VALUE items)
+weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE type, VALUE conditions,
+                          VALUE position, VALUE size, VALUE size_max,
+                          VALUE separator, VALUE items)
 {
-    char *c_name, *c_type, *c_position, *c_size, *c_separator, *c_items;
-    char *result;
+    char *c_name, *c_type, *c_conditions, *c_position, *c_size, *c_size_max;
+    char *c_separator, *c_items, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -3960,13 +3961,16 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE type, VALUE position,
     
     c_name = NULL;
     c_type = NULL;
+    c_conditions = NULL;
     c_position = NULL;
     c_size = NULL;
+    c_size_max = NULL;
     c_separator = NULL;
     c_items = NULL;
     
-    if (NIL_P (name) || NIL_P (type) || NIL_P (position) || NIL_P (size)
-        || NIL_P (separator) || NIL_P (items))
+    if (NIL_P (name) || NIL_P (type) || NIL_P (conditions) || NIL_P (position)
+        || NIL_P (size) || NIL_P (size_max) || NIL_P (separator)
+        || NIL_P (items))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         RUBY_RETURN_EMPTY;
@@ -3974,22 +3978,28 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE type, VALUE position,
     
     Check_Type (name, T_STRING);
     Check_Type (type, T_STRING);
+    Check_Type (conditions, T_STRING);
     Check_Type (position, T_STRING);
     Check_Type (size, T_STRING);
+    Check_Type (size_max, T_STRING);
     Check_Type (separator, T_STRING);
     Check_Type (items, T_STRING);
     
     c_name = STR2CSTR (name);
     c_type = STR2CSTR (type);
+    c_conditions = STR2CSTR (conditions);
     c_position = STR2CSTR (position);
     c_size = STR2CSTR (size);
+    c_size_max = STR2CSTR (size_max);
     c_separator = STR2CSTR (separator);
     c_items = STR2CSTR (items);
     
     result = script_ptr2str (weechat_bar_new (c_name,
                                               c_type,
+                                              c_conditions,
                                               c_position,
                                               c_size,
+                                              c_size_max,
                                               c_separator,
                                               c_items));
     
@@ -4589,7 +4599,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "bar_item_update", &weechat_ruby_api_bar_item_update, 1);
     rb_define_module_function (ruby_mWeechat, "bar_item_remove", &weechat_ruby_api_bar_item_remove, 1);
     rb_define_module_function (ruby_mWeechat, "bar_search", &weechat_ruby_api_bar_search, 1);
-    rb_define_module_function (ruby_mWeechat, "bar_new", &weechat_ruby_api_bar_new, 6);
+    rb_define_module_function (ruby_mWeechat, "bar_new", &weechat_ruby_api_bar_new, 8);
     rb_define_module_function (ruby_mWeechat, "bar_set", &weechat_ruby_api_bar_set, 3);
     rb_define_module_function (ruby_mWeechat, "bar_update", &weechat_ruby_api_bar_update, 1);
     rb_define_module_function (ruby_mWeechat, "bar_remove", &weechat_ruby_api_bar_remove, 1);

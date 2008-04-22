@@ -3878,7 +3878,8 @@ weechat_lua_api_bar_search (lua_State *L)
 static int
 weechat_lua_api_bar_new (lua_State *L)
 {
-    const char *name, *type, *position, *items, *size, *separator;
+    const char *name, *type, *conditions, *position, *size, *size_max;
+    const char *separator, *items;
     char *result;
     int n;
     
@@ -3893,30 +3894,36 @@ weechat_lua_api_bar_new (lua_State *L)
     
     name = NULL;
     type = NULL;
+    conditions = NULL;
     position = NULL;
     size = NULL;
+    size_max = NULL;
     separator = NULL;
     items = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 6)
+    if (n < 8)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         LUA_RETURN_EMPTY;
     }
     
-    name = lua_tostring (lua_current_interpreter, -6);
-    type = lua_tostring (lua_current_interpreter, -5);
-    position = lua_tostring (lua_current_interpreter, -4);
-    size = lua_tostring (lua_current_interpreter, -3);
+    name = lua_tostring (lua_current_interpreter, -8);
+    type = lua_tostring (lua_current_interpreter, -7);
+    conditions = lua_tostring (lua_current_interpreter, -6);
+    position = lua_tostring (lua_current_interpreter, -5);
+    size = lua_tostring (lua_current_interpreter, -4);
+    size_max = lua_tostring (lua_current_interpreter, -3);
     separator = lua_tostring (lua_current_interpreter, -2);
     items = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (weechat_bar_new ((char *)name,
                                               (char *)type,
+                                              (char *)conditions,
                                               (char *)position,
                                               (char *)size,
+                                              (char *)size_max,
                                               (char *)separator,
                                               (char *)items));
     

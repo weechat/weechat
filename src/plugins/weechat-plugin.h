@@ -376,9 +376,10 @@ struct t_weechat_plugin
     void (*bar_item_remove) (struct t_gui_bar_item *item);
     struct t_gui_bar *(*bar_search) (char *name);
     struct t_gui_bar *(*bar_new) (struct t_weechat_plugin *plugin, char *name,
-                                  char *type, char *position, char *size,
-                                  char *separator, char *items);
-    void (*bar_set) (struct t_gui_bar *bar, char *property, char *value);
+                                  char *type, char *condition, char *position,
+                                  char *size, char *size_max, char *separator,
+                                  char *items);
+    int (*bar_set) (struct t_gui_bar *bar, char *property, char *value);
     void (*bar_update) (char *name);
     void (*bar_remove) (struct t_gui_bar *bar);
     
@@ -771,10 +772,11 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->bar_item_remove(__item)
 #define weechat_bar_search(__name)              \
     weechat_plugin->bar_search(__name)
-#define weechat_bar_new(__name, __type, __position, __size,             \
-                        __separator, __items)                           \
-    weechat_plugin->bar_new(weechat_plugin, __name, __type, __position, \
-                            __size, __separator, __items)
+#define weechat_bar_new(__name, __type, __condition, __position,        \
+                        __size, __size_max, __separator, __items)       \
+    weechat_plugin->bar_new(weechat_plugin, __name, __type,             \
+                            __condition, __position, __size,            \
+                            __size_max, __separator, __items)
 #define weechat_bar_set(__bar, __property, __value)     \
     weechat_plugin->bar_set(__bar, __property, __value)
 #define weechat_bar_update(__name)              \

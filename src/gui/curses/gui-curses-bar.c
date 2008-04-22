@@ -304,15 +304,8 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
     
     if (window)
     {
-        /* bar is type "window_active" and window is not active */
-        if ((CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_WINDOW_ACTIVE)
-            && gui_current_window
-            && (gui_current_window != window))
-            return 1;
-        
-        /* bar is type "window_inactive" and window is active */
-        if ((CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_WINDOW_INACTIVE)
-            && (!gui_current_window || (gui_current_window == window)))
+        if ((CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_WINDOW)
+            && (!gui_bar_check_conditions_for_window (bar, window)))
             return 1;
     }
     
@@ -488,10 +481,8 @@ gui_bar_window_remove_unused_bars (struct t_gui_window *window)
     {
         next_bar_win = ptr_bar_win->next_bar_window;
         
-        if (((CONFIG_INTEGER(ptr_bar_win->bar->type) == GUI_BAR_TYPE_WINDOW_ACTIVE)
-             && (window != gui_current_window))
-            || ((CONFIG_INTEGER(ptr_bar_win->bar->type) == GUI_BAR_TYPE_WINDOW_INACTIVE)
-                && (window == gui_current_window)))
+        if ((CONFIG_INTEGER(ptr_bar_win->bar->type) == GUI_BAR_TYPE_WINDOW)
+            && (!gui_bar_check_conditions_for_window (ptr_bar_win->bar, window)))
         {
             gui_bar_window_free (ptr_bar_win, window);
             rc = 1;
@@ -519,10 +510,8 @@ gui_bar_window_add_missing_bars (struct t_gui_window *window)
     
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        if (((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_WINDOW_ACTIVE)
-             && (window == gui_current_window))
-            || ((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_WINDOW_INACTIVE)
-                && (window != gui_current_window)))
+        if ((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_WINDOW)
+            && gui_bar_check_conditions_for_window (ptr_bar, window))
         {
             if (!gui_bar_window_search_bar (window, ptr_bar))
             {

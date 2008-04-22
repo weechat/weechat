@@ -249,4 +249,6 @@ gui_status_draw (int erase)
         wnoutrefresh (GUI_CURSES(ptr_win)->win_status);
         refresh ();
     }
+    
+    gui_status_refresh_needed = 0;
 }

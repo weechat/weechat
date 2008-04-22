@@ -317,6 +317,8 @@ gui_chat_draw_title (struct t_gui_buffer *buffer, int erase)
     
     if (title_decoded)
         free (title_decoded);
+    
+    buffer->title_refresh_needed = 0;
 }
 
 /*
@@ -1276,6 +1278,8 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
             ptr_line->refresh_needed = 0;
         }
     }
+    
+    buffer->chat_refresh_needed = 0;
 }
 
 /*

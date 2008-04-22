@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-19 10:27+0200\n"
+"POT-Creation-Date: 2008-04-22 18:08+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -118,9 +118,9 @@ msgstr "kompiliert am"
 msgid "List of bars:"
 msgstr "Liste der Aliases:\n"
 
-#, c-format
-msgid "  %d. %s: %s, %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
-msgstr ""
+#, fuzzy, c-format
+msgid "  %d. %s: %s (cond: %s), %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
+msgstr "%sin %s%s%s/%s%s%s:%s ignoriere %s%s%s von %s%s\n"
 
 #, fuzzy
 msgid "height"
@@ -157,6 +157,10 @@ msgid "%sError: missing arguments for \"%s\" command"
 msgstr "%s fehlende Argumente für den \"%s\"-Befehl\n"
 
 #, fuzzy, c-format
+msgid "%sNot enough memory"
+msgstr "Nicht genügend Speicher für neue Zeile\n"
+
+#, fuzzy, c-format
 msgid "%sError: wrong type \"%s\" for bar \"%s\""
 msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
 
@@ -183,6 +187,10 @@ msgstr "%s unbekannte Tasten-Funktion \"%s\"\n"
 #, fuzzy
 msgid "Bar deleted"
 msgstr "/users wurde deaktiviert"
+
+#, fuzzy, c-format
+msgid "%sError: unable to set option \"%s\" for bar \"%s\""
+msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
 
 #, fuzzy, c-format
 msgid "%sError: unknown option for \"%s\" command"
@@ -603,16 +611,21 @@ msgid "manage bars"
 msgstr "Puffer verwalten"
 
 msgid ""
-"[add barname type position size separator item1,item2,...] | [del barname] | "
-"[set barname name|number|position|size|separator|items value] | [list] | "
-"[listitems]"
+"[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
+"| [del barname] | [set barname name|number|condition|position|size|separator|"
+"items value] | [list] | [listitems]"
 msgstr ""
 
 msgid ""
 "      add: add a new bar\n"
 "  barname: name of bar (must be unique)\n"
-"     type: \"root\" (outside windows), \"window_active\" (inside active "
-"window), or \"window_inactive\" (inside each inactive window)\n"
+"     type:   root: outside windows),\n"
+"           window: inside windows, with optional conditions (see below)\n"
+"cond1,...: condition(s) for displaying bar (only for type \"window\"):\n"
+"             active: on active window\n"
+"           inactive: on inactive windows\n"
+"           nicklist: on windows with nicklist\n"
+"           without condition, bar is always displayed\n"
 " position: bottom, top, left or right\n"
 "     size: size of bar (in chars)\n"
 "separator: 1 for using separator (line), 0 or nothing means no separator\n"
@@ -1686,12 +1699,19 @@ msgstr ""
 msgid "bar type (root, window, window_active, window_inactive)"
 msgstr ""
 
+msgid "condition(s) for displaying bar (for bars of type \"window\")"
+msgstr ""
+
 #, fuzzy
 msgid "bar position (bottom, top, left, right)"
 msgstr "Nicklisten-Position (top, left, right (Standard), bottom)"
 
 msgid "bar size in chars (0 = auto size)"
 msgstr ""
+
+#, fuzzy
+msgid "max bar size in chars (0 = no limit)"
+msgstr "maximale Länge der Namen in der Hotlist (0: kein Limit)"
 
 #, fuzzy
 msgid "separator line between bar and other bars/windows"
@@ -4748,10 +4768,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 #~ msgid "%s%s: cannot identify date/time for \"%s\" command"
 #~ msgstr ""
 #~ "%s kann für den \"%s\"-Befehl kein Datum/keine Uhrzeit identifizieren\n"
-
-#, fuzzy
-#~ msgid "%s%s%s on %s%s%s %s %s %s%s@%s %s(%s%s%s)"
-#~ msgstr "%sin %s%s%s/%s%s%s:%s ignoriere %s%s%s von %s%s\n"
 
 #, fuzzy
 #~ msgid "%s%s: command \"%s\" failed"

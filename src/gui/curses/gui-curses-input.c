@@ -423,4 +423,6 @@ gui_input_draw (struct t_gui_buffer *buffer, int erase)
             refresh ();
         }
     }
+    
+    buffer->input_refresh_needed = 0;
 }

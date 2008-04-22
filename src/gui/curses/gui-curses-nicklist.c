@@ -316,4 +316,6 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
             refresh ();
         }
     }
+    
+    buffer->nicklist_refresh_needed = 0;
 }

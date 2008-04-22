@@ -3219,7 +3219,8 @@ static XS (XS_weechat_bar_search)
 
 static XS (XS_weechat_bar_new)
 {
-    char *result, *name, *type, *position, *size, *separator, *bar_items;
+    char *result, *name, *type, *conditions, *position, *size, *size_max;
+    char *separator, *bar_items;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3231,7 +3232,7 @@ static XS (XS_weechat_bar_new)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 6)
+    if (items < 8)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         PERL_RETURN_EMPTY;
@@ -3239,14 +3240,18 @@ static XS (XS_weechat_bar_new)
     
     name = SvPV (ST (0), PL_na);
     type = SvPV (ST (1), PL_na);
-    position = SvPV (ST (2), PL_na);
-    size = SvPV (ST (3), PL_na);
-    separator = SvPV (ST (4), PL_na);
-    bar_items = SvPV (ST (5), PL_na);
+    conditions = SvPV (ST (2), PL_na);
+    position = SvPV (ST (3), PL_na);
+    size = SvPV (ST (4), PL_na);
+    size_max = SvPV (ST (5), PL_na);
+    separator = SvPV (ST (6), PL_na);
+    bar_items = SvPV (ST (7), PL_na);
     result = script_ptr2str (weechat_bar_new (name,
                                               type,
+                                              conditions,
                                               position,
                                               size,
+                                              size_max,
                                               separator,
                                               bar_items));
     

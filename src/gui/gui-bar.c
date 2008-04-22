@@ -32,14 +32,15 @@
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "gui-bar.h"
+#include "gui-buffer.h"
 #include "gui-chat.h"
 #include "gui-window.h"
 
 
 char *gui_bar_option_str[GUI_BAR_NUM_OPTIONS] =
-{ "type", "position", "size", "separator", "items" };
+{ "type", "conditions", "position", "size", "size_max", "separator", "items" };
 char *gui_bar_type_str[GUI_BAR_NUM_TYPES] =
-{ "root", "window", "window_active", "window_inactive" };
+{ "root", "window" };
 char *gui_bar_position_str[GUI_BAR_NUM_POSITIONS] =
 { "bottom", "top", "left", "right" };
 
@@ -112,6 +113,40 @@ gui_bar_search_position (char *position)
     
     /* position not found */
     return -1;
+}
+
+/*
+ * gui_bar_check_conditions_for_window: return 1 if bar should be displayed in
+ *                                      this window, according to condition(s)
+ *                                      on bar
+ */
+
+int
+gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
+                                     struct t_gui_window *window)
+{
+    int i;
+
+    for (i = 0; i < bar->conditions_count; i++)
+    {
+        if (string_strcasecmp (bar->conditions_array[i], "active") == 0)
+        {
+            if (gui_current_window && (gui_current_window != window))
+                return 0;
+        }
+        else if (string_strcasecmp (bar->conditions_array[i], "inactive") == 0)
+        {
+            if (!gui_current_window || (gui_current_window == window))
+                return 0;
+        }
+        else if (string_strcasecmp (bar->conditions_array[i], "nicklist") == 0)
+        {
+            if (window->buffer && !window->buffer->nicklist)
+                return 0;
+        }
+    }
+    
+    return 1;
 }
 
 /*
@@ -255,6 +290,40 @@ gui_bar_config_check_type (void *data, struct t_config_option *option,
 }
 
 /*
+ * gui_bar_config_change_conditions: callback when conditions is changed
+ */
+
+void
+gui_bar_config_change_conditions (void *data, struct t_config_option *option)
+{
+    struct t_gui_bar *ptr_bar;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    ptr_bar = gui_bar_search_with_option_name (option->name);
+    if (ptr_bar)
+    {
+        if (ptr_bar->conditions_array)
+            string_free_exploded (ptr_bar->conditions_array);
+        
+        if (CONFIG_STRING(ptr_bar->conditions) && CONFIG_STRING(ptr_bar->conditions)[0])
+        {
+            ptr_bar->conditions_array = string_explode (CONFIG_STRING(ptr_bar->conditions),
+                                                        ",", 0, 0,
+                                                        &ptr_bar->conditions_count);
+        }
+        else
+        {
+            ptr_bar->conditions_count = 0;
+            ptr_bar->conditions_array = NULL;
+        }
+    }
+    
+    gui_window_refresh_needed = 1;
+}
+
+/*
  * gui_bar_config_change_position: callback when position is changed
  */
 
@@ -306,7 +375,6 @@ gui_bar_config_check_size (void *data, struct t_config_option *option,
     return 0;
 }
 
-
 /*
  * gui_bar_config_change_size: callback when size is changed
  */
@@ -325,6 +393,31 @@ gui_bar_config_change_size (void *data, struct t_config_option *option)
         ptr_bar->current_size = (CONFIG_INTEGER(ptr_bar->size) == 0) ?
             1 : CONFIG_INTEGER(ptr_bar->size);
         gui_bar_refresh (ptr_bar);
+    }
+}
+
+/*
+ * gui_bar_config_change_size_max: callback when max size is changed
+ */
+
+void
+gui_bar_config_change_size_max (void *data, struct t_config_option *option)
+{
+    struct t_gui_bar *ptr_bar;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    ptr_bar = gui_bar_search_with_option_name (option->name);
+    if (ptr_bar)
+    {
+        if ((CONFIG_INTEGER(ptr_bar->size_max) > 0)
+            && (ptr_bar->current_size > CONFIG_INTEGER(ptr_bar->size_max)))
+        {
+            gui_bar_set_current_size (ptr_bar,
+                                      CONFIG_INTEGER(ptr_bar->size_max));
+        }
+        gui_window_refresh_needed = 1;
     }
 }
 
@@ -398,10 +491,14 @@ gui_bar_set_name (struct t_gui_bar *bar, char *name)
     {
         snprintf (option_name, length, "%s.type", name);
         config_file_option_rename (bar->type, option_name);
+        snprintf (option_name, length, "%s.conditions", name);
+        config_file_option_rename (bar->conditions, option_name);
         snprintf (option_name, length, "%s.position", name);
         config_file_option_rename (bar->position, option_name);
         snprintf (option_name, length, "%s.size", name);
         config_file_option_rename (bar->size, option_name);
+        snprintf (option_name, length, "%s.size_max", name);
+        config_file_option_rename (bar->size_max, option_name);
         snprintf (option_name, length, "%s.separator", name);
         config_file_option_rename (bar->separator, option_name);
         snprintf (option_name, length, "%s.items", name);
@@ -535,6 +632,10 @@ gui_bar_set_current_size (struct t_gui_bar *bar, int current_size)
     if (current_size == 0)
         current_size = 1;
     
+    if ((CONFIG_INTEGER(bar->size_max) > 0)
+        && (current_size > CONFIG_INTEGER(bar->size_max)))
+        current_size = CONFIG_INTEGER(bar->size_max);
+    
     /* check if new size is ok if it's more than before */
     if (current_size > bar->current_size
         && !gui_bar_check_size_add (bar, current_size - bar->current_size))
@@ -584,48 +685,50 @@ gui_bar_set_size (struct t_gui_bar *bar, char *size)
 }
 
 /*
- * gui_bar_set_items: set items for a bar
+ * gui_bar_set_size_max: set max size for a bar
  */
 
 void
-gui_bar_set_items (struct t_gui_bar *bar, char *items)
+gui_bar_set_size_max (struct t_gui_bar *bar, char *size)
 {
-    config_file_option_set (bar->items, items, 1);
+    long number;
+    char *error, value[32];
     
-    if (bar->items_array)
-        string_free_exploded (bar->items_array);
-    
-    if (CONFIG_STRING(bar->items) && CONFIG_STRING(bar->items)[0])
+    error = NULL;
+    number = strtol (size, &error, 10);
+    if (error && !error[0])
     {
-        bar->items_array = string_explode (CONFIG_STRING(bar->items),
-                                           ",", 0, 0,
-                                           &bar->items_count);
-    }
-    else
-    {
-        bar->items_count = 0;
-        bar->items_array = NULL;
+        if (number < 0)
+            return;
+        
+        snprintf (value, sizeof (value), "%ld", number);
+        config_file_option_set (bar->size_max, value, 1);
+
+        if ((number > 0) && (number < bar->current_size))
+            gui_bar_set_size (bar, value);
     }
 }
 
 /*
  * gui_bar_set: set a property for bar
+ *              return: 1 if ok, 0 if error
  */
 
-void
+int
 gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
 {
     long number;
     char *error;
     
     if (!bar || !property || !value)
-        return;
+        return 0;
     
     if (string_strcasecmp (property, "name") == 0)
     {
         gui_bar_set_name (bar, value);
+        return 1;
     }
-    if (string_strcasecmp (property, "number") == 0)
+    else if (string_strcasecmp (property, "number") == 0)
     {
         error = NULL;
         number = strtol (value, &error, 10);
@@ -634,16 +737,31 @@ gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
             gui_bar_set_number (bar, number);
             gui_window_refresh_needed = 1;
         }
+        return 1;
+    }
+    else if (string_strcasecmp (property, "conditions") == 0)
+    {
+        config_file_option_set (bar->conditions, value, 1);
+        gui_window_refresh_needed = 1;
+        return 1;
     }
     else if (string_strcasecmp (property, "position") == 0)
     {
         gui_bar_set_position (bar, value);
         gui_bar_refresh (bar);
+        return 1;
     }
     else if (string_strcasecmp (property, "size") == 0)
     {
         gui_bar_set_size (bar, value);
         gui_bar_refresh (bar);
+        return 1;
+    }
+    else if (string_strcasecmp (property, "size_max") == 0)
+    {
+        gui_bar_set_size_max (bar, value);
+        gui_bar_refresh (bar);
+        return 1;
     }
     else if (string_strcasecmp (property, "separator") == 0)
     {
@@ -651,12 +769,16 @@ gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
                                 (strcmp (value, "1") == 0) ? "on" : "off",
                                 1);
         gui_bar_refresh (bar);
+        return 1;
     }
     else if (string_strcasecmp (property, "items") == 0)
     {
-        gui_bar_set_items (bar, value);
+        config_file_option_set (bar->items, value, 1);
         gui_bar_draw (bar);
+        return 1;
     }
+    
+    return 0;
 }
 
 /*
@@ -675,11 +797,15 @@ gui_bar_alloc (char *name)
         new_bar->number = 0;
         new_bar->name = strdup (name);
         new_bar->type = NULL;
+        new_bar->conditions = NULL;
         new_bar->position = NULL;
         new_bar->size = NULL;
+        new_bar->size_max = NULL;
         new_bar->separator = NULL;
         new_bar->items = NULL;
         new_bar->current_size = 1;
+        new_bar->conditions_count = 0;
+        new_bar->conditions_array = NULL;
         new_bar->items_count = 0;
         new_bar->items_array = NULL;
         new_bar->bar_window = NULL;
@@ -720,6 +846,15 @@ gui_bar_create_option (char *bar_name, int index_option, char *value)
                     "root|window|window_active|window_inactive", 0, 0, value,
                     &gui_bar_config_check_type, NULL, NULL, NULL, NULL, NULL);
                 break;
+            case GUI_BAR_OPTION_CONDITIONS:
+                ptr_option = config_file_new_option (
+                    weechat_config_file, weechat_config_section_bar,
+                    option_name, "string",
+                    N_("condition(s) for displaying bar (for bars of type "
+                       "\"window\")"),
+                    NULL, 0, 0, value,
+                    NULL, NULL, &gui_bar_config_change_conditions, NULL, NULL, NULL);
+                break;
             case GUI_BAR_OPTION_POSITION:
                 ptr_option = config_file_new_option (
                     weechat_config_file, weechat_config_section_bar,
@@ -736,6 +871,16 @@ gui_bar_create_option (char *bar_name, int index_option, char *value)
                     NULL, 0, INT_MAX, value,
                     &gui_bar_config_check_size, NULL,
                     &gui_bar_config_change_size, NULL,
+                    NULL, NULL);
+                break;
+            case GUI_BAR_OPTION_SIZE_MAX:
+                ptr_option = config_file_new_option (
+                    weechat_config_file, weechat_config_section_bar,
+                    option_name, "integer",
+                    N_("max bar size in chars (0 = no limit)"),
+                    NULL, 0, INT_MAX, value,
+                    NULL, NULL,
+                    &gui_bar_config_change_size_max, NULL,
                     NULL, NULL);
                 break;
             case GUI_BAR_OPTION_SEPARATOR:
@@ -769,8 +914,10 @@ gui_bar_create_option (char *bar_name, int index_option, char *value)
 struct t_gui_bar *
 gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
                           struct t_config_option *type,
+                          struct t_config_option *conditions,
                           struct t_config_option *position,
                           struct t_config_option *size,
+                          struct t_config_option *size_max,
                           struct t_config_option *separator,
                           struct t_config_option *items)
 {
@@ -784,10 +931,23 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
         new_bar->plugin = plugin;
         new_bar->number = (last_gui_bar) ? last_gui_bar->number + 1 : 1;
         new_bar->type = type;
+        new_bar->conditions = conditions;
+        if (CONFIG_STRING(conditions) && CONFIG_STRING(conditions)[0])
+        {
+            new_bar->conditions_array = string_explode (CONFIG_STRING(conditions),
+                                                        ",", 0, 0,
+                                                        &new_bar->conditions_count);
+        }
+        else
+        {
+            new_bar->conditions_count = 0;
+            new_bar->conditions_array = NULL;
+        }
         new_bar->position = position;
         new_bar->size = size;
         new_bar->current_size = (CONFIG_INTEGER(size) == 0) ?
             1 : CONFIG_INTEGER(size);
+        new_bar->size_max = size_max;
         new_bar->separator = separator;
         new_bar->items = items;
         if (CONFIG_STRING(items) && CONFIG_STRING(items)[0])
@@ -839,11 +999,12 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
 
 struct t_gui_bar *
 gui_bar_new (struct t_weechat_plugin *plugin, char *name,
-             char *type, char *position, char *size, char *separators,
-             char *items)
+             char *type, char *conditions, char *position, char *size,
+             char *size_max, char *separators, char *items)
 {
-    struct t_config_option *option_type, *option_position, *option_size;
-    struct t_config_option *option_separator, *option_items;
+    struct t_config_option *option_type, *option_conditions, *option_position;
+    struct t_config_option *option_size, *option_size_max, *option_separator;
+    struct t_config_option *option_items;
     struct t_gui_bar *new_bar;
     
     if (!name || !name[0])
@@ -863,26 +1024,35 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name,
     
     option_type = gui_bar_create_option (name, GUI_BAR_OPTION_TYPE,
                                          type);
+    option_conditions = gui_bar_create_option (name, GUI_BAR_OPTION_CONDITIONS,
+                                               conditions);
     option_position = gui_bar_create_option (name, GUI_BAR_OPTION_POSITION,
                                              position);
     option_size = gui_bar_create_option (name, GUI_BAR_OPTION_SIZE,
                                          size);
+    option_size_max = gui_bar_create_option (name, GUI_BAR_OPTION_SIZE_MAX,
+                                             size_max);
     option_separator = gui_bar_create_option (name, GUI_BAR_OPTION_SEPARATOR,
                                               (config_file_string_to_boolean (separators)) ?
                                                "on" : "off");
     option_items = gui_bar_create_option (name, GUI_BAR_OPTION_ITEMS,
                                           items);
     new_bar = gui_bar_new_with_options (plugin, name, option_type,
-                                        option_position, option_size,
+                                        option_conditions, option_position,
+                                        option_size, option_size_max,
                                         option_separator, option_items);
     if (!new_bar)
     {
         if (option_type)
             config_file_option_free (option_type);
+        if (option_conditions)
+            config_file_option_free (option_conditions);
         if (option_position)
             config_file_option_free (option_position);
         if (option_size)
             config_file_option_free (option_size);
+        if (option_size_max)
+            config_file_option_free (option_size_max);
         if (option_separator)
             config_file_option_free (option_separator);
         if (option_items)
@@ -904,14 +1074,51 @@ gui_bar_use_temp_bars ()
     for (ptr_temp_bar = gui_temp_bars; ptr_temp_bar;
          ptr_temp_bar = ptr_temp_bar->next_bar)
     {
-        if (ptr_temp_bar->type && ptr_temp_bar->position
-            && ptr_temp_bar->size && ptr_temp_bar->separator
+        if (!ptr_temp_bar->type)
+            ptr_temp_bar->type = gui_bar_create_option (ptr_temp_bar->name,
+                                                        GUI_BAR_OPTION_TYPE,
+                                                        "0");
+        if (!ptr_temp_bar->conditions)
+            ptr_temp_bar->conditions = gui_bar_create_option (ptr_temp_bar->name,
+                                                              GUI_BAR_OPTION_CONDITIONS,
+                                                              "");
+        
+        if (!ptr_temp_bar->position)
+            ptr_temp_bar->position = gui_bar_create_option (ptr_temp_bar->name,
+                                                            GUI_BAR_OPTION_POSITION,
+                                                            "top");
+
+        if (!ptr_temp_bar->size)
+            ptr_temp_bar->size = gui_bar_create_option (ptr_temp_bar->name,
+                                                        GUI_BAR_OPTION_SIZE,
+                                                        "0");
+
+        if (!ptr_temp_bar->size_max)
+            ptr_temp_bar->size_max = gui_bar_create_option (ptr_temp_bar->name,
+                                                            GUI_BAR_OPTION_SIZE_MAX,
+                                                            "0");
+        
+        if (!ptr_temp_bar->separator)
+            ptr_temp_bar->separator = gui_bar_create_option (ptr_temp_bar->name,
+                                                             GUI_BAR_OPTION_SEPARATOR,
+                                                             "off");
+        
+        if (!ptr_temp_bar->items)
+            ptr_temp_bar->items = gui_bar_create_option (ptr_temp_bar->name,
+                                                         GUI_BAR_OPTION_ITEMS,
+                                                         "");
+        
+        if (ptr_temp_bar->type && ptr_temp_bar->conditions
+            && ptr_temp_bar->position && ptr_temp_bar->size
+            && ptr_temp_bar->size_max && ptr_temp_bar->separator
             && ptr_temp_bar->items)
         {
             gui_bar_new_with_options (NULL, ptr_temp_bar->name,
                                       ptr_temp_bar->type,
+                                      ptr_temp_bar->conditions,
                                       ptr_temp_bar->position,
                                       ptr_temp_bar->size,
+                                      ptr_temp_bar->size_max,
                                       ptr_temp_bar->separator,
                                       ptr_temp_bar->items);
         }
@@ -922,6 +1129,11 @@ gui_bar_use_temp_bars ()
                 config_file_option_free (ptr_temp_bar->type);
                 ptr_temp_bar->type = NULL;
             }
+            if (ptr_temp_bar->conditions)
+            {
+                config_file_option_free (ptr_temp_bar->conditions);
+                ptr_temp_bar->conditions = NULL;
+            }
             if (ptr_temp_bar->position)
             {
                 config_file_option_free (ptr_temp_bar->position);
@@ -931,6 +1143,11 @@ gui_bar_use_temp_bars ()
             {
                 config_file_option_free (ptr_temp_bar->size);
                 ptr_temp_bar->size = NULL;
+            }
+            if (ptr_temp_bar->size_max)
+            {
+                config_file_option_free (ptr_temp_bar->size_max);
+                ptr_temp_bar->size_max = NULL;
             }
             if (ptr_temp_bar->separator)
             {
@@ -1006,14 +1223,20 @@ gui_bar_free (struct t_gui_bar *bar)
         free (bar->name);
     if (bar->type)
         config_file_option_free (bar->type);
+    if (bar->conditions)
+        config_file_option_free (bar->conditions);
     if (bar->position)
         config_file_option_free (bar->position);
     if (bar->size)
         config_file_option_free (bar->size);
+    if (bar->size_max)
+        config_file_option_free (bar->size_max);
     if (bar->separator)
         config_file_option_free (bar->separator);
     if (bar->items)
         config_file_option_free (bar->items);
+    if (bar->conditions_array)
+        string_free_exploded (bar->conditions_array);
     if (bar->items_array)
         string_free_exploded (bar->items_array);
     
@@ -1073,10 +1296,14 @@ gui_bar_print_log ()
         log_printf ("  type . . . . . . . . . : %d (%s)",
                     CONFIG_INTEGER(ptr_bar->type),
                     gui_bar_type_str[CONFIG_INTEGER(ptr_bar->type)]);
+        log_printf ("  conditions . . . . . . : '%s'", CONFIG_STRING(ptr_bar->conditions));
+        log_printf ("  conditions_count . . . : %d",   ptr_bar->conditions_count);
+        log_printf ("  conditions_array . . . : 0x%x", ptr_bar->conditions_array);
         log_printf ("  position . . . . . . . : %d (%s)",
                     CONFIG_INTEGER(ptr_bar->position),
                     gui_bar_position_str[CONFIG_INTEGER(ptr_bar->position)]);
         log_printf ("  size . . . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->size));
+        log_printf ("  size_max . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->size_max));
         log_printf ("  current_size . . . . . : %d",   ptr_bar->current_size);
         log_printf ("  separator. . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->separator));
         log_printf ("  items. . . . . . . . . : '%s'", CONFIG_STRING(ptr_bar->items));

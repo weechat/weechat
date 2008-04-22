@@ -594,11 +594,17 @@ config_weechat_bar_read (void *data, struct t_config_file *config_file,
                                 case GUI_BAR_OPTION_TYPE:
                                     ptr_temp_bar->type = ptr_option;
                                     break;
+                                case GUI_BAR_OPTION_CONDITIONS:
+                                    ptr_temp_bar->conditions = ptr_option;
+                                    break;
                                 case GUI_BAR_OPTION_POSITION:
                                     ptr_temp_bar->position = ptr_option;
                                     break;
                                 case GUI_BAR_OPTION_SIZE:
                                     ptr_temp_bar->size = ptr_option;
+                                    break;
+                                case GUI_BAR_OPTION_SIZE_MAX:
+                                    ptr_temp_bar->size_max = ptr_option;
                                     break;
                                 case GUI_BAR_OPTION_SEPARATOR:
                                     ptr_temp_bar->separator = ptr_option;
@@ -617,36 +623,6 @@ config_weechat_bar_read (void *data, struct t_config_file *config_file,
     }
     
     return 1;
-}
-
-/*
- * config_weechat_bar_write: write bar section in configuration file
- *                           Return:  0 = successful
- *                                   -1 = write error
- */
-
-void
-config_weechat_bar_write (void *data, struct t_config_file *config_file,
-                          char *section_name)
-{
-    struct t_gui_bar *ptr_bar;
-    
-    /* make C compiler happy */
-    (void) data;
-    
-    config_file_write_line (config_file, section_name, NULL);
-    
-    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-    {
-        config_file_write_line (config_file,
-                                ptr_bar->name,
-                                "%s;%s;%d;%d;%s",
-                                gui_bar_type_str[CONFIG_INTEGER(ptr_bar->type)],
-                                gui_bar_position_str[CONFIG_INTEGER(ptr_bar->position)],
-                                CONFIG_INTEGER(ptr_bar->size),
-                                CONFIG_INTEGER(ptr_bar->separator),
-                                CONFIG_STRING(ptr_bar->items));
-    }
 }
 
 /*
