@@ -16,9 +16,10 @@
 
 ADD_LIBRARY(irc MODULE irc.c irc.h irc-buffer.c irc-buffer.h irc-channel.c
 irc-channel.h irc-color.c irc-color.h irc-command.c irc-command.h
-irc-completion.c irc-completion.h irc-config.c irc-config.h irc-debug.c
-irc-debug.h irc-display.c irc-display.h irc-input.c irc-mode.c irc-mode.h
-irc-nick.c irc-nick.h irc-protocol.c irc-protocol.h irc-server.c irc-server.h)
+irc-completion.c irc-completion.h irc-config.c irc-config.h irc-dcc.h
+irc-debug.c irc-debug.h irc-display.c irc-display.h irc-input.c irc-input.h
+irc-mode.c irc-mode.h irc-nick.c irc-nick.h irc-protocol.c irc-protocol.h
+irc-server.c irc-server.h)
 SET_TARGET_PROPERTIES(irc PROPERTIES PREFIX "")
 
 CHECK_INCLUDE_FILES("regex.h" HAVE_REGEX_H)
