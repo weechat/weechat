@@ -293,18 +293,20 @@ weechat_perl_load (char *filename)
                             weechat_gettext ("%s%s: unable to parse file "
                                              "\"%s\""),
                             weechat_prefix ("error"), "perl", filename);
-	    weechat_printf (NULL,
+#ifdef MULTIPLICITY
+            weechat_printf (NULL,
                             weechat_gettext ("%s%s: error: %s"),
                             weechat_prefix ("error"), "perl",
-#ifdef MULTIPLICITY
                             SvPV(perl_get_sv("weechat_perl_load_eval_file_error",
-                                             FALSE), len)
+                                             FALSE), len));
 #else
+            weechat_printf (NULL,
+                            weechat_gettext ("%s%s: error: %s"),
+                            weechat_prefix ("error"), "perl",
                             SvPV(perl_get_sv("WeechatPerlScriptLoader::"
                                              "weechat_perl_load_eval_file_error",
-                                             FALSE), len)
+                                             FALSE), len));
 #endif
-		);
 	}
 	else if (*eval == 1)
 	{
