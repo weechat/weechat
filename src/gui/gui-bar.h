@@ -83,7 +83,6 @@ struct t_gui_bar
     struct t_config_option *items;      /* bar items                        */
     
     /* internal vars */
-    int current_size;                  /* current bar size (strictly > 0)   */
     int conditions_count;              /* number of conditions              */
     char **conditions_array;           /* exploded bar conditions           */
     int items_count;                   /* number of bar items               */
@@ -137,6 +136,8 @@ extern void gui_bar_print_log ();
 
 extern struct t_gui_bar_window *gui_bar_window_search_bar (struct t_gui_window *window,
                                                            struct t_gui_bar *bar);
+extern int gui_bar_window_get_current_size (struct t_gui_bar_window *bar_window);
+extern void gui_bar_window_set_current_size (struct t_gui_bar *bar, int size);
 extern int gui_bar_window_get_size (struct t_gui_bar *bar,
                                     struct t_gui_window *window,
                                     enum t_gui_bar_position position);

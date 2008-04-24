@@ -61,6 +61,43 @@ gui_bar_window_search_bar (struct t_gui_window *window, struct t_gui_bar *bar)
 }
 
 /*
+ * gui_bar_window_get_current_size: get current size of bar window
+ *                                  return width or height, depending on bar
+ *                                  position
+ */
+
+int
+gui_bar_window_get_current_size (struct t_gui_bar_window *bar_window)
+{
+    return bar_window->current_size;
+}
+
+/*
+ * gui_bar_window_set_current_size: set current size of all bar windows for a bar
+ */
+
+void
+gui_bar_window_set_current_size (struct t_gui_bar *bar, int size)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
+    
+    if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+        bar->bar_window->current_size = (size == 0) ? 1 : size;
+    else
+    {
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            for (ptr_bar_win = GUI_CURSES(ptr_win)->bar_windows;
+                 ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
+            {
+                ptr_bar_win->current_size = (size == 0) ? 1 : size;
+            }
+        }
+    }
+}
+
+/*
  * gui_bar_window_get_size: get total bar size (window bars) for a position
  *                          bar is optional, if not NULL, size is computed
  *                          from bar 1 to bar # - 1
@@ -186,26 +223,26 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
     {
         case GUI_BAR_POSITION_BOTTOM:
             bar_window->x = x1 + add_left;
-            bar_window->y = y2 - add_bottom - bar_window->bar->current_size + 1;
+            bar_window->y = y2 - add_bottom - bar_window->current_size + 1;
             bar_window->width = x2 - x1 + 1 - add_left - add_right;
-            bar_window->height = bar_window->bar->current_size;
+            bar_window->height = bar_window->current_size;
             break;
         case GUI_BAR_POSITION_TOP:
             bar_window->x = x1 + add_left;
             bar_window->y = y1 + add_top;
             bar_window->width = x2 - x1 + 1 - add_left - add_right;
-            bar_window->height = bar_window->bar->current_size;
+            bar_window->height = bar_window->current_size;
             break;
         case GUI_BAR_POSITION_LEFT:
             bar_window->x = x1 + add_left;
             bar_window->y = y1 + add_top;
-            bar_window->width = bar_window->bar->current_size;
+            bar_window->width = bar_window->current_size;
             bar_window->height = y2 - add_top - add_bottom - y1 + 1;
             break;
         case GUI_BAR_POSITION_RIGHT:
-            bar_window->x = x2 - add_right - bar_window->bar->current_size + 1;
+            bar_window->x = x2 - add_right - bar_window->current_size + 1;
             bar_window->y = y1 + add_top;
-            bar_window->width = bar_window->bar->current_size;
+            bar_window->width = bar_window->current_size;
             bar_window->height = y2 - y1 + 1;
             break;
         case GUI_BAR_NUM_POSITIONS:
@@ -356,19 +393,19 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
         new_bar_window->win_bar = NULL;
         new_bar_window->win_separator = NULL;
         
+        new_bar_window->x = 0;
+        new_bar_window->y = 0;
+        new_bar_window->width = 1;
+        new_bar_window->height = 1;
+        new_bar_window->current_size = (CONFIG_INTEGER(bar->size) == 0) ?
+            1 : CONFIG_INTEGER(bar->size);
+        
         if (gui_init_ok)
         {
             gui_bar_window_calculate_pos_size (new_bar_window, window);
             gui_bar_window_create_win (new_bar_window);
             if (window)
                 window->refresh_needed = 1;
-        }
-        else
-        {
-            new_bar_window->x = 0;
-            new_bar_window->y = 0;
-            new_bar_window->width = 1;
-            new_bar_window->height = 1;
         }
         
         return 1;
@@ -726,7 +763,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             items = string_explode (content, "\n", 0, 0, &items_count);
             if (items_count == 0)
             {
-                gui_bar_set_current_size (bar_window->bar, 1);
+                gui_bar_window_set_current_size (bar_window->bar, 1);
                 gui_bar_window_recreate_bar_windows (bar_window->bar);
                 gui_window_clear (bar_window->win_bar,
                                   CONFIG_COLOR(bar_window->bar->color_bg));
@@ -761,18 +798,19 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                             num_lines = optimal_number_of_lines;
                         else
                             num_lines = items_count;
-                        if (bar_window->bar->current_size != num_lines)
+                        if (bar_window->current_size != num_lines)
                         {
-                            gui_bar_set_current_size (bar_window->bar, num_lines);
+                            gui_bar_window_set_current_size (bar_window->bar,
+                                                             num_lines);
                             gui_bar_window_recreate_bar_windows (bar_window->bar);
                         }
                         break;
                     case GUI_BAR_POSITION_LEFT:
                     case GUI_BAR_POSITION_RIGHT:
-                        if (bar_window->bar->current_size != max_length)
+                        if (bar_window->current_size != max_length)
                         {
-                            gui_bar_set_current_size (bar_window->bar,
-                                                      max_length);
+                            gui_bar_window_set_current_size (bar_window->bar,
+                                                             max_length);
                             gui_bar_window_recreate_bar_windows (bar_window->bar);
                         }
                         break;
@@ -802,7 +840,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
         }
         else
         {
-            gui_bar_set_current_size (bar_window->bar, 1);
+            gui_bar_window_set_current_size (bar_window->bar, 1);
             gui_bar_window_recreate_bar_windows (bar_window->bar);
             gui_window_clear (bar_window->win_bar,
                               CONFIG_COLOR(bar_window->bar->color_bg));
@@ -954,6 +992,7 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
     log_printf ("    y . . . . . . . . : %d",   bar_window->y);
     log_printf ("    width . . . . . . : %d",   bar_window->width);
     log_printf ("    height. . . . . . : %d",   bar_window->height);
+    log_printf ("    current_size. . . : %d",   bar_window->current_size);
     log_printf ("    win_bar . . . . . : 0x%x", bar_window->win_bar);
     log_printf ("    win_separator . . : 0x%x", bar_window->win_separator);
     log_printf ("    prev_bar_window . : 0x%x", bar_window->prev_bar_window);

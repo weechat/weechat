@@ -59,6 +59,7 @@ struct t_gui_bar_window
     struct t_gui_bar *bar;          /* pointer to bar                       */
     int x, y;                       /* position of window                   */
     int width, height;              /* window size                          */
+    int current_size;               /* current size (width or height)       */
     struct t_gui_bar_window *prev_bar_window; /* link to previous bar win   */
                                               /* (only for non-root bars)   */
     struct t_gui_bar_window *next_bar_window; /* link to next bar win       */

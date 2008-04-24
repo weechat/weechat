@@ -172,7 +172,7 @@ gui_bar_root_get_size (struct t_gui_bar *bar, enum t_gui_bar_position position)
         if ((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_ROOT)
             && (CONFIG_INTEGER(ptr_bar->position) == (int)position))
         {
-            total_size += ptr_bar->current_size;
+            total_size += gui_bar_window_get_current_size (ptr_bar->bar_window);
             if (CONFIG_INTEGER(ptr_bar->separator))
                 total_size++;
         }
@@ -342,6 +342,8 @@ gui_bar_config_change_position (void *data, struct t_config_option *option)
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
         gui_bar_refresh (ptr_bar);
+    
+    gui_window_refresh_needed = 1;
 }
 
 /*
@@ -355,10 +357,12 @@ gui_bar_config_change_filling (void *data, struct t_config_option *option)
     
     /* make C compiler happy */
     (void) data;
-
+    
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
         gui_bar_refresh (ptr_bar);
+    
+    gui_window_refresh_needed = 1;
 }
 
 /*
@@ -386,10 +390,16 @@ gui_bar_config_check_size (void *data, struct t_config_option *option,
             if (number < 0)
                 return 0;
             
-            if (number <= ptr_bar->current_size
-                || gui_bar_check_size_add (ptr_bar,
-                                           number - ptr_bar->current_size))
-                return 1;
+            if ((number != 0) &&
+                ((CONFIG_INTEGER(ptr_bar->size) == 0)
+                 || (number > CONFIG_INTEGER(ptr_bar->size))))
+            {
+                if (!gui_bar_check_size_add (ptr_bar,
+                                             number - CONFIG_INTEGER(ptr_bar->size)))
+                    return 0;
+            }
+            
+            return 1;
         }
     }
     
@@ -407,13 +417,13 @@ gui_bar_config_change_size (void *data, struct t_config_option *option)
     
     /* make C compiler happy */
     (void) data;
-
+    
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
     {
-        ptr_bar->current_size = (CONFIG_INTEGER(ptr_bar->size) == 0) ?
-            1 : CONFIG_INTEGER(ptr_bar->size);
-        gui_bar_refresh (ptr_bar);
+        gui_bar_window_set_current_size (ptr_bar,
+                                         CONFIG_INTEGER(ptr_bar->size_max));
+        gui_window_refresh_needed = 1;
     }
 }
 
@@ -424,22 +434,11 @@ gui_bar_config_change_size (void *data, struct t_config_option *option)
 void
 gui_bar_config_change_size_max (void *data, struct t_config_option *option)
 {
-    struct t_gui_bar *ptr_bar;
-    
     /* make C compiler happy */
     (void) data;
+    (void) option;
     
-    ptr_bar = gui_bar_search_with_option_name (option->name);
-    if (ptr_bar)
-    {
-        if ((CONFIG_INTEGER(ptr_bar->size_max) > 0)
-            && (ptr_bar->current_size > CONFIG_INTEGER(ptr_bar->size_max)))
-        {
-            gui_bar_set_current_size (ptr_bar,
-                                      CONFIG_INTEGER(ptr_bar->size_max));
-        }
-        gui_window_refresh_needed = 1;
-    }
+    gui_window_refresh_needed = 1;
 }
 
 /*
@@ -664,31 +663,6 @@ gui_bar_set_position (struct t_gui_bar *bar, char *position)
 }
 
 /*
- * gui_bar_set_current_size: set current size for a bar
- */
-
-void
-gui_bar_set_current_size (struct t_gui_bar *bar, int current_size)
-{
-    if (current_size < 0)
-        return;
-    
-    if (current_size == 0)
-        current_size = 1;
-    
-    if ((CONFIG_INTEGER(bar->size_max) > 0)
-        && (current_size > CONFIG_INTEGER(bar->size_max)))
-        current_size = CONFIG_INTEGER(bar->size_max);
-    
-    /* check if new size is ok if it's more than before */
-    if (current_size > bar->current_size
-        && !gui_bar_check_size_add (bar, current_size - bar->current_size))
-        return;
-    
-    bar->current_size = current_size;
-}
-
-/*
  * gui_bar_set_size: set size for a bar
  */
 
@@ -708,23 +682,28 @@ gui_bar_set_size (struct t_gui_bar *bar, char *size)
     {
         new_size = number;
         if (size[0] == '+')
-            new_size = bar->current_size + new_size;
+            new_size = CONFIG_INTEGER(bar->size) + new_size;
         else if (value[0] == '-')
-            new_size = bar->current_size - new_size;
+            new_size = CONFIG_INTEGER(bar->size) - new_size;
         if ((size[0] == '-') && (new_size < 1))
             return;
         if (new_size < 0)
             return;
         
         /* check if new size is ok if it's more than before */
-        if (new_size > bar->current_size
-            && !gui_bar_check_size_add (bar, new_size - bar->current_size))
-            return;
+        if ((new_size != 0) &&
+            ((CONFIG_INTEGER(bar->size) == 0)
+             || (new_size > CONFIG_INTEGER(bar->size))))
+        {
+            if (!gui_bar_check_size_add (bar,
+                                         new_size - CONFIG_INTEGER(bar->size)))
+                return;
+        }
         
         snprintf (value, sizeof (value), "%d", new_size);
         config_file_option_set (bar->size, value, 1);
-        
-        bar->current_size = (new_size == 0) ? 1 : new_size;
+
+        gui_bar_window_set_current_size (bar, new_size);
     }
 }
 
@@ -748,7 +727,9 @@ gui_bar_set_size_max (struct t_gui_bar *bar, char *size)
         snprintf (value, sizeof (value), "%ld", number);
         config_file_option_set (bar->size_max, value, 1);
 
-        if ((number > 0) && (number < bar->current_size))
+        if ((number > 0) &&
+            ((CONFIG_INTEGER(bar->size) == 0)
+             || (number < CONFIG_INTEGER(bar->size))))
             gui_bar_set_size (bar, value);
     }
 }
@@ -792,13 +773,11 @@ gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
     else if (string_strcasecmp (property, "position") == 0)
     {
         gui_bar_set_position (bar, value);
-        gui_bar_refresh (bar);
         return 1;
     }
     else if (string_strcasecmp (property, "filling") == 0)
     {
         config_file_option_set (bar->filling, value, 1);
-        gui_bar_refresh (bar);
         return 1;
     }
     else if (string_strcasecmp (property, "size") == 0)
@@ -868,7 +847,6 @@ gui_bar_alloc (char *name)
         new_bar->color_bg = NULL;
         new_bar->separator = NULL;
         new_bar->items = NULL;
-        new_bar->current_size = 1;
         new_bar->conditions_count = 0;
         new_bar->conditions_array = NULL;
         new_bar->items_count = 0;
@@ -1043,8 +1021,6 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
         new_bar->position = position;
         new_bar->filling = filling;
         new_bar->size = size;
-        new_bar->current_size = (CONFIG_INTEGER(size) == 0) ?
-            1 : CONFIG_INTEGER(size);
         new_bar->size_max = size_max;
         new_bar->color_fg = color_fg;
         new_bar->color_bg = color_bg;
@@ -1472,7 +1448,6 @@ gui_bar_print_log ()
         log_printf ("  color_bg . . . . . . . : %d",
                     CONFIG_COLOR(ptr_bar->color_bg),
                     gui_color_get_name (CONFIG_COLOR(ptr_bar->color_bg)));
-        log_printf ("  current_size . . . . . : %d",   ptr_bar->current_size);
         log_printf ("  separator. . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->separator));
         log_printf ("  items. . . . . . . . . : '%s'", CONFIG_STRING(ptr_bar->items));
         log_printf ("  items_count. . . . . . : %d",   ptr_bar->items_count);

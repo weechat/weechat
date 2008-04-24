@@ -66,7 +66,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
 {
     int type, position;
     long number;
-    char *error, *str_type, *pos_condition;
+    char *error, *str_type, *pos_condition, str_size[16];
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_item *ptr_item;
     
@@ -85,9 +85,11 @@ command_bar (void *data, struct t_gui_buffer *buffer,
             for (ptr_bar = gui_bars; ptr_bar;
                  ptr_bar = ptr_bar->next_bar)
             {
+                snprintf (str_size, sizeof (str_size),
+                          "%d", CONFIG_INTEGER(ptr_bar->size));
                 gui_chat_printf (NULL,
                                  _(" %3d. %s%s%s: %s (cond: %s), %s, filling: %s, "
-                                   "%s: %s%s%d%s"),
+                                   "%s: %s"),
                                  ptr_bar->number,
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  ptr_bar->name,
@@ -101,10 +103,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                                  ((CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_BOTTOM)
                                   || (CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_TOP)) ?
                                  _("height") : _("width"),
-                                 (CONFIG_INTEGER(ptr_bar->size) == 0) ? _("auto") : "",
-                                 (CONFIG_INTEGER(ptr_bar->size) == 0) ? " (" : "",
-                                 ptr_bar->current_size,
-                                 (CONFIG_INTEGER(ptr_bar->size) == 0) ? ")" : "");
+                                 (CONFIG_INTEGER(ptr_bar->size) == 0) ? _("auto") : str_size);
                 gui_chat_printf (NULL,
                                  _("      fg: %s, bg: %s, items: %s%s (plugin: "
                                    "%s)"),
@@ -2510,8 +2509,8 @@ command_init ()
                   N_("manage bars"),
                   N_("[add barname type[,cond1,cond2,...] position size "
                      "separator item1,item2,...] | [del barname] | "
-                     "[set barname name|number|condition|position|size|"
-                     "separator|items value] | [list] | [listitems]"),
+                     "[set barname name|number|condition|position|filling|"
+                     "size|separator|items value] | [list] | [listitems]"),
                   N_("      add: add a new bar\n"
                      "  barname: name of bar (must be unique)\n"
                      "     type:   root: outside windows),\n"
@@ -2524,6 +2523,7 @@ command_init ()
                      "           nicklist: on windows with nicklist\n"
                      "           without condition, bar is always displayed\n"
                      " position: bottom, top, left or right\n"
+                     "  filling: horizontal or vertical\n"
                      "     size: size of bar (in chars)\n"
                      "separator: 1 for using separator (line), 0 or nothing "
                      "means no separator\n"
@@ -2533,7 +2533,7 @@ command_init ()
                      "     list: list all bars\n"
                      "listitems: list all bar items"),
                   "add|del|set|list|listitems %r name|number|conditions|"
-                  "position|size|separator|items",
+                  "position|filling|size|separator|items",
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),

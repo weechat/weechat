@@ -204,10 +204,6 @@ gui_main_loop ()
         /* execute hook timers */
         hook_timer_exec ();
         
-        /* refresh window if needed */
-        if (gui_window_refresh_needed)
-            gui_window_refresh_screen ();
-        
         /* refresh status bar if needed */
         if (gui_status_refresh_needed)
             gui_status_draw (1);
@@ -244,6 +240,10 @@ gui_main_loop ()
             if (ptr_buffer->input_refresh_needed)
                 gui_input_draw (ptr_buffer, 1);
         }
+        
+        /* refresh window if needed */
+        if (gui_window_refresh_needed)
+            gui_window_refresh_screen ();
         
         /* wait for keyboard or network activity */
         FD_ZERO (&read_fds);

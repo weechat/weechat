@@ -56,6 +56,43 @@ gui_bar_window_search_bar (struct t_gui_window *window, struct t_gui_bar *bar)
 }
 
 /*
+ * gui_bar_window_get_current_size: get current size of bar window
+ *                                  return width or height, depending on bar
+ *                                  position
+ */
+
+int
+gui_bar_window_get_current_size (struct t_gui_bar_window *bar_window)
+{
+    return bar_window->current_size;
+}
+
+/*
+ * gui_bar_window_set_current_size: set current size of all bar windows for a bar
+ */
+
+void
+gui_bar_window_set_current_size (struct t_gui_bar *bar, int size)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
+    
+    if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+        bar->bar_window->current_size = (size == 0) ? 1 : size;
+    else
+    {
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            for (ptr_bar_win = GUI_GTK(ptr_win)->bar_windows;
+                 ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
+            {
+                ptr_bar_win->current_size = (size == 0) ? 1 : size;
+            }
+        }
+    }
+}
+
+/*
  * gui_bar_window_get_size: get total bar size (window bars) for a position
  *                          bar is optional, if not NULL, size is computed
  *                          from bar 1 to bar # - 1

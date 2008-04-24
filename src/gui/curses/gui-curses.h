@@ -44,6 +44,7 @@ struct t_gui_bar_window
     int x, y;                       /* position of window                   */
     int width, height;              /* window size                          */
     WINDOW *win_bar;                /* bar Curses window                    */
+    int current_size;               /* current size (width or height)       */
     WINDOW *win_separator;          /* separator (optional)                 */
     struct t_gui_bar_window *prev_bar_window; /* link to previous bar win   */
                                               /* (only for non-root bars)   */
