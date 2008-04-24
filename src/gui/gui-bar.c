@@ -376,6 +376,7 @@ gui_bar_config_check_size (void *data, struct t_config_option *option,
     struct t_gui_bar *ptr_bar;
     long number;
     char *error;
+    int new_value;
     
     /* make C compiler happy */
     (void) data;
@@ -383,24 +384,47 @@ gui_bar_config_check_size (void *data, struct t_config_option *option,
     ptr_bar = gui_bar_search_with_option_name (option->name);
     if (ptr_bar)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
+        new_value = -1;
+        if (strncmp (value, "++", 2) == 0)
         {
-            if (number < 0)
-                return 0;
-            
-            if ((number != 0) &&
-                ((CONFIG_INTEGER(ptr_bar->size) == 0)
-                 || (number > CONFIG_INTEGER(ptr_bar->size))))
+            error = NULL;
+            number = strtol (value + 2, &error, 10);
+            if (error && !error[0])
             {
-                if (!gui_bar_check_size_add (ptr_bar,
-                                             number - CONFIG_INTEGER(ptr_bar->size)))
-                    return 0;
+                new_value = CONFIG_INTEGER(ptr_bar->size) + number;
             }
-            
-            return 1;
         }
+        else if (strncmp (value, "--", 2) == 0)
+        {
+            error = NULL;
+            number = strtol (value + 2, &error, 10);
+            if (error && !error[0])
+            {
+                new_value = CONFIG_INTEGER(ptr_bar->size) - number;
+            }
+        }
+        else
+        {
+            error = NULL;
+            number = strtol (value, &error, 10);
+            if (error && !error[0])
+            {
+                new_value = number;
+            }
+        }
+        if (new_value < 0)
+            return 0;
+        
+        if ((new_value > 0) &&
+            ((CONFIG_INTEGER(ptr_bar->size) == 0)
+             || (new_value > CONFIG_INTEGER(ptr_bar->size))))
+        {
+            if (!gui_bar_check_size_add (ptr_bar,
+                                         new_value - CONFIG_INTEGER(ptr_bar->size)))
+                return 0;
+        }
+        
+        return 1;
     }
     
     return 0;
@@ -422,7 +446,7 @@ gui_bar_config_change_size (void *data, struct t_config_option *option)
     if (ptr_bar)
     {
         gui_bar_window_set_current_size (ptr_bar,
-                                         CONFIG_INTEGER(ptr_bar->size_max));
+                                         CONFIG_INTEGER(ptr_bar->size));
         gui_window_refresh_needed = 1;
     }
 }

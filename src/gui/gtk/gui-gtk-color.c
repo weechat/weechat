@@ -101,6 +101,16 @@ gui_color_assign (int *color, char *color_name)
 }
 
 /*
+ * gui_color_get_number: get number of available colors
+ */
+
+int
+gui_color_get_number ()
+{
+    return 0;
+}
+
+/*
  * gui_color_get_name: get color name
  */
 

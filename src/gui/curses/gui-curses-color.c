@@ -249,6 +249,16 @@ gui_color_assign (t_gui_color **color, char *fg_and_bg)
 }*/
 
 /*
+ * gui_color_get_number: get number of available colors
+ */
+
+int
+gui_color_get_number ()
+{
+    return GUI_CURSES_NUM_WEECHAT_COLORS;
+}
+
+/*
  * gui_color_get_name: get color name
  */
 

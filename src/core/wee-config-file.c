@@ -451,7 +451,7 @@ config_file_new_option (struct t_config_file *config_file,
             case CONFIG_OPTION_TYPE_COLOR:
                 new_option->string_values = NULL;
                 new_option->min = min;
-                new_option->max = min;
+                new_option->max = gui_color_get_number () - 1;
                 new_option->default_value = malloc (sizeof (int));
                 if (!gui_color_assign (new_option->default_value, default_value))
                     *((int *)new_option->default_value) = 0;
@@ -820,7 +820,7 @@ int
 config_file_option_set (struct t_config_option *option, char *value,
                         int run_callback)
 {
-    int value_int, i, rc, length_option;
+    int value_int, i, rc, length_option, new_value_ok;
     long number;
     char *error, *option_full_name;
     
@@ -872,13 +872,38 @@ config_file_option_set (struct t_config_option *option, char *value,
                 if (option->string_values)
                 {
                     value_int = -1;
-                    for (i = 0; option->string_values[i]; i++)
+                    if (strncmp (value, "++", 2) == 0)
                     {
-                        if (string_strcasecmp (option->string_values[i],
-                                               value) == 0)
+                        error = NULL;
+                        number = strtol (value + 2, &error, 10);
+                        if (error && !error[0])
                         {
-                            value_int = i;
-                            break;
+                            number = number % (option->max + 1);
+                            value_int = (*((int *)option->value) + number) %
+                                (option->max + 1);
+                        }
+                    }
+                    else if (strncmp (value, "--", 2) == 0)
+                    {
+                        error = NULL;
+                        number = strtol (value + 2, &error, 10);
+                        if (error && !error[0])
+                        {
+                            number = number % (option->max + 1);
+                            value_int = (*((int *)option->value) + (option->max + 1) - number) %
+                                (option->max + 1);
+                        }
+                    }
+                    else
+                    {
+                        for (i = 0; option->string_values[i]; i++)
+                        {
+                            if (string_strcasecmp (option->string_values[i],
+                                                   value) == 0)
+                            {
+                                value_int = i;
+                                break;
+                            }
                         }
                     }
                     if (value_int >= 0)
@@ -894,15 +919,48 @@ config_file_option_set (struct t_config_option *option, char *value,
                 }
                 else
                 {
-                    error = NULL;
-                    number = strtol (value, &error, 10);
-                    if (error && !error[0])
+                    new_value_ok = 0;
+                    if (strncmp (value, "++", 2) == 0)
                     {
-                        if (number == *((int *)option->value))
+                        error = NULL;
+                        number = strtol (value + 2, &error, 10);
+                        if (error && !error[0])
+                        {
+                            value_int = *((int *)option->value) + number;
+                            if (value_int <= option->max)
+                                new_value_ok = 1;
+                        }
+                    }
+                    else if (strncmp (value, "--", 2) == 0)
+                    {
+                        error = NULL;
+                        number = strtol (value + 2, &error, 10);
+                        if (error && !error[0])
+                        {
+                            value_int = *((int *)option->value) - number;
+                            if (value_int >= option->min)
+                                new_value_ok = 1;
+                        }
+                    }
+                    else
+                    {
+                        error = NULL;
+                        number = strtol (value, &error, 10);
+                        if (error && !error[0])
+                        {
+                            value_int = number;
+                            if ((value_int >= option->min)
+                                && (value_int <= option->max))
+                                new_value_ok = 1;
+                        }
+                    }
+                    if (new_value_ok)
+                    {
+                        if (value_int == *((int *)option->value))
                             rc = 1;
                         else
                         {
-                            *((int *)option->value) = number;
+                            *((int *)option->value) = value_int;
                             rc = 2;
                         }
                     }
@@ -927,7 +985,34 @@ config_file_option_set (struct t_config_option *option, char *value,
                 option->value = NULL;
             break;
         case CONFIG_OPTION_TYPE_COLOR:
-            if (gui_color_assign (&value_int, value))
+            value_int = -1;
+            if (strncmp (value, "++", 2) == 0)
+            {
+                error = NULL;
+                number = strtol (value + 2, &error, 10);
+                if (error && !error[0])
+                {
+                    number = number % (option->max + 1);
+                    value_int = (*((int *)option->value) + number) %
+                        (option->max + 1);
+                }
+            }
+            else if (strncmp (value, "--", 2) == 0)
+            {
+                error = NULL;
+                number = strtol (value + 2, &error, 10);
+                if (error && !error[0])
+                {
+                    number = number % (option->max + 1);
+                    value_int = (*((int *)option->value) + (option->max + 1) - number) %
+                        (option->max + 1);
+                }
+            }
+            else
+            {
+                gui_color_assign (&value_int, value);
+            }
+            if (value_int >= 0)
             {
                 if (value_int == *((int *)option->value))
                     rc = 1;
