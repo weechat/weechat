@@ -1158,7 +1158,7 @@ script_api_command (struct t_weechat_plugin *weechat_plugin,
 
 /*
  * script_api_config_get_plugin: get a value of a script option
- *                               format in file is: plugin.script.option=value
+ *                               format in file is: plugin.script.option = value
  */
 
 char *
@@ -1185,7 +1185,7 @@ script_api_config_get_plugin (struct t_weechat_plugin *weechat_plugin,
 
 /*
  * script_api_config_set_plugin: set value of a script config option
- *                               format in file is: plugin.script.option=value
+ *                               format in file is: plugin.script.option = value
  */
 
 int

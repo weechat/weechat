@@ -266,7 +266,7 @@ gui_bar_item_default_time (void *data, struct t_gui_bar_item *item,
                   local_time) == 0)
         return NULL;
     
-    snprintf (buf, sizeof (buf), "%s[%s%s%s] ",
+    snprintf (buf, sizeof (buf), "%s[%s%s%s]",
               GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
               GUI_COLOR(GUI_COLOR_STATUS),
               text_time,
@@ -293,7 +293,7 @@ gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
     (void) max_width;
     (void) max_height;
     
-    snprintf (buf, sizeof (buf), "%s[%s%d%s] ",
+    snprintf (buf, sizeof (buf), "%s[%s%d%s]",
               GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
               GUI_COLOR(GUI_COLOR_STATUS),
               (last_gui_buffer) ? last_gui_buffer->number : 0,
@@ -322,7 +322,7 @@ gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
     if (!window)
         window = gui_current_window;
     
-    snprintf (buf, sizeof (buf), "%s[%s%s%s] ",
+    snprintf (buf, sizeof (buf), "%s[%s%s%s]",
               GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
               GUI_COLOR(GUI_COLOR_STATUS),
               (window->buffer->plugin) ? window->buffer->plugin->name : "core",
@@ -351,7 +351,7 @@ gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
     if (!window)
         window = gui_current_window;
     
-    snprintf (buf, sizeof (buf), "%s%d%s:%s%s%s/%s%s ",
+    snprintf (buf, sizeof (buf), "%s%d%s:%s%s%s/%s%s",
               GUI_COLOR(GUI_COLOR_STATUS_NUMBER),
               window->buffer->number,
               GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
@@ -422,7 +422,7 @@ gui_bar_item_default_nicklist_count (void *data, struct t_gui_bar_item *item,
     if (!window->buffer->nicklist)
         return NULL;
     
-    snprintf (buf, sizeof (buf), "%s[%s%d%s] ",
+    snprintf (buf, sizeof (buf), "%s[%s%d%s]",
               GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
               GUI_COLOR(GUI_COLOR_STATUS),
               window->buffer->nicklist_visible_count,
@@ -454,7 +454,7 @@ gui_bar_item_default_scroll (void *data, struct t_gui_bar_item *item,
     if (!window->scroll)
         return NULL;
     
-    snprintf (buf, sizeof (buf), "%s%s ",
+    snprintf (buf, sizeof (buf), "%s%s",
               GUI_COLOR(GUI_COLOR_STATUS_MORE),
               _("(MORE)"));
     
@@ -545,7 +545,7 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
             break;
     }
     strcat (buf, GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
-    strcat (buf, "] ");
+    strcat (buf, "]");
     
     return strdup (buf);
 }

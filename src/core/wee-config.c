@@ -600,11 +600,20 @@ config_weechat_bar_read (void *data, struct t_config_file *config_file,
                                 case GUI_BAR_OPTION_POSITION:
                                     ptr_temp_bar->position = ptr_option;
                                     break;
+                                case GUI_BAR_OPTION_FILLING:
+                                    ptr_temp_bar->filling = ptr_option;
+                                    break;
                                 case GUI_BAR_OPTION_SIZE:
                                     ptr_temp_bar->size = ptr_option;
                                     break;
                                 case GUI_BAR_OPTION_SIZE_MAX:
                                     ptr_temp_bar->size_max = ptr_option;
+                                    break;
+                                case GUI_BAR_OPTION_COLOR_FG:
+                                    ptr_temp_bar->color_fg = ptr_option;
+                                    break;
+                                case GUI_BAR_OPTION_COLOR_BG:
+                                    ptr_temp_bar->color_bg = ptr_option;
                                     break;
                                 case GUI_BAR_OPTION_SEPARATOR:
                                     ptr_temp_bar->separator = ptr_option;

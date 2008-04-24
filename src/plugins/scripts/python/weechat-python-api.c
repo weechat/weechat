@@ -1627,6 +1627,107 @@ weechat_python_api_config_free (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_config_get: get config option
+ */
+
+static PyObject *
+weechat_python_api_config_get (PyObject *self, PyObject *args)
+{
+    char *option, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_config_get (option));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_config_get_plugin: get value of a plugin option
+ */
+
+static PyObject *
+weechat_python_api_config_get_plugin (PyObject *self, PyObject *args)
+{
+    char *option, *value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get_plugin");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get_plugin");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    value = script_api_config_get_plugin (weechat_python_plugin,
+                                          python_current_script,
+                                          option);
+    
+    PYTHON_RETURN_STRING(value);
+}
+
+/*
+ * weechat_python_api_config_set_plugin: set value of a plugin option
+ */
+
+static PyObject *
+weechat_python_api_config_set_plugin (PyObject *self, PyObject *args)
+{
+    char *option, *value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_set_plugin");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    option = NULL;
+    value = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &option, &value))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_set_plugin");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    if (script_api_config_set_plugin (weechat_python_plugin,
+                                      python_current_script,
+                                      option,
+                                      value))
+        PYTHON_RETURN_OK;
+    
+    PYTHON_RETURN_ERROR;
+}
+
+/*
  * weechat_python_api_prefix: get a prefix, used for display
  */
 
@@ -3426,8 +3527,8 @@ weechat_python_api_bar_search (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_bar_new (PyObject *self, PyObject *args)
 {
-    char *name, *type, *conditions, *position, *size, *size_max, *separator;
-    char *items, *result;
+    char *name, *type, *conditions, *position, *filling, *size, *size_max;
+    char *color_fg, *color_bg, *separator, *items, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -3443,13 +3544,17 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
     type = NULL;
     conditions = NULL;
     position = NULL;
+    filling = NULL;
     size = NULL;
     size_max = NULL;
+    color_fg = NULL;
+    color_bg = NULL;
     separator = NULL;
     items = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssssssss", &name, &conditions, &type,
-                           &position, &size, &size_max, &separator, &items))
+    if (!PyArg_ParseTuple (args, "sssssssssss", &name, &conditions, &type,
+                           &position, &filling, &size, &size_max, &color_fg,
+                           &color_bg, &separator, &items))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         PYTHON_RETURN_EMPTY;
@@ -3459,8 +3564,11 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
                                               type,
                                               conditions,
                                               position,
+                                              filling,
                                               size,
                                               size_max,
+                                              color_fg,
+                                              color_bg,
                                               separator,
                                               items));
     
@@ -3975,6 +4083,9 @@ PyMethodDef weechat_python_funcs[] =
     { "config_read", &weechat_python_api_config_read, METH_VARARGS, "" },
     { "config_reload", &weechat_python_api_config_reload, METH_VARARGS, "" },
     { "config_free", &weechat_python_api_config_free, METH_VARARGS, "" },
+    { "config_get", &weechat_python_api_config_get, METH_VARARGS, "" },
+    { "config_get_plugin", &weechat_python_api_config_get_plugin, METH_VARARGS, "" },
+    { "config_set_plugin", &weechat_python_api_config_set_plugin, METH_VARARGS, "" },
     { "prefix", &weechat_python_api_prefix, METH_VARARGS, "" },
     { "color", &weechat_python_api_color, METH_VARARGS, "" },
     { "prnt", &weechat_python_api_prnt, METH_VARARGS, "" },

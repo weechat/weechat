@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-22 18:08+0200\n"
+"POT-Creation-Date: 2008-04-23 18:30+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -116,7 +116,7 @@ msgid "List of bars:"
 msgstr "Lista de alias:\n"
 
 #, fuzzy, c-format
-msgid "  %d. %s: %s (cond: %s), %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
+msgid " %3d. %s%s%s: %s (cond: %s), %s, filling: %s, %s: %s%s%d%s"
 msgstr "%sen %s%s%s/%s%s%s:%s ignorando %s%s%s de %s%s\n"
 
 msgid "height"
@@ -127,6 +127,10 @@ msgstr ""
 
 msgid "auto"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "      fg: %s, bg: %s, items: %s%s (plugin: %s)"
+msgstr "%sen %s%s%s/%s%s%s:%s ignorando %s%s%s de %s%s\n"
 
 #, fuzzy
 msgid ", with separator"
@@ -1692,12 +1696,25 @@ msgstr ""
 "posiciÃ³n de la ventana de usuarios (arriba (top), izquierda (left), derecha "
 "(right, por defecto), abajo (bottom))"
 
+msgid ""
+"bar filling direction (\"horizontal\" (from left to right) or \"vertical"
+"\" (from top to bottom))"
+msgstr ""
+
 msgid "bar size in chars (0 = auto size)"
 msgstr ""
 
 #, fuzzy
 msgid "max bar size in chars (0 = no limit)"
 msgstr "longitud mÃ¡xima de nombres en la hotlist (0 = sin lÃ­mite)"
+
+#, fuzzy
+msgid "default text color for bar"
+msgstr "color para el texto de la barra de informaciÃ³n"
+
+#, fuzzy
+msgid "default background color for bar"
+msgstr "color para el texto de la barra de informaciÃ³n"
 
 msgid "separator line between bar and other bars/windows"
 msgstr ""

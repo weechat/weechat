@@ -58,8 +58,8 @@ gui_status_draw (int erase)
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if (erase)
-            gui_window_curses_clear (GUI_CURSES(ptr_win)->win_status,
-                                     GUI_COLOR_STATUS);
+            gui_window_clear_weechat (GUI_CURSES(ptr_win)->win_status,
+                                      GUI_COLOR_STATUS);
         
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                       GUI_COLOR_STATUS);

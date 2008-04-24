@@ -86,26 +86,36 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                  ptr_bar = ptr_bar->next_bar)
             {
                 gui_chat_printf (NULL,
-                                 _("  %d. %s: %s (cond: %s), %s, %s: "
-                                   "%s%s%d%s, items: %s%s (plugin: %s)"),
+                                 _(" %3d. %s%s%s: %s (cond: %s), %s, filling: %s, "
+                                   "%s: %s%s%d%s"),
                                  ptr_bar->number,
+                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  ptr_bar->name,
+                                 GUI_COLOR(GUI_COLOR_CHAT),
                                  gui_bar_type_str[CONFIG_INTEGER(ptr_bar->type)],
                                  (CONFIG_STRING(ptr_bar->conditions)
                                   && CONFIG_STRING(ptr_bar->conditions)[0]) ?
                                  CONFIG_STRING(ptr_bar->conditions) : "-",
                                  gui_bar_position_str[CONFIG_INTEGER(ptr_bar->position)],
+                                 gui_bar_filling_str[CONFIG_INTEGER(ptr_bar->filling)],
                                  ((CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_BOTTOM)
                                   || (CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_TOP)) ?
                                  _("height") : _("width"),
                                  (CONFIG_INTEGER(ptr_bar->size) == 0) ? _("auto") : "",
                                  (CONFIG_INTEGER(ptr_bar->size) == 0) ? " (" : "",
                                  ptr_bar->current_size,
-                                 (CONFIG_INTEGER(ptr_bar->size) == 0) ? ")" : "",
-                                 (CONFIG_STRING(ptr_bar->items)) ? CONFIG_STRING(ptr_bar->items) : "-",
+                                 (CONFIG_INTEGER(ptr_bar->size) == 0) ? ")" : "");
+                gui_chat_printf (NULL,
+                                 _("      fg: %s, bg: %s, items: %s%s (plugin: "
+                                   "%s)"),
+                                 gui_color_get_name (CONFIG_COLOR(ptr_bar->color_fg)),
+                                 gui_color_get_name (CONFIG_COLOR(ptr_bar->color_bg)),
+                                 (CONFIG_STRING(ptr_bar->items) && CONFIG_STRING(ptr_bar->items)[0]) ?
+                                 CONFIG_STRING(ptr_bar->items) : "-",
                                  (CONFIG_INTEGER(ptr_bar->separator)) ?
                                  _(", with separator") : "",
                                  (ptr_bar->plugin) ? ptr_bar->plugin->name : "-");
+                                 
             }
         }
         else
@@ -194,7 +204,11 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         {
             /* create bar */
             if (gui_bar_new (NULL, argv[2], str_type, pos_condition, argv[4],
-                             argv[5], "0", argv[6], argv_eol[7]))
+                             ((position == GUI_BAR_POSITION_LEFT)
+                              || (position == GUI_BAR_POSITION_RIGHT)) ?
+                             "vertical" : "horizontal",
+                             argv[5], "0", "default", "default", argv[6],
+                             argv_eol[7]))
             {
                 gui_chat_printf (NULL, _("Bar \"%s\" created"),
                                  argv[2]);

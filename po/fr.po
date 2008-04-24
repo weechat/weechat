@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-22 18:08+0200\n"
-"PO-Revision-Date: 2008-04-22 18:09+0200\n"
+"POT-Creation-Date: 2008-04-23 18:30+0200\n"
+"PO-Revision-Date: 2008-04-23 18:32+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -111,9 +111,8 @@ msgid "List of bars:"
 msgstr "Liste des barres:"
 
 #, c-format
-msgid "  %d. %s: %s (cond: %s), %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
-msgstr ""
-"  %d. %s: %s (cond: %s), %s, %s: %s%s%d%s, objets: %s%s (extension: %s)"
+msgid " %3d. %s%s%s: %s (cond: %s), %s, filling: %s, %s: %s%s%d%s"
+msgstr " %3d. %s%s%s: %s (cond: %s), %s, remplissage: %s, %s: %s%s%d%s"
 
 msgid "height"
 msgstr "hauteur"
@@ -123,6 +122,10 @@ msgstr "largeur"
 
 msgid "auto"
 msgstr "auto"
+
+#, c-format
+msgid "      fg: %s, bg: %s, items: %s%s (plugin: %s)"
+msgstr "      fg: %s, bg: %s, objets: %s%s (extension: %s)"
 
 msgid ", with separator"
 msgstr ", avec séparateur"
@@ -1648,11 +1651,24 @@ msgstr ""
 "position de la barre (bottom (bas), top (haut), left (gauche), right "
 "(droite))"
 
+msgid ""
+"bar filling direction (\"horizontal\" (from left to right) or \"vertical"
+"\" (from top to bottom))"
+msgstr ""
+"direction de remplissage de la barre (\"horizontal\" (de gauche à droite) ou "
+"\"vertical\" (de haut en bas))"
+
 msgid "bar size in chars (0 = auto size)"
 msgstr "taille de la barre en caractères (0 = taille automatique)"
 
 msgid "max bar size in chars (0 = no limit)"
 msgstr "taille max de la barre en caractères (0 = pas de limite)"
+
+msgid "default text color for bar"
+msgstr "couleur du texte par défaut pour la barre"
+
+msgid "default background color for bar"
+msgstr "couleur du fond par défaut pour la barre"
 
 msgid "separator line between bar and other bars/windows"
 msgstr "ligne de séparation entre la barre et les autres barres/fenêtres"

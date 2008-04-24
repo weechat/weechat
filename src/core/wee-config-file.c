@@ -454,7 +454,7 @@ config_file_new_option (struct t_config_file *config_file,
                 new_option->max = min;
                 new_option->default_value = malloc (sizeof (int));
                 if (!gui_color_assign (new_option->default_value, default_value))
-                    new_option->default_value = 0;
+                    *((int *)new_option->default_value) = 0;
                 new_option->value = malloc (sizeof (int));
                 *((int *)new_option->value) = *((int *)new_option->default_value);
                 break;
@@ -1187,7 +1187,10 @@ config_file_option_string (struct t_config_option *option)
     switch (option->type)
     {
         case CONFIG_OPTION_TYPE_BOOLEAN:
-            return NULL;
+            if (CONFIG_BOOLEAN(option))
+                return config_boolean_true[0];
+            else
+                return config_boolean_false[0];
         case CONFIG_OPTION_TYPE_INTEGER:
             if (option->string_values)
                 return option->string_values[CONFIG_INTEGER(option)];
@@ -1195,7 +1198,7 @@ config_file_option_string (struct t_config_option *option)
         case CONFIG_OPTION_TYPE_STRING:
             return CONFIG_STRING(option);
         case CONFIG_OPTION_TYPE_COLOR:
-            return NULL;
+            return gui_color_get_name (CONFIG_COLOR(option));
         case CONFIG_NUM_OPTION_TYPES:
             return NULL;
     }

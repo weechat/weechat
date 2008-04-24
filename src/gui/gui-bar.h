@@ -28,8 +28,11 @@ enum t_gui_bar_option
     GUI_BAR_OPTION_TYPE = 0,
     GUI_BAR_OPTION_CONDITIONS,
     GUI_BAR_OPTION_POSITION,
+    GUI_BAR_OPTION_FILLING,
     GUI_BAR_OPTION_SIZE,
     GUI_BAR_OPTION_SIZE_MAX,
+    GUI_BAR_OPTION_COLOR_FG,
+    GUI_BAR_OPTION_COLOR_BG,
     GUI_BAR_OPTION_SEPARATOR,
     GUI_BAR_OPTION_ITEMS,
     /* number of bar types */
@@ -54,6 +57,14 @@ enum t_gui_bar_position
     GUI_BAR_NUM_POSITIONS,
 };
 
+enum t_gui_bar_filling
+{
+    GUI_BAR_FILLING_HORIZONTAL = 0,
+    GUI_BAR_FILLING_VERTICAL,
+    /* number of bar positions */
+    GUI_BAR_NUM_FILLING,
+};
+
 struct t_gui_bar
 {
     /* user choices */
@@ -63,8 +74,11 @@ struct t_gui_bar
     struct t_config_option *type;       /* type (root or window)            */
     struct t_config_option *conditions; /* conditions for display           */
     struct t_config_option *position;   /* bottom, top, left, right         */
+    struct t_config_option *filling;    /* filling (H=horizontal,V=vertical)*/
     struct t_config_option *size;       /* size of bar (in chars, 0 = auto) */
     struct t_config_option *size_max;   /* max size of bar (0 = no limit)   */
+    struct t_config_option *color_fg;   /* default text color for bar       */
+    struct t_config_option *color_bg;   /* default background color for bar */
     struct t_config_option *separator;  /* true if separator line displayed */
     struct t_config_option *items;      /* bar items                        */
     
@@ -84,6 +98,7 @@ struct t_gui_bar
 
 extern char *gui_bar_type_str[];
 extern char *gui_bar_position_str[];
+extern char *gui_bar_filling_str[];
 extern struct t_gui_bar *gui_bars;
 extern struct t_gui_bar *last_gui_bar;
 extern struct t_gui_bar *gui_temp_bars;
@@ -107,9 +122,10 @@ extern struct t_config_option *gui_bar_create_option (char *bar_name,
                                                       char *value);
 extern struct t_gui_bar *gui_bar_new (struct t_weechat_plugin *plugin,
                                       char *name, char *type, char *conditions,
-                                      char *position, char *size,
-                                      char *size_max, char *separator,
-                                      char *items);
+                                      char *position, char *filling,
+                                      char *size, char *size_max,
+                                      char *color_fg, char *color_bg,
+                                      char *separator, char *items);
 extern void gui_bar_use_temp_bars ();
 extern void gui_bar_update (char *name);
 extern void gui_bar_free (struct t_gui_bar *bar);

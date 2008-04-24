@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-22 18:08+0200\n"
+"POT-Creation-Date: 2008-04-23 18:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,7 @@ msgid "List of bars:"
 msgstr ""
 
 #, c-format
-msgid "  %d. %s: %s (cond: %s), %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
+msgid " %3d. %s%s%s: %s (cond: %s), %s, filling: %s, %s: %s%s%d%s"
 msgstr ""
 
 msgid "height"
@@ -104,6 +104,10 @@ msgid "width"
 msgstr ""
 
 msgid "auto"
+msgstr ""
+
+#, c-format
+msgid "      fg: %s, bg: %s, items: %s%s (plugin: %s)"
 msgstr ""
 
 msgid ", with separator"
@@ -1410,10 +1414,21 @@ msgstr ""
 msgid "bar position (bottom, top, left, right)"
 msgstr ""
 
+msgid ""
+"bar filling direction (\"horizontal\" (from left to right) or \"vertical"
+"\" (from top to bottom))"
+msgstr ""
+
 msgid "bar size in chars (0 = auto size)"
 msgstr ""
 
 msgid "max bar size in chars (0 = no limit)"
+msgstr ""
+
+msgid "default text color for bar"
+msgstr ""
+
+msgid "default background color for bar"
 msgstr ""
 
 msgid "separator line between bar and other bars/windows"

@@ -98,8 +98,8 @@ gui_infobar_draw (struct t_gui_buffer *buffer, int erase)
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
         if (erase)
-            gui_window_curses_clear (GUI_CURSES(ptr_win)->win_infobar,
-                                     GUI_COLOR_INFOBAR);
+            gui_window_clear_weechat (GUI_CURSES(ptr_win)->win_infobar,
+                                      GUI_COLOR_INFOBAR);
         
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_infobar,
                                       GUI_COLOR_INFOBAR);

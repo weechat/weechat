@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-22 18:08+0200\n"
+"POT-Creation-Date: 2008-04-23 18:30+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -114,7 +114,7 @@ msgid "List of bars:"
 msgstr "Seznam pro aliasy:\n"
 
 #, fuzzy, c-format
-msgid "  %d. %s: %s (cond: %s), %s, %s: %s%s%d%s, items: %s%s (plugin: %s)"
+msgid " %3d. %s%s%s: %s (cond: %s), %s, filling: %s, %s: %s%s%d%s"
 msgstr "%sna %s%s%s/%s%s%s:%s ignoruji %s%s%s od %s%s\n"
 
 #, fuzzy
@@ -126,6 +126,10 @@ msgstr ""
 
 msgid "auto"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "      fg: %s, bg: %s, items: %s%s (plugin: %s)"
+msgstr "%sna %s%s%s/%s%s%s:%s ignoruji %s%s%s od %s%s\n"
 
 #, fuzzy
 msgid ", with separator"
@@ -1706,12 +1710,25 @@ msgstr ""
 msgid "bar position (bottom, top, left, right)"
 msgstr "pozice seznamu přezdívek (top, left, right (výchozí), bottom)"
 
+msgid ""
+"bar filling direction (\"horizontal\" (from left to right) or \"vertical"
+"\" (from top to bottom))"
+msgstr ""
+
 msgid "bar size in chars (0 = auto size)"
 msgstr ""
 
 #, fuzzy
 msgid "max bar size in chars (0 = no limit)"
 msgstr "maximální délka jmen v hotlistu (0 = bez limitu)"
+
+#, fuzzy
+msgid "default text color for bar"
+msgstr "barva textu v info baru"
+
+#, fuzzy
+msgid "default background color for bar"
+msgstr "barva textu v info baru"
 
 #, fuzzy
 msgid "separator line between bar and other bars/windows"

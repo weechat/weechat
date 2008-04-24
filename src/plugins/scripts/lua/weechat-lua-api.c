@@ -1852,6 +1852,124 @@ weechat_lua_api_config_free (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_config_get: get config option
+ */
+
+static int
+weechat_lua_api_config_get (lua_State *L)
+{
+    const char *option;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get");
+        LUA_RETURN_EMPTY;
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get");
+        LUA_RETURN_EMPTY;
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (weechat_config_get ((char *)option));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_config_get_plugin: get value of a plugin option
+ */
+
+static int
+weechat_lua_api_config_get_plugin (lua_State *L)
+{
+    const char *option;
+    char *value;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get_plugin");
+        LUA_RETURN_EMPTY;
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get_plugin");
+        LUA_RETURN_EMPTY;
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    value = script_api_config_get_plugin (weechat_lua_plugin,
+                                          lua_current_script,
+                                          (char *)option);
+    
+    LUA_RETURN_STRING(value);
+}
+
+/*
+ * weechat_lua_api_config_set_plugin: set value of a plugin option
+ */
+
+static int
+weechat_lua_api_config_set_plugin (lua_State *L)
+{
+    const char *option, *value;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_set_plugin");
+        LUA_RETURN_ERROR;
+    }
+    
+    option = NULL;
+    value = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_set_plugin");
+        LUA_RETURN_ERROR;
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -2);
+    value = lua_tostring (lua_current_interpreter, -1);
+    
+    if (script_api_config_set_plugin (weechat_lua_plugin,
+                                      lua_current_script,
+                                      (char *)option,
+                                      (char *)value))
+        LUA_RETURN_OK;
+    
+    LUA_RETURN_ERROR;
+}
+
+/*
  * weechat_lua_api_prefix: get a prefix, used for display
  */
 
@@ -3878,8 +3996,8 @@ weechat_lua_api_bar_search (lua_State *L)
 static int
 weechat_lua_api_bar_new (lua_State *L)
 {
-    const char *name, *type, *conditions, *position, *size, *size_max;
-    const char *separator, *items;
+    const char *name, *type, *conditions, *position, *filling, *size;
+    const char *size_max, *color_fg, *color_bg, *separator, *items;
     char *result;
     int n;
     
@@ -3896,25 +4014,31 @@ weechat_lua_api_bar_new (lua_State *L)
     type = NULL;
     conditions = NULL;
     position = NULL;
+    filling = NULL;
     size = NULL;
     size_max = NULL;
+    color_fg = NULL;
+    color_bg = NULL;
     separator = NULL;
     items = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 8)
+    if (n < 11)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         LUA_RETURN_EMPTY;
     }
     
-    name = lua_tostring (lua_current_interpreter, -8);
-    type = lua_tostring (lua_current_interpreter, -7);
-    conditions = lua_tostring (lua_current_interpreter, -6);
-    position = lua_tostring (lua_current_interpreter, -5);
-    size = lua_tostring (lua_current_interpreter, -4);
-    size_max = lua_tostring (lua_current_interpreter, -3);
+    name = lua_tostring (lua_current_interpreter, -11);
+    type = lua_tostring (lua_current_interpreter, -10);
+    conditions = lua_tostring (lua_current_interpreter, -9);
+    position = lua_tostring (lua_current_interpreter, -8);
+    filling = lua_tostring (lua_current_interpreter, -7);
+    size = lua_tostring (lua_current_interpreter, -6);
+    size_max = lua_tostring (lua_current_interpreter, -5);
+    color_fg = lua_tostring (lua_current_interpreter, -4);
+    color_bg = lua_tostring (lua_current_interpreter, -3);
     separator = lua_tostring (lua_current_interpreter, -2);
     items = lua_tostring (lua_current_interpreter, -1);
     
@@ -3922,8 +4046,11 @@ weechat_lua_api_bar_new (lua_State *L)
                                               (char *)type,
                                               (char *)conditions,
                                               (char *)position,
+                                              (char *)filling,
                                               (char *)size,
                                               (char *)size_max,
+                                              (char *)color_fg,
+                                              (char *)color_bg,
                                               (char *)separator,
                                               (char *)items));
     
@@ -4639,6 +4766,9 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "config_read", &weechat_lua_api_config_read },
     { "config_reload", &weechat_lua_api_config_reload },
     { "config_free", &weechat_lua_api_config_free },
+    { "config_get", &weechat_lua_api_config_get },
+    { "config_get_plugin", &weechat_lua_api_config_get_plugin },
+    { "config_set_plugin", &weechat_lua_api_config_set_plugin },
     { "prefix", &weechat_lua_api_prefix },
     { "color", &weechat_lua_api_color },
     { "print", &weechat_lua_api_print },

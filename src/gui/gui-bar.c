@@ -34,15 +34,19 @@
 #include "gui-bar.h"
 #include "gui-buffer.h"
 #include "gui-chat.h"
+#include "gui-color.h"
 #include "gui-window.h"
 
 
 char *gui_bar_option_str[GUI_BAR_NUM_OPTIONS] =
-{ "type", "conditions", "position", "size", "size_max", "separator", "items" };
+{ "type", "conditions", "position", "filling", "size", "size_max",
+  "color_fg", "color_bg", "separator", "items" };
 char *gui_bar_type_str[GUI_BAR_NUM_TYPES] =
 { "root", "window" };
 char *gui_bar_position_str[GUI_BAR_NUM_POSITIONS] =
 { "bottom", "top", "left", "right" };
+char *gui_bar_filling_str[GUI_BAR_NUM_FILLING] =
+{ "horizontal", "vertical" };
 
 struct t_gui_bar *gui_bars = NULL;         /* first bar                     */
 struct t_gui_bar *last_gui_bar = NULL;     /* last bar                      */
@@ -341,6 +345,23 @@ gui_bar_config_change_position (void *data, struct t_config_option *option)
 }
 
 /*
+ * gui_bar_config_change_filling: callback when filling is changed
+ */
+
+void
+gui_bar_config_change_filling (void *data, struct t_config_option *option)
+{
+    struct t_gui_bar *ptr_bar;
+    
+    /* make C compiler happy */
+    (void) data;
+
+    ptr_bar = gui_bar_search_with_option_name (option->name);
+    if (ptr_bar)
+        gui_bar_refresh (ptr_bar);
+}
+
+/*
  * gui_bar_config_check_size: callback for checking bar size before changing it
  */
 
@@ -422,6 +443,23 @@ gui_bar_config_change_size_max (void *data, struct t_config_option *option)
 }
 
 /*
+ * gui_bar_config_change_color: callback when color (fg or bg) is changed
+ */
+
+void
+gui_bar_config_change_color (void *data, struct t_config_option *option)
+{
+    struct t_gui_bar *ptr_bar;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    ptr_bar = gui_bar_search_with_option_name (option->name);
+    if (ptr_bar)
+        gui_bar_refresh (ptr_bar);
+}
+
+/*
  * gui_bar_config_change_separator: callback when separator is changed
  */
 
@@ -495,10 +533,16 @@ gui_bar_set_name (struct t_gui_bar *bar, char *name)
         config_file_option_rename (bar->conditions, option_name);
         snprintf (option_name, length, "%s.position", name);
         config_file_option_rename (bar->position, option_name);
+        snprintf (option_name, length, "%s.filling", name);
+        config_file_option_rename (bar->filling, option_name);
         snprintf (option_name, length, "%s.size", name);
         config_file_option_rename (bar->size, option_name);
         snprintf (option_name, length, "%s.size_max", name);
         config_file_option_rename (bar->size_max, option_name);
+        snprintf (option_name, length, "%s.color_fg", name);
+        config_file_option_rename (bar->color_fg, option_name);
+        snprintf (option_name, length, "%s.color_bg", name);
+        config_file_option_rename (bar->color_bg, option_name);
         snprintf (option_name, length, "%s.separator", name);
         config_file_option_rename (bar->separator, option_name);
         snprintf (option_name, length, "%s.items", name);
@@ -751,6 +795,12 @@ gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
         gui_bar_refresh (bar);
         return 1;
     }
+    else if (string_strcasecmp (property, "filling") == 0)
+    {
+        config_file_option_set (bar->filling, value, 1);
+        gui_bar_refresh (bar);
+        return 1;
+    }
     else if (string_strcasecmp (property, "size") == 0)
     {
         gui_bar_set_size (bar, value);
@@ -760,6 +810,18 @@ gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
     else if (string_strcasecmp (property, "size_max") == 0)
     {
         gui_bar_set_size_max (bar, value);
+        gui_bar_refresh (bar);
+        return 1;
+    }
+    else if (string_strcasecmp (property, "color_fg") == 0)
+    {
+        config_file_option_set (bar->color_fg, value, 1);
+        gui_bar_refresh (bar);
+        return 1;
+    }
+    else if (string_strcasecmp (property, "color_bg") == 0)
+    {
+        config_file_option_set (bar->color_bg, value, 1);
         gui_bar_refresh (bar);
         return 1;
     }
@@ -799,8 +861,11 @@ gui_bar_alloc (char *name)
         new_bar->type = NULL;
         new_bar->conditions = NULL;
         new_bar->position = NULL;
+        new_bar->filling = NULL;
         new_bar->size = NULL;
         new_bar->size_max = NULL;
+        new_bar->color_fg = NULL;
+        new_bar->color_bg = NULL;
         new_bar->separator = NULL;
         new_bar->items = NULL;
         new_bar->current_size = 1;
@@ -863,6 +928,15 @@ gui_bar_create_option (char *bar_name, int index_option, char *value)
                     "bottom|top|left|right", 0, 0, value,
                     NULL, NULL, &gui_bar_config_change_position, NULL, NULL, NULL);
                 break;
+            case GUI_BAR_OPTION_FILLING:
+                ptr_option = config_file_new_option (
+                    weechat_config_file, weechat_config_section_bar,
+                    option_name, "integer",
+                    N_("bar filling direction (\"horizontal\" (from left to "
+                       "right) or \"vertical\" (from top to bottom))"),
+                    "horizontal|vertical", 0, 0, value,
+                    NULL, NULL, &gui_bar_config_change_filling, NULL, NULL, NULL);
+                break;
             case GUI_BAR_OPTION_SIZE:
                 ptr_option = config_file_new_option (
                     weechat_config_file, weechat_config_section_bar,
@@ -881,6 +955,26 @@ gui_bar_create_option (char *bar_name, int index_option, char *value)
                     NULL, 0, INT_MAX, value,
                     NULL, NULL,
                     &gui_bar_config_change_size_max, NULL,
+                    NULL, NULL);
+                break;
+            case GUI_BAR_OPTION_COLOR_FG:
+                ptr_option = config_file_new_option (
+                    weechat_config_file, weechat_config_section_bar,
+                    option_name, "color",
+                    N_("default text color for bar"),
+                    NULL, 0, 0, value,
+                    NULL, NULL,
+                    &gui_bar_config_change_color, NULL,
+                    NULL, NULL);
+                break;
+            case GUI_BAR_OPTION_COLOR_BG:
+                ptr_option = config_file_new_option (
+                    weechat_config_file, weechat_config_section_bar,
+                    option_name, "color",
+                    N_("default background color for bar"),
+                    NULL, 0, 0, value,
+                    NULL, NULL,
+                    &gui_bar_config_change_color, NULL,
                     NULL, NULL);
                 break;
             case GUI_BAR_OPTION_SEPARATOR:
@@ -916,8 +1010,11 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
                           struct t_config_option *type,
                           struct t_config_option *conditions,
                           struct t_config_option *position,
+                          struct t_config_option *filling,
                           struct t_config_option *size,
                           struct t_config_option *size_max,
+                          struct t_config_option *color_fg,
+                          struct t_config_option *color_bg,
                           struct t_config_option *separator,
                           struct t_config_option *items)
 {
@@ -944,10 +1041,13 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
             new_bar->conditions_array = NULL;
         }
         new_bar->position = position;
+        new_bar->filling = filling;
         new_bar->size = size;
         new_bar->current_size = (CONFIG_INTEGER(size) == 0) ?
             1 : CONFIG_INTEGER(size);
         new_bar->size_max = size_max;
+        new_bar->color_fg = color_fg;
+        new_bar->color_bg = color_bg;
         new_bar->separator = separator;
         new_bar->items = items;
         if (CONFIG_STRING(items) && CONFIG_STRING(items)[0])
@@ -999,12 +1099,14 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
 
 struct t_gui_bar *
 gui_bar_new (struct t_weechat_plugin *plugin, char *name,
-             char *type, char *conditions, char *position, char *size,
-             char *size_max, char *separators, char *items)
+             char *type, char *conditions, char *position, char *filling,
+             char *size, char *size_max, char *color_fg, char *color_bg,
+             char *separators, char *items)
 {
     struct t_config_option *option_type, *option_conditions, *option_position;
-    struct t_config_option *option_size, *option_size_max, *option_separator;
-    struct t_config_option *option_items;
+    struct t_config_option *option_filling, *option_size, *option_size_max;
+    struct t_config_option *option_color_fg, *option_color_bg;
+    struct t_config_option *option_separator, *option_items;
     struct t_gui_bar *new_bar;
     
     if (!name || !name[0])
@@ -1028,10 +1130,16 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name,
                                                conditions);
     option_position = gui_bar_create_option (name, GUI_BAR_OPTION_POSITION,
                                              position);
+    option_filling = gui_bar_create_option (name, GUI_BAR_OPTION_FILLING,
+                                            filling);
     option_size = gui_bar_create_option (name, GUI_BAR_OPTION_SIZE,
                                          size);
     option_size_max = gui_bar_create_option (name, GUI_BAR_OPTION_SIZE_MAX,
                                              size_max);
+    option_color_fg = gui_bar_create_option (name, GUI_BAR_OPTION_COLOR_FG,
+                                             color_fg);
+    option_color_bg = gui_bar_create_option (name, GUI_BAR_OPTION_COLOR_BG,
+                                             color_bg);
     option_separator = gui_bar_create_option (name, GUI_BAR_OPTION_SEPARATOR,
                                               (config_file_string_to_boolean (separators)) ?
                                                "on" : "off");
@@ -1039,8 +1147,10 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name,
                                           items);
     new_bar = gui_bar_new_with_options (plugin, name, option_type,
                                         option_conditions, option_position,
-                                        option_size, option_size_max,
-                                        option_separator, option_items);
+                                        option_filling,  option_size,
+                                        option_size_max, option_color_fg,
+                                        option_color_bg, option_separator,
+                                        option_items);
     if (!new_bar)
     {
         if (option_type)
@@ -1049,10 +1159,16 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name,
             config_file_option_free (option_conditions);
         if (option_position)
             config_file_option_free (option_position);
+        if (option_filling)
+            config_file_option_free (option_filling);
         if (option_size)
             config_file_option_free (option_size);
         if (option_size_max)
             config_file_option_free (option_size_max);
+        if (option_color_fg)
+            config_file_option_free (option_color_fg);
+        if (option_color_bg)
+            config_file_option_free (option_color_bg);
         if (option_separator)
             config_file_option_free (option_separator);
         if (option_items)
@@ -1087,7 +1203,15 @@ gui_bar_use_temp_bars ()
             ptr_temp_bar->position = gui_bar_create_option (ptr_temp_bar->name,
                                                             GUI_BAR_OPTION_POSITION,
                                                             "top");
-
+        
+        if (!ptr_temp_bar->filling)
+            ptr_temp_bar->filling = gui_bar_create_option (ptr_temp_bar->name,
+                                                           GUI_BAR_OPTION_FILLING,
+                                                           (ptr_temp_bar->position
+                                                            && ((CONFIG_INTEGER(ptr_temp_bar->position) == GUI_BAR_POSITION_LEFT)
+                                                                || (CONFIG_INTEGER(ptr_temp_bar->position) == GUI_BAR_POSITION_RIGHT))) ?
+                                                           "vertical" : "horizontal");
+        
         if (!ptr_temp_bar->size)
             ptr_temp_bar->size = gui_bar_create_option (ptr_temp_bar->name,
                                                         GUI_BAR_OPTION_SIZE,
@@ -1097,6 +1221,16 @@ gui_bar_use_temp_bars ()
             ptr_temp_bar->size_max = gui_bar_create_option (ptr_temp_bar->name,
                                                             GUI_BAR_OPTION_SIZE_MAX,
                                                             "0");
+        
+        if (!ptr_temp_bar->color_fg)
+            ptr_temp_bar->color_fg = gui_bar_create_option (ptr_temp_bar->name,
+                                                            GUI_BAR_OPTION_COLOR_FG,
+                                                            "default");
+        
+        if (!ptr_temp_bar->color_bg)
+            ptr_temp_bar->color_bg = gui_bar_create_option (ptr_temp_bar->name,
+                                                            GUI_BAR_OPTION_COLOR_BG,
+                                                            "default");
         
         if (!ptr_temp_bar->separator)
             ptr_temp_bar->separator = gui_bar_create_option (ptr_temp_bar->name,
@@ -1109,16 +1243,20 @@ gui_bar_use_temp_bars ()
                                                          "");
         
         if (ptr_temp_bar->type && ptr_temp_bar->conditions
-            && ptr_temp_bar->position && ptr_temp_bar->size
-            && ptr_temp_bar->size_max && ptr_temp_bar->separator
-            && ptr_temp_bar->items)
+            && ptr_temp_bar->position && ptr_temp_bar->filling
+            && ptr_temp_bar->size && ptr_temp_bar->size_max
+            && ptr_temp_bar->color_fg && ptr_temp_bar->color_bg
+            && ptr_temp_bar->separator && ptr_temp_bar->items)
         {
             gui_bar_new_with_options (NULL, ptr_temp_bar->name,
                                       ptr_temp_bar->type,
                                       ptr_temp_bar->conditions,
                                       ptr_temp_bar->position,
+                                      ptr_temp_bar->filling,
                                       ptr_temp_bar->size,
                                       ptr_temp_bar->size_max,
+                                      ptr_temp_bar->color_fg,
+                                      ptr_temp_bar->color_bg,
                                       ptr_temp_bar->separator,
                                       ptr_temp_bar->items);
         }
@@ -1139,6 +1277,11 @@ gui_bar_use_temp_bars ()
                 config_file_option_free (ptr_temp_bar->position);
                 ptr_temp_bar->position = NULL;
             }
+            if (ptr_temp_bar->filling)
+            {
+                config_file_option_free (ptr_temp_bar->filling);
+                ptr_temp_bar->filling = NULL;
+            }
             if (ptr_temp_bar->size)
             {
                 config_file_option_free (ptr_temp_bar->size);
@@ -1148,6 +1291,16 @@ gui_bar_use_temp_bars ()
             {
                 config_file_option_free (ptr_temp_bar->size_max);
                 ptr_temp_bar->size_max = NULL;
+            }
+            if (ptr_temp_bar->color_fg)
+            {
+                config_file_option_free (ptr_temp_bar->color_fg);
+                ptr_temp_bar->color_fg = NULL;
+            }
+            if (ptr_temp_bar->color_bg)
+            {
+                config_file_option_free (ptr_temp_bar->color_bg);
+                ptr_temp_bar->color_bg = NULL;
             }
             if (ptr_temp_bar->separator)
             {
@@ -1227,10 +1380,16 @@ gui_bar_free (struct t_gui_bar *bar)
         config_file_option_free (bar->conditions);
     if (bar->position)
         config_file_option_free (bar->position);
+    if (bar->filling)
+        config_file_option_free (bar->filling);
     if (bar->size)
         config_file_option_free (bar->size);
     if (bar->size_max)
         config_file_option_free (bar->size_max);
+    if (bar->color_fg)
+        config_file_option_free (bar->color_fg);
+    if (bar->color_bg)
+        config_file_option_free (bar->color_bg);
     if (bar->separator)
         config_file_option_free (bar->separator);
     if (bar->items)
@@ -1302,8 +1461,17 @@ gui_bar_print_log ()
         log_printf ("  position . . . . . . . : %d (%s)",
                     CONFIG_INTEGER(ptr_bar->position),
                     gui_bar_position_str[CONFIG_INTEGER(ptr_bar->position)]);
+        log_printf ("  filling. . . . . . . . : %d (%s)",
+                    CONFIG_INTEGER(ptr_bar->filling),
+                    gui_bar_filling_str[CONFIG_INTEGER(ptr_bar->filling)]);
         log_printf ("  size . . . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->size));
         log_printf ("  size_max . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->size_max));
+        log_printf ("  color_fg . . . . . . . : %d",
+                    CONFIG_COLOR(ptr_bar->color_fg),
+                    gui_color_get_name (CONFIG_COLOR(ptr_bar->color_fg)));
+        log_printf ("  color_bg . . . . . . . : %d",
+                    CONFIG_COLOR(ptr_bar->color_bg),
+                    gui_color_get_name (CONFIG_COLOR(ptr_bar->color_bg)));
         log_printf ("  current_size . . . . . : %d",   ptr_bar->current_size);
         log_printf ("  separator. . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->separator));
         log_printf ("  items. . . . . . . . . : '%s'", CONFIG_STRING(ptr_bar->items));

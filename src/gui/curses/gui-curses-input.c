@@ -289,8 +289,8 @@ gui_input_draw (struct t_gui_buffer *buffer, int erase)
         if (ptr_win->buffer == buffer)
         {
             if (erase)
-                gui_window_curses_clear (GUI_CURSES(ptr_win)->win_input,
-                                         GUI_COLOR_INPUT);
+                gui_window_clear_weechat (GUI_CURSES(ptr_win)->win_input,
+                                          GUI_COLOR_INPUT);
 
             if (gui_keyboard_paste_pending)
             {

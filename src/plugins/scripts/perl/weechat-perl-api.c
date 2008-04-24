@@ -1531,6 +1531,101 @@ static XS (XS_weechat_config_free)
 }
 
 /*
+ * weechat::config_get: get config option
+ */
+
+static XS (XS_weechat_config_get)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get");
+        PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_config_get (SvPV (ST (0), PL_na)));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::config_get_plugin: get value of a plugin option
+ */
+
+static XS (XS_weechat_config_get_plugin)
+{
+    char *value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_get_plugin");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_get_plugin");
+        PERL_RETURN_EMPTY;
+    }
+    
+    value = script_api_config_get_plugin (weechat_perl_plugin,
+                                          perl_current_script,
+                                          SvPV (ST (0), PL_na));
+    
+    PERL_RETURN_STRING(value);
+}
+
+/*
+ * weechat::config_set_plugin: set value of a plugin option
+ */
+
+static XS (XS_weechat_config_set_plugin)
+{
+    char *option, *value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_set_plugin");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_set_plugin");
+        PERL_RETURN_ERROR;
+    }
+
+    option = SvPV (ST (0), PL_na);
+    value = SvPV (ST (1), PL_na);
+    if (script_api_config_set_plugin (weechat_perl_plugin,
+                                      perl_current_script,
+                                      option,
+                                      value))
+        PERL_RETURN_OK;
+    
+    PERL_RETURN_ERROR;
+}
+
+/*
  * weechat::prefix: get a prefix, used for display
  */
 
@@ -2764,7 +2859,7 @@ static XS (XS_weechat_buffer_set)
     if (!perl_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_set");
-	PERL_RETURN_ERROR;
+        PERL_RETURN_ERROR;
     }
     
     if (items < 3)
@@ -3219,8 +3314,8 @@ static XS (XS_weechat_bar_search)
 
 static XS (XS_weechat_bar_new)
 {
-    char *result, *name, *type, *conditions, *position, *size, *size_max;
-    char *separator, *bar_items;
+    char *result, *name, *type, *conditions, *position, *filling, *size;
+    char *size_max, *color_fg, *color_bg, *separator, *bar_items;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3232,7 +3327,7 @@ static XS (XS_weechat_bar_new)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 8)
+    if (items < 11)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         PERL_RETURN_EMPTY;
@@ -3242,16 +3337,22 @@ static XS (XS_weechat_bar_new)
     type = SvPV (ST (1), PL_na);
     conditions = SvPV (ST (2), PL_na);
     position = SvPV (ST (3), PL_na);
-    size = SvPV (ST (4), PL_na);
-    size_max = SvPV (ST (5), PL_na);
-    separator = SvPV (ST (6), PL_na);
-    bar_items = SvPV (ST (7), PL_na);
+    filling = SvPV (ST (4), PL_na);
+    size = SvPV (ST (5), PL_na);
+    size_max = SvPV (ST (6), PL_na);
+    color_fg = SvPV (ST (7), PL_na);
+    color_bg = SvPV (ST (8), PL_na);
+    separator = SvPV (ST (9), PL_na);
+    bar_items = SvPV (ST (10), PL_na);
     result = script_ptr2str (weechat_bar_new (name,
                                               type,
                                               conditions,
                                               position,
+                                              filling,
                                               size,
                                               size_max,
+                                              color_fg,
+                                              color_bg,
                                               separator,
                                               bar_items));
     
@@ -3739,6 +3840,9 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::config_read", XS_weechat_config_read, "weechat");
     newXS ("weechat::config_reload", XS_weechat_config_reload, "weechat");
     newXS ("weechat::config_free", XS_weechat_config_free, "weechat");
+    newXS ("weechat::config_get", XS_weechat_config_get, "weechat");
+    newXS ("weechat::config_get_plugin", XS_weechat_config_get_plugin, "weechat");
+    newXS ("weechat::config_set_plugin", XS_weechat_config_set_plugin, "weechat");
     newXS ("weechat::prefix", XS_weechat_prefix, "weechat");
     newXS ("weechat::color", XS_weechat_color, "weechat");
     newXS ("weechat::print", XS_weechat_print, "weechat");
