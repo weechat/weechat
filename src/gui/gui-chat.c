@@ -929,8 +929,19 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, char *message, ...)
             return;
     }
     
+    /* with message: create line or merge content with existing line */
+    buf = malloc (GUI_CHAT_BUFFER_PRINTF_SIZE);
+    if (!buf)
+        return;
+    
+    va_start (argptr, message);
+    vsnprintf (buf, GUI_CHAT_BUFFER_PRINTF_SIZE, message, argptr);
+    va_end (argptr);
+    
+    utf8_normalize (buf, '?');
+
     /* no message: delete line */
-    if (!message)
+    if (!buf[0])
     {
         if (gui_init_ok)
         {
@@ -949,17 +960,6 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, char *message, ...)
     }
     else
     {
-        /* with message: create line or merge content with existing line */
-        buf = malloc (GUI_CHAT_BUFFER_PRINTF_SIZE);
-        if (!buf)
-            return;
-        
-        va_start (argptr, message);
-        vsnprintf (buf, GUI_CHAT_BUFFER_PRINTF_SIZE, message, argptr);
-        va_end (argptr);
-        
-        utf8_normalize (buf, '?');
-        
         if (gui_init_ok)
         {
             gui_chat_line_add_y (buffer, y, buf);
@@ -967,7 +967,7 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, char *message, ...)
         }
         else
             string_iconv_fprintf (stdout, "%s\n", buf);
-        
-        free (buf);
     }
+    
+    free (buf);
 }
