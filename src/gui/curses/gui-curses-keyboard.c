@@ -120,7 +120,9 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind (NULL, /* m-pgup        */ "meta-meta2-5~",      "/window scroll_up");
     gui_keyboard_bind (NULL, /* m-pgdn        */ "meta-meta2-6~",      "/window scroll_down");
     gui_keyboard_bind (NULL, /* m-home        */ "meta-meta2-1~",      "/window scroll_top");
+    gui_keyboard_bind (NULL, /* m-home        */ "meta-meta2-7~",      "/window scroll_top");
     gui_keyboard_bind (NULL, /* m-end         */ "meta-meta2-4~",      "/window scroll_bottom");
+    gui_keyboard_bind (NULL, /* m-end         */ "meta-meta2-8~",      "/window scroll_bottom");
     gui_keyboard_bind (NULL, /* m-n           */ "meta-n",             "/window scroll_next_highlight");
     gui_keyboard_bind (NULL, /* m-p           */ "meta-p",             "/window scroll_previous_highlight");
     gui_keyboard_bind (NULL, /* F9            */ "meta2-20~",          "/window scroll_topic_left");
