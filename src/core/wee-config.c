@@ -1041,10 +1041,10 @@ config_weechat_init ()
         NULL, 0, 0, "%a, %d %b %Y", NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_read_marker = config_file_new_option (
         weechat_config_file, ptr_section,
-        "read_marker", "string",
-        N_("use a marker on servers/channels to show first unread "
-           "line"),
-        NULL, 0, 1, " ", NULL, NULL, &config_change_read_marker, NULL, NULL, NULL);
+        "read_marker", "integer",
+        N_("use a marker (line or char) on buffers to show first unread line"),
+        "none|line|dotted-line|char",
+        0, 0, "dotted-line", NULL, NULL, &config_change_read_marker, NULL, NULL, NULL);
     config_look_input_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "input_format", "string",
@@ -1280,13 +1280,13 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "chat_read_marker", "color",
         N_("text color for unread data marker"),
-        NULL, GUI_COLOR_CHAT_READ_MARKER, 0, "yellow",
+        NULL, GUI_COLOR_CHAT_READ_MARKER, 0, "magenta",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_chat_read_marker_bg = config_file_new_option (
         weechat_config_file, ptr_section,
         "chat_read_marker_bg", "color",
         N_("background color for unread data marker"),
-        NULL, -1, 0, "magenta", NULL, NULL, &config_change_color, NULL, NULL, NULL);
+        NULL, -1, 0, "default", NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* status window */
     config_color_status = config_file_new_option (
         weechat_config_file, ptr_section,

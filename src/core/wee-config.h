@@ -40,6 +40,11 @@
 #define CONFIG_LOOK_HOTLIST_SORT_NUMBER_ASC        4
 #define CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC       5
 
+#define CONFIG_LOOK_READ_MARKER_NONE        0
+#define CONFIG_LOOK_READ_MARKER_LINE        1
+#define CONFIG_LOOK_READ_MARKER_DOTTED_LINE 2
+#define CONFIG_LOOK_READ_MARKER_CHAR        3
+
 extern struct t_config_file *weechat_config_file;
 extern struct t_config_section *weechat_config_section_bar;
 

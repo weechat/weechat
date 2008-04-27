@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-24 15:24+0200\n"
+"POT-Creation-Date: 2008-04-27 20:32+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1130,7 +1130,8 @@ msgstr "speciális üzenet az aktuális nap megváltozásakor"
 msgid "time format for date displayed when day changed"
 msgstr "új nap kezdetével megjelenő időbélyeg"
 
-msgid "use a marker on servers/channels to show first unread line"
+#, fuzzy
+msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr "jelölje a szerveren/szobában utoljára olvasott sort"
 
 #, c-format

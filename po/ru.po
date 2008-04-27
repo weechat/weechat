@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-24 15:24+0200\n"
+"POT-Creation-Date: 2008-04-27 20:32+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1135,7 +1135,8 @@ msgstr "отображать специальное сообщение  при �
 msgid "time format for date displayed when day changed"
 msgstr "отображение маркера даты при смене дня"
 
-msgid "use a marker on servers/channels to show first unread line"
+#, fuzzy
+msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr "использовать маркер непрочитанных сообщений в окнах серверов и каналов"
 
 #, c-format

@@ -166,6 +166,47 @@ gui_chat_display_new_line (struct t_gui_window *window, int num_lines, int count
 }
 
 /*
+ * gui_chat_display_horizontal_line: display an horizontal line (marker for
+ *                                   data not read)
+ */
+
+void
+gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
+{
+    int i;
+    
+    if (!simulate)
+    {
+        gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
+                                      GUI_COLOR_CHAT_READ_MARKER);
+        switch (CONFIG_INTEGER(config_look_read_marker))
+        {
+            case CONFIG_LOOK_READ_MARKER_LINE:
+                mvwhline (GUI_CURSES(window)->win_chat,
+                          window->win_chat_cursor_y, window->win_chat_cursor_x,
+                          ACS_HLINE,
+                          window->win_chat_width);
+                break;
+            case CONFIG_LOOK_READ_MARKER_DOTTED_LINE:
+                wmove (GUI_CURSES(window)->win_chat,
+                       window->win_chat_cursor_y, window->win_chat_cursor_x);
+                wclrtoeol (GUI_CURSES(window)->win_chat);
+                for (i = 0; i < window->win_chat_width; i++)
+                {
+                    if (i % 2 != 0)
+                        mvwhline (GUI_CURSES(window)->win_chat,
+                                  window->win_chat_cursor_y, i,
+                                  ACS_HLINE, 1);
+                }
+                break;
+            default:
+                break;
+        }
+        window->win_chat_cursor_x = window->win_chat_width;
+    }
+}
+
+/*
  * gui_chat_string_next_char: returns next char of a word (for display)
  *                            special chars like colors, bold, .. are skipped
  *                            and optionaly applied
@@ -648,7 +689,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                        int count, int simulate)
 {
     int num_lines, x, y, lines_displayed, line_align;
-    int read_marker_x, read_marker_y;
+    int read_marker_x, read_marker_y, marker_line;
     int word_start_offset, word_end_offset;
     int word_length_with_spaces, word_length;
     char *ptr_data, *ptr_end_offset, *next_char;
@@ -681,6 +722,20 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     read_marker_y = y;
     
     lines_displayed = 0;
+    
+    marker_line = (((CONFIG_INTEGER(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_LINE)
+                    || (CONFIG_INTEGER(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_DOTTED_LINE))
+                   && window->buffer->last_read_line
+                   && (window->buffer->last_read_line ==
+                       gui_chat_get_prev_line_displayed (line))) ? 1 : 0;
+    
+    if (marker_line)
+    {
+        gui_chat_display_horizontal_line (window, simulate);
+        gui_chat_display_new_line (window, num_lines, count,
+                                   &lines_displayed, simulate);
+        lines_displayed--;
+    }
     
     /* display time and prefix */
     gui_chat_display_time_and_prefix (window, line, num_lines, count,
@@ -779,37 +834,37 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     }
     else
     {
-        if (CONFIG_STRING(config_look_read_marker)
-            && CONFIG_STRING(config_look_read_marker)[0])
+        /* display marker if line is matching user search */
+        if (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
         {
-            /* display marker if line is matching user search */
-            if (window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+            if (gui_chat_line_search (line, window->buffer->input_buffer,
+                                      window->buffer->text_search_exact))
             {
-                if (gui_chat_line_search (line, window->buffer->input_buffer,
-                                          window->buffer->text_search_exact))
-                {
-                    gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
-                                                  GUI_COLOR_CHAT_READ_MARKER);
-                    mvwprintw (GUI_CURSES(window)->win_chat,
-                               read_marker_y, read_marker_x,
-                               "%c", CONFIG_STRING(config_look_read_marker)[0]);
-                }
+                gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
+                                              GUI_COLOR_CHAT_READ_MARKER);
+                mvwprintw (GUI_CURSES(window)->win_chat,
+                           read_marker_y, read_marker_x,
+                           "*");
             }
-            else
+        }
+        else
+        {
+            /* display read marker if needed */
+            if ((CONFIG_INTEGER(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_CHAR)
+                && window->buffer->last_read_line
+                && (window->buffer->last_read_line == gui_chat_get_prev_line_displayed (line)))
             {
-                /* display read marker if needed */
-                if (window->buffer->last_read_line &&
-                    (window->buffer->last_read_line == gui_chat_get_prev_line_displayed (line)))
-                {
-                    gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
-                                                  GUI_COLOR_CHAT_READ_MARKER);
-                    mvwprintw (GUI_CURSES(window)->win_chat,
-                               read_marker_y, read_marker_x,
-                               "%c", CONFIG_STRING(config_look_read_marker)[0]);
-                }
+                gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
+                                              GUI_COLOR_CHAT_READ_MARKER);
+                mvwprintw (GUI_CURSES(window)->win_chat,
+                           read_marker_y, read_marker_x,
+                           "*");
             }
         }
     }
+    
+    if (marker_line)
+        lines_displayed++;
     
     return lines_displayed;
 }

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-24 15:24+0200\n"
+"POT-Creation-Date: 2008-04-27 20:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -935,7 +935,7 @@ msgstr ""
 msgid "time format for date displayed when day changed"
 msgstr ""
 
-msgid "use a marker on servers/channels to show first unread line"
+msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
 
 #, c-format
