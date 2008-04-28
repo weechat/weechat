@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-27 20:32+0200\n"
+"POT-Creation-Date: 2008-04-28 16:55+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1686,6 +1686,17 @@ msgstr "Textsuche"
 #, c-format
 msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
 msgstr ""
+
+msgid "Terminal lost, exiting WeeChat..."
+msgstr ""
+
+#, c-format
+msgid "Signal %s received, exiting WeeChat..."
+msgstr ""
+
+#, fuzzy
+msgid "Signal SIGHUP received, reloading configuration files"
+msgstr "%s konnte die Konfigurationsdatei nicht sichern\n"
 
 msgid "Act: "
 msgstr "Aktiv: "
@@ -5009,10 +5020,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 #, fuzzy
 #~ msgid "%sirc: configuration file reloaded"
 #~ msgstr "Konfigurationsdatei gesichert\n"
-
-#, fuzzy
-#~ msgid "%sirc: failed to reload configuration file"
-#~ msgstr "%s konnte die Konfigurationsdatei nicht sichern\n"
 
 #, fuzzy
 #~ msgid "%sirc: channel \"%s\" not found for \"%s\" command"

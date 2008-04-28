@@ -160,8 +160,9 @@ gui_main_init ()
 void
 gui_main_signal_sigquit ()
 {
-    log_printf (_("Signal %s received, quitting WeeChat..."),
+    log_printf (_("Signal %s received, exiting WeeChat..."),
                 "SIGQUIT");
+    hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
     quit_weechat = 1;
 }
 
@@ -172,8 +173,9 @@ gui_main_signal_sigquit ()
 void
 gui_main_signal_sigterm ()
 {
-    log_printf (_("Signal %s received, quitting WeeChat..."),
+    log_printf (_("Signal %s received, exiting WeeChat..."),
                 "SIGTERM");
+    hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
     quit_weechat = 1;
 }
 
@@ -184,7 +186,6 @@ gui_main_signal_sigterm ()
 void
 gui_main_signal_sighup ()
 {
-    log_printf (_("Signal SIGHUP received, reloading configuration files"));
     gui_reload_config = 1;
 }
 
@@ -235,6 +236,8 @@ gui_main_loop ()
         if (gui_reload_config)
         {
             gui_reload_config = 0;
+            log_printf (_("Signal SIGHUP received, reloading configuration "
+                          "files"));
             command_reload (NULL, NULL, 0, NULL, NULL);
         }
         

@@ -30,6 +30,8 @@
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
+#include "../../core/wee-hook.h"
+#include "../../core/wee-log.h"
 #include "../../core/wee-utf8.h"
 #include "../../core/wee-string.h"
 #include "../../plugins/plugin.h"
@@ -351,6 +353,8 @@ gui_keyboard_read_cb (void *data)
         if (ret == 0)
         {
             /* no data on stdin, terminal lost */
+            log_printf (_("Terminal lost, exiting WeeChat..."));
+            hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
             quit_weechat = 1;
             return WEECHAT_RC_OK;
         }
@@ -371,6 +375,8 @@ gui_keyboard_read_cb (void *data)
         if (ret == 0)
         {
             /* no data on stdin, terminal lost */
+            log_printf (_("Terminal lost, exiting WeeChat..."));
+            hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
             quit_weechat = 1;
             return WEECHAT_RC_OK;
         }

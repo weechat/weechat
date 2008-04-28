@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-27 20:32+0200\n"
-"PO-Revision-Date: 2008-04-27 20:33+0200\n"
+"POT-Creation-Date: 2008-04-28 16:55+0200\n"
+"PO-Revision-Date: 2008-04-28 16:55+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1130,7 +1130,9 @@ msgid "time format for date displayed when day changed"
 msgstr "format de date pour la date affichée quand le jour a changé"
 
 msgid "use a marker (line or char) on buffers to show first unread line"
-msgstr "utiliser un marqueur (ligne ou caractère) sur les tampons pour montrer la première ligne non lue"
+msgstr ""
+"utiliser un marqueur (ligne ou caractère) sur les tampons pour montrer la "
+"première ligne non lue"
 
 #, c-format
 msgid ""
@@ -1621,6 +1623,16 @@ msgstr "Recherche texte: "
 #, c-format
 msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
 msgstr "  Coller %d lignes ? [ctrl-Y] Oui  [ctrl-N] Non"
+
+msgid "Terminal lost, exiting WeeChat..."
+msgstr "Terminal perdu, sortie de WeeChat..."
+
+#, c-format
+msgid "Signal %s received, exiting WeeChat..."
+msgstr "Signal %s reçu, sortie de WeeChat..."
+
+msgid "Signal SIGHUP received, reloading configuration files"
+msgstr "Signal SIGHUP reçu, rechargement des fichiers de configuration"
 
 msgid "Act: "
 msgstr "Act: "

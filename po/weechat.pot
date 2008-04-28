@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-27 20:32+0200\n"
+"POT-Creation-Date: 2008-04-28 16:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1389,6 +1389,16 @@ msgstr ""
 
 #, c-format
 msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
+msgstr ""
+
+msgid "Terminal lost, exiting WeeChat..."
+msgstr ""
+
+#, c-format
+msgid "Signal %s received, exiting WeeChat..."
+msgstr ""
+
+msgid "Signal SIGHUP received, reloading configuration files"
 msgstr ""
 
 msgid "Act: "
