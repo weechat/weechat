@@ -33,6 +33,7 @@
 #include "../../core/wee-command.h"
 #include "../../core/wee-config.h"
 #include "../../core/wee-hook.h"
+#include "../../core/wee-log.h"
 #include "../../core/wee-string.h"
 #include "../../core/wee-utf8.h"
 #include "../../core/wee-util.h"
@@ -50,6 +51,9 @@
 #include "../gui-status.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
+
+
+int gui_reload_config = 0;
 
 
 /*
@@ -150,23 +154,48 @@ gui_main_init ()
 }
 
 /*
- * gui_main_quit: quit WeeChat
+ * gui_main_signal_sigquit: quit WeeChat
  */
 
 void
-gui_main_quit ()
+gui_main_signal_sigquit ()
 {
+    log_printf (_("Signal %s received, quitting WeeChat..."),
+                "SIGQUIT");
     quit_weechat = 1;
 }
 
 /*
- * gui_main_reload: reload WeeChat configuration
+ * gui_main_signal_sigterm: quit WeeChat
  */
 
 void
-gui_main_reload ()
+gui_main_signal_sigterm ()
 {
-    command_reload (NULL, NULL, 0, NULL, NULL);
+    log_printf (_("Signal %s received, quitting WeeChat..."),
+                "SIGTERM");
+    quit_weechat = 1;
+}
+
+/*
+ * gui_main_signal_sighup: reload WeeChat configuration
+ */
+
+void
+gui_main_signal_sighup ()
+{
+    log_printf (_("Signal SIGHUP received, reloading configuration files"));
+    gui_reload_config = 1;
+}
+
+/*
+ * gui_main_signal_sigwinch: called when signal SIGWINCH is received
+ */
+
+void
+gui_main_signal_sigwinch ()
+{
+    gui_window_refresh_needed = 1;
 }
 
 /*
@@ -187,13 +216,14 @@ gui_main_loop ()
     quit_weechat = 0;
     
     /* catch SIGTERM signal: quit program */
-    util_catch_signal (SIGTERM, &gui_main_quit);
+    util_catch_signal (SIGTERM, &gui_main_signal_sigterm);
+    util_catch_signal (SIGQUIT, &gui_main_signal_sigquit);
     
     /* catch SIGHUP signal: reload configuration */
-    util_catch_signal (SIGHUP, &gui_main_reload);
+    util_catch_signal (SIGHUP, &gui_main_signal_sighup);
     
     /* catch SIGWINCH signal: redraw screen */
-    util_catch_signal (SIGWINCH, &gui_window_refresh_screen_sigwinch);
+    util_catch_signal (SIGWINCH, &gui_main_signal_sigwinch);
     
     /* hook stdin (read keyboard) */
     hook_fd_keyboard = hook_fd (NULL, STDIN_FILENO, 1, 0, 0,
@@ -201,6 +231,13 @@ gui_main_loop ()
     
     while (!quit_weechat)
     {
+        /* reload config, if SIGHUP reveived */
+        if (gui_reload_config)
+        {
+            gui_reload_config = 0;
+            command_reload (NULL, NULL, 0, NULL, NULL);
+        }
+        
         /* execute hook timers */
         hook_timer_exec ();
         

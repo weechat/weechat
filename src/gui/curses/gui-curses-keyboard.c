@@ -23,6 +23,7 @@
 #include "config.h"
 #endif
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -334,7 +335,8 @@ gui_keyboard_flush ()
 int
 gui_keyboard_read_cb (void *data)
 {
-    int key, accept_paste, cancel_paste, text_added_to_buffer, paste_lines;
+    int ret, i, accept_paste, cancel_paste, text_added_to_buffer, paste_lines;
+    unsigned char buffer[4096];
     
     /* make C compiler happy */
     (void) data;
@@ -342,35 +344,44 @@ gui_keyboard_read_cb (void *data)
     accept_paste = 0;
     cancel_paste = 0;
     text_added_to_buffer = 0;
-    
-    while (1)
+
+    if (gui_keyboard_paste_pending)
     {
-        key = getch ();
-        
-        if (key == ERR)
-            break;
-        
-#ifdef KEY_RESIZE
-        if (key == KEY_RESIZE)
-            continue;
-#endif
-        if (gui_keyboard_paste_pending)
+        ret = read (STDIN_FILENO, buffer, 1);
+        if (ret == 0)
         {
-            /* ctrl-Y: accept paste */
-            if (key == 25)
-            {
-                accept_paste = 1;
-                break;
-            }
-            /* ctrl-N: cancel paste */
-            else if (key == 14)
-            {
-                cancel_paste = 1;
-                break;
-            }
+            /* no data on stdin, terminal lost */
+            quit_weechat = 1;
+            return WEECHAT_RC_OK;
+        }
+        if (ret <= 0)
+            return WEECHAT_RC_OK;
+        
+        /* ctrl-Y: accept paste */
+        if (buffer[0] == 25)
+            accept_paste = 1;
+        
+        /* ctrl-N: cancel paste */
+        if (buffer[0] == 14)
+            cancel_paste = 1;
+    }
+    else
+    {
+        ret = read (STDIN_FILENO, buffer, sizeof (buffer));
+        if (ret == 0)
+        {
+            /* no data on stdin, terminal lost */
+            quit_weechat = 1;
+            return WEECHAT_RC_OK;
+        }
+        if (ret < 0)
+            return WEECHAT_RC_OK;
+        
+        for (i = 0; i < ret; i++)
+        {
+            gui_keyboard_buffer_add (buffer[i]);
         }
         
-        gui_keyboard_buffer_add (key);
         text_added_to_buffer = 1;
     }
     

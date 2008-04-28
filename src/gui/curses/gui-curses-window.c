@@ -1753,16 +1753,6 @@ gui_window_refresh_screen ()
 }
 
 /*
- * gui_window_refresh_screen_sigwinch: called when signal SIGWINCH is received
- */
-
-void
-gui_window_refresh_screen_sigwinch ()
-{
-    gui_window_refresh_needed = 1;
-}
-
-/*
  * gui_window_title_set: set terminal title
  */
 

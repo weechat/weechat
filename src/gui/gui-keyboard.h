@@ -77,7 +77,7 @@ extern void gui_keyboard_free (struct t_gui_key **keys,
 extern void gui_keyboard_free_all (struct t_gui_key **keys,
                                    struct t_gui_key **last_key);
 extern void gui_keyboard_buffer_reset ();
-extern void gui_keyboard_buffer_add (int key);
+extern void gui_keyboard_buffer_add (unsigned char key);
 extern int gui_keyboard_get_paste_lines ();
 extern void gui_keyboard_paste_accept ();
 extern void gui_keyboard_paste_cancel ();

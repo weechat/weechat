@@ -762,7 +762,7 @@ gui_keyboard_buffer_reset ()
  */
 
 void
-gui_keyboard_buffer_add (int key)
+gui_keyboard_buffer_add (unsigned char key)
 {
     if (!gui_keyboard_buffer)
         gui_keyboard_buffer_reset ();
@@ -774,9 +774,9 @@ gui_keyboard_buffer_add (int key)
     if (gui_keyboard_buffer)
     {
         gui_keyboard_buffer[gui_keyboard_buffer_size - 1] = key;
-        if ((key == 10)
+        if ((key == 13)
             && (gui_keyboard_buffer_size > 1)
-            && (gui_keyboard_buffer[gui_keyboard_buffer_size - 2] != 10))
+            && (gui_keyboard_buffer[gui_keyboard_buffer_size - 2] != 13))
             gui_keyboard_paste_lines++;
     }
     else
@@ -797,7 +797,7 @@ int
 gui_keyboard_get_paste_lines ()
 {
     if ((gui_keyboard_buffer_size > 0)
-        && (gui_keyboard_buffer[gui_keyboard_buffer_size - 1] != 10))
+        && (gui_keyboard_buffer[gui_keyboard_buffer_size - 1] != 13))
         return gui_keyboard_paste_lines + 1;
     
     return gui_keyboard_paste_lines;
