@@ -742,12 +742,14 @@ config_file_string_to_boolean (char *text)
 int
 config_file_option_reset (struct t_config_option *option, int run_callback)
 {
-    int rc;
+    int rc, length_option;
+    char value[256], *option_full_name;
     
     if (!option)
         return 0;
     
     rc = 0;
+    value[0] = '\0';
     
     switch (option->type)
     {
@@ -757,6 +759,9 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
             else
             {
                 CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_DEFAULT(option);
+                snprintf (value, sizeof (value), "%s",
+                          CONFIG_BOOLEAN(option) ?
+                          config_boolean_true[0] : config_boolean_false[0]);
                 rc = 2;
             }
             break;
@@ -766,6 +771,8 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
             else
             {
                 CONFIG_INTEGER(option) = CONFIG_INTEGER_DEFAULT(option);
+                snprintf (value, sizeof (value), "%d",
+                          CONFIG_INTEGER(option));
                 rc = 2;
             }
             break;
@@ -781,7 +788,12 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
             if (option->default_value)
             {
                 option->value = strdup ((char *)option->default_value);
-                if (!option->value)
+                if (option->value)
+                {
+                    snprintf (value, sizeof (value), "%s",
+                              CONFIG_STRING(option));
+                }
+                else
                     rc = 0;
             }
             else
@@ -793,6 +805,8 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
             else
             {
                 CONFIG_COLOR(option) = CONFIG_COLOR_DEFAULT(option);
+                snprintf (value, sizeof (value), "%d",
+                          CONFIG_COLOR(option));
                 rc = 2;
             }
             break;
@@ -803,6 +817,26 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
     if ((rc == 2) && run_callback && option->callback_change)
     {
         (void)(option->callback_change)(option->callback_change_data, option);
+    }
+    
+    if (rc > 0)
+    {
+        if (option->config_file && option->section)
+        {
+            length_option = strlen (option->config_file->name) + 1 +
+                strlen (option->section->name) + 1 + strlen (option->name) + 1;
+            option_full_name = malloc (length_option);
+            if (option_full_name)
+            {
+                snprintf (option_full_name, length_option,
+                          "%s.%s.%s",
+                          option->config_file->name,
+                          option->section->name,
+                          option->name);
+                hook_config_exec (option_full_name, value);
+                free (option_full_name);
+            }
+        }
     }
     
     return 0;
