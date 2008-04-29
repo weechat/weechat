@@ -989,18 +989,36 @@ plugin_api_infolist_get (char *name, void *pointer, char *arguments)
             }
             else
             {
-                /* build list with all windows */
-                for (ptr_window = gui_windows; ptr_window;
-                     ptr_window = ptr_window->next_window)
+                if (arguments && arguments[0])
                 {
-                    if (!plugin_api_infolist_get_add_window (ptr_infolist,
-                                                             ptr_window))
+                    if ((string_strcasecmp (arguments, "current") == 0)
+                        && gui_current_window)
                     {
-                        plugin_infolist_free (ptr_infolist);
-                        return NULL;
+                        if (!plugin_api_infolist_get_add_window (ptr_infolist,
+                                                                 gui_current_window))
+                        {
+                            plugin_infolist_free (ptr_infolist);
+                            return NULL;
+                        }
+                        return ptr_infolist;
                     }
+                    return NULL;
                 }
-                return ptr_infolist;
+                else
+                {
+                    /* build list with all windows */
+                    for (ptr_window = gui_windows; ptr_window;
+                         ptr_window = ptr_window->next_window)
+                    {
+                        if (!plugin_api_infolist_get_add_window (ptr_infolist,
+                                                                 ptr_window))
+                        {
+                            plugin_infolist_free (ptr_infolist);
+                            return NULL;
+                        }
+                    }
+                    return ptr_infolist;
+                }
             }
         }
     }
