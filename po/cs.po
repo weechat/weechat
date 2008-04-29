@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-29 13:16+0200\n"
+"POT-Creation-Date: 2008-04-29 18:22+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -38,7 +38,6 @@ msgid ""
 "  -a, --no-connect      disable auto-connect to servers at startup\n"
 "  -c, --config          display config file options\n"
 "  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-"  -f, --key-functions   display WeeChat internal functions for keys\n"
 "  -h, --help            this help\n"
 "  -m, --commands        display WeeChat commands\n"
 "  -k, --keys            display WeeChat default keys\n"
@@ -69,9 +68,6 @@ msgstr "nastaví konfigurační možnosti"
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "%s vnitřní příkazy:\n"
-
-msgid "Internal key functions:\n"
-msgstr "Vnitřní klávesové funkce:\n"
 
 #. TRANSLATORS: %s is "weechat"
 #, c-format
@@ -361,16 +357,12 @@ msgid "Buffer command history:"
 msgstr "zobrazit historii příkazů bufferu"
 
 #, fuzzy, c-format
-msgid "New key binding: %s%s => %s%s%s%s%s"
+msgid "New key binding: %s%s => %s%s"
 msgstr "Nová klávesová zkratka:  %s"
 
 #, fuzzy
 msgid "Key bindings:"
 msgstr "Klávesové zkratky:\n"
-
-#, fuzzy
-msgid "Internal key functions:"
-msgstr "Vnitřní klávesové funkce:\n"
 
 #, fuzzy
 msgid "Default key bindings restored"
@@ -388,10 +380,6 @@ msgstr "Klávesa \"%s\" odpojena\n"
 #, fuzzy, c-format
 msgid "%sError: unable to unbind key \"%s\""
 msgstr "%s nemohu odpojit klávesu \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%sError: unknown key function \"%s\""
-msgstr "%s neznámá klávesová funkce \"%s\"\n"
 
 #, fuzzy
 msgid "Key:"
@@ -768,22 +756,28 @@ msgstr ""
 "clear: vyčistit historii\n"
 "value: číslo z položek historie kterou ukazat"
 
+#, fuzzy
+msgid "functions for command line"
+msgstr "vložit řetězec na řádku"
+
+msgid ""
+"This command is used by key bindings or plugins, it must NOT be called by "
+"user"
+msgstr ""
+
 msgid "bind/unbind keys"
 msgstr "napojit/odpojit klávesy"
 
-msgid ""
-"[key [function/command]] [unbind key] [functions] [call function [\"args\"]] "
-"[reset -yes]"
+#, fuzzy
+msgid "[key [command [args]]] | [unbind key] | [reset -yes]"
 msgstr ""
 "[klávesa [funkce/příkaz]] [unbind klávesa] [functions] [call funkce "
 "[\"argumenty\"]] [reset -yes]"
 
+#, fuzzy
 msgid ""
-"      key: display or bind this key to an internal function or a command "
-"(beginning by \"/\")\n"
+"      key: display or bind this key to a command\n"
 "   unbind: unbind a key\n"
-"functions: list internal functions for key bindings\n"
-"     call: call a function by name (with optional arguments)\n"
 "    reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)"
 msgstr ""
@@ -1621,6 +1615,10 @@ msgid "  . description: %s\n"
 msgstr "  . popis: %s\n"
 
 #, fuzzy, c-format
+msgid "%sError: command \"%s\" is running"
+msgstr "%s příkaz \"%s\" selhal\n"
+
+#, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%s alias nebo příkaz \"%s\" nenalezen\n"
 
@@ -1779,121 +1777,9 @@ msgstr "%s nemohu přidat buffer do hotlistu\n"
 msgid "Error: not enough memory for infobar message"
 msgstr "%s nedostatek paměti pro infobar zprávu\n"
 
-msgid "terminate line"
-msgstr "uknočit řádek"
-
-msgid "complete word"
-msgstr "dokončit slovo"
-
-msgid "find previous completion for word"
-msgstr "najít předchozí doplnění pro slovo"
-
-msgid "delete previous char"
-msgstr "smazat předchozí znak"
-
-msgid "delete next char"
-msgstr "smazat další zank"
-
-msgid "delete until end of line"
-msgstr "smazat do konce řádku"
-
-msgid "delete until beginning of line"
-msgstr "smazat do začátku řádku"
-
-msgid "delete entire line"
-msgstr "smazat celý řádek"
-
-msgid "delete previous word"
-msgstr "smazat předchozí slovo"
-
-msgid "delete next word"
-msgstr "smazat další slovo"
-
-msgid "paste current clipboard content"
-msgstr "vložit aktuální obsah schránky"
-
-msgid "transpose chars"
-msgstr "přesunout znaky"
-
-msgid "go to beginning of line"
-msgstr "jdi na začátek řádky"
-
-msgid "go to end of line"
-msgstr "jdi na konec řádky"
-
-msgid "move one char left"
-msgstr "posuň jeden znak vlevo"
-
-msgid "move to previous word"
-msgstr "posuň na předchozí slovo"
-
-msgid "move one char right"
-msgstr "posuň jeden znak vpravo"
-
-msgid "move to next word"
-msgstr "posuň na další slovo"
-
-msgid "call previous command in history"
-msgstr "zavolej předchozí příkaz v historii"
-
-msgid "call previous command in global history"
-msgstr "zavolej předchozí příkaz v globální historii"
-
-msgid "call next command in history"
-msgstr "zavolej další příkaz v historii"
-
-msgid "call next command in global history"
-msgstr "zavolej další příkaz v globální historii"
-
-msgid "jump to buffer with activity"
-msgstr "skoč na buffer s aktivitou"
-
-msgid "jump to DCC buffer"
-msgstr "skoč na DCC buffer"
-
-msgid "jump to last buffer"
-msgstr "skoč na poslední buffer"
-
-msgid "jump to previous buffer"
-msgstr "skoč na předchozí buffer"
-
-msgid "jump to server buffer"
-msgstr "skoč na buffer serveru"
-
-msgid "jump to next server"
-msgstr "skoč na další server"
-
-msgid "switch active server on servers buffer"
-msgstr "přepnout aktivní server na buffer serverů"
-
-msgid "scroll to first unread line in buffer"
-msgstr "přesunout na první nepřečtenout řádku v bufferu"
-
-msgid "set unread marker on all buffers"
-msgstr "nastavit značku nečtení na všech bufferech"
-
-msgid "clear hotlist"
-msgstr "vyčisti hotlist"
-
-msgid "clear infobar"
-msgstr "vyčisti infobar"
-
-msgid "grab a key"
-msgstr "zachytit klávesu"
-
-msgid "insert a string in command line"
-msgstr "vložit řetězec na řádku"
-
-msgid "search text in buffer history"
-msgstr "hledání textu v historii bufferu"
-
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
 msgstr "%s nemohu napojit kalávesu \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")"
-msgstr "%s nemohu napojit kalávesu \"%s\" (nevalidní jméno funkce: \"%s\")\n"
 
 #, fuzzy
 msgid "Error: not enough memory for key binding"
@@ -4566,6 +4452,127 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
+#~ msgid "Internal key functions:\n"
+#~ msgstr "Vnitřní klávesové funkce:\n"
+
+#, fuzzy
+#~ msgid "Internal key functions:"
+#~ msgstr "Vnitřní klávesové funkce:\n"
+
+#, fuzzy
+#~ msgid "%sError: unknown key function \"%s\""
+#~ msgstr "%s neznámá klávesová funkce \"%s\"\n"
+
+#~ msgid "terminate line"
+#~ msgstr "uknočit řádek"
+
+#~ msgid "complete word"
+#~ msgstr "dokončit slovo"
+
+#~ msgid "find previous completion for word"
+#~ msgstr "najít předchozí doplnění pro slovo"
+
+#~ msgid "delete previous char"
+#~ msgstr "smazat předchozí znak"
+
+#~ msgid "delete next char"
+#~ msgstr "smazat další zank"
+
+#~ msgid "delete until end of line"
+#~ msgstr "smazat do konce řádku"
+
+#~ msgid "delete until beginning of line"
+#~ msgstr "smazat do začátku řádku"
+
+#~ msgid "delete entire line"
+#~ msgstr "smazat celý řádek"
+
+#~ msgid "delete previous word"
+#~ msgstr "smazat předchozí slovo"
+
+#~ msgid "delete next word"
+#~ msgstr "smazat další slovo"
+
+#~ msgid "paste current clipboard content"
+#~ msgstr "vložit aktuální obsah schránky"
+
+#~ msgid "transpose chars"
+#~ msgstr "přesunout znaky"
+
+#~ msgid "go to beginning of line"
+#~ msgstr "jdi na začátek řádky"
+
+#~ msgid "go to end of line"
+#~ msgstr "jdi na konec řádky"
+
+#~ msgid "move one char left"
+#~ msgstr "posuň jeden znak vlevo"
+
+#~ msgid "move to previous word"
+#~ msgstr "posuň na předchozí slovo"
+
+#~ msgid "move one char right"
+#~ msgstr "posuň jeden znak vpravo"
+
+#~ msgid "move to next word"
+#~ msgstr "posuň na další slovo"
+
+#~ msgid "call previous command in history"
+#~ msgstr "zavolej předchozí příkaz v historii"
+
+#~ msgid "call previous command in global history"
+#~ msgstr "zavolej předchozí příkaz v globální historii"
+
+#~ msgid "call next command in history"
+#~ msgstr "zavolej další příkaz v historii"
+
+#~ msgid "call next command in global history"
+#~ msgstr "zavolej další příkaz v globální historii"
+
+#~ msgid "jump to buffer with activity"
+#~ msgstr "skoč na buffer s aktivitou"
+
+#~ msgid "jump to DCC buffer"
+#~ msgstr "skoč na DCC buffer"
+
+#~ msgid "jump to last buffer"
+#~ msgstr "skoč na poslední buffer"
+
+#~ msgid "jump to previous buffer"
+#~ msgstr "skoč na předchozí buffer"
+
+#~ msgid "jump to server buffer"
+#~ msgstr "skoč na buffer serveru"
+
+#~ msgid "jump to next server"
+#~ msgstr "skoč na další server"
+
+#~ msgid "switch active server on servers buffer"
+#~ msgstr "přepnout aktivní server na buffer serverů"
+
+#~ msgid "scroll to first unread line in buffer"
+#~ msgstr "přesunout na první nepřečtenout řádku v bufferu"
+
+#~ msgid "set unread marker on all buffers"
+#~ msgstr "nastavit značku nečtení na všech bufferech"
+
+#~ msgid "clear hotlist"
+#~ msgstr "vyčisti hotlist"
+
+#~ msgid "clear infobar"
+#~ msgstr "vyčisti infobar"
+
+#~ msgid "grab a key"
+#~ msgstr "zachytit klávesu"
+
+#~ msgid "search text in buffer history"
+#~ msgstr "hledání textu v historii bufferu"
+
+#, fuzzy
+#~ msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")"
+#~ msgstr ""
+#~ "%s nemohu napojit kalávesu \"%s\" (nevalidní jméno funkce: \"%s\")\n"
+
 #, fuzzy
 #~ msgid "launch WeeChat builtin command (do not look at commands hooked)"
 #~ msgstr ""
@@ -4761,10 +4768,6 @@ msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 #, fuzzy
 #~ msgid "%sError: wrong number \"%s\" for filter"
 #~ msgstr "%s špatný počet parametrů pro příkaz \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%sError: command \"%s\" failed"
-#~ msgstr "%s příkaz \"%s\" selhal\n"
 
 #, fuzzy
 #~ msgid "%s%s: cannot identify channel for \"%s\" command"

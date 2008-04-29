@@ -33,7 +33,6 @@
 #include "../core/wee-string.h"
 #include "../plugins/plugin.h"
 #include "gui-keyboard.h"
-#include "gui-action.h"
 #include "gui-buffer.h"
 #include "gui-completion.h"
 #include "gui-input.h"
@@ -56,82 +55,6 @@ int gui_keyboard_paste_pending = 0; /* 1 is big paste was detected and      */
 int gui_keyboard_paste_lines = 0;   /* number of lines for pending paste    */
 
 time_t gui_keyboard_last_activity_time = 0; /* last activity time (key)     */
-
-struct t_gui_key_function gui_key_functions[] =
-{ { "return",                    gui_action_return,
-    N_("terminate line") },
-  { "tab",                       gui_action_tab,
-    N_("complete word") },
-  { "tab_previous",              gui_action_tab_previous,
-    N_("find previous completion for word") },
-  { "backspace",                 gui_action_backspace,
-    N_("delete previous char") },
-  { "delete",                    gui_action_delete,
-    N_("delete next char") },
-  { "delete_end_line",           gui_action_delete_end_of_line,
-    N_("delete until end of line") },
-  { "delete_beginning_line",     gui_action_delete_begin_of_line,
-    N_("delete until beginning of line") },
-  { "delete_line",               gui_action_delete_line,
-    N_("delete entire line") },
-  { "delete_previous_word",      gui_action_delete_previous_word,
-    N_("delete previous word") },
-  { "delete_next_word",          gui_action_delete_next_word,
-    N_("delete next word") },
-  { "clipboard_paste",           gui_action_clipboard_paste,
-    N_("paste current clipboard content") },
-  { "transpose_chars",           gui_action_transpose_chars,
-    N_("transpose chars") },
-  { "home",                      gui_action_home,
-    N_("go to beginning of line") },
-  { "end",                       gui_action_end,
-    N_("go to end of line") },
-  { "left",                      gui_action_left,
-    N_("move one char left") },
-  { "previous_word",             gui_action_previous_word,
-    N_("move to previous word") },
-  { "right",                     gui_action_right,
-    N_("move one char right") },
-  { "next_word",                 gui_action_next_word,
-    N_("move to next word") },
-  { "up",                        gui_action_up,
-    N_("call previous command in history") },
-  { "up_global",                 gui_action_up_global,
-    N_("call previous command in global history") },
-  { "down",                      gui_action_down,
-    N_("call next command in history") },
-  { "down_global",               gui_action_down_global,
-    N_("call next command in global history") },
-  { "jump_smart",                gui_action_jump_smart,
-    N_("jump to buffer with activity") },
-  { "jump_dcc",                  gui_action_jump_dcc,
-    N_("jump to DCC buffer") },
-  { "jump_last_buffer",          gui_action_jump_last_buffer,
-    N_("jump to last buffer") },
-  { "jump_previous_buffer",      gui_action_jump_previous_buffer,
-    N_("jump to previous buffer") },
-  { "jump_server",               gui_action_jump_server,
-    N_("jump to server buffer") },
-  { "jump_next_server",          gui_action_jump_next_server,
-    N_("jump to next server") },
-  { "switch_server",             gui_action_switch_server,
-    N_("switch active server on servers buffer") },
-  { "scroll_unread",             gui_action_scroll_unread,
-    N_("scroll to first unread line in buffer") },
-  { "set_unread",                gui_action_set_unread,
-    N_("set unread marker on all buffers") },
-  { "hotlist_clear",             gui_action_hotlist_clear,
-    N_("clear hotlist") },
-  { "infobar_clear",             gui_action_infobar_clear,
-    N_("clear infobar") },
-  { "grab_key",                  gui_action_grab_key,
-    N_("grab a key") },
-  { "insert",                    gui_action_insert_string,
-    N_("insert a string in command line") },
-  { "search_text",               gui_action_search_text,
-    N_("search text in buffer history") },
-  { NULL, NULL, NULL }
-};
 
 
 /*
@@ -356,13 +279,10 @@ gui_keyboard_insert_sorted (struct t_gui_key **keys, struct t_gui_key **last_key
  */
 
 struct t_gui_key *
-gui_keyboard_new (struct t_gui_buffer *buffer,
-                  char *key, char *command, t_gui_key_func *function,
-                  char *args)
+gui_keyboard_new (struct t_gui_buffer *buffer, char *key, char *command)
 {
     struct t_gui_key *new_key;
     char *internal_code;
-    int length;
     
     if ((new_key = malloc (sizeof (*new_key))))
     {
@@ -371,23 +291,7 @@ gui_keyboard_new (struct t_gui_buffer *buffer,
         if (internal_code)
             free (internal_code);
         new_key->command = (command) ? strdup (command) : NULL;
-        new_key->function = function;
-        if (args)
-        {
-            if (args[0] == '"')
-            {
-                length = strlen (args);
-                if ((length > 1) && (args[length - 1] == '"'))
-                    new_key->args = string_strndup (args + 1, length - 2);
-                else
-                    new_key->args = strdup (args);
-            }
-            else
-                new_key->args = strdup (args);
-        }
-        else
-            new_key->args = NULL;
-
+        
         if (buffer)
             gui_keyboard_insert_sorted (&buffer->keys, &buffer->last_key, new_key);
         else
@@ -458,48 +362,6 @@ gui_keyboard_search_part (struct t_gui_buffer *buffer, char *key)
 }
 
 /*
- * gui_keyboard_function_search_by_name: search a function by name
- */
-
-t_gui_key_func *
-gui_keyboard_function_search_by_name (char *name)
-{
-    int i;
-    
-    i = 0;
-    while (gui_key_functions[i].function_name)
-    {
-        if (string_strcasecmp (gui_key_functions[i].function_name, name) == 0)
-            return gui_key_functions[i].function;
-        i++;
-    }
-
-    /* function not found */
-    return NULL;
-}
-
-/*
- * gui_keyboard_function_search_by_ptr: search a function by pointer
- */
-
-char *
-gui_keyboard_function_search_by_ptr (t_gui_key_func *function)
-{
-    int i;
-    
-    i = 0;
-    while (gui_key_functions[i].function_name)
-    {
-        if (gui_key_functions[i].function == function)
-            return gui_key_functions[i].function_name;
-        i++;
-    }
-
-    /* function not found */
-    return NULL;
-}
-
-/*
  * gui_keyboard_bind: bind a key to a function (command or special function)
  *                    if buffer is not null, then key is specific to buffer
  *                    otherwise it's general key (for most keys)
@@ -508,9 +370,7 @@ gui_keyboard_function_search_by_ptr (t_gui_key_func *function)
 struct t_gui_key *
 gui_keyboard_bind (struct t_gui_buffer *buffer, char *key, char *command)
 {
-    t_gui_key_func *ptr_function;
     struct t_gui_key *new_key;
-    char *command2, *ptr_args;
     
     if (!key || !command)
     {
@@ -518,43 +378,9 @@ gui_keyboard_bind (struct t_gui_buffer *buffer, char *key, char *command)
         return NULL;
     }
     
-    ptr_function = NULL;
-    ptr_args = NULL;
-    
-    if (command[0] != '/')
-    {
-        ptr_args = strchr (command, ' ');
-        if (ptr_args)
-            command2 = string_strndup (command, ptr_args - command);
-        else
-            command2 = strdup (command);
-        if (command2)
-        {
-            ptr_function = gui_keyboard_function_search_by_name (command2);
-            if (ptr_args)
-            {
-                ptr_args++;
-                while (ptr_args[0] == ' ')
-                    ptr_args++;
-            }
-            free (command2);
-        }
-        if (!ptr_function)
-        {
-            log_printf (_("Error: unable to bind key \"%s\" "
-                          "(invalid function name: \"%s\")"),
-                        key, command);
-            return NULL;
-        }
-    }
-    
     gui_keyboard_unbind (buffer, key);
     
-    new_key = gui_keyboard_new (buffer,
-                                key,
-                                (ptr_function) ? NULL : command,
-                                ptr_function,
-                                ptr_args);
+    new_key = gui_keyboard_new (buffer, key, command);
     if (!new_key)
     {
         log_printf (_("Error: not enough memory for key binding"));
@@ -646,8 +472,6 @@ gui_keyboard_pressed (char *key_str)
                     string_free_splitted_command (commands);
                 }
             }
-            else
-                (void)(ptr_key->function)(ptr_key->args);
             
             if (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
             {
@@ -685,8 +509,6 @@ gui_keyboard_free (struct t_gui_key **keys, struct t_gui_key **last_key,
         free (key->key);
     if (key->command)
         free (key->command);
-    if (key->args)
-        free (key->args);
     
     /* remove key from keys list */
     if (key->prev_key)
@@ -859,8 +681,6 @@ gui_keyboard_print_log (struct t_gui_buffer *buffer)
         log_printf ("%s[key (addr:0x%x)]", prefix, ptr_key);
         log_printf ("%skey. . . . . . . . . : '%s'", prefix, ptr_key->key);
         log_printf ("%scommand. . . . . . . : '%s'", prefix, ptr_key->command);
-        log_printf ("%sfunction . . . . . . : 0x%x", prefix, ptr_key->function);
-        log_printf ("%sargs . . . . . . . . : '%s'", prefix, ptr_key->args);
         log_printf ("%sprev_key . . . . . . : 0x%x", prefix, ptr_key->prev_key);
         log_printf ("%snext_key . . . . . . : 0x%x", prefix, ptr_key->next_key);
     }

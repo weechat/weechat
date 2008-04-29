@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-29 13:16+0200\n"
+"POT-Creation-Date: 2008-04-29 18:22+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -39,7 +39,6 @@ msgid ""
 "  -a, --no-connect      disable auto-connect to servers at startup\n"
 "  -c, --config          display config file options\n"
 "  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-"  -f, --key-functions   display WeeChat internal functions for keys\n"
 "  -h, --help            this help\n"
 "  -m, --commands        display WeeChat commands\n"
 "  -k, --keys            display WeeChat default keys\n"
@@ -71,9 +70,6 @@ msgstr "настроить параметры конфигурации"
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Внутренние команды %s:\n"
-
-msgid "Internal key functions:\n"
-msgstr "Встроенные функции клавиш:\n"
 
 #. TRANSLATORS: %s is "weechat"
 #, c-format
@@ -363,16 +359,12 @@ msgid "Buffer command history:"
 msgstr "показать историю буфера команд"
 
 #, fuzzy, c-format
-msgid "New key binding: %s%s => %s%s%s%s%s"
+msgid "New key binding: %s%s => %s%s"
 msgstr "Новая комбинация клавиш:  %s"
 
 #, fuzzy
 msgid "Key bindings:"
 msgstr "Комбинации клавиш:\n"
-
-#, fuzzy
-msgid "Internal key functions:"
-msgstr "Встроенные функции клавиш:\n"
 
 #, fuzzy
 msgid "Default key bindings restored"
@@ -390,10 +382,6 @@ msgstr "Клавиша \"%s\" не привязана\n"
 #, fuzzy, c-format
 msgid "%sError: unable to unbind key \"%s\""
 msgstr "%s не могу отвязать клавишу \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%sError: unknown key function \"%s\""
-msgstr "%s неизвестная функция клавиши \"%s\"\n"
 
 #, fuzzy
 msgid "Key:"
@@ -770,22 +758,28 @@ msgstr ""
 "   clear: очистить историю\n"
 "значение: количество отображаемых пунктов истории"
 
+#, fuzzy
+msgid "functions for command line"
+msgstr "вставить строку в поле ввода"
+
+msgid ""
+"This command is used by key bindings or plugins, it must NOT be called by "
+"user"
+msgstr ""
+
 msgid "bind/unbind keys"
 msgstr "установить/снять клавиши"
 
-msgid ""
-"[key [function/command]] [unbind key] [functions] [call function [\"args\"]] "
-"[reset -yes]"
+#, fuzzy
+msgid "[key [command [args]]] | [unbind key] | [reset -yes]"
 msgstr ""
 "[клавиша [функция/команда]] [unbind клавиша] [функции] [call функция "
 "[\"аргументы\"]] [reset -yes]"
 
+#, fuzzy
 msgid ""
-"      key: display or bind this key to an internal function or a command "
-"(beginning by \"/\")\n"
+"      key: display or bind this key to a command\n"
 "   unbind: unbind a key\n"
-"functions: list internal functions for key bindings\n"
-"     call: call a function by name (with optional arguments)\n"
 "    reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)"
 msgstr ""
@@ -1627,6 +1621,10 @@ msgid "  . description: %s\n"
 msgstr "  . описание: %s\n"
 
 #, fuzzy, c-format
+msgid "%sError: command \"%s\" is running"
+msgstr "%s команда \"%s\" не удалась\n"
+
+#, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%s сокращение или команда \"%s\" не найдены\n"
 
@@ -1788,123 +1786,9 @@ msgstr "%s не могу добавить буфер в хотлист\n"
 msgid "Error: not enough memory for infobar message"
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
-msgid "terminate line"
-msgstr "удалить строку"
-
-msgid "complete word"
-msgstr "завершить слово"
-
-msgid "find previous completion for word"
-msgstr "найти предыдущее дополнение слова"
-
-msgid "delete previous char"
-msgstr "стереть предыдущий символ"
-
-msgid "delete next char"
-msgstr "стереть следующий символ"
-
-msgid "delete until end of line"
-msgstr "стереть до конца строки"
-
-msgid "delete until beginning of line"
-msgstr "стереть до начала строки"
-
-msgid "delete entire line"
-msgstr "стереть всю строку"
-
-msgid "delete previous word"
-msgstr "стереть предыдущее слово"
-
-msgid "delete next word"
-msgstr "стереть следующее слово"
-
-msgid "paste current clipboard content"
-msgstr "вставить содержимое буфера обмена"
-
-msgid "transpose chars"
-msgstr "развернуть символы"
-
-msgid "go to beginning of line"
-msgstr "перейти к началу строки"
-
-msgid "go to end of line"
-msgstr "перейти к концу строки"
-
-msgid "move one char left"
-msgstr "перейти на 1 символ влево"
-
-msgid "move to previous word"
-msgstr "перейти к предыдущему слову"
-
-msgid "move one char right"
-msgstr "перейти на 1 символ вправо"
-
-msgid "move to next word"
-msgstr "перейти к следующему слову"
-
-msgid "call previous command in history"
-msgstr "вызвать предыдущую команду из истории"
-
-msgid "call previous command in global history"
-msgstr "вызвать предыдущую команду из глобальной истории"
-
-msgid "call next command in history"
-msgstr "вызвать следующую команду из истории"
-
-msgid "call next command in global history"
-msgstr "вызвать следующую команду из глобальной истории"
-
-msgid "jump to buffer with activity"
-msgstr "перейти к буферу с активностью:"
-
-msgid "jump to DCC buffer"
-msgstr "перейти к буферу DCC"
-
-msgid "jump to last buffer"
-msgstr "перейти к последнему буферу"
-
-msgid "jump to previous buffer"
-msgstr "перейти к предыдущему буферу"
-
-msgid "jump to server buffer"
-msgstr "перейти к буферу сервера"
-
-msgid "jump to next server"
-msgstr "перейти к следующему буферу"
-
-msgid "switch active server on servers buffer"
-msgstr "перейти к активному серверу в буфере серверов"
-
-msgid "scroll to first unread line in buffer"
-msgstr "перейти к первой непрочитанной строчке буфера"
-
-msgid "set unread marker on all buffers"
-msgstr "пометить все буферы как непрочитанные"
-
-msgid "clear hotlist"
-msgstr "очистить хотлист"
-
-msgid "clear infobar"
-msgstr "очистить информационную панель"
-
-msgid "grab a key"
-msgstr "захватить клавишу"
-
-msgid "insert a string in command line"
-msgstr "вставить строку в поле ввода"
-
-msgid "search text in buffer history"
-msgstr "поиск текста в истории буфера"
-
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
 msgstr "%s не могу установить клавишу \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")"
-msgstr ""
-"%s не могу установить клавишу \"%s\" (некорректное название функции: \"%s"
-"\")\n"
 
 #, fuzzy
 msgid "Error: not enough memory for key binding"
@@ -4557,6 +4441,128 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
+#~ msgid "Internal key functions:\n"
+#~ msgstr "Встроенные функции клавиш:\n"
+
+#, fuzzy
+#~ msgid "Internal key functions:"
+#~ msgstr "Встроенные функции клавиш:\n"
+
+#, fuzzy
+#~ msgid "%sError: unknown key function \"%s\""
+#~ msgstr "%s неизвестная функция клавиши \"%s\"\n"
+
+#~ msgid "terminate line"
+#~ msgstr "удалить строку"
+
+#~ msgid "complete word"
+#~ msgstr "завершить слово"
+
+#~ msgid "find previous completion for word"
+#~ msgstr "найти предыдущее дополнение слова"
+
+#~ msgid "delete previous char"
+#~ msgstr "стереть предыдущий символ"
+
+#~ msgid "delete next char"
+#~ msgstr "стереть следующий символ"
+
+#~ msgid "delete until end of line"
+#~ msgstr "стереть до конца строки"
+
+#~ msgid "delete until beginning of line"
+#~ msgstr "стереть до начала строки"
+
+#~ msgid "delete entire line"
+#~ msgstr "стереть всю строку"
+
+#~ msgid "delete previous word"
+#~ msgstr "стереть предыдущее слово"
+
+#~ msgid "delete next word"
+#~ msgstr "стереть следующее слово"
+
+#~ msgid "paste current clipboard content"
+#~ msgstr "вставить содержимое буфера обмена"
+
+#~ msgid "transpose chars"
+#~ msgstr "развернуть символы"
+
+#~ msgid "go to beginning of line"
+#~ msgstr "перейти к началу строки"
+
+#~ msgid "go to end of line"
+#~ msgstr "перейти к концу строки"
+
+#~ msgid "move one char left"
+#~ msgstr "перейти на 1 символ влево"
+
+#~ msgid "move to previous word"
+#~ msgstr "перейти к предыдущему слову"
+
+#~ msgid "move one char right"
+#~ msgstr "перейти на 1 символ вправо"
+
+#~ msgid "move to next word"
+#~ msgstr "перейти к следующему слову"
+
+#~ msgid "call previous command in history"
+#~ msgstr "вызвать предыдущую команду из истории"
+
+#~ msgid "call previous command in global history"
+#~ msgstr "вызвать предыдущую команду из глобальной истории"
+
+#~ msgid "call next command in history"
+#~ msgstr "вызвать следующую команду из истории"
+
+#~ msgid "call next command in global history"
+#~ msgstr "вызвать следующую команду из глобальной истории"
+
+#~ msgid "jump to buffer with activity"
+#~ msgstr "перейти к буферу с активностью:"
+
+#~ msgid "jump to DCC buffer"
+#~ msgstr "перейти к буферу DCC"
+
+#~ msgid "jump to last buffer"
+#~ msgstr "перейти к последнему буферу"
+
+#~ msgid "jump to previous buffer"
+#~ msgstr "перейти к предыдущему буферу"
+
+#~ msgid "jump to server buffer"
+#~ msgstr "перейти к буферу сервера"
+
+#~ msgid "jump to next server"
+#~ msgstr "перейти к следующему буферу"
+
+#~ msgid "switch active server on servers buffer"
+#~ msgstr "перейти к активному серверу в буфере серверов"
+
+#~ msgid "scroll to first unread line in buffer"
+#~ msgstr "перейти к первой непрочитанной строчке буфера"
+
+#~ msgid "set unread marker on all buffers"
+#~ msgstr "пометить все буферы как непрочитанные"
+
+#~ msgid "clear hotlist"
+#~ msgstr "очистить хотлист"
+
+#~ msgid "clear infobar"
+#~ msgstr "очистить информационную панель"
+
+#~ msgid "grab a key"
+#~ msgstr "захватить клавишу"
+
+#~ msgid "search text in buffer history"
+#~ msgstr "поиск текста в истории буфера"
+
+#, fuzzy
+#~ msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")"
+#~ msgstr ""
+#~ "%s не могу установить клавишу \"%s\" (некорректное название функции: \"%s"
+#~ "\")\n"
+
 #, fuzzy
 #~ msgid "launch WeeChat builtin command (do not look at commands hooked)"
 #~ msgstr ""
@@ -4752,10 +4758,6 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 #, fuzzy
 #~ msgid "%sError: wrong number \"%s\" for filter"
 #~ msgstr "%s некорректное количество аргументов команды \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%sError: command \"%s\" failed"
-#~ msgstr "%s команда \"%s\" не удалась\n"
 
 #, fuzzy
 #~ msgid "%s%s: cannot identify channel for \"%s\" command"

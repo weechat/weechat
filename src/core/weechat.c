@@ -104,7 +104,6 @@ weechat_display_usage (char *exec_name)
                           _("  -a, --no-connect      disable auto-connect to servers at startup\n"
                             "  -c, --config          display config file options\n"
                             "  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-                            "  -f, --key-functions   display WeeChat internal functions for keys\n"
                             "  -h, --help            this help\n"
                             "  -m, --commands        display WeeChat commands\n"
                             "  -k, --keys            display WeeChat default keys\n"
@@ -144,28 +143,6 @@ weechat_display_commands ()
 }
 
 /*
- * weechat_display_key_functions: display WeeChat key functions
- */
-
-void
-weechat_display_key_functions ()
-{
-    int i;
-    
-    string_iconv_fprintf (stdout, _("Internal key functions:\n"));
-    string_iconv_fprintf (stdout, "\n");
-    i = 0;
-    while (gui_key_functions[i].function_name)
-    {
-        string_iconv_fprintf (stdout,
-                              "* %s: %s\n",
-                              gui_key_functions[i].function_name,
-                              _(gui_key_functions[i].description));
-        i++;
-    }
-}
-
-/*
  * weechat_display_keys: display WeeChat default keys
  */
 
@@ -186,8 +163,7 @@ weechat_display_keys ()
         string_iconv_fprintf (stdout,
                               "* %s => %s\n",
                               (expanded_name) ? expanded_name : ptr_key->key,
-                              (ptr_key->function) ?
-                              gui_keyboard_function_search_by_ptr (ptr_key->function) : ptr_key->command);
+                              ptr_key->command);
         if (expanded_name)
             free (expanded_name);
     }
@@ -244,12 +220,6 @@ weechat_parse_args (int argc, char *argv[])
                                       "--dir");
                 weechat_shutdown (EXIT_FAILURE, 0);
             }
-        }
-        else if ((strcmp (argv[i], "-f") == 0)
-            || (strcmp (argv[i], "--key-functions") == 0))
-        {
-            weechat_display_key_functions ();
-            weechat_shutdown (EXIT_SUCCESS, 0);
         }
         else if ((strcmp (argv[i], "-h") == 0)
                 || (strcmp (argv[i], "--help") == 0))

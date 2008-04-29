@@ -112,6 +112,12 @@ input_exec_command (struct t_gui_buffer *buffer,
             break;
         case 1: /* command hooked, OK (executed) */
             break;
+        case -3: /* command is running */
+            gui_chat_printf (NULL,
+                             _("%sError: command \"%s\" is running"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             command + 1);
+            break;
         default: /* no command hooked */
             gui_chat_printf (NULL,
                              _("%sError: unknown command \"%s\" (type /help "

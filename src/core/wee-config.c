@@ -707,7 +707,7 @@ config_weechat_key_write (void *data, struct t_config_file *config_file,
                           char *section_name)
 {
     struct t_gui_key *ptr_key;
-    char *expanded_name, *function_name;
+    char *expanded_name;
     
     /* make C compiler happy */
     (void) data;
@@ -717,28 +717,11 @@ config_weechat_key_write (void *data, struct t_config_file *config_file,
     for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
     {
         expanded_name = gui_keyboard_get_expanded_name (ptr_key->key);
-        if (ptr_key->function)
-        {
-            function_name = gui_keyboard_function_search_by_ptr (ptr_key->function);
-            if (function_name)
-            {
-                config_file_write_line (config_file,
-                                        (expanded_name) ?
-                                        expanded_name : ptr_key->key,
-                                        "\"%s%s%s\"",
-                                        function_name,
-                                        (ptr_key->args) ? " " : "",
-                                        (ptr_key->args) ? ptr_key->args : "");
-            }
-        }
-        else
-        {
-            config_file_write_line (config_file,
-                                    (expanded_name) ?
-                                    expanded_name : ptr_key->key,
-                                    "\"%s\"",
-                                    ptr_key->command);
-        }
+        config_file_write_line (config_file,
+                                (expanded_name) ?
+                                expanded_name : ptr_key->key,
+                                "\"%s\"",
+                                ptr_key->command);
         if (expanded_name)
             free (expanded_name);
     }

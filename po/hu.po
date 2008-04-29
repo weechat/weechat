@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-29 13:16+0200\n"
+"POT-Creation-Date: 2008-04-29 18:22+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -44,7 +44,6 @@ msgid ""
 "  -a, --no-connect      disable auto-connect to servers at startup\n"
 "  -c, --config          display config file options\n"
 "  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-"  -f, --key-functions   display WeeChat internal functions for keys\n"
 "  -h, --help            this help\n"
 "  -m, --commands        display WeeChat commands\n"
 "  -k, --keys            display WeeChat default keys\n"
@@ -75,9 +74,6 @@ msgstr "konfigurációs paraméterek beállítása"
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "%s belső parancsok:\n"
-
-msgid "Internal key functions:\n"
-msgstr "Belső billentyűfunkciók:\n"
 
 #. TRANSLATORS: %s is "weechat"
 #, c-format
@@ -365,16 +361,12 @@ msgid "Buffer command history:"
 msgstr "a pufferben kiadott parancsok előzményének mutatása"
 
 #, fuzzy, c-format
-msgid "New key binding: %s%s => %s%s%s%s%s"
+msgid "New key binding: %s%s => %s%s"
 msgstr "Új billentyűparancs: %s"
 
 #, fuzzy
 msgid "Key bindings:"
 msgstr "Billentyűparancsok:\n"
-
-#, fuzzy
-msgid "Internal key functions:"
-msgstr "Belső billentyűfunkciók:\n"
 
 #, fuzzy
 msgid "Default key bindings restored"
@@ -393,10 +385,6 @@ msgstr "A(z) \"%s\" billentyűparancs visszavonva\n"
 #, fuzzy, c-format
 msgid "%sError: unable to unbind key \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűparancsot visszavonni\n"
-
-#, fuzzy, c-format
-msgid "%sError: unknown key function \"%s\""
-msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
 
 #, fuzzy
 msgid "Key:"
@@ -774,22 +762,28 @@ msgstr ""
 "clear: előzmények törlése\n"
 "érték: mutatandó előzmények száma"
 
+#, fuzzy
+msgid "functions for command line"
+msgstr "szöveg beillesztése a parancssorba"
+
+msgid ""
+"This command is used by key bindings or plugins, it must NOT be called by "
+"user"
+msgstr ""
+
 msgid "bind/unbind keys"
 msgstr "billentyűk hozzárendelése/hozzárendelés eltávolítása"
 
-msgid ""
-"[key [function/command]] [unbind key] [functions] [call function [\"args\"]] "
-"[reset -yes]"
+#, fuzzy
+msgid "[key [command [args]]] | [unbind key] | [reset -yes]"
 msgstr ""
 "[billentyű [funkció/parancs]] [unbind billentyű] [funkciók] [call funkció "
 "[\"paraméterek\"]] [reset -yes]"
 
+#, fuzzy
 msgid ""
-"      key: display or bind this key to an internal function or a command "
-"(beginning by \"/\")\n"
+"      key: display or bind this key to a command\n"
 "   unbind: unbind a key\n"
-"functions: list internal functions for key bindings\n"
-"     call: call a function by name (with optional arguments)\n"
 "    reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)"
 msgstr ""
@@ -1624,6 +1618,10 @@ msgid "  . description: %s\n"
 msgstr "  . leírás : %s\n"
 
 #, fuzzy, c-format
+msgid "%sError: command \"%s\" is running"
+msgstr "%s a \"%s\" parancs végrehajtása sikertelen\n"
+
+#, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%s a \"%s\" aliasz vagy parancs nem található\n"
 
@@ -1781,123 +1779,9 @@ msgstr "%s nincs elég memória az ignore elkészítéséhez\n"
 msgid "Error: not enough memory for infobar message"
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
 
-msgid "terminate line"
-msgstr "sor megszakítása"
-
-msgid "complete word"
-msgstr "szó kiegészítése"
-
-msgid "find previous completion for word"
-msgstr "előző kiegészítés keresése a szóhoz"
-
-msgid "delete previous char"
-msgstr "előző karakter törlése"
-
-msgid "delete next char"
-msgstr "következő karakter törlése"
-
-msgid "delete until end of line"
-msgstr "törlés a sor végéig"
-
-msgid "delete until beginning of line"
-msgstr "törlés a sor elejéig"
-
-msgid "delete entire line"
-msgstr "egész sor törlése"
-
-msgid "delete previous word"
-msgstr "előző szó törlése"
-
-msgid "delete next word"
-msgstr "következő szó törlése"
-
-msgid "paste current clipboard content"
-msgstr "következő vágólapelem beillesztése"
-
-msgid "transpose chars"
-msgstr "karakterek felcserélése"
-
-msgid "go to beginning of line"
-msgstr "ugrás a sor elejére"
-
-msgid "go to end of line"
-msgstr "ugrás a sor végére"
-
-msgid "move one char left"
-msgstr "egy karaktert balra"
-
-msgid "move to previous word"
-msgstr "ugrás az előző szóra"
-
-msgid "move one char right"
-msgstr "egy karaktert balra"
-
-msgid "move to next word"
-msgstr "ugrás a következő szóra"
-
-msgid "call previous command in history"
-msgstr "előző parancs hívása az előzményekből"
-
-msgid "call previous command in global history"
-msgstr "előző parancs hívása a globális előzményekből"
-
-msgid "call next command in history"
-msgstr "kövezkező parancs hívása az előzményekből"
-
-msgid "call next command in global history"
-msgstr "következő parancs hívása a globális előzményekből"
-
-msgid "jump to buffer with activity"
-msgstr "ugrás aktív pufferre"
-
-msgid "jump to DCC buffer"
-msgstr "ugrás a DCC pufferre"
-
-msgid "jump to last buffer"
-msgstr "ugrás az utolsó pufferre"
-
-msgid "jump to previous buffer"
-msgstr "ugrás az előző pufferre"
-
-msgid "jump to server buffer"
-msgstr "ugrás a szerver pufferre"
-
-msgid "jump to next server"
-msgstr "ugrás a következő szerverre"
-
-msgid "switch active server on servers buffer"
-msgstr "aktív szerverek változtatása a szerver pufferben"
-
-msgid "scroll to first unread line in buffer"
-msgstr "ugrás az első olvasatlan sorra a pufferben"
-
-msgid "set unread marker on all buffers"
-msgstr "olvasatlan jelölő bekapcsolása az összes pufferen"
-
-msgid "clear hotlist"
-msgstr "hotlist törlése"
-
-msgid "clear infobar"
-msgstr "információs pult törlése"
-
-msgid "grab a key"
-msgstr "vállasszon billentyűt"
-
-msgid "insert a string in command line"
-msgstr "szöveg beillesztése a parancssorba"
-
-msgid "search text in buffer history"
-msgstr "szöveg keresése a puffertörténetben"
-
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
-
-#, fuzzy, c-format
-msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")"
-msgstr ""
-"%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni (érvénytelen "
-"funkciónév: \"%s\")\n"
 
 #, fuzzy
 msgid "Error: not enough memory for key binding"
@@ -4572,6 +4456,128 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
+#~ msgid "Internal key functions:\n"
+#~ msgstr "Belső billentyűfunkciók:\n"
+
+#, fuzzy
+#~ msgid "Internal key functions:"
+#~ msgstr "Belső billentyűfunkciók:\n"
+
+#, fuzzy
+#~ msgid "%sError: unknown key function \"%s\""
+#~ msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#~ msgid "terminate line"
+#~ msgstr "sor megszakítása"
+
+#~ msgid "complete word"
+#~ msgstr "szó kiegészítése"
+
+#~ msgid "find previous completion for word"
+#~ msgstr "előző kiegészítés keresése a szóhoz"
+
+#~ msgid "delete previous char"
+#~ msgstr "előző karakter törlése"
+
+#~ msgid "delete next char"
+#~ msgstr "következő karakter törlése"
+
+#~ msgid "delete until end of line"
+#~ msgstr "törlés a sor végéig"
+
+#~ msgid "delete until beginning of line"
+#~ msgstr "törlés a sor elejéig"
+
+#~ msgid "delete entire line"
+#~ msgstr "egész sor törlése"
+
+#~ msgid "delete previous word"
+#~ msgstr "előző szó törlése"
+
+#~ msgid "delete next word"
+#~ msgstr "következő szó törlése"
+
+#~ msgid "paste current clipboard content"
+#~ msgstr "következő vágólapelem beillesztése"
+
+#~ msgid "transpose chars"
+#~ msgstr "karakterek felcserélése"
+
+#~ msgid "go to beginning of line"
+#~ msgstr "ugrás a sor elejére"
+
+#~ msgid "go to end of line"
+#~ msgstr "ugrás a sor végére"
+
+#~ msgid "move one char left"
+#~ msgstr "egy karaktert balra"
+
+#~ msgid "move to previous word"
+#~ msgstr "ugrás az előző szóra"
+
+#~ msgid "move one char right"
+#~ msgstr "egy karaktert balra"
+
+#~ msgid "move to next word"
+#~ msgstr "ugrás a következő szóra"
+
+#~ msgid "call previous command in history"
+#~ msgstr "előző parancs hívása az előzményekből"
+
+#~ msgid "call previous command in global history"
+#~ msgstr "előző parancs hívása a globális előzményekből"
+
+#~ msgid "call next command in history"
+#~ msgstr "kövezkező parancs hívása az előzményekből"
+
+#~ msgid "call next command in global history"
+#~ msgstr "következő parancs hívása a globális előzményekből"
+
+#~ msgid "jump to buffer with activity"
+#~ msgstr "ugrás aktív pufferre"
+
+#~ msgid "jump to DCC buffer"
+#~ msgstr "ugrás a DCC pufferre"
+
+#~ msgid "jump to last buffer"
+#~ msgstr "ugrás az utolsó pufferre"
+
+#~ msgid "jump to previous buffer"
+#~ msgstr "ugrás az előző pufferre"
+
+#~ msgid "jump to server buffer"
+#~ msgstr "ugrás a szerver pufferre"
+
+#~ msgid "jump to next server"
+#~ msgstr "ugrás a következő szerverre"
+
+#~ msgid "switch active server on servers buffer"
+#~ msgstr "aktív szerverek változtatása a szerver pufferben"
+
+#~ msgid "scroll to first unread line in buffer"
+#~ msgstr "ugrás az első olvasatlan sorra a pufferben"
+
+#~ msgid "set unread marker on all buffers"
+#~ msgstr "olvasatlan jelölő bekapcsolása az összes pufferen"
+
+#~ msgid "clear hotlist"
+#~ msgstr "hotlist törlése"
+
+#~ msgid "clear infobar"
+#~ msgstr "információs pult törlése"
+
+#~ msgid "grab a key"
+#~ msgstr "vállasszon billentyűt"
+
+#~ msgid "search text in buffer history"
+#~ msgstr "szöveg keresése a puffertörténetben"
+
+#, fuzzy
+#~ msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")"
+#~ msgstr ""
+#~ "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni (érvénytelen "
+#~ "funkciónév: \"%s\")\n"
+
 #, fuzzy
 #~ msgid "launch WeeChat builtin command (do not look at commands hooked)"
 #~ msgstr ""
@@ -4767,10 +4773,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 #, fuzzy
 #~ msgid "%sError: wrong number \"%s\" for filter"
 #~ msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
-
-#, fuzzy
-#~ msgid "%sError: command \"%s\" failed"
-#~ msgstr "%s a \"%s\" parancs végrehajtása sikertelen\n"
 
 #, fuzzy
 #~ msgid "%s%s: cannot identify channel for \"%s\" command"

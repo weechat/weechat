@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-29 13:16+0200\n"
-"PO-Revision-Date: 2008-04-29 13:17+0200\n"
+"POT-Creation-Date: 2008-04-29 18:22+0200\n"
+"PO-Revision-Date: 2008-04-29 18:22+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +37,6 @@ msgid ""
 "  -a, --no-connect      disable auto-connect to servers at startup\n"
 "  -c, --config          display config file options\n"
 "  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-"  -f, --key-functions   display WeeChat internal functions for keys\n"
 "  -h, --help            this help\n"
 "  -m, --commands        display WeeChat commands\n"
 "  -k, --keys            display WeeChat default keys\n"
@@ -51,8 +50,6 @@ msgstr ""
 "  -c, --config            afficher les options du fichier de configuration\n"
 "  -d, --dir <rep>         définir le répertoire de base pour WeeChat "
 "(défaut: ~/.weechat)\n"
-"  -f, --key-functions     afficher les fonctions internes WeeChat pour les "
-"touches\n"
 "  -h, --help              cette aide\n"
 "  -k, --keys              afficher les touches WeeChat par défaut\n"
 "  -l, --license           afficher la licence WeeChat\n"
@@ -69,9 +66,6 @@ msgstr "Options de configuration %s:\n"
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Commandes internes %s:\n"
-
-msgid "Internal key functions:\n"
-msgstr "Fonctions internes pour les touches:\n"
 
 #. TRANSLATORS: %s is "weechat"
 #, c-format
@@ -335,14 +329,11 @@ msgid "Buffer command history:"
 msgstr "Historique des commandes du tampon:"
 
 #, c-format
-msgid "New key binding: %s%s => %s%s%s%s%s"
-msgstr "Nouvelle touche: %s%s => %s%s%s%s%s"
+msgid "New key binding: %s%s => %s%s"
+msgstr "Nouvelle touche: %s%s => %s%s"
 
 msgid "Key bindings:"
 msgstr "Associations de touches:"
-
-msgid "Internal key functions:"
-msgstr "Fonctions internes pour les touches:"
 
 msgid "Default key bindings restored"
 msgstr "Touches par défaut restaurées"
@@ -360,10 +351,6 @@ msgstr "Touche \"%s\" supprimée"
 #, c-format
 msgid "%sError: unable to unbind key \"%s\""
 msgstr "%sErreur: impossible de supprimer la touche \"%s\""
-
-#, c-format
-msgid "%sError: unknown key function \"%s\""
-msgstr "%sErreur: fonction de touche \"%s\" inconnue"
 
 msgid "Key:"
 msgstr "Touche:"
@@ -760,31 +747,28 @@ msgstr ""
 "clear: effacer l'historique\n"
 "valeur: nombre d'entrées dans l'historique à afficher"
 
+msgid "functions for command line"
+msgstr "fonctions pour la ligne de commande"
+
+msgid ""
+"This command is used by key bindings or plugins, it must NOT be called by "
+"user"
+msgstr "Cette commande est utilisée par les associations de touches ou les extensions, elle ne doit PAS être appelée par l'utilisateur"
+
 msgid "bind/unbind keys"
 msgstr "associer/libérer des touches"
 
-msgid ""
-"[key [function/command]] [unbind key] [functions] [call function [\"args\"]] "
-"[reset -yes]"
-msgstr ""
-"[touche [fonction/commande]] [unbind touche] [functions] [call fonction "
-"[\"params\"]] [reset -yes]"
+msgid "[key [command [args]]] | [unbind key] | [reset -yes]"
+msgstr "[touche [commande [args]]] | [unbind touche] | [reset -yes]"
 
 msgid ""
-"      key: display or bind this key to an internal function or a command "
-"(beginning by \"/\")\n"
+"      key: display or bind this key to a command\n"
 "   unbind: unbind a key\n"
-"functions: list internal functions for key bindings\n"
-"     call: call a function by name (with optional arguments)\n"
 "    reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)"
 msgstr ""
-"   touche: voir ou associer cette touche à une fonction interne ou une "
-"commande (commençant par \"/\")\n"
+"   touche: voir ou associer cette touche à une commande\n"
 "   unbind: supprimer l'association à une touche\n"
-"functions: lister la liste des fonctions internes pour les associations de "
-"touches\n"
-"     call: appeler une foonction par son nom (avec paramètres optionnels)\n"
 "    reset: restaure les touches aux valeurs par défaut et supprime TOUTES "
 "les touches personnelles (utiliser avec précaution !)"
 
@@ -1554,6 +1538,10 @@ msgid "  . description: %s\n"
 msgstr "  . description: %s\n"
 
 #, c-format
+msgid "%sError: command \"%s\" is running"
+msgstr "%sErreur: la commande \"%s\" est en cours d'exécution"
+
+#, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%sErreur: commande \"%s\" inconnue (tapez /help pour l'aide)"
 
@@ -1652,7 +1640,9 @@ msgstr ""
 "en recréer une autre pour faire cela"
 
 msgid "bar priority (high number means bar displayed first)"
-msgstr "priorité de la barre (un nombre élevé signifie que la barre est affichée en premier)"
+msgstr ""
+"priorité de la barre (un nombre élevé signifie que la barre est affichée en "
+"premier)"
 
 msgid "bar type (root, window, window_active, window_inactive)"
 msgstr "type de barre (root, window, window_active, window_inactive)"
@@ -1710,122 +1700,9 @@ msgstr "Erreur: impossible d'ajouter le tampon à la liste des tampons actifs"
 msgid "Error: not enough memory for infobar message"
 msgstr "Erreur: pas assez de mémoire pour un message de la barre d'infos"
 
-msgid "terminate line"
-msgstr "terminer la ligne"
-
-msgid "complete word"
-msgstr "compléter le mot"
-
-msgid "find previous completion for word"
-msgstr "trouver le mot complété précédent"
-
-msgid "delete previous char"
-msgstr "effacer le caractère précédent"
-
-msgid "delete next char"
-msgstr "effacer le caractère suivant"
-
-msgid "delete until end of line"
-msgstr "effacer jusqu'à la fin de la ligne"
-
-msgid "delete until beginning of line"
-msgstr "effacer jusqu'au début de la ligne"
-
-msgid "delete entire line"
-msgstr "effacer la ligne entière"
-
-msgid "delete previous word"
-msgstr "effacer le mot précédent"
-
-msgid "delete next word"
-msgstr "effacer le mot suivant"
-
-msgid "paste current clipboard content"
-msgstr "coller le contenu du presse-papier"
-
-msgid "transpose chars"
-msgstr "inverser les caractères"
-
-msgid "go to beginning of line"
-msgstr "aller au début de la ligne"
-
-msgid "go to end of line"
-msgstr "aller à la fin de la ligne"
-
-msgid "move one char left"
-msgstr "se déplacer d'un caractère à gauche"
-
-msgid "move to previous word"
-msgstr "se déplacer au mot précédent"
-
-msgid "move one char right"
-msgstr "se déplacer d'un caractère à droite"
-
-msgid "move to next word"
-msgstr "se déplacer au mot suivant"
-
-msgid "call previous command in history"
-msgstr "appeler la commande précédente dans l'historique"
-
-msgid "call previous command in global history"
-msgstr "appeler la commande précédente dans l'historique global"
-
-msgid "call next command in history"
-msgstr "appeler la commande suivante dans l'historique"
-
-msgid "call next command in global history"
-msgstr "appeler la commande suivante dans l'historique global"
-
-msgid "jump to buffer with activity"
-msgstr "sauter au tampon avec de l'activité"
-
-msgid "jump to DCC buffer"
-msgstr "sauter au tampon DCC"
-
-msgid "jump to last buffer"
-msgstr "sauter au dernier tampon"
-
-msgid "jump to previous buffer"
-msgstr "sauter au tampon précédent"
-
-msgid "jump to server buffer"
-msgstr "sauter au tampon du serveur"
-
-msgid "jump to next server"
-msgstr "sauter au prochain serveur"
-
-msgid "switch active server on servers buffer"
-msgstr "bascule de serveur actif sur le tampon des serveurs"
-
-msgid "scroll to first unread line in buffer"
-msgstr "faire défiler jusqu'à la première ligne non lue du tampon"
-
-msgid "set unread marker on all buffers"
-msgstr "positionner le marqueur de données non lues sur tous les tampons"
-
-msgid "clear hotlist"
-msgstr "effacer la liste d'activité"
-
-msgid "clear infobar"
-msgstr "effacer la barre d'infos"
-
-msgid "grab a key"
-msgstr "capturer une touche"
-
-msgid "insert a string in command line"
-msgstr "insérer une chaîne dans la ligne de commande"
-
-msgid "search text in buffer history"
-msgstr "recherche de texte dans l'historique du tampon"
-
 #, c-format
 msgid "Error: unable to bind key \"%s\""
 msgstr "Erreur: impossible de créer la touche \"%s\""
-
-#, c-format
-msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")"
-msgstr ""
-"Erreur: impossible de créer la touche \"%s\" (nom fonction incorrect: \"%s\")"
 
 msgid "Error: not enough memory for key binding"
 msgstr "Erreur: pas assez de mémoire pour la touche"
@@ -4525,11 +4402,3 @@ msgstr ""
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\""
-
-#~ msgid "launch WeeChat builtin command (do not look at commands hooked)"
-#~ msgstr ""
-#~ "lance une commande WeeChat interne (sans regarder les commandes "
-#~ "accrochées)"
-
-#~ msgid "command"
-#~ msgstr "commande"

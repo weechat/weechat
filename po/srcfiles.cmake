@@ -49,8 +49,6 @@ SET(WEECHAT_SOURCES
 ./src/gui/gtk/gui-gtk-nicklist.c
 ./src/gui/gtk/gui-gtk-status.c
 ./src/gui/gtk/gui-gtk-window.c
-./src/gui/gui-action.c
-./src/gui/gui-action.h
 ./src/gui/gui-bar.c
 ./src/gui/gui-bar.h
 ./src/gui/gui-bar-item.c

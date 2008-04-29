@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-29 13:16+0200\n"
+"POT-Creation-Date: 2008-04-29 18:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,7 +33,6 @@ msgid ""
 "  -a, --no-connect      disable auto-connect to servers at startup\n"
 "  -c, --config          display config file options\n"
 "  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-"  -f, --key-functions   display WeeChat internal functions for keys\n"
 "  -h, --help            this help\n"
 "  -m, --commands        display WeeChat commands\n"
 "  -k, --keys            display WeeChat default keys\n"
@@ -51,9 +50,6 @@ msgstr ""
 #. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s internal commands:\n"
-msgstr ""
-
-msgid "Internal key functions:\n"
 msgstr ""
 
 #. TRANSLATORS: %s is "weechat"
@@ -316,13 +312,10 @@ msgid "Buffer command history:"
 msgstr ""
 
 #, c-format
-msgid "New key binding: %s%s => %s%s%s%s%s"
+msgid "New key binding: %s%s => %s%s"
 msgstr ""
 
 msgid "Key bindings:"
-msgstr ""
-
-msgid "Internal key functions:"
 msgstr ""
 
 msgid "Default key bindings restored"
@@ -338,10 +331,6 @@ msgstr ""
 
 #, c-format
 msgid "%sError: unable to unbind key \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%sError: unknown key function \"%s\""
 msgstr ""
 
 msgid "Key:"
@@ -657,20 +646,23 @@ msgid ""
 "value: number of history entries to show"
 msgstr ""
 
+msgid "functions for command line"
+msgstr ""
+
+msgid ""
+"This command is used by key bindings or plugins, it must NOT be called by "
+"user"
+msgstr ""
+
 msgid "bind/unbind keys"
 msgstr ""
 
-msgid ""
-"[key [function/command]] [unbind key] [functions] [call function [\"args\"]] "
-"[reset -yes]"
+msgid "[key [command [args]]] | [unbind key] | [reset -yes]"
 msgstr ""
 
 msgid ""
-"      key: display or bind this key to an internal function or a command "
-"(beginning by \"/\")\n"
+"      key: display or bind this key to a command\n"
 "   unbind: unbind a key\n"
-"functions: list internal functions for key bindings\n"
-"     call: call a function by name (with optional arguments)\n"
 "    reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)"
 msgstr ""
@@ -1331,6 +1323,10 @@ msgid "  . description: %s\n"
 msgstr ""
 
 #, c-format
+msgid "%sError: command \"%s\" is running"
+msgstr ""
+
+#, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr ""
 
@@ -1470,120 +1466,8 @@ msgstr ""
 msgid "Error: not enough memory for infobar message"
 msgstr ""
 
-msgid "terminate line"
-msgstr ""
-
-msgid "complete word"
-msgstr ""
-
-msgid "find previous completion for word"
-msgstr ""
-
-msgid "delete previous char"
-msgstr ""
-
-msgid "delete next char"
-msgstr ""
-
-msgid "delete until end of line"
-msgstr ""
-
-msgid "delete until beginning of line"
-msgstr ""
-
-msgid "delete entire line"
-msgstr ""
-
-msgid "delete previous word"
-msgstr ""
-
-msgid "delete next word"
-msgstr ""
-
-msgid "paste current clipboard content"
-msgstr ""
-
-msgid "transpose chars"
-msgstr ""
-
-msgid "go to beginning of line"
-msgstr ""
-
-msgid "go to end of line"
-msgstr ""
-
-msgid "move one char left"
-msgstr ""
-
-msgid "move to previous word"
-msgstr ""
-
-msgid "move one char right"
-msgstr ""
-
-msgid "move to next word"
-msgstr ""
-
-msgid "call previous command in history"
-msgstr ""
-
-msgid "call previous command in global history"
-msgstr ""
-
-msgid "call next command in history"
-msgstr ""
-
-msgid "call next command in global history"
-msgstr ""
-
-msgid "jump to buffer with activity"
-msgstr ""
-
-msgid "jump to DCC buffer"
-msgstr ""
-
-msgid "jump to last buffer"
-msgstr ""
-
-msgid "jump to previous buffer"
-msgstr ""
-
-msgid "jump to server buffer"
-msgstr ""
-
-msgid "jump to next server"
-msgstr ""
-
-msgid "switch active server on servers buffer"
-msgstr ""
-
-msgid "scroll to first unread line in buffer"
-msgstr ""
-
-msgid "set unread marker on all buffers"
-msgstr ""
-
-msgid "clear hotlist"
-msgstr ""
-
-msgid "clear infobar"
-msgstr ""
-
-msgid "grab a key"
-msgstr ""
-
-msgid "insert a string in command line"
-msgstr ""
-
-msgid "search text in buffer history"
-msgstr ""
-
 #, c-format
 msgid "Error: unable to bind key \"%s\""
-msgstr ""
-
-#, c-format
-msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")"
 msgstr ""
 
 msgid "Error: not enough memory for key binding"

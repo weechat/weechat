@@ -450,23 +450,6 @@ gui_completion_list_add_command_hooks (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_list_add_key_cmd: add key commands/functions to completion
- *                                  list
- */
-
-void
-gui_completion_list_add_key_cmd (struct t_gui_completion *completion)
-{
-    int i;
-    
-    for (i = 0; gui_key_functions[i].function_name; i++)
-    {
-        gui_completion_list_add (completion, gui_key_functions[i].function_name,
-                                 0, WEECHAT_LIST_POS_SORT);
-    }
-}
-
-/*
  * gui_completion_list_add_self_nick: add self nick on server to completion list
  */
 
@@ -891,9 +874,6 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                             break;
                         case 'h': /* command hooks */
                             gui_completion_list_add_command_hooks (completion);
-                            break;
-                        case 'k': /* key cmd/funtcions*/
-                            gui_completion_list_add_key_cmd (completion);
                             break;
                         case 'm': /* self nickname */
                             gui_completion_list_add_self_nick (completion);

@@ -369,6 +369,7 @@ hook_command (struct t_weechat_plugin *plugin, char *command, char *description,
  *                            -2 if command is ambigous (same command exists
  *                               for another plugin, and we don't know which
  *                               one to run)
+ *                            -3 if command is already running
  */
 
 int
@@ -378,7 +379,7 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     struct t_hook *ptr_hook, *next_hook;
     struct t_hook *hook_for_plugin, *hook_for_other_plugin;
     char **argv, **argv_eol;
-    int argc, rc;
+    int argc, rc, command_is_running;
     
     rc = -1;
     
@@ -397,26 +398,31 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     
     hook_for_plugin = NULL;
     hook_for_other_plugin = NULL;
+    command_is_running = 0;
     ptr_hook = weechat_hooks[HOOK_TYPE_COMMAND];
     while (ptr_hook)
     {
         next_hook = ptr_hook->next_hook;
         
         if (!ptr_hook->deleted
-            && !ptr_hook->running
             && ((!any_plugin || HOOK_COMMAND(ptr_hook, level) == 0))
             && ((argv[0][0] == '/') && (string_strcasecmp (argv[0] + 1,
                                                            HOOK_COMMAND(ptr_hook, command)) == 0)))
         {
-            if (ptr_hook->plugin == plugin)
-            {
-                if (!hook_for_plugin)
-                    hook_for_plugin = ptr_hook;
-            }
+            if (ptr_hook->running)
+                command_is_running = 1;
             else
             {
-                if (!hook_for_other_plugin)
-                    hook_for_other_plugin = ptr_hook;
+                if (ptr_hook->plugin == plugin)
+                {
+                    if (!hook_for_plugin)
+                        hook_for_plugin = ptr_hook;
+                }
+                else
+                {
+                    if (!hook_for_other_plugin)
+                        hook_for_other_plugin = ptr_hook;
+                }
             }
         }
         
@@ -426,7 +432,9 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
     /* ambiguous: command found for current plugin and other one, we don't know
        which one to run! */
     if (any_plugin && hook_for_plugin && hook_for_other_plugin)
+    {
         rc = -2;
+    }
     else
     {
         if (any_plugin || hook_for_plugin)
@@ -445,6 +453,16 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
                 else
                     rc = 1;
             }
+            else
+            {
+                if (command_is_running)
+                    rc = -3;
+            }
+        }
+        else
+        {
+            if (command_is_running)
+                rc = -3;
         }
     }
     

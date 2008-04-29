@@ -1126,6 +1126,92 @@ command_history (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * command_input: input actions (used by key bindings)
+ */
+
+int
+command_input (void *data, struct t_gui_buffer *buffer,
+               int argc, char **argv, char **argv_eol)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    
+    if (argc > 1)
+    {
+        if (string_strcasecmp (argv[1], "return") == 0)
+            gui_input_return ();
+        else if (string_strcasecmp (argv[1], "complete_next") == 0)
+            gui_input_complete_next ();
+        else if (string_strcasecmp (argv[1], "complete_previous") == 0)
+            gui_input_complete_previous ();
+        else if (string_strcasecmp (argv[1], "search_text") == 0)
+            gui_input_search_text ();
+        else if (string_strcasecmp (argv[1], "delete_previous_char") == 0)
+            gui_input_delete_previous_char ();
+        else if (string_strcasecmp (argv[1], "delete_next_char") == 0)
+            gui_input_delete_next_char ();
+        else if (string_strcasecmp (argv[1], "delete_previous_word") == 0)
+            gui_input_delete_previous_word ();
+        else if (string_strcasecmp (argv[1], "delete_next_word") == 0)
+            gui_input_delete_next_word ();
+        else if (string_strcasecmp (argv[1], "delete_beginning_of_line") == 0)
+            gui_input_delete_beginning_of_line ();
+        else if (string_strcasecmp (argv[1], "delete_end_of_line") == 0)
+            gui_input_delete_end_of_line ();
+        else if (string_strcasecmp (argv[1], "delete_line") == 0)
+            gui_input_delete_line ();
+        else if (string_strcasecmp (argv[1], "clipboard_paste") == 0)
+            gui_input_clipboard_paste ();
+        else if (string_strcasecmp (argv[1], "transpose_chars") == 0)
+            gui_input_transpose_chars ();
+        else if (string_strcasecmp (argv[1], "move_beginning_of_line") == 0)
+            gui_input_move_beginning_of_line ();
+        else if (string_strcasecmp (argv[1], "move_end_of_line") == 0)
+            gui_input_move_end_of_line ();
+        else if (string_strcasecmp (argv[1], "move_previous_char") == 0)
+            gui_input_move_previous_char ();
+        else if (string_strcasecmp (argv[1], "move_next_char") == 0)
+            gui_input_move_next_char ();
+        else if (string_strcasecmp (argv[1], "move_previous_word") == 0)
+            gui_input_move_previous_word ();
+        else if (string_strcasecmp (argv[1], "move_next_word") == 0)
+            gui_input_move_next_word ();
+        else if (string_strcasecmp (argv[1], "history_previous") == 0)
+            gui_input_history_previous ();
+        else if (string_strcasecmp (argv[1], "history_next") == 0)
+            gui_input_history_next ();
+        else if (string_strcasecmp (argv[1], "history_global_previous") == 0)
+            gui_input_history_global_previous ();
+        else if (string_strcasecmp (argv[1], "history_global_next") == 0)
+            gui_input_history_global_next ();
+        else if (string_strcasecmp (argv[1], "jump_smart") == 0)
+            gui_input_jump_smart ();
+        else if (string_strcasecmp (argv[1], "jump_last_buffer") == 0)
+            gui_input_jump_last_buffer ();
+        else if (string_strcasecmp (argv[1], "jump_previous_buffer") == 0)
+            gui_input_jump_previous_buffer ();
+        else if (string_strcasecmp (argv[1], "hotlist_clear") == 0)
+            gui_input_hotlist_clear ();
+        else if (string_strcasecmp (argv[1], "infobar_clear") == 0)
+            gui_input_infobar_clear ();
+        else if (string_strcasecmp (argv[1], "grab_key") == 0)
+            gui_input_grab_key ();
+        else if (string_strcasecmp (argv[1], "scroll_unread") == 0)
+            gui_input_scroll_unread ();
+        else if (string_strcasecmp (argv[1], "set_unread") == 0)
+            gui_input_set_unread ();
+        else if (string_strcasecmp (argv[1], "insert") == 0)
+        {
+            if (argc > 2)
+                gui_input_insert (argv_eol[2]);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * command_key_display: display a key binding
  */
 
@@ -1138,27 +1224,19 @@ command_key_display (struct t_gui_key *key, int new_key)
     if (new_key)
     {
         gui_chat_printf (NULL,
-                         _("New key binding: %s%s => %s%s%s%s%s"),
+                         _("New key binding: %s%s => %s%s"),
                          (expanded_name) ? expanded_name : key->key,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT),
-                         (key->function) ?
-                         gui_keyboard_function_search_by_ptr (key->function) : key->command,
-                         (key->args) ? " \"" : "",
-                         (key->args) ? key->args : "",
-                         (key->args) ? "\"" : "");
+                         key->command);
     }
     else
     {
-        gui_chat_printf (NULL, "  %20s%s => %s%s%s%s%s",
+        gui_chat_printf (NULL, "  %20s%s => %s%s",
                          (expanded_name) ? expanded_name : key->key,
                          GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                          GUI_COLOR(GUI_COLOR_CHAT),
-                         (key->function) ?
-                         gui_keyboard_function_search_by_ptr (key->function) : key->command,
-                         (key->args) ? " \"" : "",
-                         (key->args) ? key->args : "",
-                         (key->args) ? "\"" : "");
+                         key->command);
     }
     if (expanded_name)
         free (expanded_name);
@@ -1172,10 +1250,8 @@ int
 command_key (void *data, struct t_gui_buffer *buffer,
              int argc, char **argv, char **argv_eol)
 {
-    char *args, *internal_code;
-    int i;
+    char *internal_code;
     struct t_gui_key *ptr_key;
-    t_gui_key_func *ptr_function;
     
     /* make C compiler happy */
     (void) data;
@@ -1189,23 +1265,6 @@ command_key (void *data, struct t_gui_buffer *buffer,
         for (ptr_key = gui_keys; ptr_key; ptr_key = ptr_key->next_key)
         {
             command_key_display (ptr_key, 0);
-        }
-        return WEECHAT_RC_OK;
-    }
-    
-    /* display key functions */
-    if (string_strcasecmp (argv[1], "functions") == 0)
-    {
-        gui_chat_printf (NULL, "");
-        gui_chat_printf (NULL, _("Internal key functions:"));
-        i = 0;
-        while (gui_key_functions[i].function_name)
-        {
-            gui_chat_printf (NULL,
-                             "%25s  %s",
-                             gui_key_functions[i].function_name,
-                             _(gui_key_functions[i].description));
-            i++;
         }
         return WEECHAT_RC_OK;
     }
@@ -1246,36 +1305,6 @@ command_key (void *data, struct t_gui_buffer *buffer,
             {
                 gui_chat_printf (NULL,
                                  _("%sError: unable to unbind key \"%s\""),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv[2]);
-                return WEECHAT_RC_ERROR;
-            }
-        }
-        return WEECHAT_RC_OK;
-    }
-    
-    /* call a key function */
-    if (string_strcasecmp (argv[1], "call") == 0)
-    {
-        if (argc >= 3)
-        {
-            ptr_function = gui_keyboard_function_search_by_name (argv[2]);
-            if (ptr_function)
-            {
-                if (argc >= 4)
-                {
-                    args = string_remove_quotes (argv_eol[3], "'\"");
-                    (void)(*ptr_function)((args) ? args : argv_eol[3]);
-                    if (args)
-                        free (args);
-                }
-                else
-                    (void)(*ptr_function)(NULL);
-            }
-            else
-            {
-                gui_chat_printf (NULL,
-                                 _("%sError: unknown key function \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[2]);
                 return WEECHAT_RC_ERROR;
@@ -2616,21 +2645,34 @@ command_init ()
                   N_("[clear | value]"),
                   N_("clear: clear history\n"
                      "value: number of history entries to show"),
-                  "-clear",
+                  "clear",
                   &command_history, NULL);
+    hook_command (NULL, "input",
+                  N_("functions for command line"),
+                  "return | complete_next | complete_previous | search_next | "
+                  "delete_previous_char | delete_next_char | "
+                  "delete_previous_word | delete_next_word | "
+                  "delete_beginning_of_line | delete_end_of_line | "
+                  "delete_line | clipboard_paste | transpose_chars | "
+                  "move_beginning_of_line | move_end_of_line | "
+                  "move_previous_char | move_next_char | move_previous_word | "
+                  "move_next_word | history_previous | history_next | "
+                  "history_global_previous | history_global_next | "
+                  "jump_smart | jump_last_buffer | jump_previous_buffer | "
+                  "hotlist_clear | infobar_clear | grab_key | scroll_unread | "
+                  "set_unread | insert [args]",
+                  _("This command is used by key bindings or plugins, it must "
+                    "NOT be called by user"),
+                  "",
+                  &command_input, NULL);
     hook_command (NULL, "key",
                   N_("bind/unbind keys"),
-                  N_("[key [function/command]] [unbind key] [functions] "
-                     "[call function [\"args\"]] [reset -yes]"),
-                  N_("      key: display or bind this key to an internal "
-                     "function or a command (beginning by \"/\")\n"
+                  N_("[key [command [args]]] | [unbind key] | [reset -yes]"),
+                  N_("      key: display or bind this key to a command\n"
                      "   unbind: unbind a key\n"
-                     "functions: list internal functions for key bindings\n"
-                     "     call: call a function by name (with optional "
-                     "arguments)\n"
                      "    reset: restore bindings to the default values and "
                      "delete ALL personal bindings (use carefully!)"),
-                  "unbind|functions|call|reset %k",
+                  "unbind|reset",
                   &command_key, NULL);
     hook_command (NULL, "plugin",
                   N_("list/load/unload plugins"),

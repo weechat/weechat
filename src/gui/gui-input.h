@@ -34,9 +34,39 @@ extern void gui_input_move (struct t_gui_buffer *buffer, char *target,
                             char *source, int size);
 extern int gui_input_insert_string (struct t_gui_buffer *buffer, char *string,
                                     int pos);
-extern void gui_input_complete (struct t_gui_buffer *buffer);
-extern void gui_input_delete_line (struct t_gui_buffer *buffer);
 extern int gui_input_get_prompt_length (struct t_gui_buffer *buffer);
+extern void gui_input_return ();
+extern void gui_input_clipboard_paste ();
+extern void gui_input_complete_next ();
+extern void gui_input_complete_previous ();
+extern void gui_input_search_text ();
+extern void gui_input_delete_previous_char ();
+extern void gui_input_delete_next_char ();
+extern void gui_input_delete_previous_word ();
+extern void gui_input_delete_next_word ();
+extern void gui_input_delete_beginning_of_line ();
+extern void gui_input_delete_end_of_line ();
+extern void gui_input_delete_line ();
+extern void gui_input_transpose_chars ();
+extern void gui_input_move_beginning_of_line ();
+extern void gui_input_move_end_of_line ();
+extern void gui_input_move_previous_char ();
+extern void gui_input_move_next_char ();
+extern void gui_input_move_previous_word ();
+extern void gui_input_move_next_word ();
+extern void gui_input_history_previous ();
+extern void gui_input_history_next ();
+extern void gui_input_history_global_previous ();
+extern void gui_input_history_global_next ();
+extern void gui_input_jump_smart ();
+extern void gui_input_jump_last_buffer ();
+extern void gui_input_jump_previous_buffer ();
+extern void gui_input_hotlist_clear ();
+extern void gui_input_infobar_clear ();
+extern void gui_input_grab_key ();
+extern void gui_input_scroll_unread ();
+extern void gui_input_set_unread ();
+extern void gui_input_insert ();
 
 /* input functions (GUI dependent) */
 

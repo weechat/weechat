@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-29 13:16+0200\n"
+"POT-Creation-Date: 2008-04-29 18:22+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -38,7 +38,6 @@ msgid ""
 "  -a, --no-connect      disable auto-connect to servers at startup\n"
 "  -c, --config          display config file options\n"
 "  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-"  -f, --key-functions   display WeeChat internal functions for keys\n"
 "  -h, --help            this help\n"
 "  -m, --commands        display WeeChat commands\n"
 "  -k, --keys            display WeeChat default keys\n"
@@ -71,9 +70,6 @@ msgstr "poner opciones de configuraciÃ³n"
 #, c-format
 msgid "%s internal commands:\n"
 msgstr "Comandos internos %s :\n"
-
-msgid "Internal key functions:\n"
-msgstr "Funciones de clave internas:\n"
 
 #. TRANSLATORS: %s is "weechat"
 #, c-format
@@ -362,16 +358,12 @@ msgid "Buffer command history:"
 msgstr "mostrar historial de comandos de bÃºfer"
 
 #, fuzzy, c-format
-msgid "New key binding: %s%s => %s%s%s%s%s"
+msgid "New key binding: %s%s => %s%s"
 msgstr "Nueva anclaje de clave:  %s"
 
 #, fuzzy
 msgid "Key bindings:"
 msgstr "Anclajes de clave:\n"
-
-#, fuzzy
-msgid "Internal key functions:"
-msgstr "Funciones de clave internas:\n"
 
 #, fuzzy
 msgid "Default key bindings restored"
@@ -390,10 +382,6 @@ msgstr "Clave \"%s\" desatada\n"
 #, fuzzy, c-format
 msgid "%sError: unable to unbind key \"%s\""
 msgstr "%s No ha sido posible desatar la clave \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%sError: unknown key function \"%s\""
-msgstr "%s opciÃ³n desconocida para el comando \"%s\"\n"
 
 msgid "Key:"
 msgstr ""
@@ -757,22 +745,26 @@ msgstr ""
 "limpiar: limpiar historial\n"
 "valor: nÃºmero de entradas del historial para mostrar"
 
+#, fuzzy
+msgid "functions for command line"
+msgstr "%s opciÃ³n desconocida para el comando \"%s\"\n"
+
+msgid ""
+"This command is used by key bindings or plugins, it must NOT be called by "
+"user"
+msgstr ""
+
 msgid "bind/unbind keys"
 msgstr "atar/desatar claves"
 
 #, fuzzy
-msgid ""
-"[key [function/command]] [unbind key] [functions] [call function [\"args\"]] "
-"[reset -yes]"
+msgid "[key [command [args]]] | [unbind key] | [reset -yes]"
 msgstr "[clave funciÃ³n/comando] [desatar clave] [funciones] [reset -yes]"
 
 #, fuzzy
 msgid ""
-"      key: display or bind this key to an internal function or a command "
-"(beginning by \"/\")\n"
+"      key: display or bind this key to a command\n"
 "   unbind: unbind a key\n"
-"functions: list internal functions for key bindings\n"
-"     call: call a function by name (with optional arguments)\n"
 "    reset: restore bindings to the default values and delete ALL personal "
 "bindings (use carefully!)"
 msgstr ""
@@ -1606,6 +1598,10 @@ msgid "  . description: %s\n"
 msgstr "  . descripciÃ³n: %s\n"
 
 #, fuzzy, c-format
+msgid "%sError: command \"%s\" is running"
+msgstr "%s el comando \"%s\" ha fallado\n"
+
+#, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
 msgstr "%s alias o comando \"%s\" no encontrado\n"
 
@@ -1766,126 +1762,9 @@ msgid "Error: not enough memory for infobar message"
 msgstr ""
 "No hay suficiente memoria para el mensaje de la barra de informaciÃ³n\n"
 
-msgid "terminate line"
-msgstr "terminar lÃ­nea"
-
-msgid "complete word"
-msgstr "completar palabra"
-
-msgid "find previous completion for word"
-msgstr ""
-
-msgid "delete previous char"
-msgstr "borrar el carÃ¡cter anterior"
-
-msgid "delete next char"
-msgstr "borrar el carÃ¡cter siguiente"
-
-msgid "delete until end of line"
-msgstr "borrar hasta fin de lÃ­nea"
-
-msgid "delete until beginning of line"
-msgstr "borrar hasta principio de lÃ­nea"
-
-msgid "delete entire line"
-msgstr "borrar lÃ­nea entera"
-
-msgid "delete previous word"
-msgstr "borrar la palabra anterior"
-
-msgid "delete next word"
-msgstr "borrar la palabra siguiente"
-
-msgid "paste current clipboard content"
-msgstr "pegar el contenido actual del portapapeles"
-
-msgid "transpose chars"
-msgstr "transponer caracteres"
-
-msgid "go to beginning of line"
-msgstr "ir al principio de lÃ­nea"
-
-msgid "go to end of line"
-msgstr "ir al final de lÃ­nea"
-
-msgid "move one char left"
-msgstr "mover un carÃ¡cter a la izquierda"
-
-msgid "move to previous word"
-msgstr "mover a la palabra anterior"
-
-msgid "move one char right"
-msgstr "mover un carÃ¡cter a la derecha"
-
-msgid "move to next word"
-msgstr "mover a la palabra siguiente"
-
-msgid "call previous command in history"
-msgstr "llamar al comando anterior en el historial"
-
-msgid "call previous command in global history"
-msgstr "llamar al comando anterior en el historial global"
-
-msgid "call next command in history"
-msgstr "llamar al comando siguiente en el historial"
-
-msgid "call next command in global history"
-msgstr "llamar al comando siguiente en el historial global"
-
-msgid "jump to buffer with activity"
-msgstr "saltar al bÃºfer con actividad"
-
-msgid "jump to DCC buffer"
-msgstr "saltar al bÃºfer DCC"
-
-msgid "jump to last buffer"
-msgstr "saltar al Ãºltimo bÃºfer"
-
-#, fuzzy
-msgid "jump to previous buffer"
-msgstr "saltar al bÃºfer del servidor"
-
-msgid "jump to server buffer"
-msgstr "saltar al bÃºfer del servidor"
-
-msgid "jump to next server"
-msgstr "saltar al servidor siguiente"
-
-msgid "switch active server on servers buffer"
-msgstr "seleccionar servidor activo en el bÃºfer de servidores"
-
-msgid "scroll to first unread line in buffer"
-msgstr "desplazarse a la primera lÃ­nea sin leer en el bÃºfer"
-
-#, fuzzy
-msgid "set unread marker on all buffers"
-msgstr "longitud invÃ¡lida para un bÃºfer"
-
-msgid "clear hotlist"
-msgstr "limpiar hotlist"
-
-msgid "clear infobar"
-msgstr "limpiar barra de informaciÃ³n"
-
-msgid "grab a key"
-msgstr "capturar una clave"
-
-msgid "insert a string in command line"
-msgstr ""
-
-#, fuzzy
-msgid "search text in buffer history"
-msgstr "sesiÃ³n: cargando historial del bÃºfer\n"
-
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
 msgstr "%s No ha sido posible atar la clave \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")"
-msgstr ""
-"%s No ha sido posible atar la clave \"%s\" (nombre de funciÃ³n invÃ¡lido: \"%"
-"s\")\n"
 
 #, fuzzy
 msgid "Error: not enough memory for key binding"
@@ -4570,6 +4449,128 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
+#~ msgid "Internal key functions:\n"
+#~ msgstr "Funciones de clave internas:\n"
+
+#, fuzzy
+#~ msgid "Internal key functions:"
+#~ msgstr "Funciones de clave internas:\n"
+
+#, fuzzy
+#~ msgid "%sError: unknown key function \"%s\""
+#~ msgstr "%s opciÃ³n desconocida para el comando \"%s\"\n"
+
+#~ msgid "terminate line"
+#~ msgstr "terminar lÃ­nea"
+
+#~ msgid "complete word"
+#~ msgstr "completar palabra"
+
+#~ msgid "delete previous char"
+#~ msgstr "borrar el carÃ¡cter anterior"
+
+#~ msgid "delete next char"
+#~ msgstr "borrar el carÃ¡cter siguiente"
+
+#~ msgid "delete until end of line"
+#~ msgstr "borrar hasta fin de lÃ­nea"
+
+#~ msgid "delete until beginning of line"
+#~ msgstr "borrar hasta principio de lÃ­nea"
+
+#~ msgid "delete entire line"
+#~ msgstr "borrar lÃ­nea entera"
+
+#~ msgid "delete previous word"
+#~ msgstr "borrar la palabra anterior"
+
+#~ msgid "delete next word"
+#~ msgstr "borrar la palabra siguiente"
+
+#~ msgid "paste current clipboard content"
+#~ msgstr "pegar el contenido actual del portapapeles"
+
+#~ msgid "transpose chars"
+#~ msgstr "transponer caracteres"
+
+#~ msgid "go to beginning of line"
+#~ msgstr "ir al principio de lÃ­nea"
+
+#~ msgid "go to end of line"
+#~ msgstr "ir al final de lÃ­nea"
+
+#~ msgid "move one char left"
+#~ msgstr "mover un carÃ¡cter a la izquierda"
+
+#~ msgid "move to previous word"
+#~ msgstr "mover a la palabra anterior"
+
+#~ msgid "move one char right"
+#~ msgstr "mover un carÃ¡cter a la derecha"
+
+#~ msgid "move to next word"
+#~ msgstr "mover a la palabra siguiente"
+
+#~ msgid "call previous command in history"
+#~ msgstr "llamar al comando anterior en el historial"
+
+#~ msgid "call previous command in global history"
+#~ msgstr "llamar al comando anterior en el historial global"
+
+#~ msgid "call next command in history"
+#~ msgstr "llamar al comando siguiente en el historial"
+
+#~ msgid "call next command in global history"
+#~ msgstr "llamar al comando siguiente en el historial global"
+
+#~ msgid "jump to buffer with activity"
+#~ msgstr "saltar al bÃºfer con actividad"
+
+#~ msgid "jump to DCC buffer"
+#~ msgstr "saltar al bÃºfer DCC"
+
+#~ msgid "jump to last buffer"
+#~ msgstr "saltar al Ãºltimo bÃºfer"
+
+#, fuzzy
+#~ msgid "jump to previous buffer"
+#~ msgstr "saltar al bÃºfer del servidor"
+
+#~ msgid "jump to server buffer"
+#~ msgstr "saltar al bÃºfer del servidor"
+
+#~ msgid "jump to next server"
+#~ msgstr "saltar al servidor siguiente"
+
+#~ msgid "switch active server on servers buffer"
+#~ msgstr "seleccionar servidor activo en el bÃºfer de servidores"
+
+#~ msgid "scroll to first unread line in buffer"
+#~ msgstr "desplazarse a la primera lÃ­nea sin leer en el bÃºfer"
+
+#, fuzzy
+#~ msgid "set unread marker on all buffers"
+#~ msgstr "longitud invÃ¡lida para un bÃºfer"
+
+#~ msgid "clear hotlist"
+#~ msgstr "limpiar hotlist"
+
+#~ msgid "clear infobar"
+#~ msgstr "limpiar barra de informaciÃ³n"
+
+#~ msgid "grab a key"
+#~ msgstr "capturar una clave"
+
+#, fuzzy
+#~ msgid "search text in buffer history"
+#~ msgstr "sesiÃ³n: cargando historial del bÃºfer\n"
+
+#, fuzzy
+#~ msgid "Error: unable to bind key \"%s\" (invalid function name: \"%s\")"
+#~ msgstr ""
+#~ "%s No ha sido posible atar la clave \"%s\" (nombre de funciÃ³n invÃ¡lido: "
+#~ "\"%s\")\n"
+
 #, fuzzy
 #~ msgid "launch WeeChat builtin command (do not look at commands hooked)"
 #~ msgstr ""
@@ -4765,10 +4766,6 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 #, fuzzy
 #~ msgid "%sError: wrong number \"%s\" for filter"
 #~ msgstr "%s nÃºmero de argumentos incorrecto para el comando \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%sError: command \"%s\" failed"
-#~ msgstr "%s el comando \"%s\" ha fallado\n"
 
 #, fuzzy
 #~ msgid "%s%s: cannot identify channel for \"%s\" command"
