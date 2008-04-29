@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-28 16:55+0200\n"
+"POT-Creation-Date: 2008-04-29 13:16+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -114,7 +114,7 @@ msgid "List of bars:"
 msgstr "Seznam pro aliasy:\n"
 
 #, fuzzy, c-format
-msgid " %3d. %s%s%s: %s (cond: %s), %s, filling: %s, %s: %s"
+msgid "  %s%s%s: %s (cond: %s), %s, filling: %s, %s: %s"
 msgstr "%sna %s%s%s/%s%s%s:%s ignoruji %s%s%s od %s%s\n"
 
 #, fuzzy
@@ -128,7 +128,7 @@ msgid "auto"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "      fg: %s, bg: %s, items: %s%s (plugin: %s)"
+msgid "    priority: %d, fg: %s, bg: %s, items: %s%s (plugin: %s)"
 msgstr "%sna %s%s%s/%s%s%s:%s ignoruji %s%s%s od %s%s\n"
 
 #, fuzzy
@@ -608,7 +608,7 @@ msgstr "řídit buffery"
 
 msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
-"| [del barname] | [set barname name|number|condition|position|filling|size|"
+"| [del barname] | [set barname name|priority|condition|position|filling|size|"
 "separator|items value] | [list] | [listitems]"
 msgstr ""
 
@@ -1711,6 +1711,9 @@ msgstr "server"
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
 "that"
+msgstr ""
+
+msgid "bar priority (high number means bar displayed first)"
 msgstr ""
 
 msgid "bar type (root, window, window_active, window_inactive)"

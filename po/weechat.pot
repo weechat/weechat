@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-28 16:55+0200\n"
+"POT-Creation-Date: 2008-04-29 13:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,7 @@ msgid "List of bars:"
 msgstr ""
 
 #, c-format
-msgid " %3d. %s%s%s: %s (cond: %s), %s, filling: %s, %s: %s"
+msgid "  %s%s%s: %s (cond: %s), %s, filling: %s, %s: %s"
 msgstr ""
 
 msgid "height"
@@ -107,7 +107,7 @@ msgid "auto"
 msgstr ""
 
 #, c-format
-msgid "      fg: %s, bg: %s, items: %s%s (plugin: %s)"
+msgid "    priority: %d, fg: %s, bg: %s, items: %s%s (plugin: %s)"
 msgstr ""
 
 msgid ", with separator"
@@ -534,7 +534,7 @@ msgstr ""
 
 msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
-"| [del barname] | [set barname name|number|condition|position|filling|size|"
+"| [del barname] | [set barname name|priority|condition|position|filling|size|"
 "separator|items value] | [list] | [listitems]"
 msgstr ""
 
@@ -1414,6 +1414,9 @@ msgstr ""
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
 "that"
+msgstr ""
+
+msgid "bar priority (high number means bar displayed first)"
 msgstr ""
 
 msgid "bar type (root, window, window_active, window_inactive)"

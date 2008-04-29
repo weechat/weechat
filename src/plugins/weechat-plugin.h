@@ -376,10 +376,11 @@ struct t_weechat_plugin
     void (*bar_item_remove) (struct t_gui_bar_item *item);
     struct t_gui_bar *(*bar_search) (char *name);
     struct t_gui_bar *(*bar_new) (struct t_weechat_plugin *plugin, char *name,
-                                  char *type, char *condition, char *position,
-                                  char *filling, char *size, char *size_max,
-                                  char *color_fg, char *color_bg,
-                                  char *separator, char *items);
+                                  char *priority, char *type, char *condition,
+                                  char *position, char *filling, char *size,
+                                  char *size_max, char *color_fg,
+                                  char *color_bg, char *separator,
+                                  char *items);
     int (*bar_set) (struct t_gui_bar *bar, char *property, char *value);
     void (*bar_update) (char *name);
     void (*bar_remove) (struct t_gui_bar *bar);
@@ -773,10 +774,10 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->bar_item_remove(__item)
 #define weechat_bar_search(__name)              \
     weechat_plugin->bar_search(__name)
-#define weechat_bar_new(__name, __type, __condition, __position,        \
-                        __filling, __size, __size_max, __color_fg,      \
-                        __color_bg, __separator, __items)               \
-    weechat_plugin->bar_new(weechat_plugin, __name, __type,             \
+#define weechat_bar_new(__name, __priority, __type, __condition,        \
+                        __position, __filling, __size, __size_max,      \
+                        __color_fg, __color_bg, __separator, __items)   \
+    weechat_plugin->bar_new(weechat_plugin, __name, __priority, __type, \
                             __condition, __position, __filling, __size, \
                             __size_max, __color_fg, __color_bg,         \
                             __separator, __items)

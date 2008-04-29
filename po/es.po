@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-28 16:55+0200\n"
+"POT-Creation-Date: 2008-04-29 13:16+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -116,7 +116,7 @@ msgid "List of bars:"
 msgstr "Lista de alias:\n"
 
 #, fuzzy, c-format
-msgid " %3d. %s%s%s: %s (cond: %s), %s, filling: %s, %s: %s"
+msgid "  %s%s%s: %s (cond: %s), %s, filling: %s, %s: %s"
 msgstr "%sen %s%s%s/%s%s%s:%s ignorando %s%s%s de %s%s\n"
 
 msgid "height"
@@ -129,7 +129,7 @@ msgid "auto"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "      fg: %s, bg: %s, items: %s%s (plugin: %s)"
+msgid "    priority: %d, fg: %s, bg: %s, items: %s%s (plugin: %s)"
 msgstr "%sen %s%s%s/%s%s%s:%s ignorando %s%s%s de %s%s\n"
 
 #, fuzzy
@@ -612,7 +612,7 @@ msgstr "gestionar los bÃºfers"
 
 msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
-"| [del barname] | [set barname name|number|condition|position|filling|size|"
+"| [del barname] | [set barname name|priority|condition|position|filling|size|"
 "separator|items value] | [list] | [listitems]"
 msgstr ""
 
@@ -1111,8 +1111,8 @@ msgstr "marca de tiempo para la fecha mostrada cuando el dÃ­a cambiÃ³"
 #, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
-"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea sin "
-"leer"
+"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea "
+"sin leer"
 
 #, c-format
 msgid ""
@@ -1632,8 +1632,8 @@ msgid ""
 "support.\n"
 "Be careful, private info may be in these files.\n"
 msgstr ""
-"Por favor, envÃ­a %s/%s, %s/%s y los mensajes de arriba a los desarrolladores "
-"de Weechat para el soporte.\n"
+"Por favor, envÃ­a %s/%s, %s/%s y los mensajes de arriba a los "
+"desarrolladores de Weechat para el soporte.\n"
 "SÃ© cuidadoso, puede que haya informaciÃ³n privada en estos ficheros.\n"
 
 #, c-format
@@ -1695,6 +1695,9 @@ msgstr "servidor"
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
 "that"
+msgstr ""
+
+msgid "bar priority (high number means bar displayed first)"
 msgstr ""
 
 msgid "bar type (root, window, window_active, window_inactive)"
@@ -5171,8 +5174,8 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 #~ "maximum number of lines in history for one server/channel/private window "
 #~ "(0 = unlimited)"
 #~ msgstr ""
-#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/privado "
-#~ "(0 = ilimitado)"
+#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/"
+#~ "privado (0 = ilimitado)"
 
 #, fuzzy
 #~ msgid "log messages from plugins"
@@ -5366,8 +5369,8 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 #~ "max size for aligning nick and other messages (should be >= to "
 #~ "look_align_size)"
 #~ msgstr ""
-#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a ser "
-#~ ">= a look_align_size)"
+#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a "
+#~ "ser >= a look_align_size)"
 
 #~ msgid "server name not found"
 #~ msgstr "nombre de servidor no encontrado"
@@ -6182,7 +6185,8 @@ msgstr "%s argumentos incorrectos para el comando \"%s\"\n"
 
 #~ msgid "color for chan owner symbol (specific to unrealircd)"
 #~ msgstr ""
-#~ "color para el sÃ­mbolo de propietario de canal (especificado en unrealircd)"
+#~ "color para el sÃ­mbolo de propietario de canal (especificado en "
+#~ "unrealircd)"
 
 #~ msgid "color for chan admin symbol"
 #~ msgstr "color para el sÃ­mbolo de administrador de canal"

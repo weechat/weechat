@@ -88,9 +88,8 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                 snprintf (str_size, sizeof (str_size),
                           "%d", CONFIG_INTEGER(ptr_bar->size));
                 gui_chat_printf (NULL,
-                                 _(" %3d. %s%s%s: %s (cond: %s), %s, filling: %s, "
+                                 _("  %s%s%s: %s (cond: %s), %s, filling: %s, "
                                    "%s: %s"),
-                                 ptr_bar->number,
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  ptr_bar->name,
                                  GUI_COLOR(GUI_COLOR_CHAT),
@@ -105,8 +104,9 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                                  _("height") : _("width"),
                                  (CONFIG_INTEGER(ptr_bar->size) == 0) ? _("auto") : str_size);
                 gui_chat_printf (NULL,
-                                 _("      fg: %s, bg: %s, items: %s%s (plugin: "
+                                 _("    priority: %d, fg: %s, bg: %s, items: %s%s (plugin: "
                                    "%s)"),
+                                 CONFIG_INTEGER(ptr_bar->priority),
                                  gui_color_get_name (CONFIG_COLOR(ptr_bar->color_fg)),
                                  gui_color_get_name (CONFIG_COLOR(ptr_bar->color_bg)),
                                  (CONFIG_STRING(ptr_bar->items) && CONFIG_STRING(ptr_bar->items)[0]) ?
@@ -202,7 +202,8 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         if (error && !error[0])
         {
             /* create bar */
-            if (gui_bar_new (NULL, argv[2], str_type, pos_condition, argv[4],
+            if (gui_bar_new (NULL, argv[2], "0", str_type, pos_condition,
+                             argv[4],
                              ((position == GUI_BAR_POSITION_LEFT)
                               || (position == GUI_BAR_POSITION_RIGHT)) ?
                              "vertical" : "horizontal",
@@ -2509,7 +2510,7 @@ command_init ()
                   N_("manage bars"),
                   N_("[add barname type[,cond1,cond2,...] position size "
                      "separator item1,item2,...] | [del barname] | "
-                     "[set barname name|number|condition|position|filling|"
+                     "[set barname name|priority|condition|position|filling|"
                      "size|separator|items value] | [list] | [listitems]"),
                   N_("      add: add a new bar\n"
                      "  barname: name of bar (must be unique)\n"
@@ -2532,7 +2533,7 @@ command_init ()
                      "      set: set a value for a bar property\n"
                      "     list: list all bars\n"
                      "listitems: list all bar items"),
-                  "add|del|set|list|listitems %r name|number|conditions|"
+                  "add|del|set|list|listitems %r name|priority|conditions|"
                   "position|filling|size|separator|items",
                   &command_bar, NULL);
     hook_command (NULL, "buffer",

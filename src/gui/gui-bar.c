@@ -39,7 +39,7 @@
 
 
 char *gui_bar_option_str[GUI_BAR_NUM_OPTIONS] =
-{ "type", "conditions", "position", "filling", "size", "size_max",
+{ "priority", "type", "conditions", "position", "filling", "size", "size_max",
   "color_fg", "color_bg", "separator", "items" };
 char *gui_bar_type_str[GUI_BAR_NUM_TYPES] =
 { "root", "window" };
@@ -120,6 +120,68 @@ gui_bar_search_position (char *position)
 }
 
 /*
+ * gui_bar_find_pos: find position for a bar in list (keeping list sorted
+ *                   by priority)
+ */
+
+struct t_gui_bar *
+gui_bar_find_pos (struct t_gui_bar *bar)
+{
+    struct t_gui_bar *ptr_bar;
+    
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        if (CONFIG_INTEGER(bar->priority) >= CONFIG_INTEGER(ptr_bar->priority))
+            return ptr_bar;
+    }
+    
+    /* bar not found, add to end of list */
+    return NULL;
+}
+
+/*
+ * gui_bar_insert: insert a bar to the list (at good position, according to
+ *                 priority)
+ */
+
+void
+gui_bar_insert (struct t_gui_bar *bar)
+{
+    struct t_gui_bar *pos_bar;
+    
+    if (gui_bars)
+    {
+        pos_bar = gui_bar_find_pos (bar);
+        if (pos_bar)
+        {
+            /* insert bar into the list (before position found) */
+            bar->prev_bar = pos_bar->prev_bar;
+            bar->next_bar = pos_bar;
+            if (pos_bar->prev_bar)
+                (pos_bar->prev_bar)->next_bar = bar;
+            else
+                gui_bars = bar;
+            pos_bar->prev_bar = bar;
+        }
+        else
+        {
+            /* add bar to the end */
+            bar->prev_bar = last_gui_bar;
+            bar->next_bar = NULL;
+            last_gui_bar->next_bar = bar;
+            last_gui_bar = bar;
+        }
+    }
+    else
+    {
+        bar->prev_bar = NULL;
+        bar->next_bar = NULL;
+        gui_bars = bar;
+        last_gui_bar = bar;
+    }
+}
+
+/*
  * gui_bar_check_conditions_for_window: return 1 if bar should be displayed in
  *                                      this window, according to condition(s)
  *                                      on bar
@@ -195,25 +257,6 @@ gui_bar_search (char *name)
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (strcmp (ptr_bar->name, name) == 0)
-            return ptr_bar;
-    }
-    
-    /* bar not found */
-    return NULL;
-}
-
-/*
- * gui_bar_search_by_number: search a bar by number
- */
-
-struct t_gui_bar *
-gui_bar_search_by_number (int number)
-{
-    struct t_gui_bar *ptr_bar;
-    
-    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-    {
-        if (ptr_bar->number == number)
             return ptr_bar;
     }
     
@@ -545,11 +588,13 @@ gui_bar_set_name (struct t_gui_bar *bar, char *name)
     
     if (!name || !name[0])
         return;
-
+    
     length = strlen (name) + 64;
     option_name = malloc (length);
     if (option_name)
     {
+        snprintf (option_name, length, "%s.priority", name);
+        config_file_option_rename (bar->priority, option_name);
         snprintf (option_name, length, "%s.type", name);
         config_file_option_rename (bar->type, option_name);
         snprintf (option_name, length, "%s.conditions", name);
@@ -580,89 +625,61 @@ gui_bar_set_name (struct t_gui_bar *bar, char *name)
 }
 
 /*
- * gui_bar_set_number: set number for a bar
+ * gui_bar_set_priority: set priority for a bar
  */
 
 void
-gui_bar_set_number (struct t_gui_bar *bar, int number)
+gui_bar_set_priority (struct t_gui_bar *bar, char *priority)
 {
+    long number;
+    char *error;
     struct t_gui_bar *ptr_bar;
     struct t_gui_window *ptr_win;
-    int i;
-
-    if (number < 1)
-        number = 1;
     
-    /* bar number is already ok? */
-    if (number == bar->number)
-        return;
-    
-    /* remove bar from list */
-    if (bar == gui_bars)
+    error = NULL;
+    number = strtol (priority, &error, 10);
+    if (error && !error[0])
     {
-        gui_bars = bar->next_bar;
-        gui_bars->prev_bar = NULL;
-    }
-    if (bar == last_gui_bar)
-    {
-        last_gui_bar = bar->prev_bar;
-        last_gui_bar->next_bar = NULL;
-    }
-    if (bar->prev_bar)
-        (bar->prev_bar)->next_bar = bar->next_bar;
-    if (bar->next_bar)
-        (bar->next_bar)->prev_bar = bar->prev_bar;
-
-    if (number == 1)
-    {
-        gui_bars->prev_bar = bar;
-        bar->prev_bar = NULL;
-        bar->next_bar = gui_bars;
-        gui_bars = bar;
-    }
-    else
-    {
-        /* assign new number to all bars */
-        i = 1;
+        if (number < 0)
+            number = 0;
+        
+        /* bar number is already ok? */
+        if (number == CONFIG_INTEGER(bar->priority))
+            return;
+        
+        config_file_option_set (bar->priority, priority, 1);
+        
+        /* remove bar from list */
+        if (bar == gui_bars)
+        {
+            gui_bars = bar->next_bar;
+            gui_bars->prev_bar = NULL;
+        }
+        if (bar == last_gui_bar)
+        {
+            last_gui_bar = bar->prev_bar;
+            last_gui_bar->next_bar = NULL;
+        }
+        if (bar->prev_bar)
+            (bar->prev_bar)->next_bar = bar->next_bar;
+        if (bar->next_bar)
+            (bar->next_bar)->prev_bar = bar->prev_bar;
+        
+        gui_bar_insert (bar);
+        
+        /* free bar windows */
         for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
         {
-            ptr_bar->number = i++;
+            gui_bar_free_bar_windows (ptr_bar);
         }
         
-        ptr_bar = gui_bar_search_by_number (number);
-        if (ptr_bar)
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         {
-            /* add bar before ptr_bar */
-            bar->prev_bar = ptr_bar->prev_bar;
-            bar->next_bar = ptr_bar;
-            if (ptr_bar->prev_bar)
-                (ptr_bar->prev_bar)->next_bar = bar;
-            ptr_bar->prev_bar = bar;
-        }
-        else
-        {
-            /* add to end of list */
-            bar->prev_bar = last_gui_bar;
-            bar->next_bar = NULL;
-            last_gui_bar->next_bar = bar;
-            last_gui_bar = bar;
-        }
-    }
-    
-    /* assign new number to all bars */
-    i = 1;
-    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-    {
-        ptr_bar->number = i++;
-        gui_bar_free_bar_windows (ptr_bar);
-    }
-    
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-    {
-        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-        {
-            if (CONFIG_INTEGER(ptr_bar->type) != GUI_BAR_TYPE_ROOT)
-                gui_bar_window_new (ptr_bar, ptr_win);
+            for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+            {
+                if (CONFIG_INTEGER(ptr_bar->type) != GUI_BAR_TYPE_ROOT)
+                    gui_bar_window_new (ptr_bar, ptr_win);
+            }
         }
     }
 }
@@ -766,9 +783,6 @@ gui_bar_set_size_max (struct t_gui_bar *bar, char *size)
 int
 gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
 {
-    long number;
-    char *error;
-    
     if (!bar || !property || !value)
         return 0;
     
@@ -777,15 +791,10 @@ gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
         gui_bar_set_name (bar, value);
         return 1;
     }
-    else if (string_strcasecmp (property, "number") == 0)
+    else if (string_strcasecmp (property, "priority") == 0)
     {
-        error = NULL;
-        number = strtol (value, &error, 10);
-        if (error && !error[0])
-        {
-            gui_bar_set_number (bar, number);
-            gui_window_refresh_needed = 1;
-        }
+        gui_bar_set_priority (bar, value);
+        gui_window_refresh_needed = 1;
         return 1;
     }
     else if (string_strcasecmp (property, "conditions") == 0)
@@ -847,43 +856,6 @@ gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
 }
 
 /*
- * gui_bar_alloc: allocate and initialize new bar structure
- */
-
-struct t_gui_bar *
-gui_bar_alloc (char *name)
-{
-    struct t_gui_bar *new_bar;
-
-    new_bar = malloc (sizeof (*new_bar));
-    if (new_bar)
-    {
-        new_bar->plugin = NULL;
-        new_bar->number = 0;
-        new_bar->name = strdup (name);
-        new_bar->type = NULL;
-        new_bar->conditions = NULL;
-        new_bar->position = NULL;
-        new_bar->filling = NULL;
-        new_bar->size = NULL;
-        new_bar->size_max = NULL;
-        new_bar->color_fg = NULL;
-        new_bar->color_bg = NULL;
-        new_bar->separator = NULL;
-        new_bar->items = NULL;
-        new_bar->conditions_count = 0;
-        new_bar->conditions_array = NULL;
-        new_bar->items_count = 0;
-        new_bar->items_array = NULL;
-        new_bar->bar_window = NULL;
-        new_bar->prev_bar = NULL;
-        new_bar->next_bar = NULL;
-    }
-    
-    return new_bar;
-}
-
-/*
  * gui_bar_create_option: create an option for a bar
  */
 
@@ -905,6 +877,14 @@ gui_bar_create_option (char *bar_name, int index_option, char *value)
         
         switch (index_option)
         {
+            case GUI_BAR_OPTION_PRIORITY:
+                ptr_option = config_file_new_option (
+                    weechat_config_file, weechat_config_section_bar,
+                    option_name, "integer",
+                    N_("bar priority (high number means bar displayed first)"),
+                    NULL, 0, INT_MAX, value,
+                    NULL, NULL, NULL, NULL, NULL, NULL);
+                break;
             case GUI_BAR_OPTION_TYPE:
                 ptr_option = config_file_new_option (
                     weechat_config_file, weechat_config_section_bar,
@@ -1004,11 +984,104 @@ gui_bar_create_option (char *bar_name, int index_option, char *value)
 }
 
 /*
+ * gui_bar_create_option_temp: create option for a temporary bar (when reading
+ *                             config file)
+ */
+
+void
+gui_bar_create_option_temp (struct t_gui_bar *temp_bar, int index_option,
+                            char *value)
+{
+    struct t_config_option *new_option;
+    
+    new_option = gui_bar_create_option (temp_bar->name,
+                                        index_option,
+                                        value);
+    if (new_option)
+    {
+        switch (index_option)
+        {
+            case GUI_BAR_OPTION_PRIORITY:
+                temp_bar->priority = new_option;
+                break;
+            case GUI_BAR_OPTION_TYPE:
+                temp_bar->type = new_option;
+                break;
+            case GUI_BAR_OPTION_CONDITIONS:
+                temp_bar->conditions = new_option;
+                break;
+            case GUI_BAR_OPTION_POSITION:
+                temp_bar->position = new_option;
+                break;
+            case GUI_BAR_OPTION_FILLING:
+                temp_bar->filling = new_option;
+                break;
+            case GUI_BAR_OPTION_SIZE:
+                temp_bar->size = new_option;
+                break;
+            case GUI_BAR_OPTION_SIZE_MAX:
+                temp_bar->size_max = new_option;
+                break;
+            case GUI_BAR_OPTION_COLOR_FG:
+                temp_bar->color_fg = new_option;
+                break;
+            case GUI_BAR_OPTION_COLOR_BG:
+                temp_bar->color_bg = new_option;
+                break;
+            case GUI_BAR_OPTION_SEPARATOR:
+                temp_bar->separator = new_option;
+                break;
+            case GUI_BAR_OPTION_ITEMS:
+                temp_bar->items = new_option;
+                break;
+        }
+    }
+}
+
+/*
+ * gui_bar_alloc: allocate and initialize new bar structure
+ */
+
+struct t_gui_bar *
+gui_bar_alloc (char *name)
+{
+    struct t_gui_bar *new_bar;
+
+    new_bar = malloc (sizeof (*new_bar));
+    if (new_bar)
+    {
+        new_bar->plugin = NULL;
+        new_bar->name = strdup (name);
+        new_bar->priority = 0;
+        new_bar->type = NULL;
+        new_bar->conditions = NULL;
+        new_bar->position = NULL;
+        new_bar->filling = NULL;
+        new_bar->size = NULL;
+        new_bar->size_max = NULL;
+        new_bar->color_fg = NULL;
+        new_bar->color_bg = NULL;
+        new_bar->separator = NULL;
+        new_bar->items = NULL;
+        new_bar->conditions_count = 0;
+        new_bar->conditions_array = NULL;
+        new_bar->items_count = 0;
+        new_bar->items_array = NULL;
+        new_bar->bar_window = NULL;
+        new_bar->prev_bar = NULL;
+        new_bar->next_bar = NULL;
+    }
+    
+    return new_bar;
+}
+
+/*
  * gui_bar_new_with_options: create a new bar with options
  */
 
 struct t_gui_bar *
 gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
+                          struct t_config_option *priority,
                           struct t_config_option *type,
                           struct t_config_option *conditions,
                           struct t_config_option *position,
@@ -1028,7 +1101,7 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
     if (new_bar)
     {
         new_bar->plugin = plugin;
-        new_bar->number = (last_gui_bar) ? last_gui_bar->number + 1 : 1;
+        new_bar->priority = priority;
         new_bar->type = type;
         new_bar->conditions = conditions;
         if (CONFIG_STRING(conditions) && CONFIG_STRING(conditions)[0])
@@ -1063,14 +1136,8 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
         }
         new_bar->bar_window = NULL;
         
-        /* add bar to bars queue */
-        new_bar->prev_bar = last_gui_bar;
-        if (gui_bars)
-            last_gui_bar->next_bar = new_bar;
-        else
-            gui_bars = new_bar;
-        last_gui_bar = new_bar;
-        new_bar->next_bar = NULL;
+        /* add bar to bars list */
+        gui_bar_insert (new_bar);
         
         /* add window bar */
         if (CONFIG_INTEGER(new_bar->type) == GUI_BAR_TYPE_ROOT)
@@ -1099,13 +1166,13 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
 
 struct t_gui_bar *
 gui_bar_new (struct t_weechat_plugin *plugin, char *name,
-             char *type, char *conditions, char *position, char *filling,
-             char *size, char *size_max, char *color_fg, char *color_bg,
-             char *separators, char *items)
+             char *priority, char *type, char *conditions, char *position,
+             char *filling, char *size, char *size_max, char *color_fg,
+             char *color_bg, char *separators, char *items)
 {
-    struct t_config_option *option_type, *option_conditions, *option_position;
-    struct t_config_option *option_filling, *option_size, *option_size_max;
-    struct t_config_option *option_color_fg, *option_color_bg;
+    struct t_config_option *option_priority, *option_type, *option_conditions;
+    struct t_config_option *option_position, *option_filling, *option_size;
+    struct t_config_option *option_size_max, *option_color_fg, *option_color_bg;
     struct t_config_option *option_separator, *option_items;
     struct t_gui_bar *new_bar;
     
@@ -1124,6 +1191,8 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name,
     if (gui_bar_search_position (position) < 0)
         return NULL;
     
+    option_priority = gui_bar_create_option (name, GUI_BAR_OPTION_PRIORITY,
+                                             priority);
     option_type = gui_bar_create_option (name, GUI_BAR_OPTION_TYPE,
                                          type);
     option_conditions = gui_bar_create_option (name, GUI_BAR_OPTION_CONDITIONS,
@@ -1145,14 +1214,16 @@ gui_bar_new (struct t_weechat_plugin *plugin, char *name,
                                                "on" : "off");
     option_items = gui_bar_create_option (name, GUI_BAR_OPTION_ITEMS,
                                           items);
-    new_bar = gui_bar_new_with_options (plugin, name, option_type,
-                                        option_conditions, option_position,
-                                        option_filling,  option_size,
-                                        option_size_max, option_color_fg,
-                                        option_color_bg, option_separator,
-                                        option_items);
+    new_bar = gui_bar_new_with_options (plugin, name, option_priority,
+                                        option_type,option_conditions,
+                                        option_position, option_filling,
+                                        option_size, option_size_max,
+                                        option_color_fg, option_color_bg,
+                                        option_separator, option_items);
     if (!new_bar)
     {
+        if (option_priority)
+            config_file_option_free (option_priority);
         if (option_type)
             config_file_option_free (option_type);
         if (option_conditions)
@@ -1190,6 +1261,10 @@ gui_bar_use_temp_bars ()
     for (ptr_temp_bar = gui_temp_bars; ptr_temp_bar;
          ptr_temp_bar = ptr_temp_bar->next_bar)
     {
+        if (!ptr_temp_bar->priority)
+            ptr_temp_bar->priority = gui_bar_create_option (ptr_temp_bar->name,
+                                                            GUI_BAR_OPTION_PRIORITY,
+                                                            "0");
         if (!ptr_temp_bar->type)
             ptr_temp_bar->type = gui_bar_create_option (ptr_temp_bar->name,
                                                         GUI_BAR_OPTION_TYPE,
@@ -1242,13 +1317,15 @@ gui_bar_use_temp_bars ()
                                                          GUI_BAR_OPTION_ITEMS,
                                                          "");
         
-        if (ptr_temp_bar->type && ptr_temp_bar->conditions
-            && ptr_temp_bar->position && ptr_temp_bar->filling
-            && ptr_temp_bar->size && ptr_temp_bar->size_max
-            && ptr_temp_bar->color_fg && ptr_temp_bar->color_bg
-            && ptr_temp_bar->separator && ptr_temp_bar->items)
+        if (ptr_temp_bar->priority && ptr_temp_bar->type
+            && ptr_temp_bar->conditions && ptr_temp_bar->position
+            && ptr_temp_bar->filling && ptr_temp_bar->size
+            && ptr_temp_bar->size_max && ptr_temp_bar->color_fg
+            && ptr_temp_bar->color_bg && ptr_temp_bar->separator
+            && ptr_temp_bar->items)
         {
             gui_bar_new_with_options (NULL, ptr_temp_bar->name,
+                                      ptr_temp_bar->priority,
                                       ptr_temp_bar->type,
                                       ptr_temp_bar->conditions,
                                       ptr_temp_bar->position,
@@ -1262,6 +1339,11 @@ gui_bar_use_temp_bars ()
         }
         else
         {
+            if (ptr_temp_bar->priority)
+            {
+                config_file_option_free (ptr_temp_bar->priority);
+                ptr_temp_bar->priority = NULL;
+            }
             if (ptr_temp_bar->type)
             {
                 config_file_option_free (ptr_temp_bar->type);
@@ -1374,6 +1456,8 @@ gui_bar_free (struct t_gui_bar *bar)
     /* free data */
     if (bar->name)
         free (bar->name);
+    if (bar->priority)
+        config_file_option_free (bar->priority);
     if (bar->type)
         config_file_option_free (bar->type);
     if (bar->conditions)
@@ -1450,8 +1534,8 @@ gui_bar_print_log ()
         log_printf ("");
         log_printf ("[bar (addr:0x%x)]", ptr_bar);
         log_printf ("  plugin . . . . . . . . : 0x%x", ptr_bar->plugin);
-        log_printf ("  number . . . . . . . . : %d",   ptr_bar->number);
         log_printf ("  name . . . . . . . . . : '%s'", ptr_bar->name);
+        log_printf ("  priority . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->priority));
         log_printf ("  type . . . . . . . . . : %d (%s)",
                     CONFIG_INTEGER(ptr_bar->type),
                     gui_bar_type_str[CONFIG_INTEGER(ptr_bar->type)]);

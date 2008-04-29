@@ -538,7 +538,6 @@ config_weechat_bar_read (void *data, struct t_config_file *config_file,
 {
     char *pos_option, *bar_name;
     struct t_gui_bar *ptr_temp_bar;
-    struct t_config_option *ptr_option;
     int index_option;
     
     /* make C compiler happy */
@@ -584,45 +583,8 @@ config_weechat_bar_read (void *data, struct t_config_file *config_file,
                     index_option = gui_bar_search_option (pos_option);
                     if (index_option >= 0)
                     {
-                        ptr_option = gui_bar_create_option (ptr_temp_bar->name,
-                                                            index_option,
-                                                            value);
-                        if (ptr_option)
-                        {
-                            switch (index_option)
-                            {
-                                case GUI_BAR_OPTION_TYPE:
-                                    ptr_temp_bar->type = ptr_option;
-                                    break;
-                                case GUI_BAR_OPTION_CONDITIONS:
-                                    ptr_temp_bar->conditions = ptr_option;
-                                    break;
-                                case GUI_BAR_OPTION_POSITION:
-                                    ptr_temp_bar->position = ptr_option;
-                                    break;
-                                case GUI_BAR_OPTION_FILLING:
-                                    ptr_temp_bar->filling = ptr_option;
-                                    break;
-                                case GUI_BAR_OPTION_SIZE:
-                                    ptr_temp_bar->size = ptr_option;
-                                    break;
-                                case GUI_BAR_OPTION_SIZE_MAX:
-                                    ptr_temp_bar->size_max = ptr_option;
-                                    break;
-                                case GUI_BAR_OPTION_COLOR_FG:
-                                    ptr_temp_bar->color_fg = ptr_option;
-                                    break;
-                                case GUI_BAR_OPTION_COLOR_BG:
-                                    ptr_temp_bar->color_bg = ptr_option;
-                                    break;
-                                case GUI_BAR_OPTION_SEPARATOR:
-                                    ptr_temp_bar->separator = ptr_option;
-                                    break;
-                                case GUI_BAR_OPTION_ITEMS:
-                                    ptr_temp_bar->items = ptr_option;
-                                    break;
-                            }
-                        }
+                        gui_bar_create_option_temp (ptr_temp_bar, index_option,
+                                                    value);
                     }
                 }
                 

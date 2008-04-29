@@ -309,7 +309,7 @@ gui_bar_window_create_win (struct t_gui_bar_window *bar_window)
 
 /*
  * gui_bar_window_find_pos: find position for bar window (keeping list sorted
- *                          by bar number)
+ *                          by bar priority)
  */
 
 struct t_gui_bar_window *
@@ -320,7 +320,7 @@ gui_bar_window_find_pos (struct t_gui_bar *bar, struct t_gui_window *window)
     for (ptr_bar_window = GUI_CURSES(window)->bar_windows; ptr_bar_window;
          ptr_bar_window = ptr_bar_window->next_bar_window)
     {
-        if (ptr_bar_window->bar->number > bar->number)
+        if (CONFIG_INTEGER(bar->priority) >= CONFIG_INTEGER(ptr_bar_window->bar->priority))
             return ptr_bar_window;
     }
     
