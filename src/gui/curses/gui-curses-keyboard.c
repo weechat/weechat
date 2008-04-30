@@ -111,7 +111,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind (NULL, /* m-right (kde) */ "meta2-1;3C",         "/buffer +1");
     gui_keyboard_bind (NULL, /* F6            */ "meta2-17~",          "/buffer +1");
     gui_keyboard_bind (NULL, /* pgup          */ "meta2-5~",           "/window page_up");
-    gui_keyboard_bind (NULL, /* pgup          */ "meta2-I",            "/winfow page_up");
+    gui_keyboard_bind (NULL, /* pgup          */ "meta2-I",            "/window page_up");
     gui_keyboard_bind (NULL, /* pgdn          */ "meta2-6~",           "/window page_down");
     gui_keyboard_bind (NULL, /* pgdn          */ "meta2-G",            "/window page_down");
     gui_keyboard_bind (NULL, /* m-pgup        */ "meta-meta2-5~",      "/window scroll_up");
