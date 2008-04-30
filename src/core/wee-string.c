@@ -568,7 +568,7 @@ string_explode (char *string, char *separators, int keep_eol,
         return NULL;
     
     string2 = string_strip (string, 1, 1, separators);
-    if (!string2)
+    if (!string2 || !string2[0])
         return NULL;
     
     /* calculate number of items */
