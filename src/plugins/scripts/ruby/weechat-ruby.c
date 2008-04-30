@@ -112,7 +112,9 @@ weechat_ruby_exec (struct t_plugin_script *script,
     VALUE rc, err;
     int ruby_error, *ret_i;
     void *ret_value;
-    
+    struct t_plugin_script *old_ruby_current_script;
+
+    old_ruby_current_script = ruby_current_script;
     ruby_current_script = script;
     
     if (argv && argv[0])
@@ -209,6 +211,7 @@ weechat_ruby_exec (struct t_plugin_script *script,
                         weechat_gettext ("%s%s: function \"%s\" must return a "
                                          "valid value"),
                         weechat_prefix ("error"), "ruby", function);
+        ruby_current_script = old_ruby_current_script;
 	return WEECHAT_RC_OK;
     }
     
@@ -218,8 +221,11 @@ weechat_ruby_exec (struct t_plugin_script *script,
                         weechat_gettext ("%s%s: not enough memory in function "
                                          "\"%s\""),
                         weechat_prefix ("error"), "ruby", function);
+        ruby_current_script = old_ruby_current_script;
 	return NULL;
     }
+    
+    ruby_current_script = old_ruby_current_script;
     
     return ret_value;
 }
@@ -433,7 +439,8 @@ weechat_ruby_unload (struct t_plugin_script *script)
 {
     int *r;
     char *ruby_argv[1] = { NULL };
-
+    void *interpreter;
+    
     weechat_printf (NULL,
                     weechat_gettext ("%s: unloading script \"%s\""),
                     "ruby", script->name);
@@ -448,10 +455,12 @@ weechat_ruby_unload (struct t_plugin_script *script)
 	    free (r);
     }
     
-    if (script->interpreter)
-	rb_gc_unregister_address (script->interpreter);
+    interpreter = script->interpreter;
     
     script_remove (weechat_ruby_plugin, &ruby_scripts, script);
+    
+    if (interpreter)
+	rb_gc_unregister_address (interpreter);
 }
 
 /*
@@ -614,6 +623,25 @@ weechat_ruby_debug_dump_cb (void *data, char *signal, char *type_data,
 }
 
 /*
+ * weechat_ruby_buffer_closed_cb: callback called when a buffer is closed
+ */
+
+int
+weechat_ruby_buffer_closed_cb (void *data, char *signal, char *type_data,
+                               void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    
+    if (signal_data)
+        script_remove_buffer_callbacks (ruby_scripts, signal_data);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * weechat_plugin_init: initialize Ruby plugin
  */
 
@@ -704,6 +732,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                  &weechat_ruby_command_cb,
                  &weechat_ruby_completion_cb,
                  &weechat_ruby_debug_dump_cb,
+                 &weechat_ruby_buffer_closed_cb,
                  &weechat_ruby_load_cb);
     
     /* init ok */

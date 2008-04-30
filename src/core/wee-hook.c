@@ -1227,6 +1227,10 @@ unhook (struct t_hook *hook)
 {
     struct t_hook *ptr_hook;
     
+    /* invalid hook? */
+    if (!hook_valid (hook))
+        return;
+    
     /* hook already deleted? */
     if (hook->deleted)
         return;

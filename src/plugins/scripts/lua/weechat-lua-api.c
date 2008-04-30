@@ -2657,7 +2657,7 @@ weechat_lua_api_hook_signal_cb (void *data, char *signal, char *type_data,
 {
     struct t_script_callback *script_callback;
     char *lua_argv[3];
-    static char value_str[64];
+    static char value_str[64], empty_value[1] = { '\0' };
     int *rc, ret, free_needed;
     
     script_callback = (struct t_script_callback *)data;
@@ -2666,7 +2666,7 @@ weechat_lua_api_hook_signal_cb (void *data, char *signal, char *type_data,
     free_needed = 0;
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
-        lua_argv[1] = (char *)signal_data;
+        lua_argv[1] = (signal_data) ? (char *)signal_data : empty_value;
     }
     else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)
     {

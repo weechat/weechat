@@ -59,6 +59,7 @@ weechat_python_exec (struct t_plugin_script *script,
     PyObject *rc;
     void *ret_value;
     int *ret_i;
+    struct t_plugin_script *old_python_current_script;
     
     /* PyEval_AcquireLock (); */
     PyThreadState_Swap (script->interpreter);
@@ -75,7 +76,8 @@ weechat_python_exec (struct t_plugin_script *script,
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
 	return NULL;
     }
-    
+
+    old_python_current_script = python_current_script;
     python_current_script = script;
     
     if (argv && argv[0])
@@ -151,6 +153,9 @@ weechat_python_exec (struct t_plugin_script *script,
                                          "a valid value"),
                         weechat_prefix ("error"), "python", function);
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
+        python_current_script = old_python_current_script;
+        if (python_current_script)
+            PyThreadState_Swap (python_current_script->interpreter);
 	return NULL;
     }
     
@@ -161,12 +166,20 @@ weechat_python_exec (struct t_plugin_script *script,
                                          "function \"%s\""),
                         weechat_prefix ("error"), "python", function);
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
+        python_current_script = old_python_current_script;
+        if (python_current_script)
+            PyThreadState_Swap (python_current_script->interpreter);
 	return NULL;
     }
     
-    if (PyErr_Occurred ()) PyErr_Print ();
+    if (PyErr_Occurred ())
+        PyErr_Print ();
     
     /* PyEval_ReleaseThread (python_current_script->interpreter); */
+    
+    python_current_script = old_python_current_script;
+    if (python_current_script)
+        PyThreadState_Swap (python_current_script->interpreter);
     
     return ret_value;
 }
@@ -426,6 +439,7 @@ void
 weechat_python_unload (struct t_plugin_script *script)
 {
     int *r;
+    void *interpreter;
     
     weechat_printf (NULL,
                     weechat_gettext ("%s: unloading script \"%s\""),
@@ -438,11 +452,13 @@ weechat_python_unload (struct t_plugin_script *script)
 	if (r)
 	    free (r);
     }
-
-    PyThreadState_Swap (script->interpreter);
-    Py_EndInterpreter (script->interpreter);
+    
+    interpreter = script->interpreter;
     
     script_remove (weechat_python_plugin, &python_scripts, script);
+    
+    PyThreadState_Swap (interpreter);
+    Py_EndInterpreter (interpreter);
 }
 
 /*
@@ -605,6 +621,25 @@ weechat_python_debug_dump_cb (void *data, char *signal, char *type_data,
 }
 
 /*
+ * weechat_python_buffer_closed_cb: callback called when a buffer is closed
+ */
+
+int
+weechat_python_buffer_closed_cb (void *data, char *signal, char *type_data,
+                                 void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    
+    if (signal_data)
+        script_remove_buffer_callbacks (python_scripts, signal_data);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * weechat_plugin_init: initialize Python plugin
  */
 
@@ -644,6 +679,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                  &weechat_python_command_cb,
                  &weechat_python_completion_cb,
                  &weechat_python_debug_dump_cb,
+                 &weechat_python_buffer_closed_cb,
                  &weechat_python_load_cb);
     
     /* init ok */

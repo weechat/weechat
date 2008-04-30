@@ -751,7 +751,7 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
 {
     struct t_gui_window *ptr_window;
     struct t_gui_buffer *ptr_buffer;
-    
+
     hook_signal_send ("buffer_closing",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     
@@ -827,12 +827,13 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
             ptr_window->buffer = NULL;
     }
     
+    hook_signal_send ("buffer_closed",
+                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    
     free (buffer);
     
     if (gui_windows && gui_current_window && gui_current_window->buffer)
         gui_status_refresh_needed = 1;
-    
-    hook_signal_send ("buffer_closed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*

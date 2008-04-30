@@ -68,6 +68,10 @@ extern void script_init (struct t_weechat_plugin *weechat_plugin,
                                                            char *signal,
                                                            char *type_data,
                                                            void *signal_data),
+                         int (*callback_signal_buffer_closed)(void *data,
+                                                              char *signal,
+                                                              char *type_data,
+                                                              void *signal_data),
                          int (*callback_load_file)(void *data, char *filename));
 extern char *script_ptr2str (void *pointer);
 extern void *script_str2ptr (char *pointer_str);
@@ -84,6 +88,8 @@ extern struct t_plugin_script *script_add (struct t_weechat_plugin *weechat_plug
                                            char *author, char *version,
                                            char *license, char *description,
                                            char *shutdown_func, char *charset);
+extern void script_remove_buffer_callbacks (struct t_plugin_script *scripts,
+                                            struct t_gui_buffer *buffer);
 extern void script_remove (struct t_weechat_plugin *weechat_plugin,
                            struct t_plugin_script **scripts,
                            struct t_plugin_script *script);

@@ -57,10 +57,13 @@ weechat_lua_exec (struct t_plugin_script *script,
 {
     void *ret_value;
     int argc, *ret_i;
+    struct t_plugin_script *old_lua_current_script;
     
     lua_current_interpreter = script->interpreter;
     
     lua_getglobal (lua_current_interpreter, function);
+
+    old_lua_current_script = lua_current_script;
     lua_current_script = script;
     
     if (argv && argv[0])
@@ -98,6 +101,7 @@ weechat_lua_exec (struct t_plugin_script *script,
                         weechat_gettext ("%s%s: error: %s"),
                         weechat_prefix ("error"), "lua",
                         lua_tostring (lua_current_interpreter, -1));
+        lua_current_script = old_lua_current_script;
         return NULL;
     }
     
@@ -113,8 +117,11 @@ weechat_lua_exec (struct t_plugin_script *script,
     else
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS(function);
+        lua_current_script = old_lua_current_script;
 	return NULL;
     }
+    
+    lua_current_script = old_lua_current_script;
     
     return ret_value; 
 }
@@ -257,6 +264,7 @@ weechat_lua_unload (struct t_plugin_script *script)
 {
     int *r;
     char *lua_argv[1] = { NULL };
+    void *interpreter;
     
     weechat_printf (NULL,
                     weechat_gettext ("%s: unloading script \"%s\""),
@@ -272,9 +280,11 @@ weechat_lua_unload (struct t_plugin_script *script)
 	    free (r);
     }
     
-    lua_close (script->interpreter);
+    interpreter = script->interpreter;
     
     script_remove (weechat_lua_plugin, &lua_scripts, script);
+    
+    lua_close (script->interpreter);
 }
 
 /*
@@ -437,6 +447,25 @@ weechat_lua_debug_dump_cb (void *data, char *signal, char *type_data,
 }
 
 /*
+ * weechat_lua_buffer_closed_cb: callback called when a buffer is closed
+ */
+
+int
+weechat_lua_buffer_closed_cb (void *data, char *signal, char *type_data,
+                               void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    
+    if (signal_data)
+        script_remove_buffer_callbacks (lua_scripts, signal_data);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * weechat_plugin_init: initialize Lua plugin
  */
 
@@ -450,6 +479,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                  &weechat_lua_command_cb,
                  &weechat_lua_completion_cb,
                  &weechat_lua_debug_dump_cb,
+                 &weechat_lua_buffer_closed_cb,
                  &weechat_lua_load_cb);
     
     /* init ok */

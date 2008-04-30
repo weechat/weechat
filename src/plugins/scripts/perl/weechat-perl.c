@@ -113,7 +113,8 @@ weechat_perl_exec (struct t_plugin_script *script,
     void *ret_value;
     int *ret_i, mem_err, length;
     SV *ret_s;
-
+    struct t_plugin_script *old_perl_current_script;
+    
     /* this code is placed here to conform ISO C90 */
     dSP;
     
@@ -132,6 +133,8 @@ weechat_perl_exec (struct t_plugin_script *script,
     ENTER;
     SAVETMPS;
     PUSHMARK(sp);
+    
+    old_perl_current_script = perl_current_script;
     
     /* are we loading the script file ? */
     if (strcmp (function, "weechat_perl_load_eval_file") != 0)
@@ -202,6 +205,15 @@ weechat_perl_exec (struct t_plugin_script *script,
                                          "\"%s\""),
                         weechat_prefix ("error"), "perl", function);
         return NULL;
+    }
+
+    if (strcmp (function, "weechat_perl_load_eval_file") != 0)
+    {
+        perl_current_script = old_perl_current_script;
+#ifdef MULTIPLICITY
+        if (perl_current_script)
+            PERL_SET_CONTEXT (perl_current_script->interpreter);
+#endif
     }
     
     return ret_value;
@@ -381,6 +393,7 @@ weechat_perl_unload (struct t_plugin_script *script)
 {
     int *r;
     char *perl_argv[1] = { NULL };
+    void *interpreter;
     
     weechat_printf (NULL,
                     weechat_gettext ("%s: unloading script \"%s\""),
@@ -391,7 +404,7 @@ weechat_perl_unload (struct t_plugin_script *script)
 #else
     eval_pv (script->interpreter, TRUE);
 #endif        
-
+    
     if (script->shutdown_func && script->shutdown_func[0])
     {
         r = (int *) weechat_perl_exec (script,
@@ -402,15 +415,17 @@ weechat_perl_unload (struct t_plugin_script *script)
 	    free (r);
     }
     
-#ifdef MULTIPLICITY
-    perl_destruct (script->interpreter);
-    perl_free (script->interpreter);
-#else
-    if (script->interpreter)
-	free (script->interpreter);
-#endif
+    interpreter = script->interpreter;
     
     script_remove (weechat_perl_plugin, &perl_scripts, script);
+    
+#ifdef MULTIPLICITY
+    perl_destruct (interpreter);
+    perl_free (interpreter);
+#else
+    if (interpreter)
+	free (interpreter);
+#endif
 }
 
 /*
@@ -573,6 +588,25 @@ weechat_perl_debug_dump_cb (void *data, char *signal, char *type_data,
 }
 
 /*
+ * weechat_perl_buffer_closed_cb: callback called when a buffer is closed
+ */
+
+int
+weechat_perl_buffer_closed_cb (void *data, char *signal, char *type_data,
+                               void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    
+    if (signal_data)
+        script_remove_buffer_callbacks (perl_scripts, signal_data);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * weechat_plugin_init: initialize Perl plugin
  */
 
@@ -605,6 +639,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
                  &weechat_perl_command_cb,
                  &weechat_perl_completion_cb,
                  &weechat_perl_debug_dump_cb,
+                 &weechat_perl_buffer_closed_cb,
                  &weechat_perl_load_cb);
     
     /* init ok */

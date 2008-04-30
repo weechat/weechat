@@ -562,18 +562,22 @@ void
 plugin_remove (struct t_weechat_plugin *plugin)
 {
     struct t_weechat_plugin *new_weechat_plugins;
-    struct t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer *ptr_buffer, *next_buffer;
     
     /* close buffers created by this plugin */
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
+    ptr_buffer = gui_buffers;
+    while (ptr_buffer)
     {
+        next_buffer = ptr_buffer->next_buffer;
+        
         if (ptr_buffer->plugin == plugin)
         {
             ptr_buffer->close_callback = NULL;
             ptr_buffer->close_callback_data = NULL;
             gui_buffer_close (ptr_buffer, 1);
         }
+        
+        ptr_buffer = next_buffer;
     }
     
     /* remove plugin from list */

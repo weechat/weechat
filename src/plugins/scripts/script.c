@@ -90,6 +90,9 @@ script_init (struct t_weechat_plugin *weechat_plugin,
              int (*callback_signal_debug_dump)(void *data, char *signal,
                                                char *type_data,
                                                void *signal_data),
+             int (*callback_signal_buffer_closed)(void *data, char *signal,
+                                               char *type_data,
+                                               void *signal_data),
              int (*callback_load_file)(void *data, char *filename))
 {
     char *string, *completion = "list|listfull|load|autoload|reload|unload %f";
@@ -154,6 +157,9 @@ script_init (struct t_weechat_plugin *weechat_plugin,
     
     /* add signal for "debug_dump" */
     weechat_hook_signal ("debug_dump", callback_signal_debug_dump, NULL);
+    
+    /* add signal for "buffer_closed" */
+    weechat_hook_signal ("buffer_closed", callback_signal_buffer_closed, NULL);
     
     /* autoload scripts */
     script_auto_load (weechat_plugin, callback_load_file);
@@ -401,6 +407,34 @@ script_add (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * script_remove_buffer_callbacks: remove callbacks for a buffer (called when a
+ *                                 buffer is closed by user)
+ */
+
+void
+script_remove_buffer_callbacks (struct t_plugin_script *scripts,
+                                struct t_gui_buffer *buffer)
+{
+    struct t_plugin_script *ptr_script;
+    struct t_script_callback *ptr_script_callback, *next_script_callback;
+    
+    for (ptr_script = scripts; ptr_script;
+         ptr_script = ptr_script->next_script)
+    {
+        ptr_script_callback = ptr_script->callbacks;
+        while (ptr_script_callback)
+        {
+            next_script_callback = ptr_script_callback->next_callback;
+            
+            if (ptr_script_callback->buffer == buffer)
+                script_callback_remove (ptr_script, ptr_script_callback);
+            
+            ptr_script_callback = next_script_callback;
+        }
+    }
+}
+
+/*
  * script_remove: remove a script from list of scripts
  */
 
@@ -409,7 +443,7 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
                struct t_plugin_script **scripts,
                struct t_plugin_script *script)
 {
-    struct t_script_callback *ptr_script_callback;
+    struct t_script_callback *ptr_script_callback, *next_script_callback;
     
     for (ptr_script_callback = script->callbacks; ptr_script_callback;
          ptr_script_callback = ptr_script_callback->next_callback)
@@ -419,6 +453,12 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
         {
             weechat_unhook (ptr_script_callback->hook);
         }
+    }
+
+    ptr_script_callback = script->callbacks;
+    while (ptr_script_callback)
+    {
+        next_script_callback = ptr_script_callback->next_callback;
         
         /* free config file */
         if (ptr_script_callback->config_file
@@ -433,6 +473,21 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
         /* remove bar item */
         if (ptr_script_callback->bar_item)
             weechat_bar_item_remove (ptr_script_callback->bar_item);
+        
+        /* remove buffer */
+        if (ptr_script_callback->buffer)
+        {
+            for (next_script_callback = ptr_script_callback->next_callback;
+                 next_script_callback;
+                 next_script_callback = next_script_callback->next_callback)
+            {
+                if (next_script_callback->buffer != ptr_script_callback->buffer)
+                    break;
+            }
+            weechat_buffer_close (ptr_script_callback->buffer, 1);
+        }
+        
+        ptr_script_callback = next_script_callback;
     }
     
     /* remove all callbacks created by this script */
