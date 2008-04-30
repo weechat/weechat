@@ -186,6 +186,11 @@ gui_main_signal_sigterm ()
 void
 gui_main_signal_sighup ()
 {
+    /* SIGHUP signal is received when terminal is closed (exit of WeeChat
+       without using /quit command), that's why we set only flag to reload
+       config files later (when terminal is closed, config files are NOT
+       reloaded, but they are if signal SIGHUP is sent to WeeChat by user)
+    */
     gui_reload_config = 1;
 }
 
