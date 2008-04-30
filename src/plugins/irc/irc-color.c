@@ -20,242 +20,227 @@
 
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <ctype.h>
 
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-color.h"
+#include "irc-config.h"
+
+
+char *irc_color_to_weechat[IRC_NUM_COLORS] =
+{ /*  0 */ "white",
+  /*  1 */ "black",
+  /*  2 */ "blue",
+  /*  3 */ "green",
+  /*  4 */ "lightred",
+  /*  5 */ "red",
+  /*  6 */ "magenta",
+  /*  7 */ "brown",
+  /*  8 */ "yellow",
+  /*  9 */ "lightgreen",
+  /* 10 */ "cyan",
+  /* 11 */ "lightcyan",
+  /* 12 */ "lightblue",
+  /* 13 */ "lightmagenta",
+  /* 14 */ "default",
+  /* 15 */ "white"
+};
 
 
 /*
- * irc_color_decode: parses a message (coming from IRC server),
+ * irc_color_decode: replace IRC colors by WeeChat colors
  *                   if keep_colors == 0: remove any color/style in message
- *                     otherwise change colors by internal WeeChat color codes
- *                   if keep_eechat_attr == 0: remove any weechat color/style attribute
- *                   After use, string returned has to be free()
+ *                   otherwise: keep colors
+ *                   Note: after use, string returned has to be free()
  */
 
-unsigned char *
-irc_color_decode (unsigned char *string, int keep_irc_colors,
-                  int keep_weechat_attr)
+char *
+irc_color_decode (char *string, int keep_colors)
 {
-    /*unsigned char *out;
-    int out_length, out_pos, length;
-    char str_fg[3], str_bg[3];
-    int fg, bg, attr;*/
-
-    (void) string;
-    (void) keep_irc_colors;
-    (void) keep_weechat_attr;
-
-    return (unsigned char *)strdup ((char *)string);
+    unsigned char *out, *ptr_string;
+    int out_length, length, out_pos;
+    char str_fg[3], str_bg[3], str_color[128];
+    int fg, bg;
     
-    /*out_length = (strlen ((char *)string) * 2) + 1;
+    out_length = (strlen (string) * 2) + 1;
     out = malloc (out_length);
     if (!out)
         return NULL;
     
-    out_pos = 0;
-    while (string && string[0] && (out_pos < out_length - 1))
+    ptr_string = (unsigned char *)string;
+    out[0] = '\0';
+    while (ptr_string && ptr_string[0])
     {
-        switch (string[0])
+        switch (ptr_string[0])
         {
             case IRC_COLOR_BOLD_CHAR:
+                if (keep_colors)
+                    strcat ((char *)out, weechat_color("bold"));
+                ptr_string++;
+                break;
             case IRC_COLOR_RESET_CHAR:
+                if (keep_colors)
+                    strcat ((char *)out, weechat_color("reset"));
+                ptr_string++;
+                break;
             case IRC_COLOR_FIXED_CHAR:
+                ptr_string++;
+                break;
             case IRC_COLOR_REVERSE_CHAR:
             case IRC_COLOR_REVERSE2_CHAR:
+                if (keep_colors)
+                    strcat ((char *)out, weechat_color("reverse"));
+                ptr_string++;
+                break;
             case IRC_COLOR_ITALIC_CHAR:
+                if (keep_colors)
+                    strcat ((char *)out, weechat_color("italic"));
+                ptr_string++;
+                break;
             case IRC_COLOR_UNDERLINE_CHAR:
-                if (keep_irc_colors)
-                    out[out_pos++] = string[0];
-                string++;
+                if (keep_colors)
+                    strcat ((char *)out, weechat_color("underline"));
+                ptr_string++;
                 break;
             case IRC_COLOR_COLOR_CHAR:
-                string++;
+                ptr_string++;
                 str_fg[0] = '\0';
                 str_bg[0] = '\0';
-                if (isdigit (string[0]))
+                if (isdigit (ptr_string[0]))
                 {
-                    str_fg[0] = string[0];
+                    str_fg[0] = ptr_string[0];
                     str_fg[1] = '\0';
-                    string++;
-                    if (isdigit (string[0]))
+                    ptr_string++;
+                    if (isdigit (ptr_string[0]))
                     {
-                        str_fg[1] = string[0];
+                        str_fg[1] = ptr_string[0];
                         str_fg[2] = '\0';
-                        string++;
+                        ptr_string++;
                     }
                 }
-                if (string[0] == ',')
+                if (ptr_string[0] == ',')
                 {
-                    string++;
-                    if (isdigit (string[0]))
+                    ptr_string++;
+                    if (isdigit (ptr_string[0]))
                     {
-                        str_bg[0] = string[0];
+                        str_bg[0] = ptr_string[0];
                         str_bg[1] = '\0';
-                        string++;
-                        if (isdigit (string[0]))
+                        ptr_string++;
+                        if (isdigit (ptr_string[0]))
                         {
-                            str_bg[1] = string[0];
+                            str_bg[1] = ptr_string[0];
                             str_bg[2] = '\0';
-                            string++;
+                            ptr_string++;
                         }
                     }
                 }
-                if (keep_irc_colors)
+                if (keep_colors)
                 {
-                    if (!str_fg[0] && !str_bg[0])
-                        out[out_pos++] = IRC_COLOR_COLOR_CHAR;
-                    else
+                    if (str_fg[0] || str_bg[0])
                     {
-                        attr = 0;
+                        fg = -1;
+                        bg = -1;
                         if (str_fg[0])
                         {
                             sscanf (str_fg, "%d", &fg);
-                            fg %= GUI_NUM_IRC_COLORS;
-                            attr |= gui_irc_colors[fg][1];
+                            fg %= IRC_NUM_COLORS;
                         }
                         if (str_bg[0])
                         {
                             sscanf (str_bg, "%d", &bg);
-                            bg %= GUI_NUM_IRC_COLORS;
-                            attr |= gui_irc_colors[bg][1];
+                            bg %= IRC_NUM_COLORS;
                         }
-                        if (attr & A_BOLD)
-                        {
-                            out[out_pos++] = GUI_ATTR_WEECHAT_SET_CHAR;
-                            out[out_pos++] = IRC_COLOR_BOLD_CHAR;
-                        }
-                        else
-                        {
-                            out[out_pos++] = GUI_ATTR_WEECHAT_REMOVE_CHAR;
-                            out[out_pos++] = IRC_COLOR_BOLD_CHAR;
-                        }
-                        out[out_pos++] = IRC_COLOR_COLOR_CHAR;
-                        if (str_fg[0])
-                        {
-                            out[out_pos++] = (gui_irc_colors[fg][0] / 10) + '0';
-                            out[out_pos++] = (gui_irc_colors[fg][0] % 10) + '0';
-                        }
-                        if (str_bg[0])
-                        {
-                            out[out_pos++] = ',';
-                            out[out_pos++] = (gui_irc_colors[bg][0] / 10) + '0';
-                            out[out_pos++] = (gui_irc_colors[bg][0] % 10) + '0';
-                        }
+                        snprintf (str_color, sizeof (str_color),
+                                  "%s%s%s",
+                                  (fg >= 0) ? irc_color_to_weechat[fg] : "",
+                                  (bg >= 0) ? "," : "",
+                                  (bg >= 0) ? irc_color_to_weechat[bg] : "");
+                        strcat ((char *)out, weechat_color(str_color));
                     }
                 }
-                break;
-            case GUI_ATTR_WEECHAT_COLOR_CHAR:
-                if (keep_weechat_attr)
-                    out[out_pos++] = string[0];
-                string++;
-                if (isdigit (string[0]) && isdigit (string[1]))
-                {
-                    if (keep_weechat_attr)
-                    {
-                        out[out_pos++] = string[0];
-                        out[out_pos++] = string[1];
-                    }
-                    string += 2;
-                }
-                break;
-            case GUI_ATTR_WEECHAT_SET_CHAR:
-            case GUI_ATTR_WEECHAT_REMOVE_CHAR:
-                if (keep_weechat_attr)
-                    out[out_pos++] = string[0];
-                string++;
-                if (string[0])
-                {
-                    if (keep_weechat_attr)
-                        out[out_pos++] = string[0];
-                    string++;
-                }
-                break;
-            case GUI_ATTR_WEECHAT_RESET_CHAR:
-                if (keep_weechat_attr)
-                    out[out_pos++] = string[0];
-                string++;
                 break;
             default:
-                length = utf8_char_size ((char *)string);
+                length = weechat_utf8_char_size ((char *)ptr_string);
                 if (length == 0)
                     length = 1;
-                memcpy (out + out_pos, string, length);
-                out_pos += length;
-                string += length;
+                out_pos = strlen ((char *)out);
+                memcpy (out + out_pos, ptr_string, length);
+                out[out_pos + length] = '\0';
+                ptr_string += length;
+                break;
         }
     }
-    out[out_pos] = '\0';
-    return out;*/
+    
+    return (char *)out;
 }
 
 /*
  * irc_color_decode_for_user_entry: parses a message (coming from IRC server),
  *                                  and replaces colors/bold/.. by ^C, ^B, ..
- *                                  After use, string returned has to be free()
+ *                                  Note: after use, string returned has to be free()
  */
 
-unsigned char *
-irc_color_decode_for_user_entry (unsigned char *string)
+char *
+irc_color_decode_for_user_entry (char *string)
 {
-    /*unsigned char *out;
-      int out_length, out_pos, length;*/
-
-    (void) string;
-
-    return (unsigned char *)strdup ((char *)string);
+    unsigned char *out, *ptr_string;
+    int out_length, out_pos, length;
     
-    /*out_length = (strlen ((char *)string) * 2) + 1;
+    out_length = (strlen (string) * 2) + 1;
     out = malloc (out_length);
     if (!out)
         return NULL;
     
+    ptr_string = (unsigned char *)string;
     out_pos = 0;
-    while (string && string[0] && (out_pos < out_length - 1))
+    while (ptr_string && ptr_string[0] && (out_pos < out_length - 1))
     {
-        switch (string[0])
+        switch (ptr_string[0])
         {
             case IRC_COLOR_BOLD_CHAR:
-                out[out_pos++] = 0x02; // ^B
-                string++;
+                out[out_pos++] = 0x02;
+                ptr_string++;
                 break;
             case IRC_COLOR_FIXED_CHAR:
-                string++;
+                ptr_string++;
                 break;
             case IRC_COLOR_RESET_CHAR:
-                out[out_pos++] = 0x0F; // ^O
-                string++;
+                out[out_pos++] = 0x0F;
+                ptr_string++;
                 break;
             case IRC_COLOR_REVERSE_CHAR:
             case IRC_COLOR_REVERSE2_CHAR:
-                out[out_pos++] = 0x12; // ^R
-                string++;
+                out[out_pos++] = 0x12;
+                ptr_string++;
                 break;
             case IRC_COLOR_ITALIC_CHAR:
-                string++;
+                out[out_pos++] = 0x1D;
+                ptr_string++;
                 break;
             case IRC_COLOR_UNDERLINE_CHAR:
-                out[out_pos++] = 0x15; // ^U
-                string++;
+                out[out_pos++] = 0x15;
+                ptr_string++;
                 break;
             case IRC_COLOR_COLOR_CHAR:
-                out[out_pos++] = 0x03; // ^C
-                string++;
+                out[out_pos++] = 0x03;
+                ptr_string++;
                 break;
             default:
-                length = utf8_char_size ((char *)string);
+                length = weechat_utf8_char_size ((char *)ptr_string);
                 if (length == 0)
                     length = 1;
-                memcpy (out + out_pos, string, length);
+                memcpy (out + out_pos, ptr_string, length);
                 out_pos += length;
-                string += length;
+                ptr_string += length;
         }
     }
+    
     out[out_pos] = '\0';
-    return out;*/
+    
+    return (char *)out;
 }
 
 /*
@@ -263,66 +248,62 @@ irc_color_decode_for_user_entry (unsigned char *string)
  *                   encode special chars (^Cb, ^Cc, ..) in IRC colors
  *                   if keep_colors == 0: remove any color/style in message
  *                   otherwise: keep colors
- *                   After use, string returned has to be free()
+ *                   Note: after use, string returned has to be free()
  */
 
-unsigned char *
-irc_color_encode (unsigned char *string, int keep_colors)
+char *
+irc_color_encode (char *string, int keep_colors)
 {
-    /*unsigned char *out;
-      int out_length, out_pos, length;*/
-
-    (void) string;
-    (void) keep_colors;
-
-    return NULL;
+    unsigned char *out, *ptr_string;
+    int out_length, out_pos, length;
     
-    /*out_length = (strlen ((char *)string) * 2) + 1;
+    out_length = (strlen (string) * 2) + 1;
     out = malloc (out_length);
     if (!out)
         return NULL;
     
+    ptr_string = (unsigned char *)string;
     out_pos = 0;
-    while (string && string[0] && (out_pos < out_length - 1))
+    while (ptr_string && ptr_string[0] && (out_pos < out_length - 1))
     {
-        switch (string[0])
+        switch (ptr_string[0])
         {
             case 0x02: // ^B
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_BOLD_CHAR;
-                string++;
+                ptr_string++;
                 break;
             case 0x03: // ^C
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_COLOR_CHAR;
-                string++;
-                if (isdigit (string[0]))
+                ptr_string++;
+                if (isdigit (ptr_string[0]))
                 {
                     if (keep_colors)
-                        out[out_pos++] = string[0];
-                    string++;
-                    if (isdigit (string[0]))
+                        out[out_pos++] = ptr_string[0];
+                    ptr_string++;
+                    if (isdigit (ptr_string[0]))
                     {
                         if (keep_colors)
-                            out[out_pos++] = string[0];
-                        string++;
+                            out[out_pos++] = ptr_string[0];
+                        ptr_string++;
                     }
                 }
-                if (string[0] == ',')
+                if (ptr_string[0] == ',')
                 {
                     if (keep_colors)
                         out[out_pos++] = ',';
-                    string++;
-                    if (isdigit (string[0]))
+                    ptr_string++;
+                    if (isdigit (ptr_string[0]))
                     {
                         if (keep_colors)
-                            out[out_pos++] = string[0];
-                        string++;
-                        if (isdigit (string[0]))
+                            out[out_pos++] = ptr_string[0];
+                        ptr_string++;
+                        if (isdigit (ptr_string[0]))
                         {
                             if (keep_colors)
-                                out[out_pos++] = string[0];
-                            string++;
+                                out[out_pos++] = ptr_string[0];
+                            ptr_string++;
                         }
                     }
                 }
@@ -330,27 +311,29 @@ irc_color_encode (unsigned char *string, int keep_colors)
             case 0x0F: // ^O
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_RESET_CHAR;
-                string++;
+                ptr_string++;
                 break;
             case 0x12: // ^R
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_REVERSE_CHAR;
-                string++;
+                ptr_string++;
                 break;
             case 0x15: // ^U
                 if (keep_colors)
                     out[out_pos++] = IRC_COLOR_UNDERLINE_CHAR;
-                string++;
+                ptr_string++;
                 break;
             default:
-                length = utf8_char_size ((char *)string);
+                length = weechat_utf8_char_size ((char *)ptr_string);
                 if (length == 0)
                     length = 1;
-                memcpy (out + out_pos, string, length);
+                memcpy (out + out_pos, ptr_string, length);
                 out_pos += length;
-                string += length;
+                ptr_string += length;
         }
     }
+    
     out[out_pos] = '\0';
-    return out;*/
+    
+    return (char *)out;
 }

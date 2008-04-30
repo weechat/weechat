@@ -40,9 +40,13 @@ void
 irc_input_user_message_display (struct t_gui_buffer *buffer, char *text)
 {
     struct t_irc_nick *ptr_nick;
+    char *text_decoded;
+    
+    text_decoded = irc_color_decode (text,
+                                     weechat_config_boolean (irc_config_network_colors_send));
     
     IRC_GET_SERVER_CHANNEL(buffer);
-
+    
     if (ptr_channel)
     {
         if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
@@ -52,7 +56,7 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, char *text)
                             "%s%s",
                             irc_nick_as_prefix (NULL, ptr_server->nick,
                                                 IRC_COLOR_CHAT_NICK_SELF),
-                            text);
+                            (text_decoded) ? text_decoded : text);
         }
         else
         {
@@ -63,7 +67,7 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, char *text)
                                 "%s%s",
                                 irc_nick_as_prefix (ptr_nick, NULL,
                                                     IRC_COLOR_CHAT_NICK_SELF),
-                                text);
+                                (text_decoded) ? text_decoded : text);
             }
             else
             {
@@ -74,6 +78,9 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, char *text)
             }
         }
     }
+    
+    if (text_decoded)
+        free (text_decoded);
 }
 
 /*
@@ -157,8 +164,8 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer, char *input_data)
     
     if (ptr_channel)
     {
-        data_with_colors = (char *)irc_color_encode ((unsigned char *)input_data,
-                                                     weechat_config_boolean (irc_config_network_colors_send));
+        data_with_colors = irc_color_encode (input_data,
+                                             weechat_config_boolean (irc_config_network_colors_send));
         
         if (ptr_channel->dcc_chat)
         {

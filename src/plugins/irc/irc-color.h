@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_IRC_COLOR_H
 #define __WEECHAT_IRC_COLOR_H 1
 
+#define IRC_NUM_COLORS        16
+
 /* shift ncurses colors for compatibility with colors
    in IRC messages (same as other IRC clients) */
 
@@ -51,10 +53,8 @@
 #define IRC_COLOR_UNDERLINE_CHAR  '\x1F'
 #define IRC_COLOR_UNDERLINE_STR   "\x1F"
 
-extern unsigned char *irc_color_decode (unsigned char *string,
-                                        int keep_irc_colors,
-                                        int keep_weechat_attr);
-extern unsigned char *irc_color_decode_for_user_entry (unsigned char *string);
-extern unsigned char *irc_color_encode (unsigned char *string, int keep_colors);
+extern char *irc_color_decode (char *string, int keep_colors);
+extern char *irc_color_decode_for_user_entry (char *string);
+extern char *irc_color_encode (char *string, int keep_colors);
 
 #endif /* irc-color.h */

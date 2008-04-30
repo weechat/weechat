@@ -236,51 +236,88 @@ plugin_api_color (char *color_name)
     if (num_color >= 0)
         return GUI_COLOR(num_color);
     
-    /* custom color name (GUI dependent) */
-    pos_comma = strchr (color_name, ',');
-    if (pos_comma)
+    /* attribute or other color name (GUI dependent) */
+    index_color = (index_color + 1) % 20;
+    color[index_color][0] = '\0';
+
+    if (string_strcasecmp (color_name, "reset") == 0)
     {
-        if (pos_comma == color_name)
-            str_fg = NULL;
-        else
-            str_fg = string_strndup (color_name, pos_comma - color_name);
-        pos_bg = pos_comma + 1;
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%s",
+                  GUI_COLOR_RESET_STR);
+    }
+    else if (string_strcasecmp (color_name, "bold") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%s%s",
+                  GUI_COLOR_SET_STR,
+                  GUI_COLOR_ATTR_BOLD_STR);
+    }
+    else if (string_strcasecmp (color_name, "reverse") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%s%s",
+                  GUI_COLOR_SET_STR,
+                  GUI_COLOR_ATTR_REVERSE_STR);
+    }
+    else if (string_strcasecmp (color_name, "italic") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%s%s",
+                  GUI_COLOR_SET_STR,
+                  GUI_COLOR_ATTR_ITALIC_STR);
+    }
+    else if (string_strcasecmp (color_name, "underline") == 0)
+    {
+        snprintf (color[index_color], sizeof (color[index_color]),
+                  "%s%s",
+                  GUI_COLOR_SET_STR,
+                  GUI_COLOR_ATTR_UNDERLINE_STR);
     }
     else
     {
-        str_fg = strdup (color_name);
-        pos_bg = NULL;
+        /* custom color name (GUI dependent) */
+        pos_comma = strchr (color_name, ',');
+        if (pos_comma)
+        {
+            if (pos_comma == color_name)
+                str_fg = NULL;
+            else
+                str_fg = string_strndup (color_name, pos_comma - color_name);
+            pos_bg = pos_comma + 1;
+        }
+        else
+        {
+            str_fg = strdup (color_name);
+            pos_bg = NULL;
+        }
+        
+        if (str_fg && pos_bg)
+        {
+            fg = gui_color_search (str_fg);
+            bg = gui_color_search (pos_bg);
+            snprintf (color[index_color], sizeof (color[index_color]),
+                      "%s*%02d,%02d",
+                      GUI_COLOR_COLOR_STR, fg, bg);
+        }
+        else if (str_fg && !pos_bg)
+        {
+            fg = gui_color_search (str_fg);
+            snprintf (color[index_color], sizeof (color[index_color]),
+                      "%sF%02d",
+                      GUI_COLOR_COLOR_STR, fg);
+        }
+        else if (!str_fg && pos_bg)
+        {
+            bg = gui_color_search (pos_bg);
+            snprintf (color[index_color], sizeof (color[index_color]),
+                      "%sB%02d",
+                      GUI_COLOR_COLOR_STR, bg);
+        }
+        
+        if (str_fg)
+            free (str_fg);
     }
-    
-    index_color = (index_color + 1) % 20;
-    
-    color[index_color][0] = '\0';
-    
-    if (str_fg && pos_bg)
-    {
-        fg = gui_color_search (str_fg);
-        bg = gui_color_search (pos_bg);
-        snprintf (color[index_color], sizeof (color[index_color]),
-                  "%s*%02d,%02d",
-                  GUI_COLOR_COLOR_STR, fg, bg);
-    }
-    else if (str_fg && !pos_bg)
-    {
-        fg = gui_color_search (str_fg);
-        snprintf (color[index_color], sizeof (color[index_color]),
-                  "%sF%02d",
-                  GUI_COLOR_COLOR_STR, fg);
-    }
-    else if (!str_fg && pos_bg)
-    {
-        bg = gui_color_search (pos_bg);
-        snprintf (color[index_color], sizeof (color[index_color]),
-                  "%sB%02d",
-                  GUI_COLOR_COLOR_STR, bg);
-    }
-    
-    if (str_fg)
-        free (str_fg);
     
     return color[index_color];
 }

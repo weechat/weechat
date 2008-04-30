@@ -100,6 +100,7 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind (NULL, /* ^S^U          */ "ctrl-Sctrl-U",       "/input set_unread");
     gui_keyboard_bind (NULL, /* ^Cb           */ "ctrl-Cb",            "/input insert \\x02");
     gui_keyboard_bind (NULL, /* ^Cc           */ "ctrl-Cc",            "/input insert \\x03");
+    gui_keyboard_bind (NULL, /* ^Cc           */ "ctrl-Ci",            "/input insert \\x1D");
     gui_keyboard_bind (NULL, /* ^Co           */ "ctrl-Co",            "/input insert \\x0F");
     gui_keyboard_bind (NULL, /* ^Cr           */ "ctrl-Cr",            "/input insert \\x12");
     gui_keyboard_bind (NULL, /* ^Cu           */ "ctrl-Cu",            "/input insert \\x15");

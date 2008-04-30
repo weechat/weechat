@@ -1632,8 +1632,7 @@ irc_server_msgq_flush ()
                         
                         /* parse and execute command */
                         irc_protocol_recv_command (irc_recv_msgq->server,
-                                                   (msg_decoded) ?
-                                                   msg_decoded : ptr_msg,
+                                                   (msg_decoded) ? msg_decoded : ptr_msg,
                                                    host,
                                                    command,
                                                    arguments);

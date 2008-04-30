@@ -25,6 +25,7 @@
 
 #include "../weechat-plugin.h"
 #include "irc.h"
+#include "irc-color.h"
 #include "irc-completion.h"
 #include "irc-config.h"
 #include "irc-server.h"
@@ -264,6 +265,8 @@ irc_completion_channel_topic_cb (void *data, char *completion,
                                  struct t_gui_buffer *buffer,
                                  struct t_weelist *list)
 {
+    char *topic_color;
+    
     IRC_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
@@ -272,7 +275,12 @@ irc_completion_channel_topic_cb (void *data, char *completion,
     
     if (ptr_channel && ptr_channel->topic && ptr_channel->topic[0])
     {
-        weechat_list_add (list, ptr_channel->topic, WEECHAT_LIST_POS_SORT);
+        topic_color = irc_color_decode_for_user_entry (ptr_channel->topic);
+        weechat_list_add (list,
+                          (topic_color) ? topic_color : ptr_channel->topic,
+                          WEECHAT_LIST_POS_SORT);
+        if (topic_color)
+            free (topic_color);
     }
     
     return WEECHAT_RC_OK;
