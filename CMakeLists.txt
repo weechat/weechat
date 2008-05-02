@@ -24,7 +24,10 @@ IF(PREFIX)
   SET(CMAKE_INSTALL_PREFIX ${PREFIX} CACHE PATH "Install path prefix" FORCE)
 ENDIF(PREFIX)
 
-SET(VERSION 0.2.7-dev)
+SET(VERSION_MAJOR "0")
+SET(VERSION_MINOR "2")
+SET(VERSION_PATCH "7-dev")
+SET(VERSION ${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH})
 SET(PKG_STRING "${PROJECT_NAME} ${VERSION}")
 SET(LIBDIR ${CMAKE_INSTALL_PREFIX}/lib/weechat)
 SET(SHAREDIR ${CMAKE_INSTALL_PREFIX}/share/weechat)
@@ -56,10 +59,10 @@ IF(NOT DISABLE_COMPILE_DEBUG)
   SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g")
 ENDIF(NOT DISABLE_COMPILE_DEBUG)
 
-ADD_SUBDIRECTORY( po ) 
-ADD_SUBDIRECTORY( src ) 
+ADD_SUBDIRECTORY( po )
+ADD_SUBDIRECTORY( src )
 IF(NOT DISABLE_DOC)
-  ADD_SUBDIRECTORY( doc ) 
+  ADD_SUBDIRECTORY( doc )
 ENDIF(NOT DISABLE_DOC)
 
 CONFIGURE_FILE(config.h.cmake config.h @ONLY)
@@ -82,3 +85,31 @@ ADD_CUSTOM_TARGET(dist
   DEPENDS doc
   WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
+# packages
+SET(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Fast, light and extensible chat client")
+SET(CPACK_PACKAGE_VENDOR "FlashCode")
+SET(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
+SET(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
+SET(CPACK_PACKAGE_VERSION_MAJOR ${VERSION_MAJOR})
+SET(CPACK_PACKAGE_VERSION_MINOR ${VERSION_MINOR})
+SET(CPACK_PACKAGE_VERSION_PATCH ${VERSION_PATCH})
+
+# binary package
+SET(CPACK_GENERATOR "STGZ;TGZ;TBZ2")
+SET(CPACK_PACKAGE_FILE_NAME weechat-binary-${VERSION})
+
+# source package
+SET(CPACK_SOURCE_GENERATOR "TGZ;TBZ2")
+SET(CPACK_SOURCE_PACKAGE_FILE_NAME weechat-${VERSION})
+SET(CPACK_SOURCE_IGNORE_FILES "/\\\\.git" "/build/" "/m4/"
+  "/autom4te\\\\.cache/" "/ABOUT-NLS$" "/config\\\\.guess$" "/config\\\\.h$"
+  "/config\\\\.h.in$" "/config\\\\.log$" "/config\\\\.rpath$"
+  "/config\\\\.status$" "/config\\\\.sub$" "/configure$" "/depcomp$"
+  "/install-sh$" "/missing$" "/intl/" "/libtool$" "/\\\\.libs/"
+  "/ltmain\\\\.sh$" "/\\\\.deps/" "/date\\\\.xml$" "/html/" "/html1/"
+  "\\\\.pdf$" "/Makefile$" "/Makefile\\\\.in$" "stamp" "/po/.*\\\\.header$"
+  "\\\\.gmo$" "~$" "\\\\.o$" "\\\\.lo$" "\\\\.a$" "\\\\.la$" "\\\\.lai$"
+  "\\\\.Plo$" "/weechat-curses$" "/weechat-gtk$"
+)
+
+INCLUDE(CPack)
