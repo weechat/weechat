@@ -800,8 +800,8 @@ irc_protocol_cmd_nick (struct t_irc_server *server, char *command,
                 {
                     free (ptr_channel->name);
                     ptr_channel->name = strdup (new_nick);
+                    weechat_buffer_set (ptr_channel->buffer, "name", new_nick);
                 }
-                weechat_buffer_set (ptr_channel->buffer, "name", new_nick);
                 break;
             case IRC_CHANNEL_TYPE_CHANNEL:
                 /* rename nick in nicklist if found */
