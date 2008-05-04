@@ -25,6 +25,9 @@
 #include <ctype.h>
 #include <sys/time.h>
 #include <time.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
 
 #include "../weechat-plugin.h"
 #include "irc.h"
@@ -855,16 +858,29 @@ int
 irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
                  char **argv, char **argv_eol)
 {
+    struct sockaddr_in addr;
+    socklen_t length;
+    unsigned long address;
+    struct t_plugin_infolist *infolist;
+    struct t_plugin_infolist_item *item;
+    char plugin_id[128], str_address[128];
+    
     IRC_GET_SERVER_CHANNEL(buffer);
     if (!ptr_server || !ptr_server->is_connected)
         return WEECHAT_RC_ERROR;
     
-    /* make compiler happy */
+    /* make C compiler happy */
     (void) data;
-    (void) argv_eol; // to remove!
     
     if (argc > 1)
     {
+        /* use the local interface, from the server socket */
+        memset (&addr, 0, sizeof (struct sockaddr_in));
+        length = sizeof (addr);
+        getsockname (ptr_server->sock, (struct sockaddr *) &addr, &length);
+        addr.sin_family = AF_INET;
+        address = ntohl (addr.sin_addr.s_addr);
+        
         /* DCC SEND file */
         if (weechat_strcasecmp (argv[1], "send") == 0)
         {
@@ -872,8 +888,28 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
             {
                 IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "dcc send");
             }
-            //irc_dcc_send_request (ptr_server, IRC_DCC_FILE_SEND,
-            //                      argv[2], argv_eol[3]);
+            infolist = weechat_infolist_new ();
+            if (infolist)
+            {
+                item = weechat_infolist_new_item (infolist);
+                if (item)
+                {
+                    snprintf (plugin_id, sizeof (plugin_id),
+                              "irc_%x", (unsigned int)ptr_server);
+                    weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
+                    weechat_infolist_new_var_string (item, "type", "file_send");
+                    weechat_infolist_new_var_string (item, "protocol", "dcc");
+                    weechat_infolist_new_var_string (item, "nick", argv[2]);
+                    weechat_infolist_new_var_string (item, "filename", argv_eol[3]);
+                    snprintf (str_address, sizeof (str_address),
+                              "%lu", address);
+                    weechat_infolist_new_var_string (item, "address", str_address);
+                    weechat_hook_signal_send ("xfer_add",
+                                              WEECHAT_HOOK_SIGNAL_POINTER,
+                                              infolist);
+                }
+                weechat_infolist_free (infolist);
+            }
         }
         /* DCC CHAT */
         else if (weechat_strcasecmp (argv[1], "chat") == 0)
@@ -882,8 +918,26 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
             {
                 IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "dcc chat");
             }
-            //irc_dcc_send_request (ptr_server, IRC_DCC_CHAT_SEND,
-            //                      argv[2], NULL);
+            infolist = weechat_infolist_new ();
+            if (infolist)
+            {
+                item = weechat_infolist_new_item (infolist);
+                if (item)
+                {
+                    snprintf (plugin_id, sizeof (plugin_id),
+                              "irc_%x", (unsigned int)ptr_server);
+                    weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
+                    weechat_infolist_new_var_string (item, "type", "chat_send");
+                    weechat_infolist_new_var_string (item, "nick", argv[2]);
+                    snprintf (str_address, sizeof (str_address),
+                              "%lu", address);
+                    weechat_infolist_new_var_string (item, "address", str_address);
+                    weechat_hook_signal_send ("xfer_add",
+                                              WEECHAT_HOOK_SIGNAL_POINTER,
+                                              infolist);
+                }
+                weechat_infolist_free (infolist);
+            }
         }
         /* close DCC CHAT */
         else if (weechat_strcasecmp (argv[1], "close") == 0)

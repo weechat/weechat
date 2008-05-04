@@ -416,14 +416,6 @@ gui_color_init_weechat ()
     gui_color[GUI_COLOR_NICKLIST_PREFIX5] = gui_color_build (GUI_COLOR_NICKLIST_PREFIX5, CONFIG_COLOR(config_color_nicklist_prefix5), CONFIG_COLOR(config_color_nicklist_bg));
     gui_color[GUI_COLOR_NICKLIST_MORE] = gui_color_build (GUI_COLOR_NICKLIST_MORE, CONFIG_COLOR(config_color_nicklist_more), CONFIG_COLOR(config_color_nicklist_bg));
     gui_color[GUI_COLOR_NICKLIST_SEPARATOR] = gui_color_build (GUI_COLOR_NICKLIST_SEPARATOR, CONFIG_COLOR(config_color_nicklist_separator), CONFIG_COLOR(config_color_nicklist_bg));
-    
-    gui_color[GUI_COLOR_INFO] = gui_color_build (GUI_COLOR_INFO, CONFIG_COLOR(config_color_info), CONFIG_COLOR(config_color_info_bg));
-    gui_color[GUI_COLOR_INFO_WAITING] = gui_color_build (GUI_COLOR_INFO_WAITING, CONFIG_COLOR(config_color_info_waiting), CONFIG_COLOR(config_color_info_bg));
-    gui_color[GUI_COLOR_INFO_CONNECTING] = gui_color_build (GUI_COLOR_INFO_CONNECTING, CONFIG_COLOR(config_color_info_connecting), CONFIG_COLOR(config_color_info_bg));
-    gui_color[GUI_COLOR_INFO_ACTIVE] = gui_color_build (GUI_COLOR_INFO_ACTIVE, CONFIG_COLOR(config_color_info_active), CONFIG_COLOR(config_color_info_bg));
-    gui_color[GUI_COLOR_INFO_DONE] = gui_color_build (GUI_COLOR_INFO_DONE, CONFIG_COLOR(config_color_info_done), CONFIG_COLOR(config_color_info_bg));
-    gui_color[GUI_COLOR_INFO_FAILED] = gui_color_build (GUI_COLOR_INFO_FAILED, CONFIG_COLOR(config_color_info_failed), CONFIG_COLOR(config_color_info_bg));
-    gui_color[GUI_COLOR_INFO_ABORTED] = gui_color_build (GUI_COLOR_INFO_ABORTED, CONFIG_COLOR(config_color_info_aborted), CONFIG_COLOR(config_color_info_bg));
 }
 
 /*

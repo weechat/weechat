@@ -63,20 +63,16 @@ irc_debug_printf (struct t_irc_server *server, int send, int modified,
     
     if (!irc_debug_buffer)
     {
-        /* search for irc debug buffer */
-        irc_debug_buffer = weechat_buffer_search ("irc", "debug");
+        irc_debug_buffer = weechat_buffer_new ("irc", "debug",
+                                               NULL, NULL,
+                                               &irc_debug_buffer_close_cb, NULL);
+        
+        /* failed to create buffer ? then exit */
         if (!irc_debug_buffer)
-        {
-            irc_debug_buffer = weechat_buffer_new ("irc", "debug",
-                                                   NULL, NULL,
-                                                   &irc_debug_buffer_close_cb, NULL);
-            /* failed to create buffer ? then exit */
-            if (!irc_debug_buffer)
-                return;
-            
-            weechat_buffer_set (irc_debug_buffer,
-                                "title", _("IRC debug messages"));
-        }
+            return;
+        
+        weechat_buffer_set (irc_debug_buffer,
+                            "title", _("IRC debug messages"));
     }
     
     buf = weechat_iconv_to_internal (NULL, message);
@@ -143,8 +139,6 @@ irc_debug_signal_debug_dump_cb (void *data, char *signal, char *type_data,
                         weechat_plugin->name);
     
     irc_server_print_log ();
-    
-    //irc_dcc_print_log ();
     
     weechat_log_printf ("");
     weechat_log_printf ("***** End of \"%s\" plugin dump *****",

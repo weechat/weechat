@@ -36,10 +36,6 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-#ifdef HAVE_GNUTLS
-#include <gnutls/gnutls.h>
-#endif
-
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-server.h"
@@ -2057,386 +2053,6 @@ irc_server_child_read_cb (void *arg_server)
 }
 
 /*
- * irc_server_convbase64_8x3_to_6x4 : convert 3 bytes of 8 bits in 4 bytes of 6 bits
- */
-
-void
-irc_server_convbase64_8x3_to_6x4 (char *from, char *to)
-{
-    unsigned char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-    
-    to[0] = base64_table [ (from[0] & 0xfc) >> 2 ];
-    to[1] = base64_table [ ((from[0] & 0x03) << 4) + ((from[1] & 0xf0) >> 4) ];
-    to[2] = base64_table [ ((from[1] & 0x0f) << 2) + ((from[2] & 0xc0) >> 6) ];
-    to[3] = base64_table [ from[2] & 0x3f ];
-}
-
-/*
- * irc_server_base64encode: encode a string in base64
- */
-
-void
-irc_server_base64encode (char *from, char *to)
-{
-    char *f, *t;
-    int from_len;
-    
-    from_len = strlen(from);
-    
-    f = from;
-    t = to;
-    
-    while (from_len >= 3)
-    {
-        irc_server_convbase64_8x3_to_6x4 (f, t);
-        f += 3 * sizeof (*f);
-        t += 4 * sizeof (*t);
-        from_len -= 3;
-    }
-    
-    if (from_len > 0)
-    {
-        char rest[3] = { 0, 0, 0 };
-        switch (from_len)
-        {
-            case 1 :
-                rest[0] = f[0];
-                irc_server_convbase64_8x3_to_6x4 (rest, t);
-                t[2] = t[3] = '=';
-                break;
-            case 2 :
-                rest[0] = f[0];
-                rest[1] = f[1];
-                irc_server_convbase64_8x3_to_6x4 (rest, t);
-                t[3] = '=';
-                break;
-        }
-        t[4] = 0;
-    }
-}
-
-/*
- * irc_server_pass_httpproxy: establish connection/authentification to an
- *                            http proxy
- *                            return : 
- *                             - 0 if connexion throw proxy was successful
- *                             - 1 if connexion fails
- */
-
-int
-irc_server_pass_httpproxy (int sock, char *address, int port)
-{
-
-    char buffer[256], authbuf[128], authbuf_base64[196];
-    char *config_proxy_username, *config_proxy_password;
-    int n, m;
-
-    config_proxy_username = weechat_config_string (
-        weechat_config_get ("weechat.proxy.username"));
-    config_proxy_username = weechat_config_string (
-        weechat_config_get ("weechat.proxy.password"));
-    
-    if (config_proxy_username && config_proxy_username[0])
-    {
-        /* authentification */
-        snprintf (authbuf, sizeof (authbuf), "%s:%s",
-                  config_proxy_username,
-                  (config_proxy_password) ? config_proxy_password : "");
-        irc_server_base64encode (authbuf, authbuf_base64);
-        n = snprintf (buffer, sizeof (buffer),
-                      "CONNECT %s:%d HTTP/1.0\r\nProxy-Authorization: Basic %s\r\n\r\n",
-                      address, port, authbuf_base64);
-    }
-    else 
-    {
-        /* no authentification */
-        n = snprintf (buffer, sizeof (buffer),
-                      "CONNECT %s:%d HTTP/1.0\r\n\r\n", address, port);
-    }
-    
-    m = send (sock, buffer, n, 0);
-    if (n != m)
-        return 1;
-    
-    n = recv (sock, buffer, sizeof (buffer), 0);
-    
-    /* success result must be like: "HTTP/1.0 200 OK" */
-    if (n < 12)
-        return 1;
-    
-    if (memcmp (buffer, "HTTP/", 5) || memcmp (buffer + 9, "200", 3))
-        return 1;
-    
-    return 0;
-}
-
-/*
- * irc_server_resolve: resolve hostname on its IP address
- *                     (works with ipv4 and ipv6)
- *                     return :
- *                      - 0 if resolution was successful
- *                      - 1 if resolution fails
- */
-
-int
-irc_server_resolve (char *hostname, char *ip, int *version)
-{
-    char ipbuffer[NI_MAXHOST];
-    struct addrinfo *res;
-    
-    if (version != NULL)
-        *version = 0;
-    
-    res = NULL;
-    
-    if (getaddrinfo (hostname, NULL, NULL, &res) != 0)
-        return 1;
-    
-    if (!res)
-        return 1;
-    
-    if (getnameinfo (res->ai_addr, res->ai_addrlen, ipbuffer, sizeof(ipbuffer), NULL, 0, NI_NUMERICHOST) != 0)
-    {
-        freeaddrinfo (res);
-        return 1;
-    }
-    
-    if ((res->ai_family == AF_INET) && (version != NULL))
-        *version = 4;
-    if ((res->ai_family == AF_INET6) && (version != NULL))
-        *version = 6;
-    
-    strcpy (ip, ipbuffer);
-    
-    freeaddrinfo (res);
-    
-    return 0;
-}
-
-/*
- * irc_server_pass_socks4proxy: establish connection/authentification thru a
- *                              socks4 proxy
- *                              return : 
- *                               - 0 if connexion thru proxy was successful
- *                               - 1 if connexion fails
- */
-
-int
-irc_server_pass_socks4proxy (int sock, char *address, int port, char *username)
-{
-    /* 
-     * socks4 protocol is explained here: 
-     *  http://archive.socks.permeo.com/protocol/socks4.protocol
-     *
-     */
-    
-    struct s_socks4
-    {
-        char version;           /* 1 byte  */ /* socks version : 4 or 5 */
-        char method;            /* 1 byte  */ /* socks method : connect (1) or bind (2) */
-        unsigned short port;    /* 2 bytes */ /* destination port */
-        unsigned long address;  /* 4 bytes */ /* destination address */
-        char user[64];          /* username (64 characters seems to be enought) */
-    } socks4;
-    unsigned char buffer[24];
-    char ip_addr[NI_MAXHOST];
-    
-    socks4.version = 4;
-    socks4.method = 1;
-    socks4.port = htons (port);
-    irc_server_resolve (address, ip_addr, NULL);
-    socks4.address = inet_addr (ip_addr);
-    strncpy (socks4.user, username, sizeof (socks4.user) - 1);
-    
-    send (sock, (char *) &socks4, 8 + strlen (socks4.user) + 1, 0);
-    recv (sock, buffer, sizeof (buffer), 0);
-    
-    if (buffer[0] == 0 && buffer[1] == 90)
-        return 0;
-    
-    return 1;
-}
-
-/*
- * irc_server_pass_socks5proxy: establish connection/authentification thru a
- *                              socks5 proxy
- *                              return : 
- *                               - 0 if connexion thru proxy was successful
- *                               - 1 if connexion fails
- */
-
-int
-irc_server_pass_socks5proxy (int sock, char *address, int port)
-{
-    /* 
-     * socks5 protocol is explained in RFC 1928
-     * socks5 authentication with username/pass is explained in RFC 1929
-     */
-    
-    struct s_sock5
-    {
-        char version;   /* 1 byte      */ /* socks version : 4 or 5 */
-        char nmethods;  /* 1 byte      */ /* size in byte(s) of field 'method', here 1 byte */
-        char method;    /* 1-255 bytes */ /* socks method : noauth (0), auth(user/pass) (2), ... */
-    } socks5;
-    unsigned char buffer[288];
-    int username_len, password_len, addr_len, addr_buffer_len;
-    unsigned char *addr_buffer;
-    char *config_proxy_username, *config_proxy_password;
-    
-    socks5.version = 5;
-    socks5.nmethods = 1;
-    
-    config_proxy_username = weechat_config_string (
-        weechat_config_get ("weechat.proxy.username"));
-    config_proxy_username = weechat_config_string (
-        weechat_config_get ("weechat.proxy.password"));
-    
-    if (config_proxy_username && config_proxy_username[0])
-        socks5.method = 2; /* with authentication */
-    else
-        socks5.method = 0; /* without authentication */
-    
-    send (sock, (char *) &socks5, sizeof(socks5), 0);
-    /* server socks5 must respond with 2 bytes */
-    if (recv (sock, buffer, 2, 0) != 2)
-        return 1;
-    
-    if (config_proxy_username && config_proxy_username[0])
-    {
-        /* with authentication */
-        /*   -> socks server must respond with :
-         *       - socks version (buffer[0]) = 5 => socks5
-         *       - socks method  (buffer[1]) = 2 => authentication
-         */
-        
-        if (buffer[0] != 5 || buffer[1] != 2)
-            return 1;
-        
-        /* authentication as in RFC 1929 */
-        username_len = strlen (config_proxy_username);
-        password_len = strlen (config_proxy_password);
-        
-        /* make username/password buffer */
-        buffer[0] = 1;
-        buffer[1] = (unsigned char) username_len;
-        memcpy(buffer + 2, config_proxy_username, username_len);
-        buffer[2 + username_len] = (unsigned char) password_len;
-        memcpy (buffer + 3 + username_len, config_proxy_password, password_len);
-        
-        send (sock, buffer, 3 + username_len + password_len, 0);
-        
-        /* server socks5 must respond with 2 bytes */
-        if (recv (sock, buffer, 2, 0) != 2)
-            return 1;
-        
-        /* buffer[1] = auth state, must be 0 for success */
-        if (buffer[1] != 0)
-            return 1;
-    }
-    else
-    {
-        /* without authentication */
-        /*   -> socks server must respond with :
-         *       - socks version (buffer[0]) = 5 => socks5
-         *       - socks method  (buffer[1]) = 0 => no authentication
-         */
-        if (!(buffer[0] == 5 && buffer[1] == 0))
-            return 1;
-    }
-    
-    /* authentication successful then giving address/port to connect */
-    addr_len = strlen(address);
-    addr_buffer_len = 4 + 1 + addr_len + 2;
-    addr_buffer = malloc (addr_buffer_len * sizeof(*addr_buffer));
-    if (!addr_buffer)
-        return 1;
-    addr_buffer[0] = 5;   /* version 5 */
-    addr_buffer[1] = 1;   /* command: 1 for connect */
-    addr_buffer[2] = 0;   /* reserved */
-    addr_buffer[3] = 3;   /* address type : ipv4 (1), domainname (3), ipv6 (4) */
-    addr_buffer[4] = (unsigned char) addr_len;
-    memcpy (addr_buffer + 5, address, addr_len); /* server address */
-    *((unsigned short *) (addr_buffer + 5 + addr_len)) = htons (port); /* server port */
-    
-    send (sock, addr_buffer, addr_buffer_len, 0);
-    free (addr_buffer);
-    
-    /* dialog with proxy server */
-    if (recv (sock, buffer, 4, 0) != 4)
-        return 1;
-    
-    if (!(buffer[0] == 5 && buffer[1] == 0))
-        return 1;
-    
-    /* buffer[3] = address type */
-    switch (buffer[3])
-    {
-        case 1:
-            /* ipv4 
-             * server socks return server bound address and port
-             * address of 4 bytes and port of 2 bytes (= 6 bytes)
-             */
-            if (recv (sock, buffer, 6, 0) != 6)
-                return 1;
-            break;
-        case 3:
-            /* domainname
-             * server socks return server bound address and port
-             */
-            /* reading address length */
-            if (recv (sock, buffer, 1, 0) != 1)
-                return 1;    
-            addr_len = buffer[0];
-            /* reading address + port = addr_len + 2 */
-            if (recv (sock, buffer, addr_len + 2, 0) != (addr_len + 2))
-                return 1;
-            break;
-        case 4:
-            /* ipv6
-             * server socks return server bound address and port
-             * address of 16 bytes and port of 2 bytes (= 18 bytes)
-             */
-            if (recv (sock, buffer, 18, 0) != 18)
-                return 1;
-            break;
-        default:
-            return 1;
-    }
-    
-    return 0;
-}
-
-/*
- * irc_server_pass_proxy: establish connection/authentification to a proxy
- *                        return : 
- *                         - 0 if connexion throw proxy was successful
- *                         - 1 if connexion fails
- */
-
-int
-irc_server_pass_proxy (int sock, char *address, int port, char *username)
-{
-    int rc;
-    char *config_proxy_type;
-    
-    config_proxy_type = weechat_config_string (
-        weechat_config_get ("weechat.proxy.type"));
-    
-    rc = 1;
-    if (config_proxy_type)
-    {
-        if (weechat_strcasecmp (config_proxy_type, "http") == 0)
-            rc = irc_server_pass_httpproxy (sock, address, port);
-        if (weechat_strcasecmp (config_proxy_type,  "socks4") == 0)
-            rc = irc_server_pass_socks4proxy (sock, address, port, username);
-        if (weechat_strcasecmp (config_proxy_type, "socks5") == 0)
-            rc = irc_server_pass_socks5proxy (sock, address, port);
-    }
-    return rc;
-}
-
-/*
  * irc_server_child: child process trying to connect to server
  */
 
@@ -2497,10 +2113,9 @@ irc_server_child (struct t_irc_server *server)
             return 0;
         }
         
-        if (irc_server_pass_proxy (server->sock,
-                                   server->addresses_array[server->current_address],
-                                   server->ports_array[server->current_address],
-                                   server->username))
+        if (weechat_network_pass_proxy (server->sock,
+                                        server->addresses_array[server->current_address],
+                                        server->ports_array[server->current_address]))
         {
             write (server->child_write, "4", 1);
             freeaddrinfo (res);
@@ -3172,6 +2787,76 @@ irc_server_set_default_notify_level (struct t_irc_server *server, int notify)
         config_option_list_set (&(server->notify_levels), "*", level_string);
     }
     */
+}
+
+/*
+ * irc_server_xfer_send_ready_cb: callback called when user send (file or chat)
+ *                                to someone and that xfer plugin successfully
+ *                                initialized xfer and is ready for sending
+ *                                in that case, irc plugin send message to
+ *                                remote nick and wait for "accept" reply
+ */
+
+int
+irc_server_xfer_send_ready_cb (void *data, char *signal, char *type_data,
+                               void *signal_data)
+{
+    struct t_plugin_infolist *infolist;
+    struct t_irc_server *server, *ptr_server;
+    char *plugin_id, *type;
+
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    
+    infolist = (struct t_plugin_infolist *)signal_data;
+    
+    if (weechat_infolist_next (infolist))
+    {
+        plugin_id = weechat_infolist_string (infolist, "plugin_id");
+        if (plugin_id)
+        {
+            if (strncmp (plugin_id, "irc_", 4) == 0)
+            {
+                sscanf (plugin_id + 4, "%x", (unsigned int *)&server);
+                for (ptr_server = irc_servers; ptr_server;
+                     ptr_server = ptr_server->next_server)
+                {
+                    if (ptr_server == server)
+                        break;
+                }
+                if (ptr_server)
+                {
+                    type = weechat_infolist_string (infolist, "type");
+                    if (type)
+                    {
+                        if (strcmp (type, "file_send") == 0)
+                        {
+                            irc_server_sendf (server, 
+                                              "PRIVMSG %s :\01DCC SEND \"%s\" "
+                                              "%s %d %s\01\n",
+                                              weechat_infolist_string (infolist, "nick"),
+                                              weechat_infolist_string (infolist, "filename"),
+                                              weechat_infolist_string (infolist, "address"),
+                                              weechat_infolist_integer (infolist, "port"),
+                                              weechat_infolist_string (infolist, "size"));
+                        }
+                        else if (strcmp (type, "chat_send") == 0)
+                        {
+                            irc_server_sendf (server, 
+                                              "PRIVMSG %s :\01DCC CHAT chat %s %d\01",
+                                              weechat_infolist_string (infolist, "nick"),
+                                              weechat_infolist_string (infolist, "address"),
+                                              weechat_infolist_integer (infolist, "port"));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    return WEECHAT_RC_OK;
 }
 
 /*

@@ -38,6 +38,7 @@
 #include "../core/wee-hook.h"
 #include "../core/wee-list.h"
 #include "../core/wee-log.h"
+#include "../core/wee-network.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "../core/wee-util.h"
@@ -396,8 +397,17 @@ plugin_load (char *filename)
         
         new_plugin->command = &plugin_api_command;
         
-        new_plugin->info_get = &plugin_api_info_get;
+        new_plugin->network_pass_proxy = &network_pass_proxy;
+        new_plugin->network_connect_to = &network_connect_to;
         
+        new_plugin->info_get = &plugin_api_info_get;
+
+        new_plugin->infolist_new = &plugin_infolist_new;
+        new_plugin->infolist_new_item = &plugin_infolist_new_item;
+        new_plugin->infolist_new_var_integer = &plugin_infolist_new_var_integer;
+        new_plugin->infolist_new_var_string = &plugin_infolist_new_var_string;
+        new_plugin->infolist_new_var_pointer = &plugin_infolist_new_var_pointer;
+        new_plugin->infolist_new_var_time = &plugin_infolist_new_var_time;
         new_plugin->infolist_get = &plugin_api_infolist_get;
         new_plugin->infolist_next = &plugin_api_infolist_next;
         new_plugin->infolist_prev = &plugin_api_infolist_prev;

@@ -42,7 +42,7 @@
 struct t_config_file *config_files = NULL;
 struct t_config_file *last_config_file = NULL;
 
-char *config_option_type_str[CONFIG_NUM_OPTION_TYPES] =
+char *config_option_type_string[CONFIG_NUM_OPTION_TYPES] =
 { "boolean", "integer", "string", "color" };
 char *config_boolean_true[] = { "on", "yes", "y", "true", "t", "1", NULL };
 char *config_boolean_false[] = { "off", "no", "n", "false", "f", "0", NULL };
@@ -367,7 +367,7 @@ config_file_new_option (struct t_config_file *config_file,
     var_type = -1;
     for (i = 0; i < CONFIG_NUM_OPTION_TYPES; i++)
     {
-        if (string_strcasecmp (type, config_option_type_str[i]) == 0)
+        if (string_strcasecmp (type, config_option_type_string[i]) == 0)
         {
             var_type = i;
             break;

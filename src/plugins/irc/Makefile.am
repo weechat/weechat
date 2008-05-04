@@ -34,6 +34,7 @@ irc_la_SOURCES = irc.c \
                  irc-completion.h \
                  irc-config.c \
                  irc-config.h \
+                 irc-dcc.c \
                  irc-dcc.h \
                  irc-debug.c \
                  irc-debug.h \
@@ -50,7 +51,5 @@ irc_la_SOURCES = irc.c \
                  irc-server.c \
                  irc-server.h
 
-#                 irc-dcc.c
-
 irc_la_LDFLAGS = -module
-irc_la_LIBADD  = $(GNUTLS_LFLAGS)
+irc_la_LIBADD  = $(IRC_LFLAGS) $(GNUTLS_LFLAGS)

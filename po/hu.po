@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-29 18:22+0200\n"
+"POT-Creation-Date: 2008-05-04 17:30+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1421,38 +1421,6 @@ msgstr "a '+' jel színe névlista görgetésekor"
 #, fuzzy
 msgid "text color for nicklist separator"
 msgstr "névelválasztó színe"
-
-#, fuzzy
-msgid "text color for status info"
-msgstr "státuszsor színe"
-
-#, fuzzy
-msgid "background color for status info"
-msgstr "státuszablak háttere"
-
-#, fuzzy
-msgid "text color for \"waiting\" status info"
-msgstr "\"waiting\" dcc státusz színe"
-
-#, fuzzy
-msgid "text color for \"connecting\" status info"
-msgstr "\"connecting\" dcc státusz színe"
-
-#, fuzzy
-msgid "text color for \"active\" status info"
-msgstr "\"active\" dcc státusz színe"
-
-#, fuzzy
-msgid "text color for \"done\" status info"
-msgstr "\"done\" dcc státusz színe"
-
-#, fuzzy
-msgid "text color for \"failed\" status info"
-msgstr "\"failed\" dcc státusz színe"
-
-#, fuzzy
-msgid "text color for \"aborted\" status info"
-msgstr "\"aborted\" dcc státusz színe"
 
 #, fuzzy
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
@@ -3145,59 +3113,6 @@ msgstr ""
 msgid "send unknown commands to IRC server"
 msgstr "ismeretlen parancsok küldése az IRC szervernek"
 
-#, fuzzy
-msgid "automatically accept incoming dcc files (use carefully!)"
-msgstr "dcc beszélgetések automatikus fogadása (óvatosan használja!)"
-
-msgid "automatically accept dcc chats (use carefully!)"
-msgstr "dcc beszélgetések automatikus fogadása (óvatosan használja!)"
-
-msgid "timeout for dcc request (in seconds)"
-msgstr "dcc kérések időkorlátja (másodpercben)"
-
-#, fuzzy
-msgid "block size for dcc packets in bytes"
-msgstr "dcc csomagok blokkmérete"
-
-msgid "does not wait for ACK when sending file"
-msgstr "nem vár ACK válaszra fájl küldésekor"
-
-msgid ""
-"restricts outgoing dcc to use only ports in the given range (useful for NAT) "
-"(syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value "
-"means any port)"
-msgstr ""
-"korlátozza a dcc-t, hogy csak egy bizonyos tartományban lévő portokat "
-"használja (NAT esetén hasznos) (szintaxis: egyetlen port, pl. 5000 vagy egy "
-"port intervallum, pl. 5000-5015, üresen hagyva tetszőleges port)"
-
-msgid ""
-"IP or DNS address used for outgoing dcc (if empty, local interface IP is "
-"used)"
-msgstr "kimenő dcc forgalom IP/DNS-címe (ha üres, a helyi interfész IP-címe)"
-
-#, fuzzy
-msgid "path for writing incoming files with dcc"
-msgstr "dcc-n beérkező fájlok helye"
-
-msgid ""
-"path for reading files when sending thru dcc (when no path is specified)"
-msgstr ""
-"dcc-n keresztül küldendő fájlok elérési útvonala (ha nincs külön megadva)"
-
-msgid "convert spaces to underscores when sending files"
-msgstr "szóközök alulvonássá alakítása küldéskor"
-
-msgid "rename incoming files if already exists (add '.1', '.2', ...)"
-msgstr ""
-"fájlok automatikus átnevezése, ha már léteznek ('.1', '.2', ... hozzáadása)"
-
-msgid ""
-"automatically resume dcc transfer if connection with remote host is loosed"
-msgstr ""
-"dcc adatátvitel automatikus felépítése, ha megszakad a kapcsolat a távoli "
-"géppel"
-
 msgid "automatically log server messages"
 msgstr "szerverüzenetek automatikus naplózása"
 
@@ -3209,190 +3124,6 @@ msgstr "személyes beszélgetése automatikus naplózása"
 
 msgid "hide password displayed by nickserv"
 msgstr "a nickserv által mutatott jelszó elrejtése"
-
-msgid "Waiting"
-msgstr "Várakozás"
-
-msgid "Connecting"
-msgstr "Kapcsolódás"
-
-msgid "Active"
-msgstr "Aktív"
-
-msgid "Done"
-msgstr "Kész"
-
-msgid "Failed"
-msgstr "Sikertelen"
-
-msgid "Aborted"
-msgstr "Megszakítva"
-
-#, c-format
-msgid "DCC: file %s%s%s"
-msgstr "DCC: fájl %s%s%s"
-
-#, c-format
-msgid " (local filename: %s%s%s)"
-msgstr " (helyi fájlnév: %s%s%s)"
-
-msgid " sent to "
-msgstr " fogadó fél: "
-
-msgid " received from "
-msgstr " küldő fél: "
-
-msgid "OK"
-msgstr "Rendben"
-
-msgid "FAILED"
-msgstr "SIKERTELEN"
-
-#, c-format
-msgid "DCC chat closed with %s%s %s(%s%d.%d.%d.%d%s)\n"
-msgstr "DCC beszélgetés vége: %s%s %s(%s%d.%d.%d.%d%s)\n"
-
-#, c-format
-msgid ""
-"%s can't associate DCC chat with private buffer (maybe private buffer has "
-"already DCC CHAT?)\n"
-msgstr ""
-"%s nem sikerült a DCC beszégetést a privát pufferhez kapcsolni (talán már "
-"lett DCC CHAT hozzárendelve?)\n"
-
-#, c-format
-msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
-msgstr ""
-"Csatlakozás a %s%s %s(%s%d.%d.%d.%d%s)%s partnerhez DCC beszélgetésen "
-"keresztül\n"
-
-#, c-format
-msgid "DCC: file %s%s%s resumed at position %u\n"
-msgstr "DCC: a(z) %s%s%s fájl visszatért a(z) %u pozíción\n"
-
-#, c-format
-msgid ""
-"%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or "
-"ended\n"
-msgstr ""
-"%s nem sikerült a(z) \"%s\" fájlra visszatérni (port: %d, indulási pozíció: %"
-"u): DCC nem található vagy véget ért\n"
-
-#, c-format
-msgid "%s not enough memory for new DCC\n"
-msgstr "%s nincs elegendő memória új DCC számára\n"
-
-msgid "DCC chat"
-msgstr "DCC beszélgetés"
-
-#, c-format
-msgid ""
-"Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"
-msgstr ""
-"Beérkező DCC fájl a következőtől: %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%"
-"s bájt\n"
-
-#, c-format
-msgid ""
-"Sending DCC file to %s%s%s: %s%s%s (local filename: %s%s%s), %s%lu%s bytes\n"
-msgstr ""
-"DCC fájl küldése a következőnek: %s%s%s: %s%s%s (helyi fájlnév: %s%s%s), %s%"
-"lu%s bájt\n"
-
-#, c-format
-msgid "Incoming DCC chat request from %s%s%s (%s%d.%d.%d.%d%s)\n"
-msgstr "Beérkező DCC beszélgetés a következőtől: %s%s%s (%s%d.%d.%d.%d%s)\n"
-
-#, c-format
-msgid "Sending DCC chat request to %s%s\n"
-msgstr "DCC beszélgetésre felkérés küldése a következőnek: %s%s\n"
-
-#, c-format
-msgid ""
-"DCC: file %s%s%s (local filename: %s%s%s) will be resumed at position %u\n"
-msgstr ""
-"DCC: a %s%s%s fájl (helyi fájlnév: %s%s%s) a(z) %u pozíción fog visszatérni\n"
-
-#, c-format
-msgid "%s not enough memory for DCC SEND\n"
-msgstr "%s nincs elég memória a DCC SEND parancshoz\n"
-
-#, c-format
-msgid "%s cannot access file \"%s\"\n"
-msgstr "%s nem sikerült a(z) \"%s\" fájlt elérni\n"
-
-#, c-format
-msgid "%s could not find address for '%s'. Falling back to local IP.\n"
-msgstr ""
-"%s nem sikerült a(z) '%s' címét meghatározni. Helyi IP-cím használata.\n"
-
-#, c-format
-msgid "%s cannot create socket for DCC\n"
-msgstr "%s DCC csatorna meghatározása sikertelen\n"
-
-#, c-format
-msgid "%s cannot find available port for DCC\n"
-msgstr "%s nem sikerült elérhető portot találni a DCC-hez\n"
-
-#, c-format
-msgid "%s cannot send DCC\n"
-msgstr "%s DCC küldése sikertelen\n"
-
-#, c-format
-msgid "%s error sending data to \"%s\" via DCC CHAT\n"
-msgstr "%s hiba a(z) \"%s\" felé DCC CHAT-tel történő adatküldés közben\n"
-
-#, c-format
-msgid "Private %s> %s"
-msgstr "Privát %s> %s"
-
-#, c-format
-msgid "%s DCC: unable to create pipe\n"
-msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
-
-#, c-format
-msgid "%s DCC: unable to read local file\n"
-msgstr "%s DCC: nem sikerült a helyi fájlt olvasni\n"
-
-#, c-format
-msgid "%s DCC: unable to send block to receiver\n"
-msgstr "%s DCC: nem sikerült a blokkot a fogadónak eljuttatni\n"
-
-#, c-format
-msgid "%s DCC: unable to read ACK from receiver\n"
-msgstr "%s DCC: nem érkezett ACK válasz a fogadótól\n"
-
-#, c-format
-msgid "%s DCC: unable to connect to sender\n"
-msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
-
-#, c-format
-msgid "%s DCC: unable to receive block from sender\n"
-msgstr "%s DCC: nem sikerült fogadni a küldő blokkját\n"
-
-#, c-format
-msgid "%s DCC: unable to write local file\n"
-msgstr "%s DCC: nem sikerült a helyi fájlt írni\n"
-
-#, c-format
-msgid "%s DCC: unable to fork\n"
-msgstr "%s DCC: nem sikerült forkolni\n"
-
-#, c-format
-msgid "%s DCC: timeout\n"
-msgstr "%s DCC: időtúllépés\n"
-
-#, c-format
-msgid "%s DCC: unable to create socket for sending file\n"
-msgstr "%s DCC: nem sikerült csatornát nyitni a fájlküldéshez\n"
-
-#, c-format
-msgid "%s DCC: unable to set 'nonblock' option for socket\n"
-msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
-
-#, fuzzy, c-format
-msgid "Aborting active DCC: \"%s\" from %s"
-msgstr "\"%s\" aktív DCC megszakítása a következővel: %s\n"
 
 #, fuzzy
 msgid "IRC debug messages"
@@ -3492,6 +3223,10 @@ msgstr "CTCP %sVERSION%s válasz %s%s%s felhasználótól: %s\n"
 #, fuzzy, c-format
 msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
 msgstr "CTCP %sPING%s válasz %s%s%s felhasználótól: %ld.%ld másodperc\n"
+
+#, c-format
+msgid "Private %s> %s"
+msgstr "Privát %s> %s"
 
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
@@ -4456,6 +4191,319 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
+#, fuzzy
+msgid "waiting"
+msgstr "Várakozás"
+
+#, fuzzy
+msgid "connecting"
+msgstr "Kapcsolódás"
+
+#, fuzzy
+msgid "active"
+msgstr "Aktív"
+
+#, fuzzy
+msgid "done"
+msgstr "Kész"
+
+#, fuzzy
+msgid "failed"
+msgstr "Sikertelen"
+
+#, fuzzy
+msgid "aborted"
+msgstr "Megszakítva"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for new xfer"
+msgstr "%s nincs elegendő memória új DCC számára\n"
+
+#, fuzzy, c-format
+msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
+msgstr ""
+"Beérkező DCC fájl a következőtől: %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%"
+"s bájt\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s: sending file to %s: %s (local filename: %s), %lu bytes (protocol: %s)"
+msgstr ""
+"DCC fájl küldése a következőnek: %s%s%s: %s%s%s (helyi fájlnév: %s%s%s), %s%"
+"lu%s bájt\n"
+
+#, fuzzy, c-format
+msgid "%s: incoming chat request from %s (%d.%d.%d.%d)"
+msgstr "Beérkező DCC beszélgetés a következőtől: %s%s%s (%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
+msgid "%s: sending chat request to %s"
+msgstr "DCC beszélgetésre felkérés küldése a következőnek: %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s (local filename: %s) will be resumed at position %u"
+msgstr ""
+"DCC: a %s%s%s fájl (helyi fájlnév: %s%s%s) a(z) %u pozíción fog visszatérni\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s %s %s: %s"
+msgstr "DCC: fájl %s%s%s"
+
+#, fuzzy
+msgid "sent to"
+msgstr " fogadó fél: "
+
+#, fuzzy
+msgid "received from"
+msgstr " küldő fél: "
+
+msgid "OK"
+msgstr "Rendben"
+
+msgid "FAILED"
+msgstr "SIKERTELEN"
+
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgstr "DCC beszélgetés vége: %s%s %s(%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing arguments"
+msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown xfer type \"%s\""
+msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: filename missing for type \"%s\""
+msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: protocol missing for type \"%s\""
+msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown xfer protocol \"%s\""
+msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory"
+msgstr "Nincs elég memória az új sorhoz\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot access file \"%s\""
+msgstr "%s nem sikerült a(z) \"%s\" fájlt elérni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+msgstr ""
+"%s nem sikerült a(z) '%s' címét meghatározni. Helyi IP-cím használata.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer"
+msgstr "%s nem sikerült a csatornát létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s nem sikerült elérhető portot találni a DCC-hez\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating xfer"
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
+#, fuzzy, c-format
+msgid "%s%s: aborting active xfer: \"%s\" from %s"
+msgstr "\"%s\" aktív DCC megszakítása a következővel: %s\n"
+
+#, fuzzy, c-format
+msgid "%s: aborting active xfer: \"%s\" from %s"
+msgstr "\"%s\" aktív DCC megszakítása a következővel: %s\n"
+
+#, fuzzy
+msgid "text color"
+msgstr "üzenetek színe"
+
+#, fuzzy
+msgid "background color"
+msgstr "nevek háttere"
+
+#, fuzzy
+msgid "background color for selected line"
+msgstr "szövegbeviteli mező színe"
+
+#, fuzzy
+msgid "text color for \"waiting\" status"
+msgstr "\"waiting\" dcc státusz színe"
+
+#, fuzzy
+msgid "text color for \"connecting\" status"
+msgstr "\"connecting\" dcc státusz színe"
+
+#, fuzzy
+msgid "text color for \"active\" status"
+msgstr "\"active\" dcc státusz színe"
+
+#, fuzzy
+msgid "text color for \"done\" status"
+msgstr "\"done\" dcc státusz színe"
+
+#, fuzzy
+msgid "text color for \"failed\" status"
+msgstr "\"failed\" dcc státusz színe"
+
+#, fuzzy
+msgid "text color for \"aborted\" status"
+msgstr "\"aborted\" dcc státusz színe"
+
+#, fuzzy
+msgid "timeout for xfer request (in seconds)"
+msgstr "dcc kérések időkorlátja (másodpercben)"
+
+#, fuzzy
+msgid "block size for sending packets, in bytes"
+msgstr "dcc csomagok blokkmérete"
+
+msgid "does not wait for ACK when sending file"
+msgstr "nem vár ACK válaszra fájl küldésekor"
+
+#, fuzzy
+msgid ""
+"restricts outgoing files/chats to use only ports in the given range (useful "
+"for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, "
+"empty value means any port)"
+msgstr ""
+"korlátozza a dcc-t, hogy csak egy bizonyos tartományban lévő portokat "
+"használja (NAT esetén hasznos) (szintaxis: egyetlen port, pl. 5000 vagy egy "
+"port intervallum, pl. 5000-5015, üresen hagyva tetszőleges port)"
+
+#, fuzzy
+msgid ""
+"IP or DNS address used for sending files/chats (if empty, local interface IP "
+"is used)"
+msgstr "kimenő dcc forgalom IP/DNS-címe (ha üres, a helyi interfész IP-címe)"
+
+#, fuzzy
+msgid "path for writing incoming files"
+msgstr "dcc-n beérkező fájlok helye"
+
+#, fuzzy
+msgid "path for reading files when sending (when no path is specified by user)"
+msgstr ""
+"dcc-n keresztül küldendő fájlok elérési útvonala (ha nincs külön megadva)"
+
+msgid "convert spaces to underscores when sending files"
+msgstr "szóközök alulvonássá alakítása küldéskor"
+
+msgid "rename incoming files if already exists (add '.1', '.2', ...)"
+msgstr ""
+"fájlok automatikus átnevezése, ha már léteznek ('.1', '.2', ... hozzáadása)"
+
+#, fuzzy
+msgid ""
+"automatically resume file transfer if connection with remote host is lost"
+msgstr ""
+"dcc adatátvitel automatikus felépítése, ha megszakad a kapcsolat a távoli "
+"géppel"
+
+#, fuzzy
+msgid "automatically accept incoming files (use carefully!)"
+msgstr "dcc beszélgetések automatikus fogadása (óvatosan használja!)"
+
+#, fuzzy
+msgid "automatically accept chat requests (use carefully!)"
+msgstr "dcc beszélgetések automatikus fogadása (óvatosan használja!)"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe"
+msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to fork"
+msgstr "%s DCC: nem sikerült forkolni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to read local file"
+msgstr "%s DCC: nem sikerült a helyi fájlt olvasni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to send block to receiver"
+msgstr "%s DCC: nem sikerült a blokkot a fogadónak eljuttatni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to read ACK from receiver"
+msgstr "%s DCC: nem érkezett ACK válasz a fogadótól\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to connect to sender"
+msgstr "%s DCC: nem sikerült kapcsolódni a küldőhöz\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to receive block from sender"
+msgstr "%s DCC: nem sikerült fogadni a küldő blokkját\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to write local file"
+msgstr "%s DCC: nem sikerült a helyi fájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgstr "%s hiba a(z) \"%s\" felé DCC CHAT-tel történő adatküldés közben\n"
+
+#, fuzzy
+#~ msgid "text color for status info"
+#~ msgstr "státuszsor színe"
+
+#, fuzzy
+#~ msgid "background color for status info"
+#~ msgstr "státuszablak háttere"
+
+#~ msgid " (local filename: %s%s%s)"
+#~ msgstr " (helyi fájlnév: %s%s%s)"
+
+#~ msgid ""
+#~ "%s can't associate DCC chat with private buffer (maybe private buffer has "
+#~ "already DCC CHAT?)\n"
+#~ msgstr ""
+#~ "%s nem sikerült a DCC beszégetést a privát pufferhez kapcsolni (talán már "
+#~ "lett DCC CHAT hozzárendelve?)\n"
+
+#~ msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
+#~ msgstr ""
+#~ "Csatlakozás a %s%s %s(%s%d.%d.%d.%d%s)%s partnerhez DCC beszélgetésen "
+#~ "keresztül\n"
+
+#~ msgid "DCC: file %s%s%s resumed at position %u\n"
+#~ msgstr "DCC: a(z) %s%s%s fájl visszatért a(z) %u pozíción\n"
+
+#~ msgid ""
+#~ "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found "
+#~ "or ended\n"
+#~ msgstr ""
+#~ "%s nem sikerült a(z) \"%s\" fájlra visszatérni (port: %d, indulási "
+#~ "pozíció: %u): DCC nem található vagy véget ért\n"
+
+#~ msgid "DCC chat"
+#~ msgstr "DCC beszélgetés"
+
+#~ msgid "%s not enough memory for DCC SEND\n"
+#~ msgstr "%s nincs elég memória a DCC SEND parancshoz\n"
+
+#~ msgid "%s cannot create socket for DCC\n"
+#~ msgstr "%s DCC csatorna meghatározása sikertelen\n"
+
+#~ msgid "%s cannot send DCC\n"
+#~ msgstr "%s DCC küldése sikertelen\n"
+
+#~ msgid "%s DCC: timeout\n"
+#~ msgstr "%s DCC: időtúllépés\n"
+
+#~ msgid "%s DCC: unable to create socket for sending file\n"
+#~ msgstr "%s DCC: nem sikerült csatornát nyitni a fájlküldéshez\n"
+
+#~ msgid "%s DCC: unable to set 'nonblock' option for socket\n"
+#~ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
+
 #~ msgid "Internal key functions:\n"
 #~ msgstr "Belső billentyűfunkciók:\n"
 
@@ -4684,10 +4732,6 @@ msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 #, fuzzy
 #~ msgid "manage charsets"
 #~ msgstr "pufferek kezelése"
-
-#, fuzzy
-#~ msgid "%s%s: value \"%s\" is invalid for option \"%s\""
-#~ msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
 
 #, fuzzy
 #~ msgid "%s%s: error creating server for reading configuration file"

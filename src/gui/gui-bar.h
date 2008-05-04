@@ -96,9 +96,9 @@ struct t_gui_bar
 
 /* variables */
 
-extern char *gui_bar_type_str[];
-extern char *gui_bar_position_str[];
-extern char *gui_bar_filling_str[];
+extern char *gui_bar_type_string[];
+extern char *gui_bar_position_string[];
+extern char *gui_bar_filling_string[];
 extern struct t_gui_bar *gui_bars;
 extern struct t_gui_bar *last_gui_bar;
 extern struct t_gui_bar *gui_temp_bars;

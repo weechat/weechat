@@ -80,6 +80,10 @@ if PLUGIN_TRIGGER
 trigger_dir = trigger
 endif
 
+if PLUGIN_XFER
+xfer_dir = xfer
+endif
+
 SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(debug_dir) \
             $(demo_dir) $(fifo_dir) $(irc_dir) $(logger_dir) $(script_dir) \
-            $(trigger_dir)
+            $(trigger_dir) $(xfer_dir)

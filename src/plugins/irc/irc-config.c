@@ -33,7 +33,7 @@
 #include "irc-server.h"
 
 
-char *irc_config_server_option_str[IRC_CONFIG_NUM_SERVER_OPTIONS] =
+char *irc_config_server_option_string[IRC_CONFIG_NUM_SERVER_OPTIONS] =
 { "autoconnect", "autoreconnect", "autoreconnect_delay", "addresses", "ipv6",
   "ssl", "password", "nicks", "username", "realname", "hostname", "command",
   "command_delay", "autojoin", "autorejoin", "notify_levels"
@@ -47,7 +47,7 @@ struct t_config_file *irc_config_file = NULL;
 struct t_config_section *irc_config_section_server_default = NULL;
 struct t_config_section *irc_config_section_server = NULL;
 
-/* config, look section */
+/* IRC config, look section */
 
 struct t_config_option *irc_config_look_one_server_buffer;
 struct t_config_option *irc_config_look_open_near_server;
@@ -59,7 +59,7 @@ struct t_config_option *irc_config_look_show_away_once;
 struct t_config_option *irc_config_look_notice_as_pv;
 struct t_config_option *irc_config_look_highlight;
 
-/* config, network section */
+/* IRC config, network section */
 
 struct t_config_option *irc_config_network_default_msg_part;
 struct t_config_option *irc_config_network_default_msg_quit;
@@ -73,29 +73,14 @@ struct t_config_option *irc_config_network_colors_receive;
 struct t_config_option *irc_config_network_colors_send;
 struct t_config_option *irc_config_network_send_unknown_commands;
 
-/* config, dcc section */
-
-struct t_config_option *irc_config_dcc_auto_accept_files;
-struct t_config_option *irc_config_dcc_auto_accept_chats;
-struct t_config_option *irc_config_dcc_timeout;
-struct t_config_option *irc_config_dcc_blocksize;
-struct t_config_option *irc_config_dcc_fast_send;
-struct t_config_option *irc_config_dcc_port_range;
-struct t_config_option *irc_config_dcc_own_ip;
-struct t_config_option *irc_config_dcc_download_path;
-struct t_config_option *irc_config_dcc_upload_path;
-struct t_config_option *irc_config_dcc_convert_spaces;
-struct t_config_option *irc_config_dcc_auto_rename;
-struct t_config_option *irc_config_dcc_auto_resume;
-
-/* config, log section */
+/* IRC config, log section */
 
 struct t_config_option *irc_config_log_auto_log_server;
 struct t_config_option *irc_config_log_auto_log_channel;
 struct t_config_option *irc_config_log_auto_log_private;
 struct t_config_option *irc_config_log_hide_nickserv_pwd;
 
-/* config, server section */
+/* IRC config, server section */
 
 struct t_config_option *irc_config_server_default[IRC_CONFIG_NUM_SERVER_OPTIONS];
 
@@ -117,7 +102,7 @@ irc_config_search_server_option (char *option_name)
     
     for (i = 0; i < IRC_CONFIG_NUM_SERVER_OPTIONS; i++)
     {
-        if (weechat_strcasecmp (irc_config_server_option_str[i],
+        if (weechat_strcasecmp (irc_config_server_option_string[i],
                                 option_name) == 0)
             return i;
     }
@@ -757,9 +742,9 @@ irc_config_server_create_option (void *data, struct t_config_file *config_file,
                                                                        option_name,
                                                                        value,
                                                                        &irc_config_server_change_cb,
-                                                                       irc_config_server_option_str[index_option],
+                                                                       irc_config_server_option_string[index_option],
                                                                        &irc_config_server_delete_cb,
-                                                                       irc_config_server_option_str[index_option]);
+                                                                       irc_config_server_option_string[index_option]);
                             
                             if (ptr_option)
                             {
@@ -857,10 +842,10 @@ irc_config_server_create_default_options (struct t_config_section *section)
             irc_config_file,
             section,
             i,
-            irc_config_server_option_str[i],
+            irc_config_server_option_string[i],
             default_value,
             &irc_config_server_default_change_cb,
-            irc_config_server_option_str[i],
+            irc_config_server_option_string[i],
             NULL,
             NULL);
     }
@@ -1013,83 +998,6 @@ irc_config_init ()
         N_("send unknown commands to IRC server"),
         NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
     
-    ptr_section = weechat_config_new_section (irc_config_file, "dcc",
-                                              0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (irc_config_file);
-        return 0;
-    }
-    
-    irc_config_dcc_auto_accept_files = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "auto_accept_files", "boolean",
-        N_("automatically accept incoming dcc files (use carefully!)"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_dcc_auto_accept_chats = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "auto_accept_chats", "boolean",
-        N_("automatically accept dcc chats (use carefully!)"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_dcc_timeout = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "timeout", "integer",
-        N_("timeout for dcc request (in seconds)"),
-        NULL, 5, INT_MAX, "300", NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_dcc_blocksize = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "blocksize", "integer",
-        N_("block size for dcc packets in bytes"),
-        NULL, IRC_DCC_MIN_BLOCKSIZE, IRC_DCC_MAX_BLOCKSIZE, "65536",
-        NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_dcc_fast_send = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "fast_send", "boolean",
-        N_("does not wait for ACK when sending file"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_dcc_port_range = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "port_range", "string",
-        N_("restricts outgoing dcc to use only ports in the given range "
-           "(useful for NAT) (syntax: a single port, ie. 5000 or a port "
-           "range, ie. 5000-5015, empty value means any port)"),
-        NULL, 0, 0, "", NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_dcc_own_ip = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "own_ip", "string",
-        N_("IP or DNS address used for outgoing dcc "
-           "(if empty, local interface IP is used)"),
-        NULL, 0, 0, "", NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_dcc_download_path = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "download_path", "string",
-        N_("path for writing incoming files with dcc"),
-        NULL, 0, 0, "%h/dcc", NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_dcc_upload_path = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "upload_path", "string",
-        N_("path for reading files when sending thru dcc (when no path is "
-           "specified)"),
-        NULL, 0, 0, "~", NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_dcc_convert_spaces = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "convert_spaces", "boolean",
-        N_("convert spaces to underscores when sending files"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_dcc_auto_rename = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "auto_rename", "boolean",
-        N_("rename incoming files if already exists (add '.1', '.2', ...)"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_dcc_auto_resume = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "auto_resume", "boolean",
-        N_("automatically resume dcc transfer if connection with remote host "
-           "is loosed"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL);
-    
     ptr_section = weechat_config_new_section (irc_config_file, "log",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -1162,11 +1070,7 @@ irc_config_init ()
 int
 irc_config_read ()
 {
-    int rc;
-    
-    rc = weechat_config_read (irc_config_file);
-    
-    return rc;
+    return weechat_config_read (irc_config_file);
 }
 
 /*

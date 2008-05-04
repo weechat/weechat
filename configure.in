@@ -84,13 +84,15 @@ AC_MSG_RESULT($ac_cv_type_socklen_t)
 # Checks for library functions.
 AC_FUNC_SELECT_ARGTYPES
 AC_TYPE_SIGNAL
-AC_CHECK_FUNCS([gethostbyname gethostname getsockname gettimeofday inet_ntoa memset mkdir select setlocale socket strcasecmp strchr strdup strndup strncasecmp strpbrk strrchr strstr uname regexec])
+AC_CHECK_FUNCS([gethostbyname gethostname getsockname gettimeofday inet_ntoa memset mkdir select setlocale socket strcasecmp strchr strdup strndup strncasecmp strpbrk strrchr strstr regexec])
 
 # Variables in config.h
 
 AH_VERBATIM([PREFIX], [#undef PREFIX])
 AH_VERBATIM([WEECHAT_LIBDIR], [#undef WEECHAT_LIBDIR])
 AH_VERBATIM([WEECHAT_SHAREDIR], [#undef WEECHAT_SHAREDIR])
+AH_VERBATIM([HAVE_GNUTLS], [#undef HAVE_GNUTLS])
+AH_VERBATIM([HAVE_FLOCK], [#undef HAVE_FLOCK])
 AH_VERBATIM([PLUGIN_ALIAS], [#undef PLUGIN_ALIAS])
 AH_VERBATIM([PLUGIN_ASPELL], [#undef PLUGIN_ASPELL])
 AH_VERBATIM([PLUGIN_CHARSET], [#undef PLUGIN_CHARSET])
@@ -99,13 +101,12 @@ AH_VERBATIM([PLUGIN_DEMO], [#undef PLUGIN_DEMO])
 AH_VERBATIM([PLUGIN_FIFO], [#undef PLUGIN_FIFO])
 AH_VERBATIM([PLUGIN_IRC], [#undef PLUGIN_IRC])
 AH_VERBATIM([PLUGIN_LOGGER], [#undef PLUGIN_LOGGER])
-AH_VERBATIM([PLUGIN_TRIGGER], [#undef PLUGIN_TRIGGER])
 AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
 AH_VERBATIM([PLUGIN_PYTHON], [#undef PLUGIN_PYTHON])
 AH_VERBATIM([PLUGIN_RUBY], [#undef PLUGIN_RUBY])
 AH_VERBATIM([PLUGIN_LUA], [#undef PLUGIN_LUA])
-AH_VERBATIM([HAVE_GNUTLS], [#undef HAVE_GNUTLS])
-AH_VERBATIM([HAVE_FLOCK], [#undef HAVE_FLOCK])
+AH_VERBATIM([PLUGIN_TRIGGER], [#undef PLUGIN_TRIGGER])
+AH_VERBATIM([PLUGIN_XFER], [#undef PLUGIN_XFER])
 
 # Arguments for ./configure
 
@@ -128,6 +129,7 @@ AC_ARG_ENABLE(python,       [  --disable-python        turn off Python script pl
 AC_ARG_ENABLE(ruby,         [  --disable-ruby          turn off Ruby script plugin (default=compiled if found)],enable_ruby=$enableval,enable_ruby=yes)
 AC_ARG_ENABLE(lua,          [  --disable-lua           turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
 AC_ARG_ENABLE(trigger,      [  --disable-trigger       turn off Trigger plugin (default=compiled if found)],enable_trigger=$enableval,enable_trigger=yes)
+AC_ARG_ENABLE(xfer,         [  --disable-xfer          turn off Xfer (file transfer) plugin (default=compiled if found)],enable_xfer=$enableval,enable_xfer=yes)
 AC_ARG_WITH(lua-inc,        [  --with-lua-inc=DIR,     lua include files are in DIR (default=autodetect)],lua_inc=$withval,lua_inc='')
 AC_ARG_WITH(lua-lib,        [  --with-lua-lib=DIR,     lua library files are in DIR (default=autodetect)],lua_lib=$withval,lua_lib='')
 AC_ARG_WITH(lua-suffix,     [  --with-lua-suffix=ARG   lua is suffixed with ARG (default=autodetect)],lua_suffix=$withval,lua_suffix='')
@@ -677,6 +679,18 @@ else
     not_asked="$not_asked trigger"
 fi
 
+# ---------------------------------- xfer --------------------------------------
+
+if test "x$enable_xfer" = "xyes" ; then
+    XFER_CFLAGS=""
+    XFER_LFLAGS=""
+    AC_SUBST(XFER_CFLAGS)
+    AC_SUBST(XFER_LFLAGS)
+    AC_DEFINE(PLUGIN_XFER)
+else
+    not_asked="$not_asked xfer"
+fi
+
 # ------------------------------------------------------------------------------
 #                                   gnutls
 # ------------------------------------------------------------------------------
@@ -854,6 +868,9 @@ CFLAGS="$CFLAGS -DWEECHAT_VERSION=\\\"$VERSION\\\""
 #                                output Makefiles
 # ------------------------------------------------------------------------------
 
+AM_CONDITIONAL(HAVE_GNUTLS,    test "$enable_gnutls" = "yes")
+AM_CONDITIONAL(HAVE_FLOCK,     test "$enable_flock" = "yes")
+AM_CONDITIONAL(DBLATEX_FOUND,  test "$DBLATEX_FOUND" = "yes")
 AM_CONDITIONAL(GUI_NCURSES,    test "$enable_ncurses" = "yes")
 AM_CONDITIONAL(GUI_WXWIDGETS,  test "$enable_wxwidgets" = "yes")
 AM_CONDITIONAL(GUI_GTK,        test "$enable_gtk" = "yes")
@@ -871,9 +888,7 @@ AM_CONDITIONAL(PLUGIN_PYTHON,  test "$enable_python" = "yes")
 AM_CONDITIONAL(PLUGIN_RUBY,    test "$enable_ruby" = "yes")
 AM_CONDITIONAL(PLUGIN_LUA,     test "$enable_lua" = "yes")
 AM_CONDITIONAL(PLUGIN_TRIGGER, test "$enable_trigger" = "yes")
-AM_CONDITIONAL(HAVE_GNUTLS,    test "$enable_gnutls" = "yes")
-AM_CONDITIONAL(HAVE_FLOCK,     test "$enable_flock" = "yes")
-AM_CONDITIONAL(DBLATEX_FOUND,  test "$DBLATEX_FOUND" = "yes")
+AM_CONDITIONAL(PLUGIN_XFER,    test "$enable_xfer" = "yes")
 
 AC_OUTPUT([Makefile
            doc/Makefile
@@ -896,12 +911,13 @@ AC_OUTPUT([Makefile
            src/plugins/fifo/Makefile
            src/plugins/irc/Makefile
            src/plugins/logger/Makefile
-           src/plugins/trigger/Makefile
            src/plugins/scripts/Makefile
            src/plugins/scripts/perl/Makefile
            src/plugins/scripts/python/Makefile
            src/plugins/scripts/ruby/Makefile
            src/plugins/scripts/lua/Makefile
+           src/plugins/trigger/Makefile
+           src/plugins/xfer/Makefile
            src/gui/Makefile
            src/gui/curses/Makefile
            src/gui/wxwidgets/Makefile
@@ -973,6 +989,9 @@ if test "x$enable_lua" = "xyes"; then
 fi
 if test "x$enable_trigger" = "xyes"; then
     listplugins="$listplugins trigger"
+fi
+if test "x$enable_xfer" = "xyes"; then
+    listplugins="$listplugins xfer"
 fi
 
 listoptional=""

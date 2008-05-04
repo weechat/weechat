@@ -164,14 +164,6 @@ struct t_config_option *config_color_nicklist_prefix4;
 struct t_config_option *config_color_nicklist_prefix5;
 struct t_config_option *config_color_nicklist_more;
 struct t_config_option *config_color_nicklist_separator;
-struct t_config_option *config_color_info;
-struct t_config_option *config_color_info_bg;
-struct t_config_option *config_color_info_waiting;
-struct t_config_option *config_color_info_connecting;
-struct t_config_option *config_color_info_active;
-struct t_config_option *config_color_info_done;
-struct t_config_option *config_color_info_failed;
-struct t_config_option *config_color_info_aborted;
 
 /* config, history section */
 
@@ -1440,56 +1432,7 @@ config_weechat_init ()
         N_("text color for nicklist separator"),
         NULL, GUI_COLOR_NICKLIST_SEPARATOR, 0, "blue",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    /* status info */
-    config_color_info = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "info", "color",
-        N_("text color for status info"),
-        NULL, GUI_COLOR_INFO, 0, "default",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_info_bg = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "info_bg", "color",
-        N_("background color for status info"),
-        NULL, -1, 0, "default",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_info_waiting = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "info_waiting", "color",
-        N_("text color for \"waiting\" status info"),
-        NULL, GUI_COLOR_INFO_WAITING, 0, "lightcyan",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_info_connecting = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "info_connecting", "color",
-        N_("text color for \"connecting\" status info"),
-        NULL, GUI_COLOR_INFO_CONNECTING, 0, "yellow",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_info_active = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "info_active", "color",
-        N_("text color for \"active\" status info"),
-        NULL, GUI_COLOR_INFO_ACTIVE, 0, "lightblue",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_info_done = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "info_done", "color",
-        N_("text color for \"done\" status info"),
-        NULL, GUI_COLOR_INFO_DONE, 0, "lightgreen",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_info_failed = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "info_failed", "color",
-        N_("text color for \"failed\" status info"),
-        NULL, GUI_COLOR_INFO_FAILED, 0, "lightred",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_info_aborted = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "info_aborted", "color",
-        N_("text color for \"aborted\" status info"),
-        NULL, GUI_COLOR_INFO_ABORTED, 0, "lightred",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-
+    
     /* history */
     ptr_section = config_file_new_section (weechat_config_file, "history",
                                            0, 0,

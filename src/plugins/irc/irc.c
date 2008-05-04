@@ -22,10 +22,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#ifdef HAVE_GNUTLS
-#include <gnutls/gnutls.h>
-#endif
-
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-command.h"
@@ -54,31 +50,6 @@ struct t_hook *irc_hook_timer_check_away = NULL;
 gnutls_certificate_credentials gnutls_xcred; /* gnutls client credentials */
 #endif
 
-
-/*
- * irc_create_directories: create directories for IRC plugin
- */
-
-void
-irc_create_directories ()
-{
-    char *weechat_dir, *dir1, *dir2;
-    
-    /* create DCC download directory */
-    weechat_dir = weechat_info_get ("weechat_dir");
-    if (weechat_dir)
-    {
-        dir1 = weechat_string_replace (weechat_config_string (irc_config_dcc_download_path),
-                                       "~", getenv ("HOME"));
-        dir2 = weechat_string_replace (dir1, "%h", weechat_dir);
-        if (dir2)
-            (void) weechat_mkdir (dir2, 0700);
-        if (dir1)
-            free (dir1);
-        if (dir2)
-            free (dir2);
-    }
-}
 
 /*
  * irc_signal_quit_cb: callback for "quit" signal
@@ -128,14 +99,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 
     if (irc_config_read () < 0)
         return WEECHAT_RC_ERROR;
-
-    irc_create_directories ();
-
+    
     irc_command_init ();
-
+    
     /* hook some signals */
     irc_debug_init ();
     weechat_hook_signal ("quit", &irc_signal_quit_cb, NULL);
+    weechat_hook_signal ("xfer_send_ready", &irc_server_xfer_send_ready_cb, NULL);
     
     /* hook completions */
     irc_completion_init ();

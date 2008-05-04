@@ -38,14 +38,14 @@
 #include "gui-window.h"
 
 
-char *gui_bar_option_str[GUI_BAR_NUM_OPTIONS] =
+char *gui_bar_option_string[GUI_BAR_NUM_OPTIONS] =
 { "priority", "type", "conditions", "position", "filling", "size", "size_max",
   "color_fg", "color_bg", "separator", "items" };
-char *gui_bar_type_str[GUI_BAR_NUM_TYPES] =
+char *gui_bar_type_string[GUI_BAR_NUM_TYPES] =
 { "root", "window" };
-char *gui_bar_position_str[GUI_BAR_NUM_POSITIONS] =
+char *gui_bar_position_string[GUI_BAR_NUM_POSITIONS] =
 { "bottom", "top", "left", "right" };
-char *gui_bar_filling_str[GUI_BAR_NUM_FILLING] =
+char *gui_bar_filling_string[GUI_BAR_NUM_FILLING] =
 { "horizontal", "vertical" };
 
 struct t_gui_bar *gui_bars = NULL;         /* first bar                     */
@@ -71,7 +71,7 @@ gui_bar_search_option (char *option_name)
     
     for (i = 0; i < GUI_BAR_NUM_OPTIONS; i++)
     {
-        if (string_strcasecmp (gui_bar_option_str[i], option_name) == 0)
+        if (string_strcasecmp (gui_bar_option_string[i], option_name) == 0)
             return i;
     }
     
@@ -91,7 +91,7 @@ gui_bar_search_type (char *type)
     
     for (i = 0; i < GUI_BAR_NUM_TYPES; i++)
     {
-        if (string_strcasecmp (type, gui_bar_type_str[i]) == 0)
+        if (string_strcasecmp (type, gui_bar_type_string[i]) == 0)
             return i;
     }
     
@@ -111,7 +111,7 @@ gui_bar_search_position (char *position)
     
     for (i = 0; i < GUI_BAR_NUM_POSITIONS; i++)
     {
-        if (string_strcasecmp (position, gui_bar_position_str[i]) == 0)
+        if (string_strcasecmp (position, gui_bar_position_string[i]) == 0)
             return i;
     }
     
@@ -868,12 +868,13 @@ gui_bar_create_option (char *bar_name, int index_option, char *value)
     
     ptr_option = NULL;
     
-    length = strlen (bar_name) + 1 + strlen (gui_bar_option_str[index_option]) + 1;
+    length = strlen (bar_name) + 1 +
+        strlen (gui_bar_option_string[index_option]) + 1;
     option_name = malloc (length);
     if (option_name)
     {
         snprintf (option_name, length, "%s.%s",
-                  bar_name, gui_bar_option_str[index_option]);
+                  bar_name, gui_bar_option_string[index_option]);
         
         switch (index_option)
         {
@@ -1538,16 +1539,16 @@ gui_bar_print_log ()
         log_printf ("  priority . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->priority));
         log_printf ("  type . . . . . . . . . : %d (%s)",
                     CONFIG_INTEGER(ptr_bar->type),
-                    gui_bar_type_str[CONFIG_INTEGER(ptr_bar->type)]);
+                    gui_bar_type_string[CONFIG_INTEGER(ptr_bar->type)]);
         log_printf ("  conditions . . . . . . : '%s'", CONFIG_STRING(ptr_bar->conditions));
         log_printf ("  conditions_count . . . : %d",   ptr_bar->conditions_count);
         log_printf ("  conditions_array . . . : 0x%x", ptr_bar->conditions_array);
         log_printf ("  position . . . . . . . : %d (%s)",
                     CONFIG_INTEGER(ptr_bar->position),
-                    gui_bar_position_str[CONFIG_INTEGER(ptr_bar->position)]);
+                    gui_bar_position_string[CONFIG_INTEGER(ptr_bar->position)]);
         log_printf ("  filling. . . . . . . . : %d (%s)",
                     CONFIG_INTEGER(ptr_bar->filling),
-                    gui_bar_filling_str[CONFIG_INTEGER(ptr_bar->filling)]);
+                    gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->filling)]);
         log_printf ("  size . . . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->size));
         log_printf ("  size_max . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->size_max));
         log_printf ("  color_fg . . . . . . . : %d",

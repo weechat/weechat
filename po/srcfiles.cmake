@@ -19,6 +19,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-list.h
 ./src/core/wee-log.c
 ./src/core/wee-log.h
+./src/core/wee-network.c
+./src/core/wee-network.h
 ./src/core/wee-string.c
 ./src/core/wee-string.h
 ./src/core/wee-upgrade.c
@@ -166,4 +168,18 @@ SET(WEECHAT_SOURCES
 ./src/plugins/trigger/trigger-libirc.c
 ./src/plugins/trigger/trigger-libirc.h
 ./src/plugins/weechat-plugin.h
+./src/plugins/xfer/xfer.c
+./src/plugins/xfer/xfer-buffer.c
+./src/plugins/xfer/xfer-buffer.h
+./src/plugins/xfer/xfer-chat.c
+./src/plugins/xfer/xfer-chat.h
+./src/plugins/xfer/xfer-config.c
+./src/plugins/xfer/xfer-config.h
+./src/plugins/xfer/xfer-dcc.c
+./src/plugins/xfer/xfer-dcc.h
+./src/plugins/xfer/xfer-file.c
+./src/plugins/xfer/xfer-file.h
+./src/plugins/xfer/xfer.h
+./src/plugins/xfer/xfer-network.c
+./src/plugins/xfer/xfer-network.h
 )

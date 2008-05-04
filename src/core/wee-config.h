@@ -152,14 +152,6 @@ extern struct t_config_option *config_color_nicklist_prefix4;
 extern struct t_config_option *config_color_nicklist_prefix5;
 extern struct t_config_option *config_color_nicklist_more;
 extern struct t_config_option *config_color_nicklist_separator;
-extern struct t_config_option *config_color_info;
-extern struct t_config_option *config_color_info_bg;
-extern struct t_config_option *config_color_info_waiting;
-extern struct t_config_option *config_color_info_connecting;
-extern struct t_config_option *config_color_info_active;
-extern struct t_config_option *config_color_info_done;
-extern struct t_config_option *config_color_info_failed;
-extern struct t_config_option *config_color_info_aborted;
 
 extern struct t_config_option *config_history_max_lines;
 extern struct t_config_option *config_history_max_commands;

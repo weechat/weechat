@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-29 18:22+0200\n"
+"POT-Creation-Date: 2008-05-04 17:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1148,30 +1148,6 @@ msgid "text color for '+' when scrolling nicks in nicklist"
 msgstr ""
 
 msgid "text color for nicklist separator"
-msgstr ""
-
-msgid "text color for status info"
-msgstr ""
-
-msgid "background color for status info"
-msgstr ""
-
-msgid "text color for \"waiting\" status info"
-msgstr ""
-
-msgid "text color for \"connecting\" status info"
-msgstr ""
-
-msgid "text color for \"active\" status info"
-msgstr ""
-
-msgid "text color for \"done\" status info"
-msgstr ""
-
-msgid "text color for \"failed\" status info"
-msgstr ""
-
-msgid "text color for \"aborted\" status info"
 msgstr ""
 
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
@@ -2613,49 +2589,6 @@ msgstr ""
 msgid "send unknown commands to IRC server"
 msgstr ""
 
-msgid "automatically accept incoming dcc files (use carefully!)"
-msgstr ""
-
-msgid "automatically accept dcc chats (use carefully!)"
-msgstr ""
-
-msgid "timeout for dcc request (in seconds)"
-msgstr ""
-
-msgid "block size for dcc packets in bytes"
-msgstr ""
-
-msgid "does not wait for ACK when sending file"
-msgstr ""
-
-msgid ""
-"restricts outgoing dcc to use only ports in the given range (useful for NAT) "
-"(syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value "
-"means any port)"
-msgstr ""
-
-msgid ""
-"IP or DNS address used for outgoing dcc (if empty, local interface IP is "
-"used)"
-msgstr ""
-
-msgid "path for writing incoming files with dcc"
-msgstr ""
-
-msgid ""
-"path for reading files when sending thru dcc (when no path is specified)"
-msgstr ""
-
-msgid "convert spaces to underscores when sending files"
-msgstr ""
-
-msgid "rename incoming files if already exists (add '.1', '.2', ...)"
-msgstr ""
-
-msgid ""
-"automatically resume dcc transfer if connection with remote host is loosed"
-msgstr ""
-
 msgid "automatically log server messages"
 msgstr ""
 
@@ -2666,178 +2599,6 @@ msgid "automatically log private chats"
 msgstr ""
 
 msgid "hide password displayed by nickserv"
-msgstr ""
-
-msgid "Waiting"
-msgstr ""
-
-msgid "Connecting"
-msgstr ""
-
-msgid "Active"
-msgstr ""
-
-msgid "Done"
-msgstr ""
-
-msgid "Failed"
-msgstr ""
-
-msgid "Aborted"
-msgstr ""
-
-#, c-format
-msgid "DCC: file %s%s%s"
-msgstr ""
-
-#, c-format
-msgid " (local filename: %s%s%s)"
-msgstr ""
-
-msgid " sent to "
-msgstr ""
-
-msgid " received from "
-msgstr ""
-
-msgid "OK"
-msgstr ""
-
-msgid "FAILED"
-msgstr ""
-
-#, c-format
-msgid "DCC chat closed with %s%s %s(%s%d.%d.%d.%d%s)\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s can't associate DCC chat with private buffer (maybe private buffer has "
-"already DCC CHAT?)\n"
-msgstr ""
-
-#, c-format
-msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
-msgstr ""
-
-#, c-format
-msgid "DCC: file %s%s%s resumed at position %u\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or "
-"ended\n"
-msgstr ""
-
-#, c-format
-msgid "%s not enough memory for new DCC\n"
-msgstr ""
-
-msgid "DCC chat"
-msgstr ""
-
-#, c-format
-msgid ""
-"Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"Sending DCC file to %s%s%s: %s%s%s (local filename: %s%s%s), %s%lu%s bytes\n"
-msgstr ""
-
-#, c-format
-msgid "Incoming DCC chat request from %s%s%s (%s%d.%d.%d.%d%s)\n"
-msgstr ""
-
-#, c-format
-msgid "Sending DCC chat request to %s%s\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"DCC: file %s%s%s (local filename: %s%s%s) will be resumed at position %u\n"
-msgstr ""
-
-#, c-format
-msgid "%s not enough memory for DCC SEND\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot access file \"%s\"\n"
-msgstr ""
-
-#, c-format
-msgid "%s could not find address for '%s'. Falling back to local IP.\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot create socket for DCC\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot find available port for DCC\n"
-msgstr ""
-
-#, c-format
-msgid "%s cannot send DCC\n"
-msgstr ""
-
-#, c-format
-msgid "%s error sending data to \"%s\" via DCC CHAT\n"
-msgstr ""
-
-#, c-format
-msgid "Private %s> %s"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to create pipe\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to read local file\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to send block to receiver\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to read ACK from receiver\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to connect to sender\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to receive block from sender\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to write local file\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to fork\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: timeout\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to create socket for sending file\n"
-msgstr ""
-
-#, c-format
-msgid "%s DCC: unable to set 'nonblock' option for socket\n"
-msgstr ""
-
-#, c-format
-msgid "Aborting active DCC: \"%s\" from %s"
 msgstr ""
 
 msgid "IRC debug messages"
@@ -2935,6 +2696,10 @@ msgstr ""
 
 #, c-format
 msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
+msgstr ""
+
+#, c-format
+msgid "Private %s> %s"
 msgstr ""
 
 #, c-format
@@ -3870,4 +3635,224 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
+msgstr ""
+
+msgid "waiting"
+msgstr ""
+
+msgid "connecting"
+msgstr ""
+
+msgid "active"
+msgstr ""
+
+msgid "done"
+msgstr ""
+
+msgid "failed"
+msgstr ""
+
+msgid "aborted"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory for new xfer"
+msgstr ""
+
+#, c-format
+msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s: sending file to %s: %s (local filename: %s), %lu bytes (protocol: %s)"
+msgstr ""
+
+#, c-format
+msgid "%s: incoming chat request from %s (%d.%d.%d.%d)"
+msgstr ""
+
+#, c-format
+msgid "%s: sending chat request to %s"
+msgstr ""
+
+#, c-format
+msgid "%s: file %s (local filename: %s) will be resumed at position %u"
+msgstr ""
+
+#, c-format
+msgid "%s: file %s %s %s: %s"
+msgstr ""
+
+msgid "sent to"
+msgstr ""
+
+msgid "received from"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "FAILED"
+msgstr ""
+
+#, c-format
+msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing arguments"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown xfer type \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: filename missing for type \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: protocol missing for type \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown xfer protocol \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot access file \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot create socket for xfer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating xfer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: aborting active xfer: \"%s\" from %s"
+msgstr ""
+
+#, c-format
+msgid "%s: aborting active xfer: \"%s\" from %s"
+msgstr ""
+
+msgid "text color"
+msgstr ""
+
+msgid "background color"
+msgstr ""
+
+msgid "background color for selected line"
+msgstr ""
+
+msgid "text color for \"waiting\" status"
+msgstr ""
+
+msgid "text color for \"connecting\" status"
+msgstr ""
+
+msgid "text color for \"active\" status"
+msgstr ""
+
+msgid "text color for \"done\" status"
+msgstr ""
+
+msgid "text color for \"failed\" status"
+msgstr ""
+
+msgid "text color for \"aborted\" status"
+msgstr ""
+
+msgid "timeout for xfer request (in seconds)"
+msgstr ""
+
+msgid "block size for sending packets, in bytes"
+msgstr ""
+
+msgid "does not wait for ACK when sending file"
+msgstr ""
+
+msgid ""
+"restricts outgoing files/chats to use only ports in the given range (useful "
+"for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, "
+"empty value means any port)"
+msgstr ""
+
+msgid ""
+"IP or DNS address used for sending files/chats (if empty, local interface IP "
+"is used)"
+msgstr ""
+
+msgid "path for writing incoming files"
+msgstr ""
+
+msgid "path for reading files when sending (when no path is specified by user)"
+msgstr ""
+
+msgid "convert spaces to underscores when sending files"
+msgstr ""
+
+msgid "rename incoming files if already exists (add '.1', '.2', ...)"
+msgstr ""
+
+msgid ""
+"automatically resume file transfer if connection with remote host is lost"
+msgstr ""
+
+msgid "automatically accept incoming files (use carefully!)"
+msgstr ""
+
+msgid "automatically accept chat requests (use carefully!)"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create pipe"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to fork"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to read local file"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to send block to receiver"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to read ACK from receiver"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to connect to sender"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to receive block from sender"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to write local file"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
 msgstr ""

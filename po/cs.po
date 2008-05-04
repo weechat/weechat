@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-29 18:22+0200\n"
+"POT-Creation-Date: 2008-05-04 17:30+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1420,38 +1420,6 @@ msgstr "barva pro '+' při procházení přezdívek"
 #, fuzzy
 msgid "text color for nicklist separator"
 msgstr "barva děliče přezdívek"
-
-#, fuzzy
-msgid "text color for status info"
-msgstr "barva status baru"
-
-#, fuzzy
-msgid "background color for status info"
-msgstr "pozadí stavového okna"
-
-#, fuzzy
-msgid "text color for \"waiting\" status info"
-msgstr "barva pro \"waiting\" status dcc"
-
-#, fuzzy
-msgid "text color for \"connecting\" status info"
-msgstr "barva pro \"connecting\" status dcc"
-
-#, fuzzy
-msgid "text color for \"active\" status info"
-msgstr "barva pro \"active\" status dcc"
-
-#, fuzzy
-msgid "text color for \"done\" status info"
-msgstr "barva pro \"done\" status dcc"
-
-#, fuzzy
-msgid "text color for \"failed\" status info"
-msgstr "barva pro \"failed\" status dcc"
-
-#, fuzzy
-msgid "text color for \"aborted\" status info"
-msgstr "barva pro \"aborted\" status dcc"
 
 #, fuzzy
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
@@ -3144,60 +3112,6 @@ msgstr ""
 msgid "send unknown commands to IRC server"
 msgstr "poslat neznámý příkaz na IRC server"
 
-#, fuzzy
-msgid "automatically accept incoming dcc files (use carefully!)"
-msgstr "automaticky akceptovat dcc rozhovor (používejte opatrně!)"
-
-msgid "automatically accept dcc chats (use carefully!)"
-msgstr "automaticky akceptovat dcc rozhovor (používejte opatrně!)"
-
-msgid "timeout for dcc request (in seconds)"
-msgstr "časový limit pro dcc požadavek (v sekundách)"
-
-#, fuzzy
-msgid "block size for dcc packets in bytes"
-msgstr "velikost bloku pro dcc pakety"
-
-msgid "does not wait for ACK when sending file"
-msgstr "nečekat na ACK při odesílání souboru"
-
-msgid ""
-"restricts outgoing dcc to use only ports in the given range (useful for NAT) "
-"(syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value "
-"means any port)"
-msgstr ""
-"omezit odchozí dcc pro používaní portů pouze v zadaném rozsahu (užitečné pro "
-"NAT) (syntaxe: samostatný port, např. 5000 nebo rozsah portů např. 5000-"
-"5015, prázdná hodnota znamená jakýkoliv port)"
-
-msgid ""
-"IP or DNS address used for outgoing dcc (if empty, local interface IP is "
-"used)"
-msgstr ""
-"IP nebo DNS adresa použitá pro odchozí dcc (pokud je prázdné použije se "
-"lokální IP)"
-
-#, fuzzy
-msgid "path for writing incoming files with dcc"
-msgstr "cesta pro příchozí dcc soubory"
-
-msgid ""
-"path for reading files when sending thru dcc (when no path is specified)"
-msgstr ""
-"cesta pro čtení souborů při odesílání přes dcc (když není specifikována "
-"cesta)"
-
-msgid "convert spaces to underscores when sending files"
-msgstr "konvertovat mezery na podtržítka při odesílání souborů"
-
-msgid "rename incoming files if already exists (add '.1', '.2', ...)"
-msgstr ""
-"přejmenovat příchozí soubory, jestliže již existují (přídat '.1', '.2', ...)"
-
-msgid ""
-"automatically resume dcc transfer if connection with remote host is loosed"
-msgstr "automaticky obnovit dcc přenos pokud bylo ztraceno spojení s hostem"
-
 msgid "automatically log server messages"
 msgstr "automati logovat zprávy server"
 
@@ -3209,187 +3123,6 @@ msgstr "automaticky logovat soukromé rozhovory"
 
 msgid "hide password displayed by nickserv"
 msgstr "schovat heslo zobrazené nickservem"
-
-msgid "Waiting"
-msgstr "Čekám"
-
-msgid "Connecting"
-msgstr "Připojuji"
-
-msgid "Active"
-msgstr "Aktivní"
-
-msgid "Done"
-msgstr "Provedeno"
-
-msgid "Failed"
-msgstr "Selhal"
-
-msgid "Aborted"
-msgstr "Zrušeno"
-
-#, c-format
-msgid "DCC: file %s%s%s"
-msgstr "DCC: soubor %s%s%s"
-
-#, c-format
-msgid " (local filename: %s%s%s)"
-msgstr " (lokální jmého souboru: %s%s%s)"
-
-msgid " sent to "
-msgstr " poslán "
-
-msgid " received from "
-msgstr " obdržen od "
-
-msgid "OK"
-msgstr "OK"
-
-msgid "FAILED"
-msgstr "SELHALO"
-
-#, c-format
-msgid "DCC chat closed with %s%s %s(%s%d.%d.%d.%d%s)\n"
-msgstr "DCC rozhovor zavřen s %s%s %s(%s%d.%d.%d.%d%s)\n"
-
-#, c-format
-msgid ""
-"%s can't associate DCC chat with private buffer (maybe private buffer has "
-"already DCC CHAT?)\n"
-msgstr ""
-"%s nemohu přiřadit DCC rozhovor k soukromému bufferu (možná má "
-"soukromýbuffer již DCC CHAT?)\n"
-
-#, c-format
-msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
-msgstr "Připojeno na %s%s %s(%s%d.%d.%d.%d.%s)%s přes DCC rozhovor\n"
-
-#, c-format
-msgid "DCC: file %s%s%s resumed at position %u\n"
-msgstr "DCC: soubor %s%s%s bude obnoven na pozici %u\n"
-
-#, c-format
-msgid ""
-"%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or "
-"ended\n"
-msgstr ""
-"%s nemohu obnovit soubor \"%s\" (port: %d, počáteční pozice: %u): DCC "
-"nenalezeno nebo ukončeno\n"
-
-#, c-format
-msgid "%s not enough memory for new DCC\n"
-msgstr "%s nedostatek paměti pro nové DCC\n"
-
-msgid "DCC chat"
-msgstr "DCC rozhovor"
-
-#, c-format
-msgid ""
-"Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"
-msgstr ""
-"Příchozí DCC soubor od %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytů\n"
-
-#, c-format
-msgid ""
-"Sending DCC file to %s%s%s: %s%s%s (local filename: %s%s%s), %s%lu%s bytes\n"
-msgstr ""
-"Posílám DCC soubor k %s%s%s: %s%s%s (lokální jméno souboru: %s%s%s), %s%lu%s "
-"bytů\n"
-
-#, c-format
-msgid "Incoming DCC chat request from %s%s%s (%s%d.%d.%d.%d%s)\n"
-msgstr "Příchozí požadavek DCC rozhovoru od %s%s%s (%s%d.%d.%d.%d%s)\n"
-
-#, c-format
-msgid "Sending DCC chat request to %s%s\n"
-msgstr "Posílám požadavek DCC rozhovoru na %s%s\n"
-
-#, c-format
-msgid ""
-"DCC: file %s%s%s (local filename: %s%s%s) will be resumed at position %u\n"
-msgstr ""
-"DCC: soubor %s%s%s (lokální jméno souboru: %s%s%s) bude obnoven na pozici %"
-"u\n"
-
-#, c-format
-msgid "%s not enough memory for DCC SEND\n"
-msgstr "%s nedostatek pameti pro DCC SEND\n"
-
-#, c-format
-msgid "%s cannot access file \"%s\"\n"
-msgstr "%s nemohu přistupovat k souboru \"%s\"\n"
-
-#, c-format
-msgid "%s could not find address for '%s'. Falling back to local IP.\n"
-msgstr "%s nemůžu najíž adresu pro '%s'. Navracím se k lokální IP.\n"
-
-#, c-format
-msgid "%s cannot create socket for DCC\n"
-msgstr "%s nemohu vytvořit soket pro DCC\n"
-
-#, c-format
-msgid "%s cannot find available port for DCC\n"
-msgstr "%s nemůžu najít dostupný port pro DCC\n"
-
-#, c-format
-msgid "%s cannot send DCC\n"
-msgstr "%s neomhu poslat DCC\n"
-
-#, c-format
-msgid "%s error sending data to \"%s\" via DCC CHAT\n"
-msgstr "%s chyba posílání dat k \"%s\" přes DCC CHAT\n"
-
-#, c-format
-msgid "Private %s> %s"
-msgstr "Soukromý %s> %s"
-
-#, c-format
-msgid "%s DCC: unable to create pipe\n"
-msgstr "%s DCC: nemohu vytvořit rouru\n"
-
-#, c-format
-msgid "%s DCC: unable to read local file\n"
-msgstr "%s DCC: nemohu číst lokální soubor\n"
-
-#, c-format
-msgid "%s DCC: unable to send block to receiver\n"
-msgstr "%s DCC: nemohu odeslat blok příjemci\n"
-
-#, c-format
-msgid "%s DCC: unable to read ACK from receiver\n"
-msgstr "%s DCC: nemohu číst ACK od příjemce\n"
-
-#, c-format
-msgid "%s DCC: unable to connect to sender\n"
-msgstr "%s DCC: nemohu se připojit k odesílateli\n"
-
-#, c-format
-msgid "%s DCC: unable to receive block from sender\n"
-msgstr "%s DCC: nemohu přijmout blok od odesílatele\n"
-
-#, c-format
-msgid "%s DCC: unable to write local file\n"
-msgstr "%s DCC: nemohu zapisovat do lokálního souboru\n"
-
-#, c-format
-msgid "%s DCC: unable to fork\n"
-msgstr "%s DCC: nemohu provést fork\n"
-
-#, c-format
-msgid "%s DCC: timeout\n"
-msgstr "%s DCC: překročení časového limitu\n"
-
-#, c-format
-msgid "%s DCC: unable to create socket for sending file\n"
-msgstr "%s DCC: nemohu vytvořit socket pro odesílání souboru\n"
-
-#, c-format
-msgid "%s DCC: unable to set 'nonblock' option for socket\n"
-msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
-
-#, fuzzy, c-format
-msgid "Aborting active DCC: \"%s\" from %s"
-msgstr "Ruším aktivní DCC: \"%s\" od %s\n"
 
 #, fuzzy
 msgid "IRC debug messages"
@@ -3489,6 +3222,10 @@ msgstr "CTCP %sVERSION%s odpověď od %s%s%s: %s\n"
 #, fuzzy, c-format
 msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
 msgstr "CTCP %sPING%s odpověď od %s%s%s: %ld.%ld sekund\n"
+
+#, c-format
+msgid "Private %s> %s"
+msgstr "Soukromý %s> %s"
 
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
@@ -4452,6 +4189,317 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
+#, fuzzy
+msgid "waiting"
+msgstr "Čekám"
+
+#, fuzzy
+msgid "connecting"
+msgstr "Připojuji"
+
+#, fuzzy
+msgid "active"
+msgstr "Aktivní"
+
+#, fuzzy
+msgid "done"
+msgstr "Provedeno"
+
+#, fuzzy
+msgid "failed"
+msgstr "Selhal"
+
+#, fuzzy
+msgid "aborted"
+msgstr "Zrušeno"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for new xfer"
+msgstr "%s nedostatek paměti pro nové DCC\n"
+
+#, fuzzy, c-format
+msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
+msgstr ""
+"Příchozí DCC soubor od %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytů\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s: sending file to %s: %s (local filename: %s), %lu bytes (protocol: %s)"
+msgstr ""
+"Posílám DCC soubor k %s%s%s: %s%s%s (lokální jméno souboru: %s%s%s), %s%lu%s "
+"bytů\n"
+
+#, fuzzy, c-format
+msgid "%s: incoming chat request from %s (%d.%d.%d.%d)"
+msgstr "Příchozí požadavek DCC rozhovoru od %s%s%s (%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
+msgid "%s: sending chat request to %s"
+msgstr "Posílám požadavek DCC rozhovoru na %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s (local filename: %s) will be resumed at position %u"
+msgstr ""
+"DCC: soubor %s%s%s (lokální jméno souboru: %s%s%s) bude obnoven na pozici %"
+"u\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s %s %s: %s"
+msgstr "DCC: soubor %s%s%s"
+
+#, fuzzy
+msgid "sent to"
+msgstr " poslán "
+
+#, fuzzy
+msgid "received from"
+msgstr " obdržen od "
+
+msgid "OK"
+msgstr "OK"
+
+msgid "FAILED"
+msgstr "SELHALO"
+
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgstr "DCC rozhovor zavřen s %s%s %s(%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing arguments"
+msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown xfer type \"%s\""
+msgstr "%s neznámá klávesová funkce \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: filename missing for type \"%s\""
+msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: protocol missing for type \"%s\""
+msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown xfer protocol \"%s\""
+msgstr "%s neznámá klávesová funkce \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory"
+msgstr "Nedostatek paměti pro nový řádek\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot access file \"%s\""
+msgstr "%s nemohu přistupovat k souboru \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+msgstr "%s nemůžu najíž adresu pro '%s'. Navracím se k lokální IP.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer"
+msgstr "%s nemohu vytvořit soket\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s nemůžu najít dostupný port pro DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating xfer"
+msgstr "%s nedostatek paměti pro infobar zprávu\n"
+
+#, fuzzy, c-format
+msgid "%s%s: aborting active xfer: \"%s\" from %s"
+msgstr "Ruším aktivní DCC: \"%s\" od %s\n"
+
+#, fuzzy, c-format
+msgid "%s: aborting active xfer: \"%s\" from %s"
+msgstr "Ruším aktivní DCC: \"%s\" od %s\n"
+
+#, fuzzy
+msgid "text color"
+msgstr "barva pro text rozhovoru"
+
+#, fuzzy
+msgid "background color"
+msgstr "pozadí přezdívek"
+
+#, fuzzy
+msgid "background color for selected line"
+msgstr "barva pro vstupní text"
+
+#, fuzzy
+msgid "text color for \"waiting\" status"
+msgstr "barva pro \"waiting\" status dcc"
+
+#, fuzzy
+msgid "text color for \"connecting\" status"
+msgstr "barva pro \"connecting\" status dcc"
+
+#, fuzzy
+msgid "text color for \"active\" status"
+msgstr "barva pro \"active\" status dcc"
+
+#, fuzzy
+msgid "text color for \"done\" status"
+msgstr "barva pro \"done\" status dcc"
+
+#, fuzzy
+msgid "text color for \"failed\" status"
+msgstr "barva pro \"failed\" status dcc"
+
+#, fuzzy
+msgid "text color for \"aborted\" status"
+msgstr "barva pro \"aborted\" status dcc"
+
+#, fuzzy
+msgid "timeout for xfer request (in seconds)"
+msgstr "časový limit pro dcc požadavek (v sekundách)"
+
+#, fuzzy
+msgid "block size for sending packets, in bytes"
+msgstr "velikost bloku pro dcc pakety"
+
+msgid "does not wait for ACK when sending file"
+msgstr "nečekat na ACK při odesílání souboru"
+
+#, fuzzy
+msgid ""
+"restricts outgoing files/chats to use only ports in the given range (useful "
+"for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, "
+"empty value means any port)"
+msgstr ""
+"omezit odchozí dcc pro používaní portů pouze v zadaném rozsahu (užitečné pro "
+"NAT) (syntaxe: samostatný port, např. 5000 nebo rozsah portů např. 5000-"
+"5015, prázdná hodnota znamená jakýkoliv port)"
+
+#, fuzzy
+msgid ""
+"IP or DNS address used for sending files/chats (if empty, local interface IP "
+"is used)"
+msgstr ""
+"IP nebo DNS adresa použitá pro odchozí dcc (pokud je prázdné použije se "
+"lokální IP)"
+
+#, fuzzy
+msgid "path for writing incoming files"
+msgstr "cesta pro příchozí dcc soubory"
+
+#, fuzzy
+msgid "path for reading files when sending (when no path is specified by user)"
+msgstr ""
+"cesta pro čtení souborů při odesílání přes dcc (když není specifikována "
+"cesta)"
+
+msgid "convert spaces to underscores when sending files"
+msgstr "konvertovat mezery na podtržítka při odesílání souborů"
+
+msgid "rename incoming files if already exists (add '.1', '.2', ...)"
+msgstr ""
+"přejmenovat příchozí soubory, jestliže již existují (přídat '.1', '.2', ...)"
+
+#, fuzzy
+msgid ""
+"automatically resume file transfer if connection with remote host is lost"
+msgstr "automaticky obnovit dcc přenos pokud bylo ztraceno spojení s hostem"
+
+#, fuzzy
+msgid "automatically accept incoming files (use carefully!)"
+msgstr "automaticky akceptovat dcc rozhovor (používejte opatrně!)"
+
+#, fuzzy
+msgid "automatically accept chat requests (use carefully!)"
+msgstr "automaticky akceptovat dcc rozhovor (používejte opatrně!)"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe"
+msgstr "%s DCC: nemohu vytvořit rouru\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to fork"
+msgstr "%s DCC: nemohu provést fork\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to read local file"
+msgstr "%s DCC: nemohu číst lokální soubor\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to send block to receiver"
+msgstr "%s DCC: nemohu odeslat blok příjemci\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to read ACK from receiver"
+msgstr "%s DCC: nemohu číst ACK od příjemce\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to connect to sender"
+msgstr "%s DCC: nemohu se připojit k odesílateli\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to receive block from sender"
+msgstr "%s DCC: nemohu přijmout blok od odesílatele\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to write local file"
+msgstr "%s DCC: nemohu zapisovat do lokálního souboru\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgstr "%s chyba posílání dat k \"%s\" přes DCC CHAT\n"
+
+#, fuzzy
+#~ msgid "text color for status info"
+#~ msgstr "barva status baru"
+
+#, fuzzy
+#~ msgid "background color for status info"
+#~ msgstr "pozadí stavového okna"
+
+#~ msgid " (local filename: %s%s%s)"
+#~ msgstr " (lokální jmého souboru: %s%s%s)"
+
+#~ msgid ""
+#~ "%s can't associate DCC chat with private buffer (maybe private buffer has "
+#~ "already DCC CHAT?)\n"
+#~ msgstr ""
+#~ "%s nemohu přiřadit DCC rozhovor k soukromému bufferu (možná má "
+#~ "soukromýbuffer již DCC CHAT?)\n"
+
+#~ msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
+#~ msgstr "Připojeno na %s%s %s(%s%d.%d.%d.%d.%s)%s přes DCC rozhovor\n"
+
+#~ msgid "DCC: file %s%s%s resumed at position %u\n"
+#~ msgstr "DCC: soubor %s%s%s bude obnoven na pozici %u\n"
+
+#~ msgid ""
+#~ "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found "
+#~ "or ended\n"
+#~ msgstr ""
+#~ "%s nemohu obnovit soubor \"%s\" (port: %d, počáteční pozice: %u): DCC "
+#~ "nenalezeno nebo ukončeno\n"
+
+#~ msgid "DCC chat"
+#~ msgstr "DCC rozhovor"
+
+#~ msgid "%s not enough memory for DCC SEND\n"
+#~ msgstr "%s nedostatek pameti pro DCC SEND\n"
+
+#~ msgid "%s cannot create socket for DCC\n"
+#~ msgstr "%s nemohu vytvořit soket pro DCC\n"
+
+#~ msgid "%s cannot send DCC\n"
+#~ msgstr "%s neomhu poslat DCC\n"
+
+#~ msgid "%s DCC: timeout\n"
+#~ msgstr "%s DCC: překročení časového limitu\n"
+
+#~ msgid "%s DCC: unable to create socket for sending file\n"
+#~ msgstr "%s DCC: nemohu vytvořit socket pro odesílání souboru\n"
+
+#~ msgid "%s DCC: unable to set 'nonblock' option for socket\n"
+#~ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
+
 #~ msgid "Internal key functions:\n"
 #~ msgstr "Vnitřní klávesové funkce:\n"
 
@@ -4679,10 +4727,6 @@ msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 #, fuzzy
 #~ msgid "manage charsets"
 #~ msgstr "řídit buffery"
-
-#, fuzzy
-#~ msgid "%s%s: value \"%s\" is invalid for option \"%s\""
-#~ msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
 
 #, fuzzy
 #~ msgid "%s%s: error creating server for reading configuration file"

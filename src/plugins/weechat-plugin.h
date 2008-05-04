@@ -388,11 +388,29 @@ struct t_weechat_plugin
     /* command */
     void (*command) (struct t_weechat_plugin *plugin,
                      struct t_gui_buffer *buffer, char *command);
+
+    /* network */
+    int (*network_pass_proxy) (int sock, char *address, int port);
+    int (*network_connect_to) (int sock, unsigned long address, int port);
     
     /* infos */
     char *(*info_get) (struct t_weechat_plugin *plugin, char *info);
     
     /* infolists */
+    struct t_plugin_infolist *(*infolist_new) ();
+    struct t_plugin_infolist_item *(*infolist_new_item) (struct t_plugin_infolist *list);
+    struct t_plugin_infolist_var *(*infolist_new_var_integer) (struct t_plugin_infolist_item *item,
+                                                               char *name,
+                                                               int value);
+    struct t_plugin_infolist_var *(*infolist_new_var_string) (struct t_plugin_infolist_item *item,
+                                                              char *name,
+                                                              char *value);
+    struct t_plugin_infolist_var *(*infolist_new_var_pointer) (struct t_plugin_infolist_item *item,
+                                                               char *name,
+                                                               void *pointer);
+    struct t_plugin_infolist_var *(*infolist_new_var_time) (struct t_plugin_infolist_item *item,
+                                                            char *name,
+                                                            time_t time);
     struct t_plugin_infolist *(*infolist_get) (char *name, void *pointer,
                                                char *arguments);
     int (*infolist_next) (struct t_plugin_infolist *infolist);
@@ -792,11 +810,29 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_command(__buffer, __command)                            \
     weechat_plugin->command(weechat_plugin, __buffer, __command)
 
+/* network */
+#define weechat_network_pass_proxy(__sock, __address, __port)           \
+    weechat_plugin->network_pass_proxy(__sock, __address, __port)
+#define weechat_network_connect_to(__sock, __address, __port)           \
+    weechat_plugin->network_connect_to(__sock, __address, __port)
+
 /* infos */
 #define weechat_info_get(__name)                        \
     weechat_plugin->info_get(weechat_plugin, __name)
 
 /* infolists */
+#define weechat_infolist_new()                  \
+    weechat_plugin->infolist_new()
+#define weechat_infolist_new_item(__list)       \
+    weechat_plugin->infolist_new_item(__list)
+#define weechat_infolist_new_var_integer(__item, __name, __value)       \
+    weechat_plugin->infolist_new_var_integer(__item, __name, __value)
+#define weechat_infolist_new_var_string(__item, __name, __value)        \
+    weechat_plugin->infolist_new_var_string(__item, __name, __value)
+#define weechat_infolist_new_var_pointer(__item, __name, __pointer)     \
+    weechat_plugin->infolist_new_var_pointer(__item, __name, __pointer)
+#define weechat_infolist_new_var_time(__item, __name, __time)           \
+    weechat_plugin->infolist_new_var_time(__item, __name, __time)
 #define weechat_infolist_get(__name, __pointer, __arguments)            \
     weechat_plugin->infolist_get(__name, __pointer, __arguments)
 #define weechat_infolist_next(__list)           \

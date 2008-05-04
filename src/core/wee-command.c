@@ -93,12 +93,12 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  ptr_bar->name,
                                  GUI_COLOR(GUI_COLOR_CHAT),
-                                 gui_bar_type_str[CONFIG_INTEGER(ptr_bar->type)],
+                                 gui_bar_type_string[CONFIG_INTEGER(ptr_bar->type)],
                                  (CONFIG_STRING(ptr_bar->conditions)
                                   && CONFIG_STRING(ptr_bar->conditions)[0]) ?
                                  CONFIG_STRING(ptr_bar->conditions) : "-",
-                                 gui_bar_position_str[CONFIG_INTEGER(ptr_bar->position)],
-                                 gui_bar_filling_str[CONFIG_INTEGER(ptr_bar->filling)],
+                                 gui_bar_position_string[CONFIG_INTEGER(ptr_bar->position)],
+                                 gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->filling)],
                                  ((CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_BOTTOM)
                                   || (CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_TOP)) ?
                                  _("height") : _("width"),

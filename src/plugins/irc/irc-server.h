@@ -186,6 +186,8 @@ extern void irc_server_disconnect (struct t_irc_server *server, int reconnect);
 extern void irc_server_disconnect_all ();
 extern void irc_server_free (struct t_irc_server *server);
 extern void irc_server_free_data (struct t_irc_server *server);
+extern int irc_server_xfer_send_ready_cb (void *data, char *signal,
+                                          char *type_data, void *signal_data);
 extern void irc_server_print_log ();
 
 #endif /* irc-server.h */

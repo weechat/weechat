@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-29 18:22+0200\n"
+"POT-Creation-Date: 2008-05-04 17:30+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1426,38 +1426,6 @@ msgstr "цвет '+' при прокрутке ников"
 #, fuzzy
 msgid "text color for nicklist separator"
 msgstr "цвет разделителя ников"
-
-#, fuzzy
-msgid "text color for status info"
-msgstr "цвет строки состояния"
-
-#, fuzzy
-msgid "background color for status info"
-msgstr "цвет окна статуса"
-
-#, fuzzy
-msgid "text color for \"waiting\" status info"
-msgstr "цвет \"ожидания\" в окне DCC"
-
-#, fuzzy
-msgid "text color for \"connecting\" status info"
-msgstr "цвет \"соединения\" в окне DCC"
-
-#, fuzzy
-msgid "text color for \"active\" status info"
-msgstr "цвет \"активности\" в окне DCC"
-
-#, fuzzy
-msgid "text color for \"done\" status info"
-msgstr "цвет \"завершённых\" в окне DCC"
-
-#, fuzzy
-msgid "text color for \"failed\" status info"
-msgstr "цвет \"неудачных\" в окне DCC"
-
-#, fuzzy
-msgid "text color for \"aborted\" status info"
-msgstr "цвет \"отменённых\" в окне DCC"
 
 #, fuzzy
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
@@ -3141,61 +3109,6 @@ msgstr ""
 msgid "send unknown commands to IRC server"
 msgstr "отсылать неизвестные команды IRC серверу"
 
-#, fuzzy
-msgid "automatically accept incoming dcc files (use carefully!)"
-msgstr "автоматически подтверждать dcc-чат (используйте осторожно!)"
-
-msgid "automatically accept dcc chats (use carefully!)"
-msgstr "автоматически подтверждать dcc-чат (используйте осторожно!)"
-
-msgid "timeout for dcc request (in seconds)"
-msgstr "таймаут запросов dcc-соединений (в секундах)"
-
-#, fuzzy
-msgid "block size for dcc packets in bytes"
-msgstr "размер блока dcc пакетов"
-
-msgid "does not wait for ACK when sending file"
-msgstr "не ожидать ACK при отправке файла"
-
-msgid ""
-"restricts outgoing dcc to use only ports in the given range (useful for NAT) "
-"(syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value "
-"means any port)"
-msgstr ""
-"привязывает исходящие DCС соединения к определённому интервалу портов "
-"(полезно для NAT) (синтаксис: определённый порт, например 5000, или интервал "
-"портов, например 5000-5015, пустое значение означает любой порт)"
-
-msgid ""
-"IP or DNS address used for outgoing dcc (if empty, local interface IP is "
-"used)"
-msgstr ""
-"IP адрес или домен, используемый для исходящих DCC соединений (пустое "
-"значение означает текущий IP адрес)"
-
-#, fuzzy
-msgid "path for writing incoming files with dcc"
-msgstr "путь для получаемых файлов"
-
-msgid ""
-"path for reading files when sending thru dcc (when no path is specified)"
-msgstr "путь для поиска отправляемых файлов (если не задан полный путь)"
-
-msgid "convert spaces to underscores when sending files"
-msgstr "заменять пробелы знаками подчёркивания при отправке файлов"
-
-msgid "rename incoming files if already exists (add '.1', '.2', ...)"
-msgstr ""
-"переименовывать получаемые файлы при наличии файла с тем же названием "
-"(добавлять '.1', '.2' и т.д.)"
-
-msgid ""
-"automatically resume dcc transfer if connection with remote host is loosed"
-msgstr ""
-"автоматически продолжать DCC передачу если соединение с удалённым хостом "
-"было утеряно"
-
 msgid "automatically log server messages"
 msgstr "автоматически журналировать сообщения сервера"
 
@@ -3207,183 +3120,6 @@ msgstr "автоматически журналировать приваты"
 
 msgid "hide password displayed by nickserv"
 msgstr "скрывать пароль, отображаемый nickserv'ом"
-
-msgid "Waiting"
-msgstr "Ожидание"
-
-msgid "Connecting"
-msgstr "Подключение"
-
-msgid "Active"
-msgstr "Активно"
-
-msgid "Done"
-msgstr "Завершено"
-
-msgid "Failed"
-msgstr "Неудача"
-
-msgid "Aborted"
-msgstr "Отменено"
-
-#, c-format
-msgid "DCC: file %s%s%s"
-msgstr "DCC: файл %s%s%s"
-
-#, c-format
-msgid " (local filename: %s%s%s)"
-msgstr " (локальное имя файла: %s%s%s)"
-
-msgid " sent to "
-msgstr " отправлен "
-
-msgid " received from "
-msgstr " получен от "
-
-msgid "OK"
-msgstr "OK"
-
-msgid "FAILED"
-msgstr "НЕУДАЧА"
-
-#, c-format
-msgid "DCC chat closed with %s%s %s(%s%d.%d.%d.%d%s)\n"
-msgstr "DCC-чат закончен с %s%s %s(%s%d.%d.%d.%d%s)\n"
-
-#, c-format
-msgid ""
-"%s can't associate DCC chat with private buffer (maybe private buffer has "
-"already DCC CHAT?)\n"
-msgstr ""
-"%s не могу ассоциировать DCC-чат с буфером (возможно буфер уже имеет DCC-"
-"чат)\n"
-
-#, c-format
-msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
-msgstr "Соединён с %s%s %s(%s%d.%d.%d.%d%s)%s DCC-чатом\n"
-
-#, c-format
-msgid "DCC: file %s%s%s resumed at position %u\n"
-msgstr "DCC: файл %s%s%s продолжается с позиции %u\n"
-
-#, c-format
-msgid ""
-"%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or "
-"ended\n"
-msgstr ""
-"%s не могу продолжить файл \"%s\" (порт: %d, начальная позиция: %u): DCC не "
-"найден или завершён\n"
-
-#, c-format
-msgid "%s not enough memory for new DCC\n"
-msgstr "%s недостаточно памяти для нового DCC\n"
-
-msgid "DCC chat"
-msgstr "DCC чат"
-
-#, c-format
-msgid ""
-"Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"
-msgstr "Входящий файл от %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s байт\n"
-
-#, c-format
-msgid ""
-"Sending DCC file to %s%s%s: %s%s%s (local filename: %s%s%s), %s%lu%s bytes\n"
-msgstr "Отправляю файл %s%s%s: %s%s%s (файл: %s%s%s), %s%lu%s байт\n"
-
-#, c-format
-msgid "Incoming DCC chat request from %s%s%s (%s%d.%d.%d.%d%s)\n"
-msgstr "Входящий запрос на DCC-чат от %s%s%s (%s%d.%d.%d.%d%s)\n"
-
-#, c-format
-msgid "Sending DCC chat request to %s%s\n"
-msgstr "Отправляю запрос на DCC-чат %s%s\n"
-
-#, c-format
-msgid ""
-"DCC: file %s%s%s (local filename: %s%s%s) will be resumed at position %u\n"
-msgstr ""
-"DCC: файл %s%s%s (локальное имя файла: %s%s%s) будет продолжен с позиции %u\n"
-
-#, c-format
-msgid "%s not enough memory for DCC SEND\n"
-msgstr "%s недостаточно памяти для отправки файла\n"
-
-#, c-format
-msgid "%s cannot access file \"%s\"\n"
-msgstr "%s нет доступа к файлу \"%s\"\n"
-
-#, c-format
-msgid "%s could not find address for '%s'. Falling back to local IP.\n"
-msgstr "%s не могу найти адрес для '%s'. Откатываюсь на локальный IP.\n"
-
-#, c-format
-msgid "%s cannot create socket for DCC\n"
-msgstr "%s не могу создать сокет для DCC\n"
-
-#, c-format
-msgid "%s cannot find available port for DCC\n"
-msgstr "%s не могу найти свободный порт для DCC\n"
-
-#, c-format
-msgid "%s cannot send DCC\n"
-msgstr "%s не могу установить DCC-соединение\n"
-
-#, c-format
-msgid "%s error sending data to \"%s\" via DCC CHAT\n"
-msgstr "%s ошибка при отправке данных \"%s\" через DCC-чат\n"
-
-#, c-format
-msgid "Private %s> %s"
-msgstr "Личное %s> %s"
-
-#, c-format
-msgid "%s DCC: unable to create pipe\n"
-msgstr "%s DCC: не могу создать pipe\n"
-
-#, c-format
-msgid "%s DCC: unable to read local file\n"
-msgstr "%s DCC: не могу прочитать локальный файл\n"
-
-#, c-format
-msgid "%s DCC: unable to send block to receiver\n"
-msgstr "%s DCC: не могу отправить блок получателю\n"
-
-#, c-format
-msgid "%s DCC: unable to read ACK from receiver\n"
-msgstr "%s DCC: не могу прочитать ACK от получателя\n"
-
-#, c-format
-msgid "%s DCC: unable to connect to sender\n"
-msgstr "%s DCC: не могу соединиться с отправителем\n"
-
-#, c-format
-msgid "%s DCC: unable to receive block from sender\n"
-msgstr "%s DCC: не могу получить блок от отправителя\n"
-
-#, c-format
-msgid "%s DCC: unable to write local file\n"
-msgstr "%s DCC: не могу записать локальный файл\n"
-
-#, c-format
-msgid "%s DCC: unable to fork\n"
-msgstr "%s DCC: не могу forkнуться\n"
-
-#, c-format
-msgid "%s DCC: timeout\n"
-msgstr "%s DCC: таймаут\n"
-
-#, c-format
-msgid "%s DCC: unable to create socket for sending file\n"
-msgstr "%s DCC: не могу создать сокет для отправки файла\n"
-
-#, c-format
-msgid "%s DCC: unable to set 'nonblock' option for socket\n"
-msgstr "%s DCC: не могу установить неблокирующий режим для сокета\n"
-
-#, fuzzy, c-format
-msgid "Aborting active DCC: \"%s\" from %s"
-msgstr "Отменяю активное DCC-сединение: \"%s\" от %s\n"
 
 #, fuzzy
 msgid "IRC debug messages"
@@ -3483,6 +3219,10 @@ msgstr "Ответ на CTCP %sVERSION%s от %s%s%s: %s\n"
 #, fuzzy, c-format
 msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
 msgstr "Ответ на %sPING%s от %s%s%s: %ld.%ld секунд\n"
+
+#, c-format
+msgid "Private %s> %s"
+msgstr "Личное %s> %s"
 
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
@@ -4441,6 +4181,314 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
+#, fuzzy
+msgid "waiting"
+msgstr "Ожидание"
+
+#, fuzzy
+msgid "connecting"
+msgstr "Подключение"
+
+#, fuzzy
+msgid "active"
+msgstr "Активно"
+
+#, fuzzy
+msgid "done"
+msgstr "Завершено"
+
+#, fuzzy
+msgid "failed"
+msgstr "Неудача"
+
+#, fuzzy
+msgid "aborted"
+msgstr "Отменено"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for new xfer"
+msgstr "%s недостаточно памяти для нового DCC\n"
+
+#, fuzzy, c-format
+msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
+msgstr "Входящий файл от %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s байт\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s: sending file to %s: %s (local filename: %s), %lu bytes (protocol: %s)"
+msgstr "Отправляю файл %s%s%s: %s%s%s (файл: %s%s%s), %s%lu%s байт\n"
+
+#, fuzzy, c-format
+msgid "%s: incoming chat request from %s (%d.%d.%d.%d)"
+msgstr "Входящий запрос на DCC-чат от %s%s%s (%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
+msgid "%s: sending chat request to %s"
+msgstr "Отправляю запрос на DCC-чат %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s (local filename: %s) will be resumed at position %u"
+msgstr ""
+"DCC: файл %s%s%s (локальное имя файла: %s%s%s) будет продолжен с позиции %u\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s %s %s: %s"
+msgstr "DCC: файл %s%s%s"
+
+#, fuzzy
+msgid "sent to"
+msgstr " отправлен "
+
+#, fuzzy
+msgid "received from"
+msgstr " получен от "
+
+msgid "OK"
+msgstr "OK"
+
+msgid "FAILED"
+msgstr "НЕУДАЧА"
+
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgstr "DCC-чат закончен с %s%s %s(%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing arguments"
+msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown xfer type \"%s\""
+msgstr "%s неизвестная функция клавиши \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: filename missing for type \"%s\""
+msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: protocol missing for type \"%s\""
+msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown xfer protocol \"%s\""
+msgstr "%s неизвестная функция клавиши \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory"
+msgstr "Недостаточно памяти для новой строчки\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot access file \"%s\""
+msgstr "%s нет доступа к файлу \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+msgstr "%s не могу найти адрес для '%s'. Откатываюсь на локальный IP.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer"
+msgstr "%s невозможно создать сокет\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s не могу найти свободный порт для DCC\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating xfer"
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, fuzzy, c-format
+msgid "%s%s: aborting active xfer: \"%s\" from %s"
+msgstr "Отменяю активное DCC-сединение: \"%s\" от %s\n"
+
+#, fuzzy, c-format
+msgid "%s: aborting active xfer: \"%s\" from %s"
+msgstr "Отменяю активное DCC-сединение: \"%s\" от %s\n"
+
+#, fuzzy
+msgid "text color"
+msgstr "цвет чата"
+
+#, fuzzy
+msgid "background color"
+msgstr "фон ников"
+
+#, fuzzy
+msgid "background color for selected line"
+msgstr "цвет вводимого текста"
+
+#, fuzzy
+msgid "text color for \"waiting\" status"
+msgstr "цвет \"ожидания\" в окне DCC"
+
+#, fuzzy
+msgid "text color for \"connecting\" status"
+msgstr "цвет \"соединения\" в окне DCC"
+
+#, fuzzy
+msgid "text color for \"active\" status"
+msgstr "цвет \"активности\" в окне DCC"
+
+#, fuzzy
+msgid "text color for \"done\" status"
+msgstr "цвет \"завершённых\" в окне DCC"
+
+#, fuzzy
+msgid "text color for \"failed\" status"
+msgstr "цвет \"неудачных\" в окне DCC"
+
+#, fuzzy
+msgid "text color for \"aborted\" status"
+msgstr "цвет \"отменённых\" в окне DCC"
+
+#, fuzzy
+msgid "timeout for xfer request (in seconds)"
+msgstr "таймаут запросов dcc-соединений (в секундах)"
+
+#, fuzzy
+msgid "block size for sending packets, in bytes"
+msgstr "размер блока dcc пакетов"
+
+msgid "does not wait for ACK when sending file"
+msgstr "не ожидать ACK при отправке файла"
+
+#, fuzzy
+msgid ""
+"restricts outgoing files/chats to use only ports in the given range (useful "
+"for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, "
+"empty value means any port)"
+msgstr ""
+"привязывает исходящие DCС соединения к определённому интервалу портов "
+"(полезно для NAT) (синтаксис: определённый порт, например 5000, или интервал "
+"портов, например 5000-5015, пустое значение означает любой порт)"
+
+#, fuzzy
+msgid ""
+"IP or DNS address used for sending files/chats (if empty, local interface IP "
+"is used)"
+msgstr ""
+"IP адрес или домен, используемый для исходящих DCC соединений (пустое "
+"значение означает текущий IP адрес)"
+
+#, fuzzy
+msgid "path for writing incoming files"
+msgstr "путь для получаемых файлов"
+
+#, fuzzy
+msgid "path for reading files when sending (when no path is specified by user)"
+msgstr "путь для поиска отправляемых файлов (если не задан полный путь)"
+
+msgid "convert spaces to underscores when sending files"
+msgstr "заменять пробелы знаками подчёркивания при отправке файлов"
+
+msgid "rename incoming files if already exists (add '.1', '.2', ...)"
+msgstr ""
+"переименовывать получаемые файлы при наличии файла с тем же названием "
+"(добавлять '.1', '.2' и т.д.)"
+
+#, fuzzy
+msgid ""
+"automatically resume file transfer if connection with remote host is lost"
+msgstr ""
+"автоматически продолжать DCC передачу если соединение с удалённым хостом "
+"было утеряно"
+
+#, fuzzy
+msgid "automatically accept incoming files (use carefully!)"
+msgstr "автоматически подтверждать dcc-чат (используйте осторожно!)"
+
+#, fuzzy
+msgid "automatically accept chat requests (use carefully!)"
+msgstr "автоматически подтверждать dcc-чат (используйте осторожно!)"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe"
+msgstr "%s DCC: не могу создать pipe\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to fork"
+msgstr "%s DCC: не могу forkнуться\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to read local file"
+msgstr "%s DCC: не могу прочитать локальный файл\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to send block to receiver"
+msgstr "%s DCC: не могу отправить блок получателю\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to read ACK from receiver"
+msgstr "%s DCC: не могу прочитать ACK от получателя\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to connect to sender"
+msgstr "%s DCC: не могу соединиться с отправителем\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to receive block from sender"
+msgstr "%s DCC: не могу получить блок от отправителя\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to write local file"
+msgstr "%s DCC: не могу записать локальный файл\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgstr "%s ошибка при отправке данных \"%s\" через DCC-чат\n"
+
+#, fuzzy
+#~ msgid "text color for status info"
+#~ msgstr "цвет строки состояния"
+
+#, fuzzy
+#~ msgid "background color for status info"
+#~ msgstr "цвет окна статуса"
+
+#~ msgid " (local filename: %s%s%s)"
+#~ msgstr " (локальное имя файла: %s%s%s)"
+
+#~ msgid ""
+#~ "%s can't associate DCC chat with private buffer (maybe private buffer has "
+#~ "already DCC CHAT?)\n"
+#~ msgstr ""
+#~ "%s не могу ассоциировать DCC-чат с буфером (возможно буфер уже имеет DCC-"
+#~ "чат)\n"
+
+#~ msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
+#~ msgstr "Соединён с %s%s %s(%s%d.%d.%d.%d%s)%s DCC-чатом\n"
+
+#~ msgid "DCC: file %s%s%s resumed at position %u\n"
+#~ msgstr "DCC: файл %s%s%s продолжается с позиции %u\n"
+
+#~ msgid ""
+#~ "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found "
+#~ "or ended\n"
+#~ msgstr ""
+#~ "%s не могу продолжить файл \"%s\" (порт: %d, начальная позиция: %u): DCC "
+#~ "не найден или завершён\n"
+
+#~ msgid "DCC chat"
+#~ msgstr "DCC чат"
+
+#~ msgid "%s not enough memory for DCC SEND\n"
+#~ msgstr "%s недостаточно памяти для отправки файла\n"
+
+#~ msgid "%s cannot create socket for DCC\n"
+#~ msgstr "%s не могу создать сокет для DCC\n"
+
+#~ msgid "%s cannot send DCC\n"
+#~ msgstr "%s не могу установить DCC-соединение\n"
+
+#~ msgid "%s DCC: timeout\n"
+#~ msgstr "%s DCC: таймаут\n"
+
+#~ msgid "%s DCC: unable to create socket for sending file\n"
+#~ msgstr "%s DCC: не могу создать сокет для отправки файла\n"
+
+#~ msgid "%s DCC: unable to set 'nonblock' option for socket\n"
+#~ msgstr "%s DCC: не могу установить неблокирующий режим для сокета\n"
+
 #~ msgid "Internal key functions:\n"
 #~ msgstr "Встроенные функции клавиш:\n"
 
@@ -4669,10 +4717,6 @@ msgstr "%s некорректные аргументы команды \"%s\"\n"
 #, fuzzy
 #~ msgid "manage charsets"
 #~ msgstr "управление буферами"
-
-#, fuzzy
-#~ msgid "%s%s: value \"%s\" is invalid for option \"%s\""
-#~ msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
 
 #, fuzzy
 #~ msgid "%s%s: error creating server for reading configuration file"

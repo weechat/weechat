@@ -57,7 +57,7 @@ enum t_irc_config_server_option
 #define IRC_CONFIG_SERVER_DEFAULT_AUTOREJOIN          0
 
 
-extern char *irc_config_server_option_str[];
+extern char *irc_config_server_option_string[];
 extern struct t_config_file *irc_config;
 
 extern struct t_config_option *irc_config_look_one_server_buffer;
@@ -81,19 +81,6 @@ extern struct t_config_option *irc_config_network_anti_flood;
 extern struct t_config_option *irc_config_network_colors_receive;
 extern struct t_config_option *irc_config_network_colors_send;
 extern struct t_config_option *irc_config_network_send_unknown_commands;
-
-extern struct t_config_option *irc_config_dcc_auto_accept_files;
-extern struct t_config_option *irc_config_dcc_auto_accept_chats;
-extern struct t_config_option *irc_config_dcc_timeout;
-extern struct t_config_option *irc_config_dcc_blocksize;
-extern struct t_config_option *irc_config_dcc_fast_send;
-extern struct t_config_option *irc_config_dcc_port_range;
-extern struct t_config_option *irc_config_dcc_own_ip;
-extern struct t_config_option *irc_config_dcc_download_path;
-extern struct t_config_option *irc_config_dcc_upload_path;
-extern struct t_config_option *irc_config_dcc_convert_spaces;
-extern struct t_config_option *irc_config_dcc_auto_rename;
-extern struct t_config_option *irc_config_dcc_auto_resume;
 
 extern struct t_config_option *irc_config_log_auto_log_server;
 extern struct t_config_option *irc_config_log_auto_log_channel;

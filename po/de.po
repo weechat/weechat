@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-04-29 18:22+0200\n"
+"POT-Creation-Date: 2008-05-04 17:30+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1414,38 +1414,6 @@ msgstr "Farbe des '+' beim Scrolling von Nicknames"
 #, fuzzy
 msgid "text color for nicklist separator"
 msgstr "Farbe der Nicknamefenster-Trennlinie"
-
-#, fuzzy
-msgid "text color for status info"
-msgstr "Farbe der Statuszeile"
-
-#, fuzzy
-msgid "background color for status info"
-msgstr "Hintergrund des Statusfensters"
-
-#, fuzzy
-msgid "text color for \"waiting\" status info"
-msgstr "Farbe des DCC-Status 'warten'"
-
-#, fuzzy
-msgid "text color for \"connecting\" status info"
-msgstr "Farbe des DCC-Status 'verbinden'"
-
-#, fuzzy
-msgid "text color for \"active\" status info"
-msgstr "Farbe des DCC-Status 'aktiv'"
-
-#, fuzzy
-msgid "text color for \"done\" status info"
-msgstr "Farbe des DCC-Status 'fertig'"
-
-#, fuzzy
-msgid "text color for \"failed\" status info"
-msgstr "Farbe des DCC-Status 'fehlgeschlagen'"
-
-#, fuzzy
-msgid "text color for \"aborted\" status info"
-msgstr "Farbe des DCC-Status 'abgebrochen'"
 
 #, fuzzy
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
@@ -3124,64 +3092,6 @@ msgstr ""
 msgid "send unknown commands to IRC server"
 msgstr "sende unbekannte Befehle an den IRC-Server"
 
-#, fuzzy
-msgid "automatically accept incoming dcc files (use carefully!)"
-msgstr "DCC-CHats automatisch annehmen (Vorsicht!)"
-
-msgid "automatically accept dcc chats (use carefully!)"
-msgstr "DCC-CHats automatisch annehmen (Vorsicht!)"
-
-msgid "timeout for dcc request (in seconds)"
-msgstr "DCC-Timeout in Sekunden"
-
-#, fuzzy
-msgid "block size for dcc packets in bytes"
-msgstr "Blockgröße für DCCs"
-
-msgid "does not wait for ACK when sending file"
-msgstr "warte beim Veschicken von Dateien nicht auf das ACK-Signal"
-
-msgid ""
-"restricts outgoing dcc to use only ports in the given range (useful for NAT) "
-"(syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, empty value "
-"means any port)"
-msgstr ""
-"beschränkt ausgehenden DCC auf die ausschließliche Benutzung von Ports in "
-"einem vorgegebenen Bereich (hilfreich bei NAT) (Syntax: ein einzelner Port, "
-"z.B. 5000, oder eine Port-Bereich, z.B. 5000-5015,wenn kein Bereich "
-"angegeben ist, ist jeder Port möglich)"
-
-msgid ""
-"IP or DNS address used for outgoing dcc (if empty, local interface IP is "
-"used)"
-msgstr ""
-"IP- oder DNS-Adresse für ausgehenden DCC (wenn kein Wert angegeben wird, "
-"wird die IP des lokalen Interfaces benutzt)"
-
-#, fuzzy
-msgid "path for writing incoming files with dcc"
-msgstr "Pfad für per DCC eingehende Dateien"
-
-msgid ""
-"path for reading files when sending thru dcc (when no path is specified)"
-msgstr ""
-"Pfad, aus dem Dateien standardmäßig gelesen werden, wenn keine explizite "
-"Angabe vorliegt"
-
-msgid "convert spaces to underscores when sending files"
-msgstr "Leerzeichen in Unterstriche umwandeln beim Veschicken von Dateien"
-
-msgid "rename incoming files if already exists (add '.1', '.2', ...)"
-msgstr ""
-"eingehende Dateien automatisch umbenennen, falls nötig, um Überschreiben zu "
-"vermeiden (durch Hinzufügen von '.1', '.2', ...)"
-
-msgid ""
-"automatically resume dcc transfer if connection with remote host is loosed"
-msgstr ""
-"abgebrochene Übertragungen automatisch fortsetzen, wenn die Verbindung "
-"abgebrochen ist"
-
 msgid "automatically log server messages"
 msgstr "Automatisches Logging von Servermessages"
 
@@ -3193,188 +3103,6 @@ msgstr "Automatisches Logging von Queries"
 
 msgid "hide password displayed by nickserv"
 msgstr "Von NickServ angezeigte Passwörter verstecken"
-
-msgid "Waiting"
-msgstr "warten"
-
-msgid "Connecting"
-msgstr "verbinden"
-
-msgid "Active"
-msgstr "aktiv"
-
-msgid "Done"
-msgstr "fertig"
-
-msgid "Failed"
-msgstr "fehlg."
-
-msgid "Aborted"
-msgstr "abgebr."
-
-#, c-format
-msgid "DCC: file %s%s%s"
-msgstr "DCC: Datei %s%s%s"
-
-#, c-format
-msgid " (local filename: %s%s%s)"
-msgstr " (lokaler Dateiname: %s%s%s)"
-
-msgid " sent to "
-msgstr " gesendet an "
-
-msgid " received from "
-msgstr " empfangen von "
-
-msgid "OK"
-msgstr "OK"
-
-msgid "FAILED"
-msgstr "FEHLGESCHLAGEN"
-
-#, c-format
-msgid "DCC chat closed with %s%s %s(%s%d.%d.%d.%d%s)\n"
-msgstr "DCC Chat mit %s%s %s(%s%d.%d.%d.%d%s) geschlossen \n"
-
-#, c-format
-msgid ""
-"%s can't associate DCC chat with private buffer (maybe private buffer has "
-"already DCC CHAT?)\n"
-msgstr ""
-"%s kann keinen DCC Chat mit privatem Puffer assoziieren (ist er bereits ein "
-"DCC CHAT?)\n"
-
-#, c-format
-msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
-msgstr "DCC Chat mit %s%s %s(%s%d.%d.%d.%d%s)%s aufgebaut\n"
-
-#, c-format
-msgid "DCC: file %s%s%s resumed at position %u\n"
-msgstr "DCC: Datei %s%s%s wird an Position %u fortgesetzt\n"
-
-#, c-format
-msgid ""
-"%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found or "
-"ended\n"
-msgstr ""
-"%s kann die Datei \"%s\" nicht fortsetzen (Port: %d, Startposition: %u): DCC "
-"nicht gefunden oder bereits fertig\n"
-
-#, c-format
-msgid "%s not enough memory for new DCC\n"
-msgstr "%s nicht genug Speicher für neuen DCC\n"
-
-msgid "DCC chat"
-msgstr "DCC Chat"
-
-#, c-format
-msgid ""
-"Incoming DCC file from %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s bytes\n"
-msgstr ""
-"Eingehende DCC-Datei von %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s Bytes\n"
-
-#, c-format
-msgid ""
-"Sending DCC file to %s%s%s: %s%s%s (local filename: %s%s%s), %s%lu%s bytes\n"
-msgstr ""
-"Sende DCC-Datei zu %s%s%s: %s%s%s (lokaler Dateiname: %s%s%s), %s%lu%s "
-"Bytes\n"
-
-#, c-format
-msgid "Incoming DCC chat request from %s%s%s (%s%d.%d.%d.%d%s)\n"
-msgstr "Eingehende DCC-Chatanforderung von %s%s%s (%s%d.%d.%d.%d%s)\n"
-
-#, c-format
-msgid "Sending DCC chat request to %s%s\n"
-msgstr "Sende DCC-Chatanforderung an %s%s\n"
-
-#, c-format
-msgid ""
-"DCC: file %s%s%s (local filename: %s%s%s) will be resumed at position %u\n"
-msgstr ""
-"DCC: Datei %s%s%s (lokaler Dateiname: %s%s%s) wird an der Position %u "
-"fortgesetzt\n"
-
-#, c-format
-msgid "%s not enough memory for DCC SEND\n"
-msgstr "%s nicht genug Speicher für DCC SEND\n"
-
-#, c-format
-msgid "%s cannot access file \"%s\"\n"
-msgstr "%s kann nicht auf die Datei \"%s\" zugreifen\n"
-
-#, c-format
-msgid "%s could not find address for '%s'. Falling back to local IP.\n"
-msgstr ""
-"%s kann die Adresse für '%s' nicht finden. Greife auf lokale IP zurück.\n"
-
-#, c-format
-msgid "%s cannot create socket for DCC\n"
-msgstr "%s kann keinen Socket für DCC anlegen\n"
-
-#, c-format
-msgid "%s cannot find available port for DCC\n"
-msgstr "%s kann keinen freien Port für DCC ermitteln\n"
-
-#, c-format
-msgid "%s cannot send DCC\n"
-msgstr "%s kann keinen DCC senden\n"
-
-#, c-format
-msgid "%s error sending data to \"%s\" via DCC CHAT\n"
-msgstr "%s Fehler beim Senden von Daten an \"%s\" via DCC CHAT\n"
-
-#, c-format
-msgid "Private %s> %s"
-msgstr "Privat %s> %s"
-
-#, c-format
-msgid "%s DCC: unable to create pipe\n"
-msgstr "%s DCC: kann keine Pipe erstellen\n"
-
-#, c-format
-msgid "%s DCC: unable to read local file\n"
-msgstr "%s DCC: kann lokale Datei nicht lesen\n"
-
-#, c-format
-msgid "%s DCC: unable to send block to receiver\n"
-msgstr "%s DCC: kann den Block nicht an den Empfänger übertragen\n"
-
-#, c-format
-msgid "%s DCC: unable to read ACK from receiver\n"
-msgstr "%s DCC: kann kein ACK vom Empfänger empfangen\n"
-
-#, c-format
-msgid "%s DCC: unable to connect to sender\n"
-msgstr "%s DCC: kann keine Verbindung zum Sender herstellen\n"
-
-#, c-format
-msgid "%s DCC: unable to receive block from sender\n"
-msgstr "%s DCC: kann Block nicht vom Sender empfangen\n"
-
-#, c-format
-msgid "%s DCC: unable to write local file\n"
-msgstr "%s DCC: kann lokalen Datei nicht schreiben\n"
-
-#, c-format
-msgid "%s DCC: unable to fork\n"
-msgstr "%s DCC: kann nicht forken\n"
-
-#, c-format
-msgid "%s DCC: timeout\n"
-msgstr "%s DCC: Timeout\n"
-
-#, c-format
-msgid "%s DCC: unable to create socket for sending file\n"
-msgstr "%s DCC: kann keinen Socket für den Dateiversand erstellen\n"
-
-#, c-format
-msgid "%s DCC: unable to set 'nonblock' option for socket\n"
-msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
-
-#, fuzzy, c-format
-msgid "Aborting active DCC: \"%s\" from %s"
-msgstr "Aktiver DCC wird abgebrochen: \"%s\" von %s\n"
 
 #, fuzzy
 msgid "IRC debug messages"
@@ -3474,6 +3202,10 @@ msgstr "CTCP %sVERSION%s Antwort von %s%s%s: %s\n"
 #, fuzzy, c-format
 msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
 msgstr "CTCP %sPING%s Antwort von %s%s%s: %ld.%ld Sekunden\n"
+
+#, c-format
+msgid "Private %s> %s"
+msgstr "Privat %s> %s"
 
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
@@ -4441,6 +4173,322 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 
+#, fuzzy
+msgid "waiting"
+msgstr "warten"
+
+#, fuzzy
+msgid "connecting"
+msgstr "verbinden"
+
+#, fuzzy
+msgid "active"
+msgstr "aktiv"
+
+#, fuzzy
+msgid "done"
+msgstr "fertig"
+
+#, fuzzy
+msgid "failed"
+msgstr "fehlg."
+
+#, fuzzy
+msgid "aborted"
+msgstr "abgebr."
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory for new xfer"
+msgstr "%s nicht genug Speicher für neuen DCC\n"
+
+#, fuzzy, c-format
+msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
+msgstr ""
+"Eingehende DCC-Datei von %s%s%s (%s%d.%d.%d.%d%s)%s: %s%s%s, %s%lu%s Bytes\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s: sending file to %s: %s (local filename: %s), %lu bytes (protocol: %s)"
+msgstr ""
+"Sende DCC-Datei zu %s%s%s: %s%s%s (lokaler Dateiname: %s%s%s), %s%lu%s "
+"Bytes\n"
+
+#, fuzzy, c-format
+msgid "%s: incoming chat request from %s (%d.%d.%d.%d)"
+msgstr "Eingehende DCC-Chatanforderung von %s%s%s (%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
+msgid "%s: sending chat request to %s"
+msgstr "Sende DCC-Chatanforderung an %s%s\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s (local filename: %s) will be resumed at position %u"
+msgstr ""
+"DCC: Datei %s%s%s (lokaler Dateiname: %s%s%s) wird an der Position %u "
+"fortgesetzt\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s %s %s: %s"
+msgstr "DCC: Datei %s%s%s"
+
+#, fuzzy
+msgid "sent to"
+msgstr " gesendet an "
+
+#, fuzzy
+msgid "received from"
+msgstr " empfangen von "
+
+msgid "OK"
+msgstr "OK"
+
+msgid "FAILED"
+msgstr "FEHLGESCHLAGEN"
+
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgstr "DCC Chat mit %s%s %s(%s%d.%d.%d.%d%s) geschlossen \n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing arguments"
+msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown xfer type \"%s\""
+msgstr "%s unbekannte Tasten-Funktion \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: filename missing for type \"%s\""
+msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: protocol missing for type \"%s\""
+msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown xfer protocol \"%s\""
+msgstr "%s unbekannte Tasten-Funktion \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory"
+msgstr "Nicht genügend Speicher für neue Zeile\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot access file \"%s\""
+msgstr "%s kann nicht auf die Datei \"%s\" zugreifen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: could not find address for \"%s\", falling back to local IP"
+msgstr ""
+"%s kann die Adresse für '%s' nicht finden. Greife auf lokale IP zurück.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot create socket for xfer"
+msgstr "%s Socket konnte nicht angelegt werden\n"
+
+#, fuzzy, c-format
+msgid "%s%s: cannot find available port for xfer"
+msgstr "%s kann keinen freien Port für DCC ermitteln\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating xfer"
+msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
+
+#, fuzzy, c-format
+msgid "%s%s: aborting active xfer: \"%s\" from %s"
+msgstr "Aktiver DCC wird abgebrochen: \"%s\" von %s\n"
+
+#, fuzzy, c-format
+msgid "%s: aborting active xfer: \"%s\" from %s"
+msgstr "Aktiver DCC wird abgebrochen: \"%s\" von %s\n"
+
+#, fuzzy
+msgid "text color"
+msgstr "Farbe vom Chat-Text"
+
+#, fuzzy
+msgid "background color"
+msgstr "Hintergrundfarbe der Nicknames"
+
+#, fuzzy
+msgid "background color for selected line"
+msgstr "Farbe der Eingabezeile"
+
+#, fuzzy
+msgid "text color for \"waiting\" status"
+msgstr "Farbe des DCC-Status 'warten'"
+
+#, fuzzy
+msgid "text color for \"connecting\" status"
+msgstr "Farbe des DCC-Status 'verbinden'"
+
+#, fuzzy
+msgid "text color for \"active\" status"
+msgstr "Farbe des DCC-Status 'aktiv'"
+
+#, fuzzy
+msgid "text color for \"done\" status"
+msgstr "Farbe des DCC-Status 'fertig'"
+
+#, fuzzy
+msgid "text color for \"failed\" status"
+msgstr "Farbe des DCC-Status 'fehlgeschlagen'"
+
+#, fuzzy
+msgid "text color for \"aborted\" status"
+msgstr "Farbe des DCC-Status 'abgebrochen'"
+
+#, fuzzy
+msgid "timeout for xfer request (in seconds)"
+msgstr "DCC-Timeout in Sekunden"
+
+#, fuzzy
+msgid "block size for sending packets, in bytes"
+msgstr "Blockgröße für DCCs"
+
+msgid "does not wait for ACK when sending file"
+msgstr "warte beim Veschicken von Dateien nicht auf das ACK-Signal"
+
+#, fuzzy
+msgid ""
+"restricts outgoing files/chats to use only ports in the given range (useful "
+"for NAT) (syntax: a single port, ie. 5000 or a port range, ie. 5000-5015, "
+"empty value means any port)"
+msgstr ""
+"beschränkt ausgehenden DCC auf die ausschließliche Benutzung von Ports in "
+"einem vorgegebenen Bereich (hilfreich bei NAT) (Syntax: ein einzelner Port, "
+"z.B. 5000, oder eine Port-Bereich, z.B. 5000-5015,wenn kein Bereich "
+"angegeben ist, ist jeder Port möglich)"
+
+#, fuzzy
+msgid ""
+"IP or DNS address used for sending files/chats (if empty, local interface IP "
+"is used)"
+msgstr ""
+"IP- oder DNS-Adresse für ausgehenden DCC (wenn kein Wert angegeben wird, "
+"wird die IP des lokalen Interfaces benutzt)"
+
+#, fuzzy
+msgid "path for writing incoming files"
+msgstr "Pfad für per DCC eingehende Dateien"
+
+#, fuzzy
+msgid "path for reading files when sending (when no path is specified by user)"
+msgstr ""
+"Pfad, aus dem Dateien standardmäßig gelesen werden, wenn keine explizite "
+"Angabe vorliegt"
+
+msgid "convert spaces to underscores when sending files"
+msgstr "Leerzeichen in Unterstriche umwandeln beim Veschicken von Dateien"
+
+msgid "rename incoming files if already exists (add '.1', '.2', ...)"
+msgstr ""
+"eingehende Dateien automatisch umbenennen, falls nötig, um Überschreiben zu "
+"vermeiden (durch Hinzufügen von '.1', '.2', ...)"
+
+#, fuzzy
+msgid ""
+"automatically resume file transfer if connection with remote host is lost"
+msgstr ""
+"abgebrochene Übertragungen automatisch fortsetzen, wenn die Verbindung "
+"abgebrochen ist"
+
+#, fuzzy
+msgid "automatically accept incoming files (use carefully!)"
+msgstr "DCC-CHats automatisch annehmen (Vorsicht!)"
+
+#, fuzzy
+msgid "automatically accept chat requests (use carefully!)"
+msgstr "DCC-CHats automatisch annehmen (Vorsicht!)"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create pipe"
+msgstr "%s DCC: kann keine Pipe erstellen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to fork"
+msgstr "%s DCC: kann nicht forken\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to read local file"
+msgstr "%s DCC: kann lokale Datei nicht lesen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to send block to receiver"
+msgstr "%s DCC: kann den Block nicht an den Empfänger übertragen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to read ACK from receiver"
+msgstr "%s DCC: kann kein ACK vom Empfänger empfangen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to connect to sender"
+msgstr "%s DCC: kann keine Verbindung zum Sender herstellen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to receive block from sender"
+msgstr "%s DCC: kann Block nicht vom Sender empfangen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to write local file"
+msgstr "%s DCC: kann lokalen Datei nicht schreiben\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgstr "%s Fehler beim Senden von Daten an \"%s\" via DCC CHAT\n"
+
+#, fuzzy
+#~ msgid "text color for status info"
+#~ msgstr "Farbe der Statuszeile"
+
+#, fuzzy
+#~ msgid "background color for status info"
+#~ msgstr "Hintergrund des Statusfensters"
+
+#~ msgid " (local filename: %s%s%s)"
+#~ msgstr " (lokaler Dateiname: %s%s%s)"
+
+#~ msgid ""
+#~ "%s can't associate DCC chat with private buffer (maybe private buffer has "
+#~ "already DCC CHAT?)\n"
+#~ msgstr ""
+#~ "%s kann keinen DCC Chat mit privatem Puffer assoziieren (ist er bereits "
+#~ "ein DCC CHAT?)\n"
+
+#~ msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
+#~ msgstr "DCC Chat mit %s%s %s(%s%d.%d.%d.%d%s)%s aufgebaut\n"
+
+#~ msgid "DCC: file %s%s%s resumed at position %u\n"
+#~ msgstr "DCC: Datei %s%s%s wird an Position %u fortgesetzt\n"
+
+#~ msgid ""
+#~ "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found "
+#~ "or ended\n"
+#~ msgstr ""
+#~ "%s kann die Datei \"%s\" nicht fortsetzen (Port: %d, Startposition: %u): "
+#~ "DCC nicht gefunden oder bereits fertig\n"
+
+#~ msgid "DCC chat"
+#~ msgstr "DCC Chat"
+
+#~ msgid "%s not enough memory for DCC SEND\n"
+#~ msgstr "%s nicht genug Speicher für DCC SEND\n"
+
+#~ msgid "%s cannot create socket for DCC\n"
+#~ msgstr "%s kann keinen Socket für DCC anlegen\n"
+
+#~ msgid "%s cannot send DCC\n"
+#~ msgstr "%s kann keinen DCC senden\n"
+
+#~ msgid "%s DCC: timeout\n"
+#~ msgstr "%s DCC: Timeout\n"
+
+#~ msgid "%s DCC: unable to create socket for sending file\n"
+#~ msgstr "%s DCC: kann keinen Socket für den Dateiversand erstellen\n"
+
+#~ msgid "%s DCC: unable to set 'nonblock' option for socket\n"
+#~ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
+
 #~ msgid "Internal key functions:\n"
 #~ msgstr "Interne Tastenfunktionen:\n"
 
@@ -4670,10 +4718,6 @@ msgstr "%s fehlerhafte Argumente für der \"%s\"-Befehl\n"
 #, fuzzy
 #~ msgid "manage charsets"
 #~ msgstr "Puffer verwalten"
-
-#, fuzzy
-#~ msgid "%s%s: value \"%s\" is invalid for option \"%s\""
-#~ msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
 
 #, fuzzy
 #~ msgid "%s%s: error creating server for reading configuration file"

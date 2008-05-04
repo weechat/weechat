@@ -14,11 +14,22 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(LIB_CORE_SRC weechat.c weechat.h wee-backtrace.c wee-backtrace.h
-wee-command.c wee-command.h wee-config.c wee-config.h wee-config-file.c
-wee-config-file.h wee-debug.c wee-debug.h wee-hook.c wee-hook.h wee-input.c
-wee-input.h wee-list.c wee-list.h wee-log.c wee-log.h wee-string.c wee-string.h
-wee-upgrade.c wee-upgrade.h wee-utf8.c wee-utf8.h wee-util.c wee-util.h)
+SET(LIB_CORE_SRC
+weechat.c weechat.h
+wee-backtrace.c wee-backtrace.h
+wee-command.c wee-command.h
+wee-config.c wee-config.h
+wee-config-file.c wee-config-file.h
+wee-debug.c wee-debug.h
+wee-hook.c wee-hook.h
+wee-input.c wee-input.h
+wee-list.c wee-list.h
+wee-log.c wee-log.h
+wee-network.c wee-network.h
+wee-string.c wee-string.h
+wee-upgrade.c wee-upgrade.h
+wee-utf8.c wee-utf8.h
+wee-util.c wee-util.h)
 
 # Check for flock support
 INCLUDE(CheckSymbolExists)
