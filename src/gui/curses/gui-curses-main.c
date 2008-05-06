@@ -313,41 +313,46 @@ gui_main_loop ()
 
 /*
  * gui_main_end: GUI end
+ *               clean_exit is 0 when WeeChat is crashing (we don't clean
+ *               objects because WeeChat can crash again during this cleanup...)
  */
 
 void
-gui_main_end ()
+gui_main_end (int clean_exit)
 {
-    /* remove bar items and bars */
-    gui_bar_item_end ();
-    gui_bar_free_all ();
-    
-    /* free clipboard buffer */
-    if (gui_input_clipboard)
-        free (gui_input_clipboard);
-    
-    /* delete all windows */
-    while (gui_windows)
-        gui_window_free (gui_windows);
-    gui_window_tree_free (&gui_windows_tree);
-
-    /* delete all buffers */
-    while (gui_buffers)
-        gui_buffer_close (gui_buffers, 0);
-    
-    /* delete global history */
-    gui_history_global_free ();
-    
-    /* delete infobar messages */
-    while (gui_infobar)
-        gui_infobar_remove ();
-
-    /* reset title */
-    if (CONFIG_BOOLEAN(config_look_set_title))
-	gui_window_title_reset ();
-    
-    /* end color */
-    gui_color_end ();
+    if (clean_exit)
+    {
+        /* remove bar items and bars */
+        gui_bar_item_end ();
+        gui_bar_free_all ();
+        
+        /* free clipboard buffer */
+        if (gui_input_clipboard)
+            free (gui_input_clipboard);
+        
+        /* delete all windows */
+        while (gui_windows)
+            gui_window_free (gui_windows);
+        gui_window_tree_free (&gui_windows_tree);
+        
+        /* delete all buffers */
+        while (gui_buffers)
+            gui_buffer_close (gui_buffers, 0);
+        
+        /* delete global history */
+        gui_history_global_free ();
+        
+        /* delete infobar messages */
+        while (gui_infobar)
+            gui_infobar_remove ();
+        
+        /* reset title */
+        if (CONFIG_BOOLEAN(config_look_set_title))
+            gui_window_title_reset ();
+        
+        /* end color */
+        gui_color_end ();
+    }
     
     /* end of Curses output */
     refresh ();

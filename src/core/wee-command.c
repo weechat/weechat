@@ -2175,7 +2175,7 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
     plugin_end ();
     /*if (CONFIG_BOOLEAN(config_look_save_on_exit))
         (void) config_write (NULL);
-    gui_main_end ();
+    gui_main_end (1);
     fifo_remove ();
     weechat_log_close ();
     

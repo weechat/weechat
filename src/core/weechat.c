@@ -496,7 +496,7 @@ main (int argc, char *argv[])
     plugin_end ();                      /* end plugin interface(s)          */
     if (CONFIG_BOOLEAN(config_look_save_on_exit))
         (void) config_weechat_write (NULL); /* save WeeChat config file     */
-    gui_main_end ();                    /* shut down WeeChat GUI            */
+    gui_main_end (1);                   /* shut down WeeChat GUI            */
     config_file_free_all ();            /* free all configuration files     */
     gui_keyboard_end ();                /* end keyboard                     */
     unhook_all ();                      /* remove all hooks                 */

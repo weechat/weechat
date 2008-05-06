@@ -205,40 +205,45 @@ gui_main_loop ()
 
 /*
  * gui_main_end: GUI end
+ *               clean_exit is 0 when WeeChat is crashing (we don't clean
+ *               objects because WeeChat can crash again during this cleanup...)
  */
 
 void
-gui_main_end ()
+gui_main_end (int clean_exit)
 {
     struct t_gui_window *ptr_win;
-    
-    /* free clipboard buffer */
-    if (gui_input_clipboard)
-      free(gui_input_clipboard);
-    
-    /* delete all windows */
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-    {
-        /* TODO: destroy Gtk widgets */
-    }
-    
-    /* delete all buffers */
-    while (gui_buffers)
-        gui_buffer_close (gui_buffers, 0);
-    
-    /* delete all windows */
-    while (gui_windows)
-        gui_window_free (gui_windows);
-    gui_window_tree_free (&gui_windows_tree);
-    
-    /* delete global history */
-    gui_history_global_free ();
-    
-    /* delete infobar messages */
-    while (gui_infobar)
-        gui_infobar_remove ();
 
-    /* reset title */
-    if (CONFIG_BOOLEAN(config_look_set_title))
-	gui_window_title_reset ();
+    if (clean_exit)
+    {
+        /* free clipboard buffer */
+        if (gui_input_clipboard)
+            free(gui_input_clipboard);
+        
+        /* delete all windows */
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            /* TODO: destroy Gtk widgets */
+        }
+        
+        /* delete all buffers */
+        while (gui_buffers)
+            gui_buffer_close (gui_buffers, 0);
+        
+        /* delete all windows */
+        while (gui_windows)
+            gui_window_free (gui_windows);
+        gui_window_tree_free (&gui_windows_tree);
+        
+        /* delete global history */
+        gui_history_global_free ();
+        
+        /* delete infobar messages */
+        while (gui_infobar)
+            gui_infobar_remove ();
+        
+        /* reset title */
+        if (CONFIG_BOOLEAN(config_look_set_title))
+            gui_window_title_reset ();
+    }
 }

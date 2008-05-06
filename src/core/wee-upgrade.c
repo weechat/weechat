@@ -509,7 +509,7 @@ session_crash (FILE *file, char *message, ...)
     va_end (argptr);
     
     fclose (file);
-    gui_main_end ();
+    gui_main_end (0);
     string_iconv_fprintf (stderr, "Error: %s\n", buf);
     string_iconv_fprintf (stderr,
                           _("Last operation with session file was at position %ld, "

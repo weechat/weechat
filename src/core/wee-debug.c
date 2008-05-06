@@ -122,7 +122,7 @@ debug_sigsegv ()
 {
     debug_dump (1);
     unhook_all ();
-    gui_main_end ();
+    gui_main_end (0);
     
     string_iconv_fprintf (stderr, "\n");
     string_iconv_fprintf (stderr, "*** Very bad! WeeChat is crashing (SIGSEGV received)\n");
