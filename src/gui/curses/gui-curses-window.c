@@ -323,6 +323,7 @@ gui_window_set_custom_color_fg_bg (WINDOW *window, int fg, int bg)
     if ((fg >= 0) && (fg < GUI_CURSES_NUM_WEECHAT_COLORS)
         && (bg >= 0) && (bg < GUI_CURSES_NUM_WEECHAT_COLORS))
     {
+        gui_window_remove_color_style (window, A_BOLD);
         wattron (window, gui_weechat_colors[fg].attributes);
         gui_window_set_color (window,
                               gui_weechat_colors[fg].foreground,

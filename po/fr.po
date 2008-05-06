@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-04 17:30+0200\n"
-"PO-Revision-Date: 2008-05-04 17:30+0200\n"
+"POT-Creation-Date: 2008-05-06 16:47+0200\n"
+"PO-Revision-Date: 2008-05-06 16:46+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2157,7 +2157,7 @@ msgstr ""
 "message: message pour l'absence (si pas de message donné, le statut "
 "d'absence est supprimé)"
 
-msgid "bans nicks or hosts"
+msgid "ban nicks or hosts"
 msgstr "bannit des pseudos ou hôtes"
 
 msgid "[channel] [nickname [nickname ...]]"
@@ -2226,14 +2226,15 @@ msgstr ""
 "         canal: canal pour le cycle\n"
 "message_de_fin: message de fin (affiché aux autres utilisateurs)"
 
-msgid "starts DCC (file or chat) or close chat"
-msgstr "démarre le DCC (fichier ou discussion) ou ferme une discussion"
+msgid "start DCC (file or chat)"
+msgstr "démarre le DCC (fichier ou discussion)"
 
 msgid "action [nickname [file]]"
 msgstr "action [pseudo [fichier]]"
 
+#, fuzzy
 msgid ""
-"  action: 'send' (file) or 'chat' or 'close' (chat)\n"
+"  action: 'send' (file) or 'chat'\n"
 "nickname: nickname to send file or chat\n"
 "    file: filename (on local host)"
 msgstr ""
@@ -2242,16 +2243,16 @@ msgstr ""
 " pseudo: pseudo pour envoyer le fichier ou discuter\n"
 "fichier: nom du fichier (sur la machine locale)"
 
-msgid "removes half channel operator status from nickname(s)"
+msgid "remove half channel operator status from nickname(s)"
 msgstr "retire le statut de demi-opérateur du canal à/aux pseudo(s)"
 
 msgid "[nickname [nickname]]"
 msgstr "[pseudo [pseudo]]"
 
-msgid "removes channel operator status from nickname(s)"
+msgid "remove channel operator status from nickname(s)"
 msgstr "retire le statut d'opérateur du canal à/aux pseudo(s)"
 
-msgid "removes voice from nickname(s)"
+msgid "remove voice from nickname(s)"
 msgstr "retire la voix du/des pseudo(s)"
 
 msgid "shutdown the server"
@@ -2270,7 +2271,7 @@ msgstr ""
 "       -all: se déconnecter de tous les serveurs\n"
 "nom_serveur: nom du serveur pour se déconnecter"
 
-msgid "gives half channel operator status to nickname(s)"
+msgid "give half channel operator status to nickname(s)"
 msgstr "donner le statut de demi-opérateur à un/des pseudo(s)"
 
 msgid "get information describing the server"
@@ -2502,7 +2503,7 @@ msgstr ""
 "pseudo: pseudo cible pour la notice\n"
 " texte: texte à envoyer"
 
-msgid "gives channel operator status to nickname(s)"
+msgid "give channel operator status to nickname(s)"
 msgstr "donner le statut opérateur à un/des pseudo(s)"
 
 msgid "nickname [nickname]"
@@ -2773,7 +2774,7 @@ msgstr ""
 msgid "find the route to specific server"
 msgstr "trouver le chemin jusqu'à un serveur spécifique"
 
-msgid "unbans nicks or hosts"
+msgid "unban nicks or hosts"
 msgstr "supprime le bannissement sur des pseudos ou hôtes"
 
 msgid "[channel] nickname [nickname ...]"
@@ -2792,7 +2793,7 @@ msgstr "retourne une liste d'informations sur des pseudos"
 msgid "list of users logged into the server"
 msgstr "liste des utilisateurs connectés au serveur"
 
-msgid "gives the version info of nick or server (current or specified)"
+msgid "give the version info of nick or server (current or specified)"
 msgstr "retourne la version du pseudo ou du serveur (courant ou spécifié)"
 
 msgid "[server | nickname]"
@@ -2805,7 +2806,7 @@ msgstr ""
 "serveur: nom du serveur\n"
 " pseudo: pseudo"
 
-msgid "gives voice to nickname(s)"
+msgid "give voice to nickname(s)"
 msgstr "donne la voix à/aux pseudo(s)"
 
 msgid ""
@@ -4166,8 +4167,31 @@ msgid "aborted"
 msgstr "interrompu"
 
 #, c-format
+msgid "%s%s: file %s %s %s: %s"
+msgstr "%s%s: fichier %s %s %s: %s"
+
+msgid "sent to"
+msgstr "envoyé à"
+
+msgid "received from"
+msgstr "reçu de"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "FAILED"
+msgstr "ECHOUE"
+
+#, c-format
+msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgstr "%s: discussion fermée avec %s (%d.%d.%d.%d)"
+
+#, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: pas assez de mémoire pour un nouveau xfer"
+
+msgid "xfer chat"
+msgstr "discussion xfer"
 
 #, c-format
 msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
@@ -4192,40 +4216,12 @@ msgid "%s: file %s (local filename: %s) will be resumed at position %u"
 msgstr "%s: fichier %s (nom local: %s) sera recommencé en position %u"
 
 #, c-format
-msgid "%s: file %s %s %s: %s"
-msgstr "%s: fichier %s %s %s: %s"
-
-msgid "sent to"
-msgstr "envoyé à"
-
-msgid "received from"
-msgstr "reçu de"
-
-msgid "OK"
-msgstr "OK"
-
-msgid "FAILED"
-msgstr "ECHOUE"
-
-#, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
-msgstr "%s: discussion fermée avec %s (%d.%d.%d.%d)"
-
-#, c-format
 msgid "%s%s: missing arguments"
 msgstr "%s%s: paramètres manquants"
 
 #, c-format
 msgid "%s%s: unknown xfer type \"%s\""
 msgstr "%s%s: type de xfer inconnu \"%s\""
-
-#, c-format
-msgid "%s%s: filename missing for type \"%s\""
-msgstr "%s%s: nom de fichier manquant pour le type \"%s\""
-
-#, c-format
-msgid "%s%s: protocol missing for type \"%s\""
-msgstr "%s%s: protocole manquant pour le type \"%s\""
 
 #, c-format
 msgid "%s%s: unknown xfer protocol \"%s\""
@@ -4261,9 +4257,47 @@ msgstr "%s%s: erreur de création du xfer"
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "%s%s: abandon du xfer actif: \"%s\" de %s"
 
+msgid "bytes"
+msgstr "octets"
+
+msgid "KB"
+msgstr "Ko"
+
+msgid "MB"
+msgstr "Mo"
+
+msgid "GB"
+msgstr "Go"
+
+msgid "ETA"
+msgstr "ETA"
+
+msgid "Xfer list"
+msgstr "Liste Xfer"
+
 #, c-format
-msgid "%s: aborting active xfer: \"%s\" from %s"
-msgstr "%s: abandon du xfer actif: \"%s\" de %s"
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgstr "%s%s: erreur d'envoi de données à \"%s\" via discussion xfer"
+
+#, c-format
+msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+msgstr "Connecté à %s (%d.%d.%d.%d) via discussion xfer"
+
+msgid "xfer control"
+msgstr "contrôle xfer"
+
+msgid "Open buffer with xfer list"
+msgstr "Ouverture du tampon avec la liste des xfers"
+
+msgid "auto open xfer buffer and switch to it when a new xfer is added to list"
+msgstr ""
+"ouvrir automatiquement le tampon xfer et basculer vers celui-ci lorsqu'un "
+"nouveau xfer est ajouté à la liste"
+
+msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
+msgstr ""
+"taille de la barre de progression, en caractères (si 0, la barre de "
+"progression est désactivée)"
 
 msgid "text color"
 msgstr "couleur du texte"
@@ -4354,10 +4388,6 @@ msgid "%s%s: unable to create pipe"
 msgstr "%s%s: impossible de créer le tuyau"
 
 #, c-format
-msgid "%s%s: unable to fork"
-msgstr "%s%s: impossible de créer un processus"
-
-#, c-format
 msgid "%s%s: unable to read local file"
 msgstr "%s%s: impossible de lire le fichier local"
 
@@ -4382,5 +4412,17 @@ msgid "%s%s: unable to write local file"
 msgstr "%s%s: impossible d'écrire dans le fichier local"
 
 #, c-format
-msgid "%s%s: error sending data to \"%s\" via xfer chat"
-msgstr "%s%s: erreur d'envoi de données à \"%s\" via discussion xfer"
+msgid "%s%s: unable to fork"
+msgstr "%s%s: impossible de créer un processus"
+
+#, c-format
+msgid "%s%s: unable to create socket for sending file"
+msgstr "%s%s: impossible de créer la socket pour l'envoi du fichier"
+
+#, c-format
+msgid "%s%s: unable to set option \"nonblock\" for socket"
+msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
+
+#, c-format
+msgid "%s%s: timeout for \"%s\" with %s"
+msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"

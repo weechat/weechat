@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-04 17:30+0200\n"
+"POT-Creation-Date: 2008-05-06 16:47+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2238,7 +2238,8 @@ msgstr ""
 "     -all: включить режим \"отсутствую\" на всех подключенных серверах\n"
 "сообщение: причина отсутствия (если сообщения нет - статус снимается)"
 
-msgid "bans nicks or hosts"
+#, fuzzy
+msgid "ban nicks or hosts"
 msgstr "банит ник или хост"
 
 msgid "[channel] [nickname [nickname ...]]"
@@ -2306,14 +2307,16 @@ msgstr ""
 "    канал: целевой канал\n"
 "сообщение: причина покидания (отображается другим пользователям)"
 
-msgid "starts DCC (file or chat) or close chat"
+#, fuzzy
+msgid "start DCC (file or chat)"
 msgstr "начинает DCC (передачу файла или чат) или закрывает чат"
 
 msgid "action [nickname [file]]"
 msgstr "действие [ник [файл]]"
 
+#, fuzzy
 msgid ""
-"  action: 'send' (file) or 'chat' or 'close' (chat)\n"
+"  action: 'send' (file) or 'chat'\n"
 "nickname: nickname to send file or chat\n"
 "    file: filename (on local host)"
 msgstr ""
@@ -2322,16 +2325,19 @@ msgstr ""
 "     ник: адресат для файла или DCC-беседы\n"
 "    файл: отправляемый файл (на местном хосте)"
 
-msgid "removes half channel operator status from nickname(s)"
+#, fuzzy
+msgid "remove half channel operator status from nickname(s)"
 msgstr "снимает статус полу-оператора с ника(-ов)"
 
 msgid "[nickname [nickname]]"
 msgstr "[ник [ник]]"
 
-msgid "removes channel operator status from nickname(s)"
+#, fuzzy
+msgid "remove channel operator status from nickname(s)"
 msgstr "снимает статус оператора с ника(-ов)"
 
-msgid "removes voice from nickname(s)"
+#, fuzzy
+msgid "remove voice from nickname(s)"
 msgstr "снимает право голоса с ника(-ов)"
 
 msgid "shutdown the server"
@@ -2350,7 +2356,8 @@ msgstr ""
 "  -all: отключиться от всех серверов\n"
 "сервер: название сервера для отключения"
 
-msgid "gives half channel operator status to nickname(s)"
+#, fuzzy
+msgid "give half channel operator status to nickname(s)"
 msgstr "даёт статус полу-оператора канала пользователю(-ям)"
 
 msgid "get information describing the server"
@@ -2580,7 +2587,8 @@ msgstr ""
 "  ник: адресат уведомления\n"
 "текст: отправляемый текст"
 
-msgid "gives channel operator status to nickname(s)"
+#, fuzzy
+msgid "give channel operator status to nickname(s)"
 msgstr "даёт статус оператора канала нику(-ам)"
 
 msgid "nickname [nickname]"
@@ -2848,7 +2856,8 @@ msgstr ""
 msgid "find the route to specific server"
 msgstr "найти путь к определённому серверу"
 
-msgid "unbans nicks or hosts"
+#, fuzzy
+msgid "unban nicks or hosts"
 msgstr "снимает бан с хоста или ника"
 
 msgid "[channel] nickname [nickname ...]"
@@ -2867,7 +2876,8 @@ msgstr "возвращает список информации о никах"
 msgid "list of users logged into the server"
 msgstr "перечислить подключенных к серверу пользователей"
 
-msgid "gives the version info of nick or server (current or specified)"
+#, fuzzy
+msgid "give the version info of nick or server (current or specified)"
 msgstr ""
 "предоставляет информацию о версии ника или сервера (текущего или указанного)"
 
@@ -2881,7 +2891,8 @@ msgstr ""
 "сервер: название сервера\n"
 "   ник: ник"
 
-msgid "gives voice to nickname(s)"
+#, fuzzy
+msgid "give voice to nickname(s)"
 msgstr "даёт право голоса нику(-ам)"
 
 msgid ""
@@ -4206,8 +4217,33 @@ msgid "aborted"
 msgstr "Отменено"
 
 #, fuzzy, c-format
+msgid "%s%s: file %s %s %s: %s"
+msgstr "DCC: файл %s%s%s"
+
+#, fuzzy
+msgid "sent to"
+msgstr " отправлен "
+
+#, fuzzy
+msgid "received from"
+msgstr " получен от "
+
+msgid "OK"
+msgstr "OK"
+
+msgid "FAILED"
+msgstr "НЕУДАЧА"
+
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgstr "DCC-чат закончен с %s%s %s(%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s недостаточно памяти для нового DCC\n"
+
+msgid "xfer chat"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
@@ -4232,42 +4268,12 @@ msgstr ""
 "DCC: файл %s%s%s (локальное имя файла: %s%s%s) будет продолжен с позиции %u\n"
 
 #, fuzzy, c-format
-msgid "%s: file %s %s %s: %s"
-msgstr "DCC: файл %s%s%s"
-
-#, fuzzy
-msgid "sent to"
-msgstr " отправлен "
-
-#, fuzzy
-msgid "received from"
-msgstr " получен от "
-
-msgid "OK"
-msgstr "OK"
-
-msgid "FAILED"
-msgstr "НЕУДАЧА"
-
-#, fuzzy, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
-msgstr "DCC-чат закончен с %s%s %s(%s%d.%d.%d.%d%s)\n"
-
-#, fuzzy, c-format
 msgid "%s%s: missing arguments"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown xfer type \"%s\""
 msgstr "%s неизвестная функция клавиши \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: filename missing for type \"%s\""
-msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: protocol missing for type \"%s\""
-msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown xfer protocol \"%s\""
@@ -4301,9 +4307,45 @@ msgstr "%s недостаточно памяти для сообщения в с
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "Отменяю активное DCC-сединение: \"%s\" от %s\n"
 
+msgid "bytes"
+msgstr "байтов"
+
+msgid "KB"
+msgstr "КБ"
+
+msgid "MB"
+msgstr "МБ"
+
+msgid "GB"
+msgstr "ГБ"
+
+msgid "ETA"
+msgstr "осталось"
+
+#, fuzzy
+msgid "Xfer list"
+msgstr "очистить хотлист"
+
 #, fuzzy, c-format
-msgid "%s: aborting active xfer: \"%s\" from %s"
-msgstr "Отменяю активное DCC-сединение: \"%s\" от %s\n"
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgstr "%s ошибка при отправке данных \"%s\" через DCC-чат\n"
+
+#, fuzzy, c-format
+msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+msgstr "Соединён с %s%s %s(%s%d.%d.%d.%d%s)%s DCC-чатом\n"
+
+msgid "xfer control"
+msgstr ""
+
+#, fuzzy
+msgid "Open buffer with xfer list"
+msgstr "Открытые буферы:\n"
+
+msgid "auto open xfer buffer and switch to it when a new xfer is added to list"
+msgstr ""
+
+msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
+msgstr ""
 
 #, fuzzy
 msgid "text color"
@@ -4406,10 +4448,6 @@ msgid "%s%s: unable to create pipe"
 msgstr "%s DCC: не могу создать pipe\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to fork"
-msgstr "%s DCC: не могу forkнуться\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to read local file"
 msgstr "%s DCC: не могу прочитать локальный файл\n"
 
@@ -4434,8 +4472,32 @@ msgid "%s%s: unable to write local file"
 msgstr "%s DCC: не могу записать локальный файл\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error sending data to \"%s\" via xfer chat"
-msgstr "%s ошибка при отправке данных \"%s\" через DCC-чат\n"
+msgid "%s%s: unable to fork"
+msgstr "%s DCC: не могу forkнуться\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create socket for sending file"
+msgstr "%s DCC: не могу создать сокет для отправки файла\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to set option \"nonblock\" for socket"
+msgstr "%s DCC: не могу установить неблокирующий режим для сокета\n"
+
+#, fuzzy, c-format
+msgid "%s%s: timeout for \"%s\" with %s"
+msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: filename missing for type \"%s\""
+#~ msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: protocol missing for type \"%s\""
+#~ msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s: aborting active xfer: \"%s\" from %s"
+#~ msgstr "Отменяю активное DCC-сединение: \"%s\" от %s\n"
 
 #, fuzzy
 #~ msgid "text color for status info"
@@ -4454,9 +4516,6 @@ msgstr "%s ошибка при отправке данных \"%s\" через D
 #~ msgstr ""
 #~ "%s не могу ассоциировать DCC-чат с буфером (возможно буфер уже имеет DCC-"
 #~ "чат)\n"
-
-#~ msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
-#~ msgstr "Соединён с %s%s %s(%s%d.%d.%d.%d%s)%s DCC-чатом\n"
 
 #~ msgid "DCC: file %s%s%s resumed at position %u\n"
 #~ msgstr "DCC: файл %s%s%s продолжается с позиции %u\n"
@@ -4482,12 +4541,6 @@ msgstr "%s ошибка при отправке данных \"%s\" через D
 
 #~ msgid "%s DCC: timeout\n"
 #~ msgstr "%s DCC: таймаут\n"
-
-#~ msgid "%s DCC: unable to create socket for sending file\n"
-#~ msgstr "%s DCC: не могу создать сокет для отправки файла\n"
-
-#~ msgid "%s DCC: unable to set 'nonblock' option for socket\n"
-#~ msgstr "%s DCC: не могу установить неблокирующий режим для сокета\n"
 
 #~ msgid "Internal key functions:\n"
 #~ msgstr "Встроенные функции клавиш:\n"
@@ -4592,9 +4645,6 @@ msgstr "%s ошибка при отправке данных \"%s\" через D
 
 #~ msgid "set unread marker on all buffers"
 #~ msgstr "пометить все буферы как непрочитанные"
-
-#~ msgid "clear hotlist"
-#~ msgstr "очистить хотлист"
 
 #~ msgid "clear infobar"
 #~ msgstr "очистить информационную панель"
@@ -5161,10 +5211,6 @@ msgstr "%s ошибка при отправке данных \"%s\" через D
 
 #~ msgid "clear window(s)"
 #~ msgstr "очистить окно(-а)"
-
-#, fuzzy
-#~ msgid "Open buffers:"
-#~ msgstr "Открытые буферы:\n"
 
 #, fuzzy
 #~ msgid "%sError: buffer number \"%s\" not found for \"%s\" command"
@@ -5820,21 +5866,6 @@ msgstr "%s ошибка при отправке данных \"%s\" через D
 
 #~ msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 #~ msgstr "%s сервер/канал (%s/%s) не найден для команды plug-inа\n"
-
-#~ msgid "bytes"
-#~ msgstr "байтов"
-
-#~ msgid "KB"
-#~ msgstr "КБ"
-
-#~ msgid "MB"
-#~ msgstr "МБ"
-
-#~ msgid "GB"
-#~ msgstr "ГБ"
-
-#~ msgid "ETA"
-#~ msgstr "осталось"
 
 #~ msgid "  [A] Accept"
 #~ msgstr "  [A] Принять"

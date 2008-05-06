@@ -2803,8 +2803,9 @@ irc_server_xfer_send_ready_cb (void *data, char *signal, char *type_data,
 {
     struct t_plugin_infolist *infolist;
     struct t_irc_server *server, *ptr_server;
-    char *plugin_id, *type;
-
+    char *plugin_name, *plugin_id, *type, *filename;
+    int spaces_in_name;
+    
     /* make C compiler happy */
     (void) data;
     (void) signal;
@@ -2814,42 +2815,44 @@ irc_server_xfer_send_ready_cb (void *data, char *signal, char *type_data,
     
     if (weechat_infolist_next (infolist))
     {
+        plugin_name = weechat_infolist_string (infolist, "plugin_name");
         plugin_id = weechat_infolist_string (infolist, "plugin_id");
-        if (plugin_id)
+        if (plugin_name && (strcmp (plugin_name, "irc") == 0) && plugin_id)
         {
-            if (strncmp (plugin_id, "irc_", 4) == 0)
+            sscanf (plugin_id, "%x", (unsigned int *)&server);
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
             {
-                sscanf (plugin_id + 4, "%x", (unsigned int *)&server);
-                for (ptr_server = irc_servers; ptr_server;
-                     ptr_server = ptr_server->next_server)
+                if (ptr_server == server)
+                    break;
+            }
+            if (ptr_server)
+            {
+                type = weechat_infolist_string (infolist, "type");
+                if (type)
                 {
-                    if (ptr_server == server)
-                        break;
-                }
-                if (ptr_server)
-                {
-                    type = weechat_infolist_string (infolist, "type");
-                    if (type)
+                    if (strcmp (type, "file_send") == 0)
                     {
-                        if (strcmp (type, "file_send") == 0)
-                        {
-                            irc_server_sendf (server, 
-                                              "PRIVMSG %s :\01DCC SEND \"%s\" "
-                                              "%s %d %s\01\n",
-                                              weechat_infolist_string (infolist, "nick"),
-                                              weechat_infolist_string (infolist, "filename"),
-                                              weechat_infolist_string (infolist, "address"),
-                                              weechat_infolist_integer (infolist, "port"),
-                                              weechat_infolist_string (infolist, "size"));
-                        }
-                        else if (strcmp (type, "chat_send") == 0)
-                        {
-                            irc_server_sendf (server, 
-                                              "PRIVMSG %s :\01DCC CHAT chat %s %d\01",
-                                              weechat_infolist_string (infolist, "nick"),
-                                              weechat_infolist_string (infolist, "address"),
-                                              weechat_infolist_integer (infolist, "port"));
-                        }
+                        filename = weechat_infolist_string (infolist, "filename");
+                        spaces_in_name = (strchr (filename, ' ') != NULL);
+                        irc_server_sendf (server, 
+                                          "PRIVMSG %s :\01DCC SEND %s%s%s "
+                                          "%s %d %s\01",
+                                          weechat_infolist_string (infolist, "remote_nick"),
+                                          (spaces_in_name) ? "\"" : "",
+                                          filename,
+                                          (spaces_in_name) ? "\"" : "",
+                                          weechat_infolist_string (infolist, "address"),
+                                          weechat_infolist_integer (infolist, "port"),
+                                          weechat_infolist_string (infolist, "size"));
+                    }
+                    else if (strcmp (type, "chat_send") == 0)
+                    {
+                        irc_server_sendf (server, 
+                                          "PRIVMSG %s :\01DCC CHAT chat %s %d\01",
+                                          weechat_infolist_string (infolist, "remote_nick"),
+                                          weechat_infolist_string (infolist, "address"),
+                                          weechat_infolist_integer (infolist, "port"));
                     }
                 }
             }

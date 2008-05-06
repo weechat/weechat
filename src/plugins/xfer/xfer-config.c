@@ -32,6 +32,7 @@ struct t_config_file *xfer_config_file = NULL;
 /* xfer config, look section */
 
 struct t_config_option *xfer_config_look_auto_open_buffer;
+struct t_config_option *xfer_config_look_progress_bar_size;
 
 /* xfer config, color section */
 
@@ -104,6 +105,12 @@ xfer_config_init ()
         N_("auto open xfer buffer and switch to it when a new xfer is added "
            "to list"),
         NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_look_progress_bar_size = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "progress_bar_size", "integer",
+        N_("size of progress bar, in chars (if 0, progress bar is disabled)"),
+        NULL, 0, XFER_CONFIG_PROGRESS_BAR_MAX_SIZE, "20",
+        NULL, NULL, NULL, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (xfer_config_file, "color",
                                               0, 0,

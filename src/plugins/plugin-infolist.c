@@ -111,7 +111,8 @@ plugin_infolist_new_var_integer (struct t_plugin_infolist_item *item,
         new_var->name = strdup (name);
         new_var->type = PLUGIN_INFOLIST_INTEGER;
         new_var->value = malloc (sizeof (int));
-        *((int *)new_var->value) = value;
+        if (new_var->value)
+            *((int *)new_var->value) = value;
         
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;
@@ -208,7 +209,8 @@ plugin_infolist_new_var_time (struct t_plugin_infolist_item *item,
         new_var->name = strdup (name);
         new_var->type = PLUGIN_INFOLIST_TIME;
         new_var->value = malloc (sizeof (time_t));
-        *((time_t *)new_var->value) = time;
+        if (new_var->value)
+            *((time_t *)new_var->value) = time;
         
         new_var->prev_var = item->last_var;
         new_var->next_var = NULL;

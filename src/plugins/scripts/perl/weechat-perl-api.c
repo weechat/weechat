@@ -2751,6 +2751,34 @@ static XS (XS_weechat_buffer_search)
 }
 
 /*
+ * weechat::buffer_clear: clear a buffer
+ */
+
+static XS (XS_weechat_buffer_clear)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_clear");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_clear");
+        PERL_RETURN_ERROR;
+    }
+    
+    weechat_buffer_clear (script_str2ptr (SvPV (ST (0), PL_na))); /* buffer */
+    
+    PERL_RETURN_OK;
+}
+
+/*
  * weechat::buffer_close: close a buffer
  */
 
@@ -3867,6 +3895,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::unhook_all", XS_weechat_unhook_all, "weechat");
     newXS ("weechat::buffer_new", XS_weechat_buffer_new, "weechat");
     newXS ("weechat::buffer_search", XS_weechat_buffer_search, "weechat");
+    newXS ("weechat::buffer_clear", XS_weechat_buffer_clear, "weechat");
     newXS ("weechat::buffer_close", XS_weechat_buffer_close, "weechat");
     newXS ("weechat::buffer_get_string", XS_weechat_buffer_get_string, "weechat");
     newXS ("weechat::buffer_get_pointer", XS_weechat_buffer_get_pointer, "weechat");

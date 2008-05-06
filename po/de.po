@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-04 17:30+0200\n"
+"POT-Creation-Date: 2008-05-06 16:47+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2231,7 +2231,8 @@ msgstr ""
 "Nachricht: Abwesenheitsnachricht (bzw. keine, um den Abwesenheitszustand zu "
 "deaktivieren)"
 
-msgid "bans nicks or hosts"
+#, fuzzy
+msgid "ban nicks or hosts"
 msgstr "Nicknames oder Hosts sperren/verbannen"
 
 msgid "[channel] [nickname [nickname ...]]"
@@ -2294,14 +2295,16 @@ msgstr ""
 "     Channel: zu verlassender Channel\n"
 "Abschiedsnachricht: Abschiedsnachricht (die den anderen Usern angezeigt wird)"
 
-msgid "starts DCC (file or chat) or close chat"
+#, fuzzy
+msgid "start DCC (file or chat)"
 msgstr "DCC (Filetransfer oder Chat) starten oder Chat beenden"
 
 msgid "action [nickname [file]]"
 msgstr "Aktion [Nickname [Datei]]"
 
+#, fuzzy
 msgid ""
-"  action: 'send' (file) or 'chat' or 'close' (chat)\n"
+"  action: 'send' (file) or 'chat'\n"
 "nickname: nickname to send file or chat\n"
 "    file: filename (on local host)"
 msgstr ""
@@ -2309,16 +2312,19 @@ msgstr ""
 "Nickname: Empfänger der Datei bzw. Chatpartner\n"
 "    Datei: zu versendende (lokal vorliegende) Datei"
 
-msgid "removes half channel operator status from nickname(s)"
+#, fuzzy
+msgid "remove half channel operator status from nickname(s)"
 msgstr "Halb-Operatorstatus aberkennen"
 
 msgid "[nickname [nickname]]"
 msgstr "Nickname [Nickname]"
 
-msgid "removes channel operator status from nickname(s)"
+#, fuzzy
+msgid "remove channel operator status from nickname(s)"
 msgstr "Operatorstatus aberkennen"
 
-msgid "removes voice from nickname(s)"
+#, fuzzy
+msgid "remove voice from nickname(s)"
 msgstr "Voice wegnehmen"
 
 msgid "shutdown the server"
@@ -2337,7 +2343,8 @@ msgstr ""
 "      -all: Trenne von allen Servern\n"
 "servername: Servername, von dem getrennt werden soll"
 
-msgid "gives half channel operator status to nickname(s)"
+#, fuzzy
+msgid "give half channel operator status to nickname(s)"
 msgstr "Halb-Operatorstatus verleihen"
 
 msgid "get information describing the server"
@@ -2567,7 +2574,8 @@ msgstr ""
 "Nickname: Empfänger der Nachricht\n"
 "    Text: zu sendender Text"
 
-msgid "gives channel operator status to nickname(s)"
+#, fuzzy
+msgid "give channel operator status to nickname(s)"
 msgstr "Channeloperatorstatus verleihen"
 
 msgid "nickname [nickname]"
@@ -2819,7 +2827,8 @@ msgstr ""
 msgid "find the route to specific server"
 msgstr "Route zum angegebenen Server ermitteln"
 
-msgid "unbans nicks or hosts"
+#, fuzzy
+msgid "unban nicks or hosts"
 msgstr "Bann aufheben"
 
 msgid "[channel] nickname [nickname ...]"
@@ -2838,7 +2847,8 @@ msgstr "liste von Nickname-Informationen ermitteln"
 msgid "list of users logged into the server"
 msgstr "auf dem Server eingeloggte User auflisten"
 
-msgid "gives the version info of nick or server (current or specified)"
+#, fuzzy
+msgid "give the version info of nick or server (current or specified)"
 msgstr "Versionsinformationen von Nickname oder Server ermitteln"
 
 msgid "[server | nickname]"
@@ -2851,7 +2861,8 @@ msgstr ""
 "  Server: Servername\n"
 "Nickname: Nickname"
 
-msgid "gives voice to nickname(s)"
+#, fuzzy
+msgid "give voice to nickname(s)"
 msgstr "Voice vergeben"
 
 msgid ""
@@ -4198,8 +4209,33 @@ msgid "aborted"
 msgstr "abgebr."
 
 #, fuzzy, c-format
+msgid "%s%s: file %s %s %s: %s"
+msgstr "DCC: Datei %s%s%s"
+
+#, fuzzy
+msgid "sent to"
+msgstr " gesendet an "
+
+#, fuzzy
+msgid "received from"
+msgstr " empfangen von "
+
+msgid "OK"
+msgstr "OK"
+
+msgid "FAILED"
+msgstr "FEHLGESCHLAGEN"
+
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgstr "DCC Chat mit %s%s %s(%s%d.%d.%d.%d%s) geschlossen \n"
+
+#, fuzzy, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s nicht genug Speicher für neuen DCC\n"
+
+msgid "xfer chat"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
@@ -4228,42 +4264,12 @@ msgstr ""
 "fortgesetzt\n"
 
 #, fuzzy, c-format
-msgid "%s: file %s %s %s: %s"
-msgstr "DCC: Datei %s%s%s"
-
-#, fuzzy
-msgid "sent to"
-msgstr " gesendet an "
-
-#, fuzzy
-msgid "received from"
-msgstr " empfangen von "
-
-msgid "OK"
-msgstr "OK"
-
-msgid "FAILED"
-msgstr "FEHLGESCHLAGEN"
-
-#, fuzzy, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
-msgstr "DCC Chat mit %s%s %s(%s%d.%d.%d.%d%s) geschlossen \n"
-
-#, fuzzy, c-format
 msgid "%s%s: missing arguments"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown xfer type \"%s\""
 msgstr "%s unbekannte Tasten-Funktion \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: filename missing for type \"%s\""
-msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: protocol missing for type \"%s\""
-msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown xfer protocol \"%s\""
@@ -4298,9 +4304,45 @@ msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "Aktiver DCC wird abgebrochen: \"%s\" von %s\n"
 
+msgid "bytes"
+msgstr "Bytes"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "ETA"
+msgstr "ETA"
+
+#, fuzzy
+msgid "Xfer list"
+msgstr "Hotlist leeren"
+
 #, fuzzy, c-format
-msgid "%s: aborting active xfer: \"%s\" from %s"
-msgstr "Aktiver DCC wird abgebrochen: \"%s\" von %s\n"
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgstr "%s Fehler beim Senden von Daten an \"%s\" via DCC CHAT\n"
+
+#, fuzzy, c-format
+msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+msgstr "DCC Chat mit %s%s %s(%s%d.%d.%d.%d%s)%s aufgebaut\n"
+
+msgid "xfer control"
+msgstr ""
+
+#, fuzzy
+msgid "Open buffer with xfer list"
+msgstr "Offene Puffer:\n"
+
+msgid "auto open xfer buffer and switch to it when a new xfer is added to list"
+msgstr ""
+
+msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
+msgstr ""
 
 #, fuzzy
 msgid "text color"
@@ -4406,10 +4448,6 @@ msgid "%s%s: unable to create pipe"
 msgstr "%s DCC: kann keine Pipe erstellen\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to fork"
-msgstr "%s DCC: kann nicht forken\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to read local file"
 msgstr "%s DCC: kann lokale Datei nicht lesen\n"
 
@@ -4434,8 +4472,32 @@ msgid "%s%s: unable to write local file"
 msgstr "%s DCC: kann lokalen Datei nicht schreiben\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error sending data to \"%s\" via xfer chat"
-msgstr "%s Fehler beim Senden von Daten an \"%s\" via DCC CHAT\n"
+msgid "%s%s: unable to fork"
+msgstr "%s DCC: kann nicht forken\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create socket for sending file"
+msgstr "%s DCC: kann keinen Socket für den Dateiversand erstellen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to set option \"nonblock\" for socket"
+msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: timeout for \"%s\" with %s"
+msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid "%s%s: filename missing for type \"%s\""
+#~ msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: protocol missing for type \"%s\""
+#~ msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s: aborting active xfer: \"%s\" from %s"
+#~ msgstr "Aktiver DCC wird abgebrochen: \"%s\" von %s\n"
 
 #, fuzzy
 #~ msgid "text color for status info"
@@ -4454,9 +4516,6 @@ msgstr "%s Fehler beim Senden von Daten an \"%s\" via DCC CHAT\n"
 #~ msgstr ""
 #~ "%s kann keinen DCC Chat mit privatem Puffer assoziieren (ist er bereits "
 #~ "ein DCC CHAT?)\n"
-
-#~ msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
-#~ msgstr "DCC Chat mit %s%s %s(%s%d.%d.%d.%d%s)%s aufgebaut\n"
 
 #~ msgid "DCC: file %s%s%s resumed at position %u\n"
 #~ msgstr "DCC: Datei %s%s%s wird an Position %u fortgesetzt\n"
@@ -4482,12 +4541,6 @@ msgstr "%s Fehler beim Senden von Daten an \"%s\" via DCC CHAT\n"
 
 #~ msgid "%s DCC: timeout\n"
 #~ msgstr "%s DCC: Timeout\n"
-
-#~ msgid "%s DCC: unable to create socket for sending file\n"
-#~ msgstr "%s DCC: kann keinen Socket für den Dateiversand erstellen\n"
-
-#~ msgid "%s DCC: unable to set 'nonblock' option for socket\n"
-#~ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 
 #~ msgid "Internal key functions:\n"
 #~ msgstr "Interne Tastenfunktionen:\n"
@@ -4594,9 +4647,6 @@ msgstr "%s Fehler beim Senden von Daten an \"%s\" via DCC CHAT\n"
 #, fuzzy
 #~ msgid "set unread marker on all buffers"
 #~ msgstr "Fehlerhafte Pufferlänge"
-
-#~ msgid "clear hotlist"
-#~ msgstr "Hotlist leeren"
 
 #~ msgid "clear infobar"
 #~ msgstr "Infobar leeren"
@@ -5178,10 +5228,6 @@ msgstr "%s Fehler beim Senden von Daten an \"%s\" via DCC CHAT\n"
 
 #~ msgid "clear window(s)"
 #~ msgstr "Fenster leeren"
-
-#, fuzzy
-#~ msgid "Open buffers:"
-#~ msgstr "Offene Puffer:\n"
 
 #, fuzzy
 #~ msgid "%sError: buffer number \"%s\" not found for \"%s\" command"
@@ -5819,21 +5865,6 @@ msgstr "%s Fehler beim Senden von Daten an \"%s\" via DCC CHAT\n"
 #~ msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 #~ msgstr ""
 #~ "%s Server/Channel (%s/%s) für den Plugin-Exec-Befehl nicht gefunden\n"
-
-#~ msgid "bytes"
-#~ msgstr "Bytes"
-
-#~ msgid "KB"
-#~ msgstr "KB"
-
-#~ msgid "MB"
-#~ msgstr "MB"
-
-#~ msgid "GB"
-#~ msgstr "GB"
-
-#~ msgid "ETA"
-#~ msgstr "ETA"
 
 #~ msgid "  [A] Accept"
 #~ msgstr "  [A] annehmen"

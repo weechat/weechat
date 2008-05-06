@@ -3291,6 +3291,42 @@ weechat_lua_api_buffer_search (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_buffer_clear: clear a buffer
+ */
+
+static int
+weechat_lua_api_buffer_clear (lua_State *L)
+{
+    const char *buffer;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_clear");
+        LUA_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_clear");
+        LUA_RETURN_ERROR;
+    }
+    
+    buffer = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_buffer_clear (script_str2ptr ((char *)buffer));
+    
+    LUA_RETURN_OK;
+}
+
+/*
  * weechat_lua_api_buffer_close: close a buffer
  */
 
@@ -4794,6 +4830,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "unhook_all", &weechat_lua_api_unhook_all },
     { "buffer_new", &weechat_lua_api_buffer_new },
     { "buffer_search", &weechat_lua_api_buffer_search },
+    { "buffer_clear", &weechat_lua_api_buffer_clear },
     { "buffer_close", &weechat_lua_api_buffer_close },
     { "buffer_get_string", &weechat_lua_api_buffer_get_string },
     { "buffer_get_pointer", &weechat_lua_api_buffer_get_pointer },

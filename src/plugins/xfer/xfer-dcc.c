@@ -31,7 +31,6 @@
 
 #include "../weechat-plugin.h"
 #include "xfer.h"
-#include "xfer-dcc.h"
 #include "xfer-network.h"
 
 

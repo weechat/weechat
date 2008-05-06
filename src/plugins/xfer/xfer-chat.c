@@ -74,37 +74,25 @@ xfer_chat_sendf (struct t_xfer *xfer, char *format, ...)
     {
         weechat_printf (NULL,
                         _("%s%s: error sending data to \"%s\" via xfer chat"),
-                        weechat_prefix ("error"), "xfer", xfer->nick);
+                        weechat_prefix ("error"), "xfer", xfer->remote_nick);
         xfer_close (xfer, XFER_STATUS_FAILED);
     }
 }
 
 /*
- * xfer_chat_recv: receive data from xfer chat remote host
+ * xfer_chat_recv_cb: receive data from xfer chat remote host
  */
 
-void
-xfer_chat_recv (struct t_xfer *xfer)
+int
+xfer_chat_recv_cb (void *arg_xfer)
 {
-    fd_set read_fd;
-    static struct timeval timeout;
+    struct t_xfer *xfer;
     static char buffer[4096 + 2];
     char *buf2, *pos, *ptr_buf, *next_ptr_buf;
     int num_read;
     
-    FD_ZERO (&read_fd);
-    FD_SET (xfer->sock, &read_fd);
-    timeout.tv_sec = 0;
-    timeout.tv_usec = 0;
+    xfer = (struct t_xfer *)arg_xfer;
     
-    /* something to read on socket? */
-    if (select (FD_SETSIZE, &read_fd, NULL, NULL, &timeout) <= 0)
-        return;
-    
-    if (!FD_ISSET (xfer->sock, &read_fd))
-        return;
-    
-    /* there's something to read on socket! */
     num_read = recv (xfer->sock, buffer, sizeof (buffer) - 2, 0);
     if (num_read > 0)
     {
@@ -144,7 +132,7 @@ xfer_chat_recv (struct t_xfer *xfer)
             
             if (ptr_buf)
             {
-                weechat_printf (xfer->buffer, "%s\t%s", xfer->nick, ptr_buf);
+                weechat_printf (xfer->buffer, "%s\t%s", xfer->remote_nick, ptr_buf);
             }
             
             ptr_buf = next_ptr_buf;
@@ -157,5 +145,95 @@ xfer_chat_recv (struct t_xfer *xfer)
     {
         xfer_close (xfer, XFER_STATUS_ABORTED);
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * xfer_chat_buffer_input_cb: callback called when user send data to xfer chat
+ *                            buffer
+ */
+
+int
+xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
+                           char *input_data)
+{
+    struct t_xfer *xfer;
+    
+    xfer = (struct t_xfer *)data;
+    
+    if (!XFER_HAS_ENDED(xfer->status))
+    {
+        xfer_chat_sendf (xfer, "%s\n", input_data);
+        if (!XFER_HAS_ENDED(xfer->status))
+        {
+            weechat_printf (buffer,
+                            "%s\t%s",
+                            xfer->local_nick,
+                            input_data);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * xfer_chat_close_buffer_cb: callback called when a buffer with direct chat
+ *                            is closed
+ */
+
+int
+xfer_chat_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
+{
+    struct t_xfer *xfer;
+    
+    /* make C compiler happy */
+    (void) buffer;
+    
+    xfer = (struct t_xfer *)data;
+    
+    if (!XFER_HAS_ENDED(xfer->status))
+    {
+        xfer_close (xfer, XFER_STATUS_ABORTED);
+        xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+    }
+    
+    xfer->buffer = NULL;
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * xfer_chat_open_buffer: create channel for DCC chat
+ */
+
+void
+xfer_chat_open_buffer (struct t_xfer *xfer)
+{
+    char *name;
+    int length;
+
+    length = strlen (xfer->plugin_name) + 1 + strlen (xfer->remote_nick) + 1;
+    name = malloc (length);
+    if (name)
+    {
+        snprintf (name, length, "%s_%s", xfer->plugin_name, xfer->remote_nick);
+        xfer->buffer = weechat_buffer_new ("xfer", name,
+                                           &xfer_chat_buffer_input_cb, xfer,
+                                           &xfer_chat_buffer_close_cb, xfer);
+        if (xfer->buffer)
+        {
+            weechat_buffer_set (xfer->buffer, "title", _("xfer chat"));
+            weechat_printf (xfer->buffer,
+                            _("Connected to %s (%d.%d.%d.%d) via "
+                              "xfer chat"),
+                            xfer->remote_nick,
+                            xfer->address >> 24,
+                            (xfer->address >> 16) & 0xff,
+                            (xfer->address >> 8) & 0xff,
+                            xfer->address & 0xff);
+        }
+        free (name);
     }
 }

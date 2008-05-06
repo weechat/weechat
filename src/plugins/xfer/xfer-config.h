@@ -22,9 +22,12 @@
 
 #define XFER_CONFIG_NAME "xfer"
 
+#define XFER_CONFIG_PROGRESS_BAR_MAX_SIZE 256
+
 extern struct t_config_file *xfer_config;
 
 extern struct t_config_option *xfer_config_look_auto_open_buffer;
+extern struct t_config_option *xfer_config_look_progress_bar_size;
 
 extern struct t_config_option *xfer_config_color_text;
 extern struct t_config_option *xfer_config_color_text_bg;

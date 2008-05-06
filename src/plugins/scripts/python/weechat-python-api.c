@@ -2919,6 +2919,37 @@ weechat_python_api_buffer_search (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_buffer_clear: clear a buffer
+ */
+
+static PyObject *
+weechat_python_api_buffer_clear (PyObject *self, PyObject *args)
+{
+    char *buffer;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_clear");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    buffer = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &buffer))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_clear");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_buffer_clear (script_str2ptr (buffer));
+    
+    PYTHON_RETURN_OK;
+}
+
+/*
  * weechat_python_api_buffer_close: close a buffer
  */
 
@@ -4110,6 +4141,7 @@ PyMethodDef weechat_python_funcs[] =
     { "unhook_all", &weechat_python_api_unhook_all, METH_VARARGS, "" },
     { "buffer_new", &weechat_python_api_buffer_new, METH_VARARGS, "" },
     { "buffer_search", &weechat_python_api_buffer_search, METH_VARARGS, "" },
+    { "buffer_clear", &weechat_python_api_buffer_clear, METH_VARARGS, "" },
     { "buffer_close", &weechat_python_api_buffer_close, METH_VARARGS, "" },
     { "buffer_get_string", &weechat_python_api_buffer_get_string, METH_VARARGS, "" },
     { "buffer_get_pointer", &weechat_python_api_buffer_get_pointer, METH_VARARGS, "" },

@@ -20,11 +20,12 @@
 #ifndef __WEECHAT_XFER_NETWORK_H
 #define __WEECHAT_XFER_NETWORK_H 1
 
-extern int xfer_network_connect (struct t_xfer *xfer);
 extern int xfer_network_create_pipe (struct t_xfer *xfer);
 extern void xfer_network_write_pipe (struct t_xfer *xfer, int status,
                                      int error);
 extern void xfer_network_connect_init (struct t_xfer *xfer);
 extern void xfer_network_child_kill (struct t_xfer *xfer);
+extern int xfer_network_connect (struct t_xfer *xfer);
+extern void xfer_network_accept (struct t_xfer *xfer);
 
 #endif /* xfer-network.h */

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-04 17:30+0200\n"
+"POT-Creation-Date: 2008-05-06 16:47+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2210,7 +2210,8 @@ msgstr ""
 "mensaje: mensaje para el estado ausente (si no se da ningÃºn mensaje, se "
 "elimina el estado ausente)"
 
-msgid "bans nicks or hosts"
+#, fuzzy
+msgid "ban nicks or hosts"
 msgstr "banea usuarios o mÃ¡quinas"
 
 msgid "[channel] [nickname [nickname ...]]"
@@ -2276,14 +2277,16 @@ msgstr ""
 "            canal: nombre de canal para el ciclo\n"
 "mensaje de salida: mensaje de partida (mostrado al resto de usuarios)"
 
-msgid "starts DCC (file or chat) or close chat"
+#, fuzzy
+msgid "start DCC (file or chat)"
 msgstr "empieza DCC (archivo o charla) o cierra charla"
 
 msgid "action [nickname [file]]"
 msgstr "acciÃ³n [usuario [fichero]]"
 
+#, fuzzy
 msgid ""
-"  action: 'send' (file) or 'chat' or 'close' (chat)\n"
+"  action: 'send' (file) or 'chat'\n"
 "nickname: nickname to send file or chat\n"
 "    file: filename (on local host)"
 msgstr ""
@@ -2292,16 +2295,19 @@ msgstr ""
 "usuario: nombre de usuario a quien enviar el archivo o la charla\n"
 "fichero: nombre del fichero (en la mÃ¡quina local)"
 
-msgid "removes half channel operator status from nickname(s)"
+#, fuzzy
+msgid "remove half channel operator status from nickname(s)"
 msgstr "elimina el estado de media operador de canal a/a los usuario(s)"
 
 msgid "[nickname [nickname]]"
 msgstr "[usuario [usuario]]"
 
-msgid "removes channel operator status from nickname(s)"
+#, fuzzy
+msgid "remove channel operator status from nickname(s)"
 msgstr "elimina el estado de operador de canal a/a los usuario(s)"
 
-msgid "removes voice from nickname(s)"
+#, fuzzy
+msgid "remove voice from nickname(s)"
 msgstr "elimina la voz a/a los usuario(s)"
 
 msgid "shutdown the server"
@@ -2321,7 +2327,8 @@ msgid ""
 "servername: server name to disconnect"
 msgstr "nombre_del_servidor: nombre del servidor al que conectarse"
 
-msgid "gives half channel operator status to nickname(s)"
+#, fuzzy
+msgid "give half channel operator status to nickname(s)"
 msgstr "dar el estado de operador de medio canal a/a los usuario(s)"
 
 msgid "get information describing the server"
@@ -2556,7 +2563,8 @@ msgstr ""
 "usuario: usuario destinatario del aviso\n"
 "  texto: texto a enviar"
 
-msgid "gives channel operator status to nickname(s)"
+#, fuzzy
+msgid "give channel operator status to nickname(s)"
 msgstr "dar el estado de operador de canal a/a los usuario(s)"
 
 msgid "nickname [nickname]"
@@ -2811,7 +2819,8 @@ msgstr ""
 msgid "find the route to specific server"
 msgstr "encontrar la ruta hacia el servidor especificado"
 
-msgid "unbans nicks or hosts"
+#, fuzzy
+msgid "unban nicks or hosts"
 msgstr "desbanea a usuarios o mÃ¡quinas"
 
 msgid "[channel] nickname [nickname ...]"
@@ -2830,7 +2839,8 @@ msgstr "devuelve una lista de informaciÃ³n sobre usuarios"
 msgid "list of users logged into the server"
 msgstr "lista de usuarios conectados al servidor"
 
-msgid "gives the version info of nick or server (current or specified)"
+#, fuzzy
+msgid "give the version info of nick or server (current or specified)"
 msgstr ""
 "da la informaciÃ³n de versiÃ³n del usuario o servidor (actual o especificado)"
 
@@ -2844,7 +2854,8 @@ msgstr ""
 "servidor: nombre de servidor\n"
 " usuario: usuario"
 
-msgid "gives voice to nickname(s)"
+#, fuzzy
+msgid "give voice to nickname(s)"
 msgstr "da voz a/a los usuario(s)"
 
 msgid ""
@@ -4202,8 +4213,33 @@ msgid "aborted"
 msgstr "Abortado"
 
 #, fuzzy, c-format
+msgid "%s%s: file %s %s %s: %s"
+msgstr "DCC: fichero %s%s%s"
+
+#, fuzzy
+msgid "sent to"
+msgstr " enviado a "
+
+#, fuzzy
+msgid "received from"
+msgstr " recibido de "
+
+msgid "OK"
+msgstr "OK"
+
+msgid "FAILED"
+msgstr "FALLÃ"
+
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgstr "Charla DCC cerrada con %s%s %s(%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s no hay memoria suficiente para un nuevo DCC\n"
+
+msgid "xfer chat"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
@@ -4233,42 +4269,12 @@ msgstr ""
 "la posiciÃ³n %u\n"
 
 #, fuzzy, c-format
-msgid "%s: file %s %s %s: %s"
-msgstr "DCC: fichero %s%s%s"
-
-#, fuzzy
-msgid "sent to"
-msgstr " enviado a "
-
-#, fuzzy
-msgid "received from"
-msgstr " recibido de "
-
-msgid "OK"
-msgstr "OK"
-
-msgid "FAILED"
-msgstr "FALLÃ"
-
-#, fuzzy, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
-msgstr "Charla DCC cerrada con %s%s %s(%s%d.%d.%d.%d%s)\n"
-
-#, fuzzy, c-format
 msgid "%s%s: missing arguments"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown xfer type \"%s\""
 msgstr "%s opciÃ³n desconocida para el comando \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: filename missing for type \"%s\""
-msgstr "%s %s, lÃ­nea %d: opciÃ³n \"%s\" invÃ¡lida\n"
-
-#, fuzzy, c-format
-msgid "%s%s: protocol missing for type \"%s\""
-msgstr "%s %s, lÃ­nea %d: opciÃ³n \"%s\" invÃ¡lida\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown xfer protocol \"%s\""
@@ -4304,9 +4310,45 @@ msgstr ""
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "Abandonar el DCC activo: \"%s\" de %s\n"
 
+msgid "bytes"
+msgstr "bytes"
+
+msgid "KB"
+msgstr ""
+
+msgid "MB"
+msgstr ""
+
+msgid "GB"
+msgstr ""
+
+msgid "ETA"
+msgstr "Tiempo estimado de llegada"
+
+#, fuzzy
+msgid "Xfer list"
+msgstr "limpiar hotlist"
+
 #, fuzzy, c-format
-msgid "%s: aborting active xfer: \"%s\" from %s"
-msgstr "Abandonar el DCC activo: \"%s\" de %s\n"
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
+
+#, fuzzy, c-format
+msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+msgstr "Conectado a %s%s %s(%s%d.%d.%d.%d%s)%s a travÃ©s de una charla DCC\n"
+
+msgid "xfer control"
+msgstr ""
+
+#, fuzzy
+msgid "Open buffer with xfer list"
+msgstr "BÃºfers abiertos:\n"
+
+msgid "auto open xfer buffer and switch to it when a new xfer is added to list"
+msgstr ""
+
+msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
+msgstr ""
 
 #, fuzzy
 msgid "text color"
@@ -4415,10 +4457,6 @@ msgid "%s%s: unable to create pipe"
 msgstr "%s no es posible crear el servidor\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to fork"
-msgstr "%s no es posible crear el servidor\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to read local file"
 msgstr "%s no es posible crear el servidor\n"
 
@@ -4443,8 +4481,32 @@ msgid "%s%s: unable to write local file"
 msgstr "%s no es posible crear el servidor\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error sending data to \"%s\" via xfer chat"
-msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
+msgid "%s%s: unable to fork"
+msgstr "%s no es posible crear el servidor\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create socket for sending file"
+msgstr "%s no es posible crear el servidor\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to set option \"nonblock\" for socket"
+msgstr "%s no es posible crear el servidor\n"
+
+#, fuzzy, c-format
+msgid "%s%s: timeout for \"%s\" with %s"
+msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "%s%s: filename missing for type \"%s\""
+#~ msgstr "%s %s, lÃ­nea %d: opciÃ³n \"%s\" invÃ¡lida\n"
+
+#, fuzzy
+#~ msgid "%s%s: protocol missing for type \"%s\""
+#~ msgstr "%s %s, lÃ­nea %d: opciÃ³n \"%s\" invÃ¡lida\n"
+
+#, fuzzy
+#~ msgid "%s: aborting active xfer: \"%s\" from %s"
+#~ msgstr "Abandonar el DCC activo: \"%s\" de %s\n"
 
 #, fuzzy
 #~ msgid "text color for status info"
@@ -4463,10 +4525,6 @@ msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
 #~ msgstr ""
 #~ "%s no se puede asociar la conversaciÃ³n DCC con el bÃºfer privado (quizÃ¡ "
 #~ "el bÃºfer privado ya tiene DCC CHAT)\n"
-
-#~ msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
-#~ msgstr ""
-#~ "Conectado a %s%s %s(%s%d.%d.%d.%d%s)%s a travÃ©s de una charla DCC\n"
 
 #~ msgid "DCC: file %s%s%s resumed at position %u\n"
 #~ msgstr "DCC: archivo %s%s%s reanudado en la posiciÃ³n %u\n"
@@ -4489,14 +4547,6 @@ msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
 
 #~ msgid "%s cannot send DCC\n"
 #~ msgstr "%s no es posible enviar el DCC\n"
-
-#, fuzzy
-#~ msgid "%s DCC: unable to create socket for sending file\n"
-#~ msgstr "%s no es posible crear el servidor\n"
-
-#, fuzzy
-#~ msgid "%s DCC: unable to set 'nonblock' option for socket\n"
-#~ msgstr "%s no es posible crear el servidor\n"
 
 #~ msgid "Internal key functions:\n"
 #~ msgstr "Funciones de clave internas:\n"
@@ -4600,9 +4650,6 @@ msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
 #, fuzzy
 #~ msgid "set unread marker on all buffers"
 #~ msgstr "longitud invÃ¡lida para un bÃºfer"
-
-#~ msgid "clear hotlist"
-#~ msgstr "limpiar hotlist"
 
 #~ msgid "clear infobar"
 #~ msgstr "limpiar barra de informaciÃ³n"
@@ -5175,10 +5222,6 @@ msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
 
 #~ msgid "clear window(s)"
 #~ msgstr "limpiar la(s) ventana(s)"
-
-#, fuzzy
-#~ msgid "Open buffers:"
-#~ msgstr "BÃºfers abiertos:\n"
 
 #, fuzzy
 #~ msgid "%sError: buffer number \"%s\" not found for \"%s\" command"
@@ -5849,12 +5892,6 @@ msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
 #~ msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 #~ msgstr ""
 #~ "%s servidor/canal (%s/%s) no encontrado para el plugin de comando exec\n"
-
-#~ msgid "bytes"
-#~ msgstr "bytes"
-
-#~ msgid "ETA"
-#~ msgstr "Tiempo estimado de llegada"
 
 #~ msgid "  [A] Accept"
 #~ msgstr "  [A] Aceptar"

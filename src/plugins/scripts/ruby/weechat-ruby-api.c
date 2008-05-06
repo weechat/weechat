@@ -3349,6 +3349,41 @@ weechat_ruby_api_buffer_search (VALUE class, VALUE category, VALUE name)
 }
 
 /*
+ * weechat_ruby_api_buffer_clear: clear a buffer
+ */
+
+static VALUE
+weechat_ruby_api_buffer_clear (VALUE class, VALUE buffer)
+{
+    char *c_buffer;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_clear");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_buffer = NULL;
+    
+    if (NIL_P (buffer))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_clear");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (buffer, T_STRING);
+    
+    c_buffer = STR2CSTR (buffer);
+    
+    weechat_buffer_clear (script_str2ptr (c_buffer));
+    
+    RUBY_RETURN_OK;
+}
+
+/*
  * weechat_ruby_api_buffer_close: close a buffer
  */
 
@@ -4714,6 +4749,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "unhook_all", &weechat_ruby_api_unhook_all, 0);
     rb_define_module_function (ruby_mWeechat, "buffer_new", &weechat_ruby_api_buffer_new, 4);
     rb_define_module_function (ruby_mWeechat, "buffer_search", &weechat_ruby_api_buffer_search, 2);
+    rb_define_module_function (ruby_mWeechat, "buffer_clear", &weechat_ruby_api_buffer_clear, 1);
     rb_define_module_function (ruby_mWeechat, "buffer_close", &weechat_ruby_api_buffer_close, 1);
     rb_define_module_function (ruby_mWeechat, "buffer_get_string", &weechat_ruby_api_buffer_get_string, 2);
     rb_define_module_function (ruby_mWeechat, "buffer_get_pointer", &weechat_ruby_api_buffer_get_pointer, 2);

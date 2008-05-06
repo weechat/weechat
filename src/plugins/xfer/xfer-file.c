@@ -101,7 +101,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
     }
     
     xfer->local_filename = malloc (strlen (dir2) +
-                                   strlen (xfer->nick) +
+                                   strlen (xfer->remote_nick) +
                                    strlen (xfer->filename) + 4);
     if (!xfer->local_filename)
         return;
@@ -111,7 +111,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
     if (dir_separator
         && (xfer->local_filename[strlen (xfer->local_filename) - 1] != dir_separator[0]))
         strcat (xfer->local_filename, dir_separator);
-    strcat (xfer->local_filename, xfer->nick);
+    strcat (xfer->local_filename, xfer->remote_nick);
     strcat (xfer->local_filename, ".");
     strcat (xfer->local_filename, xfer->filename);
     

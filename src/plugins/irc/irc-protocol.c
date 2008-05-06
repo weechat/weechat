@@ -1331,6 +1331,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
 {
     char *nick, *host, *pos_args, *pos_end_01, *pos, *pos_message;
     char *dcc_args, *pos_file, *pos_addr, *pos_port, *pos_size, *pos_start_resume;  /* for DCC */
+    struct t_plugin_infolist *infolist;
+    struct t_plugin_infolist_item *item;
+    char plugin_id[128];
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     int highlight_displayed, look_infobar_delay_highlight;
@@ -1644,11 +1647,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                                 "privmsg");
                 return WEECHAT_RC_ERROR;
             }
-                
-            pos_end_01[0] = '\0';
-            dcc_args = strdup (pos_args + 9);
-            pos_end_01[0] = '\01';
-                
+            
+            dcc_args = weechat_strndup (pos_args + 9, pos_end_01 - pos_args - 9);
+            
             if (!dcc_args)
             {
                 weechat_printf (server->buffer,
@@ -1722,7 +1723,33 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                 pos--;
             }
             pos[1] = '\0';
-
+            
+            /* add DCC file via xfer plugin */
+            infolist = weechat_infolist_new ();
+            if (infolist)
+            {
+                item = weechat_infolist_new_item (infolist);
+                if (item)
+                {
+                    weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
+                    snprintf (plugin_id, sizeof (plugin_id),
+                              "%x", (unsigned int)server);
+                    weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
+                    weechat_infolist_new_var_string (item, "type", "file_recv");
+                    weechat_infolist_new_var_string (item, "protocol", "dcc");
+                    weechat_infolist_new_var_string (item, "remote_nick", nick);
+                    weechat_infolist_new_var_string (item, "local_nick", server->nick);
+                    weechat_infolist_new_var_string (item, "filename", pos_file);
+                    weechat_infolist_new_var_string (item, "size", pos_size);
+                    weechat_infolist_new_var_string (item, "address", pos_addr);
+                    weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
+                    weechat_hook_signal_send ("xfer_add",
+                                              WEECHAT_HOOK_SIGNAL_POINTER,
+                                              infolist);
+                }
+                weechat_infolist_free (infolist);
+            }
+            
             /* TODO: add DCC file */
             //irc_dcc_add (server, IRC_DCC_FILE_RECV,
             //             strtoul (pos_addr, NULL, 10),
@@ -1751,11 +1778,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                                 "privmsg");
                 return WEECHAT_RC_ERROR;
             }
-                
-            pos_end_01[0] = '\0';
-            dcc_args = strdup (pos_args + 11);
-            pos_end_01[0] = '\01';
-                
+            
+            dcc_args = weechat_strndup (pos_args + 11, pos_end_01 - pos_args - 11);
+            
             if (!dcc_args)
             {
                 weechat_printf (server->buffer,
@@ -1825,7 +1850,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
         }
             
         /* incoming DCC ACCEPT (resume accepted by sender) */
-        if (strncmp (pos, "\01DCC ACCEPT", 11) == 0)
+        if (strncmp (pos_args, "\01DCC ACCEPT", 11) == 0)
         {
             /* check if DCC ACCEPT is ok, i.e. with 0x01 at end */
             pos_end_01 = strchr (pos_args + 1, '\01');
@@ -1837,11 +1862,9 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                                 "privmsg");
                 return WEECHAT_RC_ERROR;
             }
-                
-            pos_end_01[0] = '\0';
-            dcc_args = strdup (pos_args + 11);
-            pos_end_01[0] = '\01';
-                
+            
+            dcc_args = weechat_strndup (pos_args + 11, pos_end_01 - pos_args - 11);
+            
             if (!dcc_args)
             {
                 weechat_printf (server->buffer,
@@ -1911,7 +1934,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
         }
             
         /* incoming DCC CHAT */
-        if (strncmp (pos, "\01DCC CHAT", 9) == 0)
+        if (strncmp (pos_args, "\01DCC CHAT", 9) == 0)
         {
             /* check if DCC CHAT is ok, i.e. with 0x01 at end */
             pos_end_01 = strchr (pos_args + 1, '\01');
@@ -1924,10 +1947,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                 return WEECHAT_RC_ERROR;
             }
                 
-            pos_end_01[0] = '\0';
-            dcc_args = strdup (pos_args + 9);
-            pos_end_01[0] = '\01';
-                
+            dcc_args = weechat_strndup (pos_args + 9, pos_end_01 - pos_args - 9);
+            
             if (!dcc_args)
             {
                 weechat_printf (server->buffer,
@@ -1944,7 +1965,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
             {
                 pos_file++;
             }
-                
+            
             /* DCC IP address */
             pos_addr = strchr (pos_file, ' ');
             if (!pos_addr)
@@ -1995,11 +2016,29 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                 return WEECHAT_RC_ERROR;
             }
                 
-            /* TODO: add DCC chat */
-            //irc_dcc_add (server, IRC_DCC_CHAT_RECV,
-            //             strtoul (pos_addr, NULL, 10),
-            //             atoi (pos_port), nick, -1, NULL, NULL, 0);
-                
+            /* add DCC chat via xfer plugin */
+            infolist = weechat_infolist_new ();
+            if (infolist)
+            {
+                item = weechat_infolist_new_item (infolist);
+                if (item)
+                {
+                    weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
+                    snprintf (plugin_id, sizeof (plugin_id),
+                              "%x", (unsigned int)server);
+                    weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
+                    weechat_infolist_new_var_string (item, "type", "chat_recv");
+                    weechat_infolist_new_var_string (item, "remote_nick", nick);
+                    weechat_infolist_new_var_string (item, "local_nick", server->nick);
+                    weechat_infolist_new_var_string (item, "address", pos_addr);
+                    weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
+                    weechat_hook_signal_send ("xfer_add",
+                                              WEECHAT_HOOK_SIGNAL_POINTER,
+                                              infolist);
+                }
+                weechat_infolist_free (infolist);
+            }
+            
             weechat_hook_signal_send ("irc_dcc",
                                       WEECHAT_HOOK_SIGNAL_STRING,
                                       argv_eol[0]);
@@ -2012,7 +2051,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
         /* private message received => display it */
         ptr_channel = irc_channel_search (server, nick);
         
-        if (strncmp (pos, "\01ACTION ", 8) == 0)
+        if (strncmp (pos_args, "\01ACTION ", 8) == 0)
         {
             if (!ptr_channel)
             {

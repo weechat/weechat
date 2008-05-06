@@ -106,10 +106,12 @@ enum t_xfer_error
 struct t_xfer
 {
     /* data received by xfer to initiate a transfer */
-    char *plugin_id;                   /* plugin identifier                 */
+    char *plugin_name;                 /* plugin name                       */
+    char *plugin_id;                   /* id used by plugin                 */
     enum t_xfer_type type;             /* xfer type (send/recv file)        */
     enum t_xfer_protocol protocol;     /* xfer protocol (for file transfer) */
-    char *nick;                        /* remote nick                       */
+    char *remote_nick;                 /* remote nick                       */
+    char *local_nick;                  /* local nick                        */
     char *filename;                    /* filename                          */
     unsigned long size;                /* file size                         */
     unsigned long address;             /* local or remote IP address        */
@@ -127,6 +129,7 @@ struct t_xfer
     int child_read;                    /* to read into child pipe           */
     int child_write;                   /* to write into child pipe          */
     struct t_hook *hook_fd;            /* hook for socket or child pipe     */
+    struct t_hook *hook_timer;         /* timeout for recever accept        */
     char *unterminated_message;        /* beginning of a message            */
     int file;                          /* local file (read or write)        */
     char *local_filename;              /* local filename (with path)        */
@@ -148,9 +151,12 @@ extern char *xfer_type_string[];
 extern char *xfer_protocol_string[];
 extern char *xfer_status_string[];
 extern struct t_xfer *xfer_list, *last_xfer;
+extern int xfer_count;
 extern int xfer_debug;
 
+extern struct t_xfer *xfer_search_by_number (int number);
 extern void xfer_close (struct t_xfer *xfer, enum t_xfer_status status);
-extern struct t_xfer *xfer_alloc ();
+extern void xfer_send_signal (struct t_xfer *xfer, char *signal);
+extern void xfer_free (struct t_xfer *xfer);
 
 #endif /* xfer.h */

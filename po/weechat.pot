@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-04 17:30+0200\n"
+"POT-Creation-Date: 2008-05-06 16:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1885,7 +1885,7 @@ msgid ""
 "message: message for away (if no message is given, away status is removed)"
 msgstr ""
 
-msgid "bans nicks or hosts"
+msgid "ban nicks or hosts"
 msgstr ""
 
 msgid "[channel] [nickname [nickname ...]]"
@@ -1937,28 +1937,28 @@ msgid ""
 "part_message: part message (displayed to other users)"
 msgstr ""
 
-msgid "starts DCC (file or chat) or close chat"
+msgid "start DCC (file or chat)"
 msgstr ""
 
 msgid "action [nickname [file]]"
 msgstr ""
 
 msgid ""
-"  action: 'send' (file) or 'chat' or 'close' (chat)\n"
+"  action: 'send' (file) or 'chat'\n"
 "nickname: nickname to send file or chat\n"
 "    file: filename (on local host)"
 msgstr ""
 
-msgid "removes half channel operator status from nickname(s)"
+msgid "remove half channel operator status from nickname(s)"
 msgstr ""
 
 msgid "[nickname [nickname]]"
 msgstr ""
 
-msgid "removes channel operator status from nickname(s)"
+msgid "remove channel operator status from nickname(s)"
 msgstr ""
 
-msgid "removes voice from nickname(s)"
+msgid "remove voice from nickname(s)"
 msgstr ""
 
 msgid "shutdown the server"
@@ -1975,7 +1975,7 @@ msgid ""
 "servername: server name to disconnect"
 msgstr ""
 
-msgid "gives half channel operator status to nickname(s)"
+msgid "give half channel operator status to nickname(s)"
 msgstr ""
 
 msgid "get information describing the server"
@@ -2159,7 +2159,7 @@ msgid ""
 "    text: text to send"
 msgstr ""
 
-msgid "gives channel operator status to nickname(s)"
+msgid "give channel operator status to nickname(s)"
 msgstr ""
 
 msgid "nickname [nickname]"
@@ -2366,7 +2366,7 @@ msgstr ""
 msgid "find the route to specific server"
 msgstr ""
 
-msgid "unbans nicks or hosts"
+msgid "unban nicks or hosts"
 msgstr ""
 
 msgid "[channel] nickname [nickname ...]"
@@ -2383,7 +2383,7 @@ msgstr ""
 msgid "list of users logged into the server"
 msgstr ""
 
-msgid "gives the version info of nick or server (current or specified)"
+msgid "give the version info of nick or server (current or specified)"
 msgstr ""
 
 msgid "[server | nickname]"
@@ -2394,7 +2394,7 @@ msgid ""
 "nickname: nickname"
 msgstr ""
 
-msgid "gives voice to nickname(s)"
+msgid "give voice to nickname(s)"
 msgstr ""
 
 msgid ""
@@ -3656,7 +3656,30 @@ msgid "aborted"
 msgstr ""
 
 #, c-format
+msgid "%s%s: file %s %s %s: %s"
+msgstr ""
+
+msgid "sent to"
+msgstr ""
+
+msgid "received from"
+msgstr ""
+
+msgid "OK"
+msgstr ""
+
+msgid "FAILED"
+msgstr ""
+
+#, c-format
+msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgstr ""
+
+#, c-format
 msgid "%s%s: not enough memory for new xfer"
+msgstr ""
+
+msgid "xfer chat"
 msgstr ""
 
 #, c-format
@@ -3681,39 +3704,11 @@ msgid "%s: file %s (local filename: %s) will be resumed at position %u"
 msgstr ""
 
 #, c-format
-msgid "%s: file %s %s %s: %s"
-msgstr ""
-
-msgid "sent to"
-msgstr ""
-
-msgid "received from"
-msgstr ""
-
-msgid "OK"
-msgstr ""
-
-msgid "FAILED"
-msgstr ""
-
-#, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
-msgstr ""
-
-#, c-format
 msgid "%s%s: missing arguments"
 msgstr ""
 
 #, c-format
 msgid "%s%s: unknown xfer type \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: filename missing for type \"%s\""
-msgstr ""
-
-#, c-format
-msgid "%s%s: protocol missing for type \"%s\""
 msgstr ""
 
 #, c-format
@@ -3748,8 +3743,42 @@ msgstr ""
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr ""
 
+msgid "bytes"
+msgstr ""
+
+msgid "KB"
+msgstr ""
+
+msgid "MB"
+msgstr ""
+
+msgid "GB"
+msgstr ""
+
+msgid "ETA"
+msgstr ""
+
+msgid "Xfer list"
+msgstr ""
+
 #, c-format
-msgid "%s: aborting active xfer: \"%s\" from %s"
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgstr ""
+
+#, c-format
+msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+msgstr ""
+
+msgid "xfer control"
+msgstr ""
+
+msgid "Open buffer with xfer list"
+msgstr ""
+
+msgid "auto open xfer buffer and switch to it when a new xfer is added to list"
+msgstr ""
+
+msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr ""
 
 msgid "text color"
@@ -3826,10 +3855,6 @@ msgid "%s%s: unable to create pipe"
 msgstr ""
 
 #, c-format
-msgid "%s%s: unable to fork"
-msgstr ""
-
-#, c-format
 msgid "%s%s: unable to read local file"
 msgstr ""
 
@@ -3854,5 +3879,17 @@ msgid "%s%s: unable to write local file"
 msgstr ""
 
 #, c-format
-msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgid "%s%s: unable to fork"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create socket for sending file"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to set option \"nonblock\" for socket"
+msgstr ""
+
+#, c-format
+msgid "%s%s: timeout for \"%s\" with %s"
 msgstr ""

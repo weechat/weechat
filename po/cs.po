@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-04 17:30+0200\n"
+"POT-Creation-Date: 2008-05-06 16:47+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2230,7 +2230,8 @@ msgstr ""
 "zpráva: zpráva pro nepřítomnost (pokud není zadána je status nepřítomnosti "
 "odebrán)"
 
-msgid "bans nicks or hosts"
+#, fuzzy
+msgid "ban nicks or hosts"
 msgstr "zakázat přezdívky nebo hosty"
 
 msgid "[channel] [nickname [nickname ...]]"
@@ -2298,14 +2299,16 @@ msgstr ""
 "       kanál: jméno kanálu pro cyklus\n"
 "zpráva_části: zpráva při opuštění (zobrazí se ostatním uživatelům)"
 
-msgid "starts DCC (file or chat) or close chat"
+#, fuzzy
+msgid "start DCC (file or chat)"
 msgstr "spustit DCC (soubor nebo rozhovor) nebo zavřít rozhovor"
 
 msgid "action [nickname [file]]"
 msgstr "akce [přezdívka [soubor]]"
 
+#, fuzzy
 msgid ""
-"  action: 'send' (file) or 'chat' or 'close' (chat)\n"
+"  action: 'send' (file) or 'chat'\n"
 "nickname: nickname to send file or chat\n"
 "    file: filename (on local host)"
 msgstr ""
@@ -2313,16 +2316,19 @@ msgstr ""
 "nickname: přezdívka, které poslat soubor nebo rozhovor\n"
 "  soubor: jméno souboru (na lokálním počítači)"
 
-msgid "removes half channel operator status from nickname(s)"
+#, fuzzy
+msgid "remove half channel operator status from nickname(s)"
 msgstr "odebrat status operátora polovičního kanálu z přezdívky (přezdívek)"
 
 msgid "[nickname [nickname]]"
 msgstr "[přezdívka [přezdívka]]"
 
-msgid "removes channel operator status from nickname(s)"
+#, fuzzy
+msgid "remove channel operator status from nickname(s)"
 msgstr "odebrat status operátora kanálu z přezdívky (přezdívek)"
 
-msgid "removes voice from nickname(s)"
+#, fuzzy
+msgid "remove voice from nickname(s)"
 msgstr "odebrat hlas z přezdívky (přezdívek)"
 
 msgid "shutdown the server"
@@ -2341,7 +2347,8 @@ msgstr ""
 "         -all: odpojit od všech serverů\n"
 "jméno_serveru: jméno serveru pro odpojení"
 
-msgid "gives half channel operator status to nickname(s)"
+#, fuzzy
+msgid "give half channel operator status to nickname(s)"
 msgstr "dát přezdívce (přezdívkám) status operátora polovičního kanálu"
 
 msgid "get information describing the server"
@@ -2572,7 +2579,8 @@ msgstr ""
 "přezdívka: uživatel, kterému poslat notifikaci\n"
 "     text: text, který poslat"
 
-msgid "gives channel operator status to nickname(s)"
+#, fuzzy
+msgid "give channel operator status to nickname(s)"
 msgstr "dát status operátora kanálu přezdívce (přezdívkám)"
 
 msgid "nickname [nickname]"
@@ -2844,7 +2852,8 @@ msgstr ""
 msgid "find the route to specific server"
 msgstr "najít cestu k určenému serveru"
 
-msgid "unbans nicks or hosts"
+#, fuzzy
+msgid "unban nicks or hosts"
 msgstr "zruší zakázání pro přezdívku nebo hosta"
 
 msgid "[channel] nickname [nickname ...]"
@@ -2863,7 +2872,8 @@ msgstr "vrátí seznam informací o přezdívce"
 msgid "list of users logged into the server"
 msgstr "seznam uživatelů přihlášených k serveru"
 
-msgid "gives the version info of nick or server (current or specified)"
+#, fuzzy
+msgid "give the version info of nick or server (current or specified)"
 msgstr "dát informace o verzi přezdívky nebo serveru (aktuální nebo určené)"
 
 msgid "[server | nickname]"
@@ -2876,7 +2886,8 @@ msgstr ""
 "   server: jméno serveru\n"
 "přezdívka: přezdívka"
 
-msgid "gives voice to nickname(s)"
+#, fuzzy
+msgid "give voice to nickname(s)"
 msgstr "dá hlas přezdívce (přezdívkám)"
 
 msgid ""
@@ -4214,8 +4225,33 @@ msgid "aborted"
 msgstr "Zrušeno"
 
 #, fuzzy, c-format
+msgid "%s%s: file %s %s %s: %s"
+msgstr "DCC: soubor %s%s%s"
+
+#, fuzzy
+msgid "sent to"
+msgstr " poslán "
+
+#, fuzzy
+msgid "received from"
+msgstr " obdržen od "
+
+msgid "OK"
+msgstr "OK"
+
+msgid "FAILED"
+msgstr "SELHALO"
+
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgstr "DCC rozhovor zavřen s %s%s %s(%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s nedostatek paměti pro nové DCC\n"
+
+msgid "xfer chat"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
@@ -4244,42 +4280,12 @@ msgstr ""
 "u\n"
 
 #, fuzzy, c-format
-msgid "%s: file %s %s %s: %s"
-msgstr "DCC: soubor %s%s%s"
-
-#, fuzzy
-msgid "sent to"
-msgstr " poslán "
-
-#, fuzzy
-msgid "received from"
-msgstr " obdržen od "
-
-msgid "OK"
-msgstr "OK"
-
-msgid "FAILED"
-msgstr "SELHALO"
-
-#, fuzzy, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
-msgstr "DCC rozhovor zavřen s %s%s %s(%s%d.%d.%d.%d%s)\n"
-
-#, fuzzy, c-format
 msgid "%s%s: missing arguments"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown xfer type \"%s\""
 msgstr "%s neznámá klávesová funkce \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: filename missing for type \"%s\""
-msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: protocol missing for type \"%s\""
-msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown xfer protocol \"%s\""
@@ -4313,9 +4319,45 @@ msgstr "%s nedostatek paměti pro infobar zprávu\n"
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "Ruším aktivní DCC: \"%s\" od %s\n"
 
+msgid "bytes"
+msgstr "bajtů"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "ETA"
+msgstr "ETA"
+
+#, fuzzy
+msgid "Xfer list"
+msgstr "vyčisti hotlist"
+
 #, fuzzy, c-format
-msgid "%s: aborting active xfer: \"%s\" from %s"
-msgstr "Ruším aktivní DCC: \"%s\" od %s\n"
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgstr "%s chyba posílání dat k \"%s\" přes DCC CHAT\n"
+
+#, fuzzy, c-format
+msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+msgstr "Připojeno na %s%s %s(%s%d.%d.%d.%d.%s)%s přes DCC rozhovor\n"
+
+msgid "xfer control"
+msgstr ""
+
+#, fuzzy
+msgid "Open buffer with xfer list"
+msgstr "Otevřené buffery:\n"
+
+msgid "auto open xfer buffer and switch to it when a new xfer is added to list"
+msgstr ""
+
+msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
+msgstr ""
 
 #, fuzzy
 msgid "text color"
@@ -4417,10 +4459,6 @@ msgid "%s%s: unable to create pipe"
 msgstr "%s DCC: nemohu vytvořit rouru\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to fork"
-msgstr "%s DCC: nemohu provést fork\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to read local file"
 msgstr "%s DCC: nemohu číst lokální soubor\n"
 
@@ -4445,8 +4483,32 @@ msgid "%s%s: unable to write local file"
 msgstr "%s DCC: nemohu zapisovat do lokálního souboru\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error sending data to \"%s\" via xfer chat"
-msgstr "%s chyba posílání dat k \"%s\" přes DCC CHAT\n"
+msgid "%s%s: unable to fork"
+msgstr "%s DCC: nemohu provést fork\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create socket for sending file"
+msgstr "%s DCC: nemohu vytvořit socket pro odesílání souboru\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to set option \"nonblock\" for socket"
+msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
+
+#, fuzzy, c-format
+msgid "%s%s: timeout for \"%s\" with %s"
+msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: filename missing for type \"%s\""
+#~ msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: protocol missing for type \"%s\""
+#~ msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s: aborting active xfer: \"%s\" from %s"
+#~ msgstr "Ruším aktivní DCC: \"%s\" od %s\n"
 
 #, fuzzy
 #~ msgid "text color for status info"
@@ -4465,9 +4527,6 @@ msgstr "%s chyba posílání dat k \"%s\" přes DCC CHAT\n"
 #~ msgstr ""
 #~ "%s nemohu přiřadit DCC rozhovor k soukromému bufferu (možná má "
 #~ "soukromýbuffer již DCC CHAT?)\n"
-
-#~ msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
-#~ msgstr "Připojeno na %s%s %s(%s%d.%d.%d.%d.%s)%s přes DCC rozhovor\n"
 
 #~ msgid "DCC: file %s%s%s resumed at position %u\n"
 #~ msgstr "DCC: soubor %s%s%s bude obnoven na pozici %u\n"
@@ -4493,12 +4552,6 @@ msgstr "%s chyba posílání dat k \"%s\" přes DCC CHAT\n"
 
 #~ msgid "%s DCC: timeout\n"
 #~ msgstr "%s DCC: překročení časového limitu\n"
-
-#~ msgid "%s DCC: unable to create socket for sending file\n"
-#~ msgstr "%s DCC: nemohu vytvořit socket pro odesílání souboru\n"
-
-#~ msgid "%s DCC: unable to set 'nonblock' option for socket\n"
-#~ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 
 #~ msgid "Internal key functions:\n"
 #~ msgstr "Vnitřní klávesové funkce:\n"
@@ -4603,9 +4656,6 @@ msgstr "%s chyba posílání dat k \"%s\" přes DCC CHAT\n"
 
 #~ msgid "set unread marker on all buffers"
 #~ msgstr "nastavit značku nečtení na všech bufferech"
-
-#~ msgid "clear hotlist"
-#~ msgstr "vyčisti hotlist"
 
 #~ msgid "clear infobar"
 #~ msgstr "vyčisti infobar"
@@ -5178,10 +5228,6 @@ msgstr "%s chyba posílání dat k \"%s\" přes DCC CHAT\n"
 
 #~ msgid "clear window(s)"
 #~ msgstr "vyčistí okno/okna"
-
-#, fuzzy
-#~ msgid "Open buffers:"
-#~ msgstr "Otevřené buffery:\n"
 
 #, fuzzy
 #~ msgid "%sError: buffer number \"%s\" not found for \"%s\" command"
@@ -5819,21 +5865,6 @@ msgstr "%s chyba posílání dat k \"%s\" přes DCC CHAT\n"
 
 #~ msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 #~ msgstr "%s server/kanál (%s/%s) nenaleyen pro exec příkaz pluginu\n"
-
-#~ msgid "bytes"
-#~ msgstr "bajtů"
-
-#~ msgid "KB"
-#~ msgstr "KB"
-
-#~ msgid "MB"
-#~ msgstr "MB"
-
-#~ msgid "GB"
-#~ msgstr "GB"
-
-#~ msgid "ETA"
-#~ msgstr "ETA"
 
 #~ msgid "  [A] Accept"
 #~ msgstr "  [A] Akceptovat"

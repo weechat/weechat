@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-04 17:30+0200\n"
+"POT-Creation-Date: 2008-05-06 16:47+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2231,7 +2231,8 @@ msgstr ""
 " üzenet: távolléti üzenet (ha nincs üzenet megadva, a távolléti státusz "
 "eltávolítása)"
 
-msgid "bans nicks or hosts"
+#, fuzzy
+msgid "ban nicks or hosts"
 msgstr "név vagy gép letiltása"
 
 msgid "[channel] [nickname [nickname ...]]"
@@ -2300,14 +2301,16 @@ msgstr ""
 "        szoba: a szoba ahonnan ki-be szeretnénk lépni\n"
 "kilépő_üzenet: kilépő üzenet (csak a többi felhasználó látja)"
 
-msgid "starts DCC (file or chat) or close chat"
+#, fuzzy
+msgid "start DCC (file or chat)"
 msgstr "DCC (fájl vagy beszélgetés) indítása vagy beszélgetés lezárása"
 
 msgid "action [nickname [file]]"
 msgstr "parancs [név [fájl]]"
 
+#, fuzzy
 msgid ""
-"  action: 'send' (file) or 'chat' or 'close' (chat)\n"
+"  action: 'send' (file) or 'chat'\n"
 "nickname: nickname to send file or chat\n"
 "    file: filename (on local host)"
 msgstr ""
@@ -2316,16 +2319,19 @@ msgstr ""
 "küldjük\n"
 "   fájl: fájlnév (a helyi gépen)"
 
-msgid "removes half channel operator status from nickname(s)"
+#, fuzzy
+msgid "remove half channel operator status from nickname(s)"
 msgstr "elveszi a féloperátori jogot a felhasználó(k)tól"
 
 msgid "[nickname [nickname]]"
 msgstr "[név [név]]"
 
-msgid "removes channel operator status from nickname(s)"
+#, fuzzy
+msgid "remove channel operator status from nickname(s)"
 msgstr "elveszi az operátori jogot a felhasználó(k)tól"
 
-msgid "removes voice from nickname(s)"
+#, fuzzy
+msgid "remove voice from nickname(s)"
 msgstr "elveszi a voice jogot a felhasználó(k)tól"
 
 msgid "shutdown the server"
@@ -2344,7 +2350,8 @@ msgstr ""
 "      -all: kapcsolat bontása minden szerverrel\n"
 "szervernév: belső szervernév amivel a kapcsolatot bontja"
 
-msgid "gives half channel operator status to nickname(s)"
+#, fuzzy
+msgid "give half channel operator status to nickname(s)"
 msgstr "féloperátori jog biztosítása a felhasználó(k)nak"
 
 msgid "get information describing the server"
@@ -2576,7 +2583,8 @@ msgstr ""
 "   név: felhasználó akinek az üzenetet küldjük\n"
 "szöveg: az üzenet szövege"
 
-msgid "gives channel operator status to nickname(s)"
+#, fuzzy
+msgid "give channel operator status to nickname(s)"
 msgstr "operátori jogok biztosítása felhasználó(k)nak"
 
 msgid "nickname [nickname]"
@@ -2848,7 +2856,8 @@ msgstr ""
 msgid "find the route to specific server"
 msgstr "útvonal keresése a megadott szerverhez"
 
-msgid "unbans nicks or hosts"
+#, fuzzy
+msgid "unban nicks or hosts"
 msgstr "gép vagy felhasználó tiltásának visszavonása"
 
 msgid "[channel] nickname [nickname ...]"
@@ -2867,7 +2876,8 @@ msgstr "információt ad a kívánt felhasználókról"
 msgid "list of users logged into the server"
 msgstr "a bejelentkezett felhasználók listázása a szerveren"
 
-msgid "gives the version info of nick or server (current or specified)"
+#, fuzzy
+msgid "give the version info of nick or server (current or specified)"
 msgstr ""
 "verzióinformáció kijelzése felhasználóról vagy szerverről (aktuális vagy "
 "megadott)"
@@ -2882,7 +2892,8 @@ msgstr ""
 "szerver: szerver neve\n"
 "    név: felhasználónév"
 
-msgid "gives voice to nickname(s)"
+#, fuzzy
+msgid "give voice to nickname(s)"
 msgstr "voice jog biztosítása a felhasználó(k)nak"
 
 msgid ""
@@ -4216,8 +4227,33 @@ msgid "aborted"
 msgstr "Megszakítva"
 
 #, fuzzy, c-format
+msgid "%s%s: file %s %s %s: %s"
+msgstr "DCC: fájl %s%s%s"
+
+#, fuzzy
+msgid "sent to"
+msgstr " fogadó fél: "
+
+#, fuzzy
+msgid "received from"
+msgstr " küldő fél: "
+
+msgid "OK"
+msgstr "Rendben"
+
+msgid "FAILED"
+msgstr "SIKERTELEN"
+
+#, fuzzy, c-format
+msgid "%s: chat closed with %s (%d.%d.%d.%d)"
+msgstr "DCC beszélgetés vége: %s%s %s(%s%d.%d.%d.%d%s)\n"
+
+#, fuzzy, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s nincs elegendő memória új DCC számára\n"
+
+msgid "xfer chat"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
@@ -4246,42 +4282,12 @@ msgstr ""
 "DCC: a %s%s%s fájl (helyi fájlnév: %s%s%s) a(z) %u pozíción fog visszatérni\n"
 
 #, fuzzy, c-format
-msgid "%s: file %s %s %s: %s"
-msgstr "DCC: fájl %s%s%s"
-
-#, fuzzy
-msgid "sent to"
-msgstr " fogadó fél: "
-
-#, fuzzy
-msgid "received from"
-msgstr " küldő fél: "
-
-msgid "OK"
-msgstr "Rendben"
-
-msgid "FAILED"
-msgstr "SIKERTELEN"
-
-#, fuzzy, c-format
-msgid "%s: chat closed with %s (%d.%d.%d.%d)"
-msgstr "DCC beszélgetés vége: %s%s %s(%s%d.%d.%d.%d%s)\n"
-
-#, fuzzy, c-format
 msgid "%s%s: missing arguments"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown xfer type \"%s\""
 msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: filename missing for type \"%s\""
-msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "%s%s: protocol missing for type \"%s\""
-msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown xfer protocol \"%s\""
@@ -4316,9 +4322,47 @@ msgstr "%s nincs elég memória az információs pult üzenethez\n"
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "\"%s\" aktív DCC megszakítása a következővel: %s\n"
 
+msgid "bytes"
+msgstr "byte"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "ETA"
+msgstr "ETA"
+
+#, fuzzy
+msgid "Xfer list"
+msgstr "hotlist törlése"
+
 #, fuzzy, c-format
-msgid "%s: aborting active xfer: \"%s\" from %s"
-msgstr "\"%s\" aktív DCC megszakítása a következővel: %s\n"
+msgid "%s%s: error sending data to \"%s\" via xfer chat"
+msgstr "%s hiba a(z) \"%s\" felé DCC CHAT-tel történő adatküldés közben\n"
+
+#, fuzzy, c-format
+msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+msgstr ""
+"Csatlakozás a %s%s %s(%s%d.%d.%d.%d%s)%s partnerhez DCC beszélgetésen "
+"keresztül\n"
+
+msgid "xfer control"
+msgstr ""
+
+#, fuzzy
+msgid "Open buffer with xfer list"
+msgstr "Nyitott pufferek:\n"
+
+msgid "auto open xfer buffer and switch to it when a new xfer is added to list"
+msgstr ""
+
+msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
+msgstr ""
 
 #, fuzzy
 msgid "text color"
@@ -4419,10 +4463,6 @@ msgid "%s%s: unable to create pipe"
 msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: unable to fork"
-msgstr "%s DCC: nem sikerült forkolni\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to read local file"
 msgstr "%s DCC: nem sikerült a helyi fájlt olvasni\n"
 
@@ -4447,8 +4487,32 @@ msgid "%s%s: unable to write local file"
 msgstr "%s DCC: nem sikerült a helyi fájlt írni\n"
 
 #, fuzzy, c-format
-msgid "%s%s: error sending data to \"%s\" via xfer chat"
-msgstr "%s hiba a(z) \"%s\" felé DCC CHAT-tel történő adatküldés közben\n"
+msgid "%s%s: unable to fork"
+msgstr "%s DCC: nem sikerült forkolni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create socket for sending file"
+msgstr "%s DCC: nem sikerült csatornát nyitni a fájlküldéshez\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to set option \"nonblock\" for socket"
+msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
+
+#, fuzzy, c-format
+msgid "%s%s: timeout for \"%s\" with %s"
+msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "%s%s: filename missing for type \"%s\""
+#~ msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: protocol missing for type \"%s\""
+#~ msgstr "%s %s, %d. sor: érvénytelen opció: \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s: aborting active xfer: \"%s\" from %s"
+#~ msgstr "\"%s\" aktív DCC megszakítása a következővel: %s\n"
 
 #, fuzzy
 #~ msgid "text color for status info"
@@ -4467,11 +4531,6 @@ msgstr "%s hiba a(z) \"%s\" felé DCC CHAT-tel történő adatküldés közben\n
 #~ msgstr ""
 #~ "%s nem sikerült a DCC beszégetést a privát pufferhez kapcsolni (talán már "
 #~ "lett DCC CHAT hozzárendelve?)\n"
-
-#~ msgid "Connected to %s%s %s(%s%d.%d.%d.%d%s)%s via DCC chat\n"
-#~ msgstr ""
-#~ "Csatlakozás a %s%s %s(%s%d.%d.%d.%d%s)%s partnerhez DCC beszélgetésen "
-#~ "keresztül\n"
 
 #~ msgid "DCC: file %s%s%s resumed at position %u\n"
 #~ msgstr "DCC: a(z) %s%s%s fájl visszatért a(z) %u pozíción\n"
@@ -4497,12 +4556,6 @@ msgstr "%s hiba a(z) \"%s\" felé DCC CHAT-tel történő adatküldés közben\n
 
 #~ msgid "%s DCC: timeout\n"
 #~ msgstr "%s DCC: időtúllépés\n"
-
-#~ msgid "%s DCC: unable to create socket for sending file\n"
-#~ msgstr "%s DCC: nem sikerült csatornát nyitni a fájlküldéshez\n"
-
-#~ msgid "%s DCC: unable to set 'nonblock' option for socket\n"
-#~ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 
 #~ msgid "Internal key functions:\n"
 #~ msgstr "Belső billentyűfunkciók:\n"
@@ -4607,9 +4660,6 @@ msgstr "%s hiba a(z) \"%s\" felé DCC CHAT-tel történő adatküldés közben\n
 
 #~ msgid "set unread marker on all buffers"
 #~ msgstr "olvasatlan jelölő bekapcsolása az összes pufferen"
-
-#~ msgid "clear hotlist"
-#~ msgstr "hotlist törlése"
 
 #~ msgid "clear infobar"
 #~ msgstr "információs pult törlése"
@@ -5179,10 +5229,6 @@ msgstr "%s hiba a(z) \"%s\" felé DCC CHAT-tel történő adatküldés közben\n
 
 #~ msgid "clear window(s)"
 #~ msgstr "ablak(ok) törlése"
-
-#, fuzzy
-#~ msgid "Open buffers:"
-#~ msgstr "Nyitott pufferek:\n"
 
 #, fuzzy
 #~ msgid "%sError: buffer number \"%s\" not found for \"%s\" command"
@@ -5815,21 +5861,6 @@ msgstr "%s hiba a(z) \"%s\" felé DCC CHAT-tel történő adatküldés közben\n
 #~ msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 #~ msgstr ""
 #~ "%s (%s/%s) szerver/szoba nem található a modul futtatása parancshoz\n"
-
-#~ msgid "bytes"
-#~ msgstr "byte"
-
-#~ msgid "KB"
-#~ msgstr "KB"
-
-#~ msgid "MB"
-#~ msgstr "MB"
-
-#~ msgid "GB"
-#~ msgstr "GB"
-
-#~ msgid "ETA"
-#~ msgstr "ETA"
 
 #~ msgid "  [A] Accept"
 #~ msgstr "  [A] Elfogadás"

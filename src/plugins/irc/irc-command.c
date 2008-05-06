@@ -894,12 +894,14 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
                 item = weechat_infolist_new_item (infolist);
                 if (item)
                 {
+                    weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                     snprintf (plugin_id, sizeof (plugin_id),
-                              "irc_%x", (unsigned int)ptr_server);
+                              "%x", (unsigned int)ptr_server);
                     weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
                     weechat_infolist_new_var_string (item, "type", "file_send");
                     weechat_infolist_new_var_string (item, "protocol", "dcc");
-                    weechat_infolist_new_var_string (item, "nick", argv[2]);
+                    weechat_infolist_new_var_string (item, "remote_nick", argv[2]);
+                    weechat_infolist_new_var_string (item, "local_nick", ptr_server->nick);
                     weechat_infolist_new_var_string (item, "filename", argv_eol[3]);
                     snprintf (str_address, sizeof (str_address),
                               "%lu", address);
@@ -924,11 +926,13 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
                 item = weechat_infolist_new_item (infolist);
                 if (item)
                 {
+                    weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                     snprintf (plugin_id, sizeof (plugin_id),
-                              "irc_%x", (unsigned int)ptr_server);
+                              "%x", (unsigned int)ptr_server);
                     weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
                     weechat_infolist_new_var_string (item, "type", "chat_send");
-                    weechat_infolist_new_var_string (item, "nick", argv[2]);
+                    weechat_infolist_new_var_string (item, "remote_nick", argv[2]);
+                    weechat_infolist_new_var_string (item, "local_nick", ptr_server->nick);
                     snprintf (str_address, sizeof (str_address),
                               "%lu", address);
                     weechat_infolist_new_var_string (item, "address", str_address);
@@ -937,17 +941,6 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
                                               infolist);
                 }
                 weechat_infolist_free (infolist);
-            }
-        }
-        /* close DCC CHAT */
-        else if (weechat_strcasecmp (argv[1], "close") == 0)
-        {
-            if (ptr_channel && (ptr_channel != IRC_CHANNEL_TYPE_CHANNEL)
-                && (ptr_channel->dcc_chat))
-            {
-                //irc_dcc_close (ptr_channel->dcc_chat,
-                //               IRC_DCC_ABORTED);
-                //irc_dcc_redraw (1);
             }
         }
         /* unknown DCC action */
@@ -3589,7 +3582,7 @@ irc_command_init ()
                              "given, away status is removed)"),
                           "-all", &irc_command_away, NULL);
     weechat_hook_command ("ban",
-                          N_("bans nicks or hosts"),
+                          N_("ban nicks or hosts"),
                           N_("[channel] [nickname [nickname ...]]"),
                           N_(" channel: channel for ban\n"
                              "nickname: user or host to ban"),
@@ -3627,28 +3620,27 @@ irc_command_init ()
                              "users)"),
                           "%(irc_msg_part)", &irc_command_cycle, NULL);
     weechat_hook_command ("dcc",
-                          N_("starts DCC (file or chat) or close chat"),
+                          N_("start DCC (file or chat)"),
                           N_("action [nickname [file]]"),
-                          N_("  action: 'send' (file) or 'chat' or 'close' "
-                             "(chat)\n"
+                          N_("  action: 'send' (file) or 'chat'\n"
                              "nickname: nickname to send file or chat\n"
                              "    file: filename (on local host)"),
-                          "chat|send|close %n %f",
+                          "chat|send %n %f",
                           &irc_command_dcc, NULL);
     weechat_hook_command ("dehalfop",
-                          N_("removes half channel operator status from "
+                          N_("remove half channel operator status from "
                              "nickname(s)"),
                           N_("[nickname [nickname]]"),
                           "",
                           NULL, &irc_command_dehalfop, NULL);
     weechat_hook_command ("deop",
-                          N_("removes channel operator status from "
+                          N_("remove channel operator status from "
                              "nickname(s)"),
                           N_("[nickname [nickname]]"),
                           "",
                           NULL, &irc_command_deop, NULL);
     weechat_hook_command ("devoice",
-                          N_("removes voice from nickname(s)"),
+                          N_("remove voice from nickname(s)"),
                           N_("[nickname [nickname]]"),
                           "",
                           NULL, &irc_command_devoice, NULL);
@@ -3664,7 +3656,7 @@ irc_command_init ()
                              "servername: server name to disconnect"),
                           "%(irc_servers)|-all", &irc_command_disconnect, NULL);
     weechat_hook_command ("halfop",
-                          N_("gives half channel operator status to "
+                          N_("give half channel operator status to "
                              "nickname(s)"),
                           N_("[nickname [nickname]]"),
                           "",
@@ -3798,7 +3790,7 @@ irc_command_init ()
                              "    text: text to send"),
                           "%n %-", &irc_command_notice, NULL);
     weechat_hook_command ("op",
-                          N_("gives channel operator status to nickname(s)"),
+                          N_("give channel operator status to nickname(s)"),
                           N_("nickname [nickname]"),
                           "",
                           NULL, &irc_command_op, NULL);
@@ -3961,7 +3953,7 @@ irc_command_init ()
                           N_("target: server"),
                           NULL, &irc_command_trace, NULL);
     weechat_hook_command ("unban",
-                          N_("unbans nicks or hosts"),
+                          N_("unban nicks or hosts"),
                           N_("[channel] nickname [nickname ...]"),
                           N_(" channel: channel for unban\n"
                              "nickname: user or host to unban"),
@@ -3977,14 +3969,14 @@ irc_command_init ()
                           N_("target: server"),
                           NULL, &irc_command_users, NULL);
     weechat_hook_command ("version",
-                          N_("gives the version info of nick or server "
+                          N_("give the version info of nick or server "
                              "(current or specified)"),
                           N_("[server | nickname]"),
                           N_("  server: server name\n"
                              "nickname: nickname"),
                           "%n", &irc_command_version, NULL);
     weechat_hook_command ("voice",
-                          N_("gives voice to nickname(s)"),
+                          N_("give voice to nickname(s)"),
                           N_("[nickname [nickname]]"),
                           "",
                           NULL, &irc_command_voice, NULL);

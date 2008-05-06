@@ -18,6 +18,7 @@ ADD_LIBRARY(xfer MODULE
 xfer.c xfer.h
 xfer-buffer.c xfer-buffer.h
 xfer-chat.c xfer-chat.h
+xfer-command.c xfer-command.h
 xfer-config.c xfer-config.h
 xfer-dcc.c xfer-dcc.h
 xfer-file.c xfer-file.h
