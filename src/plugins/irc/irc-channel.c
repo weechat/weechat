@@ -84,7 +84,6 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     
     /* initialize new channel */
     new_channel->type = channel_type;
-    new_channel->dcc_chat = NULL;
     new_channel->name = strdup (channel_name);
     new_channel->topic = NULL;
     new_channel->modes = NULL;
@@ -94,7 +93,6 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->checking_away = 0;
     new_channel->away_message = NULL;
     new_channel->cycle = 0;
-    new_channel->close = 0;
     new_channel->display_creation_date = 0;
     new_channel->nick_completion_reset = 0;
     new_channel->nicks = NULL;
@@ -130,18 +128,6 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
     
     if (!server || !channel)
         return;
-    
-    /* close DCC CHAT */
-    if (channel->dcc_chat)
-    {
-        channel->dcc_chat->channel = NULL;
-        /*if (!IRC_DCC_ENDED(channel->dcc_chat->status))
-        {
-            irc_dcc_close (channel->dcc_chat, IRC_DCC_ABORTED);
-            irc_dcc_redraw (1);
-        }
-        */
-    }
     
     /* remove channel from channels list */
     if (server->last_channel == channel)
@@ -191,7 +177,6 @@ irc_channel_free_all (struct t_irc_server *server)
 
 /*
  * irc_channel_search: returns pointer on a channel with name
- *                     WARNING: DCC chat channels are not returned by this function
  */
 
 struct t_irc_channel *
@@ -205,8 +190,7 @@ irc_channel_search (struct t_irc_server *server, char *channel_name)
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        if ((ptr_channel->type != IRC_CHANNEL_TYPE_DCC_CHAT)
-            && (weechat_strcasecmp (ptr_channel->name, channel_name) == 0))
+        if (weechat_strcasecmp (ptr_channel->name, channel_name) == 0)
             return ptr_channel;
     }
     return NULL;
@@ -251,28 +235,6 @@ irc_channel_search_any_without_buffer (struct t_irc_server *server,
          ptr_channel = ptr_channel->next_channel)
     {
         if (!ptr_channel->buffer
-            && (weechat_strcasecmp (ptr_channel->name, channel_name) == 0))
-            return ptr_channel;
-    }
-    return NULL;
-}
-
-/*
- * irc_channel_search_dcc: returns pointer on a DCC chat channel with name
- */
-
-struct t_irc_channel *
-irc_channel_search_dcc (struct t_irc_server *server, char *channel_name)
-{
-    struct t_irc_channel *ptr_channel;
-    
-    if (!server || !channel_name)
-        return NULL;
-    
-    for (ptr_channel = server->channels; ptr_channel;
-         ptr_channel = ptr_channel->next_channel)
-    {
-        if ((ptr_channel->type == IRC_CHANNEL_TYPE_DCC_CHAT)
             && (weechat_strcasecmp (ptr_channel->name, channel_name) == 0))
             return ptr_channel;
     }
@@ -356,36 +318,6 @@ irc_channel_set_away (struct t_irc_channel *channel, char *nick, int is_away)
             irc_nick_set_away (channel, ptr_nick, is_away);
     }
     */
-}
-
-/*
- * irc_channel_create_dcc: create DCC CHAT channel
- */
-
-int
-irc_channel_create_dcc (struct t_irc_dcc *dcc)
-{
-    struct t_irc_channel *ptr_channel;
-    
-    ptr_channel = irc_channel_search_dcc (dcc->server, dcc->nick);
-    if (!ptr_channel)
-    {
-        ptr_channel = irc_channel_new (dcc->server,
-                                       IRC_CHANNEL_TYPE_DCC_CHAT,
-                                       dcc->nick,
-                                       0);
-        if (!ptr_channel)
-            return 0;
-    }
-    
-    if (ptr_channel->dcc_chat &&
-        (!IRC_DCC_ENDED(ptr_channel->dcc_chat->status)))
-        return 0;
-    
-    ptr_channel->dcc_chat = dcc;
-    dcc->channel = ptr_channel;
-    //gui_window_redraw_buffer (ptr_channel->buffer);
-    return 1;
 }
 
 /*
@@ -499,7 +431,6 @@ irc_channel_print_log (struct t_irc_channel *channel)
     weechat_log_printf ("");
     weechat_log_printf ("  => channel %s (addr:0x%x)]", channel->name, channel);
     weechat_log_printf ("       type . . . . . . . . : %d",     channel->type);
-    weechat_log_printf ("       dcc_chat . . . . . . : 0x%x",   channel->dcc_chat);
     weechat_log_printf ("       topic. . . . . . . . : '%s'",   channel->topic);
     weechat_log_printf ("       modes. . . . . . . . : '%s'",   channel->modes);
     weechat_log_printf ("       limit. . . . . . . . : %d",     channel->limit);
@@ -507,7 +438,6 @@ irc_channel_print_log (struct t_irc_channel *channel)
     weechat_log_printf ("       checking_away. . . . : %d",     channel->checking_away);
     weechat_log_printf ("       away_message . . . . : '%s'",   channel->away_message);
     weechat_log_printf ("       cycle. . . . . . . . : %d",     channel->cycle);
-    weechat_log_printf ("       close. . . . . . . . : %d",     channel->close);
     weechat_log_printf ("       display_creation_date: %d",     channel->display_creation_date);
     weechat_log_printf ("       nicks. . . . . . . . : 0x%x",   channel->nicks);
     weechat_log_printf ("       last_nick. . . . . . : 0x%x",   channel->last_nick);

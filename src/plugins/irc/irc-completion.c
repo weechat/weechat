@@ -189,8 +189,7 @@ irc_completion_channel_nicks_cb (void *data, char *completion,
             /* add self nick at the end */
             weechat_list_add (list, ptr_server->nick, WEECHAT_LIST_POS_END);
         }
-        if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
-            || (ptr_channel->type == IRC_CHANNEL_TYPE_DCC_CHAT))
+        if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
         {
             weechat_list_add (list, ptr_channel->name, WEECHAT_LIST_POS_SORT);
         }
@@ -244,8 +243,7 @@ irc_completion_channel_nicks_hosts_cb (void *data, char *completion,
                 }
             }
         }
-        if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
-            || (ptr_channel->type == IRC_CHANNEL_TYPE_DCC_CHAT))
+        if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
         {
             weechat_list_add (list, ptr_channel->name,
                               WEECHAT_LIST_POS_SORT);

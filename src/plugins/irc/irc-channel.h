@@ -26,7 +26,6 @@
 #define IRC_CHANNEL_TYPE_UNKNOWN  -1
 #define IRC_CHANNEL_TYPE_CHANNEL  0
 #define IRC_CHANNEL_TYPE_PRIVATE  1
-#define IRC_CHANNEL_TYPE_DCC_CHAT 2
 
 #define IRC_CHANNEL_NICKS_SPEAKING_LIMIT 32
 
@@ -35,7 +34,6 @@ struct t_irc_server;
 struct t_irc_channel
 {
     int type;                          /* channel type                      */
-    struct t_irc_dcc *dcc_chat;        /* DCC CHAT pointer (NULL if not DCC)*/
     char *name;                        /* name of channel (exemple: "#abc") */
     char *topic;                       /* topic of channel (host for pv)    */
     char *modes;                       /* channel modes                     */
@@ -45,7 +43,6 @@ struct t_irc_channel
     int checking_away;                 /* = 1 if checking away with WHO cmd */
     char *away_message;                /* to display away only once in pv   */
     int cycle;                         /* currently cycling (/part + /join) */
-    int close;                         /* close request (/buffer close)     */
     int display_creation_date;         /* 1 for displaying creation date    */
     int nick_completion_reset;         /* 1 for resetting nick completion   */
                                        /* there was some join/part on chan  */
@@ -70,15 +67,12 @@ extern struct t_irc_channel *irc_channel_search_any (struct t_irc_server *server
                                                      char *channel_name);
 extern struct t_irc_channel *irc_channel_search_any_without_buffer (struct t_irc_server *server,
                                                                     char *channel_name);
-extern struct t_irc_channel *irc_channel_search_dcc (struct t_irc_server *server,
-                                                     char *channel_name);
 extern int irc_channel_is_channel (char *string);
 extern void irc_channel_remove_away (struct t_irc_channel *channel);
 extern void irc_channel_check_away (struct t_irc_server *server,
                                     struct t_irc_channel *channel, int force);
 extern void irc_channel_set_away (struct t_irc_channel *channel, char *nick,
                                   int is_away);
-extern int irc_channel_create_dcc (struct t_irc_dcc *dcc);
 extern int irc_channel_get_notify_level (struct t_irc_server *server,
                                          struct t_irc_channel *channel);
 extern void irc_channel_set_notify_level (struct t_irc_server *server,

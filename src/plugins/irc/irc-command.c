@@ -2210,8 +2210,6 @@ irc_command_part (void *data, struct t_gui_buffer *buffer, int argc,
         if (!ptr_channel->nicks)
         {
             weechat_buffer_close (ptr_channel->buffer, 1);
-            ptr_channel->buffer = NULL;
-            irc_channel_free (ptr_server, ptr_channel);
             return WEECHAT_RC_OK;
         }
         channel_name = ptr_channel->name;
@@ -3512,11 +3510,14 @@ irc_command_whois (void *data, struct t_gui_buffer *buffer, int argc,
     else
     {
         if (ptr_channel
-            && ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
-                || (ptr_channel->type == IRC_CHANNEL_TYPE_DCC_CHAT)))
+            && (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE))
+        {
             irc_server_sendf (ptr_server, "WHOIS %s", ptr_channel->name);
+        }
         else
+        {
             IRC_COMMAND_TOO_FEW_ARGUMENTS(ptr_server->buffer, "whois");
+        }
     }
     
     return WEECHAT_RC_OK;

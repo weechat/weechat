@@ -794,7 +794,6 @@ irc_protocol_cmd_nick (struct t_irc_server *server, char *command,
         switch (ptr_channel->type)
         {
             case IRC_CHANNEL_TYPE_PRIVATE:
-            case IRC_CHANNEL_TYPE_DCC_CHAT:
                 /* rename private window if this is with "old nick" */
                 if (weechat_strcasecmp (ptr_channel->name, old_nick) == 0)
                 {
@@ -1177,13 +1176,6 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *command,
                     }
                     else
                         irc_command_join_server (server, ptr_channel->name);
-                }
-                if (ptr_channel->close)
-                {
-                    weechat_buffer_close (ptr_channel->buffer, 1);
-                    ptr_channel->buffer = NULL;
-                    irc_channel_free (server, ptr_channel);
-                    ptr_channel = NULL;
                 }
             }
             else
@@ -2293,8 +2285,7 @@ irc_protocol_cmd_quit (struct t_irc_server *server, char *command,
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
-            || (ptr_channel->type == IRC_CHANNEL_TYPE_DCC_CHAT))
+        if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
             ptr_nick = NULL;
         else
             ptr_nick = irc_nick_search (ptr_channel, nick);

@@ -164,6 +164,8 @@ irc_buffer_split_server (t_gui_window *window)
 int
 irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 {
+    struct t_irc_channel *next_channel;
+    
     IRC_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
@@ -176,19 +178,20 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
             && (ptr_channel->nicks))
         {
             irc_command_part_channel (ptr_server, ptr_channel->name, NULL);
-            irc_channel_free (ptr_server, ptr_channel);
         }
+        irc_channel_free (ptr_server, ptr_channel);
     }
     else
     {
         if (ptr_server)
         {
             /* send PART on all channels for server, then disconnect from server */
-            for (ptr_channel = ptr_server->channels; ptr_channel;
-                 ptr_channel = ptr_channel->next_channel)
+            ptr_channel = ptr_server->channels;
+            while (ptr_channel)
             {
-                irc_command_part_channel (ptr_server, ptr_channel->name, NULL);
-                irc_channel_free (ptr_server, ptr_channel);
+                next_channel = ptr_channel->next_channel;
+                weechat_buffer_close (ptr_channel->buffer, 1);
+                ptr_channel = next_channel;
             }
             irc_server_disconnect (ptr_server, 0);
             ptr_server->buffer = NULL;

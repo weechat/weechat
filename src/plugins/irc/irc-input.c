@@ -49,8 +49,7 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, char *text)
     
     if (ptr_channel)
     {
-        if ((ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
-            || (ptr_channel->type == IRC_CHANNEL_TYPE_DCC_CHAT))
+        if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
         {
             weechat_printf (buffer,
                             "%s%s",
@@ -167,27 +166,8 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer, char *input_data)
         data_with_colors = irc_color_encode (input_data,
                                              weechat_config_boolean (irc_config_network_colors_send));
         
-        if (ptr_channel->dcc_chat)
-        {
-            if (ptr_channel->dcc_chat->sock < 0)
-            {
-                weechat_printf (buffer,
-                                "%s%s: DCC CHAT is closed",
-                                weechat_prefix ("error"), "irc");
-            }
-            else
-            {
-                //irc_dcc_chat_sendf (ptr_channel->dcc_chat,
-                //                    "%s\r\n",
-                //                    (data_with_colors) ? data_with_colors : input_data);
-                //irc_input_user_message_display (buffer,
-                //                                (data_with_colors) ?
-                //                                data_with_colors : input_data);
-            }
-        }
-        else
-            irc_input_send_user_message (buffer,
-                                         (data_with_colors) ? data_with_colors : input_data);
+        irc_input_send_user_message (buffer,
+                                     (data_with_colors) ? data_with_colors : input_data);
         
         if (data_with_colors)
             free (data_with_colors);
