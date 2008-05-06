@@ -778,18 +778,15 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     if (gui_previous_buffer == buffer)
         gui_previous_buffer = NULL;
     
-    if (buffer->type == GUI_BUFFER_TYPE_FORMATED)
+    /* decrease buffer number for all next buffers */
+    for (ptr_buffer = buffer->next_buffer; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
     {
-        /* decrease buffer number for all next buffers */
-        for (ptr_buffer = buffer->next_buffer; ptr_buffer;
-             ptr_buffer = ptr_buffer->next_buffer)
-        {
-            ptr_buffer->number--;
-        }
-        
-        /* free all lines */
-        gui_chat_line_free_all (buffer);
+        ptr_buffer->number--;
     }
+    
+    /* free all lines */
+    gui_chat_line_free_all (buffer);
     
     /* free some data */
     if (buffer->title)
