@@ -41,7 +41,7 @@ int xfer_buffer_selected_line = 0;
 void
 xfer_buffer_refresh (char *hotlist)
 {
-    struct t_xfer *ptr_xfer;
+    struct t_xfer *ptr_xfer, *xfer_selected;
     char str_color[256], status[64], date[128], *progress_bar, format[128];
     char format_per_sec[128], bytes_per_sec[256], eta[128];
     int i, length, line, progress_bar_size, num_bars, num_unit;
@@ -56,6 +56,28 @@ xfer_buffer_refresh (char *hotlist)
     {
         weechat_buffer_clear (xfer_buffer);
         line = 0;
+        xfer_selected = xfer_search_by_number (xfer_buffer_selected_line);
+        if (xfer_selected)
+        {
+            weechat_printf_y (xfer_buffer, 0,
+                              "%sActions (letter+enter):%s%s%s%s%s%s",
+                              weechat_color("green"),
+                              weechat_color("lightgreen"),
+                              /* accept */
+                              (XFER_IS_RECV(xfer_selected->type)
+                               && (xfer_selected->status == XFER_STATUS_WAITING)) ?
+                              _("  [A] Accept") : "",
+                              /* cancel */
+                              (!XFER_HAS_ENDED(xfer_selected->status)) ?
+                              _("  [C] Cancel") : "",
+                              /* remove */
+                              (XFER_HAS_ENDED(xfer_selected->status)) ?
+                              _("  [R] Remove") : "",
+                              /* purge old */
+                              _("  [P] Purge finished"),
+                              /* quit */
+                              _("  [Q] Close xfer list"));
+        }
         for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
         {
             snprintf (str_color, sizeof (str_color),
@@ -66,8 +88,8 @@ xfer_buffer_refresh (char *hotlist)
                       weechat_config_string (xfer_config_color_text_bg));
             
             /* display first line with remote nick and filename */
-            weechat_printf_y (xfer_buffer, line * 2,
-                              "%s%s%-25s %s%s%s",
+            weechat_printf_y (xfer_buffer, (line * 2) + 2,
+                              "%s%s%-24s %s%s%s",
                               weechat_color(str_color),
                               (line == xfer_buffer_selected_line) ?
                               "*** " : "    ",
@@ -79,7 +101,7 @@ xfer_buffer_refresh (char *hotlist)
 
             snprintf (status, sizeof (status),
                       "%s", _(xfer_status_string[ptr_xfer->status]));
-            length = strlen (status);
+            length = weechat_utf8_strlen_screen (status);
             if (length < 20)
             {
                 for (i = 0; i < 20 - length; i++)
@@ -94,8 +116,8 @@ xfer_buffer_refresh (char *hotlist)
                 date_tmp = localtime (&(ptr_xfer->start_time));
                 strftime (date, sizeof (date),
                           "%a, %d %b %Y %H:%M:%S", date_tmp);
-                weechat_printf_y (xfer_buffer, (line * 2) + 1,
-                                  "%s%s%s %s%s %s%s%s",
+                weechat_printf_y (xfer_buffer, (line * 2) + 3,
+                                  "%s%s%s %s%s%s%s%s",
                                   weechat_color(str_color),
                                   (line == xfer_buffer_selected_line) ?
                                   "*** " : "    ",
@@ -114,7 +136,7 @@ xfer_buffer_refresh (char *hotlist)
                 progress_bar_size = weechat_config_integer (xfer_config_look_progress_bar_size);
                 if (progress_bar_size > 0)
                 {
-                    progress_bar = malloc (1 + progress_bar_size + 1 + 1);
+                    progress_bar = malloc (1 + progress_bar_size + 1 + 1 + 1);
                     strcpy (progress_bar, "[");
                     if (ptr_xfer->size == 0)
                     {
@@ -135,7 +157,7 @@ xfer_buffer_refresh (char *hotlist)
                     {
                         strcat (progress_bar, " ");
                     }
-                    strcat (progress_bar, "]");
+                    strcat (progress_bar, "] ");
                 }
                 
                 /* computes pourcentage */
@@ -158,7 +180,7 @@ xfer_buffer_refresh (char *hotlist)
                     pct_complete = (unsigned long)(((float)(ptr_xfer->pos)/(float)(ptr_xfer->size)) * 100);
                 
                 snprintf (format, sizeof (format),
-                          "%%s%%s%%s %%s%%s%%s%%s %%3lu%%%%   %s %%s / %s %%s  (%%s%%s)",
+                          "%%s%%s%%s %%s%%s%%s%%s%%3lu%%%%   %s %%s / %s %%s  (%%s%%s)",
                           unit_format[num_unit],
                           unit_format[num_unit]);
                 
@@ -193,7 +215,7 @@ xfer_buffer_refresh (char *hotlist)
                 }
                 
                 /* display second line for file with status, progress bar and estimated time */
-                weechat_printf_y (xfer_buffer, (line * 2) + 1,
+                weechat_printf_y (xfer_buffer, (line * 2) + 3,
                                   format,
                                   weechat_color(str_color),
                                   (line == xfer_buffer_selected_line) ?
@@ -265,6 +287,11 @@ xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
         }
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
     }
+    /* quit xfer buffer (close it) */
+    else if (weechat_strcasecmp (input_data, "q") == 0)
+    {
+        weechat_buffer_close (buffer, 1);
+    }
     /* remove xfer */
     else if (weechat_strcasecmp (input_data, "r") == 0)
     {
@@ -273,10 +300,6 @@ xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
             xfer_free (xfer);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
         }
-    }
-    else if (weechat_strcasecmp (input_data, "q") == 0)
-    {
-        weechat_buffer_close (buffer, 1);
     }
     
     return WEECHAT_RC_OK;

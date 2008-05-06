@@ -25,6 +25,7 @@
 #include "../weechat-plugin.h"
 #include "xfer.h"
 #include "xfer-config.h"
+#include "xfer-buffer.h"
 
 
 struct t_config_file *xfer_config_file = NULL;
@@ -60,6 +61,22 @@ struct t_config_option *xfer_config_file_auto_accept_files;
 struct t_config_option *xfer_config_file_auto_accept_chats;
 
 
+
+/*
+ * xfer_config_refresh_cb: callback called when user changes xfer option that
+ *                         needs a refresh of xfer list
+ */
+
+void
+xfer_config_refresh_cb (void *data, struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    if (xfer_buffer)
+        xfer_buffer_refresh (NULL);
+}
 
 /*
  * xfer_config_reload: reload xfer configuration file
@@ -110,7 +127,7 @@ xfer_config_init ()
         "progress_bar_size", "integer",
         N_("size of progress bar, in chars (if 0, progress bar is disabled)"),
         NULL, 0, XFER_CONFIG_PROGRESS_BAR_MAX_SIZE, "20",
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (xfer_config_file, "color",
                                               0, 0,
@@ -127,55 +144,55 @@ xfer_config_init ()
         "text", "color",
         N_("text color"),
         NULL, 0, 0, "default",
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     xfer_config_color_text_bg = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "text_bg", "color",
         N_("background color"),
         NULL, 0, 0, "default",
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     xfer_config_color_text_selected = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "text_selected", "color",
         N_("text color of selected xfer line"),
         NULL, 0, 0, "white",
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     xfer_config_color_status[XFER_STATUS_WAITING] = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "status_waiting", "color",
         N_("text color for \"waiting\" status"),
         NULL, 0, 0, "lightcyan",
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     xfer_config_color_status[XFER_STATUS_CONNECTING] = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "status_connecting", "color",
         N_("text color for \"connecting\" status"),
         NULL, 0, 0, "yellow",
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     xfer_config_color_status[XFER_STATUS_ACTIVE] = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "status_active", "color",
         N_("text color for \"active\" status"),
         NULL, 0, 0, "lightblue",
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     xfer_config_color_status[XFER_STATUS_DONE] = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "status_done", "color",
         N_("text color for \"done\" status"),
         NULL, 0, 0, "lightgreen",
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     xfer_config_color_status[XFER_STATUS_FAILED] = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "status_failed", "color",
         N_("text color for \"failed\" status"),
         NULL, 0, 0, "lightred",
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     xfer_config_color_status[XFER_STATUS_ABORTED] = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "status_aborted", "color",
         N_("text color for \"aborted\" status"),
         NULL, 0, 0, "lightred",
-        NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, NULL, &xfer_config_refresh_cb, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (xfer_config_file, "network",
                                               0, 0,
