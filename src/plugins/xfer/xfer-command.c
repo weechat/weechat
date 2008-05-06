@@ -44,26 +44,27 @@ xfer_command_xfer (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (!xfer_buffer)
         xfer_buffer_open ();
-
-    if (argc > 1)
+    
+    if (xfer_buffer)
     {
-        if (strcmp (argv[1], "up") == 0)
+        weechat_buffer_set (xfer_buffer, "display", "1");
+        
+        if (argc > 1)
         {
-            if (xfer_buffer_selected_line > 0)
+            if (strcmp (argv[1], "up") == 0)
             {
-                xfer_buffer_selected_line--;
-                xfer_buffer_refresh (NULL);
+                if (xfer_buffer_selected_line > 0)
+                    xfer_buffer_selected_line--;
             }
-        }
-        else if (strcmp (argv[1], "down") == 0)
-        {
-            if (xfer_buffer_selected_line < xfer_count - 1)
+            else if (strcmp (argv[1], "down") == 0)
             {
-                xfer_buffer_selected_line++;
-                xfer_buffer_refresh (NULL);
+                if (xfer_buffer_selected_line < xfer_count - 1)
+                    xfer_buffer_selected_line++;
             }
         }
     }
+
+    xfer_buffer_refresh (NULL);
     
     return WEECHAT_RC_OK;
 }

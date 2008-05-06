@@ -38,7 +38,7 @@ struct t_config_option *xfer_config_look_progress_bar_size;
 
 struct t_config_option *xfer_config_color_text;
 struct t_config_option *xfer_config_color_text_bg;
-struct t_config_option *xfer_config_color_selected_bg;
+struct t_config_option *xfer_config_color_text_selected;
 struct t_config_option *xfer_config_color_status[XFER_NUM_STATUS];
 
 /* xfer config, network section */
@@ -102,7 +102,7 @@ xfer_config_init ()
     xfer_config_look_auto_open_buffer = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "auto_open_buffer", "boolean",
-        N_("auto open xfer buffer and switch to it when a new xfer is added "
+        N_("auto open xfer buffer when a new xfer is added "
            "to list"),
         NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_look_progress_bar_size = weechat_config_new_option (
@@ -134,11 +134,11 @@ xfer_config_init ()
         N_("background color"),
         NULL, 0, 0, "default",
         NULL, NULL, NULL, NULL, NULL, NULL);
-    xfer_config_color_selected_bg = weechat_config_new_option (
+    xfer_config_color_text_selected = weechat_config_new_option (
         xfer_config_file, ptr_section,
-        "selected_bg", "color",
-        N_("background color for selected line"),
-        NULL, 0, 0, "magenta",
+        "text_selected", "color",
+        N_("text color of selected xfer line"),
+        NULL, 0, 0, "white",
         NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_color_status[XFER_STATUS_WAITING] = weechat_config_new_option (
         xfer_config_file, ptr_section,

@@ -60,6 +60,8 @@ xfer_buffer_refresh (char *hotlist)
         {
             snprintf (str_color, sizeof (str_color),
                       "%s,%s",
+                      (line == xfer_buffer_selected_line) ?
+                      weechat_config_string (xfer_config_color_text_selected) :
                       weechat_config_string (xfer_config_color_text),
                       weechat_config_string (xfer_config_color_text_bg));
             
@@ -229,7 +231,6 @@ xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
     
     /* make C compiler happy */
     (void) data;
-    (void) buffer;
     
     xfer = xfer_search_by_number (xfer_buffer_selected_line);
     
@@ -273,6 +274,10 @@ xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
         }
     }
+    else if (weechat_strcasecmp (input_data, "q") == 0)
+    {
+        weechat_buffer_close (buffer, 1);
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -314,6 +319,5 @@ xfer_buffer_open ()
         weechat_buffer_set (xfer_buffer, "title", _("Xfer list"));
         weechat_buffer_set (xfer_buffer, "key_bind_meta2-A", "/xfer up");
         weechat_buffer_set (xfer_buffer, "key_bind_meta2-B", "/xfer down");
-        weechat_buffer_set (xfer_buffer, "display", "1");
     }
 }

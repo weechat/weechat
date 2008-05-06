@@ -31,7 +31,7 @@ extern struct t_config_option *xfer_config_look_progress_bar_size;
 
 extern struct t_config_option *xfer_config_color_text;
 extern struct t_config_option *xfer_config_color_text_bg;
-extern struct t_config_option *xfer_config_color_selected_bg;
+extern struct t_config_option *xfer_config_color_text_selected;
 extern struct t_config_option *xfer_config_color_status[];
 
 extern struct t_config_option *xfer_config_network_timeout;
