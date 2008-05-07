@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-06 16:47+0200\n"
+"POT-Creation-Date: 2008-05-07 13:30+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4258,13 +4258,13 @@ msgid "%s: sending chat request to %s"
 msgstr "Sende DCC-Chatanforderung an %s%s\n"
 
 #, fuzzy, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %u"
+msgid "%s: file %s (local filename: %s) will be resumed at position %lu"
 msgstr ""
 "DCC: Datei %s%s%s (lokaler Dateiname: %s%s%s) wird an der Position %u "
 "fortgesetzt\n"
 
 #, fuzzy, c-format
-msgid "%s%s: missing arguments"
+msgid "%s%s: missing arguments (%s)"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, fuzzy, c-format
@@ -4301,6 +4301,26 @@ msgid "%s%s: error creating xfer"
 msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
 
 #, fuzzy, c-format
+msgid ""
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %lu): xfer not "
+"found or not ready for transfert"
+msgstr ""
+"%s kann die Datei \"%s\" nicht fortsetzen (Port: %d, Startposition: %u): DCC "
+"nicht gefunden oder bereits fertig\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s resumed at position %lu"
+msgstr "DCC: Datei %s%s%s wird an Position %u fortgesetzt\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %lu): "
+"xfer not found or not ready for transfert"
+msgstr ""
+"%s kann die Datei \"%s\" nicht fortsetzen (Port: %d, Startposition: %u): DCC "
+"nicht gefunden oder bereits fertig\n"
+
+#, fuzzy, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "Aktiver DCC wird abgebrochen: \"%s\" von %s\n"
 
@@ -4315,6 +4335,26 @@ msgstr "MB"
 
 msgid "GB"
 msgstr "GB"
+
+msgid "Actions (letter+enter):"
+msgstr ""
+
+msgid "  [A] Accept"
+msgstr "  [A] annehmen"
+
+msgid "  [C] Cancel"
+msgstr "  [C] abbrechen"
+
+msgid "  [R] Remove"
+msgstr "  [R] entfernen"
+
+#, fuzzy
+msgid "  [P] Purge finished"
+msgstr "  [P] alte DCCs entfernen"
+
+#, fuzzy
+msgid "  [Q] Close xfer list"
+msgstr "  [Q] DCC-Ansicht schließen"
 
 msgid "ETA"
 msgstr "ETA"
@@ -4338,7 +4378,7 @@ msgstr ""
 msgid "Open buffer with xfer list"
 msgstr "Offene Puffer:\n"
 
-msgid "auto open xfer buffer and switch to it when a new xfer is added to list"
+msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 
 msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
@@ -4353,8 +4393,8 @@ msgid "background color"
 msgstr "Hintergrundfarbe der Nicknames"
 
 #, fuzzy
-msgid "background color for selected line"
-msgstr "Farbe der Eingabezeile"
+msgid "text color of selected xfer line"
+msgstr "Farbe des Servernamens"
 
 #, fuzzy
 msgid "text color for \"waiting\" status"
@@ -4488,6 +4528,10 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, fuzzy
+#~ msgid "background color for selected line"
+#~ msgstr "Farbe der Eingabezeile"
+
+#, fuzzy
 #~ msgid "%s%s: filename missing for type \"%s\""
 #~ msgstr "%s %s, Zeile %d: ungültige Option \"%s\"\n"
 
@@ -4516,16 +4560,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #~ msgstr ""
 #~ "%s kann keinen DCC Chat mit privatem Puffer assoziieren (ist er bereits "
 #~ "ein DCC CHAT?)\n"
-
-#~ msgid "DCC: file %s%s%s resumed at position %u\n"
-#~ msgstr "DCC: Datei %s%s%s wird an Position %u fortgesetzt\n"
-
-#~ msgid ""
-#~ "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found "
-#~ "or ended\n"
-#~ msgstr ""
-#~ "%s kann die Datei \"%s\" nicht fortsetzen (Port: %d, Startposition: %u): "
-#~ "DCC nicht gefunden oder bereits fertig\n"
 
 #~ msgid "DCC chat"
 #~ msgstr "DCC Chat"
@@ -5865,21 +5899,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #~ msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 #~ msgstr ""
 #~ "%s Server/Channel (%s/%s) für den Plugin-Exec-Befehl nicht gefunden\n"
-
-#~ msgid "  [A] Accept"
-#~ msgstr "  [A] annehmen"
-
-#~ msgid "  [C] Cancel"
-#~ msgstr "  [C] abbrechen"
-
-#~ msgid "  [R] Remove"
-#~ msgstr "  [R] entfernen"
-
-#~ msgid "  [P] Purge old DCC"
-#~ msgstr "  [P] alte DCCs entfernen"
-
-#~ msgid "  [Q] Close DCC view"
-#~ msgstr "  [Q] DCC-Ansicht schließen"
 
 #~ msgid "  [Q] Close raw data view"
 #~ msgstr "  [Q] Rohdatenansicht schließen"

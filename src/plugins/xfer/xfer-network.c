@@ -544,15 +544,7 @@ xfer_network_accept (struct t_xfer *xfer)
     if (XFER_IS_FILE(xfer->type) && (xfer->start_resume > 0))
     {
         xfer->status = XFER_STATUS_CONNECTING;
-        xfer_send_signal (xfer, "xfer_accepted");
-        /*
-        irc_server_sendf (dcc->server,
-                          (strchr (dcc->filename, ' ')) ?
-                          "PRIVMSG %s :\01DCC RESUME \"%s\" %d %u\01\n" :
-                          "PRIVMSG %s :\01DCC RESUME %s %d %u\01",
-                          dcc->nick, dcc->filename,
-                          dcc->port, dcc->start_resume);
-        */
+        xfer_send_signal (xfer, "xfer_resume_ready");
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
     }
     else

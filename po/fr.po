@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-06 16:47+0200\n"
-"PO-Revision-Date: 2008-05-06 16:46+0200\n"
+"POT-Creation-Date: 2008-05-07 13:30+0200\n"
+"PO-Revision-Date: 2008-05-07 13:30+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2232,14 +2232,12 @@ msgstr "démarre le DCC (fichier ou discussion)"
 msgid "action [nickname [file]]"
 msgstr "action [pseudo [fichier]]"
 
-#, fuzzy
 msgid ""
 "  action: 'send' (file) or 'chat'\n"
 "nickname: nickname to send file or chat\n"
 "    file: filename (on local host)"
 msgstr ""
-" action: 'send' (envoi de fichier) ou 'chat' (discussion) ou "
-"'close' (fermeture discussion)\n"
+" action: 'send' (envoi de fichier) ou 'chat' (discussion)\n"
 " pseudo: pseudo pour envoyer le fichier ou discuter\n"
 "fichier: nom du fichier (sur la machine locale)"
 
@@ -4212,12 +4210,12 @@ msgid "%s: sending chat request to %s"
 msgstr "%s: envoi d'une demande de discussion à %s"
 
 #, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %u"
-msgstr "%s: fichier %s (nom local: %s) sera recommencé en position %u"
+msgid "%s: file %s (local filename: %s) will be resumed at position %lu"
+msgstr "%s: fichier %s (nom local: %s) sera recommencé en position %lu"
 
 #, c-format
-msgid "%s%s: missing arguments"
-msgstr "%s%s: paramètres manquants"
+msgid "%s%s: missing arguments (%s)"
+msgstr "%s%s: paramètres manquants (%s)"
 
 #, c-format
 msgid "%s%s: unknown xfer type \"%s\""
@@ -4254,6 +4252,26 @@ msgid "%s%s: error creating xfer"
 msgstr "%s%s: erreur de création du xfer"
 
 #, c-format
+msgid ""
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %lu): xfer not "
+"found or not ready for transfert"
+msgstr ""
+"%s%s: impossible de continuer le fichier \"%s\" (port: %d, position de "
+"départ: %lu): xfer non trouvé ou non prêt pour le transfert"
+
+#, c-format
+msgid "%s: file %s resumed at position %lu"
+msgstr "%s: fichier %s sera recommencé en position %lu"
+
+#, c-format
+msgid ""
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %lu): "
+"xfer not found or not ready for transfert"
+msgstr ""
+"%s%s: impossible d'accepter de continuer le fichier \"%s\" (port: %d, "
+"position de départ: %lu): xfer non trouvé ou non prêt pour le transfert"
+
+#, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "%s%s: abandon du xfer actif: \"%s\" de %s"
 
@@ -4268,6 +4286,24 @@ msgstr "Mo"
 
 msgid "GB"
 msgstr "Go"
+
+msgid "Actions (letter+enter):"
+msgstr "Actions (lettre+entrée):"
+
+msgid "  [A] Accept"
+msgstr "  [A] Accepter"
+
+msgid "  [C] Cancel"
+msgstr "  [C] Annuler"
+
+msgid "  [R] Remove"
+msgstr "  [R] Retirer"
+
+msgid "  [P] Purge finished"
+msgstr "  [P] Purger terminés"
+
+msgid "  [Q] Close xfer list"
+msgstr "  [Q] Fermer la liste xfer"
 
 msgid "ETA"
 msgstr "ETA"
@@ -4289,10 +4325,10 @@ msgstr "contrôle xfer"
 msgid "Open buffer with xfer list"
 msgstr "Ouverture du tampon avec la liste des xfers"
 
-msgid "auto open xfer buffer and switch to it when a new xfer is added to list"
+msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
-"ouvrir automatiquement le tampon xfer et basculer vers celui-ci lorsqu'un "
-"nouveau xfer est ajouté à la liste"
+"ouvrir automatiquement le tampon xfer lorsqu'un nouveau xfer est ajouté à la "
+"liste"
 
 msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr ""
@@ -4305,8 +4341,8 @@ msgstr "couleur du texte"
 msgid "background color"
 msgstr "couleur du fond"
 
-msgid "background color for selected line"
-msgstr "couleur du fond pour la ligne sélectionnée"
+msgid "text color of selected xfer line"
+msgstr "couleur du texte pour la ligne xfer sélectionnée"
 
 msgid "text color for \"waiting\" status"
 msgstr "couleur du texte pour le statut \"en attente\""
@@ -4426,3 +4462,6 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "background color for selected line"
+#~ msgstr "couleur du fond pour la ligne sélectionnée"

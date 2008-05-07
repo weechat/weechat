@@ -2863,6 +2863,118 @@ irc_server_xfer_send_ready_cb (void *data, char *signal, char *type_data,
 }
 
 /*
+ * irc_server_xfer_resume_ready_cb: callback called when user receives a file
+ *                                  and that resume is possible (file is partially
+ *                                  received)
+ *                                  in that case, irc plugin send message to
+ *                                  remote nick with resume position
+ */
+
+int
+irc_server_xfer_resume_ready_cb (void *data, char *signal, char *type_data,
+                                 void *signal_data)
+{
+    struct t_plugin_infolist *infolist;
+    struct t_irc_server *server, *ptr_server;
+    char *plugin_name, *plugin_id, *filename;
+    int spaces_in_name;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    
+    infolist = (struct t_plugin_infolist *)signal_data;
+    
+    if (weechat_infolist_next (infolist))
+    {
+        plugin_name = weechat_infolist_string (infolist, "plugin_name");
+        plugin_id = weechat_infolist_string (infolist, "plugin_id");
+        if (plugin_name && (strcmp (plugin_name, "irc") == 0) && plugin_id)
+        {
+            sscanf (plugin_id, "%x", (unsigned int *)&server);
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                if (ptr_server == server)
+                    break;
+            }
+            if (ptr_server)
+            {
+                filename = weechat_infolist_string (infolist, "filename");
+                spaces_in_name = (strchr (filename, ' ') != NULL);
+                irc_server_sendf (server, 
+                                  "PRIVMSG %s :\01DCC RESUME %s%s%s %d %s\01",
+                                  weechat_infolist_string (infolist, "remote_nick"),
+                                  (spaces_in_name) ? "\"" : "",
+                                  filename,
+                                  (spaces_in_name) ? "\"" : "",
+                                  weechat_infolist_integer (infolist, "port"),
+                                  weechat_infolist_string (infolist, "start_resume"));
+            }
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_server_xfer_send_accept_resume_cb: callback called when xfer plugin
+ *                                        accepted resume request from receiver
+ *                                        in that case, irc plugin send accept
+ *                                        message to remote nick with resume
+ *                                        position
+ */
+
+int
+irc_server_xfer_send_accept_resume_cb (void *data, char *signal,
+                                       char *type_data, void *signal_data)
+{
+    struct t_plugin_infolist *infolist;
+    struct t_irc_server *server, *ptr_server;
+    char *plugin_name, *plugin_id, *filename;
+    int spaces_in_name;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    
+    infolist = (struct t_plugin_infolist *)signal_data;
+    
+    if (weechat_infolist_next (infolist))
+    {
+        plugin_name = weechat_infolist_string (infolist, "plugin_name");
+        plugin_id = weechat_infolist_string (infolist, "plugin_id");
+        if (plugin_name && (strcmp (plugin_name, "irc") == 0) && plugin_id)
+        {
+            sscanf (plugin_id, "%x", (unsigned int *)&server);
+            for (ptr_server = irc_servers; ptr_server;
+                 ptr_server = ptr_server->next_server)
+            {
+                if (ptr_server == server)
+                    break;
+            }
+            if (ptr_server)
+            {
+                filename = weechat_infolist_string (infolist, "filename");
+                spaces_in_name = (strchr (filename, ' ') != NULL);
+                irc_server_sendf (server, 
+                                  "PRIVMSG %s :\01DCC ACCEPT %s%s%s %d %s\01",
+                                  weechat_infolist_string (infolist, "remote_nick"),
+                                  (spaces_in_name) ? "\"" : "",
+                                  filename,
+                                  (spaces_in_name) ? "\"" : "",
+                                  weechat_infolist_integer (infolist, "port"),
+                                  weechat_infolist_string (infolist, "start_resume"));
+            }
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_server_print_log: print server infos in log (usually for crash dump)
  */
 

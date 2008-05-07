@@ -1742,12 +1742,6 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                 weechat_infolist_free (infolist);
             }
             
-            /* TODO: add DCC file */
-            //irc_dcc_add (server, IRC_DCC_FILE_RECV,
-            //             strtoul (pos_addr, NULL, 10),
-            //             atoi (pos_port), nick, -1, pos_file, NULL,
-            //             strtoul (pos_size, NULL, 10));
-                
             weechat_hook_signal_send ("irc_dcc",
                                       WEECHAT_HOOK_SIGNAL_STRING,
                                       argv_eol[0]);
@@ -1827,11 +1821,29 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                 pos--;
             }
             pos[1] = '\0';
-                
-            /* TODO: accept DCC resume */
-            //irc_dcc_accept_resume (server, pos_file, atoi (pos_port),
-            //                       strtoul (pos_start_resume, NULL, 10));
-                
+            
+            /* accept resume via xfer plugin */
+            infolist = weechat_infolist_new ();
+            if (infolist)
+            {
+                item = weechat_infolist_new_item (infolist);
+                if (item)
+                {
+                    weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
+                    snprintf (plugin_id, sizeof (plugin_id),
+                              "%x", (unsigned int)server);
+                    weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
+                    weechat_infolist_new_var_string (item, "type", "file_recv");
+                    weechat_infolist_new_var_string (item, "filename", pos_file);
+                    weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
+                    weechat_infolist_new_var_string (item, "start_resume", pos_start_resume);
+                    weechat_hook_signal_send ("xfer_accept_resume",
+                                              WEECHAT_HOOK_SIGNAL_POINTER,
+                                              infolist);
+                }
+                weechat_infolist_free (infolist);
+            }
+            
             weechat_hook_signal_send ("irc_dcc",
                                       WEECHAT_HOOK_SIGNAL_STRING,
                                       argv_eol[0]);
@@ -1911,11 +1923,29 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                 pos--;
             }
             pos[1] = '\0';
-                
-            /* TODO: resume DCC */
-            //irc_dcc_start_resume (server, pos_file, atoi (pos_port),
-            //                      strtoul (pos_start_resume, NULL, 10));
-                
+            
+            /* resume file via xfer plugin */
+            infolist = weechat_infolist_new ();
+            if (infolist)
+            {
+                item = weechat_infolist_new_item (infolist);
+                if (item)
+                {
+                    weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
+                    snprintf (plugin_id, sizeof (plugin_id),
+                              "%x", (unsigned int)server);
+                    weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
+                    weechat_infolist_new_var_string (item, "type", "file_recv");
+                    weechat_infolist_new_var_string (item, "filename", pos_file);
+                    weechat_infolist_new_var_integer (item, "port", atoi (pos_port));
+                    weechat_infolist_new_var_string (item, "start_resume", pos_start_resume);
+                    weechat_hook_signal_send ("xfer_start_resume",
+                                              WEECHAT_HOOK_SIGNAL_POINTER,
+                                              infolist);
+                }
+                weechat_infolist_free (infolist);
+            }
+            
             weechat_hook_signal_send ("irc_dcc",
                                       WEECHAT_HOOK_SIGNAL_STRING,
                                       argv_eol[0]);

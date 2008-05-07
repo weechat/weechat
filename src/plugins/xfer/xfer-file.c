@@ -56,8 +56,8 @@ xfer_file_resume (struct t_xfer *xfer, char *filename)
             if ((unsigned long) st.st_size < xfer->size)
             {
                 xfer->start_resume = (unsigned long) st.st_size;
-                xfer->pos = st.st_size;
-                xfer->last_check_pos = st.st_size;
+                xfer->pos = xfer->start_resume;
+                xfer->last_check_pos = xfer->start_resume;
                 return 1;
             }
         }

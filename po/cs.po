@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-06 16:47+0200\n"
+"POT-Creation-Date: 2008-05-07 13:30+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4274,13 +4274,13 @@ msgid "%s: sending chat request to %s"
 msgstr "Posílám požadavek DCC rozhovoru na %s%s\n"
 
 #, fuzzy, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %u"
+msgid "%s: file %s (local filename: %s) will be resumed at position %lu"
 msgstr ""
 "DCC: soubor %s%s%s (lokální jméno souboru: %s%s%s) bude obnoven na pozici %"
 "u\n"
 
 #, fuzzy, c-format
-msgid "%s%s: missing arguments"
+msgid "%s%s: missing arguments (%s)"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #, fuzzy, c-format
@@ -4316,6 +4316,26 @@ msgid "%s%s: error creating xfer"
 msgstr "%s nedostatek paměti pro infobar zprávu\n"
 
 #, fuzzy, c-format
+msgid ""
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %lu): xfer not "
+"found or not ready for transfert"
+msgstr ""
+"%s nemohu obnovit soubor \"%s\" (port: %d, počáteční pozice: %u): DCC "
+"nenalezeno nebo ukončeno\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s resumed at position %lu"
+msgstr "DCC: soubor %s%s%s bude obnoven na pozici %u\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %lu): "
+"xfer not found or not ready for transfert"
+msgstr ""
+"%s nemohu obnovit soubor \"%s\" (port: %d, počáteční pozice: %u): DCC "
+"nenalezeno nebo ukončeno\n"
+
+#, fuzzy, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "Ruším aktivní DCC: \"%s\" od %s\n"
 
@@ -4330,6 +4350,26 @@ msgstr "MB"
 
 msgid "GB"
 msgstr "GB"
+
+msgid "Actions (letter+enter):"
+msgstr ""
+
+msgid "  [A] Accept"
+msgstr "  [A] Akceptovat"
+
+msgid "  [C] Cancel"
+msgstr "  [C] Storno"
+
+msgid "  [R] Remove"
+msgstr "  [R] Odebrat"
+
+#, fuzzy
+msgid "  [P] Purge finished"
+msgstr "  [P] Pročistit staré DCC"
+
+#, fuzzy
+msgid "  [Q] Close xfer list"
+msgstr "  [Q] Zavřít DCC pohled"
 
 msgid "ETA"
 msgstr "ETA"
@@ -4353,7 +4393,7 @@ msgstr ""
 msgid "Open buffer with xfer list"
 msgstr "Otevřené buffery:\n"
 
-msgid "auto open xfer buffer and switch to it when a new xfer is added to list"
+msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 
 msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
@@ -4368,8 +4408,8 @@ msgid "background color"
 msgstr "pozadí přezdívek"
 
 #, fuzzy
-msgid "background color for selected line"
-msgstr "barva pro vstupní text"
+msgid "text color of selected xfer line"
+msgstr "barva pro jeméno serveru"
 
 #, fuzzy
 msgid "text color for \"waiting\" status"
@@ -4499,6 +4539,10 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #, fuzzy
+#~ msgid "background color for selected line"
+#~ msgstr "barva pro vstupní text"
+
+#, fuzzy
 #~ msgid "%s%s: filename missing for type \"%s\""
 #~ msgstr "%s %s, řádek %d: nevalidní volba \"%s\"\n"
 
@@ -4527,16 +4571,6 @@ msgstr "%s chybí argument pro volbu \"%s\"\n"
 #~ msgstr ""
 #~ "%s nemohu přiřadit DCC rozhovor k soukromému bufferu (možná má "
 #~ "soukromýbuffer již DCC CHAT?)\n"
-
-#~ msgid "DCC: file %s%s%s resumed at position %u\n"
-#~ msgstr "DCC: soubor %s%s%s bude obnoven na pozici %u\n"
-
-#~ msgid ""
-#~ "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found "
-#~ "or ended\n"
-#~ msgstr ""
-#~ "%s nemohu obnovit soubor \"%s\" (port: %d, počáteční pozice: %u): DCC "
-#~ "nenalezeno nebo ukončeno\n"
 
 #~ msgid "DCC chat"
 #~ msgstr "DCC rozhovor"
@@ -5865,21 +5899,6 @@ msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #~ msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 #~ msgstr "%s server/kanál (%s/%s) nenaleyen pro exec příkaz pluginu\n"
-
-#~ msgid "  [A] Accept"
-#~ msgstr "  [A] Akceptovat"
-
-#~ msgid "  [C] Cancel"
-#~ msgstr "  [C] Storno"
-
-#~ msgid "  [R] Remove"
-#~ msgstr "  [R] Odebrat"
-
-#~ msgid "  [P] Purge old DCC"
-#~ msgstr "  [P] Pročistit staré DCC"
-
-#~ msgid "  [Q] Close DCC view"
-#~ msgstr "  [Q] Zavřít DCC pohled"
 
 #~ msgid "  [Q] Close raw data view"
 #~ msgstr "  [Q] Zavřít čistý pohled na data"

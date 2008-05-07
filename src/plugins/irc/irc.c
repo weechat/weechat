@@ -106,6 +106,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     irc_debug_init ();
     weechat_hook_signal ("quit", &irc_signal_quit_cb, NULL);
     weechat_hook_signal ("xfer_send_ready", &irc_server_xfer_send_ready_cb, NULL);
+    weechat_hook_signal ("xfer_resume_ready", &irc_server_xfer_resume_ready_cb, NULL);
+    weechat_hook_signal ("xfer_send_accept_resume", &irc_server_xfer_send_accept_resume_cb, NULL);
     
     /* hook completions */
     irc_completion_init ();

@@ -188,6 +188,11 @@ extern void irc_server_free (struct t_irc_server *server);
 extern void irc_server_free_data (struct t_irc_server *server);
 extern int irc_server_xfer_send_ready_cb (void *data, char *signal,
                                           char *type_data, void *signal_data);
+extern int irc_server_xfer_resume_ready_cb (void *data, char *signal,
+                                            char *type_data, void *signal_data);
+extern int irc_server_xfer_send_accept_resume_cb (void *data, char *signal,
+                                                  char *type_data,
+                                                  void *signal_data);
 extern void irc_server_print_log ();
 
 #endif /* irc-server.h */

@@ -42,8 +42,8 @@ void
 xfer_buffer_refresh (char *hotlist)
 {
     struct t_xfer *ptr_xfer, *xfer_selected;
-    char str_color[256], status[64], date[128], *progress_bar, format[128];
-    char format_per_sec[128], bytes_per_sec[256], eta[128];
+    char str_color[256], suffix[32], status[64], date[128], *progress_bar;
+    char format[128], format_per_sec[128], bytes_per_sec[256], eta[128];
     int i, length, line, progress_bar_size, num_bars, num_unit;
     int num_unit_per_sec;
     unsigned long pct_complete;
@@ -60,8 +60,9 @@ xfer_buffer_refresh (char *hotlist)
         if (xfer_selected)
         {
             weechat_printf_y (xfer_buffer, 0,
-                              "%sActions (letter+enter):%s%s%s%s%s%s",
+                              "%s%s%s%s%s%s%s%s",
                               weechat_color("green"),
+                              _("Actions (letter+enter):"),
                               weechat_color("lightgreen"),
                               /* accept */
                               (XFER_IS_RECV(xfer_selected->type)
@@ -80,6 +81,13 @@ xfer_buffer_refresh (char *hotlist)
         }
         for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
         {
+            suffix[0] = '\0';
+            if (ptr_xfer->filename_suffix >= 0)
+            {
+                snprintf (suffix, sizeof (suffix),
+                          " (.%d)", ptr_xfer->filename_suffix);
+            }
+            
             snprintf (str_color, sizeof (str_color),
                       "%s,%s",
                       (line == xfer_buffer_selected_line) ?
@@ -89,7 +97,7 @@ xfer_buffer_refresh (char *hotlist)
             
             /* display first line with remote nick and filename */
             weechat_printf_y (xfer_buffer, (line * 2) + 2,
-                              "%s%s%-24s %s%s%s",
+                              "%s%s%-24s %s%s%s%s",
                               weechat_color(str_color),
                               (line == xfer_buffer_selected_line) ?
                               "*** " : "    ",
@@ -97,8 +105,9 @@ xfer_buffer_refresh (char *hotlist)
                               (XFER_IS_FILE(ptr_xfer->type)) ? "\"" : "",
                               (XFER_IS_FILE(ptr_xfer->type)) ?
                               ptr_xfer->filename : _("xfer chat"),
-                              (XFER_IS_FILE(ptr_xfer->type)) ? "\"" : "");
-
+                              (XFER_IS_FILE(ptr_xfer->type)) ? "\"" : "",
+                              suffix);
+            
             snprintf (status, sizeof (status),
                       "%s", _(xfer_status_string[ptr_xfer->status]));
             length = weechat_utf8_strlen_screen (status);

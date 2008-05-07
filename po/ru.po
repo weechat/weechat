@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-06 16:47+0200\n"
+"POT-Creation-Date: 2008-05-07 13:30+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4263,12 +4263,12 @@ msgid "%s: sending chat request to %s"
 msgstr "Отправляю запрос на DCC-чат %s%s\n"
 
 #, fuzzy, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %u"
+msgid "%s: file %s (local filename: %s) will be resumed at position %lu"
 msgstr ""
 "DCC: файл %s%s%s (локальное имя файла: %s%s%s) будет продолжен с позиции %u\n"
 
 #, fuzzy, c-format
-msgid "%s%s: missing arguments"
+msgid "%s%s: missing arguments (%s)"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy, c-format
@@ -4304,6 +4304,26 @@ msgid "%s%s: error creating xfer"
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 #, fuzzy, c-format
+msgid ""
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %lu): xfer not "
+"found or not ready for transfert"
+msgstr ""
+"%s не могу продолжить файл \"%s\" (порт: %d, начальная позиция: %u): DCC не "
+"найден или завершён\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s resumed at position %lu"
+msgstr "DCC: файл %s%s%s продолжается с позиции %u\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %lu): "
+"xfer not found or not ready for transfert"
+msgstr ""
+"%s не могу продолжить файл \"%s\" (порт: %d, начальная позиция: %u): DCC не "
+"найден или завершён\n"
+
+#, fuzzy, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "Отменяю активное DCC-сединение: \"%s\" от %s\n"
 
@@ -4318,6 +4338,26 @@ msgstr "МБ"
 
 msgid "GB"
 msgstr "ГБ"
+
+msgid "Actions (letter+enter):"
+msgstr ""
+
+msgid "  [A] Accept"
+msgstr "  [A] Принять"
+
+msgid "  [C] Cancel"
+msgstr "  [C] Отменить"
+
+msgid "  [R] Remove"
+msgstr "  [R] Удалить"
+
+#, fuzzy
+msgid "  [P] Purge finished"
+msgstr "  [P] Очистить список"
+
+#, fuzzy
+msgid "  [Q] Close xfer list"
+msgstr "  [Q] Закрыть окно"
 
 msgid "ETA"
 msgstr "осталось"
@@ -4341,7 +4381,7 @@ msgstr ""
 msgid "Open buffer with xfer list"
 msgstr "Открытые буферы:\n"
 
-msgid "auto open xfer buffer and switch to it when a new xfer is added to list"
+msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 
 msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
@@ -4356,8 +4396,8 @@ msgid "background color"
 msgstr "фон ников"
 
 #, fuzzy
-msgid "background color for selected line"
-msgstr "цвет вводимого текста"
+msgid "text color of selected xfer line"
+msgstr "цвет названия сервера"
 
 #, fuzzy
 msgid "text color for \"waiting\" status"
@@ -4488,6 +4528,10 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy
+#~ msgid "background color for selected line"
+#~ msgstr "цвет вводимого текста"
+
+#, fuzzy
 #~ msgid "%s%s: filename missing for type \"%s\""
 #~ msgstr "%s %s, строка %d: некорректный параметр \"%s\"\n"
 
@@ -4516,16 +4560,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgstr ""
 #~ "%s не могу ассоциировать DCC-чат с буфером (возможно буфер уже имеет DCC-"
 #~ "чат)\n"
-
-#~ msgid "DCC: file %s%s%s resumed at position %u\n"
-#~ msgstr "DCC: файл %s%s%s продолжается с позиции %u\n"
-
-#~ msgid ""
-#~ "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found "
-#~ "or ended\n"
-#~ msgstr ""
-#~ "%s не могу продолжить файл \"%s\" (порт: %d, начальная позиция: %u): DCC "
-#~ "не найден или завершён\n"
 
 #~ msgid "DCC chat"
 #~ msgstr "DCC чат"
@@ -5866,21 +5900,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #~ msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 #~ msgstr "%s сервер/канал (%s/%s) не найден для команды plug-inа\n"
-
-#~ msgid "  [A] Accept"
-#~ msgstr "  [A] Принять"
-
-#~ msgid "  [C] Cancel"
-#~ msgstr "  [C] Отменить"
-
-#~ msgid "  [R] Remove"
-#~ msgstr "  [R] Удалить"
-
-#~ msgid "  [P] Purge old DCC"
-#~ msgstr "  [P] Очистить список"
-
-#~ msgid "  [Q] Close DCC view"
-#~ msgstr "  [Q] Закрыть окно"
 
 #~ msgid "  [Q] Close raw data view"
 #~ msgstr "  [Q] Закрыть окно сырых данных"

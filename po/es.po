@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-06 16:47+0200\n"
+"POT-Creation-Date: 2008-05-07 13:30+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4263,13 +4263,13 @@ msgid "%s: sending chat request to %s"
 msgstr "EnvÃ­o de peticiÃ³n de charla DCC a %s%s\n"
 
 #, fuzzy, c-format
-msgid "%s: file %s (local filename: %s) will be resumed at position %u"
+msgid "%s: file %s (local filename: %s) will be resumed at position %lu"
 msgstr ""
 "DCC: el archivo %s%s%s (nombre de archivo local: %s%s%s) serÃ¡ reanudado en "
 "la posiciÃ³n %u\n"
 
 #, fuzzy, c-format
-msgid "%s%s: missing arguments"
+msgid "%s%s: missing arguments (%s)"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #, fuzzy, c-format
@@ -4307,6 +4307,26 @@ msgstr ""
 "No hay suficiente memoria para el mensaje de la barra de informaciÃ³n\n"
 
 #, fuzzy, c-format
+msgid ""
+"%s%s: unable to resume file \"%s\" (port: %d, start position: %lu): xfer not "
+"found or not ready for transfert"
+msgstr ""
+"%s no puede reanudar el archivo \"%s\" (puerto: %d, posiciÃ³n de inicio: %"
+"u): DCC no encontrado o terminado\n"
+
+#, fuzzy, c-format
+msgid "%s: file %s resumed at position %lu"
+msgstr "DCC: archivo %s%s%s reanudado en la posiciÃ³n %u\n"
+
+#, fuzzy, c-format
+msgid ""
+"%s%s: unable to accept resume file \"%s\" (port: %d, start position: %lu): "
+"xfer not found or not ready for transfert"
+msgstr ""
+"%s no puede reanudar el archivo \"%s\" (puerto: %d, posiciÃ³n de inicio: %"
+"u): DCC no encontrado o terminado\n"
+
+#, fuzzy, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "Abandonar el DCC activo: \"%s\" de %s\n"
 
@@ -4321,6 +4341,26 @@ msgstr ""
 
 msgid "GB"
 msgstr ""
+
+msgid "Actions (letter+enter):"
+msgstr ""
+
+msgid "  [A] Accept"
+msgstr "  [A] Aceptar"
+
+msgid "  [C] Cancel"
+msgstr "  [C] Cancelar"
+
+msgid "  [R] Remove"
+msgstr "  [R] Eliminar"
+
+#, fuzzy
+msgid "  [P] Purge finished"
+msgstr "  [P] Purgar los viejos DCC"
+
+#, fuzzy
+msgid "  [Q] Close xfer list"
+msgstr "  [Q] Cerrar la vista DCC"
 
 msgid "ETA"
 msgstr "Tiempo estimado de llegada"
@@ -4344,7 +4384,7 @@ msgstr ""
 msgid "Open buffer with xfer list"
 msgstr "BÃºfers abiertos:\n"
 
-msgid "auto open xfer buffer and switch to it when a new xfer is added to list"
+msgid "auto open xfer buffer when a new xfer is added to list"
 msgstr ""
 
 msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
@@ -4359,8 +4399,8 @@ msgid "background color"
 msgstr "color de fondo para los nombres de usuario"
 
 #, fuzzy
-msgid "background color for selected line"
-msgstr "color para el texto de entrada"
+msgid "text color of selected xfer line"
+msgstr "color para el nombre del servidor"
 
 #, fuzzy
 msgid "text color for \"waiting\" status"
@@ -4497,6 +4537,10 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #, fuzzy
+#~ msgid "background color for selected line"
+#~ msgstr "color para el texto de entrada"
+
+#, fuzzy
 #~ msgid "%s%s: filename missing for type \"%s\""
 #~ msgstr "%s %s, lÃ­nea %d: opciÃ³n \"%s\" invÃ¡lida\n"
 
@@ -4525,16 +4569,6 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ msgstr ""
 #~ "%s no se puede asociar la conversaciÃ³n DCC con el bÃºfer privado (quizÃ¡ "
 #~ "el bÃºfer privado ya tiene DCC CHAT)\n"
-
-#~ msgid "DCC: file %s%s%s resumed at position %u\n"
-#~ msgstr "DCC: archivo %s%s%s reanudado en la posiciÃ³n %u\n"
-
-#~ msgid ""
-#~ "%s can't resume file \"%s\" (port: %d, start position: %u): DCC not found "
-#~ "or ended\n"
-#~ msgstr ""
-#~ "%s no puede reanudar el archivo \"%s\" (puerto: %d, posiciÃ³n de inicio: %"
-#~ "u): DCC no encontrado o terminado\n"
 
 #~ msgid "DCC chat"
 #~ msgstr "Charla DCC"
@@ -5892,21 +5926,6 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ msgid "%s server/channel (%s/%s) not found for plugin exec command\n"
 #~ msgstr ""
 #~ "%s servidor/canal (%s/%s) no encontrado para el plugin de comando exec\n"
-
-#~ msgid "  [A] Accept"
-#~ msgstr "  [A] Aceptar"
-
-#~ msgid "  [C] Cancel"
-#~ msgstr "  [C] Cancelar"
-
-#~ msgid "  [R] Remove"
-#~ msgstr "  [R] Eliminar"
-
-#~ msgid "  [P] Purge old DCC"
-#~ msgstr "  [P] Purgar los viejos DCC"
-
-#~ msgid "  [Q] Close DCC view"
-#~ msgstr "  [Q] Cerrar la vista DCC"
 
 #~ msgid "  [Q] Close raw data view"
 #~ msgstr "  [Q] Cerrar vista de datos basura"

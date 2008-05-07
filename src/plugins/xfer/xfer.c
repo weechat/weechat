@@ -140,13 +140,16 @@ xfer_search_protocol (char *protocol)
  */
 
 struct t_xfer *
-xfer_search (enum t_xfer_type type, enum t_xfer_status status, int port)
+xfer_search (char *plugin_name, char *plugin_id, enum t_xfer_type type,
+             enum t_xfer_status status, int port)
 {
     struct t_xfer *ptr_xfer;
     
     for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
     {
-        if ((ptr_xfer->type == type)
+        if ((weechat_strcasecmp (ptr_xfer->plugin_name, plugin_name) == 0)
+            && (weechat_strcasecmp (ptr_xfer->plugin_id, plugin_id) == 0)
+            && (ptr_xfer->type == type)
             && (ptr_xfer->status = status)
             && (ptr_xfer->port == port))
             return ptr_xfer;
@@ -318,6 +321,9 @@ xfer_send_signal (struct t_xfer *xfer, char *signal)
                                              xfer->filename);
             snprintf (str_long, sizeof (str_long), "%lu", xfer->size);
             weechat_infolist_new_var_string (item, "size",
+                                             str_long);
+            snprintf (str_long, sizeof (str_long), "%lu", xfer->start_resume);
+            weechat_infolist_new_var_string (item, "start_resume",
                                              str_long);
             snprintf (str_long, sizeof (str_long), "%lu", xfer->address);
             weechat_infolist_new_var_string (item, "address",
@@ -510,7 +516,7 @@ xfer_new (char *plugin_name, char *plugin_id, enum t_xfer_type type,
     {
         weechat_printf (NULL,
                         _("%s: file %s (local filename: %s) "
-                          "will be resumed at position %u"),
+                          "will be resumed at position %lu"),
                         "xfer",
                         new_xfer->filename,
                         new_xfer->local_filename,
@@ -620,15 +626,11 @@ xfer_add_cb (void *data, char *signal, char *type_data, void *signal_data)
     (void) signal;
     (void) type_data;
     
-    filename2 = NULL;
-    short_filename = NULL;
-    spaces = 0;
-    
     if (!signal_data)
     {
         weechat_printf (NULL,
-                        _("%s%s: missing arguments"),
-                        weechat_prefix ("error"), "xfer");
+                        _("%s%s: missing arguments (%s)"),
+                        weechat_prefix ("error"), "xfer", "xfer_add");
         return WEECHAT_RC_ERROR;
     }
     
@@ -637,10 +639,14 @@ xfer_add_cb (void *data, char *signal, char *type_data, void *signal_data)
     if (!weechat_infolist_next (infolist))
     {
         weechat_printf (NULL,
-                        _("%s%s: missing arguments"),
-                        weechat_prefix ("error"), "xfer");
+                        _("%s%s: missing arguments (%s)"),
+                        weechat_prefix ("error"), "xfer", "xfer_add");
         return WEECHAT_RC_ERROR;
     }
+
+    filename2 = NULL;
+    short_filename = NULL;
+    spaces = 0;
     
     plugin_name = weechat_infolist_string (infolist, "plugin_name");
     plugin_id = weechat_infolist_string (infolist, "plugin_id");
@@ -654,8 +660,8 @@ xfer_add_cb (void *data, char *signal, char *type_data, void *signal_data)
     if (!plugin_name || !plugin_id || !str_type || !remote_nick || !local_nick)
     {
         weechat_printf (NULL,
-                        _("%s%s: missing arguments"),
-                        weechat_prefix ("error"), "xfer");
+                        _("%s%s: missing arguments (%s)"),
+                        weechat_prefix ("error"), "xfer", "xfer_add");
         return WEECHAT_RC_ERROR;
     }
 
@@ -671,8 +677,8 @@ xfer_add_cb (void *data, char *signal, char *type_data, void *signal_data)
     if (XFER_IS_FILE(type) && (!filename || !str_protocol))
     {
         weechat_printf (NULL,
-                        _("%s%s: missing arguments"),
-                        weechat_prefix ("error"), "xfer");
+                        _("%s%s: missing arguments (%s)"),
+                        weechat_prefix ("error"), "xfer", "xfer_add");
         return WEECHAT_RC_ERROR;
     }
     
@@ -930,13 +936,173 @@ xfer_add_cb (void *data, char *signal, char *type_data, void *signal_data)
     }
     
     /* send signal if type is file or chat "send" */
-    if (XFER_IS_SEND(ptr_xfer->type))
+    if (XFER_IS_SEND(ptr_xfer->type) && !XFER_HAS_ENDED(ptr_xfer->status))
         xfer_send_signal (ptr_xfer, "xfer_send_ready");
     
     if (short_filename)
         free (short_filename);
     if (filename2)
         free (filename2);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * xfer_start_resume_cb: callback called when resume is accepted by sender
+ */
+
+int
+xfer_start_resume_cb (void *data, char *signal, char *type_data,
+                      void *signal_data)
+{
+    struct t_plugin_infolist *infolist;
+    struct t_xfer *ptr_xfer;
+    char *plugin_name, *plugin_id, *filename, *str_start_resume;
+    int port;
+    unsigned long start_resume;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    
+    if (!signal_data)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: missing arguments (%s)"),
+                        weechat_prefix ("error"), "xfer", "xfer_start_resume");
+        return WEECHAT_RC_ERROR;
+    }
+    
+    infolist = (struct t_plugin_infolist *)signal_data;
+    
+    if (!weechat_infolist_next (infolist))
+    {
+        weechat_printf (NULL,
+                        _("%s%s: missing arguments (%s)"),
+                        weechat_prefix ("error"), "xfer", "xfer_start_resume");
+        return WEECHAT_RC_ERROR;
+    }
+
+    plugin_name = weechat_infolist_string (infolist, "plugin_name");
+    plugin_id = weechat_infolist_string (infolist, "plugin_id");
+    filename = weechat_infolist_string (infolist, "filename");
+    port = weechat_infolist_integer (infolist, "port");
+    str_start_resume = weechat_infolist_string (infolist, "start_resume");
+
+    if (!plugin_name || !plugin_id || !filename || !str_start_resume)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: missing arguments (%s)"),
+                        weechat_prefix ("error"), "xfer", "xfer_start_resume");
+        return WEECHAT_RC_ERROR;
+    }
+    
+    sscanf (str_start_resume, "%lu", &start_resume);
+    
+    ptr_xfer = xfer_search (plugin_name, plugin_id, XFER_TYPE_FILE_RECV,
+                            XFER_STATUS_CONNECTING, port);
+    if (ptr_xfer)
+    {
+        ptr_xfer->pos = start_resume;
+        ptr_xfer->ack = start_resume;
+        ptr_xfer->start_resume = start_resume;
+        ptr_xfer->last_check_pos = start_resume;
+        xfer_network_connect_init (ptr_xfer);
+    }
+    else
+    {
+        weechat_printf (NULL,
+                        _("%s%s: unable to resume file \"%s\" (port: %d, "
+                           "start position: %lu): xfer not found or not ready "
+                          "for transfert"),
+                        weechat_prefix ("error"), "xfer", filename, port,
+                        start_resume);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * xfer_accept_resume_cb: callback called when sender receives resume request
+ *                        from recever
+ */
+
+int
+xfer_accept_resume_cb (void *data, char *signal, char *type_data,
+                       void *signal_data)
+{
+    struct t_plugin_infolist *infolist;
+    struct t_xfer *ptr_xfer;
+    char *plugin_name, *plugin_id, *filename, *str_start_resume;
+    int port;
+    unsigned long start_resume;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    
+    if (!signal_data)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: missing arguments (%s)"),
+                        weechat_prefix ("error"), "xfer", "xfer_accept_resume");
+        return WEECHAT_RC_ERROR;
+    }
+    
+    infolist = (struct t_plugin_infolist *)signal_data;
+    
+    if (!weechat_infolist_next (infolist))
+    {
+        weechat_printf (NULL,
+                        _("%s%s: missing arguments (%s)"),
+                        weechat_prefix ("error"), "xfer", "xfer_accept_resume");
+        return WEECHAT_RC_ERROR;
+    }
+
+    plugin_name = weechat_infolist_string (infolist, "plugin_name");
+    plugin_id = weechat_infolist_string (infolist, "plugin_id");
+    filename = weechat_infolist_string (infolist, "filename");
+    port = weechat_infolist_integer (infolist, "port");
+    str_start_resume = weechat_infolist_string (infolist, "start_resume");
+
+    if (!plugin_name || !plugin_id || !filename || !str_start_resume)
+    {
+        weechat_printf (NULL,
+                        _("%s%s: missing arguments (%s)"),
+                        weechat_prefix ("error"), "xfer", "xfer_accept_resume");
+        return WEECHAT_RC_ERROR;
+    }
+    
+    sscanf (str_start_resume, "%lu", &start_resume);
+    
+    ptr_xfer = xfer_search (plugin_name, plugin_id, XFER_TYPE_FILE_SEND,
+                            XFER_STATUS_CONNECTING, port);
+    if (ptr_xfer)
+    {
+        ptr_xfer->pos = start_resume;
+        ptr_xfer->ack = start_resume;
+        ptr_xfer->start_resume = start_resume;
+        ptr_xfer->last_check_pos = start_resume;
+        xfer_send_signal (ptr_xfer, "xfer_send_accept_resume");
+        
+        weechat_printf (NULL,
+                        _("%s: file %s resumed at position %lu"),
+                        "xfer",
+                        ptr_xfer->filename,
+                        ptr_xfer->start_resume);
+        xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
+    }
+    else
+    {
+        weechat_printf (NULL,
+                        _("%s%s: unable to accept resume file \"%s\" (port: %d, "
+                           "start position: %lu): xfer not found or not ready "
+                          "for transfert"),
+                        weechat_prefix ("error"), "xfer", filename, port,
+                        start_resume);
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -1042,6 +1208,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     xfer_command_init ();
     
     weechat_hook_signal ("xfer_add", &xfer_add_cb, NULL);
+    weechat_hook_signal ("xfer_start_resume", &xfer_start_resume_cb, NULL);
+    weechat_hook_signal ("xfer_accept_resume", &xfer_accept_resume_cb, NULL);
     weechat_hook_signal ("debug_dump", &xfer_debug_dump_cb, NULL);
     
     return WEECHAT_RC_OK;

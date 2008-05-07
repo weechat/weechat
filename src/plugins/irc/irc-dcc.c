@@ -47,25 +47,6 @@ struct t_irc_dcc *irc_last_dcc = NULL; /* last DCC in list                  */
 
 
 /*
- * irc_dcc_chat_remove_channel: remove a buffer for DCC chat
- */
- /*
-void
-irc_dcc_chat_remove_channel (struct t_irc_channel *channel)
-{
-    struct t_irc_dcc *ptr_dcc;
-    
-    if (!channel)
-        return;
-
-    for (ptr_dcc = irc_dcc_list; ptr_dcc; ptr_dcc = ptr_dcc->next_dcc)
-    {
-        if (ptr_dcc->channel == channel)
-            ptr_dcc->channel = NULL;
-    }
-}
-*/
-/*
  * irc_dcc_accept_resume: accepts a resume and inform the receiver
  */
 /*
@@ -97,34 +78,6 @@ irc_dcc_accept_resume (struct t_irc_server *server, char *filename, int port,
                               GUI_COLOR(GUI_COLOR_CHAT),
                               ptr_dcc->start_resume);
         irc_dcc_redraw (WEECHAT_HOTLIST_MESSAGE);
-    }
-    else
-        gui_chat_printf (server->buffer,
-                         _("%s can't resume file \"%s\" (port: %d, start "
-                           "position: %u): DCC not found or ended\n"),
-                         WEECHAT_ERROR, filename, port, pos_start);
-}
-*/
-/*
- * irc_dcc_start_resume: called when "DCC ACCEPT" is received
- *                       (resume accepted by sender)
- */
-/*
-void
-irc_dcc_start_resume (struct t_irc_server *server, char *filename, int port,
-                      unsigned long pos_start)
-{
-    struct t_irc_dcc *ptr_dcc;
-    
-    ptr_dcc = irc_dcc_search (server, IRC_DCC_FILE_RECV, IRC_DCC_CONNECTING,
-                              port);
-    if (ptr_dcc)
-    {
-        ptr_dcc->pos = pos_start;
-        ptr_dcc->ack = pos_start;
-        ptr_dcc->start_resume = pos_start;
-        ptr_dcc->last_check_pos = pos_start;
-        irc_dcc_recv_connect_init (ptr_dcc);
     }
     else
         gui_chat_printf (server->buffer,
