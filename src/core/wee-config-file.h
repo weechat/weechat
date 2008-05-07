@@ -203,12 +203,13 @@ extern int config_file_option_reset (struct t_config_option *option,
                                      int run_callback);
 extern int config_file_option_set (struct t_config_option *option,
                                    char *value, int run_callback);
+extern int config_file_option_unset (struct t_config_option *option);
 extern void config_file_option_rename (struct t_config_option *option,
                                        char *new_name);
 extern void *config_file_option_get_pointer (struct t_config_option *option,
                                              char *property);
 extern int config_file_option_set_with_string (char *option_name, char *value);
-extern int config_file_unset_with_string (char *option_name);
+extern int config_file_option_unset_with_string (char *option_name);
 extern int config_file_option_boolean (struct t_config_option *option);
 extern int config_file_option_integer (struct t_config_option *option);
 extern char *config_file_option_string (struct t_config_option *option);

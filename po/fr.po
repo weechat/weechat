@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-07 14:31+0200\n"
-"PO-Revision-Date: 2008-05-07 14:31+0200\n"
+"POT-Creation-Date: 2008-05-07 15:25+0200\n"
+"PO-Revision-Date: 2008-05-07 15:26+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -504,18 +504,19 @@ msgid "Option changed"
 msgstr "Option modifiée"
 
 #, c-format
-msgid "%sOption \"%s\" not found"
-msgstr "%sOption \"%s\" non trouvée"
+msgid "%sFailed to unset option \"%s\""
+msgstr "%sImpossible de supprimer/réinitialiser l'option \"%s\""
 
 msgid "Option reset: "
 msgstr "Option réinitialisée: "
 
-msgid "Option reset"
-msgstr "Option réinitialisée"
+#, c-format
+msgid "Option removed: %s"
+msgstr "Option supprimée: %s"
 
 #, c-format
-msgid "Option \"%s\" removed"
-msgstr "Option \"%s\" supprimée"
+msgid "%d option(s) reset, %d option(s) removed"
+msgstr "%d option(s) réinitialisée(s), %d option(s) supprimée(s)"
 
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
@@ -857,16 +858,15 @@ msgid "[option]"
 msgstr "[option]"
 
 msgid ""
-"option: name of an option\n"
+"option: name of an option (may begin or end with \"*\" to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values)."
 msgstr ""
-"option: nom d'une option\n"
+"option: nom d'une option (peut commencer ou se terminer par \"*\" pour réinitialiser plusieurs options, à utiliser avec prudence !)\n"
 "\n"
-"Selon l'option, elle est réinitialisée (pour les options standards) ou "
-"supprimée (pour les options facultatives, comme les valeurs pour les "
-"serveurs)."
+"Selon l'option, elle est réinitialisée (pour les options standards) ou supprimée (pour les options facultatives, comme les valeurs pour les serveurs)."
 
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "mettre à jour WeeChat sans se déconnecter des serveurs"
@@ -4397,7 +4397,9 @@ msgstr ""
 "l'utilisateur)"
 
 msgid "use remote nick as prefix in local filename when receiving a file"
-msgstr "utiliser le pseudo distant comme préfixe dans le nom de fichier local lors de la réception d'un fichier"
+msgstr ""
+"utiliser le pseudo distant comme préfixe dans le nom de fichier local lors "
+"de la réception d'un fichier"
 
 msgid "convert spaces to underscores when sending files"
 msgstr "convertir les espaces en underscores lors d'envoi de fichiers"
@@ -4465,6 +4467,12 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "%sOption \"%s\" not found"
+#~ msgstr "%sOption \"%s\" non trouvée"
+
+#~ msgid "Option reset"
+#~ msgstr "Option réinitialisée"
 
 #~ msgid "background color for selected line"
 #~ msgstr "couleur du fond pour la ligne sélectionnée"

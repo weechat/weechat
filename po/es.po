@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-07 14:31+0200\n"
+"POT-Creation-Date: 2008-05-07 15:25+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -551,20 +551,20 @@ msgid "Option changed"
 msgstr "no presente en el canal"
 
 #, fuzzy, c-format
-msgid "%sOption \"%s\" not found"
-msgstr "%s plugin \"%s\" no encontrado\n"
+msgid "%sFailed to unset option \"%s\""
+msgstr "%s fallÃ³ al salvar el archivo de configuraciÃ³n\n"
 
 #, fuzzy
 msgid "Option reset: "
 msgstr "opciÃ³n/opciones de plugin encontrada(s)\n"
 
-#, fuzzy
-msgid "Option reset"
-msgstr "opciÃ³n/opciones de plugin encontrada(s)\n"
-
 #, fuzzy, c-format
-msgid "Option \"%s\" removed"
+msgid "Option removed: %s"
 msgstr "no presente en el canal"
+
+#, c-format
+msgid "%d option(s) reset, %d option(s) removed"
+msgstr ""
 
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
@@ -842,7 +842,8 @@ msgid "[option]"
 msgstr "[comando]"
 
 msgid ""
-"option: name of an option\n"
+"option: name of an option (may begin or end with \"*\" to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values)."
@@ -4538,6 +4539,14 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "%sOption \"%s\" not found"
+#~ msgstr "%s plugin \"%s\" no encontrado\n"
+
+#, fuzzy
+#~ msgid "Option reset"
+#~ msgstr "opciÃ³n/opciones de plugin encontrada(s)\n"
 
 #, fuzzy
 #~ msgid "background color for selected line"

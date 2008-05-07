@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-07 14:31+0200\n"
+"POT-Creation-Date: 2008-05-07 15:25+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -555,20 +555,20 @@ msgid "Option changed"
 msgstr "nincs a szobában"
 
 #, fuzzy, c-format
-msgid "%sOption \"%s\" not found"
-msgstr "%s a \"%s\" modul nem található\n"
+msgid "%sFailed to unset option \"%s\""
+msgstr "%s nem sikerült a modul opciókat elmenteni\n"
 
 #, fuzzy
 msgid "Option reset: "
 msgstr "Modul beállítások elmentve\n"
 
-#, fuzzy
-msgid "Option reset"
-msgstr "Modul beállítások elmentve\n"
-
 #, fuzzy, c-format
-msgid "Option \"%s\" removed"
+msgid "Option removed: %s"
 msgstr "nincs a szobában"
+
+#, c-format
+msgid "%d option(s) reset, %d option(s) removed"
+msgstr ""
 
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
@@ -872,7 +872,8 @@ msgid "[option]"
 msgstr "[parancs]"
 
 msgid ""
-"option: name of an option\n"
+"option: name of an option (may begin or end with \"*\" to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values)."
@@ -4544,6 +4545,14 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "%sOption \"%s\" not found"
+#~ msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy
+#~ msgid "Option reset"
+#~ msgstr "Modul beállítások elmentve\n"
 
 #, fuzzy
 #~ msgid "background color for selected line"

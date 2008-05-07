@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-07 14:31+0200\n"
+"POT-Creation-Date: 2008-05-07 15:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -483,17 +483,18 @@ msgid "Option changed"
 msgstr ""
 
 #, c-format
-msgid "%sOption \"%s\" not found"
+msgid "%sFailed to unset option \"%s\""
 msgstr ""
 
 msgid "Option reset: "
 msgstr ""
 
-msgid "Option reset"
+#, c-format
+msgid "Option removed: %s"
 msgstr ""
 
 #, c-format
-msgid "Option \"%s\" removed"
+msgid "%d option(s) reset, %d option(s) removed"
 msgstr ""
 
 #, c-format
@@ -729,7 +730,8 @@ msgid "[option]"
 msgstr ""
 
 msgid ""
-"option: name of an option\n"
+"option: name of an option (may begin or end with \"*\" to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values)."

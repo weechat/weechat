@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-07 14:31+0200\n"
+"POT-Creation-Date: 2008-05-07 15:25+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -552,20 +552,20 @@ msgid "Option changed"
 msgstr "не на канале"
 
 #, fuzzy, c-format
-msgid "%sOption \"%s\" not found"
-msgstr "%s plugin \"%s\" не найден\n"
+msgid "%sFailed to unset option \"%s\""
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
 #, fuzzy
 msgid "Option reset: "
 msgstr "Настройки pluginов сохранены\n"
 
-#, fuzzy
-msgid "Option reset"
-msgstr "Настройки pluginов сохранены\n"
-
 #, fuzzy, c-format
-msgid "Option \"%s\" removed"
+msgid "Option removed: %s"
 msgstr "не на канале"
+
+#, c-format
+msgid "%d option(s) reset, %d option(s) removed"
+msgstr ""
 
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
@@ -869,7 +869,8 @@ msgid "[option]"
 msgstr "[команда]"
 
 msgid ""
-"option: name of an option\n"
+"option: name of an option (may begin or end with \"*\" to mass-reset "
+"options, use carefully!)\n"
 "\n"
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values)."
@@ -4529,6 +4530,14 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sOption \"%s\" not found"
+#~ msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy
+#~ msgid "Option reset"
+#~ msgstr "Настройки pluginов сохранены\n"
 
 #, fuzzy
 #~ msgid "background color for selected line"

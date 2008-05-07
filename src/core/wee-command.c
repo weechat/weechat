@@ -1906,10 +1906,10 @@ int
 command_set_display_option_list (char *message, char *search)
 {
     int number_found, section_displayed, length;
-    char *option_full_name;
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
+    char *option_full_name;
     
     number_found = 0;
     
@@ -1934,7 +1934,7 @@ command_set_display_option_list (char *message, char *search)
                               ptr_config->name, ptr_section->name,
                               ptr_option->name);
                     if ((!search) ||
-                        (search && search[0] && option_full_name
+                        (search && search[0]
                          && (string_match (option_full_name, search, 0))))
                     {
                         if (!section_displayed)
@@ -2065,36 +2065,79 @@ int
 command_unset (void *data, struct t_gui_buffer *buffer,
                int argc, char **argv, char **argv_eol)
 {
-    struct t_config_option *ptr_option;
+    struct t_config_file *ptr_config;
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option, *next_option;
+    char *option_full_name;
+    int length, number_reset, number_removed;
     
     /* make C compiler happy */
     (void) data;
     (void) buffer;
     (void) argv;
     
+    number_reset = 0;
+    number_removed = 0;
+    
     if (argc >= 2)
     {
-        switch (config_file_unset_with_string (argv_eol[1]))
+        for (ptr_config = config_files; ptr_config;
+             ptr_config = ptr_config->next_config)
         {
-            case 0:
-                gui_chat_printf (NULL, _("%sOption \"%s\" not found"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 argv_eol[1]);
-                break;
-            case 1:
-                config_file_search_with_string (argv[1], NULL, NULL,
-                                                &ptr_option, NULL);
-                if (ptr_option)
-                    command_set_display_option (ptr_option,
-                                                _("Option reset: "));
-                else
-                    gui_chat_printf (NULL, _("Option reset"));
-                break;
-            case 2:
-                gui_chat_printf (NULL, _("Option \"%s\" removed"),
-                                 argv_eol[1]);
-                break;
+            for (ptr_section = ptr_config->sections; ptr_section;
+                 ptr_section = ptr_section->next_section)
+            {
+                ptr_option = ptr_section->options;
+                while (ptr_option)
+                {
+                    next_option = ptr_option->next_option;
+                    
+                    length = strlen (ptr_config->name) + 1
+                        + strlen (ptr_section->name) + 1
+                        + strlen (ptr_option->name) + 1;
+                    option_full_name = malloc (length);
+                    if (option_full_name)
+                    {
+                        snprintf (option_full_name, length, "%s.%s.%s",
+                                  ptr_config->name, ptr_section->name,
+                                  ptr_option->name);
+                        if (string_match (option_full_name, argv_eol[1], 0))
+                        {
+                            switch (config_file_option_unset (ptr_option))
+                            {
+                                case -1: /* error */
+                                    gui_chat_printf (NULL,
+                                                     _("%sFailed to unset "
+                                                       "option \"%s\""),
+                                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                                     option_full_name);
+                                    break;
+                                case 0: /* unset not needed on this option */
+                                    break;
+                                case 1: /* option reset */
+                                    command_set_display_option (ptr_option,
+                                                                _("Option reset: "));
+                                    number_reset++;
+                                    break;
+                                case 2: /* option removed */
+                                    gui_chat_printf (NULL,
+                                                     _("Option removed: %s"),
+                                                     option_full_name);
+                                    number_removed++;
+                                    break;
+                            }
+                        }
+                        free (option_full_name);
+                    }
+                    
+                    ptr_option = next_option;
+                }
+            }
         }
+        gui_chat_printf (NULL,
+                         _("%d option(s) reset, %d option(s) removed"),
+                         number_reset,
+                         number_removed);
     }
     
     return WEECHAT_RC_OK;
@@ -2720,7 +2763,8 @@ command_init ()
     hook_command (NULL, "unset",
                   N_("unset/reset config options"),
                   N_("[option]"),
-                  N_("option: name of an option\n\n"
+                  N_("option: name of an option (may begin or end with \"*\" "
+                     "to mass-reset options, use carefully!)\n\n"
                      "According to option, it's reset (for standard options) "
                      "or removed (for optional settings, like server values)."),
                   "%o",

@@ -9,7 +9,7 @@ Version 0.2.7 (under dev!):
    * removed key functions, replaced by /input command
    * fixed bug with alias, use current buffer to run commands (bug #22876)
    * new names for config files (*.conf instead of *.rc)
-   * improved /set command, new command /unset
+   * improved /set command, new command /unset (task #6085)
    * added new type of buffer, with free content
    * added tags for lines and custom filtering by tags or regex (task #7674)
    * added custom bars, with custom items

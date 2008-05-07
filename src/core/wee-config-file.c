@@ -839,7 +839,7 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
         }
     }
     
-    return 0;
+    return rc;
 }
 
 /*
@@ -1090,6 +1090,53 @@ config_file_option_set (struct t_config_option *option, char *value,
 }
 
 /*
+ * config_file_option_unset: unset/reset option
+ *                           return: -1 if failed
+ *                                    0 if reset not needed
+ *                                    1 if option reset
+ *                                    2 if option removed
+ */
+
+int
+config_file_option_unset (struct t_config_option *option)
+{
+    int rc;
+    
+    rc = 0;
+    
+    if (option->section && option->section->user_can_delete_options)
+    {
+        /* delete option */
+        if (option->callback_delete)
+        {
+            (void)(option->callback_delete)
+                (option->callback_delete_data,
+                 option);
+        }
+        config_file_option_free (option);
+        rc = 2;
+    }
+    else
+    {
+        /* reset value */
+        switch (config_file_option_reset (option, 1))
+        {
+            case 0:
+                rc = -1;
+                break;
+            case 1:
+                rc = 0;
+                break;
+            case 2:
+                rc = 1;
+                break;
+        }
+    }
+    
+    return rc;
+}
+
+/*
  * config_file_option_rename: rename an option
  */
 
@@ -1205,46 +1252,25 @@ config_file_option_set_with_string (char *option_name, char *value)
 }
 
 /*
- * config_file_unset_with_string: unset/reset option
- *                                return: 0 if failed
- *                                        1 if option reset
- *                                        2 if option removed
+ * config_file_option_unset_with_string: unset/reset option
+ *                                       return: -1 if failed
+ *                                                0 if reset not needed
+ *                                                1 if option reset
+ *                                                2 if option removed
  */
 
 int
-config_file_unset_with_string (char *option_name)
+config_file_option_unset_with_string (char *option_name)
 {
-    struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
     int rc;
     
-    rc = 0;
+    rc = -1;
     
-    config_file_search_with_string (option_name, NULL, &ptr_section,
-                                    &ptr_option, NULL);
+    config_file_search_with_string (option_name, NULL, NULL, &ptr_option, NULL);
     
-    /* delete option */
-    if (ptr_section && ptr_option)
-    {
-        if (ptr_section->user_can_delete_options)
-        {
-            /* removing option */
-            if (ptr_option->callback_delete)
-            {
-                (void)(ptr_option->callback_delete)
-                    (ptr_option->callback_delete_data,
-                     ptr_option);
-            }
-            config_file_option_free (ptr_option);
-            rc = 2;
-        }
-        else
-        {
-            /* reset value */
-            config_file_option_reset (ptr_option, 1);
-            rc = 1;
-        }
-    }
+    if (ptr_option)
+        rc = config_file_option_unset (ptr_option);
     
     return rc;
 }
