@@ -54,6 +54,7 @@ struct t_config_option *xfer_config_network_own_ip;
 
 struct t_config_option *xfer_config_file_download_path;
 struct t_config_option *xfer_config_file_upload_path;
+struct t_config_option *xfer_config_file_use_nick_in_filename;
 struct t_config_option *xfer_config_file_convert_spaces;
 struct t_config_option *xfer_config_file_auto_rename;
 struct t_config_option *xfer_config_file_auto_resume;
@@ -255,6 +256,11 @@ xfer_config_init ()
         N_("path for reading files when sending (when no path is "
            "specified by user)"),
         NULL, 0, 0, "~", NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_file_use_nick_in_filename = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "use_nick_in_filename", "boolean",
+        N_("use remote nick as prefix in local filename when receiving a file"),
+        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL);
     xfer_config_file_convert_spaces = weechat_config_new_option (
         xfer_config_file, ptr_section,
         "convert_spaces", "boolean",

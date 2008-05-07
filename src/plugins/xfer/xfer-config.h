@@ -42,6 +42,7 @@ extern struct t_config_option *xfer_config_network_own_ip;
 
 extern struct t_config_option *xfer_config_file_download_path;
 extern struct t_config_option *xfer_config_file_upload_path;
+extern struct t_config_option *xfer_config_file_use_nick_in_filename;
 extern struct t_config_option *xfer_config_file_convert_spaces;
 extern struct t_config_option *xfer_config_file_auto_rename;
 extern struct t_config_option *xfer_config_file_auto_resume;

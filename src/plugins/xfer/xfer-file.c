@@ -111,8 +111,11 @@ xfer_file_find_filename (struct t_xfer *xfer)
     if (dir_separator
         && (xfer->local_filename[strlen (xfer->local_filename) - 1] != dir_separator[0]))
         strcat (xfer->local_filename, dir_separator);
-    strcat (xfer->local_filename, xfer->remote_nick);
-    strcat (xfer->local_filename, ".");
+    if (weechat_config_boolean (xfer_config_file_use_nick_in_filename))
+    {
+        strcat (xfer->local_filename, xfer->remote_nick);
+        strcat (xfer->local_filename, ".");
+    }
     strcat (xfer->local_filename, xfer->filename);
     
     if (dir1)
