@@ -444,6 +444,8 @@ gui_chat_display_word (struct t_gui_window *window,
     char *end_line, saved_char_end, saved_char, str_space[] = " ";
     int pos_saved_char, chars_to_display, num_displayed;
     int length_align;
+    attr_t attrs;
+    short pair;
     
     if (!data ||
         ((!simulate) && (window->win_chat_cursor_y >= window->win_chat_height)))
@@ -486,6 +488,7 @@ gui_chat_display_word (struct t_gui_window *window,
             {
                 if (!simulate)
                 {
+                    wattr_get (GUI_CURSES(window)->win_chat, &attrs, &pair, NULL);
                     gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
                                                   GUI_COLOR_CHAT_PREFIX_SUFFIX);
                     gui_chat_display_word_raw (window,
@@ -497,8 +500,7 @@ gui_chat_display_word (struct t_gui_window *window,
                     gui_chat_display_word_raw (window, str_space, 0, 1);
                 window->win_chat_cursor_x += gui_chat_strlen_screen (str_space);
                 if (!simulate)
-                    gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
-                                                  GUI_COLOR_CHAT);
+                    wattr_set (GUI_CURSES(window)->win_chat, attrs, pair, NULL);
             }
         }
         
@@ -680,7 +682,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
  *                          (beginning from the end)
  *                        if simulate == 1, nothing is displayed
  *                          (for counting how many lines would have been
- *                          lines displayed)
+ *                          displayed)
  *                        returns: number of lines displayed (or simulated)
  */
 
@@ -746,8 +748,10 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         gui_window_reset_style (GUI_CURSES(window)->win_chat, GUI_COLOR_CHAT);
     
     if (!line->message || !line->message[0])
+    {
         gui_chat_display_new_line (window, num_lines, count,
                                    &lines_displayed, simulate);
+    }
     else
     {
         ptr_data = line->message;
@@ -813,7 +817,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                                 break;
                             ptr_data = gui_chat_string_next_char (window,
                                                                   (unsigned char *)next_char,
-                                                                  0);
+                                                                  1);
                         }
                     }
                 }
