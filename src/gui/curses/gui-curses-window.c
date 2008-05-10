@@ -50,10 +50,6 @@ int window_current_style_fg;           /* current foreground color          */
 int window_current_style_bg;           /* current background color          */
 int window_current_style_attr;         /* current attributes (bold, ..)     */
 int window_current_color_attr;         /* attr sum of last color(s) used    */
-int window_save_current_style_fg;      /* used to save fg temporarirly      */
-int window_save_current_style_bg;      /* used to save bg temporarirly      */
-int window_save_current_style_attr;    /* used to save current attr temp.   */
-int window_save_current_color_attr;    /* used to save attr temporarirly    */
 
 
 /*
