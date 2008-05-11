@@ -66,6 +66,7 @@ extern void gui_input_infobar_clear ();
 extern void gui_input_grab_key ();
 extern void gui_input_scroll_unread ();
 extern void gui_input_set_unread ();
+extern void gui_input_set_unread_current_buffer ();
 extern void gui_input_insert ();
 
 /* input functions (GUI dependent) */

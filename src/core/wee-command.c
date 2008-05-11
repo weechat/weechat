@@ -1201,6 +1201,8 @@ command_input (void *data, struct t_gui_buffer *buffer,
             gui_input_scroll_unread ();
         else if (string_strcasecmp (argv[1], "set_unread") == 0)
             gui_input_set_unread ();
+        else if (string_strcasecmp (argv[1], "set_unread_current_buffer") == 0)
+            gui_input_set_unread_current_buffer ();
         else if (string_strcasecmp (argv[1], "insert") == 0)
         {
             if (argc > 2)

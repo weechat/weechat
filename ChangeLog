@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-05-07
+ChangeLog - 2008-05-11
 
 
 Version 0.2.7 (under dev!):
+   * new input action "set_unread_current_buffer" to set unread marker for
+     current buffer only (task #7286)
    * new option "xfer.file.use_nick_in_filename" for Xfer files (task #7140)
    * removed key functions, replaced by /input command
    * fixed bug with alias, use current buffer to run commands (bug #22876)
