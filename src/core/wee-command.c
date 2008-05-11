@@ -1201,6 +1201,8 @@ command_input (void *data, struct t_gui_buffer *buffer,
             gui_input_scroll_unread ();
         else if (string_strcasecmp (argv[1], "set_unread") == 0)
             gui_input_set_unread ();
+        else if (string_strcasecmp (argv[1], "set_unread_current_buffer") == 0)
+            gui_input_set_unread_current_buffer ();
         else if (string_strcasecmp (argv[1], "insert") == 0)
         {
             if (argc > 2)
@@ -2161,6 +2163,10 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
     (void) argc;
     (void) argv;
     (void) argv_eol;
+
+    /* TODO: enable again /upgrade command */
+    gui_chat_printf (NULL, "/upgrade command is temporarirly disabled.");
+    return WEECHAT_RC_OK;
     
     /*ptr_binary = (argc > 1) ? argv_eol[1] : weechat_argv0;
     

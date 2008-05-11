@@ -1324,6 +1324,21 @@ gui_input_set_unread ()
 }
 
 /*
+ * gui_input_set_unread_current_buffer: set unread marker for current buffer
+ */
+
+void
+gui_input_set_unread_current_buffer ()
+{
+    if (gui_current_window
+        && (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATED))
+        gui_current_window->buffer->last_read_line = gui_current_window->buffer->last_line;
+    
+    /* refresh all windows */
+    gui_window_redraw_buffer (gui_current_window->buffer);
+}
+
+/*
  * gui_input_insert: insert a string in command line
  *                   (many default keys are bound to this function)
  */
