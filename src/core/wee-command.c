@@ -2161,6 +2161,10 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
     (void) argc;
     (void) argv;
     (void) argv_eol;
+
+    /* TODO: enable again /upgrade command */
+    gui_chat_printf (NULL, "/upgrade command is temporarirly disabled.");
+    return WEECHAT_RC_OK;
     
     /*ptr_binary = (argc > 1) ? argv_eol[1] : weechat_argv0;
     
