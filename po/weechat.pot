@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-07 15:25+0200\n"
+"POT-Creation-Date: 2008-05-11 12:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3803,6 +3803,37 @@ msgstr ""
 
 #, c-format
 msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
+msgstr ""
+
+msgid "Xfer list:"
+msgstr ""
+
+#, c-format
+msgid ""
+"%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
+msgstr ""
+
+#, c-format
+msgid ""
+"     plugin: %s (id: %s), file: %lu bytes (position: %lu), address: %d.%d.%d."
+"%d (port %d)"
+msgstr ""
+
+#, c-format
+msgid "     fast_send: %s, blocksize: %d, started on %s"
+msgstr ""
+
+msgid "yes"
+msgstr ""
+
+msgid "no"
+msgstr ""
+
+msgid "No xfer"
 msgstr ""
 
 msgid "xfer control"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-07 15:25+0200\n"
+"POT-Creation-Date: 2008-05-11 12:09+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4372,6 +4372,40 @@ msgstr "%s Fehler beim Senden von Daten an \"%s\" via DCC CHAT\n"
 msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
 msgstr "DCC Chat mit %s%s %s(%s%d.%d.%d.%d%s)%s aufgebaut\n"
 
+#, fuzzy
+msgid "Xfer list:"
+msgstr "Hotlist leeren"
+
+#, c-format
+msgid ""
+"%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
+msgstr ""
+
+#, c-format
+msgid ""
+"     plugin: %s (id: %s), file: %lu bytes (position: %lu), address: %d.%d.%d."
+"%d (port %d)"
+msgstr ""
+
+#, c-format
+msgid "     fast_send: %s, blocksize: %d, started on %s"
+msgstr ""
+
+#, fuzzy
+msgid "yes"
+msgstr "Bytes"
+
+msgid "no"
+msgstr ""
+
+#, fuzzy
+msgid "No xfer"
+msgstr "Kein Server.\n"
+
 msgid "xfer control"
 msgstr ""
 
@@ -4530,6 +4564,10 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid "to"
+#~ msgstr "top"
 
 #, fuzzy
 #~ msgid "%sOption \"%s\" not found"
@@ -6076,9 +6114,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #~ msgid "local"
 #~ msgstr "local"
-
-#~ msgid "top"
-#~ msgstr "top"
 
 #~ msgid "bottom"
 #~ msgstr "bottom"

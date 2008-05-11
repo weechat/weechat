@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-07 15:25+0200\n"
-"PO-Revision-Date: 2008-05-07 15:26+0200\n"
+"POT-Creation-Date: 2008-05-11 12:09+0200\n"
+"PO-Revision-Date: 2008-05-11 12:08+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -864,9 +864,12 @@ msgid ""
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values)."
 msgstr ""
-"option: nom d'une option (peut commencer ou se terminer par \"*\" pour réinitialiser plusieurs options, à utiliser avec prudence !)\n"
+"option: nom d'une option (peut commencer ou se terminer par \"*\" pour "
+"réinitialiser plusieurs options, à utiliser avec prudence !)\n"
 "\n"
-"Selon l'option, elle est réinitialisée (pour les options standards) ou supprimée (pour les options facultatives, comme les valeurs pour les serveurs)."
+"Selon l'option, elle est réinitialisée (pour les options standards) ou "
+"supprimée (pour les options facultatives, comme les valeurs pour les "
+"serveurs)."
 
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "mettre à jour WeeChat sans se déconnecter des serveurs"
@@ -4319,6 +4322,41 @@ msgstr "%s%s: erreur d'envoi de données à \"%s\" via discussion xfer"
 msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
 msgstr "Connecté à %s (%d.%d.%d.%d) via discussion xfer"
 
+msgid "Xfer list:"
+msgstr "Liste Xfer:"
+
+#, c-format
+msgid ""
+"%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
+msgstr ""
+"%3d. %s (%s), fichier: \"%s\" (local: \"%s\"), %s %s, statut: %s%s%s (%lu %%)"
+
+#, c-format
+msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
+msgstr ""
+"%3d. %s, discussion avec %s (pseudo local: %s), démarrée le %s, statut: %s%s"
+
+#, c-format
+msgid ""
+"     plugin: %s (id: %s), file: %lu bytes (position: %lu), address: %d.%d.%d."
+"%d (port %d)"
+msgstr ""
+"     extension: %s (id: %s), fichier: %lu octets (position: %lu), addresse: %"
+"d.%d.%d.%d (port %d)"
+
+#, c-format
+msgid "     fast_send: %s, blocksize: %d, started on %s"
+msgstr "     envoi rapide: %s, taille de bloc: %d, démarré le %s"
+
+msgid "yes"
+msgstr "oui"
+
+msgid "no"
+msgstr "non"
+
+msgid "No xfer"
+msgstr "Pas de xfer"
+
 msgid "xfer control"
 msgstr "contrôle xfer"
 
@@ -4467,6 +4505,12 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "to"
+#~ msgstr "vers"
+
+#~ msgid "from"
+#~ msgstr "de"
 
 #~ msgid "%sOption \"%s\" not found"
 #~ msgstr "%sOption \"%s\" non trouvée"

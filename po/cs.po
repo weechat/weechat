@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-07 15:25+0200\n"
+"POT-Creation-Date: 2008-05-11 12:09+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4387,6 +4387,40 @@ msgstr "%s chyba posílání dat k \"%s\" přes DCC CHAT\n"
 msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
 msgstr "Připojeno na %s%s %s(%s%d.%d.%d.%d.%s)%s přes DCC rozhovor\n"
 
+#, fuzzy
+msgid "Xfer list:"
+msgstr "vyčisti hotlist"
+
+#, c-format
+msgid ""
+"%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
+msgstr ""
+
+#, c-format
+msgid ""
+"     plugin: %s (id: %s), file: %lu bytes (position: %lu), address: %d.%d.%d."
+"%d (port %d)"
+msgstr ""
+
+#, c-format
+msgid "     fast_send: %s, blocksize: %d, started on %s"
+msgstr ""
+
+#, fuzzy
+msgid "yes"
+msgstr "bajtů"
+
+msgid "no"
+msgstr ""
+
+#, fuzzy
+msgid "No xfer"
+msgstr "žádný server.\n"
+
 msgid "xfer control"
 msgstr ""
 
@@ -4541,6 +4575,10 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "to"
+#~ msgstr "nahoře"
 
 #, fuzzy
 #~ msgid "%sOption \"%s\" not found"
@@ -6071,9 +6109,6 @@ msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #~ msgid "local"
 #~ msgstr "lokální"
-
-#~ msgid "top"
-#~ msgstr "nahoře"
 
 #~ msgid "bottom"
 #~ msgstr "dole"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-07 15:25+0200\n"
+"POT-Creation-Date: 2008-05-11 12:09+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1104,8 +1104,8 @@ msgstr "marca de tiempo para la fecha mostrada cuando el dÃ­a cambiÃ³"
 #, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
-"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea "
-"sin leer"
+"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea sin "
+"leer"
 
 #, c-format
 msgid ""
@@ -1597,8 +1597,8 @@ msgid ""
 "support.\n"
 "Be careful, private info may be in these files.\n"
 msgstr ""
-"Por favor, envÃ­a %s/%s, %s/%s y los mensajes de arriba a los "
-"desarrolladores de Weechat para el soporte.\n"
+"Por favor, envÃ­a %s/%s, %s/%s y los mensajes de arriba a los desarrolladores "
+"de Weechat para el soporte.\n"
 "SÃ© cuidadoso, puede que haya informaciÃ³n privada en estos ficheros.\n"
 
 #, c-format
@@ -4378,6 +4378,40 @@ msgstr "%s error enviando datos al \"%s\" con DCC CHAT\n"
 msgid "Connected to %s (%d.%d.%d.%d) via xfer chat"
 msgstr "Conectado a %s%s %s(%s%d.%d.%d.%d%s)%s a travÃ©s de una charla DCC\n"
 
+#, fuzzy
+msgid "Xfer list:"
+msgstr "limpiar hotlist"
+
+#, c-format
+msgid ""
+"%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
+msgstr ""
+
+#, c-format
+msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
+msgstr ""
+
+#, c-format
+msgid ""
+"     plugin: %s (id: %s), file: %lu bytes (position: %lu), address: %d.%d.%d."
+"%d (port %d)"
+msgstr ""
+
+#, c-format
+msgid "     fast_send: %s, blocksize: %d, started on %s"
+msgstr ""
+
+#, fuzzy
+msgid "yes"
+msgstr "bytes"
+
+msgid "no"
+msgstr ""
+
+#, fuzzy
+msgid "No xfer"
+msgstr "NingÃºn servidor.\n"
+
 msgid "xfer control"
 msgstr ""
 
@@ -4539,6 +4573,10 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "to"
+#~ msgstr "operador"
 
 #, fuzzy
 #~ msgid "%sOption \"%s\" not found"
@@ -5305,8 +5343,8 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ "maximum number of lines in history for one server/channel/private window "
 #~ "(0 = unlimited)"
 #~ msgstr ""
-#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/"
-#~ "privado (0 = ilimitado)"
+#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/privado "
+#~ "(0 = ilimitado)"
 
 #, fuzzy
 #~ msgid "log messages from plugins"
@@ -5500,8 +5538,8 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ "max size for aligning nick and other messages (should be >= to "
 #~ "look_align_size)"
 #~ msgstr ""
-#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a "
-#~ "ser >= a look_align_size)"
+#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a ser "
+#~ ">= a look_align_size)"
 
 #~ msgid "server name not found"
 #~ msgstr "nombre de servidor no encontrado"
@@ -6095,10 +6133,6 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ msgstr "Nuevo ignore:"
 
 #, fuzzy
-#~ msgid "top"
-#~ msgstr "operador"
-
-#, fuzzy
 #~ msgid "Open panels:\n"
 #~ msgstr "BÃºfers abiertos:\n"
 
@@ -6295,8 +6329,7 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #~ msgid "color for chan owner symbol (specific to unrealircd)"
 #~ msgstr ""
-#~ "color para el sÃ­mbolo de propietario de canal (especificado en "
-#~ "unrealircd)"
+#~ "color para el sÃ­mbolo de propietario de canal (especificado en unrealircd)"
 
 #~ msgid "color for chan admin symbol"
 #~ msgstr "color para el sÃ­mbolo de administrador de canal"
