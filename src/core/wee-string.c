@@ -940,7 +940,7 @@ string_iconv_to_internal (char *charset, char *string)
         
         output = string_iconv (0,
                                (charset && charset[0]) ?
-                               charset : local_charset,
+                               charset : weechat_local_charset,
                                WEECHAT_INTERNAL_CHARSET,
                                input);
         utf8_normalize (output, '?');
@@ -976,7 +976,7 @@ string_iconv_from_internal (char *charset, char *string)
         output = string_iconv (1,
                                WEECHAT_INTERNAL_CHARSET,
                                (charset && charset[0]) ?
-                               charset : local_charset,
+                               charset : weechat_local_charset,
                                input);
         free (input);
         return output;

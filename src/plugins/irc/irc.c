@@ -85,6 +85,8 @@ irc_signal_quit_cb (void *data, char *signal, char *type_data,
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin)
 {
+    char *auto_connect;
+    
     weechat_plugin = plugin;
     
 #ifdef HAVE_GNUTLS
@@ -111,8 +113,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     /* hook completions */
     irc_completion_init ();
-    
-    irc_server_auto_connect (1, 0);
+
+    auto_connect = weechat_info_get ("auto_connect");
+    irc_server_auto_connect ((auto_connect && (strcmp (auto_connect, "1") == 0)) ? 1 : 0,
+                             0);
     
     irc_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
                                          &irc_server_timer_cb, NULL);

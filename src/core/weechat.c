@@ -66,18 +66,16 @@
 #include "../plugins/plugin.h"
 
 
-char *weechat_argv0 = NULL;   /* WeeChat binary file name (argv[0])         */
-char *weechat_session = NULL; /* WeeChat session file (for /upgrade cmd)    */
-time_t weechat_start_time;    /* WeeChat start time (used by /uptime cmd)   */
-int quit_weechat;             /* = 1 if quit request from user... why ? :'( */
-int sigsegv = 0;              /* SIGSEGV received?                          */
-char *weechat_home = NULL;    /* WeeChat home dir. (default: ~/.weechat)    */
-
-char *local_charset = NULL;   /* local charset, for ex.: ISO-8859-1, UTF-8  */
-
-int server_cmd_line;          /* at least 1 server on WeeChat command line  */
-int auto_connect;             /* enabled by default (cmd option to disable) */
-int auto_load_plugins;        /* enabled by default (cmd option to disable) */
+char *weechat_argv0 = NULL;            /* WeeChat binary file name (argv[0])*/
+char *weechat_session = NULL;          /* session file (/upgrade)           */
+time_t weechat_start_time;             /* start time (used by /uptime cmd)  */
+int weechat_quit;                      /* = 1 if quit request from user     */
+int weechat_sigsegv = 0;               /* SIGSEGV received?                 */
+char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
+char *weechat_local_charset = NULL;    /* example: ISO-8859-1, UTF-8        */
+int weechat_server_cmd_line = 0;       /* at least 1 server on cmd line     */
+int weechat_auto_load_plugins = 1;     /* auto load plugins                 */
+int weechat_auto_connect = 1;          /* auto connect in plugins           */
 
 
 /*
@@ -181,15 +179,15 @@ weechat_parse_args (int argc, char *argv[])
     weechat_argv0 = strdup (argv[0]);
     weechat_session = NULL;
     weechat_home = NULL;
-    server_cmd_line = 0;
-    auto_connect = 1;
-    auto_load_plugins = 1;
+    weechat_server_cmd_line = 0;
+    weechat_auto_load_plugins = 1;
+    weechat_auto_connect = 1;
     
     for (i = 1; i < argc; i++)
     {
         if ((strcmp (argv[i], "-a") == 0)
             || (strcmp (argv[i], "--no-connect") == 0))
-            auto_connect = 0;
+            weechat_auto_connect = 0;
         else if ((strcmp (argv[i], "-c") == 0)
             || (strcmp (argv[i], "--config") == 0))
         {
@@ -248,7 +246,7 @@ weechat_parse_args (int argc, char *argv[])
         else if ((strcmp (argv[i], "-p") == 0)
                  || (strcmp (argv[i], "--no-plugin") == 0))
         {
-            auto_load_plugins = 0;
+            weechat_auto_load_plugins = 0;
         }
         else if (strcmp (argv[i], "--session") == 0)
         {
@@ -435,8 +433,8 @@ weechat_shutdown (int return_code, int crash)
     if (weechat_home)
         free (weechat_home);
     log_close ();
-    if (local_charset)
-        free (local_charset);
+    if (weechat_local_charset)
+        free (weechat_local_charset);
     
     if (crash)
         abort();
@@ -459,9 +457,9 @@ main (int argc, char *argv[])
 #endif
     
 #ifdef HAVE_LANGINFO_CODESET
-    local_charset = strdup (nl_langinfo (CODESET));
+    weechat_local_charset = strdup (nl_langinfo (CODESET));
 #else
-    local_charset = strdup ("");
+    weechat_local_charset = strdup ("");
 #endif
     utf8_init ();
     
@@ -488,7 +486,8 @@ main (int argc, char *argv[])
         //session_load (weechat_session); /* load previous session if asked   */
     weechat_welcome_message ();         /* display WeeChat welcome message  */
     command_startup (0);                /* command executed before plugins  */
-    plugin_init (auto_load_plugins);    /* init plugin interface(s)         */
+    plugin_init (weechat_auto_load_plugins); /* init plugin interface(s)    */
+    weechat_auto_connect = 1;           /* auto-connect for future plugins  */
     command_startup (1);                /* command executed after plugins   */
     
     gui_main_loop ();                   /* WeeChat main loop                */

@@ -349,7 +349,7 @@ gui_keyboard_read_cb (void *data)
             /* no data on stdin, terminal lost */
             log_printf (_("Terminal lost, exiting WeeChat..."));
             hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-            quit_weechat = 1;
+            weechat_quit = 1;
             return WEECHAT_RC_OK;
         }
         if (ret <= 0)
@@ -371,7 +371,7 @@ gui_keyboard_read_cb (void *data)
             /* no data on stdin, terminal lost */
             log_printf (_("Terminal lost, exiting WeeChat..."));
             hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-            quit_weechat = 1;
+            weechat_quit = 1;
             return WEECHAT_RC_OK;
         }
         if (ret < 0)

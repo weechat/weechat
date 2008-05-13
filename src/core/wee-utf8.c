@@ -41,7 +41,7 @@ int local_utf8 = 0;
 void
 utf8_init ()
 {
-    local_utf8 = (string_strcasecmp (local_charset, "UTF-8") == 0);
+    local_utf8 = (string_strcasecmp (weechat_local_charset, "UTF-8") == 0);
 }
 
 /*
@@ -443,7 +443,7 @@ utf8_pos (char *string, int real_pos)
     int count;
     char *limit;
     
-    if (!string || !local_charset)
+    if (!string || !weechat_local_charset)
         return real_pos;
     
     count = 0;

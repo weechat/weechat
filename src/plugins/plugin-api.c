@@ -439,7 +439,7 @@ plugin_api_info_get (struct t_weechat_plugin *plugin, char *info)
     }
     else if (string_strcasecmp (info, "charset_terminal") == 0)
     {
-        return local_charset;
+        return weechat_local_charset;
     }
     else if (string_strcasecmp (info, "charset_internal") == 0)
     {
@@ -457,6 +457,11 @@ plugin_api_info_get (struct t_weechat_plugin *plugin, char *info)
     else if (string_strcasecmp (info, "filters_enabled") == 0)
     {
         snprintf (value, sizeof (value), "%d", gui_filters_enabled);
+        return value;
+    }
+    else if (string_strcasecmp (info, "auto_connect") == 0)
+    {
+        snprintf (value, sizeof (value), "%d", weechat_auto_connect);
         return value;
     }
     

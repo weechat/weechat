@@ -163,7 +163,7 @@ gui_main_signal_sigquit ()
     log_printf (_("Signal %s received, exiting WeeChat..."),
                 "SIGQUIT");
     hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-    quit_weechat = 1;
+    weechat_quit = 1;
 }
 
 /*
@@ -176,7 +176,7 @@ gui_main_signal_sigterm ()
     log_printf (_("Signal %s received, exiting WeeChat..."),
                 "SIGTERM");
     hook_signal_send ("quit", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-    quit_weechat = 1;
+    weechat_quit = 1;
 }
 
 /*
@@ -219,7 +219,7 @@ gui_main_loop ()
     int max_fd;
     int ready;
     
-    quit_weechat = 0;
+    weechat_quit = 0;
     
     /* catch SIGTERM signal: quit program */
     util_catch_signal (SIGTERM, &gui_main_signal_sigterm);
@@ -235,7 +235,7 @@ gui_main_loop ()
     hook_fd_keyboard = hook_fd (NULL, STDIN_FILENO, 1, 0, 0,
                                 &gui_keyboard_read_cb, NULL);
     
-    while (!quit_weechat)
+    while (!weechat_quit)
     {
         /* reload config, if SIGHUP reveived */
         if (gui_reload_config)

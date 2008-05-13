@@ -1661,7 +1661,7 @@ command_quit (void *data, struct t_gui_buffer *buffer,
                       (argc > 1) ? argv_eol[1] : NULL);
     
     /* force end of main loop */
-    quit_weechat = 1;
+    weechat_quit = 1;
     
     return WEECHAT_RC_OK;
 }

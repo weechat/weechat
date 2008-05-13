@@ -100,9 +100,10 @@
 
 extern char *weechat_argv0;
 extern time_t weechat_start_time;
-extern int quit_weechat;
+extern int weechat_quit;
 extern char *weechat_home;
-extern char *local_charset;
+extern char *weechat_local_charset;
+extern int weechat_auto_connect;
 
 extern void weechat_dump (int crash);
 extern void weechat_shutdown (int return_code, int crash);
