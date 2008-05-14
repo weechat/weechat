@@ -2113,7 +2113,7 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     
     script_callback = (struct t_script_callback *)data;
     
-    snprintf (timebuffer, sizeof (timebuffer) - 1, "%ld", date);
+    snprintf (timebuffer, sizeof (timebuffer) - 1, "%ld", (long int)date);
     
     perl_argv[0] = script_ptr2str (buffer);
     perl_argv[1] = timebuffer;

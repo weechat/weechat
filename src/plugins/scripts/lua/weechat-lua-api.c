@@ -2566,7 +2566,7 @@ weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     
     script_callback = (struct t_script_callback *)data;
 
-    snprintf (timebuffer, sizeof (timebuffer) - 1, "%ld", date);
+    snprintf (timebuffer, sizeof (timebuffer) - 1, "%ld", (long int)date);
     
     lua_argv[0] = script_ptr2str (buffer);
     lua_argv[1] = timebuffer;
