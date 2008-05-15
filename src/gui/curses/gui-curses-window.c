@@ -25,6 +25,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <libgen.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
@@ -1794,6 +1795,7 @@ gui_window_title_set ()
 void
 gui_window_title_reset ()
 {
+    char *shell, *shellname;
     char *envterm = getenv ("TERM");
     char *envshell = getenv ("SHELL");
 
@@ -1813,14 +1815,13 @@ gui_window_title_reset ()
 	    printf ("\33]0;%s\7", "Terminal");
 	else if (strcmp (envterm, "screen") == 0)
 	{
-	    char *shell, *shellname;
 	    if (envshell)
 	    {
-		shell  = strdup (envterm);
-		shellname = basename(shell);
+		shell  = strdup (envshell);
 		if (shell)
 		{
-		    printf ("\033k%s\033\\", shellname);
+                    shellname = basename (shell);
+		    printf ("\033k%s\033\\", (shellname) ? shellname : shell);
 		    free (shell);
 		}
 		else
