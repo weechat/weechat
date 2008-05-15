@@ -2231,7 +2231,7 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
     execvp (exec_args[0], exec_args);*/
     
     /* this code should not be reached if execvp is ok */
-    plugin_init (1);
+    plugin_init (1, 0, NULL);
     
     /*string_iconv_fprintf (stderr,
                             _("Error: exec failed (program: \"%s\"), exiting WeeChat"),

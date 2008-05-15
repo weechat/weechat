@@ -56,6 +56,9 @@
 struct t_weechat_plugin *weechat_plugins = NULL;
 struct t_weechat_plugin *last_weechat_plugin = NULL;
 
+int plugin_argc;                       /* command line arguments (used only */
+char **plugin_argv;                    /* first time loading plugin)        */
+
 
 /*
  * plugin_search: search a plugin by name
@@ -90,7 +93,8 @@ plugin_load (char *filename)
     char *name, *author, *description, *version, *weechat_version, *license;
     char *charset;
     t_weechat_init_func *init_func;
-    int rc;
+    int rc, i, argc;
+    char **argv;
     struct t_weechat_plugin *new_plugin;
     
     if (!filename)
@@ -427,9 +431,42 @@ plugin_load (char *filename)
         else
             weechat_plugins = new_plugin;
         last_weechat_plugin = new_plugin;
+
+        /* build arguments for plugin */
+        argc = 0;
+        argv = NULL;
+        if (plugin_argc > 0)
+        {
+            argv = malloc ((plugin_argc + 1) * sizeof (*argv));
+            if (argv)
+            {
+                argc = 0;
+                for (i = 0; i < plugin_argc; i++)
+                {
+                    if ((string_strcasecmp (plugin_argv[i], "-a") == 0)
+                        || (string_strcasecmp (plugin_argv[i], "--no-connect") == 0)
+                        || (string_strncasecmp (plugin_argv[i], name, strlen (name)) == 0))
+                    {
+                        argv[argc] = plugin_argv[i];
+                        argc++;
+                    }
+                }
+                if (argc == 0)
+                {
+                    free (argv);
+                    argv = NULL;
+                }
+                else
+                    argv[argc] = NULL;
+            }
+        }
         
         /* init plugin */
-        rc = ((t_weechat_init_func *)init_func) (new_plugin);
+        rc = ((t_weechat_init_func *)init_func) (new_plugin, argc, argv);
+        
+        if (argv)
+            free (argv);
+        
         if (rc != WEECHAT_RC_OK)
         {
             gui_chat_printf (NULL,
@@ -735,8 +772,11 @@ plugin_reload_name (char *name)
  */
 
 void
-plugin_init (int auto_load)
+plugin_init (int auto_load, int argc, char *argv[])
 {
+    plugin_argc = argc;
+    plugin_argv = argv;
+    
     /* read plugins options on disk */
     plugin_config_init ();
     plugin_config_read ();
@@ -744,6 +784,10 @@ plugin_init (int auto_load)
     /* auto-load plugins if asked */
     if (auto_load)
         plugin_auto_load ();
+
+    /* discard command arguments for future plugins */
+    plugin_argc = 0;
+    plugin_argv = NULL;
 }
 
 /*

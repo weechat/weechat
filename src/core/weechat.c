@@ -75,7 +75,6 @@ char *weechat_home = NULL;             /* home dir. (default: ~/.weechat)   */
 char *weechat_local_charset = NULL;    /* example: ISO-8859-1, UTF-8        */
 int weechat_server_cmd_line = 0;       /* at least 1 server on cmd line     */
 int weechat_auto_load_plugins = 1;     /* auto load plugins                 */
-int weechat_auto_connect = 1;          /* auto connect in plugins           */
 
 
 /*
@@ -93,51 +92,25 @@ weechat_display_usage (char *exec_name)
                           PACKAGE_STRING, __DATE__, __TIME__, WEECHAT_WEBSITE);
     string_iconv_fprintf (stdout, "\n\n");
     string_iconv_fprintf (stdout,
-                          _("Usage: %s [options ...]\n"                 \
-                            "   or: %s [irc[6][s]://[nickname[:password]@]"
-                            "irc.example.org[:port][/channel][,channel[...]]"),
+                          _("Usage: %s [option...] [plugin:option...]\n"),
                           exec_name, exec_name);
     string_iconv_fprintf (stdout, "\n\n");
     string_iconv_fprintf (stdout,
-                          _("  -a, --no-connect      disable auto-connect to servers at startup\n"
-                            "  -c, --config          display config file options\n"
-                            "  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-                            "  -h, --help            this help\n"
-                            "  -m, --commands        display WeeChat commands\n"
-                            "  -k, --keys            display WeeChat default keys\n"
-                            "  -l, --license         display WeeChat license\n"
-                            "  -p, --no-plugin       don't load any plugin at startup\n"
-                            "  -v, --version         display WeeChat version\n\n"));
+                          _("  -a, --no-connect  disable auto-connect to servers at startup\n"
+                            "  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
+                            "  -h, --help        this help\n"
+                            "  -k, --keys        display WeeChat default keys\n"
+                            "  -l, --license     display WeeChat license\n"
+                            "  -p, --no-plugin   don't load any plugin at startup\n"
+                            "  -v, --version     display WeeChat version\n"
+                            "  plugin:option     option for plugin\n"
+                            "                    for example, irc plugin can connect\n"
+                            "                    to server with url like:\n"
+                            "                    irc[6][s]://[nickname[:password]@]"
+                            "irc.example.org[/port][//#channel1][,#channel2[...]]\n"
+                            "                    (look at plugins documentation for more information\n"
+                            "                    about possible options)\n"));
     string_iconv_fprintf(stdout, "\n");
-}
-
-/*
- * weechat_display_config_options: display config options
- */
-
-void
-weechat_display_config_options ()
-{
-    string_iconv_fprintf (stdout,
-                          /* TRANSLATORS: %s is "weechat" */
-                          _("%s configuration options:\n"),
-                          PACKAGE_NAME);
-    config_file_print_stdout (weechat_config_file);
-}
-
-/*
- * weechat_display_commands: display commands for one or more protocols
- */
-
-void
-weechat_display_commands ()
-{
-    string_iconv_fprintf (stdout,
-                          /* TRANSLATORS: %s is "weechat" */
-                           _("%s internal commands:\n"),
-                          PACKAGE_NAME);
-    string_iconv_fprintf (stdout, "\n");
-    command_print_stdout ();
 }
 
 /*
@@ -181,31 +154,10 @@ weechat_parse_args (int argc, char *argv[])
     weechat_home = NULL;
     weechat_server_cmd_line = 0;
     weechat_auto_load_plugins = 1;
-    weechat_auto_connect = 1;
     
     for (i = 1; i < argc; i++)
     {
-        if ((strcmp (argv[i], "-a") == 0)
-            || (strcmp (argv[i], "--no-connect") == 0))
-            weechat_auto_connect = 0;
-        else if ((strcmp (argv[i], "-c") == 0)
-            || (strcmp (argv[i], "--config") == 0))
-        {
-            if (i + 1 < argc)
-            {
-                weechat_display_config_options (argv[i + 1]);
-                weechat_shutdown (EXIT_SUCCESS, 0);
-            }
-            else
-            {
-                string_iconv_fprintf (stderr,
-                                      _("Error: missing argument for \"%s\" "
-                                        "option\n"),
-                                      "--config");
-                weechat_shutdown (EXIT_FAILURE, 0);
-            }
-        }
-        else if ((strcmp (argv[i], "-d") == 0)
+        if ((strcmp (argv[i], "-d") == 0)
             || (strcmp (argv[i], "--dir") == 0))
         {
             if (i + 1 < argc)
@@ -237,12 +189,6 @@ weechat_parse_args (int argc, char *argv[])
             string_iconv_fprintf (stdout, "\n%s%s", WEECHAT_LICENSE);
             weechat_shutdown (EXIT_SUCCESS, 0);
         }
-        else if ((strcmp (argv[i], "-m") == 0)
-                 || (strcmp (argv[i], "--commands") == 0))
-        {
-            weechat_display_commands ();
-            weechat_shutdown (EXIT_SUCCESS, 0);
-        }
         else if ((strcmp (argv[i], "-p") == 0)
                  || (strcmp (argv[i], "--no-plugin") == 0))
         {
@@ -266,40 +212,6 @@ weechat_parse_args (int argc, char *argv[])
         {
             string_iconv_fprintf (stdout, PACKAGE_VERSION "\n");
             weechat_shutdown (EXIT_SUCCESS, 0);
-        }
-        /*else if ((weechat_strncasecmp (argv[i], "irc", 3) == 0))
-        {
-            if (irc_server_init_with_url (argv[i], &server_tmp) < 0)
-            {
-                string_iconv_fprintf (stderr,
-                                      _("Warning: invalid syntax for IRC server "
-                                        "('%s'), ignored\n"),
-                                      argv[i]);
-            }
-            else
-            {
-                if (!irc_server_new (server_tmp.name, server_tmp.autoconnect,
-                                     server_tmp.autoreconnect,
-                                     server_tmp.autoreconnect_delay,
-                                     1, server_tmp.address, server_tmp.port,
-                                     server_tmp.ipv6, server_tmp.ssl,
-                                     server_tmp.password, server_tmp.nick1,
-                                     server_tmp.nick2, server_tmp.nick3,
-                                     NULL, NULL, NULL, NULL, 0,
-                                     server_tmp.autojoin, 1, NULL))
-                    string_iconv_fprintf (stderr,
-                                          _("Warning: unable to create server "
-                                            "('%s'), ignored\n"),
-                                          argv[i]);
-                irc_server_free_data (&server_tmp);
-                server_cmd_line = 1;
-            }
-            }*/
-        else
-        {
-            string_iconv_fprintf (stderr,
-                                  _("Warning: unknown parameter '%s', ignored\n"),
-                                  argv[i]);
         }
     }
 }
@@ -486,8 +398,8 @@ main (int argc, char *argv[])
         //session_load (weechat_session); /* load previous session if asked   */
     weechat_welcome_message ();         /* display WeeChat welcome message  */
     command_startup (0);                /* command executed before plugins  */
-    plugin_init (weechat_auto_load_plugins); /* init plugin interface(s)    */
-    weechat_auto_connect = 1;           /* auto-connect for future plugins  */
+    plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)    */
+                 argc, argv); 
     command_startup (1);                /* command executed after plugins   */
     
     gui_main_loop ();                   /* WeeChat main loop                */

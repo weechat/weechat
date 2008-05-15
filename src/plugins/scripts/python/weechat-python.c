@@ -644,8 +644,12 @@ weechat_python_buffer_closed_cb (void *data, char *signal, char *type_data,
  */
 
 int
-weechat_plugin_init (struct t_weechat_plugin *plugin)
+weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
+    
     weechat_python_plugin = plugin;
     
     /* init stdout/stderr buffer */

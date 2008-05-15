@@ -1,13 +1,12 @@
-.TH WEECHAT 1 "March 2008" "FlashCode"
+.TH WEECHAT 1 "May 2008" "FlashCode"
 
 .SH NAME
 weechat-curses \- Wee Enhanced Environment for Chat (Curses version)
 
 .SH SYNOPSIS
 .B weechat-curses
-.RI [ options... ]
-or
-.RI [ url... ]
+.RI [ option... ]
+.RI [ plugin:option... ]
 .br
 
 .SH DESCRIPTION
@@ -24,25 +23,13 @@ It is compliant with IRC RFCs 1459, 2810, 2811, 2812, and 2813.
 .br
 disable auto-connect to servers at startup
 .TP
-.B \-c, \-\-config
-.br
-display config file help (list of options)
-.TP
 .B \-d, \-\-dir <dir>
 .br
 set WeeChat home dir
 .TP
-.B \-f, \-\-key\-functions
-.br
-display internal functions for keys
-.TP
 .B \-h, \-\-help
 .br
 display summary of options
-.TP
-.B \-i, \-\-irc\-commands
-.br
-display IRC commands
 .TP
 .B \-k, \-\-keys
 .br
@@ -59,19 +46,15 @@ don't load any plugin at startup
 .B \-v, \-\-version
 .br
 display WeeChat version
-.TP
-.B \-w, \-\-weechat\-commands
-.br
-display WeeChat commands
 
-.SH URL
-WeeChat can use an URL (Uniform Resource Locator) to automatically connect
-to an IRC server. These are in the following form:
+.SH PLUGIN OPTIONS
+Options for plugins depend on plugins, you can look at plugins documentation on WeeChat website for more information.
 .TP
-.B irc[6][s]://[[nickname][:password]@]server[:port][/[#&+!]channel[,channel...]]
+For example, with irc plugin, you can connect to temporary server with an url like:
+.B irc[6][s]://[[nickname][:password]@]server[/port][//#channel1[,#channel2...]]
 .TP
-Exemple to join WeeChat channel support with nick "MyNick":
-irc://MyNick@irc.freenode.net/weechat
+To join WeeChat IRC channel support with nick "MyNick":
+irc://MyNick@irc.freenode.net//#weechat
 
 .SH FILES
 .TP
@@ -102,11 +85,11 @@ Please read the COPYING file for more information.
 .SH BUGS
 Please report bugs or feature requests at Savannah website:
 .br
-Bugs:
+- Bugs:
 .UR
 http://savannah.nongnu.org/bugs/?group=weechat
 .br
-Feature requests:
+- Feature requests:
 .UR
 http://savannah.nongnu.org/task/?group=weechat
 
@@ -116,8 +99,3 @@ WeeChat is written by FlashCode <flashcode@flashtux.org>
 Web:
 .UR
 http://weechat.flashtux.org/
-.br
-Get support there:
-.UR
-http://weechat.flashtux.org/support.php
-.UE

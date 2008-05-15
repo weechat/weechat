@@ -646,7 +646,7 @@ weechat_ruby_buffer_closed_cb (void *data, char *signal, char *type_data,
  */
 
 int
-weechat_plugin_init (struct t_weechat_plugin *plugin)
+weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
     int ruby_error;
     char *weechat_ruby_code =
@@ -691,6 +691,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
 	    "  end\n"
 	    "end\n"
 	};
+    
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
     
     weechat_ruby_plugin = plugin;
     

@@ -83,9 +83,9 @@ irc_signal_quit_cb (void *data, char *signal, char *type_data,
  */
 
 int
-weechat_plugin_init (struct t_weechat_plugin *plugin)
+weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    char *auto_connect;
+    int i, auto_connect;
     
     weechat_plugin = plugin;
     
@@ -113,10 +113,30 @@ weechat_plugin_init (struct t_weechat_plugin *plugin)
     
     /* hook completions */
     irc_completion_init ();
-
-    auto_connect = weechat_info_get ("auto_connect");
-    irc_server_auto_connect ((auto_connect && (strcmp (auto_connect, "1") == 0)) ? 1 : 0,
-                             0);
+    
+    /* look at arguments */
+    auto_connect = 1;
+    for (i = 0; i < argc; i++)
+    {
+        if ((weechat_strcasecmp (argv[i], "-a") == 0)
+            || (weechat_strcasecmp (argv[i], "--no-connect") == 0))
+        {
+            auto_connect = 0;
+        }
+        else if ((weechat_strncasecmp (argv[i], "irc", 3) == 0))
+        {
+            if (!irc_server_alloc_with_url (argv[i]))
+            {
+                weechat_printf (NULL,
+                                _("%s%s: invalid syntax for IRC server "
+                                  "('%s'), ignored"),
+                                weechat_prefix ("error"), "irc",
+                                argv[i]);
+            }
+        }
+    }
+    
+    irc_server_auto_connect (auto_connect, 0);
     
     irc_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
                                          &irc_server_timer_cb, NULL);

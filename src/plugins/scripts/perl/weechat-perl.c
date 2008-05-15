@@ -611,11 +611,15 @@ weechat_perl_buffer_closed_cb (void *data, char *signal, char *type_data,
  */
 
 int
-weechat_plugin_init (struct t_weechat_plugin *plugin)
+weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
 #ifndef MULTIPLICITY
     char *perl_args[] = { "", "-e", "0" };
 #endif
+    
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
     
     weechat_perl_plugin = plugin;
     

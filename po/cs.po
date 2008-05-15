@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-15 17:16+0200\n"
+"POT-Creation-Date: 2008-05-15 22:10+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -24,27 +24,25 @@ msgstr ""
 "Vyvíjí FlashCode <flashcode@flashtux.org> - %s"
 
 #, c-format
-msgid ""
-"Usage: %s [options ...]\n"
-"   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel]"
-"[,channel[...]]"
+msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr ""
-"Použití: %s [nastavení ...]\n"
-"   nebo: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/"
-"channel][,channel[...]]"
 
 #, fuzzy
 msgid ""
-"  -a, --no-connect      disable auto-connect to servers at startup\n"
-"  -c, --config          display config file options\n"
-"  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-"  -h, --help            this help\n"
-"  -m, --commands        display WeeChat commands\n"
-"  -k, --keys            display WeeChat default keys\n"
-"  -l, --license         display WeeChat license\n"
-"  -p, --no-plugin       don't load any plugin at startup\n"
-"  -v, --version         display WeeChat version\n"
-"\n"
+"  -a, --no-connect  disable auto-connect to servers at startup\n"
+"  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
+"  -h, --help        this help\n"
+"  -k, --keys        display WeeChat default keys\n"
+"  -l, --license     display WeeChat license\n"
+"  -p, --no-plugin   don't load any plugin at startup\n"
+"  -v, --version     display WeeChat version\n"
+"  plugin:option     option for plugin\n"
+"                    for example, irc plugin can connect\n"
+"                    to server with url like:\n"
+"                    irc[6][s]://[nickname[:password]@]irc.example.org[/port]"
+"[//#channel1][,#channel2[...]]\n"
+"                    (look at plugins documentation for more information\n"
+"                    about possible options)\n"
 msgstr ""
 "  -a, --no-connect        vypne automatické připojení k serverům při startu\n"
 "  -c, --config            zobrazí nastavení konfiguračního souboru\n"
@@ -60,16 +58,6 @@ msgstr ""
 "  -w, --weechat-commands  zobrazí příkazy WeeChat\n"
 
 #. TRANSLATORS: %s is "weechat"
-#, fuzzy, c-format
-msgid "%s configuration options:\n"
-msgstr "nastaví konfigurační možnosti"
-
-#. TRANSLATORS: %s is "weechat"
-#, c-format
-msgid "%s internal commands:\n"
-msgstr "%s vnitřní příkazy:\n"
-
-#. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s výchozí klávesy:\n"
@@ -77,10 +65,6 @@ msgstr "%s výchozí klávesy:\n"
 #, fuzzy, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "Warning: unknown parameter '%s', ignored\n"
-msgstr "%s neznámý parametr '%s', ignorován\n"
 
 #, fuzzy
 msgid "Error: unable to get HOME directory\n"
@@ -2026,6 +2010,10 @@ msgstr "%s chyba při čtení FIFO roury, zavírám ji\n"
 #, fuzzy, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s chyba při čtení FIFO roury, zavírám ji\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid syntax for IRC server ('%s'), ignored"
+msgstr "%s nevalidní syntaxe pro IRC server ('%s'), ignorován\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -4577,6 +4565,31 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #, fuzzy
+#~ msgid ""
+#~ "Usage: %s [options ...]\n"
+#~ "   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[/port][//"
+#~ "#channel1][,#channel2[...]]"
+#~ msgstr ""
+#~ "Použití: %s [nastavení ...]\n"
+#~ "   nebo: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/"
+#~ "channel][,channel[...]]"
+
+#, fuzzy
+#~ msgid "%s%s: error retrieving user's name: %s"
+#~ msgstr "%s nedostatek paměti pro infobar zprávu\n"
+
+#, fuzzy
+#~ msgid "%s configuration options:\n"
+#~ msgstr "nastaví konfigurační možnosti"
+
+#~ msgid "%s internal commands:\n"
+#~ msgstr "%s vnitřní příkazy:\n"
+
+#, fuzzy
+#~ msgid "Warning: unknown parameter '%s', ignored\n"
+#~ msgstr "%s neznámý parametr '%s', ignorován\n"
+
+#, fuzzy
 #~ msgid "to"
 #~ msgstr "nahoře"
 
@@ -6192,9 +6205,6 @@ msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #~ msgid "%s missing argument for --session option\n"
 #~ msgstr "%s chybí argument pro --session volbu\n"
-
-#~ msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
-#~ msgstr "%s nevalidní syntaxe pro IRC server ('%s'), ignorován\n"
 
 #~ msgid "%s unable to create server ('%s'), ignored\n"
 #~ msgstr "%s nemohu vytvořit server ('%s'), ignorován\n"

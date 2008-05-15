@@ -402,8 +402,12 @@ demo_signal_cb (void *data, char *signal, char *type_data, void *signal_data)
  */
 
 int
-weechat_plugin_init (struct t_weechat_plugin *plugin)
+weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
+    
     weechat_plugin = plugin;
     
     weechat_hook_command ("demo_printf",

@@ -22,7 +22,8 @@
 
 #include "weechat-plugin.h"
 
-typedef int (t_weechat_init_func) (struct t_weechat_plugin *plugin);
+typedef int (t_weechat_init_func) (struct t_weechat_plugin *plugin,
+                                   int argc, char *argv[]);
 typedef int (t_weechat_end_func) (struct t_weechat_plugin *plugin);
 
 extern struct t_weechat_plugin *weechat_plugins;
@@ -38,7 +39,7 @@ extern void plugin_unload (struct t_weechat_plugin *plugin);
 extern void plugin_unload_name (char *name);
 extern void plugin_unload_all ();
 extern void plugin_reload_name (char *name);
-extern void plugin_init (int auto_load);
+extern void plugin_init (int auto_load, int argc, char *argv[]);
 extern void plugin_end ();
 extern void plugin_print_log ();
 

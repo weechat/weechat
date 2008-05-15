@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-15 17:16+0200\n"
+"POT-Creation-Date: 2008-05-15 22:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,33 +23,24 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid ""
-"Usage: %s [options ...]\n"
-"   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel]"
-"[,channel[...]]"
+msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr ""
 
 msgid ""
-"  -a, --no-connect      disable auto-connect to servers at startup\n"
-"  -c, --config          display config file options\n"
-"  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-"  -h, --help            this help\n"
-"  -m, --commands        display WeeChat commands\n"
-"  -k, --keys            display WeeChat default keys\n"
-"  -l, --license         display WeeChat license\n"
-"  -p, --no-plugin       don't load any plugin at startup\n"
-"  -v, --version         display WeeChat version\n"
-"\n"
-msgstr ""
-
-#. TRANSLATORS: %s is "weechat"
-#, c-format
-msgid "%s configuration options:\n"
-msgstr ""
-
-#. TRANSLATORS: %s is "weechat"
-#, c-format
-msgid "%s internal commands:\n"
+"  -a, --no-connect  disable auto-connect to servers at startup\n"
+"  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
+"  -h, --help        this help\n"
+"  -k, --keys        display WeeChat default keys\n"
+"  -l, --license     display WeeChat license\n"
+"  -p, --no-plugin   don't load any plugin at startup\n"
+"  -v, --version     display WeeChat version\n"
+"  plugin:option     option for plugin\n"
+"                    for example, irc plugin can connect\n"
+"                    to server with url like:\n"
+"                    irc[6][s]://[nickname[:password]@]irc.example.org[/port]"
+"[//#channel1][,#channel2[...]]\n"
+"                    (look at plugins documentation for more information\n"
+"                    about possible options)\n"
 msgstr ""
 
 #. TRANSLATORS: %s is "weechat"
@@ -59,10 +50,6 @@ msgstr ""
 
 #, c-format
 msgid "Error: missing argument for \"%s\" option\n"
-msgstr ""
-
-#, c-format
-msgid "Warning: unknown parameter '%s', ignored\n"
 msgstr ""
 
 msgid "Error: unable to get HOME directory\n"
@@ -1692,6 +1679,10 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error opening file, closing it"
+msgstr ""
+
+#, c-format
+msgid "%s%s: invalid syntax for IRC server ('%s'), ignored"
 msgstr ""
 
 #, c-format

@@ -459,11 +459,6 @@ plugin_api_info_get (struct t_weechat_plugin *plugin, char *info)
         snprintf (value, sizeof (value), "%d", gui_filters_enabled);
         return value;
     }
-    else if (string_strcasecmp (info, "auto_connect") == 0)
-    {
-        snprintf (value, sizeof (value), "%d", weechat_auto_connect);
-        return value;
-    }
     
     /* info not found */
     return NULL;

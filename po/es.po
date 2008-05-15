@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-15 17:16+0200\n"
+"POT-Creation-Date: 2008-05-15 22:10+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -24,27 +24,25 @@ msgstr ""
 "Desarrollado por FlashCode <flashcode@flashtux.org> - %s"
 
 #, c-format
-msgid ""
-"Usage: %s [options ...]\n"
-"   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel]"
-"[,channel[...]]"
+msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr ""
-"Uso: %s [opciones ...]\n"
-"  Ã³: %s [irc[6][s]://[usuario[:contraseÃ±a]@]irc.ejemplo.org[:puerto][/"
-"channel]"
 
 #, fuzzy
 msgid ""
-"  -a, --no-connect      disable auto-connect to servers at startup\n"
-"  -c, --config          display config file options\n"
-"  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-"  -h, --help            this help\n"
-"  -m, --commands        display WeeChat commands\n"
-"  -k, --keys            display WeeChat default keys\n"
-"  -l, --license         display WeeChat license\n"
-"  -p, --no-plugin       don't load any plugin at startup\n"
-"  -v, --version         display WeeChat version\n"
-"\n"
+"  -a, --no-connect  disable auto-connect to servers at startup\n"
+"  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
+"  -h, --help        this help\n"
+"  -k, --keys        display WeeChat default keys\n"
+"  -l, --license     display WeeChat license\n"
+"  -p, --no-plugin   don't load any plugin at startup\n"
+"  -v, --version     display WeeChat version\n"
+"  plugin:option     option for plugin\n"
+"                    for example, irc plugin can connect\n"
+"                    to server with url like:\n"
+"                    irc[6][s]://[nickname[:password]@]irc.example.org[/port]"
+"[//#channel1][,#channel2[...]]\n"
+"                    (look at plugins documentation for more information\n"
+"                    about possible options)\n"
 msgstr ""
 "  -a, --no-connect        desactivar autoconexiÃ³n a los servidores al "
 "inicio\n"
@@ -62,16 +60,6 @@ msgstr ""
 "  -w, --weechat-commands  mostrar comandos de Weechat\n"
 
 #. TRANSLATORS: %s is "weechat"
-#, fuzzy, c-format
-msgid "%s configuration options:\n"
-msgstr "poner opciones de configuraciÃ³n"
-
-#. TRANSLATORS: %s is "weechat"
-#, c-format
-msgid "%s internal commands:\n"
-msgstr "Comandos internos %s :\n"
-
-#. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s claves por defecto:\n"
@@ -79,10 +67,6 @@ msgstr "%s claves por defecto:\n"
 #, fuzzy, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
-
-#, fuzzy, c-format
-msgid "Warning: unknown parameter '%s', ignored\n"
-msgstr "%s parÃ¡metro desconocido '%s', ignorado\n"
 
 #, fuzzy
 msgid "Error: unable to get HOME directory\n"
@@ -2006,6 +1990,10 @@ msgstr "%s error al leer la tuberÃ­a FIFO, cerrÃ¡ndola\n"
 #, fuzzy, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s error al leer la tuberÃ­a FIFO, cerrÃ¡ndola\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid syntax for IRC server ('%s'), ignored"
+msgstr "%s sintaxis invÃ¡lida para el servidor IRC ('%s'), ignorado\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -4575,6 +4563,32 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #, fuzzy
+#~ msgid ""
+#~ "Usage: %s [options ...]\n"
+#~ "   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[/port][//"
+#~ "#channel1][,#channel2[...]]"
+#~ msgstr ""
+#~ "Uso: %s [opciones ...]\n"
+#~ "  Ã³: %s [irc[6][s]://[usuario[:contraseÃ±a]@]irc.ejemplo.org[:puerto][/"
+#~ "channel]"
+
+#, fuzzy
+#~ msgid "%s%s: error retrieving user's name: %s"
+#~ msgstr ""
+#~ "No hay suficiente memoria para el mensaje de la barra de informaciÃ³n\n"
+
+#, fuzzy
+#~ msgid "%s configuration options:\n"
+#~ msgstr "poner opciones de configuraciÃ³n"
+
+#~ msgid "%s internal commands:\n"
+#~ msgstr "Comandos internos %s :\n"
+
+#, fuzzy
+#~ msgid "Warning: unknown parameter '%s', ignored\n"
+#~ msgstr "%s parÃ¡metro desconocido '%s', ignorado\n"
+
+#, fuzzy
 #~ msgid "to"
 #~ msgstr "operador"
 
@@ -6213,9 +6227,6 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #~ msgid "%s missing argument for --session option\n"
 #~ msgstr "%s falta un argumento para la opciÃ³n --session\n"
-
-#~ msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
-#~ msgstr "%s sintaxis invÃ¡lida para el servidor IRC ('%s'), ignorado\n"
 
 #~ msgid "%s unable to create server ('%s'), ignored\n"
 #~ msgstr "%s no es posible crear el servidor ('%s'), ignorado\n"

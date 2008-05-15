@@ -86,8 +86,12 @@ debug_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 int
-weechat_plugin_init (struct t_weechat_plugin *plugin)
+weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
+    
     weechat_plugin = plugin;
 
     weechat_hook_command ("debug",

@@ -470,8 +470,11 @@ weechat_lua_buffer_closed_cb (void *data, char *signal, char *type_data,
  */
 
 int
-weechat_plugin_init (struct t_weechat_plugin *plugin)
+weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
     
     weechat_lua_plugin = plugin;
 

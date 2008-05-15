@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-15 17:16+0200\n"
+"POT-Creation-Date: 2008-05-15 22:10+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -30,27 +30,25 @@ msgstr ""
 "Fejlesztő: FlashCode <flashcode@flashtux.org> - %s"
 
 #, c-format
-msgid ""
-"Usage: %s [options ...]\n"
-"   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel]"
-"[,channel[...]]"
+msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr ""
-"Használat: %s [opciók ...]\n"
-"     vagy: %s [irc[6][s]://[név[:jelszó]@]irc.példa.org[:port][/szoba][,szoba"
-"[...]]"
 
 #, fuzzy
 msgid ""
-"  -a, --no-connect      disable auto-connect to servers at startup\n"
-"  -c, --config          display config file options\n"
-"  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-"  -h, --help            this help\n"
-"  -m, --commands        display WeeChat commands\n"
-"  -k, --keys            display WeeChat default keys\n"
-"  -l, --license         display WeeChat license\n"
-"  -p, --no-plugin       don't load any plugin at startup\n"
-"  -v, --version         display WeeChat version\n"
-"\n"
+"  -a, --no-connect  disable auto-connect to servers at startup\n"
+"  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
+"  -h, --help        this help\n"
+"  -k, --keys        display WeeChat default keys\n"
+"  -l, --license     display WeeChat license\n"
+"  -p, --no-plugin   don't load any plugin at startup\n"
+"  -v, --version     display WeeChat version\n"
+"  plugin:option     option for plugin\n"
+"                    for example, irc plugin can connect\n"
+"                    to server with url like:\n"
+"                    irc[6][s]://[nickname[:password]@]irc.example.org[/port]"
+"[//#channel1][,#channel2[...]]\n"
+"                    (look at plugins documentation for more information\n"
+"                    about possible options)\n"
 msgstr ""
 "  -a, --no-connect        automatikus csatlakozás a szerverekhez tiltása\n"
 "  -c, --config            beállítófájl opcióinak mutatása\n"
@@ -66,16 +64,6 @@ msgstr ""
 "  -w, --weechat-commands  WeeChat parancsok mutatása\n"
 
 #. TRANSLATORS: %s is "weechat"
-#, fuzzy, c-format
-msgid "%s configuration options:\n"
-msgstr "konfigurációs paraméterek beállítása"
-
-#. TRANSLATORS: %s is "weechat"
-#, c-format
-msgid "%s internal commands:\n"
-msgstr "%s belső parancsok:\n"
-
-#. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s alapértelmezett billentyűk:\n"
@@ -83,10 +71,6 @@ msgstr "%s alapértelmezett billentyűk:\n"
 #, fuzzy, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
-
-#, fuzzy, c-format
-msgid "Warning: unknown parameter '%s', ignored\n"
-msgstr "%s ismeretlen paraméter: '%s', mellőzve\n"
 
 #, fuzzy
 msgid "Error: unable to get HOME directory\n"
@@ -2029,6 +2013,10 @@ msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
 #, fuzzy, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s hiba a FIFO cső olvasása közben, bezárás\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid syntax for IRC server ('%s'), ignored"
+msgstr "%s érvénytelen szintaxis az IRC szervernek ('%s'), mellőzve\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -4581,6 +4569,31 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, fuzzy
+#~ msgid ""
+#~ "Usage: %s [options ...]\n"
+#~ "   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[/port][//"
+#~ "#channel1][,#channel2[...]]"
+#~ msgstr ""
+#~ "Használat: %s [opciók ...]\n"
+#~ "     vagy: %s [irc[6][s]://[név[:jelszó]@]irc.példa.org[:port][/szoba][,"
+#~ "szoba[...]]"
+
+#, fuzzy
+#~ msgid "%s%s: error retrieving user's name: %s"
+#~ msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
+#, fuzzy
+#~ msgid "%s configuration options:\n"
+#~ msgstr "konfigurációs paraméterek beállítása"
+
+#~ msgid "%s internal commands:\n"
+#~ msgstr "%s belső parancsok:\n"
+
+#, fuzzy
+#~ msgid "Warning: unknown parameter '%s', ignored\n"
+#~ msgstr "%s ismeretlen paraméter: '%s', mellőzve\n"
+
+#, fuzzy
 #~ msgid "to"
 #~ msgstr "legfelső"
 
@@ -6190,9 +6203,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #~ msgid "%s missing argument for --session option\n"
 #~ msgstr "%s hiányzó argumentum a --session opciónak\n"
-
-#~ msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
-#~ msgstr "%s érvénytelen szintaxis az IRC szervernek ('%s'), mellőzve\n"
 
 #~ msgid "%s unable to create server ('%s'), ignored\n"
 #~ msgstr "%s nem sikerült a szervert ('%s') létrehozni, mellőzve\n"

@@ -818,8 +818,12 @@ alias_completion_cb (void *data, char *completion, struct t_gui_buffer *buffer,
  */
 
 int
-weechat_plugin_init (struct t_weechat_plugin *plugin)
+weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
+    
     weechat_plugin = plugin;
     
     if (!alias_config_init ())

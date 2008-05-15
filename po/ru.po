@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-15 17:16+0200\n"
+"POT-Creation-Date: 2008-05-15 22:10+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -25,27 +25,25 @@ msgstr ""
 "Разработчик - FlashCode <flashcode@flashtux.org> - %s"
 
 #, c-format
-msgid ""
-"Usage: %s [options ...]\n"
-"   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[:port][/channel]"
-"[,channel[...]]"
+msgid "Usage: %s [option...] [plugin:option...]\n"
 msgstr ""
-"Использование: %s [параметры ...]\n"
-"          или: %s [irc[6][s]://[ник[:пароль]@]irc.example.org[:порт][/канал]"
-"[,канал[...]]"
 
 #, fuzzy
 msgid ""
-"  -a, --no-connect      disable auto-connect to servers at startup\n"
-"  -c, --config          display config file options\n"
-"  -d, --dir <path>      set WeeChat home directory (default: ~/.weechat)\n"
-"  -h, --help            this help\n"
-"  -m, --commands        display WeeChat commands\n"
-"  -k, --keys            display WeeChat default keys\n"
-"  -l, --license         display WeeChat license\n"
-"  -p, --no-plugin       don't load any plugin at startup\n"
-"  -v, --version         display WeeChat version\n"
-"\n"
+"  -a, --no-connect  disable auto-connect to servers at startup\n"
+"  -d, --dir <path>  set WeeChat home directory (default: ~/.weechat)\n"
+"  -h, --help        this help\n"
+"  -k, --keys        display WeeChat default keys\n"
+"  -l, --license     display WeeChat license\n"
+"  -p, --no-plugin   don't load any plugin at startup\n"
+"  -v, --version     display WeeChat version\n"
+"  plugin:option     option for plugin\n"
+"                    for example, irc plugin can connect\n"
+"                    to server with url like:\n"
+"                    irc[6][s]://[nickname[:password]@]irc.example.org[/port]"
+"[//#channel1][,#channel2[...]]\n"
+"                    (look at plugins documentation for more information\n"
+"                    about possible options)\n"
 msgstr ""
 "  -a, --no-connect        не подключаться автоматически при запуске\n"
 "  -c, --config            отобразить параметры конфигурации\n"
@@ -62,16 +60,6 @@ msgstr ""
 "  -w, --weechat-commands  отобразить команды WeeChat\n"
 
 #. TRANSLATORS: %s is "weechat"
-#, fuzzy, c-format
-msgid "%s configuration options:\n"
-msgstr "настроить параметры конфигурации"
-
-#. TRANSLATORS: %s is "weechat"
-#, c-format
-msgid "%s internal commands:\n"
-msgstr "Внутренние команды %s:\n"
-
-#. TRANSLATORS: %s is "weechat"
 #, c-format
 msgid "%s default keys:\n"
 msgstr "%s клавиши по умолчанию:\n"
@@ -79,10 +67,6 @@ msgstr "%s клавиши по умолчанию:\n"
 #, fuzzy, c-format
 msgid "Error: missing argument for \"%s\" option\n"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
-
-#, fuzzy, c-format
-msgid "Warning: unknown parameter '%s', ignored\n"
-msgstr "%s неизвестный параметр '%s', игнорируется\n"
 
 #, fuzzy
 msgid "Error: unable to get HOME directory\n"
@@ -2036,6 +2020,10 @@ msgstr "%s ошибка чтения FIFO pipe, закрываю его\n"
 #, fuzzy, c-format
 msgid "%s%s: error opening file, closing it"
 msgstr "%s ошибка чтения FIFO pipe, закрываю его\n"
+
+#, fuzzy, c-format
+msgid "%s%s: invalid syntax for IRC server ('%s'), ignored"
+msgstr "%s некорректный синтаксис IRC сервра ('%s'), игнорируется\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -4566,6 +4554,31 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy
+#~ msgid ""
+#~ "Usage: %s [options ...]\n"
+#~ "   or: %s [irc[6][s]://[nickname[:password]@]irc.example.org[/port][//"
+#~ "#channel1][,#channel2[...]]"
+#~ msgstr ""
+#~ "Использование: %s [параметры ...]\n"
+#~ "          или: %s [irc[6][s]://[ник[:пароль]@]irc.example.org[:порт][/"
+#~ "канал][,канал[...]]"
+
+#, fuzzy
+#~ msgid "%s%s: error retrieving user's name: %s"
+#~ msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, fuzzy
+#~ msgid "%s configuration options:\n"
+#~ msgstr "настроить параметры конфигурации"
+
+#~ msgid "%s internal commands:\n"
+#~ msgstr "Внутренние команды %s:\n"
+
+#, fuzzy
+#~ msgid "Warning: unknown parameter '%s', ignored\n"
+#~ msgstr "%s неизвестный параметр '%s', игнорируется\n"
+
+#, fuzzy
 #~ msgid "to"
 #~ msgstr "сверху"
 
@@ -6195,9 +6208,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #~ msgid "%s missing argument for --session option\n"
 #~ msgstr "%s нет аргумента для параметра --session\n"
-
-#~ msgid "%s invalid syntax for IRC server ('%s'), ignored\n"
-#~ msgstr "%s некорректный синтаксис IRC сервра ('%s'), игнорируется\n"
 
 #~ msgid "%s unable to create server ('%s'), ignored\n"
 #~ msgstr "%s не могу создать сервер ('%s'), игнорируется\n"
