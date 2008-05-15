@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-11 12:09+0200\n"
+"POT-Creation-Date: 2008-05-15 17:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3309,7 +3309,7 @@ msgstr ""
 #, c-format
 msgid ""
 "%s%s: proxy fails to establish connection to server (check username/password "
-"if used)"
+"if used and if IRC server address/port is allowed by proxy)"
 msgstr ""
 
 #, c-format

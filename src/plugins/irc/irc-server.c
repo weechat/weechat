@@ -2033,7 +2033,9 @@ irc_server_child_read_cb (void *arg_server)
                 weechat_printf (server->buffer,
                                 _("%s%s: proxy fails to establish "
                                   "connection to server "
-                                  "(check username/password if used)"),
+                                  "(check username/password if used "
+                                  "and if IRC server address/port is "
+                                  "allowed by proxy)"),
                                 weechat_prefix ("error"), "irc");
                 irc_server_close_connection (server);
                 irc_server_switch_address (server);
