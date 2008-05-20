@@ -83,11 +83,6 @@ struct t_gui_window
     /* GUI specific objects */
     void *gui_objects;                 /* pointer to a GUI specific struct  */
     
-    /* DCC */
-    void *dcc_first;                   /* first dcc displayed               */
-    void *dcc_selected;                /* selected dcc                      */
-    void *dcc_last_displayed;          /* last dcc displayed (for scroll)   */
-    
     struct t_gui_buffer *buffer;       /* buffer currently displayed        */
     
     int first_line_displayed;          /* = 1 if first line is displayed    */

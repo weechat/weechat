@@ -190,14 +190,12 @@ extern struct t_gui_window *gui_buffer_find_window (struct t_gui_buffer *buffer)
 extern int gui_buffer_is_scrolled (struct t_gui_buffer *buffer);
 extern int gui_buffer_match_category_name (struct t_gui_buffer *buffer,
                                            char *mask, int case_sensitive);
-extern struct t_gui_buffer *gui_buffer_get_dcc (struct t_gui_window *window);
 extern void gui_buffer_clear (struct t_gui_buffer *buffer);
 extern void gui_buffer_clear_all ();
 extern void gui_buffer_close (struct t_gui_buffer *buffer,
                               int switch_to_another);
 extern void gui_buffer_switch_previous (struct t_gui_window *window);
 extern void gui_buffer_switch_next (struct t_gui_window *window);
-extern void gui_buffer_switch_dcc (struct t_gui_window *window);
 extern void gui_buffer_switch_by_number (struct t_gui_window *window,
                                          int number);
 extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);

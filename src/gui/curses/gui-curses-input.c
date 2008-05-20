@@ -279,7 +279,6 @@ gui_input_draw (struct t_gui_buffer *buffer, int erase)
     struct t_gui_window *ptr_win;
     char format[32];
     int prompt_length, display_prompt, offset_cursor;
-    /*t_irc_dcc *dcc_selected;*/
     
     if (!gui_ok)
         return;
@@ -365,59 +364,6 @@ gui_input_draw (struct t_gui_buffer *buffer, int erase)
                         move (ptr_win->win_input_y,
                               ptr_win->win_input_x + ptr_win->win_input_cursor_x);
                 }
-                /*
-                    case GUI_BUFFER_TYPE_DCC:
-                        dcc_selected = (ptr_win->dcc_selected) ? (t_irc_dcc *) ptr_win->dcc_selected : irc_dcc_list;
-                        wmove (GUI_CURSES(ptr_win)->win_input, 0, 0);
-                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_input,
-                                                      GUI_COLOR_WIN_INPUT_ACTIONS);
-                        if (dcc_selected)
-                        {
-                            switch (dcc_selected->status)
-                            {
-                                case IRC_DCC_WAITING:
-                                    if (IRC_DCC_IS_RECV(dcc_selected->type))
-                                        gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
-                                                            _("  [A] Accept"));
-                                    gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
-                                                        _("  [C] Cancel"));
-                                    break;
-                                case IRC_DCC_CONNECTING:
-                                case IRC_DCC_ACTIVE:
-                                    gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
-                                                        _("  [C] Cancel"));
-                                    break;
-                                case IRC_DCC_DONE:
-                                case IRC_DCC_FAILED:
-                                case IRC_DCC_ABORTED:
-                                    gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
-                                                        _("  [R] Remove"));
-                                    break;
-                            }
-                        }
-                        gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
-                                            _("  [P] Purge old DCC"));
-                        gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
-                                            _("  [Q] Close DCC view"));
-                        wclrtoeol (GUI_CURSES(ptr_win)->win_input);
-                        ptr_win->win_input_cursor_x = 0;
-                        if (ptr_win == gui_current_window)
-                            move (ptr_win->win_input_y, ptr_win->win_input_x);
-                        break;
-                    case GUI_BUFFER_TYPE_RAW_DATA:
-                        wmove (GUI_CURSES(ptr_win)->win_input, 0, 0);
-                        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_input,
-                                                      GUI_COLOR_WIN_INPUT_ACTIONS);
-                        gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
-                                            _("  [C] Clear buffer"));
-                        gui_window_wprintw (GUI_CURSES(ptr_win)->win_input,
-                                            _("  [Q] Close raw data view"));
-                        wclrtoeol (GUI_CURSES(ptr_win)->win_input);
-                        ptr_win->win_input_cursor_x = 0;
-                        if (ptr_win == gui_current_window)
-                            move (ptr_win->win_input_y, ptr_win->win_input_x);
-                        break;
-                }*/
             }
             wrefresh (GUI_CURSES(ptr_win)->win_input);
             refresh ();

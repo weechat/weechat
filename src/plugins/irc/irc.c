@@ -31,7 +31,6 @@
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
-#include "irc-dcc.h"
 
 
 WEECHAT_PLUGIN_NAME("irc");
@@ -154,7 +153,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     irc_config_write ();
     
     irc_server_disconnect_all ();
-    //irc_dcc_end ();
     irc_server_free_all ();
     
     return WEECHAT_RC_OK;

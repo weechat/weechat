@@ -27,7 +27,6 @@
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
-#include "irc-dcc.h"
 #include "irc-color.h"
 #include "irc-config.h"
 

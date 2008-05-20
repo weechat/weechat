@@ -29,7 +29,6 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-config.h"
-#include "irc-dcc.h"
 #include "irc-server.h"
 
 

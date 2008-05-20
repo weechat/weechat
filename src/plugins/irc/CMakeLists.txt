@@ -22,7 +22,6 @@ irc-color.c irc-color.h
 irc-command.c irc-command.h
 irc-completion.c irc-completion.h
 irc-config.c irc-config.h
-irc-dcc.c irc-dcc.h
 irc-debug.c irc-debug.h
 irc-display.c irc-display.h
 irc-input.c irc-input.h

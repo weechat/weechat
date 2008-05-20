@@ -249,10 +249,6 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         
         new_window->refresh_needed = 0;
         
-        new_window->dcc_first = NULL;
-        new_window->dcc_selected = NULL;
-        new_window->dcc_last_displayed = NULL;
-        
         new_window->buffer = NULL;
         
         new_window->first_line_displayed = 0;
@@ -942,9 +938,6 @@ gui_window_print_log ()
         log_printf ("  win_input_width . . : %d",   ptr_window->win_input_width);
         log_printf ("  win_input_height. . : %d",   ptr_window->win_input_height);
         log_printf ("  win_input_cursor_x. : %d",   ptr_window->win_input_cursor_x);
-        log_printf ("  dcc_first . . . . . : 0x%x", ptr_window->dcc_first);
-        log_printf ("  dcc_selected. . . . : 0x%x", ptr_window->dcc_selected);
-        log_printf ("  dcc_last_displayed. : 0x%x", ptr_window->dcc_last_displayed);
         log_printf ("  buffer. . . . . . . : 0x%x", ptr_window->buffer);
         log_printf ("  first_line_displayed: %d",   ptr_window->first_line_displayed);
         log_printf ("  start_line. . . . . : 0x%x", ptr_window->start_line);
