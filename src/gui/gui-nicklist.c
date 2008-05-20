@@ -448,6 +448,7 @@ gui_nicklist_remove_all (struct t_gui_buffer *buffer)
     {
         gui_nicklist_remove_group (buffer, buffer->nicklist_root);
     }
+    gui_nicklist_add_group (buffer, NULL, "root", NULL, 0);
 }
 
 /*
