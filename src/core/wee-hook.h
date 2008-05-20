@@ -20,6 +20,10 @@
 #ifndef __WEECHAT_HOOK_H
 #define __WEECHAT_HOOK_H 1
 
+#ifdef HAVE_GNUTLS
+#include <gnutls/gnutls.h>
+#endif
+
 struct t_gui_buffer;
 struct t_weelist;
 
@@ -30,6 +34,7 @@ enum t_hook_type
     HOOK_TYPE_COMMAND = 0,             /* new command                       */
     HOOK_TYPE_TIMER,                   /* timer                             */
     HOOK_TYPE_FD,                      /* socket of file descriptor         */
+    HOOK_TYPE_CONNECT,                 /* connect to peer with fork         */
     HOOK_TYPE_PRINT,                   /* printed message                   */
     HOOK_TYPE_SIGNAL,                  /* signal                            */
     HOOK_TYPE_CONFIG,                  /* config option                     */
@@ -46,6 +51,7 @@ enum t_hook_type
 #define HOOK_COMMAND(hook, var) (((struct t_hook_command *)hook->hook_data)->var)
 #define HOOK_TIMER(hook, var) (((struct t_hook_timer *)hook->hook_data)->var)
 #define HOOK_FD(hook, var) (((struct t_hook_fd *)hook->hook_data)->var)
+#define HOOK_CONNECT(hook, var) (((struct t_hook_connect *)hook->hook_data)->var)
 #define HOOK_PRINT(hook, var) (((struct t_hook_print *)hook->hook_data)->var)
 #define HOOK_SIGNAL(hook, var) (((struct t_hook_signal *)hook->hook_data)->var)
 #define HOOK_CONFIG(hook, var) (((struct t_hook_config *)hook->hook_data)->var)
@@ -101,6 +107,25 @@ struct t_hook_fd
     t_hook_callback_fd *callback;      /* fd callback                       */
     int fd;                            /* socket or file descriptor         */
     int flags;                         /* fd flags (read,write,..)          */
+};
+
+typedef int (t_hook_callback_connect)(void *data, int status);
+
+struct t_hook_connect
+{
+    t_hook_callback_connect *callback; /* connect callback                  */
+    char *address;                     /* peer address                      */
+    int port;                          /* peer port                         */
+    int sock;                          /* socket (created by caller)        */
+    int ipv6;                          /* IPv6 connection ?                 */
+#ifdef HAVE_GNUTLS
+    gnutls_session_t *gnutls_sess;     /* GnuTLS session (SSL connection)   */
+#endif
+    char *local_hostname;              /* force local hostname (optional)   */
+    int child_read;                    /* to read into child pipe           */
+    int child_write;                   /* to write into child pipe          */
+    pid_t child_pid;                   /* pid of child process (connecting) */
+    struct t_hook *hook_fd;            /* pointer to fd hook                */
 };
 
 typedef int (t_hook_callback_print)(void *data, struct t_gui_buffer *buffer,
@@ -191,6 +216,12 @@ extern int hook_fd_set (fd_set *read_fds, fd_set *write_fds,
                         fd_set *exception_fds);
 extern void hook_fd_exec (fd_set *read_fds, fd_set *write_fds,
                           fd_set *exception_fds);
+extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
+                                    char *address, int port,
+                                    int sock, int ipv6, void *gnutls_session,
+                                    char *local_hostname,
+                                    t_hook_callback_connect * callback,
+                                    void *callback_data);
 extern struct t_hook *hook_print (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
                                   char *tags, char *message,

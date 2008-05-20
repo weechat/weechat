@@ -364,6 +364,7 @@ plugin_load (char *filename)
         new_plugin->hook_command = &hook_command;
         new_plugin->hook_timer = &hook_timer;
         new_plugin->hook_fd = &hook_fd;
+        new_plugin->hook_connect = &hook_connect;
         new_plugin->hook_print = &hook_print;
         new_plugin->hook_signal = &hook_signal;
         new_plugin->hook_signal_send = &hook_signal_send;

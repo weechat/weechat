@@ -23,6 +23,7 @@
 #include "config.h"
 #endif
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
@@ -32,11 +33,57 @@
 #include <netdb.h>
 #include <errno.h>
 
+#ifdef HAVE_GNUTLS
+#include <gnutls/gnutls.h>
+#endif
+
 #include "weechat.h"
 #include "wee-network.h"
+#include "wee-hook.h"
 #include "wee-config.h"
 #include "wee-string.h"
+#include "../plugins/plugin.h"
 
+
+#ifdef HAVE_GNUTLS
+gnutls_certificate_credentials gnutls_xcred; /* GnuTLS client credentials   */
+const int gnutls_cert_type_prio[] = { GNUTLS_CRT_X509, GNUTLS_CRT_OPENPGP, 0 };
+#if LIBGNUTLS_VERSION_NUMBER >= 0x010700
+    const int gnutls_prot_prio[] = { GNUTLS_TLS1_2, GNUTLS_TLS1_1,
+                                     GNUTLS_TLS1_0, GNUTLS_SSL3, 0 };
+#else
+    const int gnutls_prot_prio[] = { GNUTLS_TLS1_1, GNUTLS_TLS1_0,
+                                     GNUTLS_SSL3, 0 };
+#endif
+#endif
+
+
+/*
+ * network_init: init network
+ */
+
+void
+network_init ()
+{
+#ifdef HAVE_GNUTLS
+    gnutls_global_init ();
+    gnutls_certificate_allocate_credentials (&gnutls_xcred);
+    gnutls_certificate_set_x509_trust_file (gnutls_xcred, "ca.pem", GNUTLS_X509_FMT_PEM);
+#endif
+}
+
+/*
+ * network_end: end network
+ */
+
+void
+network_end ()
+{
+#ifdef HAVE_GNUTLS
+    gnutls_certificate_free_credentials (gnutls_xcred);
+    gnutls_global_deinit();
+#endif
+}
 
 /*
  * network_convbase64_8x3_to_6x4 : convert 3 bytes of 8 bits in 4 bytes of 6 bits
@@ -101,9 +148,8 @@ network_base64encode (char *from, char *to)
 /*
  * network_pass_httpproxy: establish connection/authentification to an
  *                         http proxy
- *                         return : 
- *                          - 0 if connexion throw proxy was successful
- *                          - 1 if connexion fails
+ *                         return 1 if connection is ok
+ *                                0 if error
  */
 
 int
@@ -135,26 +181,26 @@ network_pass_httpproxy (int sock, char *address, int port)
     
     m = send (sock, buffer, n, 0);
     if (n != m)
-        return 1;
+        return 0;
     
     n = recv (sock, buffer, sizeof (buffer), 0);
     
     /* success result must be like: "HTTP/1.0 200 OK" */
     if (n < 12)
-        return 1;
+        return 0;
     
     if (memcmp (buffer, "HTTP/", 5) || memcmp (buffer + 9, "200", 3))
-        return 1;
+        return 0;
     
-    return 0;
+    /* connection ok */
+    return 1;
 }
 
 /*
  * network_resolve: resolve hostname on its IP address
  *                  (works with ipv4 and ipv6)
- *                  return :
- *                   - 0 if resolution was successful
- *                   - 1 if resolution fails
+ *                  return 1 if resolution is ok
+ *                         0 if error
  */
 
 int
@@ -169,16 +215,16 @@ network_resolve (char *hostname, char *ip, int *version)
     res = NULL;
     
     if (getaddrinfo (hostname, NULL, NULL, &res) != 0)
-        return 1;
+        return 0;
     
     if (!res)
-        return 1;
+        return 0;
     
     if (getnameinfo (res->ai_addr, res->ai_addrlen, ipbuffer, sizeof(ipbuffer),
                      NULL, 0, NI_NUMERICHOST) != 0)
     {
         freeaddrinfo (res);
-        return 1;
+        return 0;
     }
     
     if ((res->ai_family == AF_INET) && (version != NULL))
@@ -190,15 +236,15 @@ network_resolve (char *hostname, char *ip, int *version)
     
     freeaddrinfo (res);
     
-    return 0;
+    /* resolution ok */
+    return 1;
 }
 
 /*
  * network_pass_socks4proxy: establish connection/authentification thru a
  *                           socks4 proxy
- *                           return : 
- *                            - 0 if connexion thru proxy was successful
- *                            - 1 if connexion fails
+ *                           return 1 if connection is ok
+ *                                  0 if error
  */
 
 int
@@ -232,18 +278,19 @@ network_pass_socks4proxy (int sock, char *address, int port)
     send (sock, (char *) &socks4, 8 + strlen (socks4.user) + 1, 0);
     recv (sock, buffer, sizeof (buffer), 0);
     
-    if (buffer[0] == 0 && buffer[1] == 90)
-        return 0;
+    /* connection ok */
+    if ((buffer[0] == 0) && (buffer[1] == 90))
+        return 1;
     
-    return 1;
+    /* connection failed */
+    return 0;
 }
 
 /*
  * network_pass_socks5proxy: establish connection/authentification thru a
  *                           socks5 proxy
- *                           return : 
- *                            - 0 if connexion thru proxy was successful
- *                            - 1 if connexion fails
+ *                           return 1 if connection is ok
+ *                                  0 if error
  */
 
 int
@@ -276,7 +323,7 @@ network_pass_socks5proxy (int sock, char *address, int port)
     send (sock, (char *) &socks5, sizeof(socks5), 0);
     /* server socks5 must respond with 2 bytes */
     if (recv (sock, buffer, 2, 0) != 2)
-        return 1;
+        return 0;
     
     if (CONFIG_STRING(config_proxy_username)
         && CONFIG_STRING(config_proxy_username)[0])
@@ -288,7 +335,7 @@ network_pass_socks5proxy (int sock, char *address, int port)
          */
         
         if (buffer[0] != 5 || buffer[1] != 2)
-            return 1;
+            return 0;
         
         /* authentication as in RFC 1929 */
         username_len = strlen (CONFIG_STRING(config_proxy_username));
@@ -306,11 +353,11 @@ network_pass_socks5proxy (int sock, char *address, int port)
         
         /* server socks5 must respond with 2 bytes */
         if (recv (sock, buffer, 2, 0) != 2)
-            return 1;
+            return 0;
         
         /* buffer[1] = auth state, must be 0 for success */
         if (buffer[1] != 0)
-            return 1;
+            return 0;
     }
     else
     {
@@ -319,8 +366,8 @@ network_pass_socks5proxy (int sock, char *address, int port)
          *       - socks version (buffer[0]) = 5 => socks5
          *       - socks method  (buffer[1]) = 0 => no authentication
          */
-        if (!(buffer[0] == 5 && buffer[1] == 0))
-            return 1;
+        if (!((buffer[0] == 5) && (buffer[1] == 0)))
+            return 0;
     }
     
     /* authentication successful then giving address/port to connect */
@@ -328,7 +375,7 @@ network_pass_socks5proxy (int sock, char *address, int port)
     addr_buffer_len = 4 + 1 + addr_len + 2;
     addr_buffer = malloc (addr_buffer_len * sizeof(*addr_buffer));
     if (!addr_buffer)
-        return 1;
+        return 0;
     addr_buffer[0] = 5;   /* version 5 */
     addr_buffer[1] = 1;   /* command: 1 for connect */
     addr_buffer[2] = 0;   /* reserved */
@@ -342,10 +389,10 @@ network_pass_socks5proxy (int sock, char *address, int port)
     
     /* dialog with proxy server */
     if (recv (sock, buffer, 4, 0) != 4)
-        return 1;
+        return 0;
     
-    if (!(buffer[0] == 5 && buffer[1] == 0))
-        return 1;
+    if (!((buffer[0] == 5) && (buffer[1] == 0)))
+        return 0;
     
     /* buffer[3] = address type */
     switch (buffer[3])
@@ -356,7 +403,7 @@ network_pass_socks5proxy (int sock, char *address, int port)
              * address of 4 bytes and port of 2 bytes (= 6 bytes)
              */
             if (recv (sock, buffer, 6, 0) != 6)
-                return 1;
+                return 0;
             break;
         case 3:
             /* domainname
@@ -364,11 +411,11 @@ network_pass_socks5proxy (int sock, char *address, int port)
              */
             /* reading address length */
             if (recv (sock, buffer, 1, 0) != 1)
-                return 1;    
+                return 0;    
             addr_len = buffer[0];
             /* reading address + port = addr_len + 2 */
             if (recv (sock, buffer, addr_len + 2, 0) != (addr_len + 2))
-                return 1;
+                return 0;
             break;
         case 4:
             /* ipv6
@@ -376,20 +423,20 @@ network_pass_socks5proxy (int sock, char *address, int port)
              * address of 16 bytes and port of 2 bytes (= 18 bytes)
              */
             if (recv (sock, buffer, 18, 0) != 18)
-                return 1;
+                return 0;
             break;
         default:
-            return 1;
+            return 0;
     }
     
-    return 0;
+    /* connection ok */
+    return 1;
 }
 
 /*
  * network_pass_proxy: establish connection/authentification to a proxy
- *                     return : 
- *                      - 0 if connexion throw proxy was successful
- *                      - 1 if connexion fails
+ *                     return 1 if connection is ok
+ *                            0 if error
  */
 
 int
@@ -397,8 +444,8 @@ network_pass_proxy (int sock, char *address, int port)
 {
     int rc;
     
-    rc = 1;
-    if (CONFIG_BOOLEAN(config_proxy_type))
+    rc = 0;
+    if (CONFIG_BOOLEAN(config_proxy_use))
     {
         if (string_strcasecmp (CONFIG_STRING(config_proxy_type), "http") == 0)
             rc = network_pass_httpproxy (sock, address, port);
@@ -412,7 +459,8 @@ network_pass_proxy (int sock, char *address, int port)
 
 /*
  * network_connect_to: connect to a remote host
- *                     return 1 if ok, 0 if failed
+ *                     return 1 if connection is ok
+ *                            0 if error
  */
 
 int
@@ -423,7 +471,7 @@ network_connect_to (int sock, unsigned long address, int port)
     char *ip4;
     int ret;
     
-    if (CONFIG_BOOLEAN(config_proxy_type))
+    if (CONFIG_BOOLEAN(config_proxy_use))
     {
         memset (&addr, 0, sizeof (addr));
         addr.sin_addr.s_addr = htonl (address);
@@ -435,11 +483,11 @@ network_connect_to (int sock, unsigned long address, int port)
         hostent = gethostbyname (CONFIG_STRING(config_proxy_address));
         if (!hostent)
             return 0;
-        memcpy(&(addr.sin_addr),*(hostent->h_addr_list), sizeof(struct in_addr));
+        memcpy(&(addr.sin_addr), *(hostent->h_addr_list), sizeof(struct in_addr));
         ret = connect (sock, (struct sockaddr *) &addr, sizeof (addr));
         if ((ret == -1) && (errno != EINPROGRESS))
             return 0;
-        if (network_pass_proxy (sock, ip4, port) == -1)
+        if (!network_pass_proxy (sock, ip4, port))
             return 0;
     }
     else
@@ -453,4 +501,303 @@ network_connect_to (int sock, unsigned long address, int port)
             return 0;
     }
     return 1;
+}
+
+/*
+ * network_connect_child: child process trying to connect to peer
+ */
+
+void
+network_connect_child (struct t_hook *hook_connect)
+{
+    struct addrinfo hints, *res, *res_local;
+    char status_str[2];
+    int rc;
+    
+    res = NULL;
+    res_local = NULL;
+    status_str[1] = '\0';
+    
+    if (CONFIG_BOOLEAN(config_proxy_use))
+    {
+        /* get info about peer */
+        memset (&hints, 0, sizeof (hints));
+        hints.ai_family = (CONFIG_BOOLEAN(config_proxy_ipv6)) ? AF_INET6 : AF_INET;
+        hints.ai_socktype = SOCK_STREAM;
+        if (getaddrinfo (CONFIG_STRING(config_proxy_address), NULL, &hints, &res) !=0)
+        {
+            /* address not found */
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND;
+            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            return;
+        }
+        if (!res)
+        {
+            /* adddress not found */
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND;
+            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            return;
+        }
+        if ((CONFIG_BOOLEAN(config_proxy_ipv6) && (res->ai_family != AF_INET6))
+            || ((!CONFIG_BOOLEAN(config_proxy_ipv6) && (res->ai_family != AF_INET))))
+        {
+            /* IP address not found */
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND;
+            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            freeaddrinfo (res);
+            return;
+        }
+        
+        if (CONFIG_BOOLEAN(config_proxy_ipv6))
+            ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port = htons (CONFIG_INTEGER(config_proxy_port));
+        else
+            ((struct sockaddr_in *)(res->ai_addr))->sin_port = htons (CONFIG_INTEGER(config_proxy_port));
+        
+        /* connect to peer */
+        if (connect (HOOK_CONNECT(hook_connect, sock),
+                     res->ai_addr, res->ai_addrlen) != 0)
+        {
+            /* connection refused */
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED;
+            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            freeaddrinfo (res);
+            return;
+        }
+        
+        if (!network_pass_proxy (HOOK_CONNECT(hook_connect, sock),
+                                 HOOK_CONNECT(hook_connect, address),
+                                 HOOK_CONNECT(hook_connect, port)))
+        {
+            /* proxy fails to connect to peer */
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_PROXY_ERROR;
+            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            freeaddrinfo (res);
+            return;
+        }
+    }
+    else
+    {
+        /* set local hostname/IP if asked by user */
+        if (HOOK_CONNECT(hook_connect, local_hostname)
+            && HOOK_CONNECT(hook_connect, local_hostname[0]))
+        {
+            memset (&hints, 0, sizeof(hints));
+            hints.ai_family = (HOOK_CONNECT(hook_connect, ipv6)) ? AF_INET6 : AF_INET;
+            hints.ai_socktype = SOCK_STREAM;
+            rc = getaddrinfo (HOOK_CONNECT(hook_connect, local_hostname),
+                              NULL, &hints, &res_local);
+            if ((rc != 0) || !res_local
+                || (HOOK_CONNECT(hook_connect, ipv6)
+                    && (res_local->ai_family != AF_INET6))
+                || ((!HOOK_CONNECT(hook_connect, ipv6)
+                     && (res_local->ai_family != AF_INET))))
+            {
+                /* fails to set local hostname/IP */
+                status_str[0] = '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR;
+                write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+                if (res_local)
+                    freeaddrinfo (res_local);
+                return;
+            }
+            if (bind (HOOK_CONNECT(hook_connect, sock),
+                      res_local->ai_addr, res_local->ai_addrlen) < 0)
+            {
+                /* fails to set local hostname/IP */
+                status_str[0] = '0' + WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR;
+                write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+                if (res_local)
+                    freeaddrinfo (res_local);
+                return;
+            }
+        }
+        
+        /* get info about peer */
+        memset (&hints, 0, sizeof(hints));
+        hints.ai_family = (HOOK_CONNECT(hook_connect, ipv6)) ? AF_INET6 : AF_INET;
+        hints.ai_socktype = SOCK_STREAM;
+        rc = getaddrinfo (HOOK_CONNECT(hook_connect, address),
+                          NULL, &hints, &res);
+        if ((rc != 0) || !res)
+        {
+            /* address not found */
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND;
+            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            if (res)
+                freeaddrinfo (res);
+            return;
+        }
+        if ((HOOK_CONNECT(hook_connect, ipv6) && (res->ai_family != AF_INET6))
+            || ((!HOOK_CONNECT(hook_connect, ipv6) && (res->ai_family != AF_INET))))
+        {
+            /* IP address not found */
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND;
+            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            if (res)
+                freeaddrinfo (res);
+            if (res_local)
+                freeaddrinfo (res_local);
+            return;
+        }
+        
+        /* connect to peer */
+        if (HOOK_CONNECT(hook_connect, ipv6))
+            ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port =
+                htons (HOOK_CONNECT(hook_connect, port));
+        else
+            ((struct sockaddr_in *)(res->ai_addr))->sin_port =
+                htons (HOOK_CONNECT(hook_connect, port));
+
+        if (connect (HOOK_CONNECT(hook_connect, sock),
+                     res->ai_addr, res->ai_addrlen) != 0)
+        {
+            /* connection refused */
+            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED;
+            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+            if (res)
+                freeaddrinfo (res);
+            if (res_local)
+                freeaddrinfo (res_local);
+            return;
+        }
+    }
+    
+    /* connection ok */
+    status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
+    write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+    if (res)
+        freeaddrinfo (res);
+    if (res_local)
+        freeaddrinfo (res_local);
+}
+
+/*
+ * network_connect_child_read_cb: read connection progress from child process
+ */
+
+int
+network_connect_child_read_cb (void *arg_hook_connect)
+{
+    struct t_hook *hook_connect;
+    char buffer[1];
+    int num_read, rc;
+    
+    hook_connect = (struct t_hook *)arg_hook_connect;
+    
+    num_read = read (HOOK_CONNECT(hook_connect, child_read),
+                     buffer, sizeof (buffer));
+    if (num_read > 0)
+    {
+        if (buffer[0] - '0' == WEECHAT_HOOK_CONNECT_OK)
+        {
+#ifdef HAVE_GNUTLS
+            if (HOOK_CONNECT(hook_connect, gnutls_sess))
+            {
+                gnutls_transport_set_ptr (*HOOK_CONNECT(hook_connect, gnutls_sess),
+                                          (gnutls_transport_ptr) ((unsigned long) HOOK_CONNECT(hook_connect, sock)));
+                while (1)
+                {
+                    rc = gnutls_handshake (*HOOK_CONNECT(hook_connect, gnutls_sess));
+                    if ((rc == GNUTLS_E_SUCCESS)
+                        || ((rc != GNUTLS_E_AGAIN) && (rc != GNUTLS_E_INTERRUPTED)))
+                        break;
+                    usleep (1000);
+                }
+                if (rc != GNUTLS_E_SUCCESS)
+                {
+                    (void) (HOOK_CONNECT(hook_connect, callback))
+                        (hook_connect->callback_data, WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR);
+                    unhook (hook_connect);
+                    return WEECHAT_RC_OK;
+                }
+            }
+#endif
+        }
+        (void) (HOOK_CONNECT(hook_connect, callback))
+            (hook_connect->callback_data, buffer[0] - '0');
+        unhook (hook_connect);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * network_connect_with_fork: connect with fork (called by hook_connect() only!)
+ */
+
+void
+network_connect_with_fork (struct t_hook *hook_connect)
+{
+    int child_pipe[2];
+#ifndef __CYGWIN__
+    pid_t pid;
+#endif
+    
+#ifdef HAVE_GNUTLS
+    /* initialize GnuTLS if SSL asked */
+    if (HOOK_CONNECT(hook_connect, gnutls_sess))
+    {
+        if (gnutls_init (HOOK_CONNECT(hook_connect, gnutls_sess), GNUTLS_CLIENT) != 0)
+        {
+            (void) (HOOK_CONNECT(hook_connect, callback))
+                (hook_connect->callback_data,
+                 '0' + WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR);
+            unhook (hook_connect);
+            return;
+        }
+        gnutls_set_default_priority (*HOOK_CONNECT(hook_connect, gnutls_sess));
+        gnutls_certificate_type_set_priority (*HOOK_CONNECT(hook_connect, gnutls_sess),
+                                              gnutls_cert_type_prio);
+        gnutls_protocol_set_priority (*HOOK_CONNECT(hook_connect, gnutls_sess),
+                                      gnutls_prot_prio);
+        gnutls_credentials_set (*HOOK_CONNECT(hook_connect, gnutls_sess),
+                                GNUTLS_CRD_CERTIFICATE,
+                                gnutls_xcred);
+        gnutls_transport_set_ptr (*HOOK_CONNECT(hook_connect, gnutls_sess),
+                                  (gnutls_transport_ptr) ((unsigned long) HOOK_CONNECT(hook_connect, sock)));
+    }
+#endif
+    
+    /* create pipe for child process */
+    if (pipe (child_pipe) < 0)
+    {
+        (void) (HOOK_CONNECT(hook_connect, callback))
+            (hook_connect->callback_data,
+             '0' + WEECHAT_HOOK_CONNECT_MEMORY_ERROR);
+        unhook (hook_connect);
+        return;
+    }
+    HOOK_CONNECT(hook_connect, child_read) = child_pipe[0];
+    HOOK_CONNECT(hook_connect, child_write) = child_pipe[1];
+    
+#ifdef __CYGWIN__
+    /* connection may block under Cygwin, there's no other known way
+       to do better today, since connect() in child process seems not to work
+       any suggestion is welcome to improve that!
+    */
+    network_connect_child (hook_connect);
+    network_connect_child_read_cb (hook_connect);
+#else
+    switch (pid = fork ())
+    {
+        /* fork failed */
+        case -1:
+            (void) (HOOK_CONNECT(hook_connect, callback))
+                (hook_connect->callback_data,
+                 '0' + WEECHAT_HOOK_CONNECT_MEMORY_ERROR);
+            unhook (hook_connect);
+            return;
+        /* child process */
+        case 0:
+            setuid (getuid ());
+            network_connect_child (hook_connect);
+            _exit (EXIT_SUCCESS);
+    }
+    /* parent process */
+    HOOK_CONNECT(hook_connect, child_pid) = pid;
+    HOOK_CONNECT(hook_connect, hook_fd) = hook_fd (NULL,
+                                                   HOOK_CONNECT(hook_connect, child_read),
+                                                   1, 0, 0,
+                                                   network_connect_child_read_cb,
+                                                   hook_connect);
+#endif
 }

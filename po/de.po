@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-15 22:10+0200\n"
+"POT-Creation-Date: 2008-05-20 10:06+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -426,6 +426,14 @@ msgstr "     Befehls-Handler:\n"
 #, fuzzy, c-format
 msgid "      %d (flags: %d)"
 msgstr "       %d Sekunden\n"
+
+#, fuzzy
+msgid "    connect hooked:"
+msgstr "     Befehls-Handler:\n"
+
+#, c-format
+msgid "      socket: %d, address: %s, port: %d"
+msgstr ""
 
 #, fuzzy
 msgid "    prints hooked:"
@@ -2957,8 +2965,10 @@ msgstr "Benutzername, der an den Server übermittelt werden soll"
 msgid "real name to use on IRC server"
 msgstr "voller Name, der an den Server übermittelt werden soll"
 
+#, fuzzy
 msgid ""
-"custom hostname/IP for server (optional, if empty local hostname is used)"
+"custom local hostname/IP for server (optional, if empty local hostname is "
+"used)"
 msgstr ""
 "angepasster Hostname oder angepasste IP-Adresse für den Server (wenn nichts "
 "eingetragen ist, wird der lokale Hostname verwendet)"
@@ -3795,10 +3805,6 @@ msgid "%s: switching address to %s/%d"
 msgstr "%s IP-Adresse nicht gefunden\n"
 
 #, fuzzy, c-format
-msgid "%s%s: GnuTLS handshake failed"
-msgstr "%s gnutls-Handshake schlug fehl\n"
-
-#, fuzzy, c-format
 msgid "%s%s: proxy address \"%s\" not found"
 msgstr "%s Proxyadresse \"%s\" nicht gefunden\n"
 
@@ -3834,6 +3840,18 @@ msgstr ""
 msgid "%s%s: unable to set local hostname/IP"
 msgstr "%s kann lokalen Hostname/lokale IP nicht festlegen\n"
 
+#, fuzzy, c-format
+msgid "%s%s: GnuTLS init error"
+msgstr "%s gnutls Initialisierungsfehler\n"
+
+#, fuzzy, c-format
+msgid "%s%s: GnuTLS handshake failed"
+msgstr "%s gnutls-Handshake schlug fehl\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory"
+msgstr "Nicht genügend Speicher für neue Zeile\n"
+
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
 msgstr ""
@@ -3860,14 +3878,6 @@ msgstr "verbinden zu Server %s:%d%s%s via %s-Proxy %s:%d%s...\n"
 #, fuzzy, c-format
 msgid "%s: connecting to server %s/%d%s%s..."
 msgstr "%s: verbinden zu Server %s:%d%s%s...\n"
-
-#, fuzzy, c-format
-msgid "%s%s: GnuTLS init error"
-msgstr "%s gnutls Initialisierungsfehler\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create pipe"
-msgstr "%s Pipe konnte nicht angelegt werden\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket"
@@ -4266,10 +4276,6 @@ msgid "%s%s: unknown xfer protocol \"%s\""
 msgstr "%s unbekannte Tasten-Funktion \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: not enough memory"
-msgstr "Nicht genügend Speicher für neue Zeile\n"
-
-#, fuzzy, c-format
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s kann nicht auf die Datei \"%s\" zugreifen\n"
 
@@ -4553,6 +4559,10 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot create pipe"
+#~ msgstr "%s Pipe konnte nicht angelegt werden\n"
 
 #, fuzzy
 #~ msgid ""

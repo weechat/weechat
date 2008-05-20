@@ -1470,6 +1470,26 @@ command_plugin_list (char *name, int full)
                                          HOOK_FD(ptr_hook, flags));
                     }
                 }
+
+                /* connect hooked */
+                hook_found = 0;
+                for (ptr_hook = weechat_hooks[HOOK_TYPE_CONNECT]; ptr_hook;
+                     ptr_hook = ptr_hook->next_hook)
+                {
+                    if (!ptr_hook->deleted && (ptr_hook->plugin == ptr_plugin))
+                    {
+                        if (!hook_found)
+                            gui_chat_printf (NULL,
+                                             _("    connect hooked:"));
+                        hook_found = 1;
+                        gui_chat_printf (NULL,
+                                         _("      socket: %d, address: %s, "
+                                           "port: %d"),
+                                         HOOK_CONNECT(ptr_hook, sock),
+                                         HOOK_CONNECT(ptr_hook, address),
+                                         HOOK_CONNECT(ptr_hook, port));
+                    }
+                }
                 
                 /* prints hooked */
                 hook_found = 0;

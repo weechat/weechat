@@ -496,7 +496,7 @@ irc_command_connect_one_server (struct t_irc_server *server, int no_join)
                         server->name);
         return 0;
     }
-    if (server->child_pid > 0)
+    if (server->hook_connect)
     {
         weechat_printf (NULL,
                         _("%s%s: currently connecting to server "
@@ -576,7 +576,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
              ptr_server = ptr_server->next_server)
         {
             nb_connect++;
-            if (!ptr_server->is_connected && (ptr_server->child_pid == 0))
+            if (!ptr_server->is_connected && (!ptr_server->hook_connect))
             {
                 if (!irc_command_connect_one_server (ptr_server, no_join))
                     connect_ok = 0;
@@ -615,7 +615,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                                                  server_tmp.nicks,
                                                  server_tmp.username,
                                                  server_tmp.realname,
-                                                 server_tmp.hostname,
+                                                 server_tmp.local_hostname,
                                                  server_tmp.command,
                                                  1, /* command_delay */
                                                  server_tmp.autojoin,
@@ -1138,7 +1138,7 @@ irc_command_disconnect_one_server (struct t_irc_server *server)
     if (!server)
         return 0;
     
-    if ((!server->is_connected) && (server->child_pid == 0)
+    if ((!server->is_connected) && (!server->hook_connect)
         && (server->reconnect_start == 0))
     {
         weechat_printf (server->buffer,
@@ -1186,7 +1186,7 @@ irc_command_disconnect (void *data, struct t_gui_buffer *buffer, int argc,
             for (ptr_server = irc_servers; ptr_server;
                  ptr_server = ptr_server->next_server)
             {
-                if ((ptr_server->is_connected) || (ptr_server->child_pid != 0)
+                if ((ptr_server->is_connected) || (ptr_server->hook_connect)
                     || (ptr_server->reconnect_start != 0))
                 {
                     if (!irc_command_disconnect_one_server (ptr_server))
@@ -2373,7 +2373,7 @@ irc_command_reconnect_one_server (struct t_irc_server *server, int no_join)
     if (!server)
         return 0;
     
-    if ((!server->is_connected) && (server->child_pid == 0))
+    if ((!server->is_connected) && (!server->hook_connect))
     {
         weechat_printf (server->buffer,
                         _("%s%s: not connected to server \"%s\"!"),
@@ -2427,7 +2427,7 @@ irc_command_reconnect (void *data, struct t_gui_buffer *buffer, int argc,
              ptr_server = ptr_server->next_server)
         {
             nb_reconnect++;
-            if ((ptr_server->is_connected) || (ptr_server->child_pid != 0))
+            if ((ptr_server->is_connected) || (ptr_server->hook_connect))
             {
                 if (!irc_command_reconnect_one_server (ptr_server, no_join))
                     reconnect_ok = 0;
@@ -2771,7 +2771,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                                      server_tmp.nicks,
                                      server_tmp.username,
                                      server_tmp.realname,
-                                     server_tmp.hostname,
+                                     server_tmp.local_hostname,
                                      server_tmp.command,
                                      1, /* command_delay */
                                      server_tmp.autojoin,

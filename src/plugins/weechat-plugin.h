@@ -58,6 +58,17 @@ struct t_weelist;
 #define WEECHAT_HOTLIST_PRIVATE   "2"
 #define WEECHAT_HOTLIST_HIGHLIGHT "3"
 
+/* connect status for connection hooked */
+#define WEECHAT_HOOK_CONNECT_OK                     0
+#define WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND      1
+#define WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND   2
+#define WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED     3
+#define WEECHAT_HOOK_CONNECT_PROXY_ERROR            4
+#define WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR   5
+#define WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR      6
+#define WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR 7
+#define WEECHAT_HOOK_CONNECT_MEMORY_ERROR           8
+
 /* type of data for signal hooked */
 #define WEECHAT_HOOK_SIGNAL_STRING  "string"
 #define WEECHAT_HOOK_SIGNAL_INT     "int"
@@ -280,6 +291,12 @@ struct t_weechat_plugin
                                int flag_exception,
                                int (*callback)(void *data),
                                void *callback_data);
+    struct t_hook *(*hook_connect) (struct t_weechat_plugin *plugin,
+                                    char *address, int port,
+                                    int sock, int ipv6, void *gnutls_sess,
+                                    char *local_hostname,
+                                    int (*callback)(void *data, int status),
+                                    void *callback_data);
     struct t_hook *(*hook_print) (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
                                   char *tags, char *message,
@@ -711,6 +728,12 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hook_fd(weechat_plugin, __fd, __flag_read,          \
                             __flag_write, __flag_exception, __callback, \
                             __data)
+#define weechat_hook_connect(__address, __port, __sock, __ipv6,         \
+                             __gnutls_sess, __local_hostname,           \
+                             __callback, __data)                        \
+    weechat_plugin->hook_connect(weechat_plugin, __address, __port,     \
+                                 __sock, __ipv6, __gnutls_sess,         \
+                                 __local_hostname, __callback, __data)
 #define weechat_hook_print(__buffer, __tags, __msg, __strip__colors,    \
                            __callback, __data)                          \
     weechat_plugin->hook_print(weechat_plugin, __buffer, __tags,        \

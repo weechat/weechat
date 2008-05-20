@@ -69,7 +69,7 @@ struct t_irc_server
     char *nicks;                    /* nicknames as one string               */
     char *username;                 /* user name                             */
     char *realname;                 /* real name                             */
-    char *hostname;                 /* custom hostname                       */
+    char *local_hostname;           /* custom local hostname                 */
     char *command;                  /* command to run once connected         */
     int command_delay;              /* delay after execution of command      */
     char *autojoin;                 /* channels to automatically join        */
@@ -82,15 +82,13 @@ struct t_irc_server
     char **addresses_array;         /* exploded addresses                    */
     int *ports_array;               /* ports for addresses                   */
     int current_address;            /* current address index in array        */
-    pid_t child_pid;                /* pid of child process (connecting)     */
-    int child_read;                 /* to read into child pipe               */
-    int child_write;                /* to write into child pipe              */
     int sock;                       /* socket for server (IPv4 or IPv6)      */
-    struct t_hook *hook_fd;         /* hook for server socket or child pipe  */
+    struct t_hook *hook_connect;    /* connection hook                       */
+    struct t_hook *hook_fd;         /* hook for server socket                */
     int is_connected;               /* 1 if WeeChat is connected to server   */
     int ssl_connected;              /* = 1 if connected with SSL             */
 #ifdef HAVE_GNUTLS
-    gnutls_session gnutls_sess;     /* gnutls session (only if SSL is used)  */
+    gnutls_session_t gnutls_sess;   /* gnutls session (only if SSL is used)  */
 #endif
     char *unterminated_message;     /* beginning of a message in input buf   */
     int nicks_count;                /* number of nicknames                   */

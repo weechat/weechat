@@ -35,8 +35,8 @@
 
 char *irc_config_server_option_string[IRC_CONFIG_NUM_SERVER_OPTIONS] =
 { "autoconnect", "autoreconnect", "autoreconnect_delay", "addresses", "ipv6",
-  "ssl", "password", "nicks", "username", "realname", "hostname", "command",
-  "command_delay", "autojoin", "autorejoin", "notify_levels"
+  "ssl", "password", "nicks", "username", "realname", "local_hostname",
+  "command", "command_delay", "autojoin", "autorejoin", "notify_levels"
 };
 char *irc_config_server_option_default[IRC_CONFIG_NUM_SERVER_OPTIONS] =
 { "off", "on", "30", "", "off", "off", "", "", "", "", "", "", "0", "",
@@ -614,12 +614,12 @@ irc_config_server_new_option (struct t_config_file *config_file,
                 callback_change, callback_change_data,
                 callback_delete, callback_delete_data);
             break;
-        case IRC_CONFIG_SERVER_HOSTNAME:
+        case IRC_CONFIG_SERVER_LOCAL_HOSTNAME:
             new_option = weechat_config_new_option (
                 config_file, section,
                 option_name, "string",
-                N_("custom hostname/IP for server (optional, if empty local hostname "
-                   "is used)"),
+                N_("custom local hostname/IP for server (optional, if empty "
+                   "local hostname is used)"),
                 NULL, 0, 0, value, NULL, NULL,
                 callback_change, callback_change_data,
                 callback_delete, callback_delete_data);

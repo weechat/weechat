@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-15 22:10+0200\n"
+"POT-Creation-Date: 2008-05-20 10:06+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -425,6 +425,14 @@ msgstr "     parancskezelők:\n"
 #, fuzzy, c-format
 msgid "      %d (flags: %d)"
 msgstr "       %d másodperc\n"
+
+#, fuzzy
+msgid "    connect hooked:"
+msgstr "     parancskezelők:\n"
+
+#, c-format
+msgid "      socket: %d, address: %s, port: %d"
+msgstr ""
 
 #, fuzzy
 msgid "    prints hooked:"
@@ -2987,8 +2995,10 @@ msgstr "használni kívánt felhasználónév az IRC szerveren"
 msgid "real name to use on IRC server"
 msgstr "az IRC szerveren használt valódi név"
 
+#, fuzzy
 msgid ""
-"custom hostname/IP for server (optional, if empty local hostname is used)"
+"custom local hostname/IP for server (optional, if empty local hostname is "
+"used)"
 msgstr ""
 "szokásos hosztnév/IP a szerveren (tetszőleges, ha üres akkor a helyi "
 "hosztnevet használja)"
@@ -3810,10 +3820,6 @@ msgid "%s: switching address to %s/%d"
 msgstr "%s IP-cím nem található\n"
 
 #, fuzzy, c-format
-msgid "%s%s: GnuTLS handshake failed"
-msgstr "%s gnutls kézfogás sikertelen\n"
-
-#, fuzzy, c-format
 msgid "%s%s: proxy address \"%s\" not found"
 msgstr "%s proxy cím \"%s\" nem található\n"
 
@@ -3849,6 +3855,18 @@ msgstr ""
 msgid "%s%s: unable to set local hostname/IP"
 msgstr "%s nem sikerült a helyi hosztnevet/IP-t beállítani\n"
 
+#, fuzzy, c-format
+msgid "%s%s: GnuTLS init error"
+msgstr "%s gnutls inicializációs hiba\n"
+
+#, fuzzy, c-format
+msgid "%s%s: GnuTLS handshake failed"
+msgstr "%s gnutls kézfogás sikertelen\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory"
+msgstr "Nincs elég memória az új sorhoz\n"
+
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
 msgstr ""
@@ -3879,14 +3897,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s: connecting to server %s/%d%s%s..."
 msgstr "%s: csatlakozás a(z) %s:%d%s%s szerverhez...\n"
-
-#, fuzzy, c-format
-msgid "%s%s: GnuTLS init error"
-msgstr "%s gnutls inicializációs hiba\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create pipe"
-msgstr "%s nem sikerült a csövet(pipe) létrehozni\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket"
@@ -4283,10 +4293,6 @@ msgid "%s%s: unknown xfer protocol \"%s\""
 msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: not enough memory"
-msgstr "Nincs elég memória az új sorhoz\n"
-
-#, fuzzy, c-format
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" fájlt elérni\n"
 
@@ -4567,6 +4573,10 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot create pipe"
+#~ msgstr "%s nem sikerült a csövet(pipe) létrehozni\n"
 
 #, fuzzy
 #~ msgid ""

@@ -23,14 +23,19 @@
 #include "config.h"
 #endif
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
 #include <time.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <signal.h>
 
 #include "weechat.h"
 #include "wee-hook.h"
 #include "wee-log.h"
+#include "wee-network.h"
 #include "wee-string.h"
 #include "wee-util.h"
 #include "../gui/gui-buffer.h"
@@ -38,6 +43,9 @@
 #include "../plugins/plugin.h"
 
 
+char *hook_type_string[HOOK_NUM_TYPES] =
+{ "command", "timer", "fd", "connect", "print", "signal", "config",
+  "completion", "modifier" };
 struct t_hook *weechat_hooks[HOOK_NUM_TYPES];
 struct t_hook *last_weechat_hook[HOOK_NUM_TYPES];
 int hook_exec_recursion = 0;
@@ -778,6 +786,54 @@ hook_fd_exec (fd_set *read_fds, fd_set *write_fds, fd_set *exception_fds)
 }
 
 /*
+ * hook_connect: hook a connection to peer (using fork)
+ */
+
+struct t_hook *
+hook_connect (struct t_weechat_plugin *plugin, char *address, int port,
+              int sock, int ipv6, void *gnutls_sess, char *local_hostname,
+              t_hook_callback_connect *callback, void *callback_data)
+{
+    struct t_hook *new_hook;
+    struct t_hook_connect *new_hook_connect;
+    
+    if ((sock < 0) || !address || (port <= 0))
+        return NULL;
+    
+    new_hook = malloc (sizeof (*new_hook));
+    if (!new_hook)
+        return NULL;
+    new_hook_connect = malloc (sizeof (*new_hook_connect));
+    if (!new_hook_connect)
+    {
+        free (new_hook);
+        return NULL;
+    }
+    
+    hook_init_data (new_hook, plugin, HOOK_TYPE_CONNECT, callback_data);
+    
+    new_hook->hook_data = new_hook_connect;
+    new_hook_connect->callback = callback;
+    new_hook_connect->address = strdup (address);
+    new_hook_connect->port = port;
+    new_hook_connect->sock = sock;
+    new_hook_connect->ipv6 = ipv6;
+    new_hook_connect->gnutls_sess = gnutls_sess;
+    new_hook_connect->local_hostname = (local_hostname) ?
+        strdup (local_hostname) : NULL;
+    new_hook_connect->child_read = -1;
+    new_hook_connect->child_write = -1;
+    new_hook_connect->child_pid = 0;
+    new_hook_connect->hook_fd = NULL;
+    
+    hook_add_to_list (new_hook);
+    
+    network_connect_with_fork (new_hook);
+    
+    return new_hook;
+}
+
+/*
  * hook_print: hook a message printed by WeeChat
  */
 
@@ -1273,6 +1329,22 @@ unhook (struct t_hook *hook)
             case HOOK_TYPE_FD:
                 free ((struct t_hook_fd *)hook->hook_data);
                 break;
+            case HOOK_TYPE_CONNECT:
+                if (HOOK_CONNECT(hook, address))
+                    free (HOOK_CONNECT(hook, address));
+                if (HOOK_CONNECT(hook, hook_fd))
+                    unhook (HOOK_CONNECT(hook, hook_fd));
+                if (HOOK_CONNECT(hook, child_pid) > 0)
+                {
+                    kill (HOOK_CONNECT(hook, child_pid), SIGKILL);
+                    waitpid (HOOK_CONNECT(hook, child_pid), NULL, 0);
+                }
+                if (HOOK_CONNECT(hook, child_read) != -1)
+                    close (HOOK_CONNECT(hook, child_read));
+                if (HOOK_CONNECT(hook, child_write) != -1)
+                    close (HOOK_CONNECT(hook, child_write));
+                free ((struct t_hook_connect *)hook->hook_data);
+                break;
             case HOOK_TYPE_PRINT:
                 if (HOOK_PRINT(hook, message))
                     free (HOOK_PRINT(hook, message));
@@ -1388,11 +1460,12 @@ hook_print_log ()
                         (ptr_hook->plugin) ? ptr_hook->plugin->name : "");
             log_printf ("  deleted. . . . . . . . : %d",   ptr_hook->deleted);
             log_printf ("  running. . . . . . . . : %d",   ptr_hook->running);
+            log_printf ("  type . . . . . . . . . : %d (%s)",
+                        ptr_hook->type, hook_type_string[ptr_hook->type]);
+            log_printf ("  callback_data. . . . . : 0x%x", ptr_hook->callback_data);
             switch (ptr_hook->type)
             {
                 case HOOK_TYPE_COMMAND:
-                    log_printf ("  type . . . . . . . . . : %d (command)", ptr_hook->type);
-                    log_printf ("  callback_data. . . . . : 0x%x", ptr_hook->callback_data);
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  command data:");
@@ -1406,8 +1479,6 @@ hook_print_log ()
                     }
                     break;
                 case HOOK_TYPE_TIMER:
-                    log_printf ("  type . . . . . . . . . : %d (timer)", ptr_hook->type);
-                    log_printf ("  callback_data. . . . . : 0x%x", ptr_hook->callback_data);
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  timer data:");
@@ -1430,8 +1501,15 @@ hook_print_log ()
                     }
                     break;
                 case HOOK_TYPE_FD:
-                    log_printf ("  type . . . . . . . . . : %d (fd)", ptr_hook->type);
-                    log_printf ("  callback_data. . . . . : 0x%x", ptr_hook->callback_data);
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  fd data:");
+                        log_printf ("    callback . . . . . . : 0x%x", HOOK_FD(ptr_hook, callback));
+                        log_printf ("    fd . . . . . . . . . : %ld",  HOOK_FD(ptr_hook, fd));
+                        log_printf ("    flags. . . . . . . . : %ld",  HOOK_FD(ptr_hook, flags));
+                    }
+                    break;
+                case HOOK_TYPE_CONNECT:
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  fd data:");
@@ -1441,8 +1519,6 @@ hook_print_log ()
                     }
                     break;
                 case HOOK_TYPE_PRINT:
-                    log_printf ("  type . . . . . . . . . : %d (print)", ptr_hook->type);
-                    log_printf ("  callback_data. . . . . : 0x%x", ptr_hook->callback_data);
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  print data:");
@@ -1452,8 +1528,6 @@ hook_print_log ()
                     }
                     break;
                 case HOOK_TYPE_SIGNAL:
-                    log_printf ("  type . . . . . . . . . : %d (signal)", ptr_hook->type);
-                    log_printf ("  callback_data. . . . . : 0x%x", ptr_hook->callback_data);
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  signal data:");
@@ -1462,8 +1536,6 @@ hook_print_log ()
                     }
                     break;
                 case HOOK_TYPE_CONFIG:
-                    log_printf ("  type . . . . . . . . . : %d (config)", ptr_hook->type);
-                    log_printf ("  callback_data. . . . . : 0x%x", ptr_hook->callback_data);
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  config data:");
@@ -1472,8 +1544,6 @@ hook_print_log ()
                     }
                     break;
                 case HOOK_TYPE_COMPLETION:
-                    log_printf ("  type . . . . . . . . . : %d (completion)", ptr_hook->type);
-                    log_printf ("  callback_data. . . . . : 0x%x", ptr_hook->callback_data);
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  completion data:");
@@ -1482,8 +1552,6 @@ hook_print_log ()
                     }
                     break;
                 case HOOK_TYPE_MODIFIER:
-                    log_printf ("  type . . . . . . . . . : %d (modifier)", ptr_hook->type);
-                    log_printf ("  callback_data. . . . . : 0x%x", ptr_hook->callback_data);
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  modifier data:");

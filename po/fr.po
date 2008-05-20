@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-15 22:10+0200\n"
-"PO-Revision-Date: 2008-05-15 22:10+0200\n"
+"POT-Creation-Date: 2008-05-20 10:06+0200\n"
+"PO-Revision-Date: 2008-05-20 10:07+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,8 @@ msgid ""
 "                    about possible options)\n"
 msgstr ""
 "  -a, --no-connect  désactiver l'auto-connexion aux serveurs au démarrage\n"
-"  -d, --dir <rep>   définir le répertoire de base pour WeeChat (défaut: ~/.weechat)\n"
+"  -d, --dir <rep>   définir le répertoire de base pour WeeChat (défaut: ~/."
+"weechat)\n"
 "  -h, --help        cette aide\n"
 "  -k, --keys        afficher les touches WeeChat par défaut\n"
 "  -l, --license     afficher la licence WeeChat\n"
@@ -53,8 +54,10 @@ msgstr ""
 "  extension:option  option pour une extension\n"
 "                    par exemple, l'extension irc peut se connecter\n"
 "                    à un serveur avec une url comme :\n"
-"                    irc[6][s]://[nickname[:password]@]irc.example.org[port][//#channel1][,#channel2[...]]\n"
-"                    (consulter la documentation des extensions pour plus d'information\n"
+"                    irc[6][s]://[nickname[:password]@]irc.example.org[port]"
+"[//#channel1][,#channel2[...]]\n"
+"                    (consulter la documentation des extensions pour plus "
+"d'information\n"
 "                    sur les options possibles)\n"
 
 #. TRANSLATORS: %s is "weechat"
@@ -386,6 +389,13 @@ msgstr "    fichiers accrochés:"
 msgid "      %d (flags: %d)"
 msgstr "      %d (drapeaux: %d)"
 
+msgid "    connect hooked:"
+msgstr "    connexions accrochées:"
+
+#, c-format
+msgid "      socket: %d, address: %s, port: %d"
+msgstr "      socket: %d, addresse: %s, port: %d"
+
 msgid "    prints hooked:"
 msgstr "    impressions accrochées:"
 
@@ -414,7 +424,7 @@ msgid "    configuration options hooked:"
 msgstr "    options de configuration accrochées:"
 
 msgid "    completions hooked:"
-msgstr "    completion accrochées:"
+msgstr "    completions accrochées:"
 
 msgid "    modifiers hooked:"
 msgstr "    modificateurs accrochés:"
@@ -2905,10 +2915,11 @@ msgid "real name to use on IRC server"
 msgstr "nom réel pour le serveur IRC"
 
 msgid ""
-"custom hostname/IP for server (optional, if empty local hostname is used)"
+"custom local hostname/IP for server (optional, if empty local hostname is "
+"used)"
 msgstr ""
-"nom de machine/IP personnalisé pour le serveur (optionnel, si non renseigné, "
-"le nom de machine local est utilisé)"
+"nom local de machine/IP personnalisé pour le serveur (optionnel, si non "
+"renseigné, le nom de machine local est utilisé)"
 
 msgid ""
 "command(s) to run when connected to server (many commands should be "
@@ -3748,10 +3759,6 @@ msgid "%s: switching address to %s/%d"
 msgstr "%s: bascule vers l'adresse %s/%d"
 
 #, c-format
-msgid "%s%s: GnuTLS handshake failed"
-msgstr "%s%s: la poignée de main de GnuTLS a échoué"
-
-#, c-format
 msgid "%s%s: proxy address \"%s\" not found"
 msgstr "%s%s: adresse du proxy \"%s\" non trouvée"
 
@@ -3789,6 +3796,18 @@ msgid "%s%s: unable to set local hostname/IP"
 msgstr "%s%s: impossible de paramétrer le nom/IP local"
 
 #, c-format
+msgid "%s%s: GnuTLS init error"
+msgstr "%s%s: erreur d'initialisation GnuTLS"
+
+#, c-format
+msgid "%s%s: GnuTLS handshake failed"
+msgstr "%s%s: la poignée de main de GnuTLS a échoué"
+
+#, c-format
+msgid "%s%s: not enough memory"
+msgstr "%s%s: pas assez de mémoire"
+
+#, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
 msgstr ""
 "%s%s: adresses non définies pour le serveur \"%s\", connexion impossible"
@@ -3815,14 +3834,6 @@ msgstr "Connexion au serveur %s/%d%s%s via le proxy %s %s/%d%s..."
 #, c-format
 msgid "%s: connecting to server %s/%d%s%s..."
 msgstr "%s: connexion au serveur %s/%d%s%s..."
-
-#, c-format
-msgid "%s%s: GnuTLS init error"
-msgstr "%s%s: erreur d'initialisation GnuTLS"
-
-#, c-format
-msgid "%s%s: cannot create pipe"
-msgstr "%s%s: impossible de créer le tube"
 
 #, c-format
 msgid "%s%s: cannot create socket"
@@ -4220,10 +4231,6 @@ msgid "%s%s: unknown xfer protocol \"%s\""
 msgstr "%s%s: protocole xfer inconnu \"%s\""
 
 #, c-format
-msgid "%s%s: not enough memory"
-msgstr "%s%s: pas assez de mémoire"
-
-#, c-format
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s%s: impossible d'accéder au fichier \"%s\""
 
@@ -4496,3 +4503,6 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "%s%s: cannot create pipe"
+#~ msgstr "%s%s: impossible de créer le tube"

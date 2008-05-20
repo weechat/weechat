@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-15 22:10+0200\n"
+"POT-Creation-Date: 2008-05-20 10:06+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -421,6 +421,14 @@ msgstr "     manejadores de comando:\n"
 #, fuzzy, c-format
 msgid "      %d (flags: %d)"
 msgstr "        %d segundos\n"
+
+#, fuzzy
+msgid "    connect hooked:"
+msgstr "     manejadores de comando:\n"
+
+#, c-format
+msgid "      socket: %d, address: %s, port: %d"
+msgstr ""
 
 #, fuzzy
 msgid "    prints hooked:"
@@ -2952,8 +2960,10 @@ msgstr "nombre de usuario para el servidor IRC"
 msgid "real name to use on IRC server"
 msgstr "nombre real para el servidor IRC"
 
+#, fuzzy
 msgid ""
-"custom hostname/IP for server (optional, if empty local hostname is used)"
+"custom local hostname/IP for server (optional, if empty local hostname is "
+"used)"
 msgstr ""
 "nombre de mÃ¡quina local/IP personalizado para el servidor (opcional, si "
 "estÃ¡ vacÃ­o se utiliza el nombre de mÃ¡quina local)"
@@ -3798,10 +3808,6 @@ msgid "%s: switching address to %s/%d"
 msgstr "%s DirecciÃ³n IP no encontrada\n"
 
 #, fuzzy, c-format
-msgid "%s%s: GnuTLS handshake failed"
-msgstr "%s el handshake gnutls ha fallado\n"
-
-#, fuzzy, c-format
 msgid "%s%s: proxy address \"%s\" not found"
 msgstr "%s direcciÃ³n proxy \"%s\" no encontrada\n"
 
@@ -3837,6 +3843,18 @@ msgstr ""
 msgid "%s%s: unable to set local hostname/IP"
 msgstr "%s no es posible crear el servidor\n"
 
+#, fuzzy, c-format
+msgid "%s%s: GnuTLS init error"
+msgstr "%s error de inicializaciÃ³n de gnutls\n"
+
+#, fuzzy, c-format
+msgid "%s%s: GnuTLS handshake failed"
+msgstr "%s el handshake gnutls ha fallado\n"
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory"
+msgstr "No hay suficiente memoria para una nueva lÃ­nea\n"
+
 #, c-format
 msgid "%s%s: addresses not defined for server \"%s\", cannot connect"
 msgstr ""
@@ -3863,14 +3881,6 @@ msgstr "Conectando al servidor %s:%d%s%s vÃ­a %s proxy %s:%d%s...\n"
 #, fuzzy, c-format
 msgid "%s: connecting to server %s/%d%s%s..."
 msgstr "%s: conectando al servidor %s:%d%s%s...\n"
-
-#, fuzzy, c-format
-msgid "%s%s: GnuTLS init error"
-msgstr "%s error de inicializaciÃ³n de gnutls\n"
-
-#, fuzzy, c-format
-msgid "%s%s: cannot create pipe"
-msgstr "%s no ha sido posible crear la interconexiÃ³n\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot create socket"
@@ -4270,10 +4280,6 @@ msgid "%s%s: unknown xfer protocol \"%s\""
 msgstr "%s opciÃ³n desconocida para el comando \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s%s: not enough memory"
-msgstr "No hay suficiente memoria para una nueva lÃ­nea\n"
-
-#, fuzzy, c-format
 msgid "%s%s: cannot access file \"%s\""
 msgstr "%s no es posible acceder al fichero \"%s\"\n"
 
@@ -4561,6 +4567,10 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "%s%s: cannot create pipe"
+#~ msgstr "%s no ha sido posible crear la interconexiÃ³n\n"
 
 #, fuzzy
 #~ msgid ""

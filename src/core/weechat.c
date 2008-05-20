@@ -56,6 +56,7 @@
 #include "wee-debug.h"
 #include "wee-hook.h"
 #include "wee-log.h"
+#include "wee-network.h"
 #include "wee-string.h"
 #include "wee-utf8.h"
 #include "wee-util.h"
@@ -347,6 +348,8 @@ weechat_shutdown (int return_code, int crash)
     log_close ();
     if (weechat_local_charset)
         free (weechat_local_charset);
+
+    network_end ();
     
     if (crash)
         abort();
@@ -374,6 +377,7 @@ main (int argc, char *argv[])
     weechat_local_charset = strdup ("");
 #endif
     utf8_init ();
+    network_init ();
     
     util_catch_signal (SIGINT, SIG_IGN);  /* ignore SIGINT signal           */
     util_catch_signal (SIGQUIT, SIG_IGN); /* ignore SIGQUIT signal          */

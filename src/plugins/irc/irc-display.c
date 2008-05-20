@@ -193,9 +193,9 @@ irc_display_server (struct t_irc_server *server, int with_detail)
         weechat_printf (NULL, "  realname  . . . . . : %s",
                         (server->realname && server->realname[0]) ?
                         server->realname : "");
-        weechat_printf (NULL, "  hostname  . . . . . : %s",
-                        (server->hostname && server->hostname[0]) ?
-                        server->hostname : "");
+        weechat_printf (NULL, "  local_hostname  . . : %s",
+                        (server->local_hostname && server->local_hostname[0]) ?
+                        server->local_hostname : "");
         if (server->command && server->command[0])
             string = strdup (server->command);
         else

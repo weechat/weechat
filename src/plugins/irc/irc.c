@@ -46,10 +46,6 @@ struct t_weechat_plugin *weechat_irc_plugin = NULL;
 struct t_hook *irc_hook_timer = NULL;
 struct t_hook *irc_hook_timer_check_away = NULL;
 
-#ifdef HAVE_GNUTLS
-gnutls_certificate_credentials gnutls_xcred; /* gnutls client credentials */
-#endif
-
 
 /*
  * irc_signal_quit_cb: callback for "quit" signal
@@ -88,13 +84,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     int i, auto_connect;
     
     weechat_plugin = plugin;
-    
-#ifdef HAVE_GNUTLS
-    /* init GnuTLS */
-    gnutls_global_init ();
-    gnutls_certificate_allocate_credentials (&gnutls_xcred);
-    gnutls_certificate_set_x509_trust_file (gnutls_xcred, "ca.pem", GNUTLS_X509_FMT_PEM);
-#endif
     
     if (!irc_config_init ())
         return WEECHAT_RC_ERROR;
@@ -167,12 +156,6 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     irc_server_disconnect_all ();
     //irc_dcc_end ();
     irc_server_free_all ();
-    
-#ifdef HAVE_GNUTLS
-    /* GnuTLS end */
-    gnutls_certificate_free_credentials (gnutls_xcred);
-    gnutls_global_deinit();
-#endif
     
     return WEECHAT_RC_OK;
 }
