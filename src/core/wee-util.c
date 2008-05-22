@@ -347,12 +347,12 @@ util_weechat_version_cmp (char *version1, char *version2)
                 }
             }
             ptr_v1 = next1;
-            while (ptr_v1[0] && !isdigit (ptr_v1[0]))
+            while (ptr_v1 && ptr_v1[0] && !isdigit (ptr_v1[0]))
             {
                 ptr_v1++;
             }
             ptr_v2 = next2;
-            while (ptr_v2[0] && !isdigit (ptr_v2[0]))
+            while (ptr_v2 && ptr_v2[0] && !isdigit (ptr_v2[0]))
             {
                 ptr_v2++;
             }
