@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-20 10:06+0200\n"
+"POT-Creation-Date: 2008-05-22 12:51+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1559,8 +1559,8 @@ msgid "  . description: %s\n"
 msgstr "  . descripciÃ³n: %s\n"
 
 #, fuzzy, c-format
-msgid "%sError: command \"%s\" is running"
-msgstr "%s el comando \"%s\" ha fallado\n"
+msgid "%sError: too much calls to command \"%s\" (looping)"
+msgstr "%s valor incorrecto para la opciÃ³n \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -4569,6 +4569,10 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #, fuzzy
+#~ msgid "%sError: command \"%s\" is running"
+#~ msgstr "%s el comando \"%s\" ha fallado\n"
+
+#, fuzzy
 #~ msgid "%s%s: cannot create pipe"
 #~ msgstr "%s no ha sido posible crear la interconexiÃ³n\n"
 
@@ -4888,10 +4892,6 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #~ msgid "name associated to IRC server (for display only)"
 #~ msgstr "nombre asociado al servidor IRC (para mostrar solamente)"
-
-#, fuzzy
-#~ msgid "%sError: incorrect value for option \"%s\""
-#~ msgstr "%s valor incorrecto para la opciÃ³n \"%s\"\n"
 
 #, fuzzy
 #~ msgid "No plugin option found with \"%s\""

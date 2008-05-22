@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-20 10:06+0200\n"
-"PO-Revision-Date: 2008-05-20 10:07+0200\n"
+"POT-Creation-Date: 2008-05-22 12:51+0200\n"
+"PO-Revision-Date: 2008-05-22 12:52+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1515,8 +1515,8 @@ msgid "  . description: %s\n"
 msgstr "  . description: %s\n"
 
 #, c-format
-msgid "%sError: command \"%s\" is running"
-msgstr "%sErreur: la commande \"%s\" est en cours d'exécution"
+msgid "%sError: too much calls to command \"%s\" (looping)"
+msgstr "%sErreur: trop d'appels à la commande \"%s\" (boucle)"
 
 #, c-format
 msgid "%sError: unknown command \"%s\" (type /help for help)"
@@ -4503,6 +4503,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "%s%s: cannot create pipe"
-#~ msgstr "%s%s: impossible de créer le tube"

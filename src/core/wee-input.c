@@ -114,7 +114,8 @@ input_exec_command (struct t_gui_buffer *buffer,
             break;
         case -3: /* command is running */
             gui_chat_printf (NULL,
-                             _("%sError: command \"%s\" is running"),
+                             _("%sError: too much calls to command \"%s\" "
+                               "(looping)"),
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              command + 1);
             break;

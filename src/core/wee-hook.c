@@ -417,9 +417,10 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
             && ((argv[0][0] == '/') && (string_strcasecmp (argv[0] + 1,
                                                            HOOK_COMMAND(ptr_hook, command)) == 0)))
         {
-            if (ptr_hook->running)
-                command_is_running = 1;
-            else
+            if (ptr_hook->running > 0)
+                command_is_running = ptr_hook->running;
+
+            if (ptr_hook->running < HOOK_COMMAND_MAX_CALLS)
             {
                 if (ptr_hook->plugin == plugin)
                 {
@@ -452,10 +453,10 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
             
             if (ptr_hook)
             {
-                ptr_hook->running = 1;
+                ptr_hook->running++;
                 rc = (int) (HOOK_COMMAND(ptr_hook, callback))
                     (ptr_hook->callback_data, buffer, argc, argv, argv_eol);
-                ptr_hook->running = 0;
+                ptr_hook->running--;
                 if (rc == WEECHAT_RC_ERROR)
                     rc = 0;
                 else

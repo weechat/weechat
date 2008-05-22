@@ -44,10 +44,15 @@ enum t_hook_type
     HOOK_NUM_TYPES,
 };
 
+/* max calls that can be done for a command (recursive calls) */
+#define HOOK_COMMAND_MAX_CALLS  5
+
+/* flags for fd hooks */
 #define HOOK_FD_FLAG_READ       1
 #define HOOK_FD_FLAG_WRITE      2
 #define HOOK_FD_FLAG_EXCEPTION  4
 
+/* macros to access hook specific data */
 #define HOOK_COMMAND(hook, var) (((struct t_hook_command *)hook->hook_data)->var)
 #define HOOK_TIMER(hook, var) (((struct t_hook_timer *)hook->hook_data)->var)
 #define HOOK_FD(hook, var) (((struct t_hook_fd *)hook->hook_data)->var)
