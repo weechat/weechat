@@ -88,7 +88,7 @@ plugin_search (char *name)
 struct t_weechat_plugin *
 plugin_load (char *filename)
 {
-    char *full_name;
+    char *ptr_home, *full_name, *full_name2;
     void *handle;
     char *name, *author, *description, *version, *weechat_version, *license;
     char *charset;
@@ -104,6 +104,15 @@ plugin_load (char *filename)
     
     if (!full_name)
         return NULL;
+    
+    ptr_home = getenv ("HOME");
+    full_name2 = string_replace (full_name, "~", ptr_home);
+    
+    if (full_name2)
+    {
+        free (full_name);
+        full_name = full_name2;
+    }
     
     handle = dlopen (full_name, RTLD_GLOBAL | RTLD_NOW);
     if (!handle)
