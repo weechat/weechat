@@ -2234,7 +2234,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                                     ptr_channel->topic);
                     
                 if (highlight
-                    || irc_protocol_is_highlight (pos, server->nick))
+                    || irc_protocol_is_highlight (pos_args, server->nick))
                 {
                     weechat_printf_tags (ptr_channel->buffer,
                                          "irc_privmsg",
