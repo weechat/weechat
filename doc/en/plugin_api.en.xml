@@ -21,6 +21,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
+<chapter id="chapPluginAPI">
+  <title>Plugin API</title>
+  
+  <para>
+    This chapter describes WeeChat plugins interface (API).
+    --- will be completed soon! ---
+  </para>
+</chapter>
+
 <section id="secAPIFunctions">
   <title>API functions</title>
   

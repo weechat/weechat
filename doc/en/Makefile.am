@@ -16,11 +16,16 @@
 
 LANGCODE = en
 BOOK = weechat.$(LANGCODE)
-BOOK_INCLUDE = intro.$(LANGCODE).xml install.$(LANGCODE).xml \
-               usage.$(LANGCODE).xml plugins.$(LANGCODE).xml \
-               plugin_api.$(LANGCODE).xml plugin_charset.$(LANGCODE).xml \
+BOOK_INCLUDE = intro.$(LANGCODE).xml \
+               install.$(LANGCODE).xml \
+               usage.$(LANGCODE).xml \
+               plugins.$(LANGCODE).xml \
+               plugin_api.$(LANGCODE).xml \
+               plugin_irc.$(LANGCODE).xml \
+               plugin_charset.$(LANGCODE).xml \
+               plugin_fifo.$(LANGCODE).xml \
                plugin_scripts.$(LANGCODE).xml \
-               weechat_commands.xml irc_commands.xml key_functions.xml \
+               weechat_commands.xml \
                config.xml
 QUICKSTART = weechat_quickstart.$(LANGCODE).txt
 

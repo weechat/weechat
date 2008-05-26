@@ -44,7 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <para>
             Mandriva/RedHat (or any RPM compatible distribution):
             <userinput>
-              rpm -i /chemin/weechat-x.y.z-1.i386.rpm
+              rpm -i /path/to/weechat-x.y.z-1.i386.rpm
             </userinput>
           </para>
         </listitem>
@@ -66,16 +66,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>Source package</title>
     
     <para>
-      All you have to do is to run in a console or a terminal:
+      WeeChat can be compiled with autotools or cmake.
+    </para>
+
+    <section id="secCompileWithAutotools">
+      <title>Compile with Autotools</title>
+
+      <para>
+        In a console or a terminal:
 <screen><prompt>$ </prompt><userinput>./configure</userinput>
 <prompt>$ </prompt><userinput>make</userinput></screen>
-    </para>
-    <para>
-      Then get root privileges and install WeeChat:
+      </para>
+      <para>
+        Then get root privileges and install WeeChat:
 <screen><prompt>$ </prompt><userinput>su</userinput>
 (enter root password)
 <prompt># </prompt><userinput>make install</userinput></screen>
-    </para>
+      </para>
+
+    </section>
+
+    <section id="secCompileWithCmake">
+      <title>Compile with Cmake</title>
+
+      <para>
+        In a console or a terminal:
+<screen><prompt>$ </prompt><userinput>mkdir build</userinput>
+<prompt>$ </prompt><userinput>cd build</userinput>
+<prompt>$ </prompt><userinput>cmake ..</userinput>
+<prompt>$ </prompt><userinput>make</userinput></screen>
+      </para>
+      <para>
+        Then get root privileges and install WeeChat:
+<screen><prompt>$ </prompt><userinput>su</userinput>
+(enter root password)
+<prompt># </prompt><userinput>make install</userinput></screen>
+      </para>
+
+    </section>
     
   </section>
   
@@ -93,7 +121,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <para>
-      Execute this script:
+      If you're using Autotools (and not cmake), execute this script:
       <userinput>./autogen.sh</userinput>
     </para>
     

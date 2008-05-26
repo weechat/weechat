@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     Ce chapitre explique comment installer WeeChat.
   </para>
   
-  <section id="secPaquetsBinaires">
+  <section id="secBinaryPackages">
     <title>Paquets binaires</title>
     
     <para>
@@ -45,7 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <para>
             Mandriva/RedHat (ou toute distribution compatible avec les RPM) :
             <userinput>
-              rpm -i /chemin/weechat-x.y.z-1.i386.rpm
+              rpm -i /chemin/vers/weechat-x.y.z-1.i386.rpm
             </userinput>
           </para>
         </listitem>
@@ -63,24 +63,48 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </section>
   
-  <section id="secPaquetSource">
+  <section id="secSourcePackage">
     <title>Paquet source</title>
+
+    <section id="secCompileWithAutotools">
+      <title>Compiler avec les Autotools</title>
     
-    <para>
-      Tapez simplement dans une console ou un terminal :
+      <para>
+        Dans une console ou un terminal :
 <screen><prompt>$ </prompt><userinput>./configure</userinput>
 <prompt>$ </prompt><userinput>make</userinput></screen>
-    </para>
-    <para>
-      Obtenez les droits root et installez WeeChat :
+      </para>
+      <para>
+        Obtenez les droits root et installez WeeChat :
 <screen><prompt>$ </prompt><userinput>su</userinput>
 (entrez le mot de passe root)
 <prompt># </prompt><userinput>make install</userinput></screen>
-    </para>
+      </para>
+
+    </section>
+
+    <section id="secCompileWithCmake">
+      <title>Compiler avec Cmake</title>
+    
+      <para>
+        Dans une console ou un terminal :
+<screen><prompt>$ </prompt><userinput>mkdir build</userinput>
+<prompt>$ </prompt><userinput>cd build</userinput>
+<prompt>$ </prompt><userinput>cmake ..</userinput>
+<prompt>$ </prompt><userinput>make</userinput></screen>
+      </para>
+      <para>
+        Obtenez les droits root et installez WeeChat :
+<screen><prompt>$ </prompt><userinput>su</userinput>
+(entrez le mot de passe root)
+<prompt># </prompt><userinput>make install</userinput></screen>
+      </para>
+
+    </section>
     
   </section>
   
-  <section id="secSourcesGIT">
+  <section id="secGITSources">
     <title>Sources GIT</title>
     
     <para>
@@ -95,13 +119,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <para>
-      Exécutez ce script :
+      Si vous utilisez les Autotools (et non cmake), exécutez ce script :
       <userinput>./autogen.sh</userinput>
     </para>
     
     <para>
       Suivez alors les instructions du paquet source
-      (voir <xref linkend="secPaquetSource" />)
+      (voir <xref linkend="secSourcePackage" />)
     </para>
       
   </section>

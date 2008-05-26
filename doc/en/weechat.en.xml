@@ -37,7 +37,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <!ENTITY usage.en.xml SYSTEM "usage.en.xml">
   <!ENTITY plugins.en.xml SYSTEM "plugins.en.xml">
   <!ENTITY plugin_api.en.xml SYSTEM "plugin_api.en.xml">
+  <!ENTITY plugin_irc.en.xml SYSTEM "plugin_irc.en.xml">
   <!ENTITY plugin_charset.en.xml SYSTEM "plugin_charset.en.xml">
+  <!ENTITY plugin_fifo.en.xml SYSTEM "plugin_fifo.en.xml">
   <!ENTITY plugin_scripts.en.xml SYSTEM "plugin_scripts.en.xml">
   <!ENTITY authors.en.xml SYSTEM "authors.en.xml">
 ]>

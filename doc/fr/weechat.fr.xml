@@ -37,7 +37,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <!ENTITY usage.fr.xml SYSTEM "usage.fr.xml">
   <!ENTITY plugins.fr.xml SYSTEM "plugins.fr.xml">
   <!ENTITY plugin_api.fr.xml SYSTEM "plugin_api.fr.xml">
+  <!ENTITY plugin_irc.fr.xml SYSTEM "plugin_irc.fr.xml">
   <!ENTITY plugin_charset.fr.xml SYSTEM "plugin_charset.fr.xml">
+  <!ENTITY plugin_fifo.fr.xml SYSTEM "plugin_fifo.fr.xml">
   <!ENTITY plugin_scripts.fr.xml SYSTEM "plugin_scripts.fr.xml">
   <!ENTITY authors.fr.xml SYSTEM "authors.fr.xml">
 ]>
@@ -47,7 +49,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <bookinfo>
     
     <title>WeeChat 0.2.7-dev - Guide utilisateur</title>
-    <subtitle>Client de messagerie instantanée, léger et extensible</subtitle>
+    <subtitle>Client de discussion rapide, léger et extensible</subtitle>
     
     <author>
       <firstname>Sébastien</firstname>

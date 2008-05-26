@@ -100,7 +100,9 @@ IF(BUILD_HTML OR BUILD_PDF)
           COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/usage.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}-build"
           COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugins.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}-build"
           COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_api.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}-build"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_irc.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}-build"
           COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_charset.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}-build"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_fifo.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}-build"
           COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_scripts.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}-build"
           COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/authors.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}-build"
 	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/config.xml" "${CMAKE_CURRENT_BINARY_DIR}/html/${dlang}-build"
@@ -119,6 +121,9 @@ IF(BUILD_HTML OR BUILD_PDF)
           ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/usage.${dlang}.xml
           ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugins.${dlang}.xml
           ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_api.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_irc.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_charset.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_fifo.${dlang}.xml
           ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_scripts.${dlang}.xml
           ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/authors.${dlang}.xml
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/config.xml
@@ -150,7 +155,9 @@ IF(BUILD_HTML OR BUILD_PDF)
           COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/usage.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
           COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugins.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
           COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_api.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_irc.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
           COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_charset.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
+          COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_fifo.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
           COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_scripts.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
           COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/authors.${dlang}.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
 	  COMMAND ${COPY} ARGS "${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/config.xml" "${CMAKE_CURRENT_BINARY_DIR}/pdf/${dlang}-build"
@@ -166,6 +173,9 @@ IF(BUILD_HTML OR BUILD_PDF)
           ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/usage.${dlang}.xml
           ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugins.${dlang}.xml
           ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_api.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_irc.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_charset.${dlang}.xml
+          ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_fifo.${dlang}.xml
           ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/plugin_scripts.${dlang}.xml
           ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/authors.${dlang}.xml
 	  ${CMAKE_CURRENT_SOURCE_DIR}/${dlang}/config.xml

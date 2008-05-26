@@ -25,8 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <title>Plugins</title>
   
   <para>
-    Dieses Kapitel beschreibt das Plugin-Interface (API) in WeeChat und die
-    Standard-Skriptplugins (Perl, Python, Ruby, Lua), die zu WeeChat gehören.
+    <!-- TRANSLATION NEEDED -->
+    This chapter describes WeeChat plugin API and default plugins provided with
+    WeeChat.
   </para>
   
   <section id="secPluginsInWeeChat">
@@ -64,28 +65,41 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <para>
-      Das Plugin muss einige Variablen und Funktionen besitzen
-      (nötig, sonst kann das Plugin nicht geladen werden):
+      <!-- TRANSLATION NEEDED -->
+      The plugin must use some mandatory macros (to define some variables)
+      and some functions (without them the plugin can't load):
+      
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
             <row>
-              <entry>Variable</entry>
-              <entry>Beschreibung</entry>
+              <entry>Macro</entry>
+              <entry>Description</entry>
             </row>
           </thead>
           <tbody>
             <row>
-              <entry><literal>char plugin_name[]</literal></entry>
-              <entry>Plugin Name</entry>
+              <entry><literal>WEECHAT_PLUGIN_NAME</literal></entry>
+              <entry>plugin name</entry>
             </row>
             <row>
-              <entry><literal>char plugin_version[]</literal></entry>
-              <entry>Plugin Version</entry>
+              <entry><literal>WEECHAT_PLUGIN_DESCRIPTION</literal></entry>
+              <entry>short description of plugin</entry>
             </row>
             <row>
-              <entry><literal>char plugin_description[]</literal></entry>
-              <entry>kurze Beschreibung des Plugins</entry>
+              <entry><literal>WEECHAT_PLUGIN_VERSION</literal></entry>
+              <entry>plugin version</entry>
+            </row>
+            <row>
+              <entry><literal>WEECHAT_PLUGIN_WEECHAT_VERSION</literal></entry>
+              <entry>
+                target WeeChat version where plugin will run (warning: plugin
+                will not run on any other WeeChat version!)
+              </entry>
+            </row>
+            <row>
+              <entry><literal>WEECHAT_PLUGIN_LICENSE</literal></entry>
+              <entry>plugin license</entry>
             </row>
           </tbody>
         </tgroup>
@@ -101,15 +115,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </thead>
           <tbody>
             <row>
-              <entry><literal>int weechat_plugin_init (t_weechat_plugin *plugin)</literal></entry>
+              <entry><literal>int weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])</literal></entry>
               <entry>
-                Die Funktion wird aufgerufen, wenn das Plugin geladen wird.
-                Sie muss bei Erfolg PLUGIN_RC_OK, bei Fehlschlag PLUGIN_RC_KO
-                zurückgeben. (Bei einem Fehler wird das Plugin nicht geladen)
+                <!-- TRANSLATION NEEDED -->
+                function called when plugin is loaded, must return
+                WEECHAT_RC_OK if successful, WEECHAT_RC_ERROR if error
+                (if error, plugin will NOT be loaded), argc/argv are arguments
+                for plugin (given on command line by user)
               </entry>
             </row>
             <row>
-              <entry><literal>void weechat_plugin_end (t_weechat_plugin *plugin)</literal></entry>
+              <entry><literal>int weechat_plugin_end (struct t_weechat_plugin *plugin)</literal></entry>
               <entry>Funktion wird beim Abschalten aufgerufen</entry>
             </row>
           </tbody>
@@ -117,13 +133,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </informaltable>
     </para>
     
-    &plugin_api.de.xml;
-    
     <section id="secCompilePlugin">
       <title>Übersetzen eines Plugins</title>
       
       <para>
-        Das Übersetzen braucht keine WeeChat-Quellen, aber die Datei "<literal>weechat-plugin.h</literal>".
+        Das Übersetzen braucht keine WeeChat-Quellen, aber die Datei
+        "<literal>weechat-plugin.h</literal>".
       </para>
       
       <para>
@@ -159,56 +174,88 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <title>Plugin Beispiel</title>
       
       <para>
-        Vollständiges Beispiel eines Plugins, welches das Kommando /double
-        implementiert, dass seine Argumente im gegenwärtigen Channel doppelt
-        ausgibt (ok, das ist weniger nützlich, aber auch nur ein Beispiel!):
+        <!-- TRANSLATION NEEDED -->
+        Full example of plugin, which adds a /double command, which displays
+        two times arguments on current buffer, or execute two times a command
+        (ok that's not very useful, but that's just an example!):
 <screen>
 #include &lt;stdlib.h&gt;
 
 #include "weechat-plugin.h"
 
-char plugin_name[]        = "Double";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Test plugin for WeeChat";
+WEECHAT_PLUGIN_NAME("double");
+WEECHAT_PLUGIN_DESCRIPTION("Test plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode &lt;flashcode@flashtux.org&gt;");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_WEECHAT_VERSION("0.2.7");
+WEECHAT_PLUGIN_LICENSE("GPL3");
+
+struct t_weechat_plugin *weechat_plugin = NULL;
+
 
 /* "/double" command manager */
 
-int double_cmd (t_weechat_plugin *plugin, int argc, char **argv,
-                char *handler_args, void *handler_pointer)
+int
+double_cmd (void *data, struct t_gui_buffer *buffer, int argc,
+            char **argv, char **argv_eol)
 {
-    if (argv[2] &amp;&amp; (argv[2][0] != '/'))
+    /* make C compiler happy */
+    (void) argv;
+    
+    if (argc &gt; 1)
     {
-        plugin->exec_command (plugin, NULL, NULL, argv[2]);
-        plugin->exec_command (plugin, NULL, NULL, argv[2]);
+        weechat_command (NULL, argv_eol[1]);
+        weechat_command (NULL, argv_eol[1]);
     }
-    return PLUGIN_RC_OK;
+    
+    return WEECHAT_RC_OK;
 }
 
-int weechat_plugin_init (t_weechat_plugin *plugin)
+int
+weechat_plugin_init (struct t_weechat_plugin *plugin,
+                     int argc, char *argv[])
 {
-    plugin->cmd_handler_add (plugin, "double",
-                             "Display two times a message",
-                             "msg",
-                             "msg: message to display two times",
-                             NULL,
-                             &amp;double_cmd,
-                             NULL, NULL);
-    return PLUGIN_RC_OK;
+    weechat_plugin = plugin;
+    
+    weechat_hook_command ("double",
+                          "Display two times a message",
+                          "msg",
+                          "msg: message to display two times",
+                          NULL,
+                          &amp;double_cmd, NULL);
+    
+    return WEECHAT_RC_OK;
 }
 
-void weechat_plugin_end (t_weechat_plugin *plugin)
+int
+weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* nothing done here */
+    (void) plugin;
+    
+    return WEECHAT_RC_OK;
 }
 </screen>
       </para>
       
     </section>
     
+    <!-- &plugin_api.de.xml; -->
+    
   </section>
   
-  &plugin_charset.de.xml;
-  
-  &plugin_scripts.de.xml;
+  <!-- TRANSLATION NEEDED -->
+  <section id="secDefaultPlugins">
+    <title>Default plugins</title>
+    
+    &plugin_irc.de.xml;
+    
+    <!-- &plugin_charset.de.xml; -->
+    
+    &plugin_fifo.de.xml;
+    
+    <!-- &plugin_scripts.de.xml; -->
+    
+  </section>
   
 </chapter>

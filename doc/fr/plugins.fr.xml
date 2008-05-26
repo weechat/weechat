@@ -21,15 +21,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<chapter id="chapExtensions">
+<chapter id="chapPlugins">
   <title>Extensions</title>
   
   <para>
-    Ce chapitre décrit l'interface des extensions (API) et les extensions
-    pour scripts (Perl, Python, Ruby, Lua), fournies avec WeeChat.
+    Ce chapitre décrit l'API extension de WeeChat et les extensions fournies
+    par défaut avec WeeChat.
   </para>
   
-  <section id="secLesExtensionsDansWeeChat">
+  <section id="secPluginsInWeeChat">
     <title>Les extensions dans WeeChat</title>
     
     <para>
@@ -52,7 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </section>
   
-  <section id="secEcrireUneExtension">
+  <section id="secWriteAPlugin">
     <title>Ecrire une extension</title>
     
     <para>
@@ -63,28 +63,42 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <para>
-      L'extension doit comporter certaines variables et fonctions
-      obligatoires (sans quoi l'extension ne peut être chargée) :        
+      L'extension doit comporter certaines macros obligatoires (pour définir
+      des variables) et des fonctions (sans quoi l'extension ne peut être
+      chargée) :
+      
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
             <row>
-              <entry>Variable</entry>
+              <entry>Macro</entry>
               <entry>Description</entry>
             </row>
           </thead>
           <tbody>
             <row>
-              <entry><literal>char plugin_name[]</literal></entry>
+              <entry><literal>WEECHAT_PLUGIN_NAME</literal></entry>
               <entry>le nom de l'extension</entry>
             </row>
             <row>
-              <entry><literal>char plugin_version[]</literal></entry>
+              <entry><literal>WEECHAT_PLUGIN_DESCRIPTION</literal></entry>
+              <entry>une courte description de l'extension</entry>
+            </row>
+            <row>
+              <entry><literal>WEECHAT_PLUGIN_VERSION</literal></entry>
               <entry>la version de l'extension</entry>
             </row>
             <row>
-              <entry><literal>char plugin_description[]</literal></entry>
-              <entry>une courte description de l'extension</entry>
+              <entry><literal>WEECHAT_PLUGIN_WEECHAT_VERSION</literal></entry>
+              <entry>
+                la version de WeeChat pour laquelle l'extension est destinée
+                (attention: l'extension ne pourra tourner sur aucune autre
+                version de WeeChat !)
+              </entry>
+            </row>
+            <row>
+              <entry><literal>WEECHAT_PLUGIN_LICENSE</literal></entry>
+              <entry>la licence de l'extension</entry>
             </row>
           </tbody>
         </tgroup>
@@ -100,16 +114,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </thead>
           <tbody>
             <row>
-              <entry><literal>int weechat_plugin_init (t_weechat_plugin *plugin)</literal></entry>
+              <entry><literal>int weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])</literal></entry>
               <entry>
                 fonction appelée au chargement de l'extension
-                qui doit renvoyer PLUGIN_RC_OK en cas de succès,
-                PLUGIN_RC_KO en cas d'erreur (si erreur, l'extension
-                ne sera PAS chargée)
+                qui doit renvoyer WEECHAT_RC_OK en cas de succès,
+                WEECHAT_RC_ERROR en cas d'erreur (si erreur, l'extension
+                ne sera PAS chargée), argv/argv sont les paramètres pour
+                l'extension (donnés sur la ligne de commande par l'utilisateur)
               </entry>
             </row>
             <row>
-              <entry><literal>void weechat_plugin_end (t_weechat_plugin *plugin)</literal></entry>
+              <entry><literal>int weechat_plugin_end (struct t_weechat_plugin *plugin)</literal></entry>
               <entry>fonction appelée au déchargement de l'extension</entry>
             </row>
           </tbody>
@@ -117,9 +132,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </informaltable>
     </para>
     
-    &plugin_api.fr.xml;
-    
-    <section id="secCompilerExtension">
+    <section id="secCompilePlugin">
       <title>Compiler l'extension</title>
       
       <para>
@@ -138,7 +151,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       
     </section>
     
-    <section id="secChargerExtension">
+    <section id="secLoadPlugin">
       <title>Charger l'extension dans WeeChat</title>
       
       <para>
@@ -156,60 +169,91 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       
     </section>
     
-    <section id="secExempleExtension">
+    <section id="secPluginExample">
       <title>Exemple d'extension</title>
       
       <para>
         Un exemple complet d'extension, qui ajoute une commande /double
-        affichant deux fois les paramètres passés sur le canal courant
-        (d'accord ce n'est pas très utile mais ceci est un exemple !) :
+        affichant deux fois les paramètres passés sur le tampon courant
+        ou exécutant deux fois une commande (d'accord ce n'est pas très utile
+        mais ceci est un exemple !) :
 <screen>
 #include &lt;stdlib.h&gt;
 
 #include "weechat-plugin.h"
 
-char plugin_name[]        = "Double";
-char plugin_version[]     = "0.1";
-char plugin_description[] = "Plugin de test pour WeeChat";
+WEECHAT_PLUGIN_NAME("double");
+WEECHAT_PLUGIN_DESCRIPTION("Test plugin for WeeChat");
+WEECHAT_PLUGIN_AUTHOR("FlashCode &lt;flashcode@flashtux.org&gt;");
+WEECHAT_PLUGIN_VERSION("0.1");
+WEECHAT_PLUGIN_WEECHAT_VERSION("0.2.7");
+WEECHAT_PLUGIN_LICENSE("GPL3");
 
-/* gestionnaire de commande "/double" */
+struct t_weechat_plugin *weechat_plugin = NULL;
 
-int double_cmd (t_weechat_plugin *plugin, int argc, char **argv,
-                char *handler_args, void *handler_pointer)
+
+/* "/double" command manager */
+
+int
+double_cmd (void *data, struct t_gui_buffer *buffer, int argc,
+            char **argv, char **argv_eol)
 {
-    if (argv[2] &amp;&amp; (argv[2][0] != '/'))
+    /* make C compiler happy */
+    (void) argv;
+    
+    if (argc &gt; 1)
     {
-        plugin->exec_command (plugin, NULL, NULL, argv[2]);
-        plugin->exec_command (plugin, NULL, NULL, argv[2]);
+        weechat_command (NULL, argv_eol[1]);
+        weechat_command (NULL, argv_eol[1]);
     }
-    return PLUGIN_RC_OK;
+    
+    return WEECHAT_RC_OK;
 }
 
-int weechat_plugin_init (t_weechat_plugin *plugin)
+int
+weechat_plugin_init (struct t_weechat_plugin *plugin,
+                     int argc, char *argv[])
 {
-    plugin->cmd_handler_add (plugin, "double",
-                             "Affiche deux fois un message",
-                             "msg",
-                             "msg: message a afficher deux fois",
-                             NULL,
-                             &amp;double_cmd,
-                             NULL, NULL);
-    return PLUGIN_RC_OK;
+    weechat_plugin = plugin;
+    
+    weechat_hook_command ("double",
+                          "Display two times a message",
+                          "msg",
+                          "msg: message to display two times",
+                          NULL,
+                          &amp;double_cmd, NULL);
+    
+    return WEECHAT_RC_OK;
 }
 
-void weechat_plugin_end (t_weechat_plugin *plugin)
+int
+weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    /* on ne fait rien ici */
+    /* nothing done here */
+    (void) plugin;
+    
+    return WEECHAT_RC_OK;
 }
 </screen>
       </para>
       
     </section>
     
+    <!-- &plugin_api.fr.xml; -->
+
+    <section id="secDefaultPlugins">
+      <title>Default plugins</title>
+      
+      &plugin_irc.fr.xml;
+      
+      <!-- &plugin_charset.fr.xml; -->
+      
+      &plugin_fifo.fr.xml;
+      
+      <!-- &plugin_scripts.fr.xml; -->
+      
+    </section>
+    
   </section>
-  
-  &plugin_charset.fr.xml;
-  
-  &plugin_scripts.fr.xml;
   
 </chapter>

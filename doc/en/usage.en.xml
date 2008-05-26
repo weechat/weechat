@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     used, internal and IRC commands, setup file, and FIFO pipe use.
   </para>
   
-  <section id="secRunningWeeChat">
+  <section id="secRunWeeChat">
     <title>Running WeeChat</title>
     
     <para>
@@ -50,12 +50,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry><literal>-c, --config</literal></entry>
-              <entry>
-                Display config help (list of options)
-              </entry>
-            </row>
-            <row>
               <entry><literal>-d, --dir &lt;path&gt;</literal></entry>
               <entry>
                 Set path as home for WeeChat (used for configuration files,
@@ -65,21 +59,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry><literal>-f, --key-functions</literal></entry>
-              <entry>
-                Display WeeChat internal functions for keys
-              </entry>
-            </row>
-            <row>
               <entry><literal>-h, --help</literal></entry>
               <entry>
                 Display help
-              </entry>
-            </row>
-            <row>
-              <entry><literal>-i, --irc-commands</literal></entry>
-              <entry>
-                Display IRC commands list
               </entry>
             </row>
             <row>
@@ -104,12 +86,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry><literal>-v, --version</literal></entry>
               <entry>
                 Display WeeChat version
-              </entry>
-            </row>
-            <row>
-              <entry><literal>-w, --weechat-commands</literal></entry>
-              <entry>
-                Display WeeChat commands list
               </entry>
             </row>
           </tbody>
@@ -157,14 +133,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       When you run WeeChat for the first time, a default configuration
       file is created, with default options.
       The default configuration file is:
-      "<literal>~/.weechat/weechat.rc</literal>"
+      "<literal>~/.weechat/weechat.conf</literal>"
     </para>
     
     <para>
       You can edit this file at your convenience to configure WeeChat
-      (ONLY if WeeChat is not running), or you can set parameters with
-      "<literal>/set</literal>" command in WeeChat
-      (see <xref linkend="secWeeChatCommands" />)
+      or you can set parameters with "<literal>/set</literal>" command in
+      WeeChat (see <xref linkend="secWeeChatCommands" />)
     </para>
     
   </section>
@@ -442,12 +417,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry>Alt + J then Alt + D</entry>
-              <entry>
-                Display DCC buffer
-              </entry>
-            </row>
-            <row>
               <entry>Alt + J then Alt + L</entry>
               <entry>
                 Switch to last buffer
@@ -457,25 +426,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + J then Alt + P</entry>
               <entry>
                 Switch to buffer previously displayed
-              </entry>
-            </row>
-            <row>
-              <entry>Alt + J then Alt + R</entry>
-              <entry>
-                Switch to raw IRC data buffer
-              </entry>
-            </row>
-            <row>
-              <entry>Alt + J then Alt + S</entry>
-              <entry>
-                Switch to server buffer
-              </entry>
-            </row>
-            <row>
-              <entry>Alt + J then Alt + X</entry>
-              <entry>
-                Switch to first channel of next server
-                (or server buffer if no channel is opened)
               </entry>
             </row>
             <row>
@@ -544,35 +494,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>Command line</title>
     
     <para>
-      WeeChat command line (at the bottom of window) lets you send text on
-      channels and execute WeeChat or IRC commands (see
-      <xref linkend="secWeeChatIRCCommands" />).
+      WeeChat command line (at the bottom of window) lets you execute commands
+      or send text to buffer.
     </para>
     
     <para>
       Commands begin with "/" char, followed by name of command.
-      For example, to initiate a private chat with "<literal>toto</literal>":
-      <screen><userinput>/query toto</userinput></screen>
+      For example, to see list of all options:
+      <screen><userinput>/set</userinput></screen>
     </para>
     
     <para>
-      Text sent to a channel is any text that does not begin with "/" char.
+      Text sent to a buffer is any text that does not begin with "/" char.
       For example, to send text "<literal>hello</literal>" on current
-      channel:
+      buffer:
       <screen><userinput>hello</userinput></screen>
     </para>
     
     <para>
       However, it is possible to start with "/" char, by adding another.
-      For example, to send text "<literal>/query toto</literal>" on current
-      channel:
-      <screen><userinput>//query toto</userinput></screen>
+      For example, to send text "<literal>/set</literal>" on current
+      buffer:
+      <screen><userinput>//set</userinput></screen>
     </para>
     
     <para>
-      If option for sending IRC colors ("<literal>irc_colors_send</literal>")
-      is enabled, you can use color codes and attributes, as follow (press
-      Ctrl-C then following letter, with optional value):
+      For some plugins like IRC, you can use color codes and attributes, as
+      follow (press Ctrl-C then following letter, with optional value):
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -717,54 +665,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </section>
   
-  <section id="secWeeChatIRCCommands">
-    <title>WeeChat / IRC commands</title>
+  <section id="secWeeChatCommands">
+    <title>WeeChat commands</title>
     
     <para>
-      This chapter lists all WeeChat and IRC commands.
+      This chapter lists all WeeChat commands.
     </para>
     
-    <section id="secWeeChatCommands">
-      <title>WeeChat commands</title>
+    <para>
+      <!-- &weechat_commands.xml; -->
+    </para>
       
-      <para>
-        &weechat_commands.xml;
-      </para>
-      
-    </section>
-    
-    <section id="secKeyFunctions">
-      <title>Key functions</title>
-      
-      <para>
-        <informaltable colsep="0" frame="none">
-          <tgroup cols="2">
-            <thead>
-              <row>
-                <entry>Function</entry>
-                <entry>Description</entry>
-              </row>
-            </thead>
-            <tbody>
-              
-              &key_functions.xml;
-              
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </para>
-      
-    </section>
-    
-    <section id="secIRCCommands">
-      <title>IRC commands</title>
-      
-      <para>
-        &irc_commands.xml;
-      </para>
-      
-    </section>
-    
   </section>
   
   <section id="secConfigurationFile">
@@ -785,7 +696,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </thead>
           <tbody>
             
-            &config.xml;
+            <!-- &config.xml; -->
             
           </tbody>
         </tgroup>
@@ -866,80 +777,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </tbody>
         </tgroup>
       </informaltable>
-    </para>
-    
-  </section>
-  
-  <section id="secFIFOpipe">
-    <title>FIFO pipe</title>
-    
-    <para>
-      You can remote control WeeChat, by sending commands or text to a
-      FIFO pipe (you have to enable option "irc_fifo_pipe", it is disabled
-      by default).
-    </para>
-    
-    <para>
-      The FIFO pipe is located in "<literal>~/.weechat/</literal>" and is
-      called "weechat_fifo_xxxxx" (where xxxxx is the process ID (PID) of
-      running WeeChat). So if many WeeChat are running, you have many FIFO
-      pipes, one for each session.
-    </para>
-    
-    <para>
-      The syntax for the FIFO pipe commands/text is:
-      <screen>server,channel *text or command here</screen>
-      where server and channel are optional, but if channel is here, server
-      should be too.
-    </para>
-    
-    <para>
-      Some examples:
-      <itemizedlist>
-        <listitem>
-          <para>
-            nick change on freenode to "mynick|out" :
-            <screen><prompt>$ </prompt><userinput>echo 'freenode */nick mynick|out' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            display text on #weechat channel:
-            <screen><prompt>$ </prompt><userinput>echo 'freenode,#weechat *hello everybody!' >~/.weechat/weechat_fifo_12345</userinput></screen>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            display text on current channel (buffer displayed by WeeChat):
-            <screen><prompt>$ </prompt><userinput>echo '*hello!' >~/.weechat/weechat_fifo_12345</userinput></screen>
-            <emphasis>Warning:</emphasis> this is dangerous and you should
-            not do that except if you know what you do!
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            send two commands to unload/reload Perl scripts (you have to
-            separate them with "\n"):
-            <screen><prompt>$ </prompt><userinput>echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345</userinput></screen>
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    
-    <para>
-      You can write a script to send command to all running WeeChat at same
-      time, for example:
-      <screen>
-        #!/bin/sh
-        if [ $# -eq 1 ]; then
-        for fifo in ~/.weechat/weechat_fifo_*
-        do
-        echo -e "$1" >$fifo
-        done
-        fi
-      </screen>
-      If the script is called "auto_weechat_command", you can run it with:
-      <screen><prompt>$ </prompt><userinput>./auto_weechat_command "freenode,#weechat *hello"</userinput></screen>
     </para>
     
   </section>

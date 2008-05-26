@@ -46,7 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            many GUI: Curses, wxWidgets, Gtk and Qt
+            many GUI: Curses (wxWidgets, Gtk and Qt under development)
           </para>
         </listitem>
         <listitem>
@@ -91,7 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </section>
   
-  <section id="secPreRequis">
+  <section id="secPreRequisites">
     <title>Pre-requisites</title>
     
     <para>
@@ -100,7 +100,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <listitem>
           <para>
             a running GNU/Linux system (with compiler tools for source
-            package)
+            package), or compatible OS (see above)
           </para>
         </listitem>
         <listitem>

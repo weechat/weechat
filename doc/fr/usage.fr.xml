@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<chapter id="chapUtilisation">
+<chapter id="chapUsage">
   <title>Utilisation</title>
   
   <para>
@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     l'utilisation du tube FIFO.
   </para>
   
-  <section id="secLancerWeeChat">
+  <section id="secRunWeeChat">
     <title>Lancer WeeChat</title>
     
     <para>
@@ -52,12 +52,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry><literal>-c, --config</literal></entry>
-              <entry>
-                Afficher l'aide sur le fichier de config (liste des options)
-              </entry>
-            </row>
-            <row>
               <entry><literal>-d, --dir &lt;répertoire&gt;</literal></entry>
               <entry>
                 Définir le répertoire comme étant la base de WeeChat
@@ -68,22 +62,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry><literal>-f, --key-functions</literal></entry>
-              <entry>
-                Afficher la liste des fonctions internes WeeChat pour les
-                touches
-              </entry>
-            </row>
-            <row>
               <entry><literal>-h, --help</literal></entry>
               <entry>
                 Afficher l'aide
-              </entry>
-            </row>
-            <row>
-              <entry><literal>-i, --irc-commands</literal></entry>
-              <entry>
-                Afficher la liste des commandes IRC
               </entry>
             </row>
             <row>
@@ -109,12 +90,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry><literal>-v, --version</literal></entry>
               <entry>
                 Afficher la version de WeeChat
-              </entry>
-            </row>
-            <row>
-              <entry><literal>-w, --weechat-commands</literal></entry>
-              <entry>
-                Afficher la liste des commandes WeeChat
               </entry>
             </row>
           </tbody>
@@ -166,20 +141,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       Lorsque vous lancez WeeChat pour la première fois, un fichier de
       configuration par défaut est créé, avec les options par défaut.
       Le fichier de configuration par défaut est :
-      "<literal>~/.weechat/weechat.rc</literal>"
+      "<literal>~/.weechat/weechat.conf</literal>"
     </para>
     
     <para>
       Vous pouvez éditer ce fichier pour configurer WeeChat à votre
-      convenance (SEULEMENT si WeeChat ne tourne pas), ou vous pouvez
-      modifier les paramètres dans WeeChat avec la commande
-      "<literal>/set</literal>"
-      (voir <xref linkend="secCommandesWeeChat" />)
+      convenance ou vous pouvez modifier les paramètres dans WeeChat avec la
+      commande "<literal>/set</literal>"
+      (voir <xref linkend="secWeeChatCommands" />)
     </para>
     
   </section>
   
-  <section id="secRaccourcisClavier">
+  <section id="secKeyboardShortcuts">
     <title>Raccourcis clavier</title>
     
     <para>
@@ -455,12 +429,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry>Alt + J puis Alt + D</entry>
-              <entry>
-                Afficher le tampon des DCC
-              </entry>
-            </row>
-            <row>
               <entry>Alt + J puis Alt + L</entry>
               <entry>
                 Sauter au dernier tampon
@@ -470,25 +438,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + J puis Alt + P</entry>
               <entry>
                 Sauter au tampon affiché précédemment
-              </entry>
-            </row>
-            <row>
-              <entry>Alt + J puis Alt + R</entry>
-              <entry>
-                Sauter au tampon de données brutes IRC
-              </entry>
-            </row>
-            <row>
-              <entry>Alt + J puis Alt + S</entry>
-              <entry>
-                Sauter au tampon du serveur
-              </entry>
-            </row>
-            <row>
-              <entry>Alt + J puis Alt + X</entry>
-              <entry>
-                Sauter au premier canal du serveur suivant
-                (ou tampon du serveur si aucun canal n'est ouvert)
               </entry>
             </row>
             <row>
@@ -554,41 +503,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </section>
   
-  <section id="secLigneDeCommande">
+  <section id="secCommandLine">
     <title>La ligne de commande</title>
     
     <para>
       La ligne de commande WeeChat (située en bas de la fenêtre) permet
-      d'envoyer du texte sur les canaux et d'exécuter des commandes
-      WeeChat ou IRC (voir <xref linkend="secCommandesWeeChatIRC" />).
+      d'exécuter des commandes ou d'envoyer du texte vers le tampon.
     </para>
     
     <para>
       Les commandes débutent par un caractère "/", suivi du nom de la
-      commande. Par exemple pour initier une conversation privée avec
-      "<literal>toto</literal>" :
-      <screen><userinput>/query toto</userinput></screen>
+      commande. Par exemple pour afficher la liste de toutes les options :
+      <screen><userinput>/set</userinput></screen>
     </para>
     
     <para>
-      Le texte envoyé à un canal est tout texte ne commençant pas par le
+      Le texte envoyé à un tampon est tout texte ne commençant pas par le
       caractère "/", par exemple pour envoyer "<literal>bonjour</literal>"
-      sur le canal courant :
+      sur le tampon courant :
       <screen><userinput>bonjour</userinput></screen>
     </para>
     
     <para>
       Il est cependant possible de faire débuter un texte par "/" en le
       doublant. Par exemple pour envoyer le texte
-      "<literal>/query toto</literal>" sur le canal courant :
-      <screen><userinput>//query toto</userinput></screen>
+      "<literal>/set</literal>" sur le tampon courant :
+      <screen><userinput>//set</userinput></screen>
     </para>
       
     <para>
-      Si l'option d'envoi des couleurs IRC
-      ("<literal>irc_colors_send</literal>") est activée, il est possible
-      d'utiliser des codes couleur et attributs comme suit (appuyer sur Ctrl-C
-      puis la lettre qui suit et éventuellement une valeur) :
+      Pour certaines extensions comme IRC, il est possible d'utiliser
+      des codes couleur et attributs cmome suit (appuyer sur Ctrl-C puis sur
+      la lettre qui suit et éventuellement une valeur) :
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -733,57 +679,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </section>
   
-  <section id="secCommandesWeeChatIRC">
-    <title>Commandes WeeChat / IRC</title>
+  <section id="secWeeChatCommands">
+    <title>Commandes WeeChat</title>
     
     <para>
-      Ce chapitre liste toutes les commandes WeeChat et IRC.
+      Ce chapitre liste toutes les commandes WeeChat.
     </para>
     
-    <section id="secCommandesWeeChat">
-      <title>Commandes WeeChat</title>
-      
-      <para>
-        &weechat_commands.xml;
-      </para>
-      
-    </section>
-    
-    <section id="secFonctionsTouches">
-      <title>Fonctions pour les touches</title>
-      
-      <para>
-        <informaltable colsep="0" frame="none">
-          <tgroup cols="2">
-            <thead>
-              <row>
-                <entry>Fonction</entry>
-                <entry>Description</entry>
-              </row>
-            </thead>
-            <tbody>
-              
-              &key_functions.xml;
-              
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </para>
-      
-    </section>
-    
-    <section id="secCommandesIRC">
-      <title>Commandes IRC</title>
-      
-      <para>
-        &irc_commands.xml;
-      </para>
-      
-    </section>
+    <para>
+      <!-- &weechat_commands.xml; -->
+    </para>
     
   </section>
   
-  <section id="secFichierConfiguration">
+  <section id="secConfigurationFile">
     <title>Fichier de configuration</title>
     
     <para>
@@ -801,7 +710,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </thead>
           <tbody>
             
-            &config.xml;
+            <!-- &config.xml; -->
             
           </tbody>
         </tgroup>
@@ -882,83 +791,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </tbody>
         </tgroup>
       </informaltable>
-    </para>
-    
-  </section>
-  
-  <section id="secTubeFIFO">
-    <title>Tube FIFO</title>
-    
-    <para>
-      Vous pouvez contrôler WeeChat à distance, en envoyant des commandes
-      ou du texte dans un tube FIFO (l'option "irc_fifo_pipe" doit être
-      activée, elle est désactivée par défaut).
-    </para>
-    
-    <para>
-      Le tube FIFO est dans le répertoire "<literal>~/.weechat/</literal>"
-      et s'appelle "weechat_fifo_xxxxx" (où xxxxx est l'ID du processus
-      (PID) du WeeChat qui tourne). Donc si plusieurs WeeChat tournent, il
-      y a plusieurs tubes FIFO, un pour chaque session.
-    </para>
-    
-    <para>
-      La syntaxe pour envoyer des commandes ou du texte dans le tube FIFO
-      est la suivante :
-      <screen>serveur,canal *texte ou commande ici</screen>
-      où le serveur et le canal sont facultatifs, mais si le canal est là,
-      le serveur doit l'être aussi.
-    </para>
-    
-    <para>
-      Quelques exemples :
-      <itemizedlist>
-        <listitem>
-          <para>
-            changement du pseudo sur freenode en "pseudo|absent" :
-            <screen><prompt>$ </prompt><userinput>echo 'freenode */nick pseudo|absent' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            affichage de texte sur le canal #weechat :
-            <screen><prompt>$ </prompt><userinput>echo 'freenode,#weechat *bonjour tout le monde !' >~/.weechat/weechat_fifo_12345</userinput></screen>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            affichage de texte sur le canal courant (le tampon affiché
-            par WeeChat) :
-            <screen><prompt>$ </prompt><userinput>echo '*bonjour !' >~/.weechat/weechat_fifo_12345</userinput></screen>
-            <emphasis>Attention :</emphasis> ceci est dangereux et vous ne
-            devriez pas le faire sauf si vous savez ce que vous faites !
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            envoyer deux commandes pour décharger/recharger les scripts Perl
-            (vous devez les séparer par "\n") :
-            <screen><prompt>$ </prompt><userinput>echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345</userinput></screen>
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    
-    <para>
-      Vous pouvez écrire un script qui envoie les commandes à tous les
-      WeeChat qui tournent en même temps, par exemple :
-<screen>
-#!/bin/sh
-if [ $# -eq 1 ]; then
-    for fifo in ~/.weechat/weechat_fifo_*
-    do
-        echo -e "$1" >$fifo
-    done
-fi
-</screen>
-      Si le script s'appelle "auto_weechat_command", vous pouvez le lancer
-      ainsi :
-<screen><prompt>$ </prompt><userinput>./auto_weechat_command "freenode,#weechat *bonjour"</userinput></screen>
     </para>
     
   </section>

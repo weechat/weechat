@@ -44,7 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <para>
             Mandriva/RedHat (oder jede RPM-kompatible Distribution):
             <userinput>
-              rpm -i /chemin/weechat-x.y.z-1.i386.rpm
+              rpm -i /path/to/weechat-x.y.z-1.i386.rpm
             </userinput>
           </para>
         </listitem>
@@ -63,19 +63,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
   <section id="secSourcePackage">
     <title>Quellcode-Pakete</title>
+
+    <!-- TRANSLATION NEEDED -->
+    <section id="secCompileWithAutotools">
+      <title>Compile with Autotools</title>
     
-    <para>
-      Alles was sie tun müssen, ist in einer Konsole oder einem Terminal
-      aufzurufen:
+      <para>
+        In a console or a terminal:
 <screen><prompt>$ </prompt><userinput>./configure</userinput>
 <prompt>$ </prompt><userinput>make</userinput></screen>
-    </para>
-    <para>
-      Dann root werden und WeeChat installieren:
+      </para>
+      <para>
+        Dann root werden und WeeChat installieren:
 <screen><prompt>$ </prompt><userinput>su</userinput>
 (root-Passwort eingeben)
 <prompt># </prompt><userinput>make install</userinput></screen>
-    </para>
+      </para>
+
+    </section>
+
+    <!-- TRANSLATION NEEDED -->
+    <section id="secCompileWithCmake">
+      <title>Compile with Cmake</title>
+    
+      <para>
+        In a console or a terminal:
+<screen><prompt>$ </prompt><userinput>mkdir build</userinput>
+<prompt>$ </prompt><userinput>cd build</userinput>
+<prompt>$ </prompt><userinput>cmake ..</userinput>
+<prompt>$ </prompt><userinput>make</userinput></screen>
+      </para>
+      <para>
+        Dann root werden und WeeChat installieren:
+<screen><prompt>$ </prompt><userinput>su</userinput>
+(root-Passwort eingeben)
+<prompt># </prompt><userinput>make install</userinput></screen>
+      </para>
+
+    </section>
     
   </section>
   
@@ -94,7 +119,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <para>
-      Ausführen des folgenden Skripts:
+      <!-- TRANSLATION NEEDED -->
+      If you're using Autotools (and not cmake), Ausführen des folgenden Skripts:
       <userinput>./autogen.sh</userinput>
     </para>
     

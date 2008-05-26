@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     und die FIFO für die remote-Bedienung.
   </para>
   
-  <section id="secRunningWeeChat">
+  <section id="secRunWeeChat">
     <title>Starten von WeeChat</title>
     
     <para>
@@ -51,13 +51,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry><literal>-c, --config</literal></entry>
-              <entry>
-                Zeigt eine Hilfe zu den Konfigurationsmöglichkeiten (Liste
-                der Optionen)
-              </entry>
-            </row>
-            <row>
               <entry><literal>-d, --dir &lt;path&gt;</literal></entry>
               <entry>
                 Setzt den Pfad für das Verzeichnis, dass Weechat benutzen
@@ -69,22 +62,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry><literal>-f, --key-functions</literal></entry>
-              <entry>
-                Zeigt die intern verwendeten Funktionen von WeeChat für
-                bestimmte Tastenkombinationen an
-              </entry>
-            </row>
-            <row>
               <entry><literal>-h, --help</literal></entry>
               <entry>
                 Zeigt eine zusammenfassende Hilfe an.
-              </entry>
-            </row>
-            <row>
-              <entry><literal>-i, --irc-commands</literal></entry>
-              <entry>
-                Zeigt die IRC-Kommandos an
               </entry>
             </row>
             <row>
@@ -109,12 +89,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry><literal>-v, --version</literal></entry>
               <entry>
                 Zeigt die Programmversion an
-              </entry>
-            </row>
-            <row>
-              <entry><literal>-w, --weechat-commands</literal></entry>
-              <entry>
-                Zeigt die Weechat-eigenen Kommandos an
               </entry>
             </row>
           </tbody>
@@ -161,13 +135,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <para>
       Wenn Sie Weechat zum ersten Mal starten, wird eine Konfigurationsdatei
       erzeugt, deren Optionen besitzen Standardwerte. Diese Datei ist:
-      "<literal>~/.weechat/weechat.rc</literal>"
+      "<literal>~/.weechat/weechat.conf</literal>"
     </para>
     
     <para>
       Sie können diese Datei entsprechend ihren Bedürfnissen editieren,
-      um Weechat anzupassen (NUR wenn Weechat nicht läuft) oder Parameter
-      zu beeinflussen mit 
+      um Weechat anzupassen oder Parameter zu beeinflussen mit 
       "<literal>/set</literal>" Kommando in WeeChat
       (siehe <xref linkend="secWeeChatCommands" />)
     </para>
@@ -449,12 +422,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry>Alt + J dann Alt + D</entry>
-              <entry>
-                Zeige den DCC-Puffer
-              </entry>
-            </row>
-            <row>
               <entry>Alt + J dann Alt + L</entry>
               <entry>
                 Schalte zum letzten Puffer
@@ -465,25 +432,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>
                 <!-- TRANSLATION NEEDED -->
                 Switch to buffer previously displayed
-              </entry>
-            </row>
-            <row>
-              <entry>Alt + J dann Alt + R</entry>
-              <entry>
-                Schalte in den reinen IRC-Daten Puffer
-              </entry>
-            </row>
-            <row>
-              <entry>Alt + J dann Alt + S</entry>
-              <entry>
-                Schalte in den Server-Puffer
-              </entry>
-            </row>
-            <row>
-              <entry>Alt + J dann Alt + X</entry>
-              <entry>
-                Schalte in den ersten Channel des nächsten Servers
-                (oder in den Server-Puffer wenn keine Channel offen ist)
               </entry>
             </row>
             <row>
@@ -553,38 +501,37 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>Kommandozeile</title>
     
     <para>
-      Die WeeChat Kommandozeile (am Ende des Fensters) lässt sie Nachrichten
-      an einen Channel senden oder WeeChat- bzw. IRC-Kommandos ausführen
-      (siehe <xref linkend="secWeeChatIRCCommands" />).
+      <!-- TRANSLATION NEEDED -->
+      WeeChat command line (at the bottom of window) lets you execute commands
+      or send text to buffer.
     </para>
     
     <para>
       Kommandos beginnen mit einem "/", gefolgt vom Namen des Kommandos.
-      Um zum Beispiel einen privaten Chat mit "<literal>toto</literal>" zu
-      beginnen: <screen><userinput>/query toto</userinput></screen>
+      <!-- TRANSLATION NEEDED -->
+      For example, to see list of all options:
+      <screen><userinput>/set</userinput></screen>
     </para>
     
     <para>
-      Nachrichten an einen Channel sind jeder Text, der nicht mit einem "/"
+      Nachrichten an einen Puffer sind jeder Text, der nicht mit einem "/"
       begint. Um zum Beispiel den Text "<literal>hello</literal>" an den
-      gegenwärtigen Channel zu senden:
+      gegenwärtigen Puffer zu senden:
       <screen><userinput>hello</userinput></screen>
     </para>
     
     <para>
       Dennoch ist es möglich, eine Nachricht auch mit einem "/" zu beginnen,
       einfach ein weiteres "/" voranstellen. Um zum Beispiel den Text
-      "<literal>/query toto</literal>" an den gegenwärtigen Channel zu
+      "<literal>/set</literal>" an den gegenwärtigen Puffer zu
       senden:
-      <screen><userinput>//query toto</userinput></screen>
+      <screen><userinput>//set</userinput></screen>
     </para>
     
     <para>
-      Wenn die Option IRC-Farben ("<literal>irc_colors_send</literal>")
-      senden angeschaltet ist, können sie Farbcodierung und Attribute
-      wiefolgt verwenden
       <!-- TRANSLATION NEEDED -->
-      (press Ctrl-C then following letter, with optional value):
+      For some plugins like IRC, you can use color codes and attributes, as
+      follow (press Ctrl-C then following letter, with optional value):
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -729,53 +676,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </section>
   
-  <section id="secWeeChatIRCCommands">
-    <title>WeeChat / IRC Kommandos</title>
+  <section id="secWeeChatCommands">
+    <title>WeeChat Kommandos</title>
     
     <para>
-      Dieses Kapitel listet alle WeeChat- und IRC-Kommandos auf.
+      Dieses Kapitel listet alle WeeChat-Kommandos auf.
     </para>
     
-    <section id="secWeeChatCommands">
-      <title>WeeChat Kommandos</title>
-      
-      <para>
-        &weechat_commands.xml;
-      </para>
-      
-    </section>
-    
-    <section id="secKeyFunctions">
-      <title>Funktionen</title>
-      
-      <para>
-        <informaltable colsep="0" frame="none">
-          <tgroup cols="2">
-            <thead>
-              <row>
-                <entry>Funktion</entry>
-                <entry>Beschreibung</entry>
-              </row>
-            </thead>
-            <tbody>
-              
-              &key_functions.xml;
-              
-            </tbody>
-          </tgroup>
-        </informaltable>
-      </para>
-      
-    </section>
-    
-    <section id="secIRCCommands">
-      <title>IRC Kommandos</title>
-      
-      <para>
-        &irc_commands.xml;
-      </para>
-      
-    </section>
+    <para>
+      <!-- &weechat_commands.xml; -->
+    </para>
     
   </section>
   
@@ -797,7 +707,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </thead>
           <tbody>
             
-            &config.xml;
+            <!-- &config.xml; -->
             
           </tbody>
         </tgroup>
@@ -878,82 +788,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </tbody>
         </tgroup>
       </informaltable>
-    </para>
-    
-  </section>
-  
-  <section id="secFIFOpipe">
-    <title>Remote-Schnittstelle (FIFO pipe)</title>
-    
-    <para>
-      Sie können WeeChat auch extern steuern, indem sie Kommandos oder Text
-      an eine sogen. pipe übergeben (sie müssen die Option "irc_fifo_pipe" 
-      anschalten, die normalerweise abgeschaltet ist).
-    </para>
-    
-    <para>
-      Diese pipe liegt in "<literal>~/.weechat/</literal>" und hat den Namen
-      "weechat_fifo_xxxxx" (das xxxxx ist die Prozess-ID (PID) eines
-      laufenden WeeChat). Wenn mehrere Instanzen von WeeChat laufen, sind
-      mehrere pipes vorhanden, eine für jede Instanz.
-    </para>
-    
-    <para>
-      Der Syntax für ein pipe-Kommando ist:
-      <screen>server,channel *Text oder Kommando</screen>
-      wobei Server und Channel optional sind, aber wenn der Channel
-      angegeben ist, muss der Server auch angegeben werden.
-    </para>
-    
-    <para>
-      Einige Beispiele:
-      <itemizedlist>
-        <listitem>
-          <para>
-            Ändern des Nicks auf freenode in "mynick|out" :
-            <screen><prompt>$ </prompt><userinput>echo 'freenode */nick mynick|out' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Senden einer Nachricht an #weechat:
-            <screen><prompt>$ </prompt><userinput>echo 'freenode,#weechat *hello everybody!' >~/.weechat/weechat_fifo_12345</userinput></screen>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Senden einer Nachricht an den gegenwärtigen Channel (Puffer, der
-            in WeeChat angezeigt wird):
-            <screen><prompt>$ </prompt><userinput>echo '*hello!' >~/.weechat/weechat_fifo_12345</userinput></screen>
-            <emphasis>Warnung:</emphasis> Das ist gefährlich und sie sollten
-            das nicht tun, ausgenommen sie wissen was sie tun!
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            Sende zwei Kommandos um (alle) Perl-Skripte abzuschalten/neu zu
-            laden (getrennt durch ein "\n"):
-            <screen><prompt>$ </prompt><userinput>echo -e "freenode */perl unload\nfreenode */perl autoload" >~/.weechat/weechat_fifo_12345</userinput></screen>
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    
-    <para>
-      Sie können ein Skript schreiben, um ein Kommando an alle laufenden WeeChat-Instanzen zu senden,
-      zum Beispiel:
-<screen>
-#!/bin/sh
-if [ $# -eq 1 ]; then
-    for fifo in ~/.weechat/weechat_fifo_*
-    do
-        echo -e "$1" >$fifo
-    done
-fi
-</screen>
-      Wenn das Skript "auto_weechat_command" heisst, können sie es
-      folgendermassen aufrufen:
-      <screen><prompt>$ </prompt><userinput>./auto_weechat_command "freenode,#weechat *hello"</userinput></screen>
     </para>
     
   </section>
