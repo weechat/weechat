@@ -33,6 +33,7 @@ extern char *string_replace (char *string, char *search, char *replace);
 extern char *string_remove_quotes (char *string, char *quotes);
 extern char *string_strip (char *string, int left, int right, char *chars);
 extern char *string_convert_hex_chars (char *string);
+extern int string_has_highlight (char *string, char *highlight_words);
 extern char **string_explode (char *string, char *separators, int keep_eol,
                               int num_items_max, int *num_items);
 extern void string_free_exploded (char **exploded_string);

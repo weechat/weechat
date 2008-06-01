@@ -73,6 +73,8 @@ irc_debug_printf (struct t_irc_server *server, int send, int modified,
         
         weechat_buffer_set (irc_debug_buffer,
                             "title", _("IRC debug messages"));
+        /* disabled all highlights on this debug buffer */
+        weechat_buffer_set (irc_debug_buffer, "highlight_words", "-");
     }
     
     buf = weechat_iconv_to_internal (NULL, message);

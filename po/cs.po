@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-22 12:59+0200\n"
+"POT-Creation-Date: 2008-06-01 22:03+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -946,20 +946,27 @@ msgstr ""
 msgid "\t\tDay changed to %s"
 msgstr "Změnil se den na %s\n"
 
+msgid "command executed when WeeChat starts, after loading plugins"
+msgstr ""
+
+msgid "command executed when WeeChat starts, before loading plugins"
+msgstr ""
+
 msgid "display WeeChat logo at startup"
 msgstr "zobrazí WeeChat logo při spuštění"
 
 msgid "display WeeChat version at startup"
 msgstr "zobrazí verzi WeeChat při spuštění"
 
-msgid "command executed when WeeChat starts, before loading plugins"
-msgstr ""
-
-msgid "command executed when WeeChat starts, after loading plugins"
-msgstr ""
-
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "WeeChat slogan (pokud je prázdné, není slogan použit)"
+
+#, fuzzy
+msgid "time format for buffers"
+msgstr "časová známka pro buffer"
+
+msgid "number of colors to use for nicks colors"
+msgstr "počet barev použitých pro barvy přezdívek"
 
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
@@ -971,37 +978,87 @@ msgstr ""
 "byste toto nastavení zapnout, pro zobrazení skutečně bílé barvy místo "
 "výchozí barvy popředí terminálu)"
 
-#, fuzzy
-msgid "save configuration file on exit"
-msgstr "uložit soubor s nastavením při ukončení"
-
-msgid "set title for window (terminal for Curses GUI) with name and version"
-msgstr "nastaví titulek okna (terminálu pro Cruses GUI) s jménem a verzí"
-
-msgid "how many lines to scroll by with scroll_up and scroll_down"
-msgstr "o kolik řádů posunou pomocí scroll_up a scroll_down"
+msgid "display special message when day changes"
+msgstr "zobrazit speiální zprávy při změně dne"
 
 #, fuzzy
-msgid "time format for buffers"
-msgstr "časová známka pro buffer"
+msgid "time format for date displayed when day changed"
+msgstr "časová známka pro zobrazení dne při změně dne"
 
-msgid "number of colors to use for nicks colors"
-msgstr "počet barev použitých pro barvy přezdívek"
+msgid ""
+"comma separated list of words to highlight (case insensitive comparison, "
+"words may begin or end with \"*\" for partial match)"
+msgstr ""
+"čárkou oddělený seznam slov pro zvýraznění (neporovnává se velikost písmen, "
+"slova mohou začínat nebo končit \"*\" pro částečnou schodu)"
+
+msgid ""
+"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
+msgstr ""
+"maximální počet jmen v hotlistu (0 = žádné jméno není zobrazeno, pouze čísla "
+"bufferů)"
+
+msgid "max length of names in hotlist (0 = no limit)"
+msgstr "maximální délka jmen v hotlistu (0 = bez limitu)"
+
+msgid ""
+"level for displaying names in hotlist (combination of: 1=join/part, "
+"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
+msgstr ""
+"úroveň pro zobrazování jmen v hotlistu (kombinace: 1=připojení/odpojení "
+"2=zpráva, 4=soukromé, 8=zvýraznění, příklad: 12=soukromé+zvýraznění)"
+
+msgid ""
+"hotlist sort type (group_time_asc (default), group_time_desc, "
+"group_number_asc, group_number_desc, number_asc, number_desc)"
+msgstr ""
+"druh řazení hotlistu (group_time_asc [skupina_čas_vzestupně] (výchozí), "
+"group_time_desc [skupina_čas_sestupne], group_number_asc "
+"[skupina_číslo_vzestupně], group_number_desc [skupina_číslo_sestupně], "
+"number_asc [číslo_vzestupně], number_desc [číslo_sestupně] ) "
+
+msgid "enable info bar"
+msgstr "povolit info bar"
+
+msgid ""
+"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
+"notifications in infobar)"
+msgstr ""
+"podržet (v sekundách) zvýrazněnou zprávu v infobaru (0 = zakázat zvýrazněnou "
+"notifikaci v infobaru)"
+
+msgid "display seconds in infobar time"
+msgstr "zobrazit sekundy v čase v infobaru"
+
+#, fuzzy
+msgid "time format for time in infobar"
+msgstr "časová značka pro čas v infobaru"
+
+#, c-format
+msgid ""
+"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
+"and '%m' by nick modes)"
+msgstr ""
+"formát vstupního řádku ('%c' se přepíše na jeméno kanálu nebo serveru, '%n' "
+"se přepíše na přezdívku a '%m' na módy přezdívky"
+
+#, fuzzy
+msgid "time format for \"time\" bar item"
+msgstr "časová značka pro čas v infobaru"
+
+msgid "complete only with first nick found"
+msgstr "dokončit pouze s prvním nalezenou přezdívkou"
+
+msgid "chars ignored for nick completion"
+msgstr "znaky ignorovány pro doplňování přezdívky"
+
+#, fuzzy
+msgid "string inserted after nick completion"
+msgstr "řetězec vložený za doplňování přezdívky"
 
 #, fuzzy
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr "zobrazit okno se seznamem přezdívek (pouze pro okno kanálu)"
-
-msgid "nicklist position (top, left, right (default), bottom)"
-msgstr "pozice seznamu přezdívek (top, left, right (výchozí), bottom)"
-
-#, fuzzy
-msgid ""
-"min size for nicklist (width or height, depending on nicklist_position (0 = "
-"no min size))"
-msgstr ""
-"minimální velikost pro seznam přezdívek (šířka nebo výšhak, závisí na "
-"look_nicklist_position (0 = není minimální velikost))"
 
 #, fuzzy
 msgid ""
@@ -1012,6 +1069,17 @@ msgstr ""
 "look_nicklist_position (0 = není maximální velikost; jestliže min = max a > "
 "0 pak je velikost fixní ))"
 
+#, fuzzy
+msgid ""
+"min size for nicklist (width or height, depending on nicklist_position (0 = "
+"no min size))"
+msgstr ""
+"minimální velikost pro seznam přezdívek (šířka nebo výšhak, závisí na "
+"look_nicklist_position (0 = není minimální velikost))"
+
+msgid "nicklist position (top, left, right (default), bottom)"
+msgstr "pozice seznamu přezdívek (top, left, right (výchozí), bottom)"
+
 msgid "separator between chat and nicklist"
 msgstr "oddělovač mezi rozhovorem a seznamem přezdívek"
 
@@ -1020,6 +1088,12 @@ msgstr "zobrazit mód přezdívky ((částečný)op/voice) před každou přezd�
 
 msgid "display space if nick mode is not (half)op/voice"
 msgstr "zobrazit mezeru pokud mód přezdívkz není (částečný)op/voice"
+
+msgid ""
+"max number of lines for paste without asking user (0 = disable this feature)"
+msgstr ""
+"maximální počet řádků pro vložení bez dotazování uživatele (0 = vypnout tuto "
+"vlastnost)"
 
 #, fuzzy
 msgid "prefix for error messages"
@@ -1052,85 +1126,18 @@ msgid "string displayed after prefix"
 msgstr "řetězec vložený za doplňování přezdívky"
 
 #, fuzzy
-msgid "string inserted after nick completion"
-msgstr "řetězec vložený za doplňování přezdívky"
-
-msgid "chars ignored for nick completion"
-msgstr "znaky ignorovány pro doplňování přezdívky"
-
-msgid "complete only with first nick found"
-msgstr "dokončit pouze s prvním nalezenou přezdívkou"
-
-msgid "enable info bar"
-msgstr "povolit info bar"
-
-#, fuzzy
-msgid "time format for time in infobar"
-msgstr "časová značka pro čas v infobaru"
-
-msgid "display seconds in infobar time"
-msgstr "zobrazit sekundy v čase v infobaru"
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-"podržet (v sekundách) zvýrazněnou zprávu v infobaru (0 = zakázat zvýrazněnou "
-"notifikaci v infobaru)"
-
-#, fuzzy
-msgid "time format for \"time\" bar item"
-msgstr "časová značka pro čas v infobaru"
-
-msgid ""
-"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
-msgstr ""
-"maximální počet jmen v hotlistu (0 = žádné jméno není zobrazeno, pouze čísla "
-"bufferů)"
-
-msgid ""
-"level for displaying names in hotlist (combination of: 1=join/part, "
-"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
-msgstr ""
-"úroveň pro zobrazování jmen v hotlistu (kombinace: 1=připojení/odpojení "
-"2=zpráva, 4=soukromé, 8=zvýraznění, příklad: 12=soukromé+zvýraznění)"
-
-msgid "max length of names in hotlist (0 = no limit)"
-msgstr "maximální délka jmen v hotlistu (0 = bez limitu)"
-
-msgid ""
-"hotlist sort type (group_time_asc (default), group_time_desc, "
-"group_number_asc, group_number_desc, number_asc, number_desc)"
-msgstr ""
-"druh řazení hotlistu (group_time_asc [skupina_čas_vzestupně] (výchozí), "
-"group_time_desc [skupina_čas_sestupne], group_number_asc "
-"[skupina_číslo_vzestupně], group_number_desc [skupina_číslo_sestupně], "
-"number_asc [číslo_vzestupně], number_desc [číslo_sestupně] ) "
-
-msgid "display special message when day changes"
-msgstr "zobrazit speiální zprávy při změně dne"
-
-#, fuzzy
-msgid "time format for date displayed when day changed"
-msgstr "časová známka pro zobrazení dne při změně dne"
-
-#, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr "použít značku na serveru/kanále pro zobrazení první nepřečtené řádky"
 
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
-msgstr ""
-"formát vstupního řádku ('%c' se přepíše na jeméno kanálu nebo serveru, '%n' "
-"se přepíše na přezdívku a '%m' na módy přezdívky"
+#, fuzzy
+msgid "save configuration file on exit"
+msgstr "uložit soubor s nastavením při ukončení"
 
-msgid ""
-"max number of lines for paste without asking user (0 = disable this feature)"
-msgstr ""
-"maximální počet řádků pro vložení bez dotazování uživatele (0 = vypnout tuto "
-"vlastnost)"
+msgid "how many lines to scroll by with scroll_up and scroll_down"
+msgstr "o kolik řádů posunou pomocí scroll_up a scroll_down"
+
+msgid "set title for window (terminal for Curses GUI) with name and version"
+msgstr "nastaví titulek okna (terminálu pro Cruses GUI) s jménem a verzí"
 
 #, fuzzy
 msgid "background color for window separators (when splited)"
@@ -1265,8 +1272,12 @@ msgid "text color for delimiters"
 msgstr "barva děličů v infobaru"
 
 #, fuzzy
-msgid "text color for highlighted nick"
+msgid "text color for highlighted prefix"
 msgstr "barva pro zvýraznění přezdívky"
+
+#, fuzzy
+msgid "background color for highlighted prefix"
+msgstr "pozadí pro title bar"
 
 #, fuzzy
 msgid "text color for unread data marker"
@@ -3052,18 +3063,16 @@ msgstr "chytré doplňování přezdívek (doplňovat posledně mluvící jako p
 msgid "display message when (un)marking as away"
 msgstr "zobrazit zprávu, když označen/odznačen jako nepřítomen"
 
+msgid ""
+"comma separated list of tags for messages that may produce highlight "
+"(usually any message from another user, not server messages,..)"
+msgstr ""
+
 msgid "show remote away message only once in private"
 msgstr "zobrazit vzdálený zprávu o nepřítomnosti pouze jednou v soukromém okně"
 
 msgid "display notices as private messages"
 msgstr "zobrazit upozornění jako soukromé zprávy"
-
-msgid ""
-"comma separated list of words to highlight (case insensitive comparison, "
-"words may begin or end with \"*\" for partial match)"
-msgstr ""
-"čárkou oddělený seznam slov pro zvýraznění (neporovnává se velikost písmen, "
-"slova mohou začínat nebo končit \"*\" pro částečnou schodu)"
 
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
@@ -3231,10 +3240,6 @@ msgstr "CTCP %sVERSION%s odpověď od %s%s%s: %s\n"
 msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
 msgstr "CTCP %sPING%s odpověď od %s%s%s: %ld.%ld sekund\n"
 
-#, c-format
-msgid "Private %s> %s"
-msgstr "Soukromý %s> %s"
-
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s opustil %s%s"
@@ -3251,10 +3256,6 @@ msgstr "CTCP %sVERSION%s obdržen od %s%s"
 msgid "%sCTCP %sVERSION%s received from %s%s"
 msgstr "CTCP %sVERSION%s obdržen od %s%s"
 
-#, c-format
-msgid "Channel %s: * %s %s"
-msgstr "Kanál %s: %s %s"
-
 #, fuzzy, c-format
 msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
 msgstr "Obdržen CTCP %sZVUK%s \"%s\" od %s%s\n"
@@ -3270,10 +3271,6 @@ msgstr "Neznámý CTCP %s%s%s obdržen od %s%s"
 #, fuzzy, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s"
 msgstr "Neznámý CTCP %s%s%s obdržen od %s%s"
-
-#, c-format
-msgid "Channel %s: %s> %s"
-msgstr "Kanál %s: %s> %s"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot parse \"%s\" command"
@@ -4569,6 +4566,19 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #, fuzzy
+#~ msgid "words to highlight in buffers"
+#~ msgstr "přesunout na další zvýraznění v bufferu"
+
+#~ msgid "Private %s> %s"
+#~ msgstr "Soukromý %s> %s"
+
+#~ msgid "Channel %s: * %s %s"
+#~ msgstr "Kanál %s: %s %s"
+
+#~ msgid "Channel %s: %s> %s"
+#~ msgstr "Kanál %s: %s> %s"
+
+#, fuzzy
 #~ msgid "%sError: command \"%s\" is running"
 #~ msgstr "%s příkaz \"%s\" selhal\n"
 
@@ -4827,9 +4837,6 @@ msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #~ msgid "scroll to previous highlight in buffer"
 #~ msgstr "přesunout na předchozí zvýraznění v bufferu"
-
-#~ msgid "scroll to next highlight in buffer"
-#~ msgstr "přesunout na další zvýraznění v bufferu"
 
 #~ msgid "refresh screen"
 #~ msgstr "obnov obrazovku"

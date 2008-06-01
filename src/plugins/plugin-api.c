@@ -526,6 +526,8 @@ plugin_api_infolist_get_add_buffer_line (struct t_plugin_infolist *infolist,
                                          struct t_gui_line *line)
 {
     struct t_plugin_infolist_item *ptr_item;
+    int i;
+    char option_name[64];
     
     if (!infolist || !line)
         return 0;
@@ -539,6 +541,19 @@ plugin_api_infolist_get_add_buffer_line (struct t_plugin_infolist *infolist,
     if (!plugin_infolist_new_var_time (ptr_item, "date_printed", line->date))
         return 0;
     if (!plugin_infolist_new_var_string (ptr_item, "str_time", line->str_time))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "tags_count", line->tags_count))
+        return 0;
+    for (i = 0; i < line->tags_count; i++)
+    {
+        snprintf (option_name, sizeof (option_name), "tag_%05d", i + 1);
+        if (!plugin_infolist_new_var_string (ptr_item, option_name,
+                                             line->tags_array[i]))
+            return 0;
+    }
+    if (!plugin_infolist_new_var_integer (ptr_item, "displayed", line->displayed))
+        return 0;
+    if (!plugin_infolist_new_var_integer (ptr_item, "highlight", line->highlight))
         return 0;
     if (!plugin_infolist_new_var_string (ptr_item, "prefix", line->prefix))
         return 0;

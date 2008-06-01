@@ -164,6 +164,11 @@ gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
         new_buffer->text_search_found = 0;
         new_buffer->text_search_input = NULL;
         
+        /* highlight */
+        new_buffer->highlight_words = NULL;
+        new_buffer->highlight_tags_count = 0;
+        new_buffer->highlight_tags_array = NULL;
+        
         /* keys */
         new_buffer->keys = NULL;
         new_buffer->last_key = NULL;
@@ -427,6 +432,44 @@ gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick)
 }
 
 /*
+ * gui_buffer_set_highlight_words: set highlight words for a buffer
+ */
+
+void
+gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
+                                char *new_highlight_words)
+{
+    if (buffer->highlight_words)
+        free (buffer->highlight_words);
+    buffer->highlight_words = (new_highlight_words && new_highlight_words[0]) ?
+        strdup (new_highlight_words) : NULL;
+}
+
+/*
+ * gui_buffer_set_highlight_tags: set highlight tags for a buffer
+ */
+
+void
+gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
+                               char *new_highlight_tags)
+{
+    if (buffer->highlight_tags_array)
+        string_free_exploded (buffer->highlight_tags_array);
+    
+    if (new_highlight_tags)
+    {
+        buffer->highlight_tags_array = string_explode (new_highlight_tags,
+                                                       ",", 0, 0,
+                                                       &buffer->highlight_tags_count);
+    }
+    else
+    {
+        buffer->highlight_tags_count = 0;
+        buffer->highlight_tags_array = NULL;
+    }
+}
+
+/*
  * gui_buffer_set: set a buffer property
  */
 
@@ -501,6 +544,14 @@ gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
             if (error && !error[0])
                 gui_hotlist_add (buffer, number, NULL, 1);
         }
+    }
+    else if (string_strcasecmp (property, "highlight_words") == 0)
+    {
+        gui_buffer_set_highlight_words (buffer, value);
+    }
+    else if (string_strcasecmp (property, "highlight_tags") == 0)
+    {
+        gui_buffer_set_highlight_tags (buffer, value);
     }
     else if (string_strncasecmp (property, "key_bind_", 9) == 0)
     {
@@ -805,6 +856,10 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     if (buffer->text_search_input)
         free (buffer->text_search_input);
     gui_nicklist_remove_all (buffer);
+    if (buffer->highlight_words)
+        free (buffer->highlight_words);
+    if (buffer->highlight_tags_array)
+        string_free_exploded (buffer->highlight_tags_array);
     gui_keyboard_free_all (&buffer->keys, &buffer->last_key);
     
     /* remove buffer from buffers list */
@@ -1126,6 +1181,9 @@ gui_buffer_print_log ()
         log_printf ("  text_search_exact. . . : %d",   ptr_buffer->text_search_exact);
         log_printf ("  text_search_found. . . : %d",   ptr_buffer->text_search_found);
         log_printf ("  text_search_input. . . : '%s'", ptr_buffer->text_search_input);
+        log_printf ("  highlight_words. . . . : '%s'", ptr_buffer->highlight_words);
+        log_printf ("  highlight_tags_count . : %d",   ptr_buffer->highlight_tags_count);
+        log_printf ("  highlight_tags_array . : 0x%x", ptr_buffer->highlight_tags_array);
         log_printf ("  prev_buffer. . . . . . : 0x%x", ptr_buffer->prev_buffer);
         log_printf ("  next_buffer. . . . . . : 0x%x", ptr_buffer->next_buffer);
 
@@ -1160,10 +1218,11 @@ gui_buffer_print_log ()
             num--;
             tags = string_build_with_exploded (ptr_line->tags_array, ",");
             log_printf ("       line N-%05d: y:%d, str_time:'%s', tags:'%s', "
-                        "displayed:%d, refresh_needed:%d, prefix:'%s'",
+                        "displayed:%d, highlight:%d, refresh_needed:%d, prefix:'%s'",
                         num, ptr_line->y, ptr_line->str_time,
                         (tags) ? tags  : "",
                         (int)(ptr_line->displayed),
+                        (int) (ptr_line->highlight),
                         (int)(ptr_line->refresh_needed),
                         ptr_line->prefix);
             log_printf ("                     data: '%s'",

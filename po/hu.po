@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-22 12:59+0200\n"
+"POT-Creation-Date: 2008-06-01 22:03+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -953,20 +953,27 @@ msgstr ""
 msgid "\t\tDay changed to %s"
 msgstr "A mai dátum: %s\n"
 
+msgid "command executed when WeeChat starts, after loading plugins"
+msgstr ""
+
+msgid "command executed when WeeChat starts, before loading plugins"
+msgstr ""
+
 msgid "display WeeChat logo at startup"
 msgstr "WeeChat logo mutatása induláskor"
 
 msgid "display WeeChat version at startup"
 msgstr "WeeChat verziójának mutatása induláskor"
 
-msgid "command executed when WeeChat starts, before loading plugins"
-msgstr ""
-
-msgid "command executed when WeeChat starts, after loading plugins"
-msgstr ""
-
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "WeeChat szlogen (ha üres, akkor nem használja a program)"
+
+#, fuzzy
+msgid "time format for buffers"
+msgstr "a pufferek időbélyege"
+
+msgid "number of colors to use for nicks colors"
+msgstr "nevek színezéséhez használt színek száma"
 
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
@@ -978,39 +985,79 @@ msgstr ""
 "hátteret, akkor bekapcsolhatja, hogy valódi fehéret kapjon a terminálban "
 "használt betűszín helyett)"
 
-#, fuzzy
-msgid "save configuration file on exit"
-msgstr "beállítások mentése kilépéskor"
+msgid "display special message when day changes"
+msgstr "speciális üzenet az aktuális nap megváltozásakor"
 
-msgid "set title for window (terminal for Curses GUI) with name and version"
+#, fuzzy
+msgid "time format for date displayed when day changed"
+msgstr "új nap kezdetével megjelenő időbélyeg"
+
+msgid ""
+"comma separated list of words to highlight (case insensitive comparison, "
+"words may begin or end with \"*\" for partial match)"
 msgstr ""
-"ablak címsorának beállítása (Curses GUI esetén a terminálé) a program nevére "
-"és verziójára"
+"kiemelendő szavak vesszővel elválasztott listája (kis/nagybetűtől független "
+"összehasonlítás, a szavak végére/elejére \"*\"-ot illesztve részleges keresés"
 
-msgid "how many lines to scroll by with scroll_up and scroll_down"
-msgstr "a scroll_up és scroll_down hány sort görgessen"
+msgid ""
+"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
+msgstr ""
+
+msgid "max length of names in hotlist (0 = no limit)"
+msgstr ""
+
+msgid ""
+"level for displaying names in hotlist (combination of: 1=join/part, "
+"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
+msgstr ""
+
+msgid ""
+"hotlist sort type (group_time_asc (default), group_time_desc, "
+"group_number_asc, group_number_desc, number_asc, number_desc)"
+msgstr ""
+
+msgid "enable info bar"
+msgstr "információs pult engedélyezése"
+
+msgid ""
+"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
+"notifications in infobar)"
+msgstr ""
+"kihagyás (másodpercben) az üzenetek kiemelésére az információs pulton (0 = "
+"kiemelt üzenetek tiltása az információs pulton)"
+
+msgid "display seconds in infobar time"
+msgstr "másodpercek mutatása az információs pulton"
 
 #, fuzzy
-msgid "time format for buffers"
-msgstr "a pufferek időbélyege"
+msgid "time format for time in infobar"
+msgstr "időbélyeg a információs pult idejéhez"
 
-msgid "number of colors to use for nicks colors"
-msgstr "nevek színezéséhez használt színek száma"
+#, c-format
+msgid ""
+"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
+"and '%m' by nick modes)"
+msgstr ""
+"beviteli mező kinézete ('%c' helyére a szoba vagy a szerver, '%n' helyére a "
+"név és '%m' helyére a mód kerül)"
+
+#, fuzzy
+msgid "time format for \"time\" bar item"
+msgstr "időbélyeg a információs pult idejéhez"
+
+msgid "complete only with first nick found"
+msgstr "kiegészítés az első adandó névvel"
+
+msgid "chars ignored for nick completion"
+msgstr "névkiegészítéskor mellőzött karakterek"
+
+#, fuzzy
+msgid "string inserted after nick completion"
+msgstr "névkiegészítés után beszúrt szöveg"
 
 #, fuzzy
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr "névlista ablak mutatása (szobaablakban)"
-
-msgid "nicklist position (top, left, right (default), bottom)"
-msgstr "névlista helye (top, left, right (alapértelmezett), bottom)"
-
-#, fuzzy
-msgid ""
-"min size for nicklist (width or height, depending on nicklist_position (0 = "
-"no min size))"
-msgstr ""
-"névlista minimális mérete (szélesség vagy magasság a look_nicklist_position "
-"opciónak megfelelően (0 = nincs minimális érték))"
 
 #, fuzzy
 msgid ""
@@ -1021,6 +1068,17 @@ msgstr ""
 "opciónak megfelelően (0 = nincs maximális érték; ha min = max és > 0, akkor "
 "a méret fix))"
 
+#, fuzzy
+msgid ""
+"min size for nicklist (width or height, depending on nicklist_position (0 = "
+"no min size))"
+msgstr ""
+"névlista minimális mérete (szélesség vagy magasság a look_nicklist_position "
+"opciónak megfelelően (0 = nincs minimális érték))"
+
+msgid "nicklist position (top, left, right (default), bottom)"
+msgstr "névlista helye (top, left, right (alapértelmezett), bottom)"
+
 msgid "separator between chat and nicklist"
 msgstr "a névlista és a beszélgetőablak közti elválasztó"
 
@@ -1029,6 +1087,12 @@ msgstr "a felhasználó módjának ((fél)operátor/voice) mutatása a név elő
 
 msgid "display space if nick mode is not (half)op/voice"
 msgstr "szóköz megjelenítése, ha a mód nem (fél)operátor/voice"
+
+msgid ""
+"max number of lines for paste without asking user (0 = disable this feature)"
+msgstr ""
+"maximálisan beilleszthető sorok száma a felhasználó megkérdezése nélkül (0 = "
+"szolgáltatás kikapcsolása)"
 
 #, fuzzy
 msgid "prefix for error messages"
@@ -1061,77 +1125,20 @@ msgid "string displayed after prefix"
 msgstr "névkiegészítés után beszúrt szöveg"
 
 #, fuzzy
-msgid "string inserted after nick completion"
-msgstr "névkiegészítés után beszúrt szöveg"
-
-msgid "chars ignored for nick completion"
-msgstr "névkiegészítéskor mellőzött karakterek"
-
-msgid "complete only with first nick found"
-msgstr "kiegészítés az első adandó névvel"
-
-msgid "enable info bar"
-msgstr "információs pult engedélyezése"
-
-#, fuzzy
-msgid "time format for time in infobar"
-msgstr "időbélyeg a információs pult idejéhez"
-
-msgid "display seconds in infobar time"
-msgstr "másodpercek mutatása az információs pulton"
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-"kihagyás (másodpercben) az üzenetek kiemelésére az információs pulton (0 = "
-"kiemelt üzenetek tiltása az információs pulton)"
-
-#, fuzzy
-msgid "time format for \"time\" bar item"
-msgstr "időbélyeg a információs pult idejéhez"
-
-msgid ""
-"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
-msgstr ""
-
-msgid ""
-"level for displaying names in hotlist (combination of: 1=join/part, "
-"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
-msgstr ""
-
-msgid "max length of names in hotlist (0 = no limit)"
-msgstr ""
-
-msgid ""
-"hotlist sort type (group_time_asc (default), group_time_desc, "
-"group_number_asc, group_number_desc, number_asc, number_desc)"
-msgstr ""
-
-msgid "display special message when day changes"
-msgstr "speciális üzenet az aktuális nap megváltozásakor"
-
-#, fuzzy
-msgid "time format for date displayed when day changed"
-msgstr "új nap kezdetével megjelenő időbélyeg"
-
-#, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr "jelölje a szerveren/szobában utoljára olvasott sort"
 
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
-msgstr ""
-"beviteli mező kinézete ('%c' helyére a szoba vagy a szerver, '%n' helyére a "
-"név és '%m' helyére a mód kerül)"
+#, fuzzy
+msgid "save configuration file on exit"
+msgstr "beállítások mentése kilépéskor"
 
-msgid ""
-"max number of lines for paste without asking user (0 = disable this feature)"
+msgid "how many lines to scroll by with scroll_up and scroll_down"
+msgstr "a scroll_up és scroll_down hány sort görgessen"
+
+msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
-"maximálisan beilleszthető sorok száma a felhasználó megkérdezése nélkül (0 = "
-"szolgáltatás kikapcsolása)"
+"ablak címsorának beállítása (Curses GUI esetén a terminálé) a program nevére "
+"és verziójára"
 
 #, fuzzy
 msgid "background color for window separators (when splited)"
@@ -1266,8 +1273,12 @@ msgid "text color for delimiters"
 msgstr "információs pult határolóinak színe"
 
 #, fuzzy
-msgid "text color for highlighted nick"
+msgid "text color for highlighted prefix"
 msgstr "kiemelt név színe"
+
+#, fuzzy
+msgid "background color for highlighted prefix"
+msgstr "címsor háttere"
 
 #, fuzzy
 msgid "text color for unread data marker"
@@ -3059,18 +3070,16 @@ msgstr "okos névkiegészítés (először az utolsó partnerre egészít ki)"
 msgid "display message when (un)marking as away"
 msgstr "üzenet mutatása távollétkor/visszatéréskor"
 
+msgid ""
+"comma separated list of tags for messages that may produce highlight "
+"(usually any message from another user, not server messages,..)"
+msgstr ""
+
 msgid "show remote away message only once in private"
 msgstr "privát beszélgetésben a másik fél távollétét csak egyszer jelezze"
 
 msgid "display notices as private messages"
 msgstr "figyelmeztetések privát üzenetként való mutatása"
-
-msgid ""
-"comma separated list of words to highlight (case insensitive comparison, "
-"words may begin or end with \"*\" for partial match)"
-msgstr ""
-"kiemelendő szavak vesszővel elválasztott listája (kis/nagybetűtől független "
-"összehasonlítás, a szavak végére/elejére \"*\"-ot illesztve részleges keresés"
 
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
@@ -3232,10 +3241,6 @@ msgstr "CTCP %sVERSION%s válasz %s%s%s felhasználótól: %s\n"
 msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
 msgstr "CTCP %sPING%s válasz %s%s%s felhasználótól: %ld.%ld másodperc\n"
 
-#, c-format
-msgid "Private %s> %s"
-msgstr "Privát %s> %s"
-
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s elhagyta a(z) %s%s szobát"
@@ -3252,10 +3257,6 @@ msgstr "CTCP %sVERSION%s válasz innen: %s%s"
 msgid "%sCTCP %sVERSION%s received from %s%s"
 msgstr "CTCP %sVERSION%s válasz innen: %s%s"
 
-#, c-format
-msgid "Channel %s: * %s %s"
-msgstr "%s szoba: * %s %s"
-
 #, fuzzy, c-format
 msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
 msgstr "CTCP %sSOUND%s (\"%s\") érkezett innen: %s%s\n"
@@ -3271,10 +3272,6 @@ msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
 #, fuzzy, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s"
 msgstr "Ismeretlen CTCP %s%s%s érkezett innen: %s%s"
-
-#, c-format
-msgid "Channel %s: %s> %s"
-msgstr "%s szoba: %s> %s"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot parse \"%s\" command"
@@ -4573,6 +4570,19 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, fuzzy
+#~ msgid "words to highlight in buffers"
+#~ msgstr "ugrás a következő kiemelésre a pufferben"
+
+#~ msgid "Private %s> %s"
+#~ msgstr "Privát %s> %s"
+
+#~ msgid "Channel %s: * %s %s"
+#~ msgstr "%s szoba: * %s %s"
+
+#~ msgid "Channel %s: %s> %s"
+#~ msgstr "%s szoba: %s> %s"
+
+#, fuzzy
 #~ msgid "%sError: command \"%s\" is running"
 #~ msgstr "%s a \"%s\" parancs végrehajtása sikertelen\n"
 
@@ -4832,9 +4842,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #~ msgid "scroll to previous highlight in buffer"
 #~ msgstr "ugrás az előző kiemelésre a pufferben"
-
-#~ msgid "scroll to next highlight in buffer"
-#~ msgstr "ugrás a következő kiemelésre a pufferben"
 
 #~ msgid "refresh screen"
 #~ msgstr "képernyő frissítése"

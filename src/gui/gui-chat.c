@@ -558,6 +558,50 @@ gui_chat_line_match_tags (struct t_gui_line *line, int tags_count,
 }
 
 /*
+ * gui_chat_line_has_highlight: return 1 if given message contains highlight (with
+ *                              a string in global highlight or buffer highlight)
+ */
+
+int
+gui_chat_line_has_highlight (struct t_gui_buffer *buffer,
+                             struct t_gui_line *line)
+{
+    int rc;
+    char *msg_no_color;
+
+    /* highlights are disabled on this buffer? (special value "-" means that
+       buffer does not want any highlight) */
+    if (buffer->highlight_words && (strcmp (buffer->highlight_words, "-") == 0))
+        return 0;
+
+    /* check that line matches highlight tags, if any (if no tag is specified,
+       then any tag is allowed) */
+    if (buffer->highlight_tags_count > 0)
+    {
+        if (!gui_chat_line_match_tags (line,
+                                       buffer->highlight_tags_count,
+                                       buffer->highlight_tags_array))
+            return 0;
+    }
+    
+    /* remove color codes from line message */
+    msg_no_color = (char *)gui_color_decode ((unsigned char *)line->message);
+    if (!msg_no_color)
+        return 0;
+    
+    /* there is highlight on line if one of global highlight words matches line
+       or one of buffer highlight words matches line */
+    rc = (string_has_highlight (msg_no_color,
+                                CONFIG_STRING(config_look_highlight)) ||
+          string_has_highlight (msg_no_color,
+                                buffer->highlight_words));
+    
+    free (msg_no_color);
+    
+    return rc;
+}
+
+/*
  * gui_chat_line_free: delete a formated line from a buffer
  */
 
@@ -662,6 +706,9 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
     if (new_line->prefix_length > buffer->prefix_max_length)
         buffer->prefix_max_length = new_line->prefix_length;
     new_line->message = (message) ? strdup (message) : strdup ("");
+    new_line->highlight = gui_chat_line_has_highlight (buffer, new_line);
+    if (new_line->highlight)
+        gui_hotlist_add (buffer, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
     
     /* add line to lines list */
     if (!buffer->lines)

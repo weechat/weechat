@@ -24,17 +24,10 @@
 #define __USE_XOPEN
 #endif
 
-#if defined(__OpenBSD__)
-#include <utf8/wchar.h>
-#else
-#include <wchar.h>
-#endif
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include <wctype.h>
 #include <sys/time.h>
 #include <time.h>
 
@@ -174,208 +167,12 @@ irc_protocol_replace_vars (struct t_irc_server *server,
 }
 
 /*
- * irc_protocol_get_wide_char: get wide char from string (first char)
- */
-
-wint_t
-irc_protocol_get_wide_char (char *string)
-{
-    int char_size;
-    wint_t result;
-    
-    if (!string || !string[0])
-        return WEOF;
-    
-    char_size = weechat_utf8_char_size (string);
-    switch (char_size)
-    {
-        case 1:
-            result = (wint_t)string[0];
-            break;
-        case 2:
-            result = ((wint_t)((unsigned char)string[0])) << 8
-                |  ((wint_t)((unsigned char)string[1]));
-            break;
-        case 3:
-            result = ((wint_t)((unsigned char)string[0])) << 16
-                |  ((wint_t)((unsigned char)string[1])) << 8
-                |  ((wint_t)((unsigned char)string[2]));
-            break;
-        case 4:
-            result = ((wint_t)((unsigned char)string[0])) << 24
-                |  ((wint_t)((unsigned char)string[1])) << 16
-                |  ((wint_t)((unsigned char)string[2])) << 8
-                |  ((wint_t)((unsigned char)string[3]));
-            break;
-        default:
-            result = WEOF;
-    }
-    return result;
-}
-
-/*
- * irc_protocol_is_word_char: return 1 if given character is a "word character"
- */
-
-int
-irc_protocol_is_word_char (char *str)
-{
-    wint_t c = irc_protocol_get_wide_char (str);
-
-    if (c == WEOF)
-        return 0;
-    
-    if (iswalnum (c))
-        return 1;
-    
-    switch (c)
-    {
-        case '-':
-        case '_':
-        case '|':
-            return 1;
-    }
-    
-    /* not a 'word char' */
-    return 0;
-}
-
-/*
- * irc_protocol_is_highlight: return 1 if given message contains highlight (with given nick
- *                            or at least one of string in "irc_higlight" setting)
- */
-
-int
-irc_protocol_is_highlight (char *message, char *nick)
-{
-    char *msg, *highlight, *match, *match_pre, *match_post, *msg_pos, *pos, *pos_end;
-    int end, length, startswith, endswith, wildcard_start, wildcard_end;
-    
-    /* empty message ? */
-    if (!message || !message[0])
-        return 0;
-    
-    /* highlight by nickname */
-    match = strstr (message, nick);
-    if (match)
-    {
-        match_pre = weechat_utf8_prev_char (message, match);
-        if (!match_pre)
-            match_pre = match - 1;
-        match_post = match + strlen(nick);
-        startswith = ((match == message) || (!irc_protocol_is_word_char (match_pre)));
-        endswith = ((!match_post[0]) || (!irc_protocol_is_word_char (match_post)));
-        if (startswith && endswith)
-            return 1;
-    }
-    
-    /* no highlight by nickname and "irc_highlight" is empty */
-    if (!weechat_config_string (irc_config_look_highlight)
-        || !weechat_config_string (irc_config_look_highlight)[0])
-        return 0;
-    
-    /* convert both strings to lower case */
-    if ((msg = strdup (message)) == NULL)
-        return 0;
-    highlight = strdup (weechat_config_string (irc_config_look_highlight));
-    if (!highlight)
-    {
-        free (msg);
-        return 0;
-    }
-    pos = msg;
-    while (pos[0])
-    {
-        pos[0] = tolower (pos[0]);
-        pos++;
-    }
-    pos = highlight;
-    while (pos[0])
-    {
-        pos[0] = tolower (pos[0]);
-        pos++;
-    }
-    
-    /* look in "irc_highlight" for highlight */
-    pos = highlight;
-    end = 0;
-    while (!end)
-    {
-        pos_end = strchr (pos, ',');
-        if (!pos_end)
-        {
-            pos_end = strchr (pos, '\0');
-            end = 1;
-        }
-        /* error parsing string! */
-        if (!pos_end)
-        {
-            free (msg);
-            free (highlight);
-            return 0;
-        }
-        
-        length = pos_end - pos;
-        pos_end[0] = '\0';
-        if (length > 0)
-        {
-            if ((wildcard_start = (pos[0] == '*')))
-            {
-                pos++;
-                length--;
-            }
-            if ((wildcard_end = (*(pos_end - 1) == '*')))
-            {
-                *(pos_end - 1) = '\0';
-                length--;
-            }
-        }
-            
-        if (length > 0)
-        {
-            msg_pos = msg;
-            /* highlight found! */
-            while ((match = strstr (msg_pos, pos)) != NULL)
-            {
-                match_pre = match - 1;
-                match_pre = weechat_utf8_prev_char (msg, match);
-                if (!match_pre)
-                    match_pre = match - 1;
-                match_post = match + length;
-                startswith = ((match == msg) || (!irc_protocol_is_word_char (match_pre)));
-                endswith = ((!match_post[0]) || (!irc_protocol_is_word_char (match_post)));
-                if ((wildcard_start && wildcard_end) ||
-                    (!wildcard_start && !wildcard_end && 
-                     startswith && endswith) ||
-                    (wildcard_start && endswith) ||
-                    (wildcard_end && startswith))
-                {
-                    free (msg);
-                    free (highlight);
-                    return 1;
-                }
-                msg_pos = match_post;
-            }
-        }
-        
-        if (!end)
-            pos = pos_end + 1;
-    }
-    
-    /* no highlight found with "irc_highlight" list */
-    free (msg);
-    free (highlight);
-    return 0;
-}
-
-/*
  * irc_protocol_cmd_error: error received from server
  */
 
 int
 irc_protocol_cmd_error (struct t_irc_server *server, char *command,
-                        int argc, char **argv, char **argv_eol,
-                        int highlight)
+                        int argc, char **argv, char **argv_eol)
 {
     int first_arg;
     char *chan_nick, *args;
@@ -384,7 +181,6 @@ irc_protocol_cmd_error (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argc;
-    (void) highlight;
     
     first_arg = (strcmp (argv[2], server->nick) == 0) ? 3 : 2;
     
@@ -421,8 +217,7 @@ irc_protocol_cmd_error (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_invite (struct t_irc_server *server, char *command,
-                         int argc, char **argv, char **argv_eol,
-                         int highlight)
+                         int argc, char **argv, char **argv_eol)
 {
     /* INVITE message looks like:
        :nick!user@host INVITE mynick :#channel
@@ -433,7 +228,6 @@ irc_protocol_cmd_invite (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv_eol;
-    (void) highlight;
     
     weechat_printf_tags (server->buffer,
                          "irc_invite",
@@ -458,8 +252,7 @@ irc_protocol_cmd_invite (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_join (struct t_irc_server *server, char *command,
-                       int argc, char **argv, char **argv_eol,
-                       int highlight)
+                       int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
@@ -474,7 +267,6 @@ irc_protocol_cmd_join (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv_eol;
-    (void) highlight;
     
     pos_channel = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
     
@@ -534,8 +326,7 @@ irc_protocol_cmd_join (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_kick (struct t_irc_server *server, char *command,
-                       int argc, char **argv, char **argv_eol,
-                       int highlight)
+                       int argc, char **argv, char **argv_eol)
 {
     char *pos_comment;
     struct t_irc_channel *ptr_channel;
@@ -547,9 +338,6 @@ irc_protocol_cmd_kick (struct t_irc_server *server, char *command,
     
     IRC_PROTOCOL_MIN_ARGS(4);
     IRC_PROTOCOL_CHECK_HOST;
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     pos_comment = (argc > 4) ?
         ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
@@ -627,8 +415,7 @@ irc_protocol_cmd_kick (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_kill (struct t_irc_server *server, char *command,
-                       int argc, char **argv, char **argv_eol,
-                       int highlight)
+                       int argc, char **argv, char **argv_eol)
 {
     char *pos_comment;
     struct t_irc_channel *ptr_channel;
@@ -640,9 +427,6 @@ irc_protocol_cmd_kill (struct t_irc_server *server, char *command,
     
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     pos_comment = (argc > 3) ?
         ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
@@ -698,8 +482,7 @@ irc_protocol_cmd_kill (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_mode (struct t_irc_server *server, char *command,
-                       int argc, char **argv, char **argv_eol,
-                       int highlight)
+                       int argc, char **argv, char **argv_eol)
 {
     char *pos_modes;
     struct t_irc_channel *ptr_channel;
@@ -710,9 +493,6 @@ irc_protocol_cmd_mode (struct t_irc_server *server, char *command,
     
     IRC_PROTOCOL_MIN_ARGS(4);
     IRC_PROTOCOL_CHECK_HOST;
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     pos_modes = (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3];
     
@@ -764,8 +544,7 @@ irc_protocol_cmd_mode (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_nick (struct t_irc_server *server, char *command,
-                       int argc, char **argv, char **argv_eol,
-                       int highlight)
+                       int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
@@ -781,7 +560,6 @@ irc_protocol_cmd_nick (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv_eol;
-    (void) highlight;
     
     old_nick = irc_protocol_get_nick_from_host (argv[0]);
     new_nick = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
@@ -855,14 +633,12 @@ irc_protocol_cmd_nick (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_notice (struct t_irc_server *server, char *command,
-                         int argc, char **argv, char **argv_eol,
-                         int highlight)
+                         int argc, char **argv, char **argv_eol)
 {
     char *nick, *host, *pos_args, *pos_end, *pos_usec;
     struct timeval tv;
     long sec1, usec1, sec2, usec2, difftime;
     struct t_irc_channel *ptr_channel;
-    int highlight_displayed, look_infobar_delay_highlight;
     
     /* NOTICE message looks like:
        NOTICE AUTH :*** Looking up your hostname...
@@ -883,9 +659,6 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *command,
         host = NULL;
         pos_args = (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2];
     }
-    
-    look_infobar_delay_highlight = weechat_config_integer (
-        weechat_config_get ("weechat.look.infobar_delay_highlight"));
     
     if (nick && strncmp (pos_args, "\01VERSION", 8) == 0)
     {
@@ -979,44 +752,13 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *command,
                     weechat_buffer_set (ptr_channel->buffer,
                                         "title", ptr_channel->topic);
                 }
-                    
-                if (highlight
-                    || irc_protocol_is_highlight (pos_args, server->nick))
-                {
-                    weechat_printf_tags (ptr_channel->buffer,
-                                         "irc_notice",
-                                         "%s%s",
-                                         irc_nick_as_prefix (NULL, nick,
-                                                             IRC_COLOR_CHAT_HIGHLIGHT),
-                                         pos_args);
-                    if ((look_infobar_delay_highlight > 0)
-                        && (ptr_channel->buffer != weechat_current_buffer))
-                    {
-                        weechat_infobar_printf (look_infobar_delay_highlight,
-                                                IRC_COLOR_INFOBAR_HIGHLIGHT,
-                                                _("Private %s> %s"),
-                                                nick, pos_args);
-                    }
-                    highlight_displayed = 1;
-                }
-                else
-                {
-                    weechat_printf_tags (ptr_channel->buffer,
-                                         "irc_notice",
-                                         "%s%s",
-                                         irc_nick_as_prefix (NULL, nick,
-                                                             IRC_COLOR_CHAT_NICK_OTHER),
-                                         pos_args);
-                    highlight_displayed = 0;
-                }
-                    
-                /* send "irc_highlight" signal */
-                if (highlight_displayed)
-                {
-                    weechat_hook_signal_send ("irc_highlight",
-                                              WEECHAT_HOOK_SIGNAL_STRING,
-                                              argv_eol[0]);
-                }
+                
+                weechat_printf_tags (ptr_channel->buffer,
+                                     "irc_notice",
+                                     "%s%s",
+                                     irc_nick_as_prefix (NULL, nick,
+                                                         IRC_COLOR_CHAT_NICK_OTHER),
+                                     pos_args);
             }
             else
             {
@@ -1079,8 +821,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_part (struct t_irc_server *server, char *command,
-                       int argc, char **argv, char **argv_eol,
-                       int highlight)
+                       int argc, char **argv, char **argv_eol)
 {
     char *nick, *host, *pos_comment, *join_string;
     int join_length;
@@ -1093,9 +834,6 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *command,
     
     IRC_PROTOCOL_MIN_ARGS(3);
     IRC_PROTOCOL_CHECK_HOST;
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     nick = irc_protocol_get_nick_from_host (argv[0]);
     host = irc_protocol_get_address_from_host (argv[0]);
@@ -1192,8 +930,7 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_ping (struct t_irc_server *server, char *command,
-                       int argc, char **argv, char **argv_eol,
-                       int highlight)
+                       int argc, char **argv, char **argv_eol)
 {
     /* PING message looks like:
        PING :server
@@ -1203,7 +940,6 @@ irc_protocol_cmd_ping (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv_eol;
-    (void) highlight;
     
     irc_server_sendf (server, "PONG :%s",
                       (argv[1][0] == ':') ? argv[1] + 1 : argv[1]);
@@ -1217,8 +953,7 @@ irc_protocol_cmd_ping (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_pong (struct t_irc_server *server, char *command,
-                       int argc, char **argv, char **argv_eol,
-                       int highlight)
+                       int argc, char **argv, char **argv_eol)
 {
     struct timeval tv;
     int old_lag;
@@ -1228,7 +963,6 @@ irc_protocol_cmd_pong (struct t_irc_server *server, char *command,
     (void) argc;
     (void) argv;
     (void) argv_eol;
-    (void) highlight;
     
     if (server->lag_check_time.tv_sec != 0)
     {
@@ -1318,8 +1052,7 @@ irc_protocol_reply_version (struct t_irc_server *server,
 
 int
 irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
-                          int argc, char **argv, char **argv_eol,
-                          int highlight)
+                          int argc, char **argv, char **argv_eol)
 {
     char *nick, *host, *pos_args, *pos_end_01, *pos, *pos_message;
     char *dcc_args, *pos_file, *pos_addr, *pos_port, *pos_size, *pos_start_resume;  /* for DCC */
@@ -1328,8 +1061,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
     char plugin_id[128];
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
-    int highlight_displayed, look_infobar_delay_highlight;
-
+    
     /* PRIVMSG message looks like:
        :nick!user@host PRIVMSG #channel :message for channel here
        :nick!user@host PRIVMSG mynick :message for private here
@@ -1340,9 +1072,6 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
     
     IRC_PROTOCOL_MIN_ARGS(4);
     IRC_PROTOCOL_CHECK_HOST;
-    
-    look_infobar_delay_highlight = weechat_config_integer (
-        weechat_config_get ("weechat.look.infobar_delay_highlight"));
     
     nick = irc_protocol_get_nick_from_host (argv[0]);
     host = irc_protocol_get_address_from_host (argv[0]);
@@ -1362,40 +1091,15 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                 if (pos_end_01)
                     pos_end_01[0] = '\0';
                 
-                if (highlight
-                    || irc_protocol_is_highlight (pos_args, server->nick))
-                {
-                    weechat_printf_tags (ptr_channel->buffer,
-                                         "irc_privmsg,irc_action",
-                                         "%s%s%s %s%s",
-                                         weechat_prefix ("action"),
-                                         IRC_COLOR_CHAT_HIGHLIGHT,
-                                         nick,
-                                         IRC_COLOR_CHAT,
-                                         pos_args);
-                    if ((look_infobar_delay_highlight > 0)
-                        && (ptr_channel->buffer != weechat_current_buffer))
-                        weechat_infobar_printf (look_infobar_delay_highlight,
-                                                "infobar_highlight",
-                                                _("Channel %s: * %s %s"),
-                                                ptr_channel->name,
-                                                nick,
-                                                pos_args);
-                    weechat_hook_signal_send ("irc_highlight",
-                                              WEECHAT_HOOK_SIGNAL_STRING,
-                                              argv_eol[0]);
-                }
-                else
-                {
-                    weechat_printf_tags (ptr_channel->buffer,
-                                         "irc_privmsg,irc_action",
-                                         "%s%s%s %s%s",
-                                         weechat_prefix ("action"),
-                                         IRC_COLOR_CHAT_NICK,
-                                         nick,
-                                         IRC_COLOR_CHAT,
-                                         pos_args);
-                }
+                weechat_printf_tags (ptr_channel->buffer,
+                                     "irc_privmsg,irc_action",
+                                     "%s%s%s %s%s",
+                                     weechat_prefix ("action"),
+                                     IRC_COLOR_CHAT_NICK,
+                                     nick,
+                                     IRC_COLOR_CHAT,
+                                     pos_args);
+                
                 irc_channel_add_nick_speaking (ptr_channel, nick);
                     
                 if (pos_end_01)
@@ -1529,42 +1233,17 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                 
             /* other message */
             ptr_nick = irc_nick_search (ptr_channel, nick);
-            if (highlight
-                || irc_protocol_is_highlight (pos_args, server->nick))
-            {
-                weechat_printf_tags (ptr_channel->buffer,
-                                     "irc_privmsg",
-                                     "%s%s",
-                                     irc_nick_as_prefix (ptr_nick,
-                                                         (ptr_nick) ? NULL : nick,
-                                                         IRC_COLOR_CHAT_HIGHLIGHT),
-                                     pos_args);
-                if ((look_infobar_delay_highlight > 0)
-                    && (ptr_channel->buffer != weechat_current_buffer))
-                    weechat_infobar_printf (look_infobar_delay_highlight,
-                                            "infobar_highlight",
-                                            _("Channel %s: %s> %s"),
-                                            ptr_channel->name,
-                                            nick,
-                                            pos_args);
-                weechat_buffer_set (ptr_channel->buffer, "hotlist",
-                                    WEECHAT_HOTLIST_HIGHLIGHT);
-                weechat_hook_signal_send ("irc_highlight",
-                                          WEECHAT_HOOK_SIGNAL_STRING,
-                                          argv_eol[0]);
-            }
-            else
-            {
-                weechat_printf_tags (ptr_channel->buffer,
-                                     "irc_privmsg",
-                                     "%s%s",
-                                     irc_nick_as_prefix (ptr_nick,
-                                                         (ptr_nick) ? NULL : nick,
-                                                         NULL),
-                                     pos_args);
-                weechat_buffer_set (ptr_channel->buffer, "hotlist",
-                                    WEECHAT_HOTLIST_MESSAGE);
-            }
+            
+            weechat_printf_tags (ptr_channel->buffer,
+                                 "irc_privmsg",
+                                 "%s%s",
+                                 irc_nick_as_prefix (ptr_nick,
+                                                     (ptr_nick) ? NULL : nick,
+                                                     NULL),
+                                 pos_args);
+            weechat_buffer_set (ptr_channel->buffer, "hotlist",
+                                WEECHAT_HOTLIST_MESSAGE);
+            
             irc_channel_add_nick_speaking (ptr_channel, nick);
         }
         else
@@ -2101,48 +1780,21 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
             pos_end_01 = strchr (pos, '\01');
             if (pos_end_01)
                 pos_end_01[0] = '\0';
-            if (highlight
-                || irc_protocol_is_highlight (pos_args, server->nick))
-            {
-                weechat_printf_tags (ptr_channel->buffer,
-                                     "irc_privmsg,irc_action",
-                                     "%s%s%s %s%s",
-                                     weechat_prefix ("action"),
-                                     IRC_COLOR_CHAT_HIGHLIGHT,
-                                     nick,
-                                     IRC_COLOR_CHAT,
-                                     pos_args);
-                if ((look_infobar_delay_highlight > 0)
-                    && (ptr_channel->buffer != weechat_current_buffer))
-                {
-                    weechat_infobar_printf (look_infobar_delay_highlight,
-                                            "look_infobar_highlight",
-                                            _("Channel %s: * %s %s"),
-                                            ptr_channel->name,
-                                            nick, pos);
-                }
-                weechat_hook_signal_send ("irc_highlight",
-                                          WEECHAT_HOOK_SIGNAL_STRING,
-                                          argv_eol[0]);
-                weechat_buffer_set (ptr_channel->buffer, "hotlist",
-                                    WEECHAT_HOTLIST_HIGHLIGHT);
-            }
-            else
-            {
-                weechat_printf_tags (ptr_channel->buffer,
-                                     "irc_privmsg,irc_action",
-                                     "%s%s%s %s%s",
-                                     weechat_prefix ("action"),
-                                     IRC_COLOR_CHAT_NICK,
-                                     nick,
-                                     IRC_COLOR_CHAT,
-                                     pos_args);
-                weechat_hook_signal_send ("irc_pv",
-                                          WEECHAT_HOOK_SIGNAL_STRING,
-                                          argv_eol[0]);
-                weechat_buffer_set (ptr_channel->buffer, "hotlist",
-                                    WEECHAT_HOTLIST_MESSAGE);
-            }
+            
+            weechat_printf_tags (ptr_channel->buffer,
+                                 "irc_privmsg,irc_action",
+                                 "%s%s%s %s%s",
+                                 weechat_prefix ("action"),
+                                 IRC_COLOR_CHAT_NICK,
+                                 nick,
+                                 IRC_COLOR_CHAT,
+                                 pos_args);
+            weechat_hook_signal_send ("irc_pv",
+                                      WEECHAT_HOOK_SIGNAL_STRING,
+                                      argv_eol[0]);
+            weechat_buffer_set (ptr_channel->buffer, "hotlist",
+                                WEECHAT_HOTLIST_MESSAGE);
+            
             if (pos_end_01)
                 pos_end_01[0] = '\01';
         }
@@ -2232,48 +1884,19 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
                 ptr_channel->topic = strdup (host);
                 weechat_buffer_set (ptr_channel->buffer, "title",
                                     ptr_channel->topic);
-                    
-                if (highlight
-                    || irc_protocol_is_highlight (pos_args, server->nick))
-                {
-                    weechat_printf_tags (ptr_channel->buffer,
-                                         "irc_privmsg",
-                                         "%s%s",
-                                         irc_nick_as_prefix (NULL,
-                                                             nick,
-                                                             IRC_COLOR_CHAT_HIGHLIGHT),
-                                         pos_args);
-                    if ((look_infobar_delay_highlight > 0)
-                        && (ptr_channel->buffer != weechat_current_buffer))
-                        weechat_infobar_printf (look_infobar_delay_highlight,
-                                                "infobar_highlight",
-                                                _("Private %s> %s"),
-                                                nick, pos_args);
-                    highlight_displayed = 1;
-                }
-                else
-                {
-                    weechat_printf_tags (ptr_channel->buffer,
-                                         "irc_privmsg",
-                                         "%s%s",
-                                         irc_nick_as_prefix (NULL,
-                                                             nick,
-                                                             IRC_COLOR_CHAT_NICK_OTHER),
-                                         pos_args);
-                    highlight_displayed = 0;
-                }
-                    
+                
+                weechat_printf_tags (ptr_channel->buffer,
+                                     "irc_privmsg",
+                                     "%s%s",
+                                     irc_nick_as_prefix (NULL,
+                                                         nick,
+                                                         IRC_COLOR_CHAT_NICK_OTHER),
+                                     pos_args);
+                
                 weechat_hook_signal_send ("irc_pv",
                                           WEECHAT_HOOK_SIGNAL_STRING,
                                           argv_eol[0]);
-                    
-                if (highlight_displayed)
-                {
-                    weechat_hook_signal_send ("irc_highlight",
-                                              WEECHAT_HOOK_SIGNAL_STRING,
-                                              argv_eol[0]);
-                }
-                    
+                
                 weechat_buffer_set (ptr_channel->buffer,
                                     "hotlist", WEECHAT_HOTLIST_PRIVATE);
             }
@@ -2289,8 +1912,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_quit (struct t_irc_server *server, char *command,
-                       int argc, char **argv, char **argv_eol,
-                       int highlight)
+                       int argc, char **argv, char **argv_eol)
 {
     char *nick, *host, *pos_comment;
     struct t_irc_channel *ptr_channel;
@@ -2302,9 +1924,6 @@ irc_protocol_cmd_quit (struct t_irc_server *server, char *command,
     
     IRC_PROTOCOL_MIN_ARGS(2);
     IRC_PROTOCOL_CHECK_HOST;
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     nick = irc_protocol_get_nick_from_host (argv[0]);
     host = irc_protocol_get_address_from_host (argv[0]);
@@ -2370,15 +1989,11 @@ irc_protocol_cmd_quit (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_server_mode_reason (struct t_irc_server *server, char *command,
-                                     int argc, char **argv, char **argv_eol,
-                                     int highlight)
+                                     int argc, char **argv, char **argv_eol)
 {
     char *pos_mode, *pos_args;
     
     IRC_PROTOCOL_MIN_ARGS(3);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     /* skip nickname if at beginning of server message */
     if (strcmp (server->nick, argv[2]) == 0)
@@ -2408,8 +2023,7 @@ irc_protocol_cmd_server_mode_reason (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_numeric (struct t_irc_server *server, char *command,
-                          int argc, char **argv, char **argv_eol,
-                          int highlight)
+                          int argc, char **argv, char **argv_eol)
 {
     char *pos_args;
     
@@ -2417,7 +2031,6 @@ irc_protocol_cmd_numeric (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv;
-    (void) highlight;
     
     if (weechat_strcasecmp (server->nick, argv[2]) == 0)
     {
@@ -2444,8 +2057,7 @@ irc_protocol_cmd_numeric (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_topic (struct t_irc_server *server, char *command,
-                        int argc, char **argv, char **argv_eol,
-                        int highlight)
+                        int argc, char **argv, char **argv_eol)
 {
     char *pos_topic, *topic_color;
     struct t_irc_channel *ptr_channel;
@@ -2456,9 +2068,6 @@ irc_protocol_cmd_topic (struct t_irc_server *server, char *command,
     */
     
     IRC_PROTOCOL_MIN_ARGS(3);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     if (!irc_channel_is_channel (argv[2]))
     {
@@ -2527,17 +2136,13 @@ irc_protocol_cmd_topic (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_wallops (struct t_irc_server *server, char *command,
-                          int argc, char **argv, char **argv_eol,
-                          int highlight)
+                          int argc, char **argv, char **argv_eol)
 {
     /* WALLOPS message looks like:
        :nick!user@host WALLOPS :message from admin
     */
     
     IRC_PROTOCOL_MIN_ARGS(3);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     weechat_printf_tags (server->buffer,
                          "irc_wallops",
@@ -2561,8 +2166,7 @@ irc_protocol_cmd_wallops (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_001 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     char **commands, **ptr_cmd, *vars_replaced;
     char *away_msg;
@@ -2576,8 +2180,7 @@ irc_protocol_cmd_001 (struct t_irc_server *server, char *command,
     if (strcmp (server->nick, argv[2]) != 0)
         irc_server_set_nick (server, argv[2]);
     
-    irc_protocol_cmd_numeric (server, command, argc, argv, argv_eol,
-                              highlight);
+    irc_protocol_cmd_numeric (server, command, argc, argv, argv_eol);
     
     /* connection to IRC server is ok! */
     server->is_connected = 1;
@@ -2631,8 +2234,7 @@ irc_protocol_cmd_001 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_005 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     char *pos, *pos2;
 
@@ -2645,8 +2247,7 @@ irc_protocol_cmd_005 (struct t_irc_server *server, char *command,
     
     IRC_PROTOCOL_MIN_ARGS(4);
     
-    irc_protocol_cmd_numeric (server, command, argc, argv, argv_eol,
-                              highlight);
+    irc_protocol_cmd_numeric (server, command, argc, argv, argv_eol);
     
     pos = strstr (argv_eol[3], "PREFIX=");
     if (pos)
@@ -2678,17 +2279,13 @@ irc_protocol_cmd_005 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_221 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 221 message looks like:
        :server 221 nick :+s
     */
     
     IRC_PROTOCOL_MIN_ARGS(4);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     weechat_printf_tags (server->buffer,
                          irc_protocol_tags (command, "irc_numeric"),
@@ -2713,8 +2310,7 @@ irc_protocol_cmd_221 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_301 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     char *pos_away_msg;
     struct t_irc_channel *ptr_channel;
@@ -2725,9 +2321,6 @@ irc_protocol_cmd_301 (struct t_irc_server *server, char *command,
     */
     
     IRC_PROTOCOL_MIN_ARGS(3);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     if (argc > 4)
     {
@@ -2769,8 +2362,7 @@ irc_protocol_cmd_301 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_303 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 301 message looks like:
        :server 303 mynick :nick1 nick2
@@ -2780,7 +2372,6 @@ irc_protocol_cmd_303 (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv;
-    (void) highlight;
     
     weechat_printf_tags (server->buffer,
                          irc_protocol_tags (command, "irc_numeric"),
@@ -2798,8 +2389,7 @@ irc_protocol_cmd_303 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_305 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 305 message looks like:
        :server 305 mynick :Does this mean you're really back?
@@ -2809,7 +2399,6 @@ irc_protocol_cmd_305 (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv;
-    (void) highlight;
     
     if (argc > 3)
     {
@@ -2842,8 +2431,7 @@ irc_protocol_cmd_305 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_306 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 306 message looks like:
        :server 306 mynick :We'll miss you
@@ -2853,7 +2441,6 @@ irc_protocol_cmd_306 (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv;
-    (void) highlight;
     
     if (argc > 3)
     {
@@ -2892,17 +2479,13 @@ irc_protocol_cmd_306 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_whois_nick_msg (struct t_irc_server *server, char *command,
-                                 int argc, char **argv, char **argv_eol,
-                                 int highlight)
+                                 int argc, char **argv, char **argv_eol)
 {
     /* messages look like:
        :server 319 flashy FlashCode :some text here
     */
     
     IRC_PROTOCOL_MIN_ARGS(5);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     weechat_printf_tags (server->buffer,
                          irc_protocol_tags (command, "irc_numeric"),
@@ -2924,17 +2507,13 @@ irc_protocol_cmd_whois_nick_msg (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_311 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 311 message looks like:
        :server 311 mynick nick user host * :realname here
     */
     
     IRC_PROTOCOL_MIN_ARGS(8);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     weechat_printf_tags (server->buffer,
                          irc_protocol_tags (command, "irc_numeric"),
@@ -2960,17 +2539,13 @@ irc_protocol_cmd_311 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_312 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 312 message looks like:
        :server 312 mynick nick irc.freenode.net :http://freenode.net/
     */
     
     IRC_PROTOCOL_MIN_ARGS(6);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     weechat_printf_tags (server->buffer,
                          irc_protocol_tags(command, "irc_numeric"),
@@ -2996,17 +2571,13 @@ irc_protocol_cmd_312 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_314 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 314 message looks like:
        :server 314 mynick nick user host * :realname here
     */
     
     IRC_PROTOCOL_MIN_ARGS(8);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     weechat_printf_tags (server->buffer,
                          irc_protocol_tags(command, "irc_numeric"),
@@ -3031,8 +2602,7 @@ irc_protocol_cmd_314 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_315 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 315 message looks like:
        :server 315 mynick #channel :End of /WHO list.
@@ -3041,9 +2611,6 @@ irc_protocol_cmd_315 (struct t_irc_server *server, char *command,
     struct t_irc_channel *ptr_channel;
 
     IRC_PROTOCOL_MIN_ARGS(5);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     ptr_channel = irc_channel_search (server, argv[3]);
     if (ptr_channel && (ptr_channel->checking_away > 0))
@@ -3073,8 +2640,7 @@ irc_protocol_cmd_315 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_317 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     int idle_time, day, hour, min, sec;
     time_t datetime;
@@ -3087,7 +2653,6 @@ irc_protocol_cmd_317 (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv_eol;
-    (void) highlight;
     
     idle_time = atoi (argv[4]);
     day = idle_time / (60 * 60 * 24);
@@ -3167,8 +2732,7 @@ irc_protocol_cmd_317 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_321 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     char *pos_args;
     
@@ -3180,9 +2744,6 @@ irc_protocol_cmd_321 (struct t_irc_server *server, char *command,
 
     pos_args = (argc > 4) ?
         ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     weechat_printf_tags (server->buffer,
                          irc_protocol_tags(command, "irc_numeric"),
@@ -3201,8 +2762,7 @@ irc_protocol_cmd_321 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_322 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     char *pos_topic;
     
@@ -3211,9 +2771,6 @@ irc_protocol_cmd_322 (struct t_irc_server *server, char *command,
     */
     
     IRC_PROTOCOL_MIN_ARGS(5);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     pos_topic = (argc > 5) ?
         ((argv_eol[5][0] == ':') ? argv_eol[5] + 1 : argv_eol[5]) : NULL;
@@ -3245,8 +2802,7 @@ irc_protocol_cmd_322 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_323 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     char *pos_args;
     
@@ -3258,7 +2814,6 @@ irc_protocol_cmd_323 (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv;
-    (void) highlight;
     
     pos_args = (argc > 3) ?
         ((argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3]) : NULL;
@@ -3278,8 +2833,7 @@ irc_protocol_cmd_323 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_324 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
     
@@ -3291,7 +2845,6 @@ irc_protocol_cmd_324 (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv_eol;
-    (void) highlight;
     
     ptr_channel = irc_channel_search (server, argv[3]);
     if (ptr_channel)
@@ -3323,8 +2876,7 @@ irc_protocol_cmd_324 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_327 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     char *pos_realname;
     
@@ -3333,9 +2885,6 @@ irc_protocol_cmd_327 (struct t_irc_server *server, char *command,
     */
 
     IRC_PROTOCOL_MIN_ARGS(6);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     pos_realname = (argc > 6) ?
         ((argv_eol[6][0] == ':') ? argv_eol[6] + 1 : argv_eol[6]) : NULL;
@@ -3382,8 +2931,7 @@ irc_protocol_cmd_327 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_329 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
     time_t datetime;
@@ -3393,9 +2941,6 @@ irc_protocol_cmd_329 (struct t_irc_server *server, char *command,
     */
     
     IRC_PROTOCOL_MIN_ARGS(5);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     ptr_channel = irc_channel_search (server, argv[3]);
     
@@ -3435,8 +2980,7 @@ irc_protocol_cmd_329 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_331 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
     
@@ -3448,7 +2992,6 @@ irc_protocol_cmd_331 (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv_eol;
-    (void) highlight;
     
     ptr_channel = irc_channel_search (server, argv[3]);
     weechat_printf_tags ((ptr_channel) ?
@@ -3468,8 +3011,7 @@ irc_protocol_cmd_331 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_332 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     char *pos_topic;
     struct t_irc_channel *ptr_channel;
@@ -3479,9 +3021,6 @@ irc_protocol_cmd_332 (struct t_irc_server *server, char *command,
     */
     
     IRC_PROTOCOL_MIN_ARGS(5);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     pos_topic = (argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4];
     
@@ -3515,8 +3054,7 @@ irc_protocol_cmd_332 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_333 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
     time_t datetime;
@@ -3526,9 +3064,6 @@ irc_protocol_cmd_333 (struct t_irc_server *server, char *command,
     */
     
     IRC_PROTOCOL_MIN_ARGS(6);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     ptr_channel = irc_channel_search (server, argv[3]);
     datetime = (time_t)(atol ((argv_eol[5][0] == ':') ?
@@ -3568,17 +3103,13 @@ irc_protocol_cmd_333 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_338 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 338 message looks like:
        :server 338 mynick nick host :actually using host
     */
     
     IRC_PROTOCOL_MIN_ARGS(6);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     weechat_printf_tags (server->buffer,
                          irc_protocol_tags(command, "irc_numeric"),
@@ -3602,8 +3133,7 @@ irc_protocol_cmd_338 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_341 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 341 message looks like:
        :server 341 mynick nick #channel
@@ -3613,7 +3143,6 @@ irc_protocol_cmd_341 (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv_eol;
-    (void) highlight;
     
     weechat_printf_tags (server->buffer,
                          irc_protocol_tags(command, "irc_numeric"),
@@ -3637,17 +3166,13 @@ irc_protocol_cmd_341 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_344 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 344 message looks like:
        :server 344 mynick #channel nick!user@host
     */
     
     IRC_PROTOCOL_MIN_ARGS(5);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     weechat_printf_tags (server->buffer,
                          irc_protocol_tags(command, "irc_numeric"),
@@ -3668,15 +3193,11 @@ irc_protocol_cmd_344 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_345 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 345 message looks like:
        :server 345 mynick #channel :End of Channel Reop List
     */
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     IRC_PROTOCOL_MIN_ARGS(5);
     
@@ -3698,8 +3219,7 @@ irc_protocol_cmd_345 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_348 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
     time_t datetime;
@@ -3713,7 +3233,6 @@ irc_protocol_cmd_348 (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv_eol;
-    (void) highlight;
     
     ptr_channel = irc_channel_search (server, argv[3]);
     if (argc >= 7)
@@ -3767,8 +3286,7 @@ irc_protocol_cmd_348 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_349 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     char *pos_args;
     struct t_irc_channel *ptr_channel;
@@ -3781,9 +3299,6 @@ irc_protocol_cmd_349 (struct t_irc_server *server, char *command,
     
     pos_args = (argc > 4) ?
         ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     ptr_channel = irc_channel_search (server, argv[3]);
     weechat_printf_tags ((ptr_channel && ptr_channel->nicks) ?
@@ -3808,17 +3323,13 @@ irc_protocol_cmd_349 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_351 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 351 message looks like:
        :server 351 mynick dancer-ircd-1.0.36(2006/07/23_13:11:50). server :iMZ dncrTS/v4
     */
     
     IRC_PROTOCOL_MIN_ARGS(5);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     if (argc > 5)
     {
@@ -3849,8 +3360,7 @@ irc_protocol_cmd_351 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_352 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     char *pos_attr, *pos_hopcount, *pos_realname;
     int arg_start, length;
@@ -3863,9 +3373,6 @@ irc_protocol_cmd_352 (struct t_irc_server *server, char *command,
     
     IRC_PROTOCOL_MIN_ARGS(9);
     
-    /* make C compiler happy */
-    (void) highlight;
-
     arg_start = (strcmp (argv[8], "*") == 0) ? 9 : 8;
     if (argv[arg_start][0] == ':')
     {
@@ -3935,8 +3442,7 @@ irc_protocol_cmd_352 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_353 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     char *pos_channel, *pos_nick, *color;
     int args, i, prefix_found;
@@ -3949,9 +3455,6 @@ irc_protocol_cmd_353 (struct t_irc_server *server, char *command,
     */
     
     IRC_PROTOCOL_MIN_ARGS(5);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     if (irc_channel_is_channel (argv[3]))
     {
@@ -4066,8 +3569,7 @@ irc_protocol_cmd_353 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_366 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
     struct t_plugin_infolist *infolist;
@@ -4079,9 +3581,6 @@ irc_protocol_cmd_366 (struct t_irc_server *server, char *command,
     */
     
     IRC_PROTOCOL_MIN_ARGS(5);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     ptr_channel = irc_channel_search (server, argv[3]);
     if (ptr_channel && ptr_channel->nicks)
@@ -4201,8 +3700,7 @@ irc_protocol_cmd_366 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_367 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
     time_t datetime;
@@ -4215,7 +3713,6 @@ irc_protocol_cmd_367 (struct t_irc_server *server, char *command,
     
     /* make C compiler happy */
     (void) argv_eol;
-    (void) highlight;
     
     ptr_channel = irc_channel_search (server, argv[3]);
     if (argc >= 7)
@@ -4275,8 +3772,7 @@ irc_protocol_cmd_367 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_368 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     char *pos_args;
     struct t_irc_channel *ptr_channel;
@@ -4286,9 +3782,6 @@ irc_protocol_cmd_368 (struct t_irc_server *server, char *command,
     */
     
     IRC_PROTOCOL_MIN_ARGS(4);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     pos_args = (argc > 4) ?
         ((argv_eol[4][0] == ':') ? argv_eol[4] + 1 : argv_eol[4]) : NULL;
@@ -4316,13 +3809,11 @@ irc_protocol_cmd_368 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_432 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     int i, nick_found, nick_to_use;
     
-    irc_protocol_cmd_error (server, command, argc, argv, argv_eol,
-                            highlight);
+    irc_protocol_cmd_error (server, command, argc, argv, argv_eol);
     
     if (!server->is_connected)
     {
@@ -4374,8 +3865,7 @@ irc_protocol_cmd_432 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_433 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     int i, nick_found, nick_to_use;
     
@@ -4421,8 +3911,7 @@ irc_protocol_cmd_433 (struct t_irc_server *server, char *command,
     }
     else
     {
-        return irc_protocol_cmd_error (server, command, argc, argv, argv_eol,
-                                       highlight);
+        return irc_protocol_cmd_error (server, command, argc, argv, argv_eol);
     }
     
     return WEECHAT_RC_OK;
@@ -4434,17 +3923,13 @@ irc_protocol_cmd_433 (struct t_irc_server *server, char *command,
 
 int
 irc_protocol_cmd_438 (struct t_irc_server *server, char *command,
-                      int argc, char **argv, char **argv_eol,
-                      int highlight)
+                      int argc, char **argv, char **argv_eol)
 {
     /* 438 message looks like:
        :server 438 mynick newnick :Nick change too fast. Please wait 30 seconds.
     */
     
     IRC_PROTOCOL_MIN_ARGS(4);
-    
-    /* make C compiler happy */
-    (void) highlight;
     
     if (argc >= 5)
     {
@@ -4497,7 +3982,7 @@ void
 irc_protocol_recv_command (struct t_irc_server *server, char *entire_line,
                            char *host, char *command, char *arguments)
 {
-    int i, cmd_found, return_code, highlight, argc, decode_color;
+    int i, cmd_found, return_code, argc, decode_color;
     char *pos, *nick;
     char *dup_entire_line, *dup_host, *dup_arguments, *irc_message;
     t_irc_recv_func *cmd_recv_func;
@@ -4681,19 +4166,6 @@ irc_protocol_recv_command (struct t_irc_server *server, char *entire_line,
         dup_host = (host) ? strdup (host) : NULL;
         dup_arguments = (arguments) ? strdup (arguments) : NULL;
         
-        highlight = 0;
-        
-        //return_code = plugin_msg_handler_exec (server->name,
-        //                                       cmd_name,
-        //                                       dup_entire_line);
-        /* plugin handler choosed to discard message for WeeChat,
-           so we ignore this message in standard handler */
-        //if (return_code & PLUGIN_RC_OK_IGNORE_WEECHAT)
-        //    ignore = 1;
-        /* plugin asked for highlight ? */
-        //if (return_code & PLUGIN_RC_OK_WITH_HIGHLIGHT)
-        //    highlight = 1;
-        
         pos = (dup_host) ? strchr (dup_host, '!') : NULL;
         if (pos)
             pos[0] = '\0';
@@ -4703,8 +4175,7 @@ irc_protocol_recv_command (struct t_irc_server *server, char *entire_line,
         irc_message = strdup (dup_entire_line);
         
         return_code = (int) (cmd_recv_func) (server, cmd_name,
-                                             argc, argv, argv_eol,
-                                             highlight);
+                                             argc, argv, argv_eol);
         
         if (return_code == WEECHAT_RC_ERROR)
         {

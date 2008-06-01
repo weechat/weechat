@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-22 12:59+0200\n"
+"POT-Creation-Date: 2008-06-01 22:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -787,34 +787,19 @@ msgstr ""
 msgid "\t\tDay changed to %s"
 msgstr ""
 
+msgid "command executed when WeeChat starts, after loading plugins"
+msgstr ""
+
+msgid "command executed when WeeChat starts, before loading plugins"
+msgstr ""
+
 msgid "display WeeChat logo at startup"
 msgstr ""
 
 msgid "display WeeChat version at startup"
 msgstr ""
 
-msgid "command executed when WeeChat starts, before loading plugins"
-msgstr ""
-
-msgid "command executed when WeeChat starts, after loading plugins"
-msgstr ""
-
 msgid "WeeChat slogan (if empty, slogan is not used)"
-msgstr ""
-
-msgid ""
-"if set, uses real white color, disabled by default for terms with white "
-"background (if you never use white background, you should turn on this "
-"option to see real white instead of default term foreground color)"
-msgstr ""
-
-msgid "save configuration file on exit"
-msgstr ""
-
-msgid "set title for window (terminal for Curses GUI) with name and version"
-msgstr ""
-
-msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr ""
 
 msgid "time format for buffers"
@@ -823,10 +808,78 @@ msgstr ""
 msgid "number of colors to use for nicks colors"
 msgstr ""
 
+msgid ""
+"if set, uses real white color, disabled by default for terms with white "
+"background (if you never use white background, you should turn on this "
+"option to see real white instead of default term foreground color)"
+msgstr ""
+
+msgid "display special message when day changes"
+msgstr ""
+
+msgid "time format for date displayed when day changed"
+msgstr ""
+
+msgid ""
+"comma separated list of words to highlight (case insensitive comparison, "
+"words may begin or end with \"*\" for partial match)"
+msgstr ""
+
+msgid ""
+"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
+msgstr ""
+
+msgid "max length of names in hotlist (0 = no limit)"
+msgstr ""
+
+msgid ""
+"level for displaying names in hotlist (combination of: 1=join/part, "
+"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
+msgstr ""
+
+msgid ""
+"hotlist sort type (group_time_asc (default), group_time_desc, "
+"group_number_asc, group_number_desc, number_asc, number_desc)"
+msgstr ""
+
+msgid "enable info bar"
+msgstr ""
+
+msgid ""
+"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
+"notifications in infobar)"
+msgstr ""
+
+msgid "display seconds in infobar time"
+msgstr ""
+
+msgid "time format for time in infobar"
+msgstr ""
+
+#, c-format
+msgid ""
+"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
+"and '%m' by nick modes)"
+msgstr ""
+
+msgid "time format for \"time\" bar item"
+msgstr ""
+
+msgid "complete only with first nick found"
+msgstr ""
+
+msgid "chars ignored for nick completion"
+msgstr ""
+
+msgid "string inserted after nick completion"
+msgstr ""
+
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr ""
 
-msgid "nicklist position (top, left, right (default), bottom)"
+msgid ""
+"max size for nicklist (width or height, depending on nicklist_position (0 = "
+"no max size; if min = max and > 0, then size is fixed))"
 msgstr ""
 
 msgid ""
@@ -834,9 +887,7 @@ msgid ""
 "no min size))"
 msgstr ""
 
-msgid ""
-"max size for nicklist (width or height, depending on nicklist_position (0 = "
-"no max size; if min = max and > 0, then size is fixed))"
+msgid "nicklist position (top, left, right (default), bottom)"
 msgstr ""
 
 msgid "separator between chat and nicklist"
@@ -846,6 +897,10 @@ msgid "display nick mode ((half)op/voice) before each nick"
 msgstr ""
 
 msgid "display space if nick mode is not (half)op/voice"
+msgstr ""
+
+msgid ""
+"max number of lines for paste without asking user (0 = disable this feature)"
 msgstr ""
 
 msgid "prefix for error messages"
@@ -872,66 +927,16 @@ msgstr ""
 msgid "string displayed after prefix"
 msgstr ""
 
-msgid "string inserted after nick completion"
-msgstr ""
-
-msgid "chars ignored for nick completion"
-msgstr ""
-
-msgid "complete only with first nick found"
-msgstr ""
-
-msgid "enable info bar"
-msgstr ""
-
-msgid "time format for time in infobar"
-msgstr ""
-
-msgid "display seconds in infobar time"
-msgstr ""
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-
-msgid "time format for \"time\" bar item"
-msgstr ""
-
-msgid ""
-"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
-msgstr ""
-
-msgid ""
-"level for displaying names in hotlist (combination of: 1=join/part, "
-"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
-msgstr ""
-
-msgid "max length of names in hotlist (0 = no limit)"
-msgstr ""
-
-msgid ""
-"hotlist sort type (group_time_asc (default), group_time_desc, "
-"group_number_asc, group_number_desc, number_asc, number_desc)"
-msgstr ""
-
-msgid "display special message when day changes"
-msgstr ""
-
-msgid "time format for date displayed when day changed"
-msgstr ""
-
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
 
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
+msgid "save configuration file on exit"
 msgstr ""
 
-msgid ""
-"max number of lines for paste without asking user (0 = disable this feature)"
+msgid "how many lines to scroll by with scroll_up and scroll_down"
+msgstr ""
+
+msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
 
 msgid "background color for window separators (when splited)"
@@ -1033,7 +1038,10 @@ msgstr ""
 msgid "text color for delimiters"
 msgstr ""
 
-msgid "text color for highlighted nick"
+msgid "text color for highlighted prefix"
+msgstr ""
+
+msgid "background color for highlighted prefix"
 msgstr ""
 
 msgid "text color for unread data marker"
@@ -2537,15 +2545,15 @@ msgstr ""
 msgid "display message when (un)marking as away"
 msgstr ""
 
+msgid ""
+"comma separated list of tags for messages that may produce highlight "
+"(usually any message from another user, not server messages,..)"
+msgstr ""
+
 msgid "show remote away message only once in private"
 msgstr ""
 
 msgid "display notices as private messages"
-msgstr ""
-
-msgid ""
-"comma separated list of words to highlight (case insensitive comparison, "
-"words may begin or end with \"*\" for partial match)"
 msgstr ""
 
 msgid ""
@@ -2698,10 +2706,6 @@ msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
 msgstr ""
 
 #, c-format
-msgid "Private %s> %s"
-msgstr ""
-
-#, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr ""
 
@@ -2718,10 +2722,6 @@ msgid "%sCTCP %sVERSION%s received from %s%s"
 msgstr ""
 
 #, c-format
-msgid "Channel %s: * %s %s"
-msgstr ""
-
-#, c-format
 msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
 msgstr ""
 
@@ -2735,10 +2735,6 @@ msgstr ""
 
 #, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s"
-msgstr ""
-
-#, c-format
-msgid "Channel %s: %s> %s"
 msgstr ""
 
 #, c-format

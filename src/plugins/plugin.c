@@ -292,6 +292,7 @@ plugin_load (char *filename)
         new_plugin->string_replace = &string_replace;
         new_plugin->string_remove_quotes = &string_remove_quotes;
         new_plugin->string_strip = &string_strip;
+        new_plugin->string_has_highlight = &string_has_highlight;
         new_plugin->string_explode = &string_explode;
         new_plugin->string_free_exploded = &string_free_exploded;
         new_plugin->string_split_command = &string_split_command;

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-22 12:59+0200\n"
+"POT-Creation-Date: 2008-06-01 22:03+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -950,20 +950,27 @@ msgstr ""
 msgid "\t\tDay changed to %s"
 msgstr "Дата сменилась на %s\n"
 
+msgid "command executed when WeeChat starts, after loading plugins"
+msgstr ""
+
+msgid "command executed when WeeChat starts, before loading plugins"
+msgstr ""
+
 msgid "display WeeChat logo at startup"
 msgstr "отображать логотип WeeChat при запуске"
 
 msgid "display WeeChat version at startup"
 msgstr "отображать версию WeeChat при запуске"
 
-msgid "command executed when WeeChat starts, before loading plugins"
-msgstr ""
-
-msgid "command executed when WeeChat starts, after loading plugins"
-msgstr ""
-
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "слоган WeeChat (если пусто - используется слоган по умолчанию)"
+
+#, fuzzy
+msgid "time format for buffers"
+msgstr "время в буферах"
+
+msgid "number of colors to use for nicks colors"
+msgstr "количество цветов для раскрашивания ников"
 
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
@@ -975,40 +982,85 @@ msgstr ""
 "белым фоном вам следует включить этот параметр чтобы видеть настоящий белый "
 "цвет вместо цвета терминала по умолчанию)"
 
-#, fuzzy
-msgid "save configuration file on exit"
-msgstr "сохранять конфигурационный файл при выходе"
+msgid "display special message when day changes"
+msgstr "отображать специальное сообщение  при смене дня"
 
-msgid "set title for window (terminal for Curses GUI) with name and version"
+#, fuzzy
+msgid "time format for date displayed when day changed"
+msgstr "отображение маркера даты при смене дня"
+
+msgid ""
+"comma separated list of words to highlight (case insensitive comparison, "
+"words may begin or end with \"*\" for partial match)"
 msgstr ""
-"устанавливать заголовок окна (терминала при интерфейсе Curses) с именем и "
-"версией"
+"разделённый запятыми список подсвечиваемых слов (регистр учитывается, слова "
+"могут начинаться или кончаться \"*\" для неполного соответствия)"
 
-msgid "how many lines to scroll by with scroll_up and scroll_down"
-msgstr "количество проматываемых кнопками PageUp и PageDown строк"
+msgid ""
+"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
+msgstr ""
+"максимальное количество имён в хотлисте (0 = имена не показываются, только "
+"номера буферов)"
+
+msgid "max length of names in hotlist (0 = no limit)"
+msgstr "максимальная длина имён в хотлисте (0=не ограничено)"
+
+msgid ""
+"level for displaying names in hotlist (combination of: 1=join/part, "
+"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
+msgstr ""
+"уровень отображения имён в хотлисте (сочетание: 1=вход/выход, 2=сообщение, "
+"4=личное сообщение, 8=подсветка, например: 12=личные+подсветка)"
+
+msgid ""
+"hotlist sort type (group_time_asc (default), group_time_desc, "
+"group_number_asc, group_number_desc, number_asc, number_desc)"
+msgstr ""
+"тип сортировки хотлиста (group_time_asc (по-умолчанию), group_time_desc, "
+"group_number_asc, group_number_desc, number_asc, number_desc)"
+
+msgid "enable info bar"
+msgstr "включить информационную панель"
+
+msgid ""
+"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
+"notifications in infobar)"
+msgstr ""
+"задержка (в секундах) отображения сообщений в информационной строке (0 = "
+"отключить уведомления в информационной строке)"
+
+msgid "display seconds in infobar time"
+msgstr "показывать секунды в часах информационной панели"
 
 #, fuzzy
-msgid "time format for buffers"
-msgstr "время в буферах"
+msgid "time format for time in infobar"
+msgstr "время в информационной строке"
 
-msgid "number of colors to use for nicks colors"
-msgstr "количество цветов для раскрашивания ников"
+#, c-format
+msgid ""
+"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
+"and '%m' by nick modes)"
+msgstr ""
+"формат приглашения ввода ('%c' заменяется на сервер или канал, '%n' на ник, "
+"а '%m' - на режимы ника"
+
+#, fuzzy
+msgid "time format for \"time\" bar item"
+msgstr "время в информационной строке"
+
+msgid "complete only with first nick found"
+msgstr "дополнять только первым найденным ником"
+
+msgid "chars ignored for nick completion"
+msgstr "символы, игнорируемые при автодополнении ника"
+
+#, fuzzy
+msgid "string inserted after nick completion"
+msgstr "строка, вставляемая после автодополнения ника"
 
 #, fuzzy
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr "показывать список ников (в окнах каналов)"
-
-msgid "nicklist position (top, left, right (default), bottom)"
-msgstr ""
-"расположение списка пользователей (top, left, right(по умолчанию), bottom)"
-
-#, fuzzy
-msgid ""
-"min size for nicklist (width or height, depending on nicklist_position (0 = "
-"no min size))"
-msgstr ""
-"минимальный размер списка пользователей (высота или ширина, в зависимости от "
-"look_nicklist_position (0 = без минимального размера))"
 
 #, fuzzy
 msgid ""
@@ -1019,6 +1071,18 @@ msgstr ""
 "от look_nicklist_position (0 = без максимального размера; если min = max и > "
 "0, то размер фиксированный))"
 
+#, fuzzy
+msgid ""
+"min size for nicklist (width or height, depending on nicklist_position (0 = "
+"no min size))"
+msgstr ""
+"минимальный размер списка пользователей (высота или ширина, в зависимости от "
+"look_nicklist_position (0 = без минимального размера))"
+
+msgid "nicklist position (top, left, right (default), bottom)"
+msgstr ""
+"расположение списка пользователей (top, left, right(по умолчанию), bottom)"
+
 msgid "separator between chat and nicklist"
 msgstr "разделитель чата и никлиста"
 
@@ -1027,6 +1091,12 @@ msgstr "отображать режим ника (op/voice) перед кажд�
 
 msgid "display space if nick mode is not (half)op/voice"
 msgstr "оставлять пробел, если ник не op/voice"
+
+msgid ""
+"max number of lines for paste without asking user (0 = disable this feature)"
+msgstr ""
+"максимальное количество строк, вставляемых без подтверждения (0 = отключить "
+"подтверждение)"
 
 #, fuzzy
 msgid "prefix for error messages"
@@ -1060,83 +1130,20 @@ msgid "string displayed after prefix"
 msgstr "строка, вставляемая после автодополнения ника"
 
 #, fuzzy
-msgid "string inserted after nick completion"
-msgstr "строка, вставляемая после автодополнения ника"
-
-msgid "chars ignored for nick completion"
-msgstr "символы, игнорируемые при автодополнении ника"
-
-msgid "complete only with first nick found"
-msgstr "дополнять только первым найденным ником"
-
-msgid "enable info bar"
-msgstr "включить информационную панель"
-
-#, fuzzy
-msgid "time format for time in infobar"
-msgstr "время в информационной строке"
-
-msgid "display seconds in infobar time"
-msgstr "показывать секунды в часах информационной панели"
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-"задержка (в секундах) отображения сообщений в информационной строке (0 = "
-"отключить уведомления в информационной строке)"
-
-#, fuzzy
-msgid "time format for \"time\" bar item"
-msgstr "время в информационной строке"
-
-msgid ""
-"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
-msgstr ""
-"максимальное количество имён в хотлисте (0 = имена не показываются, только "
-"номера буферов)"
-
-msgid ""
-"level for displaying names in hotlist (combination of: 1=join/part, "
-"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
-msgstr ""
-"уровень отображения имён в хотлисте (сочетание: 1=вход/выход, 2=сообщение, "
-"4=личное сообщение, 8=подсветка, например: 12=личные+подсветка)"
-
-msgid "max length of names in hotlist (0 = no limit)"
-msgstr "максимальная длина имён в хотлисте (0=не ограничено)"
-
-msgid ""
-"hotlist sort type (group_time_asc (default), group_time_desc, "
-"group_number_asc, group_number_desc, number_asc, number_desc)"
-msgstr ""
-"тип сортировки хотлиста (group_time_asc (по-умолчанию), group_time_desc, "
-"group_number_asc, group_number_desc, number_asc, number_desc)"
-
-msgid "display special message when day changes"
-msgstr "отображать специальное сообщение  при смене дня"
-
-#, fuzzy
-msgid "time format for date displayed when day changed"
-msgstr "отображение маркера даты при смене дня"
-
-#, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr "использовать маркер непрочитанных сообщений в окнах серверов и каналов"
 
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
-msgstr ""
-"формат приглашения ввода ('%c' заменяется на сервер или канал, '%n' на ник, "
-"а '%m' - на режимы ника"
+#, fuzzy
+msgid "save configuration file on exit"
+msgstr "сохранять конфигурационный файл при выходе"
 
-msgid ""
-"max number of lines for paste without asking user (0 = disable this feature)"
+msgid "how many lines to scroll by with scroll_up and scroll_down"
+msgstr "количество проматываемых кнопками PageUp и PageDown строк"
+
+msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
-"максимальное количество строк, вставляемых без подтверждения (0 = отключить "
-"подтверждение)"
+"устанавливать заголовок окна (терминала при интерфейсе Curses) с именем и "
+"версией"
 
 #, fuzzy
 msgid "background color for window separators (when splited)"
@@ -1271,8 +1278,12 @@ msgid "text color for delimiters"
 msgstr "цвет разделителей информационной панели"
 
 #, fuzzy
-msgid "text color for highlighted nick"
+msgid "text color for highlighted prefix"
 msgstr "цвет подсвечиваемого ника"
+
+#, fuzzy
+msgid "background color for highlighted prefix"
+msgstr "цвет фона заголовка"
 
 #, fuzzy
 msgid "text color for unread data marker"
@@ -3055,18 +3066,16 @@ msgstr "умное дополнение ников (начинает переб�
 msgid "display message when (un)marking as away"
 msgstr "показывать сообщение во все каналы при установке/снятии отсутствия"
 
+msgid ""
+"comma separated list of tags for messages that may produce highlight "
+"(usually any message from another user, not server messages,..)"
+msgstr ""
+
 msgid "show remote away message only once in private"
 msgstr "отображать уведомление об отсутствии единожды в привате"
 
 msgid "display notices as private messages"
 msgstr "отображать notice'ы в виде личных сообщений"
-
-msgid ""
-"comma separated list of words to highlight (case insensitive comparison, "
-"words may begin or end with \"*\" for partial match)"
-msgstr ""
-"разделённый запятыми список подсвечиваемых слов (регистр учитывается, слова "
-"могут начинаться или кончаться \"*\" для неполного соответствия)"
 
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
@@ -3228,10 +3237,6 @@ msgstr "Ответ на CTCP %sVERSION%s от %s%s%s: %s\n"
 msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
 msgstr "Ответ на %sPING%s от %s%s%s: %ld.%ld секунд\n"
 
-#, c-format
-msgid "Private %s> %s"
-msgstr "Личное %s> %s"
-
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s покинул %s%s"
@@ -3248,10 +3253,6 @@ msgstr "Получен CTCP %sVERSION%s от %s%s"
 msgid "%sCTCP %sVERSION%s received from %s%s"
 msgstr "Получен CTCP %sVERSION%s от %s%s"
 
-#, c-format
-msgid "Channel %s: * %s %s"
-msgstr "Канал %s: * %s %s"
-
 #, fuzzy, c-format
 msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
 msgstr "Получен CTCP %sSOUND%s \"%s\" от %s%s\n"
@@ -3267,10 +3268,6 @@ msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
 #, fuzzy, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s"
 msgstr "Получен неизвестный CTCP %s%s%s от %s%s"
-
-#, c-format
-msgid "Channel %s: %s> %s"
-msgstr "Канал %s: %s> %s"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot parse \"%s\" command"
@@ -4558,6 +4555,19 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy
+#~ msgid "words to highlight in buffers"
+#~ msgstr "промотать буфер до следующей подсветки"
+
+#~ msgid "Private %s> %s"
+#~ msgstr "Личное %s> %s"
+
+#~ msgid "Channel %s: * %s %s"
+#~ msgstr "Канал %s: * %s %s"
+
+#~ msgid "Channel %s: %s> %s"
+#~ msgstr "Канал %s: %s> %s"
+
+#, fuzzy
 #~ msgid "%sError: command \"%s\" is running"
 #~ msgstr "%s команда \"%s\" не удалась\n"
 
@@ -4817,9 +4827,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #~ msgid "scroll to previous highlight in buffer"
 #~ msgstr "промотать буфер до предыдущей подсветки"
-
-#~ msgid "scroll to next highlight in buffer"
-#~ msgstr "промотать буфер до следующей подсветки"
 
 #~ msgid "refresh screen"
 #~ msgstr "обновить экран"

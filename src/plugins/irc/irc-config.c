@@ -54,9 +54,9 @@ struct t_config_option *irc_config_look_nick_prefix;
 struct t_config_option *irc_config_look_nick_suffix;
 struct t_config_option *irc_config_look_nick_completion_smart;
 struct t_config_option *irc_config_look_display_away;
+struct t_config_option *irc_config_look_highlight_tags;
 struct t_config_option *irc_config_look_show_away_once;
 struct t_config_option *irc_config_look_notice_as_pv;
-struct t_config_option *irc_config_look_highlight;
 
 /* IRC config, network section */
 
@@ -905,6 +905,13 @@ irc_config_init ()
         "display_away", "integer",
         N_("display message when (un)marking as away"),
         "off|local|channel", 0, 0, "local", NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_highlight_tags = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "highlight_tags", "string",
+        N_("comma separated list of tags for messages that may produce "
+           "highlight (usually any message from another user, not server "
+           "messages,..)"),
+        NULL, 0, 0, "irc_privmsg,irc_notice", NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_show_away_once = weechat_config_new_option (
         irc_config_file, ptr_section,
         "show_away_once", "boolean",
@@ -915,12 +922,6 @@ irc_config_init ()
         "notice_as_pv", "boolean",
         N_("display notices as private messages"),
         NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
-    irc_config_look_highlight = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "highlight", "string",
-        N_("comma separated list of words to highlight (case insensitive "
-           "comparison, words may begin or end with \"*\" for partial match)"),
-        NULL, 0, 0, "", NULL, NULL, NULL, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (irc_config_file, "network",
                                               0, 0,

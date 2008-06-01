@@ -380,7 +380,7 @@ gui_color_init_weechat ()
     }
     gui_color[GUI_COLOR_CHAT_HOST] = gui_color_build (GUI_COLOR_CHAT_HOST, CONFIG_COLOR(config_color_chat_host), CONFIG_COLOR(config_color_chat_bg));
     gui_color[GUI_COLOR_CHAT_DELIMITERS] = gui_color_build (GUI_COLOR_CHAT_DELIMITERS, CONFIG_COLOR(config_color_chat_delimiters), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_HIGHLIGHT] = gui_color_build (GUI_COLOR_CHAT_HIGHLIGHT, CONFIG_COLOR(config_color_chat_highlight), CONFIG_COLOR(config_color_chat_bg));
+    gui_color[GUI_COLOR_CHAT_HIGHLIGHT] = gui_color_build (GUI_COLOR_CHAT_HIGHLIGHT, CONFIG_COLOR(config_color_chat_highlight), CONFIG_COLOR(config_color_chat_highlight_bg));
     gui_color[GUI_COLOR_CHAT_READ_MARKER] = gui_color_build (GUI_COLOR_CHAT_READ_MARKER, CONFIG_COLOR(config_color_chat_read_marker), CONFIG_COLOR(config_color_chat_read_marker_bg));
     
     gui_color[GUI_COLOR_STATUS] = gui_color_build (GUI_COLOR_STATUS, CONFIG_COLOR(config_color_status), CONFIG_COLOR(config_color_status_bg));

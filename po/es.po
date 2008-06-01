@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-22 12:59+0200\n"
+"POT-Creation-Date: 2008-06-01 22:03+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -921,20 +921,27 @@ msgstr ""
 msgid "\t\tDay changed to %s"
 msgstr "DÃ­a cambiado a %s\n"
 
+msgid "command executed when WeeChat starts, after loading plugins"
+msgstr ""
+
+msgid "command executed when WeeChat starts, before loading plugins"
+msgstr ""
+
 msgid "display WeeChat logo at startup"
 msgstr "mostrar el logotipo de WeeChat en el arranque"
 
 msgid "display WeeChat version at startup"
 msgstr "mostrar la versiÃ³n de Weechat en el arranque"
 
-msgid "command executed when WeeChat starts, before loading plugins"
-msgstr ""
-
-msgid "command executed when WeeChat starts, after loading plugins"
-msgstr ""
-
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "eslÃ³gan de WeeChat (si estÃ¡ vacÃ­o, el eslÃ³gan no serÃ¡ utilizado)"
+
+#, fuzzy
+msgid "time format for buffers"
+msgstr "fecha y hora para las bÃºfers"
+
+msgid "number of colors to use for nicks colors"
+msgstr "nÃºmero de colores para usar en los colores de nombres de usuario"
 
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
@@ -946,41 +953,84 @@ msgstr ""
 "activar esta opciÃ³n para ver el blanco verdadero en vez del color de primer "
 "plano del terminal por defecto)"
 
-#, fuzzy
-msgid "save configuration file on exit"
-msgstr "guardar configuraciÃ³n a disco"
+msgid "display special message when day changes"
+msgstr "mostrar un mensaje especial cuando el dÃ­a cambia"
 
-msgid "set title for window (terminal for Curses GUI) with name and version"
+#, fuzzy
+msgid "time format for date displayed when day changed"
+msgstr "marca de tiempo para la fecha mostrada cuando el dÃ­a cambiÃ³"
+
+msgid ""
+"comma separated list of words to highlight (case insensitive comparison, "
+"words may begin or end with \"*\" for partial match)"
 msgstr ""
-"define el tÃ­tulo de la ventana (el terminal para la interfaz Curses) con el "
-"nombre y la versiÃ³n"
+"lista separada por comas de palabras a resaltar (comparaciÃ³n insensible a "
+"mayÃºsculas, las palabras pueden empezar o terminar con \"*\" para una "
+"concordancia parcial)"
 
-msgid "how many lines to scroll by with scroll_up and scroll_down"
-msgstr "cuÃ¡ntas lÃ­neas a desplazar con scroll_up and scroll_down"
+msgid ""
+"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
+msgstr ""
+"nÃºmero mÃ¡ximo de nombres en la hotlist (0 = no se muestra ninguno, sÃ³lo "
+"los nÃºmeros de bÃºfer)"
+
+msgid "max length of names in hotlist (0 = no limit)"
+msgstr "longitud mÃ¡xima de nombres en la hotlist (0 = sin lÃ­mite)"
+
+msgid ""
+"level for displaying names in hotlist (combination of: 1=join/part, "
+"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
+msgstr ""
+"nivel para mostrar mensajes en la hotlist (combinaciÃ³n de: 1=join/part, "
+"2=mensaje, 4=privado, 8=resaltado, por ejemplo: 12=privado + resaltado)"
+
+msgid ""
+"hotlist sort type (group_time_asc (default), group_time_desc, "
+"group_number_asc, group_number_desc, number_asc, number_desc)"
+msgstr ""
+
+msgid "enable info bar"
+msgstr "activa la barra de informaciÃ³n"
+
+msgid ""
+"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
+"notifications in infobar)"
+msgstr ""
+"retraso (en segundos) para la notificaciÃ³n de mensajes en la barra de "
+"informaciÃ³n (0 = desactivar las notificaciones en la barra de informaciÃ³n)"
+
+msgid "display seconds in infobar time"
+msgstr "mostrar segundos en la hora de la barra de herramientas"
 
 #, fuzzy
-msgid "time format for buffers"
-msgstr "fecha y hora para las bÃºfers"
+msgid "time format for time in infobar"
+msgstr "fecha y hora para las conversaciones guardadas"
 
-msgid "number of colors to use for nicks colors"
-msgstr "nÃºmero de colores para usar en los colores de nombres de usuario"
+#, c-format
+msgid ""
+"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
+"and '%m' by nick modes)"
+msgstr ""
+"formato para el prompt de entrada ('%c' es reemplazado por un canal o "
+"servidor, '%n' por un nick y '%m' por modos de nick)"
+
+#, fuzzy
+msgid "time format for \"time\" bar item"
+msgstr "fecha y hora para las conversaciones guardadas"
+
+msgid "complete only with first nick found"
+msgstr "completar Ãºnicamente con el primer nick encontrado"
+
+msgid "chars ignored for nick completion"
+msgstr "caracteres ignorados para el completado del nombre de usuario"
+
+#, fuzzy
+msgid "string inserted after nick completion"
+msgstr "la cadena mostrada tras la finalizaciÃ³n de los nombres de usuario"
 
 #, fuzzy
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr "mostrar ventana de usuarios (para las ventanas de canal)"
-
-msgid "nicklist position (top, left, right (default), bottom)"
-msgstr ""
-"posiciÃ³n de la ventana de usuarios (arriba (top), izquierda (left), derecha "
-"(right, por defecto), abajo (bottom))"
-
-#, fuzzy
-msgid ""
-"min size for nicklist (width or height, depending on nicklist_position (0 = "
-"no min size))"
-msgstr ""
-"tamaÃ±o mÃ­nimo para la ventana de usuarios (ancho o alto, dependiendo de "
-"look_nicklist_position (0 = sin tamaÃ±o mÃ­nimo))"
 
 #, fuzzy
 msgid ""
@@ -991,6 +1041,19 @@ msgstr ""
 "look_nicklist_position (0 = sin tamaÃ±o mÃ¡ximo, si min == max y > 0, "
 "entonces se fija el tamaÃ±o))"
 
+#, fuzzy
+msgid ""
+"min size for nicklist (width or height, depending on nicklist_position (0 = "
+"no min size))"
+msgstr ""
+"tamaÃ±o mÃ­nimo para la ventana de usuarios (ancho o alto, dependiendo de "
+"look_nicklist_position (0 = sin tamaÃ±o mÃ­nimo))"
+
+msgid "nicklist position (top, left, right (default), bottom)"
+msgstr ""
+"posiciÃ³n de la ventana de usuarios (arriba (top), izquierda (left), derecha "
+"(right, por defecto), abajo (bottom))"
+
 msgid "separator between chat and nicklist"
 msgstr ""
 
@@ -999,6 +1062,11 @@ msgstr "mostrar modo del usuario ((half)op/voice) antes de cada usuario"
 
 msgid "display space if nick mode is not (half)op/voice"
 msgstr "mostrar un espacio si el modo de usuario no es (half)op/voice"
+
+#, fuzzy
+msgid ""
+"max number of lines for paste without asking user (0 = disable this feature)"
+msgstr "nÃºmero mÃ¡ximo de nicks para la comprobaciÃ³n de ausencia"
 
 #, fuzzy
 msgid "prefix for error messages"
@@ -1033,82 +1101,22 @@ msgid "string displayed after prefix"
 msgstr "la cadena mostrada tras la finalizaciÃ³n de los nombres de usuario"
 
 #, fuzzy
-msgid "string inserted after nick completion"
-msgstr "la cadena mostrada tras la finalizaciÃ³n de los nombres de usuario"
-
-msgid "chars ignored for nick completion"
-msgstr "caracteres ignorados para el completado del nombre de usuario"
-
-msgid "complete only with first nick found"
-msgstr "completar Ãºnicamente con el primer nick encontrado"
-
-msgid "enable info bar"
-msgstr "activa la barra de informaciÃ³n"
-
-#, fuzzy
-msgid "time format for time in infobar"
-msgstr "fecha y hora para las conversaciones guardadas"
-
-msgid "display seconds in infobar time"
-msgstr "mostrar segundos en la hora de la barra de herramientas"
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-"retraso (en segundos) para la notificaciÃ³n de mensajes en la barra de "
-"informaciÃ³n (0 = desactivar las notificaciones en la barra de informaciÃ³n)"
-
-#, fuzzy
-msgid "time format for \"time\" bar item"
-msgstr "fecha y hora para las conversaciones guardadas"
-
-msgid ""
-"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
-msgstr ""
-"nÃºmero mÃ¡ximo de nombres en la hotlist (0 = no se muestra ninguno, sÃ³lo "
-"los nÃºmeros de bÃºfer)"
-
-msgid ""
-"level for displaying names in hotlist (combination of: 1=join/part, "
-"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
-msgstr ""
-"nivel para mostrar mensajes en la hotlist (combinaciÃ³n de: 1=join/part, "
-"2=mensaje, 4=privado, 8=resaltado, por ejemplo: 12=privado + resaltado)"
-
-msgid "max length of names in hotlist (0 = no limit)"
-msgstr "longitud mÃ¡xima de nombres en la hotlist (0 = sin lÃ­mite)"
-
-msgid ""
-"hotlist sort type (group_time_asc (default), group_time_desc, "
-"group_number_asc, group_number_desc, number_asc, number_desc)"
-msgstr ""
-
-msgid "display special message when day changes"
-msgstr "mostrar un mensaje especial cuando el dÃ­a cambia"
-
-#, fuzzy
-msgid "time format for date displayed when day changed"
-msgstr "marca de tiempo para la fecha mostrada cuando el dÃ­a cambiÃ³"
-
-#, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
 "usar un marcador en los servidores/canales para mostrar la primera lÃ­nea "
 "sin leer"
 
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
-msgstr ""
-"formato para el prompt de entrada ('%c' es reemplazado por un canal o "
-"servidor, '%n' por un nick y '%m' por modos de nick)"
-
 #, fuzzy
-msgid ""
-"max number of lines for paste without asking user (0 = disable this feature)"
-msgstr "nÃºmero mÃ¡ximo de nicks para la comprobaciÃ³n de ausencia"
+msgid "save configuration file on exit"
+msgstr "guardar configuraciÃ³n a disco"
+
+msgid "how many lines to scroll by with scroll_up and scroll_down"
+msgstr "cuÃ¡ntas lÃ­neas a desplazar con scroll_up and scroll_down"
+
+msgid "set title for window (terminal for Curses GUI) with name and version"
+msgstr ""
+"define el tÃ­tulo de la ventana (el terminal para la interfaz Curses) con el "
+"nombre y la versiÃ³n"
 
 #, fuzzy
 msgid "background color for window separators (when splited)"
@@ -1243,8 +1251,12 @@ msgid "text color for delimiters"
 msgstr "color para los delimitadores de la barra de informaciÃ³n"
 
 #, fuzzy
-msgid "text color for highlighted nick"
+msgid "text color for highlighted prefix"
 msgstr "color para el alias resaltado"
+
+#, fuzzy
+msgid "background color for highlighted prefix"
+msgstr "color de fondo para la barra de tÃ­tulo"
 
 #, fuzzy
 msgid "text color for unread data marker"
@@ -3024,20 +3036,17 @@ msgstr ""
 msgid "display message when (un)marking as away"
 msgstr "mostrar mensaje cuando se marque/desmarque como ausente"
 
+msgid ""
+"comma separated list of tags for messages that may produce highlight "
+"(usually any message from another user, not server messages,..)"
+msgstr ""
+
 msgid "show remote away message only once in private"
 msgstr ""
 "mostrar mensaje de ausencia remota Ãºnicamente una vez se estÃ¡ en privado"
 
 msgid "display notices as private messages"
 msgstr "mostrar noticias como mensajes privados"
-
-msgid ""
-"comma separated list of words to highlight (case insensitive comparison, "
-"words may begin or end with \"*\" for partial match)"
-msgstr ""
-"lista separada por comas de palabras a resaltar (comparaciÃ³n insensible a "
-"mayÃºsculas, las palabras pueden empezar o terminar con \"*\" para una "
-"concordancia parcial)"
 
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
@@ -3207,10 +3216,6 @@ msgstr "CTCP %sVERSION%s respuesta de %s%s%s: %s\n"
 msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
 msgstr "CTCP %sPING%s respuesta de %s%s%s: %ld.%ld segundos\n"
 
-#, c-format
-msgid "Private %s> %s"
-msgstr "Privado %s> %s"
-
 #, fuzzy, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr "%s%s %s(%s%s%s)%s ha abandonado %s%s"
@@ -3228,10 +3233,6 @@ msgid "%sCTCP %sVERSION%s received from %s%s"
 msgstr "CTCP %sVERSION%s recibido de %s%s"
 
 #, fuzzy, c-format
-msgid "Channel %s: * %s %s"
-msgstr "reop canal %s%s%s: %s%s\n"
-
-#, fuzzy, c-format
 msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
 msgstr "Recibido un CTCP %sSOUND%s \"%s\" de %s%s\n"
 
@@ -3246,10 +3247,6 @@ msgstr "CTCP desconocido %s%s%s recibido de %s%s"
 #, fuzzy, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s"
 msgstr "CTCP desconocido %s%s%s recibido de %s%s"
-
-#, fuzzy, c-format
-msgid "Channel %s: %s> %s"
-msgstr "reop canal %s%s%s: %s%s\n"
 
 #, fuzzy, c-format
 msgid "%s%s: cannot parse \"%s\" command"
@@ -4567,6 +4564,21 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #, fuzzy
+#~ msgid "words to highlight in buffers"
+#~ msgstr "desplazarse al resaltado siguiente en el bÃºfer"
+
+#~ msgid "Private %s> %s"
+#~ msgstr "Privado %s> %s"
+
+#, fuzzy
+#~ msgid "Channel %s: * %s %s"
+#~ msgstr "reop canal %s%s%s: %s%s\n"
+
+#, fuzzy
+#~ msgid "Channel %s: %s> %s"
+#~ msgstr "reop canal %s%s%s: %s%s\n"
+
+#, fuzzy
 #~ msgid "%sError: command \"%s\" is running"
 #~ msgstr "%s el comando \"%s\" ha fallado\n"
 
@@ -4822,9 +4834,6 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #~ msgid "scroll to previous highlight in buffer"
 #~ msgstr "desplazarse al resaltado anterior en el bÃºfer"
-
-#~ msgid "scroll to next highlight in buffer"
-#~ msgstr "desplazarse al resaltado siguiente en el bÃºfer"
 
 #~ msgid "refresh screen"
 #~ msgstr "recargar la pantalla"

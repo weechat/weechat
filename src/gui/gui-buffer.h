@@ -49,6 +49,7 @@ struct t_gui_line
     int tags_count;                    /* number of tags for line           */
     char **tags_array;                 /* tags for line                     */
     char displayed;                    /* 1 if line is displayed            */
+    char highlight;                    /* 1 if line has highlight           */
     char refresh_needed;               /* 1 if refresh asked (free buffer)  */
     char *prefix;                      /* prefix for line (may be NULL)     */
     int prefix_length;                 /* prefix length (on screen)         */
@@ -130,6 +131,12 @@ struct t_gui_buffer
     int text_search_exact;             /* exact search (case sensitive) ?   */
     int text_search_found;             /* 1 if text found, otherwise 0      */
     char *text_search_input;           /* input saved before text search    */
+    
+    /* highlight settings for buffer */
+    char *highlight_words;             /* list of words to highlight        */
+    int highlight_tags_count;          /* number of tags to highlight       */
+                                       /* (if 0, any tag is highlighted)    */
+    char **highlight_tags_array;       /* tags to highlight                 */
     
     /* keys associated to buffer */
     struct t_gui_key *keys;            /* keys specific to buffer           */

@@ -28,6 +28,13 @@
 #include <stdarg.h>
 #include <string.h>
 #include <ctype.h>
+#include <wctype.h>
+
+#if defined(__OpenBSD__)
+#include <utf8/wchar.h>
+#else
+#include <wchar.h>
+#endif
 
 #ifdef HAVE_ICONV
 #include <iconv.h>
@@ -536,6 +543,173 @@ string_convert_hex_chars (char *string)
     }
     
     return output;
+}
+
+/*
+ * string_get_wide_char: get wide char from string (first char)
+ */
+
+wint_t
+string_get_wide_char (char *string)
+{
+    int char_size;
+    wint_t result;
+    
+    if (!string || !string[0])
+        return WEOF;
+    
+    char_size = utf8_char_size (string);
+    switch (char_size)
+    {
+        case 1:
+            result = (wint_t)string[0];
+            break;
+        case 2:
+            result = ((wint_t)((unsigned char)string[0])) << 8
+                |  ((wint_t)((unsigned char)string[1]));
+            break;
+        case 3:
+            result = ((wint_t)((unsigned char)string[0])) << 16
+                |  ((wint_t)((unsigned char)string[1])) << 8
+                |  ((wint_t)((unsigned char)string[2]));
+            break;
+        case 4:
+            result = ((wint_t)((unsigned char)string[0])) << 24
+                |  ((wint_t)((unsigned char)string[1])) << 16
+                |  ((wint_t)((unsigned char)string[2])) << 8
+                |  ((wint_t)((unsigned char)string[3]));
+            break;
+        default:
+            result = WEOF;
+    }
+    return result;
+}
+
+/*
+ * string_is_word_char: return 1 if given character is a "word character"
+ */
+
+int
+string_is_word_char (char *string)
+{
+    wint_t c = string_get_wide_char (string);
+    
+    if (c == WEOF)
+        return 0;
+    
+    if (iswalnum (c))
+        return 1;
+    
+    switch (c)
+    {
+        case '-':
+        case '_':
+        case '|':
+            return 1;
+    }
+    
+    /* not a 'word char' */
+    return 0;
+}
+
+/*
+ * string_has_highlight: return 1 if string contains a highlight (using list of
+ *                       words to highlight)
+ *                       return 0 if no highlight is found in string
+ */
+
+int
+string_has_highlight (char *string, char *highlight_words)
+{
+    char *msg, *highlight, *match, *match_pre, *match_post, *msg_pos, *pos, *pos_end;
+    int end, length, startswith, endswith, wildcard_start, wildcard_end;
+    
+    if (!string || !string[0] || !highlight_words || !highlight_words[0])
+        return 0;
+    
+    /* convert both strings to lower case */
+    msg = strdup (string);
+    if (!msg)
+        return 0;
+    string_tolower (msg);
+    highlight = strdup (highlight_words);
+    if (!highlight)
+    {
+        free (msg);
+        return 0;
+    }
+    string_tolower (highlight);
+    
+    pos = highlight;
+    end = 0;
+    while (!end)
+    {
+        pos_end = strchr (pos, ',');
+        if (!pos_end)
+        {
+            pos_end = strchr (pos, '\0');
+            end = 1;
+        }
+        /* error parsing string! */
+        if (!pos_end)
+        {
+            free (msg);
+            free (highlight);
+            return 0;
+        }
+        
+        length = pos_end - pos;
+        pos_end[0] = '\0';
+        if (length > 0)
+        {
+            if ((wildcard_start = (pos[0] == '*')))
+            {
+                pos++;
+                length--;
+            }
+            if ((wildcard_end = (*(pos_end - 1) == '*')))
+            {
+                *(pos_end - 1) = '\0';
+                length--;
+            }
+        }
+            
+        if (length > 0)
+        {
+            msg_pos = msg;
+            /* highlight found! */
+            while ((match = strstr (msg_pos, pos)) != NULL)
+            {
+                match_pre = match - 1;
+                match_pre = utf8_prev_char (msg, match);
+                if (!match_pre)
+                    match_pre = match - 1;
+                match_post = match + length;
+                startswith = ((match == msg) || (!string_is_word_char (match_pre)));
+                endswith = ((!match_post[0]) || (!string_is_word_char (match_post)));
+                if ((wildcard_start && wildcard_end) ||
+                    (!wildcard_start && !wildcard_end && 
+                     startswith && endswith) ||
+                    (wildcard_start && endswith) ||
+                    (wildcard_end && startswith))
+                {
+                    free (msg);
+                    free (highlight);
+                    return 1;
+                }
+                msg_pos = match_post;
+            }
+        }
+        
+        if (!end)
+            pos = pos_end + 1;
+    }
+    
+    free (msg);
+    free (highlight);
+    
+    /* no highlight found */
+    return 0;
 }
 
 /*

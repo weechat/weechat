@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-05-22 12:59+0200\n"
-"PO-Revision-Date: 2008-05-22 13:00+0200\n"
+"POT-Creation-Date: 2008-06-01 22:03+0200\n"
+"PO-Revision-Date: 2008-06-01 22:03+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -951,22 +951,28 @@ msgstr ""
 msgid "\t\tDay changed to %s"
 msgstr "\t\tJour changé: %s"
 
+msgid "command executed when WeeChat starts, after loading plugins"
+msgstr ""
+"commande exécutée quand WeeChat démarre, après le chargement des extensions"
+
+msgid "command executed when WeeChat starts, before loading plugins"
+msgstr ""
+"commande exécutée quand WeeChat démarre, avant le chargement des extensions"
+
 msgid "display WeeChat logo at startup"
 msgstr "afficher le logo WeeChat au démarrage"
 
 msgid "display WeeChat version at startup"
 msgstr "afficher la version de WeeChat au démarrage"
 
-msgid "command executed when WeeChat starts, before loading plugins"
-msgstr ""
-"commande exécutée quand WeeChat démarre, avant le chargement des extensions"
-
-msgid "command executed when WeeChat starts, after loading plugins"
-msgstr ""
-"commande exécutée quand WeeChat démarre, après le chargement des extensions"
-
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "slogan WeeChat (si vide, le slogan ne sera pas utilisé)"
+
+msgid "time format for buffers"
+msgstr "format de date/heure pour les tampons"
+
+msgid "number of colors to use for nicks colors"
+msgstr "nombre de couleurs à utiliser pour les couleurs des pseudos"
 
 msgid ""
 "if set, uses real white color, disabled by default for terms with white "
@@ -978,39 +984,85 @@ msgstr ""
 "devriez activer cette option pour voir du vrai blanc au lieu de la couleur "
 "d'avant plan par défaut du terminal)"
 
-msgid "save configuration file on exit"
-msgstr "sauvegarder la configuration en quittant"
+msgid "display special message when day changes"
+msgstr "affiche un message quand le jour change"
 
-msgid "set title for window (terminal for Curses GUI) with name and version"
+msgid "time format for date displayed when day changed"
+msgstr "format de date pour la date affichée quand le jour a changé"
+
+msgid ""
+"comma separated list of words to highlight (case insensitive comparison, "
+"words may begin or end with \"*\" for partial match)"
 msgstr ""
-"définit le titre de la fenêtre (terminal pour l'interface Curses) avec le "
-"nom et la version"
+"liste des mots pour la notification (séparés par des virgules, la "
+"comparaison ne tient pas compte de la casse, les mots peuvent commencer ou "
+"se terminer par \"*\" pour une comparaison partielle)"
 
-msgid "how many lines to scroll by with scroll_up and scroll_down"
-msgstr "nombre de lignes pour le défilement avec scroll_up et scroll_down"
+msgid ""
+"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
+msgstr ""
+"nombre maximum de noms dans la liste d'activité (0 = pas de nom affiché, "
+"seulement les numéros de tampons)"
 
-msgid "time format for buffers"
-msgstr "format de date/heure pour les tampons"
+msgid "max length of names in hotlist (0 = no limit)"
+msgstr "nombre maximum des noms dans la liste d'activité (0 = pas de limite)"
 
-msgid "number of colors to use for nicks colors"
-msgstr "nombre de couleurs à utiliser pour les couleurs des pseudos"
+msgid ""
+"level for displaying names in hotlist (combination of: 1=join/part, "
+"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
+msgstr ""
+"niveau pour l'affichage des noms dans la liste d'activité (combinaison de: "
+"1=join/part, 2=message, 4=privé, 8=highlight, par exemple: 12=privé"
+"+highlight)"
+
+msgid ""
+"hotlist sort type (group_time_asc (default), group_time_desc, "
+"group_number_asc, group_number_desc, number_asc, number_desc)"
+msgstr ""
+"type de tri pour la liste d'activité (group_time_asc (par défaut), "
+"group_time_desc, group_number_asc, group_number_desc, number_asc, "
+"number_desc)"
+
+msgid "enable info bar"
+msgstr "active la barre d'infos"
+
+msgid ""
+"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
+"notifications in infobar)"
+msgstr ""
+"délai (en secondes) pour la notification des messages dans la barre d'infos "
+"(0 = désactiver les notifications dans la barre d'infos)"
+
+msgid "display seconds in infobar time"
+msgstr "afficher les secondes pour l'heure dans la barre d'infos"
+
+msgid "time format for time in infobar"
+msgstr "format de date/heure dans la barre d'infos"
+
+#, c-format
+msgid ""
+"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
+"and '%m' by nick modes)"
+msgstr ""
+"format pour l'invite de la zone de saisie ('%c' est remplacé par le canal ou "
+"serveur, '%n' par le pseudo et '%m' par les modes du pseudo)"
+
+msgid "time format for \"time\" bar item"
+msgstr "format de date/heure pour l'objet de barre \"time\""
+
+msgid "complete only with first nick found"
+msgstr "compléter seulement avec le premier pseudo trouvé"
+
+msgid "chars ignored for nick completion"
+msgstr "caractères à ignorer pour la complétion des pseudos"
+
+msgid "string inserted after nick completion"
+msgstr "chaîne affichée après la complétion des pseudos"
 
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr ""
 "afficher la liste de pseudos (sur les tampons avec la liste de pseudos "
 "activée)"
-
-msgid "nicklist position (top, left, right (default), bottom)"
-msgstr ""
-"position de la fenêtre des pseudos (top (haut), left (gauche), right "
-"(droite, par défaut), bottom (bas)"
-
-msgid ""
-"min size for nicklist (width or height, depending on nicklist_position (0 = "
-"no min size))"
-msgstr ""
-"taille minimum pour la fenêtre des pseudos (largeur ou hauteur, selon "
-"nicklist_position (0 = pas de taille minimum))"
 
 msgid ""
 "max size for nicklist (width or height, depending on nicklist_position (0 = "
@@ -1020,6 +1072,18 @@ msgstr ""
 "nicklist_position (0 = pas de taille maximum; si min = max et > 0, alors la "
 "taille est fixe))"
 
+msgid ""
+"min size for nicklist (width or height, depending on nicklist_position (0 = "
+"no min size))"
+msgstr ""
+"taille minimum pour la fenêtre des pseudos (largeur ou hauteur, selon "
+"nicklist_position (0 = pas de taille minimum))"
+
+msgid "nicklist position (top, left, right (default), bottom)"
+msgstr ""
+"position de la fenêtre des pseudos (top (haut), left (gauche), right "
+"(droite, par défaut), bottom (bas)"
+
 msgid "separator between chat and nicklist"
 msgstr "séparateur entre la discussion et la liste de pseudos"
 
@@ -1028,6 +1092,12 @@ msgstr "afficher le mode du pseudo ((half)op/voice) devant chaque utilisateur"
 
 msgid "display space if nick mode is not (half)op/voice"
 msgstr "afficher un espace si le mode du pseudo n'est pas (half)op/voice"
+
+msgid ""
+"max number of lines for paste without asking user (0 = disable this feature)"
+msgstr ""
+"nombre maximum de lignes pour la détection de collage sans demander à "
+"l'utilisateur (0 = désactiver cette fonctionnalité)"
 
 msgid "prefix for error messages"
 msgstr "préfixe pour les messages d'erreur"
@@ -1053,83 +1123,21 @@ msgstr "taille maximum pour le préfixe (0 = pas de taille maximum)"
 msgid "string displayed after prefix"
 msgstr "chaîne affichée après le préfixe"
 
-msgid "string inserted after nick completion"
-msgstr "chaîne affichée après la complétion des pseudos"
-
-msgid "chars ignored for nick completion"
-msgstr "caractères à ignorer pour la complétion des pseudos"
-
-msgid "complete only with first nick found"
-msgstr "compléter seulement avec le premier pseudo trouvé"
-
-msgid "enable info bar"
-msgstr "active la barre d'infos"
-
-msgid "time format for time in infobar"
-msgstr "format de date/heure dans la barre d'infos"
-
-msgid "display seconds in infobar time"
-msgstr "afficher les secondes pour l'heure dans la barre d'infos"
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-"délai (en secondes) pour la notification des messages dans la barre d'infos "
-"(0 = désactiver les notifications dans la barre d'infos)"
-
-msgid "time format for \"time\" bar item"
-msgstr "format de date/heure pour l'objet de barre \"time\""
-
-msgid ""
-"max number of names in hotlist (0 = no name displayed, only buffer numbers)"
-msgstr ""
-"nombre maximum de noms dans la liste d'activité (0 = pas de nom affiché, "
-"seulement les numéros de tampons)"
-
-msgid ""
-"level for displaying names in hotlist (combination of: 1=join/part, "
-"2=message, 4=private, 8=highlight, for example: 12=private+highlight)"
-msgstr ""
-"niveau pour l'affichage des noms dans la liste d'activité (combinaison de: "
-"1=join/part, 2=message, 4=privé, 8=highlight, par exemple: 12=privé"
-"+highlight)"
-
-msgid "max length of names in hotlist (0 = no limit)"
-msgstr "nombre maximum des noms dans la liste d'activité (0 = pas de limite)"
-
-msgid ""
-"hotlist sort type (group_time_asc (default), group_time_desc, "
-"group_number_asc, group_number_desc, number_asc, number_desc)"
-msgstr ""
-"type de tri pour la liste d'activité (group_time_asc (par défaut), "
-"group_time_desc, group_number_asc, group_number_desc, number_asc, "
-"number_desc)"
-
-msgid "display special message when day changes"
-msgstr "affiche un message quand le jour change"
-
-msgid "time format for date displayed when day changed"
-msgstr "format de date pour la date affichée quand le jour a changé"
-
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
 "utiliser un marqueur (ligne ou caractère) sur les tampons pour montrer la "
 "première ligne non lue"
 
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
-msgstr ""
-"format pour l'invite de la zone de saisie ('%c' est remplacé par le canal ou "
-"serveur, '%n' par le pseudo et '%m' par les modes du pseudo)"
+msgid "save configuration file on exit"
+msgstr "sauvegarder la configuration en quittant"
 
-msgid ""
-"max number of lines for paste without asking user (0 = disable this feature)"
+msgid "how many lines to scroll by with scroll_up and scroll_down"
+msgstr "nombre de lignes pour le défilement avec scroll_up et scroll_down"
+
+msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr ""
-"nombre maximum de lignes pour la détection de collage sans demander à "
-"l'utilisateur (0 = désactiver cette fonctionnalité)"
+"définit le titre de la fenêtre (terminal pour l'interface Curses) avec le "
+"nom et la version"
 
 msgid "background color for window separators (when splited)"
 msgstr "couleur du fond pour les séparateurs de fenêtres (quand divisé)"
@@ -1230,8 +1238,11 @@ msgstr "couleur du texte pour les noms d'hôtes"
 msgid "text color for delimiters"
 msgstr "couleur du texte pour les délimiteurs"
 
-msgid "text color for highlighted nick"
-msgstr "couleur du texte pour le pseudo surligné"
+msgid "text color for highlighted prefix"
+msgstr "couleur du texte pour le préfixe surligné (highlight)"
+
+msgid "background color for highlighted prefix"
+msgstr "couleur du fond pour le préfixe surligné (highlight)"
 
 msgid "text color for unread data marker"
 msgstr "couleur du texte pour le marqueur de données non lues"
@@ -2979,19 +2990,19 @@ msgstr ""
 msgid "display message when (un)marking as away"
 msgstr "affiche un message pour l'absence/le retour"
 
+msgid ""
+"comma separated list of tags for messages that may produce highlight "
+"(usually any message from another user, not server messages,..)"
+msgstr ""
+"liste des tags pour les messages qui peuvent produire un highlight (séparés "
+"par des virgules, typiquement tout message venant d'un autre utilisateur, "
+"pas les messages du serveur, ...)"
+
 msgid "show remote away message only once in private"
 msgstr "voir le message d'absence distant une seule fois en privé"
 
 msgid "display notices as private messages"
 msgstr "afficher les notices comme des messages privés"
-
-msgid ""
-"comma separated list of words to highlight (case insensitive comparison, "
-"words may begin or end with \"*\" for partial match)"
-msgstr ""
-"liste des mots pour la notification (séparés par des virgules, la "
-"comparaison ne tient pas compte de la casse, les mots peuvent commencer ou "
-"se terminer par \"*\" pour une comparaison partielle)"
 
 msgid ""
 "default part message (leaving channel) ('%v' will be replaced by WeeChat "
@@ -3158,10 +3169,6 @@ msgid "%sCTCP %sPING%s reply from %s%s%s: %ld.%ld %s"
 msgstr "%sCTCP %sPING%s réponse de %s%s%s: %ld.%ld %s"
 
 #, c-format
-msgid "Private %s> %s"
-msgstr "Privé %s> %s"
-
-#, c-format
 msgid "%s%s%s %s(%s%s%s)%s has left %s%s %s(%s%s%s)"
 msgstr "%s%s%s %s(%s%s%s)%s a quitté %s%s %s(%s%s%s)"
 
@@ -3178,10 +3185,6 @@ msgid "%sCTCP %sVERSION%s received from %s%s"
 msgstr "%sCTCP %sVERSION%s reçu de %s%s"
 
 #, c-format
-msgid "Channel %s: * %s %s"
-msgstr "Canal %s: * %s %s"
-
-#, c-format
 msgid "%sReceived a CTCP %sSOUND%s \"%s\" from %s%s"
 msgstr "%sCTCP %sSOUND%s \"%s\" reçu de %s%s"
 
@@ -3196,10 +3199,6 @@ msgstr "%sCTCP inconnu %s%s%s reçu de %s%s%s: %s"
 #, c-format
 msgid "%sUnknown CTCP %s%s%s received from %s%s"
 msgstr "%sCTCP inconnu %s%s%s reçu de %s%s"
-
-#, c-format
-msgid "Channel %s: %s> %s"
-msgstr "Canal %s: %s> %s"
 
 #, c-format
 msgid "%s%s: cannot parse \"%s\" command"

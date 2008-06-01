@@ -233,6 +233,8 @@ irc_server_set_nick (struct t_irc_server *server, char *nick)
     
     weechat_buffer_set (server->buffer, "nick", nick);
     
+    weechat_buffer_set (server->buffer, "highlight_words", nick);
+    
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
@@ -1847,9 +1849,21 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
                                              &irc_buffer_close_cb, NULL);
         if (!server->buffer)
             return 0;
+        
         weechat_buffer_set (server->buffer, "display", "1");
+        
         weechat_hook_signal_send ("logger_backlog",
                                   WEECHAT_HOOK_SIGNAL_POINTER, server->buffer);
+        
+        /* set highlights settings on server buffer */
+        if (server->nick)
+            weechat_buffer_set (server->buffer, "highlight_words", server->nick);
+        if (weechat_config_string (irc_config_look_highlight_tags)
+            && weechat_config_string (irc_config_look_highlight_tags)[0])
+        {
+            weechat_buffer_set (server->buffer, "highlight_tags",
+                                weechat_config_string (irc_config_look_highlight_tags));
+        }
     }
     
 #ifndef HAVE_GNUTLS

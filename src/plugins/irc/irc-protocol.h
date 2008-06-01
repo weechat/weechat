@@ -45,8 +45,7 @@
 struct t_irc_server;
 
 typedef int (t_irc_recv_func)(struct t_irc_server *server, char *comand,
-                              int argc, char **argv, char **argv_eol,
-                              int highlight);
+                              int argc, char **argv, char **argv_eol);
 
 struct t_irc_protocol_msg
 {

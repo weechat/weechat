@@ -566,7 +566,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
                                   int *lines_displayed,
                                   int simulate)
 {
-    char str_space[] = " ", str_plus[] = "+";
+    char str_space[] = " ", str_plus[] = "+", *prefix_highlighted;
     int i, length_allowed, num_spaces;
     
     /* display time */
@@ -608,14 +608,25 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
             {
                 gui_chat_display_word (window, line, str_space,
                                        NULL, 1, num_lines, count,
-                                       lines_displayed,simulate);
+                                       lines_displayed, simulate);
             }
         }
+        
+        prefix_highlighted = NULL;
+        if (line->highlight)
+        {
+            prefix_highlighted = (char *)gui_color_decode ((unsigned char *)line->prefix);
+            if (!simulate)
+                gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
+                                              GUI_COLOR_CHAT_HIGHLIGHT);
+        } 
+        
         /* not enough space to display full prefix ? => truncate it! */
         if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
             && (num_spaces < 0))
         {
-            gui_chat_display_word (window, line, line->prefix,
+            gui_chat_display_word (window, line,
+                                   (prefix_highlighted) ? prefix_highlighted : line->prefix,
                                    line->prefix +
                                    gui_chat_string_real_pos (line->prefix,
                                                              length_allowed - 1),
@@ -624,10 +635,14 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
         }
         else
         {
-            gui_chat_display_word (window, line, line->prefix,
+            gui_chat_display_word (window, line,
+                                   (prefix_highlighted) ? prefix_highlighted : line->prefix,
                                    NULL, 1, num_lines, count, lines_displayed,
                                    simulate);
         }
+        
+        if (prefix_highlighted)
+            free (prefix_highlighted);
         
         if (!simulate)
             gui_window_reset_style (GUI_CURSES(window)->win_chat, GUI_COLOR_CHAT);
