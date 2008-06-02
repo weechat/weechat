@@ -679,7 +679,10 @@ network_connect_child_read_cb (void *arg_hook_connect)
 {
     struct t_hook *hook_connect;
     char buffer[1];
-    int num_read, rc;
+    int num_read;
+#ifdef HAVE_GNUTLS
+    int rc;
+#endif
     
     hook_connect = (struct t_hook *)arg_hook_connect;
     

@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <string.h>
+#include <time.h>
 #include <sys/socket.h>
 #include <sys/time.h>
 
@@ -1967,7 +1968,11 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
                                                  server->ports_array[server->current_address],
                                                  server->sock,
                                                  server->ipv6,
+#ifdef HAVE_GNUTLS
                                                  (server->ssl_connected) ? &server->gnutls_sess : NULL,
+#else
+                                                 NULL,
+#endif
                                                  server->local_hostname,
                                                  irc_server_connect_cb,
                                                  server);

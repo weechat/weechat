@@ -798,6 +798,11 @@ hook_connect (struct t_weechat_plugin *plugin, char *address, int port,
     struct t_hook *new_hook;
     struct t_hook_connect *new_hook_connect;
     
+#ifndef HAVE_GNUTLS
+    /* make C compiler happy */
+    (void) gnutls_sess;
+#endif
+    
     if ((sock < 0) || !address || (port <= 0))
         return NULL;
     
@@ -819,7 +824,9 @@ hook_connect (struct t_weechat_plugin *plugin, char *address, int port,
     new_hook_connect->port = port;
     new_hook_connect->sock = sock;
     new_hook_connect->ipv6 = ipv6;
+#ifdef HAVE_GNUTLS
     new_hook_connect->gnutls_sess = gnutls_sess;
+#endif
     new_hook_connect->local_hostname = (local_hostname) ?
         strdup (local_hostname) : NULL;
     new_hook_connect->child_read = -1;
