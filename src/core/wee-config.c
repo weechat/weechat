@@ -486,9 +486,10 @@ config_change_day_change (void *data, struct t_config_option *option)
 
 /*
  * config_weechat_reload: reload WeeChat configuration file
- *                        return:  0 = successful
- *                                -1 = config file file not found
- *                                -2 = error in config file
+ *                        return one of these values:
+ *                          WEECHAT_CONFIG_READ_OK
+ *                          WEECHAT_CONFIG_READ_MEMORY_ERROR
+ *                          WEECHAT_CONFIG_READ_FILE_NOT_FOUND
  */
 
 int
@@ -511,7 +512,7 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     
     rc = config_file_reload (weechat_config_file);
     
-    if (rc == 0)
+    if (rc == WEECHAT_CONFIG_READ_OK)
     {
         gui_bar_use_temp_bars ();
     }
@@ -630,8 +631,6 @@ config_weechat_filter_read (void *data,
 
 /*
  * config_weechat_filter_write: write filter section in configuration file
- *                              Return:  0 = successful
- *                                      -1 = write error
  */
 
 void
@@ -691,8 +690,6 @@ config_weechat_key_read (void *data, struct t_config_file *config_file,
 
 /*
  * config_weechat_key_write: write key section in configuration file
- *                           Return:  0 = successful
- *                                   -1 = write error
  */
 
 void
@@ -1614,9 +1611,10 @@ config_weechat_init ()
 
 /*
  * config_weechat_read: read WeeChat configuration file
- *                      return:  0 = successful
- *                              -1 = configuration file file not found
- *                              -2 = error in configuration file
+ *                      return one of these values:
+ *                        WEECHAT_CONFIG_READ_OK
+ *                        WEECHAT_CONFIG_READ_MEMORY_ERROR
+ *                        WEECHAT_CONFIG_READ_FILE_NOT_FOUND
  */
 
 int
@@ -1625,7 +1623,7 @@ config_weechat_read ()
     int rc;
     
     rc = config_file_read (weechat_config_file);
-    if (rc == 0)
+    if (rc == WEECHAT_CONFIG_READ_OK)
     {
         config_change_infobar_seconds (NULL, NULL);
         config_change_day_change (NULL, NULL);
@@ -1637,8 +1635,10 @@ config_weechat_read ()
 
 /*
  * config_weechat_write: write WeeChat configuration file
- *                       return:  0 if ok
- *                              < 0 if error
+ *                       return one of these values:
+ *                         WEECHAT_CONFIG_WRITE_OK
+ *                         WEECHAT_CONFIG_WRITE_ERROR
+ *                         WEECHAT_CONFIG_WRITE_MEMORY_ERROR
  */
 
 int

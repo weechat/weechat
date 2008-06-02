@@ -74,7 +74,6 @@ plugin_config_search (char *plugin_name, char *option_name)
 /*
  * plugin_config_set_internal: set value for a plugin option (internal function)
  *                             This function should not be called directly.
- *                             Return: 1 if ok, 0 if error
  */
 
 int
@@ -83,7 +82,7 @@ plugin_config_set_internal (char *option, char *value)
     int rc;
     struct t_config_option *ptr_option;
     
-    rc = 0;
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     
     ptr_option = config_file_search_option (plugin_config_file,
                                             plugin_config_section_var,
@@ -98,7 +97,7 @@ plugin_config_set_internal (char *option, char *value)
             plugin_config_file, plugin_config_section_var,
             option, "string", NULL,
             NULL, 0, 0, value, NULL, NULL, NULL, NULL, NULL, NULL);
-        rc = (ptr_option) ? 1 : 0;
+        rc = (ptr_option) ? WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
     
     return rc;
@@ -106,7 +105,6 @@ plugin_config_set_internal (char *option, char *value)
 
 /*
  * plugin_config_set: set value for a plugin option (create it if not found)
- *                    Return: 1 if ok, 0 if error
  */
 
 int
@@ -115,7 +113,7 @@ plugin_config_set (char *plugin_name, char *option_name, char *value)
     int length, rc;
     char *option_full_name;
     
-    rc = 0;
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     
     length = strlen (plugin_name) + 1 + strlen (option_name) + 1;
     option_full_name = malloc (length);
@@ -133,9 +131,6 @@ plugin_config_set (char *plugin_name, char *option_name, char *value)
 
 /*
  * plugin_config_reload: reload plugins configuration file
- *                       return:  0 = successful
- *                               -1 = config file file not found
- *                               -2 = error in config file
  */
 
 int
@@ -170,7 +165,8 @@ plugin_config_create_option (void *data, struct t_config_file *config_file,
         option_name, "string", NULL,
         NULL, 0, 0, value, NULL, NULL, NULL, NULL, NULL, NULL);
     
-    return (ptr_option) ? 1 : 0;
+    return (ptr_option) ?
+        WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
 }
 
 /*
@@ -197,9 +193,6 @@ plugin_config_init ()
 
 /*
  * plugin_config_read: read plugins configuration file
- *                     return:  0 = successful
- *                             -1 = config file file not found
- *                             -2 = error in config file
  */
 
 int
@@ -210,8 +203,6 @@ plugin_config_read ()
 
 /*
  * plugin_config_write: write plugins configuration file
- *                      return:  0 if ok
- *                             < 0 if error
  */
 
 int

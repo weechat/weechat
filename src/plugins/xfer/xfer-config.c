@@ -293,9 +293,6 @@ xfer_config_init ()
 
 /*
  * xfer_config_read: read xfer configuration file
- *                   return:  0 = successful
- *                           -1 = configuration file file not found
- *                           -2 = error in configuration file
  */
 
 int
@@ -306,8 +303,6 @@ xfer_config_read ()
 
 /*
  * xfer_config_write: write xfer configuration file
- *                    return:  0 if ok
- *                           < 0 if error
  */
 
 int

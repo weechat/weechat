@@ -37,6 +37,7 @@
 #include "wee-string.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-chat.h"
+#include "../plugins/plugin.h"
 
 
 struct t_config_file *config_files = NULL;
@@ -734,9 +735,14 @@ config_file_string_to_boolean (char *text)
 
 /*
  * config_file_option_reset: set default value for an option
- *                           return: 2 if ok (value changed)
- *                                   1 if ok (value is the same)
- *                                   0 if failed
+ *                         return one of these values:
+ *                           WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
+ *                           WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
+ *                           WEECHAT_CONFIG_OPTION_SET_ERROR
+ *
+ *                           2 if ok (value changed)
+ *                           1 if ok (value is the same)
+ *                           0 if failed
  */
 
 int
@@ -746,43 +752,43 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
     char value[256], *option_full_name;
     
     if (!option)
-        return 0;
+        return WEECHAT_CONFIG_OPTION_SET_ERROR;
     
-    rc = 0;
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     value[0] = '\0';
     
     switch (option->type)
     {
         case CONFIG_OPTION_TYPE_BOOLEAN:
             if (CONFIG_BOOLEAN(option) == CONFIG_BOOLEAN_DEFAULT(option))
-                rc = 1;
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
             else
             {
                 CONFIG_BOOLEAN(option) = CONFIG_BOOLEAN_DEFAULT(option);
                 snprintf (value, sizeof (value), "%s",
                           CONFIG_BOOLEAN(option) ?
                           config_boolean_true[0] : config_boolean_false[0]);
-                rc = 2;
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
             }
             break;
         case CONFIG_OPTION_TYPE_INTEGER:
             if (CONFIG_INTEGER(option) == CONFIG_INTEGER_DEFAULT(option))
-                rc = 1;
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
             else
             {
                 CONFIG_INTEGER(option) = CONFIG_INTEGER_DEFAULT(option);
                 snprintf (value, sizeof (value), "%d",
                           CONFIG_INTEGER(option));
-                rc = 2;
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
             }
             break;
         case CONFIG_OPTION_TYPE_STRING:
-            rc = 1;
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
             if ((!option->value && option->default_value)
                 || (option->value && !option->default_value)
                 || (strcmp ((char *)option->value,
                             (char *)option->default_value) != 0))
-                rc = 2;
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
             if (option->value)
                 free (option->value);
             if (option->default_value)
@@ -794,32 +800,33 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
                               CONFIG_STRING(option));
                 }
                 else
-                    rc = 0;
+                    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
             }
             else
                 option->value = NULL;
             break;
         case CONFIG_OPTION_TYPE_COLOR:
             if (CONFIG_COLOR(option) == CONFIG_COLOR_DEFAULT(option))
-                rc = 1;
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
             else
             {
                 CONFIG_COLOR(option) = CONFIG_COLOR_DEFAULT(option);
                 snprintf (value, sizeof (value), "%d",
                           CONFIG_COLOR(option));
-                rc = 2;
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
             }
             break;
         case CONFIG_NUM_OPTION_TYPES:
             break;
     }
     
-    if ((rc == 2) && run_callback && option->callback_change)
+    if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
+        && run_callback && option->callback_change)
     {
         (void)(option->callback_change)(option->callback_change_data, option);
     }
     
-    if (rc > 0)
+    if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         if (option->config_file && option->section)
         {
@@ -845,9 +852,10 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
 /*
  * config_file_option_set: set value for an option
  *                         if value is NULL, then default value for option is set
- *                         return: 2 if ok (value changed)
- *                                 1 if ok (value is the same)
- *                                 0 if failed
+ *                         return one of these values:
+ *                           WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
+ *                           WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
+ *                           WEECHAT_CONFIG_OPTION_SET_ERROR
  */
 
 int
@@ -859,9 +867,9 @@ config_file_option_set (struct t_config_option *option, char *value,
     char *error, *option_full_name;
     
     if (!option)
-        return 0;
+        return WEECHAT_CONFIG_OPTION_SET_ERROR;
     
-    rc = 0;
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     
     if (value && option->callback_check_value)
     {
@@ -869,7 +877,7 @@ config_file_option_set (struct t_config_option *option, char *value,
             (option->callback_check_value_data,
              option,
              value))
-            return 0;
+            return WEECHAT_CONFIG_OPTION_SET_ERROR;
     }
     
     switch (option->type)
@@ -882,7 +890,7 @@ config_file_option_set (struct t_config_option *option, char *value,
                     *((int *)option->value) =
                         (*((int *)option->value) == CONFIG_BOOLEAN_TRUE) ?
                         CONFIG_BOOLEAN_FALSE : CONFIG_BOOLEAN_TRUE;
-                    rc = 2;
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                 }
                 else
                 {
@@ -890,11 +898,11 @@ config_file_option_set (struct t_config_option *option, char *value,
                     {
                         value_int = config_file_string_to_boolean (value);
                         if (value_int == *((int *)option->value))
-                            rc = 1;
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                         else
                         {
                             *((int *)option->value) = value_int;
-                            rc = 2;
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                         }
                     }
                 }
@@ -943,11 +951,11 @@ config_file_option_set (struct t_config_option *option, char *value,
                     if (value_int >= 0)
                     {
                         if (value_int == *((int *)option->value))
-                            rc = 1;
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                         else
                         {
                             *((int *)option->value) = value_int;
-                            rc = 2;
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                         }
                     }
                 }
@@ -991,29 +999,29 @@ config_file_option_set (struct t_config_option *option, char *value,
                     if (new_value_ok)
                     {
                         if (value_int == *((int *)option->value))
-                            rc = 1;
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                         else
                         {
                             *((int *)option->value) = value_int;
-                            rc = 2;
+                            rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                         }
                     }
                 }
             }
             break;
         case CONFIG_OPTION_TYPE_STRING:
-            rc = 1;
+            rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
             if ((!option->value && value)
                 || (option->value && !value)
                 || (strcmp ((char *)option->value, value) != 0))
-                rc = 2;
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
             if (option->value)
                 free (option->value);
             if (value)
             {
                 option->value = strdup (value);
                 if (!option->value)
-                    rc = 0;
+                    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
             }
             else
                 option->value = NULL;
@@ -1049,11 +1057,11 @@ config_file_option_set (struct t_config_option *option, char *value,
             if (value_int >= 0)
             {
                 if (value_int == *((int *)option->value))
-                    rc = 1;
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                 else
                 {
                     *((int *)option->value) = value_int;
-                    rc = 2;
+                    rc = WEECHAT_CONFIG_OPTION_SET_OK_CHANGED;
                 }
             }
             break;
@@ -1061,12 +1069,13 @@ config_file_option_set (struct t_config_option *option, char *value,
             break;
     }
     
-    if ((rc == 2) && run_callback && option->callback_change)
+    if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
+        && run_callback && option->callback_change)
     {
         (void)(option->callback_change)(option->callback_change_data, option);
     }
     
-    if (rc > 0)
+    if (rc != WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         if (option->config_file && option->section)
         {
@@ -1091,10 +1100,11 @@ config_file_option_set (struct t_config_option *option, char *value,
 
 /*
  * config_file_option_unset: unset/reset option
- *                           return: -1 if failed
- *                                    0 if reset not needed
- *                                    1 if option reset
- *                                    2 if option removed
+ *                           return one of these values:
+ *                             WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET
+ *                             WEECHAT_CONFIG_OPTION_UNSET_OK_RESET
+ *                             WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED
+ *                             WEECHAT_CONFIG_OPTION_UNSET_ERROR
  */
 
 int
@@ -1102,7 +1112,7 @@ config_file_option_unset (struct t_config_option *option)
 {
     int rc;
     
-    rc = 0;
+    rc = WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET;
     
     if (option->section && option->section->user_can_delete_options)
     {
@@ -1114,21 +1124,21 @@ config_file_option_unset (struct t_config_option *option)
                  option);
         }
         config_file_option_free (option);
-        rc = 2;
+        rc = WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
     }
     else
     {
         /* reset value */
         switch (config_file_option_reset (option, 1))
         {
-            case 0:
-                rc = -1;
+            case WEECHAT_CONFIG_OPTION_SET_ERROR:
+                rc = WEECHAT_CONFIG_OPTION_UNSET_ERROR;
                 break;
-            case 1:
-                rc = 0;
+            case WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE:
+                rc = WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET;
                 break;
-            case 2:
-                rc = 1;
+            case WEECHAT_CONFIG_OPTION_SET_OK_CHANGED:
+                rc = WEECHAT_CONFIG_OPTION_UNSET_OK_RESET;
                 break;
         }
     }
@@ -1207,10 +1217,11 @@ config_file_option_get_pointer (struct t_config_option *option, char *property)
 /*
  * config_file_option_set_with_string: set value for an option (with a string
  *                                     for name of option)
- *                                     return: 2 if ok (value changed)
- *                                             1 if ok (value is the same)
- *                                             0 if failed to set option
- *                                            -1 if option is not found
+ *                                     return one of these values:
+ *                                       WEECHAT_CONFIG_OPTION_SET_OK_CHANGED
+ *                                       WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE
+ *                                       WEECHAT_CONFIG_OPTION_SET_ERROR
+ *                                       WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND
  */
 
 int
@@ -1222,7 +1233,7 @@ config_file_option_set_with_string (char *option_name, char *value)
     struct t_config_option *ptr_option;
     char *pos_option;
     
-    rc = 0;
+    rc = WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
     
     config_file_search_with_string (option_name, &ptr_config, &ptr_section,
                                     &ptr_option, &pos_option);
@@ -1242,8 +1253,11 @@ config_file_option_set_with_string (char *option_name, char *value)
                      ptr_section,
                      pos_option,
                      value);
-                if (rc > 0)
+                if ((rc == WEECHAT_CONFIG_OPTION_SET_OK_CHANGED)
+                    || (rc == WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE))
+                {
                     hook_config_exec (option_name, value);
+                }
             }
         }
     }
@@ -1253,10 +1267,11 @@ config_file_option_set_with_string (char *option_name, char *value)
 
 /*
  * config_file_option_unset_with_string: unset/reset option
- *                                       return: -1 if failed
- *                                                0 if reset not needed
- *                                                1 if option reset
- *                                                2 if option removed
+ *                                       return one of these values:
+ *                                         WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET
+ *                                         WEECHAT_CONFIG_OPTION_UNSET_OK_RESET
+ *                                         WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED
+ *                                         WEECHAT_CONFIG_OPTION_UNSET_ERROR
  */
 
 int
@@ -1265,7 +1280,7 @@ config_file_option_unset_with_string (char *option_name)
     struct t_config_option *ptr_option;
     int rc;
     
-    rc = -1;
+    rc = WEECHAT_CONFIG_OPTION_UNSET_ERROR;
     
     config_file_search_with_string (option_name, NULL, NULL, &ptr_option, NULL);
     
@@ -1448,9 +1463,10 @@ config_file_write_line (struct t_config_file *config_file,
 /*
  * config_file_write_internal: write a configuration file
  *                             (should not be called directly)
- *                             return:  0 if ok
- *                                     -1 if error writing file
- *                                     -2 if not enough memory
+ *                             return one of these values:
+ *                               WEECHAT_CONFIG_WRITE_OK
+ *                               WEECHAT_CONFIG_WRITE_ERROR
+ *                               WEECHAT_CONFIG_WRITE_MEMORY_ERROR
  */
 
 int
@@ -1464,14 +1480,14 @@ config_file_write_internal (struct t_config_file *config_file,
     struct t_config_option *ptr_option;
     
     if (!config_file)
-        return -1;
+        return WEECHAT_CONFIG_WRITE_ERROR;
 
     /* build filename */
     filename_length = strlen (weechat_home) +
         strlen (config_file->filename) + 2;
     filename = malloc (filename_length);
     if (!filename)
-        return -2;
+        return WEECHAT_CONFIG_WRITE_MEMORY_ERROR;
     snprintf (filename, filename_length, "%s%s%s",
               weechat_home, DIR_SEPARATOR, config_file->filename);
     
@@ -1481,7 +1497,7 @@ config_file_write_internal (struct t_config_file *config_file,
     if (!filename2)
     {
         free (filename);
-        return -2;
+        return WEECHAT_CONFIG_WRITE_MEMORY_ERROR;
     }
     snprintf (filename2, filename_length + 32, "%s.weechattmp", filename);
     
@@ -1495,7 +1511,7 @@ config_file_write_internal (struct t_config_file *config_file,
                          filename2);
         free (filename);
         free (filename2);
-        return -1;
+        return WEECHAT_CONFIG_WRITE_ERROR;
     }
     
     log_printf (_("Writing configuration file %s %s"),
@@ -1556,16 +1572,19 @@ config_file_write_internal (struct t_config_file *config_file,
     
     free (filename);
     free (filename2);
+    
     if (rc != 0)
-        return -1;
-    return 0;
+        return WEECHAT_CONFIG_WRITE_ERROR;
+    
+    return WEECHAT_CONFIG_WRITE_OK;
 }
 
 /*
  * config_file_write: write a configuration file
- *                    return:  0 if ok
- *                            -1 if error writing file
- *                            -2 if not enough memory
+ *                    return one of these values:
+ *                      WEECHAT_CONFIG_WRITE_OK
+ *                      WEECHAT_CONFIG_WRITE_ERROR
+ *                      WEECHAT_CONFIG_WRITE_MEMORY_ERROR
  */
 
 int
@@ -1577,9 +1596,10 @@ config_file_write (struct t_config_file *config_file)
 /*
  * config_file_read_internal: read a configuration file
  *                            (should not be called directly)
- *                            return:  0 = successful
- *                                    -1 = config file file not found
- *                                    -2 = error in config file
+ *                            return one of these values:
+ *                              WEECHAT_CONFIG_READ_OK
+ *                              WEECHAT_CONFIG_READ_MEMORY_ERROR
+ *                              WEECHAT_CONFIG_READ_FILE_NOT_FOUND
  */
 
 int
@@ -1592,13 +1612,13 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
     char line[1024], *ptr_line, *ptr_line2, *pos, *pos2;
     
     if (!config_file)
-        return -1;
+        return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
     
     /* build filename */
     filename_length = strlen (weechat_home) + strlen (config_file->filename) + 2;
     filename = malloc (filename_length);
     if (!filename)
-        return -2;
+        return WEECHAT_CONFIG_READ_MEMORY_ERROR;
     snprintf (filename, filename_length, "%s%s%s",
               weechat_home, DIR_SEPARATOR, config_file->filename);
     config_file->file = fopen (filename, "r");
@@ -1613,7 +1633,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              filename);
             free (filename);
-            return -1;
+            return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
         }
     }
     
@@ -1744,7 +1764,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         }
                         else
                         {
-                            rc = -1;
+                            rc = WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND;
                             ptr_option = config_file_search_option (config_file,
                                                                     ptr_section,
                                                                     line);
@@ -1770,7 +1790,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                         
                         switch (rc)
                         {
-                            case -1:
+                            case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
                                 if (ptr_section)
                                     gui_chat_printf (NULL,
                                                      _("%sWarning: %s, line %d: "
@@ -1789,7 +1809,7 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
                                                      filename, line_number,
                                                      line);
                                 break;
-                            case 0:
+                            case WEECHAT_CONFIG_OPTION_SET_ERROR:
                                 gui_chat_printf (NULL,
                                                  _("%sWarning: %s, line %d: "
                                                    "invalid value for option "
@@ -1808,14 +1828,15 @@ config_file_read_internal (struct t_config_file *config_file, int reload)
     config_file->file = NULL;
     free (filename);
     
-    return 0;
+    return WEECHAT_CONFIG_READ_OK;
 }
 
 /*
  * config_file_read: read a configuration file
- *                   return:  0 = successful
- *                           -1 = config file file not found
- *                           -2 = error in config file
+ *                   return one of these values:
+ *                     WEECHAT_CONFIG_READ_OK
+ *                     WEECHAT_CONFIG_READ_MEMORY_ERROR
+ *                     WEECHAT_CONFIG_READ_FILE_NOT_FOUND
  */
 
 int
@@ -1826,9 +1847,10 @@ config_file_read (struct t_config_file *config_file)
 
 /*
  * config_file_reload: reload a configuration file
- *                     return:  0 = successful
- *                             -1 = config file file not found
- *                             -2 = error in config file
+ *                     return one of these values:
+ *                       WEECHAT_CONFIG_READ_OK
+ *                       WEECHAT_CONFIG_READ_MEMORY_ERROR
+ *                       WEECHAT_CONFIG_READ_FILE_NOT_FOUND
  */
 
 int
@@ -1839,7 +1861,7 @@ config_file_reload (struct t_config_file *config_file)
     int rc;
     
     if (!config_file)
-        return -1;
+        return WEECHAT_CONFIG_READ_FILE_NOT_FOUND;
     
     log_printf (_("Reloading configuration file %s"), config_file->filename);
     

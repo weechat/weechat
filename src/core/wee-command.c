@@ -48,6 +48,7 @@
 #include "../gui/gui-color.h"
 #include "../gui/gui-filter.h"
 #include "../gui/gui-history.h"
+#include "../gui/gui-hotlist.h"
 #include "../gui/gui-input.h"
 #include "../gui/gui-keyboard.h"
 #include "../gui/gui-status.h"
@@ -481,20 +482,20 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                                  GUI_COLOR(GUI_COLOR_CHAT));
                 switch (number)
                 {
-                    case 0:
+                    case GUI_HOTLIST_LOW:
                         gui_chat_printf (NULL,
                                          _("(hotlist: never)"));
                         break;
-                    case 1:
+                    case GUI_HOTLIST_MESSAGE:
                         gui_chat_printf (NULL,
                                          _("(hotlist: highlights)"));
                         break;
-                    case 2:
+                    case GUI_HOTLIST_PRIVATE:
                         gui_chat_printf (NULL,
                                          _("(hotlist: highlights + "
                                            "messages)"));
                         break;
-                    case 3:
+                    case GUI_HOTLIST_HIGHLIGHT:
                         gui_chat_printf (NULL,
                                          _("(hotlist: highlights + "
                                            "messages + join/part "
@@ -2051,13 +2052,13 @@ command_set (void *data, struct t_gui_buffer *buffer,
             free (value);
         switch (rc)
         {
-            case 0:
+            case WEECHAT_CONFIG_OPTION_SET_ERROR:
                 gui_chat_printf (NULL,
                                  _("%sError: failed to set option \"%s\""),
                                  gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                  argv[1]);
                 return WEECHAT_RC_ERROR;
-            case -1:
+            case WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND:
                 gui_chat_printf (NULL,
                                  _("%sError: configuration option \"%s\" not "
                                    "found"),
@@ -2127,21 +2128,21 @@ command_unset (void *data, struct t_gui_buffer *buffer,
                         {
                             switch (config_file_option_unset (ptr_option))
                             {
-                                case -1: /* error */
+                                case WEECHAT_CONFIG_OPTION_UNSET_ERROR:
                                     gui_chat_printf (NULL,
                                                      _("%sFailed to unset "
                                                        "option \"%s\""),
                                                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                                                      option_full_name);
                                     break;
-                                case 0: /* unset not needed on this option */
+                                case WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET:
                                     break;
-                                case 1: /* option reset */
+                                case WEECHAT_CONFIG_OPTION_UNSET_OK_RESET:
                                     command_set_display_option (ptr_option,
                                                                 _("Option reset: "));
                                     number_reset++;
                                     break;
-                                case 2: /* option removed */
+                                case WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED:
                                     gui_chat_printf (NULL,
                                                      _("Option removed: %s"),
                                                      option_full_name);

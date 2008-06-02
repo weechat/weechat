@@ -44,19 +44,41 @@ struct t_weelist;
     char weechat_plugin_license[] = __license;
 
 /* return codes for plugin functions */
-#define WEECHAT_RC_ERROR           -1  /* function failed with an error     */
-#define WEECHAT_RC_OK               0  /* function ok                       */
+#define WEECHAT_RC_OK                               0
+#define WEECHAT_RC_ERROR                           -1
+
+/* return codes for config read functions/callbacks */
+#define WEECHAT_CONFIG_READ_OK                      0
+#define WEECHAT_CONFIG_READ_MEMORY_ERROR           -1
+#define WEECHAT_CONFIG_READ_FILE_NOT_FOUND         -2
+
+/* return codes for config write functions/callbacks */
+#define WEECHAT_CONFIG_WRITE_OK                     0
+#define WEECHAT_CONFIG_WRITE_ERROR                 -1
+#define WEECHAT_CONFIG_WRITE_MEMORY_ERROR          -2
+
+/* return codes for config option set */
+#define WEECHAT_CONFIG_OPTION_SET_OK_CHANGED        2
+#define WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE     1
+#define WEECHAT_CONFIG_OPTION_SET_ERROR             0
+#define WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND -1
+
+/* return codes for config option unset */
+#define WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET     0
+#define WEECHAT_CONFIG_OPTION_UNSET_OK_RESET        1
+#define WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED      2
+#define WEECHAT_CONFIG_OPTION_UNSET_ERROR          -1
 
 /* list management (order of elements) */
-#define WEECHAT_LIST_POS_SORT      "sort"
-#define WEECHAT_LIST_POS_BEGINNING "beginning"
-#define WEECHAT_LIST_POS_END       "end"
+#define WEECHAT_LIST_POS_SORT                       "sort"
+#define WEECHAT_LIST_POS_BEGINNING                  "beginning"
+#define WEECHAT_LIST_POS_END                        "end"
 
 /* buffer hotlist */
-#define WEECHAT_HOTLIST_LOW       "0"
-#define WEECHAT_HOTLIST_MESSAGE   "1"
-#define WEECHAT_HOTLIST_PRIVATE   "2"
-#define WEECHAT_HOTLIST_HIGHLIGHT "3"
+#define WEECHAT_HOTLIST_LOW                         "0"
+#define WEECHAT_HOTLIST_MESSAGE                     "1"
+#define WEECHAT_HOTLIST_PRIVATE                     "2"
+#define WEECHAT_HOTLIST_HIGHLIGHT                   "3"
 
 /* connect status for connection hooked */
 #define WEECHAT_HOOK_CONNECT_OK                     0
@@ -70,9 +92,9 @@ struct t_weelist;
 #define WEECHAT_HOOK_CONNECT_MEMORY_ERROR           8
 
 /* type of data for signal hooked */
-#define WEECHAT_HOOK_SIGNAL_STRING  "string"
-#define WEECHAT_HOOK_SIGNAL_INT     "int"
-#define WEECHAT_HOOK_SIGNAL_POINTER "pointer"
+#define WEECHAT_HOOK_SIGNAL_STRING                  "string"
+#define WEECHAT_HOOK_SIGNAL_INT                     "int"
+#define WEECHAT_HOOK_SIGNAL_POINTER                 "pointer"
 
 struct t_weechat_plugin
 {

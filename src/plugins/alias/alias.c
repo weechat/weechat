@@ -573,7 +573,7 @@ alias_config_create_option (void *data, struct t_config_file *config_file,
     /* make C compiler happy */
     (void) data;
     
-    rc = 0;
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     
     /* create config option */
     weechat_config_new_option (
@@ -588,11 +588,12 @@ alias_config_create_option (void *data, struct t_config_file *config_file,
     if (ptr_alias)
         alias_free (ptr_alias);
     if (value && value[0])
-        rc = (alias_new (option_name, value)) ? 1 : 0;
+        rc = (alias_new (option_name, value)) ?
+            WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
     else
-        rc = 1;
+        rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
     
-    if (rc == 0)
+    if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         weechat_printf (NULL,
                         "%s%s: error creating alias \"%s\" => \"%s\"",

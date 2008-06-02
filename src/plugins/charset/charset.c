@@ -112,7 +112,7 @@ charset_config_create_option (void *data, struct t_config_file *config_file,
     /* make C compiler happy */
     (void) data;
     
-    rc = 0;
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     
     if (option_name)
     {
@@ -125,7 +125,7 @@ charset_config_create_option (void *data, struct t_config_file *config_file,
             else
             {
                 weechat_config_option_free (ptr_option);
-                rc = 1;
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
             }
         }
         else
@@ -136,14 +136,15 @@ charset_config_create_option (void *data, struct t_config_file *config_file,
                     config_file, section,
                     option_name, "string", NULL,
                     NULL, 0, 0, value, NULL, NULL, NULL, NULL, NULL, NULL);
-                rc = (ptr_option) ? 1 : 0;
+                rc = (ptr_option) ?
+                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
             }
             else
-                rc = 1;
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
         }
     }
     
-    if (rc == 0)
+    if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         weechat_printf (NULL,
                         _("%s%s: error creating charset \"%s\" => \"%s\""),

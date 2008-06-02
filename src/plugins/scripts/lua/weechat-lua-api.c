@@ -4660,7 +4660,147 @@ weechat_lua_api_constant_weechat_rc_error (lua_State *L)
     lua_pushnumber (lua_current_interpreter, WEECHAT_RC_ERROR);
     return 1;
 }
+
+static int
+weechat_lua_api_constant_weechat_config_read_ok (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
     
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_READ_OK);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_read_memory_error (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_READ_MEMORY_ERROR);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_read_file_not_found (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_READ_FILE_NOT_FOUND);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_write_ok (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_WRITE_OK);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_write_error (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_WRITE_ERROR);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_write_memory_error (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_WRITE_MEMORY_ERROR);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_option_set_ok_changed (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_OPTION_SET_OK_CHANGED);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_option_set_ok_same_value (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_option_set_error (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_OPTION_SET_ERROR);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_option_set_option_not_found (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_option_unset_ok_no_reset (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_option_unset_ok_reset (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_OPTION_UNSET_OK_RESET);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_option_unset_ok_removed (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED);
+    return 1;
+}
+
+static int
+weechat_lua_api_constant_weechat_config_option_unset_error (lua_State *L)
+{
+    /* make C compiler happy */
+    (void) L;
+    
+    lua_pushnumber (lua_current_interpreter, WEECHAT_CONFIG_OPTION_UNSET_ERROR);
+    return 1;
+}
+
 static int
 weechat_lua_api_constant_weechat_list_pos_sort (lua_State *L)
 {
@@ -4862,18 +5002,39 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "infolist_pointer", &weechat_lua_api_infolist_pointer },
     { "infolist_time", &weechat_lua_api_infolist_time },
     { "infolist_free", &weechat_lua_api_infolist_free },
+    
     /* define constants as function which returns values */
+    
     { "WEECHAT_RC_OK", &weechat_lua_api_constant_weechat_rc_ok },
     { "WEECHAT_RC_ERROR", &weechat_lua_api_constant_weechat_rc_error },
+    
+    { "WEECHAT_CONFIG_READ_OK", &weechat_lua_api_constant_weechat_config_read_ok },
+    { "WEECHAT_CONFIG_READ_MEMORY_ERROR", &weechat_lua_api_constant_weechat_config_read_memory_error },
+    { "WEECHAT_CONFIG_READ_FILE_NOT_FOUND", &weechat_lua_api_constant_weechat_config_read_file_not_found },
+    { "WEECHAT_CONFIG_WRITE_OK", &weechat_lua_api_constant_weechat_config_write_ok },
+    { "WEECHAT_CONFIG_WRITE_ERROR", &weechat_lua_api_constant_weechat_config_write_error },
+    { "WEECHAT_CONFIG_WRITE_MEMORY_ERROR", &weechat_lua_api_constant_weechat_config_write_memory_error },
+    { "WEECHAT_CONFIG_OPTION_SET_OK_CHANGED", &weechat_lua_api_constant_weechat_config_option_set_ok_changed },
+    { "WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE", &weechat_lua_api_constant_weechat_config_option_set_ok_same_value },
+    { "WEECHAT_CONFIG_OPTION_SER_ERROR", &weechat_lua_api_constant_weechat_config_option_set_error },
+    { "WEECHAT_CONFIG_OPTION_SET_OPTION_NOT_FOUND", &weechat_lua_api_constant_weechat_config_option_set_option_not_found },
+    { "WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET", &weechat_lua_api_constant_weechat_config_option_unset_ok_no_reset },
+    { "WEECHAT_CONFIG_OPTION_UNSET_OK_RESET", &weechat_lua_api_constant_weechat_config_option_unset_ok_reset },
+    { "WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED", &weechat_lua_api_constant_weechat_config_option_unset_ok_removed },
+    { "WEECHAT_CONFIG_OPTION_UNSET_ERROR", &weechat_lua_api_constant_weechat_config_option_unset_error },
+    
     { "WEECHAT_LIST_POS_SORT", &weechat_lua_api_constant_weechat_list_pos_sort },
     { "WEECHAT_LIST_POS_BEGINNING", &weechat_lua_api_constant_weechat_list_pos_beginning },
     { "WEECHAT_LIST_POS_END", &weechat_lua_api_constant_weechat_list_pos_end },
+    
     { "WEECHAT_HOTLIST_LOW", &weechat_lua_api_constant_weechat_hotlist_low },
     { "WEECHAT_HOTLIST_MESSAGE", &weechat_lua_api_constant_weechat_hotlist_message },
     { "WEECHAT_HOTLIST_PRIVATE", &weechat_lua_api_constant_weechat_hotlist_private },
     { "WEECHAT_HOTLIST_HIGHLIGHT", &weechat_lua_api_constant_weechat_hotlist_highlight },
+    
     { "WEECHAT_HOOK_SIGNAL_STRING", &weechat_lua_api_constant_weechat_hook_signal_string },
     { "WEECHAT_HOOK_SIGNAL_INT", &weechat_lua_api_constant_weechat_hook_signal_int },
     { "WEECHAT_HOOK_SIGNAL_POINTER", &weechat_lua_api_constant_weechat_hook_signal_pointer },
+    
     { NULL, NULL }
 };

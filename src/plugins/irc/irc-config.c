@@ -454,7 +454,7 @@ irc_config_reload (void *data, struct t_config_file *config_file)
     
     rc = weechat_config_reload (config_file);
     
-    if (rc == 0)
+    if (rc == WEECHAT_CONFIG_READ_OK)
         irc_config_reload_servers_from_config (1);
     
     ptr_server = irc_servers;
@@ -698,7 +698,7 @@ irc_config_server_create_option (void *data, struct t_config_file *config_file,
     /* make C compiler happy */
     (void) data;
     
-    rc = 0;
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
     
     if (option_name)
     {
@@ -753,7 +753,7 @@ irc_config_server_create_option (void *data, struct t_config_file *config_file,
                                                                 index_option,
                                                                 ptr_option);
                                 }
-                                rc = 1;
+                                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
                             }
                         }
                     }
@@ -763,7 +763,7 @@ irc_config_server_create_option (void *data, struct t_config_file *config_file,
         }
     }
     
-    if (rc == 0)
+    if (rc == WEECHAT_CONFIG_OPTION_SET_ERROR)
     {
         weechat_printf (NULL,
                         _("%s%s: error creating server option \"%s\""),
@@ -1062,9 +1062,6 @@ irc_config_init ()
 
 /*
  * irc_config_read: read IRC configuration file
- *                  return:  0 = successful
- *                          -1 = configuration file file not found
- *                          -2 = error in configuration file
  */
 
 int
@@ -1075,8 +1072,6 @@ irc_config_read ()
 
 /*
  * irc_config_write: write IRC configuration file
- *                   return:  0 if ok
- *                          < 0 if error
  */
 
 int
