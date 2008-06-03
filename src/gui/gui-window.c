@@ -683,33 +683,31 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
 void
 gui_window_scroll_previous_highlight (struct t_gui_window *window)
 {
-    (void) window;
+    struct t_gui_line *ptr_line;
     
-    /*t_gui_line *ptr_line;
-    
-    if ((gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATED)
-        && (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if ((window->buffer->type == GUI_BUFFER_TYPE_FORMATED)
+        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
-        if (gui_current_window->buffer->lines)
+        if (window->buffer->lines)
         {
             ptr_line = (window->start_line) ?
-                window->start_line->prev_line : gui_current_window->buffer->last_line;
+                window->start_line->prev_line : window->buffer->last_line;
             while (ptr_line)
             {
-                if (ptr_line->line_with_highlight)
+                if (ptr_line->highlight)
                 {
                     window->start_line = ptr_line;
                     window->start_line_pos = 0;
                     window->first_line_displayed =
-                        (window->start_line == gui_current_window->buffer->lines);
-                    gui_buffer_ask_chat_refresh (gui_current_window->buffer, 1);
-                    gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
+                        (window->start_line == window->buffer->lines);
+                    gui_buffer_ask_chat_refresh (window->buffer, 2);
+                    gui_buffer_ask_input_refresh (window->buffer, 1);
                     return;
                 }
                 ptr_line = ptr_line->prev_line;
             }
         }
-    }*/
+    }
 }
 
 /*
@@ -719,33 +717,31 @@ gui_window_scroll_previous_highlight (struct t_gui_window *window)
 void
 gui_window_scroll_next_highlight (struct t_gui_window *window)
 {
-    (void) window;
+    struct t_gui_line *ptr_line;
     
-    /*t_gui_line *ptr_line;
-    
-    if ((gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATED)
-        && (gui_current_window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
+    if ((window->buffer->type == GUI_BUFFER_TYPE_FORMATED)
+        && (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED))
     {
-        if (gui_current_window->buffer->lines)
+        if (window->buffer->lines)
         {
             ptr_line = (window->start_line) ?
-                window->start_line->next_line : gui_current_window->buffer->lines->next_line;
+                window->start_line->next_line : window->buffer->lines->next_line;
             while (ptr_line)
             {
-                if (ptr_line->line_with_highlight)
+                if (ptr_line->highlight)
                 {
                     window->start_line = ptr_line;
                     window->start_line_pos = 0;
                     window->first_line_displayed =
-                        (window->start_line == gui_current_window->buffer->lines);
-                    gui_buffer_ask_chat_refresh (gui_current_window->buffer, 1);
-                    gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
+                        (window->start_line == window->buffer->lines);
+                    gui_buffer_ask_chat_refresh (window->buffer, 2);
+                    gui_buffer_ask_input_refresh (window->buffer, 1);
                     return;
                 }
                 ptr_line = ptr_line->next_line;
             }
         }
-    }*/
+    }
 }
 
 /*
