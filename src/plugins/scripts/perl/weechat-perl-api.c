@@ -23,6 +23,7 @@
 #include <EXTERN.h>
 #include <perl.h>
 #include <XSUB.h>
+#include <time.h>
 
 #include "../../weechat-plugin.h"
 #include "../script.h"

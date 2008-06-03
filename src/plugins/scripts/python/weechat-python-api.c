@@ -21,6 +21,7 @@
 #undef _
 
 #include <Python.h>
+#include <time.h>
 
 #include "../../weechat-plugin.h"
 #include "../script.h"
