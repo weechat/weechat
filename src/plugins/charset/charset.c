@@ -59,7 +59,8 @@ int charset_debug = 0;
  */
 
 int
-charset_debug_cb (void *data, char *signal, char *type_data, void *signal_data)
+charset_debug_cb (void *data, const char *signal, const char *type_data,
+                  void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -104,7 +105,7 @@ charset_config_reload (void *data, struct t_config_file *config_file)
 int
 charset_config_create_option (void *data, struct t_config_file *config_file,
                               struct t_config_section *section,
-                              char *option_name, char *value)
+                              const char *option_name, const char *value)
 {
     struct t_config_option *ptr_option;
     int rc;
@@ -256,7 +257,7 @@ charset_config_write ()
  */
 
 int
-charset_check (char *charset)
+charset_check (const char *charset)
 {
     iconv_t cd;
     
@@ -278,7 +279,7 @@ charset_check (char *charset)
  */
 
 char *
-charset_get (struct t_config_section *section, char *name,
+charset_get (struct t_config_section *section, const char *name,
              struct t_config_option *default_charset)
 {
     char *option_name, *ptr_end;
@@ -326,12 +327,12 @@ charset_get (struct t_config_section *section, char *name,
 }
 
 /*
- * charset_decode: decode a string with a charset to internal charset
+ * charset_decode_cb: decode a string with a charset to internal charset
  */
 
 char *
-charset_decode (void *data, char *modifier, char *modifier_data,
-                char *string)
+charset_decode_cb (void *data, const char *modifier, const char *modifier_data,
+                   const char *string)
 {
     char *charset;
     
@@ -355,12 +356,12 @@ charset_decode (void *data, char *modifier, char *modifier_data,
 }
 
 /*
- * charset_encode: encode a string from internal charset to another one
+ * charset_encode_cb: encode a string from internal charset to another one
  */
 
 char *
-charset_encode (void *data, char *modifier, char *modifier_data,
-                char *string)
+charset_encode_cb (void *data, const char *modifier, const char *modifier_data,
+                   const char *string)
 {
     char *charset;
     
@@ -388,8 +389,8 @@ charset_encode (void *data, char *modifier, char *modifier_data,
  */
 
 void
-charset_set (struct t_config_section *section, char *type,
-             char *name, char *value)
+charset_set (struct t_config_section *section, const char *type,
+             const char *name, const char *value)
 {
     if (charset_config_create_option (NULL,
                                       charset_config_file,
@@ -552,8 +553,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                           &charset_command_cb, NULL);
     
     /* modifiers hooks */
-    weechat_hook_modifier ("charset_decode", &charset_decode, NULL);
-    weechat_hook_modifier ("charset_encode", &charset_encode, NULL);
+    weechat_hook_modifier ("charset_decode", &charset_decode_cb, NULL);
+    weechat_hook_modifier ("charset_encode", &charset_encode_cb, NULL);
     
     /* callback for debug */
     weechat_hook_signal ("debug", &charset_debug_cb, NULL);

@@ -90,7 +90,7 @@ irc_display_hide_password (char *string, int look_for_nickserv)
  */
 
 void
-irc_display_away (struct t_irc_server *server, char *string1, char *string2)
+irc_display_away (struct t_irc_server *server, const char *string1, const char *string2)
 {
     struct t_irc_channel *ptr_channel;
     
@@ -118,8 +118,9 @@ irc_display_away (struct t_irc_server *server, char *string1, char *string2)
 
 void
 irc_display_mode (struct t_gui_buffer *buffer,
-                  char *channel_name, char *nick_name, char set_flag,
-                  char *symbol, char *nick_host, char *message, char *param)
+                  const char *channel_name, const char *nick_name,
+                  char set_flag, const char *symbol, const char *nick_host,
+                  const char *message, const char *param)
 {
     weechat_printf (buffer,
                     "%s[%s%s%s/%s%c%s%s] %s%s %s%s%s%s%s",

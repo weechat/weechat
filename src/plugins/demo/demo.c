@@ -49,8 +49,8 @@ int demo_debug = 0;
  */
 
 int
-demo_debug_signal_debug_cb (void *data, char *signal, char *type_data,
-                            void *signal_data)
+demo_debug_signal_debug_cb (void *data, const char *signal,
+                            const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -132,7 +132,7 @@ demo_infobar_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 
 int
 demo_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
-                           char *input_data)
+                           const char *input_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -223,7 +223,7 @@ demo_buffer_set_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 void
-demo_infolist_print (struct t_plugin_infolist *infolist, char *item_name)
+demo_infolist_print (struct t_plugin_infolist *infolist, const char *item_name)
 {
     char *fields, **argv;
     int i, j, argc;
@@ -357,7 +357,8 @@ demo_info_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 int
-demo_signal_cb (void *data, char *signal, char *type_data, void *signal_data)
+demo_signal_cb (void *data, const char *signal, const char *type_data,
+                void *signal_data)
 {
     /* make C compiler happy */
     (void) data;

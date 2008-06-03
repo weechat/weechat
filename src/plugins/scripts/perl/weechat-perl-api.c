@@ -803,7 +803,7 @@ static XS (XS_weechat_config_new)
 void
 weechat_perl_api_config_section_read_cb (void *data,
                                          struct t_config_file *config_file,
-                                         char *option_name, char *value)
+                                         const char *option_name, const char *value)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[4];
@@ -814,8 +814,8 @@ weechat_perl_api_config_section_read_cb (void *data,
     if (script_callback->function && script_callback->function[0])
     {
         perl_argv[0] = script_ptr2str (config_file);
-        perl_argv[1] = option_name;
-        perl_argv[2] = value;
+        perl_argv[1] = (char *)option_name;
+        perl_argv[2] = (char *)value;
         perl_argv[3] = NULL;
         
         rc = (int *) weechat_perl_exec (script_callback->script,
@@ -837,7 +837,7 @@ weechat_perl_api_config_section_read_cb (void *data,
 void
 weechat_perl_api_config_section_write_cb (void *data,
                                           struct t_config_file *config_file,
-                                          char *section_name)
+                                          const char *section_name)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[3];
@@ -848,7 +848,7 @@ weechat_perl_api_config_section_write_cb (void *data,
     if (script_callback->function && script_callback->function[0])
     {
         perl_argv[0] = script_ptr2str (config_file);
-        perl_argv[1] = section_name;
+        perl_argv[1] = (char *)section_name;
         perl_argv[2] = NULL;
         
         rc = (int *) weechat_perl_exec (script_callback->script,
@@ -871,7 +871,7 @@ weechat_perl_api_config_section_write_cb (void *data,
 void
 weechat_perl_api_config_section_write_default_cb (void *data,
                                                   struct t_config_file *config_file,
-                                                  char *section_name)
+                                                  const char *section_name)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[3];
@@ -882,7 +882,7 @@ weechat_perl_api_config_section_write_default_cb (void *data,
     if (script_callback->function && script_callback->function[0])
     {
         perl_argv[0] = script_ptr2str (config_file);
-        perl_argv[1] = section_name;
+        perl_argv[1] = (char *)section_name;
         perl_argv[2] = NULL;
         
         rc = (int *) weechat_perl_exec (script_callback->script,
@@ -905,8 +905,8 @@ int
 weechat_perl_api_config_section_create_option_cb (void *data,
                                                   struct t_config_file *config_file,
                                                   struct t_config_section *section,
-                                                  char *option_name,
-                                                  char *value)
+                                                  const char *option_name,
+                                                  const char *value)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[5];
@@ -918,8 +918,8 @@ weechat_perl_api_config_section_create_option_cb (void *data,
     {
         perl_argv[0] = script_ptr2str (config_file);
         perl_argv[1] = script_ptr2str (section);
-        perl_argv[2] = option_name;
-        perl_argv[3] = value;
+        perl_argv[2] = (char *)option_name;
+        perl_argv[3] = (char *)value;
         perl_argv[4] = NULL;
         
         rc = (int *) weechat_perl_exec (script_callback->script,
@@ -2101,7 +2101,7 @@ static XS (XS_weechat_hook_fd)
 int
 weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
                                 time_t date, int tags_count, char **tags,
-                                char *prefix, char *message)
+                                const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[6];
@@ -2118,8 +2118,8 @@ weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     perl_argv[0] = script_ptr2str (buffer);
     perl_argv[1] = timebuffer;
     perl_argv[2] = weechat_string_build_with_exploded (tags, ",");
-    perl_argv[3] = prefix;
-    perl_argv[4] = message;
+    perl_argv[3] = (char *)prefix;
+    perl_argv[4] = (char *)message;
     perl_argv[5] = NULL;
     
     rc = (int *) weechat_perl_exec (script_callback->script,
@@ -2187,7 +2187,7 @@ static XS (XS_weechat_hook_print)
  */
 
 int
-weechat_perl_api_hook_signal_cb (void *data, char *signal, char *type_data,
+weechat_perl_api_hook_signal_cb (void *data, const char *signal, const char *type_data,
                                  void *signal_data)
 {
     struct t_script_callback *script_callback;
@@ -2197,7 +2197,7 @@ weechat_perl_api_hook_signal_cb (void *data, char *signal, char *type_data,
     
     script_callback = (struct t_script_callback *)data;
     
-    perl_argv[0] = signal;
+    perl_argv[0] = (char *)signal;
     free_needed = 0;
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
@@ -2329,7 +2329,7 @@ static XS (XS_weechat_hook_signal_send)
  */
 
 int
-weechat_perl_api_hook_config_cb (void *data, char *option, char *value)
+weechat_perl_api_hook_config_cb (void *data, const char *option, const char *value)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[3];
@@ -2337,8 +2337,8 @@ weechat_perl_api_hook_config_cb (void *data, char *option, char *value)
     
     script_callback = (struct t_script_callback *)data;
     
-    perl_argv[0] = option;
-    perl_argv[1] = value;
+    perl_argv[0] = (char *)option;
+    perl_argv[1] = (char *)value;
     perl_argv[2] = NULL;
     
     rc = (int *) weechat_perl_exec (script_callback->script,
@@ -2397,7 +2397,7 @@ static XS (XS_weechat_hook_config)
  */
 
 int
-weechat_perl_api_hook_completion_cb (void *data, char *completion,
+weechat_perl_api_hook_completion_cb (void *data, const char *completion,
                                      struct t_gui_buffer *buffer,
                                      struct t_weelist *list)
 {
@@ -2407,7 +2407,7 @@ weechat_perl_api_hook_completion_cb (void *data, char *completion,
     
     script_callback = (struct t_script_callback *)data;
     
-    perl_argv[0] = completion;
+    perl_argv[0] = (char *)completion;
     perl_argv[1] = script_ptr2str (buffer);
     perl_argv[2] = script_ptr2str (list);
     perl_argv[3] = NULL;
@@ -2472,17 +2472,17 @@ static XS (XS_weechat_hook_completion)
  */
 
 char *
-weechat_perl_api_hook_modifier_cb (void *data, char *modifier,
-                                   char *modifier_data, char *string)
+weechat_perl_api_hook_modifier_cb (void *data, const char *modifier,
+                                   const char *modifier_data, const char *string)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[4];
     
     script_callback = (struct t_script_callback *)data;
     
-    perl_argv[0] = modifier;
-    perl_argv[1] = modifier_data;
-    perl_argv[2] = string;
+    perl_argv[0] = (char *)modifier;
+    perl_argv[1] = (char *)modifier_data;
+    perl_argv[2] = (char *)string;
     perl_argv[3] = NULL;
     
     return (char *)weechat_perl_exec (script_callback->script,
@@ -2617,7 +2617,7 @@ static XS (XS_weechat_unhook_all)
 
 int
 weechat_perl_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
-                                       char *input_data)
+                                       const char *input_data)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[3];
@@ -2626,7 +2626,7 @@ weechat_perl_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
     script_callback = (struct t_script_callback *)data;
     
     perl_argv[0] = script_ptr2str (buffer);
-    perl_argv[1] = input_data;
+    perl_argv[1] = (char *)input_data;
     perl_argv[2] = NULL;
     
     rc = (int *) weechat_perl_exec (script_callback->script,

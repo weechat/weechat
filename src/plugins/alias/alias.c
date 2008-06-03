@@ -51,7 +51,7 @@ struct t_alias *last_alias = NULL;
  */
 
 struct t_alias *
-alias_search (char *alias_name)
+alias_search (const char *alias_name)
 {
     struct t_alias *ptr_alias;
     
@@ -70,7 +70,7 @@ alias_search (char *alias_name)
  */
 
 void
-alias_add_word (char **alias, int *length, char *word)
+alias_add_word (char **alias, int *length, const char *word)
 {
     int length_word;
 
@@ -99,9 +99,10 @@ alias_add_word (char **alias, int *length, char *word)
  */
 
 char *
-alias_replace_args (char *alias_args, char *user_args)
+alias_replace_args (const char *alias_args, const char *user_args)
 {
-    char **argv, *start, *pos, *res;
+    char **argv, *res, *word;
+    const char *start, *pos;
     int argc, length_res, args_count;
     
     argv = weechat_string_explode (user_args, " ", 0, 0, &argc);
@@ -115,10 +116,13 @@ alias_replace_args (char *alias_args, char *user_args)
     {
         if ((pos[0] == '\\') && (pos[1] == '$'))
         {
-            pos[0] = '\0';
-            alias_add_word (&res, &length_res, start);
+            word = weechat_strndup (start, pos - start);
+            if (word)
+            {
+                alias_add_word (&res, &length_res, word);
+                free (word);
+            }
             alias_add_word (&res, &length_res, "$");
-            pos[0] = '\\';
             start = pos + 2;
             pos = start;
         }
@@ -129,10 +133,13 @@ alias_replace_args (char *alias_args, char *user_args)
                 if (pos[1] == '*')
                 {
                     args_count++;
-                    pos[0] = '\0';
-                    alias_add_word (&res, &length_res, start);
+                    word = weechat_strndup (start, pos - start);
+                    if (word)
+                    {
+                        alias_add_word (&res, &length_res, word);
+                        free (word);
+                    }
                     alias_add_word (&res, &length_res, user_args);
-                    pos[0] = '$';
                     start = pos + 2;
                     pos = start;
                 }
@@ -141,11 +148,14 @@ alias_replace_args (char *alias_args, char *user_args)
                     if ((pos[1] >= '1') && (pos[1] <= '9'))
                     {
                         args_count++;
-                        pos[0] = '\0';
-                        alias_add_word (&res, &length_res, start);
+                        word = weechat_strndup (start, pos - start);
+                        if (word)
+                        {
+                            alias_add_word (&res, &length_res, start);
+                            free (word);
+                        }
                         if (pos[1] - '0' <= argc)
                             alias_add_word (&res, &length_res, argv[pos[1] - '1']);
-                        pos[0] = '$';
                         start = pos + 2;
                         pos = start;
                     }
@@ -293,7 +303,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
  */
 
 struct t_alias *
-alias_find_pos (char *name)
+alias_find_pos (const char *name)
 {
     struct t_alias *ptr_alias;
     
@@ -312,7 +322,7 @@ alias_find_pos (char *name)
  */
 
 struct t_alias *
-alias_new (char *name, char *command)
+alias_new (const char *name, const char *command)
 {
     struct t_alias *new_alias, *ptr_alias, *pos_alias;
     struct t_hook *new_hook;
@@ -524,7 +534,7 @@ alias_config_reload (void *data, struct t_config_file *config_file)
 void
 alias_config_write_default (void *data,
                             struct t_config_file *config_file,
-                            char *section_name)
+                            const char *section_name)
 {
     /* make C compiler happy */
     (void) data;
@@ -565,7 +575,7 @@ alias_config_write_default (void *data,
 int
 alias_config_create_option (void *data, struct t_config_file *config_file,
                             struct t_config_section *section,
-                            char *option_name, char *value)
+                            const char *option_name, const char *value)
 {
     struct t_alias *ptr_alias;
     int rc;
@@ -795,8 +805,8 @@ unalias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 int
-alias_completion_cb (void *data, char *completion, struct t_gui_buffer *buffer,
-                     struct t_weelist *list)
+alias_completion_cb (void *data, const char *completion,
+                     struct t_gui_buffer *buffer, struct t_weelist *list)
 {
     struct t_alias *ptr_alias;
     

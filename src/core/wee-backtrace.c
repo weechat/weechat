@@ -50,7 +50,7 @@
  */
 
 void
-weechat_backtrace_printf (char *message, ...)
+weechat_backtrace_printf (const char *message, ...)
 {
     static char buffer[4096];
     va_list argptr;
@@ -69,7 +69,7 @@ weechat_backtrace_printf (char *message, ...)
  */
 
 void
-weechat_backtrace_addr2line (int number, void *address, char *symbol)
+weechat_backtrace_addr2line (int number, void *address, const char *symbol)
 {
 #ifdef HAVE_BACKTRACE
     int rc;

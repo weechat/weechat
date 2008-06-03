@@ -86,7 +86,7 @@ session_write_int (FILE *file, int id, int value)
  */
 
 int
-session_write_str (FILE *file, int id, char *string)
+session_write_str (FILE *file, int id, const char *string)
 {
     char type;
     int length;
@@ -470,7 +470,7 @@ session_save_hotlist (FILE *file)
  */
 
 /*int
-session_save (char *filename)
+session_save (const char *filename)
 {
     FILE *file;
     int rc;
@@ -499,7 +499,7 @@ session_save (char *filename)
  */
 
 void
-session_crash (FILE *file, char *message, ...)
+session_crash (FILE *file, const char *message, ...)
 {
     char buf[4096];
     va_list argptr;
@@ -1718,7 +1718,7 @@ session_load_hotlist (FILE *file)
  */
 
 /*int
-session_load (char *filename)
+session_load (const char *filename)
 {
     FILE *file;
     char *signature;

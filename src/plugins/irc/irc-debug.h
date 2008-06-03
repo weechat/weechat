@@ -28,7 +28,7 @@
 struct t_irc_server;
 
 extern void irc_debug_printf (struct t_irc_server *server, int send,
-                              int modified, char *message);
+                              int modified, const char *message);
 extern void irc_debug_init ();
 
 #endif /* irc-debug.h */

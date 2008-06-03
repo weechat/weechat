@@ -39,7 +39,7 @@ struct t_weechat_plugin *weechat_python_plugin = NULL;
 
 struct t_plugin_script *python_scripts = NULL;
 struct t_plugin_script *python_current_script = NULL;
-char *python_current_script_filename = NULL;
+const char *python_current_script_filename = NULL;
 PyThreadState *python_mainThreadState = NULL;
 
 char python_buffer_output[128];
@@ -51,7 +51,7 @@ char python_buffer_output[128];
 
 void *
 weechat_python_exec (struct t_plugin_script *script,
-		     int ret_type, char *function, char **argv)
+		     int ret_type, const char *function, char **argv)
 {
     PyObject *evMain;
     PyObject *evDict;
@@ -255,7 +255,7 @@ PyMethodDef weechat_python_output_funcs[] = {
  */
 
 int
-weechat_python_load (char *filename)
+weechat_python_load (const char *filename)
 {
     char *argv[] = { "__weechat_plugin__" , NULL };
     FILE *fp;
@@ -441,7 +441,7 @@ weechat_python_load (char *filename)
  */
 
 int
-weechat_python_load_cb (void *data, char *filename)
+weechat_python_load_cb (void *data, const char *filename)
 {
     /* make C compiler happy */
     (void) data;
@@ -484,7 +484,7 @@ weechat_python_unload (struct t_plugin_script *script)
  */
 
 void
-weechat_python_unload_name (char *name)
+weechat_python_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
     
@@ -605,7 +605,7 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-weechat_python_completion_cb (void *data, char *completion,
+weechat_python_completion_cb (void *data, const char *completion,
                               struct t_gui_buffer *buffer,
                               struct t_weelist *list)
 {
@@ -624,7 +624,7 @@ weechat_python_completion_cb (void *data, char *completion,
  */
 
 int
-weechat_python_debug_dump_cb (void *data, char *signal, char *type_data,
+weechat_python_debug_dump_cb (void *data, const char *signal, const char *type_data,
                               void *signal_data)
 {
     /* make C compiler happy */
@@ -643,7 +643,7 @@ weechat_python_debug_dump_cb (void *data, char *signal, char *type_data,
  */
 
 int
-weechat_python_buffer_closed_cb (void *data, char *signal, char *type_data,
+weechat_python_buffer_closed_cb (void *data, const char *signal, const char *type_data,
                                  void *signal_data)
 {
     /* make C compiler happy */

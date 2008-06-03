@@ -20,7 +20,7 @@
 #ifndef __WEECHAT_XFER_FILE_H
 #define __WEECHAT_XFER_FILE_H 1
 
-extern int xfer_file_resume (struct t_xfer *xfer, char *filename);
+extern int xfer_file_resume (struct t_xfer *xfer, const char *filename);
 extern void xfer_file_find_filename (struct t_xfer *xfer);
 extern void xfer_file_calculate_speed (struct t_xfer *xfer, int ended);
 

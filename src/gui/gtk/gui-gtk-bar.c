@@ -296,7 +296,7 @@ gui_bar_window_add_missing_bars (struct t_gui_window *window)
 
 int
 gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
-                             char *string, int max_chars)
+                             const char *string, int max_chars)
 {
     (void) bar_window;
     (void) string;

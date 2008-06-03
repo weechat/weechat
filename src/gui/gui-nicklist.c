@@ -113,7 +113,7 @@ gui_nicklist_insert_group_sorted (struct t_gui_nick_group **groups,
 struct t_gui_nick_group *
 gui_nicklist_search_group (struct t_gui_buffer *buffer,
                            struct t_gui_nick_group *from_group,
-                           char *name)
+                           const char *name)
 {
     struct t_gui_nick_group *ptr_group;
 
@@ -148,8 +148,8 @@ gui_nicklist_search_group (struct t_gui_buffer *buffer,
 
 struct t_gui_nick_group *
 gui_nicklist_add_group (struct t_gui_buffer *buffer,
-                        struct t_gui_nick_group *parent_group, char *name,
-                        char *color, int visible)
+                        struct t_gui_nick_group *parent_group, const char *name,
+                        const char *color, int visible)
 {
     struct t_gui_nick_group *new_group;
     int num_color;
@@ -273,7 +273,7 @@ gui_nicklist_insert_nick_sorted (struct t_gui_nick_group *group,
 struct t_gui_nick *
 gui_nicklist_search_nick (struct t_gui_buffer *buffer,
                           struct t_gui_nick_group *from_group,
-                          char *name)
+                          const char *name)
 {
     struct t_gui_nick *ptr_nick;
     
@@ -294,8 +294,8 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
 
 struct t_gui_nick *
 gui_nicklist_add_nick (struct t_gui_buffer *buffer,
-                       struct t_gui_nick_group *group, char *name,
-                       char *color, char prefix, char *prefix_color,
+                       struct t_gui_nick_group *group, const char *name,
+                       const char *color, char prefix, const char *prefix_color,
                        int visible)
 {
     struct t_gui_nick *new_nick;
@@ -529,9 +529,9 @@ gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
  */
 
 char *
-gui_nicklist_get_group_start (char *name)
+gui_nicklist_get_group_start (const char *name)
 {
-    char *ptr_name;
+    const char *ptr_name;
     
     ptr_name = name;
     while (isdigit (ptr_name[0]))
@@ -541,9 +541,9 @@ gui_nicklist_get_group_start (char *name)
         ptr_name++;
     }
     if ((ptr_name[0] == '|') && (ptr_name != name))
-        return ptr_name + 1;
+        return (char *)ptr_name + 1;
     else
-        return name;
+        return (char *)name;
 }
 
 /*

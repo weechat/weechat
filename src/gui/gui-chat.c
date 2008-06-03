@@ -119,7 +119,7 @@ gui_chat_prefix_build ()
  */
 
 int
-gui_chat_strlen_screen (char *string)
+gui_chat_strlen_screen (const char *string)
 {
     int length;
     
@@ -142,9 +142,9 @@ gui_chat_strlen_screen (char *string)
  */
 
 int
-gui_chat_string_real_pos (char *string, int pos)
+gui_chat_string_real_pos (const char *string, int pos)
 {
-    char *ptr_string, *real_pos;
+    const char *real_pos, *ptr_string;
     
     if (pos <= 0)
         return 0;
@@ -172,11 +172,12 @@ gui_chat_string_real_pos (char *string, int pos)
 
 void
 gui_chat_get_word_info (struct t_gui_window *window,
-                        char *data,
+                        const char *data,
                         int *word_start_offset, int *word_end_offset,
                         int *word_length_with_spaces, int *word_length)
 {
-    char *start_data, *next_char, *next_char2;
+    const char *start_data;
+    char *next_char, *next_char2;
     int leading_spaces, char_size;
     
     *word_start_offset = 0;
@@ -465,7 +466,8 @@ gui_chat_get_next_line_displayed (struct t_gui_line *line)
  */
 
 int
-gui_chat_line_search (struct t_gui_line *line, char *text, int case_sensitive)
+gui_chat_line_search (struct t_gui_line *line, const char *text,
+                      int case_sensitive)
 {
     char *message;
     int rc;
@@ -670,8 +672,8 @@ gui_chat_line_free_all (struct t_gui_buffer *buffer)
 
 void
 gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
-                   time_t date_printed, char *tags,
-                   char *prefix, char *message)
+                   time_t date_printed, const char *tags,
+                   const char *prefix, const char *message)
 {
     struct t_gui_line *new_line;
     
@@ -745,7 +747,7 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
  */
 
 void
-gui_chat_line_add_y (struct t_gui_buffer *buffer, int y, char *message)
+gui_chat_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
 {
     struct t_gui_line *ptr_line, *new_line;
     
@@ -839,7 +841,7 @@ gui_chat_line_add_y (struct t_gui_buffer *buffer, int y, char *message)
 
 void
 gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
-                           char *tags, char *message, ...)
+                           const char *tags, const char *message, ...)
 {
     char *buf;
     va_list argptr;
@@ -958,7 +960,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
  */
 
 void
-gui_chat_printf_y (struct t_gui_buffer *buffer, int y, char *message, ...)
+gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
 {
     char *buf;
     va_list argptr;

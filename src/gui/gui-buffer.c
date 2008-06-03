@@ -63,10 +63,11 @@ struct t_gui_buffer *gui_previous_buffer = NULL;   /* previous buffer       */
  */
 
 struct t_gui_buffer *
-gui_buffer_new (struct t_weechat_plugin *plugin, char *category, char *name,
+gui_buffer_new (struct t_weechat_plugin *plugin,
+                const char *category, const char *name,
                 int (*input_callback)(void *data,
                                       struct t_gui_buffer *buffer,
-                                      char *input_data),
+                                      const char *input_data),
                 void *input_callback_data,
                 int (*close_callback)(void *data,
                                       struct t_gui_buffer *buffer),
@@ -234,7 +235,7 @@ gui_buffer_valid (struct t_gui_buffer *buffer)
  */
 
 char *
-gui_buffer_get_string (struct t_gui_buffer *buffer, char *property)
+gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 {
     static char value[32];
 
@@ -262,7 +263,7 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, char *property)
  */
 
 void *
-gui_buffer_get_pointer (struct t_gui_buffer *buffer, char *property)
+gui_buffer_get_pointer (struct t_gui_buffer *buffer, const char *property)
 {
     if (string_strcasecmp (property, "plugin") == 0)
         return buffer->plugin;
@@ -319,7 +320,7 @@ gui_buffer_ask_input_refresh (struct t_gui_buffer *buffer, int refresh)
  */
 
 void
-gui_buffer_set_category (struct t_gui_buffer *buffer, char *category)
+gui_buffer_set_category (struct t_gui_buffer *buffer, const char *category)
 {
     if (category && category[0])
     {
@@ -338,7 +339,7 @@ gui_buffer_set_category (struct t_gui_buffer *buffer, char *category)
  */
 
 void
-gui_buffer_set_name (struct t_gui_buffer *buffer, char *name)
+gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
 {
     if (name && name[0])
     {
@@ -374,7 +375,7 @@ gui_buffer_set_type (struct t_gui_buffer *buffer, enum t_gui_buffer_type type)
  */
 
 void
-gui_buffer_set_title (struct t_gui_buffer *buffer, char *new_title)
+gui_buffer_set_title (struct t_gui_buffer *buffer, const char *new_title)
 {
     if (buffer->title)
         free (buffer->title);
@@ -423,7 +424,7 @@ gui_buffer_set_nicklist_display_groups (struct t_gui_buffer *buffer,
  */
 
 void
-gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick)
+gui_buffer_set_nick (struct t_gui_buffer *buffer, const char *new_nick)
 {
     if (buffer->input_nick)
         free (buffer->input_nick);
@@ -437,7 +438,7 @@ gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick)
 
 void
 gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
-                                char *new_highlight_words)
+                                const char *new_highlight_words)
 {
     if (buffer->highlight_words)
         free (buffer->highlight_words);
@@ -451,7 +452,7 @@ gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
 
 void
 gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
-                               char *new_highlight_tags)
+                               const char *new_highlight_tags)
 {
     if (buffer->highlight_tags_array)
         string_free_exploded (buffer->highlight_tags_array);
@@ -474,7 +475,8 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
  */
 
 void
-gui_buffer_set (struct t_gui_buffer *buffer, char *property, char *value)
+gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
+                const char *value)
 {
     long number;
     char *error;
@@ -598,7 +600,7 @@ gui_buffer_search_main ()
  */
 
 struct t_gui_buffer *
-gui_buffer_search_by_category_name (char *category, char *name)
+gui_buffer_search_by_category_name (const char *category, const char *name)
 {
     struct t_gui_buffer *ptr_buffer;
     
@@ -709,10 +711,11 @@ gui_buffer_is_scrolled (struct t_gui_buffer *buffer)
  */
 
 int
-gui_buffer_match_category_name (struct t_gui_buffer *buffer, char *mask,
+gui_buffer_match_category_name (struct t_gui_buffer *buffer, const char *mask,
                                 int case_sensitive)
 {
-    char *pos_point, *category, *pos_name;
+    char *pos_point, *category;
+    const char *pos_name;
     int rc;
     
     if (!mask || !mask[0])

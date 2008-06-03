@@ -26,10 +26,11 @@ extern struct t_weechat_plugin *weechat_lua_plugin;
 
 extern struct t_plugin_script *lua_scripts;
 extern struct t_plugin_script *lua_current_script;
-extern char *lua_current_script_filename;
+extern const char *lua_current_script_filename;
 extern lua_State *lua_current_interpreter;
 
-extern void * weechat_lua_exec (struct t_plugin_script *script,
-                                int ret_type, char *function, char **argv);
+extern void *weechat_lua_exec (struct t_plugin_script *script,
+                               int ret_type, const char *function,
+                               char **argv);
 
 #endif /* weechat-lua.h */

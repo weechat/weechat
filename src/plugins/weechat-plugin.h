@@ -118,53 +118,57 @@ struct t_weechat_plugin
        existing plugins */
     
     /* strings */
-    void (*charset_set) (struct t_weechat_plugin *plugin, char *charset);
-    char *(*iconv_to_internal) (char *charset, char *string);
-    char *(*iconv_from_internal) (char *charset, char *string);
-    char *(*gettext) (char *string);
-    char *(*ngettext) (char *single, char *plural, int count);
-    char *(*strndup) (char *string, int length);
+    void (*charset_set) (struct t_weechat_plugin *plugin, const char *charset);
+    char *(*iconv_to_internal) (const char *charset, const char *string);
+    char *(*iconv_from_internal) (const char *charset, const char *string);
+    char *(*gettext) (const char *string);
+    char *(*ngettext) (const char *single, const char *plural, int count);
+    char *(*strndup) (const char *string, int length);
     void (*string_tolower) (char *string);
     void (*string_toupper) (char *string);
-    int (*strcasecmp) (char *string1, char *string2);
-    int (*strncasecmp) (char *string1, char *string2, int max);
-    int (*strcmp_ignore_chars) (char *string1, char *string2,
-                                char *chars_ignored, int case_sensitive);
-    char *(*strcasestr) (char *string1, char *string2);
-    int (*string_match) (char *string, char *mask, int case_sensitive);
-    char *(*string_replace) (char *string, char *search, char *replace);
-    char *(*string_remove_quotes) (char *string, char *quotes);
-    char *(*string_strip) (char *string, int left, int right, char *chars);
-    int (*string_has_highlight) (char *string, char *highlight_words);
-    char **(*string_explode) (char *string, char *separators, int keep_eol,
-                              int num_items_max, int *num_items);
+    int (*strcasecmp) (const char *string1, const char *string2);
+    int (*strncasecmp) (const char *string1, const char *string2, int max);
+    int (*strcmp_ignore_chars) (const char *string1, const char *string2,
+                                const char *chars_ignored, int case_sensitive);
+    char *(*strcasestr) (const char *string1, const char *string2);
+    int (*string_match) (const char *string, const char *mask,
+                         int case_sensitive);
+    char *(*string_replace) (const char *string, const char *search,
+                             const char *replace);
+    char *(*string_remove_quotes) (const char *string, const char *quotes);
+    char *(*string_strip) (const char *string, int left, int right,
+                           const char *chars);
+    int (*string_has_highlight) (const char *string,
+                                 const char *highlight_words);
+    char **(*string_explode) (const char *string, const char *separators,
+                              int keep_eol, int num_items_max, int *num_items);
     void (*string_free_exploded) (char **exploded_string);
     char *(*string_build_with_exploded) (char **exploded_string,
-                                         char *separator);
-    char **(*string_split_command) (char *command, char separator);
+                                         const char *separator);
+    char **(*string_split_command) (const char *command, char separator);
     void (*string_free_splitted_command) (char **splitted_command);
     
     /* UTF-8 strings */
-    int (*utf8_has_8bits) (char *string);
-    int (*utf8_is_valid) (char *string, char **error);
-    void (*utf8_normalize) (char *string, char replacement);
-    char *(*utf8_prev_char) (char *string_start, char *string);
-    char *(*utf8_next_char) (char *string);
-    int (*utf8_char_size) (char *string);
-    int (*utf8_strlen) (char *string);
-    int (*utf8_strnlen) (char *string, int bytes);
-    int (*utf8_strlen_screen) (char *string);
-    int (*utf8_charcasecmp) (char *string1, char *string2);
-    int (*utf8_char_size_screen) (char *string);
-    char *(*utf8_add_offset) (char *string, int offset);
-    int (*utf8_real_pos) (char *string, int pos);
-    int (*utf8_pos) (char *string, int real_pos);
+    int (*utf8_has_8bits) (const char *string);
+    int (*utf8_is_valid) (const char *string, char **error);
+    void (*utf8_normalize) (const char *string, char replacement);
+    char *(*utf8_prev_char) (const char *string_start, const char *string);
+    char *(*utf8_next_char) (const char *string);
+    int (*utf8_char_size) (const char *string);
+    int (*utf8_strlen) (const char *string);
+    int (*utf8_strnlen) (const char *string, int bytes);
+    int (*utf8_strlen_screen) (const char *string);
+    int (*utf8_charcasecmp) (const char *string1, const char *string2);
+    int (*utf8_char_size_screen) (const char *string);
+    char *(*utf8_add_offset) (const char *string, int offset);
+    int (*utf8_real_pos) (const char *string, int pos);
+    int (*utf8_pos) (const char *string, int real_pos);
     
     /* directories */
-    int (*mkdir_home) (char *directory, int mode);
-    int (*mkdir) (char *directory, int mode);
-    void (*exec_on_files) (char *directory, void *data,
-                           int (*callback)(void *data, char *filename));
+    int (*mkdir_home) (const char *directory, int mode);
+    int (*mkdir) (const char *directory, int mode);
+    void (*exec_on_files) (const char *directory, void *data,
+                           int (*callback)(void *data, const char *filename));
     
     /* util */
     int (*timeval_cmp) (struct timeval *tv1, struct timeval *tv2);
@@ -173,15 +177,15 @@ struct t_weechat_plugin
     
     /* sorted list */
     struct t_weelist *(*list_new) ();
-    struct t_weelist_item *(*list_add) (struct t_weelist *weelist, char *data,
-                                        char *where);
+    struct t_weelist_item *(*list_add) (struct t_weelist *weelist, const char *data,
+                                        const char *where);
     struct t_weelist_item *(*list_search) (struct t_weelist *weelist,
-                                           char *data);
+                                           const char *data);
     struct t_weelist_item *(*list_casesearch) (struct t_weelist *weelist,
-                                               char *data);
+                                               const char *data);
     struct t_weelist_item *(*list_get) (struct t_weelist *weelist,
                                         int position);
-    void (*list_set) (struct t_weelist_item *item, char *value);
+    void (*list_set) (struct t_weelist_item *item, const char *value);
     struct t_weelist_item *(*list_next) (struct t_weelist_item *item);
     struct t_weelist_item *(*list_prev) (struct t_weelist_item *item);
     char *(*list_string) (struct t_weelist_item *item);
@@ -193,46 +197,46 @@ struct t_weechat_plugin
 
     /* config files */
     struct t_config_file *(*config_new) (struct t_weechat_plugin *plugin,
-                                         char *name,
+                                         const char *name,
                                          int (*callback_reload)(void *data,
                                                                 struct t_config_file *config_file),
                                          void *callback_reload_data);
     struct t_config_section *(*config_new_section) (struct t_config_file *config_file,
-                                                    char *name,
+                                                    const char *name,
                                                     int user_can_add_options,
                                                     int user_can_delete_options,
                                                     int (*callback_read)(void *data,
                                                                          struct t_config_file *config_file,
                                                                          struct t_config_section *section,
-                                                                         char *option_name,
-                                                                         char *value),
+                                                                         const char *option_name,
+                                                                         const char *value),
                                                     void *callback_read_data,
                                                     void (*callback_write)(void *data,
                                                                            struct t_config_file *config_file,
-                                                                           char *section_name),
+                                                                           const char *section_name),
                                                     void *callback_write_data,
                                                     void (*callback_write_default)(void *data,
                                                                                    struct t_config_file *config_file,
-                                                                                   char *section_name),
+                                                                                   const char *section_name),
                                                     void *callback_write_default_data,
                                                     int (*callback_create_option)(void *data,
                                                                                   struct t_config_file *config_file,
                                                                                   struct t_config_section *section,
-                                                                                  char *option_name,
-                                                                                  char *value),
+                                                                                  const char *option_name,
+                                                                                  const char *value),
                                                     void *callback_create_option_data);
     struct t_config_section *(*config_search_section) (struct t_config_file *config_file,
-                                                       char *section_name);
+                                                       const char *section_name);
     struct t_config_option *(*config_new_option) (struct t_config_file *config_file,
                                                   struct t_config_section *section,
-                                                  char *name, char *type,
-                                                  char *description,
-                                                  char *string_values,
+                                                  const char *name, const char *type,
+                                                  const char *description,
+                                                  const char *string_values,
                                                   int min, int max,
-                                                  char *default_value,
+                                                  const char *default_value,
                                                   int (*callback_check_value)(void *data,
                                                                               struct t_config_option *option,
-                                                                              char *value),
+                                                                              const char *value),
                                                   void *callback_check_value_data,
                                                   void (*callback_change)(void *data,
                                                                           struct t_config_option *option),
@@ -242,32 +246,32 @@ struct t_weechat_plugin
                                                   void *callback_delete_data);
     struct t_config_option *(*config_search_option) (struct t_config_file *config_file,
                                                      struct t_config_section *section,
-                                                     char *option_name);
+                                                     const char *option_name);
     void (*config_search_section_option) (struct t_config_file *config_file,
                                           struct t_config_section *section,
-                                          char *option_name,
+                                          const char *option_name,
                                           struct t_config_section **section_found,
                                           struct t_config_option **option_found);
-    void (*config_search_with_string) (char *option_name,
+    void (*config_search_with_string) (const char *option_name,
                                        struct t_config_file **config_file,
                                        struct t_config_section **section,
                                        struct t_config_option **option,
                                        char **pos_option_name);
-    int (*config_string_to_boolean) (char *text);
+    int (*config_string_to_boolean) (const char *text);
     int (*config_option_reset) (struct t_config_option *option,
                                 int run_callback);
-    int (*config_option_set) (struct t_config_option *option, char *value,
+    int (*config_option_set) (struct t_config_option *option, const char *value,
                               int run_callback);
     void (*config_option_rename) (struct t_config_option *option,
-                                  char *new_name);
+                                  const char *new_name);
     void *(*config_option_get_pointer) (struct t_config_option *option,
-                                        char *property);
+                                        const char *property);
     int (*config_boolean) (struct t_config_option *option);
     int (*config_integer) (struct t_config_option *option);
     char *(*config_string) (struct t_config_option *option);
     int (*config_color) (struct t_config_option *option);
     void (*config_write_line) (struct t_config_file *config_file,
-                               char *option_name, char *value, ...);
+                               const char *option_name, const char *value, ...);
     int (*config_write) (struct t_config_file *config_file);
     int (*config_read) (struct t_config_file *config_file);
     int (*config_reload) (struct t_config_file *config_file);
@@ -276,29 +280,29 @@ struct t_weechat_plugin
     void (*config_section_free) (struct t_config_file *config_file,
                                  struct t_config_section *section);
     void (*config_free) (struct t_config_file *config_file);
-    struct t_config_option *(*config_get) (char *option_name);
+    struct t_config_option *(*config_get) (const char *option_name);
     char *(*config_get_plugin) (struct t_weechat_plugin *plugin,
-                                char *option_name);
+                                const char *option_name);
     int (*config_set_plugin) (struct t_weechat_plugin *plugin,
-                              char *option_name, char *value);
+                              const char *option_name, const char *value);
     
     /* display */
-    char *(*prefix) (char *prefix);
-    char *(*color) (char *color_name);
+    char *(*prefix) (const char *prefix);
+    char *(*color) (const char *color_name);
     void (*printf_date_tags) (struct t_gui_buffer *buffer, time_t date,
-                              char *tags, char *message, ...);
+                              const char *tags, const char *message, ...);
     void (*printf_y) (struct t_gui_buffer *buffer, int y,
-                      char *message, ...);
+                      const char *message, ...);
     void (*infobar_printf) (struct t_weechat_plugin *plugin, int delay,
-                            char *color_name, char *format, ...);
+                            const char *color_name, const char *format, ...);
     void (*infobar_remove) (int how_many);
-    void (*log_printf) (char *message, ...);
+    void (*log_printf) (const char *message, ...);
     
     /* hooks */
     struct t_hook *(*hook_command) (struct t_weechat_plugin *plugin,
-                                    char *command, char *description,
-                                    char *args, char *args_description,
-                                    char *completion,
+                                    const char *command, const char *description,
+                                    const char *args, const char *args_description,
+                                    const char *completion,
                                     int (*callback)(void *data,
                                                     struct t_gui_buffer *buffer,
                                                     int argc, char **argv,
@@ -315,89 +319,89 @@ struct t_weechat_plugin
                                int (*callback)(void *data),
                                void *callback_data);
     struct t_hook *(*hook_connect) (struct t_weechat_plugin *plugin,
-                                    char *address, int port,
+                                    const char *address, int port,
                                     int sock, int ipv6, void *gnutls_sess,
-                                    char *local_hostname,
+                                    const char *local_hostname,
                                     int (*callback)(void *data, int status),
                                     void *callback_data);
     struct t_hook *(*hook_print) (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
-                                  char *tags, char *message,
+                                  const char *tags, const char *message,
                                   int strip_colors,
                                   int (*callback)(void *data,
                                                   struct t_gui_buffer *buffer,
                                                   time_t date,
                                                   int tags_count,
                                                   char **tags,
-                                                  char *prefix, char *message),
+                                                  const char *prefix, const char *message),
                                   void *callback_data);
     struct t_hook *(*hook_signal) (struct t_weechat_plugin *plugin,
-                                   char *signal,
-                                   int (*callback)(void *data, char *signal,
-                                                   char *type_data,
+                                   const char *signal,
+                                   int (*callback)(void *data, const char *signal,
+                                                   const char *type_data,
                                                    void *signal_data),
                                    void *callback_data);
-    void (*hook_signal_send) (char *signal, char *type_data,
+    void (*hook_signal_send) (const char *signal, const char *type_data,
                               void *signal_data);
     struct t_hook *(*hook_config) (struct t_weechat_plugin *plugin,
-                                   char *option,
-                                   int (*callback)(void *data, char *option,
-                                                   char *value),
+                                   const char *option,
+                                   int (*callback)(void *data, const char *option,
+                                                   const char *value),
                                    void *callback_data);
     struct t_hook *(*hook_completion) (struct t_weechat_plugin *plugin,
-                                       char *completion,
+                                       const char *completion,
                                        int (*callback)(void *data,
-                                                       char *completion,
+                                                       const char *completion,
                                                        struct t_gui_buffer *buffer,
                                                        struct t_weelist *list),
                                        void *callback_data);
     struct t_hook *(*hook_modifier) (struct t_weechat_plugin *plugin,
-                                     char *modifier,
+                                     const char *modifier,
                                      char *(*callback)(void *data,
-                                                       char *modifier,
-                                                       char *modifier_data,
-                                                       char *string),
+                                                       const char *modifier,
+                                                       const char *modifier_data,
+                                                       const char *string),
                                      void *callback_data);
     char *(*hook_modifier_exec) (struct t_weechat_plugin *plugin,
-                                 char *modifier, char *modifier_data,
-                                 char *string);
+                                 const char *modifier, const char *modifier_data,
+                                 const char *string);
     void (*unhook) (struct t_hook *hook);
     void (*unhook_all) (struct t_weechat_plugin *plugin);
     
     /* buffers */
     struct t_gui_buffer *(*buffer_new) (struct t_weechat_plugin *plugin,
-                                        char *category, char *name,
+                                        const char *category, const char *name,
                                         int (*input_callback)(void *data,
                                                               struct t_gui_buffer *buffer,
-                                                              char *input_data),
+                                                              const char *input_data),
                                         void *input_callback_data,
                                         int (*close_callback)(void *data,
                                                               struct t_gui_buffer *buffer),
                                         void *close_callback_data);
-    struct t_gui_buffer *(*buffer_search) (char *category, char *name);
+    struct t_gui_buffer *(*buffer_search) (const char *category, const char *name);
     void (*buffer_clear) (struct t_gui_buffer *buffer);
     void (*buffer_close) (struct t_gui_buffer *buffer, int switch_to_another);
-    char *(*buffer_get_string) (struct t_gui_buffer *buffer, char *property);
-    void *(*buffer_get_pointer) (struct t_gui_buffer *buffer, char *property);
-    void (*buffer_set) (struct t_gui_buffer *buffer, char *property,
-                        char *value);
+    char *(*buffer_get_string) (struct t_gui_buffer *buffer, const char *property);
+    void *(*buffer_get_pointer) (struct t_gui_buffer *buffer, const char *property);
+    void (*buffer_set) (struct t_gui_buffer *buffer, const char *property,
+                        const char *value);
     
     /* nicklist */
     struct t_gui_nick_group *(*nicklist_add_group) (struct t_gui_buffer *buffer,
                                                     struct t_gui_nick_group *parent_group,
-                                                    char *name, char *color,
+                                                    const char *name, const char *color,
                                                     int visible);
     struct t_gui_nick_group *(*nicklist_search_group) (struct t_gui_buffer *buffer,
                                                        struct t_gui_nick_group *from_group,
-                                                       char *name);
+                                                       const char *name);
     struct t_gui_nick *(*nicklist_add_nick) (struct t_gui_buffer *buffer,
                                              struct t_gui_nick_group *group,
-                                             char *name, char *color,
-                                             char prefix, char *prefix_color,
+                                             const char *name, const char *color,
+                                             char prefix, const char *prefix_color,
                                              int visible);
     struct t_gui_nick *(*nicklist_search_nick) (struct t_gui_buffer *buffer,
                                                 struct t_gui_nick_group *from_group,
-                                                char *name);
+                                                const char *name);
     void (*nicklist_remove_group) (struct t_gui_buffer *buffer,
                                    struct t_gui_nick_group *group);
     void (*nicklist_remove_nick) (struct t_gui_buffer *buffer,
@@ -405,62 +409,62 @@ struct t_weechat_plugin
     void (*nicklist_remove_all) (struct t_gui_buffer *buffer);
     
     /* bars */
-    struct t_gui_bar_item *(*bar_item_search) (char *name);
+    struct t_gui_bar_item *(*bar_item_search) (const char *name);
     struct t_gui_bar_item *(*bar_item_new) (struct t_weechat_plugin *plugin,
-                                            char *name,
+                                            const char *name,
                                             char *(*build_callback)(void *data,
                                                                     struct t_gui_bar_item *item,
                                                                     struct t_gui_window *window,
                                                                     int max_width, int max_height),
                                             void *build_callback_data);
-    void (*bar_item_update) (char *name);
+    void (*bar_item_update) (const char *name);
     void (*bar_item_remove) (struct t_gui_bar_item *item);
-    struct t_gui_bar *(*bar_search) (char *name);
-    struct t_gui_bar *(*bar_new) (struct t_weechat_plugin *plugin, char *name,
-                                  char *priority, char *type, char *condition,
-                                  char *position, char *filling, char *size,
-                                  char *size_max, char *color_fg,
-                                  char *color_bg, char *separator,
-                                  char *items);
-    int (*bar_set) (struct t_gui_bar *bar, char *property, char *value);
-    void (*bar_update) (char *name);
+    struct t_gui_bar *(*bar_search) (const char *name);
+    struct t_gui_bar *(*bar_new) (struct t_weechat_plugin *plugin, const char *name,
+                                  const char *priority, const char *type, const char *condition,
+                                  const char *position, const char *filling, const char *size,
+                                  const char *size_max, const char *color_fg,
+                                  const char *color_bg, const char *separator,
+                                  const char *items);
+    int (*bar_set) (struct t_gui_bar *bar, const char *property, const char *value);
+    void (*bar_update) (const char *name);
     void (*bar_remove) (struct t_gui_bar *bar);
     
     /* command */
     void (*command) (struct t_weechat_plugin *plugin,
-                     struct t_gui_buffer *buffer, char *command);
+                     struct t_gui_buffer *buffer, const char *command);
 
     /* network */
-    int (*network_pass_proxy) (int sock, char *address, int port);
+    int (*network_pass_proxy) (int sock, const char *address, int port);
     int (*network_connect_to) (int sock, unsigned long address, int port);
     
     /* infos */
-    char *(*info_get) (struct t_weechat_plugin *plugin, char *info);
+    char *(*info_get) (struct t_weechat_plugin *plugin, const char *info);
     
     /* infolists */
     struct t_plugin_infolist *(*infolist_new) ();
     struct t_plugin_infolist_item *(*infolist_new_item) (struct t_plugin_infolist *list);
     struct t_plugin_infolist_var *(*infolist_new_var_integer) (struct t_plugin_infolist_item *item,
-                                                               char *name,
+                                                               const char *name,
                                                                int value);
     struct t_plugin_infolist_var *(*infolist_new_var_string) (struct t_plugin_infolist_item *item,
-                                                              char *name,
-                                                              char *value);
+                                                              const char *name,
+                                                              const char *value);
     struct t_plugin_infolist_var *(*infolist_new_var_pointer) (struct t_plugin_infolist_item *item,
-                                                               char *name,
+                                                               const char *name,
                                                                void *pointer);
     struct t_plugin_infolist_var *(*infolist_new_var_time) (struct t_plugin_infolist_item *item,
-                                                            char *name,
+                                                            const char *name,
                                                             time_t time);
-    struct t_plugin_infolist *(*infolist_get) (char *name, void *pointer,
-                                               char *arguments);
+    struct t_plugin_infolist *(*infolist_get) (const char *name, void *pointer,
+                                               const char *arguments);
     int (*infolist_next) (struct t_plugin_infolist *infolist);
     int (*infolist_prev) (struct t_plugin_infolist *infolist);
     char *(*infolist_fields) (struct t_plugin_infolist *infolist);
-    int (*infolist_integer) (struct t_plugin_infolist *infolist, char *var);
-    char *(*infolist_string) (struct t_plugin_infolist *infolist, char *var);
-    void *(*infolist_pointer) (struct t_plugin_infolist *infolist, char *var);
-    time_t (*infolist_time) (struct t_plugin_infolist *infolist, char *var);
+    int (*infolist_integer) (struct t_plugin_infolist *infolist, const char *var);
+    char *(*infolist_string) (struct t_plugin_infolist *infolist, const char *var);
+    void *(*infolist_pointer) (struct t_plugin_infolist *infolist, const char *var);
+    time_t (*infolist_time) (struct t_plugin_infolist *infolist, const char *var);
     void (*infolist_free) (struct t_plugin_infolist *infolist);
     
     /* WeeChat developers: ALWAYS add new functions at the end */

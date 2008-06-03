@@ -53,7 +53,7 @@ gui_input_set_color (struct t_gui_window *window, int irc_color)
  */
 
 void
-gui_input_draw_prompt (struct t_gui_window *window, char *nick)
+gui_input_draw_prompt (struct t_gui_window *window, const char *nick)
 {
     /*char *pos, saved_char, *modes;
       int char_size, mode_found;*/

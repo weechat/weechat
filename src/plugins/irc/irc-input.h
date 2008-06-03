@@ -21,6 +21,6 @@
 #define __WEECHAT_IRC_INPUT_H 1
 
 extern int irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
-                              char *input_data);
+                              const char *input_data);
 
 #endif /* irc-input.h */

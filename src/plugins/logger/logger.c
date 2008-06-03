@@ -280,7 +280,8 @@ logger_get_filename (struct t_gui_buffer *buffer)
  */
 
 void
-logger_write_line (struct t_logger_buffer *logger_buffer, char *format, ...)
+logger_write_line (struct t_logger_buffer *logger_buffer,
+                   const char *format, ...)
 {
     va_list argptr;
     char *buf, *charset, *message;
@@ -460,8 +461,8 @@ logger_stop_all ()
  */
 
 int
-logger_buffer_open_signal_cb (void *data, char *signal, char *type_data,
-                              void *signal_data)
+logger_buffer_open_signal_cb (void *data, const char *signal,
+                              const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -478,8 +479,8 @@ logger_buffer_open_signal_cb (void *data, char *signal, char *type_data,
  */
 
 int
-logger_buffer_closing_signal_cb (void *data, char *signal, char *type_data,
-                                 void *signal_data)
+logger_buffer_closing_signal_cb (void *data, const char *signal,
+                                 const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -496,7 +497,7 @@ logger_buffer_closing_signal_cb (void *data, char *signal, char *type_data,
  */
 
 void
-logger_backlog (struct t_gui_buffer *buffer, char *filename, int lines)
+logger_backlog (struct t_gui_buffer *buffer, const char *filename, int lines)
 {
     struct t_logger_line *last_lines, *ptr_lines;
     char *pos_message, *error;
@@ -547,8 +548,8 @@ logger_backlog (struct t_gui_buffer *buffer, char *filename, int lines)
  */
 
 int
-logger_backlog_signal_cb (void *data, char *signal, char *type_data,
-                          void *signal_data)
+logger_backlog_signal_cb (void *data, const char *signal,
+                          const char *type_data, void *signal_data)
 {
     struct t_logger_buffer *ptr_logger_buffer;
     
@@ -581,7 +582,7 @@ logger_backlog_signal_cb (void *data, char *signal, char *type_data,
  */
 
 int
-logger_start_signal_cb (void *data, char *signal, char *type_data,
+logger_start_signal_cb (void *data, const char *signal, const char *type_data,
                         void *signal_data)
 {
     /* make C compiler happy */
@@ -599,7 +600,7 @@ logger_start_signal_cb (void *data, char *signal, char *type_data,
  */
 
 int
-logger_stop_signal_cb (void *data, char *signal, char *type_data,
+logger_stop_signal_cb (void *data, const char *signal, const char *type_data,
                        void *signal_data)
 {
     struct t_logger_buffer *ptr_logger_buffer;
@@ -623,7 +624,7 @@ logger_stop_signal_cb (void *data, char *signal, char *type_data,
 int
 logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
                  int tags_count, char **tags,
-                 char *prefix, char *message)
+                 const char *prefix, const char *message)
 {
     struct t_logger_buffer *ptr_logger_buffer;
     struct tm *date_tmp;
@@ -661,7 +662,7 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
  */
 
 int
-logger_config_cb (void *data, char *option, char *value)
+logger_config_cb (void *data, const char *option, const char *value)
 {
     /* make C compiler happy */
     (void) data;

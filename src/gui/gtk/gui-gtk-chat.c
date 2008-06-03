@@ -194,8 +194,8 @@ gui_chat_draw_title (struct t_gui_buffer *buffer, int erase)
  */
 
 char *
-gui_chat_string_next_char (struct t_gui_window *window, unsigned char *string,
-                           int apply_style)
+gui_chat_string_next_char (struct t_gui_window *window,
+                           const unsigned char *string, int apply_style)
 {
     char str_fg[3];
     int weechat_color;
@@ -294,7 +294,7 @@ gui_chat_string_next_char (struct t_gui_window *window, unsigned char *string,
  */
 
 void
-gui_chat_display_word_raw (struct t_gui_window *window, char *string)
+gui_chat_display_word_raw (struct t_gui_window *window, const char *string)
 {
     /*char *prev_char, *next_char, saved_char;*/
     
@@ -310,8 +310,8 @@ gui_chat_display_word_raw (struct t_gui_window *window, char *string)
 void
 gui_chat_display_word (struct t_gui_window *window,
                        struct t_gui_line *line,
-                       char *data,
-                       char *end_offset,
+                       const char *data,
+                       const char *end_offset,
                        int num_lines, int count, int *lines_displayed, int simulate)
 {
     /*char *end_line, saved_char_end, saved_char;

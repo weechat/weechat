@@ -106,28 +106,31 @@ extern struct t_gui_bar *last_gui_temp_bar;
 
 /* functions */
 
-extern int gui_bar_search_option (char *option_name);
-extern int gui_bar_search_type (char *type);
-extern int gui_bar_search_position (char *position);
+extern int gui_bar_search_option (const char *option_name);
+extern int gui_bar_search_type (const char *type);
+extern int gui_bar_search_position (const char *position);
 extern int gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
                                                 struct t_gui_window *window);
 extern int gui_bar_root_get_size (struct t_gui_bar *bar,
                                   enum t_gui_bar_position position);
-extern struct t_gui_bar *gui_bar_search (char *name);
+extern struct t_gui_bar *gui_bar_search (const char *name);
 extern void gui_bar_set_current_size (struct t_gui_bar *bar, int current_size);
-extern int gui_bar_set (struct t_gui_bar *bar, char *property, char *value);
+extern int gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value);
 extern void gui_bar_create_option_temp (struct t_gui_bar *temp_bar,
-                                        int index_option, char *value);
-extern struct t_gui_bar *gui_bar_alloc (char *name);
+                                        int index_option, const char *value);
+extern struct t_gui_bar *gui_bar_alloc (const char *name);
 extern struct t_gui_bar *gui_bar_new (struct t_weechat_plugin *plugin,
-                                      char *name, char *priority, char *type,
-                                      char *conditions, char *position,
-                                      char *filling, char *size,
-                                      char *size_max, char *color_fg,
-                                      char *color_bg, char *separator,
-                                      char *items);
+                                      const char *name, const char *priority,
+                                      const char *type, const char *conditions,
+                                      const char *position,
+                                      const char *filling, const char *size,
+                                      const char *size_max,
+                                      const char *color_fg,
+                                      const char *color_bg,
+                                      const char *separator,
+                                      const char *items);
 extern void gui_bar_use_temp_bars ();
-extern void gui_bar_update (char *name);
+extern void gui_bar_update (const char *name);
 extern void gui_bar_free (struct t_gui_bar *bar);
 extern void gui_bar_free_all ();
 extern void gui_bar_free_all_plugin (struct t_weechat_plugin *plugin);

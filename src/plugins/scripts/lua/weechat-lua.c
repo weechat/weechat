@@ -43,7 +43,7 @@ struct t_weechat_plugin *weechat_lua_plugin;
 
 struct t_plugin_script *lua_scripts = NULL;
 struct t_plugin_script *lua_current_script = NULL;
-char *lua_current_script_filename = NULL;
+const char *lua_current_script_filename = NULL;
 lua_State *lua_current_interpreter = NULL;
 
 
@@ -53,7 +53,7 @@ lua_State *lua_current_interpreter = NULL;
 
 void *
 weechat_lua_exec (struct t_plugin_script *script,
-		  int ret_type, char *function, char **argv)
+		  int ret_type, const char *function, char **argv)
 {
     void *ret_value;
     int argc, *ret_i;
@@ -127,7 +127,7 @@ weechat_lua_exec (struct t_plugin_script *script,
 }
 
 int
-weechat_lua_load (char *filename)
+weechat_lua_load (const char *filename)
 {
     FILE *fp;
     char *weechat_lua_code = {
@@ -247,7 +247,7 @@ weechat_lua_load (char *filename)
  */
 
 int
-weechat_lua_load_cb (void *data, char *filename)
+weechat_lua_load_cb (void *data, const char *filename)
 {
     /* make C compiler happy */
     (void) data;
@@ -292,7 +292,7 @@ weechat_lua_unload (struct t_plugin_script *script)
  */
 
 void
-weechat_lua_unload_name (char *name)
+weechat_lua_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
     
@@ -413,7 +413,7 @@ weechat_lua_command_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-weechat_lua_completion_cb (void *data, char *completion,
+weechat_lua_completion_cb (void *data, const char *completion,
                            struct t_gui_buffer *buffer,
                            struct t_weelist *list)
 {
@@ -432,7 +432,7 @@ weechat_lua_completion_cb (void *data, char *completion,
  */
 
 int
-weechat_lua_debug_dump_cb (void *data, char *signal, char *type_data,
+weechat_lua_debug_dump_cb (void *data, const char *signal, const char *type_data,
                            void *signal_data)
 {
     /* make C compiler happy */
@@ -451,7 +451,7 @@ weechat_lua_debug_dump_cb (void *data, char *signal, char *type_data,
  */
 
 int
-weechat_lua_buffer_closed_cb (void *data, char *signal, char *type_data,
+weechat_lua_buffer_closed_cb (void *data, const char *signal, const char *type_data,
                                void *signal_data)
 {
     /* make C compiler happy */

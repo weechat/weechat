@@ -93,7 +93,7 @@ gui_input_init_color_mask (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_move (struct t_gui_buffer *buffer, char *target, char *source,
+gui_input_move (struct t_gui_buffer *buffer, char *target, const char *source,
                 int size)
 {
     int pos_source, pos_target;
@@ -114,7 +114,8 @@ gui_input_move (struct t_gui_buffer *buffer, char *target, char *source,
  */
 
 int
-gui_input_insert_string (struct t_gui_buffer *buffer, char *string, int pos)
+gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
+                         int pos)
 {
     int i, pos_start, size, length;
     char *ptr_start;
@@ -255,7 +256,7 @@ gui_input_get_prompt_length (struct t_gui_buffer *buffer)
  */
 
 void
-gui_input_clipboard_copy (char *buffer, int size)
+gui_input_clipboard_copy (const char *buffer, int size)
 {
     if (size <= 0)
         return;
@@ -710,7 +711,7 @@ gui_input_delete_beginning_of_line ()
  */
 
 void
-gui_input_delete_end_of_line (char *args)
+gui_input_delete_end_of_line (const char *args)
 {
     char *start;
     int size_deleted, length_deleted, pos_start;
@@ -1344,7 +1345,7 @@ gui_input_set_unread_current_buffer ()
  */
 
 void
-gui_input_insert (char *args)
+gui_input_insert (const char *args)
 {
     char *args2;
     

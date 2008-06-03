@@ -38,7 +38,8 @@ extern struct t_hook *gui_infobar_highlight_timer;
 
 /* infobar functions */
 
-extern void gui_infobar_printf (int delay, int color, char *message, ...);
+extern void gui_infobar_printf (int delay, int color,
+                                const char *message, ...);
 extern void gui_infobar_remove ();
 extern void gui_infobar_remove_all ();
 

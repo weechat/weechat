@@ -48,7 +48,7 @@
  */
 
 char *
-irc_protocol_get_nick_from_host (char *host)
+irc_protocol_get_nick_from_host (const char *host)
 {
     static char nick[128];
     char *pos;
@@ -75,7 +75,7 @@ irc_protocol_get_nick_from_host (char *host)
  */
 
 char *
-irc_protocol_get_address_from_host (char *host)
+irc_protocol_get_address_from_host (const char *host)
 {
     static char address[256];
     char *pos;
@@ -99,7 +99,7 @@ irc_protocol_get_address_from_host (char *host)
  */
 
 char *
-irc_protocol_tags (char *command, char *tags)
+irc_protocol_tags (const char *command, const char *tags)
 {
     static char string[256];
     
@@ -132,7 +132,7 @@ irc_protocol_tags (char *command, char *tags)
 
 char *
 irc_protocol_replace_vars (struct t_irc_server *server,
-                           struct t_irc_channel *channel, char *string)
+                           struct t_irc_channel *channel, const char *string)
 {
     char *var_nick, *var_channel, *var_server;
     char empty_string[1] = { '\0' };
@@ -171,7 +171,7 @@ irc_protocol_replace_vars (struct t_irc_server *server,
  */
 
 int
-irc_protocol_cmd_error (struct t_irc_server *server, char *command,
+irc_protocol_cmd_error (struct t_irc_server *server, const char *command,
                         int argc, char **argv, char **argv_eol)
 {
     int first_arg;
@@ -216,7 +216,7 @@ irc_protocol_cmd_error (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_invite (struct t_irc_server *server, char *command,
+irc_protocol_cmd_invite (struct t_irc_server *server, const char *command,
                          int argc, char **argv, char **argv_eol)
 {
     /* INVITE message looks like:
@@ -251,7 +251,7 @@ irc_protocol_cmd_invite (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_join (struct t_irc_server *server, char *command,
+irc_protocol_cmd_join (struct t_irc_server *server, const char *command,
                        int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
@@ -325,7 +325,7 @@ irc_protocol_cmd_join (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_kick (struct t_irc_server *server, char *command,
+irc_protocol_cmd_kick (struct t_irc_server *server, const char *command,
                        int argc, char **argv, char **argv_eol)
 {
     char *pos_comment;
@@ -414,7 +414,7 @@ irc_protocol_cmd_kick (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_kill (struct t_irc_server *server, char *command,
+irc_protocol_cmd_kill (struct t_irc_server *server, const char *command,
                        int argc, char **argv, char **argv_eol)
 {
     char *pos_comment;
@@ -481,7 +481,7 @@ irc_protocol_cmd_kill (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_mode (struct t_irc_server *server, char *command,
+irc_protocol_cmd_mode (struct t_irc_server *server, const char *command,
                        int argc, char **argv, char **argv_eol)
 {
     char *pos_modes;
@@ -543,7 +543,7 @@ irc_protocol_cmd_mode (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_nick (struct t_irc_server *server, char *command,
+irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
                        int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
@@ -632,7 +632,7 @@ irc_protocol_cmd_nick (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_notice (struct t_irc_server *server, char *command,
+irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                          int argc, char **argv, char **argv_eol)
 {
     char *nick, *host, *pos_args, *pos_end, *pos_usec;
@@ -820,7 +820,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_part (struct t_irc_server *server, char *command,
+irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
                        int argc, char **argv, char **argv_eol)
 {
     char *nick, *host, *pos_comment, *join_string;
@@ -929,7 +929,7 @@ irc_protocol_cmd_part (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_ping (struct t_irc_server *server, char *command,
+irc_protocol_cmd_ping (struct t_irc_server *server, const char *command,
                        int argc, char **argv, char **argv_eol)
 {
     /* PING message looks like:
@@ -952,7 +952,7 @@ irc_protocol_cmd_ping (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_pong (struct t_irc_server *server, char *command,
+irc_protocol_cmd_pong (struct t_irc_server *server, const char *command,
                        int argc, char **argv, char **argv_eol)
 {
     struct timeval tv;
@@ -990,8 +990,8 @@ irc_protocol_cmd_pong (struct t_irc_server *server, char *command,
 
 void
 irc_protocol_reply_version (struct t_irc_server *server,
-                            struct t_irc_channel *channel, char *nick,
-                            char *message, char *str_version)
+                            struct t_irc_channel *channel, const char *nick,
+                            const char *message, const char *str_version)
 {
     char *pos, *version, *date;
     struct t_gui_buffer *ptr_buffer;
@@ -1043,7 +1043,7 @@ irc_protocol_reply_version (struct t_irc_server *server,
     }
     weechat_hook_signal_send ("irc_ctcp",
                               WEECHAT_HOOK_SIGNAL_STRING,
-                              message);
+                              (void *)message);
 }
 
 /*
@@ -1051,7 +1051,7 @@ irc_protocol_reply_version (struct t_irc_server *server,
  */
 
 int
-irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
+irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                           int argc, char **argv, char **argv_eol)
 {
     char *nick, *host, *pos_args, *pos_end_01, *pos, *pos_message;
@@ -1911,7 +1911,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_quit (struct t_irc_server *server, char *command,
+irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
                        int argc, char **argv, char **argv_eol)
 {
     char *nick, *host, *pos_comment;
@@ -1988,7 +1988,7 @@ irc_protocol_cmd_quit (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_server_mode_reason (struct t_irc_server *server, char *command,
+irc_protocol_cmd_server_mode_reason (struct t_irc_server *server, const char *command,
                                      int argc, char **argv, char **argv_eol)
 {
     char *pos_mode, *pos_args;
@@ -2022,7 +2022,7 @@ irc_protocol_cmd_server_mode_reason (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_numeric (struct t_irc_server *server, char *command,
+irc_protocol_cmd_numeric (struct t_irc_server *server, const char *command,
                           int argc, char **argv, char **argv_eol)
 {
     char *pos_args;
@@ -2056,7 +2056,7 @@ irc_protocol_cmd_numeric (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_topic (struct t_irc_server *server, char *command,
+irc_protocol_cmd_topic (struct t_irc_server *server, const char *command,
                         int argc, char **argv, char **argv_eol)
 {
     char *pos_topic, *topic_color;
@@ -2135,7 +2135,7 @@ irc_protocol_cmd_topic (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_wallops (struct t_irc_server *server, char *command,
+irc_protocol_cmd_wallops (struct t_irc_server *server, const char *command,
                           int argc, char **argv, char **argv_eol)
 {
     /* WALLOPS message looks like:
@@ -2165,7 +2165,7 @@ irc_protocol_cmd_wallops (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_001 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_001 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char **commands, **ptr_cmd, *vars_replaced;
@@ -2233,7 +2233,7 @@ irc_protocol_cmd_001 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_005 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_005 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char *pos, *pos2;
@@ -2278,7 +2278,7 @@ irc_protocol_cmd_005 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_221 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_221 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 221 message looks like:
@@ -2309,7 +2309,7 @@ irc_protocol_cmd_221 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_301 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_301 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char *pos_away_msg;
@@ -2361,7 +2361,7 @@ irc_protocol_cmd_301 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_303 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_303 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 301 message looks like:
@@ -2388,7 +2388,7 @@ irc_protocol_cmd_303 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_305 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_305 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 305 message looks like:
@@ -2430,7 +2430,7 @@ irc_protocol_cmd_305 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_306 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_306 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 306 message looks like:
@@ -2478,7 +2478,7 @@ irc_protocol_cmd_306 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_whois_nick_msg (struct t_irc_server *server, char *command,
+irc_protocol_cmd_whois_nick_msg (struct t_irc_server *server, const char *command,
                                  int argc, char **argv, char **argv_eol)
 {
     /* messages look like:
@@ -2506,7 +2506,7 @@ irc_protocol_cmd_whois_nick_msg (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_311 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_311 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 311 message looks like:
@@ -2538,7 +2538,7 @@ irc_protocol_cmd_311 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_312 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_312 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 312 message looks like:
@@ -2570,7 +2570,7 @@ irc_protocol_cmd_312 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_314 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_314 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 314 message looks like:
@@ -2601,7 +2601,7 @@ irc_protocol_cmd_314 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_315 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_315 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 315 message looks like:
@@ -2639,7 +2639,7 @@ irc_protocol_cmd_315 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_317 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_317 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     int idle_time, day, hour, min, sec;
@@ -2731,7 +2731,7 @@ irc_protocol_cmd_317 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_321 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_321 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char *pos_args;
@@ -2761,7 +2761,7 @@ irc_protocol_cmd_321 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_322 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_322 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char *pos_topic;
@@ -2801,7 +2801,7 @@ irc_protocol_cmd_322 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_323 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_323 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char *pos_args;
@@ -2832,7 +2832,7 @@ irc_protocol_cmd_323 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_324 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_324 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
@@ -2875,7 +2875,7 @@ irc_protocol_cmd_324 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_327 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_327 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char *pos_realname;
@@ -2930,7 +2930,7 @@ irc_protocol_cmd_327 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_329 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_329 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
@@ -2979,7 +2979,7 @@ irc_protocol_cmd_329 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_331 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_331 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
@@ -3010,7 +3010,7 @@ irc_protocol_cmd_331 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_332 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_332 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char *pos_topic;
@@ -3053,7 +3053,7 @@ irc_protocol_cmd_332 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_333 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_333 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
@@ -3102,7 +3102,7 @@ irc_protocol_cmd_333 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_338 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_338 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 338 message looks like:
@@ -3132,7 +3132,7 @@ irc_protocol_cmd_338 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_341 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_341 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 341 message looks like:
@@ -3165,7 +3165,7 @@ irc_protocol_cmd_341 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_344 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_344 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 344 message looks like:
@@ -3192,7 +3192,7 @@ irc_protocol_cmd_344 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_345 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_345 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 345 message looks like:
@@ -3218,7 +3218,7 @@ irc_protocol_cmd_345 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_348 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_348 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
@@ -3285,7 +3285,7 @@ irc_protocol_cmd_348 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_349 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_349 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char *pos_args;
@@ -3322,7 +3322,7 @@ irc_protocol_cmd_349 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_351 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_351 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 351 message looks like:
@@ -3359,7 +3359,7 @@ irc_protocol_cmd_351 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_352 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_352 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char *pos_attr, *pos_hopcount, *pos_realname;
@@ -3441,7 +3441,7 @@ irc_protocol_cmd_352 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_353 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_353 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char *pos_channel, *pos_nick, *color;
@@ -3568,7 +3568,7 @@ irc_protocol_cmd_353 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_366 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_366 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
@@ -3699,7 +3699,7 @@ irc_protocol_cmd_366 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_367 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_367 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
@@ -3771,7 +3771,7 @@ irc_protocol_cmd_367 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_368 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_368 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     char *pos_args;
@@ -3808,7 +3808,7 @@ irc_protocol_cmd_368 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_432 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_432 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     int i, nick_found, nick_to_use;
@@ -3864,7 +3864,7 @@ irc_protocol_cmd_432 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_433 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_433 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     int i, nick_found, nick_to_use;
@@ -3922,7 +3922,7 @@ irc_protocol_cmd_433 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_cmd_438 (struct t_irc_server *server, char *command,
+irc_protocol_cmd_438 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     /* 438 message looks like:
@@ -3959,7 +3959,7 @@ irc_protocol_cmd_438 (struct t_irc_server *server, char *command,
  */
 
 int
-irc_protocol_is_numeric_command (char *str)
+irc_protocol_is_numeric_command (const char *str)
 {
     while (str && str[0])
     {
@@ -3979,14 +3979,16 @@ irc_protocol_is_numeric_command (char *str)
  */
 
 void
-irc_protocol_recv_command (struct t_irc_server *server, char *entire_line,
-                           char *host, char *command, char *arguments)
+irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
+                           const char *host, const char *command,
+                           const char *arguments)
 {
     int i, cmd_found, return_code, argc, decode_color;
     char *pos, *nick;
     char *dup_entire_line, *dup_host, *dup_arguments, *irc_message;
     t_irc_recv_func *cmd_recv_func;
-    char *cmd_name, **argv, **argv_eol;
+    const char *cmd_name;
+    char **argv, **argv_eol;
     struct t_irc_protocol_msg irc_protocol_messages[] =
         { { "error", N_("error received from IRC server"), 1, &irc_protocol_cmd_error },
           { "invite", N_("invite a nick on a channel"), 1, &irc_protocol_cmd_invite },

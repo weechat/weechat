@@ -42,7 +42,7 @@
  */
 
 int
-xfer_file_resume (struct t_xfer *xfer, char *filename)
+xfer_file_resume (struct t_xfer *xfer, const char *filename)
 {
     struct stat st;
     

@@ -49,14 +49,15 @@ extern time_t gui_keyboard_last_activity_time;
 extern void gui_keyboard_init ();
 extern void gui_keyboard_grab_init ();
 extern void gui_keyboard_grab_end ();
-extern char *gui_keyboard_get_internal_code (char *key);
-extern char *gui_keyboard_get_expanded_name (char *key);
+extern char *gui_keyboard_get_internal_code (const char *key);
+extern char *gui_keyboard_get_expanded_name (const char *key);
 extern struct t_gui_key *gui_keyboard_search (struct t_gui_buffer *buffer,
-                                              char *key);
+                                              const char *key);
 extern struct t_gui_key *gui_keyboard_bind (struct t_gui_buffer *buffer,
-                                            char *key, char *command);
-extern int gui_keyboard_unbind (struct t_gui_buffer *buffer, char *key);
-extern int gui_keyboard_pressed (char *key_str);
+                                            const char *key,
+                                            const char *command);
+extern int gui_keyboard_unbind (struct t_gui_buffer *buffer, const char *key);
+extern int gui_keyboard_pressed (const char *key_str);
 extern void gui_keyboard_free (struct t_gui_key **keys,
                                struct t_gui_key **last_key,
                                struct t_gui_key *key);

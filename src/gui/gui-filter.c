@@ -175,7 +175,7 @@ gui_filter_disable ()
  */
 
 struct t_gui_filter *
-gui_filter_search (char *buffer, char *tags, char *regex)
+gui_filter_search (const char *buffer, const char *tags, const char *regex)
 {
     struct t_gui_filter *ptr_filter;
     
@@ -220,11 +220,12 @@ gui_filter_search_by_number (int number)
  */
 
 struct t_gui_filter *
-gui_filter_new (char *buffer, char *tags, char *regex)
+gui_filter_new (const char *buffer, const char *tags, const char *regex)
 {
     struct t_gui_filter *new_filter;
     regex_t *regex1, *regex2;
-    char *pos_tab, *regex_prefix, *pos_regex_message;
+    char *pos_tab, *regex_prefix;
+    const char *pos_regex_message;
 
     if (!buffer || !tags || !regex)
         return NULL;

@@ -56,7 +56,7 @@ weelist_new ()
  */
 
 struct t_weelist_item *
-weelist_find_pos (struct t_weelist *weelist, char *data)
+weelist_find_pos (struct t_weelist *weelist, const char *data)
 {
     struct t_weelist_item *ptr_item;
 
@@ -79,7 +79,7 @@ weelist_find_pos (struct t_weelist *weelist, char *data)
 
 void
 weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
-                char *where)
+                const char *where)
 {
     struct t_weelist_item *pos_item;
 
@@ -139,7 +139,7 @@ weelist_insert (struct t_weelist *weelist, struct t_weelist_item *item,
  */
 
 struct t_weelist_item *
-weelist_add (struct t_weelist *weelist, char *data, char *where)
+weelist_add (struct t_weelist *weelist, const char *data, const char *where)
 {
     struct t_weelist_item *new_item;
     
@@ -161,7 +161,7 @@ weelist_add (struct t_weelist *weelist, char *data, char *where)
  */
 
 struct t_weelist_item *
-weelist_search (struct t_weelist *weelist, char *data)
+weelist_search (struct t_weelist *weelist, const char *data)
 {
     struct t_weelist_item *ptr_item;
 
@@ -183,7 +183,7 @@ weelist_search (struct t_weelist *weelist, char *data)
  */
 
 struct t_weelist_item *
-weelist_casesearch (struct t_weelist *weelist, char *data)
+weelist_casesearch (struct t_weelist *weelist, const char *data)
 {
     struct t_weelist_item *ptr_item;
 
@@ -231,7 +231,7 @@ weelist_get (struct t_weelist *weelist, int position)
  */
 
 void
-weelist_set (struct t_weelist_item *item, char *value)
+weelist_set (struct t_weelist_item *item, const char *value)
 {
     if (!item || !value)
         return;
@@ -363,7 +363,7 @@ weelist_free (struct t_weelist *weelist)
  */
 
 void
-weelist_print_log (struct t_weelist *weelist, char *name)
+weelist_print_log (struct t_weelist *weelist, const char *name)
 {
     struct t_weelist_item *ptr_item;
     

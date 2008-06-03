@@ -57,7 +57,7 @@ struct t_hook *gui_bar_item_timer = NULL;
  */
 
 struct t_gui_bar_item *
-gui_bar_item_search (char *name)
+gui_bar_item_search (const char *name)
 {
     struct t_gui_bar_item *ptr_item;
     
@@ -79,7 +79,7 @@ gui_bar_item_search (char *name)
  */
 
 struct t_gui_bar_item *
-gui_bar_item_search_with_plugin (struct t_weechat_plugin *plugin, char *name)
+gui_bar_item_search_with_plugin (struct t_weechat_plugin *plugin, const char *name)
 {
     struct t_gui_bar_item *ptr_item;
     
@@ -102,7 +102,7 @@ gui_bar_item_search_with_plugin (struct t_weechat_plugin *plugin, char *name)
  */
 
 struct t_gui_bar_item *
-gui_bar_item_new (struct t_weechat_plugin *plugin, char *name,
+gui_bar_item_new (struct t_weechat_plugin *plugin, const char *name,
                   char *(*build_callback)(void *data,
                                           struct t_gui_bar_item *item,
                                           struct t_gui_window *window,
@@ -148,7 +148,7 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, char *name,
  */
 
 int
-gui_bar_contains_item (struct t_gui_bar *bar, char *name)
+gui_bar_contains_item (struct t_gui_bar *bar, const char *name)
 {
     int i;
     
@@ -170,7 +170,7 @@ gui_bar_contains_item (struct t_gui_bar *bar, char *name)
  */
 
 void
-gui_bar_item_update (char *name)
+gui_bar_item_update (const char *name)
 {
     struct t_gui_bar *ptr_bar;
     
@@ -585,8 +585,8 @@ gui_bar_item_timer_cb (void *data)
  */
 
 int
-gui_bar_item_signal_cb (void *data, char *signal,
-                        char *type_data, void *signal_data)
+gui_bar_item_signal_cb (void *data, const char *signal,
+                        const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) signal;
@@ -603,7 +603,7 @@ gui_bar_item_signal_cb (void *data, char *signal,
  */
 
 void
-gui_bar_item_hook (char *signal, char *item)
+gui_bar_item_hook (const char *signal, const char *item)
 {
     struct t_gui_bar_item_hook *bar_item_hook;
     
@@ -611,7 +611,8 @@ gui_bar_item_hook (char *signal, char *item)
     if (bar_item_hook)
     {
         bar_item_hook->hook = hook_signal (NULL, signal,
-                                           &gui_bar_item_signal_cb, item);
+                                           &gui_bar_item_signal_cb,
+                                           (void *)item);
         bar_item_hook->next_hook = gui_bar_item_hooks;
         gui_bar_item_hooks = bar_item_hook;
     }

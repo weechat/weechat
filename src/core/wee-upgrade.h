@@ -199,7 +199,7 @@ enum t_session_hotlist
     SESSION_HOTL_CREATION_TIME
 };
 
-int session_save (char *filename);
-int session_load (char *filename);
+int session_save (const char *filename);
+int session_load (const char *filename);
 
 #endif /* wee-upgrade.h */

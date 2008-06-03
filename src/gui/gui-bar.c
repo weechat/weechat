@@ -62,7 +62,7 @@ struct t_gui_bar *last_gui_temp_bar = NULL;
  */
 
 int
-gui_bar_search_option (char *option_name)
+gui_bar_search_option (const char *option_name)
 {
     int i;
     
@@ -85,7 +85,7 @@ gui_bar_search_option (char *option_name)
  */
 
 int
-gui_bar_search_type (char *type)
+gui_bar_search_type (const char *type)
 {
     int i;
     
@@ -105,7 +105,7 @@ gui_bar_search_type (char *type)
  */
 
 int
-gui_bar_search_position (char *position)
+gui_bar_search_position (const char *position)
 {
     int i;
     
@@ -247,7 +247,7 @@ gui_bar_root_get_size (struct t_gui_bar *bar, enum t_gui_bar_position position)
  */
 
 struct t_gui_bar *
-gui_bar_search (char *name)
+gui_bar_search (const char *name)
 {
     struct t_gui_bar *ptr_bar;
     
@@ -270,7 +270,7 @@ gui_bar_search (char *name)
  */
 
 struct t_gui_bar *
-gui_bar_search_with_option_name (char *option_name)
+gui_bar_search_with_option_name (const char *option_name)
 {
     char *bar_name, *pos_option;
     struct t_gui_bar *ptr_bar;
@@ -322,7 +322,7 @@ gui_bar_refresh (struct t_gui_bar *bar)
 
 int
 gui_bar_config_check_type (void *data, struct t_config_option *option,
-                           char *value)
+                           const char *value)
 {
     /* make C compiler happy */
     (void) data;
@@ -414,7 +414,7 @@ gui_bar_config_change_filling (void *data, struct t_config_option *option)
 
 int
 gui_bar_config_check_size (void *data, struct t_config_option *option,
-                           char *value)
+                           const char *value)
 {
     struct t_gui_bar *ptr_bar;
     long number;
@@ -581,7 +581,7 @@ gui_bar_config_change_items (void *data, struct t_config_option *option)
  */
 
 void
-gui_bar_set_name (struct t_gui_bar *bar, char *name)
+gui_bar_set_name (struct t_gui_bar *bar, const char *name)
 {
     int length;
     char *option_name;
@@ -629,7 +629,7 @@ gui_bar_set_name (struct t_gui_bar *bar, char *name)
  */
 
 void
-gui_bar_set_priority (struct t_gui_bar *bar, char *priority)
+gui_bar_set_priority (struct t_gui_bar *bar, const char *priority)
 {
     long number;
     char *error;
@@ -689,7 +689,7 @@ gui_bar_set_priority (struct t_gui_bar *bar, char *priority)
  */
 
 void
-gui_bar_set_position (struct t_gui_bar *bar, char *position)
+gui_bar_set_position (struct t_gui_bar *bar, const char *position)
 {
     int position_value;
     
@@ -708,7 +708,7 @@ gui_bar_set_position (struct t_gui_bar *bar, char *position)
  */
 
 void
-gui_bar_set_size (struct t_gui_bar *bar, char *size)
+gui_bar_set_size (struct t_gui_bar *bar, const char *size)
 {
     long number;
     char *error, value[32];
@@ -753,7 +753,7 @@ gui_bar_set_size (struct t_gui_bar *bar, char *size)
  */
 
 void
-gui_bar_set_size_max (struct t_gui_bar *bar, char *size)
+gui_bar_set_size_max (struct t_gui_bar *bar, const char *size)
 {
     long number;
     char *error, value[32];
@@ -781,7 +781,7 @@ gui_bar_set_size_max (struct t_gui_bar *bar, char *size)
  */
 
 int
-gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
+gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
 {
     if (!bar || !property || !value)
         return 0;
@@ -860,7 +860,7 @@ gui_bar_set (struct t_gui_bar *bar, char *property, char *value)
  */
 
 struct t_config_option *
-gui_bar_create_option (char *bar_name, int index_option, char *value)
+gui_bar_create_option (const char *bar_name, int index_option, const char *value)
 {
     struct t_config_option *ptr_option;
     int length;
@@ -991,7 +991,7 @@ gui_bar_create_option (char *bar_name, int index_option, char *value)
 
 void
 gui_bar_create_option_temp (struct t_gui_bar *temp_bar, int index_option,
-                            char *value)
+                            const char *value)
 {
     struct t_config_option *new_option;
     
@@ -1044,7 +1044,7 @@ gui_bar_create_option_temp (struct t_gui_bar *temp_bar, int index_option,
  */
 
 struct t_gui_bar *
-gui_bar_alloc (char *name)
+gui_bar_alloc (const char *name)
 {
     struct t_gui_bar *new_bar;
 
@@ -1081,7 +1081,7 @@ gui_bar_alloc (char *name)
  */
 
 struct t_gui_bar *
-gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
+gui_bar_new_with_options (struct t_weechat_plugin *plugin, const char *name,
                           struct t_config_option *priority,
                           struct t_config_option *type,
                           struct t_config_option *conditions,
@@ -1166,10 +1166,11 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, char *name,
  */
 
 struct t_gui_bar *
-gui_bar_new (struct t_weechat_plugin *plugin, char *name,
-             char *priority, char *type, char *conditions, char *position,
-             char *filling, char *size, char *size_max, char *color_fg,
-             char *color_bg, char *separators, char *items)
+gui_bar_new (struct t_weechat_plugin *plugin, const char *name,
+             const char *priority, const char *type, const char *conditions,
+             const char *position, const char *filling, const char *size,
+             const char *size_max, const char *color_fg, const char *color_bg,
+             const char *separators, const char *items)
 {
     struct t_config_option *option_priority, *option_type, *option_conditions;
     struct t_config_option *option_position, *option_filling, *option_size;
@@ -1417,7 +1418,7 @@ gui_bar_use_temp_bars ()
  */
 
 void
-gui_bar_update (char *name)
+gui_bar_update (const char *name)
 {
     struct t_gui_bar *ptr_bar;
     

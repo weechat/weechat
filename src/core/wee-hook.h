@@ -135,8 +135,8 @@ struct t_hook_connect
 
 typedef int (t_hook_callback_print)(void *data, struct t_gui_buffer *buffer,
                                     time_t date, int tags_count,
-                                    char **tags, char *prefix,
-                                    char *message);
+                                    char **tags, const char *prefix,
+                                    const char *message);
 
 struct t_hook_print
 {
@@ -148,8 +148,8 @@ struct t_hook_print
     int strip_colors;                  /* strip colors in msg for callback? */
 };
 
-typedef int (t_hook_callback_signal)(void *data, char *signal,
-                                     char *type_data, void *signal_data);
+typedef int (t_hook_callback_signal)(void *data, const char *signal,
+                                     const char *type_data, void *signal_data);
 
 struct t_hook_signal
 {
@@ -158,7 +158,8 @@ struct t_hook_signal
                                        /* with "*", "*" == any signal)      */
 };
 
-typedef int (t_hook_callback_config)(void *data, char *option, char *value);
+typedef int (t_hook_callback_config)(void *data, const char *option,
+                                     const char *value);
 
 struct t_hook_config
 {
@@ -167,7 +168,7 @@ struct t_hook_config
                                        /* (NULL = hook for all options)     */
 };
 
-typedef int (t_hook_callback_completion)(void *data, char *completion,
+typedef int (t_hook_callback_completion)(void *data, const char *completion,
                                          struct t_gui_buffer *buffer,
                                          struct t_weelist *list);
 
@@ -177,8 +178,9 @@ struct t_hook_completion
     char *completion;                     /* name of completion             */
 };
 
-typedef char *(t_hook_callback_modifier)(void *data, char *modifier,
-                                         char *modifier_data, char *string);
+typedef char *(t_hook_callback_modifier)(void *data, const char *modifier,
+                                         const char *modifier_data,
+                                         const char *string);
 
 struct t_hook_modifier
 {
@@ -198,13 +200,13 @@ extern int hook_valid (struct t_hook *hook);
 extern int hook_valid_for_plugin (struct t_weechat_plugin *plugin,
                                   struct t_hook *hook);
 extern struct t_hook *hook_command (struct t_weechat_plugin *plugin,
-                                    char *command, char *description,
-                                    char *args, char *args_description,
-                                    char *completion,
+                                    const char *command, const char *description,
+                                    const char *args, const char *args_description,
+                                    const char *completion,
                                     t_hook_callback_command *callback,
                                     void *callback_data);
 extern int hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
-                              struct t_weechat_plugin *plugin, char *string);
+                              struct t_weechat_plugin *plugin, const char *string);
 extern struct t_hook *hook_timer (struct t_weechat_plugin *plugin,
                                   long interval, int align_second,
                                   int max_calls,
@@ -222,46 +224,47 @@ extern int hook_fd_set (fd_set *read_fds, fd_set *write_fds,
 extern void hook_fd_exec (fd_set *read_fds, fd_set *write_fds,
                           fd_set *exception_fds);
 extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
-                                    char *address, int port,
+                                    const char *address, int port,
                                     int sock, int ipv6, void *gnutls_session,
-                                    char *local_hostname,
+                                    const char *local_hostname,
                                     t_hook_callback_connect * callback,
                                     void *callback_data);
 extern struct t_hook *hook_print (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
-                                  char *tags, char *message,
+                                  const char *tags, const char *message,
                                   int strip_colors,
                                   t_hook_callback_print *callback,
                                   void *callback_data);
 extern void hook_print_exec (struct t_gui_buffer *buffer,
                              time_t date, int tags_count,
-                             char **tags_array, char *prefix,
-                             char *message);
+                             char **tags_array, const char *prefix,
+                             const char *message);
 extern struct t_hook *hook_signal (struct t_weechat_plugin *plugin,
-                                   char *signal,
+                                   const char *signal,
                                    t_hook_callback_signal *callback,
                                    void *callback_data);
-extern void hook_signal_send (char *signal, char *type_data,
+extern void hook_signal_send (const char *signal, const char *type_data,
                               void *signal_data);
-extern struct t_hook *hook_config (struct t_weechat_plugin *, char *option,
+extern struct t_hook *hook_config (struct t_weechat_plugin *, const char *option,
                                    t_hook_callback_config *callback,
                                    void *callback_data);
-extern void hook_config_exec (char *option, char *value);
+extern void hook_config_exec (const char *option, const char *value);
 extern struct t_hook *hook_completion (struct t_weechat_plugin *plugin,
-                                       char *completion,
+                                       const char *completion,
                                        t_hook_callback_completion *callback,
                                        void *callback_data);
 extern void hook_completion_exec (struct t_weechat_plugin *plugin,
-                                  char *completion,
+                                  const char *completion,
                                   struct t_gui_buffer *buffer,
                                   struct t_weelist *list);
 extern struct t_hook *hook_modifier (struct t_weechat_plugin *plugin,
-                                     char *modifier,
+                                     const char *modifier,
                                      t_hook_callback_modifier *callback,
                                      void *callback_data);
 extern char *hook_modifier_exec (struct t_weechat_plugin *plugin,
-                                 char *modifier, char *modifier_data,
-                                 char *string);
+                                 const char *modifier,
+                                 const char *modifier_data,
+                                 const char *string);
 extern void unhook (struct t_hook *hook);
 extern void unhook_all_plugin (struct t_weechat_plugin *plugin);
 extern void unhook_all ();

@@ -132,7 +132,7 @@ gui_keyboard_grab_end ()
  */
 
 char *
-gui_keyboard_get_internal_code (char *key)
+gui_keyboard_get_internal_code (const char *key)
 {
     char *result;
     
@@ -175,7 +175,7 @@ gui_keyboard_get_internal_code (char *key)
  */
 
 char *
-gui_keyboard_get_expanded_name (char *key)
+gui_keyboard_get_expanded_name (const char *key)
 {
     char *result;
     
@@ -279,7 +279,8 @@ gui_keyboard_insert_sorted (struct t_gui_key **keys, struct t_gui_key **last_key
  */
 
 struct t_gui_key *
-gui_keyboard_new (struct t_gui_buffer *buffer, char *key, char *command)
+gui_keyboard_new (struct t_gui_buffer *buffer, const char *key,
+                  const char *command)
 {
     struct t_gui_key *new_key;
     char *internal_code;
@@ -308,7 +309,7 @@ gui_keyboard_new (struct t_gui_buffer *buffer, char *key, char *command)
  */
 
 struct t_gui_key *
-gui_keyboard_search (struct t_gui_buffer *buffer, char *key)
+gui_keyboard_search (struct t_gui_buffer *buffer, const char *key)
 {
     struct t_gui_key *ptr_key;
 
@@ -328,7 +329,7 @@ gui_keyboard_search (struct t_gui_buffer *buffer, char *key)
  */
 
 int
-gui_keyboard_cmp (char *key, char *search)
+gui_keyboard_cmp (const char *key, const char *search)
 {
     while (search[0])
     {
@@ -346,7 +347,7 @@ gui_keyboard_cmp (char *key, char *search)
  */
 
 struct t_gui_key *
-gui_keyboard_search_part (struct t_gui_buffer *buffer, char *key)
+gui_keyboard_search_part (struct t_gui_buffer *buffer, const char *key)
 {
     struct t_gui_key *ptr_key;
     
@@ -368,7 +369,7 @@ gui_keyboard_search_part (struct t_gui_buffer *buffer, char *key)
  */
 
 struct t_gui_key *
-gui_keyboard_bind (struct t_gui_buffer *buffer, char *key, char *command)
+gui_keyboard_bind (struct t_gui_buffer *buffer, const char *key, const char *command)
 {
     struct t_gui_key *new_key;
     
@@ -395,7 +396,7 @@ gui_keyboard_bind (struct t_gui_buffer *buffer, char *key, char *command)
  */
 
 int
-gui_keyboard_unbind (struct t_gui_buffer *buffer, char *key)
+gui_keyboard_unbind (struct t_gui_buffer *buffer, const char *key)
 {
     struct t_gui_key *ptr_key;
     char *internal_code;
@@ -424,7 +425,7 @@ gui_keyboard_unbind (struct t_gui_buffer *buffer, char *key)
  */
 
 int
-gui_keyboard_pressed (char *key_str)
+gui_keyboard_pressed (const char *key_str)
 {
     int first_key;
     struct t_gui_key *ptr_key;

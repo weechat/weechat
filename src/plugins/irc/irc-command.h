@@ -30,16 +30,16 @@ struct t_irc_server;
 
 
 extern void irc_command_away_server (struct t_irc_server *server,
-                                     char *arguments);
+                                     const char *arguments);
 extern void irc_command_join_server (struct t_irc_server *server,
-                                     char *arguments);
+                                     const char *arguments);
 extern void irc_command_mode_server (struct t_irc_server *server,
-                                     char *arguments);
+                                     const char *arguments);
 extern void irc_command_part_channel (struct t_irc_server *server,
-                                      char *channel_name,
-                                      char *part_message);
+                                      const char *channel_name,
+                                      const char *part_message);
 extern void irc_command_quit_server (struct t_irc_server *server,
-                                     char *arguments);
+                                     const char *arguments);
 extern void irc_command_init ();
 
 #endif /* irc-command.h */

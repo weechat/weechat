@@ -213,8 +213,8 @@ gui_chat_display_horizontal_line (struct t_gui_window *window, int simulate)
  */
 
 char *
-gui_chat_string_next_char (struct t_gui_window *window, unsigned char *string,
-                           int apply_style)
+gui_chat_string_next_char (struct t_gui_window *window,
+                           const unsigned char *string, int apply_style)
 {
     char str_fg[3], str_bg[3];
     int weechat_color, fg, bg;
@@ -375,7 +375,7 @@ gui_chat_string_next_char (struct t_gui_window *window, unsigned char *string,
  */
 
 void
-gui_chat_display_word_raw (struct t_gui_window *window, char *string,
+gui_chat_display_word_raw (struct t_gui_window *window, const char *string,
                            int max_chars_on_screen, int display)
 {
     char *next_char, *output, utf_char[16], chars_displayed, size_on_screen;

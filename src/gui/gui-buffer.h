@@ -104,7 +104,7 @@ struct t_gui_buffer
     int input;                         /* = 1 if input is enabled           */
     int (*input_callback)(void *data,  /* called when user send data        */
                           struct t_gui_buffer *buffer,
-                          char *input_data);
+                          const char *input_data);
     void *input_callback_data;         /* data for callback                 */
                                        /* to this buffer                    */
     char *input_nick;                  /* self nick                         */
@@ -156,19 +156,19 @@ extern struct t_gui_buffer *gui_previous_buffer;
 /* buffer functions */
 
 extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
-                                            char *category, char *name,
+                                            const char *category, const char *name,
                                             int (*input_callback)(void *data,
                                                                   struct t_gui_buffer *buffer,
-                                                                  char *input_data),
+                                                                  const char *input_data),
                                             void *input_callback_data,
                                             int (*close_callback)(void *data,
                                                                   struct t_gui_buffer *buffer),
                                             void *close_callback_data);
 extern int gui_buffer_valid (struct t_gui_buffer *buffer);
 extern char *gui_buffer_get_string (struct t_gui_buffer *buffer,
-                                    char *property);
+                                    const char *property);
 extern void *gui_buffer_get_pointer (struct t_gui_buffer *buffer,
-                                     char *property);
+                                     const char *property);
 extern void gui_buffer_ask_title_refresh (struct t_gui_buffer *buffer,
                                           int refresh);
 extern void gui_buffer_ask_chat_refresh (struct t_gui_buffer *buffer,
@@ -178,25 +178,26 @@ extern void gui_buffer_ask_nicklist_refresh (struct t_gui_buffer *buffer,
 extern void gui_buffer_ask_input_refresh (struct t_gui_buffer *buffer,
                                           int refresh);
 extern void gui_buffer_set_category (struct t_gui_buffer *buffer,
-                                     char *category);
-extern void gui_buffer_set_name (struct t_gui_buffer *buffer, char *name);
+                                     const char *category);
+extern void gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name);
 extern void gui_buffer_set_title (struct t_gui_buffer *buffer,
-                                  char *new_title);
+                                  const char *new_title);
 extern void gui_buffer_set_nicklist (struct t_gui_buffer *buffer,
                                      int nicklist);
 extern void gui_buffer_set_nicklist_case_sensitive (struct t_gui_buffer * buffer,
                                                     int case_sensitive);
-extern void gui_buffer_set_nick (struct t_gui_buffer *buffer, char *new_nick);
-extern void gui_buffer_set (struct t_gui_buffer *buffer, char *property,
-                            char *value);
+extern void gui_buffer_set_nick (struct t_gui_buffer *buffer, const char *new_nick);
+extern void gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
+                            const char *value);
 extern struct t_gui_buffer *gui_buffer_search_main ();
-extern struct t_gui_buffer *gui_buffer_search_by_category_name (char *category,
-                                                                char *name);
+extern struct t_gui_buffer *gui_buffer_search_by_category_name (const char *category,
+                                                                const char *name);
 extern struct t_gui_buffer *gui_buffer_search_by_number (int number);
 extern struct t_gui_window *gui_buffer_find_window (struct t_gui_buffer *buffer);
 extern int gui_buffer_is_scrolled (struct t_gui_buffer *buffer);
 extern int gui_buffer_match_category_name (struct t_gui_buffer *buffer,
-                                           char *mask, int case_sensitive);
+                                           const char *mask,
+                                           int case_sensitive);
 extern void gui_buffer_clear (struct t_gui_buffer *buffer);
 extern void gui_buffer_clear_all ();
 extern void gui_buffer_close (struct t_gui_buffer *buffer,

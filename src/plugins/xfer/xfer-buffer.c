@@ -39,7 +39,7 @@ int xfer_buffer_selected_line = 0;
  */
 
 void
-xfer_buffer_refresh (char *hotlist)
+xfer_buffer_refresh (const char *hotlist)
 {
     struct t_xfer *ptr_xfer, *xfer_selected;
     char str_color[256], suffix[32], status[64], date[128], *progress_bar;
@@ -256,7 +256,7 @@ xfer_buffer_refresh (char *hotlist)
 
 int
 xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
-                      char *input_data)
+                      const char *input_data)
 {
     struct t_xfer *xfer, *ptr_xfer, *next_xfer;
     

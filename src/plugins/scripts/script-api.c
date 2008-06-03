@@ -35,7 +35,7 @@
 
 void
 script_api_charset_set (struct t_plugin_script *script,
-                        char *charset)
+                        const char *charset)
 {
     if (script->charset)
         free (script->charset);
@@ -51,10 +51,10 @@ script_api_charset_set (struct t_plugin_script *script,
 struct t_config_file *
 script_api_config_new (struct t_weechat_plugin *weechat_plugin,
                        struct t_plugin_script *script,
-                       char *name,
+                       const char *name,
                        int (*callback_reload)(void *data,
                                               struct t_config_file *config_file),
-                       char *function)
+                       const char *function)
 {
     struct t_script_callback *new_script_callback;
     struct t_config_file *new_config_file;
@@ -97,28 +97,28 @@ struct t_config_section *
 script_api_config_new_section (struct t_weechat_plugin *weechat_plugin,
                                struct t_plugin_script *script,
                                struct t_config_file *config_file,
-                               char *name,
+                               const char *name,
                                int user_can_add_options,
                                int user_can_delete_options,
                                void (*callback_read)(void *data,
                                                      struct t_config_file *config_file,
-                                                     char *option_name,
-                                                     char *value),
+                                                     const char *option_name,
+                                                     const char *value),
                                char *function_read,
                                void (*callback_write)(void *data,
                                                       struct t_config_file *config_file,
-                                                      char *section_name),
+                                                      const char *section_name),
                                char *function_write,
                                void (*callback_write_default)(void *data,
                                                               struct t_config_file *config_file,
-                                                              char *section_name),
+                                                              const char *section_name),
                                char *function_write_default,
                                int (*callback_create_option)(void *data,
                                                              struct t_config_file *config_file,
                                                              struct t_config_section *section,
-                                                             char *option_name,
-                                                             char *value),
-                               char *function_create_option)
+                                                             const char *option_name,
+                                                             const char *value),
+                               const char *function_create_option)
 {
     struct t_script_callback *new_script_callback1, *new_script_callback2;
     struct t_script_callback *new_script_callback3, *new_script_callback4;
@@ -288,19 +288,19 @@ script_api_config_new_option (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *script,
                               struct t_config_file *config_file,
                               struct t_config_section *section,
-                              char *name, char *type,
-                              char *description, char *string_values,
-                              int min, int max, char *default_value,
+                              const char *name, const char *type,
+                              const char *description, const char *string_values,
+                              int min, int max, const char *default_value,
                               void (*callback_check_value)(void *data,
                                                            struct t_config_option *option,
-                                                           char *value),
-                              char *function_check_value,
+                                                           const char *value),
+                              const char *function_check_value,
                               void (*callback_change)(void *data,
                                                       struct t_config_option *option),
-                              char *function_change,
+                              const char *function_change,
                               void (*callback_delete)(void *data,
                                                       struct t_config_option *option),
-                              char *function_delete)
+                              const char *function_delete)
 {
     struct t_script_callback *new_script_callback1, *new_script_callback2;
     struct t_script_callback *new_script_callback3;
@@ -451,7 +451,7 @@ script_api_config_free (struct t_weechat_plugin *weechat_plugin,
 void
 script_api_printf (struct t_weechat_plugin *weechat_plugin,
                    struct t_plugin_script *script,
-                   struct t_gui_buffer *buffer, char *format, ...)
+                   struct t_gui_buffer *buffer, const char *format, ...)
 {
     va_list argptr;
     char *buf, *buf2;
@@ -481,7 +481,8 @@ void
 script_api_printf_date_tags (struct t_weechat_plugin *weechat_plugin,
                              struct t_plugin_script *script,
                              struct t_gui_buffer *buffer,
-                             time_t date, char *tags, char *format, ...)
+                             time_t date, const char *tags,
+                             const char *format, ...)
 {
     va_list argptr;
     char *buf, *buf2;
@@ -512,7 +513,7 @@ void
 script_api_printf_y (struct t_weechat_plugin *weechat_plugin,
                      struct t_plugin_script *script,
                      struct t_gui_buffer *buffer, int y,
-                     char *format, ...)
+                     const char *format, ...)
 {
     va_list argptr;
     char *buf, *buf2;
@@ -541,8 +542,8 @@ script_api_printf_y (struct t_weechat_plugin *weechat_plugin,
 void
 script_api_infobar_printf (struct t_weechat_plugin *weechat_plugin,
                            struct t_plugin_script *script,
-                           int delay, char *color_name,
-                           char *format, ...)
+                           int delay, const char *color_name,
+                           const char *format, ...)
 {
     va_list argptr;
     char buf[1024];
@@ -566,7 +567,7 @@ script_api_infobar_printf (struct t_weechat_plugin *weechat_plugin,
 void
 script_api_log_printf (struct t_weechat_plugin *weechat_plugin,
                        struct t_plugin_script *script,
-                       char *format, ...)
+                       const char *format, ...)
 {
     va_list argptr;
     char *buf, *buf2;
@@ -594,14 +595,14 @@ script_api_log_printf (struct t_weechat_plugin *weechat_plugin,
 struct t_hook *
 script_api_hook_command (struct t_weechat_plugin *weechat_plugin,
                          struct t_plugin_script *script,
-                         char *command, char *description,
-                         char *args, char *args_description,
-                         char *completion,
+                         const char *command, const char *description,
+                         const char *args, const char *args_description,
+                         const char *completion,
                          int (*callback)(void *data,
                                          struct t_gui_buffer *buffer,
                                          int argc, char **argv,
                                          char **argv_eol),
-                         char *function)
+                         const char *function)
 {
     struct t_script_callback *new_script_callback;
     struct t_hook *new_hook;
@@ -639,7 +640,7 @@ script_api_hook_timer (struct t_weechat_plugin *weechat_plugin,
                        struct t_plugin_script *script,
                        int interval, int align_second, int max_calls,
                        int (*callback)(void *data),
-                       char *function)
+                       const char *function)
 {
     struct t_script_callback *new_script_callback;
     struct t_hook *new_hook;
@@ -677,7 +678,7 @@ script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
                     int fd, int flag_read, int flag_write,
                     int flag_exception,
                     int (*callback)(void *data),
-                    char *function)
+                    const char *function)
 {
     struct t_script_callback *new_script_callback;
     struct t_hook *new_hook;
@@ -713,13 +714,14 @@ struct t_hook *
 script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
                        struct t_plugin_script *script,
                        struct t_gui_buffer *buffer,
-                       char *tags, char *message, int strip_colors,
+                       const char *tags, const char *message, int strip_colors,
                        int (*callback)(void *data,
                                        struct t_gui_buffer *buffer,
                                        time_t date,
                                        int tags_count, char **tags,
-                                       char *prefix, char *message),
-                       char *function)
+                                       const char *prefix,
+                                       const char *message),
+                       const char *function)
 {
     struct t_script_callback *new_script_callback;
     struct t_hook *new_hook;
@@ -754,11 +756,11 @@ script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
 struct t_hook *
 script_api_hook_signal (struct t_weechat_plugin *weechat_plugin,
                         struct t_plugin_script *script,
-                        char *signal,
-                        int (*callback)(void *data, char *signal,
-                                        char *type_data,
+                        const char *signal,
+                        int (*callback)(void *data, const char *signal,
+                                        const char *type_data,
                                         void *signal_data),
-                        char *function)
+                        const char *function)
 {
     struct t_script_callback *new_script_callback;
     struct t_hook *new_hook;
@@ -792,10 +794,10 @@ script_api_hook_signal (struct t_weechat_plugin *weechat_plugin,
 struct t_hook *
 script_api_hook_config (struct t_weechat_plugin *weechat_plugin,
                         struct t_plugin_script *script,
-                        char *option,
-                        int (*callback)(void *data, char *option,
-                                        char *value),
-                        char *function)
+                        const char *option,
+                        int (*callback)(void *data, const char *option,
+                                        const char *value),
+                        const char *function)
 {
     struct t_script_callback *new_script_callback;
     struct t_hook *new_hook;
@@ -829,11 +831,11 @@ script_api_hook_config (struct t_weechat_plugin *weechat_plugin,
 struct t_hook *
 script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
                             struct t_plugin_script *script,
-                            char *completion,
-                            int (*callback)(void *data, char *completion,
+                            const char *completion,
+                            int (*callback)(void *data, const char *completion,
                                             struct t_gui_buffer *buffer,
                                             struct t_weelist *list),
-                            char *function)
+                            const char *function)
 {
     struct t_script_callback *new_script_callback;
     struct t_hook *new_hook;
@@ -867,10 +869,11 @@ script_api_hook_completion (struct t_weechat_plugin *weechat_plugin,
 struct t_hook *
 script_api_hook_modifier (struct t_weechat_plugin *weechat_plugin,
                           struct t_plugin_script *script,
-                          char *modifier,
-                          char *(*callback)(void *data, char *modifier,
-                                            char *modifier_data, char *string),
-                          char *function)
+                          const char *modifier,
+                          char *(*callback)(void *data, const char *modifier,
+                                            const char *modifier_data,
+                                            const char *string),
+                          const char *function)
 {
     struct t_script_callback *new_script_callback;
     struct t_hook *new_hook;
@@ -951,14 +954,14 @@ script_api_unhook_all (struct t_plugin_script *script)
 struct t_gui_buffer *
 script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
                        struct t_plugin_script *script,
-                       char *category, char *name,
+                       const char *category, const char *name,
                        int (*input_callback)(void *data,
                                              struct t_gui_buffer *buffer,
-                                             char *input_data),
-                       char *function_input,
+                                             const char *input_data),
+                       const char *function_input,
                        int (*close_callback)(void *data,
                                              struct t_gui_buffer *buffer),
-                       char *function_close)
+                       const char *function_close)
 {
     struct t_script_callback *new_script_callback_input;
     struct t_script_callback *new_script_callback_close;
@@ -1071,13 +1074,13 @@ script_api_buffer_close (struct t_weechat_plugin *weechat_plugin,
 struct t_gui_bar_item *
 script_api_bar_item_new (struct t_weechat_plugin *weechat_plugin,
                          struct t_plugin_script *script,
-                         char *name,
+                         const char *name,
                          char *(*build_callback)(void *data,
                                                  struct t_gui_bar_item *item,
                                                  struct t_gui_window *window,
                                                  int max_width,
                                                  int max_height),
-                         char *function_build)
+                         const char *function_build)
 {
     struct t_script_callback *new_script_callback;
     struct t_gui_bar_item *new_item;
@@ -1143,7 +1146,7 @@ script_api_bar_item_remove (struct t_weechat_plugin *weechat_plugin,
 void
 script_api_command (struct t_weechat_plugin *weechat_plugin,
                     struct t_plugin_script *script,
-                    struct t_gui_buffer *buffer, char *command)
+                    struct t_gui_buffer *buffer, const char *command)
 {
     char *command2;
     
@@ -1164,7 +1167,7 @@ script_api_command (struct t_weechat_plugin *weechat_plugin,
 char *
 script_api_config_get_plugin (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *script,
-                              char *option)
+                              const char *option)
 {
     char *option_fullname, *return_value;
     
@@ -1191,7 +1194,7 @@ script_api_config_get_plugin (struct t_weechat_plugin *weechat_plugin,
 int
 script_api_config_set_plugin (struct t_weechat_plugin *weechat_plugin,
                               struct t_plugin_script *script,
-                              char *option, char *value)
+                              const char *option, const char *value)
 {
     char *option_fullname;
     int return_code;

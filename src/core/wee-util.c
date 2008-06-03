@@ -106,7 +106,7 @@ util_timeval_add (struct timeval *tv, long interval)
  */
 
 int
-util_get_time_length (char *time_format)
+util_get_time_length (const char *time_format)
 {
     time_t date;
     struct tm *local_time;
@@ -144,7 +144,7 @@ util_catch_signal (int signum, void (*handler)(int))
  */
 
 int
-util_create_dir (char *directory, int permissions)
+util_create_dir (const char *directory, int permissions)
 {
     if (mkdir (directory, 0755) < 0)
     {
@@ -169,8 +169,8 @@ util_create_dir (char *directory, int permissions)
  */
 
 void
-util_exec_on_files (char *directory, void *data,
-                    int (*callback)(void *data, char *filename))
+util_exec_on_files (const char *directory, void *data,
+                    int (*callback)(void *data, const char *filename))
 {
     char complete_filename[1024];
     DIR *dir;
@@ -209,7 +209,7 @@ util_exec_on_files (char *directory, void *data,
  */
 
 char *
-util_search_full_lib_name (char *filename, char *sys_directory)
+util_search_full_lib_name (const char *filename, const char *sys_directory)
 {
     char *name_with_ext, *final_name;
     int length;
@@ -279,7 +279,7 @@ util_search_full_lib_name (char *filename, char *sys_directory)
  */
 
 int
-util_weechat_version_cmp (char *version1, char *version2)
+util_weechat_version_cmp (const char *version1, const char *version2)
 {
     char *v1, *v2, *ptr_v1, *ptr_v2, *pos1, *pos2, *next1, *next2;
     char *error1, *error2;

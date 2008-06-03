@@ -53,18 +53,18 @@ struct t_gui_nick
 
 extern struct t_gui_nick_group *gui_nicklist_search_group (struct t_gui_buffer *buffer,
                                                            struct t_gui_nick_group *from_group,
-                                                           char *name);
+                                                           const char *name);
 extern struct t_gui_nick_group *gui_nicklist_add_group (struct t_gui_buffer *buffer,
                                                         struct t_gui_nick_group *parent_group,
-                                                        char *name, char *color,
+                                                        const char *name, const char *color,
                                                         int visible);
 extern struct t_gui_nick *gui_nicklist_search_nick (struct t_gui_buffer *buffer,
                                                     struct t_gui_nick_group *from_group,
-                                                    char *name);
+                                                    const char *name);
 extern struct t_gui_nick *gui_nicklist_add_nick (struct t_gui_buffer *buffer,
                                                  struct t_gui_nick_group *group,
-                                                 char *name, char *color,
-                                                 char prefix, char *prefix_color,
+                                                 const char *name, const char *color,
+                                                 char prefix, const char *prefix_color,
                                                  int visible);
 extern void gui_nicklist_remove_group (struct t_gui_buffer *buffer,
                                        struct t_gui_nick_group *group);
@@ -74,7 +74,7 @@ extern void gui_nicklist_remove_all (struct t_gui_buffer *buffer);
 extern void gui_nicklist_get_next_item (struct t_gui_buffer *buffer,
                                         struct t_gui_nick_group **group,
                                         struct t_gui_nick **nick);
-extern char *gui_nicklist_get_group_start (char *name);
+extern char *gui_nicklist_get_group_start (const char *name);
 extern int gui_nicklist_get_max_length (struct t_gui_buffer *buffer,
                                         struct t_gui_nick_group *group);
 extern void gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,

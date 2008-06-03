@@ -58,7 +58,7 @@ char *irc_color_to_weechat[IRC_NUM_COLORS] =
  */
 
 char *
-irc_color_decode (char *string, int keep_colors)
+irc_color_decode (const char *string, int keep_colors)
 {
     unsigned char *out, *ptr_string;
     int out_length, length, out_pos;
@@ -184,7 +184,7 @@ irc_color_decode (char *string, int keep_colors)
  */
 
 char *
-irc_color_decode_for_user_entry (char *string)
+irc_color_decode_for_user_entry (const char *string)
 {
     unsigned char *out, *ptr_string;
     int out_length, out_pos, length;
@@ -252,7 +252,7 @@ irc_color_decode_for_user_entry (char *string)
  */
 
 char *
-irc_color_encode (char *string, int keep_colors)
+irc_color_encode (const char *string, int keep_colors)
 {
     unsigned char *out, *ptr_string;
     int out_length, out_pos, length;

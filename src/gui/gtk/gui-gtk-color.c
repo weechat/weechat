@@ -61,7 +61,7 @@ struct t_gui_color gui_weechat_colors[] =
  */
 
 int
-gui_color_search (char *color_name)
+gui_color_search (const char *color_name)
 {
     int i;
     
@@ -80,7 +80,7 @@ gui_color_search (char *color_name)
  */
 
 int
-gui_color_assign (int *color, char *color_name)
+gui_color_assign (int *color, const char *color_name)
 {
     int i;
     

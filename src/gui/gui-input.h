@@ -31,9 +31,9 @@ extern char *gui_input_clipboard;
 extern void gui_input_optimize_size (struct t_gui_buffer *buffer);
 extern void gui_input_init_color_mask (struct t_gui_buffer *buffer);
 extern void gui_input_move (struct t_gui_buffer *buffer, char *target,
-                            char *source, int size);
-extern int gui_input_insert_string (struct t_gui_buffer *buffer, char *string,
-                                    int pos);
+                            const char *source, int size);
+extern int gui_input_insert_string (struct t_gui_buffer *buffer,
+                                    const char *string, int pos);
 extern int gui_input_get_prompt_length (struct t_gui_buffer *buffer);
 extern void gui_input_return ();
 extern void gui_input_clipboard_paste ();

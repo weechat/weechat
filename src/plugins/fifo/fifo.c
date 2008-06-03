@@ -157,52 +157,57 @@ fifo_remove ()
  */
 
 void
-fifo_exec (char *text)
+fifo_exec (const char *text)
 {
-    char *pos_msg, *pos;
+    char *text2, *pos_msg, *pos;
     struct t_gui_buffer *ptr_buffer;
+    
+    text2 = strdup (text);
+    if (!text2)
+        return;
     
     pos = NULL;
     ptr_buffer = NULL;
     
     /* look for category/name at beginning of text
        text may be: "category,name *text" or "name *text" or "*text" */
-    if (text[0] == '*')
+    if (text2[0] == '*')
     {
-        pos_msg = text + 1;
+        pos_msg = text2 + 1;
         ptr_buffer = weechat_buffer_search (NULL, NULL);
         if (!ptr_buffer)
             ptr_buffer = weechat_current_buffer;
     }
     else
     {
-        pos_msg = strstr (text, " *");
+        pos_msg = strstr (text2, " *");
         if (!pos_msg)
         {
             weechat_printf (NULL,
                             _("%s%s: error, invalid text received on pipe"),
                             weechat_prefix ("error"), "fifo");
+            free (text2);
             return;
         }
         pos_msg[0] = '\0';
         pos = pos_msg - 1;
         pos_msg += 2;
-        while ((pos >= text) && (pos[0] == ' '))
+        while ((pos >= text2) && (pos[0] == ' '))
         {
             pos[0] = '\0';
             pos--;
         }
         
-        if (text[0])
+        if (text2[0])
         {
-            pos = strchr (text, ',');
+            pos = strchr (text2, ',');
             if (pos)
             {
                 pos[0] = '\0';
-                ptr_buffer = weechat_buffer_search (text, pos + 1);
+                ptr_buffer = weechat_buffer_search (text2, pos + 1);
             }
             else
-                ptr_buffer = weechat_buffer_search (NULL, text);
+                ptr_buffer = weechat_buffer_search (NULL, text2);
             if (!ptr_buffer)
                 ptr_buffer = weechat_current_buffer;
         }
@@ -213,10 +218,13 @@ fifo_exec (char *text)
         weechat_printf (NULL,
                         _("%s%s: error, buffer not found for pipe data"),
                         weechat_prefix ("error"), "fifo");
+        free (text2);
         return;
     }
     
     weechat_command (ptr_buffer, pos_msg);
+    
+    free (text2);
 }
 
 /*
@@ -320,7 +328,7 @@ fifo_read ()
  */
 
 int
-fifo_config_cb (void *data, char *option, char *value)
+fifo_config_cb (void *data, const char *option, const char *value)
 {
     /* make C compiler happy */
     (void) data;

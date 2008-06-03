@@ -574,7 +574,7 @@ gui_bar_window_add_missing_bars (struct t_gui_window *window)
 
 void
 gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
-                             int *x, int *y, char *string)
+                             int *x, int *y, const char *string)
 {
     int weechat_color, size_on_screen, fg, bg;
     char str_fg[3], str_bg[3], utf_char[16], *next_char, *output;

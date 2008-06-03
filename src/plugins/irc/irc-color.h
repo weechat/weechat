@@ -53,8 +53,8 @@
 #define IRC_COLOR_UNDERLINE_CHAR  '\x1F'
 #define IRC_COLOR_UNDERLINE_STR   "\x1F"
 
-extern char *irc_color_decode (char *string, int keep_colors);
-extern char *irc_color_decode_for_user_entry (char *string);
-extern char *irc_color_encode (char *string, int keep_colors);
+extern char *irc_color_decode (const char *string, int keep_colors);
+extern char *irc_color_decode_for_user_entry (const char *string);
+extern char *irc_color_encode (const char *string, int keep_colors);
 
 #endif /* irc-color.h */

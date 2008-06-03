@@ -50,10 +50,10 @@ extern int gui_chat_time_length;
 
 extern void gui_chat_prefix_build_empty ();
 extern void gui_chat_prefix_build ();
-extern int gui_chat_strlen_screen (char *string);
-extern int gui_chat_string_real_pos (char *string, int pos);
+extern int gui_chat_strlen_screen (const char *string);
+extern int gui_chat_string_real_pos (const char *string, int pos);
 extern void gui_chat_get_word_info (struct t_gui_window *window,
-                                    char *data, int *word_start_offset,
+                                    const char *data, int *word_start_offset,
                                     int *word_end_offset,
                                     int *word_length_with_spaces,
                                     int *word_length);
@@ -66,7 +66,7 @@ extern struct t_gui_line *gui_chat_get_first_line_displayed (struct t_gui_buffer
 extern struct t_gui_line *gui_chat_get_last_line_displayed (struct t_gui_buffer *buffer);
 extern struct t_gui_line *gui_chat_get_prev_line_displayed (struct t_gui_line *line);
 extern struct t_gui_line *gui_chat_get_next_line_displayed (struct t_gui_line *line);
-extern int gui_chat_line_search (struct t_gui_line *line, char *text,
+extern int gui_chat_line_search (struct t_gui_line *line, const char *text,
                                  int case_sensitive);
 extern int gui_chat_line_match_regex (struct t_gui_line *line,
                                       regex_t *regex_prefix,
@@ -77,16 +77,16 @@ extern void gui_chat_line_free (struct t_gui_buffer *buffer,
                                 struct t_gui_line *line);
 extern void gui_chat_line_free_all (struct t_gui_buffer *buffer);
 extern void gui_chat_printf_date_tags (struct t_gui_buffer *buffer,
-                                       time_t date, char *tags,
-                                       char *message, ...);
+                                       time_t date, const char *tags,
+                                       const char *message, ...);
 extern void gui_chat_printf_y (struct t_gui_buffer *buffer, int y,
-                               char *message, ...);
+                               const char *message, ...);
 
 /* chat functions (GUI dependent) */
 
 extern void gui_chat_draw_title (struct t_gui_buffer *buffer, int erase);
 extern char *gui_chat_string_next_char (struct t_gui_window *window,
-                                        unsigned char *string,
+                                        const unsigned char *string,
                                         int apply_style);
 extern void gui_chat_draw (struct t_gui_buffer *buffer, int erase);
 extern void gui_chat_draw_line (struct t_gui_buffer *buffer,

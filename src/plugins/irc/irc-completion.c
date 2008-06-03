@@ -38,7 +38,7 @@
  */
 
 int
-irc_completion_server_cb (void *data, char *completion,
+irc_completion_server_cb (void *data, const char *completion,
                           struct t_gui_buffer *buffer, struct t_weelist *list)
 {
     IRC_GET_SERVER(buffer);
@@ -59,7 +59,7 @@ irc_completion_server_cb (void *data, char *completion,
  */
 
 int
-irc_completion_server_nicks_cb (void *data, char *completion,
+irc_completion_server_nicks_cb (void *data, const char *completion,
                                 struct t_gui_buffer *buffer,
                                 struct t_weelist *list)
 {
@@ -101,7 +101,7 @@ irc_completion_server_nicks_cb (void *data, char *completion,
  */
 
 int
-irc_completion_servers_cb (void *data, char *completion,
+irc_completion_servers_cb (void *data, const char *completion,
                            struct t_gui_buffer *buffer, struct t_weelist *list)
 {
     struct t_irc_server *ptr_server;
@@ -125,7 +125,7 @@ irc_completion_servers_cb (void *data, char *completion,
  */
 
 int
-irc_completion_channel_cb (void *data, char *completion,
+irc_completion_channel_cb (void *data, const char *completion,
                            struct t_gui_buffer *buffer, struct t_weelist *list)
 {
     IRC_GET_SERVER_CHANNEL(buffer);
@@ -146,7 +146,7 @@ irc_completion_channel_cb (void *data, char *completion,
  */
 
 int
-irc_completion_channel_nicks_cb (void *data, char *completion,
+irc_completion_channel_nicks_cb (void *data, const char *completion,
                                  struct t_gui_buffer *buffer,
                                  struct t_weelist *list)
 {
@@ -206,7 +206,7 @@ irc_completion_channel_nicks_cb (void *data, char *completion,
  */
 
 int
-irc_completion_channel_nicks_hosts_cb (void *data, char *completion,
+irc_completion_channel_nicks_hosts_cb (void *data, const char *completion,
                                        struct t_gui_buffer *buffer,
                                        struct t_weelist *list)
 {
@@ -259,7 +259,7 @@ irc_completion_channel_nicks_hosts_cb (void *data, char *completion,
  */
 
 int
-irc_completion_channel_topic_cb (void *data, char *completion,
+irc_completion_channel_topic_cb (void *data, const char *completion,
                                  struct t_gui_buffer *buffer,
                                  struct t_weelist *list)
 {
@@ -289,7 +289,7 @@ irc_completion_channel_topic_cb (void *data, char *completion,
  */
 
 int
-irc_completion_channels_cb (void *data, char *completion,
+irc_completion_channels_cb (void *data, const char *completion,
                             struct t_gui_buffer *buffer, struct t_weelist *list)
 {
     struct t_irc_server *ptr_server;
@@ -318,7 +318,7 @@ irc_completion_channels_cb (void *data, char *completion,
  */
 
 int
-irc_completion_msg_part_cb (void *data, char *completion,
+irc_completion_msg_part_cb (void *data, const char *completion,
                             struct t_gui_buffer *buffer, struct t_weelist *list)
 {
     /* make C compiler happy */

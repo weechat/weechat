@@ -847,7 +847,7 @@ weechat_python_api_config_new (PyObject *self, PyObject *args)
 void
 weechat_python_api_config_read_cb (void *data,
                                    struct t_config_file *config_file,
-                                   char *option_name, char *value)
+                                   const char *option_name, const char *value)
 {
     struct t_script_callback *script_callback;
     char *python_argv[4];
@@ -858,8 +858,8 @@ weechat_python_api_config_read_cb (void *data,
     if (script_callback->function && script_callback->function[0])
     {
         python_argv[0] = script_ptr2str (config_file);
-        python_argv[1] = option_name;
-        python_argv[2] = value;
+        python_argv[1] = (char *)option_name;
+        python_argv[2] = (char *)value;
         python_argv[3] = NULL;
         
         rc = (int *) weechat_python_exec (script_callback->script,
@@ -881,7 +881,7 @@ weechat_python_api_config_read_cb (void *data,
 void
 weechat_python_api_config_section_write_cb (void *data,
                                             struct t_config_file *config_file,
-                                            char *section_name)
+                                            const char *section_name)
 {
     struct t_script_callback *script_callback;
     char *python_argv[3];
@@ -892,7 +892,7 @@ weechat_python_api_config_section_write_cb (void *data,
     if (script_callback->function && script_callback->function[0])
     {
         python_argv[0] = script_ptr2str (config_file);
-        python_argv[1] = section_name;
+        python_argv[1] = (char *)section_name;
         python_argv[2] = NULL;
         
         rc = (int *) weechat_python_exec (script_callback->script,
@@ -915,7 +915,7 @@ weechat_python_api_config_section_write_cb (void *data,
 void
 weechat_python_api_config_section_write_default_cb (void *data,
                                                     struct t_config_file *config_file,
-                                                    char *section_name)
+                                                    const char *section_name)
 {
     struct t_script_callback *script_callback;
     char *python_argv[3];
@@ -926,7 +926,7 @@ weechat_python_api_config_section_write_default_cb (void *data,
     if (script_callback->function && script_callback->function[0])
     {
         python_argv[0] = script_ptr2str (config_file);
-        python_argv[1] = section_name;
+        python_argv[1] = (char *)section_name;
         python_argv[2] = NULL;
         
         rc = (int *) weechat_python_exec (script_callback->script,
@@ -949,8 +949,8 @@ int
 weechat_python_api_config_section_create_option_cb (void *data,
                                                     struct t_config_file *config_file,
                                                     struct t_config_section *section,
-                                                    char *option_name,
-                                                    char *value)
+                                                    const char *option_name,
+                                                    const char *value)
 {
     struct t_script_callback *script_callback;
     char *python_argv[5];
@@ -962,8 +962,8 @@ weechat_python_api_config_section_create_option_cb (void *data,
     {
         python_argv[0] = script_ptr2str (config_file);
         python_argv[1] = script_ptr2str (section);
-        python_argv[2] = option_name;
-        python_argv[3] = value;
+        python_argv[2] = (char *)option_name;
+        python_argv[3] = (char *)value;
         python_argv[4] = NULL;
 
         rc = (int *) weechat_python_exec (script_callback->script,
@@ -2245,7 +2245,7 @@ weechat_python_api_hook_fd (PyObject *self, PyObject *args)
 int
 weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
                                   time_t date, int tags_count, char **tags,
-                                  char *prefix, char *message)
+                                  const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
     char *python_argv[6];
@@ -2262,8 +2262,8 @@ weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
     python_argv[0] = script_ptr2str (buffer);
     python_argv[1] = timebuffer;
     python_argv[2] = weechat_string_build_with_exploded (tags, ",");
-    python_argv[3] = prefix;
-    python_argv[4] = message;
+    python_argv[3] = (char *)prefix;
+    python_argv[4] = (char *)message;
     python_argv[5] = NULL;
     
     rc = (int *) weechat_python_exec (script_callback->script,
@@ -2336,7 +2336,7 @@ weechat_python_api_hook_print (PyObject *self, PyObject *args)
  */
 
 int
-weechat_python_api_hook_signal_cb (void *data, char *signal, char *type_data,
+weechat_python_api_hook_signal_cb (void *data, const char *signal, const char *type_data,
                                    void *signal_data)
 {
     struct t_script_callback *script_callback;
@@ -2346,7 +2346,7 @@ weechat_python_api_hook_signal_cb (void *data, char *signal, char *type_data,
     
     script_callback = (struct t_script_callback *)data;
     
-    python_argv[0] = signal;
+    python_argv[0] = (char *)signal;
     free_needed = 0;
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
@@ -2481,7 +2481,7 @@ weechat_python_api_hook_signal_send (PyObject *self, PyObject *args)
  */
 
 int
-weechat_python_api_hook_config_cb (void *data, char *option, char *value)
+weechat_python_api_hook_config_cb (void *data, const char *option, const char *value)
 {
     struct t_script_callback *script_callback;
     char *python_argv[3];
@@ -2489,8 +2489,8 @@ weechat_python_api_hook_config_cb (void *data, char *option, char *value)
     
     script_callback = (struct t_script_callback *)data;
     
-    python_argv[0] = option;
-    python_argv[1] = value;
+    python_argv[0] = (char *)option;
+    python_argv[1] = (char *)value;
     python_argv[2] = NULL;
     
     rc = (int *) weechat_python_exec (script_callback->script,
@@ -2551,7 +2551,7 @@ weechat_python_api_hook_config (PyObject *self, PyObject *args)
  */
 
 int
-weechat_python_api_hook_completion_cb (void *data, char *completion,
+weechat_python_api_hook_completion_cb (void *data, const char *completion,
                                        struct t_gui_buffer *buffer,
                                        struct t_weelist *list)
 {
@@ -2561,7 +2561,7 @@ weechat_python_api_hook_completion_cb (void *data, char *completion,
     
     script_callback = (struct t_script_callback *)data;
     
-    python_argv[0] = completion;
+    python_argv[0] = (char *)completion;
     python_argv[1] = script_ptr2str (buffer);
     python_argv[2] = script_ptr2str (list);
     python_argv[3] = NULL;
@@ -2628,17 +2628,17 @@ weechat_python_api_hook_completion (PyObject *self, PyObject *args)
  */
 
 char *
-weechat_python_api_hook_modifier_cb (void *data, char *modifier,
-                                     char *modifier_data, char *string)
+weechat_python_api_hook_modifier_cb (void *data, const char *modifier,
+                                     const char *modifier_data, const char *string)
 {
     struct t_script_callback *script_callback;
     char *python_argv[4];
     
     script_callback = (struct t_script_callback *)data;
     
-    python_argv[0] = modifier;
-    python_argv[1] = modifier_data;
-    python_argv[2] = string;
+    python_argv[0] = (char *)modifier;
+    python_argv[1] = (char *)modifier_data;
+    python_argv[2] = (char *)string;
     python_argv[3] = NULL;
     
     return (char *)weechat_python_exec (script_callback->script,
@@ -2779,7 +2779,7 @@ weechat_python_api_unhook_all (PyObject *self, PyObject *args)
 
 int
 weechat_python_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
-                                         char *input_data)
+                                         const char *input_data)
 {
     struct t_script_callback *script_callback;
     char *python_argv[3];
@@ -2788,7 +2788,7 @@ weechat_python_api_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer
     script_callback = (struct t_script_callback *)data;
     
     python_argv[0] = script_ptr2str (buffer);
-    python_argv[1] = input_data;
+    python_argv[1] = (char *)input_data;
     python_argv[2] = NULL;
     
     r = (int *) weechat_python_exec (script_callback->script,

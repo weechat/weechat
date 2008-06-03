@@ -528,7 +528,7 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
 int
 config_weechat_bar_read (void *data, struct t_config_file *config_file,
                          struct t_config_section *section,
-                         char *option_name, char *value)
+                         const char *option_name, const char *value)
 {
     char *pos_option, *bar_name;
     struct t_gui_bar *ptr_temp_bar;
@@ -599,7 +599,7 @@ int
 config_weechat_filter_read (void *data,
                             struct t_config_file *config_file,
                             struct t_config_section *section,
-                            char *option_name, char *value)
+                            const char *option_name, const char *value)
 {
     char **argv, **argv_eol;
     int argc;
@@ -635,7 +635,7 @@ config_weechat_filter_read (void *data,
 
 void
 config_weechat_filter_write (void *data, struct t_config_file *config_file,
-                             char *section_name)
+                             const char *section_name)
 {
     struct t_gui_filter *ptr_filter;
     
@@ -664,7 +664,7 @@ config_weechat_filter_write (void *data, struct t_config_file *config_file,
 int
 config_weechat_key_read (void *data, struct t_config_file *config_file,
                          struct t_config_section *section,
-                         char *option_name, char *value)
+                         const char *option_name, const char *value)
 {
     /* make C compiler happy */
     (void) data;
@@ -694,7 +694,7 @@ config_weechat_key_read (void *data, struct t_config_file *config_file,
 
 void
 config_weechat_key_write (void *data, struct t_config_file *config_file,
-                          char *section_name)
+                          const char *section_name)
 {
     struct t_gui_key *ptr_key;
     char *expanded_name;

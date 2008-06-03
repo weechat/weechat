@@ -51,11 +51,13 @@ extern int gui_filter_check_line (struct t_gui_buffer *buffer,
                                   struct t_gui_line *line);
 extern void gui_filter_enable ();
 extern void gui_filter_disable ();
-extern struct t_gui_filter *gui_filter_search (char *buffer, char *tags,
-                                               char *regex);
+extern struct t_gui_filter *gui_filter_search (const char *buffer,
+                                               const char *tags,
+                                               const char *regex);
 extern struct t_gui_filter *gui_filter_search_by_number (int number);
-extern struct t_gui_filter *gui_filter_new (char *buffer, char *tags,
-                                            char *regex);
+extern struct t_gui_filter *gui_filter_new (const char *buffer,
+                                            const char *tags,
+                                            const char *regex);
 extern void gui_filter_free (struct t_gui_filter *filter);
 extern void gui_filter_free_all ();
 extern void gui_filter_print_log ();

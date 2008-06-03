@@ -156,7 +156,7 @@ extern int xfer_debug;
 
 extern struct t_xfer *xfer_search_by_number (int number);
 extern void xfer_close (struct t_xfer *xfer, enum t_xfer_status status);
-extern void xfer_send_signal (struct t_xfer *xfer, char *signal);
+extern void xfer_send_signal (struct t_xfer *xfer, const char *signal);
 extern void xfer_free (struct t_xfer *xfer);
 
 #endif /* xfer.h */

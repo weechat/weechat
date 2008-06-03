@@ -90,7 +90,7 @@ network_end ()
  */
 
 void
-network_convbase64_8x3_to_6x4 (char *from, char *to)
+network_convbase64_8x3_to_6x4 (const char *from, char *to)
 {
     unsigned char base64_table[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         "abcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -106,9 +106,10 @@ network_convbase64_8x3_to_6x4 (char *from, char *to)
  */
 
 void
-network_base64encode (char *from, char *to)
+network_base64encode (const char *from, char *to)
 {
-    char *f, *t;
+    const char *f;
+    char *t;
     int from_len;
     
     from_len = strlen (from);
@@ -153,9 +154,8 @@ network_base64encode (char *from, char *to)
  */
 
 int
-network_pass_httpproxy (int sock, char *address, int port)
+network_pass_httpproxy (int sock, const char *address, int port)
 {
-
     char buffer[256], authbuf[128], authbuf_base64[196];
     int n, m;
     
@@ -204,7 +204,7 @@ network_pass_httpproxy (int sock, char *address, int port)
  */
 
 int
-network_resolve (char *hostname, char *ip, int *version)
+network_resolve (const char *hostname, char *ip, int *version)
 {
     char ipbuffer[NI_MAXHOST];
     struct addrinfo *res;
@@ -248,7 +248,7 @@ network_resolve (char *hostname, char *ip, int *version)
  */
 
 int
-network_pass_socks4proxy (int sock, char *address, int port)
+network_pass_socks4proxy (int sock, const char *address, int port)
 {
     /* 
      * socks4 protocol is explained here: 
@@ -294,7 +294,7 @@ network_pass_socks4proxy (int sock, char *address, int port)
  */
 
 int
-network_pass_socks5proxy (int sock, char *address, int port)
+network_pass_socks5proxy (int sock, const char *address, int port)
 {
     /* 
      * socks5 protocol is explained in RFC 1928
@@ -440,7 +440,7 @@ network_pass_socks5proxy (int sock, char *address, int port)
  */
 
 int
-network_pass_proxy (int sock, char *address, int port)
+network_pass_proxy (int sock, const char *address, int port)
 {
     int rc;
     

@@ -92,7 +92,7 @@ struct t_config_option *irc_config_server_default[IRC_CONFIG_NUM_SERVER_OPTIONS]
  */
 
 int
-irc_config_search_server_option (char *option_name)
+irc_config_search_server_option (const char *option_name)
 {
     int i;
     
@@ -111,7 +111,7 @@ irc_config_search_server_option (char *option_name)
 }
 
 struct t_irc_server *
-irc_config_get_server_from_option_name (char *name)
+irc_config_get_server_from_option_name (const char *name)
 {
     struct t_irc_server *ptr_server;
     char *pos_option, *server_name;
@@ -492,7 +492,7 @@ irc_config_reload (void *data, struct t_config_file *config_file)
 
 void
 irc_config_server_write_default (void *data, struct t_config_file *config_file,
-                                 char *section_name)
+                                 const char *section_name)
 {
     /* make C compiler happy */
     (void) data;
@@ -511,7 +511,7 @@ struct t_config_option *
 irc_config_server_new_option (struct t_config_file *config_file,
                               struct t_config_section *section,
                               int index_option,
-                              char *option_name, char *value,
+                              const char *option_name, const char *value,
                               void *callback_change,
                               void *callback_change_data,
                               void *callback_delete,
@@ -688,7 +688,7 @@ irc_config_server_new_option (struct t_config_file *config_file,
 int
 irc_config_server_create_option (void *data, struct t_config_file *config_file,
                                  struct t_config_section *section,
-                                 char *option_name, char *value)
+                                 const char *option_name, const char *value)
 {
     struct t_config_option *ptr_option;
     struct t_irc_server *ptr_server;

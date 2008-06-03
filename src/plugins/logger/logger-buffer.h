@@ -34,7 +34,7 @@ extern struct t_logger_buffer *logger_buffers;
 extern struct t_logger_buffer *last_logger_buffer;
 
 extern struct t_logger_buffer *logger_buffer_add (struct t_gui_buffer *,
-                                                  char *log_filename);
+                                                  const char *log_filename);
 extern struct t_logger_buffer *logger_buffer_search (struct t_gui_buffer *buffer);
 extern void logger_buffer_free (struct t_logger_buffer *logger_buffer);
 extern void logger_buffer_free_all ();

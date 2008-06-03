@@ -39,7 +39,7 @@ struct t_logger_buffer *last_logger_buffer = NULL;
  */
 
 struct t_logger_buffer *
-logger_buffer_add (struct t_gui_buffer *buffer, char *log_filename)
+logger_buffer_add (struct t_gui_buffer *buffer, const char *log_filename)
 {
     struct t_logger_buffer *new_logger_buffer;
     

@@ -63,15 +63,15 @@ extern struct t_gui_bar_item *last_gui_bar_item;
 
 /* functions */
 
-extern struct t_gui_bar_item *gui_bar_item_search (char *name);
+extern struct t_gui_bar_item *gui_bar_item_search (const char *name);
 extern struct t_gui_bar_item *gui_bar_item_new (struct t_weechat_plugin *plugin,
-                                                char *name,
+                                                const char *name,
                                                 char *(*build_callback)(void *data,
                                                                         struct t_gui_bar_item *item,
                                                                         struct t_gui_window *window,
                                                                         int max_width, int max_height),
                                                 void *build_callback_data);
-extern void gui_bar_item_update (char *name);
+extern void gui_bar_item_update (const char *name);
 extern void gui_bar_item_free (struct t_gui_bar_item *item);
 extern void gui_bar_item_free_all ();
 extern void gui_bar_item_free_all_plugin (struct t_weechat_plugin *plugin);

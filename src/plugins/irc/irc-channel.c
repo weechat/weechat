@@ -40,7 +40,7 @@
 
 struct t_irc_channel *
 irc_channel_new (struct t_irc_server *server, int channel_type,
-                 char *channel_name, int switch_to_channel)
+                 const char *channel_name, int switch_to_channel)
 {
     struct t_irc_channel *new_channel;
     struct t_gui_buffer *new_buffer;
@@ -188,7 +188,7 @@ irc_channel_free_all (struct t_irc_server *server)
  */
 
 struct t_irc_channel *
-irc_channel_search (struct t_irc_server *server, char *channel_name)
+irc_channel_search (struct t_irc_server *server, const char *channel_name)
 {
     struct t_irc_channel *ptr_channel;
     
@@ -209,7 +209,7 @@ irc_channel_search (struct t_irc_server *server, char *channel_name)
  */
 
 struct t_irc_channel *
-irc_channel_search_any (struct t_irc_server *server, char *channel_name)
+irc_channel_search_any (struct t_irc_server *server, const char *channel_name)
 {
     struct t_irc_channel *ptr_channel;
     
@@ -232,7 +232,7 @@ irc_channel_search_any (struct t_irc_server *server, char *channel_name)
 
 struct t_irc_channel *
 irc_channel_search_any_without_buffer (struct t_irc_server *server,
-                                       char *channel_name)
+                                       const char *channel_name)
 {
     struct t_irc_channel *ptr_channel;
     
@@ -254,7 +254,7 @@ irc_channel_search_any_without_buffer (struct t_irc_server *server,
  */
 
 int
-irc_channel_is_channel (char *string)
+irc_channel_is_channel (const char *string)
 {
     char first_char[2];
     
@@ -311,7 +311,7 @@ irc_channel_check_away (struct t_irc_server *server,
  */
 
 void
-irc_channel_set_away (struct t_irc_channel *channel, char *nick, int is_away)
+irc_channel_set_away (struct t_irc_channel *channel, const char *nick, int is_away)
 {
     (void) channel;
     (void) nick;
@@ -404,7 +404,7 @@ irc_channel_set_notify_level (struct t_irc_server *server,
  */
 
 void
-irc_channel_add_nick_speaking (struct t_irc_channel *channel, char *nick)
+irc_channel_add_nick_speaking (struct t_irc_channel *channel, const char *nick)
 {
     int size, to_remove, i;
 

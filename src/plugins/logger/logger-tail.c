@@ -42,12 +42,12 @@
  */
 
 char *
-logger_tail_last_eol (char *string_start, char *string_ptr)
+logger_tail_last_eol (const char *string_start, const char *string_ptr)
 {
     while (string_ptr >= string_start)
     {
         if ((string_ptr[0] == '\n') || (string_ptr[0] == '\r'))
-            return string_ptr;
+            return (char *)string_ptr;
         string_ptr--;
     }
     
@@ -60,7 +60,7 @@ logger_tail_last_eol (char *string_start, char *string_ptr)
  */
 
 struct t_logger_line *
-logger_tail_file (char *filename, int n_lines)
+logger_tail_file (const char *filename, int n_lines)
 {
     int fd;
     off_t file_length, file_pos;

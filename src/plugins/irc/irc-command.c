@@ -71,7 +71,7 @@ irc_command_admin (void *data, struct t_gui_buffer *buffer, int argc,
 void
 irc_command_me_channel (struct t_irc_server *server,
                         struct t_irc_channel *channel,
-                        char *arguments)
+                        const char *arguments)
 {
     char *string;
     
@@ -97,7 +97,7 @@ irc_command_me_channel (struct t_irc_server *server,
  */
 
 void
-irc_command_me_all_channels (struct t_irc_server *server, char *arguments)
+irc_command_me_all_channels (struct t_irc_server *server, const char *arguments)
 {
     struct t_irc_channel *ptr_channel;
     
@@ -114,8 +114,8 @@ irc_command_me_all_channels (struct t_irc_server *server, char *arguments)
  */
 
 void
-irc_command_mode_nicks (struct t_irc_server *server, char *channel,
-                        char *set, char *mode, int argc, char **argv)
+irc_command_mode_nicks (struct t_irc_server *server, const char *channel,
+                        const char *set, const char *mode, int argc, char **argv)
 {
     int i, length;
     char *command;
@@ -248,7 +248,7 @@ irc_command_amsg (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 void
-irc_command_away_server (struct t_irc_server *server, char *arguments)
+irc_command_away_server (struct t_irc_server *server, const char *arguments)
 {
     char *string, buffer[4096];
     time_t time_now, elapsed;
@@ -1098,9 +1098,10 @@ irc_command_die (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 void
-irc_command_quit_server (struct t_irc_server *server, char *arguments)
+irc_command_quit_server (struct t_irc_server *server, const char *arguments)
 {
-    char *ptr_arg, *buf, *version;
+    const char *ptr_arg;
+    char *buf, *version;
     
     if (!server)
         return;
@@ -1348,7 +1349,7 @@ irc_command_ison (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 void
-irc_command_join_server (struct t_irc_server *server, char *arguments)
+irc_command_join_server (struct t_irc_server *server, const char *arguments)
 {
     if (irc_channel_is_channel (arguments))
         irc_server_sendf (server, "JOIN %s", arguments);
@@ -1708,7 +1709,7 @@ irc_command_me (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
  */
 
 void
-irc_command_mode_server (struct t_irc_server *server, char *arguments)
+irc_command_mode_server (struct t_irc_server *server, const char *arguments)
 {
     irc_server_sendf (server, "MODE %s", arguments);
 }
@@ -1967,7 +1968,7 @@ irc_command_names (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 void
-irc_send_nick_server (struct t_irc_server *server, char *nickname)
+irc_send_nick_server (struct t_irc_server *server, const char *nickname)
 {
     if (!server)
         return;
@@ -2133,10 +2134,11 @@ irc_command_oper (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 void
-irc_command_part_channel (struct t_irc_server *server, char *channel_name,
-                          char *part_message)
+irc_command_part_channel (struct t_irc_server *server, const char *channel_name,
+                          const char *part_message)
 {
-    char *ptr_arg, *buf, *version;
+    const char *ptr_arg;
+    char *buf, *version;
     
     ptr_arg = (part_message) ? part_message :
         (weechat_config_string (irc_config_network_default_msg_part)

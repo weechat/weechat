@@ -42,7 +42,7 @@ struct t_weechat_plugin *weechat_ruby_plugin = NULL;
 
 struct t_plugin_script *ruby_scripts = NULL;
 struct t_plugin_script *ruby_current_script = NULL;
-char *ruby_current_script_filename = NULL;
+const char *ruby_current_script_filename = NULL;
 
 VALUE ruby_mWeechat, ruby_mWeechatOutputs;
 
@@ -107,7 +107,7 @@ rb_protect_funcall (VALUE recv, ID mid, int *state, int argc, ...)
 
 void *
 weechat_ruby_exec (struct t_plugin_script *script,
-		   int ret_type, char *function, char **argv)
+		   int ret_type, const char *function, char **argv)
 {
     VALUE rc, err;
     int ruby_error, *ret_i;
@@ -296,7 +296,7 @@ weechat_ruby_output_flush (VALUE self)
  */
 
 int
-weechat_ruby_load (char *filename)
+weechat_ruby_load (const char *filename)
 {
     char modname[64];
     VALUE curModule, ruby_retcode, err;
@@ -422,7 +422,7 @@ weechat_ruby_load (char *filename)
  */
 
 int
-weechat_ruby_load_cb (void *data, char *filename)
+weechat_ruby_load_cb (void *data, const char *filename)
 {
     /* make C compiler happy */
     (void) data;
@@ -468,7 +468,7 @@ weechat_ruby_unload (struct t_plugin_script *script)
  */
 
 void
-weechat_ruby_unload_name (char *name)
+weechat_ruby_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
     
@@ -589,7 +589,7 @@ weechat_ruby_command_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-weechat_ruby_completion_cb (void *data, char *completion,
+weechat_ruby_completion_cb (void *data, const char *completion,
                             struct t_gui_buffer *buffer,
                             struct t_weelist *list)
 {
@@ -608,7 +608,7 @@ weechat_ruby_completion_cb (void *data, char *completion,
  */
 
 int
-weechat_ruby_debug_dump_cb (void *data, char *signal, char *type_data,
+weechat_ruby_debug_dump_cb (void *data, const char *signal, const char *type_data,
                             void *signal_data)
 {
     /* make C compiler happy */
@@ -627,7 +627,7 @@ weechat_ruby_debug_dump_cb (void *data, char *signal, char *type_data,
  */
 
 int
-weechat_ruby_buffer_closed_cb (void *data, char *signal, char *type_data,
+weechat_ruby_buffer_closed_cb (void *data, const char *signal, const char *type_data,
                                void *signal_data)
 {
     /* make C compiler happy */

@@ -90,8 +90,8 @@ extern void gui_keyboard_default_bindings ();
 extern int gui_keyboard_read_cb (void *data);
 
 /* window functions */
-extern int gui_window_utf_char_valid (char *utf_char);
-extern void gui_window_wprintw (WINDOW *window, char *data, ...);
+extern int gui_window_utf_char_valid (const char *utf_char);
+extern void gui_window_wprintw (WINDOW *window, const char *data, ...);
 extern void gui_window_clear_weechat (WINDOW *window, int num_color);
 extern void gui_window_clear (WINDOW *window, int bg);
 extern void gui_window_reset_style (WINDOW *window, int num_color);

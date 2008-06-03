@@ -158,7 +158,7 @@ gui_window_objects_free (struct t_gui_window *window, int free_separator,
  */
 
 int
-gui_window_utf_char_valid (char *utf_char)
+gui_window_utf_char_valid (const char *utf_char)
 {
     /* 146 or 0x7F are not valid */
     if ((((unsigned char)(utf_char[0]) == 146)
@@ -175,7 +175,7 @@ gui_window_utf_char_valid (char *utf_char)
  */
 
 void
-gui_window_wprintw (WINDOW *window, char *data, ...)
+gui_window_wprintw (WINDOW *window, const char *data, ...)
 {
     va_list argptr;
     static char buf[4096];

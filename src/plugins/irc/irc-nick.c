@@ -155,7 +155,7 @@ irc_nick_get_gui_infos (struct t_irc_nick *nick,
 
 struct t_irc_nick *
 irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
-              char *nick_name, int is_chanowner, int is_chanadmin,
+              const char *nick_name, int is_chanowner, int is_chanadmin,
               int is_chanadmin2, int is_op, int is_halfop, int has_voice,
               int is_chanuser)
 {
@@ -251,7 +251,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
 
 void
 irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
-                 struct t_irc_nick *nick, char *new_nick)
+                 struct t_irc_nick *nick, const char *new_nick)
 {
     int nick_is_me, prefix_color;
     struct t_gui_nick_group *ptr_group;
@@ -402,7 +402,7 @@ irc_nick_free_all (struct t_irc_channel *channel)
  */
 
 struct t_irc_nick *
-irc_nick_search (struct t_irc_channel *channel, char *nickname)
+irc_nick_search (struct t_irc_channel *channel, const char *nickname)
 {
     struct t_irc_nick *ptr_nick;
     
@@ -500,7 +500,8 @@ irc_nick_set_away (struct t_irc_channel *channel, struct t_irc_nick *nick,
  */
 
 char *
-irc_nick_as_prefix (struct t_irc_nick *nick, char *nickname, char *force_color)
+irc_nick_as_prefix (struct t_irc_nick *nick, const char *nickname,
+                    const char *force_color)
 {
     static char result[256];
     char prefix[2], str_prefix_color[64];

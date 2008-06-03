@@ -65,7 +65,7 @@ char **plugin_argv;                    /* first time loading plugin)        */
  */
 
 struct t_weechat_plugin *
-plugin_search (char *name)
+plugin_search (const char *name)
 {
     struct t_weechat_plugin *ptr_plugin;
     
@@ -86,7 +86,7 @@ plugin_search (char *name)
  */
 
 struct t_weechat_plugin *
-plugin_load (char *filename)
+plugin_load (const char *filename)
 {
     char *ptr_home, *full_name, *full_name2;
     void *handle;
@@ -517,7 +517,7 @@ plugin_load (char *filename)
  */
 
 int
-plugin_auto_load_file (void *plugin, char *filename)
+plugin_auto_load_file (void *plugin, const char *filename)
 {
     char *pos;
     
@@ -716,7 +716,7 @@ plugin_unload (struct t_weechat_plugin *plugin)
  */
 
 void
-plugin_unload_name (char *name)
+plugin_unload_name (const char *name)
 {
     struct t_weechat_plugin *ptr_plugin;
     
@@ -750,7 +750,7 @@ plugin_unload_all ()
  */
 
 void
-plugin_reload_name (char *name)
+plugin_reload_name (const char *name)
 {
     struct t_weechat_plugin *ptr_plugin;
     char *filename;

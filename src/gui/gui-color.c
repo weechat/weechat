@@ -48,7 +48,7 @@ struct t_gui_color *gui_color[GUI_COLOR_NUM_COLORS]; /* GUI colors          */
  */
 
 int
-gui_color_search_config_int (char *color_name)
+gui_color_search_config_int (const char *color_name)
 {
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
@@ -105,7 +105,7 @@ gui_color_search_config_str (int color_number)
  */
 
 unsigned char *
-gui_color_decode (unsigned char *string)
+gui_color_decode (const unsigned char *string)
 {
     unsigned char *out;
     int out_length, out_pos, length;

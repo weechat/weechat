@@ -26,7 +26,8 @@ struct t_logger_line
     struct t_logger_line *next_line;   /* link to next line                 */
 };
 
-extern struct t_logger_line *logger_tail_file (char *filename, int n_lines);
+extern struct t_logger_line *logger_tail_file (const char *filename,
+                                               int n_lines);
 extern void logger_tail_free (struct t_logger_line *lines);
 
 #endif /* logger-tail.h */

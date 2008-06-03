@@ -51,7 +51,7 @@ struct t_hook *irc_hook_timer_check_away = NULL;
  */
 
 int
-irc_signal_quit_cb (void *data, char *signal, char *type_data,
+irc_signal_quit_cb (void *data, const char *signal, const char *type_data,
                     void *signal_data)
 {
     struct t_irc_server *ptr_server;

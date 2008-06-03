@@ -24,7 +24,7 @@ struct t_hook;
 
 extern void network_init ();
 extern void network_end ();
-extern int network_pass_proxy (int sock, char *address, int port);
+extern int network_pass_proxy (int sock, const char *address, int port);
 extern int network_connect_to (int sock, unsigned long address, int port);
 extern void network_connect_with_fork (struct t_hook *);
 

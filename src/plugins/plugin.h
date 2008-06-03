@@ -31,14 +31,14 @@ extern struct t_weechat_plugin *last_weechat_plugin;
 
 //extern t_plugin_irc_color plugins_irc_colors[GUI_NUM_IRC_COLORS];
 
-extern struct t_weechat_plugin *plugin_search (char *name);
-extern struct t_weechat_plugin *plugin_load (char *filename);
+extern struct t_weechat_plugin *plugin_search (const char *name);
+extern struct t_weechat_plugin *plugin_load (const char *filename);
 extern void plugin_auto_load ();
 extern void plugin_remove (struct t_weechat_plugin *plugin);
 extern void plugin_unload (struct t_weechat_plugin *plugin);
-extern void plugin_unload_name (char *name);
+extern void plugin_unload_name (const char *name);
 extern void plugin_unload_all ();
-extern void plugin_reload_name (char *name);
+extern void plugin_reload_name (const char *name);
 extern void plugin_init (int auto_load, int argc, char *argv[]);
 extern void plugin_end ();
 extern void plugin_print_log ();

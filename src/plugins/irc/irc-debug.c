@@ -54,7 +54,7 @@ irc_debug_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 
 void
 irc_debug_printf (struct t_irc_server *server, int send, int modified,
-                  char *message)
+                  const char *message)
 {
     char *buf;
     
@@ -100,8 +100,8 @@ irc_debug_printf (struct t_irc_server *server, int send, int modified,
  */
 
 int
-irc_debug_signal_debug_cb (void *data, char *signal, char *type_data,
-                           void *signal_data)
+irc_debug_signal_debug_cb (void *data, const char *signal,
+                           const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -127,8 +127,8 @@ irc_debug_signal_debug_cb (void *data, char *signal, char *type_data,
  */
 
 int
-irc_debug_signal_debug_dump_cb (void *data, char *signal, char *type_data,
-                                void *signal_data)
+irc_debug_signal_debug_dump_cb (void *data, const char *signal,
+                                const char *type_data, void *signal_data)
 {
     /* make C compiler happy */
     (void) data;

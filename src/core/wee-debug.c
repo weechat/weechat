@@ -99,7 +99,8 @@ debug_dump (int crash)
  */
 
 int
-debug_dump_cb (void *data, char *signal, char *type_data, void *signal_data)
+debug_dump_cb (void *data, const char *signal, const char *type_data,
+               void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -150,7 +151,8 @@ debug_sigsegv ()
  */
 
 int
-debug_buffer_cb (void *data, char *signal, char *type_data, void *signal_data)
+debug_buffer_cb (void *data, const char *signal, const char *type_data,
+                 void *signal_data)
 {
     /* make C compiler happy */
     (void) data;
@@ -229,7 +231,8 @@ debug_windows_tree ()
  */
 
 int
-debug_windows_cb (void *data, char *signal, char *type_data, void *signal_data)
+debug_windows_cb (void *data, const char *signal, const char *type_data,
+                  void *signal_data)
 {
     /* make C compiler happy */
     (void) data;

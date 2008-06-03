@@ -23,7 +23,7 @@
 extern struct t_gui_buffer *xfer_buffer;
 extern int xfer_buffer_selected_line;
 
-extern void xfer_buffer_refresh (char *hotlist);
+extern void xfer_buffer_refresh (const char *hotlist);
 extern void xfer_buffer_open ();
 
 #endif /* xfer-buffer.h */

@@ -62,7 +62,7 @@ struct t_gui_color gui_weechat_colors[GUI_CURSES_NUM_WEECHAT_COLORS + 1] =
  */
 
 int
-gui_color_search (char *color_name)
+gui_color_search (const char *color_name)
 {
     int i;
 
@@ -82,7 +82,7 @@ gui_color_search (char *color_name)
  */
 
 /*void
-gui_color_get_fg_bg (char *string, char **fg, char **bg)
+gui_color_get_fg_bg (const char *string, const char **fg, const char **bg)
 {
     char *pos, *pos_end_fg;
     
@@ -124,7 +124,7 @@ gui_color_get_fg_bg (char *string, char **fg, char **bg)
  */
 
 int
-gui_color_assign (int *color, char *color_name)
+gui_color_assign (int *color, const char *color_name)
 {
     int i;
     
@@ -149,7 +149,7 @@ gui_color_assign (int *color, char *color_name)
  */
 
 /*void
-gui_color_assign (t_gui_color **color, char *fg_and_bg)
+gui_color_assign (t_gui_color **color, const char *fg_and_bg)
 {
     char *color_fg, *color_bg, *color_fg2, *color_bg2;
     int value_fg, value_bg;

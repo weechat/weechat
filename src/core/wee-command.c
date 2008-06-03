@@ -1362,7 +1362,7 @@ command_key (void *data, struct t_gui_buffer *buffer,
  */
 
 void
-command_plugin_list (char *name, int full)
+command_plugin_list (const char *name, int full)
 {
     struct t_weechat_plugin *ptr_plugin;
     struct t_hook *ptr_hook;
@@ -1851,7 +1851,7 @@ command_set_display_section (struct t_config_file *config_file,
 
 void
 command_set_display_option (struct t_config_option *option,
-                            char *message)
+                            const char *message)
 {
     char *color_name;
     
@@ -1926,7 +1926,7 @@ command_set_display_option (struct t_config_option *option,
  */
 
 int
-command_set_display_option_list (char *message, char *search)
+command_set_display_option_list (const char *message, const char *search)
 {
     int number_found, section_displayed, length;
     struct t_config_file *ptr_config;

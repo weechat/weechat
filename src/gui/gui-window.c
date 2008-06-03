@@ -469,7 +469,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
     int direction, stop, count_msg;
     char time_letter, saved_char;
     time_t old_date, diff_date;
-    char *error;
+    char *pos, *error;
     long number;
     struct t_gui_line *ptr_line;
     struct tm *date_tmp, line_date, old_line_date;
@@ -493,7 +493,7 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
         }
         
         /* search number and letter */
-        char *pos = scroll;
+        pos = scroll;
         while (pos && pos[0] && isdigit (pos[0]))
         {
             pos++;

@@ -48,7 +48,7 @@ struct t_config_section *plugin_config_section_var = NULL;
  */
 
 struct t_config_option *
-plugin_config_search (char *plugin_name, char *option_name)
+plugin_config_search (const char *plugin_name, const char *option_name)
 {
     int length;
     char *option_full_name;
@@ -77,7 +77,7 @@ plugin_config_search (char *plugin_name, char *option_name)
  */
 
 int
-plugin_config_set_internal (char *option, char *value)
+plugin_config_set_internal (const char *option, const char *value)
 {
     int rc;
     struct t_config_option *ptr_option;
@@ -108,7 +108,8 @@ plugin_config_set_internal (char *option, char *value)
  */
 
 int
-plugin_config_set (char *plugin_name, char *option_name, char *value)
+plugin_config_set (const char *plugin_name, const char *option_name,
+                   const char *value)
 {
     int length, rc;
     char *option_full_name;
@@ -153,7 +154,7 @@ plugin_config_reload (void *data, struct t_config_file *config_file)
 int
 plugin_config_create_option (void *data, struct t_config_file *config_file,
                              struct t_config_section *section,
-                             char *option_name, char *value)
+                             const char *option_name, const char *value)
 {
     struct t_config_option *ptr_option;
     

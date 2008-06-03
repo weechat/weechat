@@ -35,7 +35,7 @@
  */
 
 void
-irc_mode_channel_set_nick (struct t_irc_channel *channel, char *nick,
+irc_mode_channel_set_nick (struct t_irc_channel *channel, const char *nick,
                            char set_flag, int flag)
 {
     struct t_irc_nick *ptr_nick;
@@ -53,13 +53,13 @@ irc_mode_channel_set_nick (struct t_irc_channel *channel, char *nick,
  */
 
 char
-irc_mode_channel_get_flag (char *str, char *pos)
+irc_mode_channel_get_flag (const char *string, const char *pos)
 {
     char set_flag;
 
     set_flag = '+';
     pos--;
-    while (pos >= str)
+    while (pos >= string)
     {
         if (pos[0] == '-')
             return '-';
@@ -76,7 +76,7 @@ irc_mode_channel_get_flag (char *str, char *pos)
 
 void
 irc_mode_channel_set (struct t_irc_server *server,
-                      struct t_irc_channel *channel, char *modes)
+                      struct t_irc_channel *channel, const char *modes)
 {
     char *pos_args, *str_modes, set_flag, **argv, *pos, *ptr_arg;
     int argc, current_arg;
@@ -269,7 +269,7 @@ irc_mode_user_remove (struct t_irc_server *server, char mode)
  */
 
 void
-irc_mode_user_set (struct t_irc_server *server, char *modes)
+irc_mode_user_set (struct t_irc_server *server, const char *modes)
 {
     char set_flag;
     

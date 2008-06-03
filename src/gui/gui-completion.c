@@ -159,7 +159,7 @@ gui_completion_search_command (struct t_gui_completion *completion)
  */
 
 int
-gui_completion_is_only_alphanum (char *string)
+gui_completion_is_only_alphanum (const char *string)
 {
     while (string[0])
     {
@@ -176,7 +176,7 @@ gui_completion_is_only_alphanum (char *string)
  */
 
 char *
-gui_completion_strdup_alphanum (char *string)
+gui_completion_strdup_alphanum (const char *string)
 {
     char *result, *pos;
     
@@ -202,7 +202,7 @@ gui_completion_strdup_alphanum (char *string)
  */
 
 int
-gui_completion_nickncmp (char *base_word, char *nick, int max)
+gui_completion_nickncmp (const char *base_word, const char *nick, int max)
 {
     char *base_word2, *nick2;
     int return_cmp;
@@ -229,8 +229,8 @@ gui_completion_nickncmp (char *base_word, char *nick, int max)
  */
 
 void
-gui_completion_list_add (struct t_gui_completion *completion, char *word,
-                         int nick_completion, char *where)
+gui_completion_list_add (struct t_gui_completion *completion, const char *word,
+                         int nick_completion, const char *where)
 {
     if (!word || !word[0])
         return;
@@ -805,7 +805,7 @@ gui_completion_list_add_weechat_cmd (struct t_gui_completion *completion)
 
 void
 gui_completion_custom (struct t_gui_completion *completion,
-                       char *custom_completion,
+                       const char *custom_completion,
                        struct t_weechat_plugin *plugin)
 {
     hook_completion_exec (plugin,
@@ -820,10 +820,11 @@ gui_completion_custom (struct t_gui_completion *completion,
 
 void
 gui_completion_build_list_template (struct t_gui_completion *completion,
-                                    char *template,
+                                    const char *template,
                                     struct t_weechat_plugin *plugin)
 {
-    char *word, *pos, *pos_end, *custom_completion;
+    char *word, *custom_completion;
+    const char *pos, *pos_end;
     int word_offset;
     
     word = strdup (template);
@@ -999,7 +1000,7 @@ gui_completion_build_list (struct t_gui_completion *completion)
  */
 
 void
-gui_completion_find_context (struct t_gui_completion *completion, char *data,
+gui_completion_find_context (struct t_gui_completion *completion, const char *data,
                              int size, int pos)
 {
     int i, command, command_arg, pos_start, pos_end;
@@ -1406,7 +1407,7 @@ gui_completion_auto (struct t_gui_completion *completion)
 
 void
 gui_completion_search (struct t_gui_completion *completion, int direction,
-                       char *data, int size, int pos)
+                       const char *data, int size, int pos)
 {
     char *old_word_found;
     

@@ -57,7 +57,7 @@ extern void gui_completion_init (struct t_gui_completion *completion,
                                  struct t_gui_buffer *buffer);
 extern void gui_completion_free (struct t_gui_completion *completion);
 extern void gui_completion_search (struct t_gui_completion *completion,
-                                   int direction, char *data, int size,
+                                   int direction, const char *data, int size,
                                    int pos);
 extern void gui_completion_print_log (struct t_gui_completion *completion);
 

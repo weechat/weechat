@@ -53,7 +53,7 @@ struct t_irc_message *irc_msgq_last_msg = NULL;
  */
 
 void
-irc_server_set_addresses (struct t_irc_server *server, char *addresses)
+irc_server_set_addresses (struct t_irc_server *server, const char *addresses)
 {
     int i;
     char *pos, *error;
@@ -113,7 +113,7 @@ irc_server_set_addresses (struct t_irc_server *server, char *addresses)
  */
 
 void
-irc_server_set_nicks (struct t_irc_server *server, char *nicks)
+irc_server_set_nicks (struct t_irc_server *server, const char *nicks)
 {
     /* free data */
     if (server->nicks)
@@ -224,7 +224,7 @@ irc_server_set_with_option (struct t_irc_server *server,
  */
 
 void
-irc_server_set_nick (struct t_irc_server *server, char *nick)
+irc_server_set_nick (struct t_irc_server *server, const char *nick)
 {
     struct t_irc_channel *ptr_channel;
     
@@ -323,7 +323,7 @@ irc_server_init (struct t_irc_server *server)
  */
 
 struct t_irc_server *
-irc_server_alloc (char *name)
+irc_server_alloc (const char *name)
 {
     struct t_irc_server *new_server;
     
@@ -363,41 +363,51 @@ irc_server_alloc (char *name)
  */
 
 int
-irc_server_alloc_with_url (char *irc_url)
+irc_server_alloc_with_url (const char *irc_url)
 {
-    char *url, *pos_server, *pos_channel, *pos, *pos2;
+    char *irc_url2, *url, *pos_server, *pos_channel, *pos, *pos2;
     char *password, *nick1, *nicks, *autojoin;
     int ipv6, ssl, length;
     struct t_irc_server *ptr_server;
+    
+    irc_url2 = strdup (irc_url);
+    if (!irc_url2)
+        return 0;
     
     ipv6 = 0;
     ssl = 0;
     password = NULL;
     nick1 = NULL;
     autojoin = NULL;
-    if (weechat_strncasecmp (irc_url, "irc6://", 7) == 0)
+    
+    if (weechat_strncasecmp (irc_url2, "irc6://", 7) == 0)
     {
-        pos = irc_url + 7;
+        pos = irc_url2 + 7;
         ipv6 = 1;
     }
-    else if (weechat_strncasecmp (irc_url, "ircs://", 7) == 0)
+    else if (weechat_strncasecmp (irc_url2, "ircs://", 7) == 0)
     {
-        pos = irc_url + 7;
+        pos = irc_url2 + 7;
         ssl = 1;
     }
-    else if ((weechat_strncasecmp (irc_url, "irc6s://", 8) == 0)
-        || (weechat_strncasecmp (irc_url, "ircs6://", 8) == 0))
+    else if ((weechat_strncasecmp (irc_url2, "irc6s://", 8) == 0)
+        || (weechat_strncasecmp (irc_url2, "ircs6://", 8) == 0))
     {
-        pos = irc_url + 8;
+        pos = irc_url2 + 8;
         ipv6 = 1;
         ssl = 1;
     }
-    else if (weechat_strncasecmp (irc_url, "irc://", 6) == 0)
+    else if (weechat_strncasecmp (irc_url2, "irc://", 6) == 0)
     {
-        pos = irc_url + 6;
+        pos = irc_url2 + 6;
     }
     else
+    {
+        free (irc_url2);
         return 0;
+    }
+    
+    free (irc_url2);
     
     url = strdup (pos);
     pos_server = strchr (url, '@');
@@ -487,8 +497,8 @@ irc_server_alloc_with_url (char *irc_url)
  */
 
 void
-irc_server_outqueue_add (struct t_irc_server *server, char *msg1, char *msg2,
-                         int modified)
+irc_server_outqueue_add (struct t_irc_server *server, const char *msg1,
+                         const char *msg2, int modified)
 {
     struct t_irc_outqueue *new_outqueue;
 
@@ -657,12 +667,12 @@ irc_server_free_all ()
  */
 
 struct t_irc_server *
-irc_server_new (char *name, int autoconnect, int autoreconnect,
-                int autoreconnect_delay, int temp_server, char *addresses,
-                int ipv6, int ssl, char *password, char *nicks,
-                char *username, char *realname, char *local_hostname,
-                char *command, int command_delay, char *autojoin,
-                int autorejoin, char *notify_levels)
+irc_server_new (const char *name, int autoconnect, int autoreconnect,
+                int autoreconnect_delay, int temp_server, const char *addresses,
+                int ipv6, int ssl, const char *password, const char *nicks,
+                const char *username, const char *realname, const char *local_hostname,
+                const char *command, int command_delay, const char *autojoin,
+                int autorejoin, const char *notify_levels)
 {
     struct t_irc_server *new_server;
     
@@ -725,7 +735,7 @@ irc_server_new (char *name, int autoconnect, int autoreconnect,
  */
 
 struct t_irc_server *
-irc_server_duplicate (struct t_irc_server *server, char *new_name)
+irc_server_duplicate (struct t_irc_server *server, const char *new_name)
 {
     struct t_irc_server *new_server;
     
@@ -762,7 +772,7 @@ irc_server_duplicate (struct t_irc_server *server, char *new_name)
  */
 
 int
-irc_server_rename (struct t_irc_server *server, char *new_name)
+irc_server_rename (struct t_irc_server *server, const char *new_name)
 {
     int length;
     char *option_name, *name, *pos_option;
@@ -820,7 +830,7 @@ irc_server_rename (struct t_irc_server *server, char *new_name)
  */
 
 int
-irc_server_send (struct t_irc_server *server, char *buffer, int size_buf)
+irc_server_send (struct t_irc_server *server, const char *buffer, int size_buf)
 {
     int rc;
     
@@ -912,10 +922,10 @@ irc_server_outqueue_send (struct t_irc_server *server)
  */
 
 void
-irc_server_parse_message (char *message, char **nick, char **host,
+irc_server_parse_message (const char *message, char **nick, char **host,
                           char **command, char **channel, char **arguments)
 {
-    char *pos, *pos2, *pos3, *pos4;
+    const char *pos, *pos2, *pos3, *pos4;
 
     if (nick)
         *nick = NULL;
@@ -1029,10 +1039,11 @@ irc_server_parse_message (char *message, char **nick, char **host,
  */
 
 int
-irc_server_send_one_msg (struct t_irc_server *server, char *message)
+irc_server_send_one_msg (struct t_irc_server *server, const char *message)
 {
     static char buffer[4096];
-    char *new_msg, *ptr_msg, *pos, *nick, *command, *channel;
+    const char *ptr_msg;
+    char *new_msg, *pos, *nick, *command, *channel;
     char *ptr_chan_nick, *msg_encoded;
     char str_modifier[64], modifier_data[256];
     int rc, queue, first_message;
@@ -1160,7 +1171,7 @@ irc_server_send_one_msg (struct t_irc_server *server, char *message)
  */
 
 void
-irc_server_sendf (struct t_irc_server *server, char *format, ...)
+irc_server_sendf (struct t_irc_server *server, const char *format, ...)
 {
     va_list args;
     static char buffer[4096];
@@ -1189,7 +1200,7 @@ irc_server_sendf (struct t_irc_server *server, char *format, ...)
  */
 
 void
-irc_server_msgq_add_msg (struct t_irc_server *server, char *msg)
+irc_server_msgq_add_msg (struct t_irc_server *server, const char *msg)
 {
     struct t_irc_message *message;
     
@@ -1246,7 +1257,7 @@ irc_server_msgq_add_msg (struct t_irc_server *server, char *msg)
  */
 
 void
-irc_server_msgq_add_unterminated (struct t_irc_server *server, char *string)
+irc_server_msgq_add_unterminated (struct t_irc_server *server, const char *string)
 {
     if (!string[0])
         return;
@@ -1285,7 +1296,7 @@ irc_server_msgq_add_unterminated (struct t_irc_server *server, char *string)
  */
 
 void
-irc_server_msgq_add_buffer (struct t_irc_server *server, char *buffer)
+irc_server_msgq_add_buffer (struct t_irc_server *server, const char *buffer)
 {
     char *pos_cr, *pos_lf;
 
@@ -2135,7 +2146,7 @@ irc_server_autojoin_channels (struct t_irc_server *server)
  */
 
 struct t_irc_server *
-irc_server_search (char *server_name)
+irc_server_search (const char *server_name)
 {
     struct t_irc_server *ptr_server;
     
@@ -2286,7 +2297,7 @@ irc_server_check_away ()
  */
 
 void
-irc_server_set_away (struct t_irc_server *server, char *nick, int is_away)
+irc_server_set_away (struct t_irc_server *server, const char *nick, int is_away)
 {
     struct t_irc_channel *ptr_channel;
     
@@ -2364,8 +2375,8 @@ irc_server_set_default_notify_level (struct t_irc_server *server, int notify)
  */
 
 int
-irc_server_xfer_send_ready_cb (void *data, char *signal, char *type_data,
-                               void *signal_data)
+irc_server_xfer_send_ready_cb (void *data, const char *signal,
+                               const char *type_data, void *signal_data)
 {
     struct t_plugin_infolist *infolist;
     struct t_irc_server *server, *ptr_server;
@@ -2437,8 +2448,8 @@ irc_server_xfer_send_ready_cb (void *data, char *signal, char *type_data,
  */
 
 int
-irc_server_xfer_resume_ready_cb (void *data, char *signal, char *type_data,
-                                 void *signal_data)
+irc_server_xfer_resume_ready_cb (void *data, const char *signal,
+                                 const char *type_data, void *signal_data)
 {
     struct t_plugin_infolist *infolist;
     struct t_irc_server *server, *ptr_server;
@@ -2493,8 +2504,9 @@ irc_server_xfer_resume_ready_cb (void *data, char *signal, char *type_data,
  */
 
 int
-irc_server_xfer_send_accept_resume_cb (void *data, char *signal,
-                                       char *type_data, void *signal_data)
+irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
+                                       const char *type_data,
+                                       void *signal_data)
 {
     struct t_plugin_infolist *infolist;
     struct t_irc_server *server, *ptr_server;

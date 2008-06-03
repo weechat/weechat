@@ -45,7 +45,7 @@ struct t_hook *gui_infobar_highlight_timer = NULL; /* highlight timer       */
  */
 
 void
-gui_infobar_printf (int delay, int color, char *message, ...)
+gui_infobar_printf (int delay, int color, const char *message, ...)
 {
     static char buf[1024];
     va_list argptr;

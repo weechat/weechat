@@ -50,7 +50,7 @@ FILE *weechat_log_file = NULL;     /* WeeChat log file                      */
  */
 
 int
-log_open (char *filename, char *mode)
+log_open (const char *filename, const char *mode)
 {
     int filename_length;
 
@@ -117,7 +117,7 @@ log_init ()
  */
 
 void
-log_printf (char *message, ...)
+log_printf (const char *message, ...)
 {
     static char buffer[4096];
     char *ptr_buffer;

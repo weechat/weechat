@@ -23,12 +23,15 @@
 extern int util_timeval_cmp (struct timeval *tv1, struct timeval *tv2);
 extern long util_timeval_diff (struct timeval *tv1, struct timeval *tv2);
 extern void util_timeval_add (struct timeval *tv, long interval);
-extern int util_get_time_length (char *time_format);
+extern int util_get_time_length (const char *time_format);
 extern void util_catch_signal (int signum, void (*handler)(int));
-extern int util_create_dir (char *directory, int permissions);
-extern void util_exec_on_files (char *directory, void *data,
-                                int (*callback)(void *data, char *filename));
-extern char *util_search_full_lib_name (char *filename, char *sys_directory);
-extern int util_weechat_version_cmp (char *version1, char *version2);
+extern int util_create_dir (const char *directory, int permissions);
+extern void util_exec_on_files (const char *directory, void *data,
+                                int (*callback)(void *data,
+                                                const char *filename));
+extern char *util_search_full_lib_name (const char *filename,
+                                        const char *sys_directory);
+extern int util_weechat_version_cmp (const char *version1,
+                                     const char *version2);
 
 #endif /* wee-util.h */

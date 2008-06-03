@@ -36,14 +36,14 @@ struct t_weelist
 
 extern struct t_weelist *weelist_new ();
 extern struct t_weelist_item *weelist_add (struct t_weelist *weelist,
-                                           char *data, char *where);
+                                           const char *data, const char *where);
 extern struct t_weelist_item *weelist_search (struct t_weelist *weelist,
-                                              char *data);
+                                              const char *data);
 extern struct t_weelist_item *weelist_casesearch (struct t_weelist *weelist,
-                                                  char *data);
+                                                  const char *data);
 extern struct t_weelist_item *weelist_get (struct t_weelist *weelist,
                                            int position);
-extern void weelist_set (struct t_weelist_item *item, char *value);
+extern void weelist_set (struct t_weelist_item *item, const char *value);
 extern struct t_weelist_item *weelist_next (struct t_weelist_item *item);
 extern struct t_weelist_item *weelist_prev (struct t_weelist_item *item);
 extern char *weelist_string (struct t_weelist_item *item);
@@ -52,6 +52,6 @@ extern void weelist_remove (struct t_weelist *weelist,
                             struct t_weelist_item *item);
 extern void weelist_remove_all (struct t_weelist *weelist);
 extern void weelist_free (struct t_weelist *weelist);
-extern void weelist_print_log (struct t_weelist *weelist, char *name);
+extern void weelist_print_log (struct t_weelist *weelist, const char *name);
 
 #endif /* wee-list.h */

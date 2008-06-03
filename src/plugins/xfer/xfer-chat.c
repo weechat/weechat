@@ -37,7 +37,7 @@
  */
 
 int
-xfer_chat_send (struct t_xfer *xfer, char *buffer, int size_buf)
+xfer_chat_send (struct t_xfer *xfer, const char *buffer, int size_buf)
 {
     if (!xfer)
         return -1;
@@ -50,7 +50,7 @@ xfer_chat_send (struct t_xfer *xfer, char *buffer, int size_buf)
  */
 
 void
-xfer_chat_sendf (struct t_xfer *xfer, char *format, ...)
+xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
 {
     va_list args;
     static char buffer[4096];
@@ -157,7 +157,7 @@ xfer_chat_recv_cb (void *arg_xfer)
 
 int
 xfer_chat_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
-                           char *input_data)
+                           const char *input_data)
 {
     struct t_xfer *xfer;
     

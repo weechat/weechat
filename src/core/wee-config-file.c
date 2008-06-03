@@ -54,7 +54,7 @@ char *config_boolean_false[] = { "off", "no", "n", "false", "f", "0", NULL };
  */
 
 struct t_config_file *
-config_file_search (char *name)
+config_file_search (const char *name)
 {
     struct t_config_file *ptr_config;
     
@@ -77,7 +77,7 @@ config_file_search (char *name)
  */
 
 struct t_config_file *
-config_file_new (struct t_weechat_plugin *plugin, char *name,
+config_file_new (struct t_weechat_plugin *plugin, const char *name,
                  int (*callback_reload)(void *data,
                                         struct t_config_file *config_file),
                  void *callback_reload_data)
@@ -149,27 +149,27 @@ config_file_valid_for_plugin (struct t_weechat_plugin *plugin,
  */
 
 struct t_config_section *
-config_file_new_section (struct t_config_file *config_file, char *name,
+config_file_new_section (struct t_config_file *config_file, const char *name,
                          int user_can_add_options, int user_can_delete_options,
                          int (*callback_read)(void *data,
                                               struct t_config_file *config_file,
                                               struct t_config_section *section,
-                                              char *option_name,
-                                              char *value),
+                                              const char *option_name,
+                                              const char *value),
                          void *callback_read_data,
                          void (*callback_write)(void *data,
                                                 struct t_config_file *config_file,
-                                                char *section_name),
+                                                const char *section_name),
                          void *callback_write_data,
                          void (*callback_write_default)(void *data,
                                                         struct t_config_file *config_file,
-                                                        char *section_name),
+                                                        const char *section_name),
                          void *callback_write_default_data,
                          int (*callback_create_option)(void *data,
                                                        struct t_config_file *config_file,
                                                        struct t_config_section *section,
-                                                       char *option_name,
-                                                       char *value),
+                                                       const char *option_name,
+                                                       const char *value),
                          void *callback_create_option_data)
 {
     struct t_config_section *new_section;
@@ -215,7 +215,7 @@ config_file_new_section (struct t_config_file *config_file, char *name,
 
 struct t_config_section *
 config_file_search_section (struct t_config_file *config_file,
-                            char *section_name)
+                            const char *section_name)
 {
     struct t_config_section *ptr_section;
 
@@ -270,7 +270,7 @@ config_file_section_valid_for_plugin (struct t_weechat_plugin *plugin,
  */
 
 struct t_config_option *
-config_file_option_find_pos (struct t_config_section *section, char *name)
+config_file_option_find_pos (struct t_config_section *section, const char *name)
 {
     struct t_config_option *ptr_option;
     
@@ -338,13 +338,13 @@ config_file_option_insert_in_section (struct t_config_option *option)
 
 struct t_config_option *
 config_file_new_option (struct t_config_file *config_file,
-                        struct t_config_section *section, char *name,
-                        char *type, char *description,
-                        char *string_values, int min, int max,
-                        char *default_value,
+                        struct t_config_section *section, const char *name,
+                        const char *type, const char *description,
+                        const char *string_values, int min, int max,
+                        const char *default_value,
                         int (*callback_check_value)(void *data,
                                                     struct t_config_option *option,
-                                                    char *value),
+                                                    const char *value),
                         void *callback_check_value_data,
                         void (*callback_change)(void *data,
                                                 struct t_config_option *option),
@@ -491,7 +491,7 @@ config_file_new_option (struct t_config_file *config_file,
 struct t_config_option *
 config_file_search_option (struct t_config_file *config_file,
                            struct t_config_section *section,
-                           char *option_name)
+                           const char *option_name)
 {
     struct t_config_section *ptr_section;
     struct t_config_option *ptr_option;
@@ -531,7 +531,7 @@ config_file_search_option (struct t_config_file *config_file,
 void
 config_file_search_section_option (struct t_config_file *config_file,
                                    struct t_config_section *section,
-                                   char *option_name,
+                                   const char *option_name,
                                    struct t_config_section **section_found,
                                    struct t_config_option **option_found)
 {
@@ -579,7 +579,7 @@ config_file_search_section_option (struct t_config_file *config_file,
  */
 
 void
-config_file_search_with_string (char *option_name,
+config_file_search_with_string (const char *option_name,
                                 struct t_config_file **config_file,
                                 struct t_config_section **section,
                                 struct t_config_option **option,
@@ -688,7 +688,7 @@ config_file_option_valid_for_plugin (struct t_weechat_plugin *plugin,
  */
 
 int
-config_file_string_boolean_is_valid (char *text)
+config_file_string_boolean_is_valid (const char *text)
 {
     int i;
     
@@ -717,7 +717,7 @@ config_file_string_boolean_is_valid (char *text)
  */
 
 int
-config_file_string_to_boolean (char *text)
+config_file_string_to_boolean (const char *text)
 {
     int i;
     
@@ -859,7 +859,7 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
  */
 
 int
-config_file_option_set (struct t_config_option *option, char *value,
+config_file_option_set (struct t_config_option *option, const char *value,
                         int run_callback)
 {
     int value_int, i, rc, length_option, new_value_ok;
@@ -1151,7 +1151,8 @@ config_file_option_unset (struct t_config_option *option)
  */
 
 void
-config_file_option_rename (struct t_config_option *option, char *new_name)
+config_file_option_rename (struct t_config_option *option,
+                           const char *new_name)
 {
     if (!new_name || !new_name[0])
         return;
@@ -1184,7 +1185,8 @@ config_file_option_rename (struct t_config_option *option, char *new_name)
  */
 
 void *
-config_file_option_get_pointer (struct t_config_option *option, char *property)
+config_file_option_get_pointer (struct t_config_option *option,
+                                const char *property)
 {
     if (string_strcasecmp (property, "config_file") == 0)
         return option->config_file;
@@ -1225,7 +1227,7 @@ config_file_option_get_pointer (struct t_config_option *option, char *property)
  */
 
 int
-config_file_option_set_with_string (char *option_name, char *value)
+config_file_option_set_with_string (const char *option_name, const char *value)
 {
     int rc;
     struct t_config_file *ptr_config;
@@ -1275,7 +1277,7 @@ config_file_option_set_with_string (char *option_name, char *value)
  */
 
 int
-config_file_option_unset_with_string (char *option_name)
+config_file_option_unset_with_string (const char *option_name)
 {
     struct t_config_option *ptr_option;
     int rc;
@@ -1437,7 +1439,7 @@ config_file_write_option (struct t_config_file *config_file,
 
 void
 config_file_write_line (struct t_config_file *config_file,
-                        char *option_name, char *value, ...)
+                        const char *option_name, const char *value, ...)
 {
     char buf[4096];
     va_list argptr;

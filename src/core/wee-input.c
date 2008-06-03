@@ -42,7 +42,7 @@
  */
 
 int
-input_is_command (char *line)
+input_is_command (const char *line)
 {
     char *pos_slash, *pos_space;
 
@@ -69,7 +69,7 @@ int
 input_exec_command (struct t_gui_buffer *buffer,
                     int any_plugin,
                     struct t_weechat_plugin *plugin,
-                    char *string)
+                    const char *string)
 {
     int rc;
     char *command, *pos, *ptr_args;
@@ -136,9 +136,10 @@ input_exec_command (struct t_gui_buffer *buffer,
  */
 
 void
-input_data (struct t_gui_buffer *buffer, char *data)
+input_data (struct t_gui_buffer *buffer, const char *data)
 {
-    char *new_data, *ptr_data, *pos;
+    char *new_data, *pos;
+    const char *ptr_data;
     
     if (!buffer || !data || !data[0] || (data[0] == '\r') || (data[0] == '\n'))
         return;

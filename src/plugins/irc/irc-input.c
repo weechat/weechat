@@ -36,7 +36,7 @@
  */
 
 void
-irc_input_user_message_display (struct t_gui_buffer *buffer, char *text)
+irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
 {
     struct t_irc_nick *ptr_nick;
     char *text_decoded;
@@ -84,13 +84,15 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, char *text)
 /*
  * irc_input_send_user_message: send a PRIVMSG message, and split it
  *                              if > 512 bytes
+ *                              warning: this function makes temporarirly
+ *                                       changes in "text"
  */
 
 void
 irc_input_send_user_message (struct t_gui_buffer *buffer, char *text)
 {
     int max_length;
-    char *pos, *pos_next, *pos_max, *next, saved_char, *last_space;
+    char *pos, *pos_max, *last_space, *pos_next, *next, saved_char;
     
     IRC_GET_SERVER_CHANNEL(buffer);
     
@@ -151,9 +153,10 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, char *text)
  */
 
 int
-irc_input_data_cb (void *data, struct t_gui_buffer *buffer, char *input_data)
+irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
+                   const char *input_data)
 {
-    char *data_with_colors;
+    char *data_with_colors, *msg;
     
     /* make C compiler happy */
     (void) data;
@@ -164,9 +167,13 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer, char *input_data)
     {
         data_with_colors = irc_color_encode (input_data,
                                              weechat_config_boolean (irc_config_network_colors_send));
-        
-        irc_input_send_user_message (buffer,
-                                     (data_with_colors) ? data_with_colors : input_data);
+
+        msg = strdup ((data_with_colors) ? data_with_colors : input_data);
+        if (msg)
+        {
+            irc_input_send_user_message (buffer, msg);
+            free (msg);
+        }
         
         if (data_with_colors)
             free (data_with_colors);

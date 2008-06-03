@@ -58,27 +58,27 @@ struct t_irc_nick
 
 extern struct t_irc_nick *irc_nick_new (struct t_irc_server *server,
                                         struct t_irc_channel *channel,
-                                        char *nick_name, int is_chanowner,
+                                        const char *nick_name, int is_chanowner,
                                         int is_chanadmin, int is_chanadmin2,
                                         int is_op, int is_halfop,
                                         int has_voice, int is_chanuser);
 extern void irc_nick_change (struct t_irc_server *server,
                              struct t_irc_channel *channel,
-                             struct t_irc_nick *nick, char *new_nick);
+                             struct t_irc_nick *nick, const char *new_nick);
 extern void irc_nick_set (struct t_irc_channel *channel,
                           struct t_irc_nick *nick, int set, int flag);
 extern void irc_nick_free (struct t_irc_channel *channel,
                            struct t_irc_nick *nick);
 extern void irc_nick_free_all (struct t_irc_channel *channel);
 extern struct t_irc_nick *irc_nick_search (struct t_irc_channel *channel,
-                                           char *nickname);
+                                           const char *nickname);
 extern void irc_nick_count (struct t_irc_channel *channel, int *total,
                             int *count_op, int *count_halfop, int *count_voice,
                             int *count_normal);
 extern void irc_nick_set_away (struct t_irc_channel *channel,
                                struct t_irc_nick *nick, int is_away);
-extern char *irc_nick_as_prefix (struct t_irc_nick *nick, char *nickname,
-                                 char *force_color);
+extern char *irc_nick_as_prefix (struct t_irc_nick *nick, const char *nickname,
+                                 const char *force_color);
 extern void irc_nick_print_log (struct t_irc_nick *nick);
 
 #endif /* irc-nick.h */

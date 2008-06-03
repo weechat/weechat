@@ -102,7 +102,7 @@ xfer_create_directories ()
  */
 
 int
-xfer_search_type (char *type)
+xfer_search_type (const char *type)
 {
     int i;
     
@@ -122,7 +122,7 @@ xfer_search_type (char *type)
  */
 
 int
-xfer_search_protocol (char *protocol)
+xfer_search_protocol (const char *protocol)
 {
     int i;
     
@@ -141,7 +141,7 @@ xfer_search_protocol (char *protocol)
  */
 
 struct t_xfer *
-xfer_search (char *plugin_name, char *plugin_id, enum t_xfer_type type,
+xfer_search (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
              enum t_xfer_status status, int port)
 {
     struct t_xfer *ptr_xfer;
@@ -294,7 +294,7 @@ xfer_port_in_use (int port)
  */
 
 void
-xfer_send_signal (struct t_xfer *xfer, char *signal)
+xfer_send_signal (struct t_xfer *xfer, const char *signal)
 {
     struct t_plugin_infolist *infolist;
     struct t_plugin_infolist_item *item;
@@ -408,11 +408,11 @@ xfer_alloc ()
  */
 
 struct t_xfer *
-xfer_new (char *plugin_name, char *plugin_id, enum t_xfer_type type,
-          enum t_xfer_protocol protocol, char *remote_nick, char *local_nick,
-          char *filename,
+xfer_new (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
+          enum t_xfer_protocol protocol, const char *remote_nick, const char *local_nick,
+          const char *filename,
           unsigned long size, unsigned long address, int port, int sock,
-          char *local_filename)
+          const char *local_filename)
 {
     struct t_xfer *new_xfer;
     
@@ -605,7 +605,7 @@ xfer_free (struct t_xfer *xfer)
  */
 
 int
-xfer_add_cb (void *data, char *signal, char *type_data, void *signal_data)
+xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal_data)
 {
     struct t_plugin_infolist *infolist;
     char *plugin_name, *plugin_id, *str_type, *str_protocol;
@@ -953,7 +953,7 @@ xfer_add_cb (void *data, char *signal, char *type_data, void *signal_data)
  */
 
 int
-xfer_start_resume_cb (void *data, char *signal, char *type_data,
+xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
                       void *signal_data)
 {
     struct t_plugin_infolist *infolist;
@@ -1030,7 +1030,7 @@ xfer_start_resume_cb (void *data, char *signal, char *type_data,
  */
 
 int
-xfer_accept_resume_cb (void *data, char *signal, char *type_data,
+xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
                        void *signal_data)
 {
     struct t_plugin_infolist *infolist;
@@ -1167,7 +1167,7 @@ xfer_print_log ()
  */
 
 int
-xfer_debug_dump_cb (void *data, char *signal, char *type_data,
+xfer_debug_dump_cb (void *data, const char *signal, const char *type_data,
                     void *signal_data)
 {
     /* make C compiler happy */

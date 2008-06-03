@@ -59,7 +59,7 @@
  */
 
 char *
-string_strndup (char *string, int length)
+string_strndup (const char *string, int length)
 {
     char *result;
     
@@ -111,7 +111,7 @@ string_toupper (char *string)
  */
 
 int
-string_strcasecmp (char *string1, char *string2)
+string_strcasecmp (const char *string1, const char *string2)
 {
     int diff;
     
@@ -137,7 +137,7 @@ string_strcasecmp (char *string1, char *string2)
  */
 
 int
-string_strncasecmp (char *string1, char *string2, int max)
+string_strncasecmp (const char *string1, const char *string2, int max)
 {
     int count, diff;
     
@@ -167,8 +167,8 @@ string_strncasecmp (char *string1, char *string2, int max)
  */
 
 int
-string_strcmp_ignore_chars (char *string1, char *string2, char *chars_ignored,
-                            int case_sensitive)
+string_strcmp_ignore_chars (const char *string1, const char *string2,
+                            const char *chars_ignored, int case_sensitive)
 {
     int diff;
     
@@ -230,7 +230,7 @@ string_strcmp_ignore_chars (char *string1, char *string2, char *chars_ignored,
  */
 
 char *
-string_strcasestr (char *string, char *search)
+string_strcasestr (const char *string, const char *search)
 {
     int length_search;
     
@@ -242,7 +242,7 @@ string_strcasestr (char *string, char *search)
     while (string[0])
     {
         if (string_strncasecmp (string, search, length_search) == 0)
-            return string;
+            return (char *)string;
         
         string++;
     }
@@ -257,7 +257,7 @@ string_strcasestr (char *string, char *search)
  */
 
 int
-string_match (char *string, char *mask, int case_sensitive)
+string_match (const char *string, const char *mask, int case_sensitive)
 {
     char last, *mask2;
     int len_string, len_mask, rc;
@@ -340,9 +340,10 @@ string_match (char *string, char *mask, int case_sensitive)
  */
 
 char *
-string_replace (char *string, char *search, char *replace)
+string_replace (const char *string, const char *search, const char *replace)
 {
-    char *pos, *new_string;
+    const char *pos;
+    char *new_string;
     int length1, length2, length_new, count;
     
     if (!string || !search || !replace)
@@ -398,10 +399,10 @@ string_replace (char *string, char *search, char *replace)
  */
 
 char *
-string_remove_quotes (char *string, char *quotes)
+string_remove_quotes (const char *string, const char *quotes)
 {
     int length;
-    char *pos_start, *pos_end;
+    const char *pos_start, *pos_end;
     
     if (!string || !quotes)
         return NULL;
@@ -435,12 +436,13 @@ string_remove_quotes (char *string, char *quotes)
 
 /*
  * string_strip: strip chars at beginning and/or end of string
+ *               note: returned value has to be free() after use
  */
 
 char *
-string_strip (char *string, int left, int right, char *chars)
+string_strip (const char *string, int left, int right, const char *chars)
 {
-    char *ptr_start, *ptr_end;
+    const char *ptr_start, *ptr_end;
     
     if (!string)
         return NULL;
@@ -476,10 +478,11 @@ string_strip (char *string, int left, int right, char *chars)
 
 /*
  * string_convert_hex_chars: convert hex chars (\x??) to value
+ *                           note: returned value has to be free() after use
  */
 
 char *
-string_convert_hex_chars (char *string)
+string_convert_hex_chars (const char *string)
 {
     char *output, hex_str[8], *error;
     int pos_output;
@@ -550,7 +553,7 @@ string_convert_hex_chars (char *string)
  */
 
 wint_t
-string_get_wide_char (char *string)
+string_get_wide_char (const char *string)
 {
     int char_size;
     wint_t result;
@@ -590,7 +593,7 @@ string_get_wide_char (char *string)
  */
 
 int
-string_is_word_char (char *string)
+string_is_word_char (const char *string)
 {
     wint_t c = string_get_wide_char (string);
     
@@ -619,7 +622,7 @@ string_is_word_char (char *string)
  */
 
 int
-string_has_highlight (char *string, char *highlight_words)
+string_has_highlight (const char *string, const char *highlight_words)
 {
     char *msg, *highlight, *match, *match_pre, *match_post, *msg_pos, *pos, *pos_end;
     int end, length, startswith, endswith, wildcard_start, wildcard_end;
@@ -728,7 +731,7 @@ string_has_highlight (char *string, char *highlight_words)
  */
 
 char **
-string_explode (char *string, char *separators, int keep_eol,
+string_explode (const char *string, const char *separators, int keep_eol,
                 int num_items_max, int *num_items)
 {
     int i, n_items;
@@ -851,7 +854,7 @@ string_free_exploded (char **exploded_string)
  */
 
 char *
-string_build_with_exploded (char **exploded_string, char *separator)
+string_build_with_exploded (char **exploded_string, const char *separator)
 {
     int i, length, length_separator;
     char *result;
@@ -889,11 +892,12 @@ string_build_with_exploded (char **exploded_string, char *separator)
  */
 
 char **
-string_split_command (char *command, char separator)
+string_split_command (const char *command, char separator)
 {
     int nb_substr, arr_idx, str_idx, type;
     char **array;
-    char *buffer, *ptr, *p;
+    char *buffer, *p;
+    const char *ptr;
 
     if (!command || !command[0])
 	return NULL;
@@ -985,10 +989,12 @@ string_free_splitted_command (char **splitted_command)
 
 /*
  * string_iconv: convert string to another charset
+ *               note: returned value has to be free() after use
  */
 
 char *
-string_iconv (int from_utf8, char *from_code, char *to_code, char *string)
+string_iconv (int from_utf8, const char *from_code, const char *to_code,
+              const char *string)
 {
     char *outbuf;
     
@@ -1090,10 +1096,11 @@ string_iconv (int from_utf8, char *from_code, char *to_code, char *string)
 /*
  * string_iconv_to_internal: convert user string (input, script, ..) to
  *                           WeeChat internal storage charset
+ *                           note: returned value has to be free() after use
  */
 
 char *
-string_iconv_to_internal (char *charset, char *string)
+string_iconv_to_internal (const char *charset, const char *string)
 {
     char *input, *output;
     
@@ -1127,10 +1134,11 @@ string_iconv_to_internal (char *charset, char *string)
 /*
  * string_iconv_from_internal: convert internal string to terminal charset,
  *                             for display
+ *                             note: returned value has to be free() after use
  */
 
 char *
-string_iconv_from_internal (char *charset, char *string)
+string_iconv_from_internal (const char *charset, const char *string)
 {
     char *input, *output;
     
@@ -1163,7 +1171,7 @@ string_iconv_from_internal (char *charset, char *string)
  */
 
 void
-string_iconv_fprintf (FILE *file, char *data, ...)
+string_iconv_fprintf (FILE *file, const char *data, ...)
 {
     va_list argptr;
     char *buf, *buf2;

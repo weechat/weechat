@@ -56,22 +56,22 @@ struct t_irc_channel
 
 extern struct t_irc_channel *irc_channel_new (struct t_irc_server *server,
                                               int channel_type,
-                                              char *channel_name,
+                                              const char *channel_name,
                                               int switch_to_channel);
 extern void irc_channel_free (struct t_irc_server *server,
                               struct t_irc_channel *channel);
 extern void irc_channel_free_all (struct t_irc_server *server);
 extern struct t_irc_channel *irc_channel_search (struct t_irc_server *server,
-                                                 char *channel_name);
+                                                 const char *channel_name);
 extern struct t_irc_channel *irc_channel_search_any (struct t_irc_server *server,
-                                                     char *channel_name);
+                                                     const char *channel_name);
 extern struct t_irc_channel *irc_channel_search_any_without_buffer (struct t_irc_server *server,
-                                                                    char *channel_name);
-extern int irc_channel_is_channel (char *string);
+                                                                    const char *channel_name);
+extern int irc_channel_is_channel (const char *string);
 extern void irc_channel_remove_away (struct t_irc_channel *channel);
 extern void irc_channel_check_away (struct t_irc_server *server,
                                     struct t_irc_channel *channel, int force);
-extern void irc_channel_set_away (struct t_irc_channel *channel, char *nick,
+extern void irc_channel_set_away (struct t_irc_channel *channel, const char *nick,
                                   int is_away);
 extern int irc_channel_get_notify_level (struct t_irc_server *server,
                                          struct t_irc_channel *channel);
@@ -79,7 +79,7 @@ extern void irc_channel_set_notify_level (struct t_irc_server *server,
                                           struct t_irc_channel *channel,
                                           int notify);
 extern void irc_channel_add_nick_speaking (struct t_irc_channel *channel,
-                                           char *nick);
+                                           const char *nick);
 extern void irc_channel_print_log (struct t_irc_channel *channel);
 
 #endif /* irc-channel.h */

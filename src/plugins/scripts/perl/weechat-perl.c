@@ -41,7 +41,7 @@ struct t_weechat_plugin *weechat_perl_plugin = NULL;
 
 struct t_plugin_script *perl_scripts = NULL;
 struct t_plugin_script *perl_current_script = NULL;
-char *perl_current_script_filename = NULL;
+const char *perl_current_script_filename = NULL;
 
 #ifdef NO_PERL_MULTIPLICITY
 #undef MULTIPLICITY
@@ -106,9 +106,9 @@ char *perl_weechat_code =
 
 void *
 weechat_perl_exec (struct t_plugin_script *script,
-		   int ret_type, char *function, char **argv)
+		   int ret_type, const char *function, char **argv)
 {
-    char *func;
+    const char *func;
     unsigned int count;
     void *ret_value;
     int *ret_i, mem_err, length;
@@ -224,7 +224,7 @@ weechat_perl_exec (struct t_plugin_script *script,
  */
 
 int
-weechat_perl_load (char *filename)
+weechat_perl_load (const char *filename)
 {
     STRLEN len;
     struct t_plugin_script tempscript;
@@ -274,13 +274,13 @@ weechat_perl_load (char *filename)
                 NULL);
     
     eval_pv (perl_weechat_code, TRUE);
-    perl_argv[0] = filename;
+    perl_argv[0] = (char *)filename;
     perl_argv[1] = NULL;
 #else
     snprintf (pkgname, sizeof(pkgname), "%s%d", PKG_NAME_PREFIX, perl_num);
     perl_num++;
     tempscript.interpreter = "WeechatPerlScriptLoader";
-    perl_argv[0] = filename;
+    perl_argv[0] = (char *)filename;
     perl_argv[1] = pkgname;
     perl_argv[2] = NULL;
 #endif
@@ -376,7 +376,7 @@ weechat_perl_load (char *filename)
  */
 
 int
-weechat_perl_load_cb (void *data, char *filename)
+weechat_perl_load_cb (void *data, const char *filename)
 {
     /* make C compiler happy */
     (void) data;
@@ -433,7 +433,7 @@ weechat_perl_unload (struct t_plugin_script *script)
  */
 
 void
-weechat_perl_unload_name (char *name)
+weechat_perl_unload_name (const char *name)
 {
     struct t_plugin_script *ptr_script;
     
@@ -554,7 +554,7 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-weechat_perl_completion_cb (void *data, char *completion,
+weechat_perl_completion_cb (void *data, const char *completion,
                             struct t_gui_buffer *buffer,
                             struct t_weelist *list)
 {
@@ -573,7 +573,7 @@ weechat_perl_completion_cb (void *data, char *completion,
  */
 
 int
-weechat_perl_debug_dump_cb (void *data, char *signal, char *type_data,
+weechat_perl_debug_dump_cb (void *data, const char *signal, const char *type_data,
                             void *signal_data)
 {
     /* make C compiler happy */
@@ -592,7 +592,7 @@ weechat_perl_debug_dump_cb (void *data, char *signal, char *type_data,
  */
 
 int
-weechat_perl_buffer_closed_cb (void *data, char *signal, char *type_data,
+weechat_perl_buffer_closed_cb (void *data, const char *signal, const char *type_data,
                                void *signal_data)
 {
     /* make C compiler happy */

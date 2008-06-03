@@ -44,7 +44,7 @@
 
 struct t_irc_server;
 
-typedef int (t_irc_recv_func)(struct t_irc_server *server, char *comand,
+typedef int (t_irc_recv_func)(struct t_irc_server *server, const char *comand,
                               int argc, char **argv, char **argv_eol);
 
 struct t_irc_protocol_msg
@@ -56,7 +56,8 @@ struct t_irc_protocol_msg
 };
 
 extern void irc_protocol_recv_command (struct t_irc_server *server,
-                                       char *entire_line, char *host,
-                                       char *command, char *arguments);
+                                       const char *entire_line,
+                                       const char *host, const char *command,
+                                       const char *arguments);
 
 #endif /* irc-protocol.h */

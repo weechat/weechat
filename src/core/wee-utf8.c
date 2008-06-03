@@ -49,7 +49,7 @@ utf8_init ()
  */
 
 int
-utf8_has_8bits (char *string)
+utf8_has_8bits (const char *string)
 {
     while (string && string[0])
     {
@@ -67,7 +67,7 @@ utf8_has_8bits (char *string)
  */
 
 int
-utf8_is_valid (char *string, char **error)
+utf8_is_valid (const char *string, char **error)
 {
     while (string && string[0])
     {
@@ -77,7 +77,7 @@ utf8_is_valid (char *string, char **error)
             if (!string[1] || (((unsigned char)(string[1]) & 0xC0) != 0x80))
             {
                 if (error)
-                    *error = string;
+                    *error = (char *)string;
                 return 0;
             }
             string += 2;
@@ -90,7 +90,7 @@ utf8_is_valid (char *string, char **error)
                 || (((unsigned char)(string[2]) & 0xC0) != 0x80))
             {
                 if (error)
-                    *error = string;
+                    *error = (char *)string;
                 return 0;
             }
             string += 3;
@@ -104,7 +104,7 @@ utf8_is_valid (char *string, char **error)
                 || (((unsigned char)(string[3]) & 0xC0) != 0x80))
             {
                 if (error)
-                    *error = string;
+                    *error = (char *)string;
                 return 0;
             }
             string += 4;
@@ -113,7 +113,7 @@ utf8_is_valid (char *string, char **error)
         else if ((unsigned char)(string[0]) >= 0x80)
         {
             if (error)
-                *error = string;
+                *error = (char *)string;
             return 0;
         }
         else
@@ -130,7 +130,7 @@ utf8_is_valid (char *string, char **error)
  */
 
 void
-utf8_normalize (char *string, char replacement)
+utf8_normalize (const char *string, char replacement)
 {
     char *error;
     
@@ -148,7 +148,7 @@ utf8_normalize (char *string, char replacement)
  */
 
 char *
-utf8_prev_char (char *string_start, char *string)
+utf8_prev_char (const char *string_start, const char *string)
 {
     if (!string || (string <= string_start))
         return NULL;
@@ -160,28 +160,28 @@ utf8_prev_char (char *string_start, char *string)
         /* UTF-8, at least 2 bytes */
         string--;
         if (string < string_start)
-            return string + 1;
+            return (char *)string + 1;
         if (((unsigned char)(string[0]) & 0xC0) == 0x80)
         {
             /* UTF-8, at least 3 bytes */
             string--;
             if (string < string_start)
-                return string + 1;
+                return (char *)string + 1;
             if (((unsigned char)(string[0]) & 0xC0) == 0x80)
             {
                 /* UTF-8, 4 bytes */
                 string--;
                 if (string < string_start)
-                    return string + 1;
-                return string;
+                    return (char *)string + 1;
+                return (char *)string;
             }
             else
-                return string;
+                return (char *)string;
         }
         else
-            return string;
+            return (char *)string;
     }
-    return string;
+    return (char *)string;
 }
 
 /*
@@ -189,7 +189,7 @@ utf8_prev_char (char *string_start, char *string)
  */
 
 char *
-utf8_next_char (char *string)
+utf8_next_char (const char *string)
 {
     if (!string)
         return NULL;
@@ -198,31 +198,31 @@ utf8_next_char (char *string)
     if (((unsigned char)(string[0]) & 0xE0) == 0xC0)
     {
         if (!string[1])
-            return string + 1;
-        return string + 2;
+            return (char *)string + 1;
+        return (char *)string + 2;
     }
     /* UTF-8, 3 bytes: 1110vvvv 10vvvvvv 10vvvvvv */
     else if (((unsigned char)(string[0]) & 0xF0) == 0xE0)
     {
         if (!string[1])
-            return string + 1;
+            return (char *)string + 1;
         if (!string[2])
-            return string + 2;
-        return string + 3;
+            return (char *)string + 2;
+        return (char *)string + 3;
     }
     /* UTF-8, 4 bytes: 11110vvv 10vvvvvv 10vvvvvv 10vvvvvv */
     else if (((unsigned char)(string[0]) & 0xF8) == 0xF0)
     {
         if (!string[1])
-            return string + 1;
+            return (char *)string + 1;
         if (!string[2])
-            return string + 2;
+            return (char *)string + 2;
         if (!string[3])
-            return string + 3;
-        return string + 4;
+            return (char *)string + 3;
+        return (char *)string + 4;
     }
     /* UTF-8, 1 byte: 0vvvvvvv */
-    return string + 1;
+    return (char *)string + 1;
 }
 
 /*
@@ -230,7 +230,7 @@ utf8_next_char (char *string)
  */
 
 int
-utf8_char_size (char *string)
+utf8_char_size (const char *string)
 {
     if (!string)
         return 0;
@@ -243,7 +243,7 @@ utf8_char_size (char *string)
  */
 
 int
-utf8_strlen (char *string)
+utf8_strlen (const char *string)
 {
     int length;
     
@@ -264,7 +264,7 @@ utf8_strlen (char *string)
  */
 
 int
-utf8_strnlen (char *string, int bytes)
+utf8_strnlen (const char *string, int bytes)
 {
     char *start;
     int length;
@@ -272,7 +272,7 @@ utf8_strnlen (char *string, int bytes)
     if (!string)
         return 0;
     
-    start = string;
+    start = (char *)string;
     length = 0;
     while (string && string[0] && (string - start < bytes))
     {
@@ -288,7 +288,7 @@ utf8_strnlen (char *string, int bytes)
  */
 
 int
-utf8_strlen_screen (char *string)
+utf8_strlen_screen (const char *string)
 {
     int length, num_char;
     wchar_t *wstring;
@@ -320,7 +320,7 @@ utf8_strlen_screen (char *string)
  */
 
 int
-utf8_charcasecmp (char *string1, char *string2)
+utf8_charcasecmp (const char *string1, const char *string2)
 {
     int length1, length2, i, char1, char2, diff;
     
@@ -367,7 +367,7 @@ utf8_charcasecmp (char *string1, char *string2)
  */
 
 int
-utf8_char_size_screen (char *string)
+utf8_char_size_screen (const char *string)
 {
     int char_size;
     char utf_char[16];
@@ -390,12 +390,12 @@ utf8_char_size_screen (char *string)
  */
 
 char *
-utf8_add_offset (char *string, int offset)
+utf8_add_offset (const char *string, int offset)
 {
     int count;
 
     if (!string)
-        return string;
+        return NULL;
     
     count = 0;
     while (string && string[0] && (count < offset))
@@ -403,7 +403,7 @@ utf8_add_offset (char *string, int offset)
         string = utf8_next_char (string);
         count++;
     }
-    return string;
+    return (char *)string;
 }
 
 /*
@@ -412,7 +412,7 @@ utf8_add_offset (char *string, int offset)
  */
 
 int
-utf8_real_pos (char *string, int pos)
+utf8_real_pos (const char *string, int pos)
 {
     int count, real_pos;
     char *next_char;
@@ -438,7 +438,7 @@ utf8_real_pos (char *string, int pos)
  */
 
 int
-utf8_pos (char *string, int real_pos)
+utf8_pos (const char *string, int real_pos)
 {
     int count;
     char *limit;
@@ -447,7 +447,7 @@ utf8_pos (char *string, int real_pos)
         return real_pos;
     
     count = 0;
-    limit = string + real_pos;
+    limit = (char *)string + real_pos;
     while (string && string[0] && (string < limit))
     {
         string = utf8_next_char (string);

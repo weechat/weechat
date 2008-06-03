@@ -54,7 +54,7 @@
  */
 
 void
-plugin_api_charset_set (struct t_weechat_plugin *plugin, char *charset)
+plugin_api_charset_set (struct t_weechat_plugin *plugin, const char *charset)
 {
     if (!plugin || !charset)
         return;
@@ -70,7 +70,7 @@ plugin_api_charset_set (struct t_weechat_plugin *plugin, char *charset)
  */
 
 char *
-plugin_api_gettext (char *string)
+plugin_api_gettext (const char *string)
 {
     return _(string);
 }
@@ -80,7 +80,7 @@ plugin_api_gettext (char *string)
  */
 
 char *
-plugin_api_ngettext (char *single, char *plural, int count)
+plugin_api_ngettext (const char *single, const char *plural, int count)
 {
     return NG_(single, plural, count);
 }
@@ -91,7 +91,7 @@ plugin_api_ngettext (char *single, char *plural, int count)
  */
 
 int
-plugin_api_mkdir_home (char *directory, int mode)
+plugin_api_mkdir_home (const char *directory, int mode)
 {
     char *dir_name;
     int dir_length;
@@ -126,7 +126,7 @@ plugin_api_mkdir_home (char *directory, int mode)
  */
 
 int
-plugin_api_mkdir (char *directory, int mode)
+plugin_api_mkdir (const char *directory, int mode)
 {
     if (!directory)
         return 0;
@@ -145,7 +145,7 @@ plugin_api_mkdir (char *directory, int mode)
  */
 
 struct t_config_option *
-plugin_api_config_get (char *option_name)
+plugin_api_config_get (const char *option_name)
 {
     struct t_config_option *ptr_option;
     
@@ -160,7 +160,7 @@ plugin_api_config_get (char *option_name)
 
 char *
 plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
-                              char *option_name)
+                              const char *option_name)
 {
     struct t_config_option *ptr_option;
     
@@ -181,7 +181,7 @@ plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,
 
 int
 plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
-                              char *option_name, char *value)
+                              const char *option_name, const char *value)
 {
     if (!plugin || !option_name)
         return 0;
@@ -197,7 +197,7 @@ plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
  */
 
 char *
-plugin_api_prefix (char *prefix)
+plugin_api_prefix (const char *prefix)
 {
     if (!prefix)
         return gui_chat_prefix_empty;
@@ -221,7 +221,7 @@ plugin_api_prefix (char *prefix)
  */
 
 char *
-plugin_api_color (char *color_name)
+plugin_api_color (const char *color_name)
 {
     int num_color, fg, bg;
     static char color[20][16];
@@ -328,7 +328,7 @@ plugin_api_color (char *color_name)
 
 void
 plugin_api_infobar_printf (struct t_weechat_plugin *plugin, int delay,
-                           char *color_name, char *format, ...)
+                           const char *color_name, const char *format, ...)
 {
     va_list argptr;
     static char buf[1024];
@@ -385,7 +385,7 @@ plugin_api_infobar_remove (int how_many)
 
 void
 plugin_api_command (struct t_weechat_plugin *plugin,
-                    struct t_gui_buffer *buffer, char *command)
+                    struct t_gui_buffer *buffer, const char *command)
 {
     char *command2;
     
@@ -405,7 +405,7 @@ plugin_api_command (struct t_weechat_plugin *plugin,
  */
 
 char *
-plugin_api_info_get (struct t_weechat_plugin *plugin, char *info)
+plugin_api_info_get (struct t_weechat_plugin *plugin, const char *info)
 {
     time_t inactivity;
     static char value[32];
@@ -730,7 +730,7 @@ plugin_api_infolist_get_add_window (struct t_plugin_infolist *infolist,
 
 int
 plugin_api_infolist_get_add_options (struct t_plugin_infolist *infolist,
-                                     char *option_name)
+                                     const char *option_name)
 {
     struct t_config_file *ptr_config;
     struct t_config_section *ptr_section;
@@ -930,7 +930,7 @@ plugin_api_infolist_get_add_options (struct t_plugin_infolist *infolist,
  */
 
 struct t_plugin_infolist *
-plugin_api_infolist_get (char *name, void *pointer, char *arguments)
+plugin_api_infolist_get (const char *name, void *pointer, const char *arguments)
 {
     struct t_plugin_infolist *ptr_infolist;
     struct t_gui_buffer *ptr_buffer;
@@ -1140,7 +1140,7 @@ plugin_api_infolist_fields (struct t_plugin_infolist *infolist)
  */
 
 int
-plugin_api_infolist_integer (struct t_plugin_infolist *infolist, char *var)
+plugin_api_infolist_integer (struct t_plugin_infolist *infolist, const char *var)
 {
     if (!infolist || !plugin_infolist_valid (infolist)
         || !((struct t_plugin_infolist *)infolist)->ptr_item)
@@ -1154,7 +1154,7 @@ plugin_api_infolist_integer (struct t_plugin_infolist *infolist, char *var)
  */
 
 char *
-plugin_api_infolist_string (struct t_plugin_infolist *infolist, char *var)
+plugin_api_infolist_string (struct t_plugin_infolist *infolist, const char *var)
 {
     if (!infolist || !plugin_infolist_valid (infolist)
         || !((struct t_plugin_infolist *)infolist)->ptr_item)
@@ -1168,7 +1168,7 @@ plugin_api_infolist_string (struct t_plugin_infolist *infolist, char *var)
  */
 
 void *
-plugin_api_infolist_pointer (struct t_plugin_infolist *infolist, char *var)
+plugin_api_infolist_pointer (struct t_plugin_infolist *infolist, const char *var)
 {
     if (!infolist || !plugin_infolist_valid (infolist)
         || !((struct t_plugin_infolist *)infolist)->ptr_item)
@@ -1182,7 +1182,7 @@ plugin_api_infolist_pointer (struct t_plugin_infolist *infolist, char *var)
  */
 
 time_t
-plugin_api_infolist_time (struct t_plugin_infolist *infolist, char *var)
+plugin_api_infolist_time (struct t_plugin_infolist *infolist, const char *var)
 {
     if (!infolist || !plugin_infolist_valid (infolist)
         || !((struct t_plugin_infolist *)infolist)->ptr_item)

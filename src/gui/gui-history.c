@@ -44,7 +44,7 @@ int num_history_global = 0;
  */
 
 void
-gui_history_buffer_add (struct t_gui_buffer *buffer, char *string)
+gui_history_buffer_add (struct t_gui_buffer *buffer, const char *string)
 {
     struct t_gui_history *new_history, *ptr_history;
     
@@ -94,7 +94,7 @@ gui_history_buffer_add (struct t_gui_buffer *buffer, char *string)
  */
 
 void
-gui_history_global_add (char *string)
+gui_history_global_add (const char *string)
 {
     struct t_gui_history *new_history, *ptr_history;
 

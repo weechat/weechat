@@ -26,9 +26,10 @@ extern struct t_weechat_plugin *weechat_ruby_plugin;
 
 extern struct t_plugin_script *ruby_scripts;
 extern struct t_plugin_script *ruby_current_script;
-extern char *ruby_current_script_filename;
+extern const char *ruby_current_script_filename;
 
-extern void * weechat_ruby_exec (struct t_plugin_script *script,
-                                 int ret_type, char *function, char **argv);
+extern void *weechat_ruby_exec (struct t_plugin_script *script,
+                                int ret_type, const char *function,
+                                char **argv);
 
 #endif /* weechat-perl.h */
