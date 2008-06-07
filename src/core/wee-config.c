@@ -499,10 +499,10 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     
     /* make C compiler happy */
     (void) data;
-    (void) config_file;
     
     /* remove all keys */
     gui_keyboard_free_all (&gui_keys, &last_gui_key);
+    gui_keyboard_default_bindings ();
     
     /* remove all bars */
     gui_bar_free_all ();
@@ -510,7 +510,7 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     /* remove all filters */
     gui_filter_free_all ();
     
-    rc = config_file_reload (weechat_config_file);
+    rc = config_file_reload (config_file);
     
     if (rc == WEECHAT_CONFIG_READ_OK)
     {

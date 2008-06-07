@@ -78,7 +78,9 @@ logger_config_read ()
 {
     long number;
     char *string, *error;
-    
+
+    if (logger_option_path)
+        free (logger_option_path);
     logger_option_path = weechat_config_get_plugin (LOGGER_OPTION_PATH);
     if (!logger_option_path)
     {
@@ -86,6 +88,8 @@ logger_config_read ()
                                    LOGGER_DEFAULT_OPTION_PATH);
         logger_option_path = weechat_config_get_plugin ("path");
     }
+    if (logger_option_path)
+        logger_option_path = strdup (logger_option_path);
     
     string = weechat_config_get_plugin (LOGGER_OPTION_NAME_LOWER_CASE);
     if (!string)
@@ -98,7 +102,9 @@ logger_config_read ()
         logger_option_name_lower_case = 1;
     else
         logger_option_name_lower_case = 0;
-    
+
+    if (logger_option_time_format)
+        free (logger_option_time_format);
     logger_option_time_format = weechat_config_get_plugin (LOGGER_OPTION_TIME_FORMAT);
     if (!logger_option_time_format)
     {
@@ -106,6 +112,8 @@ logger_config_read ()
                                    LOGGER_DEFAULT_OPTION_TIME_FORMAT);
         logger_option_time_format = weechat_config_get_plugin (LOGGER_OPTION_TIME_FORMAT);
     }
+    if (logger_option_time_format)
+        logger_option_time_format = strdup (logger_option_time_format);
     
     string = weechat_config_get_plugin (LOGGER_OPTION_INFO_LINES);
     if (!string)
@@ -718,6 +726,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     (void) plugin;
     
     logger_stop_all ();
+    
+    if (logger_option_path)
+        free (logger_option_path);
+    if (logger_option_time_format)
+        free (logger_option_time_format);
     
     return WEECHAT_RC_OK;
 }
