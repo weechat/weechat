@@ -705,8 +705,6 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
         strdup (prefix) : ((date != 0) ? strdup ("") : NULL);
     new_line->prefix_length = (prefix) ?
         gui_chat_strlen_screen (prefix) : 0;
-    if (new_line->prefix_length > buffer->prefix_max_length)
-        buffer->prefix_max_length = new_line->prefix_length;
     new_line->message = (message) ? strdup (message) : strdup ("");
     new_line->highlight = gui_chat_line_has_highlight (buffer, new_line);
     if (new_line->highlight)
@@ -724,7 +722,12 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
     
     /* check if line is filtered or not */
     new_line->displayed = gui_filter_check_line (buffer, new_line);
-    if (!new_line->displayed)
+    if (new_line->displayed)
+    {
+        if (new_line->prefix_length > buffer->prefix_max_length)
+            buffer->prefix_max_length = new_line->prefix_length;
+    }
+    else
     {
         if (!buffer->lines_hidden)
         {

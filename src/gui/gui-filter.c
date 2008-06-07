@@ -99,10 +99,18 @@ gui_filter_buffer (struct t_gui_buffer *buffer)
     
     lines_hidden = 0;
     
+    buffer->prefix_max_length = 0;
+    
     for (ptr_line = buffer->lines; ptr_line;
          ptr_line = ptr_line->next_line)
     {
         line_displayed = gui_filter_check_line (buffer, ptr_line);
+        
+        if (line_displayed
+            && (ptr_line->prefix_length > buffer->prefix_max_length))
+        {
+            buffer->prefix_max_length = ptr_line->prefix_length;
+        }
         
         /* force chat refresh if at least one line changed */
         if (ptr_line->displayed != line_displayed)
