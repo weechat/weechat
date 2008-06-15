@@ -767,7 +767,7 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "weechat_slogan", "string",
         N_("WeeChat slogan (if empty, slogan is not used)"),
-        NULL, 0, 0, "the geekest IRC client!", NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, _("the geekiest chat client!"), NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* look */
     ptr_section = config_file_new_section (weechat_config_file, "look",

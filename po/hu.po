@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-15 13:47+0200\n"
+"POT-Creation-Date: 2008-06-15 15:11+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -967,6 +967,9 @@ msgstr "WeeChat verziójának mutatása induláskor"
 
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "WeeChat szlogen (ha üres, akkor nem használja a program)"
+
+msgid "the geekiest chat client!"
+msgstr ""
 
 #, fuzzy
 msgid "time format for buffers"

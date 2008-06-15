@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-15 13:47+0200\n"
+"POT-Creation-Date: 2008-06-15 15:11+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -957,6 +957,9 @@ msgstr "WeeChat-Version beim Start anzeigen"
 
 msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "WeeChat-Slogan (wenn leer, wird keiner benutzt)"
+
+msgid "the geekiest chat client!"
+msgstr ""
 
 #, fuzzy
 msgid "time format for buffers"

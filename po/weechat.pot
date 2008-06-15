@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-15 13:47+0200\n"
+"POT-Creation-Date: 2008-06-15 15:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -800,6 +800,9 @@ msgid "display WeeChat version at startup"
 msgstr ""
 
 msgid "WeeChat slogan (if empty, slogan is not used)"
+msgstr ""
+
+msgid "the geekiest chat client!"
 msgstr ""
 
 msgid "time format for buffers"
