@@ -32,6 +32,8 @@
 
 #include "../weechat-plugin.h"
 #include "xfer.h"
+#include "xfer-config.h"
+#include "xfer-file.h"
 #include "xfer-network.h"
 
 
@@ -42,12 +44,22 @@
 void
 xfer_dcc_send_file_child (struct t_xfer *xfer)
 {
-    int num_read, num_sent;
+    int num_read, num_sent, blocksize;
     static char buffer[XFER_BLOCKSIZE_MAX];
     uint32_t ack;
-    time_t last_sent, new_time;
+    time_t last_sent, new_time, last_second;
+    long sent_last_second;
+    
+    blocksize = xfer->blocksize;
+    if (weechat_config_integer (xfer_config_network_speed_limit) > 0)
+    {
+        if (blocksize > weechat_config_integer (xfer_config_network_speed_limit) * 1024)
+            blocksize = weechat_config_integer (xfer_config_network_speed_limit) * 1024;
+    }
     
     last_sent = time (NULL);
+    last_second = time (NULL);
+    sent_last_second = 0;
     while (1)
     {
         /* read DCC ACK (sent by receiver) */
@@ -87,42 +99,58 @@ xfer_dcc_send_file_child (struct t_xfer *xfer)
         if ((xfer->pos < xfer->size) &&
              (xfer->fast_send || (xfer->pos <= xfer->ack)))
         {
-            lseek (xfer->file, xfer->pos, SEEK_SET);
-            num_read = read (xfer->file, buffer, xfer->blocksize);
-            if (num_read < 1)
+            if ((weechat_config_integer (xfer_config_network_speed_limit) > 0)
+                && (sent_last_second >= weechat_config_integer (xfer_config_network_speed_limit) * 1024))
             {
-                xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
-                                         XFER_ERROR_READ_LOCAL);
-                return;
+                /* we're sending too fast (according to speed limit set by user) */
+                usleep (100);
             }
-            num_sent = send (xfer->sock, buffer, num_read, 0);
-            if (num_sent < 0)
+            else
             {
-                /* socket is temporarily not available (receiver can't receive
-                   amount of data we sent ?!) */
-                if (errno == EAGAIN)
-                    usleep (1000);
-                else
+                lseek (xfer->file, xfer->pos, SEEK_SET);
+                num_read = read (xfer->file, buffer, blocksize);
+                if (num_read < 1)
                 {
                     xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
-                                             XFER_ERROR_SEND_BLOCK);
+                                             XFER_ERROR_READ_LOCAL);
                     return;
                 }
-            }
-            if (num_sent > 0)
-            {
-                xfer->pos += (unsigned long) num_sent;
-                new_time = time (NULL);
-                if (last_sent != new_time)
+                num_sent = send (xfer->sock, buffer, num_read, 0);
+                if (num_sent < 0)
                 {
-                    last_sent = new_time;
-                    xfer_network_write_pipe (xfer, XFER_STATUS_ACTIVE,
-                                             XFER_NO_ERROR);
+                    /* socket is temporarily not available (receiver can't receive
+                       amount of data we sent ?!) */
+                    if (errno == EAGAIN)
+                        usleep (1000);
+                    else
+                    {
+                        xfer_network_write_pipe (xfer, XFER_STATUS_FAILED,
+                                                 XFER_ERROR_SEND_BLOCK);
+                        return;
+                    }
+                }
+                if (num_sent > 0)
+                {
+                    xfer->pos += (unsigned long) num_sent;
+                    sent_last_second += (unsigned long) num_sent;
+                    new_time = time (NULL);
+                    if (last_sent != new_time)
+                    {
+                        last_sent = new_time;
+                        xfer_network_write_pipe (xfer, XFER_STATUS_ACTIVE,
+                                                 XFER_NO_ERROR);
+                    }
                 }
             }
         }
         else
             usleep (1000);
+        
+        if (time (NULL) > last_second)
+        {
+            last_second = time (NULL);
+            sent_last_second = 0;
+        }
     }
 }
 

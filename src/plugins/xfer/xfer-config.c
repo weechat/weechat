@@ -49,6 +49,7 @@ struct t_config_option *xfer_config_network_blocksize;
 struct t_config_option *xfer_config_network_fast_send;
 struct t_config_option *xfer_config_network_port_range;
 struct t_config_option *xfer_config_network_own_ip;
+struct t_config_option *xfer_config_network_speed_limit;
 
 /* xfer config, file section */
 
@@ -234,6 +235,12 @@ xfer_config_init ()
         N_("IP or DNS address used for sending files/chats "
            "(if empty, local interface IP is used)"),
         NULL, 0, 0, "", NULL, NULL, NULL, NULL, NULL, NULL);
+    xfer_config_network_speed_limit = weechat_config_new_option (
+        xfer_config_file, ptr_section,
+        "speed_limit", "integer",
+        N_("speed limit for sending files, in kilo-bytes by second (0 means "
+           "no limit)"),
+        NULL, 0, INT_MAX, "0", NULL, NULL, NULL, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (xfer_config_file, "file",
                                               0, 0,

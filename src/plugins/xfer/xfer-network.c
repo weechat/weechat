@@ -473,9 +473,9 @@ xfer_network_connect (struct t_xfer *xfer)
             return 0;
 
         xfer->hook_fd = weechat_hook_fd (xfer->sock,
-                                     1, 0, 0,
-                                     &xfer_network_fd_cb,
-                                     xfer);
+                                         1, 0, 0,
+                                         &xfer_network_fd_cb,
+                                         xfer);
         
         /* add timeout */
         if (weechat_config_integer (xfer_config_network_timeout) > 0)
