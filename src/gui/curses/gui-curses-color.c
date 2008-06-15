@@ -274,25 +274,26 @@ gui_color_get_name (int num_color)
  *                  given with foreground color, with a OR)
  */
 
-struct t_gui_color *
+void
 gui_color_build (int number, int foreground, int background)
 {
-    struct t_gui_color *new_color;
+    if (!gui_color[number])
+    {
+        gui_color[number] = malloc (sizeof (*gui_color[number]));
+        if (!gui_color[number])
+            return;
+        gui_color[number]->string = malloc (4);
+    }
     
-    new_color = malloc (sizeof (*new_color));
-    if (!new_color)
-        return NULL;
-    
-    new_color->foreground = gui_weechat_colors[foreground].foreground;
-    new_color->background = gui_weechat_colors[background].foreground;
-    new_color->attributes = gui_weechat_colors[foreground].attributes;
-    new_color->string = malloc (4);
-    if (new_color->string)
-        snprintf (new_color->string, 4,
+    gui_color[number]->foreground = gui_weechat_colors[foreground].foreground;
+    gui_color[number]->background = gui_weechat_colors[background].foreground;
+    gui_color[number]->attributes = gui_weechat_colors[foreground].attributes;
+    if (gui_color[number]->string)
+    {
+        snprintf (gui_color[number]->string, 4,
                   "%s%02d",
                   GUI_COLOR_COLOR_STR, number);
-    
-    return new_color;
+    }
 }
 
 /*
@@ -353,94 +354,69 @@ gui_color_init_weechat ()
 {
     int i;
     
-    gui_color[GUI_COLOR_SEPARATOR] = gui_color_build (GUI_COLOR_SEPARATOR, CONFIG_COLOR(config_color_separator), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_SEPARATOR, CONFIG_COLOR(config_color_separator), CONFIG_COLOR(config_color_chat_bg));
     
-    gui_color[GUI_COLOR_TITLE] = gui_color_build (GUI_COLOR_TITLE, CONFIG_COLOR(config_color_title), CONFIG_COLOR(config_color_title_bg));
-    gui_color[GUI_COLOR_TITLE_MORE] = gui_color_build (GUI_COLOR_TITLE_MORE, CONFIG_COLOR(config_color_title_more), CONFIG_COLOR(config_color_title_bg));
+    gui_color_build (GUI_COLOR_TITLE, CONFIG_COLOR(config_color_title), CONFIG_COLOR(config_color_title_bg));
+    gui_color_build (GUI_COLOR_TITLE_MORE, CONFIG_COLOR(config_color_title_more), CONFIG_COLOR(config_color_title_bg));
     
-    gui_color[GUI_COLOR_CHAT] = gui_color_build (GUI_COLOR_CHAT, CONFIG_COLOR(config_color_chat), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_TIME] = gui_color_build (GUI_COLOR_CHAT_TIME, CONFIG_COLOR(config_color_chat_time), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_TIME_DELIMITERS] = gui_color_build (GUI_COLOR_CHAT_TIME_DELIMITERS, CONFIG_COLOR(config_color_chat_time_delimiters), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_PREFIX_ERROR] = gui_color_build (GUI_COLOR_CHAT_PREFIX_ERROR, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_ERROR]), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_PREFIX_NETWORK] = gui_color_build (GUI_COLOR_CHAT_PREFIX_NETWORK, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_NETWORK]), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_PREFIX_ACTION] = gui_color_build (GUI_COLOR_CHAT_PREFIX_ACTION, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_ACTION]), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_PREFIX_JOIN] = gui_color_build (GUI_COLOR_CHAT_PREFIX_JOIN, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_JOIN]), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_PREFIX_QUIT] = gui_color_build (GUI_COLOR_CHAT_PREFIX_QUIT, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_QUIT]), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_PREFIX_MORE] = gui_color_build (GUI_COLOR_CHAT_PREFIX_MORE, CONFIG_COLOR(config_color_chat_prefix_more), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_PREFIX_SUFFIX] = gui_color_build (GUI_COLOR_CHAT_PREFIX_SUFFIX, CONFIG_COLOR(config_color_chat_prefix_suffix), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_BUFFER] = gui_color_build (GUI_COLOR_CHAT_BUFFER, CONFIG_COLOR(config_color_chat_buffer), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_SERVER] = gui_color_build (GUI_COLOR_CHAT_SERVER, CONFIG_COLOR(config_color_chat_server), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_CHANNEL] = gui_color_build (GUI_COLOR_CHAT_CHANNEL, CONFIG_COLOR(config_color_chat_channel), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_NICK] = gui_color_build (GUI_COLOR_CHAT_NICK, CONFIG_COLOR(config_color_chat_nick), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_NICK_SELF] = gui_color_build (GUI_COLOR_CHAT_NICK_SELF, CONFIG_COLOR(config_color_chat_nick_self), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_NICK_OTHER] = gui_color_build (GUI_COLOR_CHAT_NICK_OTHER, CONFIG_COLOR(config_color_chat_nick_other), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT, CONFIG_COLOR(config_color_chat), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_TIME, CONFIG_COLOR(config_color_chat_time), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_TIME_DELIMITERS, CONFIG_COLOR(config_color_chat_time_delimiters), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_PREFIX_ERROR, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_ERROR]), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_PREFIX_NETWORK, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_NETWORK]), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_PREFIX_ACTION, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_ACTION]), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_PREFIX_JOIN, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_JOIN]), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_PREFIX_QUIT, CONFIG_COLOR(config_color_chat_prefix[GUI_CHAT_PREFIX_QUIT]), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_PREFIX_MORE, CONFIG_COLOR(config_color_chat_prefix_more), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_PREFIX_SUFFIX, CONFIG_COLOR(config_color_chat_prefix_suffix), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_BUFFER, CONFIG_COLOR(config_color_chat_buffer), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_SERVER, CONFIG_COLOR(config_color_chat_server), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_CHANNEL, CONFIG_COLOR(config_color_chat_channel), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK, CONFIG_COLOR(config_color_chat_nick), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK_SELF, CONFIG_COLOR(config_color_chat_nick_self), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_NICK_OTHER, CONFIG_COLOR(config_color_chat_nick_other), CONFIG_COLOR(config_color_chat_bg));
     for (i = 0; i < GUI_COLOR_NICK_NUMBER; i++)
     {
-        gui_color[GUI_COLOR_CHAT_NICK1 + i] = gui_color_build (GUI_COLOR_CHAT_NICK1 + i, CONFIG_COLOR(config_color_chat_nick_colors[i]), CONFIG_COLOR(config_color_chat_bg));
+        gui_color_build (GUI_COLOR_CHAT_NICK1 + i, CONFIG_COLOR(config_color_chat_nick_colors[i]), CONFIG_COLOR(config_color_chat_bg));
     }
-    gui_color[GUI_COLOR_CHAT_HOST] = gui_color_build (GUI_COLOR_CHAT_HOST, CONFIG_COLOR(config_color_chat_host), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_DELIMITERS] = gui_color_build (GUI_COLOR_CHAT_DELIMITERS, CONFIG_COLOR(config_color_chat_delimiters), CONFIG_COLOR(config_color_chat_bg));
-    gui_color[GUI_COLOR_CHAT_HIGHLIGHT] = gui_color_build (GUI_COLOR_CHAT_HIGHLIGHT, CONFIG_COLOR(config_color_chat_highlight), CONFIG_COLOR(config_color_chat_highlight_bg));
-    gui_color[GUI_COLOR_CHAT_READ_MARKER] = gui_color_build (GUI_COLOR_CHAT_READ_MARKER, CONFIG_COLOR(config_color_chat_read_marker), CONFIG_COLOR(config_color_chat_read_marker_bg));
+    gui_color_build (GUI_COLOR_CHAT_HOST, CONFIG_COLOR(config_color_chat_host), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_DELIMITERS, CONFIG_COLOR(config_color_chat_delimiters), CONFIG_COLOR(config_color_chat_bg));
+    gui_color_build (GUI_COLOR_CHAT_HIGHLIGHT, CONFIG_COLOR(config_color_chat_highlight), CONFIG_COLOR(config_color_chat_highlight_bg));
+    gui_color_build (GUI_COLOR_CHAT_READ_MARKER, CONFIG_COLOR(config_color_chat_read_marker), CONFIG_COLOR(config_color_chat_read_marker_bg));
     
-    gui_color[GUI_COLOR_STATUS] = gui_color_build (GUI_COLOR_STATUS, CONFIG_COLOR(config_color_status), CONFIG_COLOR(config_color_status_bg));
-    gui_color[GUI_COLOR_STATUS_DELIMITERS] = gui_color_build (GUI_COLOR_STATUS_DELIMITERS, CONFIG_COLOR(config_color_status_delimiters), CONFIG_COLOR(config_color_status_bg));
-    gui_color[GUI_COLOR_STATUS_NUMBER] = gui_color_build (GUI_COLOR_STATUS_NUMBER, CONFIG_COLOR(config_color_status_number), CONFIG_COLOR(config_color_status_bg));
-    gui_color[GUI_COLOR_STATUS_CATEGORY] = gui_color_build (GUI_COLOR_STATUS_CATEGORY, CONFIG_COLOR(config_color_status_category), CONFIG_COLOR(config_color_status_bg));
-    gui_color[GUI_COLOR_STATUS_NAME] = gui_color_build (GUI_COLOR_STATUS_NAME, CONFIG_COLOR(config_color_status_name), CONFIG_COLOR(config_color_status_bg));
-    gui_color[GUI_COLOR_STATUS_DATA_MSG] = gui_color_build (GUI_COLOR_STATUS_DATA_MSG, CONFIG_COLOR(config_color_status_data_msg), CONFIG_COLOR(config_color_status_bg));
-    gui_color[GUI_COLOR_STATUS_DATA_PRIVATE] = gui_color_build (GUI_COLOR_STATUS_DATA_PRIVATE, CONFIG_COLOR(config_color_status_data_private), CONFIG_COLOR(config_color_status_bg));
-    gui_color[GUI_COLOR_STATUS_DATA_HIGHLIGHT] = gui_color_build (GUI_COLOR_STATUS_DATA_HIGHLIGHT, CONFIG_COLOR(config_color_status_data_highlight), CONFIG_COLOR(config_color_status_bg));
-    gui_color[GUI_COLOR_STATUS_DATA_OTHER] = gui_color_build (GUI_COLOR_STATUS_DATA_OTHER, CONFIG_COLOR(config_color_status_data_other), CONFIG_COLOR(config_color_status_bg));
-    gui_color[GUI_COLOR_STATUS_MORE] = gui_color_build (GUI_COLOR_STATUS_MORE, CONFIG_COLOR(config_color_status_more), CONFIG_COLOR(config_color_status_bg));
+    gui_color_build (GUI_COLOR_STATUS, CONFIG_COLOR(config_color_status), CONFIG_COLOR(config_color_status_bg));
+    gui_color_build (GUI_COLOR_STATUS_DELIMITERS, CONFIG_COLOR(config_color_status_delimiters), CONFIG_COLOR(config_color_status_bg));
+    gui_color_build (GUI_COLOR_STATUS_NUMBER, CONFIG_COLOR(config_color_status_number), CONFIG_COLOR(config_color_status_bg));
+    gui_color_build (GUI_COLOR_STATUS_CATEGORY, CONFIG_COLOR(config_color_status_category), CONFIG_COLOR(config_color_status_bg));
+    gui_color_build (GUI_COLOR_STATUS_NAME, CONFIG_COLOR(config_color_status_name), CONFIG_COLOR(config_color_status_bg));
+    gui_color_build (GUI_COLOR_STATUS_DATA_MSG, CONFIG_COLOR(config_color_status_data_msg), CONFIG_COLOR(config_color_status_bg));
+    gui_color_build (GUI_COLOR_STATUS_DATA_PRIVATE, CONFIG_COLOR(config_color_status_data_private), CONFIG_COLOR(config_color_status_bg));
+    gui_color_build (GUI_COLOR_STATUS_DATA_HIGHLIGHT, CONFIG_COLOR(config_color_status_data_highlight), CONFIG_COLOR(config_color_status_bg));
+    gui_color_build (GUI_COLOR_STATUS_DATA_OTHER, CONFIG_COLOR(config_color_status_data_other), CONFIG_COLOR(config_color_status_bg));
+    gui_color_build (GUI_COLOR_STATUS_MORE, CONFIG_COLOR(config_color_status_more), CONFIG_COLOR(config_color_status_bg));
     
-    gui_color[GUI_COLOR_INFOBAR] = gui_color_build (GUI_COLOR_INFOBAR, CONFIG_COLOR(config_color_infobar), CONFIG_COLOR(config_color_infobar_bg));
-    gui_color[GUI_COLOR_INFOBAR_DELIMITERS] = gui_color_build (GUI_COLOR_INFOBAR_DELIMITERS, CONFIG_COLOR(config_color_infobar_delimiters), CONFIG_COLOR(config_color_infobar_bg));
-    gui_color[GUI_COLOR_INFOBAR_HIGHLIGHT] = gui_color_build (GUI_COLOR_INFOBAR_HIGHLIGHT, CONFIG_COLOR(config_color_infobar_highlight), CONFIG_COLOR(config_color_infobar_bg));
+    gui_color_build (GUI_COLOR_INFOBAR, CONFIG_COLOR(config_color_infobar), CONFIG_COLOR(config_color_infobar_bg));
+    gui_color_build (GUI_COLOR_INFOBAR_DELIMITERS, CONFIG_COLOR(config_color_infobar_delimiters), CONFIG_COLOR(config_color_infobar_bg));
+    gui_color_build (GUI_COLOR_INFOBAR_HIGHLIGHT, CONFIG_COLOR(config_color_infobar_highlight), CONFIG_COLOR(config_color_infobar_bg));
     
-    gui_color[GUI_COLOR_INPUT] = gui_color_build (GUI_COLOR_INPUT, CONFIG_COLOR(config_color_input), CONFIG_COLOR(config_color_input_bg));
-    gui_color[GUI_COLOR_INPUT_SERVER] = gui_color_build (GUI_COLOR_INPUT_SERVER, CONFIG_COLOR(config_color_input_server), CONFIG_COLOR(config_color_input_bg));
-    gui_color[GUI_COLOR_INPUT_CHANNEL] = gui_color_build (GUI_COLOR_INPUT_CHANNEL, CONFIG_COLOR(config_color_input_channel), CONFIG_COLOR(config_color_input_bg));
-    gui_color[GUI_COLOR_INPUT_NICK] = gui_color_build (GUI_COLOR_INPUT_NICK, CONFIG_COLOR(config_color_input_nick), CONFIG_COLOR(config_color_input_bg));
-    gui_color[GUI_COLOR_INPUT_DELIMITERS] = gui_color_build (GUI_COLOR_INPUT_DELIMITERS, CONFIG_COLOR(config_color_input_delimiters), CONFIG_COLOR(config_color_input_bg));
-    gui_color[GUI_COLOR_INPUT_TEXT_NOT_FOUND] = gui_color_build (GUI_COLOR_INPUT_TEXT_NOT_FOUND, CONFIG_COLOR(config_color_input_text_not_found), CONFIG_COLOR(config_color_input_bg));
-    gui_color[GUI_COLOR_INPUT_ACTIONS] = gui_color_build (GUI_COLOR_INPUT_ACTIONS, CONFIG_COLOR(config_color_input_actions), CONFIG_COLOR(config_color_input_bg));
+    gui_color_build (GUI_COLOR_INPUT, CONFIG_COLOR(config_color_input), CONFIG_COLOR(config_color_input_bg));
+    gui_color_build (GUI_COLOR_INPUT_SERVER, CONFIG_COLOR(config_color_input_server), CONFIG_COLOR(config_color_input_bg));
+    gui_color_build (GUI_COLOR_INPUT_CHANNEL, CONFIG_COLOR(config_color_input_channel), CONFIG_COLOR(config_color_input_bg));
+    gui_color_build (GUI_COLOR_INPUT_NICK, CONFIG_COLOR(config_color_input_nick), CONFIG_COLOR(config_color_input_bg));
+    gui_color_build (GUI_COLOR_INPUT_DELIMITERS, CONFIG_COLOR(config_color_input_delimiters), CONFIG_COLOR(config_color_input_bg));
+    gui_color_build (GUI_COLOR_INPUT_TEXT_NOT_FOUND, CONFIG_COLOR(config_color_input_text_not_found), CONFIG_COLOR(config_color_input_bg));
+    gui_color_build (GUI_COLOR_INPUT_ACTIONS, CONFIG_COLOR(config_color_input_actions), CONFIG_COLOR(config_color_input_bg));
     
-    gui_color[GUI_COLOR_NICKLIST] = gui_color_build (GUI_COLOR_NICKLIST, CONFIG_COLOR(config_color_nicklist), CONFIG_COLOR(config_color_nicklist_bg));
-    gui_color[GUI_COLOR_NICKLIST_GROUP] = gui_color_build (GUI_COLOR_NICKLIST_GROUP, CONFIG_COLOR(config_color_nicklist_group), CONFIG_COLOR(config_color_nicklist_bg));
-    gui_color[GUI_COLOR_NICKLIST_AWAY] = gui_color_build (GUI_COLOR_NICKLIST_AWAY, CONFIG_COLOR(config_color_nicklist_away), CONFIG_COLOR(config_color_nicklist_bg));
-    gui_color[GUI_COLOR_NICKLIST_PREFIX1] = gui_color_build (GUI_COLOR_NICKLIST_PREFIX1, CONFIG_COLOR(config_color_nicklist_prefix1), CONFIG_COLOR(config_color_nicklist_bg));
-    gui_color[GUI_COLOR_NICKLIST_PREFIX2] = gui_color_build (GUI_COLOR_NICKLIST_PREFIX2, CONFIG_COLOR(config_color_nicklist_prefix2), CONFIG_COLOR(config_color_nicklist_bg));
-    gui_color[GUI_COLOR_NICKLIST_PREFIX3] = gui_color_build (GUI_COLOR_NICKLIST_PREFIX3, CONFIG_COLOR(config_color_nicklist_prefix3), CONFIG_COLOR(config_color_nicklist_bg));
-    gui_color[GUI_COLOR_NICKLIST_PREFIX4] = gui_color_build (GUI_COLOR_NICKLIST_PREFIX4, CONFIG_COLOR(config_color_nicklist_prefix4), CONFIG_COLOR(config_color_nicklist_bg));
-    gui_color[GUI_COLOR_NICKLIST_PREFIX5] = gui_color_build (GUI_COLOR_NICKLIST_PREFIX5, CONFIG_COLOR(config_color_nicklist_prefix5), CONFIG_COLOR(config_color_nicklist_bg));
-    gui_color[GUI_COLOR_NICKLIST_MORE] = gui_color_build (GUI_COLOR_NICKLIST_MORE, CONFIG_COLOR(config_color_nicklist_more), CONFIG_COLOR(config_color_nicklist_bg));
-    gui_color[GUI_COLOR_NICKLIST_SEPARATOR] = gui_color_build (GUI_COLOR_NICKLIST_SEPARATOR, CONFIG_COLOR(config_color_nicklist_separator), CONFIG_COLOR(config_color_nicklist_bg));
-}
-
-/*
- * gui_color_rebuild_weechat: rebuild WeeChat colors
- */
-
-void
-gui_color_rebuild_weechat ()
-{
-    int i;
-    
-    if (has_colors ())
-    {
-        for (i = 0; i < GUI_COLOR_NUM_COLORS; i++)
-        {
-            if (gui_color[i])
-            {
-                if (gui_color[i]->string)
-                    free (gui_color[i]->string);
-                free (gui_color[i]);
-                gui_color[i] = NULL;
-            }
-        }
-        gui_color_init_weechat ();
-    }
+    gui_color_build (GUI_COLOR_NICKLIST, CONFIG_COLOR(config_color_nicklist), CONFIG_COLOR(config_color_nicklist_bg));
+    gui_color_build (GUI_COLOR_NICKLIST_GROUP, CONFIG_COLOR(config_color_nicklist_group), CONFIG_COLOR(config_color_nicklist_bg));
+    gui_color_build (GUI_COLOR_NICKLIST_AWAY, CONFIG_COLOR(config_color_nicklist_away), CONFIG_COLOR(config_color_nicklist_bg));
+    gui_color_build (GUI_COLOR_NICKLIST_PREFIX1, CONFIG_COLOR(config_color_nicklist_prefix1), CONFIG_COLOR(config_color_nicklist_bg));
+    gui_color_build (GUI_COLOR_NICKLIST_PREFIX2, CONFIG_COLOR(config_color_nicklist_prefix2), CONFIG_COLOR(config_color_nicklist_bg));
+    gui_color_build (GUI_COLOR_NICKLIST_PREFIX3, CONFIG_COLOR(config_color_nicklist_prefix3), CONFIG_COLOR(config_color_nicklist_bg));
+    gui_color_build (GUI_COLOR_NICKLIST_PREFIX4, CONFIG_COLOR(config_color_nicklist_prefix4), CONFIG_COLOR(config_color_nicklist_bg));
+    gui_color_build (GUI_COLOR_NICKLIST_PREFIX5, CONFIG_COLOR(config_color_nicklist_prefix5), CONFIG_COLOR(config_color_nicklist_bg));
+    gui_color_build (GUI_COLOR_NICKLIST_MORE, CONFIG_COLOR(config_color_nicklist_more), CONFIG_COLOR(config_color_nicklist_bg));
+    gui_color_build (GUI_COLOR_NICKLIST_SEPARATOR, CONFIG_COLOR(config_color_nicklist_separator), CONFIG_COLOR(config_color_nicklist_bg));
 }
 
 /*

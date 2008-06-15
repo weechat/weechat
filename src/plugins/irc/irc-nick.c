@@ -507,6 +507,7 @@ irc_nick_as_prefix (struct t_irc_nick *nick, const char *nickname,
     char prefix[2], str_prefix_color[64];
     int prefix_color;
 
+    prefix[0] = '\0';
     prefix[1] = '\0';
     if (weechat_config_boolean (weechat_config_get ("weechat.look.nickmode")))
     {

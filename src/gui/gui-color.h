@@ -149,6 +149,6 @@ extern int gui_color_assign (int *color, char const *color_name);
 extern int gui_color_get_number ();
 extern char *gui_color_get_name (int num_color);
 extern void gui_color_init_pairs ();
-extern void gui_color_rebuild_weechat ();
+extern void gui_color_init_weechat ();
 
 #endif /* gui-color.h */

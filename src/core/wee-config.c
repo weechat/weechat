@@ -333,7 +333,7 @@ config_change_color (void *data, struct t_config_option *option)
     if (gui_ok)
     {
         gui_color_init_pairs ();
-        gui_color_rebuild_weechat ();
+        gui_color_init_weechat ();
         gui_window_refresh_windows ();
     }
 }

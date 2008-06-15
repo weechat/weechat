@@ -50,7 +50,6 @@
 #define IRC_COLOR_CHAT weechat_color("chat")
 #define IRC_COLOR_CHAT_CHANNEL weechat_color("chat_channel")
 #define IRC_COLOR_CHAT_DELIMITERS weechat_color("chat_delimiters")
-#define IRC_COLOR_CHAT_HIGHLIGHT weechat_color("chat_highlight")
 #define IRC_COLOR_CHAT_HOST weechat_color("chat_host")
 #define IRC_COLOR_CHAT_NICK weechat_color("chat_nick")
 #define IRC_COLOR_CHAT_NICK_SELF weechat_color("chat_nick_self")
