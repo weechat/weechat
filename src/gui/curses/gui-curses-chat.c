@@ -617,8 +617,10 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
         {
             prefix_highlighted = (char *)gui_color_decode ((unsigned char *)line->prefix);
             if (!simulate)
+            {
                 gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
                                               GUI_COLOR_CHAT_HIGHLIGHT);
+            }
         } 
         
         /* not enough space to display full prefix ? => truncate it! */
@@ -660,25 +662,32 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
             && (num_spaces < 0))
         {
             if (!simulate)
+            {
                 gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
                                               GUI_COLOR_CHAT_PREFIX_MORE);
+            }
             gui_chat_display_word (window, line, str_plus,
                                    NULL, 1, num_lines, count, lines_displayed,
                                    simulate);
         }
         else
         {
-            gui_chat_display_word (window, line, str_space,
-                                   NULL, 1, num_lines, count, lines_displayed,
-                                   simulate);
+            if (window->buffer->prefix_max_length > 0)
+            {
+                gui_chat_display_word (window, line, str_space,
+                                       NULL, 1, num_lines, count, lines_displayed,
+                                       simulate);
+            }
         }
         if ((CONFIG_INTEGER(config_look_prefix_align) != CONFIG_LOOK_PREFIX_ALIGN_NONE)
             && (CONFIG_STRING(config_look_prefix_suffix)
                 && CONFIG_STRING(config_look_prefix_suffix)[0]))
         {
             if (!simulate)
+            {
                 gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
                                               GUI_COLOR_CHAT_PREFIX_SUFFIX);
+            }
             gui_chat_display_word (window, line,
                                    CONFIG_STRING(config_look_prefix_suffix),
                                    NULL, 1, num_lines, count,
