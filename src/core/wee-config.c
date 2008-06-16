@@ -784,7 +784,7 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "buffer_time_format", "string",
         N_("time format for buffers"),
-        NULL, 0, 0, "[%H:%M:%S]", NULL, NULL, &config_change_buffer_time_format, NULL, NULL, NULL);
+        NULL, 0, 0, "%H:%M:%S", NULL, NULL, &config_change_buffer_time_format, NULL, NULL, NULL);
     config_look_color_nicks_number = config_file_new_option (
         weechat_config_file, ptr_section,
         "color_nicks_number", "integer",
