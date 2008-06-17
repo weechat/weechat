@@ -107,7 +107,6 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->last_nick = NULL;
     new_channel->buffer = new_buffer;
     new_channel->nicks_speaking = NULL;
-    //new_buffer->notify_level = irc_channel_get_notify_level (server, new_channel);
     
     /* add new channel to channels list */
     new_channel->prev_channel = server->last_channel;
@@ -325,77 +324,6 @@ irc_channel_set_away (struct t_irc_channel *channel, const char *nick, int is_aw
         if (ptr_nick)
             irc_nick_set_away (channel, ptr_nick, is_away);
     }
-    */
-}
-
-/*
- * irc_channel_get_notify_level: get channel notify level
- */
-
-int
-irc_channel_get_notify_level (struct t_irc_server *server,
-                              struct t_irc_channel *channel)
-{
-    (void) server;
-    (void) channel;
-    /*char *name, *pos, *pos2;
-    int server_default_notify, notify;
-    
-    if ((!server) || (!channel))
-        return GUI_NOTIFY_LEVEL_DEFAULT;
-    
-    if ((!server->notify_levels) || (!server->notify_levels[0]))
-        return GUI_NOTIFY_LEVEL_DEFAULT;
-    
-    server_default_notify = irc_server_get_default_notify_level (server);
-    if ((channel->type != IRC_CHANNEL_TYPE_CHANNEL)
-        && (server_default_notify == 1))
-        server_default_notify = 2;
-    
-    name = malloc (strlen (channel->name) + 2);
-    strcpy (name, channel->name);
-    strcat (name, ":");
-    pos = strstr (server->notify_levels, name);
-    free (name);
-    if (!pos)
-        return server_default_notify;
-    
-    pos2 = pos + strlen (channel->name);
-    if (pos2[0] != ':')
-        return server_default_notify;
-    pos2++;
-    if (!pos2[0])
-        return server_default_notify;
-    
-    notify = (int)(pos2[0] - '0');
-    if ((notify >= GUI_NOTIFY_LEVEL_MIN) && (notify <= GUI_NOTIFY_LEVEL_MAX))
-        return notify;
-
-    return server_default_notify;
-    */
-    return 0;
-}
-
-/*
- * irc_channel_set_notify_level: set channel notify level
- */
-
-void
-irc_channel_set_notify_level (struct t_irc_server *server,
-                              struct t_irc_channel *channel, int notify)
-{
-    (void) server;
-    (void) channel;
-    (void) notify;
-    
-    /*char level_string[2];
-    
-    if ((!server) || (!channel))
-        return;
-    
-    level_string[0] = notify + '0';
-    level_string[1] = '\0';
-    config_option_list_set (&(server->notify_levels), channel->name, level_string);
     */
 }
 

@@ -619,8 +619,7 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                                                  server_tmp.command,
                                                  1, /* command_delay */
                                                  server_tmp.autojoin,
-                                                 1, /* autorejoin */
-                                                 NULL);
+                                                 1); /* autorejoin */
                     if (ptr_server)
                     {
                         weechat_printf (NULL,
@@ -2777,8 +2776,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                                      server_tmp.command,
                                      1, /* command_delay */
                                      server_tmp.autojoin,
-                                     1, /* autorejoin */
-                                     NULL);
+                                     1); /* autorejoin */
         if (new_server)
         {
             weechat_printf (NULL,

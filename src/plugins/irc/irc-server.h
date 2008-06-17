@@ -74,7 +74,6 @@ struct t_irc_server
     int command_delay;              /* delay after execution of command      */
     char *autojoin;                 /* channels to automatically join        */
     int autorejoin;                 /* auto rejoin channels when kicked      */
-    char *notify_levels;            /* channels notify levels                */
     
     /* internal vars */
     int reloaded_from_config;       /* 1 if reloaded from config file        */
@@ -154,8 +153,7 @@ extern struct t_irc_server *irc_server_new (const char *name, int autoconnect,
                                             const char *username, const char *realname,
                                             const char *hostname, const char *command,
                                             int command_delay, const char *autojoin,
-                                            int autorejoin,
-                                            const char *notify_levels);
+                                            int autorejoin);
 extern struct t_irc_server *irc_server_duplicate (struct t_irc_server *server,
                                                   const char *new_name);
 extern int irc_server_rename (struct t_irc_server *server, const char *new_name);

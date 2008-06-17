@@ -73,11 +73,6 @@ extern void irc_channel_check_away (struct t_irc_server *server,
                                     struct t_irc_channel *channel, int force);
 extern void irc_channel_set_away (struct t_irc_channel *channel, const char *nick,
                                   int is_away);
-extern int irc_channel_get_notify_level (struct t_irc_server *server,
-                                         struct t_irc_channel *channel);
-extern void irc_channel_set_notify_level (struct t_irc_server *server,
-                                          struct t_irc_channel *channel,
-                                          int notify);
 extern void irc_channel_add_nick_speaking (struct t_irc_channel *channel,
                                            const char *nick);
 extern void irc_channel_print_log (struct t_irc_channel *channel);

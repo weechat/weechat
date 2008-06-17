@@ -221,9 +221,6 @@ irc_display_server (struct t_irc_server *server, int with_detail)
         weechat_printf (NULL, "  autojoin  . . . . . : %s",
                         (server->autojoin && server->autojoin[0]) ?
                         server->autojoin : "");
-        weechat_printf (NULL, "  notify_levels . . . : %s",
-                        (server->notify_levels && server->notify_levels[0]) ?
-                        server->notify_levels : "");
     }
     else
     {

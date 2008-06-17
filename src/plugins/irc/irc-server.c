@@ -209,11 +209,6 @@ irc_server_set_with_option (struct t_irc_server *server,
         case IRC_CONFIG_SERVER_AUTOREJOIN:
             server->autorejoin = weechat_config_integer (option);
             break;
-        case IRC_CONFIG_SERVER_NOTIFY_LEVELS:
-            if (server->notify_levels)
-                free (server->notify_levels);
-            server->notify_levels = strdup (weechat_config_string (option));
-            break;
         case IRC_CONFIG_NUM_SERVER_OPTIONS:
             break;
     }
@@ -270,7 +265,6 @@ irc_server_init (struct t_irc_server *server)
     server->command_delay = IRC_CONFIG_SERVER_DEFAULT_COMMAND_DELAY;
     server->autojoin = NULL;
     server->autorejoin = IRC_CONFIG_SERVER_DEFAULT_AUTOREJOIN;
-    server->notify_levels = NULL;
     
     /* internal vars */
     server->reloaded_from_config = 0;
@@ -597,8 +591,6 @@ irc_server_free_data (struct t_irc_server *server)
         free (server->command);
     if (server->autojoin)
         free (server->autojoin);
-    if (server->notify_levels)
-        free (server->notify_levels);
     if (server->unterminated_message)
         free (server->unterminated_message);
     if (server->nick)
@@ -672,7 +664,7 @@ irc_server_new (const char *name, int autoconnect, int autoreconnect,
                 int ipv6, int ssl, const char *password, const char *nicks,
                 const char *username, const char *realname, const char *local_hostname,
                 const char *command, int command_delay, const char *autojoin,
-                int autorejoin, const char *notify_levels)
+                int autorejoin)
 {
     struct t_irc_server *new_server;
     
@@ -684,15 +676,14 @@ irc_server_new (const char *name, int autoconnect, int autoreconnect,
         weechat_log_printf ("Creating new server (name:%s, addresses:%s, "
                             "pwd:%s, nicks:%s, username:%s, realname:%s, "
                             "local_hostname: %s, command:%s, autojoin:%s, "
-                            "autorejoin:%s, notify_levels:%s)",
+                            "autorejoin:%s)",
                             name, addresses, (password) ? password : "",
                             (nicks) ? nicks : "", (username) ? username : "",
                             (realname) ? realname : "",
                             (local_hostname) ? local_hostname : "",
                             (command) ? command : "",
                             (autojoin) ? autojoin : "",
-                            (autorejoin) ? "on" : "off",
-                            (notify_levels) ? notify_levels : "");
+                            (autorejoin) ? "on" : "off");
     }
 
     new_server = irc_server_alloc (name);
@@ -720,8 +711,6 @@ irc_server_new (const char *name, int autoconnect, int autoreconnect,
         new_server->autojoin =
             (autojoin) ? strdup (autojoin) : NULL;
         new_server->autorejoin = autorejoin;
-        new_server->notify_levels =
-            (notify_levels) ? strdup (notify_levels) : NULL;
     }
     else
         return NULL;
@@ -760,8 +749,7 @@ irc_server_duplicate (struct t_irc_server *server, const char *new_name)
                                  server->command,
                                  server->command_delay,
                                  server->autojoin,
-                                 server->autorejoin,
-                                 server->notify_levels);
+                                 server->autorejoin);
     
     return new_server;
 }
@@ -2312,61 +2300,6 @@ irc_server_set_away (struct t_irc_server *server, const char *nick, int is_away)
 }
 
 /*
- * irc_server_get_default_notify_level: get default notify level for server
- */
-
-int
-irc_server_get_default_notify_level (struct t_irc_server *server)
-{
-    (void) server;
-    
-    /*int notify, value;
-    char *pos;
-
-    notify = GUI_NOTIFY_LEVEL_DEFAULT;
-    
-    if (!server || !server->notify_levels)
-        return notify;
-    
-    pos = strstr (server->notify_levels, "*:");
-    if (pos)
-    {
-        pos += 2;
-        if (pos[0])
-        {
-            value = (int)(pos[0] - '0');
-            if ((value >= GUI_NOTIFY_LEVEL_MIN)
-                && (value <= GUI_NOTIFY_LEVEL_MAX))
-                notify = value;
-        }
-    }
-
-    return notify;*/
-    return 0;
-}
-
-/*
- * irc_server_set_default_notify_level: set default notify level for server
- */
-
-void
-irc_server_set_default_notify_level (struct t_irc_server *server, int notify)
-{
-    (void) server;
-    (void) notify;
-    
-    /*char level_string[2];
-
-    if (server)
-    {
-        level_string[0] = notify + '0';
-        level_string[1] = '\0';
-        config_option_list_set (&(server->notify_levels), "*", level_string);
-    }
-    */
-}
-
-/*
  * irc_server_xfer_send_ready_cb: callback called when user send (file or chat)
  *                                to someone and that xfer plugin successfully
  *                                initialized xfer and is ready for sending
@@ -2586,7 +2519,6 @@ irc_server_print_log ()
         weechat_log_printf ("  command_delay . . . : %d",   ptr_server->command_delay);
         weechat_log_printf ("  autojoin. . . . . . : '%s'", ptr_server->autojoin);
         weechat_log_printf ("  autorejoin. . . . . : %d",   ptr_server->autorejoin);
-        weechat_log_printf ("  notify_levels . . . : %s",   ptr_server->notify_levels);
         weechat_log_printf ("  reloaded_from_config: %d",   ptr_server->reloaded_from_config);
         weechat_log_printf ("  addresses_count . . : %d",   ptr_server->addresses_count);
         weechat_log_printf ("  addresses_array . . : 0x%x", ptr_server->addresses_array);
