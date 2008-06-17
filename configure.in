@@ -842,7 +842,10 @@ else
     AC_MSG_RESULT(no)
 fi
 
-CFLAGS=`echo $CFLAGS | sed s/-g//g`
+CFLAGS=`echo $CFLAGS | sed 's/ -g //g'`
+CFLAGS=`echo $CFLAGS | sed 's/^-g //g'`
+CFLAGS=`echo $CFLAGS | sed 's/ -g$//g'`
+CFLAGS=`echo $CFLAGS | sed 's/^-g$//g'`
 if test "x$debug" = "x0" ; then
     CFLAGS="$COMMON_CFLAGS $CFLAGS"
 else
