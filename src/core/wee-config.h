@@ -54,6 +54,7 @@ extern struct t_config_option *config_startup_display_logo;
 extern struct t_config_option *config_startup_display_version;
 extern struct t_config_option *config_startup_weechat_slogan;
 
+extern struct t_config_option *config_look_buffer_notify_default;
 extern struct t_config_option *config_look_buffer_time_format;
 extern struct t_config_option *config_look_color_nicks_number;
 extern struct t_config_option *config_look_color_real_white;
@@ -162,10 +163,12 @@ extern struct t_config_option *config_proxy_port;
 extern struct t_config_option *config_proxy_username;
 extern struct t_config_option *config_proxy_password;
 
-extern struct t_config_option *config_plugin_path;
 extern struct t_config_option *config_plugin_autoload;
+extern struct t_config_option *config_plugin_debug;
 extern struct t_config_option *config_plugin_extension;
+extern struct t_config_option *config_plugin_path;
 extern struct t_config_option *config_plugin_save_config_on_unload;
+
 
 extern int config_weechat_init ();
 extern int config_weechat_read ();

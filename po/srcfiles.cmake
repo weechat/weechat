@@ -128,6 +128,7 @@ SET(WEECHAT_SOURCES
 ./src/plugins/logger/logger.h
 ./src/plugins/logger/logger-tail.c
 ./src/plugins/logger/logger-tail.h
+./src/plugins/notify/notify.c
 ./src/plugins/plugin-api.c
 ./src/plugins/plugin-api.h
 ./src/plugins/plugin.c
@@ -166,9 +167,9 @@ SET(WEECHAT_SOURCES
 ./src/plugins/trigger/trigger-libirc.c
 ./src/plugins/trigger/trigger-libirc.h
 ./src/plugins/weechat-plugin.h
-./src/plugins/xfer/xfer.c
 ./src/plugins/xfer/xfer-buffer.c
 ./src/plugins/xfer/xfer-buffer.h
+./src/plugins/xfer/xfer.c
 ./src/plugins/xfer/xfer-chat.c
 ./src/plugins/xfer/xfer-chat.h
 ./src/plugins/xfer/xfer-command.c

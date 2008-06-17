@@ -485,6 +485,31 @@ config_file_new_option (struct t_config_file *config_file,
 }
 
 /*
+ * config_file_option_full_name: build full name for an option
+ */
+
+char *
+config_file_option_full_name (struct t_config_option *option)
+{
+    int length_option;
+    char *option_full_name;
+    
+    length_option = strlen (option->config_file->name) + 1 +
+        strlen (option->section->name) + 1 + strlen (option->name) + 1;
+    option_full_name = malloc (length_option);
+    if (option_full_name)
+    {
+        snprintf (option_full_name, length_option,
+                  "%s.%s.%s",
+                  option->config_file->name,
+                  option->section->name,
+                  option->name);
+    }
+    
+    return option_full_name;
+}
+
+/*
  * config_file_search_option: search an option in a config or section
  */
 
@@ -748,7 +773,7 @@ config_file_string_to_boolean (const char *text)
 int
 config_file_option_reset (struct t_config_option *option, int run_callback)
 {
-    int rc, length_option;
+    int rc;
     char value[256], *option_full_name;
     
     if (!option)
@@ -830,16 +855,9 @@ config_file_option_reset (struct t_config_option *option, int run_callback)
     {
         if (option->config_file && option->section)
         {
-            length_option = strlen (option->config_file->name) + 1 +
-                strlen (option->section->name) + 1 + strlen (option->name) + 1;
-            option_full_name = malloc (length_option);
+            option_full_name = config_file_option_full_name (option);
             if (option_full_name)
             {
-                snprintf (option_full_name, length_option,
-                          "%s.%s.%s",
-                          option->config_file->name,
-                          option->section->name,
-                          option->name);
                 hook_config_exec (option_full_name, value);
                 free (option_full_name);
             }
@@ -862,7 +880,7 @@ int
 config_file_option_set (struct t_config_option *option, const char *value,
                         int run_callback)
 {
-    int value_int, i, rc, length_option, new_value_ok;
+    int value_int, i, rc, new_value_ok;
     long number;
     char *error, *option_full_name;
     
@@ -1079,16 +1097,9 @@ config_file_option_set (struct t_config_option *option, const char *value,
     {
         if (option->config_file && option->section)
         {
-            length_option = strlen (option->config_file->name) + 1 +
-                strlen (option->section->name) + 1 + strlen (option->name) + 1;
-            option_full_name = malloc (length_option);
+            option_full_name = config_file_option_full_name (option);
             if (option_full_name)
             {
-                snprintf (option_full_name, length_option,
-                          "%s.%s.%s",
-                          option->config_file->name,
-                          option->section->name,
-                          option->name);
                 hook_config_exec (option_full_name, value);
                 free (option_full_name);
             }
@@ -1111,6 +1122,7 @@ int
 config_file_option_unset (struct t_config_option *option)
 {
     int rc;
+    char *option_full_name;
     
     rc = WEECHAT_CONFIG_OPTION_UNSET_OK_NO_RESET;
     
@@ -1123,8 +1135,17 @@ config_file_option_unset (struct t_config_option *option)
                 (option->callback_delete_data,
                  option);
         }
+        
+        option_full_name = config_file_option_full_name (option);
+        
         config_file_option_free (option);
         rc = WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+        
+        if (option_full_name)
+        {
+            hook_config_exec (option_full_name, NULL);
+            free (option_full_name);
+        }
     }
     else
     {

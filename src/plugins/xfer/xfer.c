@@ -1204,6 +1204,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     (void) argv;
     
     weechat_plugin = plugin;
+
+    xfer_debug = weechat_config_boolean (weechat_config_get ("weechat.plugin.debug"));
     
     if (!xfer_config_init ())
         return WEECHAT_RC_ERROR;

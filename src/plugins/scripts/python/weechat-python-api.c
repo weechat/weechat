@@ -2987,6 +2987,39 @@ weechat_python_api_buffer_close (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_buffer_get_integer get a buffer property as integer
+ */
+
+static PyObject *
+weechat_python_api_buffer_get_integer (PyObject *self, PyObject *args)
+{
+    char *buffer, *property;
+    int value;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_integer");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    buffer = NULL;
+    property = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &buffer, &property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_integer");
+        PYTHON_RETURN_INT(-1);
+    }
+    
+    value = weechat_buffer_get_integer (script_str2ptr (buffer), property);
+    
+    PYTHON_RETURN_INT(value);
+}
+
+/*
  * weechat_python_api_buffer_get_string: get a buffer property as string
  */
 
@@ -4144,6 +4177,7 @@ PyMethodDef weechat_python_funcs[] =
     { "buffer_search", &weechat_python_api_buffer_search, METH_VARARGS, "" },
     { "buffer_clear", &weechat_python_api_buffer_clear, METH_VARARGS, "" },
     { "buffer_close", &weechat_python_api_buffer_close, METH_VARARGS, "" },
+    { "buffer_get_integer", &weechat_python_api_buffer_get_integer, METH_VARARGS, "" },
     { "buffer_get_string", &weechat_python_api_buffer_get_string, METH_VARARGS, "" },
     { "buffer_get_pointer", &weechat_python_api_buffer_get_pointer, METH_VARARGS, "" },
     { "buffer_set", &weechat_python_api_buffer_set, METH_VARARGS, "" },

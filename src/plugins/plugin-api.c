@@ -498,7 +498,7 @@ plugin_api_infolist_get_add_buffer (struct t_plugin_infolist *infolist,
         return 0;
     if (!plugin_infolist_new_var_integer (ptr_item, "type", buffer->type))
         return 0;
-    if (!plugin_infolist_new_var_integer (ptr_item, "notify_level", buffer->notify_level))
+    if (!plugin_infolist_new_var_integer (ptr_item, "notify", buffer->notify))
         return 0;
     if (!plugin_infolist_new_var_integer (ptr_item, "num_displayed", buffer->num_displayed))
         return 0;

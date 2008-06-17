@@ -3428,6 +3428,43 @@ weechat_ruby_api_buffer_close (VALUE class, VALUE buffer,
 }
 
 /*
+ * weechat_ruby_api_buffer_get_integer: get a buffer property as integer
+ */
+
+static VALUE
+weechat_ruby_api_buffer_get_integer (VALUE class, VALUE buffer, VALUE property)
+{
+    char *c_buffer, *c_property;
+    int value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_integer");
+        RUBY_RETURN_INT(-1);
+    }
+    
+    if (NIL_P (buffer) || NIL_P (property))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_integer");
+        RUBY_RETURN_INT(-1);
+    }
+    
+    Check_Type (buffer, T_STRING);
+    Check_Type (property, T_STRING);
+    
+    c_buffer = STR2CSTR (buffer);
+    c_property = STR2CSTR (property);
+
+    value = weechat_buffer_get_integer (script_str2ptr (c_buffer),
+                                        c_property);
+    
+    RUBY_RETURN_INT(value);
+}
+
+/*
  * weechat_ruby_api_buffer_get_string: get a buffer property as string
  */
 
@@ -4771,6 +4808,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "buffer_search", &weechat_ruby_api_buffer_search, 2);
     rb_define_module_function (ruby_mWeechat, "buffer_clear", &weechat_ruby_api_buffer_clear, 1);
     rb_define_module_function (ruby_mWeechat, "buffer_close", &weechat_ruby_api_buffer_close, 1);
+    rb_define_module_function (ruby_mWeechat, "buffer_get_integer", &weechat_ruby_api_buffer_get_integer, 2);
     rb_define_module_function (ruby_mWeechat, "buffer_get_string", &weechat_ruby_api_buffer_get_string, 2);
     rb_define_module_function (ruby_mWeechat, "buffer_get_pointer", &weechat_ruby_api_buffer_get_pointer, 2);
     rb_define_module_function (ruby_mWeechat, "buffer_set", &weechat_ruby_api_buffer_set, 3);

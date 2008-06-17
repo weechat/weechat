@@ -65,6 +65,30 @@ gui_hotlist_search (struct t_gui_hotlist *hotlist, struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_hotlist_check_buffer_notify: return: 1 if buffer notify is ok according
+ *                                            to priority (buffer will be added
+ *                                            to hotlist)
+ *                                          0 if buffer will not be added to
+ *                                            hotlist
+ */
+
+int
+gui_hotlist_check_buffer_notify (struct t_gui_buffer *buffer, int priority)
+{
+    switch (priority)
+    {
+        case GUI_HOTLIST_LOW:
+            return (buffer->notify >= 3);
+        case GUI_HOTLIST_MESSAGE:
+        case GUI_HOTLIST_PRIVATE:
+            return (buffer->notify >= 2);
+        case GUI_HOTLIST_HIGHLIGHT:
+            return (buffer->notify >= 1);
+    }
+    return 1;
+}
+
+/*
  * gui_hotlist_find_pos: find position for a inserting in hotlist
  *                       (for sorting hotlist)
  */
@@ -207,6 +231,10 @@ gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
         priority = GUI_HOTLIST_MIN;
     else if (priority > GUI_HOTLIST_MAX)
         priority = GUI_HOTLIST_MAX;
+    
+    /* check if priority is ok according to buffer notify level value */
+    if (!gui_hotlist_check_buffer_notify (buffer, priority))
+        return;
     
     if ((ptr_hotlist = gui_hotlist_search (gui_hotlist, buffer)))
     {

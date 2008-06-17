@@ -437,87 +437,20 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     /* display/change buffer notify */
     if (string_strcasecmp (argv[1], "notify") == 0)
     {
-        if (argc < 3)
+        /* display notify level for all buffers */
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL, _("Notify levels:"));
+        for (ptr_buffer = gui_buffers; ptr_buffer;
+             ptr_buffer = ptr_buffer->next_buffer)
         {
-            /* display notify level for all buffers */
-            gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL, _("Notify levels:"));
-            for (ptr_buffer = gui_buffers; ptr_buffer;
-                 ptr_buffer = ptr_buffer->next_buffer)
-            {
-                gui_chat_printf (NULL,
-                                 "  %d.%s: %d",
-                                 ptr_buffer->number,
-                                 ptr_buffer->name,
-                                 ptr_buffer->notify_level); 
-            }
-            gui_chat_printf (NULL, "");
+            gui_chat_printf (NULL,
+                             "  %d.%s: %d (%s)",
+                             ptr_buffer->number,
+                             ptr_buffer->name,
+                             ptr_buffer->notify,
+                             gui_buffer_notify_string[ptr_buffer->notify]);
         }
-        else
-        {
-            /* set notify level for buffer */
-            error = NULL;
-            number = strtol (argv[2], &error, 10);
-            if (error && !error[0])
-            {
-                if ((number < GUI_BUFFER_NOTIFY_LEVEL_MIN)
-                    || (number > GUI_BUFFER_NOTIFY_LEVEL_MAX))
-                {
-                    /* invalid highlight level */
-                    gui_chat_printf (NULL,
-                                     _("%sError: incorrect notify level "
-                                       "(must be between %d and %d)"),
-                                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                     GUI_BUFFER_NOTIFY_LEVEL_MIN,
-                                     GUI_BUFFER_NOTIFY_LEVEL_MAX);
-                    return WEECHAT_RC_ERROR;
-                }
-                gui_chat_printf (NULL,
-                                 _("New notify level for %s%s%s: "
-                                   "%d %s"),
-                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                 buffer->name,
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 number,
-                                 GUI_COLOR(GUI_COLOR_CHAT));
-                switch (number)
-                {
-                    case GUI_HOTLIST_LOW:
-                        gui_chat_printf (NULL,
-                                         _("(hotlist: never)"));
-                        break;
-                    case GUI_HOTLIST_MESSAGE:
-                        gui_chat_printf (NULL,
-                                         _("(hotlist: highlights)"));
-                        break;
-                    case GUI_HOTLIST_PRIVATE:
-                        gui_chat_printf (NULL,
-                                         _("(hotlist: highlights + "
-                                           "messages)"));
-                        break;
-                    case GUI_HOTLIST_HIGHLIGHT:
-                        gui_chat_printf (NULL,
-                                         _("(hotlist: highlights + "
-                                           "messages + join/part "
-                                           "(all))"));
-                        break;
-                    default:
-                        gui_chat_printf (NULL, "");
-                        break;
-                }
-            }
-            else
-            {
-                /* invalid number */
-                gui_chat_printf (NULL,
-                                 _("%sError: incorrect notify level (must "
-                                   "be between %d and %d)"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                                 GUI_BUFFER_NOTIFY_LEVEL_MIN,
-                                 GUI_BUFFER_NOTIFY_LEVEL_MAX);
-                return WEECHAT_RC_ERROR;
-            }
-        }
+        gui_chat_printf (NULL, "");
         
         return WEECHAT_RC_OK;
     }
@@ -2645,10 +2578,7 @@ command_init ()
                      "example -1)\n"
                      "  close: close buffer\n"
                      "   list: list buffers (no parameter implies this list)\n"
-                     " notify: set notify level for buffer (0=never, "
-                     "1=highlight, 2=1+msg, 3=2+join/part)\n"
-                     "         (when executed on server buffer, this sets "
-                      "default notify level for whole server)\n"
+                     " notify: display notify levels for all open buffers\n"
                      " scroll: scroll in history (may be relative, and may "
                      "end by a letter: s=sec, m=min, h=hour, d=day, M=month, "
                      "y=year); if there is only letter, then scroll to "
@@ -2661,9 +2591,8 @@ command_init ()
                      "   clear all buffers: /buffer clear -all\n"
                      "         move buffer: /buffer move 5\n"
                      "        close buffer: /buffer close this is part msg\n"
-                     "          set notify: /buffer notify 2\n"
                      "     scroll 1 day up: /buffer scroll 1d  ==  /buffer "
-                     " scroll -1d  ==  /buffer scroll -24h\n"
+                     "scroll -1d  ==  /buffer scroll -24h\n"
                      " scroll to beginning\n"
                      "         of this day: /buffer scroll d\n"
                      "  scroll 15 min down: /buffer scroll +15m\n"

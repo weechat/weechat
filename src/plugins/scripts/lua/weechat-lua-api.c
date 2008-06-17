@@ -3366,6 +3366,45 @@ weechat_lua_api_buffer_close (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_buffer_get_integer: get a buffer property as integer
+ */
+
+static int
+weechat_lua_api_buffer_get_integer (lua_State *L)
+{
+    const char *buffer, *property;
+    int n, value;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_integer");
+        LUA_RETURN_INT(-1);
+    }
+    
+    buffer = NULL;
+    property = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_integer");
+        LUA_RETURN_INT(-1);
+    }
+    
+    buffer = lua_tostring (lua_current_interpreter, -2);
+    property = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_buffer_get_integer (script_str2ptr (buffer),
+                                        property);
+    
+    LUA_RETURN_INT(value);
+}
+
+/*
  * weechat_lua_api_buffer_get_string: get a buffer property as string
  */
 
@@ -4968,6 +5007,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "buffer_search", &weechat_lua_api_buffer_search },
     { "buffer_clear", &weechat_lua_api_buffer_clear },
     { "buffer_close", &weechat_lua_api_buffer_close },
+    { "buffer_get_integer", &weechat_lua_api_buffer_get_integer },
     { "buffer_get_string", &weechat_lua_api_buffer_get_string },
     { "buffer_get_pointer", &weechat_lua_api_buffer_get_pointer },
     { "buffer_set", &weechat_lua_api_buffer_set },

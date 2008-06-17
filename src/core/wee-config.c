@@ -68,6 +68,7 @@ struct t_config_option *config_startup_weechat_slogan;
 
 /* config, look & feel section */
 
+struct t_config_option *config_look_buffer_notify_default;
 struct t_config_option *config_look_buffer_time_format;
 struct t_config_option *config_look_color_nicks_number;
 struct t_config_option *config_look_color_real_white;
@@ -184,9 +185,10 @@ struct t_config_option *config_proxy_password;
 
 /* config, plugin section */
 
-struct t_config_option *config_plugin_path;
 struct t_config_option *config_plugin_autoload;
+struct t_config_option *config_plugin_debug;
 struct t_config_option *config_plugin_extension;
+struct t_config_option *config_plugin_path;
 struct t_config_option *config_plugin_save_config_on_unload;
 
 /* hooks */
@@ -779,7 +781,15 @@ config_weechat_init ()
         config_file_free (weechat_config_file);
         return 0;
     }
-
+    
+    config_look_buffer_notify_default = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "buffer_notify_default", "integer",
+        N_("default notify level for buffers (used to tell WeeChat if buffer "
+           "must be displayed in hotlist or not, according to importance "
+           "of message)"),
+        "none|highlight|message|all", 0, 0, "all",
+        NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_buffer_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "buffer_time_format", "string",
@@ -1533,12 +1543,6 @@ config_weechat_init ()
         return 0;
     }
     
-    config_plugin_path = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "path", "string",
-        N_("path for searching plugins ('%h' will be replaced by "
-           "WeeChat home, ~/.weechat by default)"),
-        NULL, 0, 0, "%h/plugins", NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_autoload = config_file_new_option (
         weechat_config_file, ptr_section,
         "autoload", "string",
@@ -1547,6 +1551,12 @@ config_weechat_init ()
            "be partial, for example \"perl\" is ok for "
            "\"perl.so\")"),
         NULL, 0, 0, "*", NULL, NULL, NULL, NULL, NULL, NULL);
+    config_plugin_debug = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "debug", "boolean",
+        N_("enable debug messages by default in all plugins (option disabled "
+           "by default, which is highly recommended)"),
+        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_extension = config_file_new_option (
         weechat_config_file, ptr_section,
         "extension", "string",
@@ -1559,6 +1569,12 @@ config_weechat_init ()
         ".so",
 #endif              
         NULL, NULL, NULL, NULL, NULL, NULL);
+    config_plugin_path = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "path", "string",
+        N_("path for searching plugins ('%h' will be replaced by "
+           "WeeChat home, ~/.weechat by default)"),
+        NULL, 0, 0, "%h/plugins", NULL, NULL, NULL, NULL, NULL, NULL);
     config_plugin_save_config_on_unload = config_file_new_option (
         weechat_config_file, ptr_section,
         "save_config_on_unload", "boolean",

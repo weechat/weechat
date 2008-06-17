@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-15 15:11+0200\n"
+"POT-Creation-Date: 2008-06-17 15:58+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -190,30 +190,6 @@ msgstr ""
 
 msgid "Notify levels:"
 msgstr "Уровни уведомления:"
-
-#, fuzzy, c-format
-msgid "%sError: incorrect notify level (must be between %d and %d)"
-msgstr "%s некорректный уровень уведомления (должен быть от %d до %d)\n"
-
-#, fuzzy, c-format
-msgid "New notify level for %s%s%s: %d %s"
-msgstr "Новый уровень уведомления для %s%s%s: %s%d %s"
-
-#, fuzzy
-msgid "(hotlist: never)"
-msgstr "(хотлист: никогда)\n"
-
-#, fuzzy
-msgid "(hotlist: highlights)"
-msgstr "(хотлист: подсвечивание)\n"
-
-#, fuzzy
-msgid "(hotlist: highlights + messages)"
-msgstr "(hotlist: подсвечивание + сообщения)\n"
-
-#, fuzzy
-msgid "(hotlist: highlights + messages + join/part (all))"
-msgstr "(хотлист: подсвечивание + сообщения + входы/выходы (всё))\n"
 
 #, fuzzy, c-format
 msgid "%sPlugin \"%s\" not found"
@@ -629,10 +605,7 @@ msgid ""
 "   move: move buffer in the list (may be relative, for example -1)\n"
 "  close: close buffer\n"
 "   list: list buffers (no parameter implies this list)\n"
-" notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2"
-"+join/part)\n"
-"         (when executed on server buffer, this sets default notify level for "
-"whole server)\n"
+" notify: display notify levels for all open buffers\n"
 " scroll: scroll in history (may be relative, and may end by a letter: s=sec, "
 "m=min, h=hour, d=day, M=month, y=year); if there is only letter, then scroll "
 "to beginning of this item\n"
@@ -646,9 +619,8 @@ msgid ""
 "   clear all buffers: /buffer clear -all\n"
 "         move buffer: /buffer move 5\n"
 "        close buffer: /buffer close this is part msg\n"
-"          set notify: /buffer notify 2\n"
-"     scroll 1 day up: /buffer scroll 1d  ==  /buffer  scroll -1d  ==  /"
-"buffer scroll -24h\n"
+"     scroll 1 day up: /buffer scroll 1d  ==  /buffer scroll -1d  ==  /buffer "
+"scroll -24h\n"
 " scroll to beginning\n"
 "         of this day: /buffer scroll d\n"
 "  scroll 15 min down: /buffer scroll +15m\n"
@@ -966,6 +938,11 @@ msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "слоган WeeChat (если пусто - используется слоган по умолчанию)"
 
 msgid "the geekiest chat client!"
+msgstr ""
+
+msgid ""
+"default notify level for buffers (used to tell WeeChat if buffer must be "
+"displayed in hotlist or not, according to importance of message)"
 msgstr ""
 
 #, fuzzy
@@ -1469,13 +1446,6 @@ msgstr "имя пользователя, используемое при под�
 msgid "password for proxy server"
 msgstr "пароль к proxy серверу"
 
-msgid ""
-"path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
-"weechat by default)"
-msgstr ""
-"путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
-"умолчанию - ~/.weechat)"
-
 #, fuzzy
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
@@ -1487,9 +1457,21 @@ msgstr ""
 "например \"perl\" успешно загрузит \"libperl.so\")"
 
 msgid ""
+"enable debug messages by default in all plugins (option disabled by default, "
+"which is highly recommended)"
+msgstr ""
+
+msgid ""
 "standard plugins extension in filename (for example \".so\" under Linux or "
 "\".dll\" under Microsoft Windows)"
 msgstr ""
+
+msgid ""
+"path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
+"weechat by default)"
+msgstr ""
+"путь поиска pluginов ('%h' заменяется на домашний каталог WeeChat, по "
+"умолчанию - ~/.weechat)"
 
 #, fuzzy
 msgid "save configuration files when unloading plugins"
@@ -3922,6 +3904,41 @@ msgstr "**** Конец log-файла"
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr ""
 
+#, c-format
+msgid "notify: debug: set notify for buffer %s to %d (%s)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, fuzzy, c-format
+msgid "Notify level: %s => %s"
+msgstr "Уровни уведомления:"
+
+#, fuzzy, c-format
+msgid "Notify level: %s: removed"
+msgstr "Уровни уведомления:"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown notify level \"%s\""
+msgstr "%s неизвестная функция клавиши \"%s\"\n"
+
+#, fuzzy
+msgid "change notify level for current buffer"
+msgstr "не найдено имя канала для буфера"
+
+msgid "[reset | none | highlight | message | all]"
+msgstr ""
+
+msgid ""
+"    reset: reset notify level to default value\n"
+"     none: buffer will never be in hotlist\n"
+"highlight: buffer will be in hotlist for highlights only\n"
+"  message: buffer will be in hotlist for highlights and user messages only\n"
+"      all: buffer will be in hotlist for any text printed"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
 msgstr "%s не могу загрузить plugin \"%s\": %s\n"
@@ -4189,6 +4206,48 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s некорректные аргументы команды \"%s\"\n"
 
+msgid "bytes"
+msgstr "байтов"
+
+msgid "KB"
+msgstr "КБ"
+
+msgid "MB"
+msgstr "МБ"
+
+msgid "GB"
+msgstr "ГБ"
+
+msgid "Actions (letter+enter):"
+msgstr ""
+
+msgid "  [A] Accept"
+msgstr "  [A] Принять"
+
+msgid "  [C] Cancel"
+msgstr "  [C] Отменить"
+
+msgid "  [R] Remove"
+msgstr "  [R] Удалить"
+
+#, fuzzy
+msgid "  [P] Purge finished"
+msgstr "  [P] Очистить список"
+
+#, fuzzy
+msgid "  [Q] Close xfer list"
+msgstr "  [Q] Закрыть окно"
+
+msgid "xfer chat"
+msgstr ""
+
+msgid "ETA"
+msgstr "осталось"
+
+#, fuzzy
+msgid "Xfer list"
+msgstr "очистить хотлист"
+
 #, fuzzy
 msgid "waiting"
 msgstr "Ожидание"
@@ -4238,9 +4297,6 @@ msgstr "DCC-чат закончен с %s%s %s(%s%d.%d.%d.%d%s)\n"
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s недостаточно памяти для нового DCC\n"
-
-msgid "xfer chat"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
@@ -4319,45 +4375,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "Отменяю активное DCC-сединение: \"%s\" от %s\n"
-
-msgid "bytes"
-msgstr "байтов"
-
-msgid "KB"
-msgstr "КБ"
-
-msgid "MB"
-msgstr "МБ"
-
-msgid "GB"
-msgstr "ГБ"
-
-msgid "Actions (letter+enter):"
-msgstr ""
-
-msgid "  [A] Accept"
-msgstr "  [A] Принять"
-
-msgid "  [C] Cancel"
-msgstr "  [C] Отменить"
-
-msgid "  [R] Remove"
-msgstr "  [R] Удалить"
-
-#, fuzzy
-msgid "  [P] Purge finished"
-msgstr "  [P] Очистить список"
-
-#, fuzzy
-msgid "  [Q] Close xfer list"
-msgstr "  [Q] Закрыть окно"
-
-msgid "ETA"
-msgstr "осталось"
-
-#, fuzzy
-msgid "Xfer list"
-msgstr "очистить хотлист"
 
 #, fuzzy, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
@@ -4560,6 +4577,30 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%sError: incorrect notify level (must be between %d and %d)"
+#~ msgstr "%s некорректный уровень уведомления (должен быть от %d до %d)\n"
+
+#, fuzzy
+#~ msgid "New notify level for %s%s%s: %d %s"
+#~ msgstr "Новый уровень уведомления для %s%s%s: %s%d %s"
+
+#, fuzzy
+#~ msgid "(hotlist: never)"
+#~ msgstr "(хотлист: никогда)\n"
+
+#, fuzzy
+#~ msgid "(hotlist: highlights)"
+#~ msgstr "(хотлист: подсвечивание)\n"
+
+#, fuzzy
+#~ msgid "(hotlist: highlights + messages)"
+#~ msgstr "(hotlist: подсвечивание + сообщения)\n"
+
+#, fuzzy
+#~ msgid "(hotlist: highlights + messages + join/part (all))"
+#~ msgstr "(хотлист: подсвечивание + сообщения + входы/выходы (всё))\n"
 
 #, fuzzy
 #~ msgid "words to highlight in buffers"

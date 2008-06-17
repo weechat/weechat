@@ -411,6 +411,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_plugin = plugin;
     
+    demo_debug = weechat_config_boolean (weechat_config_get ("weechat.plugin.debug"));
+    
     weechat_hook_command ("demo_printf",
                           _("print some messages on current ubffer"),
                           _("[text]"),

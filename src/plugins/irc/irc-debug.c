@@ -156,6 +156,7 @@ irc_debug_signal_debug_dump_cb (void *data, const char *signal,
 void
 irc_debug_init ()
 {
+    irc_debug = weechat_config_boolean (weechat_config_get ("weechat.plugin.debug"));
     weechat_hook_signal ("debug", &irc_debug_signal_debug_cb, NULL);
     weechat_hook_signal ("debug_dump", &irc_debug_signal_debug_dump_cb, NULL);
 }

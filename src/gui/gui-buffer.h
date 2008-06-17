@@ -28,9 +28,15 @@ enum t_gui_buffer_type
     GUI_BUFFER_NUM_TYPES,
 };
 
-#define GUI_BUFFER_NOTIFY_LEVEL_MIN     0
-#define GUI_BUFFER_NOTIFY_LEVEL_MAX     3
-#define GUI_BUFFER_NOTIFY_LEVEL_DEFAULT GUI_BUFFER_NOTIFY_LEVEL_MAX
+enum t_gui_buffer_notify
+{
+    GUI_BUFFER_NOTIFY_NONE = 0,
+    GUI_BUFFER_NOTIFY_HIGHLIGHT,
+    GUI_BUFFER_NOTIFY_MESSAGE,
+    GUI_BUFFER_NOTIFY_ALL,
+    /* number of buffer notify */
+    GUI_BUFFER_NUM_NOTIFY,
+};
 
 #define GUI_TEXT_SEARCH_DISABLED 0
 #define GUI_TEXT_SEARCH_BACKWARD 1
@@ -66,7 +72,7 @@ struct t_gui_buffer
     char *category;                    /* category name                     */
     char *name;                        /* buffer name                       */
     enum t_gui_buffer_type type;       /* buffer type (formated, free, ..)  */
-    int notify_level;                  /* 0 = never                         */
+    int notify;                        /* 0 = never                         */
                                        /* 1 = highlight only                */
                                        /* 2 = highlight + msg               */
                                        /* 3 = highlight + msg + join/part   */
@@ -152,6 +158,7 @@ struct t_gui_buffer
 extern struct t_gui_buffer *gui_buffers;
 extern struct t_gui_buffer *last_gui_buffer;
 extern struct t_gui_buffer *gui_previous_buffer;
+extern char *gui_buffer_notify_string[];
 
 /* buffer functions */
 
@@ -165,6 +172,8 @@ extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
                                                                   struct t_gui_buffer *buffer),
                                             void *close_callback_data);
 extern int gui_buffer_valid (struct t_gui_buffer *buffer);
+extern int gui_buffer_get_integer (struct t_gui_buffer *buffer,
+                                   const char *property);
 extern char *gui_buffer_get_string (struct t_gui_buffer *buffer,
                                     const char *property);
 extern void *gui_buffer_get_pointer (struct t_gui_buffer *buffer,

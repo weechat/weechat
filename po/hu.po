@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-15 15:11+0200\n"
+"POT-Creation-Date: 2008-06-17 15:58+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -194,28 +194,6 @@ msgstr ""
 
 msgid "Notify levels:"
 msgstr "Értesítési szintek:"
-
-#, fuzzy, c-format
-msgid "%sError: incorrect notify level (must be between %d and %d)"
-msgstr ""
-"%s helytelen értesítési szint (az értéknek %d és %d között kell lennie)\n"
-
-#, fuzzy, c-format
-msgid "New notify level for %s%s%s: %d %s"
-msgstr "A %s%s%s új értesítési szintje: %s%d %s"
-
-#, fuzzy
-msgid "(hotlist: never)"
-msgstr "kicsoda (szerver)"
-
-msgid "(hotlist: highlights)"
-msgstr ""
-
-msgid "(hotlist: highlights + messages)"
-msgstr ""
-
-msgid "(hotlist: highlights + messages + join/part (all))"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%sPlugin \"%s\" not found"
@@ -633,10 +611,7 @@ msgid ""
 "   move: move buffer in the list (may be relative, for example -1)\n"
 "  close: close buffer\n"
 "   list: list buffers (no parameter implies this list)\n"
-" notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2"
-"+join/part)\n"
-"         (when executed on server buffer, this sets default notify level for "
-"whole server)\n"
+" notify: display notify levels for all open buffers\n"
 " scroll: scroll in history (may be relative, and may end by a letter: s=sec, "
 "m=min, h=hour, d=day, M=month, y=year); if there is only letter, then scroll "
 "to beginning of this item\n"
@@ -650,9 +625,8 @@ msgid ""
 "   clear all buffers: /buffer clear -all\n"
 "         move buffer: /buffer move 5\n"
 "        close buffer: /buffer close this is part msg\n"
-"          set notify: /buffer notify 2\n"
-"     scroll 1 day up: /buffer scroll 1d  ==  /buffer  scroll -1d  ==  /"
-"buffer scroll -24h\n"
+"     scroll 1 day up: /buffer scroll 1d  ==  /buffer scroll -1d  ==  /buffer "
+"scroll -24h\n"
 " scroll to beginning\n"
 "         of this day: /buffer scroll d\n"
 "  scroll 15 min down: /buffer scroll +15m\n"
@@ -969,6 +943,11 @@ msgid "WeeChat slogan (if empty, slogan is not used)"
 msgstr "WeeChat szlogen (ha üres, akkor nem használja a program)"
 
 msgid "the geekiest chat client!"
+msgstr ""
+
+msgid ""
+"default notify level for buffers (used to tell WeeChat if buffer must be "
+"displayed in hotlist or not, according to importance of message)"
 msgstr ""
 
 #, fuzzy
@@ -1466,13 +1445,6 @@ msgstr "felhasználónév a proxy szerverhez"
 msgid "password for proxy server"
 msgstr "jelszó a proxy szerverhez"
 
-msgid ""
-"path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
-"weechat by default)"
-msgstr ""
-"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
-"könyvtára, alapértelmezésben ~/.weechat, kerül)"
-
 #, fuzzy
 msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
@@ -1484,9 +1456,21 @@ msgstr ""
 "\"perl\" elegendő \"libperl.so\" helyett)"
 
 msgid ""
+"enable debug messages by default in all plugins (option disabled by default, "
+"which is highly recommended)"
+msgstr ""
+
+msgid ""
 "standard plugins extension in filename (for example \".so\" under Linux or "
 "\".dll\" under Microsoft Windows)"
 msgstr ""
+
+msgid ""
+"path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
+"weechat by default)"
+msgstr ""
+"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+"könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
 #, fuzzy
 msgid "save configuration files when unloading plugins"
@@ -3932,6 +3916,41 @@ msgstr "****  Naplófájl vége  "
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr ""
 
+#, c-format
+msgid "notify: debug: set notify for buffer %s to %d (%s)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
+#, fuzzy, c-format
+msgid "Notify level: %s => %s"
+msgstr "Értesítési szintek:"
+
+#, fuzzy, c-format
+msgid "Notify level: %s: removed"
+msgstr "Értesítési szintek:"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown notify level \"%s\""
+msgstr "%s ismeretlen billentyűparancs \"%s\"\n"
+
+#, fuzzy
+msgid "change notify level for current buffer"
+msgstr "szobanév nem található a pufferhez"
+
+msgid "[reset | none | highlight | message | all]"
+msgstr ""
+
+msgid ""
+"    reset: reset notify level to default value\n"
+"     none: buffer will never be in hotlist\n"
+"highlight: buffer will be in hotlist for highlights only\n"
+"  message: buffer will be in hotlist for highlights and user messages only\n"
+"      all: buffer will be in hotlist for any text printed"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
 msgstr "%s nem sikerült a modult betölteni \"%s\": %s\n"
@@ -4199,6 +4218,48 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
+msgid "bytes"
+msgstr "byte"
+
+msgid "KB"
+msgstr "KB"
+
+msgid "MB"
+msgstr "MB"
+
+msgid "GB"
+msgstr "GB"
+
+msgid "Actions (letter+enter):"
+msgstr ""
+
+msgid "  [A] Accept"
+msgstr "  [A] Elfogadás"
+
+msgid "  [C] Cancel"
+msgstr "  [C] Mégsem"
+
+msgid "  [R] Remove"
+msgstr "  [R] Eltávolítás"
+
+#, fuzzy
+msgid "  [P] Purge finished"
+msgstr "  [P] Régi DCC törlése"
+
+#, fuzzy
+msgid "  [Q] Close xfer list"
+msgstr "  [Q] DCC nézet bezárása"
+
+msgid "xfer chat"
+msgstr ""
+
+msgid "ETA"
+msgstr "ETA"
+
+#, fuzzy
+msgid "Xfer list"
+msgstr "hotlist törlése"
+
 #, fuzzy
 msgid "waiting"
 msgstr "Várakozás"
@@ -4248,9 +4309,6 @@ msgstr "DCC beszélgetés vége: %s%s %s(%s%d.%d.%d.%d%s)\n"
 #, fuzzy, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s nincs elegendő memória új DCC számára\n"
-
-msgid "xfer chat"
-msgstr ""
 
 #, fuzzy, c-format
 msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
@@ -4334,45 +4392,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "\"%s\" aktív DCC megszakítása a következővel: %s\n"
-
-msgid "bytes"
-msgstr "byte"
-
-msgid "KB"
-msgstr "KB"
-
-msgid "MB"
-msgstr "MB"
-
-msgid "GB"
-msgstr "GB"
-
-msgid "Actions (letter+enter):"
-msgstr ""
-
-msgid "  [A] Accept"
-msgstr "  [A] Elfogadás"
-
-msgid "  [C] Cancel"
-msgstr "  [C] Mégsem"
-
-msgid "  [R] Remove"
-msgstr "  [R] Eltávolítás"
-
-#, fuzzy
-msgid "  [P] Purge finished"
-msgstr "  [P] Régi DCC törlése"
-
-#, fuzzy
-msgid "  [Q] Close xfer list"
-msgstr "  [Q] DCC nézet bezárása"
-
-msgid "ETA"
-msgstr "ETA"
-
-#, fuzzy
-msgid "Xfer list"
-msgstr "hotlist törlése"
 
 #, fuzzy, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"
@@ -4575,6 +4594,19 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "%sError: incorrect notify level (must be between %d and %d)"
+#~ msgstr ""
+#~ "%s helytelen értesítési szint (az értéknek %d és %d között kell lennie)\n"
+
+#, fuzzy
+#~ msgid "New notify level for %s%s%s: %d %s"
+#~ msgstr "A %s%s%s új értesítési szintje: %s%d %s"
+
+#, fuzzy
+#~ msgid "(hotlist: never)"
+#~ msgstr "kicsoda (szerver)"
 
 #, fuzzy
 #~ msgid "words to highlight in buffers"

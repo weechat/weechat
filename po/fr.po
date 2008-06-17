@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-15 15:11+0200\n"
-"PO-Revision-Date: 2008-06-15 15:11+0200\n"
+"POT-Creation-Date: 2008-06-17 15:58+0200\n"
+"PO-Revision-Date: 2008-06-17 13:24+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -182,26 +182,6 @@ msgstr "%sErreur: le tampon principal de WeeChat ne peut pas être fermé"
 
 msgid "Notify levels:"
 msgstr "Niveaux de notification:"
-
-#, c-format
-msgid "%sError: incorrect notify level (must be between %d and %d)"
-msgstr "%sErreur: niveau de notification incorrect (doit être entre %d et %d)"
-
-#, c-format
-msgid "New notify level for %s%s%s: %d %s"
-msgstr "Nouveau niveau de notification pour %s%s%s: %d %s"
-
-msgid "(hotlist: never)"
-msgstr "(hotlist: jamais)"
-
-msgid "(hotlist: highlights)"
-msgstr "(hotlist: highlights)"
-
-msgid "(hotlist: highlights + messages)"
-msgstr "(hotlist: highlights + messages)"
-
-msgid "(hotlist: highlights + messages + join/part (all))"
-msgstr "(hotlist: highlights + messages + join/part (tous))"
 
 #, c-format
 msgid "%sPlugin \"%s\" not found"
@@ -605,10 +585,7 @@ msgid ""
 "   move: move buffer in the list (may be relative, for example -1)\n"
 "  close: close buffer\n"
 "   list: list buffers (no parameter implies this list)\n"
-" notify: set notify level for buffer (0=never, 1=highlight, 2=1+msg, 3=2"
-"+join/part)\n"
-"         (when executed on server buffer, this sets default notify level for "
-"whole server)\n"
+" notify: display notify levels for all open buffers\n"
 " scroll: scroll in history (may be relative, and may end by a letter: s=sec, "
 "m=min, h=hour, d=day, M=month, y=year); if there is only letter, then scroll "
 "to beginning of this item\n"
@@ -622,9 +599,8 @@ msgid ""
 "   clear all buffers: /buffer clear -all\n"
 "         move buffer: /buffer move 5\n"
 "        close buffer: /buffer close this is part msg\n"
-"          set notify: /buffer notify 2\n"
-"     scroll 1 day up: /buffer scroll 1d  ==  /buffer  scroll -1d  ==  /"
-"buffer scroll -24h\n"
+"     scroll 1 day up: /buffer scroll 1d  ==  /buffer scroll -1d  ==  /buffer "
+"scroll -24h\n"
 " scroll to beginning\n"
 "         of this day: /buffer scroll d\n"
 "  scroll 15 min down: /buffer scroll +15m\n"
@@ -638,10 +614,7 @@ msgstr ""
 "1)\n"
 "  close: ferme le tampon\n"
 "   list: liste les tampons ouverts (pas de paramètre affiche cette liste)\n"
-" notify: fixe le niveau de notification (0=jamais, 1=highlight, 2=1+msg, 3=2"
-"+join/part)\n"
-"         (quand exécuté sur un tampon serveur, cela fixe le niveau de "
-"notification par défaut pour le serveur entier)\n"
+" notify: affiche les niveaux de notification pour tous les tampons ouverts\n"
 " scroll: fait défiler l'historique (peut être relatif, et peut se terminer "
 "par une lettre: s=sec, m=min, h=heure, d=jour, M=mois, y=année); s'il y a "
 "seulement une lettre, alors fait défiler jusqu'au début de cet élément\n"
@@ -653,7 +626,6 @@ msgstr ""
 "Exemples:\n"
 "     déplacer tampon: /buffer move 5\n"
 "       fermer tampon: /buffer close c'est le message de départ\n"
-"    niveau de notif.: /buffer notify 2\n"
 " défiler 1 jour haut: /buffer scroll 1d  ==  /buffer scroll -1d  ==  /buffer "
 "scroll -24h\n"
 "    défiler au début\n"
@@ -970,6 +942,14 @@ msgstr "slogan WeeChat (si vide, le slogan ne sera pas utilisé)"
 
 msgid "the geekiest chat client!"
 msgstr "le client de discussion le plus geek !"
+
+msgid ""
+"default notify level for buffers (used to tell WeeChat if buffer must be "
+"displayed in hotlist or not, according to importance of message)"
+msgstr ""
+"niveau de notification par défaut pour les tampons (utilisé pour dire à "
+"WeeChat si le tampon doit être affiché dans la hotlist ou non, selon "
+"l'importance du message)"
 
 msgid "time format for buffers"
 msgstr "format de date/heure pour les tampons"
@@ -1402,13 +1382,6 @@ msgid "password for proxy server"
 msgstr "mot de passe pour le serveur proxy"
 
 msgid ""
-"path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
-"weechat by default)"
-msgstr ""
-"chemin de recherche des extensions ('%h' sera remplacé par le répertoire de "
-"base WeeChat, par défaut: ~/.weechat)"
-
-msgid ""
 "comma separated list of plugins to load automatically at startup, \"*\" "
 "means all plugins found (names may be partial, for example \"perl\" is ok "
 "for \"perl.so\")"
@@ -1418,11 +1391,25 @@ msgstr ""
 "exemple \"perl\" est ok pour \"perl.so\")"
 
 msgid ""
+"enable debug messages by default in all plugins (option disabled by default, "
+"which is highly recommended)"
+msgstr ""
+"active les messages de debug par défaut pour toutes les extensions (option "
+"désactivée par défaut, ce qui est hautement recommandé)"
+
+msgid ""
 "standard plugins extension in filename (for example \".so\" under Linux or "
 "\".dll\" under Microsoft Windows)"
 msgstr ""
 "extension par défaut des extensions (par example \".so\" sous Linux ou \".dll"
 "\" sous Microsoft Windows)"
+
+msgid ""
+"path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
+"weechat by default)"
+msgstr ""
+"chemin de recherche des extensions ('%h' sera remplacé par le répertoire de "
+"base WeeChat, par défaut: ~/.weechat)"
 
 msgid "save configuration files when unloading plugins"
 msgstr ""
@@ -3872,6 +3859,47 @@ msgid "===\t========== End of backlog (%d lines) =========="
 msgstr "===\t========== Fin de l'historique (%d lignes) =========="
 
 #, c-format
+msgid "notify: debug: set notify for buffer %s to %d (%s)"
+msgstr "notify: debug: niveau de notification pour le tampon %s mis à %d (%s)"
+
+#, c-format
+msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
+msgstr ""
+"%s%s: impossible de positionner le niveau de notification \"%s\" => \"%s\""
+
+#, c-format
+msgid "Notify level: %s => %s"
+msgstr "Niveau de notification: %s => %s"
+
+#, c-format
+msgid "Notify level: %s: removed"
+msgstr "Niveau de notification: %s: supprimé"
+
+#, c-format
+msgid "%s%s: unknown notify level \"%s\""
+msgstr "%s%s: niveau de notification inconnu \"%s\""
+
+msgid "change notify level for current buffer"
+msgstr "changer le niveau de notification pour le tampon courant"
+
+msgid "[reset | none | highlight | message | all]"
+msgstr "[reset | none | highlight | message | all]"
+
+msgid ""
+"    reset: reset notify level to default value\n"
+"     none: buffer will never be in hotlist\n"
+"highlight: buffer will be in hotlist for highlights only\n"
+"  message: buffer will be in hotlist for highlights and user messages only\n"
+"      all: buffer will be in hotlist for any text printed"
+msgstr ""
+"    reset: réinitialiser le niveau de notification à sa valeur par défaut\n"
+"     none: le tampon ne sera jamais dans la hotlist\n"
+"highlight: le tampon sera dans la hotlist pour les highlights seulement\n"
+"  message: le tampon sera dans la hotlist pour les highlights et les "
+"messages d'utilisateurs seulement\n"
+"      all: le tampon sera dans la hotlist pour tout texte affiché"
+
+#, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
 msgstr "%sErreur: impossible de charger l'extension \"%s\": %s"
 
@@ -4151,6 +4179,45 @@ msgstr ""
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s%s: paramètres invalides pour la fonction \"%s\""
 
+msgid "bytes"
+msgstr "octets"
+
+msgid "KB"
+msgstr "Ko"
+
+msgid "MB"
+msgstr "Mo"
+
+msgid "GB"
+msgstr "Go"
+
+msgid "Actions (letter+enter):"
+msgstr "Actions (lettre+entrée):"
+
+msgid "  [A] Accept"
+msgstr "  [A] Accepter"
+
+msgid "  [C] Cancel"
+msgstr "  [C] Annuler"
+
+msgid "  [R] Remove"
+msgstr "  [R] Retirer"
+
+msgid "  [P] Purge finished"
+msgstr "  [P] Purger terminés"
+
+msgid "  [Q] Close xfer list"
+msgstr "  [Q] Fermer la liste xfer"
+
+msgid "xfer chat"
+msgstr "discussion xfer"
+
+msgid "ETA"
+msgstr "ETA"
+
+msgid "Xfer list"
+msgstr "Liste Xfer"
+
 msgid "waiting"
 msgstr "attente"
 
@@ -4192,9 +4259,6 @@ msgstr "%s: discussion fermée avec %s (%d.%d.%d.%d)"
 #, c-format
 msgid "%s%s: not enough memory for new xfer"
 msgstr "%s%s: pas assez de mémoire pour un nouveau xfer"
-
-msgid "xfer chat"
-msgstr "discussion xfer"
 
 #, c-format
 msgid "%s: incoming file from %s (%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"
@@ -4275,42 +4339,6 @@ msgstr ""
 #, c-format
 msgid "%s%s: aborting active xfer: \"%s\" from %s"
 msgstr "%s%s: abandon du xfer actif: \"%s\" de %s"
-
-msgid "bytes"
-msgstr "octets"
-
-msgid "KB"
-msgstr "Ko"
-
-msgid "MB"
-msgstr "Mo"
-
-msgid "GB"
-msgstr "Go"
-
-msgid "Actions (letter+enter):"
-msgstr "Actions (lettre+entrée):"
-
-msgid "  [A] Accept"
-msgstr "  [A] Accepter"
-
-msgid "  [C] Cancel"
-msgstr "  [C] Annuler"
-
-msgid "  [R] Remove"
-msgstr "  [R] Retirer"
-
-msgid "  [P] Purge finished"
-msgstr "  [P] Purger terminés"
-
-msgid "  [Q] Close xfer list"
-msgstr "  [Q] Fermer la liste xfer"
-
-msgid "ETA"
-msgstr "ETA"
-
-msgid "Xfer list"
-msgstr "Liste Xfer"
 
 #, c-format
 msgid "%s%s: error sending data to \"%s\" via xfer chat"

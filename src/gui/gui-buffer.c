@@ -57,6 +57,9 @@ struct t_gui_buffer *gui_buffers = NULL;           /* first buffer          */
 struct t_gui_buffer *last_gui_buffer = NULL;       /* last buffer           */
 struct t_gui_buffer *gui_previous_buffer = NULL;   /* previous buffer       */
 
+char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
+{ "none", "highlight", "message", "all" };
+
 
 /*
  * gui_buffer_new: create a new buffer in current window
@@ -99,7 +102,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->category = (category) ? strdup (category) : NULL;
         new_buffer->name = strdup (name);
         new_buffer->type = GUI_BUFFER_TYPE_FORMATED;
-        new_buffer->notify_level = GUI_BUFFER_NOTIFY_LEVEL_DEFAULT;
+        new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
         new_buffer->num_displayed = 0;
         
         /* close callback */
@@ -231,14 +234,27 @@ gui_buffer_valid (struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_buffer_get_integer: get a buffer property as integer
+ */
+
+int
+gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
+{
+    if (string_strcasecmp (property, "notify") == 0)
+        return buffer->notify;
+    else if (string_strcasecmp (property, "lines_hidden") == 0)
+        return buffer->lines_hidden;
+    
+    return 0;
+}
+
+/*
  * gui_buffer_get_string: get a buffer property as string
  */
 
 char *
 gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 {
-    static char value[32];
-
     if (string_strcasecmp (property, "plugin") == 0)
         return (buffer->plugin) ? buffer->plugin->name : NULL;
     else if (string_strcasecmp (property, "category") == 0)
@@ -249,11 +265,6 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
         return buffer->title;
     else if (string_strcasecmp (property, "nick") == 0)
         return buffer->input_nick;
-    else if (string_strcasecmp (property, "lines_hidden") == 0)
-    {
-        snprintf (value, sizeof (value), "%d", buffer->lines_hidden);
-        return value;
-    }
     
     return NULL;
 }
@@ -503,6 +514,19 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FORMATED);
         else if (string_strcasecmp (value, "free") == 0)
             gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FREE);
+    }
+    else if (string_strcasecmp (property, "notify") == 0)
+    {
+        error = NULL;
+        number = strtol (value, &error, 10);
+        if (error && !error[0]
+            && (number < GUI_BUFFER_NUM_NOTIFY))
+        {
+            if (number < 0)
+                buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
+            else
+                buffer->notify = number;
+        }
     }
     else if (string_strcasecmp (property, "title") == 0)
     {
@@ -1147,7 +1171,7 @@ gui_buffer_print_log ()
         log_printf ("  category . . . . . . . : '%s'", ptr_buffer->category);
         log_printf ("  name . . . . . . . . . : '%s'", ptr_buffer->name);
         log_printf ("  type . . . . . . . . . : %d",   ptr_buffer->type);
-        log_printf ("  notify_level . . . . . : %d",   ptr_buffer->notify_level);
+        log_printf ("  notify . . . . . . . . : %d",   ptr_buffer->notify);
         log_printf ("  num_displayed. . . . . : %d",   ptr_buffer->num_displayed);
         log_printf ("  title. . . . . . . . . : '%s'", ptr_buffer->title);
         log_printf ("  lines. . . . . . . . . : 0x%x", ptr_buffer->lines);

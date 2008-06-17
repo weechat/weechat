@@ -99,7 +99,7 @@ charset_config_reload (void *data, struct t_config_file *config_file)
 }
 
 /*
- * charset_config_set_option: set a charset
+ * charset_config_create_option: set a charset
  */
 
 int
@@ -522,6 +522,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     (void) argv;
     
     weechat_plugin = plugin;
+    
+    charset_debug = weechat_config_boolean (weechat_config_get ("weechat.plugin.debug"));
     
     /* get terminal & internal charsets */
     charset_terminal = weechat_info_get ("charset_terminal");

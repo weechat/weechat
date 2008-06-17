@@ -2811,6 +2811,38 @@ static XS (XS_weechat_buffer_close)
 }
 
 /*
+ * weechat::buffer_get_integer: get a buffer property as integer
+ */
+
+static XS (XS_weechat_buffer_get_integer)
+{
+    char *buffer, *property;
+    int value;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_get_integer");
+	PERL_RETURN_INT(-1);
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_get_integer");
+        PERL_RETURN_INT(-1);
+    }
+    
+    buffer = SvPV (ST (0), PL_na);
+    property = SvPV (ST (1), PL_na); 
+    value = weechat_buffer_get_integer (script_str2ptr (buffer), property);
+    
+    PERL_RETURN_INT(value);
+}
+
+/*
  * weechat::buffer_get_string: get a buffer property as string
  */
 
@@ -3898,6 +3930,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::buffer_search", XS_weechat_buffer_search, "weechat");
     newXS ("weechat::buffer_clear", XS_weechat_buffer_clear, "weechat");
     newXS ("weechat::buffer_close", XS_weechat_buffer_close, "weechat");
+    newXS ("weechat::buffer_get_integer", XS_weechat_buffer_get_integer, "weechat");
     newXS ("weechat::buffer_get_string", XS_weechat_buffer_get_string, "weechat");
     newXS ("weechat::buffer_get_pointer", XS_weechat_buffer_get_pointer, "weechat");
     newXS ("weechat::buffer_set", XS_weechat_buffer_set, "weechat");
