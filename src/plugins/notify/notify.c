@@ -495,7 +495,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* /notify command */
     weechat_hook_command ("notify",
                           _("change notify level for current buffer"),
-                          _("[reset | none | highlight | message | all]"),
+                          _("reset | none | highlight | message | all"),
                           _("    reset: reset notify level to default value\n"
                             "     none: buffer will never be in hotlist\n"
                             "highlight: buffer will be in hotlist for "
