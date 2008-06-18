@@ -285,7 +285,7 @@ gui_input_clipboard_paste ()
     {
         gui_input_insert_string (gui_current_window->buffer,
                                  gui_input_clipboard, -1);
-        gui_current_window->buffer->completion->position = -1;
+        gui_completion_stop (gui_current_window->buffer->completion, 1);
         gui_input_draw (gui_current_window->buffer, 0);
     }
 }
@@ -319,7 +319,7 @@ gui_input_return ()
             gui_current_window->buffer->input_buffer_length = 0;
             gui_current_window->buffer->input_buffer_pos = 0;
             gui_current_window->buffer->input_buffer_1st_display = 0;
-            gui_current_window->buffer->completion->position = -1;
+            gui_completion_stop (gui_current_window->buffer->completion, 1);
             gui_current_window->buffer->ptr_history = NULL;
             gui_input_optimize_size (gui_current_window->buffer);
             gui_input_draw (gui_current_window->buffer, 0);
@@ -403,25 +403,28 @@ gui_input_complete (struct t_gui_buffer *buffer)
         if ((buffer->completion->base_word_pos == 0)
             && (buffer->completion->context == GUI_COMPLETION_NICK))
         {
-            if (strncmp (utf8_add_offset (buffer->input_buffer,
-                                          buffer->input_buffer_pos),
-                         CONFIG_STRING(config_look_nick_completor),
-                         strlen (CONFIG_STRING(config_look_nick_completor))) != 0)
-                gui_input_insert_string (buffer,
-                                         CONFIG_STRING(config_look_nick_completor),
-                                         buffer->input_buffer_pos);
-            else
-                buffer->input_buffer_pos += utf8_strlen (CONFIG_STRING(config_look_nick_completor));
-            if (buffer->completion->position >= 0)
-                buffer->completion->position += strlen (CONFIG_STRING(config_look_nick_completor));
-            if (buffer->input_buffer[utf8_real_pos (buffer->input_buffer,
-                                                    buffer->input_buffer_pos)] != ' ')
-                gui_input_insert_string (buffer, " ",
-                                         buffer->input_buffer_pos);
-            else
-                buffer->input_buffer_pos++;
-            if (buffer->completion->position >= 0)
-                buffer->completion->position++;
+            if (buffer->completion->add_space)
+            {
+                if (strncmp (utf8_add_offset (buffer->input_buffer,
+                                              buffer->input_buffer_pos),
+                             CONFIG_STRING(config_completion_nick_completor),
+                             strlen (CONFIG_STRING(config_completion_nick_completor))) != 0)
+                    gui_input_insert_string (buffer,
+                                             CONFIG_STRING(config_completion_nick_completor),
+                                             buffer->input_buffer_pos);
+                else
+                    buffer->input_buffer_pos += utf8_strlen (CONFIG_STRING(config_completion_nick_completor));
+                if (buffer->completion->position >= 0)
+                    buffer->completion->position += strlen (CONFIG_STRING(config_completion_nick_completor));
+                if (buffer->input_buffer[utf8_real_pos (buffer->input_buffer,
+                                                        buffer->input_buffer_pos)] != ' ')
+                    gui_input_insert_string (buffer, " ",
+                                             buffer->input_buffer_pos);
+                else
+                    buffer->input_buffer_pos++;
+                if (buffer->completion->position >= 0)
+                    buffer->completion->position++;
+            }
         }
         else
         {
@@ -531,7 +534,7 @@ gui_input_delete_previous_char ()
             gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
             gui_input_optimize_size (gui_current_window->buffer);
             gui_input_draw (gui_current_window->buffer, 0);
-            gui_current_window->buffer->completion->position = -1;
+            gui_completion_stop (gui_current_window->buffer->completion, 1);
         }
     }
 }
@@ -563,7 +566,7 @@ gui_input_delete_next_char ()
             gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
             gui_input_optimize_size (gui_current_window->buffer);
             gui_input_draw (gui_current_window->buffer, 0);
-            gui_current_window->buffer->completion->position = -1;
+            gui_completion_stop (gui_current_window->buffer->completion, 1);
         }
     }
 }
@@ -623,7 +626,7 @@ gui_input_delete_previous_word ()
             gui_current_window->buffer->input_buffer_pos -= length_deleted;
             gui_input_optimize_size (gui_current_window->buffer);
             gui_input_draw (gui_current_window->buffer, 0);
-            gui_current_window->buffer->completion->position = -1;
+            gui_completion_stop (gui_current_window->buffer->completion, 1);
         }
     }
 }
@@ -663,7 +666,7 @@ gui_input_delete_next_word ()
         gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
         gui_input_optimize_size (gui_current_window->buffer);
         gui_input_draw (gui_current_window->buffer, 0);
-        gui_current_window->buffer->completion->position = -1;
+        gui_completion_stop (gui_current_window->buffer->completion, 1);
     }
 }
 
@@ -700,7 +703,7 @@ gui_input_delete_beginning_of_line ()
             gui_current_window->buffer->input_buffer_pos = 0;
             gui_input_optimize_size (gui_current_window->buffer);
             gui_input_draw (gui_current_window->buffer, 0);
-            gui_current_window->buffer->completion->position = -1;
+            gui_completion_stop (gui_current_window->buffer->completion, 1);
         }
     }
 }
@@ -733,7 +736,7 @@ gui_input_delete_end_of_line (const char *args)
         gui_current_window->buffer->input_buffer_length = utf8_strlen (gui_current_window->buffer->input_buffer);
         gui_input_optimize_size (gui_current_window->buffer);
         gui_input_draw (gui_current_window->buffer, 0);
-        gui_current_window->buffer->completion->position = -1;
+        gui_completion_stop (gui_current_window->buffer->completion, 1);
     }
 }
 
@@ -752,7 +755,7 @@ gui_input_delete_line ()
         gui_current_window->buffer->input_buffer_length = 0;
         gui_current_window->buffer->input_buffer_pos = 0;
         gui_input_optimize_size (gui_current_window->buffer);
-        gui_current_window->buffer->completion->position = -1;
+        gui_completion_stop (gui_current_window->buffer->completion, 1);
         gui_input_draw (gui_current_window->buffer, 0);
     }
 }
@@ -799,7 +802,7 @@ gui_input_transpose_chars ()
             gui_current_window->buffer->input_buffer_pos++;
             
             gui_input_draw (gui_current_window->buffer, 0);	
-            gui_current_window->buffer->completion->position = -1;
+            gui_completion_stop (gui_current_window->buffer->completion, 1);
         }
     }
 }

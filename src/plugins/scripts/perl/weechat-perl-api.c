@@ -2398,9 +2398,9 @@ static XS (XS_weechat_hook_config)
  */
 
 int
-weechat_perl_api_hook_completion_cb (void *data, const char *completion,
+weechat_perl_api_hook_completion_cb (void *data, const char *completion_item,
                                      struct t_gui_buffer *buffer,
-                                     struct t_weelist *list)
+                                     struct t_gui_completion *completion)
 {
     struct t_script_callback *script_callback;
     char *perl_argv[4];
@@ -2408,9 +2408,9 @@ weechat_perl_api_hook_completion_cb (void *data, const char *completion,
     
     script_callback = (struct t_script_callback *)data;
     
-    perl_argv[0] = (char *)completion;
+    perl_argv[0] = (char *)completion_item;
     perl_argv[1] = script_ptr2str (buffer);
-    perl_argv[2] = script_ptr2str (list);
+    perl_argv[2] = script_ptr2str (completion);
     perl_argv[3] = NULL;
     
     rc = (int *) weechat_perl_exec (script_callback->script,
@@ -2466,6 +2466,42 @@ static XS (XS_weechat_hook_completion)
                                                          function));
     
     PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::hook_completion_list_add: add a word to list for a completion
+ */
+
+static XS (XS_weechat_hook_completion_list_add)
+{
+    char *completion, *word, *where;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_completion_list_add");
+	PERL_RETURN_ERROR;
+    }
+    
+    if (items < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion_list_add");
+        PERL_RETURN_ERROR;
+    }
+    
+    completion = SvPV (ST (0), PL_na);
+    word = SvPV (ST (1), PL_na);
+    where = SvPV (ST (3), PL_na);
+    
+    weechat_hook_completion_list_add (script_str2ptr (completion),
+                                      word,
+                                      SvIV (ST (2)), /* nick_completion */
+                                      where);
+    
+    PERL_RETURN_OK;
 }
 
 /*
@@ -3922,6 +3958,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::hook_signal_send", XS_weechat_hook_signal_send, "weechat");
     newXS ("weechat::hook_config", XS_weechat_hook_config, "weechat");
     newXS ("weechat::hook_completion", XS_weechat_hook_completion, "weechat");
+    newXS ("weechat::hook_completion_list_add", XS_weechat_hook_completion_list_add, "weechat");
     newXS ("weechat::hook_modifier", XS_weechat_hook_modifier, "weechat");
     newXS ("weechat::hook_modifier_exec", XS_weechat_hook_modifier_exec, "weechat");
     newXS ("weechat::unhook", XS_weechat_unhook, "weechat");

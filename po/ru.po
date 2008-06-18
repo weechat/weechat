@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-17 16:16+0200\n"
+"POT-Creation-Date: 2008-06-18 16:02+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1028,16 +1028,6 @@ msgstr ""
 msgid "time format for \"time\" bar item"
 msgstr "время в информационной строке"
 
-msgid "complete only with first nick found"
-msgstr "дополнять только первым найденным ником"
-
-msgid "chars ignored for nick completion"
-msgstr "символы, игнорируемые при автодополнении ника"
-
-#, fuzzy
-msgid "string inserted after nick completion"
-msgstr "строка, вставляемая после автодополнения ника"
-
 #, fuzzy
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr "показывать список ников (в окнах каналов)"
@@ -1408,6 +1398,36 @@ msgstr "цвет '+' при прокрутке ников"
 #, fuzzy
 msgid "text color for nicklist separator"
 msgstr "цвет разделителя ников"
+
+#, fuzzy
+msgid "string inserted after nick completion"
+msgstr "строка, вставляемая после автодополнения ника"
+
+msgid "complete only with first nick found"
+msgstr "дополнять только первым найденным ником"
+
+msgid "chars ignored for nick completion"
+msgstr "символы, игнорируемые при автодополнении ника"
+
+msgid "alert user when a partial completion occurs"
+msgstr ""
+
+msgid ""
+"partially complete nicks (stop when many nicks found begin with same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command names (stop when many commands found begin with "
+"same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command arguments (stop when many arguments found begin "
+"with same prefix)"
+msgstr ""
+
+msgid "display count for each partial completion in bar item"
+msgstr ""
 
 #, fuzzy
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
@@ -3020,15 +3040,6 @@ msgstr ""
 msgid "automatically rejoin channels when kicked"
 msgstr "автоматически перезаходить на каналы после кика"
 
-msgid ""
-"comma separated list of notify levels for channels of this server (format: "
-"#channel:1,..), a channel name '*' is reserved for server default notify "
-"level"
-msgstr ""
-"разделённый запятыми список уровней уведомления этого сервера (формат: "
-"#канал:1,..), название канала '*' зарезервировано для уровня уведомления "
-"сервера"
-
 #, fuzzy, c-format
 msgid "%s%s: error creating server option \"%s\""
 msgstr "%s недостаточно памяти для сообщения в строке информации\n"
@@ -4577,6 +4588,15 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#~ msgid ""
+#~ "comma separated list of notify levels for channels of this server "
+#~ "(format: #channel:1,..), a channel name '*' is reserved for server "
+#~ "default notify level"
+#~ msgstr ""
+#~ "разделённый запятыми список уровней уведомления этого сервера (формат: "
+#~ "#канал:1,..), название канала '*' зарезервировано для уровня уведомления "
+#~ "сервера"
 
 #, fuzzy
 #~ msgid "%sError: incorrect notify level (must be between %d and %d)"

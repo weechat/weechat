@@ -2552,9 +2552,9 @@ weechat_python_api_hook_config (PyObject *self, PyObject *args)
  */
 
 int
-weechat_python_api_hook_completion_cb (void *data, const char *completion,
+weechat_python_api_hook_completion_cb (void *data, const char *completion_item,
                                        struct t_gui_buffer *buffer,
-                                       struct t_weelist *list)
+                                       struct t_gui_completion *completion)
 {
     struct t_script_callback *script_callback;
     char *python_argv[4];
@@ -2562,9 +2562,9 @@ weechat_python_api_hook_completion_cb (void *data, const char *completion,
     
     script_callback = (struct t_script_callback *)data;
     
-    python_argv[0] = (char *)completion;
+    python_argv[0] = (char *)completion_item;
     python_argv[1] = script_ptr2str (buffer);
-    python_argv[2] = script_ptr2str (list);
+    python_argv[2] = script_ptr2str (completion);
     python_argv[3] = NULL;
     
     rc = (int *) weechat_python_exec (script_callback->script,
@@ -2622,6 +2622,45 @@ weechat_python_api_hook_completion (PyObject *self, PyObject *args)
                                                         function));
     
     PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hook_completion_list_add: add a word to list for a completion
+ */
+
+static PyObject *
+weechat_python_api_hook_completion_list_add (PyObject *self, PyObject *args)
+{
+    char *completion, *word, *where;
+    int nick_completion;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_completion_list_add");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    completion = NULL;
+    word = NULL;
+    nick_completion = 0;
+    where = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ssis", &completion, &word, &nick_completion,
+                           &where))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion_list_add");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    weechat_hook_completion_list_add (script_str2ptr (completion),
+                                      word,
+                                      nick_completion,
+                                      where);
+    
+    PYTHON_RETURN_OK;
 }
 
 /*
@@ -4169,6 +4208,7 @@ PyMethodDef weechat_python_funcs[] =
     { "hook_signal_send", &weechat_python_api_hook_signal_send, METH_VARARGS, "" },
     { "hook_config", &weechat_python_api_hook_config, METH_VARARGS, "" },
     { "hook_completion", &weechat_python_api_hook_completion, METH_VARARGS, "" },
+    { "hook_completion_list_add", &weechat_python_api_hook_completion_list_add, METH_VARARGS, "" },
     { "hook_modifier", &weechat_python_api_hook_modifier, METH_VARARGS, "" },
     { "hook_modifier_exec", &weechat_python_api_hook_modifier_exec, METH_VARARGS, "" },
     { "unhook", &weechat_python_api_unhook, METH_VARARGS, "" },

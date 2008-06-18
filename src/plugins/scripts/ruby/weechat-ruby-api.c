@@ -2939,9 +2939,9 @@ weechat_ruby_api_hook_config (VALUE class, VALUE option, VALUE function)
  */
 
 int
-weechat_ruby_api_hook_completion_cb (void *data, const char *completion,
+weechat_ruby_api_hook_completion_cb (void *data, const char *completion_item,
                                      struct t_gui_buffer *buffer,
-                                     struct t_weelist *list)
+                                     struct t_gui_completion *completion)
 {
     struct t_script_callback *script_callback;
     char *ruby_argv[4];
@@ -2949,9 +2949,9 @@ weechat_ruby_api_hook_completion_cb (void *data, const char *completion,
     
     script_callback = (struct t_script_callback *)data;
     
-    ruby_argv[0] = (char *)completion;
+    ruby_argv[0] = (char *)completion_item;
     ruby_argv[1] = script_ptr2str (buffer);
-    ruby_argv[2] = script_ptr2str (list);
+    ruby_argv[2] = script_ptr2str (completion);
     ruby_argv[3] = NULL;
     
     rc = (int *) weechat_ruby_exec (script_callback->script,
@@ -3016,6 +3016,57 @@ weechat_ruby_api_hook_completion (VALUE class, VALUE completion,
                                                          c_function));
     
     RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_hook_completion_list_add: add a word to list for a completion
+ */
+
+static VALUE
+weechat_ruby_api_hook_completion_list_add (VALUE class, VALUE completion,
+                                           VALUE word, VALUE nick_completion,
+                                           VALUE where)
+{
+    char *c_completion, *c_word, *c_where;
+    int c_nick_completion;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_completion_list_add");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_completion = NULL;
+    c_word = NULL;
+    c_nick_completion = 0;
+    c_where = NULL;
+    
+    if (NIL_P (completion) || NIL_P (word) || NIL_P (nick_completion)
+        || NIL_P (where))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion_list_add");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (completion, T_STRING);
+    Check_Type (word, T_STRING);
+    Check_Type (nick_completion, T_FIXNUM);
+    Check_Type (where, T_STRING);
+    
+    c_completion = STR2CSTR (completion);
+    c_word = STR2CSTR (word);
+    c_nick_completion = FIX2INT (nick_completion);
+    c_where = STR2CSTR (where);
+    
+    weechat_hook_completion_list_add (script_str2ptr (c_completion),
+                                      c_word,
+                                      c_nick_completion,
+                                      c_where);
+    
+    RUBY_RETURN_OK;
 }
 
 /*
@@ -4800,6 +4851,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "hook_signal_send", &weechat_ruby_api_hook_signal_send, 3);
     rb_define_module_function (ruby_mWeechat, "hook_config", &weechat_ruby_api_hook_config, 2);
     rb_define_module_function (ruby_mWeechat, "hook_completion", &weechat_ruby_api_hook_completion, 2);
+    rb_define_module_function (ruby_mWeechat, "hook_completion_list_add", &weechat_ruby_api_hook_completion_list_add, 4);
     rb_define_module_function (ruby_mWeechat, "hook_modifier", &weechat_ruby_api_hook_modifier, 2);
     rb_define_module_function (ruby_mWeechat, "hook_modifier_exec", &weechat_ruby_api_hook_modifier_exec, 3);
     rb_define_module_function (ruby_mWeechat, "unhook", &weechat_ruby_api_unhook, 1);

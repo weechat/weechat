@@ -71,9 +71,6 @@ extern struct t_config_option *config_look_infobar_seconds;
 extern struct t_config_option *config_look_infobar_time_format;
 extern struct t_config_option *config_look_input_format;
 extern struct t_config_option *config_look_item_time_format;
-extern struct t_config_option *config_look_nick_complete_first;
-extern struct t_config_option *config_look_nick_completion_ignore;
-extern struct t_config_option *config_look_nick_completor;
 extern struct t_config_option *config_look_nicklist;
 extern struct t_config_option *config_look_nicklist_max_size;
 extern struct t_config_option *config_look_nicklist_min_size;
@@ -150,6 +147,15 @@ extern struct t_config_option *config_color_nicklist_prefix4;
 extern struct t_config_option *config_color_nicklist_prefix5;
 extern struct t_config_option *config_color_nicklist_more;
 extern struct t_config_option *config_color_nicklist_separator;
+
+extern struct t_config_option *config_completion_nick_completor;
+extern struct t_config_option *config_completion_nick_first_only;
+extern struct t_config_option *config_completion_nick_ignore_chars;
+extern struct t_config_option *config_completion_partial_completion_alert;
+extern struct t_config_option *config_completion_partial_completion_nick;
+extern struct t_config_option *config_completion_partial_completion_command;
+extern struct t_config_option *config_completion_partial_completion_command_arg;
+extern struct t_config_option *config_completion_partial_completion_count;
 
 extern struct t_config_option *config_history_max_lines;
 extern struct t_config_option *config_history_max_commands;

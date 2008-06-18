@@ -85,9 +85,6 @@ struct t_config_option *config_look_infobar_seconds;
 struct t_config_option *config_look_infobar_time_format;
 struct t_config_option *config_look_input_format;
 struct t_config_option *config_look_item_time_format;
-struct t_config_option *config_look_nick_complete_first;
-struct t_config_option *config_look_nick_completion_ignore;
-struct t_config_option *config_look_nick_completor;
 struct t_config_option *config_look_nicklist;
 struct t_config_option *config_look_nicklist_max_size;
 struct t_config_option *config_look_nicklist_min_size;
@@ -166,6 +163,17 @@ struct t_config_option *config_color_nicklist_prefix4;
 struct t_config_option *config_color_nicklist_prefix5;
 struct t_config_option *config_color_nicklist_more;
 struct t_config_option *config_color_nicklist_separator;
+
+/* config, completion section */
+
+struct t_config_option *config_completion_nick_completor;
+struct t_config_option *config_completion_nick_first_only;
+struct t_config_option *config_completion_nick_ignore_chars;
+struct t_config_option *config_completion_partial_completion_alert;
+struct t_config_option *config_completion_partial_completion_nick;
+struct t_config_option *config_completion_partial_completion_command;
+struct t_config_option *config_completion_partial_completion_command_arg;
+struct t_config_option *config_completion_partial_completion_count;
 
 /* config, history section */
 
@@ -885,21 +893,6 @@ config_weechat_init ()
         "item_time_format", "string",
         N_("time format for \"time\" bar item"),
         NULL, 0, 0, "%H:%M", NULL, NULL, &config_change_item_time_format, NULL, NULL, NULL);
-    config_look_nick_complete_first = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nick_complete_first", "boolean",
-        N_("complete only with first nick found"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
-    config_look_nick_completion_ignore = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nick_completion_ignore", "string",
-        N_("chars ignored for nick completion"),
-        NULL, 0, 0, "[]-^", NULL, NULL, NULL, NULL, NULL, NULL);
-    config_look_nick_completor = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "nick_completor", "string",
-        N_("string inserted after nick completion"),
-        NULL, 0, 0, ":", NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_nicklist = config_file_new_option (
         weechat_config_file, ptr_section,
         "nicklist", "boolean",
@@ -1454,6 +1447,61 @@ config_weechat_init ()
         N_("text color for nicklist separator"),
         NULL, GUI_COLOR_NICKLIST_SEPARATOR, 0, "blue",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    
+    /* completion */
+    ptr_section = config_file_new_section (weechat_config_file, "completion",
+                                           0, 0,
+                                           NULL, NULL, NULL, NULL, NULL, NULL,
+                                           NULL, NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        return 0;
+    }
+    
+    config_completion_nick_completor = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nick_completor", "string",
+        N_("string inserted after nick completion"),
+        NULL, 0, 0, ":", NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_nick_first_only = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nick_first_only", "boolean",
+        N_("complete only with first nick found"),
+        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_nick_ignore_chars = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "nick_ignore_chars", "string",
+        N_("chars ignored for nick completion"),
+        NULL, 0, 0, "[]-^", NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_partial_completion_alert = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "partial_completion_alert", "boolean",
+        N_("alert user when a partial completion occurs"),
+        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_partial_completion_nick = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "partial_completion_nick", "boolean",
+        N_("partially complete nicks (stop when many nicks found begin with "
+           "same letters)"),
+        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_partial_completion_command = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "partial_completion_command", "boolean",
+        N_("partially complete command names (stop when many commands found "
+           "begin with same letters)"),
+        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_partial_completion_command_arg = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "partial_completion_command_arg", "boolean",
+        N_("partially complete command arguments (stop when many arguments "
+           "found begin with same prefix)"),
+        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
+    config_completion_partial_completion_count = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "partial_completion_count", "boolean",
+        N_("display count for each partial completion in bar item"),
+        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL);
     
     /* history */
     ptr_section = config_file_new_section (weechat_config_file, "history",

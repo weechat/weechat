@@ -2882,9 +2882,9 @@ weechat_lua_api_hook_config (lua_State *L)
  */
 
 int
-weechat_lua_api_hook_completion_cb (void *data, const char *completion,
+weechat_lua_api_hook_completion_cb (void *data, const char *completion_item,
                                     struct t_gui_buffer *buffer,
-                                    struct t_weelist *list)
+                                    struct t_gui_completion *completion)
 {
     struct t_script_callback *script_callback;
     char *lua_argv[4];
@@ -2892,9 +2892,9 @@ weechat_lua_api_hook_completion_cb (void *data, const char *completion,
     
     script_callback = (struct t_script_callback *)data;
     
-    lua_argv[0] = (char *)completion;
+    lua_argv[0] = (char *)completion_item;
     lua_argv[1] = script_ptr2str (buffer);
-    lua_argv[2] = script_ptr2str (list);
+    lua_argv[2] = script_ptr2str (completion);
     lua_argv[3] = NULL;
     
     rc = (int *) weechat_lua_exec (script_callback->script,
@@ -2958,6 +2958,51 @@ weechat_lua_api_hook_completion (lua_State *L)
                                                          function));
     
     LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_hook_completion_list_add: add a word to list for a completion
+ */
+
+static int
+weechat_lua_api_hook_completion_list_add (lua_State *L)
+{
+    const char *completion, *word, *where;
+    int n, nick_completion;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_completion_list_add");
+        LUA_RETURN_ERROR;
+    }
+    
+    completion = NULL;
+    word = NULL;
+    nick_completion = 0;
+    where = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 4)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_completion_list_add");
+        LUA_RETURN_ERROR;
+    }
+    
+    completion = lua_tostring (lua_current_interpreter, -4);
+    word = lua_tostring (lua_current_interpreter, -3);
+    nick_completion = lua_tonumber (lua_current_interpreter, -2);
+    where = lua_tostring (lua_current_interpreter, -1);
+    
+    weechat_hook_completion_list_add (script_str2ptr (completion),
+                                      word,
+                                      nick_completion,
+                                      where);
+    
+    LUA_RETURN_OK;
 }
 
 /*
@@ -4999,6 +5044,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "hook_signal_send", &weechat_lua_api_hook_signal_send },
     { "hook_config", &weechat_lua_api_hook_config },
     { "hook_completion", &weechat_lua_api_hook_completion },
+    { "hook_completion_list_add", &weechat_lua_api_hook_completion_list_add },
     { "hook_modifier", &weechat_lua_api_hook_modifier },
     { "hook_modifier_exec", &weechat_lua_api_hook_modifier_exec },
     { "unhook", &weechat_lua_api_unhook },

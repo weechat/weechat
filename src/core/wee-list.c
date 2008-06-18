@@ -157,6 +157,28 @@ weelist_add (struct t_weelist *weelist, const char *data, const char *where)
 }
 
 /*
+ * weelist_dup: duplicate a weelist
+ */
+
+struct t_weelist *
+weelist_dup (struct t_weelist *weelist)
+{
+    struct t_weelist *new_weelist;
+    struct t_weelist_item *ptr_item;
+    
+    new_weelist = weelist_new ();
+    if (new_weelist)
+    {
+        for (ptr_item = weelist->items; ptr_item;
+             ptr_item = ptr_item->next_item)
+        {
+            weelist_add (new_weelist, ptr_item->data, WEECHAT_LIST_POS_END);
+        }
+    }
+    return new_weelist;
+}
+
+/*
  * weelist_search: search data in a list (case sensitive)
  */
 

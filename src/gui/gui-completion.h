@@ -29,33 +29,49 @@
 struct t_gui_completion
 {
     /* completion context */
-    struct t_gui_buffer *buffer;/* buffer where completion was asked         */
-    int context;                /* context: null, nick, command, cmd arg     */
-    char *base_command;         /* command with arg to complete (can be NULL)*/
-    int base_command_arg;       /* # arg to complete (if context is cmd arg) */
-    int arg_is_nick;            /* argument is nick                          */
-    char *base_word;            /* word to complete (when Tab was pressed)   */
-    int base_word_pos;          /* beggining of base word                    */
-    int position;               /* position where Tab was pressed            */
-    char *args;                 /* command line args (including base word)   */
-    int direction;              /* +1 = search next word, -1 = previous word */
-    int add_space;              /* add space after completion?               */
+    struct t_gui_buffer *buffer;  /* buffer where completion was asked       */
+    int context;                  /* context: null, nick, command, cmd arg   */
+    char *base_command;           /* cmd with arg to complete (can be NULL)  */
+    int base_command_arg;         /* # arg to complete (if context=cmd arg)  */
+    int arg_is_nick;              /* argument is nick                        */
+    char *base_word;              /* word to complete (when Tab was pressed) */
+    int base_word_pos;            /* beggining of base word                  */
+    int position;                 /* position where Tab was pressed          */
+    char *args;                   /* command line args (including base word) */
+    int direction;                /* +1=search next word, -1=previous word   */
+    int add_space;                /* add space after completion?             */
+    int force_partial_completion; /* force partial completion?               */
     
     /* for command argument completion */
     struct t_weelist *completion_list; /* data list for completion           */
     
     /* completion found */
-    char *word_found;           /* word found (to replace base word)         */
-    int position_replace;       /* position where word has to be replaced    */
-    int diff_size;              /* size difference (< 0 = char(s) deleted)   */
-    int diff_length;            /* length difference (<= diff_size)          */
+    char *word_found;             /* word found (to replace base word)       */
+    int position_replace;         /* position where word has to be replaced  */
+    int diff_size;                /* size difference (< 0 = char(s) deleted) */
+    int diff_length;              /* length difference (<= diff_size)        */
 };
+
+struct t_gui_completion_partial
+{
+    char *word;                   /* (partial) word matching completion      */
+    int count;                    /* number of matching items with this word */
+    struct t_gui_completion_partial *prev_item;
+    struct t_gui_completion_partial *next_item;
+};
+
+extern struct t_gui_completion_partial *gui_completion_partial_list;
 
 /* completion functions */
 
 extern void gui_completion_init (struct t_gui_completion *completion,
                                  struct t_gui_buffer *buffer);
 extern void gui_completion_free (struct t_gui_completion *completion);
+extern void gui_completion_stop (struct t_gui_completion *completion,
+                                 int remove_partial_completion_list);
+extern void gui_completion_list_add (struct t_gui_completion *completion,
+                                     const char *word,
+                                     int nick_completion, const char *where);
 extern void gui_completion_search (struct t_gui_completion *completion,
                                    int direction, const char *data, int size,
                                    int pos);

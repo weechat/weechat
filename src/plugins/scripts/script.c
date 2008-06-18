@@ -84,9 +84,9 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                                      struct t_gui_buffer *buffer,
                                      int argc, char **argv,
                                      char **argv_eol),
-             int (*callback_completion)(void *data, const char *completion,
+             int (*callback_completion)(void *data, const char *completion_item,
                                         struct t_gui_buffer *buffer,
-                                        struct t_weelist *list),
+                                        struct t_gui_completion *completion),
              int (*callback_signal_debug_dump)(void *data, const char *signal,
                                                const char *type_data,
                                                void *signal_data),
@@ -525,7 +525,7 @@ script_remove (struct t_weechat_plugin *weechat_plugin,
 
 void
 script_completion (struct t_weechat_plugin *weechat_plugin,
-                   struct t_weelist *list,
+                   struct t_gui_completion *completion,
                    struct t_plugin_script *scripts)
 {
     struct t_plugin_script *ptr_script;
@@ -533,7 +533,8 @@ script_completion (struct t_weechat_plugin *weechat_plugin,
     for (ptr_script = scripts; ptr_script;
          ptr_script = ptr_script->next_script)
     {
-        weechat_list_add (list, ptr_script->name, WEECHAT_LIST_POS_SORT);
+        weechat_hook_completion_list_add (completion, ptr_script->name,
+                                          0, WEECHAT_LIST_POS_SORT);
     }
 }
 

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-17 16:16+0200\n"
+"POT-Creation-Date: 2008-06-18 16:02+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1027,16 +1027,6 @@ msgstr ""
 msgid "time format for \"time\" bar item"
 msgstr "időbélyeg a információs pult idejéhez"
 
-msgid "complete only with first nick found"
-msgstr "kiegészítés az első adandó névvel"
-
-msgid "chars ignored for nick completion"
-msgstr "névkiegészítéskor mellőzött karakterek"
-
-#, fuzzy
-msgid "string inserted after nick completion"
-msgstr "névkiegészítés után beszúrt szöveg"
-
 #, fuzzy
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr "névlista ablak mutatása (szobaablakban)"
@@ -1405,6 +1395,36 @@ msgstr "a '+' jel színe névlista görgetésekor"
 #, fuzzy
 msgid "text color for nicklist separator"
 msgstr "névelválasztó színe"
+
+#, fuzzy
+msgid "string inserted after nick completion"
+msgstr "névkiegészítés után beszúrt szöveg"
+
+msgid "complete only with first nick found"
+msgstr "kiegészítés az első adandó névvel"
+
+msgid "chars ignored for nick completion"
+msgstr "névkiegészítéskor mellőzött karakterek"
+
+msgid "alert user when a partial completion occurs"
+msgstr ""
+
+msgid ""
+"partially complete nicks (stop when many nicks found begin with same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command names (stop when many commands found begin with "
+"same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command arguments (stop when many arguments found begin "
+"with same prefix)"
+msgstr ""
+
+msgid "display count for each partial completion in bar item"
+msgstr ""
 
 #, fuzzy
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
@@ -3026,15 +3046,6 @@ msgstr ""
 msgid "automatically rejoin channels when kicked"
 msgstr "automatikus visszalépés a szobába kirúgáskor"
 
-msgid ""
-"comma separated list of notify levels for channels of this server (format: "
-"#channel:1,..), a channel name '*' is reserved for server default notify "
-"level"
-msgstr ""
-"vesszővel elválasztott emlékeztetési szintek ezen szerver szobáira (forma: "
-"#szoba:1,...), a '*' szobanév a szerver alapértelmezett értesítési "
-"szintjének van fenntartva"
-
 #, fuzzy, c-format
 msgid "%s%s: error creating server option \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
@@ -4594,6 +4605,15 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#~ msgid ""
+#~ "comma separated list of notify levels for channels of this server "
+#~ "(format: #channel:1,..), a channel name '*' is reserved for server "
+#~ "default notify level"
+#~ msgstr ""
+#~ "vesszővel elválasztott emlékeztetési szintek ezen szerver szobáira "
+#~ "(forma: #szoba:1,...), a '*' szobanév a szerver alapértelmezett "
+#~ "értesítési szintjének van fenntartva"
 
 #, fuzzy
 #~ msgid "%sError: incorrect notify level (must be between %d and %d)"

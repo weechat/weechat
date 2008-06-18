@@ -413,16 +413,16 @@ weechat_lua_command_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-weechat_lua_completion_cb (void *data, const char *completion,
+weechat_lua_completion_cb (void *data, const char *completion_item,
                            struct t_gui_buffer *buffer,
-                           struct t_weelist *list)
+                           struct t_gui_completion *completion)
 {
     /* make C compiler happy */
     (void) data;
-    (void) completion;
+    (void) completion_item;
     (void) buffer;
     
-    script_completion (weechat_lua_plugin, list, lua_scripts);
+    script_completion (weechat_lua_plugin, completion, lua_scripts);
     
     return WEECHAT_RC_OK;
 }

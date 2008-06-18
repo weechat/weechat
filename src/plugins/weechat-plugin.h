@@ -27,6 +27,7 @@ struct t_gui_window;
 struct t_gui_buffer;
 struct t_gui_bar;
 struct t_gui_bar_item;
+struct t_gui_completion;
 struct t_weelist;
 
 /* macros for defining plugin infos */
@@ -349,12 +350,15 @@ struct t_weechat_plugin
                                                    const char *value),
                                    void *callback_data);
     struct t_hook *(*hook_completion) (struct t_weechat_plugin *plugin,
-                                       const char *completion,
+                                       const char *completion_item,
                                        int (*callback)(void *data,
-                                                       const char *completion,
+                                                       const char *completion_item,
                                                        struct t_gui_buffer *buffer,
-                                                       struct t_weelist *list),
+                                                       struct t_gui_completion *completion),
                                        void *callback_data);
+    void (*hook_completion_list_add) (struct t_gui_completion *completion,
+                                      const char *word, int nick_completion,
+                                      const char *where);
     struct t_hook *(*hook_modifier) (struct t_weechat_plugin *plugin,
                                      const char *modifier,
                                      char *(*callback)(void *data,
@@ -781,6 +785,11 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_hook_completion(__completion, __callback, __data)       \
     weechat_plugin->hook_completion(weechat_plugin, __completion,       \
                                     __callback, __data)
+#define weechat_hook_completion_list_add(__completion, __word,          \
+                                         __nick_completion, __where)    \
+    weechat_plugin->hook_completion_list_add(__completion, __word,      \
+                                             __nick_completion,         \
+                                             __where)
 #define weechat_hook_modifier(__modifier, __callback, __data)   \
     weechat_plugin->hook_modifier(weechat_plugin, __modifier,   \
                                   __callback, __data)

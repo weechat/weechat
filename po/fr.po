@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-17 16:16+0200\n"
-"PO-Revision-Date: 2008-06-17 16:16+0200\n"
+"POT-Creation-Date: 2008-06-18 16:02+0200\n"
+"PO-Revision-Date: 2008-06-18 16:02+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1033,15 +1033,6 @@ msgstr ""
 msgid "time format for \"time\" bar item"
 msgstr "format de date/heure pour l'objet de barre \"time\""
 
-msgid "complete only with first nick found"
-msgstr "compléter seulement avec le premier pseudo trouvé"
-
-msgid "chars ignored for nick completion"
-msgstr "caractères à ignorer pour la complétion des pseudos"
-
-msgid "string inserted after nick completion"
-msgstr "chaîne affichée après la complétion des pseudos"
-
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr ""
 "afficher la liste de pseudos (sur les tampons avec la liste de pseudos "
@@ -1345,6 +1336,42 @@ msgstr ""
 
 msgid "text color for nicklist separator"
 msgstr "couleur du texte pour le séparateur de la liste des pseudos"
+
+msgid "string inserted after nick completion"
+msgstr "chaîne affichée après la complétion des pseudos"
+
+msgid "complete only with first nick found"
+msgstr "compléter seulement avec le premier pseudo trouvé"
+
+msgid "chars ignored for nick completion"
+msgstr "caractères à ignorer pour la complétion des pseudos"
+
+msgid "alert user when a partial completion occurs"
+msgstr "alterte de l'utilisateur lorsqu'une complétion partielle survient"
+
+msgid ""
+"partially complete nicks (stop when many nicks found begin with same letters)"
+msgstr ""
+"complète partiellement les pseudos (stoppe quand plusieurs pseudos trouvés "
+"commencent par les mêmes lettres)"
+
+msgid ""
+"partially complete command names (stop when many commands found begin with "
+"same letters)"
+msgstr ""
+"complète partiellement les noms de commandes (stoppe quand plusieurs "
+"commandes trouvées commencent par les mêmes lettres)"
+
+msgid ""
+"partially complete command arguments (stop when many arguments found begin "
+"with same prefix)"
+msgstr ""
+"complète partiellement les paramètres de commande (stoppe quand plusieurs "
+"paramètres trouvés commencent par les mêmes lettres)"
+
+msgid "display count for each partial completion in bar item"
+msgstr ""
+"afficher le compteur pour chaque complétion partielle dans l'objet de barre"
 
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
 msgstr "nombre maximum de lignes dans l'historique (0 = sans limite)"
@@ -2947,15 +2974,6 @@ msgstr ""
 msgid "automatically rejoin channels when kicked"
 msgstr "rejoindre automatiquement les canaux quand mis dehors"
 
-msgid ""
-"comma separated list of notify levels for channels of this server (format: "
-"#channel:1,..), a channel name '*' is reserved for server default notify "
-"level"
-msgstr ""
-"liste des niveaux de notifications (séparés par des virgules) pour les "
-"canaux de ce serveur (format: #canal:1,..), un nom de canal '*' est réservé "
-"pour la notification par défaut du serveur"
-
 #, c-format
 msgid "%s%s: error creating server option \"%s\""
 msgstr "%s%s: erreur de création de l'option serveur \"%s\""
@@ -4537,3 +4555,12 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid ""
+#~ "comma separated list of notify levels for channels of this server "
+#~ "(format: #channel:1,..), a channel name '*' is reserved for server "
+#~ "default notify level"
+#~ msgstr ""
+#~ "liste des niveaux de notifications (séparés par des virgules) pour les "
+#~ "canaux de ce serveur (format: #canal:1,..), un nom de canal '*' est "
+#~ "réservé pour la notification par défaut du serveur"

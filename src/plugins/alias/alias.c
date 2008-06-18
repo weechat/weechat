@@ -805,20 +805,22 @@ unalias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 int
-alias_completion_cb (void *data, const char *completion,
-                     struct t_gui_buffer *buffer, struct t_weelist *list)
+alias_completion_cb (void *data, const char *completion_item,
+                     struct t_gui_buffer *buffer,
+                     struct t_gui_completion *completion)
 {
     struct t_alias *ptr_alias;
     
     /* make C compiler happy */
     (void) data;
-    (void) completion;
+    (void) completion_item;
     (void) buffer;
     
     for (ptr_alias = alias_list; ptr_alias;
          ptr_alias = ptr_alias->next_alias)
     {
-        weechat_list_add (list, ptr_alias->name, WEECHAT_LIST_POS_SORT);
+        weechat_hook_completion_list_add (completion, ptr_alias->name,
+                                          0, WEECHAT_LIST_POS_SORT);
     }
     
     return WEECHAT_RC_OK;

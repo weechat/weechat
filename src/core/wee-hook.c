@@ -40,6 +40,7 @@
 #include "wee-util.h"
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-color.h"
+#include "../gui/gui-completion.h"
 #include "../plugins/plugin.h"
 
 
@@ -1121,13 +1122,13 @@ hook_config_exec (const char *option, const char *value)
  */
 
 struct t_hook *
-hook_completion (struct t_weechat_plugin *plugin, const char *completion,
+hook_completion (struct t_weechat_plugin *plugin, const char *completion_item,
                  t_hook_callback_completion *callback, void *callback_data)
 {
     struct t_hook *new_hook;
     struct t_hook_completion *new_hook_completion;
     
-    if (!completion || !completion[0] || strchr (completion, ' '))
+    if (!completion_item || !completion_item[0] || strchr (completion_item, ' '))
         return NULL;
     
     new_hook = malloc (sizeof (*new_hook));
@@ -1144,7 +1145,7 @@ hook_completion (struct t_weechat_plugin *plugin, const char *completion,
     
     new_hook->hook_data = new_hook_completion;
     new_hook_completion->callback = callback;
-    new_hook_completion->completion = strdup (completion);
+    new_hook_completion->completion_item = strdup (completion_item);
     
     hook_add_to_list (new_hook);
     
@@ -1152,12 +1153,26 @@ hook_completion (struct t_weechat_plugin *plugin, const char *completion,
 }
 
 /*
+ * hook_completion_list_add: add a word for a completion (called by plugins)
+ */
+
+void
+hook_completion_list_add (struct t_gui_completion *completion,
+                          const char *word, int nick_completion,
+                          const char *where)
+{
+    gui_completion_list_add (completion, word, nick_completion, where);
+}
+
+/*
  * hook_completion_exec: execute completion hook
  */
 
 void
-hook_completion_exec (struct t_weechat_plugin *plugin, const char *completion,
-                      struct t_gui_buffer *buffer, struct t_weelist *list)
+hook_completion_exec (struct t_weechat_plugin *plugin,
+                      const char *completion_item,
+                      struct t_gui_buffer *buffer,
+                      struct t_gui_completion *completion)
 {
     struct t_hook *ptr_hook, *next_hook;
     
@@ -1173,12 +1188,12 @@ hook_completion_exec (struct t_weechat_plugin *plugin, const char *completion,
         
         if (!ptr_hook->deleted
             && !ptr_hook->running
-            && (string_strcasecmp (HOOK_COMPLETION(ptr_hook, completion),
-                                   completion) == 0))
+            && (string_strcasecmp (HOOK_COMPLETION(ptr_hook, completion_item),
+                                   completion_item) == 0))
         {
             ptr_hook->running = 1;
             (void) (HOOK_COMPLETION(ptr_hook, callback))
-                (ptr_hook->callback_data, completion, buffer, list);
+                (ptr_hook->callback_data, completion_item, buffer, completion);
             ptr_hook->running = 0;
         }
         
@@ -1371,8 +1386,8 @@ unhook (struct t_hook *hook)
                 free ((struct t_hook_config *)hook->hook_data);
                 break;
             case HOOK_TYPE_COMPLETION:
-                if (HOOK_COMPLETION(hook, completion))
-                    free (HOOK_COMPLETION(hook, completion));
+                if (HOOK_COMPLETION(hook, completion_item))
+                    free (HOOK_COMPLETION(hook, completion_item));
                 free ((struct t_hook_completion *)hook->hook_data);
                 break;
             case HOOK_TYPE_MODIFIER:
@@ -1558,7 +1573,7 @@ hook_print_log ()
                     {
                         log_printf ("  completion data:");
                         log_printf ("    callback . . . . . . : 0x%x", HOOK_COMPLETION(ptr_hook, callback));
-                        log_printf ("    completion . . . . . : '%s'", HOOK_COMPLETION(ptr_hook, completion));
+                        log_printf ("    completion_item. . . : '%s'", HOOK_COMPLETION(ptr_hook, completion_item));
                     }
                     break;
                 case HOOK_TYPE_MODIFIER:

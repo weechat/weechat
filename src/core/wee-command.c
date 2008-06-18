@@ -1499,7 +1499,7 @@ command_plugin_list (const char *name, int full)
                         hook_found = 1;
                         gui_chat_printf (NULL,
                                          "        %s",
-                                         HOOK_COMPLETION(ptr_hook, completion));
+                                         HOOK_COMPLETION(ptr_hook, completion_item));
                     }
                 }
 

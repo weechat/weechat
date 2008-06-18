@@ -605,16 +605,16 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-weechat_python_completion_cb (void *data, const char *completion,
+weechat_python_completion_cb (void *data, const char *completion_item,
                               struct t_gui_buffer *buffer,
-                              struct t_weelist *list)
+                              struct t_gui_completion *completion)
 {
     /* make C compiler happy */
     (void) data;
-    (void) completion;
+    (void) completion_item;
     (void) buffer;
     
-    script_completion (weechat_python_plugin, list, python_scripts);
+    script_completion (weechat_python_plugin, completion, python_scripts);
     
     return WEECHAT_RC_OK;
 }

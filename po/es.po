@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-17 16:16+0200\n"
+"POT-Creation-Date: 2008-06-18 16:02+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -998,16 +998,6 @@ msgstr ""
 msgid "time format for \"time\" bar item"
 msgstr "fecha y hora para las conversaciones guardadas"
 
-msgid "complete only with first nick found"
-msgstr "completar Ãºnicamente con el primer nick encontrado"
-
-msgid "chars ignored for nick completion"
-msgstr "caracteres ignorados para el completado del nombre de usuario"
-
-#, fuzzy
-msgid "string inserted after nick completion"
-msgstr "la cadena mostrada tras la finalizaciÃ³n de los nombres de usuario"
-
 #, fuzzy
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr "mostrar ventana de usuarios (para las ventanas de canal)"
@@ -1382,6 +1372,36 @@ msgstr "color para '+' al desplazar nicks"
 #, fuzzy
 msgid "text color for nicklist separator"
 msgstr "color para el separador de alias"
+
+#, fuzzy
+msgid "string inserted after nick completion"
+msgstr "la cadena mostrada tras la finalizaciÃ³n de los nombres de usuario"
+
+msgid "complete only with first nick found"
+msgstr "completar Ãºnicamente con el primer nick encontrado"
+
+msgid "chars ignored for nick completion"
+msgstr "caracteres ignorados para el completado del nombre de usuario"
+
+msgid "alert user when a partial completion occurs"
+msgstr ""
+
+msgid ""
+"partially complete nicks (stop when many nicks found begin with same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command names (stop when many commands found begin with "
+"same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command arguments (stop when many arguments found begin "
+"with same prefix)"
+msgstr ""
+
+msgid "display count for each partial completion in bar item"
+msgstr ""
 
 #, fuzzy
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
@@ -2989,15 +3009,6 @@ msgstr ""
 msgid "automatically rejoin channels when kicked"
 msgstr "unirse de nuevo automÃ¡ticamente a los canales cuando sea expulsado"
 
-#, fuzzy
-msgid ""
-"comma separated list of notify levels for channels of this server (format: "
-"#channel:1,..), a channel name '*' is reserved for server default notify "
-"level"
-msgstr ""
-"lista separada por comas de niveles de notificaciÃ³n para canales de este "
-"servidor (formato: #canal:1,...)"
-
 #, fuzzy, c-format
 msgid "%s%s: error creating server option \"%s\""
 msgstr ""
@@ -4587,6 +4598,15 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "comma separated list of notify levels for channels of this server "
+#~ "(format: #channel:1,..), a channel name '*' is reserved for server "
+#~ "default notify level"
+#~ msgstr ""
+#~ "lista separada por comas de niveles de notificaciÃ³n para canales de este "
+#~ "servidor (formato: #canal:1,...)"
 
 #, fuzzy
 #~ msgid "%sError: incorrect notify level (must be between %d and %d)"

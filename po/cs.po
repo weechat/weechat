@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-17 16:16+0200\n"
+"POT-Creation-Date: 2008-06-18 16:02+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1026,16 +1026,6 @@ msgstr ""
 msgid "time format for \"time\" bar item"
 msgstr "časová značka pro čas v infobaru"
 
-msgid "complete only with first nick found"
-msgstr "dokončit pouze s prvním nalezenou přezdívkou"
-
-msgid "chars ignored for nick completion"
-msgstr "znaky ignorovány pro doplňování přezdívky"
-
-#, fuzzy
-msgid "string inserted after nick completion"
-msgstr "řetězec vložený za doplňování přezdívky"
-
 #, fuzzy
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr "zobrazit okno se seznamem přezdívek (pouze pro okno kanálu)"
@@ -1402,6 +1392,36 @@ msgstr "barva pro '+' při procházení přezdívek"
 #, fuzzy
 msgid "text color for nicklist separator"
 msgstr "barva děliče přezdívek"
+
+#, fuzzy
+msgid "string inserted after nick completion"
+msgstr "řetězec vložený za doplňování přezdívky"
+
+msgid "complete only with first nick found"
+msgstr "dokončit pouze s prvním nalezenou přezdívkou"
+
+msgid "chars ignored for nick completion"
+msgstr "znaky ignorovány pro doplňování přezdívky"
+
+msgid "alert user when a partial completion occurs"
+msgstr ""
+
+msgid ""
+"partially complete nicks (stop when many nicks found begin with same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command names (stop when many commands found begin with "
+"same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command arguments (stop when many arguments found begin "
+"with same prefix)"
+msgstr ""
+
+msgid "display count for each partial completion in bar item"
+msgstr ""
 
 #, fuzzy
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
@@ -3017,15 +3037,6 @@ msgstr ""
 msgid "automatically rejoin channels when kicked"
 msgstr "automaticky znovu přijít na kanál po vykopnutí"
 
-msgid ""
-"comma separated list of notify levels for channels of this server (format: "
-"#channel:1,..), a channel name '*' is reserved for server default notify "
-"level"
-msgstr ""
-"čárkou oddělený seznam levelů upozornění pro kanály na tomto serveru "
-"(formát: #kanál:1,..), jméno serveru '*' je rezervováno pro defaultní "
-"hodnotu levelu upozornění"
-
 #, fuzzy, c-format
 msgid "%s%s: error creating server option \"%s\""
 msgstr "%s nedostatek paměti pro infobar zprávu\n"
@@ -4588,6 +4599,15 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#~ msgid ""
+#~ "comma separated list of notify levels for channels of this server "
+#~ "(format: #channel:1,..), a channel name '*' is reserved for server "
+#~ "default notify level"
+#~ msgstr ""
+#~ "čárkou oddělený seznam levelů upozornění pro kanály na tomto serveru "
+#~ "(formát: #kanál:1,..), jméno serveru '*' je rezervováno pro defaultní "
+#~ "hodnotu levelu upozornění"
 
 #, fuzzy
 #~ msgid "%sError: incorrect notify level (must be between %d and %d)"

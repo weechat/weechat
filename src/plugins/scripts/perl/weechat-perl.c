@@ -554,16 +554,16 @@ weechat_perl_command_cb (void *data, struct t_gui_buffer *buffer,
  */
 
 int
-weechat_perl_completion_cb (void *data, const char *completion,
+weechat_perl_completion_cb (void *data, const char *completion_item,
                             struct t_gui_buffer *buffer,
-                            struct t_weelist *list)
+                            struct t_gui_completion *completion)
 {
     /* make C compiler happy */
     (void) data;
-    (void) completion;
+    (void) completion_item;
     (void) buffer;
     
-    script_completion (weechat_perl_plugin, list, perl_scripts);
+    script_completion (weechat_perl_plugin, completion, perl_scripts);
     
     return WEECHAT_RC_OK;
 }

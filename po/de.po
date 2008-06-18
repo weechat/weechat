@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-17 16:16+0200\n"
+"POT-Creation-Date: 2008-06-18 16:02+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1019,16 +1019,6 @@ msgstr ""
 msgid "time format for \"time\" bar item"
 msgstr "Timestamp in der Infobar"
 
-msgid "complete only with first nick found"
-msgstr "nur mit dem ersten, passenden Nicknamen vervollständigen"
-
-msgid "chars ignored for nick completion"
-msgstr "Zeichen, die bei der Nickvervollständigung ignoriert werden"
-
-#, fuzzy
-msgid "string inserted after nick completion"
-msgstr "Nach Nickvervollständigung anzufügende Zeichenfolge"
-
 #, fuzzy
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr "Nicklisten-Fenster in Channelfenstern anzeigen"
@@ -1397,6 +1387,36 @@ msgstr "Farbe des '+' beim Scrolling von Nicknames"
 #, fuzzy
 msgid "text color for nicklist separator"
 msgstr "Farbe der Nicknamefenster-Trennlinie"
+
+#, fuzzy
+msgid "string inserted after nick completion"
+msgstr "Nach Nickvervollständigung anzufügende Zeichenfolge"
+
+msgid "complete only with first nick found"
+msgstr "nur mit dem ersten, passenden Nicknamen vervollständigen"
+
+msgid "chars ignored for nick completion"
+msgstr "Zeichen, die bei der Nickvervollständigung ignoriert werden"
+
+msgid "alert user when a partial completion occurs"
+msgstr ""
+
+msgid ""
+"partially complete nicks (stop when many nicks found begin with same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command names (stop when many commands found begin with "
+"same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command arguments (stop when many arguments found begin "
+"with same prefix)"
+msgstr ""
+
+msgid "display count for each partial completion in bar item"
+msgstr ""
 
 #, fuzzy
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
@@ -2995,15 +3015,6 @@ msgstr ""
 msgid "automatically rejoin channels when kicked"
 msgstr "Channels nach Kick automatisch wieder betreten, falls möglich"
 
-msgid ""
-"comma separated list of notify levels for channels of this server (format: "
-"#channel:1,..), a channel name '*' is reserved for server default notify "
-"level"
-msgstr ""
-"durch Kommata getrennte Liste der Notify-Levels für die Channels auf diesem "
-"Server (Format: #channel:1,...), der Channelname '*' ist für den Default-"
-"Server-Notify-Level"
-
 #, fuzzy, c-format
 msgid "%s%s: error creating server option \"%s\""
 msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
@@ -4578,6 +4589,15 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#~ msgid ""
+#~ "comma separated list of notify levels for channels of this server "
+#~ "(format: #channel:1,..), a channel name '*' is reserved for server "
+#~ "default notify level"
+#~ msgstr ""
+#~ "durch Kommata getrennte Liste der Notify-Levels für die Channels auf "
+#~ "diesem Server (Format: #channel:1,...), der Channelname '*' ist für den "
+#~ "Default-Server-Notify-Level"
 
 #, fuzzy
 #~ msgid "%sError: incorrect notify level (must be between %d and %d)"

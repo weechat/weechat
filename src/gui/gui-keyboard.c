@@ -114,7 +114,7 @@ gui_keyboard_grab_end ()
         {
             gui_input_insert_string (gui_current_window->buffer, expanded_key, -1);
             if (gui_current_window->buffer->completion)
-                gui_current_window->buffer->completion->position = -1;
+                gui_completion_stop (gui_current_window->buffer->completion, 1);
             gui_input_draw (gui_current_window->buffer, 0);
         }
         free (expanded_key);

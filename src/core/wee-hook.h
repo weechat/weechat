@@ -25,6 +25,7 @@
 #endif
 
 struct t_gui_buffer;
+struct t_gui_completion;
 struct t_weelist;
 
 /* hook types */
@@ -168,14 +169,15 @@ struct t_hook_config
                                        /* (NULL = hook for all options)     */
 };
 
-typedef int (t_hook_callback_completion)(void *data, const char *completion,
+typedef int (t_hook_callback_completion)(void *data,
+                                         const char *completion_item,
                                          struct t_gui_buffer *buffer,
-                                         struct t_weelist *list);
+                                         struct t_gui_completion *completion);
 
 struct t_hook_completion
 {
     t_hook_callback_completion *callback; /* completion callback            */
-    char *completion;                     /* name of completion             */
+    char *completion_item;                /* name of completion             */
 };
 
 typedef char *(t_hook_callback_modifier)(void *data, const char *modifier,
@@ -250,13 +252,16 @@ extern struct t_hook *hook_config (struct t_weechat_plugin *, const char *option
                                    void *callback_data);
 extern void hook_config_exec (const char *option, const char *value);
 extern struct t_hook *hook_completion (struct t_weechat_plugin *plugin,
-                                       const char *completion,
+                                       const char *completion_item,
                                        t_hook_callback_completion *callback,
                                        void *callback_data);
+extern void hook_completion_list_add (struct t_gui_completion *completion,
+                                      const char *word, int nick_completion,
+                                      const char *where);
 extern void hook_completion_exec (struct t_weechat_plugin *plugin,
-                                  const char *completion,
+                                  const char *completion_item,
                                   struct t_gui_buffer *buffer,
-                                  struct t_weelist *list);
+                                  struct t_gui_completion *completion);
 extern struct t_hook *hook_modifier (struct t_weechat_plugin *plugin,
                                      const char *modifier,
                                      t_hook_callback_modifier *callback,

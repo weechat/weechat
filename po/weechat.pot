@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-17 16:16+0200\n"
+"POT-Creation-Date: 2008-06-18 16:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -849,15 +849,6 @@ msgstr ""
 msgid "time format for \"time\" bar item"
 msgstr ""
 
-msgid "complete only with first nick found"
-msgstr ""
-
-msgid "chars ignored for nick completion"
-msgstr ""
-
-msgid "string inserted after nick completion"
-msgstr ""
-
 msgid "display nicklist (on buffers with nicklist enabled)"
 msgstr ""
 
@@ -1134,6 +1125,35 @@ msgid "text color for '+' when scrolling nicks in nicklist"
 msgstr ""
 
 msgid "text color for nicklist separator"
+msgstr ""
+
+msgid "string inserted after nick completion"
+msgstr ""
+
+msgid "complete only with first nick found"
+msgstr ""
+
+msgid "chars ignored for nick completion"
+msgstr ""
+
+msgid "alert user when a partial completion occurs"
+msgstr ""
+
+msgid ""
+"partially complete nicks (stop when many nicks found begin with same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command names (stop when many commands found begin with "
+"same letters)"
+msgstr ""
+
+msgid ""
+"partially complete command arguments (stop when many arguments found begin "
+"with same prefix)"
+msgstr ""
+
+msgid "display count for each partial completion in bar item"
 msgstr ""
 
 msgid "maximum number of lines in history per buffer (0 = unlimited)"
@@ -2504,12 +2524,6 @@ msgid ""
 msgstr ""
 
 msgid "automatically rejoin channels when kicked"
-msgstr ""
-
-msgid ""
-"comma separated list of notify levels for channels of this server (format: "
-"#channel:1,..), a channel name '*' is reserved for server default notify "
-"level"
 msgstr ""
 
 #, c-format

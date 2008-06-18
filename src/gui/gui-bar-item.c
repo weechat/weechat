@@ -37,6 +37,7 @@
 #include "gui-bar.h"
 #include "gui-buffer.h"
 #include "gui-color.h"
+#include "gui-completion.h"
 #include "gui-filter.h"
 #include "gui-hotlist.h"
 #include "gui-window.h"
@@ -46,7 +47,7 @@ struct t_gui_bar_item *gui_bar_items = NULL;     /* first bar item          */
 struct t_gui_bar_item *last_gui_bar_item = NULL; /* last bar item           */
 char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 { "time", "buffer_count", "buffer_plugin", "buffer_name", "buffer_filter",
-  "nicklist_count", "scroll", "hotlist"
+  "nicklist_count", "scroll", "hotlist", "completion"
 };
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
@@ -551,6 +552,58 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * gui_bar_item_default_completion: default item for (partial) completion
+ */
+
+char *
+gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
+                                 struct t_gui_window *window,
+                                 int max_width, int max_height)
+{
+    int length;
+    char *buf, number_str[16];
+    struct t_gui_completion_partial *ptr_item;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) window;
+    (void) max_width;
+    (void) max_height;
+
+    length = 1;
+    for (ptr_item = gui_completion_partial_list; ptr_item;
+         ptr_item = ptr_item->next_item)
+    {
+        length += strlen (ptr_item->word) + 32;
+    }
+    buf = malloc (length);
+    if (buf)
+    {
+        buf[0] = '\0';
+        for (ptr_item = gui_completion_partial_list; ptr_item;
+             ptr_item = ptr_item->next_item)
+        {
+            strcat (buf, GUI_COLOR(GUI_COLOR_STATUS));
+            strcat (buf, ptr_item->word);
+            if (ptr_item->count > 0)
+            {
+                strcat (buf, GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
+                strcat (buf, "(");
+                snprintf (number_str, sizeof (number_str),
+                          "%d", ptr_item->count);
+                strcat (buf, number_str);
+                strcat (buf, ")");
+            }
+            if (ptr_item->next_item)
+                strcat (buf, " ");
+        }
+        return buf;
+    }
+    return NULL;
+}
+
+/*
  * gui_bar_item_timer_cb: timer callback
  */
 
@@ -690,6 +743,13 @@ gui_bar_item_init ()
                       &gui_bar_item_default_hotlist, NULL);
     gui_bar_item_hook ("hotlist_changed",
                        gui_bar_item_names[GUI_BAR_ITEM_HOTLIST]);
+    
+    /* completion (possible words when a partial completion occurs) */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_COMPLETION],
+                      &gui_bar_item_default_completion, NULL);
+    gui_bar_item_hook ("partial_completion",
+                       gui_bar_item_names[GUI_BAR_ITEM_COMPLETION]);
 }
 
 /*
