@@ -6,7 +6,7 @@ ChangeLog - 2008-06-18
 
 Version 0.2.7 (under dev!):
    * add new options for completion, optional stop instead of cycling with
-     words found
+     words found (task #5909)
    * add speed limit for DCC files sending (task #6178)
    * add new input action "set_unread_current_buffer" to set unread marker for
      current buffer only (task #7286)
