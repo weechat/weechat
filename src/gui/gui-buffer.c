@@ -492,9 +492,29 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     long number;
     char *error;
 
-    if (!buffer || !property || !value)
+    if (!property || !value)
         return;
     
+    /* properties that does NOT need a buffer */
+    if (string_strcasecmp (property, "hotlist") == 0)
+    {
+        if (strcmp (value, "-") == 0)
+            gui_add_hotlist = 0;
+        else if (strcmp (value, "+") == 0)
+            gui_add_hotlist = 1;
+        else
+        {
+            error = NULL;
+            number = strtol (value, &error, 10);
+            if (error && !error[0])
+                gui_hotlist_add (buffer, number, NULL, 1);
+        }
+    }
+    
+    if (!buffer)
+        return;
+    
+    /* properties that need a buffer */
     if (string_strcasecmp (property, "display") == 0)
     {
         gui_window_switch_to_buffer (gui_current_window, buffer);
@@ -556,20 +576,6 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "nick") == 0)
     {
         gui_buffer_set_nick (buffer, value);
-    }
-    else if (string_strcasecmp (property, "hotlist") == 0)
-    {
-        if (strcmp (value, "-") == 0)
-            gui_add_hotlist = 0;
-        else if (strcmp (value, "+") == 0)
-            gui_add_hotlist = 1;
-        else
-        {
-            error = NULL;
-            number = strtol (value, &error, 10);
-            if (error && !error[0])
-                gui_hotlist_add (buffer, number, NULL, 1);
-        }
     }
     else if (string_strcasecmp (property, "highlight_words") == 0)
     {

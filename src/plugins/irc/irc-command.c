@@ -384,9 +384,9 @@ irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
     
     /* make C compiler happy */
     (void) data;
-    (void) argv;
     
     weechat_buffer_set (NULL, "hotlist", "-");
+    
     if ((argc > 2) && (weechat_strcasecmp (argv[1], "-all") == 0))
     {
         for (ptr_server = irc_servers; ptr_server;

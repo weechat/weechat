@@ -667,6 +667,27 @@ gui_chat_line_free_all (struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_chat_line_get_notify_level: get notify level for a line
+ */
+
+int
+gui_chat_line_get_notify_level (struct t_gui_line *line)
+{
+    int i;
+    
+    for (i = 0; i < line->tags_count; i++)
+    {
+        if (string_strcasecmp (line->tags_array[i], "notify_highlight") == 0)
+            return GUI_HOTLIST_HIGHLIGHT;
+        if (string_strcasecmp (line->tags_array[i], "notify_private") == 0)
+            return GUI_HOTLIST_PRIVATE;
+        if (string_strcasecmp (line->tags_array[i], "notify_message") == 0)
+            return GUI_HOTLIST_MESSAGE;
+    }
+    return GUI_HOTLIST_LOW;
+}
+
+/*
  * gui_chat_line_add: add a new line for a buffer
  */
 
@@ -707,8 +728,6 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
         gui_chat_strlen_screen (prefix) : 0;
     new_line->message = (message) ? strdup (message) : strdup ("");
     new_line->highlight = gui_chat_line_has_highlight (buffer, new_line);
-    if (new_line->highlight)
-        gui_hotlist_add (buffer, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
     
     /* add line to lines list */
     if (!buffer->lines)
@@ -726,6 +745,14 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
     {
         if (new_line->prefix_length > buffer->prefix_max_length)
             buffer->prefix_max_length = new_line->prefix_length;
+        if (new_line->highlight)
+            gui_hotlist_add (buffer, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
+        else
+        {
+            gui_hotlist_add (buffer,
+                             gui_chat_line_get_notify_level (new_line),
+                             NULL, 0);
+        }
     }
     else
     {
@@ -942,16 +969,7 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     }
     
     if (gui_init_ok)
-    {
         gui_buffer_ask_chat_refresh (buffer, 1);
-        if (gui_add_hotlist
-            && ((buffer->num_displayed == 0)
-                || (gui_buffer_is_scrolled (buffer))))
-        {
-            gui_hotlist_add (buffer, 0, NULL, 1);
-            gui_status_refresh_needed = 1;
-        }
-    }
     
     free (buf);
 }

@@ -230,7 +230,7 @@ irc_protocol_cmd_invite (struct t_irc_server *server, const char *command,
     (void) argv_eol;
     
     weechat_printf_tags (server->buffer,
-                         "irc_invite",
+                         "irc_invite,notify_highlight",
                          _("%sYou have been invited to %s%s%s by "
                            "%s%s"),
                          weechat_prefix ("network"),
@@ -239,8 +239,6 @@ irc_protocol_cmd_invite (struct t_irc_server *server, const char *command,
                          IRC_COLOR_CHAT,
                          IRC_COLOR_CHAT_NICK,
                          irc_protocol_get_nick_from_host (argv[0]));
-    weechat_buffer_set (server->buffer, "hotlist",
-                        WEECHAT_HOTLIST_HIGHLIGHT);
     
     return WEECHAT_RC_OK;
 }
@@ -635,7 +633,7 @@ int
 irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                          int argc, char **argv, char **argv_eol)
 {
-    char *nick, *host, *pos_args, *pos_end, *pos_usec;
+    char *nick, *host, *pos_args, *pos_end, *pos_usec, tags[128];
     struct timeval tv;
     long sec1, usec1, sec2, usec2, difftime;
     struct t_irc_channel *ptr_channel;
@@ -728,6 +726,19 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
         }
         else
         {
+            if (nick
+                && (weechat_strcasecmp (nick, "nickserv") != 0)
+                && (weechat_strcasecmp (nick, "chanserv") != 0)
+                && (weechat_strcasecmp (nick, "memoserv") != 0))
+            {
+                snprintf (tags, sizeof (tags),
+                          "%s", "irc_notice,notify_private");
+            }
+            else
+            {
+                snprintf (tags, sizeof (tags),
+                          "%s", "irc_notice");
+            }
             if (nick && weechat_config_boolean (irc_config_look_notice_as_pv))
             {
                 ptr_channel = irc_channel_search (server, nick);
@@ -754,7 +765,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                 }
                 
                 weechat_printf_tags (ptr_channel->buffer,
-                                     "irc_notice",
+                                     tags,
                                      "%s%s",
                                      irc_nick_as_prefix (NULL, nick,
                                                          IRC_COLOR_CHAT_NICK_OTHER),
@@ -765,7 +776,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                 if (host && host[0])
                 {
                     weechat_printf_tags (server->buffer,
-                                         "irc_notice",
+                                         tags,
                                          "%s%s%s %s(%s%s%s)%s: %s",
                                          weechat_prefix ("network"),
                                          IRC_COLOR_CHAT_NICK,
@@ -782,7 +793,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                     if (nick && nick[0])
                     {
                         weechat_printf_tags (server->buffer,
-                                             "irc_notice",
+                                             tags,
                                              "%s%s%s%s: %s",
                                              weechat_prefix ("network"),
                                              IRC_COLOR_CHAT_NICK,
@@ -793,21 +804,12 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                     else
                     {
                         weechat_printf_tags (server->buffer,
-                                             "irc_notice",
+                                             tags,
                                              "%s%s",
                                              weechat_prefix ("network"),
                                              pos_args);
                     }
                 }
-            }
-                
-            if (nick
-                && (weechat_strcasecmp (nick, "nickserv") != 0)
-                && (weechat_strcasecmp (nick, "chanserv") != 0)
-                && (weechat_strcasecmp (nick, "memoserv") != 0))
-            {
-                weechat_buffer_set (server->buffer, "hotlist",
-                                    WEECHAT_HOTLIST_PRIVATE);
             }
         }
     }
@@ -1092,7 +1094,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     pos_end_01[0] = '\0';
                 
                 weechat_printf_tags (ptr_channel->buffer,
-                                     "irc_privmsg,irc_action",
+                                     "irc_privmsg,irc_action,notify_message",
                                      "%s%s%s %s%s",
                                      weechat_prefix ("action"),
                                      IRC_COLOR_CHAT_NICK,
@@ -1235,14 +1237,12 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
             ptr_nick = irc_nick_search (ptr_channel, nick);
             
             weechat_printf_tags (ptr_channel->buffer,
-                                 "irc_privmsg",
+                                 "irc_privmsg,notify_message",
                                  "%s%s",
                                  irc_nick_as_prefix (ptr_nick,
                                                      (ptr_nick) ? NULL : nick,
                                                      NULL),
                                  pos_args);
-            weechat_buffer_set (ptr_channel->buffer, "hotlist",
-                                WEECHAT_HOTLIST_MESSAGE);
             
             irc_channel_add_nick_speaking (ptr_channel, nick);
         }
@@ -1782,7 +1782,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 pos_end_01[0] = '\0';
             
             weechat_printf_tags (ptr_channel->buffer,
-                                 "irc_privmsg,irc_action",
+                                 "irc_privmsg,irc_action,notify_private",
                                  "%s%s%s %s%s",
                                  weechat_prefix ("action"),
                                  IRC_COLOR_CHAT_NICK,
@@ -1792,8 +1792,6 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
             weechat_hook_signal_send ("irc_pv",
                                       WEECHAT_HOOK_SIGNAL_STRING,
                                       argv_eol[0]);
-            weechat_buffer_set (ptr_channel->buffer, "hotlist",
-                                WEECHAT_HOTLIST_MESSAGE);
             
             if (pos_end_01)
                 pos_end_01[0] = '\01';
@@ -1886,7 +1884,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                                     ptr_channel->topic);
                 
                 weechat_printf_tags (ptr_channel->buffer,
-                                     "irc_privmsg",
+                                     "irc_privmsg,notify_private",
                                      "%s%s",
                                      irc_nick_as_prefix (NULL,
                                                          nick,
@@ -1896,9 +1894,6 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 weechat_hook_signal_send ("irc_pv",
                                           WEECHAT_HOOK_SIGNAL_STRING,
                                           argv_eol[0]);
-                
-                weechat_buffer_set (ptr_channel->buffer,
-                                    "hotlist", WEECHAT_HOTLIST_PRIVATE);
             }
         }
     }
