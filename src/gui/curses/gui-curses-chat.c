@@ -142,6 +142,37 @@ gui_chat_get_real_width (struct t_gui_window *window)
 }
 
 /*
+ * gui_chat_marker_for_line: return 1 if marker must be displayed before this
+ *                           line, or 0 if it must not
+ */
+
+int
+gui_chat_marker_for_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
+{
+    /* marker is not set for buffer? */
+    if (!buffer->last_read_line)
+        return 0;
+    
+    /* marker is disabled in config? */
+    if ((CONFIG_INTEGER(config_look_read_marker) != CONFIG_LOOK_READ_MARKER_LINE)
+        && (CONFIG_INTEGER(config_look_read_marker) != CONFIG_LOOK_READ_MARKER_DOTTED_LINE))
+        return 0;
+    
+    line = line->prev_line;
+    while (line)
+    {
+        if (buffer->last_read_line == line)
+            return 1;
+        
+        if (line->displayed)
+            break;
+        
+        line = line->prev_line;
+    }
+    return 0;
+}
+
+/*
  * gui_chat_display_new_line: display a new line
  */
 
@@ -749,11 +780,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     
     lines_displayed = 0;
     
-    marker_line = (((CONFIG_INTEGER(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_LINE)
-                    || (CONFIG_INTEGER(config_look_read_marker) == CONFIG_LOOK_READ_MARKER_DOTTED_LINE))
-                   && window->buffer->last_read_line
-                   && (window->buffer->last_read_line ==
-                       gui_chat_get_prev_line_displayed (line))) ? 1 : 0;
+    marker_line = gui_chat_marker_for_line (window->buffer, line);
     
     if (marker_line)
     {
