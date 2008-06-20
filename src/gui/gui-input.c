@@ -1192,6 +1192,7 @@ gui_input_jump_smart ()
                 gui_hotlist_initial_buffer = gui_current_window->buffer;
             gui_window_switch_to_buffer (gui_current_window,
                                          gui_hotlist->buffer);
+            gui_window_scroll_bottom (gui_current_window);
             gui_window_redraw_buffer (gui_current_window->buffer);
         }
         else
@@ -1200,6 +1201,7 @@ gui_input_jump_smart ()
             {
                 gui_window_switch_to_buffer (gui_current_window,
                                              gui_hotlist_initial_buffer);
+                gui_window_scroll_bottom (gui_current_window);
                 gui_window_redraw_buffer (gui_current_window->buffer);
                 gui_hotlist_initial_buffer = NULL;
             }
