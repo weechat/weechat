@@ -746,12 +746,12 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
         if (new_line->prefix_length > buffer->prefix_max_length)
             buffer->prefix_max_length = new_line->prefix_length;
         if (new_line->highlight)
-            gui_hotlist_add (buffer, GUI_HOTLIST_HIGHLIGHT, NULL, 0);
+            gui_hotlist_add (buffer, GUI_HOTLIST_HIGHLIGHT, NULL, 1);
         else
         {
             gui_hotlist_add (buffer,
                              gui_chat_line_get_notify_level (new_line),
-                             NULL, 0);
+                             NULL, 1);
         }
     }
     else
