@@ -44,7 +44,6 @@
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
-#include "../gui-infobar.h"
 #include "../gui-input.h"
 #include "../gui-history.h"
 #include "../gui-nicklist.h"
@@ -96,8 +95,6 @@ gui_main_init ()
 
     /* build prefixes according to config */
     gui_chat_prefix_build ();
-    
-    gui_infobar = NULL;
     
     gui_ok = ((COLS >= GUI_WINDOW_MIN_WIDTH)
               && (LINES >= GUI_WINDOW_MIN_HEIGHT));
@@ -341,10 +338,6 @@ gui_main_end (int clean_exit)
         
         /* delete global history */
         gui_history_global_free ();
-        
-        /* delete infobar messages */
-        while (gui_infobar)
-            gui_infobar_remove ();
         
         /* reset title */
         if (CONFIG_BOOLEAN(config_look_set_title))

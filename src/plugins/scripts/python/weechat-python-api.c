@@ -1905,72 +1905,6 @@ weechat_python_api_prnt_y (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat_python_api_infobar_print: print message to infobar
- */
-
-static PyObject *
-weechat_python_api_infobar_print (PyObject *self, PyObject *args)
-{
-    int delay;
-    char *color, *message;
-    
-    /* make C compiler happy */
-    (void) self;
-    
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PYTHON_RETURN_ERROR;
-    }
-    
-    delay = 1;
-    message = NULL;
-    
-    if (!PyArg_ParseTuple (args, "iss", &delay, &color, &message))
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        PYTHON_RETURN_ERROR;
-    }
-    
-    script_api_infobar_printf (weechat_python_plugin,
-                               python_current_script,
-                               delay, color, "%s", message);
-    
-    PYTHON_RETURN_OK;
-}
-
-/*
- * weechat_python_api_infobar_remove: remove message(s) from infobar
- */
-
-static PyObject *
-weechat_python_api_infobar_remove (PyObject *self, PyObject *args)
-{
-    int how_many;
-    
-    /* make C compiler happy */
-    (void) self;
-    
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_remove");
-        PYTHON_RETURN_ERROR;
-    }
-    
-    how_many = 0;
-    
-    if (!PyArg_ParseTuple (args, "|i", &how_many))
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_remove");
-        PYTHON_RETURN_ERROR;
-    }
-    
-    weechat_infobar_remove (how_many);
-    
-    PYTHON_RETURN_OK;
-}
-
-/*
  * weechat_python_api_log_print: print message in WeeChat log file
  */
 
@@ -4197,8 +4131,6 @@ PyMethodDef weechat_python_funcs[] =
     { "prnt", &weechat_python_api_prnt, METH_VARARGS, "" },
     { "prnt_date_tags", &weechat_python_api_prnt_date_tags, METH_VARARGS, "" },
     { "prnt_y", &weechat_python_api_prnt_y, METH_VARARGS, "" },
-    { "infobar_print", &weechat_python_api_infobar_print, METH_VARARGS, "" },
-    { "infobar_remove", &weechat_python_api_infobar_remove, METH_VARARGS, "" },
     { "log_print", &weechat_python_api_log_print, METH_VARARGS, "" },
     { "hook_command", &weechat_python_api_hook_command, METH_VARARGS, "" },
     { "hook_timer", &weechat_python_api_hook_timer, METH_VARARGS, "" },

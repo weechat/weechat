@@ -2177,81 +2177,6 @@ weechat_lua_api_print_y (lua_State *L)
 }
 
 /*
- * weechat_lua_api_infobar_print: print message to infobar
- */
-
-static int
-weechat_lua_api_infobar_print (lua_State *L)
-{
-    const char *color, *message;
-    int delay, n;
-    
-    /* make C compiler happy */
-    (void) L;
-    
-    if (!lua_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        LUA_RETURN_ERROR;
-    }
-    
-    delay = 1;
-    color = NULL;
-    message = NULL;
-
-    n = lua_gettop (lua_current_interpreter);
-
-    if (n < 3)
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        LUA_RETURN_ERROR;
-    }
-    
-    delay = lua_tonumber (lua_current_interpreter, -3);
-    color = lua_tostring (lua_current_interpreter, -2);
-    message = lua_tostring (lua_current_interpreter, -1);
-    
-    script_api_infobar_printf (weechat_lua_plugin,
-                               lua_current_script,
-                               delay,
-                               color,
-                               "%s",
-                               message);
-
-    LUA_RETURN_OK;
-}
-
-/*
- * weechat_lua_api_infobar_remove: remove message(s) in infobar
- */
-
-static int
-weechat_lua_api_infobar_remove (lua_State *L)
-{
-    int n, how_many;
-    
-    /* make C compiler happy */
-    (void) L;
-    
-    if (!lua_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_remove");
-        LUA_RETURN_ERROR;
-    }
-    
-    how_many = 0;
-    
-    n = lua_gettop (lua_current_interpreter);
-    
-    if (n == 1)
-        how_many = lua_tonumber (lua_current_interpreter, -1);
-    
-    weechat_infobar_remove (how_many);
-    
-    LUA_RETURN_OK;
-}
-
-/*
  * weechat_lua_api_log_print: print message in WeeChat log file
  */
 
@@ -5033,8 +4958,6 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "print", &weechat_lua_api_print },
     { "print_date_tags", &weechat_lua_api_print_date_tags },
     { "print_y", &weechat_lua_api_print_y },
-    { "infobar_print", &weechat_lua_api_infobar_print },
-    { "infobar_remove", &weechat_lua_api_infobar_remove },
     { "log_print", &weechat_lua_api_log_print },
     { "hook_command", &weechat_lua_api_hook_command },
     { "hook_timer", &weechat_lua_api_hook_timer },

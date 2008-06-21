@@ -38,7 +38,6 @@
 #include "gui-completion.h"
 #include "gui-history.h"
 #include "gui-hotlist.h"
-#include "gui-infobar.h"
 #include "gui-keyboard.h"
 #include "gui-status.h"
 #include "gui-window.h"
@@ -1255,17 +1254,6 @@ gui_input_hotlist_clear ()
         gui_window_redraw_buffer (gui_current_window->buffer);
     }
     gui_hotlist_initial_buffer = gui_current_window->buffer;
-}
-
-/*
- * gui_input_infobar_clear: clear infobar (default key: meta-i)
- */
-
-void
-gui_input_infobar_clear ()
-{
-    gui_infobar_remove ();
-    gui_infobar_draw (gui_current_window->buffer, 1);
 }
 
 /*

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-18 16:02+0200\n"
+"POT-Creation-Date: 2008-06-21 11:30+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -826,20 +826,6 @@ msgid ""
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 msgstr ""
 
-msgid "enable info bar"
-msgstr ""
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-
-msgid "display seconds in infobar time"
-msgstr ""
-
-msgid "time format for time in infobar"
-msgstr ""
-
 #, c-format
 msgid ""
 "format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
@@ -1056,18 +1042,6 @@ msgid "text color for buffer with new data (not messages) (status bar)"
 msgstr ""
 
 msgid "text color for buffer with new data (status bar)"
-msgstr ""
-
-msgid "text color for infobar"
-msgstr ""
-
-msgid "background color for infobar"
-msgstr ""
-
-msgid "text color for infobar delimiters"
-msgstr ""
-
-msgid "text color for infobar highlight notification"
 msgstr ""
 
 msgid "text color for input line"
@@ -1450,9 +1424,6 @@ msgstr ""
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr ""
 
-msgid "Error: not enough memory for infobar message"
-msgstr ""
-
 #, c-format
 msgid "Error: unable to bind key \"%s\""
 msgstr ""
@@ -1602,9 +1573,6 @@ msgstr ""
 msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
 msgstr ""
 
-msgid "test message in infobar"
-msgstr ""
-
 #, c-format
 msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 msgstr ""
@@ -1633,9 +1601,6 @@ msgid "[text]"
 msgstr ""
 
 msgid "text: write this text"
-msgstr ""
-
-msgid "print a message in infobar for 10 seconds"
 msgstr ""
 
 msgid "open a new buffer"

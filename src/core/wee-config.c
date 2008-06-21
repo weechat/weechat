@@ -47,7 +47,6 @@
 #include "../gui/gui-color.h"
 #include "../gui/gui-filter.h"
 #include "../gui/gui-hotlist.h"
-#include "../gui/gui-infobar.h"
 #include "../gui/gui-keyboard.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-status.h"
@@ -79,10 +78,6 @@ struct t_config_option *config_look_hotlist_names_count;
 struct t_config_option *config_look_hotlist_names_length;
 struct t_config_option *config_look_hotlist_names_level;
 struct t_config_option *config_look_hotlist_sort;
-struct t_config_option *config_look_infobar;
-struct t_config_option *config_look_infobar_delay_highlight;
-struct t_config_option *config_look_infobar_seconds;
-struct t_config_option *config_look_infobar_time_format;
 struct t_config_option *config_look_input_format;
 struct t_config_option *config_look_item_time_format;
 struct t_config_option *config_look_nicklist;
@@ -139,11 +134,6 @@ struct t_config_option *config_color_status_data_private;
 struct t_config_option *config_color_status_data_highlight;
 struct t_config_option *config_color_status_data_other;
 struct t_config_option *config_color_status_more;
-struct t_config_option *config_color_infobar;
-struct t_config_option *config_color_infobar_bg;
-struct t_config_option *config_color_infobar_delimiters;
-struct t_config_option *config_color_infobar_highlight;
-struct t_config_option *config_color_infobar_bg;
 struct t_config_option *config_color_input;
 struct t_config_option *config_color_input_bg;
 struct t_config_option *config_color_input_server;
@@ -377,50 +367,6 @@ config_change_nicks_colors (void *data, struct t_config_option *option)
         }
     }
     */
-}
-
-/*
- * config_change_infobar_seconds: called when display of seconds in infobar changed
- */
-
-void
-config_change_infobar_seconds (void *data, struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-    
-    int seconds;
-    
-    if (gui_infobar_refresh_timer)
-        unhook (gui_infobar_refresh_timer);
-    
-    seconds = (CONFIG_BOOLEAN(config_look_infobar_seconds)) ? 1 : 60;
-    gui_infobar_refresh_timer = hook_timer (NULL, seconds * 1000, seconds, 0,
-                                            gui_infobar_refresh_timer_cb, NULL);
-    (void) gui_infobar_refresh_timer_cb ("force");
-}
-
-/*
- * config_change_item_time_format: called when time format for time item changed
- */
-
-void
-config_change_item_time_format (void *data, struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-    
-    int seconds;
-    
-    if (gui_infobar_refresh_timer)
-        unhook (gui_infobar_refresh_timer);
-    
-    seconds = (CONFIG_BOOLEAN(config_look_infobar_seconds)) ? 1 : 60;
-    gui_infobar_refresh_timer = hook_timer (NULL, seconds * 1000, seconds, 0,
-                                            gui_infobar_refresh_timer_cb, NULL);
-    (void) gui_infobar_refresh_timer_cb ("force");
 }
 
 /*
@@ -860,28 +806,6 @@ config_weechat_init ()
         "group_time_asc|group_time_desc|group_number_asc|"
         "group_number_desc|number_asc|number_desc",
         0, 0, "group_time_asc", NULL, NULL, &config_change_hotlist, NULL, NULL, NULL);
-    config_look_infobar = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "infobar", "boolean",
-        N_("enable info bar"),
-        NULL, 0, 0, "on", NULL, NULL, &config_change_buffers, NULL, NULL, NULL);
-    config_look_infobar_delay_highlight = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "infobar_delay_highlight", "integer",
-        N_("delay (in seconds) for highlight messages in "
-           "infobar (0 = disable highlight notifications in "
-           "infobar)"),
-        NULL, 0, INT_MAX, "7", NULL, NULL, NULL, NULL, NULL, NULL);
-    config_look_infobar_seconds = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "infobar_seconds", "boolean",
-        N_("display seconds in infobar time"),
-        NULL, 0, 0, "on", NULL, NULL, &config_change_infobar_seconds, NULL, NULL, NULL);
-    config_look_infobar_time_format = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "infobar_time_format", "string",
-        N_("time format for time in infobar"),
-        NULL, 0, 0, "%B, %A %d %Y", NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_input_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "input_format", "string",
@@ -892,7 +816,7 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "item_time_format", "string",
         N_("time format for \"time\" bar item"),
-        NULL, 0, 0, "%H:%M", NULL, NULL, &config_change_item_time_format, NULL, NULL, NULL);
+        NULL, 0, 0, "%H:%M", NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_nicklist = config_file_new_option (
         weechat_config_file, ptr_section,
         "nicklist", "boolean",
@@ -1306,31 +1230,6 @@ config_weechat_init ()
         N_("text color for buffer with new data (status bar)"),
         NULL, GUI_COLOR_STATUS_MORE, 0, "yellow",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    /* infobar window */
-    config_color_infobar = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "infobar", "color",
-        N_("text color for infobar"),
-        NULL, GUI_COLOR_INFOBAR, 0, "black",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_infobar_bg = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "infobar_bg", "color",
-        N_("background color for infobar"),
-        NULL, -1, 0, "cyan",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_infobar_delimiters = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "infobar_delimiters", "color",
-        N_("text color for infobar delimiters"),
-        NULL, GUI_COLOR_INFOBAR_DELIMITERS, 0, "blue",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_infobar_highlight = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "infobar_highlight", "color",
-        N_("text color for infobar highlight notification"),
-        NULL, GUI_COLOR_INFOBAR_HIGHLIGHT, 0, "white",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* input window */
     config_color_input = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -1689,7 +1588,6 @@ config_weechat_read ()
     rc = config_file_read (weechat_config_file);
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
-        config_change_infobar_seconds (NULL, NULL);
         config_change_day_change (NULL, NULL);
         gui_bar_use_temp_bars ();
     }

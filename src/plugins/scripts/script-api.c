@@ -536,31 +536,6 @@ script_api_printf_y (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
- * script_api_infobar_printf: print a message in infobar
- */
-
-void
-script_api_infobar_printf (struct t_weechat_plugin *weechat_plugin,
-                           struct t_plugin_script *script,
-                           int delay, const char *color_name,
-                           const char *format, ...)
-{
-    va_list argptr;
-    char buf[1024];
-    char *buf2;
-    
-    va_start (argptr, format);
-    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
-    va_end (argptr);
-    
-    buf2 = (script->charset && script->charset[0]) ?
-        weechat_iconv_to_internal (script->charset, buf) : NULL;
-    weechat_infobar_printf (delay, color_name, "%s", (buf2) ? buf2 : buf);
-    if (buf2)
-        free (buf2);
-}
-
-/*
  * script_api_log_printf: add a message in WeeChat log file
  */
 

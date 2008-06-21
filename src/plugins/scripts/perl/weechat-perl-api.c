@@ -1792,64 +1792,6 @@ static XS (XS_weechat_print_y)
 }
 
 /*
- * weechat::infobar_print: print message to infobar
- */
-
-static XS (XS_weechat_infobar_print)
-{
-    char *color, *message;
-    dXSARGS;
-    
-    /* make C compiler happy */
-    (void) cv;
-    
-    if (!perl_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        PERL_RETURN_ERROR;
-    }
-    
-    if (items < 3)
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        PERL_RETURN_ERROR;
-    }
-    
-    color = SvPV (ST (1), PL_na);
-    message = SvPV (ST (2), PL_na);
-    script_api_infobar_printf (weechat_perl_plugin,
-                               perl_current_script,
-                               SvIV (ST (0)), /* delay */
-                               color,
-                               "%s",
-                               message);
-    
-    PERL_RETURN_OK;
-}
-
-/*
- * weechat::infobar_remove: remove message(s) from infobar
- */
-
-static XS (XS_weechat_infobar_remove)
-{
-    dXSARGS;
-    
-    /* make C compiler happy */
-    (void) cv;
-    
-    if (!perl_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_remove");
-        PERL_RETURN_ERROR;
-    }
-    
-    weechat_infobar_remove ((items >= 1) ? SvIV (ST (0)) : 0); /* how_many */
-    
-    PERL_RETURN_OK;
-}
-
-/*
  * weechat::log_print: print message in WeeChat log file
  */
 
@@ -3947,8 +3889,6 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::print", XS_weechat_print, "weechat");
     newXS ("weechat::print_date_tags", XS_weechat_print_date_tags, "weechat");
     newXS ("weechat::print_y", XS_weechat_print_y, "weechat");
-    newXS ("weechat::infobar_print", XS_weechat_infobar_print, "weechat");
-    newXS ("weechat::infobar_remove", XS_weechat_infobar_remove, "weechat");
     newXS ("weechat::log_print", XS_weechat_log_print, "weechat");
     newXS ("weechat::hook_command", XS_weechat_hook_command, "weechat");
     newXS ("weechat::hook_timer", XS_weechat_hook_timer, "weechat");

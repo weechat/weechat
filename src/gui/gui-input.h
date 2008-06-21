@@ -62,7 +62,6 @@ extern void gui_input_jump_smart ();
 extern void gui_input_jump_last_buffer ();
 extern void gui_input_jump_previous_buffer ();
 extern void gui_input_hotlist_clear ();
-extern void gui_input_infobar_clear ();
 extern void gui_input_grab_key ();
 extern void gui_input_scroll_unread ();
 extern void gui_input_set_unread ();

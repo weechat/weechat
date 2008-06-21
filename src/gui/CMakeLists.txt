@@ -28,7 +28,6 @@ gui-filter.c gui-filter.h
 gui-completion.c gui-completion.h
 gui-history.c gui-history.h
 gui-hotlist.c gui-hotlist.h
-gui-infobar.c gui-infobar.h
 gui-input.c gui-input.h
 gui-keyboard.c gui-keyboard.h
 gui-main.h

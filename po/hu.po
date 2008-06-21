@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-18 16:02+0200\n"
+"POT-Creation-Date: 2008-06-21 11:30+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -998,23 +998,6 @@ msgid ""
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 msgstr ""
 
-msgid "enable info bar"
-msgstr "információs pult engedélyezése"
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-"kihagyás (másodpercben) az üzenetek kiemelésére az információs pulton (0 = "
-"kiemelt üzenetek tiltása az információs pulton)"
-
-msgid "display seconds in infobar time"
-msgstr "másodpercek mutatása az információs pulton"
-
-#, fuzzy
-msgid "time format for time in infobar"
-msgstr "időbélyeg a információs pult idejéhez"
-
 #, c-format
 msgid ""
 "format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
@@ -1303,22 +1286,6 @@ msgstr "új adatot tartalmazó ablak színe (nem üzenetek) (státuszsor)"
 #, fuzzy
 msgid "text color for buffer with new data (status bar)"
 msgstr "új adatot tartalmazó ablak színe (státuszsor)"
-
-#, fuzzy
-msgid "text color for infobar"
-msgstr "információs pult szövegének színe"
-
-#, fuzzy
-msgid "background color for infobar"
-msgstr "információs pult szövegének színe"
-
-#, fuzzy
-msgid "text color for infobar delimiters"
-msgstr "információs pult határolóinak színe"
-
-#, fuzzy
-msgid "text color for infobar highlight notification"
-msgstr "információs pulton megjelenő kiemelések színe"
 
 #, fuzzy
 msgid "text color for input line"
@@ -1752,10 +1719,6 @@ msgstr "Nincs elég memória az új sorhoz\n"
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nincs elég memória az ignore elkészítéséhez\n"
 
-#, fuzzy
-msgid "Error: not enough memory for infobar message"
-msgstr "%s nincs elég memória az információs pult üzenethez\n"
-
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
 msgstr "%s nem sikerült a(z) \"%s\" billentyűt hozzárendelni\n"
@@ -1928,10 +1891,6 @@ msgstr ""
 msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
 msgstr ""
 
-#, fuzzy
-msgid "test message in infobar"
-msgstr "információs pult törlése"
-
 #, fuzzy, c-format
 msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 msgstr "%s hiányzó argumentum a \"%s\" parancsnak\n"
@@ -1963,10 +1922,6 @@ msgstr "szöveg"
 #, fuzzy
 msgid "text: write this text"
 msgstr "időbélyeg a információs pult idejéhez"
-
-#, fuzzy
-msgid "print a message in infobar for 10 seconds"
-msgstr "információs pult törlése"
 
 #, fuzzy
 msgid "open a new buffer"
@@ -4605,6 +4560,51 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#~ msgid "enable info bar"
+#~ msgstr "információs pult engedélyezése"
+
+#~ msgid ""
+#~ "delay (in seconds) for highlight messages in infobar (0 = disable "
+#~ "highlight notifications in infobar)"
+#~ msgstr ""
+#~ "kihagyás (másodpercben) az üzenetek kiemelésére az információs pulton (0 "
+#~ "= kiemelt üzenetek tiltása az információs pulton)"
+
+#~ msgid "display seconds in infobar time"
+#~ msgstr "másodpercek mutatása az információs pulton"
+
+#, fuzzy
+#~ msgid "time format for time in infobar"
+#~ msgstr "időbélyeg a információs pult idejéhez"
+
+#, fuzzy
+#~ msgid "text color for infobar"
+#~ msgstr "információs pult szövegének színe"
+
+#, fuzzy
+#~ msgid "background color for infobar"
+#~ msgstr "információs pult szövegének színe"
+
+#, fuzzy
+#~ msgid "text color for infobar delimiters"
+#~ msgstr "információs pult határolóinak színe"
+
+#, fuzzy
+#~ msgid "text color for infobar highlight notification"
+#~ msgstr "információs pulton megjelenő kiemelések színe"
+
+#, fuzzy
+#~ msgid "Error: not enough memory for infobar message"
+#~ msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
+#, fuzzy
+#~ msgid "test message in infobar"
+#~ msgstr "információs pult törlése"
+
+#, fuzzy
+#~ msgid "print a message in infobar for 10 seconds"
+#~ msgstr "információs pult törlése"
 
 #~ msgid ""
 #~ "comma separated list of notify levels for channels of this server "

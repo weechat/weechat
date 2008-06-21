@@ -41,10 +41,6 @@ extern int plugin_api_config_set_plugin (struct t_weechat_plugin *plugin,
 /* display */
 extern char *plugin_api_prefix (const char *prefix);
 extern char *plugin_api_color (const char *color_name);
-extern void plugin_api_infobar_printf (struct t_weechat_plugin *plugin,
-                                       int delay, const char *color_name,
-                                       const char *format, ...);
-extern void plugin_api_infobar_remove (int how_many);
 
 /* command */
 extern void plugin_api_command (struct t_weechat_plugin *plugin,

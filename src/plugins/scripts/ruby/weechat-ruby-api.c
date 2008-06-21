@@ -2200,87 +2200,6 @@ weechat_ruby_api_print_y (VALUE class, VALUE buffer, VALUE y, VALUE message)
 }
 
 /*
- * weechat_ruby_api_infobar_print: print message to infobar
- */
-
-static VALUE
-weechat_ruby_api_infobar_print (VALUE class, VALUE delay, VALUE color,
-                                VALUE message)
-{
-    int c_delay;
-    char *c_color, *c_message;
-
-    /* make C compiler happy */
-    (void) class;
-    
-    if (!ruby_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_print");
-        RUBY_RETURN_ERROR;
-    }
-    
-    c_delay = 1;
-    c_color = NULL;
-    c_message = NULL;
-    
-    if (NIL_P (delay) || NIL_P (color) || NIL_P (message))
-    {
-        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infobar_print");
-        RUBY_RETURN_ERROR;
-    }
-    
-    Check_Type (delay, T_FIXNUM);
-    Check_Type (color, T_STRING);
-    Check_Type (message, T_STRING);
-    
-    c_delay = FIX2INT (delay);
-    c_color = STR2CSTR (color);
-    c_message = STR2CSTR (message);
-    
-    script_api_infobar_printf (weechat_ruby_plugin,
-                               ruby_current_script,
-                               c_delay, c_color, "%s", c_message);
-    
-    RUBY_RETURN_OK;
-}
-
-/*
- * weechat_ruby_api_infobar_remove: remove message(s) from infobar
- */
-
-static VALUE
-weechat_ruby_api_infobar_remove (int argc, VALUE *argv, VALUE class)
-{
-    VALUE how_many;
-    int c_how_many;
-    
-    /* make C compiler happy */
-    (void) class;
-    
-    if (!ruby_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infobar_remove");
-        RUBY_RETURN_ERROR;
-    }
-    
-    how_many = Qnil;
-    
-    rb_scan_args (argc, argv, "01", &how_many);
-    
-    if (!NIL_P (how_many))
-    {
-        Check_Type (how_many, T_FIXNUM);
-        c_how_many = FIX2INT (how_many);
-    }
-    else
-        c_how_many = 0;
-    
-    weechat_infobar_remove (c_how_many);
-    
-    RUBY_RETURN_OK;
-}
-
-/*
  * weechat_ruby_api_log_print: print message in WeeChat log file
  */
 
@@ -4840,8 +4759,6 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "print", &weechat_ruby_api_print, 2);
     rb_define_module_function (ruby_mWeechat, "print_date_tags", &weechat_ruby_api_print_date_tags, 4);
     rb_define_module_function (ruby_mWeechat, "print_y", &weechat_ruby_api_print_y, 3);
-    rb_define_module_function (ruby_mWeechat, "infobar_print", &weechat_ruby_api_infobar_print, 3);
-    rb_define_module_function (ruby_mWeechat, "infobar_remove", &weechat_ruby_api_infobar_remove, -1);
     rb_define_module_function (ruby_mWeechat, "log_print", &weechat_ruby_api_log_print, 1);
     rb_define_module_function (ruby_mWeechat, "hook_command", &weechat_ruby_api_hook_command, 6);
     rb_define_module_function (ruby_mWeechat, "hook_timer", &weechat_ruby_api_hook_timer, 4);

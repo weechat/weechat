@@ -33,7 +33,6 @@ SET(WEECHAT_SOURCES
 ./src/gui/curses/gui-curses-chat.c
 ./src/gui/curses/gui-curses-color.c
 ./src/gui/curses/gui-curses.h
-./src/gui/curses/gui-curses-infobar.c
 ./src/gui/curses/gui-curses-input.c
 ./src/gui/curses/gui-curses-keyboard.c
 ./src/gui/curses/gui-curses-main.c
@@ -44,7 +43,6 @@ SET(WEECHAT_SOURCES
 ./src/gui/gtk/gui-gtk-chat.c
 ./src/gui/gtk/gui-gtk-color.c
 ./src/gui/gtk/gui-gtk.h
-./src/gui/gtk/gui-gtk-infobar.c
 ./src/gui/gtk/gui-gtk-input.c
 ./src/gui/gtk/gui-gtk-keyboard.c
 ./src/gui/gtk/gui-gtk-main.c
@@ -69,8 +67,6 @@ SET(WEECHAT_SOURCES
 ./src/gui/gui-history.h
 ./src/gui/gui-hotlist.c
 ./src/gui/gui-hotlist.h
-./src/gui/gui-infobar.c
-./src/gui/gui-infobar.h
 ./src/gui/gui-input.c
 ./src/gui/gui-input.h
 ./src/gui/gui-keyboard.c

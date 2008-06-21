@@ -1127,8 +1127,6 @@ command_input (void *data, struct t_gui_buffer *buffer,
             gui_input_jump_previous_buffer ();
         else if (string_strcasecmp (argv[1], "hotlist_clear") == 0)
             gui_input_hotlist_clear ();
-        else if (string_strcasecmp (argv[1], "infobar_clear") == 0)
-            gui_input_infobar_clear ();
         else if (string_strcasecmp (argv[1], "grab_key") == 0)
             gui_input_grab_key ();
         else if (string_strcasecmp (argv[1], "scroll_unread") == 0)
@@ -2658,8 +2656,8 @@ command_init ()
                   "move_next_word | history_previous | history_next | "
                   "history_global_previous | history_global_next | "
                   "jump_smart | jump_last_buffer | jump_previous_buffer | "
-                  "hotlist_clear | infobar_clear | grab_key | scroll_unread | "
-                  "set_unread | set_unread_current_buffer | insert [args]",
+                  "hotlist_clear | grab_key | scroll_unread | set_unread | "
+                  "set_unread_current_buffer | insert [args]",
                   _("This command is used by key bindings or plugins."),
                   "return|complete_next|complete_previous|search_next|"
                   "delete_previous_char|delete_next_char|"
@@ -2671,8 +2669,8 @@ command_init ()
                   "move_next_word|history_previous|history_next|"
                   "history_global_previous|history_global_next|"
                   "jump_smart|jump_last_buffer|jump_previous_buffer|"
-                  "hotlist_clear|infobar_clear|grab_key|scroll_unread|"
-                  "set_unread|set_unread_current_buffer|insert",
+                  "hotlist_clear|grab_key|scroll_unread|set_unread|"
+                  "set_unread_current_buffer|insert",
                   &command_input, NULL);
     hook_command (NULL, "key",
                   N_("bind/unbind keys"),

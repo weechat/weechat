@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-18 16:02+0200\n"
+"POT-Creation-Date: 2008-06-21 11:30+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -999,23 +999,6 @@ msgstr ""
 "тип сортировки хотлиста (group_time_asc (по-умолчанию), group_time_desc, "
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 
-msgid "enable info bar"
-msgstr "включить информационную панель"
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-"задержка (в секундах) отображения сообщений в информационной строке (0 = "
-"отключить уведомления в информационной строке)"
-
-msgid "display seconds in infobar time"
-msgstr "показывать секунды в часах информационной панели"
-
-#, fuzzy
-msgid "time format for time in infobar"
-msgstr "время в информационной строке"
-
 #, c-format
 msgid ""
 "format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
@@ -1306,22 +1289,6 @@ msgstr "цвет окна с новыми данными (но не сообще
 #, fuzzy
 msgid "text color for buffer with new data (status bar)"
 msgstr "цвет окна с новыми данными (в строке состояния)"
-
-#, fuzzy
-msgid "text color for infobar"
-msgstr "цвет текста информационной панели"
-
-#, fuzzy
-msgid "background color for infobar"
-msgstr "цвет текста информационной панели"
-
-#, fuzzy
-msgid "text color for infobar delimiters"
-msgstr "цвет разделителей информационной панели"
-
-#, fuzzy
-msgid "text color for infobar highlight notification"
-msgstr "цвет оповещения в информационной панели"
 
 #, fuzzy
 msgid "text color for input line"
@@ -1757,10 +1724,6 @@ msgstr "Недостаточно памяти для новой строчки\n
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s не могу добавить буфер в хотлист\n"
 
-#, fuzzy
-msgid "Error: not enough memory for infobar message"
-msgstr "%s недостаточно памяти для сообщения в строке информации\n"
-
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
 msgstr "%s не могу установить клавишу \"%s\"\n"
@@ -1933,10 +1896,6 @@ msgstr ""
 msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
 msgstr ""
 
-#, fuzzy
-msgid "test message in infobar"
-msgstr "очистить информационную панель"
-
 #, fuzzy, c-format
 msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 msgstr "%s нет аргументов для \"%s\" команды\n"
@@ -1968,10 +1927,6 @@ msgstr "текст"
 #, fuzzy
 msgid "text: write this text"
 msgstr "время в информационной строке"
-
-#, fuzzy
-msgid "print a message in infobar for 10 seconds"
-msgstr "очистить информационную панель"
 
 #, fuzzy
 msgid "open a new buffer"
@@ -4588,6 +4543,51 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#~ msgid "enable info bar"
+#~ msgstr "включить информационную панель"
+
+#~ msgid ""
+#~ "delay (in seconds) for highlight messages in infobar (0 = disable "
+#~ "highlight notifications in infobar)"
+#~ msgstr ""
+#~ "задержка (в секундах) отображения сообщений в информационной строке (0 = "
+#~ "отключить уведомления в информационной строке)"
+
+#~ msgid "display seconds in infobar time"
+#~ msgstr "показывать секунды в часах информационной панели"
+
+#, fuzzy
+#~ msgid "time format for time in infobar"
+#~ msgstr "время в информационной строке"
+
+#, fuzzy
+#~ msgid "text color for infobar"
+#~ msgstr "цвет текста информационной панели"
+
+#, fuzzy
+#~ msgid "background color for infobar"
+#~ msgstr "цвет текста информационной панели"
+
+#, fuzzy
+#~ msgid "text color for infobar delimiters"
+#~ msgstr "цвет разделителей информационной панели"
+
+#, fuzzy
+#~ msgid "text color for infobar highlight notification"
+#~ msgstr "цвет оповещения в информационной панели"
+
+#, fuzzy
+#~ msgid "Error: not enough memory for infobar message"
+#~ msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, fuzzy
+#~ msgid "test message in infobar"
+#~ msgstr "очистить информационную панель"
+
+#, fuzzy
+#~ msgid "print a message in infobar for 10 seconds"
+#~ msgstr "очистить информационную панель"
 
 #~ msgid ""
 #~ "comma separated list of notify levels for channels of this server "

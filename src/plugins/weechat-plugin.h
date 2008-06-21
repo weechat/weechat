@@ -294,9 +294,6 @@ struct t_weechat_plugin
                               const char *tags, const char *message, ...);
     void (*printf_y) (struct t_gui_buffer *buffer, int y,
                       const char *message, ...);
-    void (*infobar_printf) (struct t_weechat_plugin *plugin, int delay,
-                            const char *color_name, const char *format, ...);
-    void (*infobar_remove) (int how_many);
     void (*log_printf) (const char *message, ...);
     
     /* hooks */
@@ -736,12 +733,6 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                  __argz...)                             \
     weechat_plugin->printf_date_tags(__buffer, __date, __tags,          \
                                      __message, ##__argz)
-#define weechat_infobar_printf(__delay, __color_name, __message,        \
-                               __argz...)                               \
-    weechat_plugin->infobar_printf(weechat_plugin, __delay,             \
-                                   __color_name, __message, ##__argz)
-#define weechat_infobar_remove(__how_many)      \
-    weechat_plugin->infobar_remove(__how_many)
 #define weechat_log_printf(__message, __argz...)        \
     weechat_plugin->log_printf(__message, ##__argz)
 

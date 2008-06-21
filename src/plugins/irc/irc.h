@@ -55,7 +55,6 @@
 #define IRC_COLOR_CHAT_NICK_SELF weechat_color("chat_nick_self")
 #define IRC_COLOR_CHAT_NICK_OTHER weechat_color("chat_nick_other")
 #define IRC_COLOR_CHAT_SERVER weechat_color("chat_server")
-#define IRC_COLOR_INFOBAR_HIGHLIGHT weechat_color("infobar_highlight")
 #define IRC_COLOR_NICKLIST_PREFIX1 weechat_color("nicklist_prefix1")
 #define IRC_COLOR_NICKLIST_PREFIX2 weechat_color("nicklist_prefix2")
 #define IRC_COLOR_NICKLIST_PREFIX3 weechat_color("nicklist_prefix3")

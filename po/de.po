@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-18 16:02+0200\n"
+"POT-Creation-Date: 2008-06-21 11:30+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -990,23 +990,6 @@ msgid ""
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 msgstr ""
 
-msgid "enable info bar"
-msgstr "Infoleiste aktivieren"
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-"Anzeigezeit in Sekunden für Highlight-Messages in der Infobar (0: gar nicht "
-"erst anzeigen)"
-
-msgid "display seconds in infobar time"
-msgstr "Sekunden in der Infobar-Zeit anzeigen"
-
-#, fuzzy
-msgid "time format for time in infobar"
-msgstr "Timestamp in der Infobar"
-
 #, c-format
 msgid ""
 "format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
@@ -1295,22 +1278,6 @@ msgstr ""
 #, fuzzy
 msgid "text color for buffer with new data (status bar)"
 msgstr "Farbe eines Fensters mit neuen Daten in der Statuszeile"
-
-#, fuzzy
-msgid "text color for infobar"
-msgstr "Farbe des Infobar-Textes"
-
-#, fuzzy
-msgid "background color for infobar"
-msgstr "Farbe des Infobar-Textes"
-
-#, fuzzy
-msgid "text color for infobar delimiters"
-msgstr "Farbe der Infobar-Trennzeichen"
-
-#, fuzzy
-msgid "text color for infobar highlight notification"
-msgstr "Farbe der Infobar-Highlight-Notifikation"
 
 #, fuzzy
 msgid "text color for input line"
@@ -1750,10 +1717,6 @@ msgstr "Nicht genügend Speicher für neue Zeile\n"
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s Puffer kann nicht zur Hotlist hinzugefügt werden\n"
 
-#, fuzzy
-msgid "Error: not enough memory for infobar message"
-msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
-
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
 msgstr "%s kann die Taste \"%s\" nicht zuordnen\n"
@@ -1924,10 +1887,6 @@ msgstr ""
 msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
 msgstr ""
 
-#, fuzzy
-msgid "test message in infobar"
-msgstr "Infobar leeren"
-
 #, fuzzy, c-format
 msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 msgstr "%s fehlende Argumente für den \"%s\"-Befehl\n"
@@ -1959,10 +1918,6 @@ msgstr "Text"
 #, fuzzy
 msgid "text: write this text"
 msgstr "Timestamp in der Infobar"
-
-#, fuzzy
-msgid "print a message in infobar for 10 seconds"
-msgstr "Infobar leeren"
 
 #, fuzzy
 msgid "open a new buffer"
@@ -4589,6 +4544,51 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#~ msgid "enable info bar"
+#~ msgstr "Infoleiste aktivieren"
+
+#~ msgid ""
+#~ "delay (in seconds) for highlight messages in infobar (0 = disable "
+#~ "highlight notifications in infobar)"
+#~ msgstr ""
+#~ "Anzeigezeit in Sekunden für Highlight-Messages in der Infobar (0: gar "
+#~ "nicht erst anzeigen)"
+
+#~ msgid "display seconds in infobar time"
+#~ msgstr "Sekunden in der Infobar-Zeit anzeigen"
+
+#, fuzzy
+#~ msgid "time format for time in infobar"
+#~ msgstr "Timestamp in der Infobar"
+
+#, fuzzy
+#~ msgid "text color for infobar"
+#~ msgstr "Farbe des Infobar-Textes"
+
+#, fuzzy
+#~ msgid "background color for infobar"
+#~ msgstr "Farbe des Infobar-Textes"
+
+#, fuzzy
+#~ msgid "text color for infobar delimiters"
+#~ msgstr "Farbe der Infobar-Trennzeichen"
+
+#, fuzzy
+#~ msgid "text color for infobar highlight notification"
+#~ msgstr "Farbe der Infobar-Highlight-Notifikation"
+
+#, fuzzy
+#~ msgid "Error: not enough memory for infobar message"
+#~ msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
+
+#, fuzzy
+#~ msgid "test message in infobar"
+#~ msgstr "Infobar leeren"
+
+#, fuzzy
+#~ msgid "print a message in infobar for 10 seconds"
+#~ msgstr "Infobar leeren"
 
 #~ msgid ""
 #~ "comma separated list of notify levels for channels of this server "

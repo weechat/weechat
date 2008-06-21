@@ -36,8 +36,6 @@ lib_weechat_gui_common_a_SOURCES = gui-bar.c \
                                    gui-history.h \
                                    gui-hotlist.c \
                                    gui-hotlist.h \
-                                   gui-infobar.c \
-                                   gui-infobar.h \
                                    gui-input.c \
                                    gui-input.h \
                                    gui-keyboard.c \

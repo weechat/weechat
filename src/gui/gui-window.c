@@ -236,11 +236,6 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         new_window->win_status_width = 0;
         new_window->win_status_height = 0;
         
-        new_window->win_infobar_x = 0;
-        new_window->win_infobar_y = 0;
-        new_window->win_infobar_width = 0;
-        new_window->win_infobar_height = 0;
-        
         new_window->win_input_x = 0;
         new_window->win_input_y = 0;
         new_window->win_input_width = 0;
@@ -925,10 +920,6 @@ gui_window_print_log ()
         log_printf ("  win_status_y. . . . : %d",   ptr_window->win_status_y);
         log_printf ("  win_status_width. . : %d",   ptr_window->win_status_width);
         log_printf ("  win_status_height . : %d",   ptr_window->win_status_height);
-        log_printf ("  win_infobar_x . . . : %d",   ptr_window->win_infobar_x);
-        log_printf ("  win_infobar_y . . . : %d",   ptr_window->win_infobar_y);
-        log_printf ("  win_infobar_width . : %d",   ptr_window->win_infobar_width);
-        log_printf ("  win_infobar_height. : %d",   ptr_window->win_infobar_height);
         log_printf ("  win_input_x . . . . : %d",   ptr_window->win_input_x);
         log_printf ("  win_input_y . . . . : %d",   ptr_window->win_input_y);
         log_printf ("  win_input_width . . : %d",   ptr_window->win_input_width);

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-18 16:02+0200\n"
-"PO-Revision-Date: 2008-06-18 16:02+0200\n"
+"POT-Creation-Date: 2008-06-21 11:30+0200\n"
+"PO-Revision-Date: 2008-06-21 11:30+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1006,22 +1006,6 @@ msgstr ""
 "group_time_desc, group_number_asc, group_number_desc, number_asc, "
 "number_desc)"
 
-msgid "enable info bar"
-msgstr "active la barre d'infos"
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-"délai (en secondes) pour la notification des messages dans la barre d'infos "
-"(0 = désactiver les notifications dans la barre d'infos)"
-
-msgid "display seconds in infobar time"
-msgstr "afficher les secondes pour l'heure dans la barre d'infos"
-
-msgid "time format for time in infobar"
-msgstr "format de date/heure dans la barre d'infos"
-
 #, c-format
 msgid ""
 "format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
@@ -1263,18 +1247,6 @@ msgstr ""
 msgid "text color for buffer with new data (status bar)"
 msgstr ""
 "couleur du texte pour un tampon avec des nouvelles données (barre de statut)"
-
-msgid "text color for infobar"
-msgstr "couleur du texte pour la barre d'infos"
-
-msgid "background color for infobar"
-msgstr "couleur du fond pour la barre d'infos"
-
-msgid "text color for infobar delimiters"
-msgstr "couleur du texte pour les délimiteurs de la barre d'infos"
-
-msgid "text color for infobar highlight notification"
-msgstr "couleur du texte pour la notification dans la barre d'infos"
 
 msgid "text color for input line"
 msgstr "couleur du texte pour la ligne de saisie"
@@ -1700,9 +1672,6 @@ msgstr "Pas assez de mémoire pour une nouvelle ligne"
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Erreur: impossible d'ajouter le tampon à la liste des tampons actifs"
 
-msgid "Error: not enough memory for infobar message"
-msgstr "Erreur: pas assez de mémoire pour un message de la barre d'infos"
-
 #, c-format
 msgid "Error: unable to bind key \"%s\""
 msgstr "Erreur: impossible de créer la touche \"%s\""
@@ -1872,9 +1841,6 @@ msgstr "%smessage de démonstration avec préfixe d'erreur"
 msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
 msgstr "couleurs: %s tampon %s pseudo1 %s pseudo2 %s pseudo3 %s pseudo4"
 
-msgid "test message in infobar"
-msgstr "message de test dans la barre d'infos"
-
 #, c-format
 msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 msgstr "%s%s: paramètre manquant pour la commande \"%s\" (essayez /help %s)"
@@ -1905,9 +1871,6 @@ msgstr "[texte]"
 
 msgid "text: write this text"
 msgstr "texte: affiche ce texte"
-
-msgid "print a message in infobar for 10 seconds"
-msgstr "affiche un message dans la barre d'infos pendant 10 secondes"
 
 msgid "open a new buffer"
 msgstr "ouvrir un nouveau tampon"
@@ -4555,12 +4518,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid ""
-#~ "comma separated list of notify levels for channels of this server "
-#~ "(format: #channel:1,..), a channel name '*' is reserved for server "
-#~ "default notify level"
-#~ msgstr ""
-#~ "liste des niveaux de notifications (séparés par des virgules) pour les "
-#~ "canaux de ce serveur (format: #canal:1,..), un nom de canal '*' est "
-#~ "réservé pour la notification par défaut du serveur"

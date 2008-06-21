@@ -64,12 +64,6 @@ struct t_gui_window
     int win_status_width;              /* width of status window            */
     int win_status_height;             /* height of status window           */
     
-    /* infobar bar settings */
-    int win_infobar_x;                 /* infobar window position           */
-    int win_infobar_y;                 /* infobar window position           */
-    int win_infobar_width;             /* width of infobar window           */
-    int win_infobar_height;            /* height of infobar window          */
-    
     /* input window settings */
     int win_input_x;                   /* input window position             */
     int win_input_y;                   /* input window position             */

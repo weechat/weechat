@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-18 16:02+0200\n"
+"POT-Creation-Date: 2008-06-21 11:30+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -997,23 +997,6 @@ msgstr ""
 "[skupina_číslo_vzestupně], group_number_desc [skupina_číslo_sestupně], "
 "number_asc [číslo_vzestupně], number_desc [číslo_sestupně] ) "
 
-msgid "enable info bar"
-msgstr "povolit info bar"
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-"podržet (v sekundách) zvýrazněnou zprávu v infobaru (0 = zakázat zvýrazněnou "
-"notifikaci v infobaru)"
-
-msgid "display seconds in infobar time"
-msgstr "zobrazit sekundy v čase v infobaru"
-
-#, fuzzy
-msgid "time format for time in infobar"
-msgstr "časová značka pro čas v infobaru"
-
 #, c-format
 msgid ""
 "format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
@@ -1300,22 +1283,6 @@ msgstr "barva okna s novými daty (ne zprávami) (status bar)"
 #, fuzzy
 msgid "text color for buffer with new data (status bar)"
 msgstr "barva okna s novými daty (status bar)"
-
-#, fuzzy
-msgid "text color for infobar"
-msgstr "barva textu v info baru"
-
-#, fuzzy
-msgid "background color for infobar"
-msgstr "barva textu v info baru"
-
-#, fuzzy
-msgid "text color for infobar delimiters"
-msgstr "barva děličů v infobaru"
-
-#, fuzzy
-msgid "text color for infobar highlight notification"
-msgstr "barva upozornění zvýraznění v info baru"
 
 #, fuzzy
 msgid "text color for input line"
@@ -1748,10 +1715,6 @@ msgstr "Nedostatek paměti pro nový řádek\n"
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nemohu přidat buffer do hotlistu\n"
 
-#, fuzzy
-msgid "Error: not enough memory for infobar message"
-msgstr "%s nedostatek paměti pro infobar zprávu\n"
-
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
 msgstr "%s nemohu napojit kalávesu \"%s\"\n"
@@ -1923,10 +1886,6 @@ msgstr ""
 msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
 msgstr ""
 
-#, fuzzy
-msgid "test message in infobar"
-msgstr "vyčisti infobar"
-
 #, fuzzy, c-format
 msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 msgstr "%s chybí argumenty pro příkaz \"%s\"\n"
@@ -1958,10 +1917,6 @@ msgstr "text"
 #, fuzzy
 msgid "text: write this text"
 msgstr "časová značka pro čas v infobaru"
-
-#, fuzzy
-msgid "print a message in infobar for 10 seconds"
-msgstr "vyčisti infobar"
 
 #, fuzzy
 msgid "open a new buffer"
@@ -4599,6 +4554,51 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#~ msgid "enable info bar"
+#~ msgstr "povolit info bar"
+
+#~ msgid ""
+#~ "delay (in seconds) for highlight messages in infobar (0 = disable "
+#~ "highlight notifications in infobar)"
+#~ msgstr ""
+#~ "podržet (v sekundách) zvýrazněnou zprávu v infobaru (0 = zakázat "
+#~ "zvýrazněnou notifikaci v infobaru)"
+
+#~ msgid "display seconds in infobar time"
+#~ msgstr "zobrazit sekundy v čase v infobaru"
+
+#, fuzzy
+#~ msgid "time format for time in infobar"
+#~ msgstr "časová značka pro čas v infobaru"
+
+#, fuzzy
+#~ msgid "text color for infobar"
+#~ msgstr "barva textu v info baru"
+
+#, fuzzy
+#~ msgid "background color for infobar"
+#~ msgstr "barva textu v info baru"
+
+#, fuzzy
+#~ msgid "text color for infobar delimiters"
+#~ msgstr "barva děličů v infobaru"
+
+#, fuzzy
+#~ msgid "text color for infobar highlight notification"
+#~ msgstr "barva upozornění zvýraznění v info baru"
+
+#, fuzzy
+#~ msgid "Error: not enough memory for infobar message"
+#~ msgstr "%s nedostatek paměti pro infobar zprávu\n"
+
+#, fuzzy
+#~ msgid "test message in infobar"
+#~ msgstr "vyčisti infobar"
+
+#, fuzzy
+#~ msgid "print a message in infobar for 10 seconds"
+#~ msgstr "vyčisti infobar"
 
 #~ msgid ""
 #~ "comma separated list of notify levels for channels of this server "

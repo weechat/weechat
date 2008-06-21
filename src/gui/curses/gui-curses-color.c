@@ -395,10 +395,6 @@ gui_color_init_weechat ()
     gui_color_build (GUI_COLOR_STATUS_DATA_OTHER, CONFIG_COLOR(config_color_status_data_other), CONFIG_COLOR(config_color_status_bg));
     gui_color_build (GUI_COLOR_STATUS_MORE, CONFIG_COLOR(config_color_status_more), CONFIG_COLOR(config_color_status_bg));
     
-    gui_color_build (GUI_COLOR_INFOBAR, CONFIG_COLOR(config_color_infobar), CONFIG_COLOR(config_color_infobar_bg));
-    gui_color_build (GUI_COLOR_INFOBAR_DELIMITERS, CONFIG_COLOR(config_color_infobar_delimiters), CONFIG_COLOR(config_color_infobar_bg));
-    gui_color_build (GUI_COLOR_INFOBAR_HIGHLIGHT, CONFIG_COLOR(config_color_infobar_highlight), CONFIG_COLOR(config_color_infobar_bg));
-    
     gui_color_build (GUI_COLOR_INPUT, CONFIG_COLOR(config_color_input), CONFIG_COLOR(config_color_input_bg));
     gui_color_build (GUI_COLOR_INPUT_SERVER, CONFIG_COLOR(config_color_input_server), CONFIG_COLOR(config_color_input_bg));
     gui_color_build (GUI_COLOR_INPUT_CHANNEL, CONFIG_COLOR(config_color_input_channel), CONFIG_COLOR(config_color_input_bg));

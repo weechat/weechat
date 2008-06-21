@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-18 16:02+0200\n"
+"POT-Creation-Date: 2008-06-21 11:30+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -969,23 +969,6 @@ msgid ""
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 msgstr ""
 
-msgid "enable info bar"
-msgstr "activa la barra de informaciÃ³n"
-
-msgid ""
-"delay (in seconds) for highlight messages in infobar (0 = disable highlight "
-"notifications in infobar)"
-msgstr ""
-"retraso (en segundos) para la notificaciÃ³n de mensajes en la barra de "
-"informaciÃ³n (0 = desactivar las notificaciones en la barra de informaciÃ³n)"
-
-msgid "display seconds in infobar time"
-msgstr "mostrar segundos en la hora de la barra de herramientas"
-
-#, fuzzy
-msgid "time format for time in infobar"
-msgstr "fecha y hora para las conversaciones guardadas"
-
 #, c-format
 msgid ""
 "format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
@@ -1073,8 +1056,8 @@ msgstr "la cadena mostrada tras la finalizaciÃ³n de los nombres de usuario"
 #, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
-"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea "
-"sin leer"
+"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea sin "
+"leer"
 
 #, fuzzy
 msgid "save configuration file on exit"
@@ -1280,22 +1263,6 @@ msgstr ""
 #, fuzzy
 msgid "text color for buffer with new data (status bar)"
 msgstr "color para una ventana con nuevos datos (barra de estado)"
-
-#, fuzzy
-msgid "text color for infobar"
-msgstr "color para el texto de la barra de informaciÃ³n"
-
-#, fuzzy
-msgid "background color for infobar"
-msgstr "color para el texto de la barra de informaciÃ³n"
-
-#, fuzzy
-msgid "text color for infobar delimiters"
-msgstr "color para los delimitadores de la barra de informaciÃ³n"
-
-#, fuzzy
-msgid "text color for infobar highlight notification"
-msgstr "color para la notificaciÃ³n en la barra de informaciÃ³n"
 
 #, fuzzy
 msgid "text color for input line"
@@ -1604,8 +1571,8 @@ msgid ""
 "support.\n"
 "Be careful, private info may be in these files.\n"
 msgstr ""
-"Por favor, envÃ­a %s/%s, %s/%s y los mensajes de arriba a los "
-"desarrolladores de Weechat para el soporte.\n"
+"Por favor, envÃ­a %s/%s, %s/%s y los mensajes de arriba a los desarrolladores "
+"de Weechat para el soporte.\n"
 "SÃ© cuidadoso, puede que haya informaciÃ³n privada en estos ficheros.\n"
 
 #, c-format
@@ -1732,11 +1699,6 @@ msgstr "No hay suficiente memoria para una nueva lÃ­nea\n"
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s no es posible aÃ±adir un bÃºfer a la lista caliente (hotlist)\n"
-
-#, fuzzy
-msgid "Error: not enough memory for infobar message"
-msgstr ""
-"No hay suficiente memoria para el mensaje de la barra de informaciÃ³n\n"
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
@@ -1903,10 +1865,6 @@ msgstr ""
 msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
 msgstr ""
 
-#, fuzzy
-msgid "test message in infobar"
-msgstr "limpiar barra de informaciÃ³n"
-
 #, fuzzy, c-format
 msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 msgstr "%s faltan argumentos para el comando \"%s\"\n"
@@ -1938,10 +1896,6 @@ msgstr "texto"
 #, fuzzy
 msgid "text: write this text"
 msgstr "fecha y hora para las conversaciones guardadas"
-
-#, fuzzy
-msgid "print a message in infobar for 10 seconds"
-msgstr "limpiar barra de informaciÃ³n"
 
 #, fuzzy
 msgid "open a new buffer"
@@ -4599,6 +4553,53 @@ msgstr "%s no es posible crear el servidor\n"
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
+#~ msgid "enable info bar"
+#~ msgstr "activa la barra de informaciÃ³n"
+
+#~ msgid ""
+#~ "delay (in seconds) for highlight messages in infobar (0 = disable "
+#~ "highlight notifications in infobar)"
+#~ msgstr ""
+#~ "retraso (en segundos) para la notificaciÃ³n de mensajes en la barra de "
+#~ "informaciÃ³n (0 = desactivar las notificaciones en la barra de "
+#~ "informaciÃ³n)"
+
+#~ msgid "display seconds in infobar time"
+#~ msgstr "mostrar segundos en la hora de la barra de herramientas"
+
+#, fuzzy
+#~ msgid "time format for time in infobar"
+#~ msgstr "fecha y hora para las conversaciones guardadas"
+
+#, fuzzy
+#~ msgid "text color for infobar"
+#~ msgstr "color para el texto de la barra de informaciÃ³n"
+
+#, fuzzy
+#~ msgid "background color for infobar"
+#~ msgstr "color para el texto de la barra de informaciÃ³n"
+
+#, fuzzy
+#~ msgid "text color for infobar delimiters"
+#~ msgstr "color para los delimitadores de la barra de informaciÃ³n"
+
+#, fuzzy
+#~ msgid "text color for infobar highlight notification"
+#~ msgstr "color para la notificaciÃ³n en la barra de informaciÃ³n"
+
+#, fuzzy
+#~ msgid "Error: not enough memory for infobar message"
+#~ msgstr ""
+#~ "No hay suficiente memoria para el mensaje de la barra de informaciÃ³n\n"
+
+#, fuzzy
+#~ msgid "test message in infobar"
+#~ msgstr "limpiar barra de informaciÃ³n"
+
+#, fuzzy
+#~ msgid "print a message in infobar for 10 seconds"
+#~ msgstr "limpiar barra de informaciÃ³n"
+
 #, fuzzy
 #~ msgid ""
 #~ "comma separated list of notify levels for channels of this server "
@@ -5443,8 +5444,8 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ "maximum number of lines in history for one server/channel/private window "
 #~ "(0 = unlimited)"
 #~ msgstr ""
-#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/"
-#~ "privado (0 = ilimitado)"
+#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/privado "
+#~ "(0 = ilimitado)"
 
 #, fuzzy
 #~ msgid "log messages from plugins"
@@ -5638,8 +5639,8 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ "max size for aligning nick and other messages (should be >= to "
 #~ "look_align_size)"
 #~ msgstr ""
-#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a "
-#~ "ser >= a look_align_size)"
+#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a ser "
+#~ ">= a look_align_size)"
 
 #~ msgid "server name not found"
 #~ msgstr "nombre de servidor no encontrado"
@@ -6426,8 +6427,7 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #~ msgid "color for chan owner symbol (specific to unrealircd)"
 #~ msgstr ""
-#~ "color para el sÃ­mbolo de propietario de canal (especificado en "
-#~ "unrealircd)"
+#~ "color para el sÃ­mbolo de propietario de canal (especificado en unrealircd)"
 
 #~ msgid "color for chan admin symbol"
 #~ msgstr "color para el sÃ­mbolo de administrador de canal"

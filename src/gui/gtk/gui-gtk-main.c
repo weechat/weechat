@@ -37,7 +37,6 @@
 #include "../gui-main.h"
 #include "../gui-buffer.h"
 #include "../gui-history.h"
-#include "../gui-infobar.h"
 #include "../gui-input.h"
 #include "../gui-window.h"
 #include "gui-gtk.h"
@@ -84,8 +83,6 @@ gui_main_init ()
     GdkColor color_fg, color_bg;
     
     gui_color_init ();
-    
-    gui_infobar = NULL;
     
     gui_ok = 1;
     
@@ -237,10 +234,6 @@ gui_main_end (int clean_exit)
         
         /* delete global history */
         gui_history_global_free ();
-        
-        /* delete infobar messages */
-        while (gui_infobar)
-            gui_infobar_remove ();
         
         /* reset title */
         if (CONFIG_BOOLEAN(config_look_set_title))

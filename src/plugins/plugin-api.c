@@ -40,7 +40,6 @@
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-filter.h"
-#include "../gui/gui-infobar.h"
 #include "../gui/gui-keyboard.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
@@ -320,63 +319,6 @@ plugin_api_color (const char *color_name)
     }
     
     return color[index_color];
-}
-
-/*
- * plugin_api_infobar_printf: print a message in infobar
- */
-
-void
-plugin_api_infobar_printf (struct t_weechat_plugin *plugin, int delay,
-                           const char *color_name, const char *format, ...)
-{
-    va_list argptr;
-    static char buf[1024];
-    char *buf2;
-    int num_color;
-    
-    if (!plugin || !format)
-        return;
-    
-    va_start (argptr, format);
-    vsnprintf (buf, sizeof (buf) - 1, format, argptr);
-    va_end (argptr);
-    
-    buf2 = string_iconv_to_internal (plugin->charset, buf);
-    if (color_name && color_name[0])
-    {
-        num_color = gui_color_search_config_int (color_name);
-        if (num_color < 0)
-            num_color = GUI_COLOR_INFOBAR;
-    }
-    else
-        num_color = GUI_COLOR_INFOBAR;
-    
-    gui_infobar_printf (delay, num_color,
-                        "%s",
-                        (buf2) ? buf2 : buf);
-    if (buf2)
-        free (buf2);
-}
-
-/*
- * plugin_api_infobar_remove: remove message(s) in infobar
- */
-
-void
-plugin_api_infobar_remove (int how_many)
-{
-    if (how_many <= 0)
-        gui_infobar_remove_all ();
-    else
-    {
-        while ((gui_infobar) && (how_many > 0))
-        {
-            gui_infobar_remove ();
-            how_many--;
-        }
-    }
-    gui_infobar_draw (gui_current_window->buffer, 1);
 }
 
 /*
@@ -693,14 +635,6 @@ plugin_api_infolist_get_add_window (struct t_plugin_infolist *infolist,
     if (!plugin_infolist_new_var_integer (ptr_item, "status_width", window->win_status_width))
         return 0;
     if (!plugin_infolist_new_var_integer (ptr_item, "status_height", window->win_status_height))
-        return 0;
-    if (!plugin_infolist_new_var_integer (ptr_item, "infobar_x", window->win_infobar_x))
-        return 0;
-    if (!plugin_infolist_new_var_integer (ptr_item, "infobar_y", window->win_infobar_y))
-        return 0;
-    if (!plugin_infolist_new_var_integer (ptr_item, "infobar_width", window->win_infobar_width))
-        return 0;
-    if (!plugin_infolist_new_var_integer (ptr_item, "infobar_height", window->win_infobar_height))
         return 0;
     if (!plugin_infolist_new_var_integer (ptr_item, "input_x", window->win_input_x))
         return 0;
