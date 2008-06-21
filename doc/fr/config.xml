@@ -216,34 +216,6 @@
   <entry>Compléter seulement avec le premier pseudo trouvé</entry>
 </row>
 <row>
-  <entry><option>look_infobar</option></entry>
-  <entry>booléen</entry>
-  <entry>'on' ou 'off'</entry>
-  <entry>'on'</entry>
-  <entry>Active la barre d'infos</entry>
-</row>
-<row>
-  <entry><option>look_infobar_timestamp</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
-  <entry>'%B, %A %d %Y'</entry>
-  <entry>Format de date/heure dans la barre d'infos</entry>
-</row>
-<row>
-  <entry><option>look_infobar_seconds</option></entry>
-  <entry>booléen</entry>
-  <entry>'on' ou 'off'</entry>
-  <entry>'on'</entry>
-  <entry>Afficher les secondes pour l'heure dans la barre d'infos</entry>
-</row>
-<row>
-  <entry><option>look_infobar_delay_highlight</option></entry>
-  <entry>entier</entry>
-  <entry>entre 0 et 2147483647</entry>
-  <entry>7</entry>
-  <entry>Délai (en secondes) pour la notification des messages dans la barre d'infos (0 = désactiver les notifications dans la barre d'infos)</entry>
-</row>
-<row>
   <entry><option>look_hotlist_names_count</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 32</entry>
@@ -515,34 +487,6 @@
   <entry>couleur Curses ou Gtk</entry>
   <entry>'blue'</entry>
   <entry>Couleur de fond pour la fenêtre de statut</entry>
-</row>
-<row>
-  <entry><option>col_infobar</option></entry>
-  <entry>couleur</entry>
-  <entry>couleur Curses ou Gtk</entry>
-  <entry>'black'</entry>
-  <entry>Couleur pour la barre d'infos</entry>
-</row>
-<row>
-  <entry><option>col_infobar_delimiters</option></entry>
-  <entry>couleur</entry>
-  <entry>couleur Curses ou Gtk</entry>
-  <entry>'blue'</entry>
-  <entry>Couleur pour les délimiteurs de la barre d'infos</entry>
-</row>
-<row>
-  <entry><option>col_infobar_highlight</option></entry>
-  <entry>couleur</entry>
-  <entry>couleur Curses ou Gtk</entry>
-  <entry>'white'</entry>
-  <entry>Couleur pour la notification dans la barre d'infos</entry>
-</row>
-<row>
-  <entry><option>col_infobar_bg</option></entry>
-  <entry>couleur</entry>
-  <entry>couleur Curses ou Gtk</entry>
-  <entry>'cyan'</entry>
-  <entry>Couleur de fond pour la fenêtre de barre d'infos</entry>
 </row>
 <row>
   <entry><option>col_input</option></entry>

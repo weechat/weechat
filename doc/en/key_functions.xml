@@ -194,10 +194,6 @@
   <entry>clear hotlist</entry>
 </row>
 <row>
-  <entry><literal>infobar_clear</literal></entry>
-  <entry>clear infobar</entry>
-</row>
-<row>
   <entry><literal>refresh</literal></entry>
   <entry>refresh screen</entry>
 </row>

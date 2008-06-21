@@ -216,34 +216,6 @@
   <entry>Nur mit dem ersten, passenden Nicknamen vervollständigen</entry>
 </row>
 <row>
-  <entry><option>look_infobar</option></entry>
-  <entry>Boolean</entry>
-  <entry>eine beliebige Zeichenfolge</entry>
-  <entry>'on'</entry>
-  <entry>Infoleiste aktivieren</entry>
-</row>
-<row>
-  <entry><option>look_infobar_timestamp</option></entry>
-  <entry>Zeichenfolge</entry>
-  <entry>eine beliebige Zeichenfolge</entry>
-  <entry>'%B, %A %d %Y'</entry>
-  <entry>Timestamp in der Infobar</entry>
-</row>
-<row>
-  <entry><option>look_infobar_seconds</option></entry>
-  <entry>Boolean</entry>
-  <entry>eine beliebige Zeichenfolge</entry>
-  <entry>'on'</entry>
-  <entry>Sekunden in der Infobar-Zeit anzeigen</entry>
-</row>
-<row>
-  <entry><option>look_infobar_delay_highlight</option></entry>
-  <entry>Ganzzahl</entry>
-  <entry>zwischen 0 und 2147483647</entry>
-  <entry>7</entry>
-  <entry>Anzeigezeit in Sekunden für Highlight-Messages in der Infobar (0: gar nicht erst anzeigen)</entry>
-</row>
-<row>
   <entry><option>look_hotlist_names_count</option></entry>
   <entry>Ganzzahl</entry>
   <entry>zwischen 0 und 32</entry>
@@ -515,34 +487,6 @@
   <entry>Curses- oder Gtk-Farben</entry>
   <entry>'blue'</entry>
   <entry>Hintergrund des Statusfensters</entry>
-</row>
-<row>
-  <entry><option>col_infobar</option></entry>
-  <entry>Farbe</entry>
-  <entry>Curses- oder Gtk-Farben</entry>
-  <entry>'black'</entry>
-  <entry>Farbe des Infobar-Textes</entry>
-</row>
-<row>
-  <entry><option>col_infobar_delimiters</option></entry>
-  <entry>Farbe</entry>
-  <entry>Curses- oder Gtk-Farben</entry>
-  <entry>'blue'</entry>
-  <entry>Farbe der Infobar-Trennzeichen</entry>
-</row>
-<row>
-  <entry><option>col_infobar_highlight</option></entry>
-  <entry>Farbe</entry>
-  <entry>Curses- oder Gtk-Farben</entry>
-  <entry>'white'</entry>
-  <entry>Farbe der Infobar-Highlight-Notifikation</entry>
-</row>
-<row>
-  <entry><option>col_infobar_bg</option></entry>
-  <entry>Farbe</entry>
-  <entry>Curses- oder Gtk-Farben</entry>
-  <entry>'cyan'</entry>
-  <entry>Hintergrund des Infobar-Fensters</entry>
 </row>
 <row>
   <entry><option>col_input</option></entry>

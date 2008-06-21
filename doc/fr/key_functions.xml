@@ -194,10 +194,6 @@
   <entry>effacer la liste d'activité</entry>
 </row>
 <row>
-  <entry><literal>infobar_clear</literal></entry>
-  <entry>effacer la barre d'infos</entry>
-</row>
-<row>
   <entry><literal>refresh</literal></entry>
   <entry>rafraîchir l'écran</entry>
 </row>

@@ -411,12 +411,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry>Alt + I</entry>
-              <entry>
-                Remove last infobar message
-              </entry>
-            </row>
-            <row>
               <entry>Alt + J then Alt + L</entry>
               <entry>
                 Switch to last buffer

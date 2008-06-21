@@ -194,10 +194,6 @@
   <entry>Hotlist leeren</entry>
 </row>
 <row>
-  <entry><literal>infobar_clear</literal></entry>
-  <entry>Infobar leeren</entry>
-</row>
-<row>
   <entry><literal>refresh</literal></entry>
   <entry>Bild neu aufbauen</entry>
 </row>

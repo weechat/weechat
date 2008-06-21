@@ -216,34 +216,6 @@
   <entry>Complete only with first nick found</entry>
 </row>
 <row>
-  <entry><option>look_infobar</option></entry>
-  <entry>boolean</entry>
-  <entry>'on' or 'off'</entry>
-  <entry>'on'</entry>
-  <entry>Enable info bar</entry>
-</row>
-<row>
-  <entry><option>look_infobar_timestamp</option></entry>
-  <entry>string</entry>
-  <entry>any string</entry>
-  <entry>'%B, %A %d %Y'</entry>
-  <entry>Timestamp for time in infobar</entry>
-</row>
-<row>
-  <entry><option>look_infobar_seconds</option></entry>
-  <entry>boolean</entry>
-  <entry>'on' or 'off'</entry>
-  <entry>'on'</entry>
-  <entry>Display seconds in infobar time</entry>
-</row>
-<row>
-  <entry><option>look_infobar_delay_highlight</option></entry>
-  <entry>integer</entry>
-  <entry>between 0 and 2147483647</entry>
-  <entry>7</entry>
-  <entry>Delay (in seconds) for highlight messages in infobar (0 = disable highlight notifications in infobar)</entry>
-</row>
-<row>
   <entry><option>look_hotlist_names_count</option></entry>
   <entry>integer</entry>
   <entry>between 0 and 32</entry>
@@ -515,34 +487,6 @@
   <entry>Curses or Gtk color</entry>
   <entry>'blue'</entry>
   <entry>Background for status window</entry>
-</row>
-<row>
-  <entry><option>col_infobar</option></entry>
-  <entry>color</entry>
-  <entry>Curses or Gtk color</entry>
-  <entry>'black'</entry>
-  <entry>Color for info bar text</entry>
-</row>
-<row>
-  <entry><option>col_infobar_delimiters</option></entry>
-  <entry>color</entry>
-  <entry>Curses or Gtk color</entry>
-  <entry>'blue'</entry>
-  <entry>Color for infobar delimiters</entry>
-</row>
-<row>
-  <entry><option>col_infobar_highlight</option></entry>
-  <entry>color</entry>
-  <entry>Curses or Gtk color</entry>
-  <entry>'white'</entry>
-  <entry>Color for info bar highlight notification</entry>
-</row>
-<row>
-  <entry><option>col_infobar_bg</option></entry>
-  <entry>color</entry>
-  <entry>Curses or Gtk color</entry>
-  <entry>'cyan'</entry>
-  <entry>Background for info bar window</entry>
 </row>
 <row>
   <entry><option>col_input</option></entry>
