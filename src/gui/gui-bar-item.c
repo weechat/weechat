@@ -531,7 +531,7 @@ gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
     if (!window)
         window = gui_current_window;
     
-    if (!gui_filters_enabled)
+    if (!gui_filters_enabled || !gui_filters)
         return NULL;
     
     snprintf (buf, sizeof (buf),
