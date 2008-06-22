@@ -4038,7 +4038,8 @@ static int
 weechat_lua_api_bar_new (lua_State *L)
 {
     const char *name, *priority, *type, *conditions, *position, *filling;
-    const char *size, *size_max, *color_fg, *color_bg, *separator, *items;
+    const char *size, *size_max, *color_fg, *color_delim, *color_bg;
+    const char *separator, *items;
     char *result;
     int n;
     
@@ -4060,27 +4061,29 @@ weechat_lua_api_bar_new (lua_State *L)
     size = NULL;
     size_max = NULL;
     color_fg = NULL;
+    color_delim = NULL;
     color_bg = NULL;
     separator = NULL;
     items = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 12)
+    if (n < 13)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         LUA_RETURN_EMPTY;
     }
     
-    name = lua_tostring (lua_current_interpreter, -12);
-    priority = lua_tostring (lua_current_interpreter, -11);
-    type = lua_tostring (lua_current_interpreter, -10);
-    conditions = lua_tostring (lua_current_interpreter, -9);
-    position = lua_tostring (lua_current_interpreter, -8);
-    filling = lua_tostring (lua_current_interpreter, -7);
-    size = lua_tostring (lua_current_interpreter, -6);
-    size_max = lua_tostring (lua_current_interpreter, -5);
-    color_fg = lua_tostring (lua_current_interpreter, -4);
+    name = lua_tostring (lua_current_interpreter, -13);
+    priority = lua_tostring (lua_current_interpreter, -12);
+    type = lua_tostring (lua_current_interpreter, -11);
+    conditions = lua_tostring (lua_current_interpreter, -10);
+    position = lua_tostring (lua_current_interpreter, -9);
+    filling = lua_tostring (lua_current_interpreter, -8);
+    size = lua_tostring (lua_current_interpreter, -7);
+    size_max = lua_tostring (lua_current_interpreter, -6);
+    color_fg = lua_tostring (lua_current_interpreter, -5);
+    color_delim = lua_tostring (lua_current_interpreter, -4);
     color_bg = lua_tostring (lua_current_interpreter, -3);
     separator = lua_tostring (lua_current_interpreter, -2);
     items = lua_tostring (lua_current_interpreter, -1);
@@ -4094,6 +4097,7 @@ weechat_lua_api_bar_new (lua_State *L)
                                               size,
                                               size_max,
                                               color_fg,
+                                              color_delim,
                                               color_bg,
                                               separator,
                                               items));

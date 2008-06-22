@@ -208,8 +208,8 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                              ((position == GUI_BAR_POSITION_LEFT)
                               || (position == GUI_BAR_POSITION_RIGHT)) ?
                              "vertical" : "horizontal",
-                             argv[5], "0", "default", "default", argv[6],
-                             argv_eol[7]))
+                             argv[5], "0", "default", "default", "default",
+                             argv[6], argv_eol[7]))
             {
                 gui_chat_printf (NULL, _("Bar \"%s\" created"),
                                  argv[2]);

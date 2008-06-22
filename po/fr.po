@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-21 11:30+0200\n"
-"PO-Revision-Date: 2008-06-21 11:30+0200\n"
+"POT-Creation-Date: 2008-06-22 10:47+0200\n"
+"PO-Revision-Date: 2008-06-22 10:48+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1647,6 +1647,9 @@ msgstr "taille max de la barre en caractères (0 = pas de limite)"
 msgid "default text color for bar"
 msgstr "couleur du texte par défaut pour la barre"
 
+msgid "default delimiter color for bar"
+msgstr "couleur du délimiteur par défaut pour la barre"
+
 msgid "default background color for bar"
 msgstr "couleur du fond par défaut pour la barre"
 
@@ -1658,9 +1661,6 @@ msgstr "objets de la barre"
 
 msgid "filtered"
 msgstr "filtré"
-
-msgid "(MORE)"
-msgstr "(PLUS)"
 
 #, c-format
 msgid "%sError: a buffer with same name already exists (%s / %s)"

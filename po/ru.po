@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-21 11:30+0200\n"
+"POT-Creation-Date: 2008-06-22 10:47+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1692,6 +1692,10 @@ msgid "default text color for bar"
 msgstr "цвет текста информационной панели"
 
 #, fuzzy
+msgid "default delimiter color for bar"
+msgstr "цвет текста информационной панели"
+
+#, fuzzy
 msgid "default background color for bar"
 msgstr "цвет текста информационной панели"
 
@@ -1706,10 +1710,6 @@ msgstr "Список сокращений:\n"
 #, fuzzy
 msgid "filtered"
 msgstr "команда users отключена"
-
-#, fuzzy
-msgid "(MORE)"
-msgstr "-ДАЛЬШЕ-"
 
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name already exists (%s / %s)"
@@ -4543,6 +4543,10 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "(MORE)"
+#~ msgstr "-ДАЛЬШЕ-"
 
 #~ msgid "enable info bar"
 #~ msgstr "включить информационную панель"

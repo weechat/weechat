@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-21 11:30+0200\n"
+"POT-Creation-Date: 2008-06-22 10:47+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1668,6 +1668,10 @@ msgid "default text color for bar"
 msgstr "color para el texto de la barra de informaciÃ³n"
 
 #, fuzzy
+msgid "default delimiter color for bar"
+msgstr "color para el texto de la barra de informaciÃ³n"
+
+#, fuzzy
 msgid "default background color for bar"
 msgstr "color para el texto de la barra de informaciÃ³n"
 
@@ -1681,10 +1685,6 @@ msgstr "Lista de alias:\n"
 #, fuzzy
 msgid "filtered"
 msgstr "los usuarios han sido desactivados"
-
-#, fuzzy
-msgid "(MORE)"
-msgstr "-MÃS-"
 
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name already exists (%s / %s)"
@@ -4552,6 +4552,10 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "(MORE)"
+#~ msgstr "-MÃS-"
 
 #~ msgid "enable info bar"
 #~ msgstr "activa la barra de informaciÃ³n"

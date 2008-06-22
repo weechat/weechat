@@ -40,7 +40,7 @@
 
 char *gui_bar_option_string[GUI_BAR_NUM_OPTIONS] =
 { "priority", "type", "conditions", "position", "filling", "size", "size_max",
-  "color_fg", "color_bg", "separator", "items" };
+  "color_fg", "color_delim", "color_bg", "separator", "items" };
 char *gui_bar_type_string[GUI_BAR_NUM_TYPES] =
 { "root", "window" };
 char *gui_bar_position_string[GUI_BAR_NUM_POSITIONS] =
@@ -609,6 +609,8 @@ gui_bar_set_name (struct t_gui_bar *bar, const char *name)
         config_file_option_rename (bar->size_max, option_name);
         snprintf (option_name, length, "%s.color_fg", name);
         config_file_option_rename (bar->color_fg, option_name);
+        snprintf (option_name, length, "%s.color_delim", name);
+        config_file_option_rename (bar->color_delim, option_name);
         snprintf (option_name, length, "%s.color_bg", name);
         config_file_option_rename (bar->color_bg, option_name);
         snprintf (option_name, length, "%s.separator", name);
@@ -831,6 +833,12 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
         gui_bar_refresh (bar);
         return 1;
     }
+    else if (string_strcasecmp (property, "color_delim") == 0)
+    {
+        config_file_option_set (bar->color_delim, value, 1);
+        gui_bar_refresh (bar);
+        return 1;
+    }
     else if (string_strcasecmp (property, "color_bg") == 0)
     {
         config_file_option_set (bar->color_bg, value, 1);
@@ -950,6 +958,16 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     &gui_bar_config_change_color, NULL,
                     NULL, NULL);
                 break;
+            case GUI_BAR_OPTION_COLOR_DELIM:
+                ptr_option = config_file_new_option (
+                    weechat_config_file, weechat_config_section_bar,
+                    option_name, "color",
+                    N_("default delimiter color for bar"),
+                    NULL, 0, 0, value,
+                    NULL, NULL,
+                    &gui_bar_config_change_color, NULL,
+                    NULL, NULL);
+                break;
             case GUI_BAR_OPTION_COLOR_BG:
                 ptr_option = config_file_new_option (
                     weechat_config_file, weechat_config_section_bar,
@@ -1026,6 +1044,9 @@ gui_bar_create_option_temp (struct t_gui_bar *temp_bar, int index_option,
             case GUI_BAR_OPTION_COLOR_FG:
                 temp_bar->color_fg = new_option;
                 break;
+            case GUI_BAR_OPTION_COLOR_DELIM:
+                temp_bar->color_delim = new_option;
+                break;
             case GUI_BAR_OPTION_COLOR_BG:
                 temp_bar->color_bg = new_option;
                 break;
@@ -1061,6 +1082,7 @@ gui_bar_alloc (const char *name)
         new_bar->size = NULL;
         new_bar->size_max = NULL;
         new_bar->color_fg = NULL;
+        new_bar->color_delim = NULL;
         new_bar->color_bg = NULL;
         new_bar->separator = NULL;
         new_bar->items = NULL;
@@ -1090,6 +1112,7 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, const char *name,
                           struct t_config_option *size,
                           struct t_config_option *size_max,
                           struct t_config_option *color_fg,
+                          struct t_config_option *color_delim,
                           struct t_config_option *color_bg,
                           struct t_config_option *separator,
                           struct t_config_option *items)
@@ -1121,6 +1144,7 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, const char *name,
         new_bar->size = size;
         new_bar->size_max = size_max;
         new_bar->color_fg = color_fg;
+        new_bar->color_delim = color_delim;
         new_bar->color_bg = color_bg;
         new_bar->separator = separator;
         new_bar->items = items;
@@ -1169,12 +1193,14 @@ struct t_gui_bar *
 gui_bar_new (struct t_weechat_plugin *plugin, const char *name,
              const char *priority, const char *type, const char *conditions,
              const char *position, const char *filling, const char *size,
-             const char *size_max, const char *color_fg, const char *color_bg,
+             const char *size_max, const char *color_fg,
+             const char *color_delim, const char *color_bg,
              const char *separators, const char *items)
 {
     struct t_config_option *option_priority, *option_type, *option_conditions;
     struct t_config_option *option_position, *option_filling, *option_size;
-    struct t_config_option *option_size_max, *option_color_fg, *option_color_bg;
+    struct t_config_option *option_size_max, *option_color_fg;
+    struct t_config_option *option_color_delim, *option_color_bg;
     struct t_config_option *option_separator, *option_items;
     struct t_gui_bar *new_bar;
     
@@ -1209,6 +1235,8 @@ gui_bar_new (struct t_weechat_plugin *plugin, const char *name,
                                              size_max);
     option_color_fg = gui_bar_create_option (name, GUI_BAR_OPTION_COLOR_FG,
                                              color_fg);
+    option_color_delim = gui_bar_create_option (name, GUI_BAR_OPTION_COLOR_DELIM,
+                                                color_delim);
     option_color_bg = gui_bar_create_option (name, GUI_BAR_OPTION_COLOR_BG,
                                              color_bg);
     option_separator = gui_bar_create_option (name, GUI_BAR_OPTION_SEPARATOR,
@@ -1220,8 +1248,9 @@ gui_bar_new (struct t_weechat_plugin *plugin, const char *name,
                                         option_type,option_conditions,
                                         option_position, option_filling,
                                         option_size, option_size_max,
-                                        option_color_fg, option_color_bg,
-                                        option_separator, option_items);
+                                        option_color_fg, option_color_delim,
+                                        option_color_bg, option_separator,
+                                        option_items);
     if (!new_bar)
     {
         if (option_priority)
@@ -1240,6 +1269,8 @@ gui_bar_new (struct t_weechat_plugin *plugin, const char *name,
             config_file_option_free (option_size_max);
         if (option_color_fg)
             config_file_option_free (option_color_fg);
+        if (option_color_delim)
+            config_file_option_free (option_color_delim);
         if (option_color_bg)
             config_file_option_free (option_color_bg);
         if (option_separator)
@@ -1304,6 +1335,11 @@ gui_bar_use_temp_bars ()
                                                             GUI_BAR_OPTION_COLOR_FG,
                                                             "default");
         
+        if (!ptr_temp_bar->color_delim)
+            ptr_temp_bar->color_delim = gui_bar_create_option (ptr_temp_bar->name,
+                                                               GUI_BAR_OPTION_COLOR_DELIM,
+                                                               "default");
+        
         if (!ptr_temp_bar->color_bg)
             ptr_temp_bar->color_bg = gui_bar_create_option (ptr_temp_bar->name,
                                                             GUI_BAR_OPTION_COLOR_BG,
@@ -1323,8 +1359,8 @@ gui_bar_use_temp_bars ()
             && ptr_temp_bar->conditions && ptr_temp_bar->position
             && ptr_temp_bar->filling && ptr_temp_bar->size
             && ptr_temp_bar->size_max && ptr_temp_bar->color_fg
-            && ptr_temp_bar->color_bg && ptr_temp_bar->separator
-            && ptr_temp_bar->items)
+            && ptr_temp_bar->color_delim && ptr_temp_bar->color_bg
+            && ptr_temp_bar->separator && ptr_temp_bar->items)
         {
             gui_bar_new_with_options (NULL, ptr_temp_bar->name,
                                       ptr_temp_bar->priority,
@@ -1335,6 +1371,7 @@ gui_bar_use_temp_bars ()
                                       ptr_temp_bar->size,
                                       ptr_temp_bar->size_max,
                                       ptr_temp_bar->color_fg,
+                                      ptr_temp_bar->color_delim,
                                       ptr_temp_bar->color_bg,
                                       ptr_temp_bar->separator,
                                       ptr_temp_bar->items);
@@ -1380,6 +1417,11 @@ gui_bar_use_temp_bars ()
             {
                 config_file_option_free (ptr_temp_bar->color_fg);
                 ptr_temp_bar->color_fg = NULL;
+            }
+            if (ptr_temp_bar->color_delim)
+            {
+                config_file_option_free (ptr_temp_bar->color_delim);
+                ptr_temp_bar->color_delim = NULL;
             }
             if (ptr_temp_bar->color_bg)
             {
@@ -1474,6 +1516,8 @@ gui_bar_free (struct t_gui_bar *bar)
         config_file_option_free (bar->size_max);
     if (bar->color_fg)
         config_file_option_free (bar->color_fg);
+    if (bar->color_delim)
+        config_file_option_free (bar->color_delim);
     if (bar->color_bg)
         config_file_option_free (bar->color_bg);
     if (bar->separator)
@@ -1555,6 +1599,9 @@ gui_bar_print_log ()
         log_printf ("  color_fg . . . . . . . : %d",
                     CONFIG_COLOR(ptr_bar->color_fg),
                     gui_color_get_name (CONFIG_COLOR(ptr_bar->color_fg)));
+        log_printf ("  color_delim. . . . . . : %d",
+                    CONFIG_COLOR(ptr_bar->color_delim),
+                    gui_color_get_name (CONFIG_COLOR(ptr_bar->color_delim)));
         log_printf ("  color_bg . . . . . . . : %d",
                     CONFIG_COLOR(ptr_bar->color_bg),
                     gui_color_get_name (CONFIG_COLOR(ptr_bar->color_bg)));

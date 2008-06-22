@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-21 11:30+0200\n"
+"POT-Creation-Date: 2008-06-22 10:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1399,6 +1399,9 @@ msgstr ""
 msgid "default text color for bar"
 msgstr ""
 
+msgid "default delimiter color for bar"
+msgstr ""
+
 msgid "default background color for bar"
 msgstr ""
 
@@ -1409,9 +1412,6 @@ msgid "items of bar"
 msgstr ""
 
 msgid "filtered"
-msgstr ""
-
-msgid "(MORE)"
 msgstr ""
 
 #, c-format

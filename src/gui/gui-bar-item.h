@@ -65,6 +65,10 @@ extern struct t_gui_bar_item *last_gui_bar_item;
 /* functions */
 
 extern struct t_gui_bar_item *gui_bar_item_search (const char *name);
+extern char *gui_bar_item_get_value (const char *name,
+                                     struct t_gui_bar *bar,
+                                     struct t_gui_window *window,
+                                     int width, int height);
 extern struct t_gui_bar_item *gui_bar_item_new (struct t_weechat_plugin *plugin,
                                                 const char *name,
                                                 char *(*build_callback)(void *data,

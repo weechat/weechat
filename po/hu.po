@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-21 11:30+0200\n"
+"POT-Creation-Date: 2008-06-22 10:47+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1688,6 +1688,10 @@ msgid "default text color for bar"
 msgstr "információs pult szövegének színe"
 
 #, fuzzy
+msgid "default delimiter color for bar"
+msgstr "információs pult szövegének színe"
+
+#, fuzzy
 msgid "default background color for bar"
 msgstr "információs pult szövegének színe"
 
@@ -1702,10 +1706,6 @@ msgstr "Aliaszok listája:\n"
 #, fuzzy
 msgid "filtered"
 msgstr "a felhasználók le lettek tiltva"
-
-#, fuzzy
-msgid "(MORE)"
-msgstr "-TOVÁBB-"
 
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name already exists (%s / %s)"
@@ -4560,6 +4560,10 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "(MORE)"
+#~ msgstr "-TOVÁBB-"
 
 #~ msgid "enable info bar"
 #~ msgstr "információs pult engedélyezése"

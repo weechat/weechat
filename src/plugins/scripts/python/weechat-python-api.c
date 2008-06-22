@@ -3566,7 +3566,8 @@ static PyObject *
 weechat_python_api_bar_new (PyObject *self, PyObject *args)
 {
     char *name, *priority, *type, *conditions, *position, *filling, *size;
-    char *size_max, *color_fg, *color_bg, *separator, *items, *result;
+    char *size_max, *color_fg, *color_delim, *color_bg, *separator, *items;
+    char *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -3587,13 +3588,15 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
     size = NULL;
     size_max = NULL;
     color_fg = NULL;
+    color_delim = NULL;
     color_bg = NULL;
     separator = NULL;
     items = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssssssssssss", &name, &priority, &conditions,
-                           &type, &position, &filling, &size, &size_max,
-                           &color_fg, &color_bg, &separator, &items))
+    if (!PyArg_ParseTuple (args, "sssssssssssss", &name, &priority,
+                           &conditions, &type, &position, &filling, &size,
+                           &size_max, &color_fg, &color_delim, &color_bg,
+                           &separator, &items))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         PYTHON_RETURN_EMPTY;
@@ -3608,6 +3611,7 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
                                               size,
                                               size_max,
                                               color_fg,
+                                              color_delim,
                                               color_bg,
                                               separator,
                                               items));

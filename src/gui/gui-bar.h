@@ -33,6 +33,7 @@ enum t_gui_bar_option
     GUI_BAR_OPTION_SIZE,
     GUI_BAR_OPTION_SIZE_MAX,
     GUI_BAR_OPTION_COLOR_FG,
+    GUI_BAR_OPTION_COLOR_DELIM,
     GUI_BAR_OPTION_COLOR_BG,
     GUI_BAR_OPTION_SEPARATOR,
     GUI_BAR_OPTION_ITEMS,
@@ -79,6 +80,7 @@ struct t_gui_bar
     struct t_config_option *size;       /* size of bar (in chars, 0 = auto) */
     struct t_config_option *size_max;   /* max size of bar (0 = no limit)   */
     struct t_config_option *color_fg;   /* default text color for bar       */
+    struct t_config_option *color_delim;/* default delimiter color for bar  */
     struct t_config_option *color_bg;   /* default background color for bar */
     struct t_config_option *separator;  /* true if separator line displayed */
     struct t_config_option *items;      /* bar items                        */
@@ -126,6 +128,7 @@ extern struct t_gui_bar *gui_bar_new (struct t_weechat_plugin *plugin,
                                       const char *filling, const char *size,
                                       const char *size_max,
                                       const char *color_fg,
+                                      const char *color_delim,
                                       const char *color_bg,
                                       const char *separator,
                                       const char *items);

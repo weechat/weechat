@@ -99,6 +99,157 @@ gui_bar_item_search_with_plugin (struct t_weechat_plugin *plugin, const char *na
 }
 
 /*
+ * gui_bar_item_valid_char_name: return 1 if char is valid for item name
+ *                               (any letter, digit, "-" or "_")
+ *                               return 0 otherwise
+ */
+
+int
+gui_bar_item_valid_char_name (char c)
+{
+    return  (((c >= 'a') && (c <= 'z'))
+             || ((c >= 'A') && (c <= 'Z'))
+             || ((c >= '0') && (c <= '9'))
+             || (c == '-')
+             || (c == '_')) ?
+        1 : 0;
+}
+
+/*
+ * gui_bar_item_get_value: return value of a bar item
+ *                         first look for prefix/suffix in name, then run item
+ *                         callback (if found) and concatene strings
+ *                         for example:  if name == "[time]"
+ *                         return: color(delimiter) + "[" +
+ *                                 (value of item "time") + color(delimiter) +
+ *                                 "]"
+ */
+
+char *
+gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
+                        struct t_gui_window *window,
+                        int width, int height)
+{
+    const char *ptr, *start, *end;
+    char *prefix, *item_name, *suffix;
+    char *item_value, delimiter_color[32], bar_color[32];
+    char *result;
+    int valid_char, length;
+    struct t_gui_bar_item *ptr_item;
+    
+    start = NULL;
+    end = NULL;
+    prefix = NULL;
+    item_name = NULL;
+    suffix = NULL;
+    
+    ptr = name;
+    while (ptr && ptr[0])
+    {
+        valid_char = gui_bar_item_valid_char_name (ptr[0]);
+        if (!start && valid_char)
+            start = ptr;
+        else if (start && !end && !valid_char)
+            end = ptr - 1;
+        ptr++;
+    }
+    if (start)
+    {
+        if (start > name)
+            prefix = string_strndup (name, start - name);
+    }
+    else
+        prefix = strdup (name);
+    if (start)
+    {
+        item_name = (end) ?
+            string_strndup (start, end - start + 1) : strdup (start);
+    }
+    if (end && end[0] && end[1])
+        suffix = strdup (end + 1);
+    
+    item_value = NULL;
+    if (item_name)
+    {
+        ptr_item = gui_bar_item_search (item_name);
+        if (ptr_item)
+        {
+            if  (ptr_item->build_callback)
+            {
+                item_value = (ptr_item->build_callback) (ptr_item->build_callback_data,
+                                                         ptr_item, window,
+                                                         width,
+                                                         height);
+                if (!item_value || !item_value[0])
+                {
+                    if (prefix)
+                    {
+                        free (prefix);
+                        prefix = NULL;
+                    }
+                    if (suffix)
+                    {
+                        free (suffix);
+                        suffix = NULL;
+                    }
+                }
+            }
+        }
+        else
+            item_value = strdup (item_name);
+    }
+    
+    length = 0;
+    if (prefix)
+        length += 64 + strlen (prefix) + 1; /* color + prefix + color */
+    if (item_value && item_value[0])
+        length += strlen (item_value) + 1;
+    if (suffix)
+        length += 32 + strlen (suffix) + 1; /* color + suffix */
+
+    result = NULL;
+    if (length > 0)
+    {
+        result = malloc (length);
+        if (result)
+        {
+            delimiter_color[0] = '\0';
+            bar_color[0] = '\0';
+            if (prefix || suffix)
+            {
+                snprintf (delimiter_color, sizeof (delimiter_color),
+                          "%cF%02d",
+                          GUI_COLOR_COLOR_CHAR,
+                          CONFIG_COLOR(bar->color_delim));
+                snprintf (bar_color, sizeof (bar_color),
+                          "%cF%02d",
+                          GUI_COLOR_COLOR_CHAR,
+                          CONFIG_COLOR(bar->color_fg));
+            }
+            snprintf (result, length,
+                      "%s%s%s%s%s%s",
+                      (prefix) ? delimiter_color : "",
+                      (prefix) ? prefix : "",
+                      (prefix) ? bar_color : "",
+                      (item_value) ? item_value : "",
+                      (suffix) ? delimiter_color : "",
+                      (suffix) ? suffix : "");
+        }
+    }
+    
+    if (prefix)
+        free (prefix);
+    if (item_name)
+        free (item_name);
+    if (suffix)
+        free (suffix);
+    if (item_value)
+        free (item_value);
+    
+    return result;
+}
+
+/*
  * gui_bar_item_new: create a new bar item
  */
 
@@ -115,7 +266,7 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, const char *name,
     if (!name || !name[0])
         return NULL;
     
-    /* it's not possible to create 2 bar items with same name for same plugin*/
+    /* it's not possible to create 2 bar items with same name for same plugin */
     if (gui_bar_item_search_with_plugin (plugin, name))
         return NULL;
     
@@ -151,14 +302,25 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, const char *name,
 int
 gui_bar_contains_item (struct t_gui_bar *bar, const char *name)
 {
-    int i;
+    int i, length;
+    char *ptr;
     
     if (!bar || !name || !name[0])
         return 0;
     
+    length = strlen (name);
+    
     for (i = 0; i < bar->items_count; i++)
     {
-        if (strcmp (bar->items_array[i], name) == 0)
+        /* skip non letters chars at beginning (prefix) */
+        ptr = bar->items_array[i];
+        while (ptr && ptr[0])
+        {
+            if (gui_bar_item_valid_char_name (ptr[0]))
+                break;
+            ptr++;
+        }
+        if (ptr && ptr[0] && (strncmp (ptr, name, length) == 0))
             return 1;
     }
     
@@ -251,7 +413,7 @@ gui_bar_item_default_time (void *data, struct t_gui_bar_item *item,
 {
     time_t date;
     struct tm *local_time;
-    char text_time[128], buf[512];
+    char text_time[128];
     
     /* make C compiler happy */
     (void) data;
@@ -267,13 +429,7 @@ gui_bar_item_default_time (void *data, struct t_gui_bar_item *item,
                   local_time) == 0)
         return NULL;
     
-    snprintf (buf, sizeof (buf), "%s[%s%s%s]",
-              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
-              GUI_COLOR(GUI_COLOR_STATUS),
-              text_time,
-              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
-    
-    return strdup (buf);
+    return strdup (text_time);
 }
 
 /*
@@ -285,7 +441,7 @@ gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
                                    struct t_gui_window *window,
                                    int max_width, int max_height)
 {
-    char buf[64];
+    char buf[32];
     
     /* make C compiler happy */
     (void) data;
@@ -294,11 +450,8 @@ gui_bar_item_default_buffer_count (void *data, struct t_gui_bar_item *item,
     (void) max_width;
     (void) max_height;
     
-    snprintf (buf, sizeof (buf), "%s[%s%d%s]",
-              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
-              GUI_COLOR(GUI_COLOR_STATUS),
-              (last_gui_buffer) ? last_gui_buffer->number : 0,
-              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
+    snprintf (buf, sizeof (buf), "%d",
+              (last_gui_buffer) ? last_gui_buffer->number : 0);
     
     return strdup (buf);
 }
@@ -312,8 +465,6 @@ gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
                                     struct t_gui_window *window,
                                     int max_width, int max_height)
 {
-    char buf[64];
-    
     /* make C compiler happy */
     (void) data;
     (void) item;
@@ -323,13 +474,8 @@ gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
     if (!window)
         window = gui_current_window;
     
-    snprintf (buf, sizeof (buf), "%s[%s%s%s]",
-              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
-              GUI_COLOR(GUI_COLOR_STATUS),
-              (window->buffer->plugin) ? window->buffer->plugin->name : "core",
-              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
-    
-    return strdup (buf);
+    return (window->buffer->plugin) ?
+        strdup (window->buffer->plugin->name) : strdup ("core");
 }
 
 /*
@@ -353,13 +499,13 @@ gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
         window = gui_current_window;
     
     snprintf (buf, sizeof (buf), "%s%d%s:%s%s%s/%s%s",
-              GUI_COLOR(GUI_COLOR_STATUS_NUMBER),
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_number))),
               window->buffer->number,
-              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
-              GUI_COLOR(GUI_COLOR_STATUS_CATEGORY),
+              GUI_COLOR_BAR_DELIM,
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_category))),
               window->buffer->category,
-              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
-              GUI_COLOR(GUI_COLOR_STATUS_NAME),
+              GUI_COLOR_BAR_DELIM,
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_name))),
               window->buffer->name);
     
     return strdup (buf);
@@ -389,12 +535,9 @@ gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
         return NULL;
     
     snprintf (buf, sizeof (buf),
-              "%s[%sF%s%s%s] ",
-              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
-              GUI_COLOR(GUI_COLOR_STATUS),
+              "F%s%s",
               (window->buffer->lines_hidden) ? "," : "",
-              (window->buffer->lines_hidden) ? _("filtered") : "",
-              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
+              (window->buffer->lines_hidden) ? _("filtered") : "");
     
     return strdup (buf);
 }
@@ -409,7 +552,7 @@ gui_bar_item_default_nicklist_count (void *data, struct t_gui_bar_item *item,
                                      struct t_gui_window *window,
                                      int max_width, int max_height)
 {
-    char buf[64];
+    char buf[32];
     
     /* make C compiler happy */
     (void) data;
@@ -423,11 +566,8 @@ gui_bar_item_default_nicklist_count (void *data, struct t_gui_bar_item *item,
     if (!window->buffer->nicklist)
         return NULL;
     
-    snprintf (buf, sizeof (buf), "%s[%s%d%s]",
-              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS),
-              GUI_COLOR(GUI_COLOR_STATUS),
-              window->buffer->nicklist_visible_count,
-              GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
+    snprintf (buf, sizeof (buf), "%d",
+              window->buffer->nicklist_visible_count);
     
     return strdup (buf);
 }
@@ -456,8 +596,8 @@ gui_bar_item_default_scroll (void *data, struct t_gui_bar_item *item,
         return NULL;
     
     snprintf (buf, sizeof (buf), "%s%s",
-              GUI_COLOR(GUI_COLOR_STATUS_MORE),
-              _("(MORE)"));
+              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_more))),
+              _("-MORE-"));
     
     return strdup (buf);
 }
@@ -487,9 +627,6 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
     
     buf[0] = '\0';
     
-    strcat (buf, GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
-    strcat (buf, "[");
-    strcat (buf, GUI_COLOR(GUI_COLOR_STATUS));
     strcat (buf, _("Act: "));
     
     names_count = 0;
@@ -499,19 +636,19 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
         switch (ptr_hotlist->priority)
         {
             case GUI_HOTLIST_LOW:
-                strcat (buf, GUI_COLOR(GUI_COLOR_STATUS_DATA_OTHER));
+                strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_data_other))));
                 display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 1) != 0);
                 break;
             case GUI_HOTLIST_MESSAGE:
-                strcat (buf, GUI_COLOR(GUI_COLOR_STATUS_DATA_MSG));
+                strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_data_msg))));
                 display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 2) != 0);
                 break;
             case GUI_HOTLIST_PRIVATE:
-                strcat (buf, GUI_COLOR(GUI_COLOR_STATUS_DATA_PRIVATE));
+                strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_data_private))));
                 display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 4) != 0);
                 break;
             case GUI_HOTLIST_HIGHLIGHT:
-                strcat (buf, GUI_COLOR(GUI_COLOR_STATUS_DATA_HIGHLIGHT));
+                strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_data_highlight))));
                 display_name = ((CONFIG_INTEGER(config_look_hotlist_names_level) & 8) != 0);
                 break;
             default:
@@ -527,9 +664,9 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
         {
             names_count++;
             
-            strcat (buf, GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
+            strcat (buf, GUI_COLOR_BAR_DELIM);
             strcat (buf, ":");
-            strcat (buf, GUI_COLOR(GUI_COLOR_STATUS));
+            strcat (buf, GUI_COLOR_BAR_FG);
             if (CONFIG_INTEGER(config_look_hotlist_names_length) == 0)
                 snprintf (format, sizeof (format) - 1, "%%s");
             else
@@ -545,8 +682,6 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
         if (strlen (buf) > sizeof (buf) - 32)
             break;
     }
-    strcat (buf, GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
-    strcat (buf, "]");
     
     return strdup (buf);
 }
@@ -570,13 +705,14 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
     (void) window;
     (void) max_width;
     (void) max_height;
-
+    
     length = 1;
     for (ptr_item = gui_completion_partial_list; ptr_item;
          ptr_item = ptr_item->next_item)
     {
         length += strlen (ptr_item->word) + 32;
     }
+    
     buf = malloc (length);
     if (buf)
     {
@@ -584,11 +720,11 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
         for (ptr_item = gui_completion_partial_list; ptr_item;
              ptr_item = ptr_item->next_item)
         {
-            strcat (buf, GUI_COLOR(GUI_COLOR_STATUS));
+            strcat (buf, GUI_COLOR_BAR_FG);
             strcat (buf, ptr_item->word);
             if (ptr_item->count > 0)
             {
-                strcat (buf, GUI_COLOR(GUI_COLOR_STATUS_DELIMITERS));
+                strcat (buf, GUI_COLOR_BAR_DELIM);
                 strcat (buf, "(");
                 snprintf (number_str, sizeof (number_str),
                           "%d", ptr_item->count);
@@ -598,9 +734,9 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
             if (ptr_item->next_item)
                 strcat (buf, " ");
         }
-        return buf;
     }
-    return NULL;
+    
+    return buf;
 }
 
 /*
@@ -622,6 +758,9 @@ gui_bar_item_timer_cb (void *data)
                   local_time) == 0)
         return WEECHAT_RC_OK;
     
+    /* we update item only if it changed since last time
+       for example if time is only hours:minutes, we'll update
+       only when minute changed */
     if (strcmp (new_item_time_text, item_time_text) != 0)
     {
         snprintf (item_time_text, sizeof (item_time_text),
