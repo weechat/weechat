@@ -337,6 +337,59 @@ gui_bar_config_check_type (void *data, struct t_config_option *option,
 }
 
 /*
+ * gui_bar_config_change_priority: callback when priority is changed
+ */
+
+void
+gui_bar_config_change_priority (void *data, struct t_config_option *option)
+{
+    struct t_gui_bar *ptr_bar;
+    struct t_gui_window *ptr_win;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    ptr_bar = gui_bar_search_with_option_name (option->name);
+    if (ptr_bar)
+    {
+        /* remove bar from list */
+        if (ptr_bar == gui_bars)
+        {
+            gui_bars = ptr_bar->next_bar;
+            gui_bars->prev_bar = NULL;
+        }
+        if (ptr_bar == last_gui_bar)
+        {
+            last_gui_bar = ptr_bar->prev_bar;
+            last_gui_bar->next_bar = NULL;
+        }
+        if (ptr_bar->prev_bar)
+            (ptr_bar->prev_bar)->next_bar = ptr_bar->next_bar;
+        if (ptr_bar->next_bar)
+            (ptr_bar->next_bar)->prev_bar = ptr_bar->prev_bar;
+        
+        gui_bar_insert (ptr_bar);
+        
+        /* free bar windows */
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+        {
+            gui_bar_free_bar_windows (ptr_bar);
+        }
+        
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+            {
+                if (CONFIG_INTEGER(ptr_bar->type) != GUI_BAR_TYPE_ROOT)
+                    gui_bar_window_new (ptr_bar, ptr_win);
+            }
+        }
+    }
+    
+    gui_window_refresh_needed = 1;
+}
+
+/*
  * gui_bar_config_change_conditions: callback when conditions is changed
  */
 
@@ -635,8 +688,6 @@ gui_bar_set_priority (struct t_gui_bar *bar, const char *priority)
 {
     long number;
     char *error;
-    struct t_gui_bar *ptr_bar;
-    struct t_gui_window *ptr_win;
     
     error = NULL;
     number = strtol (priority, &error, 10);
@@ -650,39 +701,6 @@ gui_bar_set_priority (struct t_gui_bar *bar, const char *priority)
             return;
         
         config_file_option_set (bar->priority, priority, 1);
-        
-        /* remove bar from list */
-        if (bar == gui_bars)
-        {
-            gui_bars = bar->next_bar;
-            gui_bars->prev_bar = NULL;
-        }
-        if (bar == last_gui_bar)
-        {
-            last_gui_bar = bar->prev_bar;
-            last_gui_bar->next_bar = NULL;
-        }
-        if (bar->prev_bar)
-            (bar->prev_bar)->next_bar = bar->next_bar;
-        if (bar->next_bar)
-            (bar->next_bar)->prev_bar = bar->prev_bar;
-        
-        gui_bar_insert (bar);
-        
-        /* free bar windows */
-        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-        {
-            gui_bar_free_bar_windows (ptr_bar);
-        }
-        
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        {
-            for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-            {
-                if (CONFIG_INTEGER(ptr_bar->type) != GUI_BAR_TYPE_ROOT)
-                    gui_bar_window_new (ptr_bar, ptr_win);
-            }
-        }
     }
 }
 
@@ -892,7 +910,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     option_name, "integer",
                     N_("bar priority (high number means bar displayed first)"),
                     NULL, 0, INT_MAX, value,
-                    NULL, NULL, NULL, NULL, NULL, NULL);
+                    NULL, NULL, &gui_bar_config_change_priority, NULL, NULL, NULL);
                 break;
             case GUI_BAR_OPTION_TYPE:
                 ptr_option = config_file_new_option (

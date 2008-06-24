@@ -116,7 +116,6 @@ extern int gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
 extern int gui_bar_root_get_size (struct t_gui_bar *bar,
                                   enum t_gui_bar_position position);
 extern struct t_gui_bar *gui_bar_search (const char *name);
-extern void gui_bar_set_current_size (struct t_gui_bar *bar, int current_size);
 extern int gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value);
 extern void gui_bar_create_option_temp (struct t_gui_bar *temp_bar,
                                         int index_option, const char *value);
