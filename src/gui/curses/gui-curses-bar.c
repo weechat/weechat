@@ -91,7 +91,8 @@ gui_bar_window_set_current_size (struct t_gui_bar *bar, int size)
             for (ptr_bar_win = GUI_CURSES(ptr_win)->bar_windows;
                  ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
             {
-                ptr_bar_win->current_size = (size == 0) ? 1 : size;
+                if (ptr_bar_win->bar == bar)
+                    ptr_bar_win->current_size = (size == 0) ? 1 : size;
             }
         }
     }
@@ -117,25 +118,28 @@ gui_bar_window_get_size (struct t_gui_bar *bar, struct t_gui_window *window,
         /* stop before bar */
         if (bar && (ptr_bar_window->bar == bar))
             return total_size;
-        
-        if ((CONFIG_INTEGER(ptr_bar_window->bar->type) != GUI_BAR_TYPE_ROOT)
-            && (CONFIG_INTEGER(ptr_bar_window->bar->position) == (int)position))
+
+        if (!CONFIG_BOOLEAN(ptr_bar_window->bar->hidden))
         {
-            switch (position)
+            if ((CONFIG_INTEGER(ptr_bar_window->bar->type) != GUI_BAR_TYPE_ROOT)
+                && (CONFIG_INTEGER(ptr_bar_window->bar->position) == (int)position))
             {
-                case GUI_BAR_POSITION_BOTTOM:
-                case GUI_BAR_POSITION_TOP:
-                    total_size += ptr_bar_window->height;
-                    break;
-                case GUI_BAR_POSITION_LEFT:
-                case GUI_BAR_POSITION_RIGHT:
-                    total_size += ptr_bar_window->width;
-                    break;
-                case GUI_BAR_NUM_POSITIONS:
-                    break;
+                switch (position)
+                {
+                    case GUI_BAR_POSITION_BOTTOM:
+                    case GUI_BAR_POSITION_TOP:
+                        total_size += ptr_bar_window->height;
+                        break;
+                    case GUI_BAR_POSITION_LEFT:
+                    case GUI_BAR_POSITION_RIGHT:
+                        total_size += ptr_bar_window->width;
+                        break;
+                    case GUI_BAR_NUM_POSITIONS:
+                        break;
+                }
+                if (CONFIG_INTEGER(ptr_bar_window->bar->separator))
+                    total_size++;
             }
-            if (CONFIG_INTEGER(ptr_bar_window->bar->separator))
-                total_size++;
         }
     }
     return total_size;
@@ -202,10 +206,10 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
         y1 = window->win_y;
         x2 = x1 + window->win_width - 1;
         y2 = y1 + window->win_height - 1;
+        add_bottom = gui_bar_window_get_size (bar_window->bar, window, GUI_BAR_POSITION_BOTTOM);
+        add_top = gui_bar_window_get_size (bar_window->bar, window, GUI_BAR_POSITION_TOP);
         add_left = gui_bar_window_get_size (bar_window->bar, window, GUI_BAR_POSITION_LEFT);
         add_right = gui_bar_window_get_size (bar_window->bar, window, GUI_BAR_POSITION_RIGHT);
-        add_top = gui_bar_window_get_size (bar_window->bar, window, GUI_BAR_POSITION_TOP);
-        add_bottom = gui_bar_window_get_size (bar_window->bar, window, GUI_BAR_POSITION_BOTTOM);
     }
     else
     {
@@ -237,13 +241,13 @@ gui_bar_window_calculate_pos_size (struct t_gui_bar_window *bar_window,
             bar_window->x = x1 + add_left;
             bar_window->y = y1 + add_top;
             bar_window->width = bar_window->current_size;
-            bar_window->height = y2 - add_top - add_bottom - y1 + 1;
+            bar_window->height = y2 - y1 + 1 - add_top - add_bottom;
             break;
         case GUI_BAR_POSITION_RIGHT:
             bar_window->x = x2 - add_right - bar_window->current_size + 1;
             bar_window->y = y1 + add_top;
             bar_window->width = bar_window->current_size;
-            bar_window->height = y2 - y1 + 1;
+            bar_window->height = y2 - y1 + 1 - add_top - add_bottom;
             break;
         case GUI_BAR_NUM_POSITIONS:
             break;
@@ -397,6 +401,8 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
         new_bar_window->y = 0;
         new_bar_window->width = 1;
         new_bar_window->height = 1;
+        new_bar_window->cursor_x = -1;
+        new_bar_window->cursor_y = -1;
         new_bar_window->current_size = (CONFIG_INTEGER(bar->size) == 0) ?
             1 : CONFIG_INTEGER(bar->size);
         
@@ -425,6 +431,9 @@ gui_bar_window_recreate_bar_windows (struct t_gui_bar *bar)
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *ptr_bar_win;
 
+    if (CONFIG_BOOLEAN(bar->hidden))
+        return;
+    
     if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
     {
         gui_bar_window_calculate_pos_size (bar->bar_window, NULL);
@@ -574,7 +583,8 @@ gui_bar_window_add_missing_bars (struct t_gui_window *window)
 
 void
 gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
-                             int *x, int *y, const char *string)
+                             int *x, int *y,
+                             const char *string)
 {
     int weechat_color, size_on_screen, fg, bg;
     char str_fg[3], str_bg[3], utf_char[16], *next_char, *output;
@@ -583,7 +593,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
         return;
     
     wmove (bar_window->win_bar, *y, *x);
-
+    
     gui_window_set_custom_color_fg_bg (bar_window->win_bar,
                                        CONFIG_COLOR(bar_window->bar->color_fg),
                                        CONFIG_COLOR(bar_window->bar->color_bg));
@@ -595,7 +605,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
             string++;
             switch (string[0])
             {
-                case 'F': /* fg color */
+                case GUI_COLOR_FG_CHAR: /* fg color */
                     if (string[1] && string[2])
                     {
                         str_fg[0] = string[1];
@@ -607,7 +617,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         string += 3;
                     }
                     break;
-                case 'B': /* bg color */
+                case GUI_COLOR_BG_CHAR: /* bg color */
                     if (string[1] && string[2])
                     {
                         str_bg[0] = string[1];
@@ -619,7 +629,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         string += 3;
                     }
                     break;
-                case '*': /* fg + bg color */
+                case GUI_COLOR_FG_BG_CHAR: /* fg + bg color */
                     if (string[1] && string[2] && (string[3] == ',')
                         && string[4] && string[5])
                     {
@@ -636,22 +646,33 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                         string += 6;
                     }
                     break;
-                case 'b': /* bar color */
+                case GUI_COLOR_BAR_CHAR: /* bar color */
                     switch (string[1])
                     {
-                        case 'f': /* bar foreground */
+                        case GUI_COLOR_BAR_FG_CHAR:
+                            /* bar foreground */
                             gui_window_set_custom_color_fg (bar_window->win_bar,
                                                             CONFIG_INTEGER(bar_window->bar->color_fg));
                             string += 2;
                             break;
-                        case 'd': /* bar delimiter */
+                        case GUI_COLOR_BAR_DELIM_CHAR:
+                            /* bar delimiter */
                             gui_window_set_custom_color_fg (bar_window->win_bar,
                                                             CONFIG_INTEGER(bar_window->bar->color_delim));
                             string += 2;
                             break;
-                        case 'b': /* bar background */
+                        case GUI_COLOR_BAR_BG_CHAR:
+                            /* bar background */
                             gui_window_set_custom_color_bg (bar_window->win_bar,
                                                             CONFIG_INTEGER(bar_window->bar->color_bg));
+                            string += 2;
+                            break;
+                        case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
+                            /* move cursor to current position on screen */
+                            getyx (bar_window->win_bar,
+                                   bar_window->cursor_y, bar_window->cursor_x);
+                            bar_window->cursor_x += bar_window->x;
+                            bar_window->cursor_y += bar_window->y;
                             string += 2;
                             break;
                         default:
@@ -720,10 +741,25 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     int x, y, i, items_count, num_lines, line;
     char *content, *item_value, *item_value2, **items;
     char space_with_reinit_color[32];
-    int content_length, length, max_length, optimal_number_of_lines;
+    int length_reinit_color, content_length, length, length_on_screen;
+    int max_length, optimal_number_of_lines, chars_available;
     
     if (!gui_init_ok)
         return;
+    
+    snprintf (space_with_reinit_color,
+              sizeof (space_with_reinit_color),
+              "%c%c%02d,%02d ",
+              GUI_COLOR_COLOR_CHAR,
+              GUI_COLOR_FG_BG_CHAR,
+              CONFIG_COLOR(bar_window->bar->color_fg),
+              CONFIG_COLOR(bar_window->bar->color_bg));
+    length_reinit_color = strlen (space_with_reinit_color);
+    
+    /* these values will be overwritten later (by gui_bar_window_print_string)
+       if cursor has to move somewhere in bar window */
+    bar_window->cursor_x = -1;
+    bar_window->cursor_y = -1;
     
     if (CONFIG_INTEGER(bar_window->bar->size) == 0)
     {
@@ -733,19 +769,13 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
         {
             item_value = gui_bar_item_get_value (bar_window->bar->items_array[i],
                                                  bar_window->bar, window,
-                                                 0, 0);
+                                                 0, 0, 0);
             if (item_value)
             {
                 if (item_value[0])
                 {
                     if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_HORIZONTAL)
                     {
-                        snprintf (space_with_reinit_color,
-                                  sizeof (space_with_reinit_color),
-                                  "%c*%02d,%02d ",
-                                  GUI_COLOR_COLOR_CHAR,
-                                  CONFIG_COLOR(bar_window->bar->color_fg),
-                                  CONFIG_COLOR(bar_window->bar->color_bg));
                         item_value2 = string_replace (item_value, "\n",
                                                       space_with_reinit_color);
                     }
@@ -760,11 +790,11 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                     }
                     else
                     {
-                        content_length += 1 +
+                        content_length += length_reinit_color +
                             strlen ((item_value2) ? item_value2 : item_value);
                         content = realloc (content, content_length);
                         if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_HORIZONTAL)
-                            strcat (content, " ");
+                            strcat (content, space_with_reinit_color);
                         else
                             strcat (content, "\n");
                         strcat (content,
@@ -793,14 +823,22 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 optimal_number_of_lines = 0;
                 for (line = 0; line < items_count; line++)
                 {
-                    length = gui_chat_strlen_screen (items[line]);
-                    if (length > max_length)
-                        max_length = length;
+                    length_on_screen = gui_chat_strlen_screen (items[line]);
                     
-                    if (length % bar_window->width == 0)
-                        num_lines = length / bar_window->width;
+                    length = strlen (items[line]);
+                    if ((length >= 3)
+                        && (items[line][length - 3] == GUI_COLOR_COLOR_CHAR)
+                        && (items[line][length - 2] == GUI_COLOR_BAR_CHAR)
+                        && (items[line][length - 1] == GUI_COLOR_BAR_MOVE_CURSOR_CHAR))
+                        length_on_screen++;
+                    
+                    if (length_on_screen > max_length)
+                        max_length = length_on_screen;
+                    
+                    if (length_on_screen % bar_window->width == 0)
+                        num_lines = length_on_screen / bar_window->width;
                     else
-                        num_lines = (length / bar_window->width) + 1;
+                        num_lines = (length_on_screen / bar_window->width) + 1;
                     if (num_lines == 0)
                         num_lines = 1;
                     optimal_number_of_lines += num_lines;
@@ -874,22 +912,21 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
         
         for (i = 0; i < bar_window->bar->items_count; i++)
         {
+            chars_available =
+                ((bar_window->height - y - 1) * bar_window->width) + /* next lines */
+                (bar_window->width - x - 1); /* chars on current line */
+            
             item_value = gui_bar_item_get_value (bar_window->bar->items_array[i],
                                                  bar_window->bar, window,
                                                  bar_window->width,
-                                                 bar_window->height);
+                                                 bar_window->height,
+                                                 chars_available);
             if (item_value)
             {
                 if (item_value[0])
                 {
                     if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_HORIZONTAL)
                     {
-                        snprintf (space_with_reinit_color,
-                                  sizeof (space_with_reinit_color),
-                                  "%c*%02d,%02d ",
-                                  GUI_COLOR_COLOR_CHAR,
-                                  CONFIG_COLOR(bar_window->bar->color_fg),
-                                  CONFIG_COLOR(bar_window->bar->color_bg));
                         item_value2 = string_replace (item_value, "\n",
                                                       space_with_reinit_color);
                     }
@@ -911,8 +948,10 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                             y++;
                         }
                         else
+                        {
                             gui_bar_window_print_string (bar_window, &x, &y,
-                                                         " ");
+                                                         space_with_reinit_color);
+                        }
                     }
                     if (item_value2)
                         free (item_value2);
@@ -922,6 +961,14 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 free (item_value);
             }
         }
+    }
+
+    /* move cursor if it was asked in an item content (input_text does that
+       to move cursor in user input text) */
+    if (window && (gui_current_window == window)
+        && (bar_window->cursor_x >= 0) && (bar_window->cursor_y >= 0))
+    {
+        move (bar_window->cursor_y, bar_window->cursor_x);
     }
     
     wnoutrefresh (bar_window->win_bar);
@@ -973,6 +1020,9 @@ gui_bar_draw (struct t_gui_bar *bar)
     struct t_gui_window *ptr_win;
     struct t_gui_bar_window *ptr_bar_win;
     
+    if (CONFIG_BOOLEAN(bar->hidden))
+        return;
+    
     if (bar->bar_window)
     {
         /* root bar */
@@ -1009,6 +1059,8 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
     log_printf ("    y . . . . . . . . : %d",   bar_window->y);
     log_printf ("    width . . . . . . : %d",   bar_window->width);
     log_printf ("    height. . . . . . : %d",   bar_window->height);
+    log_printf ("    cursor_x. . . . . : %d",   bar_window->cursor_x);
+    log_printf ("    cursor_y. . . . . : %d",   bar_window->cursor_y);
     log_printf ("    current_size. . . : %d",   bar_window->current_size);
     log_printf ("    win_bar . . . . . : 0x%x", bar_window->win_bar);
     log_printf ("    win_separator . . : 0x%x", bar_window->win_separator);

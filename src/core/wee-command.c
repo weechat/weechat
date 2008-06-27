@@ -58,42 +58,34 @@
 
 
 /*
- * command_bar: manage bars
+ * command_bar_list: list bars
  */
 
-int
-command_bar (void *data, struct t_gui_buffer *buffer,
-             int argc, char **argv, char **argv_eol)
+void
+command_bar_list (int full)
 {
-    int type, position;
-    long number;
-    char *error, *str_type, *pos_condition, str_size[16];
     struct t_gui_bar *ptr_bar;
-    struct t_gui_bar_item *ptr_item;
+    char str_size[16];
     
-    /* make C compiler happy */
-    (void) data;
-    (void) buffer;
-    
-    /* list of bars */
-    if ((argc == 1)
-        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    if (gui_bars)
     {
-        if (gui_bars)
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL, _("List of bars:"));
+        for (ptr_bar = gui_bars; ptr_bar;
+             ptr_bar = ptr_bar->next_bar)
         {
-            gui_chat_printf (NULL, "");
-            gui_chat_printf (NULL, _("List of bars:"));
-            for (ptr_bar = gui_bars; ptr_bar;
-                 ptr_bar = ptr_bar->next_bar)
+            snprintf (str_size, sizeof (str_size),
+                      "%d", CONFIG_INTEGER(ptr_bar->size));
+            if (full)
             {
-                snprintf (str_size, sizeof (str_size),
-                          "%d", CONFIG_INTEGER(ptr_bar->size));
                 gui_chat_printf (NULL,
-                                 _("  %s%s%s: %s (cond: %s), %s, filling: %s, "
-                                   "%s: %s"),
+                                 _("  %s%s%s: %s%s%s (cond: %s), %s, "
+                                   "filling: %s, %s: %s"),
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  ptr_bar->name,
                                  GUI_COLOR(GUI_COLOR_CHAT),
+                                 (CONFIG_BOOLEAN(ptr_bar->hidden)) ? _("(hidden)") : "",
+                                 (CONFIG_BOOLEAN(ptr_bar->hidden)) ? " " : "",
                                  gui_bar_type_string[CONFIG_INTEGER(ptr_bar->type)],
                                  (CONFIG_STRING(ptr_bar->conditions)
                                   && CONFIG_STRING(ptr_bar->conditions)[0]) ?
@@ -115,12 +107,59 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                                  (CONFIG_INTEGER(ptr_bar->separator)) ?
                                  _(", with separator") : "",
                                  (ptr_bar->plugin) ? ptr_bar->plugin->name : "-");
-                                 
+            }
+            else
+            {
+                gui_chat_printf (NULL,
+                                 "  %s%s%s: %s%s%s, %s, %s: %s",
+                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                 ptr_bar->name,
+                                 GUI_COLOR(GUI_COLOR_CHAT),
+                                 (CONFIG_BOOLEAN(ptr_bar->hidden)) ? _("(hidden)") : "",
+                                 (CONFIG_BOOLEAN(ptr_bar->hidden)) ? " " : "",
+                                 gui_bar_type_string[CONFIG_INTEGER(ptr_bar->type)],
+                                 gui_bar_position_string[CONFIG_INTEGER(ptr_bar->position)],
+                                 ((CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_BOTTOM)
+                                  || (CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_TOP)) ?
+                                 _("height") : _("width"),
+                                 (CONFIG_INTEGER(ptr_bar->size) == 0) ? _("auto") : str_size);
             }
         }
-        else
-            gui_chat_printf (NULL, _("No bar defined"));
-        
+    }
+    else
+        gui_chat_printf (NULL, _("No bar defined"));
+}
+
+/*
+ * command_bar: manage bars
+ */
+
+int
+command_bar (void *data, struct t_gui_buffer *buffer,
+             int argc, char **argv, char **argv_eol)
+{
+    int type, position;
+    long number;
+    char *error, *str_type, *pos_condition;
+    struct t_gui_bar *ptr_bar;
+    struct t_gui_bar_item *ptr_item;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    
+    /* list of bars */
+    if ((argc == 1)
+        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    {
+        command_bar_list (0);
+        return WEECHAT_RC_OK;
+    }
+    
+    /* full list of bars */
+    if ((argc == 2) && (string_strcasecmp (argv[1], "listfull") == 0))
+    {
+        command_bar_list (1);
         return WEECHAT_RC_OK;
     }
     
@@ -203,7 +242,8 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         if (error && !error[0])
         {
             /* create bar */
-            if (gui_bar_new (NULL, argv[2], "0", str_type, pos_condition,
+            if (gui_bar_new (NULL, argv[2], "0", "0", str_type,
+                             (pos_condition) ? pos_condition : "",
                              argv[4],
                              ((position == GUI_BAR_POSITION_LEFT)
                               || (position == GUI_BAR_POSITION_RIGHT)) ?
@@ -293,6 +333,72 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                              gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                              argv[3], argv[2]);
             return WEECHAT_RC_ERROR;
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+
+    /* hide a bar */
+    if (string_strcasecmp (argv[1], "hide") == 0)
+    {
+        if (argc < 3)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "bar");
+            return WEECHAT_RC_ERROR;
+        }
+        ptr_bar = gui_bar_search (argv[2]);
+        if (!ptr_bar)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unknown bar \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        if (!CONFIG_BOOLEAN(ptr_bar->hidden))
+        {
+            if (gui_bar_set (ptr_bar, "hidden", "1"))
+            {
+                gui_chat_printf (NULL, _("Bar \"%s\" is now hidden"),
+                                 ptr_bar->name);
+            }
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+
+    /* show a bar */
+    if (string_strcasecmp (argv[1], "show") == 0)
+    {
+        if (argc < 3)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "bar");
+            return WEECHAT_RC_ERROR;
+        }
+        ptr_bar = gui_bar_search (argv[2]);
+        if (!ptr_bar)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unknown bar \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        if (CONFIG_BOOLEAN(ptr_bar->hidden))
+        {
+            if (gui_bar_set (ptr_bar, "hidden", "0"))
+            {
+                gui_chat_printf (NULL, _("Bar \"%s\" is now visible"),
+                                 ptr_bar->name);
+            }
         }
         
         return WEECHAT_RC_OK;
@@ -2541,7 +2647,8 @@ command_init ()
                   N_("[add barname type[,cond1,cond2,...] position size "
                      "separator item1,item2,...] | [del barname] | "
                      "[set barname name|priority|condition|position|filling|"
-                     "size|separator|items value] | [list] | [listitems]"),
+                     "size|separator|items value] | [hide|show barname] | "
+                     "[list] | [listitems]"),
                   N_("      add: add a new bar\n"
                      "  barname: name of bar (must be unique)\n"
                      "     type:   root: outside windows),\n"
@@ -2561,10 +2668,14 @@ command_init ()
                      "item1,...: items for this bar\n"
                      "      del: delete a bar\n"
                      "      set: set a value for a bar property\n"
+                     "     hide: hide a bar\n"
+                     "     show: show an hidden bar\n"
                      "     list: list all bars\n"
+                     " listfull: list all bars (verbose)\n"
                      "listitems: list all bar items"),
-                  "add|del|set|list|listitems %r name|priority|conditions|"
-                  "position|filling|size|separator|items",
+                  "add|del|set|hide|show|list|listfull|listitems %r "
+                  "name|priority|conditions|position|filling|size|separator|"
+                  "items",
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
@@ -2686,8 +2797,7 @@ command_init ()
                   N_("[list [name]] | [listfull [name]] | [load filename] | "
                      "[autoload] | [reload [name]] | [unload [name]]"),
                   N_("    list: list loaded plugins\n"
-                     "listfull: list loaded plugins with detailed info for "
-                     "each plugin\n"
+                     "listfull: list loaded plugins (verbose)\n"
                      "    load: load a plugin\n"
                      "autoload: autoload plugins in system or user directory\n"
                      "  reload: reload one plugin (if no name given, unload "

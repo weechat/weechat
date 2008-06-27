@@ -297,6 +297,7 @@ gui_keyboard_flush ()
                                          key_str, -1);
                 if (gui_current_window->buffer->completion)
                     gui_completion_stop (gui_current_window->buffer->completion, 0);
+                gui_input_text_changed_signal ();
                 input_draw = 1;
             }
             

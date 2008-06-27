@@ -224,7 +224,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                     }
                 }
                 break;
-            case GUI_COLOR_SET_CHAR:
+            case GUI_COLOR_SET_WEECHAT_CHAR:
                 string++;
                 switch (string[0])
                 {
@@ -249,7 +249,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                         break;
                 }
                 break;
-            case GUI_COLOR_REMOVE_CHAR:
+            case GUI_COLOR_REMOVE_WEECHAT_CHAR:
                 string++;
                 switch (string[0])
                 {

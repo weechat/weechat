@@ -39,8 +39,8 @@
 
 
 char *gui_bar_option_string[GUI_BAR_NUM_OPTIONS] =
-{ "priority", "type", "conditions", "position", "filling", "size", "size_max",
-  "color_fg", "color_delim", "color_bg", "separator", "items" };
+{ "hidden", "priority", "type", "conditions", "position", "filling", "size",
+  "size_max", "color_fg", "color_delim", "color_bg", "separator", "items" };
 char *gui_bar_type_string[GUI_BAR_NUM_TYPES] =
 { "root", "window" };
 char *gui_bar_position_string[GUI_BAR_NUM_POSITIONS] =
@@ -230,13 +230,16 @@ gui_bar_root_get_size (struct t_gui_bar *bar, enum t_gui_bar_position position)
     {
         if (bar && (ptr_bar == bar))
             return total_size;
-        
-        if ((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_ROOT)
-            && (CONFIG_INTEGER(ptr_bar->position) == (int)position))
+
+        if (!CONFIG_BOOLEAN(ptr_bar->hidden))
         {
-            total_size += gui_bar_window_get_current_size (ptr_bar->bar_window);
-            if (CONFIG_INTEGER(ptr_bar->separator))
-                total_size++;
+            if ((CONFIG_INTEGER(ptr_bar->type) == GUI_BAR_TYPE_ROOT)
+                && (CONFIG_INTEGER(ptr_bar->position) == (int)position))
+            {
+                total_size += gui_bar_window_get_current_size (ptr_bar->bar_window);
+                if (CONFIG_INTEGER(ptr_bar->separator))
+                    total_size++;
+            }
         }
     }
     return total_size;
@@ -337,6 +340,44 @@ gui_bar_config_check_type (void *data, struct t_config_option *option,
 }
 
 /*
+ * gui_bar_config_change_hidden: callback when "hidden" flag is changed
+ */
+
+void
+gui_bar_config_change_hidden (void *data, struct t_config_option *option)
+{
+    struct t_gui_bar *ptr_bar;
+    struct t_gui_window *ptr_win;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    ptr_bar = gui_bar_search_with_option_name (option->name);
+    if (ptr_bar)
+    {
+        /* free bar windows */
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+        {
+            gui_bar_free_bar_windows (ptr_bar);
+        }
+        
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+            {
+                if (!CONFIG_BOOLEAN(ptr_bar->hidden)
+                    && (CONFIG_INTEGER(ptr_bar->type) != GUI_BAR_TYPE_ROOT))
+                {
+                    gui_bar_window_new (ptr_bar, ptr_win);
+                }
+            }
+        }
+    }
+    
+    gui_window_refresh_needed = 1;
+}
+
+/*
  * gui_bar_config_change_priority: callback when priority is changed
  */
 
@@ -380,8 +421,11 @@ gui_bar_config_change_priority (void *data, struct t_config_option *option)
         {
             for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
             {
-                if (CONFIG_INTEGER(ptr_bar->type) != GUI_BAR_TYPE_ROOT)
+                if (!CONFIG_BOOLEAN(ptr_bar->hidden)
+                    && (CONFIG_INTEGER(ptr_bar->type) != GUI_BAR_TYPE_ROOT))
+                {
                     gui_bar_window_new (ptr_bar, ptr_win);
+                }
             }
         }
     }
@@ -436,7 +480,7 @@ gui_bar_config_change_position (void *data, struct t_config_option *option)
     (void) data;
 
     ptr_bar = gui_bar_search_with_option_name (option->name);
-    if (ptr_bar)
+    if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->hidden))
         gui_bar_refresh (ptr_bar);
     
     gui_window_refresh_needed = 1;
@@ -455,7 +499,7 @@ gui_bar_config_change_filling (void *data, struct t_config_option *option)
     (void) data;
     
     ptr_bar = gui_bar_search_with_option_name (option->name);
-    if (ptr_bar)
+    if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->hidden))
         gui_bar_refresh (ptr_bar);
     
     gui_window_refresh_needed = 1;
@@ -515,8 +559,9 @@ gui_bar_config_check_size (void *data, struct t_config_option *option,
             ((CONFIG_INTEGER(ptr_bar->size) == 0)
              || (new_value > CONFIG_INTEGER(ptr_bar->size))))
         {
-            if (!gui_bar_check_size_add (ptr_bar,
-                                         new_value - CONFIG_INTEGER(ptr_bar->size)))
+            if (!CONFIG_BOOLEAN(ptr_bar->hidden)
+                && !gui_bar_check_size_add (ptr_bar,
+                                            new_value - CONFIG_INTEGER(ptr_bar->size)))
                 return 0;
         }
         
@@ -574,7 +619,7 @@ gui_bar_config_change_color (void *data, struct t_config_option *option)
     (void) data;
     
     ptr_bar = gui_bar_search_with_option_name (option->name);
-    if (ptr_bar)
+    if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->hidden))
         gui_bar_refresh (ptr_bar);
 }
 
@@ -591,7 +636,7 @@ gui_bar_config_change_separator (void *data, struct t_config_option *option)
     (void) data;
     
     ptr_bar = gui_bar_search_with_option_name (option->name);
-    if (ptr_bar)
+    if (ptr_bar && !CONFIG_BOOLEAN(ptr_bar->hidden))
         gui_bar_refresh (ptr_bar);
 }
 
@@ -624,8 +669,9 @@ gui_bar_config_change_items (void *data, struct t_config_option *option)
             ptr_bar->items_count = 0;
             ptr_bar->items_array = NULL;
         }
-        
-        gui_bar_draw (ptr_bar);
+
+        if (!CONFIG_BOOLEAN(ptr_bar->hidden))
+            gui_bar_draw (ptr_bar);
     }
 }
 
@@ -646,6 +692,8 @@ gui_bar_set_name (struct t_gui_bar *bar, const char *name)
     option_name = malloc (length);
     if (option_name)
     {
+        snprintf (option_name, length, "%s.hidden", name);
+        config_file_option_rename (bar->hidden, option_name);
         snprintf (option_name, length, "%s.priority", name);
         config_file_option_rename (bar->priority, option_name);
         snprintf (option_name, length, "%s.type", name);
@@ -811,16 +859,19 @@ gui_bar_set (struct t_gui_bar *bar, const char *property, const char *value)
         gui_bar_set_name (bar, value);
         return 1;
     }
+    else if (string_strcasecmp (property, "hidden") == 0)
+    {
+        config_file_option_set (bar->hidden, value, 1);
+        return 1;
+    }
     else if (string_strcasecmp (property, "priority") == 0)
     {
         gui_bar_set_priority (bar, value);
-        gui_window_refresh_needed = 1;
         return 1;
     }
     else if (string_strcasecmp (property, "conditions") == 0)
     {
         config_file_option_set (bar->conditions, value, 1);
-        gui_window_refresh_needed = 1;
         return 1;
     }
     else if (string_strcasecmp (property, "position") == 0)
@@ -904,6 +955,14 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
         
         switch (index_option)
         {
+            case GUI_BAR_OPTION_HIDDEN:
+                ptr_option = config_file_new_option (
+                    weechat_config_file, weechat_config_section_bar,
+                    option_name, "boolean",
+                    N_("true if bar is hidden, false if it is displayed"),
+                    NULL, 0, 0, value,
+                    NULL, NULL, &gui_bar_config_change_hidden, NULL, NULL, NULL);
+                break;
             case GUI_BAR_OPTION_PRIORITY:
                 ptr_option = config_file_new_option (
                     weechat_config_file, weechat_config_section_bar,
@@ -1038,6 +1097,9 @@ gui_bar_create_option_temp (struct t_gui_bar *temp_bar, int index_option,
     {
         switch (index_option)
         {
+            case GUI_BAR_OPTION_HIDDEN:
+                temp_bar->hidden = new_option;
+                break;
             case GUI_BAR_OPTION_PRIORITY:
                 temp_bar->priority = new_option;
                 break;
@@ -1092,7 +1154,8 @@ gui_bar_alloc (const char *name)
     {
         new_bar->plugin = NULL;
         new_bar->name = strdup (name);
-        new_bar->priority = 0;
+        new_bar->hidden = NULL;
+        new_bar->priority = NULL;
         new_bar->type = NULL;
         new_bar->conditions = NULL;
         new_bar->position = NULL;
@@ -1122,6 +1185,7 @@ gui_bar_alloc (const char *name)
 
 struct t_gui_bar *
 gui_bar_new_with_options (struct t_weechat_plugin *plugin, const char *name,
+                          struct t_config_option *hidden,
                           struct t_config_option *priority,
                           struct t_config_option *type,
                           struct t_config_option *conditions,
@@ -1143,6 +1207,7 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, const char *name,
     if (new_bar)
     {
         new_bar->plugin = plugin;
+        new_bar->hidden = hidden;
         new_bar->priority = priority;
         new_bar->type = type;
         new_bar->conditions = conditions;
@@ -1209,14 +1274,15 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, const char *name,
 
 struct t_gui_bar *
 gui_bar_new (struct t_weechat_plugin *plugin, const char *name,
-             const char *priority, const char *type, const char *conditions,
-             const char *position, const char *filling, const char *size,
-             const char *size_max, const char *color_fg,
-             const char *color_delim, const char *color_bg,
-             const char *separators, const char *items)
+             const char *hidden, const char *priority, const char *type,
+             const char *conditions, const char *position,
+             const char *filling, const char *size, const char *size_max,
+             const char *color_fg, const char *color_delim,
+             const char *color_bg, const char *separators, const char *items)
 {
-    struct t_config_option *option_priority, *option_type, *option_conditions;
-    struct t_config_option *option_position, *option_filling, *option_size;
+    struct t_config_option *option_hidden, *option_priority, *option_type;
+    struct t_config_option *option_conditions, *option_position;
+    struct t_config_option *option_filling, *option_size;
     struct t_config_option *option_size_max, *option_color_fg;
     struct t_config_option *option_color_delim, *option_color_bg;
     struct t_config_option *option_separator, *option_items;
@@ -1237,6 +1303,8 @@ gui_bar_new (struct t_weechat_plugin *plugin, const char *name,
     if (gui_bar_search_position (position) < 0)
         return NULL;
     
+    option_hidden = gui_bar_create_option (name, GUI_BAR_OPTION_HIDDEN,
+                                           hidden);
     option_priority = gui_bar_create_option (name, GUI_BAR_OPTION_PRIORITY,
                                              priority);
     option_type = gui_bar_create_option (name, GUI_BAR_OPTION_TYPE,
@@ -1262,15 +1330,17 @@ gui_bar_new (struct t_weechat_plugin *plugin, const char *name,
                                                "on" : "off");
     option_items = gui_bar_create_option (name, GUI_BAR_OPTION_ITEMS,
                                           items);
-    new_bar = gui_bar_new_with_options (plugin, name, option_priority,
-                                        option_type,option_conditions,
-                                        option_position, option_filling,
-                                        option_size, option_size_max,
-                                        option_color_fg, option_color_delim,
-                                        option_color_bg, option_separator,
-                                        option_items);
+    new_bar = gui_bar_new_with_options (plugin, name, option_hidden,
+                                        option_priority, option_type,
+                                        option_conditions, option_position,
+                                        option_filling, option_size,
+                                        option_size_max, option_color_fg,
+                                        option_color_delim, option_color_bg,
+                                        option_separator, option_items);
     if (!new_bar)
     {
+        if (option_hidden)
+            config_file_option_free (option_hidden);
         if (option_priority)
             config_file_option_free (option_priority);
         if (option_type)
@@ -1312,6 +1382,10 @@ gui_bar_use_temp_bars ()
     for (ptr_temp_bar = gui_temp_bars; ptr_temp_bar;
          ptr_temp_bar = ptr_temp_bar->next_bar)
     {
+        if (!ptr_temp_bar->hidden)
+            ptr_temp_bar->hidden = gui_bar_create_option (ptr_temp_bar->name,
+                                                          GUI_BAR_OPTION_HIDDEN,
+                                                          "0");
         if (!ptr_temp_bar->priority)
             ptr_temp_bar->priority = gui_bar_create_option (ptr_temp_bar->name,
                                                             GUI_BAR_OPTION_PRIORITY,
@@ -1373,14 +1447,17 @@ gui_bar_use_temp_bars ()
                                                          GUI_BAR_OPTION_ITEMS,
                                                          "");
         
-        if (ptr_temp_bar->priority && ptr_temp_bar->type
-            && ptr_temp_bar->conditions && ptr_temp_bar->position
-            && ptr_temp_bar->filling && ptr_temp_bar->size
-            && ptr_temp_bar->size_max && ptr_temp_bar->color_fg
-            && ptr_temp_bar->color_delim && ptr_temp_bar->color_bg
-            && ptr_temp_bar->separator && ptr_temp_bar->items)
+        if (ptr_temp_bar->hidden && ptr_temp_bar->priority
+            && ptr_temp_bar->type && ptr_temp_bar->conditions
+            && ptr_temp_bar->position && ptr_temp_bar->filling
+            && ptr_temp_bar->size && ptr_temp_bar->size_max
+            && ptr_temp_bar->color_fg && ptr_temp_bar->color_delim
+            && ptr_temp_bar->color_bg && ptr_temp_bar->separator
+            && ptr_temp_bar->items)
         {
-            gui_bar_new_with_options (NULL, ptr_temp_bar->name,
+            gui_bar_new_with_options (NULL,
+                                      ptr_temp_bar->name,
+                                      ptr_temp_bar->hidden,
                                       ptr_temp_bar->priority,
                                       ptr_temp_bar->type,
                                       ptr_temp_bar->conditions,
@@ -1396,6 +1473,11 @@ gui_bar_use_temp_bars ()
         }
         else
         {
+            if (ptr_temp_bar->hidden)
+            {
+                config_file_option_free (ptr_temp_bar->hidden);
+                ptr_temp_bar->hidden = NULL;
+            }
             if (ptr_temp_bar->priority)
             {
                 config_file_option_free (ptr_temp_bar->priority);
@@ -1484,7 +1566,7 @@ gui_bar_update (const char *name)
     
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
-        if (strcmp (ptr_bar->name, name) == 0)
+        if (!CONFIG_BOOLEAN(ptr_bar->hidden) && (strcmp (ptr_bar->name, name) == 0))
             gui_bar_draw (ptr_bar);
     }
 }
@@ -1518,6 +1600,8 @@ gui_bar_free (struct t_gui_bar *bar)
     /* free data */
     if (bar->name)
         free (bar->name);
+    if (bar->hidden)
+        config_file_option_free (bar->hidden);
     if (bar->priority)
         config_file_option_free (bar->priority);
     if (bar->type)
@@ -1599,6 +1683,7 @@ gui_bar_print_log ()
         log_printf ("[bar (addr:0x%x)]", ptr_bar);
         log_printf ("  plugin . . . . . . . . : 0x%x", ptr_bar->plugin);
         log_printf ("  name . . . . . . . . . : '%s'", ptr_bar->name);
+        log_printf ("  hidden . . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->hidden));
         log_printf ("  priority . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->priority));
         log_printf ("  type . . . . . . . . . : %d (%s)",
                     CONFIG_INTEGER(ptr_bar->type),

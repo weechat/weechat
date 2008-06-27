@@ -25,7 +25,8 @@ struct t_gui_window;
 
 enum t_gui_bar_option
 {
-    GUI_BAR_OPTION_PRIORITY = 0,
+    GUI_BAR_OPTION_HIDDEN = 0,
+    GUI_BAR_OPTION_PRIORITY,
     GUI_BAR_OPTION_TYPE,
     GUI_BAR_OPTION_CONDITIONS,
     GUI_BAR_OPTION_POSITION,
@@ -72,6 +73,7 @@ struct t_gui_bar
     /* user choices */
     struct t_weechat_plugin *plugin;    /* plugin                           */
     char *name;                         /* bar name                         */
+    struct t_config_option *hidden;     /* true if bar is hidden            */
     struct t_config_option *priority;   /* bar priority                     */
     struct t_config_option *type;       /* type (root or window)            */
     struct t_config_option *conditions; /* conditions for display           */
@@ -121,8 +123,9 @@ extern void gui_bar_create_option_temp (struct t_gui_bar *temp_bar,
                                         int index_option, const char *value);
 extern struct t_gui_bar *gui_bar_alloc (const char *name);
 extern struct t_gui_bar *gui_bar_new (struct t_weechat_plugin *plugin,
-                                      const char *name, const char *priority,
-                                      const char *type, const char *conditions,
+                                      const char *name, const char *hidden,
+                                      const char *priority, const char *type,
+                                      const char *conditions,
                                       const char *position,
                                       const char *filling, const char *size,
                                       const char *size_max,

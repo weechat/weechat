@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-22 10:47+0200\n"
+"POT-Creation-Date: 2008-06-27 17:04+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -96,8 +96,11 @@ msgid "List of bars:"
 msgstr "Список сокращений:\n"
 
 #, fuzzy, c-format
-msgid "  %s%s%s: %s (cond: %s), %s, filling: %s, %s: %s"
+msgid "  %s%s%s: %s%s%s (cond: %s), %s, filling: %s, %s: %s"
 msgstr "%sна %s%s%s/%s%s%s:%s игнорирует %s%s%s с %s%s\n"
+
+msgid "(hidden)"
+msgstr "(скрытый)"
 
 #, fuzzy
 msgid "height"
@@ -172,6 +175,14 @@ msgstr "команда users отключена"
 #, fuzzy, c-format
 msgid "%sError: unable to set option \"%s\" for bar \"%s\""
 msgstr "%s неизвестный параметр для команды \"%s\"\n"
+
+#, c-format
+msgid "Bar \"%s\" is now hidden"
+msgstr ""
+
+#, c-format
+msgid "Bar \"%s\" is now visible"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sError: unknown option for \"%s\" command"
@@ -567,7 +578,7 @@ msgstr "управление буферами"
 msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
 "| [del barname] | [set barname name|priority|condition|position|filling|size|"
-"separator|items value] | [list] | [listitems]"
+"separator|items value] | [hide|show barname] | [list] | [listitems]"
 msgstr ""
 
 msgid ""
@@ -587,7 +598,10 @@ msgid ""
 "item1,...: items for this bar\n"
 "      del: delete a bar\n"
 "      set: set a value for a bar property\n"
+"     hide: hide a bar\n"
+"     show: show an hidden bar\n"
 "     list: list all bars\n"
+" listfull: list all bars (verbose)\n"
 "listitems: list all bar items"
 msgstr ""
 
@@ -763,9 +777,10 @@ msgstr ""
 "[list [имя]] | [listfull [имя]] | [load имя_файла] | [autoload] | [reload "
 "[имя]] | [unload [имя]]"
 
+#, fuzzy
 msgid ""
 "    list: list loaded plugins\n"
-"listfull: list loaded plugins with detailed info for each plugin\n"
+"listfull: list loaded plugins (verbose)\n"
 "    load: load a plugin\n"
 "autoload: autoload plugins in system or user directory\n"
 "  reload: reload one plugin (if no name given, unload all plugins, then "
@@ -1659,6 +1674,9 @@ msgstr "сервер"
 msgid ""
 "%sUnable to change bar type: you must delete bar and create another to do "
 "that"
+msgstr ""
+
+msgid "true if bar is hidden, false if it is displayed"
 msgstr ""
 
 msgid "bar priority (high number means bar displayed first)"
@@ -3112,9 +3130,6 @@ msgstr "выкл."
 msgid " (temporary server, will not be saved)"
 msgstr " (временный сервер, не будет сохранён)"
 
-msgid "(hidden)"
-msgstr "(скрытый)"
-
 msgid " (temporary)"
 msgstr " (временный)"
 
@@ -4543,6 +4558,10 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "hidden"
+#~ msgstr "(скрытый)"
 
 #, fuzzy
 #~ msgid "(MORE)"

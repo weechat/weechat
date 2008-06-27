@@ -137,6 +137,28 @@ gui_chat_strlen_screen (const char *string)
 }
 
 /*
+ * gui_chat_string_add_offset: move forward N chars in a string, skipping all
+ *                             formatting chars (like colors,..)
+ */
+
+char *
+gui_chat_string_add_offset (const char *string, int offset)
+{
+    while (string && string[0] && (offset > 0))
+    {
+        string = gui_chat_string_next_char (NULL,
+                                            (unsigned char *)string,
+                                            0);
+        if (string)
+        {
+            string = utf8_next_char (string);
+            offset--;
+        }
+    }
+    return (char *)string;
+}
+
+/*
  * gui_chat_string_real_pos: get real position in string
  *                           (ignoring color/bold/.. chars)
  */

@@ -600,6 +600,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     {
         gui_input_delete_line (buffer);
         gui_input_insert_string (buffer, value, 0);
+        gui_input_text_changed_signal ();
         gui_buffer_ask_input_refresh (buffer, 1);
     }
 }

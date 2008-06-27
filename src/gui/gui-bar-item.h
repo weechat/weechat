@@ -22,7 +22,9 @@
 
 enum t_gui_bar_item_weechat
 {
-    GUI_BAR_ITEM_TIME = 0,
+    GUI_BAR_ITEM_INPUT_PROMPT = 0,
+    GUI_BAR_ITEM_INPUT_TEXT,
+    GUI_BAR_ITEM_TIME,
     GUI_BAR_ITEM_BUFFER_COUNT,
     GUI_BAR_ITEM_BUFFER_PLUGIN,
     GUI_BAR_ITEM_BUFFER_NAME,
@@ -61,6 +63,7 @@ struct t_gui_bar_item_hook
 
 extern struct t_gui_bar_item *gui_bar_items;
 extern struct t_gui_bar_item *last_gui_bar_item;
+extern char *gui_bar_item_names[];
 
 /* functions */
 
@@ -68,7 +71,8 @@ extern struct t_gui_bar_item *gui_bar_item_search (const char *name);
 extern char *gui_bar_item_get_value (const char *name,
                                      struct t_gui_bar *bar,
                                      struct t_gui_window *window,
-                                     int width, int height);
+                                     int width, int height,
+                                     int chars_available);
 extern struct t_gui_bar_item *gui_bar_item_new (struct t_weechat_plugin *plugin,
                                                 const char *name,
                                                 char *(*build_callback)(void *data,

@@ -116,6 +116,7 @@ gui_keyboard_grab_end ()
             if (gui_current_window->buffer->completion)
                 gui_completion_stop (gui_current_window->buffer->completion, 1);
             gui_input_draw (gui_current_window->buffer, 0);
+            gui_input_text_changed_signal ();
         }
         free (expanded_key);
     }

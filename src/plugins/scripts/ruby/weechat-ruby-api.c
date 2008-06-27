@@ -4093,15 +4093,15 @@ weechat_ruby_api_bar_search (VALUE class, VALUE name)
  */
 
 static VALUE
-weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE priority, VALUE type,
-                          VALUE conditions, VALUE position, VALUE filling,
-                          VALUE size, VALUE size_max, VALUE color_fg,
-                          VALUE color_delim, VALUE color_bg, VALUE separator,
-                          VALUE items)
+weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE hidden,
+                          VALUE priority, VALUE type, VALUE conditions,
+                          VALUE position, VALUE filling, VALUE size,
+                          VALUE size_max, VALUE color_fg, VALUE color_delim,
+                          VALUE color_bg, VALUE separator, VALUE items)
 {
-    char *c_name, *c_priority, *c_type, *c_conditions, *c_position, *c_filling;
-    char *c_size, *c_size_max, *c_color_fg, *c_color_delim, *c_color_bg;
-    char *c_separator, *c_items;
+    char *c_name, *c_hidden, *c_priority, *c_type, *c_conditions, *c_position;
+    char *c_filling, *c_size, *c_size_max, *c_color_fg, *c_color_delim;
+    char *c_color_bg, *c_separator, *c_items;
     char *result;
     VALUE return_value;
     
@@ -4115,6 +4115,7 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE priority, VALUE type,
     }
     
     c_name = NULL;
+    c_hidden = NULL;
     c_priority = NULL;
     c_type = NULL;
     c_conditions = NULL;
@@ -4128,16 +4129,18 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE priority, VALUE type,
     c_separator = NULL;
     c_items = NULL;
     
-    if (NIL_P (name) || NIL_P (priority) || NIL_P (type) || NIL_P (conditions)
-        || NIL_P (position) || NIL_P (filling) || NIL_P (size)
-        || NIL_P (size_max) || NIL_P (color_fg) || NIL_P (color_delim)
-        || NIL_P (color_bg) || NIL_P (separator) || NIL_P (items))
+    if (NIL_P (name) || NIL_P (hidden) || NIL_P (priority) || NIL_P (type)
+        || NIL_P (conditions) || NIL_P (position) || NIL_P (filling)
+        || NIL_P (size) || NIL_P (size_max) || NIL_P (color_fg)
+        || NIL_P (color_delim) || NIL_P (color_bg) || NIL_P (separator)
+        || NIL_P (items))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         RUBY_RETURN_EMPTY;
     }
     
     Check_Type (name, T_STRING);
+    Check_Type (hidden, T_STRING);
     Check_Type (priority, T_STRING);
     Check_Type (type, T_STRING);
     Check_Type (conditions, T_STRING);
@@ -4152,6 +4155,7 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE priority, VALUE type,
     Check_Type (items, T_STRING);
     
     c_name = STR2CSTR (name);
+    c_hidden = STR2CSTR (hidden);
     c_priority = STR2CSTR (priority);
     c_type = STR2CSTR (type);
     c_conditions = STR2CSTR (conditions);
@@ -4166,6 +4170,7 @@ weechat_ruby_api_bar_new (VALUE class, VALUE name, VALUE priority, VALUE type,
     c_items = STR2CSTR (items);
     
     result = script_ptr2str (weechat_bar_new (c_name,
+                                              c_hidden,
                                               c_priority,
                                               c_type,
                                               c_conditions,
@@ -4798,7 +4803,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "bar_item_update", &weechat_ruby_api_bar_item_update, 1);
     rb_define_module_function (ruby_mWeechat, "bar_item_remove", &weechat_ruby_api_bar_item_remove, 1);
     rb_define_module_function (ruby_mWeechat, "bar_search", &weechat_ruby_api_bar_search, 1);
-    rb_define_module_function (ruby_mWeechat, "bar_new", &weechat_ruby_api_bar_new, 13);
+    rb_define_module_function (ruby_mWeechat, "bar_new", &weechat_ruby_api_bar_new, 14);
     rb_define_module_function (ruby_mWeechat, "bar_set", &weechat_ruby_api_bar_set, 3);
     rb_define_module_function (ruby_mWeechat, "bar_update", &weechat_ruby_api_bar_update, 1);
     rb_define_module_function (ruby_mWeechat, "bar_remove", &weechat_ruby_api_bar_remove, 1);

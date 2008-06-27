@@ -263,7 +263,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                 string++;
                 switch (string[0])
                 {
-                    case 'F':
+                    case GUI_COLOR_FG_CHAR: /* fg color */
                         if (string[1] && string[2])
                         {
                             if (apply_style)
@@ -278,7 +278,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                             string += 3;
                         }
                         break;
-                    case 'B':
+                    case GUI_COLOR_BG_CHAR: /* bg color */
                         if (string[1] && string[2])
                         {
                             if (apply_style)
@@ -293,7 +293,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                             string += 3;
                         }
                         break;
-                    case '*':
+                    case GUI_COLOR_FG_BG_CHAR: /* fg + bg color */
                         if (string[1] && string[2] && (string[3] == ',')
                             && string[4] && string[5])
                         {
@@ -313,6 +313,20 @@ gui_chat_string_next_char (struct t_gui_window *window,
                             string += 6;
                         }
                         break;
+                    case GUI_COLOR_BAR_CHAR: /* bar color */
+                        switch (string[1])
+                        {
+                            case GUI_COLOR_BAR_FG_CHAR:
+                            case GUI_COLOR_BAR_DELIM_CHAR:
+                            case GUI_COLOR_BAR_BG_CHAR:
+                            case GUI_COLOR_BAR_MOVE_CURSOR_CHAR:
+                                string += 2;
+                                break;
+                            default:
+                                string++;
+                                break;
+                        }
+                        break;
                     default:
                         if (isdigit (string[0]) && isdigit (string[1]))
                         {
@@ -330,7 +344,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                         break;
                 }
                 break;
-            case GUI_COLOR_SET_CHAR:
+            case GUI_COLOR_SET_WEECHAT_CHAR:
                 string++;
                 switch (string[0])
                 {
@@ -358,7 +372,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                         break;
                 }
                 break;
-            case GUI_COLOR_REMOVE_CHAR:
+            case GUI_COLOR_REMOVE_WEECHAT_CHAR:
                 string++;
                 switch (string[0])
                 {

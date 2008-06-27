@@ -424,13 +424,18 @@ struct t_weechat_plugin
     struct t_gui_bar *(*bar_search) (const char *name);
     struct t_gui_bar *(*bar_new) (struct t_weechat_plugin *plugin,
                                   const char *name,
-                                  const char *priority, const char *type,
+                                  const char *hidden,
+                                  const char *priority,
+                                  const char *type,
                                   const char *condition,
-                                  const char *position, const char *filling,
+                                  const char *position,
+                                  const char *filling,
                                   const char *size,
-                                  const char *size_max, const char *color_fg,
+                                  const char *size_max,
+                                  const char *color_fg,
                                   const char *color_delim,
-                                  const char *color_bg, const char *separator,
+                                  const char *color_bg,
+                                  const char *separator,
                                   const char *items);
     int (*bar_set) (struct t_gui_bar *bar, const char *property,
                     const char *value);
@@ -856,14 +861,16 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->bar_item_remove(__item)
 #define weechat_bar_search(__name)              \
     weechat_plugin->bar_search(__name)
-#define weechat_bar_new(__name, __priority, __type, __condition,        \
-                        __position, __filling, __size, __size_max,      \
-                        __color_fg, __color_delim, __color_bg,          \
-                        __separator, __items)                           \
-    weechat_plugin->bar_new(weechat_plugin, __name, __priority, __type, \
-                            __condition, __position, __filling, __size, \
-                            __size_max, __color_fg, __color_delim,      \
-                            __color_bg, __separator, __items)
+#define weechat_bar_new(__name, __hidden, __priority, __type,          \
+                        __condition, __position, __filling, __size,    \
+                        __size_max, __color_fg, __color_delim,         \
+                        __color_bg,                                    \
+                        __separator, __items)                          \
+    weechat_plugin->bar_new(weechat_plugin, __name, __hidden,          \
+                            __priority, __type, __condition,           \
+                            __position, __filling, __size, __size_max, \
+                            __color_fg, __color_delim, __color_bg,     \
+                            __separator, __items)
 #define weechat_bar_set(__bar, __property, __value)     \
     weechat_plugin->bar_set(__bar, __property, __value)
 #define weechat_bar_update(__name)              \

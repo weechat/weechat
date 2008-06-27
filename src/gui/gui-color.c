@@ -125,47 +125,53 @@ gui_color_get_custom (const char *color_name)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%s%s",
-                  GUI_COLOR_SET_STR,
+                  GUI_COLOR_SET_WEECHAT_STR,
                   GUI_COLOR_ATTR_BOLD_STR);
     }
     else if (string_strcasecmp (color_name, "reverse") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%s%s",
-                  GUI_COLOR_SET_STR,
+                  GUI_COLOR_SET_WEECHAT_STR,
                   GUI_COLOR_ATTR_REVERSE_STR);
     }
     else if (string_strcasecmp (color_name, "italic") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%s%s",
-                  GUI_COLOR_SET_STR,
+                  GUI_COLOR_SET_WEECHAT_STR,
                   GUI_COLOR_ATTR_ITALIC_STR);
     }
     else if (string_strcasecmp (color_name, "underline") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
                   "%s%s",
-                  GUI_COLOR_SET_STR,
+                  GUI_COLOR_SET_WEECHAT_STR,
                   GUI_COLOR_ATTR_UNDERLINE_STR);
     }
     else if (string_strcasecmp (color_name, "bar_fg") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%cbf",
-                  GUI_COLOR_COLOR_CHAR);
+                  "%c%c%c",
+                  GUI_COLOR_COLOR_CHAR,
+                  GUI_COLOR_BAR_CHAR,
+                  GUI_COLOR_BAR_FG_CHAR);
     }
     else if (string_strcasecmp (color_name, "bar_delim") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%cbd",
-                  GUI_COLOR_COLOR_CHAR);
+                  "%c%c%c",
+                  GUI_COLOR_COLOR_CHAR,
+                  GUI_COLOR_BAR_CHAR,
+                  GUI_COLOR_BAR_DELIM_CHAR);
     }
     else if (string_strcasecmp (color_name, "bar_bg") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),
-                  "%cbb",
-                  GUI_COLOR_COLOR_CHAR);
+                  "%c%c%c",
+                  GUI_COLOR_COLOR_CHAR,
+                  GUI_COLOR_BAR_CHAR,
+                  GUI_COLOR_BAR_BG_CHAR);
     }
     else
     {
@@ -256,8 +262,8 @@ gui_color_decode (const unsigned char *string)
                         break;
                 }
                 break;
-            case GUI_COLOR_SET_CHAR:
-            case GUI_COLOR_REMOVE_CHAR:
+            case GUI_COLOR_SET_WEECHAT_CHAR:
+            case GUI_COLOR_REMOVE_WEECHAT_CHAR:
                 string++;
                 if (string[0])
                     string++;

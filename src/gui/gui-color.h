@@ -96,30 +96,47 @@ enum t_gui_color_enum
 
 /* WeeChat internal color attributes (should never be in protocol messages) */
 
-#define GUI_COLOR_COLOR_CHAR          '\x19'
-#define GUI_COLOR_COLOR_STR           "\x19"
-#define GUI_COLOR_SET_CHAR            '\x1A'
-#define GUI_COLOR_SET_STR             "\x1A"
-#define GUI_COLOR_REMOVE_CHAR         '\x1B'
-#define GUI_COLOR_REMOVE_STR          "\x1B"
-#define GUI_COLOR_RESET_CHAR          '\x1C'
-#define GUI_COLOR_RESET_STR           "\x1C"
+#define GUI_COLOR_COLOR_CHAR           '\x19'
+#define GUI_COLOR_COLOR_STR            "\x19"
+#define GUI_COLOR_SET_WEECHAT_CHAR     '\x1A'
+#define GUI_COLOR_SET_WEECHAT_STR      "\x1A"
+#define GUI_COLOR_REMOVE_WEECHAT_CHAR  '\x1B'
+#define GUI_COLOR_REMOVE_WEECHAT_STR   "\x1B"
+#define GUI_COLOR_RESET_CHAR           '\x1C'
+#define GUI_COLOR_RESET_STR            "\x1C"
 
-#define GUI_COLOR_ATTR_BOLD_CHAR      '\x01'
-#define GUI_COLOR_ATTR_BOLD_STR       "\x01"
-#define GUI_COLOR_ATTR_REVERSE_CHAR   '\x02'
-#define GUI_COLOR_ATTR_REVERSE_STR    "\x02"
-#define GUI_COLOR_ATTR_ITALIC_CHAR    '\x03'
-#define GUI_COLOR_ATTR_ITALIC_STR     "\x03"
-#define GUI_COLOR_ATTR_UNDERLINE_CHAR '\x04'
-#define GUI_COLOR_ATTR_UNDERLINE_STR  "\x04"
+#define GUI_COLOR_ATTR_BOLD_CHAR       '\x01'
+#define GUI_COLOR_ATTR_BOLD_STR        "\x01"
+#define GUI_COLOR_ATTR_REVERSE_CHAR    '\x02'
+#define GUI_COLOR_ATTR_REVERSE_STR     "\x02"
+#define GUI_COLOR_ATTR_ITALIC_CHAR     '\x03'
+#define GUI_COLOR_ATTR_ITALIC_STR      "\x03"
+#define GUI_COLOR_ATTR_UNDERLINE_CHAR  '\x04'
+#define GUI_COLOR_ATTR_UNDERLINE_STR   "\x04"
 
 #define GUI_COLOR(color) ((gui_color[color]) ? gui_color[color]->string : "")
 #define GUI_NO_COLOR     GUI_COLOR_RESET_STR
 
-#define GUI_COLOR_BAR_FG    (gui_color_get_custom ("bar_fg"))
-#define GUI_COLOR_BAR_DELIM (gui_color_get_custom ("bar_delim"))
-#define GUI_COLOR_BAR_BG    (gui_color_get_custom ("bar_bg"))
+#define GUI_COLOR_CUSTOM_BAR_FG    (gui_color_get_custom ("bar_fg"))
+#define GUI_COLOR_CUSTOM_BAR_DELIM (gui_color_get_custom ("bar_delim"))
+#define GUI_COLOR_CUSTOM_BAR_BG    (gui_color_get_custom ("bar_bg"))
+
+#define GUI_COLOR_FG_CHAR              'F'
+#define GUI_COLOR_FG_STR               "F"
+#define GUI_COLOR_BG_CHAR              'B'
+#define GUI_COLOR_BG_STR               "B"
+#define GUI_COLOR_FG_BG_CHAR           '*'
+#define GUI_COLOR_FG_BG_STR            "*"
+#define GUI_COLOR_BAR_CHAR             'b'
+#define GUI_COLOR_BAR_STR              "b"
+#define GUI_COLOR_BAR_FG_CHAR          'F'
+#define GUI_COLOR_BAR_FG_STR           "F"
+#define GUI_COLOR_BAR_DELIM_CHAR       'D'
+#define GUI_COLOR_BAR_DELIM_STR        "D"
+#define GUI_COLOR_BAR_BG_CHAR          'B'
+#define GUI_COLOR_BAR_BG_STR           "B"
+#define GUI_COLOR_BAR_MOVE_CURSOR_CHAR '#'
+#define GUI_COLOR_BAR_MOVE_CURSOR_STR  "#"
 
 /* color structure */
 

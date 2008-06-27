@@ -386,22 +386,19 @@ utf8_char_size_screen (const char *string)
 }
 
 /*
- * utf8_add_offset: moves forward N chars in an UTF-8 string
+ * utf8_add_offset: move forward N chars in an UTF-8 string
  */
 
 char *
 utf8_add_offset (const char *string, int offset)
 {
-    int count;
-
     if (!string)
         return NULL;
     
-    count = 0;
-    while (string && string[0] && (count < offset))
+    while (string && string[0] && (offset > 0))
     {
         string = utf8_next_char (string);
-        count++;
+        offset--;
     }
     return (char *)string;
 }

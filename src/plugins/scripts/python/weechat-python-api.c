@@ -3565,9 +3565,9 @@ weechat_python_api_bar_search (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_bar_new (PyObject *self, PyObject *args)
 {
-    char *name, *priority, *type, *conditions, *position, *filling, *size;
-    char *size_max, *color_fg, *color_delim, *color_bg, *separator, *items;
-    char *result;
+    char *name, *hidden, *priority, *type, *conditions, *position, *filling;
+    char *size, *size_max, *color_fg, *color_delim, *color_bg, *separator;
+    char *items, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -3580,6 +3580,7 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
     }
     
     name = NULL;
+    hidden = NULL;
     priority = NULL;
     type = NULL;
     conditions = NULL;
@@ -3593,7 +3594,7 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
     separator = NULL;
     items = NULL;
     
-    if (!PyArg_ParseTuple (args, "sssssssssssss", &name, &priority,
+    if (!PyArg_ParseTuple (args, "ssssssssssssss", &name, &hidden, &priority,
                            &conditions, &type, &position, &filling, &size,
                            &size_max, &color_fg, &color_delim, &color_bg,
                            &separator, &items))
@@ -3603,6 +3604,7 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
     }
     
     result = script_ptr2str (weechat_bar_new (name,
+                                              hidden,
                                               priority,
                                               type,
                                               conditions,

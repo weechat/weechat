@@ -3353,9 +3353,9 @@ static XS (XS_weechat_bar_search)
 
 static XS (XS_weechat_bar_new)
 {
-    char *result, *name, *priority, *type, *conditions, *position, *filling;
-    char *size, *size_max, *color_fg, *color_delim, *color_bg, *separator;
-    char *bar_items;
+    char *result, *name, *hidden, *priority, *type, *conditions, *position;
+    char *filling, *size, *size_max, *color_fg, *color_delim, *color_bg;
+    char *separator, *bar_items;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3367,26 +3367,28 @@ static XS (XS_weechat_bar_new)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 13)
+    if (items < 14)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         PERL_RETURN_EMPTY;
     }
     
     name = SvPV (ST (0), PL_na);
-    priority = SvPV (ST (1), PL_na);
-    type = SvPV (ST (2), PL_na);
-    conditions = SvPV (ST (3), PL_na);
-    position = SvPV (ST (4), PL_na);
-    filling = SvPV (ST (5), PL_na);
-    size = SvPV (ST (6), PL_na);
-    size_max = SvPV (ST (7), PL_na);
-    color_fg = SvPV (ST (8), PL_na);
-    color_delim = SvPV (ST (9), PL_na);
-    color_bg = SvPV (ST (10), PL_na);
-    separator = SvPV (ST (11), PL_na);
-    bar_items = SvPV (ST (12), PL_na);
+    hidden = SvPV (ST (1), PL_na);
+    priority = SvPV (ST (2), PL_na);
+    type = SvPV (ST (3), PL_na);
+    conditions = SvPV (ST (4), PL_na);
+    position = SvPV (ST (5), PL_na);
+    filling = SvPV (ST (6), PL_na);
+    size = SvPV (ST (7), PL_na);
+    size_max = SvPV (ST (8), PL_na);
+    color_fg = SvPV (ST (9), PL_na);
+    color_delim = SvPV (ST (10), PL_na);
+    color_bg = SvPV (ST (11), PL_na);
+    separator = SvPV (ST (12), PL_na);
+    bar_items = SvPV (ST (13), PL_na);
     result = script_ptr2str (weechat_bar_new (name,
+                                              hidden,
                                               priority,
                                               type,
                                               conditions,
