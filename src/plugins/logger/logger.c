@@ -48,23 +48,26 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_logger_plugin = NULL;
 
+#define LOGGER_OPTION_AUTO_LOG        "auto_log"
 #define LOGGER_OPTION_PATH            "path"
 #define LOGGER_OPTION_NAME_LOWER_CASE "name_lower_case"
 #define LOGGER_OPTION_TIME_FORMAT     "time_format"
 #define LOGGER_OPTION_INFO_LINES      "info_lines"
 #define LOGGER_OPTION_BACKLOG         "backlog"
 
+#define LOGGER_DEFAULT_OPTION_AUTO_LOG        "on"
 #define LOGGER_DEFAULT_OPTION_PATH            "%h/logs/"
 #define LOGGER_DEFAULT_OPTION_NAME_LOWER_CASE "on"
 #define LOGGER_DEFAULT_OPTION_TIME_FORMAT     "%Y-%m-%d %H:%M:%S"
 #define LOGGER_DEFAULT_OPTION_INFO_LINES      "off"
 #define LOGGER_DEFAULT_OPTION_BACKLOG         "20"
 
+int logger_option_auto_log = 0;
 char *logger_option_path = NULL;
-int logger_option_name_lower_case;
+int logger_option_name_lower_case = 0;
 char *logger_option_time_format = NULL;
-int logger_option_info_lines;
-int logger_option_backlog;
+int logger_option_info_lines = 0;
+int logger_option_backlog = 0;
 
 
 /*
@@ -78,7 +81,23 @@ logger_config_read ()
 {
     long number;
     char *string, *error;
-
+    int old_auto_log;
+    
+    /* option "auto_log" */
+    old_auto_log = logger_option_auto_log;
+    string = weechat_config_get_plugin (LOGGER_OPTION_AUTO_LOG);
+    if (!string)
+    {
+        weechat_config_set_plugin (LOGGER_OPTION_AUTO_LOG,
+                                   LOGGER_DEFAULT_OPTION_AUTO_LOG);
+        string = weechat_config_get_plugin (LOGGER_OPTION_AUTO_LOG);
+    }
+    if (string && (weechat_config_string_to_boolean (string) > 0))
+        logger_option_auto_log = 1;
+    else
+        logger_option_auto_log = 0;
+    
+    /* option "path" */
     if (logger_option_path)
         free (logger_option_path);
     logger_option_path = weechat_config_get_plugin (LOGGER_OPTION_PATH);
@@ -91,6 +110,7 @@ logger_config_read ()
     if (logger_option_path)
         logger_option_path = strdup (logger_option_path);
     
+    /* option "name_lower_case" */
     string = weechat_config_get_plugin (LOGGER_OPTION_NAME_LOWER_CASE);
     if (!string)
     {
@@ -102,7 +122,8 @@ logger_config_read ()
         logger_option_name_lower_case = 1;
     else
         logger_option_name_lower_case = 0;
-
+    
+    /* option "time_format" */
     if (logger_option_time_format)
         free (logger_option_time_format);
     logger_option_time_format = weechat_config_get_plugin (LOGGER_OPTION_TIME_FORMAT);
@@ -115,6 +136,7 @@ logger_config_read ()
     if (logger_option_time_format)
         logger_option_time_format = strdup (logger_option_time_format);
     
+    /* option "info_lines" */
     string = weechat_config_get_plugin (LOGGER_OPTION_INFO_LINES);
     if (!string)
     {
@@ -127,6 +149,7 @@ logger_config_read ()
     else
         logger_option_info_lines = 0;
     
+    /* option "backlog" */
     string = weechat_config_get_plugin (LOGGER_OPTION_BACKLOG);
     if (!string)
     {
@@ -142,6 +165,17 @@ logger_config_read ()
         if (error && !error[0])
             logger_option_backlog = number;
     }
+    
+    /* start/stop logging for all buffers if option "auto_log" is changed */
+    if (old_auto_log != logger_option_auto_log)
+    {
+        if (logger_option_auto_log)
+            logger_start_buffer_all ();
+        else
+            logger_stop_all ();
+    }
+        
+    /* return 1 (ok) if path and time format are defined */
     if (logger_option_path && logger_option_time_format)
         return 1;
     else
@@ -368,7 +402,7 @@ logger_start_buffer (struct t_gui_buffer *buffer)
     struct t_logger_buffer *ptr_logger_buffer;
     char *log_filename;
     
-    if (!buffer)
+    if (!buffer || !logger_option_auto_log)
         return;
     
     ptr_logger_buffer = logger_buffer_search (buffer);

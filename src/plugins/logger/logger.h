@@ -26,4 +26,7 @@
 
 extern struct t_weechat_plugin *weechat_logger_plugin;
 
+extern void logger_start_buffer_all ();
+extern void logger_stop_all ();
+
 #endif /* logger.h */
