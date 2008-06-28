@@ -391,8 +391,8 @@ gui_chat_get_line_align (struct t_gui_buffer *buffer, struct t_gui_line *line,
         return gui_chat_time_length + 1 + CONFIG_INTEGER(config_look_prefix_align_max) +
             length_suffix + 1;
     else
-        return gui_chat_time_length + 1 + buffer->prefix_max_length +
-            length_suffix + 1;
+        return gui_chat_time_length + ((buffer->prefix_max_length > 0) ? 1 : 0) +
+            + buffer->prefix_max_length + length_suffix + 1;
 }
 
 /*
