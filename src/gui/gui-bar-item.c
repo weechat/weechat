@@ -61,16 +61,16 @@ struct t_hook *gui_bar_item_timer = NULL;
  */
 
 struct t_gui_bar_item *
-gui_bar_item_search (const char *name)
+gui_bar_item_search (const char *item_name)
 {
     struct t_gui_bar_item *ptr_item;
     
-    if (!name || !name[0])
+    if (!item_name || !item_name[0])
         return NULL;
     
     for (ptr_item = gui_bar_items; ptr_item; ptr_item = ptr_item->next_item)
     {
-        if (strcmp (ptr_item->name, name) == 0)
+        if (strcmp (ptr_item->name, item_name) == 0)
             return ptr_item;
     }
     
@@ -123,7 +123,7 @@ gui_bar_item_string_get_item_start (const char *string)
  */
 
 int
-gui_bar_item_string_is_item (const char *string, const char *name)
+gui_bar_item_string_is_item (const char *string, const char *item_name)
 {
     const char *item_start;
     int length;
@@ -132,8 +132,8 @@ gui_bar_item_string_is_item (const char *string, const char *name)
     if (!item_start)
         return 0;
     
-    length = strlen (name);
-    if (strncmp (item_start, name, length) == 0)
+    length = strlen (item_name);
+    if (strncmp (item_start, item_name, length) == 0)
     {
         if (!gui_bar_item_valid_char_name (item_start[length]))
             return 1;
@@ -147,22 +147,83 @@ gui_bar_item_string_is_item (const char *string, const char *name)
  */
 
 struct t_gui_bar_item *
-gui_bar_item_search_with_plugin (struct t_weechat_plugin *plugin, const char *name)
+gui_bar_item_search_with_plugin (struct t_weechat_plugin *plugin,
+                                 const char *item_name)
 {
     struct t_gui_bar_item *ptr_item;
     
-    if (!name || !name[0])
+    if (!item_name || !item_name[0])
         return NULL;
     
     for (ptr_item = gui_bar_items; ptr_item; ptr_item = ptr_item->next_item)
     {
         if ((ptr_item->plugin == plugin)
-            && (strcmp (ptr_item->name, name) == 0))
+            && (strcmp (ptr_item->name, item_name) == 0))
             return ptr_item;
     }
     
     /* bar item not found */
     return NULL;
+}
+
+/*
+ * gui_bar_contains_item: return 1 if a bar contains item, O otherwise
+ */
+
+int
+gui_bar_contains_item (struct t_gui_bar *bar, const char *item_name)
+{
+    int i;
+    
+    if (!bar || !item_name || !item_name[0])
+        return 0;
+    
+    for (i = 0; i < bar->items_count; i++)
+    {
+        /* skip non letters chars at beginning (prefix) */
+        if (gui_bar_item_string_is_item (bar->items_array[i], item_name))
+            return 1;
+    }
+    
+    /* item is not in bar */
+    return 0;
+}
+
+/*
+ * gui_bar_item_used_in_a_bar: return 1 if an item is used in at least one bar
+ *                             if partial_name == 1, then search a bar that
+ *                             contains item beginning with "item_name"
+ */
+
+int
+gui_bar_item_used_in_a_bar (const char *item_name, int partial_name)
+{
+    struct t_gui_bar *ptr_bar;
+    int i, length;
+    const char *ptr_start;
+    
+    length = strlen (item_name);
+    
+    for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+    {
+        for (i = 0; i < ptr_bar->items_count; i++)
+        {
+            ptr_start = gui_bar_item_string_get_item_start (ptr_bar->items_array[i]);
+            if (ptr_start)
+            {
+                if ((partial_name
+                     && strncmp (ptr_start, item_name, length) == 0)
+                    || (!partial_name
+                        && strcmp (ptr_start, item_name) == 0))
+                {
+                    return 1;
+                }
+            }
+        }
+    }
+    
+    /* item not used by any bar */
+    return 0;
 }
 
 /*
@@ -457,41 +518,18 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, const char *name,
 }
 
 /*
- * gui_bar_contains_item: return 1 if a bar contains item, O otherwise
- */
-
-int
-gui_bar_contains_item (struct t_gui_bar *bar, const char *name)
-{
-    int i;
-    
-    if (!bar || !name || !name[0])
-        return 0;
-    
-    for (i = 0; i < bar->items_count; i++)
-    {
-        /* skip non letters chars at beginning (prefix) */
-        if (gui_bar_item_string_is_item (bar->items_array[i], name))
-            return 1;
-    }
-    
-    /* item is not in bar */
-    return 0;
-}
-
-/*
  * gui_bar_item_update: update an item on all bars displayed on screen
  */
 
 void
-gui_bar_item_update (const char *name)
+gui_bar_item_update (const char *item_name)
 {
     struct t_gui_bar *ptr_bar;
     
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (!CONFIG_BOOLEAN(ptr_bar->hidden)
-            && gui_bar_contains_item (ptr_bar, name))
+            && gui_bar_contains_item (ptr_bar, item_name))
         {
             gui_bar_draw (ptr_bar);
         }

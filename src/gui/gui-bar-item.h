@@ -68,6 +68,8 @@ extern char *gui_bar_item_names[];
 /* functions */
 
 extern struct t_gui_bar_item *gui_bar_item_search (const char *name);
+extern int gui_bar_item_used_in_a_bar (const char *item_name,
+                                       int partial_name);
 extern char *gui_bar_item_get_value (const char *name,
                                      struct t_gui_bar *bar,
                                      struct t_gui_window *window,
@@ -78,7 +80,8 @@ extern struct t_gui_bar_item *gui_bar_item_new (struct t_weechat_plugin *plugin,
                                                 char *(*build_callback)(void *data,
                                                                         struct t_gui_bar_item *item,
                                                                         struct t_gui_window *window,
-                                                                        int max_width, int max_height),
+                                                                        int max_width,
+                                                                        int max_height),
                                                 void *build_callback_data);
 extern void gui_bar_item_update (const char *name);
 extern void gui_bar_item_free (struct t_gui_bar_item *item);

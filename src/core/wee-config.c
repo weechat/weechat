@@ -471,6 +471,7 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
         gui_bar_use_temp_bars ();
+        //gui_bar_create_default ();
     }
     
     return rc;
@@ -1590,6 +1591,7 @@ config_weechat_read ()
     {
         config_change_day_change (NULL, NULL);
         gui_bar_use_temp_bars ();
+        //gui_bar_create_default ();
     }
     
     return rc;

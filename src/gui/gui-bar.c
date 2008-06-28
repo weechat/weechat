@@ -32,6 +32,7 @@
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "gui-bar.h"
+#include "gui-bar-item.h"
 #include "gui-buffer.h"
 #include "gui-chat.h"
 #include "gui-color.h"
@@ -1553,6 +1554,113 @@ gui_bar_use_temp_bars ()
         gui_temp_bars = next_temp_bar;
     }
     last_gui_temp_bar = NULL;
+}
+
+/*
+ * gui_bar_create_default: create default bars if they do not exist
+ */
+
+void
+gui_bar_create_default ()
+{
+    struct t_gui_bar *ptr_bar;
+    int length;
+    char *buf;
+    
+    /* search an input_text item */
+    if (!gui_bar_item_used_in_a_bar (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT], 1))
+    {
+        ptr_bar = gui_bar_search ("input");
+        if (ptr_bar)
+        {
+            /* add item "input_text" to input bar */
+            length = 1;
+            if (CONFIG_STRING(ptr_bar->items))
+                length += strlen (CONFIG_STRING(ptr_bar->items));
+            length += 1; /* "," */
+            length += strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
+            buf = malloc (length);
+            if (buf)
+            {
+                snprintf (buf, length, "%s,%s",
+                          (CONFIG_STRING(ptr_bar->items)) ?
+                          CONFIG_STRING(ptr_bar->items) : "",
+                          gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
+                config_file_option_set (ptr_bar->items, buf, 1);
+                gui_bar_draw (ptr_bar);
+                free (buf);
+            }
+        }
+        else
+        {
+            /* create input bar */
+            length = 1 /* "[" */
+                + strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT])
+                + 2 /* "]," */
+                + strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT])
+                + 1 /* \0 */;
+            buf = malloc (length);
+            if (buf)
+            {
+                snprintf (buf, length, "[%s],%s",
+                          gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
+                          gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
+                if (gui_bar_new (NULL, "input", "0", "999", "window", "",
+                                 "bottom", "horizontal", "1", "0",
+                                 gui_color_get_name (CONFIG_COLOR(config_color_input)),
+                                 gui_color_get_name (CONFIG_COLOR(config_color_input_delimiters)),
+                                 gui_color_get_name (CONFIG_COLOR(config_color_input_bg)),
+                                 "0", buf))
+                {
+                    gui_chat_printf (NULL, _("Bar \"%s\" created"),
+                                     "input");
+                }
+                free (buf);
+            }
+        }
+    }
+    
+    /* search status bar */
+    ptr_bar = gui_bar_search ("status");
+    if (!ptr_bar)
+    {
+        /* create status bar */
+        length = strlen (gui_bar_item_names[GUI_BAR_ITEM_TIME])
+            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT])
+            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN])
+            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME])
+            + strlen (gui_bar_item_names[GUI_BAR_ITEM_HOTLIST])
+            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER])
+            + strlen (gui_bar_item_names[GUI_BAR_ITEM_COMPLETION])
+            + strlen (gui_bar_item_names[GUI_BAR_ITEM_SCROLL])
+            + strlen (gui_bar_item_names[GUI_BAR_ITEM_NICKLIST_COUNT])
+            + (9 * 4) + 1;
+        buf = malloc (length);
+        if (buf)
+        {
+            snprintf (buf, length, "[%s],[%s],[%s],%s,(%s),[%s],[%s],%s,%s",
+                      gui_bar_item_names[GUI_BAR_ITEM_TIME],
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT],
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN],
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME],
+                      gui_bar_item_names[GUI_BAR_ITEM_NICKLIST_COUNT],
+                      gui_bar_item_names[GUI_BAR_ITEM_HOTLIST],
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER],
+                      gui_bar_item_names[GUI_BAR_ITEM_COMPLETION],
+                      gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
+            if (gui_bar_new (NULL, "status", "0", "0", "window", "",
+                             "bottom", "horizontal", "1", "0",
+                             gui_color_get_name (CONFIG_COLOR(config_color_status)),
+                             gui_color_get_name (CONFIG_COLOR(config_color_status_delimiters)),
+                             gui_color_get_name (CONFIG_COLOR(config_color_status_bg)),
+                             "0", buf))
+            {
+                gui_chat_printf (NULL, _("Bar \"%s\" created"),
+                                 "input");
+            }
+            free (buf);
+        }
+    }
 }
 
 /*

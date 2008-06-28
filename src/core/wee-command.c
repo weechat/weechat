@@ -277,6 +277,13 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
+    /* create default bars */
+    if (string_strcasecmp (argv[1], "default") == 0)
+    {
+        gui_bar_create_default ();
+        return WEECHAT_RC_OK;
+    }
+    
     /* delete a bar */
     if (string_strcasecmp (argv[1], "del") == 0)
     {
@@ -2647,10 +2654,10 @@ command_init ()
     hook_command (NULL, "bar",
                   N_("manage bars"),
                   N_("[add barname type[,cond1,cond2,...] position size "
-                     "separator item1,item2,...] | [del barname] | "
-                     "[set barname name|priority|condition|position|filling|"
-                     "size|separator|items value] | [hide|show barname] | "
-                     "[list] | [listitems]"),
+                     "separator item1,item2,...] | [default] | "
+                     "[del barname] | [set barname name|priority|condition|"
+                     "position|filling|size|separator|items value] | "
+                     "[hide|show barname] | [list] | [listitems]"),
                   N_("      add: add a new bar\n"
                      "  barname: name of bar (must be unique)\n"
                      "     type:   root: outside windows),\n"
@@ -2668,6 +2675,7 @@ command_init ()
                      "separator: 1 for using separator (line), 0 or nothing "
                      "means no separator\n"
                      "item1,...: items for this bar\n"
+                     "  default: create default bars\n"
                      "      del: delete a bar\n"
                      "      set: set a value for a bar property\n"
                      "     hide: hide a bar\n"
@@ -2675,7 +2683,7 @@ command_init ()
                      "     list: list all bars\n"
                      " listfull: list all bars (verbose)\n"
                      "listitems: list all bar items"),
-                  "add|del|set|hide|show|list|listfull|listitems %r "
+                  "add|default|del|set|hide|show|list|listfull|listitems %r "
                   "name|priority|conditions|position|filling|size|separator|"
                   "items",
                   &command_bar, NULL);

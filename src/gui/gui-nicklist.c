@@ -33,14 +33,26 @@
 #include <ctype.h>
 
 #include "../core/weechat.h"
+#include "../core/wee-hook.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
+#include "../plugins/plugin.h"
 #include "gui-nicklist.h"
 #include "gui-buffer.h"
 #include "gui-color.h"
 #include "gui-status.h"
 
+
+/*
+ * gui_nicklist_changed_signal: send "nicklist_changed" signal
+ */
+
+void
+gui_nicklist_changed_signal ()
+{
+    hook_signal_send ("nicklist_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+}
 
 /*
  * gui_nicklist_find_pos_group: find position for a group (for sorting nicklist)
@@ -200,6 +212,8 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
         gui_status_refresh_needed = 1;
     }
     
+    gui_nicklist_changed_signal ();
+    
     return new_group;
 }
 
@@ -342,6 +356,8 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
         gui_status_refresh_needed = 1;
     }
     
+    gui_nicklist_changed_signal ();
+    
     return new_nick;
 }
 
@@ -379,6 +395,8 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
     }
     
     free (nick);
+    
+    gui_nicklist_changed_signal ();
 }
 
 /*
@@ -435,6 +453,8 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
     }
     
     free (group);
+    
+    gui_nicklist_changed_signal ();
 }
 
 /*

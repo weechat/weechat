@@ -135,6 +135,7 @@ extern struct t_gui_bar *gui_bar_new (struct t_weechat_plugin *plugin,
                                       const char *separator,
                                       const char *items);
 extern void gui_bar_use_temp_bars ();
+extern void gui_bar_create_default ();
 extern void gui_bar_update (const char *name);
 extern void gui_bar_free (struct t_gui_bar *bar);
 extern void gui_bar_free_all ();
