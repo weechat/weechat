@@ -651,12 +651,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         }
     }
     
-    gui_chat_printf (NULL,
-                     _("%sError: unknown option for \"%s\" "
-                       "command"),
-                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                     "buffer");
-    return WEECHAT_RC_ERROR;
+    return WEECHAT_RC_OK;
 }
 
 /*
