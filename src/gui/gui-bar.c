@@ -1656,9 +1656,26 @@ gui_bar_create_default ()
                              "0", buf))
             {
                 gui_chat_printf (NULL, _("Bar \"%s\" created"),
-                                 "input");
+                                 "status");
             }
             free (buf);
+        }
+    }
+    
+    /* search title bar */
+    ptr_bar = gui_bar_search ("title");
+    if (!ptr_bar)
+    {
+        /* create title bar */
+        if (gui_bar_new (NULL, "title", "0", "0", "window", "",
+                         "top", "horizontal", "1", "0",
+                         gui_color_get_name (CONFIG_COLOR(config_color_title)),
+                         gui_color_get_name (CONFIG_COLOR(config_color_title)),
+                         gui_color_get_name (CONFIG_COLOR(config_color_title_bg)),
+                         "0", gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]))
+        {
+            gui_chat_printf (NULL, _("Bar \"%s\" created"),
+                             "title");
         }
     }
 }

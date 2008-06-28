@@ -50,7 +50,7 @@ struct t_gui_bar_item *last_gui_bar_item = NULL; /* last bar item           */
 char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 { "input_prompt", "input_text", "time", "buffer_count", "buffer_plugin",
   "buffer_name", "buffer_filter", "nicklist_count", "scroll", "hotlist",
-  "completion"
+  "completion", "buffer_title"
 };
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
@@ -994,6 +994,28 @@ gui_bar_item_default_completion (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * gui_bar_item_default_buffer_title: default item for buffer title
+ */
+
+char *
+gui_bar_item_default_buffer_title (void *data, struct t_gui_bar_item *item,
+                                   struct t_gui_window *window,
+                                   int max_width, int max_height)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) max_width;
+    (void) max_height;
+    
+    if (!window)
+        window = gui_current_window;
+    
+    return (window->buffer->title) ?
+        strdup (window->buffer->title) : NULL;
+}
+
+/*
  * gui_bar_item_timer_cb: timer callback
  */
 
@@ -1159,6 +1181,13 @@ gui_bar_item_init ()
                       &gui_bar_item_default_completion, NULL);
     gui_bar_item_hook ("partial_completion",
                        gui_bar_item_names[GUI_BAR_ITEM_COMPLETION]);
+    
+    /* buffer title */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE],
+                      &gui_bar_item_default_buffer_title, NULL);
+    gui_bar_item_hook ("buffer_title_changed",
+                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]);
 }
 
 /*

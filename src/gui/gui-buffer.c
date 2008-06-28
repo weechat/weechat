@@ -392,6 +392,7 @@ gui_buffer_set_title (struct t_gui_buffer *buffer, const char *new_title)
         free (buffer->title);
     buffer->title = (new_title && new_title[0]) ? strdup (new_title) : NULL;
     gui_buffer_ask_title_refresh (buffer, 1);
+    hook_signal_send ("buffer_title_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*

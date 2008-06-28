@@ -33,6 +33,7 @@ enum t_gui_bar_item_weechat
     GUI_BAR_ITEM_SCROLL,
     GUI_BAR_ITEM_HOTLIST,
     GUI_BAR_ITEM_COMPLETION,
+    GUI_BAR_ITEM_BUFFER_TITLE,
     /* number of bar items */
     GUI_BAR_NUM_ITEMS,
 };
