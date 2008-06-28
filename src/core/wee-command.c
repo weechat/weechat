@@ -2617,23 +2617,57 @@ command_window (void *data, struct t_gui_buffer *buffer,
         number = strtol (argv[1] + 1, &error, 10);
         if (error && !error[0])
             gui_window_switch_by_buffer (gui_current_window, number);
+        return WEECHAT_RC_OK;
     }
-    else if (string_strcasecmp (argv[1], "-1") == 0)
+    
+    /* switch to previous window */
+    if (string_strcasecmp (argv[1], "-1") == 0)
+    {
         gui_window_switch_previous (gui_current_window);
-    else if (string_strcasecmp (argv[1], "+1") == 0)
+        return WEECHAT_RC_OK;
+    }
+    
+    /* switch to next window */
+    if (string_strcasecmp (argv[1], "+1") == 0)
+    {
         gui_window_switch_next (gui_current_window);
-    else if (string_strcasecmp (argv[1], "up") == 0)
+        return WEECHAT_RC_OK;
+    }
+    
+    /* switch to window above */
+    if (string_strcasecmp (argv[1], "up") == 0)
+    {
         gui_window_switch_up (gui_current_window);
-    else if (string_strcasecmp (argv[1], "down") == 0)
+        return WEECHAT_RC_OK;
+    }
+    
+    /* switch to window below */
+    if (string_strcasecmp (argv[1], "down") == 0)
+    {
         gui_window_switch_down (gui_current_window);
-    else if (string_strcasecmp (argv[1], "left") == 0)
+        return WEECHAT_RC_OK;
+    }
+    
+    /* switch to window on the left */
+    if (string_strcasecmp (argv[1], "left") == 0)
+    {
         gui_window_switch_left (gui_current_window);
-    else if (string_strcasecmp (argv[1], "right") == 0)
+        return WEECHAT_RC_OK;
+    }
+    
+    /* switch to window on the right */
+    if (string_strcasecmp (argv[1], "right") == 0)
+    {
         gui_window_switch_right (gui_current_window);
-    else if (string_strcasecmp (argv[1], "scroll") == 0)
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll in window */
+    if (string_strcasecmp (argv[1], "scroll") == 0)
     {
         if (argc > 2)
             gui_window_scroll (gui_current_window, argv[2]);
+        return WEECHAT_RC_OK;
     }
     
     gui_chat_printf (NULL,
