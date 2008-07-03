@@ -752,7 +752,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
  *                        if simulate == 1, nothing is displayed
  *                          (for counting how many lines would have been
  *                          displayed)
- *                        returns: number of lines displayed (or simulated)
+ *                        return number of lines displayed (or simulated)
  */
 
 int
@@ -765,6 +765,9 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     int word_length_with_spaces, word_length;
     char *ptr_data, *ptr_end_offset, *next_char;
     char *ptr_style;
+    
+    if (!line)
+        return 0;
     
     if (simulate)
     {
@@ -1151,7 +1154,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                     /* if so, disable scroll indicator */
                     if (!ptr_line && ptr_win->scroll)
                     {
-                        if (count == gui_chat_display_line (ptr_win, ptr_win->buffer->last_line, 0, 1))
+                        if (count == gui_chat_display_line (ptr_win, gui_chat_get_last_line_displayed (ptr_win->buffer), 0, 1))
                             ptr_win->scroll = 0;
                     }
                     
