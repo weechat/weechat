@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-06-28 12:09+0200\n"
+"POT-Creation-Date: 2008-07-03 12:38+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -164,6 +164,10 @@ msgstr "%s не могу сохранить конфигурационный ф�
 msgid "%sError: wrong size \"%s\" for bar \"%s\""
 msgstr "%s некорректное количество аргументов команды \"%s\"\n"
 
+#, fuzzy
+msgid "All bars deleted"
+msgstr "команда users отключена"
+
 #, fuzzy, c-format
 msgid "%sError: unknown bar \"%s\""
 msgstr "%s неизвестная функция клавиши \"%s\"\n"
@@ -183,6 +187,14 @@ msgstr ""
 #, c-format
 msgid "Bar \"%s\" is now visible"
 msgstr ""
+
+#, fuzzy, c-format
+msgid "%sError: buffer not found for \"%s\" command"
+msgstr "%s буфер номер \"%s\" не найден для команды \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%sError: unable to scroll bar \"%s\""
+msgstr "%s не могу сохранить конфигурационный файл pluginов\n"
 
 #, fuzzy, c-format
 msgid "%sError: unknown option for \"%s\" command"
@@ -577,34 +589,53 @@ msgstr "управление буферами"
 
 msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
-"| [default] | [del barname] | [set barname name|priority|condition|position|"
-"filling|size|separator|items value] | [hide|show barname] | [list] | "
-"[listitems]"
+"| [default] | [del barname|-all] | [set barname name|priority|condition|"
+"position|filling|size|separator|items value] | [hide|show barname] | [scroll "
+"barname category.name value] | [list] | [listitems]"
 msgstr ""
 
 msgid ""
-"      add: add a new bar\n"
-"  barname: name of bar (must be unique)\n"
-"     type:   root: outside windows),\n"
-"           window: inside windows, with optional conditions (see below)\n"
-"cond1,...: condition(s) for displaying bar (only for type \"window\"):\n"
-"             active: on active window\n"
-"           inactive: on inactive windows\n"
-"           nicklist: on windows with nicklist\n"
-"           without condition, bar is always displayed\n"
-" position: bottom, top, left or right\n"
-"  filling: horizontal or vertical\n"
-"     size: size of bar (in chars)\n"
-"separator: 1 for using separator (line), 0 or nothing means no separator\n"
-"item1,...: items for this bar\n"
-"  default: create default bars\n"
-"      del: delete a bar\n"
-"      set: set a value for a bar property\n"
-"     hide: hide a bar\n"
-"     show: show an hidden bar\n"
-"     list: list all bars\n"
-" listfull: list all bars (verbose)\n"
-"listitems: list all bar items"
+"          add: add a new bar\n"
+"      barname: name of bar (must be unique)\n"
+"         type:   root: outside windows),\n"
+"               window: inside windows, with optional conditions (see below)\n"
+"    cond1,...: condition(s) for displaying bar (only for type \"window\"):\n"
+"                 active: on active window\n"
+"               inactive: on inactive windows\n"
+"               nicklist: on windows with nicklist\n"
+"               without condition, bar is always displayed\n"
+"     position: bottom, top, left or right\n"
+"      filling: horizontal or vertical\n"
+"         size: size of bar (in chars)\n"
+"    separator: 1 for using separator (line), 0 or nothing means no "
+"separator\n"
+"    item1,...: items for this bar\n"
+"      default: create default bars\n"
+"          del: delete a bar (or all bars with -all)\n"
+"          set: set a value for a bar property\n"
+"         hide: hide a bar\n"
+"         show: show an hidden bar\n"
+"       scroll: scroll bar up/down\n"
+"category.name: category and name of buffer to scroll ('*' means current "
+"buffer, you should use '*' for root bars)\n"
+"        value: value for scroll: 'x' or 'y', followed by '+', '-', "
+"'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by "
+"%% of width/height, otherwise value is number of chars)\n"
+"         list: list all bars\n"
+"     listfull: list all bars (verbose)\n"
+"    listitems: list all bar items\n"
+"\n"
+"Examples:\n"
+"  create a bar with time and completion:\n"
+"    /bar add mybar root bottom 1 0 [time],completion\n"
+"  hide a bar:\n"
+"    /bar hide mybar\n"
+"  scroll nicklist 10 lines down on current buffer:\n"
+"    /bar scroll nicklist * y+10\n"
+"  scroll nicklist one page up on #weechat buffer:\n"
+"    /bar scroll nicklist #weechat y-100%\n"
+"  scroll to end of nicklist on current buffer:\n"
+"    /bar scroll nicklist * ye"
 msgstr ""
 
 msgid "manage buffers"
@@ -1120,16 +1151,16 @@ msgid "background color for window separators (when splited)"
 msgstr "цвет разделителей окна (при разбитом экране)"
 
 #, fuzzy
+msgid "text color for '+' when scrolling bars"
+msgstr "цвет '+' при прокрутке топика"
+
+#, fuzzy
 msgid "text color for title bar"
 msgstr "цвет заголовка"
 
 #, fuzzy
 msgid "background color for title bar"
 msgstr "цвет фона заголовка"
-
-#, fuzzy
-msgid "text color for '+' when scrolling title"
-msgstr "цвет '+' при прокрутке топика"
 
 #, fuzzy
 msgid "text color for chat"
@@ -1726,6 +1757,10 @@ msgstr "разделитель чата и никлиста"
 #, fuzzy
 msgid "items of bar"
 msgstr "Список сокращений:\n"
+
+#, fuzzy, c-format
+msgid "Bar \"%s\" updated"
+msgstr "Сокращение \"%s\" => \"%s\" создано\n"
 
 #, fuzzy
 msgid "filtered"
@@ -5416,10 +5451,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #~ msgid "clear window(s)"
 #~ msgstr "очистить окно(-а)"
-
-#, fuzzy
-#~ msgid "%sError: buffer number \"%s\" not found for \"%s\" command"
-#~ msgstr "%s буфер номер \"%s\" не найден для команды \"%s\"\n"
 
 #, fuzzy
 #~ msgid "     %d keyboards hooked"

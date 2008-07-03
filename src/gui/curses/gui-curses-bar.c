@@ -26,6 +26,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <limits.h>
 
 #include "../../core/weechat.h"
 #include "../../core/wee-config.h"
@@ -143,6 +144,80 @@ gui_bar_window_get_size (struct t_gui_bar *bar, struct t_gui_window *window,
         }
     }
     return total_size;
+}
+
+/*
+ * gui_bar_get_min_width: return minimum width of a bar window displayed for
+ *                        a bar
+ *                        for example, if a bar is displayed in 3 windows,
+ *                        this function return min width of these 3 bar windows
+ */
+
+int
+gui_bar_get_min_width (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
+    int min_width;
+    
+    if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+        return bar->bar_window->width;
+    
+    min_width = INT_MAX;
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        for (ptr_bar_win = GUI_CURSES(ptr_win)->bar_windows;
+             ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
+        {
+            if (ptr_bar_win->bar == bar)
+            {
+                if (ptr_bar_win->width < min_width)
+                    min_width = ptr_bar_win->width;
+            }
+        }
+    }
+    
+    if (min_width == INT_MAX)
+        return 0;
+    
+    return min_width;
+}
+
+/*
+ * gui_bar_get_min_height: return minimum height of a bar window displayed for
+ *                         a bar
+ *                         for example, if a bar is displayed in 3 windows,
+ *                         this function return min width of these 3 bar windows
+ */
+
+int
+gui_bar_get_min_height (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
+    int min_height;
+    
+    if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+        return bar->bar_window->height;
+    
+    min_height = INT_MAX;
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        for (ptr_bar_win = GUI_CURSES(ptr_win)->bar_windows;
+             ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
+        {
+            if (ptr_bar_win->bar == bar)
+            {
+                if (ptr_bar_win->height < min_height)
+                    min_height = ptr_bar_win->height;
+            }
+        }
+    }
+    
+    if (min_height == INT_MAX)
+        return 0;
+    
+    return min_height;
 }
 
 /*
@@ -401,6 +476,8 @@ gui_bar_window_new (struct t_gui_bar *bar, struct t_gui_window *window)
         new_bar_window->y = 0;
         new_bar_window->width = 1;
         new_bar_window->height = 1;
+        new_bar_window->scroll_x = 0;
+        new_bar_window->scroll_y = 0;
         new_bar_window->cursor_x = -1;
         new_bar_window->cursor_y = -1;
         new_bar_window->current_size = (CONFIG_INTEGER(bar->size) == 0) ?
@@ -579,9 +656,12 @@ gui_bar_window_add_missing_bars (struct t_gui_window *window)
 
 /*
  * gui_bar_window_print_string: print a string text on a bar window
+ *                              return 1 if all was printed, 0 if some text
+ *                              was not displayed (wrapped due to bar window
+ *                              width)
  */
 
-void
+int
 gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              int *x, int *y,
                              const char *string)
@@ -590,7 +670,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
     char str_fg[3], str_bg[3], utf_char[16], *next_char, *output;
     
     if (!string || !string[0])
-        return;
+        return 1;
     
     wmove (bar_window->win_bar, *y, *x);
     
@@ -710,9 +790,9 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
             if (*x + size_on_screen > bar_window->width)
             {
                 if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_VERTICAL)
-                    return;
+                    return 0;
                 if (*y >= bar_window->height - 1)
-                    return;
+                    return 0;
                 *x = 0;
                 (*y)++;
                 wmove (bar_window->win_bar, *y, *x);
@@ -728,6 +808,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
             string = next_char;
         }
     }
+    return 1;
 }
 
 /*
@@ -743,6 +824,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
     char space_with_reinit_color[32];
     int length_reinit_color, content_length, length, length_on_screen;
     int max_length, optimal_number_of_lines, chars_available;
+    int some_data_not_displayed;
     
     if (!gui_init_ok)
         return;
@@ -877,17 +959,59 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                                   CONFIG_COLOR(bar_window->bar->color_bg));
                 x = 0;
                 y = 0;
+                some_data_not_displayed = 0;
+                if ((bar_window->scroll_y > 0)
+                    && (bar_window->scroll_y >= items_count))
+                {
+                    bar_window->scroll_y = items_count - bar_window->height;
+                    if (bar_window->scroll_y < 0)
+                        bar_window->scroll_y = 0;
+                }
                 for (line = 0;
                      (line < items_count) && (y < bar_window->height);
                      line++)
                 {
-                    gui_bar_window_print_string (bar_window, &x, &y,
-                                                 items[line]);
-                    if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_VERTICAL)
+                    if ((bar_window->scroll_y == 0)
+                        || (line >= bar_window->scroll_y))
                     {
-                        x = 0;
-                        y++;
+                        if (!gui_bar_window_print_string (bar_window, &x, &y,
+                                                          items[line]))
+                        {
+                            some_data_not_displayed = 1;
+                        }
+                        if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_VERTICAL)
+                        {
+                            x = 0;
+                            y++;
+                        }
+                        else
+                        {
+                            gui_bar_window_print_string (bar_window, &x, &y,
+                                                         space_with_reinit_color);
+                        }
                     }
+                }
+                if (bar_window->scroll_y > 0)
+                {
+                    x = (bar_window->height > 1) ? bar_window->width - 2 : 0;
+                    if (x < 0)
+                        x = 0;
+                    y = 0;
+                    gui_window_set_custom_color_fg_bg (bar_window->win_bar,
+                                                       CONFIG_COLOR(config_color_bar_more),
+                                                       CONFIG_INTEGER(bar_window->bar->color_bg));
+                    mvwprintw (bar_window->win_bar, y, x, "--");
+                }
+                if (some_data_not_displayed || (line < items_count))
+                {
+                    x = bar_window->width - 2;
+                    if (x < 0)
+                        x = 0;
+                    y = (bar_window->height > 1) ? bar_window->height - 1 : 0;
+                    gui_window_set_custom_color_fg_bg (bar_window->win_bar,
+                                                       CONFIG_COLOR(config_color_bar_more),
+                                                       CONFIG_INTEGER(bar_window->bar->color_bg));
+                    mvwprintw (bar_window->win_bar, y, x, "++");
                 }
             }
             if (items)
@@ -936,22 +1060,59 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                                             item_value2 : item_value,
                                             "\n", 0, 0,
                                             &items_count);
+                    some_data_not_displayed = 0;
+                    if ((bar_window->scroll_y > 0)
+                        && (bar_window->scroll_y >= items_count))
+                    {
+                        bar_window->scroll_y = items_count - bar_window->height;
+                        if (bar_window->scroll_y < 0)
+                            bar_window->scroll_y = 0;
+                    }
                     for (line = 0;
                          (line < items_count) && (y < bar_window->height);
                          line++)
                     {
-                        gui_bar_window_print_string (bar_window, &x, &y,
-                                                     items[line]);
-                        if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_VERTICAL)
+                        if ((bar_window->scroll_y == 0)
+                            || (line >= bar_window->scroll_y))
                         {
+                            if (!gui_bar_window_print_string (bar_window, &x, &y,
+                                                              items[line]))
+                            {
+                                some_data_not_displayed = 1;
+                            }
+                            if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_VERTICAL)
+                            {
+                                x = 0;
+                                y++;
+                            }
+                            else
+                            {
+                                gui_bar_window_print_string (bar_window, &x, &y,
+                                                             space_with_reinit_color);
+                            }
+                        }
+                    }
+                    if (bar_window->scroll_y > 0)
+                    {
+                        x = (bar_window->height > 1) ? bar_window->width - 2 : 0;
+                        if (x < 0)
                             x = 0;
-                            y++;
-                        }
-                        else
-                        {
-                            gui_bar_window_print_string (bar_window, &x, &y,
-                                                         space_with_reinit_color);
-                        }
+                        y = 0;
+                        gui_window_set_custom_color_fg_bg (bar_window->win_bar,
+                                                           CONFIG_COLOR(config_color_bar_more),
+                                                           CONFIG_INTEGER(bar_window->bar->color_bg));
+                        mvwprintw (bar_window->win_bar, y, x, "--");
+                    }
+                    if (some_data_not_displayed || (line < items_count))
+                    {
+                        x = bar_window->width - 2;
+                        if (x < 0)
+                            x = 0;
+                        y = (bar_window->height > 1) ? bar_window->height - 1 : 0;
+                        gui_window_set_custom_color_fg_bg (bar_window->win_bar,
+                                                           CONFIG_COLOR(config_color_bar_more),
+                                                           CONFIG_INTEGER(bar_window->bar->color_bg));
+                        mvwprintw (bar_window->win_bar, y, x, "++");
                     }
                     if (item_value2)
                         free (item_value2);
@@ -1046,6 +1207,186 @@ gui_bar_draw (struct t_gui_bar *bar)
 }
 
 /*
+ * gui_bar_window_scroll: scroll a bar window with a value
+ *                        if add == 1, then value is added (otherwise subtracted)
+ *                        if add_x == 1, then value is added to scroll_x (otherwise scroll_y)
+ *                        if percent == 1, then value is a percentage (otherwise number of chars)
+ */
+
+void
+gui_bar_window_scroll (struct t_gui_bar_window *bar_window,
+                       struct t_gui_window *window,
+                       int add_x, int scroll_beginning, int scroll_end,
+                       int add, int percent, int value)
+{
+    int old_scroll_x, old_scroll_y;
+    
+    old_scroll_x = bar_window->scroll_x;
+    old_scroll_y = bar_window->scroll_y;
+
+    if (scroll_beginning)
+    {
+        if (add_x)
+            bar_window->scroll_x = 0;
+        else
+            bar_window->scroll_y = 0;
+    }
+    else if (scroll_end)
+    {
+        if (add_x)
+            bar_window->scroll_x = INT_MAX;
+        else
+            bar_window->scroll_y = INT_MAX;
+    }
+    else
+    {
+        if (percent)
+        {
+            if (add_x)
+                value = (bar_window->width * value) / 100;
+            else
+                value = (bar_window->height * value) / 100;
+            if (value == 0)
+                value = 1;
+        }
+        if (add)
+        {
+            if (add_x)
+                bar_window->scroll_x += value;
+            else
+                bar_window->scroll_y += value;
+        }
+        else
+        {
+            if (add_x)
+                bar_window->scroll_x -= value;
+            else
+                bar_window->scroll_y -= value;
+        }
+    }
+    
+    if (bar_window->scroll_x < 0)
+        bar_window->scroll_x = 0;
+    
+    if (bar_window->scroll_y < 0)
+        bar_window->scroll_y = 0;
+    
+    /* refresh only if scroll has changed (X and/or Y) */
+    if ((old_scroll_x != bar_window->scroll_x)
+        || (old_scroll_y != bar_window->scroll_y))
+    {
+        gui_bar_window_draw (bar_window, window);
+    }
+}
+
+/*
+ * gui_bar_scroll: scroll a bar for a buffer
+ *                 return 1 if scroll is ok, 0 if error
+ */
+
+int
+gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_buffer *buffer,
+                const char *scroll)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
+    long number;
+    char *str, *error;
+    int length, add_x, add, percent, scroll_beginning, scroll_end;
+    
+    add_x = 0;
+    str = NULL;
+    number = 0;
+    add = 0;
+    percent = 0;
+    scroll_beginning = 0;
+    scroll_end = 0;
+    
+    if ((scroll[0] == 'x') || (scroll[0] == 'X'))
+    {
+        add_x = 1;
+        scroll++;
+    }
+    else if ((scroll[0] == 'y') || (scroll[0] == 'Y'))
+    {
+        scroll++;
+    }
+    else
+        return 0;
+    
+    if ((scroll[0] == 'b') || (scroll[0] == 'B'))
+    {
+        scroll_beginning = 1;
+    }
+    else if ((scroll[0] == 'e') || (scroll[0] == 'E'))
+    {
+        scroll_end = 1;
+    }
+    else
+    {
+        if (scroll[0] == '+')
+        {
+            add = 1;
+            scroll++;
+        }
+        else if (scroll[0] == '-')
+        {
+            scroll++;
+        }
+        else
+            return 0;
+        
+        length = strlen (scroll);
+        if (length == 0)
+            return 0;
+    
+        if (scroll[length - 1] == '%')
+        {
+            str = string_strndup (scroll, length - 1);
+            percent = 1;
+        }
+        else
+            str = strdup (scroll);
+        if (!str)
+            return 0;
+        
+        error = NULL;
+        number = strtol (str, &error, 10);
+        
+        if (!error || error[0] || (number <= 0))
+        {
+            free (str);
+            return 0;
+        }
+    }
+    
+    if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+        gui_bar_window_scroll (bar->bar_window, NULL,
+                               add_x, scroll_beginning, scroll_end,
+                               add, percent, number);
+    else
+    {
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            if (ptr_win->buffer == buffer)
+            {
+                for (ptr_bar_win = GUI_CURSES(ptr_win)->bar_windows;
+                     ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
+                {
+                    gui_bar_window_scroll (ptr_bar_win, ptr_win,
+                                           add_x, scroll_beginning, scroll_end,
+                                           add, percent, number);
+                }
+            }
+        }
+    }
+    
+    free (str);
+    
+    return 1;
+}
+
+/*
  * gui_bar_window_print_log: print bar window infos in log (usually for crash dump)
  */
 
@@ -1059,6 +1400,8 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
     log_printf ("    y . . . . . . . . : %d",   bar_window->y);
     log_printf ("    width . . . . . . : %d",   bar_window->width);
     log_printf ("    height. . . . . . : %d",   bar_window->height);
+    log_printf ("    scroll_x. . . . . : %d",   bar_window->scroll_x);
+    log_printf ("    scroll_y. . . . . : %d",   bar_window->scroll_y);
     log_printf ("    cursor_x. . . . . : %d",   bar_window->cursor_x);
     log_printf ("    cursor_y. . . . . : %d",   bar_window->cursor_y);
     log_printf ("    current_size. . . : %d",   bar_window->current_size);

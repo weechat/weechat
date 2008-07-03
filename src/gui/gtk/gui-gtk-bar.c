@@ -111,6 +111,80 @@ gui_bar_window_get_size (struct t_gui_bar *bar, struct t_gui_window *window,
 }
 
 /*
+ * gui_bar_get_min_width: return minimum width of a bar window displayed for
+ *                        a bar
+ *                        for example, if a bar is displayed in 3 windows,
+ *                        this function return min width of these 3 bar windows
+ */
+
+int
+gui_bar_get_min_width (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
+    int min_width;
+    
+    if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+        return bar->bar_window->width;
+    
+    min_width = INT_MAX;
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        for (ptr_bar_win = GUI_GTK(ptr_win)->bar_windows;
+             ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
+        {
+            if (ptr_bar_win->bar == bar)
+            {
+                if (ptr_bar_win->width < min_width)
+                    min_width = ptr_bar_win->width;
+            }
+        }
+    }
+    
+    if (min_width == INT_MAX)
+        return 0;
+    
+    return min_width;
+}
+
+/*
+ * gui_bar_get_min_height: return minimum height of a bar window displayed for
+ *                         a bar
+ *                         for example, if a bar is displayed in 3 windows,
+ *                         this function return min width of these 3 bar windows
+ */
+
+int
+gui_bar_get_min_height (struct t_gui_bar *bar)
+{
+    struct t_gui_window *ptr_win;
+    struct t_gui_bar_window *ptr_bar_win;
+    int min_height;
+    
+    if (CONFIG_INTEGER(bar->type) == GUI_BAR_TYPE_ROOT)
+        return bar->bar_window->height;
+    
+    min_height = INT_MAX;
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+    {
+        for (ptr_bar_win = GUI_GTK(ptr_win)->bar_windows;
+             ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
+        {
+            if (ptr_bar_win->bar == bar)
+            {
+                if (ptr_bar_win->height < min_height)
+                    min_height = ptr_bar_win->height;
+            }
+        }
+    }
+    
+    if (min_height == INT_MAX)
+        return 0;
+    
+    return min_height;
+}
+
+/*
  * gui_bar_check_size_add: check if "add_size" is ok for bar
  *                         return 1 if new size is ok
  *                                0 if new size is too big
@@ -333,6 +407,23 @@ gui_bar_draw (struct t_gui_bar *bar)
 }
 
 /*
+ * gui_bar_scroll: scroll a bar for a buffer
+ *                 return 1 if scroll is ok, 0 if error
+ */
+
+int
+gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_buffer *buffer,
+                const char *scroll)
+{
+    (void) bar;
+    (void) buffer;
+    (void) scroll;
+    
+    /* TODO: write this function for Gtk */
+    return 0;
+}
+
+/*
  * gui_bar_window_print_log: print bar window infos in log (usually for crash dump)
  */
 
@@ -346,6 +437,8 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
     log_printf ("    y . . . . . . . . : %d",   bar_window->y);
     log_printf ("    width . . . . . . : %d",   bar_window->width);
     log_printf ("    height. . . . . . : %d",   bar_window->height);
+    log_printf ("    scroll_x. . . . . : %d",   bar_window->scroll_x);
+    log_printf ("    scroll_y. . . . . : %d",   bar_window->scroll_y);
     log_printf ("    prev_bar_window . : 0x%x", bar_window->prev_bar_window);
     log_printf ("    next_bar_window . : 0x%x", bar_window->next_bar_window);
 }

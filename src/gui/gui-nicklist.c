@@ -164,7 +164,6 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
                         const char *color, int visible)
 {
     struct t_gui_nick_group *new_group;
-    int num_color;
     
     if (!name || gui_nicklist_search_group (buffer, parent_group, name))
         return NULL;
@@ -172,18 +171,9 @@ gui_nicklist_add_group (struct t_gui_buffer *buffer,
     new_group = malloc (sizeof (*new_group));
     if (!new_group)
         return NULL;
-
-    if (color)
-    {
-        num_color = gui_color_search_config_int (color);
-        if (num_color < 0)
-            num_color = GUI_COLOR_NICKLIST;
-    }
-    else
-        num_color = GUI_COLOR_NICKLIST;
     
     new_group->name = strdup (name);
-    new_group->color = num_color;
+    new_group->color = (color) ? strdup (color) : NULL;
     new_group->visible = visible;
     new_group->parent = (parent_group) ? parent_group : buffer->nicklist_root;
     new_group->level = (new_group->parent) ? new_group->parent->level + 1 : 0;
@@ -313,7 +303,6 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
                        int visible)
 {
     struct t_gui_nick *new_nick;
-    int num_color, num_color_prefix;
     
     if (!name || gui_nicklist_search_nick (buffer, NULL, name))
         return NULL;
@@ -321,30 +310,12 @@ gui_nicklist_add_nick (struct t_gui_buffer *buffer,
     new_nick = malloc (sizeof (*new_nick));
     if (!new_nick)
         return NULL;
-
-    if (color)
-    {
-        num_color = gui_color_search_config_int (color);
-        if (num_color < 0)
-            num_color = GUI_COLOR_NICKLIST;
-    }
-    else
-        num_color = GUI_COLOR_NICKLIST;
-
-    if (prefix_color)
-    {
-        num_color_prefix = gui_color_search_config_int (prefix_color);
-        if (num_color_prefix < 0)
-            num_color_prefix = GUI_COLOR_NICKLIST;
-    }
-    else
-        num_color_prefix = GUI_COLOR_NICKLIST;
-
+    
     new_nick->group = (group) ? group : buffer->nicklist_root;
     new_nick->name = strdup (name);
-    new_nick->color = num_color;
+    new_nick->color = (color) ? strdup (color) : NULL;
     new_nick->prefix = prefix;
-    new_nick->prefix_color = num_color_prefix;
+    new_nick->prefix_color = (prefix_color) ? strdup (prefix_color) : NULL;
     new_nick->visible = visible;
     
     gui_nicklist_insert_nick_sorted (new_nick->group, new_nick);
@@ -385,6 +356,10 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
     /* free data */
     if (nick->name)
         free (nick->name);
+    if (nick->color)
+        free (nick->color);
+    if (nick->prefix_color)
+        free (nick->prefix_color);
     
     if (nick->visible)
     {
@@ -442,6 +417,8 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
     /* free data */
     if (group->name)
         free (group->name);
+    if (group->color)
+        free (group->color);
     
     if (group->visible)
     {
@@ -652,7 +629,7 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
               (indent * 2) + 6);
     log_printf (format, " ", group->name);
     snprintf (format, sizeof (format),
-              "%%-%dscolor . . . : %%d",
+              "%%-%dscolor . . . : '%%s'",
               (indent * 2) + 6);
     log_printf (format, " ", group->color);
     snprintf (format, sizeof (format),
@@ -707,35 +684,35 @@ gui_nicklist_print_log (struct t_gui_nick_group *group, int indent)
                   (indent * 2) + 4);
         log_printf (format, " ", ptr_nick);
         snprintf (format, sizeof (format),
-                  "%%-%dsgroup . . . : 0x%%X",
+                  "%%-%dsgroup . . . . . : 0x%%X",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->group);
         snprintf (format, sizeof (format),
-                  "%%-%dsname. . . . : '%%s'",
+                  "%%-%dsname. . . . . . : '%%s'",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->name);
         snprintf (format, sizeof (format),
-                  "%%-%dscolor . . . : %%d",
+                  "%%-%dscolor . . . . . : '%%s'",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->color);
         snprintf (format, sizeof (format),
-                  "%%-%dsprefix. . . : '%%c'",
+                  "%%-%dsprefix. . . . . : '%%c'",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->prefix);
         snprintf (format, sizeof (format),
-                  "%%-%dsprefix_color: %%d",
+                  "%%-%dsprefix_color. . : '%%s'",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->prefix_color);
         snprintf (format, sizeof (format),
-                  "%%-%dsvisible . . : %%d",
+                  "%%-%dsvisible . . . . : %%d",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->visible);
         snprintf (format, sizeof (format),
-                  "%%-%dsprev_nick . : 0x%%X",
+                  "%%-%dsprev_nick . . . : 0x%%X",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->prev_nick);
         snprintf (format, sizeof (format),
-                  "%%-%dsnext_nick . : 0x%%X",
+                  "%%-%dsnext_nick . . . : 0x%%X",
                   (indent * 2) + 6);
         log_printf (format, " ", ptr_nick->next_nick);
     }

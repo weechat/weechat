@@ -357,7 +357,6 @@ gui_color_init_weechat ()
     gui_color_build (GUI_COLOR_SEPARATOR, CONFIG_COLOR(config_color_separator), CONFIG_COLOR(config_color_chat_bg));
     
     gui_color_build (GUI_COLOR_TITLE, CONFIG_COLOR(config_color_title), CONFIG_COLOR(config_color_title_bg));
-    gui_color_build (GUI_COLOR_TITLE_MORE, CONFIG_COLOR(config_color_title_more), CONFIG_COLOR(config_color_title_bg));
     
     gui_color_build (GUI_COLOR_CHAT, CONFIG_COLOR(config_color_chat), CONFIG_COLOR(config_color_chat_bg));
     gui_color_build (GUI_COLOR_CHAT_TIME, CONFIG_COLOR(config_color_chat_time), CONFIG_COLOR(config_color_chat_bg));

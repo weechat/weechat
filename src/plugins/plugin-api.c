@@ -451,15 +451,13 @@ plugin_api_infolist_get_add_nicklist (struct t_plugin_infolist *infolist,
                 return 0;
             if (!plugin_infolist_new_var_string (ptr_item, "name", ptr_nick->name))
                 return 0;
-            if (!plugin_infolist_new_var_string (ptr_item, "color",
-                                                 gui_color_search_config_str (ptr_nick->color)))
+            if (!plugin_infolist_new_var_string (ptr_item, "color", ptr_nick->color))
                 return 0;
             prefix[0] = ptr_nick->prefix;
             prefix[1] = '\0';
             if (!plugin_infolist_new_var_string (ptr_item, "prefix", prefix))
                 return 0;
-            if (!plugin_infolist_new_var_string (ptr_item, "prefix_color",
-                                                 gui_color_search_config_str (ptr_nick->prefix_color)))
+            if (!plugin_infolist_new_var_string (ptr_item, "prefix_color", ptr_nick->prefix_color))
                 return 0;
             if (!plugin_infolist_new_var_integer (ptr_item, "visible", ptr_nick->visible))
                 return 0;
@@ -470,8 +468,7 @@ plugin_api_infolist_get_add_nicklist (struct t_plugin_infolist *infolist,
                 return 0;
             if (!plugin_infolist_new_var_string (ptr_item, "name", ptr_group->name))
                 return 0;
-            if (!plugin_infolist_new_var_string (ptr_item, "color",
-                                                 gui_color_search_config_str (ptr_group->color)))
+            if (!plugin_infolist_new_var_string (ptr_item, "color", ptr_group->color))
                 return 0;
             if (!plugin_infolist_new_var_integer (ptr_item, "visible", ptr_group->visible))
                 return 0;

@@ -211,6 +211,7 @@ gui_main_loop ()
     struct t_hook *hook_fd_keyboard;
     struct t_gui_window *ptr_win;
     struct t_gui_buffer *ptr_buffer;
+    struct t_gui_bar *ptr_bar;
     struct timeval tv_timeout;
     fd_set read_fds, write_fds, except_fds;
     int max_fd;
@@ -249,6 +250,15 @@ gui_main_loop ()
         /* refresh status bar if needed */
         if (gui_status_refresh_needed)
             gui_status_draw (1);
+        
+        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+        {
+            if (ptr_bar->bar_refresh_needed)
+            {
+                gui_bar_draw (ptr_bar);
+                ptr_bar->bar_refresh_needed = 0;
+            }
+        }
         
         for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
         {

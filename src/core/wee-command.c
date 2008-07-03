@@ -140,9 +140,11 @@ command_bar (void *data, struct t_gui_buffer *buffer,
 {
     int type, position;
     long number;
-    char *error, *str_type, *pos_condition;
+    char *error, *str_type, *pos_condition, *pos_point, *category;
+    char *ptr_buffer_name;
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_item *ptr_item;
+    struct t_gui_buffer *ptr_buffer;
     
     /* make C compiler happy */
     (void) data;
@@ -296,18 +298,27 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                              "bar");
             return WEECHAT_RC_ERROR;
         }
-        ptr_bar = gui_bar_search (argv[2]);
-        if (!ptr_bar)
+        if (string_strcasecmp (argv[2], "-all") == 0)
         {
-            gui_chat_printf (NULL,
-                             _("%sError: unknown bar \"%s\""),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[2]);
-            return WEECHAT_RC_ERROR;
+            gui_bar_free_all ();
+            gui_chat_printf (NULL, _("All bars deleted"));
+            //gui_bar_create_default ();
         }
-        gui_bar_free (ptr_bar);
-        gui_chat_printf (NULL, _("Bar deleted"));
-
+        else
+        {
+            ptr_bar = gui_bar_search (argv[2]);
+            if (!ptr_bar)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: unknown bar \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2]);
+                return WEECHAT_RC_ERROR;
+            }
+            gui_bar_free (ptr_bar);
+            gui_chat_printf (NULL, _("Bar deleted"));
+        }
+        
         return WEECHAT_RC_OK;
     }
     
@@ -344,7 +355,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         
         return WEECHAT_RC_OK;
     }
-
+    
     /* hide a bar */
     if (string_strcasecmp (argv[1], "hide") == 0)
     {
@@ -406,6 +417,66 @@ command_bar (void *data, struct t_gui_buffer *buffer,
                 gui_chat_printf (NULL, _("Bar \"%s\" is now visible"),
                                  ptr_bar->name);
             }
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* scroll in a bar */
+    if (string_strcasecmp (argv[1], "scroll") == 0)
+    {
+        if (argc < 5)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: missing arguments for \"%s\" "
+                               "command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             "bar");
+            return WEECHAT_RC_ERROR;
+        }
+        ptr_bar = gui_bar_search (argv[2]);
+        if (!ptr_bar)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unknown bar \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
+        }
+        if (strcmp (argv[3], "*") == 0)
+            ptr_buffer = buffer;
+        else
+        {
+            pos_point = strchr (argv[3], '.');
+            if (pos_point)
+            {
+                category = string_strndup (argv[3], pos_point - argv[3]);
+                ptr_buffer_name = pos_point + 1;
+            }
+            else
+            {
+                category = NULL;
+                ptr_buffer_name = argv[3];
+            }
+            ptr_buffer = gui_buffer_search_by_category_name (category,
+                                                             ptr_buffer_name);
+            if (category)
+                free (category);
+        }
+        if (!ptr_buffer)
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: buffer not found for \"%s\" command"),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR], "bar");
+            return WEECHAT_RC_ERROR;
+        }
+        if (!gui_bar_scroll (ptr_bar, ptr_buffer, argv_eol[4]))
+        {
+            gui_chat_printf (NULL,
+                             _("%sError: unable to scroll bar \"%s\""),
+                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                             argv[2]);
+            return WEECHAT_RC_ERROR;
         }
         
         return WEECHAT_RC_OK;
@@ -2684,37 +2755,56 @@ command_init ()
                   N_("manage bars"),
                   N_("[add barname type[,cond1,cond2,...] position size "
                      "separator item1,item2,...] | [default] | "
-                     "[del barname] | [set barname name|priority|condition|"
-                     "position|filling|size|separator|items value] | "
-                     "[hide|show barname] | [list] | [listitems]"),
-                  N_("      add: add a new bar\n"
-                     "  barname: name of bar (must be unique)\n"
-                     "     type:   root: outside windows),\n"
-                     "           window: inside windows, with optional "
+                     "[del barname|-all] | [set barname name|priority|"
+                     "condition|position|filling|size|separator|"
+                     "items value] | [hide|show barname] | [scroll barname "
+                     "category.name value] | [list] | [listitems]"),
+                  N_("          add: add a new bar\n"
+                     "      barname: name of bar (must be unique)\n"
+                     "         type:   root: outside windows),\n"
+                     "               window: inside windows, with optional "
                      "conditions (see below)\n"
-                     "cond1,...: condition(s) for displaying bar (only for "
+                     "    cond1,...: condition(s) for displaying bar (only for "
                      "type \"window\"):\n"
-                     "             active: on active window\n"
-                     "           inactive: on inactive windows\n"
-                     "           nicklist: on windows with nicklist\n"
-                     "           without condition, bar is always displayed\n"
-                     " position: bottom, top, left or right\n"
-                     "  filling: horizontal or vertical\n"
-                     "     size: size of bar (in chars)\n"
-                     "separator: 1 for using separator (line), 0 or nothing "
+                     "                 active: on active window\n"
+                     "               inactive: on inactive windows\n"
+                     "               nicklist: on windows with nicklist\n"
+                     "               without condition, bar is always displayed\n"
+                     "     position: bottom, top, left or right\n"
+                     "      filling: horizontal or vertical\n"
+                     "         size: size of bar (in chars)\n"
+                     "    separator: 1 for using separator (line), 0 or nothing "
                      "means no separator\n"
-                     "item1,...: items for this bar\n"
-                     "  default: create default bars\n"
-                     "      del: delete a bar\n"
-                     "      set: set a value for a bar property\n"
-                     "     hide: hide a bar\n"
-                     "     show: show an hidden bar\n"
-                     "     list: list all bars\n"
-                     " listfull: list all bars (verbose)\n"
-                     "listitems: list all bar items"),
-                  "add|default|del|set|hide|show|list|listfull|listitems %r "
-                  "name|priority|conditions|position|filling|size|separator|"
-                  "items",
+                     "    item1,...: items for this bar\n"
+                     "      default: create default bars\n"
+                     "          del: delete a bar (or all bars with -all)\n"
+                     "          set: set a value for a bar property\n"
+                     "         hide: hide a bar\n"
+                     "         show: show an hidden bar\n"
+                     "       scroll: scroll bar up/down\n"
+                     "category.name: category and name of buffer to scroll ('*' "
+                     "means current buffer, you should use '*' for root bars)\n"
+                     "        value: value for scroll: 'x' or 'y', followed by "
+                     "'+', '-', 'b' (beginning) or 'e' (end), value (for +/-), "
+                     "and optional %% (to scroll by %% of width/height, "
+                     "otherwise value is number of chars)\n"
+                     "         list: list all bars\n"
+                     "     listfull: list all bars (verbose)\n"
+                     "    listitems: list all bar items\n\n"
+                     "Examples:\n"
+                     "  create a bar with time and completion:\n"
+                     "    /bar add mybar root bottom 1 0 [time],completion\n"
+                     "  hide a bar:\n"
+                     "    /bar hide mybar\n"
+                     "  scroll nicklist 10 lines down on current buffer:\n"
+                     "    /bar scroll nicklist * y+10\n"
+                     "  scroll nicklist one page up on #weechat buffer:\n"
+                     "    /bar scroll nicklist #weechat y-100%\n"
+                     "  scroll to end of nicklist on current buffer:\n"
+                     "    /bar scroll nicklist * ye"),
+                  "add|default|del|set|hide|show|scroll|list|listfull|"
+                  "listitems %r name|priority|conditions|position|filling|"
+                  "size|separator|items",
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),

@@ -3568,6 +3568,7 @@ irc_protocol_cmd_366 (struct t_irc_server *server, const char *command,
 {
     struct t_irc_channel *ptr_channel;
     struct t_plugin_infolist *infolist;
+    struct t_config_option *ptr_option;
     int num_nicks, num_op, num_halfop, num_voice, num_normal, length, i;
     char *string, *prefix;
     
@@ -3590,8 +3591,12 @@ irc_protocol_cmd_366 (struct t_irc_server *server, const char *command,
                 if (strcmp (weechat_infolist_string (infolist, "type"),
                             "nick") == 0)
                 {
+                    weechat_config_search_with_string (weechat_infolist_string (infolist,
+                                                                                "prefix_color"),
+                                                       NULL, NULL, &ptr_option,
+                                                       NULL);
                     length +=
-                        strlen (weechat_infolist_string (infolist, "prefix_color")) +
+                        ((ptr_option) ? strlen (weechat_color (weechat_config_string (ptr_option))) : 0) +
                         strlen (weechat_infolist_string (infolist, "prefix")) +
                         strlen (IRC_COLOR_CHAT) +
                         strlen (weechat_infolist_string (infolist, "name")) + 1;
@@ -3612,9 +3617,12 @@ irc_protocol_cmd_366 (struct t_irc_server *server, const char *command,
                         prefix = weechat_infolist_string (infolist, "prefix");
                         if (prefix[0] && (prefix[0] != ' '))
                         {
-                            strcat (string,
-                                    weechat_color (weechat_infolist_string (infolist,
-                                                                            "prefix_color")));
+                            weechat_config_search_with_string (weechat_infolist_string (infolist,
+                                                                                        "prefix_color"),
+                                                               NULL, NULL, &ptr_option,
+                                                               NULL);
+                            if (ptr_option)
+                                strcat (string, weechat_color (weechat_config_string (ptr_option)));
                             strcat (string, prefix);
                         }
                         strcat (string, IRC_COLOR_CHAT);

@@ -114,7 +114,10 @@ gui_color_get_custom (const char *color_name)
     /* attribute or other color name (GUI dependent) */
     index_color = (index_color + 1) % 20;
     color[index_color][0] = '\0';
-
+    
+    if (!color_name || !color_name[0])
+        return color[index_color];
+    
     if (string_strcasecmp (color_name, "reset") == 0)
     {
         snprintf (color[index_color], sizeof (color[index_color]),

@@ -84,8 +84,8 @@ gui_chat_draw_title (struct t_gui_buffer *buffer, int erase)
                 
                 if (ptr_win->win_title_start > 0)
                 {
-                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
-                                                  GUI_COLOR_TITLE_MORE);
+                    //gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
+                    //                              GUI_COLOR_TITLE_MORE);
                     wprintw (GUI_CURSES(ptr_win)->win_title, "%s", "++");
                 }
                 
@@ -94,8 +94,8 @@ gui_chat_draw_title (struct t_gui_buffer *buffer, int erase)
                     gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
                                                   GUI_COLOR_TITLE);
                     wprintw (GUI_CURSES(ptr_win)->win_title, "%s", ptr_title);
-                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
-                                                  GUI_COLOR_TITLE_MORE);
+                    //gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
+                    //                              GUI_COLOR_TITLE_MORE);
                     mvwprintw (GUI_CURSES(ptr_win)->win_title, 0,
                                ptr_win->win_width - 2,
                                "%s", "++");

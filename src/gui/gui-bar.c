@@ -300,6 +300,16 @@ gui_bar_search_with_option_name (const char *option_name)
 }
 
 /*
+ * gui_bar_ask_refresh: ask refresh for bar
+ */
+
+void
+gui_bar_ask_refresh (struct t_gui_bar *bar)
+{
+    bar->bar_refresh_needed = 1;
+}
+
+/*
  * gui_bar_refresh: ask for bar refresh on screen (for all windows where bar is)
  */
 
@@ -1173,6 +1183,7 @@ gui_bar_alloc (const char *name)
         new_bar->items_count = 0;
         new_bar->items_array = NULL;
         new_bar->bar_window = NULL;
+        new_bar->bar_refresh_needed = 0;
         new_bar->prev_bar = NULL;
         new_bar->next_bar = NULL;
     }
@@ -1244,6 +1255,7 @@ gui_bar_new_with_options (struct t_weechat_plugin *plugin, const char *name,
             new_bar->items_array = NULL;
         }
         new_bar->bar_window = NULL;
+        new_bar->bar_refresh_needed = 1;
         
         /* add bar to bars list */
         gui_bar_insert (new_bar);
@@ -1570,7 +1582,7 @@ gui_bar_create_default ()
     /* search an input_text item */
     if (!gui_bar_item_used_in_a_bar (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT], 1))
     {
-        ptr_bar = gui_bar_search ("input");
+        ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_INPUT);
         if (ptr_bar)
         {
             /* add item "input_text" to input bar */
@@ -1587,6 +1599,8 @@ gui_bar_create_default ()
                           CONFIG_STRING(ptr_bar->items) : "",
                           gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
                 config_file_option_set (ptr_bar->items, buf, 1);
+                gui_chat_printf (NULL, _("Bar \"%s\" updated"),
+                                 GUI_BAR_DEFAULT_NAME_INPUT);
                 gui_bar_draw (ptr_bar);
                 free (buf);
             }
@@ -1605,15 +1619,23 @@ gui_bar_create_default ()
                 snprintf (buf, length, "[%s],%s",
                           gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
                           gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
-                if (gui_bar_new (NULL, "input", "0", "999", "window", "",
-                                 "bottom", "horizontal", "1", "0",
+                if (gui_bar_new (NULL, GUI_BAR_DEFAULT_NAME_INPUT,
+                                 "0",          /* hidden */
+                                 "1000",       /* priority */
+                                 "window",     /* type */
+                                 "",           /* conditions */
+                                 "bottom",     /* position */
+                                 "horizontal", /* filling */
+                                 "1",          /* size */
+                                 "0",          /* size_max */
                                  gui_color_get_name (CONFIG_COLOR(config_color_input)),
                                  gui_color_get_name (CONFIG_COLOR(config_color_input_delimiters)),
                                  gui_color_get_name (CONFIG_COLOR(config_color_input_bg)),
-                                 "0", buf))
+                                 "0",          /* separators */
+                                 buf))         /* items */
                 {
                     gui_chat_printf (NULL, _("Bar \"%s\" created"),
-                                     "input");
+                                     GUI_BAR_DEFAULT_NAME_INPUT);
                 }
                 free (buf);
             }
@@ -1621,7 +1643,7 @@ gui_bar_create_default ()
     }
     
     /* search status bar */
-    ptr_bar = gui_bar_search ("status");
+    ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_STATUS);
     if (!ptr_bar)
     {
         /* create status bar */
@@ -1633,7 +1655,7 @@ gui_bar_create_default ()
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER])
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_COMPLETION])
             + strlen (gui_bar_item_names[GUI_BAR_ITEM_SCROLL])
-            + strlen (gui_bar_item_names[GUI_BAR_ITEM_NICKLIST_COUNT])
+            + strlen (gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT])
             + (9 * 4) + 1;
         buf = malloc (length);
         if (buf)
@@ -1643,39 +1665,80 @@ gui_bar_create_default ()
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME],
-                      gui_bar_item_names[GUI_BAR_ITEM_NICKLIST_COUNT],
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT],
                       gui_bar_item_names[GUI_BAR_ITEM_HOTLIST],
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER],
                       gui_bar_item_names[GUI_BAR_ITEM_COMPLETION],
                       gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
-            if (gui_bar_new (NULL, "status", "0", "0", "window", "",
-                             "bottom", "horizontal", "1", "0",
+            if (gui_bar_new (NULL, GUI_BAR_DEFAULT_NAME_STATUS,
+                             "0",          /* hidden */
+                             "500",        /* priority */
+                             "window",     /* type */
+                             "",           /* conditions */
+                             "bottom",     /* position */
+                             "horizontal", /* filling */
+                             "1",          /* size */
+                             "0",          /* size_max */
                              gui_color_get_name (CONFIG_COLOR(config_color_status)),
                              gui_color_get_name (CONFIG_COLOR(config_color_status_delimiters)),
                              gui_color_get_name (CONFIG_COLOR(config_color_status_bg)),
-                             "0", buf))
+                             "0",          /* separators */
+                             buf))         /* items */
             {
                 gui_chat_printf (NULL, _("Bar \"%s\" created"),
-                                 "status");
+                                 GUI_BAR_DEFAULT_NAME_STATUS);
             }
             free (buf);
         }
     }
     
     /* search title bar */
-    ptr_bar = gui_bar_search ("title");
+    ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_TITLE);
     if (!ptr_bar)
     {
         /* create title bar */
-        if (gui_bar_new (NULL, "title", "0", "0", "window", "",
-                         "top", "horizontal", "1", "0",
+        if (gui_bar_new (NULL, GUI_BAR_DEFAULT_NAME_TITLE,
+                         "0",          /* hidden */
+                         "500",        /* priority */
+                         "window",     /* type */
+                         "",           /* conditions */
+                         "top",        /* position */
+                         "horizontal", /* filling */
+                         "1",          /* size */
+                         "0",          /* size_max */
                          gui_color_get_name (CONFIG_COLOR(config_color_title)),
                          gui_color_get_name (CONFIG_COLOR(config_color_title)),
                          gui_color_get_name (CONFIG_COLOR(config_color_title_bg)),
-                         "0", gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]))
+                         "0",          /* separators */
+                         gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE])) /* items */
         {
             gui_chat_printf (NULL, _("Bar \"%s\" created"),
-                             "title");
+                             GUI_BAR_DEFAULT_NAME_TITLE);
+        }
+    }
+    
+    /* search nicklist bar */
+    ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_NICKLIST);
+    if (!ptr_bar)
+    {
+        /* create nicklist bar */
+        if (gui_bar_new (NULL, GUI_BAR_DEFAULT_NAME_NICKLIST,
+                         "0",        /* hidden */
+                         "200",      /* priority */
+                         "window",   /* type */
+                         "nicklist", /* conditions */
+                         "right",    /* position */
+                         "vertical", /* filling */
+                         "0",        /* size */
+                         "0",        /* size_max */
+                         gui_color_get_name (CONFIG_COLOR(config_color_nicklist)),
+                         gui_color_get_name (CONFIG_COLOR(config_color_nicklist)),
+                         gui_color_get_name (CONFIG_COLOR(config_color_nicklist_bg)),
+                         "1",        /* separators */
+                         gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST])) /* items */
+        {
+            gui_chat_printf (NULL, _("Bar \"%s\" created"),
+                             GUI_BAR_DEFAULT_NAME_NICKLIST);
         }
     }
 }
@@ -1692,7 +1755,7 @@ gui_bar_update (const char *name)
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         if (!CONFIG_BOOLEAN(ptr_bar->hidden) && (strcmp (ptr_bar->name, name) == 0))
-            gui_bar_draw (ptr_bar);
+            gui_bar_ask_refresh (ptr_bar);
     }
 }
 

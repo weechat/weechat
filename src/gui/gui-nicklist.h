@@ -25,7 +25,7 @@ struct t_gui_buffer;
 struct t_gui_nick_group
 {
     char *name;                        /* group name                        */
-    int color;                         /* color for group in nicklist       */
+    char *color;                       /* color for group in nicklist       */
     int visible;                       /* 1 if group is displayed           */
     int level;                         /* group level (root is 0)           */
     struct t_gui_nick_group *parent;   /* parent                            */
@@ -41,9 +41,9 @@ struct t_gui_nick
 {
     struct t_gui_nick_group *group;    /* group which contains nick         */
     char *name;                        /* nick name                         */
-    int color;                         /* color for nick in nicklist        */
+    char *color;                       /* color for nick in nicklist        */
     char prefix;                       /* prefix for nick (for admins, ..)  */
-    int prefix_color;                  /* color for prefix                  */
+    char *prefix_color;                /* color for prefix                  */
     int visible;                       /* 1 if nick is displayed            */
     struct t_gui_nick *prev_nick;      /* link to previous nick             */
     struct t_gui_nick *next_nick;      /* link to next nick                 */

@@ -27,7 +27,6 @@ enum t_gui_color_enum
     GUI_COLOR_SEPARATOR = 0,
     
     GUI_COLOR_TITLE,
-    GUI_COLOR_TITLE_MORE,
     
     GUI_COLOR_CHAT,
     GUI_COLOR_CHAT_TIME,

@@ -100,9 +100,9 @@ struct t_config_option *config_look_set_title;
 /* config, colors section */
 
 struct t_config_option *config_color_separator;
+struct t_config_option *config_color_bar_more;
 struct t_config_option *config_color_title;
 struct t_config_option *config_color_title_bg;
-struct t_config_option *config_color_title_more;
 struct t_config_option *config_color_chat;
 struct t_config_option *config_color_chat_bg;
 struct t_config_option *config_color_chat_time;
@@ -945,6 +945,13 @@ config_weechat_init ()
         N_("background color for window separators (when splited)"),
         NULL, GUI_COLOR_SEPARATOR, 0, "blue",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    /* bar colors */
+    config_color_bar_more = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "bar_more", "color",
+        N_("text color for '+' when scrolling bars"),
+        NULL, -1, 0, "lightmagenta",
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* title window */
     config_color_title = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -957,12 +964,6 @@ config_weechat_init ()
         "title_bg", "color",
         N_("background color for title bar"),
         NULL, -1, 0, "blue",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_title_more = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "title_more", "color",
-        N_("text color for '+' when scrolling title"),
-        NULL, GUI_COLOR_TITLE_MORE, 0, "lightmagenta",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* chat window */
     config_color_chat = config_file_new_option (

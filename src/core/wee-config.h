@@ -85,9 +85,9 @@ extern struct t_config_option *config_look_scroll_amount;
 extern struct t_config_option *config_look_set_title;
 
 extern struct t_config_option *config_color_separator;
+extern struct t_config_option *config_color_bar_more;
 extern struct t_config_option *config_color_title;
 extern struct t_config_option *config_color_title_bg;
-extern struct t_config_option *config_color_title_more;
 extern struct t_config_option *config_color_chat;
 extern struct t_config_option *config_color_chat_bg;
 extern struct t_config_option *config_color_chat_time;

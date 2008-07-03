@@ -48,6 +48,7 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
     struct t_gui_window *ptr_win;
     struct t_gui_nick_group *ptr_group, *save_ptr_group;
     struct t_gui_nick *ptr_nick, *save_ptr_nick;
+    struct t_config_option *ptr_option;
     int i, j, k, x, y, x2, max_y, column, max_length, max_chars;
     int nicks_displayed, num_to_display, chars_left;
     char format_empty[32], *buf, *ptr_buf, *ptr_next, saved_char;
@@ -241,15 +242,30 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                                 }
                                 chars_left -= ptr_nick->group->level;
                             }
-                            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
-                                                          ptr_nick->prefix_color);
+                            
+                            //gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
+                            //                              ptr_nick->prefix_color);
+                            config_file_search_with_string (ptr_nick->prefix_color,
+                                                            NULL, NULL, &ptr_option,
+                                                            NULL);
+                            if (ptr_option)
+                                gui_window_set_custom_color_fg (GUI_CURSES(ptr_win)->win_nick,
+                                                                CONFIG_COLOR(ptr_option));
+                            
                             mvwprintw (GUI_CURSES(ptr_win)->win_nick,
                                        y, x, "%c", ptr_nick->prefix);
                             x++;
                             chars_left--;
                             
-                            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
-                                                          ptr_nick->color);
+                            //gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
+                            //                              ptr_nick->color);
+                            config_file_search_with_string (ptr_nick->color,
+                                                            NULL, NULL, &ptr_option,
+                                                            NULL);
+                            if (ptr_option)
+                                gui_window_set_custom_color_fg (GUI_CURSES(ptr_win)->win_nick,
+                                                                CONFIG_COLOR(ptr_option));
+                            
                             ptr_buf = ptr_nick->name;
                         }
                         else
@@ -262,8 +278,8 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                                 x++;
                             }
                             chars_left -= ptr_group->level;
-                            gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
-                                                          ptr_group->color);
+                            //gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_nick,
+                            //                              ptr_group->color);
                             //wattron (GUI_CURSES(ptr_win)->win_nick, A_UNDERLINE);
                             ptr_buf = gui_nicklist_get_group_start (ptr_group->name);
                         }

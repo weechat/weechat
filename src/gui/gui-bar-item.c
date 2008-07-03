@@ -42,6 +42,7 @@
 #include "gui-completion.h"
 #include "gui-filter.h"
 #include "gui-hotlist.h"
+#include "gui-nicklist.h"
 #include "gui-window.h"
 
 
@@ -49,8 +50,8 @@ struct t_gui_bar_item *gui_bar_items = NULL;     /* first bar item          */
 struct t_gui_bar_item *last_gui_bar_item = NULL; /* last bar item           */
 char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
 { "input_prompt", "input_text", "time", "buffer_count", "buffer_plugin",
-  "buffer_name", "buffer_filter", "nicklist_count", "scroll", "hotlist",
-  "completion", "buffer_title"
+  "buffer_name", "buffer_filter", "buffer_nicklist_count", "scroll", "hotlist",
+  "completion", "buffer_title", "buffer_nicklist"
 };
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
@@ -268,7 +269,7 @@ gui_bar_item_input_text_update_for_display (const char *item_content,
             if (buf)
             {
                 length_screen_before_cursor = gui_chat_strlen_screen (buf);
-                length_screen_after_cursor = gui_chat_strlen_screen (pos_cursor + strlen (str_cursor));
+                length_screen_after_cursor = gui_chat_strlen_screen (pos_cursor);
                 free (buf);
             }
         }
@@ -531,7 +532,7 @@ gui_bar_item_update (const char *item_name)
         if (!CONFIG_BOOLEAN(ptr_bar->hidden)
             && gui_bar_contains_item (ptr_bar, item_name))
         {
-            gui_bar_draw (ptr_bar);
+            gui_bar_ask_refresh (ptr_bar);
         }
     }
 }
@@ -797,14 +798,15 @@ gui_bar_item_default_buffer_filter (void *data, struct t_gui_bar_item *item,
 }
 
 /*
- * gui_bar_item_default_nicklist_count: default item for number of nicks in
- *                                      buffer nicklist
+ * gui_bar_item_default_buffer_nicklist_count: default item for number of nicks
+ *                                             in buffer nicklist
  */
 
 char *
-gui_bar_item_default_nicklist_count (void *data, struct t_gui_bar_item *item,
-                                     struct t_gui_window *window,
-                                     int max_width, int max_height)
+gui_bar_item_default_buffer_nicklist_count (void *data,
+                                            struct t_gui_bar_item *item,
+                                            struct t_gui_window *window,
+                                            int max_width, int max_height)
 {
     char buf[32];
     
@@ -1016,6 +1018,102 @@ gui_bar_item_default_buffer_title (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * gui_bar_item_default_buffer_nicklist: default item for nicklist
+ */
+
+char *
+gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
+                                      struct t_gui_window *window,
+                                      int max_width, int max_height)
+{
+    struct t_gui_nick_group *ptr_group;
+    struct t_gui_nick *ptr_nick;
+    struct t_config_option *ptr_option;
+    int i, length;
+    char *buf, str_prefix[2];
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) max_width;
+    (void) max_height;
+    
+    if (!window)
+        window = gui_current_window;
+    
+    length = 1;
+    ptr_group = NULL;
+    ptr_nick = NULL;
+    gui_nicklist_get_next_item (window->buffer, &ptr_group, &ptr_nick);
+    while (ptr_group || ptr_nick)
+    {
+        if ((ptr_nick && ptr_nick->visible)
+            || (ptr_group && window->buffer->nicklist_display_groups
+                && ptr_group->visible))
+        {
+            if (ptr_nick)
+                length += ptr_nick->group->level + 16 /* color */
+                    + 1 /* prefix */ + 16 /* color */
+                    + strlen (ptr_nick->name) + 1;
+            else
+                length += ptr_group->level - 1
+                    + strlen (gui_nicklist_get_group_start (ptr_group->name))
+                    + 1;
+        }
+        gui_nicklist_get_next_item (window->buffer, &ptr_group, &ptr_nick);
+    }
+
+    buf = malloc (length);
+    if (buf)
+    {
+        buf[0] = '\0';
+        ptr_group = NULL;
+        ptr_nick = NULL;
+        gui_nicklist_get_next_item (window->buffer, &ptr_group, &ptr_nick);
+        while (ptr_group || ptr_nick)
+        {
+            if ((ptr_nick && ptr_nick->visible)
+                || (ptr_group && window->buffer->nicklist_display_groups
+                    && ptr_group->visible))
+            {
+                if (ptr_nick)
+                {
+                    if (window->buffer->nicklist_display_groups)
+                    {
+                        for (i = 0; i < ptr_nick->group->level; i++)
+                        {
+                            strcat (buf, " ");
+                        }
+                    }
+                    config_file_search_with_string (ptr_nick->prefix_color,
+                                                    NULL, NULL, &ptr_option,
+                                                    NULL);
+                    if (ptr_option)
+                        strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(ptr_option))));
+                    str_prefix[0] = ptr_nick->prefix;
+                    str_prefix[1] = '\0';
+                    strcat (buf, str_prefix);
+                    strcat (buf, GUI_COLOR_CUSTOM_BAR_FG);
+                    strcat (buf, ptr_nick->name);
+                }
+                else
+                {
+                    for (i = 0; i < ptr_group->level - 1; i++)
+                    {
+                        strcat (buf, " ");
+                    }
+                    strcat (buf, gui_nicklist_get_group_start (ptr_group->name));
+                }
+                strcat (buf, "\n");
+            }
+            gui_nicklist_get_next_item (window->buffer, &ptr_group, &ptr_nick);
+        }
+    }
+    
+    return buf;
+}
+
+/*
  * gui_bar_item_timer_cb: timer callback
  */
 
@@ -1152,14 +1250,14 @@ gui_bar_item_init ()
     gui_bar_item_hook ("filters_*",
                        gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
     
-    /* nicklist count */
+    /* buffer nicklist count */
     gui_bar_item_new (NULL,
-                      gui_bar_item_names[GUI_BAR_ITEM_NICKLIST_COUNT],
-                      &gui_bar_item_default_nicklist_count, NULL);
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT],
+                      &gui_bar_item_default_buffer_nicklist_count, NULL);
     gui_bar_item_hook ("buffer_switch",
-                       gui_bar_item_names[GUI_BAR_ITEM_NICKLIST_COUNT]);
+                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT]);
     gui_bar_item_hook ("nicklist_changed",
-                       gui_bar_item_names[GUI_BAR_ITEM_NICKLIST_COUNT]);
+                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT]);
     
     /* scroll indicator */
     gui_bar_item_new (NULL,
@@ -1188,6 +1286,13 @@ gui_bar_item_init ()
                       &gui_bar_item_default_buffer_title, NULL);
     gui_bar_item_hook ("buffer_title_changed",
                        gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]);
+    
+    /* buffer nicklist */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST],
+                      &gui_bar_item_default_buffer_nicklist, NULL);
+    gui_bar_item_hook ("nicklist_changed",
+                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
 }
 
 /*

@@ -43,6 +43,7 @@ struct t_gui_bar_window
     struct t_gui_bar *bar;          /* pointer to bar                       */
     int x, y;                       /* position of window                   */
     int width, height;              /* window size                          */
+    int scroll_x, scroll_y;         /* X-Y scroll in bar                    */
     int cursor_x, cursor_y;         /* use to move cursor on screen (for    */
                                     /* input_text item)                     */
     WINDOW *win_bar;                /* bar Curses window                    */

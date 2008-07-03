@@ -123,10 +123,10 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind (NULL, /* m-p           */ "meta-p",             "/window scroll_previous_highlight");
     gui_keyboard_bind (NULL, /* F9            */ "meta2-20~",          "/window scroll_topic_left");
     gui_keyboard_bind (NULL, /* F10           */ "meta2-21~",          "/window scroll_topic_right");
-    gui_keyboard_bind (NULL, /* F11           */ "meta2-23~",          "/window nicklist_page_up");
-    gui_keyboard_bind (NULL, /* F12           */ "meta2-24~",          "/window nicklist_page_down");
-    gui_keyboard_bind (NULL, /* m-F11         */ "meta-meta2-23~",     "/window nicklist_beginning");
-    gui_keyboard_bind (NULL, /* m-F12         */ "meta-meta2-24~",     "/window nicklist_end");
+    gui_keyboard_bind (NULL, /* F11           */ "meta2-23~",          "/bar scroll nicklist * y-100%");
+    gui_keyboard_bind (NULL, /* F12           */ "meta2-24~",          "/bar scroll nicklist * y+100%");
+    gui_keyboard_bind (NULL, /* m-F11         */ "meta-meta2-23~",     "/bar scroll nicklist * yb");
+    gui_keyboard_bind (NULL, /* m-F12         */ "meta-meta2-24~",     "/bar scroll nicklist * ye");
     gui_keyboard_bind (NULL, /* ^L            */ "ctrl-L",             "/window refresh");
     gui_keyboard_bind (NULL, /* F7            */ "meta2-18~",          "/window -1");
     gui_keyboard_bind (NULL, /* F8            */ "meta2-19~",          "/window +1");
