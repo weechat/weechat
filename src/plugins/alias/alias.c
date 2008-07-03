@@ -133,11 +133,14 @@ alias_replace_args (const char *alias_args, const char *user_args)
                 if (pos[1] == '*')
                 {
                     args_count++;
-                    word = weechat_strndup (start, pos - start);
-                    if (word)
+                    if (pos > start)
                     {
-                        alias_add_word (&res, &length_res, word);
-                        free (word);
+                        word = weechat_strndup (start, pos - start);
+                        if (word)
+                        {
+                            alias_add_word (&res, &length_res, word);
+                            free (word);
+                        }
                     }
                     alias_add_word (&res, &length_res, user_args);
                     start = pos + 2;
@@ -148,13 +151,16 @@ alias_replace_args (const char *alias_args, const char *user_args)
                     if ((pos[1] >= '1') && (pos[1] <= '9'))
                     {
                         args_count++;
-                        word = weechat_strndup (start, pos - start);
-                        if (word)
+                        if (pos > start)
                         {
-                            alias_add_word (&res, &length_res, start);
-                            free (word);
+                            word = weechat_strndup (start, pos - start);
+                            if (word)
+                            {
+                                alias_add_word (&res, &length_res, word);
+                                free (word);
+                            }
                         }
-                        if (pos[1] - '0' <= argc)
+                        if (pos[1] - '1' < argc)
                             alias_add_word (&res, &length_res, argv[pos[1] - '1']);
                         start = pos + 2;
                         pos = start;
@@ -565,6 +571,7 @@ alias_config_write_default (void *data,
     weechat_config_write_line (config_file, "W", "%s", "\"who\"");
     weechat_config_write_line (config_file, "WC", "%s", "\"window merge\"");
     weechat_config_write_line (config_file, "WI", "%s", "\"whois\"");
+    weechat_config_write_line (config_file, "WII", "%s", "\"whois $1 $1\"");
     weechat_config_write_line (config_file, "WW", "%s", "\"whowas\"");
 }
 
