@@ -39,6 +39,7 @@ FIND_PATH(
 FIND_LIBRARY(
         LUA51_LIBRARY NAMES lua51 lua5.1 lua-5.1 lua
         PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
+        PATH_SUFFIXES lua51 lua5.1 lua-5.1
 )
 
 IF(LUA51_INCLUDE_PATH AND LUA51_LIBRARY)
@@ -56,11 +57,13 @@ ELSE(LUA51_INCLUDE_PATH AND LUA51_LIBRARY)
   FIND_LIBRARY(
         LUA50_LIBRARY NAMES lua50 lua5.0 lua-5.0 lua
         PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
+        PATH_SUFFIXES lua50 lua5.0 lua-5.0 lua
   )
 
   FIND_LIBRARY(
-  		LUALIB50_LIBRARY NAMES lualib50 lualib5.0 lualib-5.0 lualib
-		PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
+  	LUALIB50_LIBRARY NAMES lualib50 lualib5.0 lualib-5.0 lualib
+	PATHS /lib /usr/lib /usr/local/lib /usr/pkg/lib
+        PATH_SUFFIXES lua50 lua5.0 lua-5.0 lua
   )
 
   IF(LUA50_INCLUDE_PATH AND LUA50_LIBRARY AND LUALIB50_LIBRARY)
