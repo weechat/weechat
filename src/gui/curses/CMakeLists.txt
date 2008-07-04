@@ -14,6 +14,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+if(COMMAND cmake_policy)
+  cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
+
 SET(WEECHAT_CURSES_SRC gui-curses-bar.c gui-curses-chat.c gui-curses-color.c
 gui-curses-input.c gui-curses-keyboard.c gui-curses-main.c
 gui-curses-nicklist.c gui-curses-status.c gui-curses-window.c gui-curses.h)
@@ -44,6 +48,6 @@ ADD_EXECUTABLE(${EXECUTABLE} ${WEECHAT_CURSES_SRC})
 INCLUDE_DIRECTORIES(.. ../../core ../../plugins)
 
 # Because of a linker bug, we have to link 2 times with libweechat_core.a
-TARGET_LINK_LIBRARIES(${EXECUTABLE} -lweechat_core ${STATIC_LIBS} ${EXTRA_LIBS})
+TARGET_LINK_LIBRARIES(${EXECUTABLE} ${STATIC_LIBS} ${EXTRA_LIBS})
 
 INSTALL(TARGETS ${EXECUTABLE} RUNTIME DESTINATION bin)
