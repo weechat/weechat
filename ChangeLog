@@ -5,6 +5,7 @@ ChangeLog - 2008-07-06
 
 
 Version 0.2.7 (under dev!):
+   * fix bug with wide chars in input (bug #16356)
    * add number of lines remaining after last line displayed in "-MORE-"
      indicator (task #6702)
    * add new options for completion, optional stop instead of cycling with
