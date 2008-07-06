@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-06-18
+ChangeLog - 2008-07-06
 
 
 Version 0.2.7 (under dev!):
+   * add number of lines remaining after last line displayed in "-MORE-"
+     indicator (task #6702)
    * add new options for completion, optional stop instead of cycling with
      words found (task #5909)
    * add speed limit for DCC files sending (task #6178)
