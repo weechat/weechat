@@ -500,8 +500,8 @@ gui_chat_display_word (struct t_gui_window *window,
         
     if (end_offset && end_offset[0])
     {
-        saved_char_end = end_offset[1];
-        end_offset[1] = '\0';
+        saved_char_end = end_offset[0];
+        end_offset[0] = '\0';
     }
     else
     {
@@ -597,7 +597,7 @@ gui_chat_display_word (struct t_gui_window *window,
     }
     
     if (end_offset)
-        end_offset[1] = saved_char_end;
+        end_offset[0] = saved_char_end;
 }
 
 /*
@@ -676,7 +676,7 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
                                    (prefix_highlighted) ? prefix_highlighted : line->prefix,
                                    line->prefix +
                                    gui_chat_string_real_pos (line->prefix,
-                                                             length_allowed - 1),
+                                                             length_allowed),
                                    1, num_lines, count, lines_displayed,
                                    simulate);
         }
@@ -863,7 +863,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                 
                 /* display word */
                 gui_chat_display_word (window, line, ptr_data,
-                                       ptr_end_offset,
+                                       ptr_end_offset + 1,
                                        0, num_lines, count, &lines_displayed,
                                        simulate);
                 
