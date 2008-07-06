@@ -674,9 +674,11 @@ gui_chat_display_time_and_prefix (struct t_gui_window *window,
         {
             gui_chat_display_word (window, line,
                                    (prefix_highlighted) ? prefix_highlighted : line->prefix,
-                                   line->prefix +
-                                   gui_chat_string_real_pos (line->prefix,
-                                                             length_allowed),
+                                   (prefix_highlighted) ?
+                                   prefix_highlighted + gui_chat_string_real_pos (prefix_highlighted,
+                                                                                  length_allowed) :
+                                   line->prefix + gui_chat_string_real_pos (line->prefix,
+                                                                            length_allowed),
                                    1, num_lines, count, lines_displayed,
                                    simulate);
         }
