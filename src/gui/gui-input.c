@@ -54,7 +54,7 @@ char *gui_input_clipboard = NULL;      /* clipboard content                 */
 void
 gui_input_prompt_changed_signal ()
 {
-    hook_signal_send ("input_prompr_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    hook_signal_send ("input_prompt_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*
@@ -1113,6 +1113,8 @@ gui_input_history_next ()
                 }
                 else
                 {
+                    gui_current_window->buffer->input_buffer[0] = '\0';
+                    gui_current_window->buffer->input_buffer_color_mask[0] = '\0';
                     gui_current_window->buffer->input_buffer_size = 0;
                     gui_current_window->buffer->input_buffer_length = 0;
                 }
@@ -1137,11 +1139,13 @@ gui_input_history_next ()
                     gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
                     gui_history_buffer_add (gui_current_window->buffer, gui_current_window->buffer->input_buffer);
                     gui_history_global_add (gui_current_window->buffer->input_buffer);
+                    gui_current_window->buffer->input_buffer[0] = '\0';
+                    gui_current_window->buffer->input_buffer_color_mask[0] = '\0';
                     gui_current_window->buffer->input_buffer_size = 0;
                     gui_current_window->buffer->input_buffer_length = 0;
-                    gui_input_optimize_size (gui_current_window->buffer);
                     gui_current_window->buffer->input_buffer_pos = 0;
                     gui_current_window->buffer->input_buffer_1st_display = 0;
+                    gui_input_optimize_size (gui_current_window->buffer);
                     gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
                 }
             }
