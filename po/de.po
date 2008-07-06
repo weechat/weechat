@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-07-03 12:38+0200\n"
+"POT-Creation-Date: 2008-07-06 11:26+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1757,6 +1757,10 @@ msgstr "Alias \"%s\" => \"%s\" angelegt\n"
 #, fuzzy
 msgid "filtered"
 msgstr "/users wurde deaktiviert"
+
+#, fuzzy, c-format
+msgid "%s-MORE(%d)-"
+msgstr "-MEHR-"
 
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name already exists (%s / %s)"

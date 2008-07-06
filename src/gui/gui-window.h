@@ -83,6 +83,8 @@ struct t_gui_window
     struct t_gui_line *start_line;     /* pointer to line if scrolling      */
     int start_line_pos;                /* position in first line displayed  */
     int scroll;                        /* = 1 if "MORE" should be displayed */
+    int scroll_lines_after;            /* number of lines after last line   */
+                                       /* displayed (with scrolling)        */
     struct t_gui_window_tree *ptr_tree;/* pointer to leaf in windows tree   */
     
     struct t_gui_window *prev_window;  /* link to previous window           */

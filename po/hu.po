@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-07-03 12:38+0200\n"
+"POT-Creation-Date: 2008-07-06 11:26+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1761,6 +1761,10 @@ msgstr "A \"%s\" => \"%s\" aliasz elkészült\n"
 #, fuzzy
 msgid "filtered"
 msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%s-MORE(%d)-"
+msgstr "-TOVÁBB-"
 
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name already exists (%s / %s)"

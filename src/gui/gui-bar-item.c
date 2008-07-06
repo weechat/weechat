@@ -851,9 +851,9 @@ gui_bar_item_default_scroll (void *data, struct t_gui_bar_item *item,
     if (!window->scroll)
         return NULL;
     
-    snprintf (buf, sizeof (buf), "%s%s",
+    snprintf (buf, sizeof (buf), _("%s-MORE(%d)-"),
               gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_more))),
-              _("-MORE-"));
+              window->scroll_lines_after);
     
     return strdup (buf);
 }

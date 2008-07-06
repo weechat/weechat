@@ -250,6 +250,7 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         new_window->start_line = NULL;
         new_window->start_line_pos = 0;
         new_window->scroll = 0;
+        new_window->scroll_lines_after = 0;
         
         new_window->ptr_tree = ptr_leaf;
         ptr_leaf->window = new_window;

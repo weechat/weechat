@@ -1077,7 +1077,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
     struct t_gui_window *ptr_win;
     struct t_gui_line *ptr_line;
     char format_empty[32];
-    int i, line_pos, count, old_scroll, y_start, y_end;
+    int i, line_pos, count, old_scroll, old_scroll_lines_after, y_start, y_end;
     
     if (!gui_ok)
         return;
@@ -1147,6 +1147,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                     }
                     
                     old_scroll = ptr_win->scroll;
+                    old_scroll_lines_after = ptr_win->scroll_lines_after;
                     
                     ptr_win->scroll = (ptr_win->win_chat_cursor_y > ptr_win->win_chat_height - 1);
                     
@@ -1158,17 +1159,31 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                             ptr_win->scroll = 0;
                     }
                     
-                    if (ptr_win->scroll != old_scroll)
-                    {
-                        hook_signal_send ("window_scrolled",
-                                          WEECHAT_HOOK_SIGNAL_POINTER, ptr_win);
-                    }
-                    
                     if (!ptr_win->scroll
                         && (ptr_win->start_line == gui_chat_get_first_line_displayed (ptr_win->buffer)))
                     {
                         ptr_win->start_line = NULL;
                         ptr_win->start_line_pos = 0;
+                    }
+                    
+                    ptr_win->scroll_lines_after = 0;
+                    if (ptr_win->scroll && ptr_line)
+                    {
+                        /* count number of lines after last line displayed */
+                        while (ptr_line)
+                        {
+                            ptr_line = gui_chat_get_next_line_displayed (ptr_line);
+                            if (ptr_line)
+                                ptr_win->scroll_lines_after++;
+                        }
+                        ptr_win->scroll_lines_after++;
+                    }
+                    
+                    if ((ptr_win->scroll != old_scroll)
+                        || (ptr_win->scroll_lines_after != old_scroll_lines_after))
+                    {
+                        hook_signal_send ("window_scrolled",
+                                          WEECHAT_HOOK_SIGNAL_POINTER, ptr_win);
                     }
                     
                     /* cursor is below end line of chat window? */

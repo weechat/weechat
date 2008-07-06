@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-07-03 12:38+0200\n"
-"PO-Revision-Date: 2008-07-03 12:39+0200\n"
+"POT-Creation-Date: 2008-07-06 11:26+0200\n"
+"PO-Revision-Date: 2008-07-06 11:27+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1739,6 +1739,10 @@ msgstr "Barre \"%s\" mise à jour"
 
 msgid "filtered"
 msgstr "filtré"
+
+#, c-format
+msgid "%s-MORE(%d)-"
+msgstr "%s-PLUS(%d)-"
 
 #, c-format
 msgid "%sError: a buffer with same name already exists (%s / %s)"
