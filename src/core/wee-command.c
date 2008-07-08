@@ -435,50 +435,44 @@ command_bar (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_ERROR;
         }
         ptr_bar = gui_bar_search (argv[2]);
-        if (!ptr_bar)
+        if (ptr_bar)
         {
-            gui_chat_printf (NULL,
-                             _("%sError: unknown bar \"%s\""),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[2]);
-            return WEECHAT_RC_ERROR;
-        }
-        if (strcmp (argv[3], "*") == 0)
-            ptr_buffer = buffer;
-        else
-        {
-            pos_point = strchr (argv[3], '.');
-            if (pos_point)
-            {
-                category = string_strndup (argv[3], pos_point - argv[3]);
-                ptr_buffer_name = pos_point + 1;
-            }
+            if (strcmp (argv[3], "*") == 0)
+                ptr_buffer = buffer;
             else
             {
-                category = NULL;
-                ptr_buffer_name = argv[3];
+                pos_point = strchr (argv[3], '.');
+                if (pos_point)
+                {
+                    category = string_strndup (argv[3], pos_point - argv[3]);
+                    ptr_buffer_name = pos_point + 1;
+                }
+                else
+                {
+                    category = NULL;
+                    ptr_buffer_name = argv[3];
+                }
+                ptr_buffer = gui_buffer_search_by_category_name (category,
+                                                                 ptr_buffer_name);
+                if (category)
+                    free (category);
             }
-            ptr_buffer = gui_buffer_search_by_category_name (category,
-                                                             ptr_buffer_name);
-            if (category)
-                free (category);
+            if (!ptr_buffer)
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: buffer not found for \"%s\" command"),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR], "bar");
+                return WEECHAT_RC_ERROR;
+            }
+            if (!gui_bar_scroll (ptr_bar, ptr_buffer, argv_eol[4]))
+            {
+                gui_chat_printf (NULL,
+                                 _("%sError: unable to scroll bar \"%s\""),
+                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                 argv[2]);
+                return WEECHAT_RC_ERROR;
+            }
         }
-        if (!ptr_buffer)
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: buffer not found for \"%s\" command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR], "bar");
-            return WEECHAT_RC_ERROR;
-        }
-        if (!gui_bar_scroll (ptr_bar, ptr_buffer, argv_eol[4]))
-        {
-            gui_chat_printf (NULL,
-                             _("%sError: unable to scroll bar \"%s\""),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             argv[2]);
-            return WEECHAT_RC_ERROR;
-        }
-        
         return WEECHAT_RC_OK;
     }
     
