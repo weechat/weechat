@@ -237,7 +237,6 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     snprintf (str_prefix_color, sizeof (str_prefix_color),
               "weechat.color.nicklist_prefix%d",
               prefix_color);
-    
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                new_nick->name, "weechat.color.nicklist",
                                prefix, str_prefix_color, 1);
@@ -288,8 +287,8 @@ irc_nick_change (struct t_irc_server *server, struct t_irc_channel *channel,
     irc_nick_get_gui_infos (nick, &prefix, &prefix_color,
                             channel->buffer, &ptr_group);
     snprintf (str_prefix_color, sizeof (str_prefix_color),
-                  "nicklist_prefix%d",
-                  prefix_color);
+              "weechat.color.nicklist_prefix%d",
+              prefix_color);
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                nick->name, "weechat.color.nicklist",
                                prefix, str_prefix_color, 1);
@@ -322,7 +321,7 @@ irc_nick_set (struct t_irc_channel *channel,
     irc_nick_get_gui_infos (nick, &prefix, &prefix_color,
                             channel->buffer, &ptr_group);
     snprintf (str_prefix_color, sizeof (str_prefix_color),
-              "nicklist_prefix%d",
+              "weechat.color.nicklist_prefix%d",
               prefix_color);
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
                                nick->name, "weechat.color.nicklist",
