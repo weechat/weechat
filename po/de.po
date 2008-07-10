@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-07-06 11:26+0200\n"
+"POT-Creation-Date: 2008-07-10 17:35+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -99,7 +99,9 @@ msgid "List of bars:"
 msgstr "Liste der Aliases:\n"
 
 #, fuzzy, c-format
-msgid "  %s%s%s: %s%s%s (cond: %s), %s, filling: %s, %s: %s"
+msgid ""
+"  %s%s%s: %s%s%s (cond: %s), %s, filling: %s(top/bottom)/%s(left/right), %s: "
+"%s"
 msgstr "%sin %s%s%s/%s%s%s:%s ignoriere %s%s%s von %s%s\n"
 
 msgid "(hidden)"
@@ -1720,7 +1722,12 @@ msgstr "Nicklisten-Position (top, left, right (Standard), bottom)"
 
 msgid ""
 "bar filling direction (\"horizontal\" (from left to right) or \"vertical"
-"\" (from top to bottom))"
+"\" (from top to bottom)) when bar position is top or bottom"
+msgstr ""
+
+msgid ""
+"bar filling direction (\"horizontal\" (from left to right) or \"vertical"
+"\" (from top to bottom)) when bar position is left or right"
 msgstr ""
 
 msgid "bar size in chars (0 = auto size)"

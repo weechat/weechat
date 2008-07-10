@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-07-06 11:26+0200\n"
+"POT-Creation-Date: 2008-07-10 17:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,7 +77,9 @@ msgid "List of bars:"
 msgstr ""
 
 #, c-format
-msgid "  %s%s%s: %s%s%s (cond: %s), %s, filling: %s, %s: %s"
+msgid ""
+"  %s%s%s: %s%s%s (cond: %s), %s, filling: %s(top/bottom)/%s(left/right), %s: "
+"%s"
 msgstr ""
 
 msgid "(hidden)"
@@ -1436,7 +1438,12 @@ msgstr ""
 
 msgid ""
 "bar filling direction (\"horizontal\" (from left to right) or \"vertical"
-"\" (from top to bottom))"
+"\" (from top to bottom)) when bar position is top or bottom"
+msgstr ""
+
+msgid ""
+"bar filling direction (\"horizontal\" (from left to right) or \"vertical"
+"\" (from top to bottom)) when bar position is left or right"
 msgstr ""
 
 msgid "bar size in chars (0 = auto size)"

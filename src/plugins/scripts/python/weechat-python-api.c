@@ -3565,9 +3565,9 @@ weechat_python_api_bar_search (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_bar_new (PyObject *self, PyObject *args)
 {
-    char *name, *hidden, *priority, *type, *conditions, *position, *filling;
-    char *size, *size_max, *color_fg, *color_delim, *color_bg, *separator;
-    char *items, *result;
+    char *name, *hidden, *priority, *type, *conditions, *position;
+    char *filling_top_bottom, *filling_left_right, *size, *size_max;
+    char *color_fg, *color_delim, *color_bg, *separator, *items, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -3585,7 +3585,8 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
     type = NULL;
     conditions = NULL;
     position = NULL;
-    filling = NULL;
+    filling_top_bottom = NULL;
+    filling_left_right = NULL;
     size = NULL;
     size_max = NULL;
     color_fg = NULL;
@@ -3594,10 +3595,10 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
     separator = NULL;
     items = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssssssssssssss", &name, &hidden, &priority,
-                           &conditions, &type, &position, &filling, &size,
-                           &size_max, &color_fg, &color_delim, &color_bg,
-                           &separator, &items))
+    if (!PyArg_ParseTuple (args, "sssssssssssssss", &name, &hidden, &priority,
+                           &conditions, &type, &position, &filling_top_bottom,
+                           &filling_left_right, &size, &size_max, &color_fg,
+                           &color_delim, &color_bg, &separator, &items))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         PYTHON_RETURN_EMPTY;
@@ -3609,7 +3610,8 @@ weechat_python_api_bar_new (PyObject *self, PyObject *args)
                                               type,
                                               conditions,
                                               position,
-                                              filling,
+                                              filling_top_bottom,
+                                              filling_left_right,
                                               size,
                                               size_max,
                                               color_fg,

@@ -36,7 +36,8 @@ enum t_gui_bar_option
     GUI_BAR_OPTION_TYPE,
     GUI_BAR_OPTION_CONDITIONS,
     GUI_BAR_OPTION_POSITION,
-    GUI_BAR_OPTION_FILLING,
+    GUI_BAR_OPTION_FILLING_TOP_BOTTOM,
+    GUI_BAR_OPTION_FILLING_LEFT_RIGHT,
     GUI_BAR_OPTION_SIZE,
     GUI_BAR_OPTION_SIZE_MAX,
     GUI_BAR_OPTION_COLOR_FG,
@@ -84,7 +85,10 @@ struct t_gui_bar
     struct t_config_option *type;       /* type (root or window)            */
     struct t_config_option *conditions; /* conditions for display           */
     struct t_config_option *position;   /* bottom, top, left, right         */
-    struct t_config_option *filling;    /* filling (H=horizontal,V=vertical)*/
+    struct t_config_option *filling_top_bottom; /* filling when position is */
+                                        /* top/bottom (horizontal/vertical) */
+    struct t_config_option *filling_left_right; /* filling when position is */
+                                        /* left/right (horizontal/vertical) */
     struct t_config_option *size;       /* size of bar (in chars, 0 = auto) */
     struct t_config_option *size_max;   /* max size of bar (0 = no limit)   */
     struct t_config_option *color_fg;   /* default text color for bar       */
@@ -120,6 +124,7 @@ extern struct t_gui_bar *last_gui_temp_bar;
 extern int gui_bar_search_option (const char *option_name);
 extern int gui_bar_search_type (const char *type);
 extern int gui_bar_search_position (const char *position);
+extern struct t_config_option *gui_bar_get_option_filling (struct t_gui_bar *bar);
 extern int gui_bar_check_conditions_for_window (struct t_gui_bar *bar,
                                                 struct t_gui_window *window);
 extern int gui_bar_root_get_size (struct t_gui_bar *bar,
@@ -131,11 +136,15 @@ extern void gui_bar_create_option_temp (struct t_gui_bar *temp_bar,
                                         int index_option, const char *value);
 extern struct t_gui_bar *gui_bar_alloc (const char *name);
 extern struct t_gui_bar *gui_bar_new (struct t_weechat_plugin *plugin,
-                                      const char *name, const char *hidden,
-                                      const char *priority, const char *type,
+                                      const char *name,
+                                      const char *hidden,
+                                      const char *priority,
+                                      const char *type,
                                       const char *conditions,
                                       const char *position,
-                                      const char *filling, const char *size,
+                                      const char *filling_top_bottom,
+                                      const char *filling_left_right,
+                                      const char *size,
                                       const char *size_max,
                                       const char *color_fg,
                                       const char *color_delim,

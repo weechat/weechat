@@ -80,7 +80,8 @@ command_bar_list (int full)
             {
                 gui_chat_printf (NULL,
                                  _("  %s%s%s: %s%s%s (cond: %s), %s, "
-                                   "filling: %s, %s: %s"),
+                                   "filling: %s(top/bottom)/%s(left/right), "
+                                   "%s: %s"),
                                  GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
                                  ptr_bar->name,
                                  GUI_COLOR(GUI_COLOR_CHAT),
@@ -91,7 +92,8 @@ command_bar_list (int full)
                                   && CONFIG_STRING(ptr_bar->conditions)[0]) ?
                                  CONFIG_STRING(ptr_bar->conditions) : "-",
                                  gui_bar_position_string[CONFIG_INTEGER(ptr_bar->position)],
-                                 gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->filling)],
+                                 gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->filling_top_bottom)],
+                                 gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->filling_left_right)],
                                  ((CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_BOTTOM)
                                   || (CONFIG_INTEGER(ptr_bar->position) == GUI_BAR_POSITION_TOP)) ?
                                  _("height") : _("width"),
@@ -247,9 +249,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
             if (gui_bar_new (NULL, argv[2], "0", "0", str_type,
                              (pos_condition) ? pos_condition : "",
                              argv[4],
-                             ((position == GUI_BAR_POSITION_LEFT)
-                              || (position == GUI_BAR_POSITION_RIGHT)) ?
-                             "vertical" : "horizontal",
+                             "horizontal", "vertical",
                              argv[5], "0", "default", "default", "default",
                              argv[6], argv_eol[7]))
             {

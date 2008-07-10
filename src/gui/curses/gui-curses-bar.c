@@ -789,7 +789,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
             size_on_screen = utf8_char_size_screen (utf_char);
             if (*x + size_on_screen > bar_window->width)
             {
-                if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_VERTICAL)
+                if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_VERTICAL)
                     return 0;
                 if (*y >= bar_window->height - 1)
                     return 0;
@@ -856,7 +856,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             {
                 if (item_value[0])
                 {
-                    if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_HORIZONTAL)
+                    if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_HORIZONTAL)
                     {
                         item_value2 = string_replace (item_value, "\n",
                                                       space_with_reinit_color);
@@ -875,7 +875,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         content_length += length_reinit_color +
                             strlen ((item_value2) ? item_value2 : item_value);
                         content = realloc (content, content_length);
-                        if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_HORIZONTAL)
+                        if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_HORIZONTAL)
                             strcat (content, space_with_reinit_color);
                         else
                             strcat (content, "\n");
@@ -932,7 +932,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                 {
                     case GUI_BAR_POSITION_BOTTOM:
                     case GUI_BAR_POSITION_TOP:
-                        if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_HORIZONTAL)
+                        if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_HORIZONTAL)
                             num_lines = optimal_number_of_lines;
                         else
                             num_lines = items_count;
@@ -979,7 +979,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         {
                             some_data_not_displayed = 1;
                         }
-                        if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_VERTICAL)
+                        if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_VERTICAL)
                         {
                             x = 0;
                             y++;
@@ -1049,7 +1049,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
             {
                 if (item_value[0])
                 {
-                    if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_HORIZONTAL)
+                    if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_HORIZONTAL)
                     {
                         item_value2 = string_replace (item_value, "\n",
                                                       space_with_reinit_color);
@@ -1080,7 +1080,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                             {
                                 some_data_not_displayed = 1;
                             }
-                            if (CONFIG_INTEGER(bar_window->bar->filling) == GUI_BAR_FILLING_VERTICAL)
+                            if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_VERTICAL)
                             {
                                 x = 0;
                                 y++;

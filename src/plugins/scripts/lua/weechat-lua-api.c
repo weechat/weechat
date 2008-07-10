@@ -4038,8 +4038,8 @@ static int
 weechat_lua_api_bar_new (lua_State *L)
 {
     const char *name, *hidden, *priority, *type, *conditions, *position;
-    const char *filling, *size, *size_max, *color_fg, *color_delim, *color_bg;
-    const char *separator, *items;
+    const char *filling_top_bottom, *filling_left_right, *size, *size_max;
+    const char *color_fg, *color_delim, *color_bg, *separator, *items;
     char *result;
     int n;
     
@@ -4058,7 +4058,8 @@ weechat_lua_api_bar_new (lua_State *L)
     type = NULL;
     conditions = NULL;
     position = NULL;
-    filling = NULL;
+    filling_top_bottom = NULL;
+    filling_left_right = NULL;
     size = NULL;
     size_max = NULL;
     color_fg = NULL;
@@ -4069,19 +4070,20 @@ weechat_lua_api_bar_new (lua_State *L)
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 14)
+    if (n < 15)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("bar_new");
         LUA_RETURN_EMPTY;
     }
     
-    name = lua_tostring (lua_current_interpreter, -14);
-    hidden = lua_tostring (lua_current_interpreter, -13);
-    priority = lua_tostring (lua_current_interpreter, -12);
-    type = lua_tostring (lua_current_interpreter, -11);
-    conditions = lua_tostring (lua_current_interpreter, -10);
-    position = lua_tostring (lua_current_interpreter, -9);
-    filling = lua_tostring (lua_current_interpreter, -8);
+    name = lua_tostring (lua_current_interpreter, -15);
+    hidden = lua_tostring (lua_current_interpreter, -14);
+    priority = lua_tostring (lua_current_interpreter, -13);
+    type = lua_tostring (lua_current_interpreter, -12);
+    conditions = lua_tostring (lua_current_interpreter, -11);
+    position = lua_tostring (lua_current_interpreter, -10);
+    filling_top_bottom = lua_tostring (lua_current_interpreter, -9);
+    filling_left_right = lua_tostring (lua_current_interpreter, -8);
     size = lua_tostring (lua_current_interpreter, -7);
     size_max = lua_tostring (lua_current_interpreter, -6);
     color_fg = lua_tostring (lua_current_interpreter, -5);
@@ -4096,7 +4098,8 @@ weechat_lua_api_bar_new (lua_State *L)
                                               type,
                                               conditions,
                                               position,
-                                              filling,
+                                              filling_top_bottom,
+                                              filling_left_right,
                                               size,
                                               size_max,
                                               color_fg,

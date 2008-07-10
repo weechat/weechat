@@ -429,7 +429,8 @@ struct t_weechat_plugin
                                   const char *type,
                                   const char *condition,
                                   const char *position,
-                                  const char *filling,
+                                  const char *filling_top_bottom,
+                                  const char *filling_left_right,
                                   const char *size,
                                   const char *size_max,
                                   const char *color_fg,
@@ -862,13 +863,14 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_bar_search(__name)              \
     weechat_plugin->bar_search(__name)
 #define weechat_bar_new(__name, __hidden, __priority, __type,          \
-                        __condition, __position, __filling, __size,    \
-                        __size_max, __color_fg, __color_delim,         \
-                        __color_bg,                                    \
+                        __condition, __position, __filling_top_bottom, \
+                        __filling_left_right, __size, __size_max,      \
+                        __color_fg, __color_delim, __color_bg,         \
                         __separator, __items)                          \
     weechat_plugin->bar_new(weechat_plugin, __name, __hidden,          \
                             __priority, __type, __condition,           \
-                            __position, __filling, __size, __size_max, \
+                            __position, __filling_top_bottom,          \
+                            __filling_left_right, __size, __size_max,  \
                             __color_fg, __color_delim, __color_bg,     \
                             __separator, __items)
 #define weechat_bar_set(__bar, __property, __value)     \
