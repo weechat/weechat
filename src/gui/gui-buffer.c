@@ -636,16 +636,18 @@ gui_buffer_search_by_category_name (const char *category, const char *name)
 {
     struct t_gui_buffer *ptr_buffer;
     
-    if (!category && !name)
+    if ((!category || !category[0]) && (!name || !name[0]))
         return gui_current_window->buffer;
     
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        if ((!category || (ptr_buffer->category
-                           && (strcmp (ptr_buffer->category, category) == 0)))
-            && (!name || (ptr_buffer->name
-                          && (strcmp (ptr_buffer->name, name) == 0))))
+        if ((!category || !category[0]
+             || (ptr_buffer->category
+                 && (strcmp (ptr_buffer->category, category) == 0)))
+            && (!name || !name[0]
+                || (ptr_buffer->name
+                    && (strcmp (ptr_buffer->name, name) == 0))))
             return ptr_buffer;
     }
     
