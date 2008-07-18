@@ -491,14 +491,15 @@ irc_server_alloc_with_url (const char *irc_url)
  */
 
 void
-irc_server_outqueue_add (struct t_irc_server *server, const char *msg1,
-                         const char *msg2, int modified)
+irc_server_outqueue_add (struct t_irc_server *server, const char *command,
+                         const char *msg1, const char *msg2, int modified)
 {
     struct t_irc_outqueue *new_outqueue;
 
     new_outqueue = malloc (sizeof (*new_outqueue));
     if (new_outqueue)
     {
+        new_outqueue->command = (command) ? strdup (command) : strdup ("unknown");
         new_outqueue->message_before_mod = (msg1) ? strdup (msg1) : NULL;
         new_outqueue->message_after_mod = (msg2) ? strdup (msg2) : NULL;
         new_outqueue->modified = modified;
@@ -536,7 +537,10 @@ irc_server_outqueue_free (struct t_irc_server *server,
     
     if (outqueue->next_outqueue)
         (outqueue->next_outqueue)->prev_outqueue = outqueue->prev_outqueue;
-    
+
+    /* free data */
+    if (outqueue->command)
+        free (outqueue->command);
     if (outqueue->message_before_mod)
         free (outqueue->message_before_mod);
     if (outqueue->message_after_mod)
@@ -553,7 +557,9 @@ void
 irc_server_outqueue_free_all (struct t_irc_server *server)
 {
     while (server->outqueue)
+    {
         irc_server_outqueue_free (server, server->outqueue);
+    }
 }
 
 /*
@@ -813,6 +819,29 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
 }
 
 /*
+ * irc_server_send_signal: send a signal for an IRC message (received or sent)
+ */
+
+void
+irc_server_send_signal (struct t_irc_server *server, const char *signal,
+                        const char *command, const char *full_message)
+{
+    int length;
+    char *str_signal;
+    
+    length = strlen (server->name) + 1 + strlen (signal) + 1 + strlen (command) + 1;
+    str_signal = malloc (length);
+    if (str_signal)
+    {
+        snprintf (str_signal, length,
+                  "%s,%s_%s", server->name, signal, command);
+        weechat_hook_signal_send (str_signal, WEECHAT_HOOK_SIGNAL_STRING,
+                                  (void *)full_message);
+        free (str_signal);
+    }
+}
+
+/*
  * irc_server_send: send data to IRC server
  *                  return number of bytes sent, -1 if error
  */
@@ -894,6 +923,13 @@ irc_server_outqueue_send (struct t_irc_server *server)
                                   server->outqueue->message_after_mod);
                 if (pos)
                     pos[0] = '\r';
+                
+                /* send signal with command that will be sent to server */
+                irc_server_send_signal (server, "irc_out",
+                                        server->outqueue->command,
+                                        server->outqueue->message_after_mod);
+                
+                /* send command */
                 irc_server_send (server, server->outqueue->message_after_mod,
                                  strlen (server->outqueue->message_after_mod));
                 server->last_user_message = time_now;
@@ -1106,7 +1142,7 @@ irc_server_send_one_msg (struct t_irc_server *server, const char *message)
             /* if queue, then only queue message and send nothing now */
             if (queue)
             {
-                irc_server_outqueue_add (server,
+                irc_server_outqueue_add (server, command,
                                          (new_msg && first_message) ? message : NULL,
                                          buffer,
                                          (new_msg) ? 1 : 0);
@@ -1117,6 +1153,12 @@ irc_server_send_one_msg (struct t_irc_server *server, const char *message)
                     irc_debug_printf (server, 1, 0, message);
                 if (new_msg)
                     irc_debug_printf (server, 1, 1, ptr_msg);
+                
+                /* send signal with command that will be sent to server */
+                irc_server_send_signal (server, "irc_out",
+                                        (command) ? command : "unknown",
+                                        ptr_msg);
+                
                 if (irc_server_send (server, buffer, strlen (buffer)) <= 0)
                     rc = 0;
                 else

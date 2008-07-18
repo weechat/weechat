@@ -4115,6 +4115,9 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
     if (!command)
         return;
     
+    /* send signal with received command */
+    irc_server_send_signal (server, "irc_in", command, entire_line);
+    
     /* look for IRC command */
     cmd_found = -1;
     for (i = 0; irc_protocol_messages[i].name; i++)
