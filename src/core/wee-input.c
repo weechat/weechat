@@ -178,8 +178,6 @@ input_data (struct t_gui_buffer *buffer, const char *data)
                 if ((ptr_data[0] == '/') && (ptr_data[1] == '/'))
                     ptr_data++;
                 
-                hook_command_exec (buffer, 1, buffer->plugin, ptr_data);
-                
                 if (buffer->input_callback)
                 {
                     (void)(buffer->input_callback) (buffer->input_callback_data,
