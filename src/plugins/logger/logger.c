@@ -679,7 +679,8 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
     
     ptr_logger_buffer = logger_buffer_search (buffer);
     if (ptr_logger_buffer && ptr_logger_buffer->log_filename
-        && ptr_logger_buffer->log_enabled)
+        && ptr_logger_buffer->log_enabled
+        && (date > 0))
     {
         date_tmp = localtime (&date);
         buf_time[0] = '\0';
