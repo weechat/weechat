@@ -1,10 +1,11 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-07-06
+ChangeLog - 2008-07-28
 
 
 Version 0.2.7 (under dev!):
+   * fix display bug with some weird UTF-8 chars (bug #19687)
    * fix bug with wide chars in input (bug #16356)
    * add number of lines remaining after last line displayed in "-MORE-"
      indicator (task #6702)

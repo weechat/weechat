@@ -787,23 +787,25 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                 snprintf (utf_char, sizeof (utf_char), ".");
 
             size_on_screen = utf8_char_size_screen (utf_char);
-            if (*x + size_on_screen > bar_window->width)
+            if (size_on_screen > 0)
             {
-                if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_VERTICAL)
-                    return 0;
-                if (*y >= bar_window->height - 1)
-                    return 0;
-                *x = 0;
-                (*y)++;
-                wmove (bar_window->win_bar, *y, *x);
+                if (*x + size_on_screen > bar_window->width)
+                {
+                    if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_VERTICAL)
+                        return 0;
+                    if (*y >= bar_window->height - 1)
+                        return 0;
+                    *x = 0;
+                    (*y)++;
+                    wmove (bar_window->win_bar, *y, *x);
+                }
+                output = string_iconv_from_internal (NULL, utf_char);
+                wprintw (bar_window->win_bar, "%s",
+                         (output) ? output : utf_char);
+                if (output)
+                    free (output);
+                *x += size_on_screen;
             }
-            output = string_iconv_from_internal (NULL, utf_char);
-            wprintw (bar_window->win_bar, "%s",
-                     (output) ? output : utf_char);
-            if (output)
-                free (output);
-            
-            *x += size_on_screen;
             
             string = next_char;
         }
