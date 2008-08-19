@@ -35,6 +35,7 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
+#include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
@@ -878,6 +879,93 @@ gui_window_search_stop (struct t_gui_window *window)
     gui_buffer_ask_chat_refresh (window->buffer, 2);
     gui_status_refresh_needed = 1;
     gui_buffer_ask_input_refresh (window->buffer, 1);
+}
+
+/*
+ * gui_window_add_to_infolist: add a window in an infolist
+ *                             return 1 if ok, 0 if error
+ */
+
+int
+gui_window_add_to_infolist (struct t_infolist *infolist,
+                            struct t_gui_window *window)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !window)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!infolist_new_var_pointer (ptr_item, "pointer", window))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "x", window->win_x))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "y", window->win_y))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "width", window->win_width))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "height", window->win_height))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "width_pct", window->win_width_pct))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "height_pct", window->win_height_pct))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "chat_x", window->win_chat_x))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "chat_y", window->win_chat_y))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "chat_width", window->win_chat_width))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "chat_height", window->win_chat_height))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "nick_x", window->win_nick_x))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "nick_y", window->win_nick_y))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "nick_width", window->win_nick_width))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "nick_height", window->win_nick_height))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "nick_start", window->win_nick_start))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "title_x", window->win_title_x))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "title_y", window->win_title_y))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "title_width", window->win_title_width))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "title_start", window->win_title_start))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "status_x", window->win_status_x))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "status_y", window->win_status_y))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "status_width", window->win_status_width))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "status_height", window->win_status_height))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input_x", window->win_input_x))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input_y", window->win_input_y))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input_width", window->win_input_width))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input_height", window->win_input_height))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input_cursor_x", window->win_input_cursor_x))
+        return 0;
+    if (!infolist_new_var_pointer (ptr_item, "buffer", window->buffer))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "start_line_y",
+                                   ((window->buffer->type == GUI_BUFFER_TYPE_FREE)
+                                    && (window->start_line)) ?
+                                   window->start_line->y : 0))
+        return 0;
+    
+    return 1;
 }
 
 /*

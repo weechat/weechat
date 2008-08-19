@@ -47,6 +47,7 @@
 #include "gui-window.h"
 
 
+char *gui_chat_buffer = NULL;                 /* buffer for printf          */
 char *gui_chat_prefix[GUI_CHAT_NUM_PREFIXES]; /* prefixes                   */
 char gui_chat_prefix_empty[] = "";            /* empty prefix               */
 int gui_chat_time_length = 0;    /* length of time for each line (in chars) */
@@ -899,7 +900,6 @@ void
 gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
                            const char *tags, const char *message, ...)
 {
-    char *buf;
     va_list argptr;
     time_t date_printed;
     int display_time;
@@ -924,15 +924,16 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
             return;
     }
     
-    buf = malloc (GUI_CHAT_BUFFER_PRINTF_SIZE);
-    if (!buf)
+    if (!gui_chat_buffer)
+        gui_chat_buffer = malloc (GUI_CHAT_BUFFER_PRINTF_SIZE);
+    if (!gui_chat_buffer)
         return;
     
     va_start (argptr, message);
-    vsnprintf (buf, GUI_CHAT_BUFFER_PRINTF_SIZE, message, argptr);
+    vsnprintf (gui_chat_buffer, GUI_CHAT_BUFFER_PRINTF_SIZE, message, argptr);
     va_end (argptr);
     
-    utf8_normalize (buf, '?');
+    utf8_normalize (gui_chat_buffer, '?');
     
     date_printed = time (NULL);
     if (date <= 0)
@@ -941,14 +942,14 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     if (gui_init_ok)
         ptr_line = buffer->last_line;
     
-    pos = buf;
+    pos = gui_chat_buffer;
     while (pos)
     {
         pos_prefix = NULL;
         display_time = 1;
         
         /* if two first chars are tab, then do not display time */
-        if ((buf[0] == '\t') && (buf[1] == '\t'))
+        if ((pos[0] == '\t') && (pos[1] == '\t'))
         {
             display_time = 0;
             pos += 2;
@@ -956,11 +957,11 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
         else
         {
             /* if tab found, use prefix (before tab) */
-            pos_tab = strchr (buf, '\t');
+            pos_tab = strchr (pos, '\t');
             if (pos_tab)
             {
                 pos_tab[0] = '\0';
-                pos_prefix = buf;
+                pos_prefix = pos;
                 pos = pos_tab + 1;
             }
         }
@@ -996,8 +997,6 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     
     if (gui_init_ok)
         gui_buffer_ask_chat_refresh (buffer, 1);
-    
-    free (buf);
 }
 
 /*

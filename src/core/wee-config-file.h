@@ -36,6 +36,7 @@
 #define CONFIG_BOOLEAN_TRUE   1
 
 struct t_weelist;
+struct t_infolist;
 
 struct t_config_file
 {
@@ -228,6 +229,8 @@ extern void config_file_section_free (struct t_config_file *config_file,
 extern void config_file_free (struct t_config_file *config_file);
 extern void config_file_free_all ();
 extern void config_file_free_all_plugin (struct t_weechat_plugin *plugin);
+extern int config_file_add_to_infolist (struct t_infolist *infolist,
+                                        const char *option_name);
 extern void config_file_print_stdout (struct t_config_file *config_file);
 extern void config_file_print_log ();
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-07-10 17:35+0200\n"
+"POT-Creation-Date: 2008-08-13 16:43+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -560,6 +560,18 @@ msgstr "není na kanále"
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d volba/volby resetovány, %d volba/volby smazány"
 
+#, fuzzy
+msgid "Upgrading WeeChat..."
+msgstr "Terminál ztracen, ukončuji WeeChat..."
+
+#, fuzzy, c-format
+msgid "%sError: unable to save session in file"
+msgstr "%s selhalo uložení nastavení pluginů\n"
+
+#, c-format
+msgid "Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr ""
+
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
 msgstr "Čas běhu WeeChat: %d %s %02d:%02d:%02d, spuštěn %s"
@@ -723,7 +735,8 @@ msgstr ""
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr ""
-"filtrovat zprávy v bufferu, pro jejich schováni/zobrazení podle tagů nebo regulárního výrazu"
+"filtrovat zprávy v bufferu, pro jejich schováni/zobrazení podle tagů nebo "
+"regulárního výrazu"
 
 msgid ""
 "[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number]"
@@ -752,8 +765,8 @@ msgstr ""
 "    add: přidat filtr\n"
 "    del: smazat filtr\n"
 "  číslo: číslo filtru pro smazání (podívejte se na list pro nalezení)\n"
-" buffer: buffer kde je filtr aktivní: může to být jméno (kategorie.jméno) nebo "
-"\"*\" pro všechny buffery\n"
+" buffer: buffer kde je filtr aktivní: může to být jméno (kategorie.jméno) "
+"nebo \"*\" pro všechny buffery\n"
 "   tagy: čárkami rozdělený seznam tagů, například: \"irc_join,irc_part,"
 "irc_quit\"\n"
 "  regex: regulární výraz hledaný v řádku (použíjte \\t pro oddělení prefixu "
@@ -908,11 +921,11 @@ msgid ""
 "According to option, it's reset (for standard options) or removed (for "
 "optional settings, like server values)."
 msgstr ""
-"volba: jméno volby (může být začátek nebo konec s \"*\" pro hromadný "
-"reset voleb, používejte obezřetně!).\n"
+"volba: jméno volby (může být začátek nebo konec s \"*\" pro hromadný reset "
+"voleb, používejte obezřetně!).\n"
 "\n"
-"Podle volby je volba resetována (pro standardní volby) nebo odebrána "
-"(pro nepovinné volby jako hodnoty serveru)."
+"Podle volby je volba resetována (pro standardní volby) nebo odebrána (pro "
+"nepovinné volby jako hodnoty serveru)."
 
 msgid "upgrade WeeChat without disconnecting from servers"
 msgstr "aktualizovat WeeChat bez odpojení od serveru"
@@ -1457,22 +1470,22 @@ msgstr "upozornit uživatele pokud nastane částečné doplnění"
 msgid ""
 "partially complete nicks (stop when many nicks found begin with same letters)"
 msgstr ""
-"částečně doplňovat přezdívky (zastavit pokud je nalezeno více přezdívek začínajících "
-"stejnými písmenemy)"
+"částečně doplňovat přezdívky (zastavit pokud je nalezeno více přezdívek "
+"začínajících stejnými písmenemy)"
 
 msgid ""
 "partially complete command names (stop when many commands found begin with "
 "same letters)"
 msgstr ""
-"částečně doplňovat jména příkazů (zastavit pokud je nalezeno více příkazů začínajících "
-"stejnými písmeny)"
+"částečně doplňovat jména příkazů (zastavit pokud je nalezeno více příkazů "
+"začínajících stejnými písmeny)"
 
 msgid ""
 "partially complete command arguments (stop when many arguments found begin "
 "with same prefix)"
 msgstr ""
-"částečně doplňovat argumenty příkazů (zastavit pokud je nalezeno více argumentů "
-"začínající stejným prefixem)"
+"částečně doplňovat argumenty příkazů (zastavit pokud je nalezeno více "
+"argumentů začínající stejným prefixem)"
 
 msgid "display count for each partial completion in bar item"
 msgstr "zobrazit počet každého částečného doplnění v položce pole"
@@ -1528,15 +1541,15 @@ msgid ""
 "enable debug messages by default in all plugins (option disabled by default, "
 "which is highly recommended)"
 msgstr ""
-"povolit ladící zprávy defaultně ve všech pluginech (volba je defaultně vypnuta, "
-"což je velice doporučeno)"
+"povolit ladící zprávy defaultně ve všech pluginech (volba je defaultně "
+"vypnuta, což je velice doporučeno)"
 
 msgid ""
 "standard plugins extension in filename (for example \".so\" under Linux or "
 "\".dll\" under Microsoft Windows)"
 msgstr ""
-"standardní přípona souboru pluginů (například \".so\" pod Linuxem nebo \".dll\" "
-"pod Microsoft Windows)"
+"standardní přípona souboru pluginů (například \".so\" pod Linuxem nebo \".dll"
+"\" pod Microsoft Windows)"
 
 msgid ""
 "path for searching plugins ('%h' will be replaced by WeeChat home, ~/."
@@ -1670,39 +1683,24 @@ msgstr ""
 "s jiným domovským adresářem pomocí \"--dir\" volby příkazové řádky.\n"
 
 #, c-format
-msgid ""
-"Last operation with session file was at position %ld, read of %d bytes\n"
-msgstr "Poslední operace se souborem sezení bzla na pozici %ld, čtu %d bytů\n"
-
-#, c-format
-msgid ""
-"Please send %s/%s, %s/%s and above messages to WeeChat developers for "
-"support.\n"
-"Be careful, private info may be in these files.\n"
+msgid "%sError upgrading WeeChat:"
 msgstr ""
-"Prosím pošlete %s/%s, %s/%s a zprávu nahoře vývojářům WeeChat pro podporu.\n"
-"Opatrně v souborech můžou být soukromé informace.\n"
+
+#, fuzzy, c-format
+msgid "%s    error: %s"
+msgstr "%sServer: %s%s\n"
 
 #, c-format
-msgid "wrong type in file (expected: %d, read: %d)"
-msgstr "špatný typ v souboru (očekáván: %d, přečten: %d)"
+msgid "%s    last read: position: %ld, length: %d"
+msgstr ""
 
-msgid "invalid length for a buffer"
-msgstr "nevalidní délka pro buffer"
-
-msgid "object read error"
-msgstr "chyba při čtení objektu"
+#, fuzzy, c-format
+msgid "%s    source: %s, line: %d"
+msgstr "    napsal \"%s\", licence: %s"
 
 #, c-format
-msgid "wrong object (expected: %d, read: %d)"
-msgstr "špatný objekt (očekáván: %d, přečten: %d)"
-
-msgid "type read error"
-msgstr "chyba při čtení typu"
-
-#, c-format
-msgid "wrong type (expected: %d, read: %d)"
-msgstr "špatný typ (očekáván: %d, přečten: %d)"
+msgid "%s*** Please report above info to developers ***"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Error: cannot create directory \"%s\"\n"
@@ -1766,15 +1764,15 @@ msgid ""
 "bar filling direction (\"horizontal\" (from left to right) or \"vertical"
 "\" (from top to bottom)) when bar position is top or bottom"
 msgstr ""
-"směr plnění pole (\"horizontal\" (z leva do prava) nebo \"vertical\" "
-"(z hora dolů)) když je pozice pole nahoře nebo dole"
+"směr plnění pole (\"horizontal\" (z leva do prava) nebo \"vertical\" (z hora "
+"dolů)) když je pozice pole nahoře nebo dole"
 
 msgid ""
 "bar filling direction (\"horizontal\" (from left to right) or \"vertical"
 "\" (from top to bottom)) when bar position is left or right"
 msgstr ""
-"směr plnění pole (\"horizontal\" (z leva do prava) nebo \"vertical\" "
-"(z hora dolů)) když je pozice pole vlevo nebo vpravo"
+"směr plnění pole (\"horizontal\" (z leva do prava) nebo \"vertical\" (z hora "
+"dolů)) když je pozice pole vlevo nebo vpravo"
 
 msgid "bar size in chars (0 = auto size)"
 msgstr "velikost pole ve znacích (0 = automatická velikost)"
@@ -2001,7 +1999,8 @@ msgstr "%sdemo zpráva s chybovým prefixem"
 
 #, c-format
 msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
-msgstr "barvy: %s buffer %s přezdívka1 %s přezdívka2 %s přezdívka3 %s přezdívka4"
+msgstr ""
+"barvy: %s buffer %s přezdívka1 %s přezdívka2 %s přezdívka3 %s přezdívka4"
 
 #, fuzzy, c-format
 msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
@@ -4043,7 +4042,8 @@ msgstr ""
 "    reset: resetovat úroveň notifikace do výchozí hodnoty\n"
 "     none: buffer nikdy nebude v hotlistu\n"
 "highlight: buffer bude v hotlistu pouze při zvýraznění\n"
-"  message: buffer bude v hotlistu pouze při zvýraznění a uživatelských zprávách\n"
+"  message: buffer bude v hotlistu pouze při zvýraznění a uživatelských "
+"zprávách\n"
 "      all: buffer bude v hotlistu pro jakýkoliv vytištěný text"
 
 #, fuzzy, c-format
@@ -4511,19 +4511,21 @@ msgstr "vyčisti hotlist"
 msgid ""
 "%3d. %s (%s), file: \"%s\" (local: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
 msgstr ""
-"%3d. %s (%s), soubor: \"%s\" (lokální: \"%s\"), %s %s, status: %s%s%s (%lu %%)"
+"%3d. %s (%s), soubor: \"%s\" (lokální: \"%s\"), %s %s, status: %s%s%s (%lu %"
+"%)"
 
 #, c-format
 msgid "%3d. %s, chat with %s (local nick: %s), started on %s, status: %s%s"
-msgstr "%3d. %s, komunikace s %s (lokální přezdívka: %s), začalo %s, status: %s%s"
+msgstr ""
+"%3d. %s, komunikace s %s (lokální přezdívka: %s), začalo %s, status: %s%s"
 
 #, c-format
 msgid ""
 "     plugin: %s (id: %s), file: %lu bytes (position: %lu), address: %d.%d.%d."
 "%d (port %d)"
 msgstr ""
-"     plugin: %s (id: %s), soubor: %lu bytů (pozice: %lu), adresa: %d.%d.%d.%d"
-" (port %d)"
+"     plugin: %s (id: %s), soubor: %lu bytů (pozice: %lu), adresa: %d.%d.%d.%"
+"d (port %d)"
 
 #, c-format
 msgid "     fast_send: %s, blocksize: %d, started on %s"
@@ -4545,7 +4547,8 @@ msgid "Open buffer with xfer list"
 msgstr "Otevřené buffery s xfer seznamem"
 
 msgid "auto open xfer buffer when a new xfer is added to list"
-msgstr "automaticky otevřít xfer buffer, když je přidána nová položka do xfer seznamu"
+msgstr ""
+"automaticky otevřít xfer buffer, když je přidána nová položka do xfer seznamu"
 
 msgid "size of progress bar, in chars (if 0, progress bar is disabled)"
 msgstr "velikost ukazatele průběhu ve znacích (0 pro vypnutí ukazatele)"
@@ -4618,7 +4621,8 @@ msgstr ""
 msgid ""
 "speed limit for sending files, in kilo-bytes by second (0 means no limit)"
 msgstr ""
-"rychlostní limit pro posílání souboru, v kilobytech za sekundu (0 znamená žádný limit)"
+"rychlostní limit pro posílání souboru, v kilobytech za sekundu (0 znamená "
+"žádný limit)"
 
 #, fuzzy
 msgid "path for writing incoming files"
@@ -4631,7 +4635,9 @@ msgstr ""
 "cesta)"
 
 msgid "use remote nick as prefix in local filename when receiving a file"
-msgstr "použít vzdálenou přezdívku jako prefix lokálního souboru při přijímání souboru"
+msgstr ""
+"použít vzdálenou přezdívku jako prefix lokálního souboru při přijímání "
+"souboru"
 
 msgid "convert spaces to underscores when sending files"
 msgstr "konvertovat mezery na podtržítka při odesílání souborů"
@@ -4696,3 +4702,47 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "write of infolist type 'integer'"
+#~ msgstr "  . typ: celočíselný\n"
+
+#, fuzzy
+#~ msgid "unable to create infolist"
+#~ msgstr "%s DCC: nemohu vytvořit rouru\n"
+
+#, fuzzy
+#~ msgid "unable to create infolist item"
+#~ msgstr "%s DCC: nemohu vytvořit rouru\n"
+
+#~ msgid ""
+#~ "Last operation with session file was at position %ld, read of %d bytes\n"
+#~ msgstr ""
+#~ "Poslední operace se souborem sezení bzla na pozici %ld, čtu %d bytů\n"
+
+#~ msgid ""
+#~ "Please send %s/%s, %s/%s and above messages to WeeChat developers for "
+#~ "support.\n"
+#~ "Be careful, private info may be in these files.\n"
+#~ msgstr ""
+#~ "Prosím pošlete %s/%s, %s/%s a zprávu nahoře vývojářům WeeChat pro "
+#~ "podporu.\n"
+#~ "Opatrně v souborech můžou být soukromé informace.\n"
+
+#~ msgid "wrong type in file (expected: %d, read: %d)"
+#~ msgstr "špatný typ v souboru (očekáván: %d, přečten: %d)"
+
+#~ msgid "invalid length for a buffer"
+#~ msgstr "nevalidní délka pro buffer"
+
+#~ msgid "object read error"
+#~ msgstr "chyba při čtení objektu"
+
+#~ msgid "wrong object (expected: %d, read: %d)"
+#~ msgstr "špatný objekt (očekáván: %d, přečten: %d)"
+
+#~ msgid "type read error"
+#~ msgstr "chyba při čtení typu"
+
+#~ msgid "wrong type (expected: %d, read: %d)"
+#~ msgstr "špatný typ (očekáván: %d, přečten: %d)"

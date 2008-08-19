@@ -14,9 +14,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SET(LIB_PLUGINS_SRC weechat-plugin.h plugin.c plugin.h plugin-api.c
-plugin-api.h plugin-config.h plugin-config.c plugin-infolist.c
-plugin-infolist.h)
+SET(LIB_PLUGINS_SRC
+weechat-plugin.h
+plugin.c plugin.h
+plugin-api.c plugin-api.h
+plugin-config.h plugin-config.c)
 
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
 ADD_LIBRARY(weechat_plugins STATIC ${LIB_PLUGINS_SRC})

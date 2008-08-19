@@ -34,6 +34,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-hook.h"
+#include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
@@ -607,6 +608,78 @@ gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
     /* count current group */
     if (buffer->nicklist_display_groups && group->visible)
         buffer->nicklist_visible_count++;
+}
+
+/*
+ * gui_nicklist_add_to_infolist: add a nicklist in an infolist
+ *                               return 1 if ok, 0 if error
+ */
+
+int
+gui_nicklist_add_to_infolist (struct t_infolist *infolist,
+                              struct t_gui_buffer *buffer)
+{
+    struct t_infolist_item *ptr_item;
+    struct t_gui_nick_group *ptr_group;
+    struct t_gui_nick *ptr_nick;
+    char prefix[2];
+    
+    if (!infolist || !buffer)
+        return 0;
+    
+    ptr_group = NULL;
+    ptr_nick = NULL;
+    gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    while (ptr_group || ptr_nick)
+    {
+        ptr_item = infolist_new_item (infolist);
+        if (!ptr_item)
+            return 0;
+        
+        if (ptr_nick)
+        {
+            if (!infolist_new_var_string (ptr_item, "type", "nick"))
+                return 0;
+            if (ptr_nick->group)
+            {
+                if (!infolist_new_var_string (ptr_item, "group_name", ptr_nick->group->name))
+                    return 0;
+            }
+            if (!infolist_new_var_string (ptr_item, "name", ptr_nick->name))
+                return 0;
+            if (!infolist_new_var_string (ptr_item, "color", ptr_nick->color))
+                return 0;
+            prefix[0] = ptr_nick->prefix;
+            prefix[1] = '\0';
+            if (!infolist_new_var_string (ptr_item, "prefix", prefix))
+                return 0;
+            if (!infolist_new_var_string (ptr_item, "prefix_color", ptr_nick->prefix_color))
+                return 0;
+            if (!infolist_new_var_integer (ptr_item, "visible", ptr_nick->visible))
+                return 0;
+        }
+        else
+        {
+            if (!infolist_new_var_string (ptr_item, "type", "group"))
+                return 0;
+            if (ptr_group->parent)
+            {
+                if (!infolist_new_var_string (ptr_item, "parent_name", ptr_group->parent->name))
+                    return 0;
+            }
+            if (!infolist_new_var_string (ptr_item, "name", ptr_group->name))
+                return 0;
+            if (!infolist_new_var_string (ptr_item, "color", ptr_group->color))
+                return 0;
+            if (!infolist_new_var_integer (ptr_item, "visible", ptr_group->visible))
+                return 0;
+            if (!infolist_new_var_integer (ptr_item, "level", ptr_group->level))
+                return 0;
+        }
+        gui_nicklist_get_next_item (buffer, &ptr_group, &ptr_nick);
+    }
+    
+    return 1;
 }
 
 /*

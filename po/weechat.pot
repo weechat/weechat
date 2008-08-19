@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-07-10 17:35+0200\n"
+"POT-Creation-Date: 2008-08-13 16:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -493,6 +493,17 @@ msgstr ""
 
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
+msgstr ""
+
+msgid "Upgrading WeeChat..."
+msgstr ""
+
+#, c-format
+msgid "%sError: unable to save session in file"
+msgstr ""
+
+#, c-format
+msgid "Error: exec failed (program: \"%s\"), exiting WeeChat"
 msgstr ""
 
 #, c-format
@@ -1350,36 +1361,23 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid ""
-"Last operation with session file was at position %ld, read of %d bytes\n"
+msgid "%sError upgrading WeeChat:"
 msgstr ""
 
 #, c-format
-msgid ""
-"Please send %s/%s, %s/%s and above messages to WeeChat developers for "
-"support.\n"
-"Be careful, private info may be in these files.\n"
+msgid "%s    error: %s"
 msgstr ""
 
 #, c-format
-msgid "wrong type in file (expected: %d, read: %d)"
-msgstr ""
-
-msgid "invalid length for a buffer"
-msgstr ""
-
-msgid "object read error"
+msgid "%s    last read: position: %ld, length: %d"
 msgstr ""
 
 #, c-format
-msgid "wrong object (expected: %d, read: %d)"
-msgstr ""
-
-msgid "type read error"
+msgid "%s    source: %s, line: %d"
 msgstr ""
 
 #, c-format
-msgid "wrong type (expected: %d, read: %d)"
+msgid "%s*** Please report above info to developers ***"
 msgstr ""
 
 #, c-format

@@ -58,6 +58,7 @@
 #include "wee-log.h"
 #include "wee-network.h"
 #include "wee-string.h"
+#include "wee-upgrade.h"
 #include "wee-utf8.h"
 #include "wee-util.h"
 #include "../gui/gui-chat.h"
@@ -68,7 +69,7 @@
 
 
 char *weechat_argv0 = NULL;            /* WeeChat binary file name (argv[0])*/
-char *weechat_session = NULL;          /* session file (/upgrade)           */
+int weechat_upgrading;                 /* =1 if WeeChat is upgrading        */
 time_t weechat_start_time;             /* start time (used by /uptime cmd)  */
 int weechat_quit;                      /* = 1 if quit request from user     */
 int weechat_sigsegv = 0;               /* SIGSEGV received?                 */
@@ -151,7 +152,7 @@ weechat_parse_args (int argc, char *argv[])
     int i;
     
     weechat_argv0 = strdup (argv[0]);
-    weechat_session = NULL;
+    weechat_upgrading = 0;
     weechat_home = NULL;
     weechat_server_cmd_line = 0;
     weechat_auto_load_plugins = 1;
@@ -195,18 +196,9 @@ weechat_parse_args (int argc, char *argv[])
         {
             weechat_auto_load_plugins = 0;
         }
-        else if (strcmp (argv[i], "--session") == 0)
+        else if (strcmp (argv[i], "--upgrade") == 0)
         {
-            if (i + 1 < argc)
-                weechat_session = strdup (argv[++i]);
-            else
-            {
-                string_iconv_fprintf (stderr,
-                                      _("Error: missing argument for \"%s\" "
-                                        "option\n"),
-                                      "--session");
-                weechat_shutdown (EXIT_FAILURE, 0);
-            }
+            weechat_upgrading = 1;
         }
         else if ((strcmp (argv[i], "-v") == 0)
                  || (strcmp (argv[i], "--version") == 0))
@@ -383,7 +375,7 @@ main (int argc, char *argv[])
     util_catch_signal (SIGQUIT, SIG_IGN); /* ignore SIGQUIT signal          */
     util_catch_signal (SIGPIPE, SIG_IGN); /* ignore SIGPIPE signal          */
     util_catch_signal (SIGSEGV,
-                       &debug_sigsegv); /* crash dump for SIGSEGV signal  */
+                       &debug_sigsegv); /* crash dump for SIGSEGV signal    */
     hook_init ();                       /* initialize hooks                 */
     debug_init ();                      /* hook signals for debug           */ 
     gui_main_pre_init (&argc, &argv);   /* pre-initiliaze interface         */
@@ -398,11 +390,11 @@ main (int argc, char *argv[])
     if (config_weechat_read () < 0)     /* read WeeChat configuration       */
         exit (EXIT_FAILURE);
     gui_main_init ();                   /* init WeeChat interface           */
-    //if (weechat_session)
-        //session_load (weechat_session); /* load previous session if asked   */
+    if (weechat_upgrading)
+        upgrade_weechat_load ();        /* upgrade with session file        */
     weechat_welcome_message ();         /* display WeeChat welcome message  */
     command_startup (0);                /* command executed before plugins  */
-    plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)    */
+    plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */
                  argc, argv); 
     command_startup (1);                /* command executed after plugins   */
     

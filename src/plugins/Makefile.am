@@ -24,9 +24,7 @@ lib_weechat_plugins_a_SOURCES = weechat-plugin.h \
                                 plugin-api.c \
                                 plugin-api.h \
                                 plugin-config.c \
-                                plugin-config.h \
-                                plugin-infolist.c \
-                                plugin-infolist.h
+                                plugin-config.h
 
 if PLUGIN_ALIAS
 alias_dir = alias

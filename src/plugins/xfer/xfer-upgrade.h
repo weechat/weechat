@@ -17,16 +17,19 @@
  */
 
 
-#ifndef __WEECHAT_XFER_DISPLAY_H
-#define __WEECHAT_XFER_DISPLAY_H 1
+#ifndef __WEECHAT_XFER_UPGRADE_H
+#define __WEECHAT_XFER_UPGRADE_H 1
 
-extern struct t_gui_buffer *xfer_buffer;
-extern int xfer_buffer_selected_line;
+#define XFER_UPGRADE_FILENAME "xfer"
 
-extern void xfer_buffer_refresh (const char *hotlist);
-extern int xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
-                                 const char *input_data);
-extern int xfer_buffer_close_cb (void *data, struct t_gui_buffer *buffer);
-extern void xfer_buffer_open ();
+/* For developers: please add new values ONLY AT THE END of enums */
 
-#endif /* xfer-buffer.h */
+enum t_xfer_upgrade_type
+{
+    XFER_UPGRADE_TYPE_XFER = 0,
+};
+
+extern int xfer_upgrade_save ();
+extern int xfer_upgrade_load ();
+
+#endif /* xfer-upgrade.h */

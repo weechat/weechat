@@ -203,11 +203,12 @@ demo_buffer_set_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
  */
 
 void
-demo_infolist_print (struct t_plugin_infolist *infolist, const char *item_name)
+demo_infolist_print (struct t_infolist *infolist, const char *item_name)
 {
     char *fields, **argv;
-    int i, j, argc;
-    time_t date;
+    void *pointer;
+    int i, j, argc, size;
+    time_t time;
     
     i = 1;
     while (weechat_infolist_next (infolist))
@@ -241,11 +242,20 @@ demo_infolist_print (struct t_plugin_infolist *infolist, const char *item_name)
                                             weechat_infolist_pointer (infolist,
                                                                       argv[j] + 2));
                             break;
+                        case 'b':
+                            pointer = weechat_infolist_buffer (infolist,
+                                                               argv[j] + 2,
+                                                               &size);
+                            weechat_printf (NULL, "  %s: %X (size: %d)",
+                                            argv[j] + 2,
+                                            pointer,
+                                            size);
+                            break;
                         case 't':
-                            date = weechat_infolist_time (infolist, argv[j] + 2);
+                            time = weechat_infolist_time (infolist, argv[j] + 2);
                             weechat_printf (NULL, "  %s: (%ld) %s",
                                             argv[j] + 2,
-                                            date, ctime (&date));
+                                            time, ctime (&time));
                             break;
                     }
                 }
@@ -265,7 +275,7 @@ int
 demo_infolist_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                           char **argv, char **argv_eol)
 {
-    struct t_plugin_infolist *infolist;
+    struct t_infolist *infolist;
     
     /* make C compiler happy */
     (void) data;

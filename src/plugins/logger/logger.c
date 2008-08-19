@@ -69,6 +69,8 @@ char *logger_option_time_format = NULL;
 int logger_option_info_lines = 0;
 int logger_option_backlog = 0;
 
+char *logger_buf_write = NULL;         /* buffer for writing a line         */
+
 
 /*
  * logger_config_read: read config options for logger plugin
@@ -233,7 +235,7 @@ logger_create_directory ()
 char *
 logger_get_filename (struct t_gui_buffer *buffer)
 {
-    struct t_plugin_infolist *ptr_infolist;
+    struct t_infolist *ptr_infolist;
     char *res;
     char *dir_separator, *weechat_dir, *log_path, *log_path2;
     char *plugin_name, *plugin_name2, *category, *category2, *name, *name2;
@@ -326,10 +328,15 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
                    const char *format, ...)
 {
     va_list argptr;
-    char *buf, *charset, *message;
+    char *charset, *message;
     time_t seconds;
     struct tm *date_tmp;
     char buf_time[256];
+
+    if (!logger_buf_write)
+        logger_buf_write = malloc (LOGGER_BUF_WRITE_SIZE);
+    if (!logger_buf_write)
+        return;
     
     if (logger_buffer->log_filename)
     {
@@ -347,7 +354,6 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
                                 logger_buffer->log_filename);
                 free (logger_buffer->log_filename);
                 logger_buffer->log_filename = NULL;
-                free (buf);
                 return;
             }
             
@@ -359,36 +365,30 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
                 if (date_tmp)
                     strftime (buf_time, sizeof (buf_time) - 1,
                               logger_option_time_format, date_tmp);
-                snprintf (buf, sizeof (buf) - 1,
+                snprintf (logger_buf_write, LOGGER_BUF_WRITE_SIZE,
                           _("%s\t****  Beginning of log  ****"),
                           buf_time);
                 message = (charset) ?
-                    weechat_iconv_from_internal (charset, buf) : NULL;
+                    weechat_iconv_from_internal (charset, logger_buf_write) : NULL;
                 fprintf (logger_buffer->log_file,
-                         "%s\n", (message) ? message : buf);
+                         "%s\n", (message) ? message : logger_buf_write);
                 if (message)
                     free (message);
             }
         }
 
-        buf = malloc (128 * 1024);
-        if (buf)
-        {
-            va_start (argptr, format);
-            vsnprintf (buf, 128 * 1024, format, argptr);
-            va_end (argptr);
-            
-            message = (charset) ?
-                weechat_iconv_from_internal (charset, buf) : NULL;
-            
-            fprintf (logger_buffer->log_file,
-                     "%s\n", (message) ? message : buf);
-            fflush (logger_buffer->log_file);
-            if (message)
-                free (message);
-            
-            free (buf);
-        }
+        va_start (argptr, format);
+        vsnprintf (logger_buf_write, LOGGER_BUF_WRITE_SIZE, format, argptr);
+        va_end (argptr);
+        
+        message = (charset) ?
+            weechat_iconv_from_internal (charset, logger_buf_write) : NULL;
+        
+        fprintf (logger_buffer->log_file,
+                 "%s\n", (message) ? message : logger_buf_write);
+        fflush (logger_buffer->log_file);
+        if (message)
+            free (message);
     }
 }
 
@@ -434,7 +434,7 @@ logger_start_buffer (struct t_gui_buffer *buffer)
 void
 logger_start_buffer_all ()
 {
-    struct t_plugin_infolist *ptr_infolist;
+    struct t_infolist *ptr_infolist;
     
     ptr_infolist = weechat_infolist_get ("buffer", NULL, NULL);
     if (ptr_infolist)
@@ -766,6 +766,9 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         free (logger_option_path);
     if (logger_option_time_format)
         free (logger_option_time_format);
+    
+    if (logger_buf_write)
+        free (logger_buf_write);
     
     return WEECHAT_RC_OK;
 }

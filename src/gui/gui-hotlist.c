@@ -29,6 +29,7 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
+#include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
 #include "../core/wee-util.h"
 #include "../plugins/plugin.h"
@@ -375,6 +376,34 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
     pos_hotlist = gui_hotlist_search (gui_hotlist, buffer);
     if (pos_hotlist)
         gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, pos_hotlist);
+}
+
+/*
+ * gui_hotlist_add_to_infolist: add a hotlist in an infolist
+ *                              return 1 if ok, 0 if error
+ */
+
+int
+gui_hotlist_add_to_infolist (struct t_infolist *infolist,
+                             struct t_gui_hotlist *hotlist)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !hotlist)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!infolist_new_var_integer (ptr_item, "priority", hotlist->priority))
+        return 0;
+    if (!infolist_new_var_buffer (ptr_item, "creation_time", &(hotlist->creation_time), sizeof (struct timeval)))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "buffer_number", hotlist->buffer->number))
+        return 0;
+    
+    return 1;
 }
 
 /*

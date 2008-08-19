@@ -556,6 +556,36 @@ irc_nick_as_prefix (struct t_irc_nick *nick, const char *nickname,
 }
 
 /*
+ * irc_nick_add_to_infolist: add a nick in an infolist
+ *                           return 1 if ok, 0 if error
+ */
+
+int
+irc_nick_add_to_infolist (struct t_infolist *infolist,
+                          struct t_irc_nick *nick)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !nick)
+        return 0;
+    
+    ptr_item = weechat_infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!weechat_infolist_new_var_string (ptr_item, "name", nick->name))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "host", nick->host))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "flags", nick->flags))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "color", nick->color))
+        return 0;
+    
+    return 1;
+}
+
+/*
  * irc_nick_print_log: print nick infos in log (usually for crash dump)
  */
 

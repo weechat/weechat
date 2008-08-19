@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_GUI_BUFFER_H
 #define __WEECHAT_GUI_BUFFER_H 1
 
+struct t_infolist;
+
 enum t_gui_buffer_type
 {
     GUI_BUFFER_TYPE_FORMATED = 0,
@@ -68,6 +70,11 @@ struct t_gui_buffer
 {
     struct t_weechat_plugin *plugin;   /* plugin which created this buffer  */
                                        /* (NULL for a WeeChat buffer)       */
+    /* when upgrading, plugins are not loaded, so we use next variable
+       to store plugin name, then restore plugin pointer when plugin is
+       loaded */
+    char *plugin_name_for_upgrade;     /* plugin name when upgrading        */
+    
     int number;                        /* buffer number (for jump/switch)   */
     char *category;                    /* category name                     */
     char *name;                        /* buffer name                       */
@@ -172,6 +179,8 @@ extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
                                                                   struct t_gui_buffer *buffer),
                                             void *close_callback_data);
 extern int gui_buffer_valid (struct t_gui_buffer *buffer);
+extern void gui_buffer_set_plugin_for_upgrade (char *name,
+                                               struct t_weechat_plugin *plugin);
 extern int gui_buffer_get_integer (struct t_gui_buffer *buffer,
                                    const char *property);
 extern char *gui_buffer_get_string (struct t_gui_buffer *buffer,
@@ -197,7 +206,7 @@ extern void gui_buffer_set_nicklist_case_sensitive (struct t_gui_buffer * buffer
                                                     int case_sensitive);
 extern void gui_buffer_set_nick (struct t_gui_buffer *buffer, const char *new_nick);
 extern void gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
-                            const char *value);
+                            void *value);
 extern struct t_gui_buffer *gui_buffer_search_main ();
 extern struct t_gui_buffer *gui_buffer_search_by_category_name (const char *category,
                                                                 const char *name);
@@ -216,6 +225,10 @@ extern void gui_buffer_switch_next (struct t_gui_window *window);
 extern void gui_buffer_switch_by_number (struct t_gui_window *window,
                                          int number);
 extern void gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number);
+extern int gui_buffer_add_to_infolist (struct t_infolist *infolist,
+                                       struct t_gui_buffer *buffer);
+extern int gui_buffer_line_add_to_infolist (struct t_infolist *infolist,
+                                            struct t_gui_line *line);
 extern void gui_buffer_dump_hexa (struct t_gui_buffer *buffer);
 extern void gui_buffer_print_log ();
 

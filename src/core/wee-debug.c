@@ -28,6 +28,7 @@
 #include "weechat.h"
 #include "wee-backtrace.h"
 #include "wee-config-file.h"
+#include "wee-infolist.h"
 #include "wee-log.h"
 #include "wee-hook.h"
 #include "wee-string.h"
@@ -82,6 +83,8 @@ debug_dump (int crash)
     gui_bar_print_log ();
     gui_bar_item_print_log ();
     gui_hotlist_print_log ();
+    
+    infolist_print_log ();
     
     hook_print_log ();
     

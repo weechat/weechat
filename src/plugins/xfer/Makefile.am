@@ -35,7 +35,9 @@ xfer_la_SOURCES = xfer.c \
                   xfer-file.c \
                   xfer-file.h \
                   xfer-network.c \
-                  xfer-network.h
+                  xfer-network.h \
+                  xfer-upgrade.c \
+                  xfer-upgrade.h
 
 xfer_la_LDFLAGS = -module
 xfer_la_LIBADD  = $(XFER_LFLAGS)

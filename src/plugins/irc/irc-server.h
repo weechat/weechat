@@ -169,6 +169,7 @@ extern int irc_server_connect (struct t_irc_server *server,
                                int disable_autojoin);
 extern void irc_server_auto_connect (int auto_connect, int temp_server);
 extern void irc_server_autojoin_channels ();
+extern int irc_server_recv_cb (void *arg_server);
 extern int irc_server_timer_cb (void *data);
 extern void irc_server_outqueue_free_all (struct t_irc_server *server);
 extern int irc_server_get_channel_count (struct t_irc_server *server);
@@ -189,6 +190,8 @@ extern int irc_server_xfer_resume_ready_cb (void *data, const char *signal,
 extern int irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
                                                   const char *type_data,
                                                   void *signal_data);
+extern int irc_server_add_to_infolist (struct t_infolist *infolist,
+                                       struct t_irc_server *server);
 extern void irc_server_print_log ();
 
 #endif /* irc-server.h */

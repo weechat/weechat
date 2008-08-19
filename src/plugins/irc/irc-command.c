@@ -860,8 +860,8 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
     struct sockaddr_in addr;
     socklen_t length;
     unsigned long address;
-    struct t_plugin_infolist *infolist;
-    struct t_plugin_infolist_item *item;
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
     char plugin_id[128], str_address[128];
     
     IRC_GET_SERVER_CHANNEL(buffer);

@@ -35,6 +35,7 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
+#include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
@@ -98,6 +99,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     {
         /* init buffer */
         new_buffer->plugin = plugin;
+        new_buffer->plugin_name_for_upgrade = NULL;
         new_buffer->number = (last_gui_buffer) ? last_gui_buffer->number + 1 : 1;
         new_buffer->category = (category) ? strdup (category) : NULL;
         new_buffer->name = strdup (name);
@@ -208,9 +210,9 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
 }
 
 /*
- * buffer_valid: check if a buffer pointer exists
- *               return 1 if buffer exists
- *                      0 if buffer is not found
+ * gui_buffer_valid: check if a buffer pointer exists
+ *                   return 1 if buffer exists
+ *                          0 if buffer is not found
  */
 
 int
@@ -231,6 +233,30 @@ gui_buffer_valid (struct t_gui_buffer *buffer)
     
     /* buffer not found */
     return 0;
+}
+
+/*
+ * gui_buffer_set_plugin_for_upgrade: set plugin pointer for buffers with a
+ *                                    given name (used after /upgrade)
+ */
+
+void
+gui_buffer_set_plugin_for_upgrade (char *name, struct t_weechat_plugin *plugin)
+{
+    struct t_gui_buffer *ptr_buffer;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->plugin_name_for_upgrade
+            && (strcmp (ptr_buffer->plugin_name_for_upgrade, name) == 0))
+        {
+            free (ptr_buffer->plugin_name_for_upgrade);
+            ptr_buffer->plugin_name_for_upgrade = NULL;
+            
+            ptr_buffer->plugin = plugin;
+        }
+    }
 }
 
 /*
@@ -488,25 +514,28 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
 
 void
 gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
-                const char *value)
+                void *value)
 {
+    const char *value_str;
     long number;
     char *error;
-
+    
     if (!property || !value)
         return;
+    
+    value_str = (const char *)value;
     
     /* properties that does NOT need a buffer */
     if (string_strcasecmp (property, "hotlist") == 0)
     {
-        if (strcmp (value, "-") == 0)
+        if (strcmp (value_str, "-") == 0)
             gui_add_hotlist = 0;
-        else if (strcmp (value, "+") == 0)
+        else if (strcmp (value_str, "+") == 0)
             gui_add_hotlist = 1;
         else
         {
             error = NULL;
-            number = strtol (value, &error, 10);
+            number = strtol (value_str, &error, 10);
             if (error && !error[0])
                 gui_hotlist_add (buffer, number, NULL, 1);
         }
@@ -516,30 +545,46 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         return;
     
     /* properties that need a buffer */
-    if (string_strcasecmp (property, "display") == 0)
+    if (string_strcasecmp (property, "close_callback") == 0)
+    {
+        buffer->close_callback = value;
+    }
+    else if (string_strcasecmp (property, "close_callback_data") == 0)
+    {
+        buffer->close_callback_data = value;
+    }
+    else if (string_strcasecmp (property, "input_callback") == 0)
+    {
+        buffer->input_callback = value;
+    }
+    else if (string_strcasecmp (property, "input_callback_data") == 0)
+    {
+        buffer->input_callback_data = value;
+    }
+    else if (string_strcasecmp (property, "display") == 0)
     {
         gui_window_switch_to_buffer (gui_current_window, buffer);
         gui_window_redraw_buffer (buffer);
     }
     else if (string_strcasecmp (property, "category") == 0)
     {
-        gui_buffer_set_category (buffer, value);
+        gui_buffer_set_category (buffer, value_str);
     }
     else if (string_strcasecmp (property, "name") == 0)
     {
-        gui_buffer_set_name (buffer, value);
+        gui_buffer_set_name (buffer, value_str);
     }
     else if (string_strcasecmp (property, "type") == 0)
     {
-        if (string_strcasecmp (value, "formated") == 0)
+        if (string_strcasecmp (value_str, "formated") == 0)
             gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FORMATED);
-        else if (string_strcasecmp (value, "free") == 0)
+        else if (string_strcasecmp (value_str, "free") == 0)
             gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FREE);
     }
     else if (string_strcasecmp (property, "notify") == 0)
     {
         error = NULL;
-        number = strtol (value, &error, 10);
+        number = strtol (value_str, &error, 10);
         if (error && !error[0]
             && (number < GUI_BUFFER_NUM_NOTIFY))
         {
@@ -551,44 +596,44 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (string_strcasecmp (property, "title") == 0)
     {
-        gui_buffer_set_title (buffer, value);
+        gui_buffer_set_title (buffer, value_str);
     }
     else if (string_strcasecmp (property, "nicklist") == 0)
     {
         error = NULL;
-        number = strtol (value, &error, 10);
+        number = strtol (value_str, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist (buffer, number);
     }
     else if (string_strcasecmp (property, "nicklist_case_sensitive") == 0)
     {
         error = NULL;
-        number = strtol (value, &error, 10);
+        number = strtol (value_str, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist_case_sensitive (buffer, number);
     }
     else if (string_strcasecmp (property, "nicklist_display_groups") == 0)
     {
         error = NULL;
-        number = strtol (value, &error, 10);
+        number = strtol (value_str, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist_display_groups (buffer, number);
     }
     else if (string_strcasecmp (property, "nick") == 0)
     {
-        gui_buffer_set_nick (buffer, value);
+        gui_buffer_set_nick (buffer, value_str);
     }
     else if (string_strcasecmp (property, "highlight_words") == 0)
     {
-        gui_buffer_set_highlight_words (buffer, value);
+        gui_buffer_set_highlight_words (buffer, value_str);
     }
     else if (string_strcasecmp (property, "highlight_tags") == 0)
     {
-        gui_buffer_set_highlight_tags (buffer, value);
+        gui_buffer_set_highlight_tags (buffer, value_str);
     }
     else if (string_strncasecmp (property, "key_bind_", 9) == 0)
     {
-        gui_keyboard_bind (buffer, property + 9, value);
+        gui_keyboard_bind (buffer, property + 9, value_str);
     }
     else if (string_strncasecmp (property, "key_unbind_", 11) == 0)
     {
@@ -600,7 +645,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "input") == 0)
     {
         gui_input_delete_line (buffer);
-        gui_input_insert_string (buffer, value, 0);
+        gui_input_insert_string (buffer, value_str, 0);
         gui_input_text_changed_signal ();
         gui_buffer_ask_input_refresh (buffer, 1);
     }
@@ -1094,6 +1139,132 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     
     hook_signal_send ("buffer_moved",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+}
+
+/*
+ * gui_buffer_add_to_infolist: add a buffer in an infolist
+ *                             return 1 if ok, 0 if error
+ */
+
+int
+gui_buffer_add_to_infolist (struct t_infolist *infolist,
+                            struct t_gui_buffer *buffer)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !buffer)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+
+    if (!infolist_new_var_pointer (ptr_item, "pointer", buffer))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "current_buffer",
+                                   (gui_current_window->buffer == buffer) ? 1 : 0))
+        return 0;
+    if (!infolist_new_var_pointer (ptr_item, "plugin", buffer->plugin))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "plugin_name",
+                                  (buffer->plugin) ?
+                                  buffer->plugin->name : NULL))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "number", buffer->number))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "category", buffer->category))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "name", buffer->name))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "type", buffer->type))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "notify", buffer->notify))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "num_displayed", buffer->num_displayed))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "lines_hidden", buffer->lines_hidden))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "nicklist_case_sensitive", buffer->nicklist_case_sensitive))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "nicklist_display_groups", buffer->nicklist_display_groups))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "title", buffer->title))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "input", buffer->input))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "input_nick", buffer->input_nick))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "input_string", buffer->input_buffer))
+        return 0;
+    
+    return 1;
+}
+
+/*
+ * gui_buffer_line_add_to_infolist: add a buffer line in an infolist
+ *                                  return 1 if ok, 0 if error
+ */
+
+int
+gui_buffer_line_add_to_infolist (struct t_infolist *infolist,
+                                 struct t_gui_line *line)
+{
+    struct t_infolist_item *ptr_item;
+    int i, length;
+    char option_name[64], *tags;
+    
+    if (!infolist || !line)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!infolist_new_var_time (ptr_item, "date", line->date))
+        return 0;
+    if (!infolist_new_var_time (ptr_item, "date_printed", line->date))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "str_time", line->str_time))
+        return 0;
+    
+    /* write tags */
+    if (!infolist_new_var_integer (ptr_item, "tags_count", line->tags_count))
+        return 0;
+    for (i = 0; i < line->tags_count; i++)
+    {
+        snprintf (option_name, sizeof (option_name), "tag_%05d", i + 1);
+        if (!infolist_new_var_string (ptr_item, option_name,
+                                      line->tags_array[i]))
+            return 0;
+        length += strlen (line->tags_array[i]) + 1;
+    }
+    tags = malloc (length + 1);
+    if (!tags)
+        return 0;
+    tags[0] = '\0';
+    for (i = 0; i < line->tags_count; i++)
+    {
+        strcat (tags, line->tags_array[i]);
+        if (i < line->tags_count - 1)
+            strcat (tags, ",");
+    }
+    if (!infolist_new_var_string (ptr_item, "tags", tags))
+    {
+        free (tags);
+        return 0;
+    }
+    free (tags);
+    
+    if (!infolist_new_var_integer (ptr_item, "displayed", line->displayed))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "highlight", line->highlight))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "prefix", line->prefix))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "message", line->message))
+        return 0;
+    
+    return 1;
 }
 
 /*

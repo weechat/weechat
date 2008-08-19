@@ -57,6 +57,8 @@ extern void gui_hotlist_free (struct t_gui_hotlist **hotlist,
 extern void gui_hotlist_free_all (struct t_gui_hotlist **hotlist,
                                   struct t_gui_hotlist **last_hotlist);
 extern void gui_hotlist_remove_buffer (struct t_gui_buffer *buffer);
+extern int gui_hotlist_add_to_infolist (struct t_infolist *infolist,
+                                        struct t_gui_hotlist *hotlist);
 extern void gui_hotlist_print_log ();
 
 #endif /* gui-hotlist.h */

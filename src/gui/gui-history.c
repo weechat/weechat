@@ -34,7 +34,7 @@
 
 
 struct t_gui_history *history_global = NULL;
-struct t_gui_history *history_global_last = NULL;
+struct t_gui_history *last_history_global = NULL;
 struct t_gui_history *history_global_ptr = NULL;
 int num_history_global = 0;
 
@@ -115,7 +115,7 @@ gui_history_global_add (const char *string)
 	    if (history_global)
 		history_global->prev_history = new_history;
 	    else
-		history_global_last = new_history;
+		last_history_global = new_history;
 	    new_history->next_history = history_global;
 	    new_history->prev_history = NULL;
 	    history_global = new_history;
@@ -125,14 +125,14 @@ gui_history_global_add (const char *string)
 	    if ((CONFIG_INTEGER(config_history_max_commands) > 0)
 		&& (num_history_global > CONFIG_INTEGER(config_history_max_commands)))
 	    {
-		ptr_history = history_global_last->prev_history;
-                if (history_global_ptr == history_global_last)
+		ptr_history = last_history_global->prev_history;
+                if (history_global_ptr == last_history_global)
                     history_global_ptr = ptr_history;
-		history_global_last->prev_history->next_history = NULL;
-		if (history_global_last->text)
-		    free (history_global_last->text);
-		free (history_global_last);
-		history_global_last = ptr_history;
+		last_history_global->prev_history->next_history = NULL;
+		if (last_history_global->text)
+		    free (last_history_global->text);
+		free (last_history_global);
+		last_history_global = ptr_history;
 		num_history_global--;
 	    }
 	}
@@ -157,7 +157,7 @@ gui_history_global_free ()
         history_global = ptr_history;
     }
     history_global = NULL;
-    history_global_last = NULL;
+    last_history_global = NULL;
     history_global_ptr = NULL;
     num_history_global = 0;
 }

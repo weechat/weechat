@@ -37,6 +37,7 @@
 #include "xfer-config.h"
 #include "xfer-file.h"
 #include "xfer-network.h"
+#include "xfer-upgrade.h"
 
 
 WEECHAT_PLUGIN_NAME("xfer");
@@ -69,6 +70,28 @@ struct t_xfer *last_xfer = NULL;       /* last file/chat in list            */
 int xfer_count = 0;                    /* number of xfer                    */
 
 int xfer_debug = 0;
+
+int xfer_signal_upgrade_received = 0;  /* signal "upgrade" received ?       */
+
+
+/*
+ * xfer_signal_upgrade_cb: callback for "upgrade" signal
+ */
+
+int
+xfer_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
+                        void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+    
+    xfer_signal_upgrade_received = 1;
+    
+    return WEECHAT_RC_OK;
+}
 
 
 /*
@@ -296,8 +319,8 @@ xfer_port_in_use (int port)
 void
 xfer_send_signal (struct t_xfer *xfer, const char *signal)
 {
-    struct t_plugin_infolist *infolist;
-    struct t_plugin_infolist_item *item;
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
     char str_long[128];
     
     infolist = weechat_infolist_new ();
@@ -607,7 +630,7 @@ xfer_free (struct t_xfer *xfer)
 int
 xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal_data)
 {
-    struct t_plugin_infolist *infolist;
+    struct t_infolist *infolist;
     char *plugin_name, *plugin_id, *str_type, *str_protocol;
     char *remote_nick, *local_nick, *filename;
     int type, protocol;
@@ -635,7 +658,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
         return WEECHAT_RC_ERROR;
     }
     
-    infolist = (struct t_plugin_infolist *)signal_data;
+    infolist = (struct t_infolist *)signal_data;
     
     if (!weechat_infolist_next (infolist))
     {
@@ -959,7 +982,7 @@ int
 xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
                       void *signal_data)
 {
-    struct t_plugin_infolist *infolist;
+    struct t_infolist *infolist;
     struct t_xfer *ptr_xfer;
     char *plugin_name, *plugin_id, *filename, *str_start_resume;
     int port;
@@ -978,7 +1001,7 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
         return WEECHAT_RC_ERROR;
     }
     
-    infolist = (struct t_plugin_infolist *)signal_data;
+    infolist = (struct t_infolist *)signal_data;
     
     if (!weechat_infolist_next (infolist))
     {
@@ -1036,7 +1059,7 @@ int
 xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
                        void *signal_data)
 {
-    struct t_plugin_infolist *infolist;
+    struct t_infolist *infolist;
     struct t_xfer *ptr_xfer;
     char *plugin_name, *plugin_id, *filename, *str_start_resume;
     int port;
@@ -1055,7 +1078,7 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
         return WEECHAT_RC_ERROR;
     }
     
-    infolist = (struct t_plugin_infolist *)signal_data;
+    infolist = (struct t_infolist *)signal_data;
     
     if (!weechat_infolist_next (infolist))
     {
@@ -1237,25 +1260,30 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     /* make C compiler happy */
     (void) plugin;
     
-    for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
+    xfer_config_write ();
+    
+    if (xfer_signal_upgrade_received)
+        xfer_upgrade_save ();
+    else
     {
-        if (ptr_xfer->sock >= 0)
+        for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
         {
-            if (ptr_xfer->status == XFER_STATUS_ACTIVE)
+            if (ptr_xfer->sock >= 0)
             {
-                weechat_printf (NULL,
-                                _("%s%s: aborting active xfer: \"%s\" from %s"),
-                                weechat_prefix ("error"), "xfer",
-                                ptr_xfer->filename, ptr_xfer->remote_nick);
-                weechat_log_printf (_("%s%s: aborting active xfer: \"%s\" from %s"),
-                                    "", "xfer",
+                if (ptr_xfer->status == XFER_STATUS_ACTIVE)
+                {
+                    weechat_printf (NULL,
+                                    _("%s%s: aborting active xfer: \"%s\" from %s"),
+                                    weechat_prefix ("error"), "xfer",
                                     ptr_xfer->filename, ptr_xfer->remote_nick);
+                    weechat_log_printf (_("%s%s: aborting active xfer: \"%s\" from %s"),
+                                        "", "xfer",
+                                        ptr_xfer->filename, ptr_xfer->remote_nick);
+                }
+                xfer_close (ptr_xfer, XFER_STATUS_FAILED);
             }
-            xfer_close (ptr_xfer, XFER_STATUS_FAILED);
         }
     }
-    
-    xfer_config_write ();
     
     return WEECHAT_RC_OK;
 }

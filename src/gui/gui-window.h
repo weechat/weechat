@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_GUI_WINDOW_H
 #define __WEECHAT_GUI_WINDOW_H 1
 
+struct t_infolist;
+
 extern int gui_init_ok;
 extern int gui_ok;
 extern int gui_window_refresh_needed;
@@ -135,6 +137,8 @@ extern void gui_window_search_start (struct t_gui_window *window);
 extern void gui_window_search_restart (struct t_gui_window *window);
 extern void gui_window_search_stop (struct t_gui_window *window);
 extern int gui_window_search_text (struct t_gui_window *window);
+extern int gui_window_add_to_infolist (struct t_infolist *infolist,
+                                       struct t_gui_window *window);
 extern void gui_window_print_log ();
 
 /* window functions (GUI dependent) */

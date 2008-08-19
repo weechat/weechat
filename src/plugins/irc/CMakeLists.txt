@@ -28,7 +28,8 @@ irc-input.c irc-input.h
 irc-mode.c irc-mode.h
 irc-nick.c irc-nick.h
 irc-protocol.c irc-protocol.h
-irc-server.c irc-server.h)
+irc-server.c irc-server.h
+irc-upgrade.c irc-upgrade.h)
 SET_TARGET_PROPERTIES(irc PROPERTIES PREFIX "")
 
 CHECK_INCLUDE_FILES("regex.h" HAVE_REGEX_H)

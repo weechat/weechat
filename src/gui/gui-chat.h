@@ -77,6 +77,11 @@ extern int gui_chat_line_match_tags (struct t_gui_line *line, int tags_count,
 extern void gui_chat_line_free (struct t_gui_buffer *buffer,
                                 struct t_gui_line *line);
 extern void gui_chat_line_free_all (struct t_gui_buffer *buffer);
+extern void gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
+                               time_t date_printed, const char *tags,
+                               const char *prefix, const char *message);
+extern void gui_chat_line_add_y (struct t_gui_buffer *buffer, int y,
+                                 const char *message);
 extern void gui_chat_printf_date_tags (struct t_gui_buffer *buffer,
                                        time_t date, const char *tags,
                                        const char *message, ...);

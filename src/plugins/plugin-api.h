@@ -50,20 +50,23 @@ extern void plugin_api_command (struct t_weechat_plugin *plugin,
 extern char *plugin_api_info_get (struct t_weechat_plugin *plugin, const char *info);
 
 /* infolists */
-extern struct t_plugin_infolist *plugin_api_infolist_get (const char *name,
-                                                          void *pointer,
-                                                          const char *arguments);
-extern int plugin_api_infolist_next (struct t_plugin_infolist *infolist);
-extern int plugin_api_infolist_prev (struct t_plugin_infolist *infolist);
-extern char *plugin_api_infolist_fields (struct t_plugin_infolist *infolist);
-extern int plugin_api_infolist_integer (struct t_plugin_infolist *infolist,
+extern struct t_infolist *plugin_api_infolist_get (const char *name,
+                                                   void *pointer,
+                                                   const char *arguments);
+extern int plugin_api_infolist_next (struct t_infolist *infolist);
+extern int plugin_api_infolist_prev (struct t_infolist *infolist);
+extern void plugin_api_infolist_reset_item_cursor (struct t_infolist *infolist);
+extern char *plugin_api_infolist_fields (struct t_infolist *infolist);
+extern int plugin_api_infolist_integer (struct t_infolist *infolist,
                                         const char *var);
-extern char *plugin_api_infolist_string (struct t_plugin_infolist *infolist,
+extern char *plugin_api_infolist_string (struct t_infolist *infolist,
                                          const char *var);
-extern void *plugin_api_infolist_pointer (struct t_plugin_infolist *infolist,
+extern void *plugin_api_infolist_pointer (struct t_infolist *infolist,
                                           const char *var);
-extern time_t plugin_api_infolist_time (struct t_plugin_infolist *infolist,
+extern void *plugin_api_infolist_buffer (struct t_infolist *infolist,
+                                         const char *var, int *size);
+extern time_t plugin_api_infolist_time (struct t_infolist *infolist,
                                         const char *var);
-extern void plugin_api_infolist_free (struct t_plugin_infolist *infolist);
+extern void plugin_api_infolist_free (struct t_infolist *infolist);
 
 #endif /* plugin-api.h */

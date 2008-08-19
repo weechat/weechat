@@ -53,16 +53,23 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
                         weechat_prefix ("error"), "irc");
         return NULL;
     }
-
-    /* create buffer for channel */
-    new_buffer = weechat_buffer_new (server->name, channel_name,
-                                     &irc_input_data_cb, NULL,
-                                     &irc_buffer_close_cb, NULL);
-    if (!new_buffer)
+    
+    /* create buffer for channel (or use existing one) */
+    new_buffer = weechat_buffer_search (server->name, channel_name);
+    if (new_buffer)
+        weechat_nicklist_remove_all (new_buffer);
+    else
     {
-        free (new_channel);
-        return NULL;
+        new_buffer = weechat_buffer_new (server->name, channel_name,
+                                         &irc_input_data_cb, NULL,
+                                         &irc_buffer_close_cb, NULL);
+        if (!new_buffer)
+        {
+            free (new_channel);
+            return NULL;
+        }
     }
+    
     if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
     {
         weechat_buffer_set (new_buffer, "nick", server->nick);
@@ -122,6 +129,20 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     
     /* all is ok, return address of new channel */
     return new_channel;
+}
+
+/*
+ * irc_channel_set_topic: set topic for a channel
+ */
+
+void
+irc_channel_set_topic (struct t_irc_channel *channel, char *topic)
+{
+    if (channel->topic)
+        free (channel->topic);
+    
+    channel->topic = (topic) ? strdup (topic) : NULL;
+    weechat_buffer_set (channel->buffer, "title", channel->topic);
 }
 
 /*
@@ -351,6 +372,52 @@ irc_channel_add_nick_speaking (struct t_irc_channel *channel, const char *nick)
                                  weechat_list_get (channel->nicks_speaking, 0));
         }
     }
+}
+
+/*
+ * irc_channel_add_to_infolist: add a channel in an infolist
+ *                              return 1 if ok, 0 if error
+ */
+
+int
+irc_channel_add_to_infolist (struct t_infolist *infolist,
+                             struct t_irc_channel *channel)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !channel)
+        return 0;
+    
+    ptr_item = weechat_infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!weechat_infolist_new_var_integer (ptr_item, "type", channel->type))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "name", channel->name))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "topic", channel->topic))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "modes", channel->modes))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "limit", channel->limit))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "key", channel->key))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "nicks_count", channel->nicks_count))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "checking_away", channel->checking_away))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "away_message", channel->away_message))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "cycle", channel->cycle))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "display_creation_date", channel->display_creation_date))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "nick_completion_reset", channel->nick_completion_reset))
+        return 0;
+    
+    return 1;
 }
 
 /*

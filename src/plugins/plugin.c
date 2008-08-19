@@ -36,10 +36,12 @@
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
 #include "../core/wee-hook.h"
+#include "../core/wee-infolist.h"
 #include "../core/wee-list.h"
 #include "../core/wee-log.h"
 #include "../core/wee-network.h"
 #include "../core/wee-string.h"
+#include "../core/wee-upgrade-file.h"
 #include "../core/wee-utf8.h"
 #include "../core/wee-util.h"
 #include "../gui/gui-bar.h"
@@ -50,7 +52,6 @@
 #include "plugin.h"
 #include "plugin-api.h"
 #include "plugin-config.h"
-#include "plugin-infolist.h"
 
 
 struct t_weechat_plugin *weechat_plugins = NULL;
@@ -68,6 +69,9 @@ struct t_weechat_plugin *
 plugin_search (const char *name)
 {
     struct t_weechat_plugin *ptr_plugin;
+    
+    if (!name)
+        return NULL;
     
     for (ptr_plugin = weechat_plugins; ptr_plugin;
          ptr_plugin = ptr_plugin->next_plugin)
@@ -417,22 +421,30 @@ plugin_load (const char *filename)
         new_plugin->network_connect_to = &network_connect_to;
         
         new_plugin->info_get = &plugin_api_info_get;
-
-        new_plugin->infolist_new = &plugin_infolist_new;
-        new_plugin->infolist_new_item = &plugin_infolist_new_item;
-        new_plugin->infolist_new_var_integer = &plugin_infolist_new_var_integer;
-        new_plugin->infolist_new_var_string = &plugin_infolist_new_var_string;
-        new_plugin->infolist_new_var_pointer = &plugin_infolist_new_var_pointer;
-        new_plugin->infolist_new_var_time = &plugin_infolist_new_var_time;
+        
+        new_plugin->infolist_new = &infolist_new;
+        new_plugin->infolist_new_item = &infolist_new_item;
+        new_plugin->infolist_new_var_integer = &infolist_new_var_integer;
+        new_plugin->infolist_new_var_string = &infolist_new_var_string;
+        new_plugin->infolist_new_var_pointer = &infolist_new_var_pointer;
+        new_plugin->infolist_new_var_buffer = &infolist_new_var_buffer;
+        new_plugin->infolist_new_var_time = &infolist_new_var_time;
         new_plugin->infolist_get = &plugin_api_infolist_get;
         new_plugin->infolist_next = &plugin_api_infolist_next;
         new_plugin->infolist_prev = &plugin_api_infolist_prev;
+        new_plugin->infolist_reset_item_cursor = &plugin_api_infolist_reset_item_cursor;
         new_plugin->infolist_fields = &plugin_api_infolist_fields;
         new_plugin->infolist_integer = &plugin_api_infolist_integer;
         new_plugin->infolist_string = &plugin_api_infolist_string;
         new_plugin->infolist_pointer = &plugin_api_infolist_pointer;
+        new_plugin->infolist_buffer = &plugin_api_infolist_buffer;
         new_plugin->infolist_time = &plugin_api_infolist_time;
         new_plugin->infolist_free = &plugin_api_infolist_free;
+
+        new_plugin->upgrade_create = &upgrade_file_create;
+        new_plugin->upgrade_write_object = &upgrade_file_write_object;
+        new_plugin->upgrade_read = &upgrade_file_read;
+        new_plugin->upgrade_close = &upgrade_file_close;
         
         /* add new plugin to list */
         new_plugin->prev_plugin = last_weechat_plugin;
@@ -443,6 +455,10 @@ plugin_load (const char *filename)
             weechat_plugins = new_plugin;
         last_weechat_plugin = new_plugin;
 
+        /* associate orphan buffers with this plugin (if asked during upgrade
+           process) */
+        gui_buffer_set_plugin_for_upgrade (name, new_plugin);
+        
         /* build arguments for plugin */
         argc = 0;
         argv = NULL;
@@ -456,6 +472,7 @@ plugin_load (const char *filename)
                 {
                     if ((string_strcasecmp (plugin_argv[i], "-a") == 0)
                         || (string_strcasecmp (plugin_argv[i], "--no-connect") == 0)
+                        || (string_strcasecmp (plugin_argv[i], "--upgrade") == 0)
                         || (string_strncasecmp (plugin_argv[i], name, strlen (name)) == 0))
                     {
                         argv[argc] = plugin_argv[i];
@@ -841,6 +858,4 @@ plugin_print_log ()
         log_printf ("  prev_plugin. . . . . . : 0x%x", ptr_plugin->prev_plugin);
         log_printf ("  next_plugin. . . . . . : 0x%x", ptr_plugin->next_plugin);
     }
-
-    plugin_infolist_print_log ();
 }

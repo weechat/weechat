@@ -300,11 +300,8 @@ irc_protocol_cmd_join (struct t_irc_server *server, const char *command,
     if (!ptr_channel->nicks)
     {
         if (ptr_channel->topic)
-        {
-            free (ptr_channel->topic);
-            ptr_channel->topic = NULL;
-            weechat_buffer_set (ptr_channel->buffer, "title", NULL);
-        }
+            irc_channel_set_topic (ptr_channel, NULL);
+        
         ptr_channel->display_creation_date = 1;
     }
     
@@ -758,11 +755,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                     }
                 }
                 if (!ptr_channel->topic)
-                {
-                    ptr_channel->topic = strdup ((host) ? host : "");
-                    weechat_buffer_set (ptr_channel->buffer,
-                                        "title", ptr_channel->topic);
-                }
+                    irc_channel_set_topic (ptr_channel, host);
                 
                 weechat_printf_tags (ptr_channel->buffer,
                                      tags,
@@ -1058,8 +1051,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
 {
     char *nick, *host, *pos_args, *pos_end_01, *pos, *pos_message;
     char *dcc_args, *pos_file, *pos_addr, *pos_port, *pos_size, *pos_start_resume;  /* for DCC */
-    struct t_plugin_infolist *infolist;
-    struct t_plugin_infolist_item *item;
+    struct t_infolist *infolist;
+    struct t_infolist_item *item;
     char plugin_id[128];
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
@@ -1770,12 +1763,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 }
             }
             if (!ptr_channel->topic)
-            {
-                ptr_channel->topic = strdup (host);
-                weechat_buffer_set (ptr_channel->buffer,
-                                    "title", ptr_channel->topic);
-            }
-                    
+                irc_channel_set_topic (ptr_channel, host);
+            
             pos_args += 8;
             pos_end_01 = strchr (pos, '\01');
             if (pos_end_01)
@@ -1877,11 +1866,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                         return WEECHAT_RC_ERROR;
                     }
                 }
-                if (ptr_channel->topic)
-                    free (ptr_channel->topic);
-                ptr_channel->topic = strdup (host);
-                weechat_buffer_set (ptr_channel->buffer, "title",
-                                    ptr_channel->topic);
+                irc_channel_set_topic (ptr_channel, host);
                 
                 weechat_printf_tags (ptr_channel->buffer,
                                      "irc_privmsg,notify_private",
@@ -2112,15 +2097,7 @@ irc_protocol_cmd_topic (struct t_irc_server *server, const char *command,
     }
     
     if (ptr_channel)
-    {
-        if (ptr_channel->topic)
-            free (ptr_channel->topic);
-        if (pos_topic)
-            ptr_channel->topic = strdup (pos_topic);
-        else
-            ptr_channel->topic = strdup ("");
-        weechat_buffer_set (ptr_channel->buffer, "title", ptr_channel->topic);
-    }
+        irc_channel_set_topic (ptr_channel, pos_topic);
     
     return WEECHAT_RC_OK;
 }
@@ -3022,12 +2999,7 @@ irc_protocol_cmd_332 (struct t_irc_server *server, const char *command,
     ptr_channel = irc_channel_search (server, argv[3]);
     
     if (ptr_channel && ptr_channel->nicks)
-    {
-        if (ptr_channel->topic)
-            free (ptr_channel->topic);
-        ptr_channel->topic = strdup (pos_topic);
-        weechat_buffer_set (ptr_channel->buffer, "title", ptr_channel->topic);
-    }
+        irc_channel_set_topic (ptr_channel, pos_topic);
     
     weechat_printf_tags ((ptr_channel && ptr_channel->nicks) ?
                          ptr_channel->buffer : server->buffer,
@@ -3567,7 +3539,7 @@ irc_protocol_cmd_366 (struct t_irc_server *server, const char *command,
                       int argc, char **argv, char **argv_eol)
 {
     struct t_irc_channel *ptr_channel;
-    struct t_plugin_infolist *infolist;
+    struct t_infolist *infolist;
     struct t_config_option *ptr_option;
     int num_nicks, num_op, num_halfop, num_voice, num_normal, length, i;
     char *string, *prefix;

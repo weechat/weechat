@@ -13,6 +13,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-debug.h
 ./src/core/wee-hook.c
 ./src/core/wee-hook.h
+./src/core/wee-infolist.c
+./src/core/wee-infolist.h
 ./src/core/wee-input.c
 ./src/core/wee-input.h
 ./src/core/wee-list.c
@@ -25,6 +27,8 @@ SET(WEECHAT_SOURCES
 ./src/core/wee-string.h
 ./src/core/wee-upgrade.c
 ./src/core/wee-upgrade.h
+./src/core/wee-upgrade-file.c
+./src/core/wee-upgrade-file.h
 ./src/core/wee-utf8.c
 ./src/core/wee-utf8.h
 ./src/core/wee-util.c
@@ -131,8 +135,6 @@ SET(WEECHAT_SOURCES
 ./src/plugins/plugin-config.c
 ./src/plugins/plugin-config.h
 ./src/plugins/plugin.h
-./src/plugins/plugin-infolist.c
-./src/plugins/plugin-infolist.h
 ./src/plugins/scripts/lua/weechat-lua-api.c
 ./src/plugins/scripts/lua/weechat-lua-api.h
 ./src/plugins/scripts/lua/weechat-lua.c
@@ -179,4 +181,6 @@ SET(WEECHAT_SOURCES
 ./src/plugins/xfer/xfer.h
 ./src/plugins/xfer/xfer-network.c
 ./src/plugins/xfer/xfer-network.h
+./src/plugins/xfer/xfer-upgrade.c
+./src/plugins/xfer/xfer-upgrade.h
 )

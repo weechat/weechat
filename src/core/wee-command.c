@@ -51,6 +51,7 @@
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-input.h"
 #include "../gui/gui-keyboard.h"
+#include "../gui/gui-main.h"
 #include "../gui/gui-status.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
@@ -2283,9 +2284,8 @@ int
 command_upgrade (void *data, struct t_gui_buffer *buffer,
                  int argc, char **argv, char **argv_eol)
 {
-    /*int filename_length;
-    char *filename, *ptr_binary;
-    char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--session", NULL, NULL };*/
+    char *ptr_binary;
+    char *exec_args[7] = { NULL, "-a", "--dir", NULL, "--upgrade", NULL };
     
     /* make C compiler happy */
     (void) data;
@@ -2293,85 +2293,46 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
     (void) argc;
     (void) argv;
     (void) argv_eol;
-
-    /* TODO: enable again /upgrade command */
-    gui_chat_printf (NULL, "/upgrade command is temporarirly disabled.");
-    return WEECHAT_RC_OK;
     
-    /*ptr_binary = (argc > 1) ? argv_eol[1] : weechat_argv0;
+    ptr_binary = (argc > 1) ? argv_eol[1] : weechat_argv0;
     
-    for (ptr_server = irc_servers; ptr_server;
-         ptr_server = ptr_server->next_server)
+    gui_chat_printf (NULL,
+                     _("Upgrading WeeChat..."));
+    
+    /* send "upgrade" signal to plugins */
+    hook_signal_send ("upgrade", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    
+    if (!upgrade_weechat_save ())
     {
-        if (ptr_server->child_pid != 0)
-        {
-            gui_chat_printf_error (NULL,
-                              _("Error: can't upgrade: connection to at least "
-                                "one server is pending"));
-            return WEECHAT_RC_ERROR;
-            }*/
-        /* TODO: remove this test, and fix gnutls save/load in session */
-    /*if (ptr_server->is_connected && ptr_server->ssl_connected)
-        {
-            gui_chat_printf_error_nolog (NULL,
-                                    _("Error: can't upgrade: connection to at least "
-                                      "one SSL server is active "
-                                      "(should be fixed in a future version)"));
-            return WEECHAT_RC_ERROR;
-        }
-        if (ptr_server->outqueue)
-        {
-            gui_chat_printf_error_nolog (NULL,
-                                    _("Error: can't upgrade: anti-flood is active on "
-                                      "at least one server (sending many lines)"));
-            return WEECHAT_RC_ERROR;
-        }
-    }
-    
-    filename_length = strlen (weechat_home) + strlen (WEECHAT_SESSION_NAME) + 2;
-    filename = malloc (filename_length);
-    if (!filename)
-        return -2;
-    snprintf (filename, filename_length, "%s%s" WEECHAT_SESSION_NAME,
-              weechat_home, DIR_SEPARATOR);
-    
-    gui_chat_printf_info_nolog (NULL,
-                           _("Upgrading WeeChat..."));
-    
-    if (!session_save (filename))
-    {
-        free (filename);
-        gui_chat_printf_error_nolog (NULL,
-                                _("Error: unable to save session in file"));
+        gui_chat_printf (NULL,
+                         _("%sError: unable to save session in file"),
+                         gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
         return WEECHAT_RC_ERROR;
     }
     
     exec_args[0] = strdup (ptr_binary);
     exec_args[3] = strdup (weechat_home);
-    exec_args[5] = strdup (filename);*/
     
     /* unload plugins, save config, then upgrade */
     plugin_end ();
-    /*if (CONFIG_BOOLEAN(config_look_save_on_exit))
-        (void) config_write (NULL);
+    if (CONFIG_BOOLEAN(config_look_save_on_exit))
+        (void) config_weechat_write ();
     gui_main_end (1);
-    fifo_remove ();
-    weechat_log_close ();
+    log_close ();
     
-    execvp (exec_args[0], exec_args);*/
+    execvp (exec_args[0], exec_args);
     
     /* this code should not be reached if execvp is ok */
     plugin_init (1, 0, NULL);
     
-    /*string_iconv_fprintf (stderr,
+    string_iconv_fprintf (stderr,
                             _("Error: exec failed (program: \"%s\"), exiting WeeChat"),
                             exec_args[0]);
     
     free (exec_args[0]);
     free (exec_args[3]);
-    free (filename);
     
-    exit (EXIT_FAILURE);*/
+    exit (EXIT_FAILURE);
     
     /* never executed */
     return WEECHAT_RC_ERROR;

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-07-10 17:35+0200\n"
+"POT-Creation-Date: 2008-08-13 16:43+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -564,6 +564,18 @@ msgstr "nincs a szobában"
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr ""
+
+#, fuzzy
+msgid "Upgrading WeeChat..."
+msgstr "WeeChat frissítése...\n"
+
+#, fuzzy, c-format
+msgid "%sError: unable to save session in file"
+msgstr "%s nem sikerült a folyamatot menteni\n"
+
+#, fuzzy, c-format
+msgid "Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr "%s futtatási hiba (program: \"%s\"), a WeeChat kilép\n"
 
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
@@ -1633,41 +1645,25 @@ msgstr ""
 "Ha egy másik WeeChat folyamat használja ezt a fájlt, próbálja másik\n"
 "saját könyvtárral futtatni a WeeChat-et a \"--dir\" opció segítségével!\n"
 
+#, fuzzy, c-format
+msgid "%sError upgrading WeeChat:"
+msgstr "WeeChat frissítése...\n"
+
+#, fuzzy, c-format
+msgid "%s    error: %s"
+msgstr "%sSzerver: %s%s\n"
+
 #, c-format
-msgid ""
-"Last operation with session file was at position %ld, read of %d bytes\n"
+msgid "%s    last read: position: %ld, length: %d"
 msgstr ""
 
 #, c-format
-msgid ""
-"Please send %s/%s, %s/%s and above messages to WeeChat developers for "
-"support.\n"
-"Be careful, private info may be in these files.\n"
+msgid "%s    source: %s, line: %d"
 msgstr ""
-"Kérjük küldje el a %s/%s, %s/%s és a fölötte látható üzeneteket a WeeChat "
-"fejlesztőinek ha segítségre van szüksége.\n"
-"Figyelem, ezek a fájlok személyes adatokat tartalmazhatnak.\n"
 
 #, c-format
-msgid "wrong type in file (expected: %d, read: %d)"
-msgstr "rossz típus a fájlban (várt: %d, beolvasott: %d)"
-
-msgid "invalid length for a buffer"
-msgstr "érvénytelen pufferhossz"
-
-msgid "object read error"
-msgstr "objektumolvasási hiba"
-
-#, c-format
-msgid "wrong object (expected: %d, read: %d)"
-msgstr "hibás objektum (várt: %d, beolvasott: %d)"
-
-msgid "type read error"
-msgstr "típus olvasási hiba"
-
-#, c-format
-msgid "wrong type (expected: %d, read: %d)"
-msgstr "rossz típus (várt: %d, beolvasott: %d)"
+msgid "%s*** Please report above info to developers ***"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Error: cannot create directory \"%s\"\n"
@@ -4625,6 +4621,49 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, fuzzy
+#~ msgid "write of infolist type 'integer'"
+#~ msgstr "  . típus: szám\n"
+
+#, fuzzy
+#~ msgid "unable to create infolist"
+#~ msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
+
+#, fuzzy
+#~ msgid "unable to create infolist item"
+#~ msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
+
+#, fuzzy
+#~ msgid "read of string value"
+#~ msgstr "  . típus szöveg (értékek: "
+
+#~ msgid ""
+#~ "Please send %s/%s, %s/%s and above messages to WeeChat developers for "
+#~ "support.\n"
+#~ "Be careful, private info may be in these files.\n"
+#~ msgstr ""
+#~ "Kérjük küldje el a %s/%s, %s/%s és a fölötte látható üzeneteket a WeeChat "
+#~ "fejlesztőinek ha segítségre van szüksége.\n"
+#~ "Figyelem, ezek a fájlok személyes adatokat tartalmazhatnak.\n"
+
+#~ msgid "wrong type in file (expected: %d, read: %d)"
+#~ msgstr "rossz típus a fájlban (várt: %d, beolvasott: %d)"
+
+#~ msgid "invalid length for a buffer"
+#~ msgstr "érvénytelen pufferhossz"
+
+#~ msgid "object read error"
+#~ msgstr "objektumolvasási hiba"
+
+#~ msgid "wrong object (expected: %d, read: %d)"
+#~ msgstr "hibás objektum (várt: %d, beolvasott: %d)"
+
+#~ msgid "type read error"
+#~ msgstr "típus olvasási hiba"
+
+#~ msgid "wrong type (expected: %d, read: %d)"
+#~ msgstr "rossz típus (várt: %d, beolvasott: %d)"
+
+#, fuzzy
 #~ msgid "hidden"
 #~ msgstr "(rejtett)"
 
@@ -6286,9 +6325,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #~ msgid "%sDetail:\n"
 #~ msgstr "%sRészletek:\n"
 
-#~ msgid "  . type string (values: "
-#~ msgstr "  . típus szöveg (értékek: "
-
 #~ msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 #~ msgstr "  . típus szín (Curses vagy Gtk szín, lásd WeeChat dokumentáció)\n"
 
@@ -6313,15 +6349,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #~ msgstr ""
 #~ "%s nem sikerült frissíteni: az anti-flood (több sor küldése) legalább egy "
 #~ "szerveren aktív\n"
-
-#~ msgid "Upgrading WeeChat...\n"
-#~ msgstr "WeeChat frissítése...\n"
-
-#~ msgid "%s unable to save session in file\n"
-#~ msgstr "%s nem sikerült a folyamatot menteni\n"
-
-#~ msgid "%s exec failed (program: \"%s\"), exiting WeeChat\n"
-#~ msgstr "%s futtatási hiba (program: \"%s\"), a WeeChat kilép\n"
 
 #~ msgid "gnutls init error"
 #~ msgstr "gnutls inicializációs hiba"

@@ -33,6 +33,7 @@
 #include "weechat.h"
 #include "wee-config-file.h"
 #include "wee-hook.h"
+#include "wee-infolist.h"
 #include "wee-log.h"
 #include "wee-string.h"
 #include "../gui/gui-color.h"
@@ -2102,6 +2103,206 @@ config_file_free_all_plugin (struct t_weechat_plugin *plugin)
         
         ptr_config = next_config;
     }
+}
+
+/*
+ * config_file_add_to_infolist: add config options in an infolist
+ *                              return 1 if ok, 0 if error
+ */
+
+int
+config_file_add_to_infolist (struct t_infolist *infolist,
+                             const char *option_name)
+{
+    struct t_config_file *ptr_config;
+    struct t_config_section *ptr_section;
+    struct t_config_option *ptr_option;
+    struct t_infolist_item *ptr_item;
+    int length;
+    char *option_full_name, value[128];
+    
+    if (!infolist)
+        return 0;
+    
+    for (ptr_config = config_files; ptr_config;
+         ptr_config = ptr_config->next_config)
+    {
+        for (ptr_section = ptr_config->sections; ptr_section;
+             ptr_section = ptr_section->next_section)
+        {
+            for (ptr_option = ptr_section->options; ptr_option;
+                 ptr_option = ptr_option->next_option)
+            {
+                length = strlen (ptr_config->name) + 1 +
+                    strlen (ptr_section->name) + 1 +
+                    strlen (ptr_option->name) + 1;
+                option_full_name = malloc (length);
+                if (option_full_name)
+                {
+                    snprintf (option_full_name, length, "%s.%s.%s",
+                              ptr_config->name,
+                              ptr_section->name,
+                              ptr_option->name);
+                    if (!option_name || !option_name[0]
+                        || string_match (option_full_name, option_name, 0))
+                    {
+                        ptr_item = infolist_new_item (infolist);
+                        if (!ptr_item)
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        if (!infolist_new_var_string (ptr_item,
+                                                      "full_name",
+                                                      option_full_name))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        if (!infolist_new_var_string (ptr_item,
+                                                      "name",
+                                                      ptr_option->name))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        switch (ptr_option->type)
+                        {
+                            case CONFIG_OPTION_TYPE_BOOLEAN:
+                                if (!infolist_new_var_string (ptr_item,
+                                                              "type",
+                                                              "boolean"))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                if (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE)
+                                    snprintf (value, sizeof (value), "on");
+                                else
+                                    snprintf (value, sizeof (value), "off");
+                                if (!infolist_new_var_string (ptr_item,
+                                                              "value",
+                                                              value))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                if (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE)
+                                    snprintf (value, sizeof (value), "on");
+                                else
+                                    snprintf (value, sizeof (value), "off");
+                                if (!infolist_new_var_string (ptr_item,
+                                                              "default_value",
+                                                              value))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                break;
+                            case CONFIG_OPTION_TYPE_INTEGER:
+                                if (!infolist_new_var_string (ptr_item,
+                                                              "type",
+                                                              "integer"))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                if (ptr_option->string_values)
+                                {
+                                    if (!infolist_new_var_string (ptr_item,
+                                                                  "value",
+                                                                  ptr_option->string_values[CONFIG_INTEGER(ptr_option)]))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
+                                    if (!infolist_new_var_string (ptr_item,
+                                                                  "default_value",
+                                                                  ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
+                                }
+                                else
+                                {
+                                    snprintf (value, sizeof (value), "%d",
+                                              CONFIG_INTEGER(ptr_option));
+                                    if (!infolist_new_var_string (ptr_item,
+                                                                  "value",
+                                                                  value))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
+                                    snprintf (value, sizeof (value), "%d",
+                                              CONFIG_INTEGER_DEFAULT(ptr_option));
+                                    if (!infolist_new_var_string (ptr_item,
+                                                                  "default_value",
+                                                                  value))
+                                    {
+                                        free (option_full_name);
+                                        return 0;
+                                    }
+                                }
+                                break;
+                            case CONFIG_OPTION_TYPE_STRING:
+                                if (!infolist_new_var_string (ptr_item,
+                                                              "type",
+                                                              "string"))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                if (!infolist_new_var_string (ptr_item,
+                                                              "value",
+                                                              CONFIG_STRING(ptr_option)))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                if (!infolist_new_var_string (ptr_item,
+                                                              "default_value",
+                                                              CONFIG_STRING_DEFAULT(ptr_option)))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                break;
+                            case CONFIG_OPTION_TYPE_COLOR:
+                                if (!infolist_new_var_string (ptr_item,
+                                                              "type",
+                                                              "color"))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                if (!infolist_new_var_string (ptr_item,
+                                                              "value",
+                                                              gui_color_get_name (CONFIG_COLOR(ptr_option))))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                if (!infolist_new_var_string (ptr_item,
+                                                              "default_value",
+                                                              gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option))))
+                                {
+                                    free (option_full_name);
+                                    return 0;
+                                }
+                                break;
+                            case CONFIG_NUM_OPTION_TYPES:
+                                break;
+                        }
+                    }
+                    free (option_full_name);
+                }
+            }
+        }
+    }
+    
+    return 1;
 }
 
 /*

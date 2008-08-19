@@ -3488,7 +3488,7 @@ weechat_lua_api_buffer_set (lua_State *L)
     property = lua_tostring (lua_current_interpreter, -2);
     value = lua_tostring (lua_current_interpreter, -1);
     
-    weechat_buffer_set (script_str2ptr (buffer), property, value);
+    weechat_buffer_set (script_str2ptr (buffer), property, (void *)value);
     
     LUA_RETURN_OK;
 }
@@ -4147,7 +4147,7 @@ weechat_lua_api_bar_set (lua_State *L)
     
     weechat_buffer_set (script_str2ptr (bar),
                         property,
-                        value);
+                        (void *)value);
     
     LUA_RETURN_OK;
 }

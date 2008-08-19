@@ -295,7 +295,7 @@ irc_config_server_delete_cb (void *data, struct t_config_option *option)
     int i, index_option, length;
     char *name, *mask;
     struct t_irc_server *ptr_server;
-    struct t_plugin_infolist *infolist;
+    struct t_infolist *infolist;
     
     index_option = irc_config_search_server_option (data);
     if (index_option >= 0)
@@ -340,7 +340,7 @@ irc_config_server_delete_cb (void *data, struct t_config_option *option)
 void
 irc_config_reload_servers_from_config ()
 {
-    struct t_plugin_infolist *infolist;
+    struct t_infolist *infolist;
     struct t_irc_server *ptr_server;
     struct t_config_option *ptr_option;
     char *name, *full_name, *server_name, *pos_option;

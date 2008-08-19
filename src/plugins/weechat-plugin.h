@@ -386,7 +386,7 @@ struct t_weechat_plugin
     char *(*buffer_get_string) (struct t_gui_buffer *buffer, const char *property);
     void *(*buffer_get_pointer) (struct t_gui_buffer *buffer, const char *property);
     void (*buffer_set) (struct t_gui_buffer *buffer, const char *property,
-                        const char *value);
+                        void *value);
     
     /* nicklist */
     struct t_gui_nick_group *(*nicklist_add_group) (struct t_gui_buffer *buffer,
@@ -455,30 +455,48 @@ struct t_weechat_plugin
     char *(*info_get) (struct t_weechat_plugin *plugin, const char *info);
     
     /* infolists */
-    struct t_plugin_infolist *(*infolist_new) ();
-    struct t_plugin_infolist_item *(*infolist_new_item) (struct t_plugin_infolist *list);
-    struct t_plugin_infolist_var *(*infolist_new_var_integer) (struct t_plugin_infolist_item *item,
-                                                               const char *name,
-                                                               int value);
-    struct t_plugin_infolist_var *(*infolist_new_var_string) (struct t_plugin_infolist_item *item,
-                                                              const char *name,
-                                                              const char *value);
-    struct t_plugin_infolist_var *(*infolist_new_var_pointer) (struct t_plugin_infolist_item *item,
-                                                               const char *name,
-                                                               void *pointer);
-    struct t_plugin_infolist_var *(*infolist_new_var_time) (struct t_plugin_infolist_item *item,
-                                                            const char *name,
-                                                            time_t time);
-    struct t_plugin_infolist *(*infolist_get) (const char *name, void *pointer,
-                                               const char *arguments);
-    int (*infolist_next) (struct t_plugin_infolist *infolist);
-    int (*infolist_prev) (struct t_plugin_infolist *infolist);
-    char *(*infolist_fields) (struct t_plugin_infolist *infolist);
-    int (*infolist_integer) (struct t_plugin_infolist *infolist, const char *var);
-    char *(*infolist_string) (struct t_plugin_infolist *infolist, const char *var);
-    void *(*infolist_pointer) (struct t_plugin_infolist *infolist, const char *var);
-    time_t (*infolist_time) (struct t_plugin_infolist *infolist, const char *var);
-    void (*infolist_free) (struct t_plugin_infolist *infolist);
+    struct t_infolist *(*infolist_new) ();
+    struct t_infolist_item *(*infolist_new_item) (struct t_infolist *infolist);
+    struct t_infolist_var *(*infolist_new_var_integer) (struct t_infolist_item *item,
+                                                        const char *name,
+                                                        int value);
+    struct t_infolist_var *(*infolist_new_var_string) (struct t_infolist_item *item,
+                                                       const char *name,
+                                                       const char *value);
+    struct t_infolist_var *(*infolist_new_var_pointer) (struct t_infolist_item *item,
+                                                        const char *name,
+                                                        void *pointer);
+    struct t_infolist_var *(*infolist_new_var_buffer) (struct t_infolist_item *item,
+                                                       const char *name,
+                                                       void *pointer,
+                                                       int size);
+    struct t_infolist_var *(*infolist_new_var_time) (struct t_infolist_item *item,
+                                                     const char *name,
+                                                     time_t time);
+    struct t_infolist *(*infolist_get) (const char *name, void *pointer,
+                                        const char *arguments);
+    int (*infolist_next) (struct t_infolist *infolist);
+    int (*infolist_prev) (struct t_infolist *infolist);
+    void (*infolist_reset_item_cursor) (struct t_infolist *infolist);
+    char *(*infolist_fields) (struct t_infolist *infolist);
+    int (*infolist_integer) (struct t_infolist *infolist, const char *var);
+    char *(*infolist_string) (struct t_infolist *infolist, const char *var);
+    void *(*infolist_pointer) (struct t_infolist *infolist, const char *var);
+    void *(*infolist_buffer) (struct t_infolist *infolist, const char *var,
+                              int *size);
+    time_t (*infolist_time) (struct t_infolist *infolist, const char *var);
+    void (*infolist_free) (struct t_infolist *infolist);
+
+    /* upgrade */
+    struct t_upgrade_file *(*upgrade_create) (const char *filename,
+                                              int write);
+    int (*upgrade_write_object) (struct t_upgrade_file *upgrade_file,
+                                 int object_id,
+                                 struct t_infolist *infolist);
+    int (*upgrade_read) (struct t_upgrade_file *upgrade_file,
+                         int (*callback_read)(int object_id,
+                                              struct t_infolist *infolist));
+    void (*upgrade_close) (struct t_upgrade_file *upgrade_file);
     
     /* WeeChat developers: ALWAYS add new functions at the end */
 };
@@ -905,25 +923,45 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->infolist_new_var_string(__item, __name, __value)
 #define weechat_infolist_new_var_pointer(__item, __name, __pointer)     \
     weechat_plugin->infolist_new_var_pointer(__item, __name, __pointer)
+#define weechat_infolist_new_var_buffer(__item, __name, __buffer,       \
+                                        __size)                         \
+    weechat_plugin->infolist_new_var_buffer(__item, __name, __buffer,   \
+                                            __size)
 #define weechat_infolist_new_var_time(__item, __name, __time)           \
     weechat_plugin->infolist_new_var_time(__item, __name, __time)
 #define weechat_infolist_get(__name, __pointer, __arguments)            \
     weechat_plugin->infolist_get(__name, __pointer, __arguments)
-#define weechat_infolist_next(__list)           \
+#define weechat_infolist_next(__list)                                   \
     weechat_plugin->infolist_next(__list)
-#define weechat_infolist_prev(__list)           \
+#define weechat_infolist_prev(__list)                                   \
     weechat_plugin->infolist_prev(__list)
-#define weechat_infolist_fields(__list)         \
+#define weechat_infolist_reset_item_cursor(__list)                      \
+    weechat_plugin->infolist_reset_item_cursor(__list)
+#define weechat_infolist_fields(__list)                                 \
     weechat_plugin->infolist_fields(__list)
-#define weechat_infolist_integer(__item, __var)         \
+#define weechat_infolist_integer(__item, __var)                         \
     weechat_plugin->infolist_integer(__item, __var)
-#define weechat_infolist_string(__item, __var)          \
+#define weechat_infolist_string(__item, __var)                          \
     weechat_plugin->infolist_string(__item, __var)
-#define weechat_infolist_pointer(__item, __var)         \
+#define weechat_infolist_pointer(__item, __var)                         \
     weechat_plugin->infolist_pointer(__item, __var)
-#define weechat_infolist_time(__item, __var)            \
+#define weechat_infolist_buffer(__item, __var, __size)                  \
+    weechat_plugin->infolist_buffer(__item, __var, __size)
+#define weechat_infolist_time(__item, __var)                            \
     weechat_plugin->infolist_time(__item, __var)
-#define weechat_infolist_free(__list)           \
+#define weechat_infolist_free(__list)                                   \
     weechat_plugin->infolist_free(__list)
+
+/* upgrade */
+#define weechat_upgrade_create(__filename, __write)                     \
+    weechat_plugin->upgrade_create(__filename, __write)
+#define weechat_upgrade_write_object(__upgrade_file, __object_id,       \
+                                     __infolist)                        \
+    weechat_plugin->upgrade_write_object(__upgrade_file, __object_id,   \
+                                         __infolist)
+#define weechat_upgrade_read(__upgrade_file, __callback)                \
+    weechat_plugin->upgrade_read(__upgrade_file, __callback)
+#define weechat_upgrade_close(__upgrade_file)                           \
+    weechat_plugin->upgrade_close(__upgrade_file)
 
 #endif /* weechat-plugin.h */

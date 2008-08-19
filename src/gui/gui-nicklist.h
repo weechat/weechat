@@ -21,6 +21,7 @@
 #define __WEECHAT_GUI_NICKLIST_H 1
 
 struct t_gui_buffer;
+struct t_infolist;
 
 struct t_gui_nick_group
 {
@@ -79,6 +80,8 @@ extern int gui_nicklist_get_max_length (struct t_gui_buffer *buffer,
                                         struct t_gui_nick_group *group);
 extern void gui_nicklist_compute_visible_count (struct t_gui_buffer *buffer,
                                                 struct t_gui_nick_group *group);
+extern int gui_nicklist_add_to_infolist (struct t_infolist *infolist,
+                                         struct t_gui_buffer *buffer);
 extern void gui_nicklist_print_log (struct t_gui_nick_group *group, int indent);
 
 /* nicklist functions (GUI dependent) */

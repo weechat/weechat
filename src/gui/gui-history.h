@@ -30,7 +30,7 @@ struct t_gui_history
 };
 
 extern struct t_gui_history *history_global;
-extern struct t_gui_history *history_global_last;
+extern struct t_gui_history *last_history_global;
 extern struct t_gui_history *history_global_ptr;
 
 /* history functions (gui-history.c) */

@@ -47,7 +47,9 @@ irc_la_SOURCES = irc.c \
                  irc-protocol.c \
                  irc-protocol.h \
                  irc-server.c \
-                 irc-server.h
+                 irc-server.h \
+                 irc-upgrade.c \
+                 irc-upgrade.h
 
 irc_la_LDFLAGS = -module
 irc_la_LIBADD  = $(IRC_LFLAGS) $(GNUTLS_LFLAGS)

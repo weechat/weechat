@@ -227,14 +227,14 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
         free (server->nick);
     server->nick = (nick) ? strdup (nick) : NULL;
     
-    weechat_buffer_set (server->buffer, "nick", nick);
+    weechat_buffer_set (server->buffer, "nick", (void *)nick);
     
-    weechat_buffer_set (server->buffer, "highlight_words", nick);
+    weechat_buffer_set (server->buffer, "highlight_words", (void *)nick);
     
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
     {
-        weechat_buffer_set (ptr_channel->buffer, "nick", nick);
+        weechat_buffer_set (ptr_channel->buffer, "nick", (void *)nick);
     }
 }
 
@@ -770,7 +770,7 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
 {
     int length;
     char *option_name, *name, *pos_option;
-    struct t_plugin_infolist *infolist;
+    struct t_infolist *infolist;
     struct t_config_option *ptr_option;
     
     /* check if another server exists with this name */
@@ -1765,7 +1765,7 @@ irc_server_connect_cb (void *arg_server, int status)
             irc_server_login (server);
             server->hook_fd = weechat_hook_fd (server->sock,
                                                1, 0, 0,
-                                               irc_server_recv_cb,
+                                               &irc_server_recv_cb,
                                                server);
             break;
         case WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND:
@@ -2353,7 +2353,7 @@ int
 irc_server_xfer_send_ready_cb (void *data, const char *signal,
                                const char *type_data, void *signal_data)
 {
-    struct t_plugin_infolist *infolist;
+    struct t_infolist *infolist;
     struct t_irc_server *server, *ptr_server;
     char *plugin_name, *plugin_id, *type, *filename;
     int spaces_in_name;
@@ -2363,7 +2363,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
     (void) signal;
     (void) type_data;
     
-    infolist = (struct t_plugin_infolist *)signal_data;
+    infolist = (struct t_infolist *)signal_data;
     
     if (weechat_infolist_next (infolist))
     {
@@ -2426,7 +2426,7 @@ int
 irc_server_xfer_resume_ready_cb (void *data, const char *signal,
                                  const char *type_data, void *signal_data)
 {
-    struct t_plugin_infolist *infolist;
+    struct t_infolist *infolist;
     struct t_irc_server *server, *ptr_server;
     char *plugin_name, *plugin_id, *filename;
     int spaces_in_name;
@@ -2436,7 +2436,7 @@ irc_server_xfer_resume_ready_cb (void *data, const char *signal,
     (void) signal;
     (void) type_data;
     
-    infolist = (struct t_plugin_infolist *)signal_data;
+    infolist = (struct t_infolist *)signal_data;
     
     if (weechat_infolist_next (infolist))
     {
@@ -2483,7 +2483,7 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
                                        const char *type_data,
                                        void *signal_data)
 {
-    struct t_plugin_infolist *infolist;
+    struct t_infolist *infolist;
     struct t_irc_server *server, *ptr_server;
     char *plugin_name, *plugin_id, *filename;
     int spaces_in_name;
@@ -2493,7 +2493,7 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
     (void) signal;
     (void) type_data;
     
-    infolist = (struct t_plugin_infolist *)signal_data;
+    infolist = (struct t_infolist *)signal_data;
     
     if (weechat_infolist_next (infolist))
     {
@@ -2525,6 +2525,103 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
     }
     
     return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_server_add_to_infolist: add a server in an infolist
+ *                             return 1 if ok, 0 if error
+ */
+
+int
+irc_server_add_to_infolist (struct t_infolist *infolist,
+                            struct t_irc_server *server)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !server)
+        return 0;
+    
+    ptr_item = weechat_infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!weechat_infolist_new_var_string (ptr_item, "name", server->name))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "autoconnect", server->autoconnect))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "autoreconnect", server->autoreconnect))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "autoreconnect_delay", server->autoreconnect_delay))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "temp_server", server->temp_server))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "addresses", server->addresses))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ipv6", server->ipv6))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ssl", server->ssl))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "password", server->password))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "nicks", server->nicks))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "username", server->username))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "realname", server->realname))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "local_hostname", server->local_hostname))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "command", server->command))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "command_delay", server->command_delay))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "autojoin", server->autojoin))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "autorejoin", server->autorejoin))
+        return 0;
+
+    if (!weechat_infolist_new_var_integer (ptr_item, "current_address", server->current_address))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "sock", server->sock))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "is_connected", server->is_connected))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "ssl_connected", server->ssl_connected))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "unterminated_message", server->unterminated_message))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "nick", server->nick))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "nick_modes", server->nick_modes))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "prefix", server->prefix))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "reconnect_start", server->reconnect_start))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "command_time", server->command_time))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "reconnect_join", server->reconnect_join))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "disable_autojoin", server->disable_autojoin))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "is_away", server->is_away))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "away_message", server->away_message))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "away_time", server->away_time))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "lag", server->lag))
+        return 0;
+    if (!weechat_infolist_new_var_buffer (ptr_item, "lag_check_time", &(server->lag_check_time), sizeof (struct timeval)))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "lag_next_check", server->lag_next_check))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "queue_msg", server->queue_msg))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "last_user_message", server->last_user_message))
+        return 0;
+    
+    return 1;
 }
 
 /*

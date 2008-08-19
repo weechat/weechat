@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-07-10 17:35+0200\n"
-"PO-Revision-Date: 2008-07-10 17:36+0200\n"
+"POT-Creation-Date: 2008-08-13 16:43+0200\n"
+"PO-Revision-Date: 2008-08-13 16:44+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -97,7 +97,9 @@ msgstr "Liste des barres:"
 msgid ""
 "  %s%s%s: %s%s%s (cond: %s), %s, filling: %s(top/bottom)/%s(left/right), %s: "
 "%s"
-msgstr "  %s%s%s: %s%s%s (cond: %s), %s, remplissage: %s(haut/bas)/%s(gauche/droite), %s: %s"
+msgstr ""
+"  %s%s%s: %s%s%s (cond: %s), %s, remplissage: %s(haut/bas)/%s(gauche/"
+"droite), %s: %s"
 
 msgid "(hidden)"
 msgstr "(caché)"
@@ -517,6 +519,17 @@ msgstr "Option supprimée: %s"
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr "%d option(s) réinitialisée(s), %d option(s) supprimée(s)"
+
+msgid "Upgrading WeeChat..."
+msgstr "Mise à jour de WeeChat..."
+
+#, c-format
+msgid "%sError: unable to save session in file"
+msgstr "%sErreur: impossible de sauvegarder la session dans le ficheir"
+
+#, c-format
+msgid "Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr "Error: exec a échoué (programme: \"%s\"), sortie de WeeChat"
 
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
@@ -1609,42 +1622,24 @@ msgstr ""
 "dir\".\n"
 
 #, c-format
-msgid ""
-"Last operation with session file was at position %ld, read of %d bytes\n"
-msgstr ""
-"Dernière opération avec le fichier de session en position %ld, lecture de %d "
-"octets\n"
+msgid "%sError upgrading WeeChat:"
+msgstr "%sErreur de mise à jour de WeeChat:"
 
 #, c-format
-msgid ""
-"Please send %s/%s, %s/%s and above messages to WeeChat developers for "
-"support.\n"
-"Be careful, private info may be in these files.\n"
-msgstr ""
-"Merci d'envoyer %s/%s, %s/%s et les messages ci-dessus aux développeurs "
-"WeeChat pour du support.\n"
-"Faites attention, des infos privées peuvent se trouver dans ces fichiers.\n"
+msgid "%s    error: %s"
+msgstr "%s    erreur: %s"
 
 #, c-format
-msgid "wrong type in file (expected: %d, read: %d)"
-msgstr "type erroné dans le fichier (attendu: %d, lu: %d)"
-
-msgid "invalid length for a buffer"
-msgstr "longueur invalide pour une zone"
-
-msgid "object read error"
-msgstr "erreur de lecture de l'objet"
+msgid "%s    last read: position: %ld, length: %d"
+msgstr "%s    dernier lu: position: %ld, longueur: %d"
 
 #, c-format
-msgid "wrong object (expected: %d, read: %d)"
-msgstr "objet erroné (attendu: %d, lu: %d)"
-
-msgid "type read error"
-msgstr "erreur de lecture du type"
+msgid "%s    source: %s, line: %d"
+msgstr "%s    source: %s, ligne: %d"
 
 #, c-format
-msgid "wrong type (expected: %d, read: %d)"
-msgstr "type erroné (attendu: %d, lu: %d)"
+msgid "%s*** Please report above info to developers ***"
+msgstr "%s*** Merci de reporter les erreurs ci-dessus aux développeurs ***"
 
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
@@ -1710,12 +1705,17 @@ msgstr ""
 msgid ""
 "bar filling direction (\"horizontal\" (from left to right) or \"vertical"
 "\" (from top to bottom)) when bar position is top or bottom"
-msgstr "direction de remplissage de la barre (\"horizontal\" (de gauche à droite) ou \"vertical\" (de haut en bas)) quand la position de la barre est haut ou bas"
+msgstr ""
+"direction de remplissage de la barre (\"horizontal\" (de gauche à droite) ou "
+"\"vertical\" (de haut en bas)) quand la position de la barre est haut ou bas"
 
 msgid ""
 "bar filling direction (\"horizontal\" (from left to right) or \"vertical"
 "\" (from top to bottom)) when bar position is left or right"
-msgstr "direction de remplissage de la barre (\"horizontal\" (de gauche à droite) ou \"vertical\" (de haut en bas)) quand la position de la barre est gauche ou droite"
+msgstr ""
+"direction de remplissage de la barre (\"horizontal\" (de gauche à droite) ou "
+"\"vertical\" (de haut en bas)) quand la position de la barre est gauche ou "
+"droite"
 
 msgid "bar size in chars (0 = auto size)"
 msgstr "taille de la barre en caractères (0 = taille automatique)"
@@ -4602,6 +4602,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "hidden"
-#~ msgstr "caché"

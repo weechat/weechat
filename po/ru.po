@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-07-10 17:35+0200\n"
+"POT-Creation-Date: 2008-08-13 16:43+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -559,6 +559,18 @@ msgstr "не на канале"
 #, c-format
 msgid "%d option(s) reset, %d option(s) removed"
 msgstr ""
+
+#, fuzzy
+msgid "Upgrading WeeChat..."
+msgstr "Обновляю WeeChat...\n"
+
+#, fuzzy, c-format
+msgid "%sError: unable to save session in file"
+msgstr "%s не могу сохранить сессию в файл\n"
+
+#, fuzzy, c-format
+msgid "Error: exec failed (program: \"%s\"), exiting WeeChat"
+msgstr "%s запуск не удался (программа: \"%s\"), выхожу из WeeChat\n"
 
 #, c-format
 msgid "WeeChat uptime: %d %s %02d:%02d:%02d, started on %s"
@@ -1635,41 +1647,25 @@ msgstr ""
 "WeeChat\n"
 "с другой домашней директорией используя параметр \"--dir\".\n"
 
-#, c-format
-msgid ""
-"Last operation with session file was at position %ld, read of %d bytes\n"
-msgstr "Последняя операция с файлом сессии в позиции %ld, чтение %d байтов\n"
+#, fuzzy, c-format
+msgid "%sError upgrading WeeChat:"
+msgstr "Обновляю WeeChat...\n"
+
+#, fuzzy, c-format
+msgid "%s    error: %s"
+msgstr "%sСервер: %s%s\n"
 
 #, c-format
-msgid ""
-"Please send %s/%s, %s/%s and above messages to WeeChat developers for "
-"support.\n"
-"Be careful, private info may be in these files.\n"
+msgid "%s    last read: position: %ld, length: %d"
 msgstr ""
-"Пожалуйста, пошлите %s/%s, %s/%s и эти сообщения разработчикам WeeChat для "
-"поддержки разработки.\n"
-"Будьте осторожны, файлы могут содержать личные данные.\n"
 
 #, c-format
-msgid "wrong type in file (expected: %d, read: %d)"
-msgstr "некорректный тип в файле (ожидалось: %d, прочитано: %d)"
-
-msgid "invalid length for a buffer"
-msgstr "некорректная длина буфера"
-
-msgid "object read error"
-msgstr "ошибка чтения объекта"
+msgid "%s    source: %s, line: %d"
+msgstr ""
 
 #, c-format
-msgid "wrong object (expected: %d, read: %d)"
-msgstr "некорректный объект (ожидалось: %d, прочитано: %d)"
-
-msgid "type read error"
-msgstr "ошибка чтения типа"
-
-#, c-format
-msgid "wrong type (expected: %d, read: %d)"
-msgstr "некорректный тип (ожидалось: %d, прочитано: %d)"
+msgid "%s*** Please report above info to developers ***"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Error: cannot create directory \"%s\"\n"
@@ -4608,6 +4604,54 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy
+#~ msgid "write of infolist type 'integer'"
+#~ msgstr "  . тип: целочисленный\n"
+
+#, fuzzy
+#~ msgid "unable to create infolist"
+#~ msgstr "%s DCC: не могу создать pipe\n"
+
+#, fuzzy
+#~ msgid "unable to create infolist item"
+#~ msgstr "%s DCC: не могу создать pipe\n"
+
+#, fuzzy
+#~ msgid "read of string value"
+#~ msgstr "  . строковой тип (значения: "
+
+#~ msgid ""
+#~ "Last operation with session file was at position %ld, read of %d bytes\n"
+#~ msgstr ""
+#~ "Последняя операция с файлом сессии в позиции %ld, чтение %d байтов\n"
+
+#~ msgid ""
+#~ "Please send %s/%s, %s/%s and above messages to WeeChat developers for "
+#~ "support.\n"
+#~ "Be careful, private info may be in these files.\n"
+#~ msgstr ""
+#~ "Пожалуйста, пошлите %s/%s, %s/%s и эти сообщения разработчикам WeeChat "
+#~ "для поддержки разработки.\n"
+#~ "Будьте осторожны, файлы могут содержать личные данные.\n"
+
+#~ msgid "wrong type in file (expected: %d, read: %d)"
+#~ msgstr "некорректный тип в файле (ожидалось: %d, прочитано: %d)"
+
+#~ msgid "invalid length for a buffer"
+#~ msgstr "некорректная длина буфера"
+
+#~ msgid "object read error"
+#~ msgstr "ошибка чтения объекта"
+
+#~ msgid "wrong object (expected: %d, read: %d)"
+#~ msgstr "некорректный объект (ожидалось: %d, прочитано: %d)"
+
+#~ msgid "type read error"
+#~ msgstr "ошибка чтения типа"
+
+#~ msgid "wrong type (expected: %d, read: %d)"
+#~ msgstr "некорректный тип (ожидалось: %d, прочитано: %d)"
+
+#, fuzzy
 #~ msgid "hidden"
 #~ msgstr "(скрытый)"
 
@@ -6297,9 +6341,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgid "%sDetail:\n"
 #~ msgstr "%sПодробности:\n"
 
-#~ msgid "  . type string (values: "
-#~ msgstr "  . строковой тип (значения: "
-
 #~ msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 #~ msgstr "  . цветовой тип (цвет Curses или Gtk, см. документацию WeeChat)\n"
 
@@ -6327,15 +6368,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgstr ""
 #~ "%s не могу обновиться: анти-флуд не завершил работу (отсылаются несколько "
 #~ "строк)\n"
-
-#~ msgid "Upgrading WeeChat...\n"
-#~ msgstr "Обновляю WeeChat...\n"
-
-#~ msgid "%s unable to save session in file\n"
-#~ msgstr "%s не могу сохранить сессию в файл\n"
-
-#~ msgid "%s exec failed (program: \"%s\"), exiting WeeChat\n"
-#~ msgstr "%s запуск не удался (программа: \"%s\"), выхожу из WeeChat\n"
 
 #~ msgid "gnutls init error"
 #~ msgstr "ошибка инициализации gnutls"

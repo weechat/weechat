@@ -24,11 +24,11 @@
 
 #define IRC_NICK_CHANOWNER  1
 #define IRC_NICK_CHANADMIN  2
-#define IRC_NICK_OP         4
-#define IRC_NICK_HALFOP     8
-#define IRC_NICK_VOICE      16
-#define IRC_NICK_AWAY       32
-#define IRC_NICK_CHANADMIN2 64
+#define IRC_NICK_CHANADMIN2 4
+#define IRC_NICK_OP         8
+#define IRC_NICK_HALFOP     16
+#define IRC_NICK_VOICE      32
+#define IRC_NICK_AWAY       64
 #define IRC_NICK_CHANUSER   128
 #define IRC_NICK_SET_FLAG(nick, set, flag) \
     if (set) \
@@ -79,6 +79,8 @@ extern void irc_nick_set_away (struct t_irc_channel *channel,
                                struct t_irc_nick *nick, int is_away);
 extern char *irc_nick_as_prefix (struct t_irc_nick *nick, const char *nickname,
                                  const char *force_color);
+extern int irc_nick_add_to_infolist (struct t_infolist *infolist,
+                                     struct t_irc_nick *nick);
 extern void irc_nick_print_log (struct t_irc_nick *nick);
 
 #endif /* irc-nick.h */

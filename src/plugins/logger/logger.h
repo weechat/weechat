@@ -24,6 +24,8 @@
 
 #define weechat_plugin weechat_logger_plugin
 
+#define LOGGER_BUF_WRITE_SIZE  (16*1024)
+
 extern struct t_weechat_plugin *weechat_logger_plugin;
 
 extern void logger_start_buffer_all ();

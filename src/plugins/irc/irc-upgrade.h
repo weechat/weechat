@@ -17,16 +17,21 @@
  */
 
 
-#ifndef __WEECHAT_XFER_DISPLAY_H
-#define __WEECHAT_XFER_DISPLAY_H 1
+#ifndef __WEECHAT_IRC_UPGRADE_H
+#define __WEECHAT_IRC_UPGRADE_H 1
 
-extern struct t_gui_buffer *xfer_buffer;
-extern int xfer_buffer_selected_line;
+#define IRC_UPGRADE_FILENAME "irc"
 
-extern void xfer_buffer_refresh (const char *hotlist);
-extern int xfer_buffer_input_cb (void *data, struct t_gui_buffer *buffer,
-                                 const char *input_data);
-extern int xfer_buffer_close_cb (void *data, struct t_gui_buffer *buffer);
-extern void xfer_buffer_open ();
+/* For developers: please add new values ONLY AT THE END of enums */
 
-#endif /* xfer-buffer.h */
+enum t_irc_upgrade_type
+{
+    IRC_UPGRADE_TYPE_SERVER = 0,
+    IRC_UPGRADE_TYPE_CHANNEL,
+    IRC_UPGRADE_TYPE_NICK,
+};
+
+extern int irc_upgrade_save ();
+extern int irc_upgrade_load ();
+
+#endif /* irc-upgrade.h */

@@ -31,6 +31,7 @@
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
+#include "irc-upgrade.h"
 
 
 WEECHAT_PLUGIN_NAME("irc");
@@ -44,6 +45,8 @@ struct t_weechat_plugin *weechat_irc_plugin = NULL;
 
 struct t_hook *irc_hook_timer = NULL;
 struct t_hook *irc_hook_timer_check_away = NULL;
+
+int irc_signal_upgrade_received = 0;   /* signal "upgrade" received ?       */
 
 
 /*
@@ -74,13 +77,32 @@ irc_signal_quit_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
+ * irc_signal_upgrade_cb: callback for "upgrade" signal
+ */
+
+int
+irc_signal_upgrade_cb (void *data, const char *signal, const char *type_data,
+                       void *signal_data)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
+    (void) signal_data;
+    
+    irc_signal_upgrade_received = 1;
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * weechat_plugin_init: initialize IRC plugin
  */
 
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    int i, auto_connect;
+    int i, auto_connect, upgrading;
     
     weechat_plugin = plugin;
     
@@ -95,6 +117,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* hook some signals */
     irc_debug_init ();
     weechat_hook_signal ("quit", &irc_signal_quit_cb, NULL);
+    weechat_hook_signal ("upgrade", &irc_signal_upgrade_cb, NULL);
     weechat_hook_signal ("xfer_send_ready", &irc_server_xfer_send_ready_cb, NULL);
     weechat_hook_signal ("xfer_resume_ready", &irc_server_xfer_resume_ready_cb, NULL);
     weechat_hook_signal ("xfer_send_accept_resume", &irc_server_xfer_send_accept_resume_cb, NULL);
@@ -104,6 +127,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     /* look at arguments */
     auto_connect = 1;
+    upgrading = 0;
     for (i = 0; i < argc; i++)
     {
         if ((weechat_strcasecmp (argv[i], "-a") == 0)
@@ -122,9 +146,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                                 argv[i]);
             }
         }
+        else if (weechat_strcasecmp (argv[i], "--upgrade") == 0)
+        {
+            upgrading = 1;
+        }
     }
-    
-    irc_server_auto_connect (auto_connect, 0);
+
+    if (upgrading)
+        irc_upgrade_load ();
+    else
+        irc_server_auto_connect (auto_connect, 0);
     
     irc_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
                                          &irc_server_timer_cb, NULL);
@@ -152,7 +183,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     
     irc_config_write ();
     
-    irc_server_disconnect_all ();
+    if (irc_signal_upgrade_received)
+        irc_upgrade_save ();
+    else
+        irc_server_disconnect_all ();
+    
     irc_server_free_all ();
     
     return WEECHAT_RC_OK;

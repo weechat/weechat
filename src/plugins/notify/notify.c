@@ -209,7 +209,7 @@ notify_set_buffer (struct t_gui_buffer *buffer)
 void
 notify_set_buffer_all ()
 {
-    struct t_plugin_infolist *ptr_infolist;
+    struct t_infolist *ptr_infolist;
     
     ptr_infolist = weechat_infolist_get ("buffer", NULL, NULL);
     if (ptr_infolist)
