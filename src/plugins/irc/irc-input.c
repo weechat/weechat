@@ -48,33 +48,17 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
     
     if (ptr_channel)
     {
-        if (ptr_channel->type == IRC_CHANNEL_TYPE_PRIVATE)
-        {
-            weechat_printf (buffer,
-                            "%s%s",
-                            irc_nick_as_prefix (NULL, ptr_server->nick,
-                                                IRC_COLOR_CHAT_NICK_SELF),
-                            (text_decoded) ? text_decoded : text);
-        }
-        else
-        {
+        if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
             ptr_nick = irc_nick_search (ptr_channel, ptr_server->nick);
-            if (ptr_nick)
-            {
-                weechat_printf (buffer,
-                                "%s%s",
-                                irc_nick_as_prefix (ptr_nick, NULL,
-                                                    IRC_COLOR_CHAT_NICK_SELF),
-                                (text_decoded) ? text_decoded : text);
-            }
-            else
-            {
-                weechat_printf (ptr_server->buffer,
-                                _("%s%s: cannot find nick for sending "
-                                  "message"),
-                                weechat_prefix ("error"), "irc");
-            }
-        }
+        else
+            ptr_nick = NULL;
+        
+        weechat_printf (buffer,
+                        "%s%s",
+                        irc_nick_as_prefix ((ptr_nick) ? ptr_nick : NULL,
+                                            (ptr_nick) ? NULL : ptr_server->nick,
+                                            IRC_COLOR_CHAT_NICK_SELF),
+                        (text_decoded) ? text_decoded : text);
     }
     
     if (text_decoded)
