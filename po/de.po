@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-13 16:43+0200\n"
+"POT-Creation-Date: 2008-08-22 12:08+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2050,7 +2050,7 @@ msgstr "%s Fehler beim Lesen vom FIFO, FIFO wird geschlossen\n"
 
 # ???
 #, fuzzy, c-format
-msgid "%s%s: invalid syntax for IRC server ('%s'), ignored"
+msgid "%s%s: error with IRC server from URL (\"s\"), ignored"
 msgstr "%s ungültige Syntax für IRC-Server ('%s'), ignoriert\n"
 
 #, fuzzy, c-format
@@ -2087,8 +2087,8 @@ msgid "%s%s: missing argument for \"%s\" option"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
-msgstr "%s Server \"%s\" nicht gefunden\n"
+msgid "%s: server %s%s%s created"
+msgstr "Server %s%s%s angelegt\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create server \"%s\""
@@ -2130,10 +2130,6 @@ msgstr ""
 "ausgeführt werden\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nick \"%s\" not found for \"%s\" command"
-msgstr "%s Nickname \"%s\" für den \"%s\"-Befehl nicht gefunden\n"
-
-#, fuzzy, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s kann kein neues privates Fenster \"%s\" erzeugen\n"
 
@@ -2172,24 +2168,12 @@ msgstr ""
 "werden!\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s created"
-msgstr "Server %s%s%s angelegt\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to create server"
 msgstr "%s kann den Server nicht anlegen\n"
 
 #, fuzzy, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "Server %s%s%s wurde gelöscht\n"
-
-#, fuzzy, c-format
-msgid "%s%s: server \"%s\" is not a temporary server"
-msgstr "%s Server \"%s\" nicht gefunden\n"
-
-#, fuzzy, c-format
-msgid "%s: server %s%s%s is not temporary any more"
-msgstr "%s Server \"%s\" nicht gefunden\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -2286,7 +2270,7 @@ msgid ""
 "      -all: connect to all servers\n"
 "servername: internal server name to connect\n"
 "   -nojoin: do not join any channel (even if autojoin is enabled on server)\n"
-"  hostname: hostname to connect, creating temporary server\n"
+"  hostname: hostname to connect\n"
 "      port: port for server (integer, default is 6667)\n"
 "      ipv6: use IPv6 protocol\n"
 "       ssl: use SSL protocol"
@@ -2716,10 +2700,8 @@ msgstr "Auflisten, Hinzufügen oder Entfernen von Servern"
 #, fuzzy
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
-"port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1,"
-"nick2,...] [-username username] [-realname realname] [-autojoin channel[,"
-"channel]] ] | [copy servername newservername] | [rename servername "
-"newservername] | [keep servername] | [del servername]"
+"port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
+"[rename servername newservername] | [del servername]"
 msgstr ""
 "[Servername] | [Servername Hostname Port [-auto | -noauto] [-ipv6] [-ssl] [-"
 "pwd Passwort] [-nicks Nick1 Nick2 Nick3] [-username Benutzername] [-realname "
@@ -2733,21 +2715,25 @@ msgid ""
 "servername: server name, for internal and display use\n"
 "  hostname: name or IP address of server, with optional port (default: "
 "6667)\n"
-"      temp: create temporary server (not saved in config file)\n"
 "      auto: automatically connect to server when WeeChat starts\n"
 "    noauto: do not connect to server when WeeChat starts (default)\n"
 "      ipv6: use IPv6 protocol\n"
 "       ssl: use SSL protocol\n"
-"  password: password for server\n"
-"nick1,2,..: nicknames for server\n"
-"  username: user name\n"
-"  realname: real name of user\n"
 "      copy: duplicate a server\n"
 "    rename: rename a server\n"
-"      keep: keep server in config file (for temporary servers only)\n"
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
-"is currently sending)"
+"is currently sending)\n"
+"\n"
+"Examples:\n"
+"  /server listfull\n"
+"  /server add oftc irc.oftc.net/6697 -ssl\n"
+"  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl\n"
+"  /server add freenode2 chat.eu.freenode.net/6697,chat.us.freenode.net/6667\n"
+"  /server copy oftc oftcbis\n"
+"  /server rename oftc newoftc\n"
+"  /server del freenode\n"
+"  /server deloutq"
 msgstr ""
 "Servername: anzuzeigender Servername\n"
 "  Hostname: Name oder IP-Adresse des Servers\n"
@@ -3151,12 +3137,6 @@ msgstr "an"
 
 msgid "off"
 msgstr "aus"
-
-msgid " (temporary server, will not be saved)"
-msgstr " (temporärer Server, wird nicht gespeichert)"
-
-msgid " (temporary)"
-msgstr ""
 
 #, fuzzy
 msgid "channel"
@@ -3766,6 +3746,10 @@ msgstr "%s \"%s\"-Befehl empfangen ohne Host\n"
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s Neuer Server konnte nicht alloziert werden\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating new server \"%s\""
+msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
 
 #, c-format
 msgid ""
@@ -4600,6 +4584,25 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
+#~ msgstr "%s Server \"%s\" nicht gefunden\n"
+
+#, fuzzy
+#~ msgid "%s%s: nick \"%s\" not found for \"%s\" command"
+#~ msgstr "%s Nickname \"%s\" für den \"%s\"-Befehl nicht gefunden\n"
+
+#, fuzzy
+#~ msgid "%s%s: server \"%s\" is not a temporary server"
+#~ msgstr "%s Server \"%s\" nicht gefunden\n"
+
+#, fuzzy
+#~ msgid "%s: server %s%s%s is not temporary any more"
+#~ msgstr "%s Server \"%s\" nicht gefunden\n"
+
+#~ msgid " (temporary server, will not be saved)"
+#~ msgstr " (temporärer Server, wird nicht gespeichert)"
 
 #, fuzzy
 #~ msgid "write of infolist type 'integer'"

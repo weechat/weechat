@@ -1234,6 +1234,37 @@ static XS (XS_weechat_config_option_set)
 }
 
 /*
+ * weechat::config_option_unset: unset an option
+ */
+
+static XS (XS_weechat_config_option_unset)
+{
+    int rc;
+    char *option;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_unset");
+	PERL_RETURN_INT(0);
+    }
+    
+    if (items < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_unset");
+        PERL_RETURN_INT(0);
+    }
+    
+    option = SvPV (ST (0), PL_na);
+    rc = weechat_config_option_unset (script_str2ptr (option));
+    
+    PERL_RETURN_INT(rc);
+}
+
+/*
  * weechat::config_option_rename: rename an option
  */
 
@@ -3878,6 +3909,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::config_string_to_boolean", XS_weechat_config_string_to_boolean, "weechat");
     newXS ("weechat::config_option_reset", XS_weechat_config_option_reset, "weechat");
     newXS ("weechat::config_option_set", XS_weechat_config_option_set, "weechat");
+    newXS ("weechat::config_option_unset", XS_weechat_config_option_unset, "weechat");
     newXS ("weechat::config_option_rename", XS_weechat_config_option_rename, "weechat");
     newXS ("weechat::config_boolean", XS_weechat_config_boolean, "weechat");
     newXS ("weechat::config_integer", XS_weechat_config_integer, "weechat");

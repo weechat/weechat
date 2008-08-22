@@ -1510,6 +1510,42 @@ weechat_ruby_api_config_option_set (VALUE class, VALUE option, VALUE new_value,
 }
 
 /*
+ * weechat_ruby_api_config_option_unset: unset an option
+ */
+
+static VALUE
+weechat_ruby_api_config_option_unset (VALUE class, VALUE option)
+{
+    char *c_option;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_unset");
+        RUBY_RETURN_INT(0);
+    }
+    
+    c_option = NULL;
+    
+    if (NIL_P (option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_unset");
+        RUBY_RETURN_INT(0);
+    }
+    
+    Check_Type (option, T_STRING);
+    
+    c_option = STR2CSTR (option);
+    
+    rc = weechat_config_option_unset (script_str2ptr (c_option));
+    
+    RUBY_RETURN_INT(rc);
+}
+
+/*
  * weechat_ruby_api_config_option_rename: rename an option
  */
 
@@ -4756,6 +4792,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "config_string_to_boolean", &weechat_ruby_api_config_string_to_boolean, 1);
     rb_define_module_function (ruby_mWeechat, "config_option_reset", &weechat_ruby_api_config_option_reset, 2);
     rb_define_module_function (ruby_mWeechat, "config_option_set", &weechat_ruby_api_config_option_set, 3);
+    rb_define_module_function (ruby_mWeechat, "config_option_unset", &weechat_ruby_api_config_option_unset, 1);
     rb_define_module_function (ruby_mWeechat, "config_option_rename", &weechat_ruby_api_config_option_rename, 2);
     rb_define_module_function (ruby_mWeechat, "config_boolean", &weechat_ruby_api_config_boolean, 1);
     rb_define_module_function (ruby_mWeechat, "config_integer", &weechat_ruby_api_config_integer, 1);

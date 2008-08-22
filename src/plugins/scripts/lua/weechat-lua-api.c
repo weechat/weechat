@@ -1479,6 +1479,42 @@ weechat_lua_api_config_option_set (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_config_option_unset: unset an option
+ */
+
+static int
+weechat_lua_api_config_option_unset (lua_State *L)
+{
+    const char *option;
+    int n, rc;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_unset");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_unset");
+        LUA_RETURN_INT(0);
+    }
+    
+    option = lua_tostring (lua_current_interpreter, -1);
+    
+    rc = weechat_config_option_unset (script_str2ptr (option));
+    
+    LUA_RETURN_INT(rc);
+}
+
+/*
  * weechat_lua_api_config_option_rename: rename an option
  */
 
@@ -4950,6 +4986,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "config_string_to_boolean", &weechat_lua_api_config_string_to_boolean },
     { "config_option_reset", &weechat_lua_api_config_option_reset },
     { "config_option_set", &weechat_lua_api_config_option_set },
+    { "config_option_unset", &weechat_lua_api_config_option_unset },
     { "config_option_rename", &weechat_lua_api_config_option_rename },
     { "config_boolean", &weechat_lua_api_config_boolean },
     { "config_integer", &weechat_lua_api_config_integer },

@@ -349,6 +349,7 @@ plugin_load (const char *filename)
         new_plugin->config_string_to_boolean = &config_file_string_to_boolean;
         new_plugin->config_option_reset = &config_file_option_reset;
         new_plugin->config_option_set = &config_file_option_set;
+        new_plugin->config_option_unset = &config_file_option_unset;
         new_plugin->config_option_rename = &config_file_option_rename;
         new_plugin->config_option_get_pointer = &config_file_option_get_pointer;
         new_plugin->config_boolean = &config_file_option_boolean;

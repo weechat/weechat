@@ -1303,6 +1303,38 @@ weechat_python_api_config_option_set (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_config_option_unset: unset an option
+ */
+
+static PyObject *
+weechat_python_api_config_option_unset (PyObject *self, PyObject *args)
+{
+    char *option;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("config_option_unset");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    option = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &option))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_option_unset");
+        PYTHON_RETURN_INT(0);
+    }
+    
+    rc = weechat_config_option_unset (script_str2ptr (option));
+    
+    PYTHON_RETURN_INT(rc);
+}
+
+/*
  * weechat_python_api_config_option_rename: rename an option
  */
 
@@ -4121,6 +4153,7 @@ PyMethodDef weechat_python_funcs[] =
     { "config_string_to_boolean", &weechat_python_api_config_string_to_boolean, METH_VARARGS, "" },
     { "config_option_reset", &weechat_python_api_config_option_reset, METH_VARARGS, "" },
     { "config_option_set", &weechat_python_api_config_option_set, METH_VARARGS, "" },
+    { "config_option_unset", &weechat_python_api_config_option_unset, METH_VARARGS, "" },
     { "config_option_rename", &weechat_python_api_config_option_rename, METH_VARARGS, "" },
     { "config_boolean", &weechat_python_api_config_boolean, METH_VARARGS, "" },
     { "config_integer", &weechat_python_api_config_integer, METH_VARARGS, "" },

@@ -166,10 +166,8 @@ irc_display_server (struct t_irc_server *server, int with_detail)
                         _("connected") : _("not connected"),
                         IRC_COLOR_CHAT_DELIMITERS);
         
-        weechat_printf (NULL, "  autoconnect . . . . : %s%s",
-                        (server->autoconnect) ? _("on") : _("off"),
-                        (server->temp_server) ?
-                        _(" (temporary server, will not be saved)") : "");
+        weechat_printf (NULL, "  autoconnect . . . . : %s",
+                        (server->autoconnect) ? _("on") : _("off"));
         weechat_printf (NULL, "  autoreconnect . . . : %s",
                         (server->autoreconnect) ? _("on") : _("off"));
         weechat_printf (NULL, "  autoreconnect_delay : %d %s",
@@ -228,7 +226,7 @@ irc_display_server (struct t_irc_server *server, int with_detail)
         {
             num_channels = irc_server_get_channel_count (server);
             num_pv = irc_server_get_pv_count (server);
-            weechat_printf (NULL, " %s %s%s %s[%s%s%s]%s%s, %d %s, %d pv",
+            weechat_printf (NULL, " %s %s%s %s[%s%s%s]%s, %d %s, %d pv",
                             (server->is_connected) ? "*" : " ",
                             IRC_COLOR_CHAT_SERVER,
                             server->name,
@@ -238,20 +236,16 @@ irc_display_server (struct t_irc_server *server, int with_detail)
                             _("connected") : _("not connected"),
                             IRC_COLOR_CHAT_DELIMITERS,
                             IRC_COLOR_CHAT,
-                            (server->temp_server) ? _(" (temporary)") : "",
                             num_channels,
-                            NG_("channel", "channels",
-                                num_channels),
+                            NG_("channel", "channels", num_channels),
                             num_pv);
         }
         else
         {
-            weechat_printf (NULL, " %s %s%s%s%s",
+            weechat_printf (NULL, " %s %s%s",
                             (server->is_connected) ? "*" : " ",
                             IRC_COLOR_CHAT_SERVER,
-                            server->name,
-                            IRC_COLOR_CHAT,
-                            (server->temp_server) ? _(" (temporary)") : "");
+                            server->name);
         }
     }
 }

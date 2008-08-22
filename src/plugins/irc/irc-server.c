@@ -49,6 +49,57 @@ struct t_irc_message *irc_msgq_last_msg = NULL;
 
 
 /*
+ * irc_server_get_name_without_port: get name of server without port
+ *                                   (ends before first '/' if found)
+ */
+
+char *
+irc_server_get_name_without_port (const char *name)
+{
+    char *pos;
+    
+    if (!name)
+        return NULL;
+    
+    pos = strchr (name, '/');
+    if (pos && (pos != name))
+        return weechat_strndup (name, pos - name);
+    
+    return strdup (name);
+}
+
+/*
+ * irc_server_new_option: create option in configuration for a server option
+ */
+
+void
+irc_server_new_option (struct t_irc_server *server, int index_option,
+                       const char *value)
+{
+    int length;
+    char *option_name;
+    
+    length = strlen (server->name) + 1 +
+        strlen (irc_config_server_option_string[index_option]) + 1;
+    option_name = malloc (length);
+    if (option_name)
+    {
+        snprintf (option_name, length, "%s.%s",
+                  server->name,
+                  irc_config_server_option_string[index_option]);
+        irc_config_server_new_option (irc_config_file,
+                                      irc_config_section_server,
+                                      index_option,
+                                      option_name,
+                                      value,
+                                      &irc_config_server_change_cb,
+                                      irc_config_server_option_string[index_option],
+                                      &irc_config_server_delete_cb,
+                                      irc_config_server_option_string[index_option]);
+    }
+}
+
+/*
  * irc_server_set_addresses: set addresses for server
  */
 
@@ -252,7 +303,6 @@ irc_server_init (struct t_irc_server *server)
     server->autoconnect = IRC_CONFIG_SERVER_DEFAULT_AUTOCONNECT;
     server->autoreconnect = IRC_CONFIG_SERVER_DEFAULT_AUTORECONNECT;
     server->autoreconnect_delay = IRC_CONFIG_SERVER_DEFAULT_AUTORECONNECT_DELAY;
-    server->temp_server = 0;
     server->addresses = NULL;
     server->ipv6 = IRC_CONFIG_SERVER_DEFAULT_IPV6;
     server->ssl = IRC_CONFIG_SERVER_DEFAULT_SSL;
@@ -320,6 +370,9 @@ struct t_irc_server *
 irc_server_alloc (const char *name)
 {
     struct t_irc_server *new_server;
+
+    if (irc_server_search (name))
+        return NULL;
     
     /* alloc memory for new server */
     if ((new_server = malloc (sizeof (*new_server))) == NULL)
@@ -361,7 +414,9 @@ irc_server_alloc_with_url (const char *irc_url)
 {
     char *irc_url2, *url, *pos_server, *pos_channel, *pos, *pos2;
     char *password, *nick1, *nicks, *autojoin;
-    int ipv6, ssl, length;
+    char *default_nicks, *default_password, *default_autojoin, value[16];
+    char *server_name;
+    int ipv6, ssl, default_ipv6, default_ssl, length;
     struct t_irc_server *ptr_server;
     
     irc_url2 = strdup (irc_url);
@@ -447,15 +502,26 @@ irc_server_alloc_with_url (const char *irc_url)
             strcat (autojoin, pos_channel);
         }
     }
-    
-    ptr_server = irc_server_alloc (pos_server);
+
+    /* server name ends before first '/' (if found) */
+    server_name = irc_server_get_name_without_port (pos_server);
+    ptr_server = irc_server_alloc (server_name);
+    if (server_name)
+        free (server_name);
     
     if (ptr_server)
     {
         irc_server_set_addresses (ptr_server, pos_server);
+        
+        default_ipv6 = ptr_server->ipv6;
+        default_ssl = ptr_server->ssl;
+        default_nicks = (ptr_server->nicks) ? strdup (ptr_server->nicks) : NULL;
+        default_password = (ptr_server->password) ? strdup (ptr_server->password) : NULL;
+        default_autojoin = (ptr_server->autojoin) ? strdup (ptr_server->autojoin) : NULL;
+        
         ptr_server->ipv6 = ipv6;
         ptr_server->ssl = ssl;
-
+        
         if (nick1)
         {
             length = ((strlen (nick1) + 2) * 5) + 1;
@@ -471,10 +537,60 @@ irc_server_alloc_with_url (const char *irc_url)
         }
         ptr_server->password = (password) ? strdup (password) : NULL;
         ptr_server->autojoin = (autojoin) ? strdup (autojoin) : NULL;
-        ptr_server->temp_server = 1;
         ptr_server->autoconnect = 1;
+        
+        /* create server options */
+        irc_server_new_option (ptr_server,
+                               IRC_CONFIG_SERVER_ADDRESSES,
+                               ptr_server->addresses);
+        if (default_ipv6 != ptr_server->ipv6)
+        {
+            snprintf (value, sizeof (value),
+                      "%s",
+                      (ptr_server->ipv6) ? "on" : "off");
+            irc_server_new_option (ptr_server,
+                                   IRC_CONFIG_SERVER_IPV6,
+                                   value);
+        }
+        if (default_ssl != ptr_server->ssl)
+        {
+            snprintf (value, sizeof (value),
+                      "%s",
+                      (ptr_server->ssl) ? "on" : "off");
+            irc_server_new_option (ptr_server,
+                                   IRC_CONFIG_SERVER_SSL,
+                                   value);
+        }
+        if (ptr_server->nicks
+            && (!default_nicks || strcmp (default_nicks, ptr_server->nicks) != 0))
+        {
+            irc_server_new_option (ptr_server,
+                                   IRC_CONFIG_SERVER_NICKS,
+                                   ptr_server->nicks);
+        }
+        if (ptr_server->password
+            && (!default_password || strcmp (default_password, ptr_server->password) != 0))
+        {
+            irc_server_new_option (ptr_server,
+                                   IRC_CONFIG_SERVER_PASSWORD,
+                                   ptr_server->password);
+        }
+        if (ptr_server->autojoin
+            && (!default_autojoin || strcmp (default_autojoin, ptr_server->autojoin) != 0))
+        {
+            irc_server_new_option (ptr_server,
+                                   IRC_CONFIG_SERVER_AUTOJOIN,
+                                   ptr_server->autojoin);
+        }
     }
-
+    else
+    {
+        weechat_printf (NULL,
+                        _("%s%s: error creating new server \"%s\""),
+                        weechat_prefix ("error"), "irc",
+                        pos_server);
+    }
+    
     if (password)
         free (password);
     if (nick1)
@@ -621,13 +737,15 @@ void
 irc_server_free (struct t_irc_server *server)
 {
     struct t_irc_server *new_irc_servers;
-
+    
     if (!server)
         return;
     
     /* close any opened channel/private */
     while (server->channels)
+    {
         irc_channel_free (server, server->channels);
+    }
     
     /* remove server from queue */
     if (last_irc_server == server)
@@ -666,11 +784,11 @@ irc_server_free_all ()
 
 struct t_irc_server *
 irc_server_new (const char *name, int autoconnect, int autoreconnect,
-                int autoreconnect_delay, int temp_server, const char *addresses,
-                int ipv6, int ssl, const char *password, const char *nicks,
-                const char *username, const char *realname, const char *local_hostname,
-                const char *command, int command_delay, const char *autojoin,
-                int autorejoin)
+                int autoreconnect_delay, const char *addresses, int ipv6,
+                int ssl, const char *password, const char *nicks,
+                const char *username, const char *realname,
+                const char *local_hostname, const char *command,
+                int command_delay, const char *autojoin, int autorejoin)
 {
     struct t_irc_server *new_server;
     
@@ -698,7 +816,6 @@ irc_server_new (const char *name, int autoconnect, int autoreconnect,
         new_server->autoconnect = autoconnect;
         new_server->autoreconnect = autoreconnect;
         new_server->autoreconnect_delay = autoreconnect_delay;
-        new_server->temp_server = temp_server;
         irc_server_set_addresses (new_server, addresses);
         new_server->ipv6 = ipv6;
         new_server->ssl = ssl;
@@ -730,20 +847,23 @@ irc_server_new (const char *name, int autoconnect, int autoreconnect,
  */
 
 struct t_irc_server *
-irc_server_duplicate (struct t_irc_server *server, const char *new_name)
+irc_server_duplicate (struct t_irc_server *server, const char *new_server_name)
 {
     struct t_irc_server *new_server;
+    int length, index_option;
+    char *mask, *option_name, *pos_option;
+    struct t_config_option *ptr_option;
+    struct t_infolist *infolist;
     
     /* check if another server exists with this name */
-    if (irc_server_search (new_name))
-        return 0;
+    if (irc_server_search (new_server_name))
+        return NULL;
     
     /* duplicate server */
-    new_server = irc_server_new (new_name,
+    new_server = irc_server_new (new_server_name,
                                  server->autoconnect,
                                  server->autoreconnect,
                                  server->autoreconnect_delay,
-                                 server->temp_server,
                                  server->addresses,
                                  server->ipv6,
                                  server->ssl,
@@ -757,6 +877,46 @@ irc_server_duplicate (struct t_irc_server *server, const char *new_name)
                                  server->autojoin,
                                  server->autorejoin);
     
+    if (new_server)
+    {
+        /* duplicate options */
+        length = 32 + strlen (server->name) + 1;
+        mask = malloc (length);
+        if (!mask)
+            return 0;
+        snprintf (mask, length, "irc.server.%s.*", server->name);
+        infolist = weechat_infolist_get ("options", NULL, mask);
+        free (mask);
+        while (weechat_infolist_next (infolist))
+        {
+            weechat_config_search_with_string (weechat_infolist_string (infolist,
+                                                                        "full_name"),
+                                               NULL, NULL, &ptr_option,
+                                               NULL);
+            if (ptr_option)
+            {
+                option_name = weechat_infolist_string (infolist, "option_name");
+                if (option_name)
+                {
+                    pos_option = strrchr (option_name, '.');
+                    if (pos_option)
+                    {
+                        pos_option++;
+                        
+                        index_option = irc_config_search_server_option (pos_option);
+                        if (index_option >= 0)
+                        {
+                            irc_server_new_option (new_server,
+                                                   index_option,
+                                                   weechat_infolist_string (infolist, "value"));
+                        }
+                    }
+                }
+            }
+        }
+        weechat_infolist_free (infolist);
+    }
+    
     return new_server;
 }
 
@@ -766,25 +926,26 @@ irc_server_duplicate (struct t_irc_server *server, const char *new_name)
  */
 
 int
-irc_server_rename (struct t_irc_server *server, const char *new_name)
+irc_server_rename (struct t_irc_server *server, const char *new_server_name)
 {
     int length;
-    char *option_name, *name, *pos_option;
+    char *mask, *option_name, *pos_option, *new_option_name;
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
+    struct t_irc_channel *ptr_channel;
     
     /* check if another server exists with this name */
-    if (irc_server_search (new_name))
+    if (irc_server_search (new_server_name))
         return 0;
     
     /* rename options */
     length = 32 + strlen (server->name) + 1;
-    option_name = malloc (length);
-    if (!option_name)
+    mask = malloc (length);
+    if (!mask)
         return 0;
-    snprintf (option_name, length, "irc.server.%s.*", server->name);
-    infolist = weechat_infolist_get ("options", NULL, option_name);
-    free (option_name);
+    snprintf (mask, length, "irc.server.%s.*", server->name);
+    infolist = weechat_infolist_get ("options", NULL, mask);
+    free (mask);
     while (weechat_infolist_next (infolist))
     {
         weechat_config_search_with_string (weechat_infolist_string (infolist,
@@ -793,18 +954,22 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
                                            NULL);
         if (ptr_option)
         {
-            name = weechat_infolist_string (infolist, "name");
-            pos_option = strchr (name, '.');
-            if (pos_option)
+            option_name = weechat_infolist_string (infolist, "option_name");
+            if (option_name)
             {
-                pos_option++;
-                length = strlen (new_name) + 1 + strlen (pos_option) + 1;
-                option_name = malloc (length);
-                if (option_name)
+                pos_option = strrchr (option_name, '.');
+                if (pos_option)
                 {
-                    snprintf (option_name, length, "%s.%s", new_name, pos_option);
-                    weechat_config_option_rename (ptr_option, option_name);
-                    free (option_name);
+                    pos_option++;
+                    length = strlen (new_server_name) + 1 + strlen (pos_option) + 1;
+                    new_option_name = malloc (length);
+                    if (new_option_name)
+                    {
+                        snprintf (new_option_name, length,
+                                  "%s.%s", new_server_name, pos_option);
+                        weechat_config_option_rename (ptr_option, new_option_name);
+                        free (new_option_name);
+                    }
                 }
             }
         }
@@ -814,7 +979,21 @@ irc_server_rename (struct t_irc_server *server, const char *new_name)
     /* rename server */
     if (server->name)
         free (server->name);
-    server->name = strdup (new_name);
+    server->name = strdup (new_server_name);
+
+    /* change "category" for buffers with this server */
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel->buffer)
+            weechat_buffer_set (ptr_channel->buffer, "category", server->name);
+    }
+    if (server->buffer)
+    {
+        weechat_buffer_set (server->buffer, "category", server->name);
+        weechat_buffer_set (server->buffer, "name", server->name);
+    }
+    
     return 1;
 }
 
@@ -2045,15 +2224,14 @@ irc_server_reconnect (struct t_irc_server *server)
  */
 
 void
-irc_server_auto_connect (int auto_connect, int temp_server)
+irc_server_auto_connect (int auto_connect)
 {
     struct t_irc_server *ptr_server;
     
     for (ptr_server = irc_servers; ptr_server;
          ptr_server = ptr_server->next_server)
     {
-        if ( ((temp_server) && (ptr_server->temp_server))
-            || ((!temp_server) && (auto_connect) && (ptr_server->autoconnect)) )
+        if ((auto_connect) && (ptr_server->autoconnect))
         {
             if (!irc_server_connect (ptr_server, 0))
                 irc_server_reconnect_schedule (ptr_server);
@@ -2553,8 +2731,6 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "autoreconnect_delay", server->autoreconnect_delay))
         return 0;
-    if (!weechat_infolist_new_var_integer (ptr_item, "temp_server", server->temp_server))
-        return 0;
     if (!weechat_infolist_new_var_string (ptr_item, "addresses", server->addresses))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "ipv6", server->ipv6))
@@ -2642,7 +2818,6 @@ irc_server_print_log ()
         weechat_log_printf ("  autoconnect . . . . : %d",   ptr_server->autoconnect);
         weechat_log_printf ("  autoreconnect . . . : %d",   ptr_server->autoreconnect);
         weechat_log_printf ("  autoreconnect_delay : %d",   ptr_server->autoreconnect_delay);
-        weechat_log_printf ("  temp_server . . . . : %d",   ptr_server->temp_server);
         weechat_log_printf ("  addresses . . . . . : '%s'", ptr_server->addresses);
         weechat_log_printf ("  ipv6. . . . . . . . : %d",   ptr_server->ipv6);
         weechat_log_printf ("  ssl . . . . . . . . : %d",   ptr_server->ssl);

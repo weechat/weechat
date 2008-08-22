@@ -62,7 +62,6 @@ struct t_irc_server
     int autoconnect;                /* = 1 if auto connect at startup        */
     int autoreconnect;              /* = 1 if auto reco when disconnected    */
     int autoreconnect_delay;        /* delay before trying again reconnect   */
-    int temp_server;                /* server is temporary (not saved!)      */
     char *addresses;                /* server addresses (IP/name with port)  */
     int ipv6;                       /* use IPv6 protocol                     */
     int ssl;                        /* SSL protocol                          */
@@ -136,6 +135,10 @@ extern const int gnutls_prot_prio[];
 extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
 
 
+extern char *irc_server_get_name_without_port (const char *name);
+extern void irc_server_new_option (struct t_irc_server *server,
+                                   int index_option,
+                                   const char *value);
 extern void irc_server_set_addresses (struct t_irc_server *server,
                                       const char *addresses);
 extern void irc_server_set_nicks (struct t_irc_server *server, const char *nicks);
@@ -150,12 +153,17 @@ extern void irc_server_free_all ();
 extern struct t_irc_server *irc_server_new (const char *name, int autoconnect,
                                             int autoreconnect,
                                             int autoreconnect_delay,
-                                            int temp_server, const char *addresses,
-                                            int ipv6, int ssl,
-                                            const char *password, const char *nicks,
-                                            const char *username, const char *realname,
-                                            const char *hostname, const char *command,
-                                            int command_delay, const char *autojoin,
+                                            const char *addresses,
+                                            int ipv6,
+                                            int ssl,
+                                            const char *password,
+                                            const char *nicks,
+                                            const char *username,
+                                            const char *realname,
+                                            const char *hostname,
+                                            const char *command,
+                                            int command_delay,
+                                            const char *autojoin,
                                             int autorejoin);
 extern struct t_irc_server *irc_server_duplicate (struct t_irc_server *server,
                                                   const char *new_name);
@@ -167,7 +175,7 @@ extern void irc_server_sendf (struct t_irc_server *server, const char *format, .
 extern struct t_irc_server *irc_server_search (const char *server_name);
 extern int irc_server_connect (struct t_irc_server *server,
                                int disable_autojoin);
-extern void irc_server_auto_connect (int auto_connect, int temp_server);
+extern void irc_server_auto_connect (int auto_connect);
 extern void irc_server_autojoin_channels ();
 extern int irc_server_recv_cb (void *arg_server);
 extern int irc_server_timer_cb (void *data);

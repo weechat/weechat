@@ -140,8 +140,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
             if (!irc_server_alloc_with_url (argv[i]))
             {
                 weechat_printf (NULL,
-                                _("%s%s: invalid syntax for IRC server "
-                                  "('%s'), ignored"),
+                                _("%s%s: error with IRC server from URL "
+                                  "(\"s\"), ignored"),
                                 weechat_prefix ("error"), "irc",
                                 argv[i]);
             }
@@ -151,11 +151,11 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
             upgrading = 1;
         }
     }
-
+    
     if (upgrading)
         irc_upgrade_load ();
     else
-        irc_server_auto_connect (auto_connect, 0);
+        irc_server_auto_connect (auto_connect);
     
     irc_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
                                          &irc_server_timer_cb, NULL);

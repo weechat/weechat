@@ -120,7 +120,7 @@ irc_config_get_server_from_option_name (const char *name)
     
     if (name)
     {
-        pos_option = strchr (name, '.');
+        pos_option = strrchr (name, '.');
         if (pos_option)
         {
             server_name = weechat_strndup (name, pos_option - name);
@@ -343,20 +343,21 @@ irc_config_reload_servers_from_config ()
     struct t_infolist *infolist;
     struct t_irc_server *ptr_server;
     struct t_config_option *ptr_option;
-    char *name, *full_name, *server_name, *pos_option;
+    char *full_name, *option_name, *server_name, *pos_option;
     int i, index_option;
     
     infolist = weechat_infolist_get ("options", NULL, "irc.server.*");
     while (weechat_infolist_next (infolist))
     {
-        name = weechat_infolist_string (infolist, "name");
         full_name = weechat_infolist_string (infolist, "full_name");
-        if (name && full_name)
+        option_name = weechat_infolist_string (infolist, "option_name");
+        if (full_name && option_name)
         {
-            pos_option = strchr (name, '.');
+            pos_option = strrchr (option_name, '.');
             if (pos_option)
             {
-                server_name = weechat_strndup (name, pos_option - name);
+                server_name = weechat_strndup (option_name,
+                                               pos_option - option_name);
                 if (server_name)
                 {
                     pos_option++;
@@ -502,7 +503,8 @@ struct t_config_option *
 irc_config_server_new_option (struct t_config_file *config_file,
                               struct t_config_section *section,
                               int index_option,
-                              const char *option_name, const char *value,
+                              const char *option_name,
+                              const char *value,
                               void *callback_change,
                               void *callback_change_data,
                               void *callback_delete,
@@ -682,7 +684,7 @@ irc_config_server_create_option (void *data, struct t_config_file *config_file,
     
     if (option_name)
     {
-        pos_option = strchr (option_name, '.');
+        pos_option = strrchr (option_name, '.');
         if (pos_option)
         {
             server_name = weechat_strndup (option_name,

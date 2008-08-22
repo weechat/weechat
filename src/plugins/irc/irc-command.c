@@ -525,7 +525,8 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
 {
     struct t_irc_server server_tmp;
     int i, nb_connect, connect_ok, all_servers, no_join, port, ipv6, ssl;
-    char *error;
+    int default_ipv6, default_ssl;
+    char *error, value[16];
     long number;
     
     IRC_GET_SERVER(buffer);
@@ -599,15 +600,19 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                 else
                 {
                     irc_server_init (&server_tmp);
-                    server_tmp.name = strdup (argv[i]);
+                    
+                    default_ipv6 = server_tmp.ipv6;
+                    default_ssl = server_tmp.ssl;
+                    
+                    server_tmp.name = irc_server_get_name_without_port (argv[i]);
                     server_tmp.addresses = strdup (argv[i]);
                     server_tmp.ipv6 = ipv6;
                     server_tmp.ssl = ssl;
+                    
                     ptr_server = irc_server_new (server_tmp.name,
                                                  server_tmp.autoconnect,
                                                  server_tmp.autoreconnect,
                                                  server_tmp.autoreconnect_delay,
-                                                 1, /* temp server */
                                                  server_tmp.addresses,
                                                  server_tmp.ipv6,
                                                  server_tmp.ssl,
@@ -623,13 +628,35 @@ irc_command_connect (void *data, struct t_gui_buffer *buffer, int argc,
                     if (ptr_server)
                     {
                         weechat_printf (NULL,
-                                        _("%s: server %s%s%s created "
-                                          "(temporary server, "
-                                          "NOT SAVED!)"),
+                                        _("%s: server %s%s%s created"),
                                         "irc",
                                         IRC_COLOR_CHAT_SERVER,
                                         server_tmp.name,
                                         IRC_COLOR_CHAT);
+                        
+                        /* create server options */
+                        irc_server_new_option (&server_tmp,
+                                               IRC_CONFIG_SERVER_ADDRESSES,
+                                               server_tmp.addresses);
+                        if (default_ipv6 != server_tmp.ipv6)
+                        {
+                            snprintf (value, sizeof (value),
+                                      "%s",
+                                      (server_tmp.ipv6) ? "on" : "off");
+                            irc_server_new_option (&server_tmp,
+                                                   IRC_CONFIG_SERVER_IPV6,
+                                                   value);
+                        }
+                        if (default_ssl != server_tmp.ssl)
+                        {
+                            snprintf (value, sizeof (value),
+                                      "%s",
+                                      (server_tmp.ssl) ? "on" : "off");
+                            irc_server_new_option (&server_tmp,
+                                                   IRC_CONFIG_SERVER_SSL,
+                                                   value);
+                        }
+                        
                         if (!irc_command_connect_one_server (ptr_server, 0))
                             connect_ok = 0;
                     }
@@ -2518,9 +2545,12 @@ int
 irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    int i, detailed_list, one_server_found;
+    int i, detailed_list, one_server_found, length;
+    int default_autoconnect, default_ipv6, default_ssl;
     struct t_irc_server server_tmp, *ptr_server, *server_found, *new_server;
-    char *server_name;
+    char *server_name, *mask, value[16];
+    struct t_infolist *infolist;
+    struct t_config_option *ptr_option;
     
     /* make C compiler happy */
     (void) data;
@@ -2638,14 +2668,6 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_ERROR;
     }
     
-    /* TODO: fix server command */
-    weechat_printf (NULL,
-                    "%sSome server options are temporarirly disabled in "
-                    "this version, you can use /set irc.server.xxxx.yyyy = zzzz "
-                    "and /reload command to reload options from irc.conf",
-                    weechat_prefix ("error"));
-    return WEECHAT_RC_ERROR;
-    
     if (weechat_strcasecmp (argv[1], "add") == 0)
     {
         if (argc < 4)
@@ -2663,6 +2685,10 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         
         /* init server struct */
         irc_server_init (&server_tmp);
+
+        default_autoconnect = server_tmp.autoconnect;
+        default_ipv6 = server_tmp.ipv6;
+        default_ssl = server_tmp.ssl;
         
         server_tmp.name = strdup (argv[2]);
         server_tmp.addresses = strdup (argv[3]);
@@ -2672,8 +2698,6 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         {
             if (argv[i][0] == '-')
             {
-                if (weechat_strcasecmp (argv[i], "-temp") == 0)
-                    server_tmp.temp_server = 1;
                 if (weechat_strcasecmp (argv[i], "-auto") == 0)
                     server_tmp.autoconnect = 1;
                 if (weechat_strcasecmp (argv[i], "-noauto") == 0)
@@ -2682,76 +2706,6 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                     server_tmp.ipv6 = 1;
                 if (weechat_strcasecmp (argv[i], "-ssl") == 0)
                     server_tmp.ssl = 1;
-                if (weechat_strcasecmp (argv[i], "-pwd") == 0)
-                {
-                    if (i == (argc - 1))
-                    {
-                        weechat_printf (NULL,
-                                        _("%s%s: missing argument for "
-                                          "\"%s\" option"),
-                                        weechat_prefix ("error"), "irc",
-                                        "-pwd");
-                        irc_server_free_data (&server_tmp);
-                        return WEECHAT_RC_ERROR;
-                    }
-                    server_tmp.password = strdup (argv[++i]);
-                }
-                if (weechat_strcasecmp (argv[i], "-nicks") == 0)
-                {
-                    if (i == (argc - 1))
-                    {
-                        weechat_printf (NULL,
-                                        _("%s%s: missing argument for "
-                                          "\"%s\" option"),
-                                        weechat_prefix ("error"), "irc",
-                                        "-nicks");
-                        irc_server_free_data (&server_tmp);
-                        return WEECHAT_RC_ERROR;
-                    }
-                    server_tmp.nicks = strdup (argv[++i]);
-                }
-                if (weechat_strcasecmp (argv[i], "-username") == 0)
-                {
-                    if (i == (argc - 1))
-                    {
-                        weechat_printf (NULL,
-                                        _("%s%s: missing argument for "
-                                          "\"%s\" option"),
-                                        weechat_prefix ("error"), "irc",
-                                        "-username");
-                        irc_server_free_data (&server_tmp);
-                        return WEECHAT_RC_ERROR;
-                    }
-                    server_tmp.username = strdup (argv[++i]);
-                }
-                if (weechat_strcasecmp (argv[i], "-realname") == 0)
-                {
-                    if (i == (argc - 1))
-                    {
-                        weechat_printf (NULL,
-                                        _("%s%s: missing argument for "
-                                          "\"%s\" option"),
-                                        weechat_prefix ("error"), "irc",
-                                        "-realname");
-                        irc_server_free_data (&server_tmp);
-                        return WEECHAT_RC_ERROR;
-                    }
-                    server_tmp.realname = strdup (argv[++i]);
-                }
-                if (weechat_strcasecmp (argv[i], "-autojoin") == 0)
-                {
-                    if (i == (argc - 1))
-                    {
-                        weechat_printf (NULL,
-                                        _("%s%s: missing argument for "
-                                          "\"%s\" option"),
-                                        weechat_prefix ("error"), "irc",
-                                        "-autojoin");
-                        irc_server_free_data (&server_tmp);
-                        return WEECHAT_RC_ERROR;
-                    }
-                    server_tmp.autojoin = strdup (argv[++i]);
-                }
             }
         }
         
@@ -2760,7 +2714,6 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                                      server_tmp.autoconnect,
                                      server_tmp.autoreconnect,
                                      server_tmp.autoreconnect_delay,
-                                     server_tmp.temp_server,
                                      server_tmp.addresses,
                                      server_tmp.ipv6,
                                      server_tmp.ssl,
@@ -2781,6 +2734,38 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                             IRC_COLOR_CHAT_SERVER,
                             server_tmp.name,
                             IRC_COLOR_CHAT);
+
+            /* create server options */
+            irc_server_new_option (&server_tmp,
+                                   IRC_CONFIG_SERVER_ADDRESSES,
+                                   server_tmp.addresses);
+            if (default_autoconnect != server_tmp.autoconnect)
+            {
+                snprintf (value, sizeof (value),
+                          "%s",
+                          (server_tmp.autoconnect) ? "on" : "off");
+                irc_server_new_option (&server_tmp,
+                                       IRC_CONFIG_SERVER_AUTOCONNECT,
+                                       value);
+            }
+            if (default_ipv6 != server_tmp.ipv6)
+            {
+                snprintf (value, sizeof (value),
+                          "%s",
+                          (server_tmp.ipv6) ? "on" : "off");
+                irc_server_new_option (&server_tmp,
+                                       IRC_CONFIG_SERVER_IPV6,
+                                       value);
+            }
+            if (default_ssl != server_tmp.ssl)
+            {
+                snprintf (value, sizeof (value),
+                          "%s",
+                          (server_tmp.ssl) ? "on" : "off");
+                irc_server_new_option (&server_tmp,
+                                       IRC_CONFIG_SERVER_SSL,
+                                       value);
+            }
         }
         else
         {
@@ -2842,54 +2827,10 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                             IRC_COLOR_CHAT,
                             IRC_COLOR_CHAT_SERVER,
                             argv[3]);
-            //gui_window_redraw_all_buffers ();
             return WEECHAT_RC_OK;
         }
         
         return WEECHAT_RC_ERROR;
-    }
-    
-    if (weechat_strcasecmp (argv[1], "keep") == 0)
-    {
-        if (argc < 3)
-        {
-            IRC_COMMAND_TOO_FEW_ARGUMENTS(NULL, "server rename");
-        }
-        
-        /* look for server by name */
-        server_found = irc_server_search (argv[2]);
-        if (!server_found)
-        {
-            weechat_printf (NULL,
-                            _("%s%s: server \"%s\" not found for "
-                              "\"%s\" command"),
-                            weechat_prefix ("error"), "irc",
-                            argv[2], "server keep");
-            return WEECHAT_RC_ERROR;
-        }
-        
-        /* check that it is temporary server */
-        if (!server_found->temp_server)
-        {
-            weechat_printf (NULL,
-                            _("%s%s: server \"%s\" is not a temporary "
-                              "server"),
-                            weechat_prefix ("error"), "irc", argv[2]);
-            return WEECHAT_RC_ERROR;
-        }
-        
-        /* remove temporary flag on server */
-        server_found->temp_server = 0;
-        
-        weechat_printf (NULL,
-                        _("%s: server %s%s%s is not temporary any "
-                          "more"),
-                        "irc",
-                        IRC_COLOR_CHAT_SERVER,
-                        argv[2],
-                        IRC_COLOR_CHAT);
-        
-        return WEECHAT_RC_OK;
     }
     
     if (weechat_strcasecmp (argv[1], "del") == 0)
@@ -2919,24 +2860,29 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                             weechat_prefix ("error"), "irc",
                             argv[2], argv[2]);
             return WEECHAT_RC_ERROR;
-            }
-        
-            /*
-            for (ptr_buffer = gui_buffers; ptr_buffer;
-                 ptr_buffer = ptr_buffer->next_buffer)
-            {
-                if ((ptr_buffer->protocol == irc_protocol)
-                    && (IRC_BUFFER_SERVER(ptr_buffer) == server_found))
-                {
-                    IRC_BUFFER_SERVER(ptr_buffer) = NULL;
-                    IRC_BUFFER_CHANNEL(ptr_buffer) = NULL;
-                }
-            }
-            */
+        }
         
         server_name = strdup (server_found->name);
         
-        irc_server_free (server_found);
+        /* remove all options (server will be removed when last option is removed) */
+        length = 32 + strlen (server_found->name) + 1;
+        mask = malloc (length);
+        if (mask)
+        {
+            snprintf (mask, length, "irc.server.%s.*", server_found->name);
+            infolist = weechat_infolist_get ("options", NULL, mask);
+            free (mask);
+            while (weechat_infolist_next (infolist))
+            {
+                weechat_config_search_with_string (weechat_infolist_string (infolist,
+                                                                            "full_name"),
+                                                   NULL, NULL, &ptr_option,
+                                                   NULL);
+                if (ptr_option)
+                    weechat_config_option_unset (ptr_option);
+            }
+            weechat_infolist_free (infolist);
+        }
         
         weechat_printf (NULL,
                         _("%s: Server %s%s%s has been deleted"),
@@ -2946,8 +2892,6 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         IRC_COLOR_CHAT);
         if (server_name)
             free (server_name);
-        
-        //gui_window_redraw_buffer (window->buffer);
         
         return WEECHAT_RC_OK;
     }
@@ -2966,10 +2910,11 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                         "irc");
         return WEECHAT_RC_OK;
     }
-
+    
     weechat_printf (NULL,
                     _("%s%s: unknown option for \"%s\" command"),
                     weechat_prefix ("error"), "irc", "server");
+    
     return WEECHAT_RC_ERROR;
 }
 
@@ -3593,8 +3538,7 @@ irc_command_init ()
                              "servername: internal server name to connect\n"
                              "   -nojoin: do not join any channel (even if "
                              "autojoin is enabled on server)\n"
-                             "  hostname: hostname to connect, creating "
-                             "temporary server\n"
+                             "  hostname: hostname to connect\n"
                              "      port: port for server (integer, default "
                              "is 6667)\n"
                              "      ipv6: use IPv6 protocol\n"
@@ -3857,14 +3801,11 @@ irc_command_init ()
     weechat_hook_command ("server",
                           N_("list, add or remove servers"),
                           N_("[list [servername]] | [listfull [servername]] | "
-                             "[add servername hostname[/port] [-temp] "
-                             "[-auto | -noauto] [-ipv6] [-ssl] [-pwd password] "
-                             "[-nicks nick1,nick2,...] [-username username] "
-                             "[-realname realname] "
-                             "[-autojoin channel[,channel]] ] | "
+                             "[add servername hostname[/port] "
+                             "[-auto | -noauto] [-ipv6] [-ssl]] | "
                              "[copy servername newservername] | "
                              "[rename servername newservername] | "
-                             "[keep servername] | [del servername]"),
+                             "[del servername]"),
                           N_("      list: list servers (no parameter implies "
                              "this list)\n"
                              "  listfull: list servers with detailed info for "
@@ -3874,27 +3815,29 @@ irc_command_init ()
                              "display use\n"
                              "  hostname: name or IP address of server, with "
                              "optional port (default: 6667)\n"
-                             "      temp: create temporary server (not saved "
-                             "in config file)\n"
                              "      auto: automatically connect to server "
                              "when WeeChat starts\n"
                              "    noauto: do not connect to server when "
                              "WeeChat starts (default)\n"
                              "      ipv6: use IPv6 protocol\n"
                              "       ssl: use SSL protocol\n"
-                             "  password: password for server\n"
-                             "nick1,2,..: nicknames for server\n"
-                             "  username: user name\n"
-                             "  realname: real name of user\n"
                              "      copy: duplicate a server\n"
                              "    rename: rename a server\n"
-                             "      keep: keep server in config file (for "
-                             "temporary servers only)\n"
                              "       del: delete a server\n"
                              "   deloutq: delete messages out queue for all "
                              "servers (all messages "
-                             "WeeChat is currently sending)"),
-                          "add|copy|rename|keep|del|deloutq|list|listfull "
+                             "WeeChat is currently sending)\n\n"
+                             "Examples:\n"
+                             "  /server listfull\n"
+                             "  /server add oftc irc.oftc.net/6697 -ssl\n"
+                             "  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl\n"
+                             "  /server add freenode2 chat.eu.freenode.net/6697,"
+                             "chat.us.freenode.net/6667\n"
+                             "  /server copy oftc oftcbis\n"
+                             "  /server rename oftc newoftc\n"
+                             "  /server del freenode\n"
+                             "  /server deloutq"),
+                          "add|copy|rename|del|deloutq|list|listfull "
                           "%(irc_servers) %(irc_servers)",
                           &irc_command_server, NULL);
     weechat_hook_command ("servlist",

@@ -2160,7 +2160,21 @@ config_file_add_to_infolist (struct t_infolist *infolist,
                             return 0;
                         }
                         if (!infolist_new_var_string (ptr_item,
-                                                      "name",
+                                                      "config_name",
+                                                      ptr_config->name))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        if (!infolist_new_var_string (ptr_item,
+                                                      "section_name",
+                                                      ptr_section->name))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        if (!infolist_new_var_string (ptr_item,
+                                                      "option_name",
                                                       ptr_option->name))
                         {
                             free (option_full_name);

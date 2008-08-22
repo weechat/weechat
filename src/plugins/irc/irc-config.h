@@ -58,7 +58,9 @@ enum t_irc_config_server_option
 
 
 extern char *irc_config_server_option_string[];
-extern struct t_config_file *irc_config;
+extern struct t_config_file *irc_config_file;
+extern struct t_config_section *irc_config_section_server_default;
+extern struct t_config_section *irc_config_section_server;
 
 extern struct t_config_option *irc_config_look_one_server_buffer;
 extern struct t_config_option *irc_config_look_open_near_server;
@@ -89,6 +91,20 @@ extern struct t_config_option *irc_config_log_hide_nickserv_pwd;
 
 extern struct t_config_option *irc_config_server_default[];
 
+extern int irc_config_search_server_option (const char *option_name);
+extern void irc_config_server_change_cb (void *data,
+                                         struct t_config_option *option);
+extern void irc_config_server_delete_cb (void *data,
+                                         struct t_config_option *option);
+struct t_config_option *irc_config_server_new_option (struct t_config_file *config_file,
+                                                      struct t_config_section *section,
+                                                      int index_option,
+                                                      const char *option_name,
+                                                      const char *value,
+                                                      void *callback_change,
+                                                      void *callback_change_data,
+                                                      void *callback_delete,
+                                                      void *callback_delete_data);
 extern int irc_config_init ();
 extern int irc_config_read ();
 extern int irc_config_write ();

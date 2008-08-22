@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-13 16:43+0200\n"
+"POT-Creation-Date: 2008-08-22 12:08+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1117,8 +1117,8 @@ msgstr "la cadena mostrada tras la finalizaciÃ³n de los nombres de usuario"
 #, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
-"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea sin "
-"leer"
+"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea "
+"sin leer"
 
 #, fuzzy
 msgid "save configuration file on exit"
@@ -2028,7 +2028,7 @@ msgid "%s%s: error opening file, closing it"
 msgstr "%s error al leer la tuberÃ­a FIFO, cerrÃ¡ndola\n"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid syntax for IRC server ('%s'), ignored"
+msgid "%s%s: error with IRC server from URL (\"s\"), ignored"
 msgstr "%s sintaxis invÃ¡lida para el servidor IRC ('%s'), ignorado\n"
 
 #, fuzzy, c-format
@@ -2065,8 +2065,8 @@ msgid "%s%s: missing argument for \"%s\" option"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
-msgstr "%s servidor \"%s\" no encontrado\n"
+msgid "%s: server %s%s%s created"
+msgstr "Servidor %s%s%s creado\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create server \"%s\""
@@ -2107,10 +2107,6 @@ msgstr ""
 "%s el comando \"%s\" sÃ³lo puede ser ejecutado en una ventana de canal\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nick \"%s\" not found for \"%s\" command"
-msgstr "%s usuario \"%s\" no encontrado para el comando \"%s\"\n"
-
-#, fuzzy, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s no es posible crear una nueva ventana privada \"%s\"\n"
 
@@ -2147,24 +2143,12 @@ msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s el servidor \"%s\" ya existe, Â¡no se puede crear!\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s created"
-msgstr "Servidor %s%s%s creado\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to create server"
 msgstr "%s no es posible crear el servidor\n"
 
 #, fuzzy, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "El servidor %s%s%s ha sido borrado\n"
-
-#, fuzzy, c-format
-msgid "%s%s: server \"%s\" is not a temporary server"
-msgstr "%s servidor \"%s\" no encontrado\n"
-
-#, fuzzy, c-format
-msgid "%s: server %s%s%s is not temporary any more"
-msgstr "%s servidor \"%s\" no encontrado\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -2264,7 +2248,7 @@ msgid ""
 "      -all: connect to all servers\n"
 "servername: internal server name to connect\n"
 "   -nojoin: do not join any channel (even if autojoin is enabled on server)\n"
-"  hostname: hostname to connect, creating temporary server\n"
+"  hostname: hostname to connect\n"
 "      port: port for server (integer, default is 6667)\n"
 "      ipv6: use IPv6 protocol\n"
 "       ssl: use SSL protocol"
@@ -2704,10 +2688,8 @@ msgstr "lista, aÃ±de o elimina servidores"
 #, fuzzy
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
-"port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1,"
-"nick2,...] [-username username] [-realname realname] [-autojoin channel[,"
-"channel]] ] | [copy servername newservername] | [rename servername "
-"newservername] | [keep servername] | [del servername]"
+"port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
+"[rename servername newservername] | [del servername]"
 msgstr ""
 "[nombre_de_servidor] | [nombre_de_servidor nombre/IP puerto [-auto | -"
 "noauto] [-ipv6] [-ssl] [-pwd contraseÃ±a] [-nicks alias1 alias2 alias3] [-"
@@ -2722,21 +2704,25 @@ msgid ""
 "servername: server name, for internal and display use\n"
 "  hostname: name or IP address of server, with optional port (default: "
 "6667)\n"
-"      temp: create temporary server (not saved in config file)\n"
 "      auto: automatically connect to server when WeeChat starts\n"
 "    noauto: do not connect to server when WeeChat starts (default)\n"
 "      ipv6: use IPv6 protocol\n"
 "       ssl: use SSL protocol\n"
-"  password: password for server\n"
-"nick1,2,..: nicknames for server\n"
-"  username: user name\n"
-"  realname: real name of user\n"
 "      copy: duplicate a server\n"
 "    rename: rename a server\n"
-"      keep: keep server in config file (for temporary servers only)\n"
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
-"is currently sending)"
+"is currently sending)\n"
+"\n"
+"Examples:\n"
+"  /server listfull\n"
+"  /server add oftc irc.oftc.net/6697 -ssl\n"
+"  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl\n"
+"  /server add freenode2 chat.eu.freenode.net/6697,chat.us.freenode.net/6667\n"
+"  /server copy oftc oftcbis\n"
+"  /server rename oftc newoftc\n"
+"  /server del freenode\n"
+"  /server deloutq"
 msgstr ""
 " nombre_de_servidor: nombre del servidor, para uso interno y para mostrar\n"
 "nombre_de_anfitriÃ³n: nombre o direcciÃ³n IP del servidor\n"
@@ -3145,12 +3131,6 @@ msgstr "activo"
 
 msgid "off"
 msgstr "inactivo"
-
-msgid " (temporary server, will not be saved)"
-msgstr " (servidor temporal, no serÃ¡ guardado)"
-
-msgid " (temporary)"
-msgstr ""
 
 #, fuzzy
 msgid "channel"
@@ -3766,6 +3746,11 @@ msgstr "%s comando \"%s\" recibido sin host \n"
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s no ha sido posible crear un nuevo servidor\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating new server \"%s\""
+msgstr ""
+"No hay suficiente memoria para el mensaje de la barra de informaciÃ³n\n"
 
 #, c-format
 msgid ""
@@ -4608,6 +4593,25 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
+#~ msgstr "%s servidor \"%s\" no encontrado\n"
+
+#, fuzzy
+#~ msgid "%s%s: nick \"%s\" not found for \"%s\" command"
+#~ msgstr "%s usuario \"%s\" no encontrado para el comando \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: server \"%s\" is not a temporary server"
+#~ msgstr "%s servidor \"%s\" no encontrado\n"
+
+#, fuzzy
+#~ msgid "%s: server %s%s%s is not temporary any more"
+#~ msgstr "%s servidor \"%s\" no encontrado\n"
+
+#~ msgid " (temporary server, will not be saved)"
+#~ msgstr " (servidor temporal, no serÃ¡ guardado)"
 
 #, fuzzy
 #~ msgid "write of infolist type 'integer'"
@@ -5553,8 +5557,8 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ "maximum number of lines in history for one server/channel/private window "
 #~ "(0 = unlimited)"
 #~ msgstr ""
-#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/privado "
-#~ "(0 = ilimitado)"
+#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/"
+#~ "privado (0 = ilimitado)"
 
 #, fuzzy
 #~ msgid "log messages from plugins"
@@ -5748,8 +5752,8 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ "max size for aligning nick and other messages (should be >= to "
 #~ "look_align_size)"
 #~ msgstr ""
-#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a ser "
-#~ ">= a look_align_size)"
+#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a "
+#~ "ser >= a look_align_size)"
 
 #~ msgid "server name not found"
 #~ msgstr "nombre de servidor no encontrado"
@@ -6524,7 +6528,8 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #~ msgid "color for chan owner symbol (specific to unrealircd)"
 #~ msgstr ""
-#~ "color para el sÃ­mbolo de propietario de canal (especificado en unrealircd)"
+#~ "color para el sÃ­mbolo de propietario de canal (especificado en "
+#~ "unrealircd)"
 
 #~ msgid "color for chan admin symbol"
 #~ msgstr "color para el sÃ­mbolo de administrador de canal"

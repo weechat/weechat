@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-13 16:43+0200\n"
+"POT-Creation-Date: 2008-08-22 12:08+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2109,7 +2109,7 @@ msgid "%s%s: error opening file, closing it"
 msgstr "%s chyba při čtení FIFO roury, zavírám ji\n"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid syntax for IRC server ('%s'), ignored"
+msgid "%s%s: error with IRC server from URL (\"s\"), ignored"
 msgstr "%s nevalidní syntaxe pro IRC server ('%s'), ignorován\n"
 
 #, fuzzy, c-format
@@ -2145,8 +2145,8 @@ msgid "%s%s: missing argument for \"%s\" option"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
-msgstr "Server %s%s%s vytvořen (dočasný server, NEUKLÁDÁ SE!)\n"
+msgid "%s: server %s%s%s created"
+msgstr "Server %s%s%s vytvořen\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create server \"%s\""
@@ -2188,10 +2188,6 @@ msgstr ""
 "rozhovoru\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nick \"%s\" not found for \"%s\" command"
-msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
-
-#, fuzzy, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s nemohu vytvořít nové soukromý buffer\"%s\"\n"
 
@@ -2228,24 +2224,12 @@ msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s server \"%s\" již existuje, nemohu jej vytvořít!\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s created"
-msgstr "Server %s%s%s vytvořen\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to create server"
 msgstr "%s nemohu vytvořit server\n"
 
 #, fuzzy, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "Server %s%s%s byl zkopírován do %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: server \"%s\" is not a temporary server"
-msgstr "%s server \"%s\" není dočasným serverem\n"
-
-#, fuzzy, c-format
-msgid "%s: server %s%s%s is not temporary any more"
-msgstr "Server %s%s%s již není dočasný\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -2340,11 +2324,12 @@ msgstr ""
 "[-all [-nojoin] | jméno_serveru [jméno_serveru ...] [-nojoin] | hostname [-"
 "port port] [-ipv6] [-ssl]]"
 
+#, fuzzy
 msgid ""
 "      -all: connect to all servers\n"
 "servername: internal server name to connect\n"
 "   -nojoin: do not join any channel (even if autojoin is enabled on server)\n"
-"  hostname: hostname to connect, creating temporary server\n"
+"  hostname: hostname to connect\n"
 "      port: port for server (integer, default is 6667)\n"
 "      ipv6: use IPv6 protocol\n"
 "       ssl: use SSL protocol"
@@ -2780,10 +2765,8 @@ msgstr "vypíše, přídá nebo odebere servery"
 #, fuzzy
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
-"port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1,"
-"nick2,...] [-username username] [-realname realname] [-autojoin channel[,"
-"channel]] ] | [copy servername newservername] | [rename servername "
-"newservername] | [keep servername] | [del servername]"
+"port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
+"[rename servername newservername] | [del servername]"
 msgstr ""
 "[list [jméno_serveru]] | [listfull [jméno_serveru]] | [add jméno_serveru "
 "jméno_hosta [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd "
@@ -2801,21 +2784,25 @@ msgid ""
 "servername: server name, for internal and display use\n"
 "  hostname: name or IP address of server, with optional port (default: "
 "6667)\n"
-"      temp: create temporary server (not saved in config file)\n"
 "      auto: automatically connect to server when WeeChat starts\n"
 "    noauto: do not connect to server when WeeChat starts (default)\n"
 "      ipv6: use IPv6 protocol\n"
 "       ssl: use SSL protocol\n"
-"  password: password for server\n"
-"nick1,2,..: nicknames for server\n"
-"  username: user name\n"
-"  realname: real name of user\n"
 "      copy: duplicate a server\n"
 "    rename: rename a server\n"
-"      keep: keep server in config file (for temporary servers only)\n"
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
-"is currently sending)"
+"is currently sending)\n"
+"\n"
+"Examples:\n"
+"  /server listfull\n"
+"  /server add oftc irc.oftc.net/6697 -ssl\n"
+"  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl\n"
+"  /server add freenode2 chat.eu.freenode.net/6697,chat.us.freenode.net/6667\n"
+"  /server copy oftc oftcbis\n"
+"  /server rename oftc newoftc\n"
+"  /server del freenode\n"
+"  /server deloutq"
 msgstr ""
 "             list: vypsat servery (pokud nejsou uvedeny žádné parametry bude "
 "vypsán tento seznam)\n"
@@ -3235,12 +3222,6 @@ msgstr "na"
 
 msgid "off"
 msgstr "off"
-
-msgid " (temporary server, will not be saved)"
-msgstr " (dočasný server, nebude uložen)"
-
-msgid " (temporary)"
-msgstr " (dočasný)"
 
 #, fuzzy
 msgid "channel"
@@ -3850,6 +3831,10 @@ msgstr "%s \"%s\" příkaz obdržen bez hosta\n"
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s nemůžu přidělit nový server\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating new server \"%s\""
+msgstr "%s nedostatek paměti pro infobar zprávu\n"
 
 #, c-format
 msgid ""
@@ -4702,6 +4687,28 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
+#~ msgstr "Server %s%s%s vytvořen (dočasný server, NEUKLÁDÁ SE!)\n"
+
+#, fuzzy
+#~ msgid "%s%s: nick \"%s\" not found for \"%s\" command"
+#~ msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: server \"%s\" is not a temporary server"
+#~ msgstr "%s server \"%s\" není dočasným serverem\n"
+
+#, fuzzy
+#~ msgid "%s: server %s%s%s is not temporary any more"
+#~ msgstr "Server %s%s%s již není dočasný\n"
+
+#~ msgid " (temporary server, will not be saved)"
+#~ msgstr " (dočasný server, nebude uložen)"
+
+#~ msgid " (temporary)"
+#~ msgstr " (dočasný)"
 
 #, fuzzy
 #~ msgid "write of infolist type 'integer'"

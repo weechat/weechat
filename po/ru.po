@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-13 16:43+0200\n"
+"POT-Creation-Date: 2008-08-22 12:08+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2061,7 +2061,7 @@ msgid "%s%s: error opening file, closing it"
 msgstr "%s ошибка чтения FIFO pipe, закрываю его\n"
 
 #, fuzzy, c-format
-msgid "%s%s: invalid syntax for IRC server ('%s'), ignored"
+msgid "%s%s: error with IRC server from URL (\"s\"), ignored"
 msgstr "%s некорректный синтаксис IRC сервра ('%s'), игнорируется\n"
 
 #, fuzzy, c-format
@@ -2097,8 +2097,8 @@ msgid "%s%s: missing argument for \"%s\" option"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
-msgstr "Сервер %s%s%s создан (временный сервер, НЕ СОХРАНЁН!\n"
+msgid "%s: server %s%s%s created"
+msgstr "Сервер %s%s%s создан\n"
 
 #, fuzzy, c-format
 msgid "%s%s: unable to create server \"%s\""
@@ -2139,10 +2139,6 @@ msgstr ""
 "%s \"%s\" команда может быть выполнена только в буфере канала или привата\n"
 
 #, fuzzy, c-format
-msgid "%s%s: nick \"%s\" not found for \"%s\" command"
-msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
-
-#, fuzzy, c-format
 msgid "%s%s: cannot create new private buffer \"%s\""
 msgstr "%s невозможно создать новый буфер привата \"%s\"\n"
 
@@ -2179,24 +2175,12 @@ msgid "%s%s: server \"%s\" already exists, can't create it!"
 msgstr "%s сервер \"%s\" уже существует, не могу создать его!\n"
 
 #, fuzzy, c-format
-msgid "%s: server %s%s%s created"
-msgstr "Сервер %s%s%s создан\n"
-
-#, fuzzy, c-format
 msgid "%s%s: unable to create server"
 msgstr "%s не могу создать сервер\n"
 
 #, fuzzy, c-format
 msgid "%s: server %s%s%s has been copied to %s%s"
 msgstr "Сервер %s%s%s скопирован в %s%s\n"
-
-#, fuzzy, c-format
-msgid "%s%s: server \"%s\" is not a temporary server"
-msgstr "%s сервер \"%s\" не является временным сервером\n"
-
-#, fuzzy, c-format
-msgid "%s: server %s%s%s is not temporary any more"
-msgstr "Сервер %s%s%s больше не временный\n"
 
 #, fuzzy, c-format
 msgid ""
@@ -2290,11 +2274,12 @@ msgstr ""
 "[-all [-nojoin] | сервер [servername ...] [-nojoin] | адрес [-port порт] [-"
 "ipv6] [-ssl]]"
 
+#, fuzzy
 msgid ""
 "      -all: connect to all servers\n"
 "servername: internal server name to connect\n"
 "   -nojoin: do not join any channel (even if autojoin is enabled on server)\n"
-"  hostname: hostname to connect, creating temporary server\n"
+"  hostname: hostname to connect\n"
 "      port: port for server (integer, default is 6667)\n"
 "      ipv6: use IPv6 protocol\n"
 "       ssl: use SSL protocol"
@@ -2731,10 +2716,8 @@ msgstr "перечислить, добавить или удалить серв�
 #, fuzzy
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
-"port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1,"
-"nick2,...] [-username username] [-realname realname] [-autojoin channel[,"
-"channel]] ] | [copy servername newservername] | [rename servername "
-"newservername] | [keep servername] | [del servername]"
+"port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
+"[rename servername newservername] | [del servername]"
 msgstr ""
 "[list [сервер]] | [listfull [сервер]] | [add сервер адрес [-port порт] [-"
 "temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd пароль] [-nicks ник1 ник2 ник3] "
@@ -2750,21 +2733,25 @@ msgid ""
 "servername: server name, for internal and display use\n"
 "  hostname: name or IP address of server, with optional port (default: "
 "6667)\n"
-"      temp: create temporary server (not saved in config file)\n"
 "      auto: automatically connect to server when WeeChat starts\n"
 "    noauto: do not connect to server when WeeChat starts (default)\n"
 "      ipv6: use IPv6 protocol\n"
 "       ssl: use SSL protocol\n"
-"  password: password for server\n"
-"nick1,2,..: nicknames for server\n"
-"  username: user name\n"
-"  realname: real name of user\n"
 "      copy: duplicate a server\n"
 "    rename: rename a server\n"
-"      keep: keep server in config file (for temporary servers only)\n"
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
-"is currently sending)"
+"is currently sending)\n"
+"\n"
+"Examples:\n"
+"  /server listfull\n"
+"  /server add oftc irc.oftc.net/6697 -ssl\n"
+"  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl\n"
+"  /server add freenode2 chat.eu.freenode.net/6697,chat.us.freenode.net/6667\n"
+"  /server copy oftc oftcbis\n"
+"  /server rename oftc newoftc\n"
+"  /server del freenode\n"
+"  /server deloutq"
 msgstr ""
 "    list: перечислить серверы (отсутствие параметров подразумевает этот "
 "список)\n"
@@ -3170,12 +3157,6 @@ msgstr "вкл."
 
 msgid "off"
 msgstr "выкл."
-
-msgid " (temporary server, will not be saved)"
-msgstr " (временный сервер, не будет сохранён)"
-
-msgid " (temporary)"
-msgstr " (временный)"
 
 #, fuzzy
 msgid "channel"
@@ -3778,6 +3759,10 @@ msgstr "%s \"%s\" команда получена без хоста\n"
 #, fuzzy, c-format
 msgid "%s%s: error when allocating new server"
 msgstr "%s не могу расположить новый сервер\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error creating new server \"%s\""
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
 
 #, c-format
 msgid ""
@@ -4602,6 +4587,28 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
+#~ msgstr "Сервер %s%s%s создан (временный сервер, НЕ СОХРАНЁН!\n"
+
+#, fuzzy
+#~ msgid "%s%s: nick \"%s\" not found for \"%s\" command"
+#~ msgstr "%s ник \"%s\" не найден для команды \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: server \"%s\" is not a temporary server"
+#~ msgstr "%s сервер \"%s\" не является временным сервером\n"
+
+#, fuzzy
+#~ msgid "%s: server %s%s%s is not temporary any more"
+#~ msgstr "Сервер %s%s%s больше не временный\n"
+
+#~ msgid " (temporary server, will not be saved)"
+#~ msgstr " (временный сервер, не будет сохранён)"
+
+#~ msgid " (temporary)"
+#~ msgstr " (временный)"
 
 #, fuzzy
 #~ msgid "write of infolist type 'integer'"

@@ -263,6 +263,7 @@ struct t_weechat_plugin
                                 int run_callback);
     int (*config_option_set) (struct t_config_option *option, const char *value,
                               int run_callback);
+    int (*config_option_unset) (struct t_config_option *option);
     void (*config_option_rename) (struct t_config_option *option,
                                   const char *new_name);
     void *(*config_option_get_pointer) (struct t_config_option *option,
@@ -705,6 +706,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_config_option_set(__option, __value, __run_callback)    \
     weechat_plugin->config_option_set(__option, __value,                \
                                       __run_callback)
+#define weechat_config_option_unset(__option)                           \
+    weechat_plugin->config_option_unset(__option)
 #define weechat_config_option_rename(__option, __new_name)      \
     weechat_plugin->config_option_rename(__option, __new_name)
 #define weechat_config_option_get_pointer(__option, __property)         \
