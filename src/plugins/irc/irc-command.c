@@ -3831,7 +3831,7 @@ irc_command_init ()
                              "  /server listfull\n"
                              "  /server add oftc irc.oftc.net/6697 -ssl\n"
                              "  /server add oftc6 irc6.oftc.net/6697 -ipv6 -ssl\n"
-                             "  /server add freenode2 chat.eu.freenode.net/6697,"
+                             "  /server add freenode2 chat.eu.freenode.net/6667,"
                              "chat.us.freenode.net/6667\n"
                              "  /server copy oftc oftcbis\n"
                              "  /server rename oftc newoftc\n"

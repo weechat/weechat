@@ -141,7 +141,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
             {
                 weechat_printf (NULL,
                                 _("%s%s: error with IRC server from URL "
-                                  "(\"s\"), ignored"),
+                                  "(\"%s\"), ignored"),
                                 weechat_prefix ("error"), "irc",
                                 argv[i]);
             }
