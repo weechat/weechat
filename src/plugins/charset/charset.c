@@ -545,12 +545,12 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     /* /charset command */
     weechat_hook_command ("charset",
-                          _("change charset for current buffer"),
-                          _("[[decode | encode] charset] | [reset]"),
-                          _(" decode: change decoding charset\n"
-                            " encode: change encoding charset\n"
-                            "charset: new charset for current buffer\n"
-                            "  reset: reset charsets for current buffer"),
+                          N_("change charset for current buffer"),
+                          N_("[[decode | encode] charset] | [reset]"),
+                          N_(" decode: change decoding charset\n"
+                             " encode: change encoding charset\n"
+                             "charset: new charset for current buffer\n"
+                             "  reset: reset charsets for current buffer"),
                           "decode|encode|reset",
                           &charset_command_cb, NULL);
     

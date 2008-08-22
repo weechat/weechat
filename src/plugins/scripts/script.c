@@ -132,14 +132,14 @@ script_init (struct t_weechat_plugin *weechat_plugin,
                   completion, weechat_plugin->name);
     }
     weechat_hook_command (weechat_plugin->name,
-                          _("list/load/unload scripts"),
-                          _("[list [name]] | [listfull [name]] "
-                            "[load filename] | [autoload] | "
-                            "[reload] | [unload [name]]"),
-                          _("filename: script (file) to load\n"
-                            "name: a script name\n\n"
-                            "Without argument, this command "
-                            "lists all loaded scripts."),
+                          N_("list/load/unload scripts"),
+                          N_("[list [name]] | [listfull [name]] "
+                             "[load filename] | [autoload] | "
+                             "[reload] | [unload [name]]"),
+                          N_("filename: script (file) to load\n"
+                             "name: a script name\n\n"
+                             "Without argument, this command "
+                             "lists all loaded scripts."),
                           (string) ? string : completion,
                           callback_command, NULL);
     if (string)

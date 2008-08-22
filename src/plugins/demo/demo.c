@@ -404,41 +404,41 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     demo_debug = weechat_config_boolean (weechat_config_get ("weechat.plugin.debug"));
     
     weechat_hook_command ("demo_printf",
-                          _("print some messages on current ubffer"),
-                          _("[text]"),
-                          _("text: write this text"),
+                          N_("print some messages on current ubffer"),
+                          N_("[text]"),
+                          N_("text: write this text"),
                           "",
                           &demo_printf_command_cb, NULL);
     
     weechat_hook_command ("demo_buffer",
-                          _("open a new buffer"),
-                          _("category name"),
+                          N_("open a new buffer"),
+                          N_("category name"),
                           "",
                           "",
                           &demo_buffer_command_cb, NULL);
 
     weechat_hook_command ("demo_buffer_set",
-                          _("set a buffer property"),
-                          _("property value"),
+                          N_("set a buffer property"),
+                          N_("property value"),
                           "",
                           "",
                           &demo_buffer_set_command_cb, NULL);
     
     weechat_hook_command ("demo_infolist",
-                          _("get and display an infolist"),
-                          _("infolist"),
-                          _("infolist: infolist to display (values: buffer, "
-                            "buffer_lines)"),
+                          N_("get and display an infolist"),
+                          N_("infolist"),
+                          N_("infolist: infolist to display (values: buffer, "
+                             "buffer_lines)"),
                           "buffer|buffer_lines",
                           &demo_infolist_command_cb, NULL);
     
     weechat_hook_command ("demo_info",
-                          _("get and display an info"),
-                          _("info"),
-                          _("info: info to display (values: version, "
-                            "weechat_dir, weechat_libdir, weechat_sharedir, "
-                            "charset_terminal, charset_internal, inactivity, "
-                            "input, input_mask, input_pos)"),
+                          N_("get and display an info"),
+                          N_("info"),
+                          N_("info: info to display (values: version, "
+                             "weechat_dir, weechat_libdir, weechat_sharedir, "
+                             "charset_terminal, charset_internal, inactivity, "
+                             "input, input_mask, input_pos)"),
                           "version|weechat_dir|weechat_libdir|"
                           "weechat_sharedir|charset_terminal|charset_internal|"
                           "inactivity|input|input_mask|input_pos",

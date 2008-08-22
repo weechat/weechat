@@ -27,6 +27,7 @@
 struct t_gui_buffer;
 struct t_gui_completion;
 struct t_weelist;
+struct t_infolist;
 
 /* hook types */
 
@@ -273,6 +274,8 @@ extern char *hook_modifier_exec (struct t_weechat_plugin *plugin,
 extern void unhook (struct t_hook *hook);
 extern void unhook_all_plugin (struct t_weechat_plugin *plugin);
 extern void unhook_all ();
+extern int hook_add_to_infolist (struct t_infolist *infolist,
+                                 const char *type);
 extern void hook_print_log ();
 
 #endif /* wee-hook.h */

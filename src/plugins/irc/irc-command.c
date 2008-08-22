@@ -2870,7 +2870,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         if (mask)
         {
             snprintf (mask, length, "irc.server.%s.*", server_found->name);
-            infolist = weechat_infolist_get ("options", NULL, mask);
+            infolist = weechat_infolist_get ("option", NULL, mask);
             free (mask);
             while (weechat_infolist_next (infolist))
             {

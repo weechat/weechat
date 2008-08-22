@@ -34,6 +34,7 @@
 
 #include "weechat.h"
 #include "wee-hook.h"
+#include "wee-infolist.h"
 #include "wee-log.h"
 #include "wee-network.h"
 #include "wee-string.h"
@@ -67,6 +68,28 @@ hook_init ()
         weechat_hooks[type] = NULL;
         last_weechat_hook[type] = NULL;
     }
+}
+
+/*
+ * hook_search_type: search type string and return integer (-1 if not found)
+ */
+
+int
+hook_search_type (const char *type)
+{
+    int i;
+    
+    if (!type)
+        return -1;
+    
+    for (i = 0; i < HOOK_NUM_TYPES; i++)
+    {
+        if (strcmp (hook_type_string[i], type) == 0)
+            return i;
+    }
+    
+    /* type not found */
+    return -1;
 }
 
 /*
@@ -1462,6 +1485,228 @@ unhook_all ()
 }
 
 /*
+ * hook_add_to_infolist_type: add hooks of a type in an infolist
+ *                            return 1 if ok, 0 if error
+ */
+
+int
+hook_add_to_infolist_type (struct t_infolist *infolist,
+                           int type)
+{
+    struct t_hook *ptr_hook;
+    struct t_infolist_item *ptr_item;
+    char value[64];
+
+    for (ptr_hook = weechat_hooks[type]; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
+    {
+        ptr_item = infolist_new_item (infolist);
+        if (!ptr_item)
+            return 0;
+        
+        if (!infolist_new_var_pointer (ptr_item, "pointer", ptr_hook))
+            return 0;
+        if (!infolist_new_var_pointer (ptr_item, "plugin", ptr_hook->plugin))
+            return 0;
+        if (!infolist_new_var_string (ptr_item, "plugin_name",
+                                      (ptr_hook->plugin) ?
+                                      ptr_hook->plugin->name : NULL))
+            return 0;
+        if (!infolist_new_var_string (ptr_item, "type", hook_type_string[ptr_hook->type]))
+            return 0;
+        if (!infolist_new_var_integer (ptr_item, "deleted", ptr_hook->deleted))
+            return 0;
+        if (!infolist_new_var_integer (ptr_item, "running", ptr_hook->running))
+            return 0;
+        switch (ptr_hook->type)
+        {
+            case HOOK_TYPE_COMMAND:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_COMMAND(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "command", HOOK_COMMAND(ptr_hook, command)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "level", HOOK_COMMAND(ptr_hook, level)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "description_en",
+                                                  HOOK_COMMAND(ptr_hook, description)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "description",
+                                                  (HOOK_COMMAND(ptr_hook, description)
+                                                   && HOOK_COMMAND(ptr_hook, description)[0]) ?
+                                                  _(HOOK_COMMAND(ptr_hook, description)) : ""))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "args_en",
+                                                  HOOK_COMMAND(ptr_hook, args)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "args",
+                                                  (HOOK_COMMAND(ptr_hook, args)
+                                                   && HOOK_COMMAND(ptr_hook, args)[0]) ?
+                                                  _(HOOK_COMMAND(ptr_hook, args)) : ""))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "args_description_en",
+                                                  HOOK_COMMAND(ptr_hook, args_description)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "args_description",
+                                                  (HOOK_COMMAND(ptr_hook, args_description)
+                                                   && HOOK_COMMAND(ptr_hook, args_description)[0]) ?
+                                                  _(HOOK_COMMAND(ptr_hook, args_description)) : ""))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "completion", HOOK_COMMAND(ptr_hook, completion)))
+                        return 0;
+                }
+                break;
+            case HOOK_TYPE_TIMER:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_TIMER(ptr_hook, callback)))
+                        return 0;
+                    snprintf (value, sizeof (value), "%ld", HOOK_TIMER(ptr_hook, interval));
+                    if (!infolist_new_var_string (ptr_item, "interval", value))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "remaining_calls", HOOK_TIMER(ptr_hook, remaining_calls)))
+                        return 0;
+                    if (!infolist_new_var_buffer (ptr_item, "last_exec",
+                                                  &(HOOK_TIMER(ptr_hook, last_exec)),
+                                                  sizeof (HOOK_TIMER(ptr_hook, last_exec))))
+                        return 0;
+                    if (!infolist_new_var_buffer (ptr_item, "next_exec",
+                                                  &(HOOK_TIMER(ptr_hook, next_exec)),
+                                                  sizeof (HOOK_TIMER(ptr_hook, next_exec))))
+                        return 0;
+                }
+                break;
+            case HOOK_TYPE_FD:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_FD(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "fd", HOOK_FD(ptr_hook, fd)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "flags", HOOK_FD(ptr_hook, flags)))
+                        return 0;
+                }
+                break;
+            case HOOK_TYPE_CONNECT:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_CONNECT(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "address", HOOK_CONNECT(ptr_hook, address)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "port", HOOK_CONNECT(ptr_hook, port)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "sock", HOOK_CONNECT(ptr_hook, sock)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "ipv6", HOOK_CONNECT(ptr_hook, ipv6)))
+                        return 0;
+#ifdef HAVE_GNUTLS
+                    if (!infolist_new_var_pointer (ptr_item, "gnutls_sess", HOOK_CONNECT(ptr_hook, gnutls_sess)))
+                        return 0;
+#endif
+                    if (!infolist_new_var_string (ptr_item, "local_hostname", HOOK_CONNECT(ptr_hook, local_hostname)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "child_read", HOOK_CONNECT(ptr_hook, child_read)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "child_write", HOOK_CONNECT(ptr_hook, child_write)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "child_pid", HOOK_CONNECT(ptr_hook, child_pid)))
+                        return 0;
+                    if (!infolist_new_var_pointer (ptr_item, "hook_fd", HOOK_CONNECT(ptr_hook, hook_fd)))
+                        return 0;
+                }
+                break;
+            case HOOK_TYPE_PRINT:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_PRINT(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_pointer (ptr_item, "buffer", HOOK_PRINT(ptr_hook, buffer)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "tags_count", HOOK_PRINT(ptr_hook, tags_count)))
+                        return 0;
+                    if (!infolist_new_var_pointer (ptr_item, "tags_array", HOOK_PRINT(ptr_hook, tags_array)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "message", HOOK_PRINT(ptr_hook, message)))
+                        return 0;
+                    if (!infolist_new_var_integer (ptr_item, "strip_colors", HOOK_PRINT(ptr_hook, strip_colors)))
+                        return 0;
+                }
+                break;
+            case HOOK_TYPE_SIGNAL:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_SIGNAL(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "signal", HOOK_SIGNAL(ptr_hook, signal)))
+                        return 0;
+                }
+                break;
+            case HOOK_TYPE_CONFIG:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_CONFIG(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "option", HOOK_CONFIG(ptr_hook, option)))
+                        return 0;
+                }
+                break;
+            case HOOK_TYPE_COMPLETION:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_COMPLETION(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "completion_item", HOOK_COMPLETION(ptr_hook, completion_item)))
+                        return 0;
+                }
+                break;
+            case HOOK_TYPE_MODIFIER:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_MODIFIER(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "modifier", HOOK_MODIFIER(ptr_hook, modifier)))
+                        return 0;
+                }
+                break;
+            case HOOK_NUM_TYPES:
+                /* this constant is used to count types only,
+                   it is never used as type */
+                break;
+        }
+    }
+    
+    return 1;
+}
+
+/*
+ * hook_add_to_infolist: add hooks in an infolist
+ *                       if type == NULL or is not found, all types are returned
+ *                       return 1 if ok, 0 if error
+ */
+
+int
+hook_add_to_infolist (struct t_infolist *infolist,
+                      const char *type)
+{
+    int i, type_int;
+    
+    if (!infolist)
+        return 0;
+    
+    type_int = (type) ? hook_search_type (type) : -1;
+    
+    for (i = 0; i < HOOK_NUM_TYPES; i++)
+    {
+        if ((type_int < 0) || (type_int == i))
+            hook_add_to_infolist_type (infolist, i);
+    }
+    
+    return 1;
+}
+
+/*
  * hook_print_log: print hooks in log (usually for crash dump)
  */
 
@@ -1497,10 +1742,10 @@ hook_print_log ()
                         log_printf ("    callback . . . . . . : 0x%x", HOOK_COMMAND(ptr_hook, callback));
                         log_printf ("    command. . . . . . . : '%s'", HOOK_COMMAND(ptr_hook, command));
                         log_printf ("    level. . . . . . . . : %d",   HOOK_COMMAND(ptr_hook, level));
-                        log_printf ("    command_desc . . . . : '%s'", HOOK_COMMAND(ptr_hook, description));
-                        log_printf ("    command_args . . . . : '%s'", HOOK_COMMAND(ptr_hook, args));
-                        log_printf ("    command_args_desc. . : '%s'", HOOK_COMMAND(ptr_hook, args_description));
-                        log_printf ("    command_completion . : '%s'", HOOK_COMMAND(ptr_hook, completion));
+                        log_printf ("    description. . . . . : '%s'", HOOK_COMMAND(ptr_hook, description));
+                        log_printf ("    args . . . . . . . . : '%s'", HOOK_COMMAND(ptr_hook, args));
+                        log_printf ("    args_description . . : '%s'", HOOK_COMMAND(ptr_hook, args_description));
+                        log_printf ("    completion . . . . . : '%s'", HOOK_COMMAND(ptr_hook, completion));
                     }
                     break;
                 case HOOK_TYPE_TIMER:
@@ -1509,6 +1754,7 @@ hook_print_log ()
                         log_printf ("  timer data:");
                         log_printf ("    callback . . . . . . : 0x%x", HOOK_TIMER(ptr_hook, callback));
                         log_printf ("    interval . . . . . . : %ld",  HOOK_TIMER(ptr_hook, interval));
+                        log_printf ("    remaining_calls. . . : %d",   HOOK_TIMER(ptr_hook, remaining_calls));
                         local_time = localtime (&HOOK_TIMER(ptr_hook, last_exec).tv_sec);
                         strftime (text_time, sizeof (text_time),
                                   "%d/%m/%Y %H:%M:%S", local_time);
@@ -1530,17 +1776,26 @@ hook_print_log ()
                     {
                         log_printf ("  fd data:");
                         log_printf ("    callback . . . . . . : 0x%x", HOOK_FD(ptr_hook, callback));
-                        log_printf ("    fd . . . . . . . . . : %ld",  HOOK_FD(ptr_hook, fd));
-                        log_printf ("    flags. . . . . . . . : %ld",  HOOK_FD(ptr_hook, flags));
+                        log_printf ("    fd . . . . . . . . . : %d",   HOOK_FD(ptr_hook, fd));
+                        log_printf ("    flags. . . . . . . . : %d",   HOOK_FD(ptr_hook, flags));
                     }
                     break;
                 case HOOK_TYPE_CONNECT:
                     if (!ptr_hook->deleted)
                     {
-                        log_printf ("  fd data:");
-                        log_printf ("    callback . . . . . . : 0x%x", HOOK_FD(ptr_hook, callback));
-                        log_printf ("    fd . . . . . . . . . : %ld",  HOOK_FD(ptr_hook, fd));
-                        log_printf ("    flags. . . . . . . . : %ld",  HOOK_FD(ptr_hook, flags));
+                        log_printf ("  connect data:");
+                        log_printf ("    callback . . . . . . : 0x%x", HOOK_CONNECT(ptr_hook, callback));
+                        log_printf ("    address. . . . . . . : '%s'", HOOK_CONNECT(ptr_hook, address));
+                        log_printf ("    port . . . . . . . . : %d",   HOOK_CONNECT(ptr_hook, port));
+                        log_printf ("    sock . . . . . . . . : %d",   HOOK_CONNECT(ptr_hook, sock));
+                        log_printf ("    ipv6 . . . . . . . . : %d",   HOOK_CONNECT(ptr_hook, ipv6));
+#ifdef HAVE_GNUTLS
+                        log_printf ("    gnutls_sess. . . . . : 0x%x", HOOK_CONNECT(ptr_hook, gnutls_sess));
+#endif
+                        log_printf ("    local_hostname . . . : '%s'", HOOK_CONNECT(ptr_hook, local_hostname));
+                        log_printf ("    child_read . . . . . : %d",   HOOK_CONNECT(ptr_hook, child_read));
+                        log_printf ("    child_write. . . . . : %d",   HOOK_CONNECT(ptr_hook, child_write));
+                        log_printf ("    hook_fd. . . . . . . : 0x%x", HOOK_CONNECT(ptr_hook, hook_fd));
                     }
                     break;
                 case HOOK_TYPE_PRINT:
@@ -1549,7 +1804,10 @@ hook_print_log ()
                         log_printf ("  print data:");
                         log_printf ("    callback . . . . . . : 0x%x", HOOK_PRINT(ptr_hook, callback));
                         log_printf ("    buffer . . . . . . . : 0x%x", HOOK_PRINT(ptr_hook, buffer));
+                        log_printf ("    tags_count . . . . . : %d",   HOOK_PRINT(ptr_hook, tags_count));
+                        log_printf ("    tags_array . . . . . : 0x%x", HOOK_PRINT(ptr_hook, tags_array));
                         log_printf ("    message. . . . . . . : '%s'", HOOK_PRINT(ptr_hook, message));
+                        log_printf ("    strip_colors . . . . : %d",   HOOK_PRINT(ptr_hook, strip_colors));
                     }
                     break;
                 case HOOK_TYPE_SIGNAL:

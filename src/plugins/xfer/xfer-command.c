@@ -198,6 +198,6 @@ xfer_command_init ()
     weechat_hook_command ("xfer",
                           N_("xfer control"),
                           "",
-                          _("Open buffer with xfer list"),
+                          N_("Open buffer with xfer list"),
                           "list|listfull", &xfer_command_xfer, NULL);
 }

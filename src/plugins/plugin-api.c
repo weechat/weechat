@@ -34,6 +34,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-config.h"
+#include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-input.h"
 #include "../core/wee-string.h"
@@ -293,6 +294,10 @@ plugin_api_info_get (struct t_weechat_plugin *plugin, const char *info)
     {
         return WEECHAT_SHAREDIR;
     }
+    else if (string_strcasecmp (info, "weechat_localedir") == 0)
+    {
+        return LOCALEDIR;
+    }
     else if (string_strcasecmp (info, "charset_terminal") == 0)
     {
         return weechat_local_charset;
@@ -469,7 +474,7 @@ plugin_api_infolist_get (const char *name, void *pointer, const char *arguments)
             }
         }
     }
-    else if (string_strcasecmp (name, "options") == 0)
+    else if (string_strcasecmp (name, "option") == 0)
     {
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
@@ -482,8 +487,21 @@ plugin_api_infolist_get (const char *name, void *pointer, const char *arguments)
             return ptr_infolist;
         }
     }
+    else if (string_strcasecmp (name, "hook") == 0)
+    {
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            if (!hook_add_to_infolist (ptr_infolist, arguments))
+            {
+                infolist_free (ptr_infolist);
+                return NULL;
+            }
+            return ptr_infolist;
+        }
+    }
     
-    /* list not found */
+    /* infolist not found */
     return NULL;
 }
 

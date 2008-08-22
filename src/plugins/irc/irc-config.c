@@ -316,7 +316,7 @@ irc_config_server_delete_cb (void *data, struct t_config_option *option)
                 {
                     snprintf (mask, length, "irc.server.%s.*",
                               ptr_server->name);
-                    infolist = weechat_infolist_get ("options", NULL, mask);
+                    infolist = weechat_infolist_get ("option", NULL, mask);
                     i = 0;
                     while (weechat_infolist_next (infolist))
                     {
@@ -346,7 +346,7 @@ irc_config_reload_servers_from_config ()
     char *full_name, *option_name, *server_name, *pos_option;
     int i, index_option;
     
-    infolist = weechat_infolist_get ("options", NULL, "irc.server.*");
+    infolist = weechat_infolist_get ("option", NULL, "irc.server.*");
     while (weechat_infolist_next (infolist))
     {
         full_name = weechat_infolist_string (infolist, "full_name");

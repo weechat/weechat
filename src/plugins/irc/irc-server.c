@@ -885,7 +885,7 @@ irc_server_duplicate (struct t_irc_server *server, const char *new_server_name)
         if (!mask)
             return 0;
         snprintf (mask, length, "irc.server.%s.*", server->name);
-        infolist = weechat_infolist_get ("options", NULL, mask);
+        infolist = weechat_infolist_get ("option", NULL, mask);
         free (mask);
         while (weechat_infolist_next (infolist))
         {
@@ -944,7 +944,7 @@ irc_server_rename (struct t_irc_server *server, const char *new_server_name)
     if (!mask)
         return 0;
     snprintf (mask, length, "irc.server.%s.*", server->name);
-    infolist = weechat_infolist_get ("options", NULL, mask);
+    infolist = weechat_infolist_get ("option", NULL, mask);
     free (mask);
     while (weechat_infolist_next (infolist))
     {
