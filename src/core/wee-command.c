@@ -2822,7 +2822,15 @@ command_init ()
                      "   tags: comma separated list of tags, for "
                      "example: \"irc_join,irc_part,irc_quit\"\n"
                      "  regex: regular expression to search in "
-                     "line (use \\t to separate prefix from message)"),
+                     "line (use \\t to separate prefix from message)\n\n"
+                     "Examples:\n"
+                     "  filter IRC join/part/quit messages:\n"
+                     "    /filter add * irc_join,irc_part,irc_quit *\n"
+                     "  filter lines containing word \"spam\":\n"
+                     "    /filter add * * spam\n"
+                     "  filter lines containing \"weechat sucks\" on channel "
+                     "#weechat:\n"
+                     "    /filter add freenode.#weechat * weechat sucks"),
                   "list|enable|disable|toggle|add|del",
                   &command_filter, NULL);
     hook_command (NULL, "help",
