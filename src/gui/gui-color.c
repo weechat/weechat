@@ -235,6 +235,9 @@ gui_color_decode (const unsigned char *string)
     unsigned char *out;
     int out_length, out_pos, length;
     
+    if (!string)
+        return NULL;
+    
     out_length = (strlen ((char *)string) * 2) + 1;
     out = malloc (out_length);
     if (!out)
@@ -294,8 +297,11 @@ gui_color_decode (const unsigned char *string)
 void
 gui_color_free (struct t_gui_color *color)
 {
-    if (color->string)
-        free (color->string);
-    
-    free (color);
+    if (color)
+    {
+        if (color->string)
+            free (color->string);
+        
+        free (color);
+    }
 }

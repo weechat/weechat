@@ -532,7 +532,8 @@ gui_chat_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
     match_prefix = 1;
     match_message = 1;
     
-    prefix = (char *)gui_color_decode ((unsigned char *)line->prefix);
+    prefix = (line->prefix) ?
+        (char *)gui_color_decode ((unsigned char *)line->prefix) : NULL;
     if (prefix && regex_prefix)
     {
         if (regexec (regex_prefix, prefix, 0, NULL, 0) != 0)
