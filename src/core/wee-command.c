@@ -2826,6 +2826,8 @@ command_init ()
                      "Examples:\n"
                      "  filter IRC join/part/quit messages:\n"
                      "    /filter add * irc_join,irc_part,irc_quit *\n"
+                     "  filter nick \"toto\" on channel #weechat:\n"
+                     "    /filter add freenode.#weechat * toto\\t\n"
                      "  filter lines containing word \"spam\":\n"
                      "    /filter add * * spam\n"
                      "  filter lines containing \"weechat sucks\" on channel "
