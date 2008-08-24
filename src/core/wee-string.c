@@ -859,11 +859,11 @@ string_build_with_exploded (char **exploded_string, const char *separator)
     int i, length, length_separator;
     char *result;
     
-    if (!exploded_string || !separator)
+    if (!exploded_string)
         return NULL;
     
     length = 0;
-    length_separator = strlen (separator);
+    length_separator = (separator) ? strlen (separator) : 0;
     
     for (i = 0; exploded_string[i]; i++)
     {
@@ -871,13 +871,16 @@ string_build_with_exploded (char **exploded_string, const char *separator)
     }
     
     result = malloc (length + 1);
-    result[0] = '\0';
-    
-    for (i = 0; exploded_string[i]; i++)
+    if (result)
     {
-        strcat (result, exploded_string[i]);
-        if (exploded_string[i + 1])
-            strcat (result, separator);
+        result[0] = '\0';
+        
+        for (i = 0; exploded_string[i]; i++)
+        {
+            strcat (result, exploded_string[i]);
+            if (separator && exploded_string[i + 1])
+                strcat (result, separator);
+        }
     }
     
     return result;

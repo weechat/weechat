@@ -2119,7 +2119,7 @@ config_file_add_to_infolist (struct t_infolist *infolist,
     struct t_config_option *ptr_option;
     struct t_infolist_item *ptr_item;
     int length;
-    char *option_full_name, value[128];
+    char *option_full_name, value[128], *string_values;
     
     if (!infolist)
         return 0;
@@ -2176,6 +2176,49 @@ config_file_add_to_infolist (struct t_infolist *infolist,
                         if (!infolist_new_var_string (ptr_item,
                                                       "option_name",
                                                       ptr_option->name))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        if (!infolist_new_var_string (ptr_item,
+                                                      "description",
+                                                      (ptr_option->description
+                                                       && ptr_option->description[0]) ?
+                                                      _(ptr_option->description) : ""))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        if (!infolist_new_var_string (ptr_item,
+                                                      "description_en",
+                                                      ptr_option->description))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        string_values = string_build_with_exploded (ptr_option->string_values,
+                                                                    "|");
+                        if (!infolist_new_var_string (ptr_item,
+                                                      "string_values",
+                                                      string_values))
+                        {
+                            if (string_values)
+                                free (string_values);
+                            free (option_full_name);
+                            return 0;
+                        }
+                        if (string_values)
+                            free (string_values);
+                        if (!infolist_new_var_integer (ptr_item,
+                                                       "min",
+                                                       ptr_option->min))
+                        {
+                            free (option_full_name);
+                            return 0;
+                        }
+                        if (!infolist_new_var_integer (ptr_item,
+                                                       "max",
+                                                       ptr_option->max))
                         {
                             free (option_full_name);
                             return 0;
