@@ -210,6 +210,9 @@ demo_infolist_print (struct t_infolist *infolist, const char *item_name)
     int i, j, argc, size;
     time_t time;
     
+    if (!infolist)
+        return;
+    
     i = 1;
     while (weechat_infolist_next (infolist))
     {
@@ -268,6 +271,45 @@ demo_infolist_print (struct t_infolist *infolist, const char *item_name)
 }
 
 /*
+ * demo_info_command_cb: demo command for info_get
+ */
+
+int
+demo_info_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
+                      char **argv, char **argv_eol)
+{
+    struct t_infolist *infolist;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    
+    if (argc > 1)
+        weechat_printf (NULL, "info \"%s\" = \"%s\"",
+                        argv[1],
+                        weechat_info_get (argv[1],
+                                          (argc > 2) ? argv_eol[2] : NULL));
+    else
+    {
+        infolist = weechat_infolist_get ("hook", NULL, "info");
+        if (infolist)
+        {
+            weechat_printf (NULL, "");
+            weechat_printf (NULL, _("Available infos:"));
+            while (weechat_infolist_next (infolist))
+            {
+                weechat_printf (NULL,
+                                "  %s",
+                                weechat_infolist_string (infolist, "info_name"));
+            }
+            weechat_infolist_free (infolist);
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * demo_infolist_command_cb: demo command for list
  */
 
@@ -280,64 +322,33 @@ demo_infolist_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     /* make C compiler happy */
     (void) data;
     (void) buffer;
-    (void) argv_eol;
     
     if (argc > 1)
     {
-        if (weechat_strcasecmp (argv[1], "buffer") == 0)
+        infolist = weechat_infolist_get (argv[1], NULL,
+                                         (argc > 2) ? argv_eol[2] : NULL);
+        if (infolist)
         {
-            infolist = weechat_infolist_get ("buffer", NULL, NULL);
-            if (infolist)
-            {
-                demo_infolist_print (infolist, "buffer");
-                weechat_infolist_free (infolist);
-            }
-            return WEECHAT_RC_OK;
-        }
-        if (weechat_strcasecmp (argv[1], "buffer_lines") == 0)
-        {
-            infolist = weechat_infolist_get ("buffer_lines", NULL, NULL);
-            if (infolist)
-            {
-                demo_infolist_print (infolist, "buffer_line");
-                weechat_infolist_free (infolist);
-            }
-            return WEECHAT_RC_OK;
+            demo_infolist_print (infolist, argv[1]);
+            weechat_infolist_free (infolist);
         }
     }
-    
-    weechat_printf (NULL,
-                    _("%s%s: missing argument for \"%s\" command "
-                      "(try /help %s)"),
-                    weechat_prefix ("error"), "demo",
-                    "demo_infolist", "demo_infolist");
-    
-    return WEECHAT_RC_OK;
-}
-
-/*
- * demo_info_command_cb: demo command for info_get
- */
-
-int
-demo_info_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
-                      char **argv, char **argv_eol)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) buffer;
-    (void) argv_eol;
-    
-    if (argc > 1)
-        weechat_printf (NULL, "info \"%s\" = \"%s\"",
-                        argv[1],
-                        weechat_info_get (argv[1]));
     else
-        weechat_printf (NULL,
-                        _("%s%s: missing argument for \"%s\" command "
-                          "(try /help %s)"),
-                        weechat_prefix ("error"), "demo",
-                        "demo_info", "demo_info");
+    {
+        infolist = weechat_infolist_get ("hook", NULL, "infolist");
+        if (infolist)
+        {
+            weechat_printf (NULL, "");
+            weechat_printf (NULL, _("Available infolists:"));
+            while (weechat_infolist_next (infolist))
+            {
+                weechat_printf (NULL,
+                                "  %s",
+                                weechat_infolist_string (infolist, "infolist_name"));
+            }
+            weechat_infolist_free (infolist);
+        }
+    }
     
     return WEECHAT_RC_OK;
 }
@@ -416,7 +427,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                           "",
                           "",
                           &demo_buffer_command_cb, NULL);
-
+    
     weechat_hook_command ("demo_buffer_set",
                           N_("set a buffer property"),
                           N_("property value"),
@@ -424,25 +435,24 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                           "",
                           &demo_buffer_set_command_cb, NULL);
     
-    weechat_hook_command ("demo_infolist",
-                          N_("get and display an infolist"),
-                          N_("infolist"),
-                          N_("infolist: infolist to display (values: buffer, "
-                             "buffer_lines)"),
-                          "buffer|buffer_lines",
-                          &demo_infolist_command_cb, NULL);
-    
     weechat_hook_command ("demo_info",
                           N_("get and display an info"),
-                          N_("info"),
-                          N_("info: info to display (values: version, "
-                             "weechat_dir, weechat_libdir, weechat_sharedir, "
-                             "charset_terminal, charset_internal, inactivity, "
-                             "input, input_mask, input_pos)"),
-                          "version|weechat_dir|weechat_libdir|"
-                          "weechat_sharedir|charset_terminal|charset_internal|"
-                          "inactivity|input|input_mask|input_pos",
+                          N_("[info [arguments]]"),
+                          N_("     info: info to display\n"
+                             "arguments: optional arguments for info\n\n"
+                             "Without argument, this command displays list "
+                             "of available infos"),
+                          "%i",
                           &demo_info_command_cb, NULL);
+    
+    weechat_hook_command ("demo_infolist",
+                          N_("get and display an infolist"),
+                          N_("[infolist]"),
+                          N_("infolist: infolist to display\n\n"
+                             "Without argument, this command displays list "
+                             "of available infolists"),
+                          "%i",
+                          &demo_infolist_command_cb, NULL);
     
     weechat_hook_signal ("debug", &demo_debug_signal_debug_cb, NULL);
     weechat_hook_signal ("*", &demo_signal_cb, NULL);

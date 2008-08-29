@@ -24,6 +24,7 @@ irc-completion.c irc-completion.h
 irc-config.c irc-config.h
 irc-debug.c irc-debug.h
 irc-display.c irc-display.h
+irc-info.c irc-info.h
 irc-input.c irc-input.h
 irc-mode.c irc-mode.h
 irc-nick.c irc-nick.h

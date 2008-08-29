@@ -214,7 +214,7 @@ script_auto_load (struct t_weechat_plugin *weechat_plugin,
     int dir_length;
     
     /* build directory, adding WeeChat home */
-    dir_home = weechat_info_get ("weechat_dir");
+    dir_home = weechat_info_get ("weechat_dir", "");
     if (!dir_home)
         return;
     dir_length = strlen (dir_home) + strlen (weechat_plugin->name) + 16;
@@ -277,7 +277,7 @@ script_search_full_name (struct t_weechat_plugin *weechat_plugin,
         return NULL;
     }
     
-    dir_home = weechat_info_get ("weechat_dir");
+    dir_home = weechat_info_get ("weechat_dir", "");
     if (dir_home)
     {
         /* try WeeChat user's autoload dir */
@@ -321,7 +321,7 @@ script_search_full_name (struct t_weechat_plugin *weechat_plugin,
     }
     
     /* try WeeChat system dir */
-    dir_system = weechat_info_get ("weechat_sharedir");
+    dir_system = weechat_info_get ("weechat_sharedir", "");
     if (dir_system)
     {
         length = strlen (dir_system) + strlen (weechat_plugin->name) +

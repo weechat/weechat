@@ -87,7 +87,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
     if (!dir1)
         return;
     
-    weechat_home = weechat_info_get ("weechat_dir");
+    weechat_home = weechat_info_get ("weechat_dir", "");
     if (!weechat_home)
     {
         free (dir1);
@@ -107,7 +107,7 @@ xfer_file_find_filename (struct t_xfer *xfer)
         return;
     
     strcpy (xfer->local_filename, dir2);
-    dir_separator = weechat_info_get("dir_separator");
+    dir_separator = weechat_info_get("dir_separator", "");
     if (dir_separator
         && (xfer->local_filename[strlen (xfer->local_filename) - 1] != dir_separator[0]))
         strcat (xfer->local_filename, dir_separator);

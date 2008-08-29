@@ -52,7 +52,10 @@ irc_protocol_get_nick_from_host (const char *host)
 {
     static char nick[128];
     char *pos;
-
+    
+    if (!host)
+        return NULL;
+    
     nick[0] = '\0';
     if (host)
     {
@@ -1004,8 +1007,8 @@ irc_protocol_reply_version (struct t_irc_server *server,
             pos = NULL;
     }
     
-    version = weechat_info_get ("version");
-    date = weechat_info_get ("date");
+    version = weechat_info_get ("version", "");
+    date = weechat_info_get ("date", "");
     if (version && date)
     {
         irc_server_sendf (server,
@@ -4167,6 +4170,9 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
                             "%s%s",
                             weechat_prefix ("error"), entire_line);
         }
+        
+        /* send signal with received command */
+        irc_server_send_signal (server, "irc_in2", command, entire_line);
         
         if (irc_message)
             free (irc_message);

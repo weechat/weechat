@@ -55,6 +55,7 @@ struct t_irc_protocol_msg
     t_irc_recv_func *recv_function; /* function called when msg is received  */
 };
 
+extern char *irc_protocol_get_nick_from_host (const char *host);
 extern void irc_protocol_recv_command (struct t_irc_server *server,
                                        const char *entire_line,
                                        const char *host, const char *command,

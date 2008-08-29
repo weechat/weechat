@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-24 19:12+0200\n"
+"POT-Creation-Date: 2008-08-29 14:53+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2013,9 +2013,11 @@ msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
 msgstr ""
 "barvy: %s buffer %s přezdívka1 %s přezdívka2 %s přezdívka3 %s přezdívka4"
 
-#, fuzzy, c-format
-msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
-msgstr "%s chybí argumenty pro příkaz \"%s\"\n"
+msgid "Available infos:"
+msgstr ""
+
+msgid "Available infolists:"
+msgstr ""
 
 #, c-format
 msgid "demo_signal: signal: %s, type_data: %s, signal_data: '%s'"
@@ -2061,31 +2063,33 @@ msgid "property value"
 msgstr "hodnota vlastnosti"
 
 #, fuzzy
+msgid "get and display an info"
+msgstr "maximální počtet příkazů, který zobarzit"
+
+#, fuzzy
+msgid "[info [arguments]]"
+msgstr "příjemce typ [argumenty]"
+
+msgid ""
+"     info: info to display\n"
+"arguments: optional arguments for info\n"
+"\n"
+"Without argument, this command displays list of available infos"
+msgstr ""
+
+#, fuzzy
 msgid "get and display an infolist"
 msgstr "maximální počtet příkazů, který zobarzit"
 
 #, fuzzy
-msgid "infolist"
+msgid "[infolist]"
 msgstr "seznam zakázaných"
 
-msgid "infolist: infolist to display (values: buffer, buffer_lines)"
-msgstr "infolist: infolist pro zobrazení (hodnoty: buffer, buffer_lines)"
-
-#, fuzzy
-msgid "get and display an info"
-msgstr "maximální počtet příkazů, který zobarzit"
-
-msgid "info"
-msgstr "info"
-
 msgid ""
-"info: info to display (values: version, weechat_dir, weechat_libdir, "
-"weechat_sharedir, charset_terminal, charset_internal, inactivity, input, "
-"input_mask, input_pos)"
+"infolist: infolist to display\n"
+"\n"
+"Without argument, this command displays list of available infolists"
 msgstr ""
-"info: info pro zobrazení (hodnoty: version, weechat_dir, weechat_libdir, "
-"weechat_sharedir, charset_terminal, charset_internal, inactivity, input, "
-"input_mask, input_pos)"
 
 #, fuzzy, c-format
 msgid "%s: pipe open"
@@ -4698,6 +4702,27 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
+#~ msgstr "%s chybí argumenty pro příkaz \"%s\"\n"
+
+#~ msgid "infolist: infolist to display (values: buffer, buffer_lines)"
+#~ msgstr "infolist: infolist pro zobrazení (hodnoty: buffer, buffer_lines)"
+
+#, fuzzy
+#~ msgid ""
+#~ "     info: info to display (values: version, weechat_dir, weechat_libdir, "
+#~ "weechat_sharedir, charset_terminal, charset_internal, inactivity, input, "
+#~ "input_mask, input_pos)\n"
+#~ "arguments: optional arguments for info"
+#~ msgstr ""
+#~ "info: info pro zobrazení (hodnoty: version, weechat_dir, weechat_libdir, "
+#~ "weechat_sharedir, charset_terminal, charset_internal, inactivity, input, "
+#~ "input_mask, input_pos)"
+
+#~ msgid "info"
+#~ msgstr "info"
 
 #, fuzzy
 #~ msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"

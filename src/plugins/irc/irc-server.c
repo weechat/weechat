@@ -49,6 +49,31 @@ struct t_irc_message *irc_msgq_last_msg = NULL;
 
 
 /*
+ * irc_server_valid: check if a server pointer exists
+ *                   return 1 if server exists
+ *                          0 if server is not found
+ */
+
+int
+irc_server_valid (struct t_irc_server *server)
+{
+    struct t_irc_server *ptr_server;
+    
+    if (!server)
+        return 0;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server == server)
+            return 1;
+    }
+    
+    /* server not found */
+    return 0;
+}
+
+/*
  * irc_server_get_name_without_port: get name of server without port
  *                                   (ends before first '/' if found)
  */
@@ -351,6 +376,7 @@ irc_server_init (struct t_irc_server *server)
     server->outqueue = NULL;
     server->last_outqueue = NULL;
     server->buffer = NULL;
+    server->buffer_as_string = NULL;
     server->channels = NULL;
     server->last_channel = NULL;
 
@@ -727,6 +753,8 @@ irc_server_free_data (struct t_irc_server *server)
         irc_server_outqueue_free_all (server);
     if (server->channels)
         irc_channel_free_all (server);
+    if (server->buffer_as_string)
+        free (server->buffer_as_string);
 }
 
 /*

@@ -2569,6 +2569,129 @@ static XS (XS_weechat_hook_modifier_exec)
 }
 
 /*
+ * weechat_perl_api_hook_info_cb: callback for info hooked
+ */
+
+char *
+weechat_perl_api_hook_info_cb (void *data, const char *info_name,
+                               const char *arguments)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[3];
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    perl_argv[0] = (char *)info_name;
+    perl_argv[1] = (char *)arguments;
+    perl_argv[2] = NULL;
+    
+    return (char *)weechat_perl_exec (script_callback->script,
+                                      WEECHAT_SCRIPT_EXEC_STRING,
+                                      script_callback->function,
+                                      perl_argv);
+}
+
+/*
+ * weechat::hook_info: hook an info
+ */
+
+static XS (XS_weechat_hook_info)
+{
+    char *result, *info_name, *perl_fn;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_info");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_info");
+        PERL_RETURN_EMPTY;
+    }
+    
+    info_name = SvPV (ST (0), PL_na);
+    perl_fn = SvPV (ST (1), PL_na);
+    result = script_ptr2str (script_api_hook_info (weechat_perl_plugin,
+                                                   perl_current_script,
+                                                   info_name,
+                                                   &weechat_perl_api_hook_info_cb,
+                                                   perl_fn));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_perl_api_hook_infolist_cb: callback for infolist hooked
+ */
+
+struct t_infolist *
+weechat_perl_api_hook_infolist_cb (void *data, const char *infolist_name,
+                                   void *pointer, const char *arguments)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[4];
+    struct t_infolist *value;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    perl_argv[0] = (char *)infolist_name;
+    perl_argv[1] = script_ptr2str (pointer);
+    perl_argv[2] = (char *)arguments;
+    perl_argv[3] = NULL;
+    
+    value = (struct t_infolist *)weechat_perl_exec (script_callback->script,
+                                                    WEECHAT_SCRIPT_EXEC_STRING,
+                                                    script_callback->function,
+                                                    perl_argv);
+    
+    if (perl_argv[1])
+        free (perl_argv[1]);
+    
+    return value;
+}
+
+/*
+ * weechat::hook_infolist: hook an infolist
+ */
+
+static XS (XS_weechat_hook_infolist)
+{
+    char *result, *infolist_name, *perl_fn;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_infolist");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_infolist");
+        PERL_RETURN_EMPTY;
+    }
+    
+    infolist_name = SvPV (ST (0), PL_na);
+    perl_fn = SvPV (ST (1), PL_na);
+    result = script_ptr2str (script_api_hook_infolist (weechat_perl_plugin,
+                                                       perl_current_script,
+                                                       infolist_name,
+                                                       &weechat_perl_api_hook_infolist_cb,
+                                                       perl_fn));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat::unhook: unhook something
  */
 
@@ -3578,13 +3701,14 @@ static XS (XS_weechat_info_get)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 1)
+    if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("info_get");
         PERL_RETURN_EMPTY;
     }
     
-    value = weechat_info_get (SvPV (ST (0), PL_na));
+    value = weechat_info_get (SvPV (ST (0), PL_na),
+                              SvPV (ST (1), PL_na));
     
     PERL_RETURN_STRING(value);
 }
@@ -3940,6 +4064,8 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::hook_completion_list_add", XS_weechat_hook_completion_list_add, "weechat");
     newXS ("weechat::hook_modifier", XS_weechat_hook_modifier, "weechat");
     newXS ("weechat::hook_modifier_exec", XS_weechat_hook_modifier_exec, "weechat");
+    newXS ("weechat::hook_info", XS_weechat_hook_info, "weechat");
+    newXS ("weechat::hook_infolist", XS_weechat_hook_infolist, "weechat");
     newXS ("weechat::unhook", XS_weechat_unhook, "weechat");
     newXS ("weechat::unhook_all", XS_weechat_unhook_all, "weechat");
     newXS ("weechat::buffer_new", XS_weechat_buffer_new, "weechat");

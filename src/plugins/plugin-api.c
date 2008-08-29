@@ -258,55 +258,60 @@ plugin_api_command (struct t_weechat_plugin *plugin,
 }
 
 /*
- * plugin_api_info_get: get info about WeeChat
+ * plugin_api_info_get_inernal: get info about WeeChat
  */
 
 char *
-plugin_api_info_get (struct t_weechat_plugin *plugin, const char *info)
+plugin_api_info_get_internal (void *data, const char *info_name,
+                              const char *arguments)
 {
     time_t inactivity;
     static char value[32];
     
-    if (!plugin || !info)
+    /* make C compiler happy */
+    (void) data;
+    (void) arguments;
+    
+    if (!info_name)
         return NULL;
     
-    if (string_strcasecmp (info, "version") == 0)
+    if (string_strcasecmp (info_name, "version") == 0)
     {
         return PACKAGE_VERSION;
     }
-    if (string_strcasecmp (info, "date") == 0)
+    if (string_strcasecmp (info_name, "date") == 0)
     {
         return __DATE__;
     }
-    else if (string_strcasecmp (info, "dir_separator") == 0)
+    else if (string_strcasecmp (info_name, "dir_separator") == 0)
     {
         return DIR_SEPARATOR;
     }
-    else if (string_strcasecmp (info, "weechat_dir") == 0)
+    else if (string_strcasecmp (info_name, "weechat_dir") == 0)
     {
         return weechat_home;
     }
-    else if (string_strcasecmp (info, "weechat_libdir") == 0)
+    else if (string_strcasecmp (info_name, "weechat_libdir") == 0)
     {
         return WEECHAT_LIBDIR;
     }
-    else if (string_strcasecmp (info, "weechat_sharedir") == 0)
+    else if (string_strcasecmp (info_name, "weechat_sharedir") == 0)
     {
         return WEECHAT_SHAREDIR;
     }
-    else if (string_strcasecmp (info, "weechat_localedir") == 0)
+    else if (string_strcasecmp (info_name, "weechat_localedir") == 0)
     {
         return LOCALEDIR;
     }
-    else if (string_strcasecmp (info, "charset_terminal") == 0)
+    else if (string_strcasecmp (info_name, "charset_terminal") == 0)
     {
         return weechat_local_charset;
     }
-    else if (string_strcasecmp (info, "charset_internal") == 0)
+    else if (string_strcasecmp (info_name, "charset_internal") == 0)
     {
         return WEECHAT_INTERNAL_CHARSET;
     }
-    else if (string_strcasecmp (info, "inactivity") == 0)
+    else if (string_strcasecmp (info_name, "inactivity") == 0)
     {
         if (gui_keyboard_last_activity_time == 0)
             inactivity = 0;
@@ -315,7 +320,7 @@ plugin_api_info_get (struct t_weechat_plugin *plugin, const char *info)
         snprintf (value, sizeof (value), "%ld", (long int)inactivity);
         return value;
     }
-    else if (string_strcasecmp (info, "filters_enabled") == 0)
+    else if (string_strcasecmp (info_name, "filters_enabled") == 0)
     {
         snprintf (value, sizeof (value), "%d", gui_filters_enabled);
         return value;
@@ -326,23 +331,28 @@ plugin_api_info_get (struct t_weechat_plugin *plugin, const char *info)
 }
 
 /*
- * plugin_api_infolist_get: get list with infos about WeeChat structures
- *                          WARNING: caller has to free string returned
- *                          by this function after use, with weechat_infolist_free()
+ * plugin_api_infolist_get_internal: get list with infos about WeeChat structures
+ *                                   WARNING: caller has to free string returned
+ *                                            by this function after use, with
+ *                                            weechat_infolist_free()
  */
 
 struct t_infolist *
-plugin_api_infolist_get (const char *name, void *pointer, const char *arguments)
+plugin_api_infolist_get_internal (void *data, const char *infolist_name,
+                                  void *pointer, const char *arguments)
 {
     struct t_infolist *ptr_infolist;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
     struct t_gui_window *ptr_window;
     
-    if (!name || !name[0])
+    /* make C compiler happy */
+    (void) data;
+    
+    if (!infolist_name || !infolist_name[0])
         return NULL;
     
-    if (string_strcasecmp (name, "buffer") == 0)
+    if (string_strcasecmp (infolist_name, "buffer") == 0)
     {
         /* invalid buffer pointer ? */
         if (pointer && (!gui_buffer_valid (pointer)))
@@ -377,7 +387,7 @@ plugin_api_infolist_get (const char *name, void *pointer, const char *arguments)
             }
         }
     }
-    else if (string_strcasecmp (name, "buffer_lines") == 0)
+    else if (string_strcasecmp (infolist_name, "buffer_lines") == 0)
     {
         if (!pointer)
             pointer = gui_buffers;
@@ -403,7 +413,7 @@ plugin_api_infolist_get (const char *name, void *pointer, const char *arguments)
             return ptr_infolist;
         }
     }
-    else if (string_strcasecmp (name, "nicklist") == 0)
+    else if (string_strcasecmp (infolist_name, "nicklist") == 0)
     {
         /* invalid buffer pointer ? */
         if (!pointer || (!gui_buffer_valid (pointer)))
@@ -420,7 +430,7 @@ plugin_api_infolist_get (const char *name, void *pointer, const char *arguments)
             return ptr_infolist;
         }
     }
-    else if (string_strcasecmp (name, "window") == 0)
+    else if (string_strcasecmp (infolist_name, "window") == 0)
     {
         /* invalid window pointer ? */
         if (pointer && (!gui_window_valid (pointer)))
@@ -474,7 +484,7 @@ plugin_api_infolist_get (const char *name, void *pointer, const char *arguments)
             }
         }
     }
-    else if (string_strcasecmp (name, "option") == 0)
+    else if (string_strcasecmp (infolist_name, "option") == 0)
     {
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
@@ -487,7 +497,7 @@ plugin_api_infolist_get (const char *name, void *pointer, const char *arguments)
             return ptr_infolist;
         }
     }
-    else if (string_strcasecmp (name, "hook") == 0)
+    else if (string_strcasecmp (infolist_name, "hook") == 0)
     {
         ptr_infolist = infolist_new ();
         if (ptr_infolist)
@@ -636,4 +646,34 @@ plugin_api_infolist_free (struct t_infolist *infolist)
 {
     if (infolist && infolist_valid (infolist))
         infolist_free (infolist);
+}
+
+/*
+ * plugin_api_init: init plugin API
+ */
+
+void
+plugin_api_init ()
+{
+    /* WeeChat core info hooks */
+    hook_info (NULL, "version",           &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "date",              &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "dir_separator",     &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "weechat_dir",       &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "weechat_libdir",    &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "weechat_sharedir",  &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "weechat_localedir", &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "charset_terminal",  &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "charset_internal",  &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "inactivity",        &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "filters_enabled",   &plugin_api_info_get_internal, NULL);
+    
+    /* WeeChat core infolist hooks */
+    hook_infolist (NULL, "buffer",       &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "buffer_lines", &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "buffer",       &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "nicklist",     &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "window",       &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "option",       &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "hook",         &plugin_api_infolist_get_internal, NULL);
 }

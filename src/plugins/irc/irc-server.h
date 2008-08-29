@@ -112,6 +112,7 @@ struct t_irc_server
     struct t_irc_outqueue *outqueue;      /* queue for outgoing user msgs    */
     struct t_irc_outqueue *last_outqueue; /* last outgoing user message      */
     struct t_gui_buffer *buffer;          /* GUI buffer allocated for server */
+    char *buffer_as_string;               /* used to return buffer info      */
     struct t_irc_channel *channels;       /* opened channels on server       */
     struct t_irc_channel *last_channel;   /* last opened channal on server   */
     struct t_irc_server *prev_server;     /* link to previous server         */
@@ -135,6 +136,7 @@ extern const int gnutls_prot_prio[];
 extern struct t_irc_message *irc_recv_msgq, *irc_msgq_last_msg;
 
 
+extern int irc_server_valid (struct t_irc_server *server);
 extern char *irc_server_get_name_without_port (const char *name);
 extern void irc_server_new_option (struct t_irc_server *server,
                                    int index_option,

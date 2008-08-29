@@ -524,6 +524,48 @@ gui_completion_list_add_command_hooks (struct t_gui_completion *completion)
 }
 
 /*
+ * gui_completion_list_add_info_hooks: add info hooks to completion list
+ */
+
+void
+gui_completion_list_add_info_hooks (struct t_gui_completion *completion)
+{
+    struct t_hook *ptr_hook;
+    
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_INFO]; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
+    {
+        if (!ptr_hook->deleted
+            && (HOOK_INFO(ptr_hook, info_name))
+            && (HOOK_INFO(ptr_hook, info_name)[0]))
+            gui_completion_list_add (completion,
+                                     HOOK_INFO(ptr_hook, info_name),
+                                     0, WEECHAT_LIST_POS_SORT);
+    }
+}
+
+/*
+ * gui_completion_list_add_infolist_hooks: add infolist hooks to completion list
+ */
+
+void
+gui_completion_list_add_infolist_hooks (struct t_gui_completion *completion)
+{
+    struct t_hook *ptr_hook;
+    
+    for (ptr_hook = weechat_hooks[HOOK_TYPE_INFOLIST]; ptr_hook;
+         ptr_hook = ptr_hook->next_hook)
+    {
+        if (!ptr_hook->deleted
+            && (HOOK_INFOLIST(ptr_hook, infolist_name))
+            && (HOOK_INFOLIST(ptr_hook, infolist_name)[0]))
+            gui_completion_list_add (completion,
+                                     HOOK_INFOLIST(ptr_hook, infolist_name),
+                                     0, WEECHAT_LIST_POS_SORT);
+    }
+}
+
+/*
  * gui_completion_list_add_self_nick: add self nick on server to completion list
  */
 
@@ -951,6 +993,12 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                             break;
                         case 'h': /* command hooks */
                             gui_completion_list_add_command_hooks (completion);
+                            break;
+                        case 'i': /* infos hooked */
+                            gui_completion_list_add_info_hooks (completion);
+                            break;
+                        case 'I': /* infolists hooked */
+                            gui_completion_list_add_infolist_hooks (completion);
                             break;
                         case 'm': /* self nickname */
                             gui_completion_list_add_self_nick (completion);

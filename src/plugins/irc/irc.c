@@ -28,6 +28,7 @@
 #include "irc-completion.h"
 #include "irc-config.h"
 #include "irc-debug.h"
+#include "irc-info.h"
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
@@ -113,6 +114,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         return WEECHAT_RC_ERROR;
     
     irc_command_init ();
+    
+    irc_info_init ();
     
     /* hook some signals */
     irc_debug_init ();

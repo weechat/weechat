@@ -104,7 +104,7 @@ xfer_create_directories ()
     char *weechat_dir, *dir1, *dir2;
     
     /* create download directory */
-    weechat_dir = weechat_info_get ("weechat_dir");
+    weechat_dir = weechat_info_get ("weechat_dir", "");
     if (weechat_dir)
     {
         dir1 = weechat_string_replace (weechat_config_string (xfer_config_file_download_path),
@@ -754,7 +754,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
                 return WEECHAT_RC_ERROR;
             }
             
-            weechat_dir = weechat_info_get ("weechat_dir");
+            weechat_dir = weechat_info_get ("weechat_dir", "");
             dir2 = weechat_string_replace (dir1, "%h", weechat_dir);
             if (!dir2)
             {

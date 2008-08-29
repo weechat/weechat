@@ -34,6 +34,31 @@
 
 
 /*
+ * irc_channel_valid: check if a channel pointer exists for a server
+ *                    return 1 if channel exists
+ *                           0 if channel is not found
+ */
+
+int
+irc_channel_valid (struct t_irc_server *server, struct t_irc_channel *channel)
+{
+    struct t_irc_channel *ptr_channel;
+    
+    if (!server)
+        return 0;
+    
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        if (ptr_channel == channel)
+            return 1;
+    }
+    
+    /* channel not found */
+    return 0;
+}
+
+/*
  * irc_channel_new: allocate a new channel for a server and add it to servers
  *                  list
  */
@@ -114,6 +139,7 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     new_channel->last_nick = NULL;
     new_channel->buffer = new_buffer;
     new_channel->nicks_speaking = NULL;
+    new_channel->buffer_as_string = NULL;
     
     /* add new channel to channels list */
     new_channel->prev_channel = server->last_channel;
@@ -185,6 +211,8 @@ irc_channel_free (struct t_irc_server *server, struct t_irc_channel *channel)
         free (channel->away_message);
     if (channel->nicks_speaking)
         weechat_list_free (channel->nicks_speaking);
+    if (channel->buffer_as_string)
+        free (channel->buffer_as_string);
     
     free (channel);
     

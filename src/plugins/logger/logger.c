@@ -200,7 +200,7 @@ logger_create_directory ()
     dir1 = weechat_string_replace (logger_option_path, "~", getenv ("HOME"));
     if (dir1)
     {
-        weechat_dir = weechat_info_get ("weechat_dir");
+        weechat_dir = weechat_info_get ("weechat_dir", "");
         if (weechat_dir)
         {
             dir2 = weechat_string_replace (dir1, "%h", weechat_dir);
@@ -243,8 +243,8 @@ logger_get_filename (struct t_gui_buffer *buffer)
     
     res = NULL;
     
-    dir_separator = weechat_info_get ("dir_separator");
-    weechat_dir = weechat_info_get ("weechat_dir");
+    dir_separator = weechat_info_get ("dir_separator", "");
+    weechat_dir = weechat_info_get ("weechat_dir", "");
     log_path = weechat_string_replace (logger_option_path, "~",
                                        getenv ("HOME"));
     log_path2 = weechat_string_replace (log_path, "%h", weechat_dir);
@@ -340,7 +340,7 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
     
     if (logger_buffer->log_filename)
     {
-        charset = weechat_info_get ("charset_terminal");
+        charset = weechat_info_get ("charset_terminal", "");
         
         if (!logger_buffer->log_file)
         {

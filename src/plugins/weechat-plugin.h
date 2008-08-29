@@ -28,6 +28,7 @@ struct t_gui_buffer;
 struct t_gui_bar;
 struct t_gui_bar_item;
 struct t_gui_completion;
+struct t_infolist;
 struct t_weelist;
 
 /* macros for defining plugin infos */
@@ -367,6 +368,19 @@ struct t_weechat_plugin
     char *(*hook_modifier_exec) (struct t_weechat_plugin *plugin,
                                  const char *modifier, const char *modifier_data,
                                  const char *string);
+    struct t_hook *(*hook_info) (struct t_weechat_plugin *plugin,
+                                 const char *info_name,
+                                 char *(*callback)(void *data,
+                                                   const char *info_name,
+                                                   const char *arguments),
+                                 void *callback_data);
+    struct t_hook *(*hook_infolist) (struct t_weechat_plugin *plugin,
+                                     const char *infolist_name,
+                                     struct t_infolist *(*callback)(void *data,
+                                                                    const char *infolist_name,
+                                                                    void *pointer,
+                                                                    const char *arguments),
+                                     void *callback_data);
     void (*unhook) (struct t_hook *hook);
     void (*unhook_all) (struct t_weechat_plugin *plugin);
     
@@ -453,7 +467,8 @@ struct t_weechat_plugin
     int (*network_connect_to) (int sock, unsigned long address, int port);
     
     /* infos */
-    char *(*info_get) (struct t_weechat_plugin *plugin, const char *info);
+    char *(*info_get) (struct t_weechat_plugin *plugin, const char *info_name,
+                       const char *arguments);
     
     /* infolists */
     struct t_infolist *(*infolist_new) ();
@@ -474,7 +489,9 @@ struct t_weechat_plugin
     struct t_infolist_var *(*infolist_new_var_time) (struct t_infolist_item *item,
                                                      const char *name,
                                                      time_t time);
-    struct t_infolist *(*infolist_get) (const char *name, void *pointer,
+    struct t_infolist *(*infolist_get) (struct t_weechat_plugin *plugin,
+                                        const char *infolist_name,
+                                        void *pointer,
                                         const char *arguments);
     int (*infolist_next) (struct t_infolist *infolist);
     int (*infolist_prev) (struct t_infolist *infolist);
@@ -509,45 +526,45 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 /* macros for easy call to plugin API */
 
 /* strings */
-#define weechat_charset_set(__charset)                          \
+#define weechat_charset_set(__charset)                                  \
     weechat_plugin->charset_set(weechat_plugin, __charset)
-#define weechat_iconv_to_internal(__charset, __string)          \
+#define weechat_iconv_to_internal(__charset, __string)                  \
     weechat_plugin->iconv_to_internal(__charset, __string)
-#define weechat_iconv_from_internal(__charset, __string)        \
+#define weechat_iconv_from_internal(__charset, __string)                \
     weechat_plugin->iconv_from_internal(__charset, __string)
 #ifndef __WEECHAT_H
 #ifndef _
 #define _(string) weechat_plugin->gettext(string)
 #define N_(string) (string)
-#define NG_(single,plural,number)                       \
+#define NG_(single,plural,number)                                       \
     weechat_plugin->ngettext(single, plural, number)
 #endif
 #endif
 #define weechat_gettext(string) weechat_plugin->gettext(string)
-#define weechat_ngettext(single,plural,number)          \
+#define weechat_ngettext(single,plural,number)                          \
     weechat_plugin->ngettext(single, plural, number)
-#define weechat_strndup(__string, __length)     \
+#define weechat_strndup(__string, __length)                             \
     weechat_plugin->strndup(__string, __length)
-#define weechat_string_tolower(__string)        \
+#define weechat_string_tolower(__string)                                \
     weechat_plugin->string_tolower(__string)
-#define weechat_string_toupper(__string)        \
+#define weechat_string_toupper(__string)                                \
     weechat_plugin->string_toupper(__string)
-#define weechat_strcasecmp(__string1, __string2)        \
+#define weechat_strcasecmp(__string1, __string2)                        \
     weechat_plugin->strcasecmp(__string1, __string2)
-#define weechat_strncasecmp(__string1, __string2, __max)        \
+#define weechat_strncasecmp(__string1, __string2, __max)                \
     weechat_plugin->strncasecmp(__string1, __string2, __max)
 #define weechat_strcmp_ignore_chars(__string1, __string2,               \
                                     __chars_ignored, __case_sensitive)  \
     weechat_plugin->strcmp_ignore_chars(__string1, __string2,           \
                                         __chars_ignored,                \
                                         __case_sensitive)
-#define weechat_strcasestr(__string1, __string2)        \
+#define weechat_strcasestr(__string1, __string2)                        \
     weechat_plugin->strcasestr(__string1, __string2)
 #define weechat_string_match(__string, __mask, __case_sensitive)        \
     weechat_plugin->string_match(__string, __mask, __case_sensitive)
 #define weechat_string_replace(__string, __search, __replace)           \
     weechat_plugin->string_replace(__string, __search, __replace)
-#define weechat_string_remove_quotes(__string, __quotes)        \
+#define weechat_string_remove_quotes(__string, __quotes)                \
     weechat_plugin->string_remove_quotes(__string, __quotes)
 #define weechat_string_strip(__string, __left, __right, __chars)        \
     weechat_plugin->string_strip(__string, __left, __right, __chars)
@@ -557,7 +574,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                __num_items)                             \
     weechat_plugin->string_explode(__string, __separator, __eol,        \
                                    __max, __num_items)
-#define weechat_string_free_exploded(__exploded_string)         \
+#define weechat_string_free_exploded(__exploded_string)                 \
     weechat_plugin->string_free_exploded(__exploded_string)
 #define weechat_string_build_with_exploded(__exploded_string,           \
                                            __separator)                 \
@@ -569,77 +586,77 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_free_splitted_command(__splitted_command)
 
 /* UTF-8 strings */
-#define weechat_utf8_has_8bits(__string)        \
+#define weechat_utf8_has_8bits(__string)                                \
     weechat_plugin->utf8_has_8bits(__string)
-#define weechat_utf8_is_valid(__string, __error)        \
+#define weechat_utf8_is_valid(__string, __error)                        \
     weechat_plugin->utf8_is_valid(__string, __error)
-#define weechat_utf8_normalize(__string, __char)        \
+#define weechat_utf8_normalize(__string, __char)                        \
     weechat_plugin->utf8_normalize(__string, __char)
-#define weechat_utf8_prev_char(__start, __string)       \
+#define weechat_utf8_prev_char(__start, __string)                       \
     weechat_plugin->utf8_prev_char(__start, __string)
-#define weechat_utf8_next_char(__string)        \
+#define weechat_utf8_next_char(__string)                                \
     weechat_plugin->utf8_next_char(__string)
-#define weechat_utf8_char_size(__string)        \
+#define weechat_utf8_char_size(__string)                                \
     weechat_plugin->utf8_char_size(__string)
-#define weechat_utf8_strlen(__string)           \
+#define weechat_utf8_strlen(__string)                                   \
     weechat_plugin->utf8_strlen(__string)
-#define weechat_utf8_strnlen(__string, __bytes)         \
+#define weechat_utf8_strnlen(__string, __bytes)                         \
     weechat_plugin->utf8_strnlen(__string, __bytes)
-#define weechat_utf8_strlen_screen(__string)            \
+#define weechat_utf8_strlen_screen(__string)                            \
     weechat_plugin->utf8_strlen_screen(__string)
-#define weechat_utf8_charcasecmp(__string1, __string2)          \
+#define weechat_utf8_charcasecmp(__string1, __string2)                  \
     weechat_plugin->utf8_charcasecmp(__string1, __string2)
-#define weechat_utf8_char_size_screen(__string)         \
+#define weechat_utf8_char_size_screen(__string)                         \
     weechat_plugin->utf8_char_size_screen(__string)
-#define weechat_utf8_add_offset(__string, __offset)     \
+#define weechat_utf8_add_offset(__string, __offset)                     \
     weechat_plugin->utf8_add_offset(__string, __offset)
-#define weechat_utf8_real_pos(__string, __pos)          \
+#define weechat_utf8_real_pos(__string, __pos)                          \
     weechat_plugin->utf8_real_pos(__string, __pos)
-#define weechat_utf8_pos(__string, __real_pos)          \
+#define weechat_utf8_pos(__string, __real_pos)                          \
     weechat_plugin->utf8_pos(__string, __real_pos)
 
 /* directories */
-#define weechat_mkdir_home(__directory, __mode)         \
+#define weechat_mkdir_home(__directory, __mode)                         \
     weechat_plugin->mkdir_home(__directory, __mode)
-#define weechat_mkdir(__directory, __mode)      \
+#define weechat_mkdir(__directory, __mode)                              \
     weechat_plugin->mkdir(__directory, __mode)
 #define weechat_exec_on_files(__directory, __data, __callback)          \
     weechat_plugin->exec_on_files(__directory, __data, __callback)
 
 /* util */
-#define weechat_timeval_cmp(__time1, __time2)           \
+#define weechat_timeval_cmp(__time1, __time2)                           \
     weechat_plugin->timeval_cmp(__time1, __time2)
-#define weechat_timeval_diff(__time1, __time2)          \
+#define weechat_timeval_diff(__time1, __time2)                          \
     weechat_plugin->timeval_diff(__time1, __time2)
-#define weechat_timeval_add(__time, __interval)         \
+#define weechat_timeval_add(__time, __interval)                         \
     weechat_plugin->timeval_add(__time, __interval)
 
 /* sorted list */
-#define weechat_list_new()                      \
+#define weechat_list_new()                                              \
     weechat_plugin->list_new()
-#define weechat_list_add(__list, __string, __where)     \
+#define weechat_list_add(__list, __string, __where)                     \
     weechat_plugin->list_add(__list, __string, __where)
-#define weechat_list_search(__list, __string)           \
+#define weechat_list_search(__list, __string)                           \
     weechat_plugin->list_search(__list, __string)
-#define weechat_list_casesearch(__list, __string)       \
+#define weechat_list_casesearch(__list, __string)                       \
     weechat_plugin->list_casesearch(__list, __string)
-#define weechat_list_get(__list, __index)       \
+#define weechat_list_get(__list, __index)                               \
     weechat_plugin->list_get(__list, __index)
-#define weechat_list_set(__item, __value)               \
+#define weechat_list_set(__item, __value)                               \
     weechat_plugin->list_set(__item, __value)
-#define weechat_list_next(__item)               \
+#define weechat_list_next(__item)                                       \
     weechat_plugin->list_next(__item)
-#define weechat_list_prev(__item)               \
+#define weechat_list_prev(__item)                                       \
     weechat_plugin->list_prev(__item)
-#define weechat_list_string(__item)             \
+#define weechat_list_string(__item)                                     \
     weechat_plugin->list_string(__item)
-#define weechat_list_size(__list)               \
+#define weechat_list_size(__list)                                       \
     weechat_plugin->list_size(__list)
-#define weechat_list_remove(__list, __item)     \
+#define weechat_list_remove(__list, __item)                             \
     weechat_plugin->list_remove(__list, __item)
-#define weechat_list_remove_all(__list)         \
+#define weechat_list_remove_all(__list)                                 \
     weechat_plugin->list_remove_all(__list)
-#define weechat_list_free(__list)               \
+#define weechat_list_free(__list)                                       \
     weechat_plugin->list_free(__list)
 
 /* config files */
@@ -666,7 +683,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                        __cb_write_def_data,             \
                                        __cb_create_option,              \
                                        __cb_create_option_data)
-#define weechat_config_search_section(__config, __name)         \
+#define weechat_config_search_section(__config, __name)                 \
     weechat_plugin->config_search_section(__config, __name)
 #define weechat_config_new_option(__config, __section, __name, __type,  \
                                   __desc, __string_values, __min,       \
@@ -699,7 +716,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->config_search_with_string(__name, __config,         \
                                               __section, __option,      \
                                               __pos_option);
-#define weechat_config_string_to_boolean(__string)      \
+#define weechat_config_string_to_boolean(__string)                      \
     weechat_plugin->config_string_to_boolean(__string)
 #define weechat_config_option_reset(__option, __run_callback)           \
     weechat_plugin->config_option_reset(__option, __run_callback)
@@ -708,52 +725,51 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                       __run_callback)
 #define weechat_config_option_unset(__option)                           \
     weechat_plugin->config_option_unset(__option)
-#define weechat_config_option_rename(__option, __new_name)      \
+#define weechat_config_option_rename(__option, __new_name)              \
     weechat_plugin->config_option_rename(__option, __new_name)
 #define weechat_config_option_get_pointer(__option, __property)         \
     weechat_plugin->config_option_get_pointer(__option, __property)
-#define weechat_config_boolean(__option)        \
+#define weechat_config_boolean(__option)                                \
     weechat_plugin->config_boolean(__option)
-#define weechat_config_integer(__option)        \
+#define weechat_config_integer(__option)                                \
     weechat_plugin->config_integer(__option)
-#define weechat_config_string(__option)         \
+#define weechat_config_string(__option)                                 \
     weechat_plugin->config_string(__option)
-#define weechat_config_color(__option)          \
+#define weechat_config_color(__option)                                  \
     weechat_plugin->config_color(__option)
-#define weechat_config_write_line(__config, __option,           \
-                                  __value...)                   \
-    weechat_plugin->config_write_line(__config, __option,       \
-                                      ##__value)
-#define weechat_config_write(__config)          \
+#define weechat_config_write_line(__config, __option, __value...)       \
+    weechat_plugin->config_write_line(__config, __option, ##__value)
+#define weechat_config_write(__config)                                  \
     weechat_plugin->config_write(__config)
-#define weechat_config_read(__config)           \
+#define weechat_config_read(__config)                                   \
     weechat_plugin->config_read(__config)
-#define weechat_config_reload(__config)         \
+#define weechat_config_reload(__config)                                 \
     weechat_plugin->config_reload(__config)
-#define weechat_config_option_free(__option)            \
+#define weechat_config_option_free(__option)                            \
     weechat_plugin->config_option_free(__option)
-#define weechat_config_section_free_options(__section)          \
+#define weechat_config_section_free_options(__section)                  \
     weechat_plugin->config_section_free_options(__section)
-#define weechat_config_section_free(__config, __section)        \
+#define weechat_config_section_free(__config, __section)                \
     weechat_plugin->config_section_free(__config, __section)
-#define weechat_config_free(__config)           \
+#define weechat_config_free(__config)                                   \
     weechat_plugin->config_free(__config)
-#define weechat_config_get(__option)            \
+#define weechat_config_get(__option)                                    \
     weechat_plugin->config_get(__option)
-#define weechat_config_get_plugin(__option)                     \
+#define weechat_config_get_plugin(__option)                             \
     weechat_plugin->config_get_plugin(weechat_plugin, __option)
 #define weechat_config_set_plugin(__option, __value)                    \
-    weechat_plugin->config_set_plugin(weechat_plugin, __option, __value)
+    weechat_plugin->config_set_plugin(weechat_plugin, __option,         \
+                                      __value)
 
 /* display */
-#define weechat_prefix(__prefix)                \
+#define weechat_prefix(__prefix)                                        \
     weechat_plugin->prefix(__prefix)
-#define weechat_color(__color_name)             \
+#define weechat_color(__color_name)                                     \
     weechat_plugin->color(__color_name)
 #define weechat_printf(__buffer, __message, __argz...)                  \
     weechat_plugin->printf_date_tags(__buffer, 0, NULL, __message,      \
                                      ##__argz)
-#define weechat_printf_y(__buffer, __y, __message, __argz...)     \
+#define weechat_printf_y(__buffer, __y, __message, __argz...)           \
     weechat_plugin->printf_y(__buffer, __y, __message, ##__argz)
 #define weechat_printf_date(__buffer, __date, __message, __argz...)     \
     weechat_plugin->printf_date_tags(__buffer, __date, NULL,            \
@@ -765,16 +781,16 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                  __argz...)                             \
     weechat_plugin->printf_date_tags(__buffer, __date, __tags,          \
                                      __message, ##__argz)
-#define weechat_log_printf(__message, __argz...)        \
+#define weechat_log_printf(__message, __argz...)                        \
     weechat_plugin->log_printf(__message, ##__argz)
 
 /* hooks */
 #define weechat_hook_command(__command, __description, __args,          \
                              __args_desc, __completion, __callback,     \
                              __data)                                    \
-    weechat_plugin->hook_command(weechat_plugin, __command, __description, \
-                                 __args, __args_desc, __completion,     \
-                                 __callback, __data)
+    weechat_plugin->hook_command(weechat_plugin, __command,             \
+                                 __description, __args, __args_desc,    \
+                                 __completion, __callback, __data)
 #define weechat_hook_timer(__interval, __align_second, __max_calls,     \
                            __callback, __data)                          \
     weechat_plugin->hook_timer(weechat_plugin, __interval,              \
@@ -813,16 +829,22 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->hook_completion_list_add(__completion, __word,      \
                                              __nick_completion,         \
                                              __where)
-#define weechat_hook_modifier(__modifier, __callback, __data)   \
-    weechat_plugin->hook_modifier(weechat_plugin, __modifier,   \
+#define weechat_hook_modifier(__modifier, __callback, __data)           \
+    weechat_plugin->hook_modifier(weechat_plugin, __modifier,           \
                                   __callback, __data)
 #define weechat_hook_modifier_exec(__modifier, __modifier_data,         \
                                    __string)                            \
     weechat_plugin->hook_modifier_exec(weechat_plugin, __modifier,      \
                                        __modifier_data, __string)
-#define weechat_unhook(__hook)                  \
+#define weechat_hook_info(__info_name, __callback, __data)              \
+    weechat_plugin->hook_info(weechat_plugin, __info_name,              \
+                              __callback, __data)
+#define weechat_hook_infolist(__infolist_name, __callback, __data)      \
+    weechat_plugin->hook_infolist(weechat_plugin, __infolist_name,      \
+                              __callback, __data)
+#define weechat_unhook(__hook)                                          \
     weechat_plugin->unhook( __hook)
-#define weechat_unhook_all()                            \
+#define weechat_unhook_all()                                            \
     weechat_plugin->unhook_all_plugin(weechat_plugin)
 
 /* buffers */
@@ -832,27 +854,27 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->buffer_new(weechat_plugin, __category, __name,      \
                                __input_callback, __input_callback_data, \
                                __close_callback, __close_callback_data)
-#define weechat_buffer_search(__category, __name)       \
+#define weechat_buffer_search(__category, __name)                       \
     weechat_plugin->buffer_search(__category, __name)
-#define weechat_current_buffer                  \
+#define weechat_current_buffer                                          \
     weechat_plugin->buffer_search(NULL, NULL)
-#define weechat_buffer_clear(__buffer)          \
+#define weechat_buffer_clear(__buffer)                                  \
     weechat_plugin->buffer_clear(__buffer)
-#define weechat_buffer_close(__buffer, __switch_to_another)     \
+#define weechat_buffer_close(__buffer, __switch_to_another)             \
     weechat_plugin->buffer_close(__buffer, __switch_to_another)
-#define weechat_buffer_get_integer(__buffer, __property)         \
+#define weechat_buffer_get_integer(__buffer, __property)                \
     weechat_plugin->buffer_get_integer(__buffer, __property)
-#define weechat_buffer_get_string(__buffer, __property)        \
+#define weechat_buffer_get_string(__buffer, __property)                 \
     weechat_plugin->buffer_get_string(__buffer, __property)
-#define weechat_buffer_get_pointer(__buffer, __property)        \
+#define weechat_buffer_get_pointer(__buffer, __property)                \
     weechat_plugin->buffer_get_pointer(__buffer, __property)
-#define weechat_buffer_set(__buffer, __property, __value)       \
+#define weechat_buffer_set(__buffer, __property, __value)               \
     weechat_plugin->buffer_set(__buffer, __property, __value)
 
 /* nicklist */
-#define weechat_nicklist_add_group(__buffer, __parent_group, __name, \
-                                   __color, __visible)               \
-    weechat_plugin->nicklist_add_group(__buffer, __parent_group,     \
+#define weechat_nicklist_add_group(__buffer, __parent_group, __name,    \
+                                   __color, __visible)                  \
+    weechat_plugin->nicklist_add_group(__buffer, __parent_group,        \
                                        __name, __color, __visible)
 #define weechat_nicklist_search_group(__buffer, __from_group, __name)   \
     weechat_plugin->nicklist_search_group(__buffer, __from_group,       \
@@ -860,45 +882,46 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 #define weechat_nicklist_add_nick(__buffer, __group, __name, __color,   \
                                   __prefix, __prefix_color, __visible)  \
     weechat_plugin->nicklist_add_nick(__buffer, __group, __name,        \
-                                      __color, __prefix, __prefix_color, \
-                                      __visible)
+                                      __color, __prefix,                \
+                                      __prefix_color, __visible)
 #define weechat_nicklist_search_nick(__buffer, __from_group, __name)    \
-    weechat_plugin->nicklist_search_nick(__buffer, __from_group, __name)
-#define weechat_nicklist_remove_group(__buffer, __group)        \
+    weechat_plugin->nicklist_search_nick(__buffer, __from_group,        \
+                                         __name)
+#define weechat_nicklist_remove_group(__buffer, __group)                \
     weechat_plugin->nicklist_remove_group(__buffer, __group)
-#define weechat_nicklist_remove_nick(__buffer, __nick)          \
+#define weechat_nicklist_remove_nick(__buffer, __nick)                  \
     weechat_plugin->nicklist_remove_nick(__buffer, __nick)
-#define weechat_nicklist_remove_all(__buffer)           \
+#define weechat_nicklist_remove_all(__buffer)                           \
     weechat_plugin->nicklist_remove_all(__buffer)
 
 /* bars */
-#define weechat_bar_item_search(__name)         \
+#define weechat_bar_item_search(__name)                                 \
     weechat_plugin->bar_item_search(__name)
 #define weechat_bar_item_new(__name, __build_callback, __data)          \
     weechat_plugin->bar_item_new(weechat_plugin, __name,                \
                                  __build_callback, __data)
-#define weechat_bar_item_update(__name)         \
+#define weechat_bar_item_update(__name)                                 \
     weechat_plugin->bar_item_update(__name)
-#define weechat_bar_item_remove(__item)         \
+#define weechat_bar_item_remove(__item)                                 \
     weechat_plugin->bar_item_remove(__item)
-#define weechat_bar_search(__name)              \
+#define weechat_bar_search(__name)                                      \
     weechat_plugin->bar_search(__name)
-#define weechat_bar_new(__name, __hidden, __priority, __type,          \
-                        __condition, __position, __filling_top_bottom, \
-                        __filling_left_right, __size, __size_max,      \
-                        __color_fg, __color_delim, __color_bg,         \
-                        __separator, __items)                          \
-    weechat_plugin->bar_new(weechat_plugin, __name, __hidden,          \
-                            __priority, __type, __condition,           \
-                            __position, __filling_top_bottom,          \
-                            __filling_left_right, __size, __size_max,  \
-                            __color_fg, __color_delim, __color_bg,     \
+#define weechat_bar_new(__name, __hidden, __priority, __type,           \
+                        __condition, __position, __filling_top_bottom,  \
+                        __filling_left_right, __size, __size_max,       \
+                        __color_fg, __color_delim, __color_bg,          \
+                        __separator, __items)                           \
+    weechat_plugin->bar_new(weechat_plugin, __name, __hidden,           \
+                            __priority, __type, __condition,            \
+                            __position, __filling_top_bottom,           \
+                            __filling_left_right, __size, __size_max,   \
+                            __color_fg, __color_delim, __color_bg,      \
                             __separator, __items)
-#define weechat_bar_set(__bar, __property, __value)     \
+#define weechat_bar_set(__bar, __property, __value)                     \
     weechat_plugin->bar_set(__bar, __property, __value)
-#define weechat_bar_update(__name)              \
+#define weechat_bar_update(__name)                                      \
     weechat_plugin->bar_update(__name)
-#define weechat_bar_remove(__bar)               \
+#define weechat_bar_remove(__bar)                                       \
     weechat_plugin->bar_remove(__bar)
 
 /* command */
@@ -912,13 +935,13 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->network_connect_to(__sock, __address, __port)
 
 /* infos */
-#define weechat_info_get(__name)                        \
-    weechat_plugin->info_get(weechat_plugin, __name)
+#define weechat_info_get(__info_name, __arguments)                      \
+    weechat_plugin->info_get(weechat_plugin, __info_name, __arguments)
 
 /* infolists */
-#define weechat_infolist_new()                  \
+#define weechat_infolist_new()                                          \
     weechat_plugin->infolist_new()
-#define weechat_infolist_new_item(__list)       \
+#define weechat_infolist_new_item(__list)                               \
     weechat_plugin->infolist_new_item(__list)
 #define weechat_infolist_new_var_integer(__item, __name, __value)       \
     weechat_plugin->infolist_new_var_integer(__item, __name, __value)
@@ -932,8 +955,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                             __size)
 #define weechat_infolist_new_var_time(__item, __name, __time)           \
     weechat_plugin->infolist_new_var_time(__item, __name, __time)
-#define weechat_infolist_get(__name, __pointer, __arguments)            \
-    weechat_plugin->infolist_get(__name, __pointer, __arguments)
+#define weechat_infolist_get(__infolist_name, __pointer, __arguments)   \
+    weechat_plugin->infolist_get(weechat_plugin, __infolist_name,       \
+                                 __pointer, __arguments)
 #define weechat_infolist_next(__list)                                   \
     weechat_plugin->infolist_next(__list)
 #define weechat_infolist_prev(__list)                                   \

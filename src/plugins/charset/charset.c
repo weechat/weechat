@@ -526,8 +526,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     charset_debug = weechat_config_boolean (weechat_config_get ("weechat.plugin.debug"));
     
     /* get terminal & internal charsets */
-    charset_terminal = weechat_info_get ("charset_terminal");
-    charset_internal = weechat_info_get ("charset_internal");
+    charset_terminal = weechat_info_get ("charset_terminal", "");
+    charset_internal = weechat_info_get ("charset_internal", "");
     
     /* display message */
     weechat_printf (NULL,

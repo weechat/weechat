@@ -3135,6 +3135,145 @@ weechat_ruby_api_hook_modifier_exec (VALUE class, VALUE modifier,
 }
 
 /*
+ * weechat_ruby_api_hook_info_cb: callback for info hooked
+ */
+
+char *
+weechat_ruby_api_hook_info_cb (void *data, const char *info_name,
+                               const char *arguments)
+{
+    struct t_script_callback *script_callback;
+    char *ruby_argv[3];
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    ruby_argv[0] = (char *)info_name;
+    ruby_argv[1] = (char *)arguments;
+    ruby_argv[2] = NULL;
+    
+    return (char *)weechat_ruby_exec (script_callback->script,
+                                      WEECHAT_SCRIPT_EXEC_STRING,
+                                      script_callback->function,
+                                      ruby_argv);
+}
+
+/*
+ * weechat_ruby_api_hook_info: hook an info
+ */
+
+static VALUE
+weechat_ruby_api_hook_info (VALUE class, VALUE info_name, VALUE function)
+{
+    char *c_info_name, *c_function, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_info");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_info_name = NULL;
+    c_function = NULL;
+    
+    if (NIL_P (info_name) || NIL_P (function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_info");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (info_name, T_STRING);
+    Check_Type (function, T_STRING);
+    
+    c_info_name = STR2CSTR (info_name);
+    c_function = STR2CSTR (function);
+    
+    result = script_ptr2str (script_api_hook_info (weechat_ruby_plugin,
+                                                   ruby_current_script,
+                                                   c_info_name,
+                                                   &weechat_ruby_api_hook_info_cb,
+                                                   c_function));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_ruby_api_hook_infolist_cb: callback for infolist hooked
+ */
+
+struct t_infolist *
+weechat_ruby_api_hook_infolist_cb (void *data, const char *infolist_name,
+                                   void *pointer, const char *arguments)
+{
+    struct t_script_callback *script_callback;
+    char *ruby_argv[4];
+    struct t_infolist *value;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    ruby_argv[0] = (char *)infolist_name;
+    ruby_argv[1] = script_ptr2str (pointer);
+    ruby_argv[2] = (char *)arguments;
+    ruby_argv[3] = NULL;
+    
+    value = (struct t_infolist *)weechat_ruby_exec (script_callback->script,
+                                                    WEECHAT_SCRIPT_EXEC_STRING,
+                                                    script_callback->function,
+                                                    ruby_argv);
+    
+    if (ruby_argv[1])
+        free (ruby_argv[1]);
+    
+    return value;
+}
+
+/*
+ * weechat_ruby_api_hook_infolist: hook an infolist
+ */
+
+static VALUE
+weechat_ruby_api_hook_infolist (VALUE class, VALUE infolist_name, VALUE function)
+{
+    char *c_infolist_name, *c_function, *result;
+    VALUE return_value;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_infolist");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_infolist_name = NULL;
+    c_function = NULL;
+    
+    if (NIL_P (infolist_name) || NIL_P (function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_infolist");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (infolist_name, T_STRING);
+    Check_Type (function, T_STRING);
+    
+    c_infolist_name = STR2CSTR (infolist_name);
+    c_function = STR2CSTR (function);
+    
+    result = script_ptr2str (script_api_hook_infolist (weechat_ruby_plugin,
+                                                       ruby_current_script,
+                                                       c_infolist_name,
+                                                       &weechat_ruby_api_hook_infolist_cb,
+                                                       c_function));
+    
+    RUBY_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_ruby_api_unhook: unhook something
  */
 
@@ -4376,9 +4515,9 @@ weechat_ruby_api_command (VALUE class, VALUE buffer, VALUE command)
  */
 
 static VALUE
-weechat_ruby_api_info_get (VALUE class, VALUE info)
+weechat_ruby_api_info_get (VALUE class, VALUE info_name, VALUE arguments)
 {
-    char *c_info, *value;
+    char *c_info_name, *c_arguments, *value;
     
     /* make C compiler happy */
     (void) class;
@@ -4389,17 +4528,19 @@ weechat_ruby_api_info_get (VALUE class, VALUE info)
         RUBY_RETURN_EMPTY;
     }
     
-    if (NIL_P (info))
+    if (NIL_P (info_name) || NIL_P (arguments))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("info_get");
         RUBY_RETURN_EMPTY;
     }
     
-    Check_Type (info, T_STRING);
+    Check_Type (info_name, T_STRING);
+    Check_Type (arguments, T_STRING);
     
-    c_info = STR2CSTR (info);
-
-    value = weechat_info_get (c_info);
+    c_info_name = STR2CSTR (info_name);
+    c_arguments = STR2CSTR (arguments);
+    
+    value = weechat_info_get (c_info_name, c_arguments);
     
     RUBY_RETURN_STRING(value);
 }
@@ -4823,6 +4964,8 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "hook_completion_list_add", &weechat_ruby_api_hook_completion_list_add, 4);
     rb_define_module_function (ruby_mWeechat, "hook_modifier", &weechat_ruby_api_hook_modifier, 2);
     rb_define_module_function (ruby_mWeechat, "hook_modifier_exec", &weechat_ruby_api_hook_modifier_exec, 3);
+    rb_define_module_function (ruby_mWeechat, "hook_info", &weechat_ruby_api_hook_info, 2);
+    rb_define_module_function (ruby_mWeechat, "hook_infolist", &weechat_ruby_api_hook_infolist, 2);
     rb_define_module_function (ruby_mWeechat, "unhook", &weechat_ruby_api_unhook, 1);
     rb_define_module_function (ruby_mWeechat, "unhook_all", &weechat_ruby_api_unhook_all, 0);
     rb_define_module_function (ruby_mWeechat, "buffer_new", &weechat_ruby_api_buffer_new, 4);
@@ -4850,7 +4993,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "bar_update", &weechat_ruby_api_bar_update, 1);
     rb_define_module_function (ruby_mWeechat, "bar_remove", &weechat_ruby_api_bar_remove, 1);
     rb_define_module_function (ruby_mWeechat, "command", &weechat_ruby_api_command, 2);
-    rb_define_module_function (ruby_mWeechat, "info_get", &weechat_ruby_api_info_get, 1);
+    rb_define_module_function (ruby_mWeechat, "info_get", &weechat_ruby_api_info_get, 2);
     rb_define_module_function (ruby_mWeechat, "infolist_get", &weechat_ruby_api_infolist_get, 3);
     rb_define_module_function (ruby_mWeechat, "infolist_next", &weechat_ruby_api_infolist_next, 1);
     rb_define_module_function (ruby_mWeechat, "infolist_prev", &weechat_ruby_api_infolist_prev, 1);

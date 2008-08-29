@@ -68,5 +68,6 @@ extern void *plugin_api_infolist_buffer (struct t_infolist *infolist,
 extern time_t plugin_api_infolist_time (struct t_infolist *infolist,
                                         const char *var);
 extern void plugin_api_infolist_free (struct t_infolist *infolist);
+extern void plugin_api_init ();
 
 #endif /* plugin-api.h */

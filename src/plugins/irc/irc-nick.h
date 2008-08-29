@@ -56,6 +56,8 @@ struct t_irc_nick
     struct t_irc_nick *next_nick;   /* link to next nick on channel          */
 };
 
+extern int irc_nick_valid (struct t_irc_channel *channel,
+                           struct t_irc_nick *nick);
 extern struct t_irc_nick *irc_nick_new (struct t_irc_server *server,
                                         struct t_irc_channel *channel,
                                         const char *nick_name, int is_chanowner,

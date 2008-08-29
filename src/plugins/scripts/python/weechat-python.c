@@ -314,7 +314,7 @@ weechat_python_load (const char *filename)
 
     /* adding $weechat_dir/python in $PYTHONPATH */    
     python_path = PySys_GetObject ("path");
-    w_home = weechat_info_get ("weechat_dir");
+    w_home = weechat_info_get ("weechat_dir", "");
     if (w_home)
     {
         len = strlen (w_home) + 1 + strlen("python") + 1;

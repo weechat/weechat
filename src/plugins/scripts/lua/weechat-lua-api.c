@@ -3076,6 +3076,145 @@ weechat_lua_api_hook_modifier_exec (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_hook_info_cb: callback for info hooked
+ */
+
+char *
+weechat_lua_api_hook_info_cb (void *data, const char *info_name,
+                              const char *arguments)
+{
+    struct t_script_callback *script_callback;
+    char *lua_argv[3];
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    lua_argv[0] = (char *)info_name;
+    lua_argv[1] = (char *)arguments;
+    lua_argv[2] = NULL;
+    
+    return (char *)weechat_lua_exec (script_callback->script,
+                                     WEECHAT_SCRIPT_EXEC_STRING,
+                                     script_callback->function,
+                                     lua_argv);
+}
+
+/*
+ * weechat_lua_api_hook_info: hook an info
+ */
+
+static int
+weechat_lua_api_hook_info (lua_State *L)
+{
+    const char *info_name, *function;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_info");
+        LUA_RETURN_EMPTY;
+    }
+    
+    info_name = NULL;
+    function = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_info");
+        LUA_RETURN_EMPTY;
+    }
+    
+    info_name = lua_tostring (lua_current_interpreter, -2);
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (script_api_hook_info (weechat_lua_plugin,
+                                                   lua_current_script,
+                                                   info_name,
+                                                   &weechat_lua_api_hook_info_cb,
+                                                   function));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_lua_api_hook_infolist_cb: callback for infolist hooked
+ */
+
+struct t_infolist *
+weechat_lua_api_hook_infolist_cb (void *data, const char *info_name,
+                                  void *pointer, const char *arguments)
+{
+    struct t_script_callback *script_callback;
+    char *lua_argv[4];
+    struct t_infolist *value;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    lua_argv[0] = (char *)info_name;
+    lua_argv[1] = script_ptr2str (pointer);
+    lua_argv[2] = (char *)arguments;
+    lua_argv[3] = NULL;
+    
+    value = (struct t_infolist *)weechat_lua_exec (script_callback->script,
+                                                   WEECHAT_SCRIPT_EXEC_STRING,
+                                                   script_callback->function,
+                                                   lua_argv);
+    
+    if (lua_argv[1])
+        free (lua_argv[1]);
+    
+    return value;
+}
+
+/*
+ * weechat_lua_api_hook_infolist: hook an infolist
+ */
+
+static int
+weechat_lua_api_hook_infolist (lua_State *L)
+{
+    const char *infolist_name, *function;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+        
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_infolist");
+        LUA_RETURN_EMPTY;
+    }
+    
+    infolist_name = NULL;
+    function = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_infolist");
+        LUA_RETURN_EMPTY;
+    }
+    
+    infolist_name = lua_tostring (lua_current_interpreter, -2);
+    function = lua_tostring (lua_current_interpreter, -1);
+    
+    result = script_ptr2str (script_api_hook_infolist (weechat_lua_plugin,
+                                                       lua_current_script,
+                                                       infolist_name,
+                                                       &weechat_lua_api_hook_infolist_cb,
+                                                       function));
+    
+    LUA_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_lua_api_unhook: unhook something
  */
 
@@ -4308,7 +4447,7 @@ weechat_lua_api_command (lua_State *L)
 static int
 weechat_lua_api_info_get (lua_State *L)
 {
-    const char *info;
+    const char *info_name, *arguments;
     char *value;
     int n;
     
@@ -4321,19 +4460,21 @@ weechat_lua_api_info_get (lua_State *L)
         LUA_RETURN_EMPTY;
     }
     
-    info = NULL;
+    info_name = NULL;
+    arguments = NULL;
     
     n = lua_gettop (lua_current_interpreter);
-
-    if (n < 1)
+    
+    if (n < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("info_get");
         LUA_RETURN_EMPTY;
     }
-
-    info = lua_tostring (lua_current_interpreter, -1);
     
-    value = weechat_info_get (info);
+    info_name = lua_tostring (lua_current_interpreter, -2);
+    arguments = lua_tostring (lua_current_interpreter, -1);
+    
+    value = weechat_info_get (info_name, arguments);
     
     LUA_RETURN_STRING(value);
 }
@@ -5017,6 +5158,8 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "hook_completion_list_add", &weechat_lua_api_hook_completion_list_add },
     { "hook_modifier", &weechat_lua_api_hook_modifier },
     { "hook_modifier_exec", &weechat_lua_api_hook_modifier_exec },
+    { "hook_info", &weechat_lua_api_hook_info },
+    { "hook_infolist", &weechat_lua_api_hook_infolist },
     { "unhook", &weechat_lua_api_unhook },
     { "unhook_all", &weechat_lua_api_unhook_all },
     { "buffer_new", &weechat_lua_api_buffer_new },

@@ -67,7 +67,7 @@ fifo_create ()
         fifo_option = weechat_config_get_plugin ("fifo");
     }
     
-    weechat_home = weechat_info_get ("weechat_dir");
+    weechat_home = weechat_info_get ("weechat_dir", "");
     
     if (fifo_option && weechat_home)
     {

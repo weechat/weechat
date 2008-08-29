@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-24 19:12+0200\n"
+"POT-Creation-Date: 2008-08-29 14:53+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1645,8 +1645,10 @@ msgstr ""
 msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
 msgstr ""
 
-#, c-format
-msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
+msgid "Available infos:"
+msgstr ""
+
+msgid "Available infolists:"
 msgstr ""
 
 #, c-format
@@ -1687,25 +1689,29 @@ msgstr ""
 msgid "property value"
 msgstr ""
 
-msgid "get and display an infolist"
-msgstr ""
-
-msgid "infolist"
-msgstr ""
-
-msgid "infolist: infolist to display (values: buffer, buffer_lines)"
-msgstr ""
-
 msgid "get and display an info"
 msgstr ""
 
-msgid "info"
+msgid "[info [arguments]]"
 msgstr ""
 
 msgid ""
-"info: info to display (values: version, weechat_dir, weechat_libdir, "
-"weechat_sharedir, charset_terminal, charset_internal, inactivity, input, "
-"input_mask, input_pos)"
+"     info: info to display\n"
+"arguments: optional arguments for info\n"
+"\n"
+"Without argument, this command displays list of available infos"
+msgstr ""
+
+msgid "get and display an infolist"
+msgstr ""
+
+msgid "[infolist]"
+msgstr ""
+
+msgid ""
+"infolist: infolist to display\n"
+"\n"
+"Without argument, this command displays list of available infolists"
 msgstr ""
 
 #, c-format

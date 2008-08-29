@@ -33,6 +33,30 @@
 
 
 /*
+ * irc_nick_valid: check if a nick pointer exists for a channel
+ *                       return 1 if nick exists
+ *                              0 if nick is not found
+ */
+
+int
+irc_nick_valid (struct t_irc_channel *channel, struct t_irc_nick *nick)
+{
+    struct t_irc_nick *ptr_nick;
+    
+    if (!channel)
+        return 0;
+    
+    for (ptr_nick = channel->nicks; ptr_nick; ptr_nick = ptr_nick->next_nick)
+    {
+        if (ptr_nick == nick)
+            return 1;
+    }
+    
+    /* nick not found */
+    return 0;
+}
+
+/*
  * irc_nick_find_color: find a color for a nick (according to nick letters)
  */
 

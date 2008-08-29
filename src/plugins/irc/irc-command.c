@@ -863,7 +863,7 @@ irc_command_cycle (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (ptr_arg)
     {
-        version = weechat_info_get ("version");
+        version = weechat_info_get ("version", "");
         buf = weechat_string_replace (ptr_arg, "%v", (version) ? version : "");
         irc_server_sendf (ptr_server, "PART %s :%s", channel_name,
                           (buf) ? buf : ptr_arg);
@@ -1141,7 +1141,7 @@ irc_command_quit_server (struct t_irc_server *server, const char *arguments)
         
         if (ptr_arg)
         {
-            version = weechat_info_get ("version");
+            version = weechat_info_get ("version", "");
             buf = weechat_string_replace (ptr_arg, "%v",
                                           (version) ? version : "");
             irc_server_sendf (server, "QUIT :%s",
@@ -2169,7 +2169,7 @@ irc_command_part_channel (struct t_irc_server *server, const char *channel_name,
     
     if (ptr_arg)
     {
-        version = weechat_info_get ("version");
+        version = weechat_info_get ("version", "");
         buf = weechat_string_replace (ptr_arg, "%v", (version) ? version : "");
         irc_server_sendf (server, "PART %s :%s",
                           channel_name,

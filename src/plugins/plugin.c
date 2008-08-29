@@ -386,6 +386,8 @@ plugin_load (const char *filename)
         new_plugin->hook_completion_list_add = &hook_completion_list_add;
         new_plugin->hook_modifier = &hook_modifier;
         new_plugin->hook_modifier_exec = &hook_modifier_exec;
+        new_plugin->hook_info = &hook_info;
+        new_plugin->hook_infolist = &hook_infolist;
         new_plugin->unhook = &unhook;
         new_plugin->unhook_all = &unhook_all_plugin;
         
@@ -421,7 +423,7 @@ plugin_load (const char *filename)
         new_plugin->network_pass_proxy = &network_pass_proxy;
         new_plugin->network_connect_to = &network_connect_to;
         
-        new_plugin->info_get = &plugin_api_info_get;
+        new_plugin->info_get = &hook_info_get;
         
         new_plugin->infolist_new = &infolist_new;
         new_plugin->infolist_new_item = &infolist_new_item;
@@ -430,7 +432,7 @@ plugin_load (const char *filename)
         new_plugin->infolist_new_var_pointer = &infolist_new_var_pointer;
         new_plugin->infolist_new_var_buffer = &infolist_new_var_buffer;
         new_plugin->infolist_new_var_time = &infolist_new_var_time;
-        new_plugin->infolist_get = &plugin_api_infolist_get;
+        new_plugin->infolist_get = &hook_infolist_get;
         new_plugin->infolist_next = &plugin_api_infolist_next;
         new_plugin->infolist_prev = &plugin_api_infolist_prev;
         new_plugin->infolist_reset_item_cursor = &plugin_api_infolist_reset_item_cursor;
@@ -441,7 +443,7 @@ plugin_load (const char *filename)
         new_plugin->infolist_buffer = &plugin_api_infolist_buffer;
         new_plugin->infolist_time = &plugin_api_infolist_time;
         new_plugin->infolist_free = &plugin_api_infolist_free;
-
+        
         new_plugin->upgrade_create = &upgrade_file_create;
         new_plugin->upgrade_write_object = &upgrade_file_write_object;
         new_plugin->upgrade_read = &upgrade_file_read;
@@ -805,6 +807,9 @@ plugin_init (int auto_load, int argc, char *argv[])
 {
     plugin_argc = argc;
     plugin_argv = argv;
+
+    /* init plugin API (create some hooks) */
+    plugin_api_init ();
     
     /* read plugins options on disk */
     plugin_config_init ();

@@ -163,7 +163,7 @@ sub docgen
         setlocale(LC_MESSAGES, $locale.".UTF-8");
         my $d = Locale::gettext->domain_raw("weechat");
         $d->codeset("UTF-8");
-        $d->dir(weechat::info_get("weechat_localedir"));
+        $d->dir(weechat::info_get("weechat_localedir", ""));
         
         my $dir = $path."/".substr($locale, 0, 2)."/autogen/";
         if (-d $dir)

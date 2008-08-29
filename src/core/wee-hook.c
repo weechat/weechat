@@ -47,7 +47,7 @@
 
 char *hook_type_string[HOOK_NUM_TYPES] =
 { "command", "timer", "fd", "connect", "print", "signal", "config",
-  "completion", "modifier" };
+  "completion", "modifier", "info", "infolist" };
 struct t_hook *weechat_hooks[HOOK_NUM_TYPES];
 struct t_hook *last_weechat_hook[HOOK_NUM_TYPES];
 int hook_exec_recursion = 0;
@@ -1275,6 +1275,9 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
     /* make C compiler happy */
     (void) plugin;
     
+    if (!modifier || !modifier[0])
+        return NULL;
+    
     new_msg = NULL;
     message_modified = strdup (string);
     if (!message_modified)
@@ -1320,6 +1323,170 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
     hook_exec_end ();
     
     return message_modified;
+}
+
+/*
+ * hook_info: hook an info
+ */
+
+struct t_hook *
+hook_info (struct t_weechat_plugin *plugin, const char *info_name,
+           t_hook_callback_info *callback, void *callback_data)
+{
+    struct t_hook *new_hook;
+    struct t_hook_info *new_hook_info;
+    
+    if (!info_name || !info_name[0])
+        return NULL;
+    
+    new_hook = malloc (sizeof (*new_hook));
+    if (!new_hook)
+        return NULL;
+    new_hook_info = malloc (sizeof (*new_hook_info));
+    if (!new_hook_info)
+    {
+        free (new_hook);
+        return NULL;
+    }
+    
+    hook_init_data (new_hook, plugin, HOOK_TYPE_INFO, callback_data);
+    
+    new_hook->hook_data = new_hook_info;
+    new_hook_info->callback = callback;
+    new_hook_info->info_name = strdup (info_name);
+    
+    hook_add_to_list (new_hook);
+    
+    return new_hook;
+}
+
+/*
+ * hook_info_get: get info via info hook
+ */
+
+char *
+hook_info_get (struct t_weechat_plugin *plugin, const char *info_name,
+               const char *arguments)
+{
+    struct t_hook *ptr_hook, *next_hook;
+    char *value;
+    
+    /* make C compiler happy */
+    (void) plugin;
+    
+    if (!info_name || !info_name[0])
+        return NULL;
+    
+    hook_exec_start ();
+    
+    ptr_hook = weechat_hooks[HOOK_TYPE_INFO];
+    while (ptr_hook)
+    {
+        next_hook = ptr_hook->next_hook;
+        
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
+            && (string_strcasecmp (HOOK_INFO(ptr_hook, info_name),
+                                   info_name) == 0))
+        {
+            ptr_hook->running = 1;
+            value = (HOOK_INFO(ptr_hook, callback))
+                (ptr_hook->callback_data, info_name, arguments);
+            ptr_hook->running = 0;
+            
+            hook_exec_end ();
+            return value;
+        }
+        
+        ptr_hook = next_hook;
+    }
+    
+    hook_exec_end ();
+    
+    /* info not found */
+    return NULL;
+}
+
+/*
+ * hook_infolist: hook an infolist
+ */
+
+struct t_hook *
+hook_infolist (struct t_weechat_plugin *plugin, const char *infolist_name,
+               t_hook_callback_infolist *callback, void *callback_data)
+{
+    struct t_hook *new_hook;
+    struct t_hook_infolist *new_hook_infolist;
+    
+    if (!infolist_name || !infolist_name[0])
+        return NULL;
+    
+    new_hook = malloc (sizeof (*new_hook));
+    if (!new_hook)
+        return NULL;
+    new_hook_infolist = malloc (sizeof (*new_hook_infolist));
+    if (!new_hook_infolist)
+    {
+        free (new_hook);
+        return NULL;
+    }
+    
+    hook_init_data (new_hook, plugin, HOOK_TYPE_INFOLIST, callback_data);
+    
+    new_hook->hook_data = new_hook_infolist;
+    new_hook_infolist->callback = callback;
+    new_hook_infolist->infolist_name = strdup (infolist_name);
+    
+    hook_add_to_list (new_hook);
+    
+    return new_hook;
+}
+
+/*
+ * hook_infolist_get: get info via info hook
+ */
+
+struct t_infolist *
+hook_infolist_get (struct t_weechat_plugin *plugin, const char *infolist_name,
+                   void *pointer, const char *arguments)
+{
+    struct t_hook *ptr_hook, *next_hook;
+    struct t_infolist *value;
+    
+    /* make C compiler happy */
+    (void) plugin;
+    
+    if (!infolist_name || !infolist_name[0])
+        return NULL;
+    
+    hook_exec_start ();
+    
+    ptr_hook = weechat_hooks[HOOK_TYPE_INFOLIST];
+    while (ptr_hook)
+    {
+        next_hook = ptr_hook->next_hook;
+        
+        if (!ptr_hook->deleted
+            && !ptr_hook->running
+            && (string_strcasecmp (HOOK_INFOLIST(ptr_hook, infolist_name),
+                                   infolist_name) == 0))
+        {
+            ptr_hook->running = 1;
+            value = (HOOK_INFOLIST(ptr_hook, callback))
+                (ptr_hook->callback_data, infolist_name, pointer, arguments);
+            ptr_hook->running = 0;
+            
+            hook_exec_end ();
+            return value;
+        }
+        
+        ptr_hook = next_hook;
+    }
+    
+    hook_exec_end ();
+    
+    /* infolist not found */
+    return NULL;
 }
 
 /*
@@ -1417,6 +1584,16 @@ unhook (struct t_hook *hook)
                 if (HOOK_MODIFIER(hook, modifier))
                     free (HOOK_MODIFIER(hook, modifier));
                 free ((struct t_hook_modifier *)hook->hook_data);
+                break;
+            case HOOK_TYPE_INFO:
+                if (HOOK_INFO(hook, info_name))
+                    free (HOOK_INFO(hook, info_name));
+                free ((struct t_hook_info *)hook->hook_data);
+                break;
+            case HOOK_TYPE_INFOLIST:
+                if (HOOK_INFOLIST(hook, infolist_name))
+                    free (HOOK_INFOLIST(hook, infolist_name));
+                free ((struct t_hook_infolist *)hook->hook_data);
                 break;
             case HOOK_NUM_TYPES:
                 /* this constant is used to count types only,
@@ -1670,6 +1847,24 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                         return 0;
                 }
                 break;
+            case HOOK_TYPE_INFO:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_INFO(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "info_name", HOOK_INFO(ptr_hook, info_name)))
+                        return 0;
+                }
+                break;
+            case HOOK_TYPE_INFOLIST:
+                if (!ptr_hook->deleted)
+                {
+                    if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_INFOLIST(ptr_hook, callback)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "infolist_name", HOOK_INFOLIST(ptr_hook, infolist_name)))
+                        return 0;
+                }
+                break;
             case HOOK_NUM_TYPES:
                 /* this constant is used to count types only,
                    it is never used as type */
@@ -1840,6 +2035,22 @@ hook_print_log ()
                         log_printf ("  modifier data:");
                         log_printf ("    callback . . . . . . : 0x%x", HOOK_MODIFIER(ptr_hook, callback));
                         log_printf ("    modifier . . . . . . : '%s'", HOOK_MODIFIER(ptr_hook, modifier));
+                    }
+                    break;
+                case HOOK_TYPE_INFO:
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  info data:");
+                        log_printf ("    callback . . . . . . : 0x%x", HOOK_INFO(ptr_hook, callback));
+                        log_printf ("    info_name. . . . . . : '%s'", HOOK_INFO(ptr_hook, info_name));
+                    }
+                    break;
+                case HOOK_TYPE_INFOLIST:
+                    if (!ptr_hook->deleted)
+                    {
+                        log_printf ("  infolist data:");
+                        log_printf ("    callback . . . . . . : 0x%x", HOOK_INFOLIST(ptr_hook, callback));
+                        log_printf ("    infolist_name. . . . : '%s'", HOOK_INFOLIST(ptr_hook, infolist_name));
                     }
                     break;
                 case HOOK_NUM_TYPES:

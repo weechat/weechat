@@ -2725,6 +2725,133 @@ weechat_python_api_hook_modifier_exec (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_hook_info_cb: callback for info hooked
+ */
+
+char *
+weechat_python_api_hook_info_cb (void *data, const char *info_name,
+                                 const char *arguments)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[3];
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    python_argv[0] = (char *)info_name;
+    python_argv[1] = (char *)arguments;
+    python_argv[2] = NULL;
+    
+    return (char *)weechat_python_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_STRING,
+                                        script_callback->function,
+                                        python_argv);
+}
+
+/*
+ * weechat_python_api_hook_info: hook an info
+ */
+
+static PyObject *
+weechat_python_api_hook_info (PyObject *self, PyObject *args)
+{
+    char *info_name, *function, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_info");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    info_name = NULL;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &info_name, &function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_info");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str(script_api_hook_info (weechat_python_plugin,
+                                                  python_current_script,
+                                                  info_name,
+                                                  &weechat_python_api_hook_info_cb,
+                                                  function));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hook_infolist_cb: callback for infolist hooked
+ */
+
+struct t_infolist *
+weechat_python_api_hook_infolist_cb (void *data, const char *infolist_name,
+                                     void *pointer, const char *arguments)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[4];
+    struct t_infolist *value;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    python_argv[0] = (char *)infolist_name;
+    python_argv[1] = script_ptr2str (pointer);
+    python_argv[2] = (char *)arguments;
+    python_argv[3] = NULL;
+    
+    value = (struct t_infolist *)weechat_python_exec (script_callback->script,
+                                                      WEECHAT_SCRIPT_EXEC_STRING,
+                                                      script_callback->function,
+                                                      python_argv);
+    
+    if (python_argv[1])
+        free (python_argv[1]);
+    
+    return value;
+}
+
+/*
+ * weechat_python_api_hook_infolist: hook an infolist
+ */
+
+static PyObject *
+weechat_python_api_hook_infolist (PyObject *self, PyObject *args)
+{
+    char *infolist_name, *function, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_infolist");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    infolist_name = NULL;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "ss", &infolist_name, &function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_infolist");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str(script_api_hook_infolist (weechat_python_plugin,
+                                                      python_current_script,
+                                                      infolist_name,
+                                                      &weechat_python_api_hook_infolist_cb,
+                                                      function));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
  * weechat_python_api_unhook: unhook something
  */
 
@@ -3794,7 +3921,7 @@ weechat_python_api_command (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_info_get (PyObject *self, PyObject *args)
 {
-    char *info, *value;
+    char *info_name, *arguments, *value;
     
     /* make C compiler happy */
     (void) self;
@@ -3805,15 +3932,15 @@ weechat_python_api_info_get (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    info = NULL;
+    info_name = NULL;
     
-    if (!PyArg_ParseTuple (args, "s", &info))
+    if (!PyArg_ParseTuple (args, "ss", &info_name, &arguments))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("info_get");
         PYTHON_RETURN_EMPTY;
     }
     
-    value = weechat_info_get (info);
+    value = weechat_info_get (info_name, arguments);
     
     PYTHON_RETURN_STRING(value);
 }
@@ -4184,6 +4311,8 @@ PyMethodDef weechat_python_funcs[] =
     { "hook_completion_list_add", &weechat_python_api_hook_completion_list_add, METH_VARARGS, "" },
     { "hook_modifier", &weechat_python_api_hook_modifier, METH_VARARGS, "" },
     { "hook_modifier_exec", &weechat_python_api_hook_modifier_exec, METH_VARARGS, "" },
+    { "hook_info", &weechat_python_api_hook_info, METH_VARARGS, "" },
+    { "hook_infolist", &weechat_python_api_hook_infolist, METH_VARARGS, "" },
     { "unhook", &weechat_python_api_unhook, METH_VARARGS, "" },
     { "unhook_all", &weechat_python_api_unhook_all, METH_VARARGS, "" },
     { "buffer_new", &weechat_python_api_buffer_new, METH_VARARGS, "" },

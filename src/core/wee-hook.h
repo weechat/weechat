@@ -42,6 +42,8 @@ enum t_hook_type
     HOOK_TYPE_CONFIG,                  /* config option                     */
     HOOK_TYPE_COMPLETION,              /* custom completions                */
     HOOK_TYPE_MODIFIER,                /* string modifier                   */
+    HOOK_TYPE_INFO,                    /* get some info as string           */
+    HOOK_TYPE_INFOLIST,                /* get some info as infolist         */
     /* number of hook types */
     HOOK_NUM_TYPES,
 };
@@ -64,6 +66,8 @@ enum t_hook_type
 #define HOOK_CONFIG(hook, var) (((struct t_hook_config *)hook->hook_data)->var)
 #define HOOK_COMPLETION(hook, var) (((struct t_hook_completion *)hook->hook_data)->var)
 #define HOOK_MODIFIER(hook, var) (((struct t_hook_modifier *)hook->hook_data)->var)
+#define HOOK_INFO(hook, var) (((struct t_hook_info *)hook->hook_data)->var)
+#define HOOK_INFOLIST(hook, var) (((struct t_hook_infolist *)hook->hook_data)->var)
 
 struct t_hook
 {
@@ -191,6 +195,26 @@ struct t_hook_modifier
     char *modifier;                     /* name of modifier                 */
 };
 
+typedef char *(t_hook_callback_info)(void *data, const char *info_name,
+                                     const char *arguments);
+
+struct t_hook_info
+{
+    t_hook_callback_info *callback;    /* info callback                     */
+    char *info_name;                   /* name of info returned             */
+};
+
+typedef struct t_infolist *(t_hook_callback_infolist)(void *data,
+                                                      const char *infolist_name,
+                                                      void *pointer,
+                                                      const char *arguments);
+
+struct t_hook_infolist
+{
+    t_hook_callback_infolist *callback; /* infolist callback                */
+    char *infolist_name;                /* name of infolist returned        */
+};
+
 /* hook variables */
 
 extern struct t_hook *weechat_hooks[];
@@ -271,6 +295,21 @@ extern char *hook_modifier_exec (struct t_weechat_plugin *plugin,
                                  const char *modifier,
                                  const char *modifier_data,
                                  const char *string);
+extern struct t_hook *hook_info (struct t_weechat_plugin *plugin,
+                                 const char *info_name,
+                                 t_hook_callback_info *callback,
+                                 void *callback_data);
+extern char *hook_info_get (struct t_weechat_plugin *plugin,
+                            const char *info_name,
+                            const char *arguments);
+extern struct t_hook *hook_infolist (struct t_weechat_plugin *plugin,
+                                     const char *infolist_name,
+                                     t_hook_callback_infolist *callback,
+                                     void *callback_data);
+extern struct t_infolist *hook_infolist_get (struct t_weechat_plugin *plugin,
+                                             const char *infolist_name,
+                                             void *pointer,
+                                             const char *arguments);
 extern void unhook (struct t_hook *hook);
 extern void unhook_all_plugin (struct t_weechat_plugin *plugin);
 extern void unhook_all ();

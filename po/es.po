@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-24 19:12+0200\n"
+"POT-Creation-Date: 2008-08-29 14:53+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1127,8 +1127,8 @@ msgstr "la cadena mostrada tras la finalizaciÃ³n de los nombres de usuario"
 #, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
-"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea "
-"sin leer"
+"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea sin "
+"leer"
 
 #, fuzzy
 msgid "save configuration file on exit"
@@ -1934,9 +1934,11 @@ msgstr ""
 msgid "colors: %s buffer %s nick1 %s nick2 %s nick3 %s nick4"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
-msgstr "%s faltan argumentos para el comando \"%s\"\n"
+msgid "Available infos:"
+msgstr ""
+
+msgid "Available infolists:"
+msgstr ""
 
 #, c-format
 msgid "demo_signal: signal: %s, type_data: %s, signal_data: '%s'"
@@ -1981,27 +1983,32 @@ msgid "property value"
 msgstr ""
 
 #, fuzzy
+msgid "get and display an info"
+msgstr "nÃºmero mÃ¡ximo de comandos para mostrar"
+
+#, fuzzy
+msgid "[info [arguments]]"
+msgstr "nombre_de_usuario tipo [argumentos]"
+
+msgid ""
+"     info: info to display\n"
+"arguments: optional arguments for info\n"
+"\n"
+"Without argument, this command displays list of available infos"
+msgstr ""
+
+#, fuzzy
 msgid "get and display an infolist"
 msgstr "nÃºmero mÃ¡ximo de comandos para mostrar"
 
 #, fuzzy
-msgid "infolist"
+msgid "[infolist]"
 msgstr "lista de baneos"
 
-msgid "infolist: infolist to display (values: buffer, buffer_lines)"
-msgstr ""
-
-#, fuzzy
-msgid "get and display an info"
-msgstr "nÃºmero mÃ¡ximo de comandos para mostrar"
-
-msgid "info"
-msgstr ""
-
 msgid ""
-"info: info to display (values: version, weechat_dir, weechat_libdir, "
-"weechat_sharedir, charset_terminal, charset_internal, inactivity, input, "
-"input_mask, input_pos)"
+"infolist: infolist to display\n"
+"\n"
+"Without argument, this command displays list of available infolists"
 msgstr ""
 
 #, fuzzy, c-format
@@ -4605,6 +4612,10 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #, fuzzy
+#~ msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
+#~ msgstr "%s faltan argumentos para el comando \"%s\"\n"
+
+#, fuzzy
 #~ msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
 #~ msgstr "%s servidor \"%s\" no encontrado\n"
 
@@ -5567,8 +5578,8 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ "maximum number of lines in history for one server/channel/private window "
 #~ "(0 = unlimited)"
 #~ msgstr ""
-#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/"
-#~ "privado (0 = ilimitado)"
+#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/privado "
+#~ "(0 = ilimitado)"
 
 #, fuzzy
 #~ msgid "log messages from plugins"
@@ -5762,8 +5773,8 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ "max size for aligning nick and other messages (should be >= to "
 #~ "look_align_size)"
 #~ msgstr ""
-#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a "
-#~ "ser >= a look_align_size)"
+#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a ser "
+#~ ">= a look_align_size)"
 
 #~ msgid "server name not found"
 #~ msgstr "nombre de servidor no encontrado"
@@ -6538,8 +6549,7 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #~ msgid "color for chan owner symbol (specific to unrealircd)"
 #~ msgstr ""
-#~ "color para el sÃ­mbolo de propietario de canal (especificado en "
-#~ "unrealircd)"
+#~ "color para el sÃ­mbolo de propietario de canal (especificado en unrealircd)"
 
 #~ msgid "color for chan admin symbol"
 #~ msgstr "color para el sÃ­mbolo de administrador de canal"

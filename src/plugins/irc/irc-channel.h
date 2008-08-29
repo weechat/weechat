@@ -50,10 +50,13 @@ struct t_irc_channel
     struct t_irc_nick *last_nick;      /* last nick on the channel          */
     struct t_weelist *nicks_speaking;  /* for smart completion              */
     struct t_gui_buffer *buffer;       /* buffer allocated for channel      */
+    char *buffer_as_string;            /* used to return buffer info        */
     struct t_irc_channel *prev_channel; /* link to previous channel         */
     struct t_irc_channel *next_channel; /* link to next channel             */
 };
 
+extern int irc_channel_valid (struct t_irc_server *server,
+                              struct t_irc_channel *channel);
 extern struct t_irc_channel *irc_channel_new (struct t_irc_server *server,
                                               int channel_type,
                                               const char *channel_name,
