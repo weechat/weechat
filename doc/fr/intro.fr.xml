@@ -32,14 +32,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>Description</title>
     
     <para>
-      WeeChat (Wee Enhanced Environment for Chat) est un client
-      chat libre, rapide et léger, conçu pour différents systèmes
-      d'exploitation.
+      WeeChat (Wee Enhanced Environment for Chat) est un client de discussion
+      libre, rapide et léger, conçu pour différents systèmes d'exploitation.
     </para>
     
     <para>
       Ses principales caractéristiques sont les suivantes :
       <itemizedlist>
+        <listitem>
+          <para>
+            multi-protocoles (IRC et bientôt d'autres)
+          </para>
+        </listitem>
         <listitem>
           <para>
             connexion multi-serveurs (avec SSL, IPv6, proxy)
@@ -62,7 +66,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            conforme aux <acronym>RFC</acronym>s
+            conforme aux <acronym>RFC</acronym>s IRC
             <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>,
             <ulink url="http://www.ietf.org/rfc/rfc2810.txt">2810</ulink>,
             <ulink url="http://www.ietf.org/rfc/rfc2811.txt">2811</ulink>,
@@ -108,7 +112,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            droits "root" (pour installer WeeChat)
+            droits "root" (pour installer WeeChat dans un répertoire système)
           </para>
         </listitem>
         <listitem>

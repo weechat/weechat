@@ -42,6 +42,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <itemizedlist>
         <listitem>
           <para>
+            <!-- TRANSLATION NEEDED -->
+            multi-protocols (IRC and other soon)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
             Mehrere Server gleichzeitig nutzbar (mit SSL, IPv6, Proxy)
           </para>
         </listitem>
@@ -64,7 +70,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            entsprechend den folgenden <acronym>RFC</acronym>s
+            entsprechend den folgenden IRC <acronym>RFC</acronym>s
             <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>,
             <ulink url="http://www.ietf.org/rfc/rfc2810.txt">2810</ulink>,
             <ulink url="http://www.ietf.org/rfc/rfc2811.txt">2811</ulink>,
@@ -109,7 +115,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            root-Rechte für die Installation
+            <!-- TRANSLATION NEEDED -->
+            root-Rechte (to install WeeChat in a system directory)
           </para>
         </listitem>
         <listitem>

@@ -41,6 +41,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <itemizedlist>
         <listitem>
           <para>
+            multi-protocols (IRC and other soon)
+          </para>
+        </listitem>
+        <listitem>
+          <para>
             multi-servers connection (with SSL, IPv6, proxy)
           </para>
         </listitem>
@@ -61,7 +66,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            compliant with <acronym>RFC</acronym>s
+            compliant with IRC <acronym>RFC</acronym>s
             <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>,
             <ulink url="http://www.ietf.org/rfc/rfc2810.txt">2810</ulink>,
             <ulink url="http://www.ietf.org/rfc/rfc2811.txt">2811</ulink>,
@@ -105,7 +110,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            "root" privileges (to install WeeChat)
+            "root" privileges (to install WeeChat in a system directory)
           </para>
         </listitem>
         <listitem>

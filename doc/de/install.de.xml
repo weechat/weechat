@@ -32,7 +32,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>Binäre Pakete</title>
     
     <para>
-      Binäre Pakete sind für die folgenden Distributionen verfügbar:
+      <!-- TRANSLATION NEEDED -->
+      Binary packages are available for many distributions, including:
       <itemizedlist>
         <listitem>
           <para>
