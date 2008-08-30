@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -52,7 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <subtitle>Fast, light and extensible chat client</subtitle>
     
     <author>
-      <firstname>Sébastien</firstname>
+      <firstname>SÃ©bastien</firstname>
       <surname>Helleu</surname>
       <email>flashcode AT flashtux.org</email>
     </author>
@@ -61,7 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <copyright>
       <year>2008</year>
-      <holder>Sébastien Helleu</holder>
+      <holder>SÃ©bastien Helleu</holder>
     </copyright>
     
     <legalnotice>

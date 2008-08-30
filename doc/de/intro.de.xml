@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -22,10 +22,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <chapter id="chapIntroduction">
-  <title>Einführung</title>
+  <title>EinfÃ¼hrung</title>
   
   <para>
-    Dieses Kapitel beschreibt WeeChat und die Vorraussetzungen für die
+    Dieses Kapitel beschreibt WeeChat und die Vorraussetzungen fÃ¼r die
     Installation.
   </para>
   
@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <para>
       WeeChat (Wee Enhanced Environment for Chat) ist ein freier Chat Client,
-      schnell und klein, entwickelt für viele Betriebssysteme.
+      schnell und klein, entwickelt fÃ¼r viele Betriebssysteme.
     </para>
     
     <para>
@@ -59,7 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            änderbar und erweiterbar mit Plugins und Skripten
+            Ã¤nderbar und erweiterbar mit Plugins und Skripten
           </para>
         </listitem>
         <listitem>
@@ -103,13 +103,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <listitem>
           <para>
             <!-- TRANSLATION NEEDED -->
-            ein laufendes GNU/Linux (Compiler für Quellcode-Pakete) or
+            ein laufendes GNU/Linux (Compiler fÃ¼r Quellcode-Pakete) or
             compatible OS (see above)
           </para>
         </listitem>
         <listitem>
           <para>
-            root-Rechte für die Installation
+            root-Rechte fÃ¼r die Installation
           </para>
         </listitem>
         <listitem>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -58,7 +58,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>Ein Plugin schreiben</title>
     
     <para>
-      Das Plugin muss die Datei "weechat-plugin.h" einbinden (verfügbar 
+      Das Plugin muss die Datei "weechat-plugin.h" einbinden (verfÃ¼gbar 
       im WeeChat-Quellcode).
       Diese Datei definiert die Strukturen und Typen um mit WeeChat
       zu kommunizieren.
@@ -134,15 +134,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <section id="secCompilePlugin">
-      <title>Übersetzen eines Plugins</title>
+      <title>Ãœbersetzen eines Plugins</title>
       
       <para>
-        Das Übersetzen braucht keine WeeChat-Quellen, aber die Datei
+        Das Ãœbersetzen braucht keine WeeChat-Quellen, aber die Datei
         "<literal>weechat-plugin.h</literal>".
       </para>
       
       <para>
-        Um ein Plugin zu übersetzen, das aus einer Datei "toto.c" besteht
+        Um ein Plugin zu Ã¼bersetzen, das aus einer Datei "toto.c" besteht
         (unter GNU/Linux):
 <screen>
 <prompt>$ </prompt><userinput>gcc -fPIC -Wall -c toto.c</userinput>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -107,7 +107,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     <para>
       Example:
-      <screen>char *str = plugin->iconv_to_internal (plugin, "ISO-8859-1", "iso string: é à");</screen>
+      <screen>char *str = plugin->iconv_to_internal (plugin, "ISO-8859-1", "iso string: Ã© Ã ");</screen>
     </para>
   </section>
   
@@ -152,7 +152,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     <para>
       Example:
-      <screen>char *str = plugin->iconv_from_internal (plugin, "ISO-8859-1", "utf-8 string: é à");</screen>
+      <screen>char *str = plugin->iconv_from_internal (plugin, "ISO-8859-1", "utf-8 string: Ã© Ã ");</screen>
     </para>
   </section>
   

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- ********* WARNING! *********
 
@@ -11,43 +11,43 @@
 </row>
 <row>
   <entry><literal>tab</literal></entry>
-  <entry>Wort vervollständigen</entry>
+  <entry>Wort vervollstÃ¤ndigen</entry>
 </row>
 <row>
   <entry><literal>tab_previous</literal></entry>
-  <entry>finde letzte Wortvervollständigung</entry>
+  <entry>finde letzte WortvervollstÃ¤ndigung</entry>
 </row>
 <row>
   <entry><literal>backspace</literal></entry>
-  <entry>vorheriges Zeichen löschen</entry>
+  <entry>vorheriges Zeichen lÃ¶schen</entry>
 </row>
 <row>
   <entry><literal>delete</literal></entry>
-  <entry>nächstes Zeichen löschen</entry>
+  <entry>nÃ¤chstes Zeichen lÃ¶schen</entry>
 </row>
 <row>
   <entry><literal>delete_end_line</literal></entry>
-  <entry>bis zum Zeilenende löschen</entry>
+  <entry>bis zum Zeilenende lÃ¶schen</entry>
 </row>
 <row>
   <entry><literal>delete_beginning_line</literal></entry>
-  <entry>bis zum Zeilenanfang löschen</entry>
+  <entry>bis zum Zeilenanfang lÃ¶schen</entry>
 </row>
 <row>
   <entry><literal>delete_line</literal></entry>
-  <entry>ganze Zeile löschen</entry>
+  <entry>ganze Zeile lÃ¶schen</entry>
 </row>
 <row>
   <entry><literal>delete_previous_word</literal></entry>
-  <entry>vorheriges Wort löschen</entry>
+  <entry>vorheriges Wort lÃ¶schen</entry>
 </row>
 <row>
   <entry><literal>delete_next_word</literal></entry>
-  <entry>nächstes Wort löschen</entry>
+  <entry>nÃ¤chstes Wort lÃ¶schen</entry>
 </row>
 <row>
   <entry><literal>clipboard_paste</literal></entry>
-  <entry>einfügen</entry>
+  <entry>einfÃ¼gen</entry>
 </row>
 <row>
   <entry><literal>transpose_chars</literal></entry>
@@ -87,11 +87,11 @@
 </row>
 <row>
   <entry><literal>down</literal></entry>
-  <entry>nächsten Befehl aus dem Verlauf abfragen</entry>
+  <entry>nÃ¤chsten Befehl aus dem Verlauf abfragen</entry>
 </row>
 <row>
   <entry><literal>down_global</literal></entry>
-  <entry>nächsten Befehl aus dem globalen Verlauf abfragen</entry>
+  <entry>nÃ¤chsten Befehl aus dem globalen Verlauf abfragen</entry>
 </row>
 <row>
   <entry><literal>page_up</literal></entry>
@@ -143,7 +143,7 @@
 </row>
 <row>
   <entry><literal>jump_smart</literal></entry>
-  <entry>zu nächstem aktiven Puffer springen</entry>
+  <entry>zu nÃ¤chstem aktiven Puffer springen</entry>
 </row>
 <row>
   <entry><literal>jump_dcc</literal></entry>
@@ -167,7 +167,7 @@
 </row>
 <row>
   <entry><literal>jump_next_server</literal></entry>
-  <entry>zum nächsten Server springen</entry>
+  <entry>zum nÃ¤chsten Server springen</entry>
 </row>
 <row>
   <entry><literal>switch_server</literal></entry>
@@ -179,7 +179,7 @@
 </row>
 <row>
   <entry><literal>scroll_next_highlight</literal></entry>
-  <entry>scrolle zur nächsten Hervorhebung im Puffer</entry>
+  <entry>scrolle zur nÃ¤chsten Hervorhebung im Puffer</entry>
 </row>
 <row>
   <entry><literal>scroll_unread</literal></entry>
@@ -199,11 +199,11 @@
 </row>
 <row>
   <entry><literal>grab_key</literal></entry>
-  <entry>Tastencode ermitteln und einfügen</entry>
+  <entry>Tastencode ermitteln und einfÃ¼gen</entry>
 </row>
 <row>
   <entry><literal>insert</literal></entry>
-  <entry>füge eine Zeichenkette in der Befehlszeile ein</entry>
+  <entry>fÃ¼ge eine Zeichenkette in der Befehlszeile ein</entry>
 </row>
 <row>
   <entry><literal>search_text</literal></entry>

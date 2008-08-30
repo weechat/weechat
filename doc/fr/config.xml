@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- ********* WARNING! *********
 
@@ -7,64 +7,64 @@
 
 <row>
   <entry><option>look_save_on_exit</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
   <entry>Sauvegarder la configuration en quittant</entry>
 </row>
 <row>
   <entry><option>look_set_title</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Définit le titre de la fenêtre (terminal pour l'interface Curses) avec le nom et la version</entry>
+  <entry>DÃ©finit le titre de la fenÃªtre (terminal pour l'interface Curses) avec le nom et la version</entry>
 </row>
 <row>
   <entry><option>look_startup_logo</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Afficher le logo WeeChat au démarrage</entry>
+  <entry>Afficher le logo WeeChat au dÃ©marrage</entry>
 </row>
 <row>
   <entry><option>look_startup_version</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Afficher la version de WeeChat au démarrage</entry>
+  <entry>Afficher la version de WeeChat au dÃ©marrage</entry>
 </row>
 <row>
   <entry><option>look_weechat_slogan</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'the geekest IRC client!'</entry>
-  <entry>Slogan WeeChat (si vide, le slogan ne sera pas utilisé)</entry>
+  <entry>Slogan WeeChat (si vide, le slogan ne sera pas utilisÃ©)</entry>
 </row>
 <row>
   <entry><option>look_one_server_buffer</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
-  <entry>Utiliser le même tampon pour tous les serveurs</entry>
+  <entry>Utiliser le mÃªme tampon pour tous les serveurs</entry>
 </row>
 <row>
   <entry><option>look_open_near_server</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
-  <entry>Ouvrir les nouveaux canaux/privés près du serveur</entry>
+  <entry>Ouvrir les nouveaux canaux/privÃ©s prÃ¨s du serveur</entry>
 </row>
 <row>
   <entry><option>look_scroll_amount</option></entry>
   <entry>entier</entry>
   <entry>entre 1 et 2147483647</entry>
   <entry>3</entry>
-  <entry>Nombre de lignes pour le défilement avec scroll_up et scroll_down</entry>
+  <entry>Nombre de lignes pour le dÃ©filement avec scroll_up et scroll_down</entry>
 </row>
 <row>
   <entry><option>look_buffer_timestamp</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'[%H:%M:%S]'</entry>
   <entry>Format de date/heure pour les tampons</entry>
 </row>
@@ -73,98 +73,98 @@
   <entry>entier</entry>
   <entry>entre 1 et 10</entry>
   <entry>10</entry>
-  <entry>Nombre de couleurs à utiliser pour les couleurs des pseudos</entry>
+  <entry>Nombre de couleurs Ã  utiliser pour les couleurs des pseudos</entry>
 </row>
 <row>
   <entry><option>look_color_actions</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Afficher les actions avec différentes couleurs</entry>
+  <entry>Afficher les actions avec diffÃ©rentes couleurs</entry>
 </row>
 <row>
   <entry><option>look_nicklist</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Afficher la fenêtre des pseudos (pour les fenêtres de canaux)</entry>
+  <entry>Afficher la fenÃªtre des pseudos (pour les fenÃªtres de canaux)</entry>
 </row>
 <row>
   <entry><option>look_nicklist_position</option></entry>
-  <entry>chaîne</entry>
+  <entry>chaÃ®ne</entry>
   <entry>'left', 'right', 'top', 'bottom'</entry>
   <entry>'right'</entry>
-  <entry>Position de la fenêtre des pseudos (haut (top), gauche (left), droite (right, par défaut), bas (bottom))</entry>
+  <entry>Position de la fenÃªtre des pseudos (haut (top), gauche (left), droite (right, par dÃ©faut), bas (bottom))</entry>
 </row>
 <row>
   <entry><option>look_nicklist_min_size</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 100</entry>
   <entry>0</entry>
-  <entry>Taille minimum pour la fenêtre des pseudos (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille minimum))</entry>
+  <entry>Taille minimum pour la fenÃªtre des pseudos (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille minimum))</entry>
 </row>
 <row>
   <entry><option>look_nicklist_max_size</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 100</entry>
   <entry>0</entry>
-  <entry>Taille maximum pour la fenêtre des pseudos (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille maximum; si min = max et &gt; 0, alors la taille est fixe))</entry>
+  <entry>Taille maximum pour la fenÃªtre des pseudos (largeur ou hauteur, selon look_nicklist_position (0 = pas de taille maximum; si min = max et &gt; 0, alors la taille est fixe))</entry>
 </row>
 <row>
   <entry><option>look_nicklist_separator</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Séparateur entre la discussion et la liste de pseudos</entry>
+  <entry>SÃ©parateur entre la discussion et la liste de pseudos</entry>
 </row>
 <row>
   <entry><option>look_no_nickname</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'-cmd-'</entry>
-  <entry>Texte à afficher en lieu et place du pseudo lorsque la connexion n'est pas active</entry>
+  <entry>Texte Ã  afficher en lieu et place du pseudo lorsque la connexion n'est pas active</entry>
 </row>
 <row>
   <entry><option>look_nickmode</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
   <entry>Afficher le mode du pseudo ((half)op/voice) devant chaque utilisateur</entry>
 </row>
 <row>
   <entry><option>look_nickmode_empty</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
   <entry>Afficher un espace si le mode du pseudo n'est pas (half)op/voice</entry>
 </row>
 <row>
   <entry><option>look_nick_prefix</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>Texte à afficher avant le pseudo dans la fenêtre de discussion</entry>
+  <entry>Texte Ã  afficher avant le pseudo dans la fenÃªtre de discussion</entry>
 </row>
 <row>
   <entry><option>look_nick_suffix</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>' |'</entry>
-  <entry>Texte à afficher après le pseudo dans la fenêtre de discussion</entry>
+  <entry>Texte Ã  afficher aprÃ¨s le pseudo dans la fenÃªtre de discussion</entry>
 </row>
 <row>
   <entry><option>look_align_nick</option></entry>
-  <entry>chaîne</entry>
+  <entry>chaÃ®ne</entry>
   <entry>'none', 'left', 'right'</entry>
   <entry>'right'</entry>
-  <entry>Alignement des pseudos (taille fixe pour les pseudos dans la fenêtre de discussion (none, left, right))</entry>
+  <entry>Alignement des pseudos (taille fixe pour les pseudos dans la fenÃªtre de discussion (none, left, right))</entry>
 </row>
 <row>
   <entry><option>look_align_other</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Alignement pour les autres messages (ne commençant pas par un pseudo)</entry>
+  <entry>Alignement pour les autres messages (ne commenÃ§ant pas par un pseudo)</entry>
 </row>
 <row>
   <entry><option>look_align_size</option></entry>
@@ -178,119 +178,119 @@
   <entry>entier</entry>
   <entry>entre 8 et 64</entry>
   <entry>20</entry>
-  <entry>Taille maximum pour l'alignement des pseudos et autres messages (doit être &gt;= à look_align_size)</entry>
+  <entry>Taille maximum pour l'alignement des pseudos et autres messages (doit Ãªtre &gt;= Ã  look_align_size)</entry>
 </row>
 <row>
   <entry><option>look_align_text_offset</option></entry>
   <entry>entier</entry>
   <entry>entre -1 et 64</entry>
   <entry>-1</entry>
-  <entry>Décalage pour aligner les lignes des messages (exceptées les premières lignes), par défaut -1 (aligner après le pseudo), une valeur nulle ou positive est le décalage après le début de la ligne</entry>
+  <entry>DÃ©calage pour aligner les lignes des messages (exceptÃ©es les premiÃ¨res lignes), par dÃ©faut -1 (aligner aprÃ¨s le pseudo), une valeur nulle ou positive est le dÃ©calage aprÃ¨s le dÃ©but de la ligne</entry>
 </row>
 <row>
   <entry><option>look_nick_completor</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>':'</entry>
-  <entry>La chaîne affichée après la complétion des pseudos</entry>
+  <entry>La chaÃ®ne affichÃ©e aprÃ¨s la complÃ©tion des pseudos</entry>
 </row>
 <row>
   <entry><option>look_nick_completion_ignore</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'[]-^'</entry>
-  <entry>Caractères à ignorer pour la complétion des pseudos</entry>
+  <entry>CaractÃ¨res Ã  ignorer pour la complÃ©tion des pseudos</entry>
 </row>
 <row>
   <entry><option>look_nick_completion_smart</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Complétion intelligente pour les pseudos (complète d'abord avec les personnes qui ont parlé récemment)</entry>
+  <entry>ComplÃ©tion intelligente pour les pseudos (complÃ¨te d'abord avec les personnes qui ont parlÃ© rÃ©cemment)</entry>
 </row>
 <row>
   <entry><option>look_nick_complete_first</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
-  <entry>Compléter seulement avec le premier pseudo trouvé</entry>
+  <entry>ComplÃ©ter seulement avec le premier pseudo trouvÃ©</entry>
 </row>
 <row>
   <entry><option>look_hotlist_names_count</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 32</entry>
   <entry>3</entry>
-  <entry>Nombre maximum de noms dans la liste d'activité (0 = pas de nom affiché, seulement les numéros de tampons)</entry>
+  <entry>Nombre maximum de noms dans la liste d'activitÃ© (0 = pas de nom affichÃ©, seulement les numÃ©ros de tampons)</entry>
 </row>
 <row>
   <entry><option>look_hotlist_names_level</option></entry>
   <entry>entier</entry>
   <entry>entre 1 et 15</entry>
   <entry>12</entry>
-  <entry>Niveau pour l'affichage des noms dans la liste d'activité (combinaison de: 1=join/part, 2=message, 4=privé, 8=highlight, par exemple: 12=privé+highlight)</entry>
+  <entry>Niveau pour l'affichage des noms dans la liste d'activitÃ© (combinaison de: 1=join/part, 2=message, 4=privÃ©, 8=highlight, par exemple: 12=privÃ©+highlight)</entry>
 </row>
 <row>
   <entry><option>look_hotlist_names_length</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 32</entry>
   <entry>0</entry>
-  <entry>Nombre maximum des noms dans la liste d'activité (0 = pas de limite)</entry>
+  <entry>Nombre maximum des noms dans la liste d'activitÃ© (0 = pas de limite)</entry>
 </row>
 <row>
   <entry><option>look_hotlist_sort</option></entry>
-  <entry>chaîne</entry>
+  <entry>chaÃ®ne</entry>
   <entry>'group_time_asc', 'group_time_desc', 'group_number_asc', 'group_number_desc', 'number_asc', 'number_desc'</entry>
   <entry>'group_time_asc'</entry>
-  <entry>Type de tri pour la liste d'activité (group_time_asc (par défaut), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)</entry>
+  <entry>Type de tri pour la liste d'activitÃ© (group_time_asc (par dÃ©faut), group_time_desc, group_number_asc, group_number_desc, number_asc, number_desc)</entry>
 </row>
 <row>
   <entry><option>look_day_change</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
   <entry>Affiche un message quand le jour change</entry>
 </row>
 <row>
   <entry><option>look_day_change_timestamp</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'%a, %d %b %Y'</entry>
-  <entry>Format de date pour la date affichée quand le jour a changé</entry>
+  <entry>Format de date pour la date affichÃ©e quand le jour a changÃ©</entry>
 </row>
 <row>
   <entry><option>look_read_marker</option></entry>
-  <entry>caractère</entry>
-  <entry>tout caractère</entry>
+  <entry>caractÃ¨re</entry>
+  <entry>tout caractÃ¨re</entry>
   <entry>' '</entry>
-  <entry>Utiliser un marqueur sur les serveurs/canaux pour montrer la première ligne non lue</entry>
+  <entry>Utiliser un marqueur sur les serveurs/canaux pour montrer la premiÃ¨re ligne non lue</entry>
 </row>
 <row>
   <entry><option>look_input_format</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'[%n(%m)] '</entry>
-  <entry>Format pour l'invite de la zone de saisie ('%c' est remplacé par le canal ou serveur, '%n' par le pseudo et '%m' par les modes du pseudo)</entry>
+  <entry>Format pour l'invite de la zone de saisie ('%c' est remplacÃ© par le canal ou serveur, '%n' par le pseudo et '%m' par les modes du pseudo)</entry>
 </row>
 <row>
   <entry><option>look_paste_max_lines</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 2147483647</entry>
   <entry>3</entry>
-  <entry>Nombre maximum de lignes pour la détection de collage sans demander à l'utilisateur (0 = désactiver cette fonctionnalité)</entry>
+  <entry>Nombre maximum de lignes pour la dÃ©tection de collage sans demander Ã  l'utilisateur (0 = dÃ©sactiver cette fonctionnalitÃ©)</entry>
 </row>
 <row>
   <entry><option>col_real_white</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
-  <entry>Si activé, utilise la vraie couleur blanche, désactivé par défaut pour les terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous devriez activer cette option pour voir du vrai blanc au lieu de la couleur d'avant plan par défaut du terminal)</entry>
+  <entry>Si activÃ©, utilise la vraie couleur blanche, dÃ©sactivÃ© par dÃ©faut pour les terminaux avec un fond blanc (si vous n'utilisez jamais de fond blanc, vous devriez activer cette option pour voir du vrai blanc au lieu de la couleur d'avant plan par dÃ©faut du terminal)</entry>
 </row>
 <row>
   <entry><option>col_separator</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'blue'</entry>
-  <entry>Couleur pour les séparateurs de fenêtres (quand divisé)</entry>
+  <entry>Couleur pour les sÃ©parateurs de fenÃªtres (quand divisÃ©)</entry>
 </row>
 <row>
   <entry><option>col_title</option></entry>
@@ -304,7 +304,7 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightmagenta'</entry>
-  <entry>Couleur pour les '+' lors du défilement du titre</entry>
+  <entry>Couleur pour les '+' lors du dÃ©filement du titre</entry>
 </row>
 <row>
   <entry><option>col_title_bg</option></entry>
@@ -325,28 +325,28 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'default'</entry>
-  <entry>Couleur pour l'heure dans la fenêtre de discussion</entry>
+  <entry>Couleur pour l'heure dans la fenÃªtre de discussion</entry>
 </row>
 <row>
   <entry><option>col_chat_time_sep</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'brown'</entry>
-  <entry>Couleur pour la séparation de l'heure (fenêtre de discussion)</entry>
+  <entry>Couleur pour la sÃ©paration de l'heure (fenÃªtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_prefix1</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightcyan'</entry>
-  <entry>Couleur pour le 1er et le 3ème caractère du préfixe</entry>
+  <entry>Couleur pour le 1er et le 3Ã¨me caractÃ¨re du prÃ©fixe</entry>
 </row>
 <row>
   <entry><option>col_chat_prefix2</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'white'</entry>
-  <entry>Couleur pour le caractère du milieu du préfixe</entry>
+  <entry>Couleur pour le caractÃ¨re du milieu du prÃ©fixe</entry>
 </row>
 <row>
   <entry><option>col_chat_server</option></entry>
@@ -360,70 +360,70 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightgreen'</entry>
-  <entry>Couleur pour la flèche du join (préfixe)</entry>
+  <entry>Couleur pour la flÃ¨che du join (prÃ©fixe)</entry>
 </row>
 <row>
   <entry><option>col_chat_part</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightred'</entry>
-  <entry>Couleur pour la flèche du part/quit (préfixe)</entry>
+  <entry>Couleur pour la flÃ¨che du part/quit (prÃ©fixe)</entry>
 </row>
 <row>
   <entry><option>col_chat_nick</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightcyan'</entry>
-  <entry>Couleur pour les pseudos dans les actions (fenêtre de discussion)</entry>
+  <entry>Couleur pour les pseudos dans les actions (fenÃªtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_host</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'cyan'</entry>
-  <entry>Couleur pour les hôtes (fenêtre de discussion)</entry>
+  <entry>Couleur pour les hÃ´tes (fenÃªtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_channel</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'white'</entry>
-  <entry>Couleur pour les canaux dans les actions (fenêtre de discussion)</entry>
+  <entry>Couleur pour les canaux dans les actions (fenÃªtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_dark</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'green'</entry>
-  <entry>Couleur pour les séparateurs sombres (fenêtre de discussion)</entry>
+  <entry>Couleur pour les sÃ©parateurs sombres (fenÃªtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_highlight</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'yellow'</entry>
-  <entry>Couleur pour le pseudo surligné (fenêtre de discussion)</entry>
+  <entry>Couleur pour le pseudo surlignÃ© (fenÃªtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_chat_bg</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'default'</entry>
-  <entry>Couleur de fond pour la fenêtre de discussion</entry>
+  <entry>Couleur de fond pour la fenÃªtre de discussion</entry>
 </row>
 <row>
   <entry><option>col_chat_read_marker</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'yellow'</entry>
-  <entry>Couleur pour le marqueur de données non lues</entry>
+  <entry>Couleur pour le marqueur de donnÃ©es non lues</entry>
 </row>
 <row>
   <entry><option>col_chat_read_marker_bg</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'magenta'</entry>
-  <entry>Couleur de fond pour le marqueur de données non lues</entry>
+  <entry>Couleur de fond pour le marqueur de donnÃ©es non lues</entry>
 </row>
 <row>
   <entry><option>col_status</option></entry>
@@ -437,7 +437,7 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'cyan'</entry>
-  <entry>Couleur pour les délimiteurs de la barre de statut</entry>
+  <entry>Couleur pour les dÃ©limiteurs de la barre de statut</entry>
 </row>
 <row>
   <entry><option>col_status_channel</option></entry>
@@ -451,42 +451,42 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'yellow'</entry>
-  <entry>Couleur pour une fenêtre avec de nouvelles infos (barre de statut)</entry>
+  <entry>Couleur pour une fenÃªtre avec de nouvelles infos (barre de statut)</entry>
 </row>
 <row>
   <entry><option>col_status_private</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightmagenta'</entry>
-  <entry>Couleur pour une fenêtre avec un message privé (barre de statut)</entry>
+  <entry>Couleur pour une fenÃªtre avec un message privÃ© (barre de statut)</entry>
 </row>
 <row>
   <entry><option>col_status_highlight</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightred'</entry>
-  <entry>Couleur pour une fenêtre avec un highlight (barre de statut)</entry>
+  <entry>Couleur pour une fenÃªtre avec un highlight (barre de statut)</entry>
 </row>
 <row>
   <entry><option>col_status_data_other</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'default'</entry>
-  <entry>Couleur pour une fenêtre avec des nouvelles données (pas des infos) (barre de statut)</entry>
+  <entry>Couleur pour une fenÃªtre avec des nouvelles donnÃ©es (pas des infos) (barre de statut)</entry>
 </row>
 <row>
   <entry><option>col_status_more</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'white'</entry>
-  <entry>Couleur pour une fenêtre avec des nouvelles données (barre de statut)</entry>
+  <entry>Couleur pour une fenÃªtre avec des nouvelles donnÃ©es (barre de statut)</entry>
 </row>
 <row>
   <entry><option>col_status_bg</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'blue'</entry>
-  <entry>Couleur de fond pour la fenêtre de statut</entry>
+  <entry>Couleur de fond pour la fenÃªtre de statut</entry>
 </row>
 <row>
   <entry><option>col_input</option></entry>
@@ -521,28 +521,28 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'cyan'</entry>
-  <entry>Couleur pour le texte saisi (délimiteurs)</entry>
+  <entry>Couleur pour le texte saisi (dÃ©limiteurs)</entry>
 </row>
 <row>
   <entry><option>col_input_text_not_found</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'red'</entry>
-  <entry>Couleur pour le texte non trouvé</entry>
+  <entry>Couleur pour le texte non trouvÃ©</entry>
 </row>
 <row>
   <entry><option>col_input_actions</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightgreen'</entry>
-  <entry>Couleur pour les actions dans la fenêtre de saisie</entry>
+  <entry>Couleur pour les actions dans la fenÃªtre de saisie</entry>
 </row>
 <row>
   <entry><option>col_input_bg</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'default'</entry>
-  <entry>Couleur de fond pour la fenêtre de saisie</entry>
+  <entry>Couleur de fond pour la fenÃªtre de saisie</entry>
 </row>
 <row>
   <entry><option>col_nick</option></entry>
@@ -563,28 +563,28 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightgreen'</entry>
-  <entry>Couleur pour le symbole propriétaire du canal (spécifique à unrealircd)</entry>
+  <entry>Couleur pour le symbole propriÃ©taire du canal (spÃ©cifique Ã  unrealircd)</entry>
 </row>
 <row>
   <entry><option>col_nick_chanadmin</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightgreen'</entry>
-  <entry>Couleur pour le symbole administrateur du canal (spécifique à unrealircd)</entry>
+  <entry>Couleur pour le symbole administrateur du canal (spÃ©cifique Ã  unrealircd)</entry>
 </row>
 <row>
   <entry><option>col_nick_op</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightgreen'</entry>
-  <entry>Couleur pour le symbole opérateur</entry>
+  <entry>Couleur pour le symbole opÃ©rateur</entry>
 </row>
 <row>
   <entry><option>col_nick_halfop</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightmagenta'</entry>
-  <entry>Couleur pour le symbole demi-opérateur</entry>
+  <entry>Couleur pour le symbole demi-opÃ©rateur</entry>
 </row>
 <row>
   <entry><option>col_nick_voice</option></entry>
@@ -605,14 +605,14 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightmagenta'</entry>
-  <entry>Couleur pour les '+' lors du défilement des pseudos</entry>
+  <entry>Couleur pour les '+' lors du dÃ©filement des pseudos</entry>
 </row>
 <row>
   <entry><option>col_nick_sep</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'blue'</entry>
-  <entry>Couleur pour le séparateur de pseudos</entry>
+  <entry>Couleur pour le sÃ©parateur de pseudos</entry>
 </row>
 <row>
   <entry><option>col_nick_self</option></entry>
@@ -696,7 +696,7 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'default'</entry>
-  <entry>Couleur pour l'autre pseudo dans la fenêtre privée</entry>
+  <entry>Couleur pour l'autre pseudo dans la fenÃªtre privÃ©e</entry>
 </row>
 <row>
   <entry><option>col_nick_bg</option></entry>
@@ -710,7 +710,7 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'white'</entry>
-  <entry>Couleur pour le DCC sélectionné (fenêtre de discussion)</entry>
+  <entry>Couleur pour le DCC sÃ©lectionnÃ© (fenÃªtre de discussion)</entry>
 </row>
 <row>
   <entry><option>col_dcc_waiting</option></entry>
@@ -738,14 +738,14 @@
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightgreen'</entry>
-  <entry>Couleur pour le statut dcc "terminé"</entry>
+  <entry>Couleur pour le statut dcc "terminÃ©"</entry>
 </row>
 <row>
   <entry><option>col_dcc_failed</option></entry>
   <entry>couleur</entry>
   <entry>couleur Curses ou Gtk</entry>
   <entry>'lightred'</entry>
-  <entry>Couleur pour le statut dcc "échoué"</entry>
+  <entry>Couleur pour le statut dcc "Ã©chouÃ©"</entry>
 </row>
 <row>
   <entry><option>col_dcc_aborted</option></entry>
@@ -759,7 +759,7 @@
   <entry>entier</entry>
   <entry>entre 0 et 2147483647</entry>
   <entry>4096</entry>
-  <entry>Nombre maximum de lignes dans l'historique pour un serveur/fenêtre/fenêtre privée (0 = sans limite)</entry>
+  <entry>Nombre maximum de lignes dans l'historique pour un serveur/fenÃªtre/fenÃªtre privÃ©e (0 = sans limite)</entry>
 </row>
 <row>
   <entry><option>history_max_commands</option></entry>
@@ -773,105 +773,105 @@
   <entry>entier</entry>
   <entry>entre 0 et 2147483647</entry>
   <entry>5</entry>
-  <entry>Nombre maximum de commandes à afficher par défaut dans le listing d'historique (0 = sans limite)</entry>
+  <entry>Nombre maximum de commandes Ã  afficher par dÃ©faut dans le listing d'historique (0 = sans limite)</entry>
 </row>
 <row>
   <entry><option>log_auto_server</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
   <entry>Enregistrer automatiquement les messages du serveur</entry>
 </row>
 <row>
   <entry><option>log_auto_channel</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
   <entry>Enregistrer automatiquement les conversations des canaux</entry>
 </row>
 <row>
   <entry><option>log_auto_private</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
-  <entry>Enregistrer automatiquement les conversations privées</entry>
+  <entry>Enregistrer automatiquement les conversations privÃ©es</entry>
 </row>
 <row>
   <entry><option>log_plugin_msg</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
   <entry>Enregistrer les messages des plugins (scripts)</entry>
 </row>
 <row>
   <entry><option>log_path</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'%h/logs/'</entry>
-  <entry>Chemin pour les conversations sauvegardées par WeeChat ('%h' sera remplacé par le répertoire de base WeeChat, par défaut: ~/.weechat)</entry>
+  <entry>Chemin pour les conversations sauvegardÃ©es par WeeChat ('%h' sera remplacÃ© par le rÃ©pertoire de base WeeChat, par dÃ©faut: ~/.weechat)</entry>
 </row>
 <row>
   <entry><option>log_timestamp</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'%Y %b %d %H:%M:%S'</entry>
-  <entry>Format de date/heure pour les conversations sauvegardées (voir strftime(3) pour le format de date/heure)</entry>
+  <entry>Format de date/heure pour les conversations sauvegardÃ©es (voir strftime(3) pour le format de date/heure)</entry>
 </row>
 <row>
   <entry><option>log_hide_nickserv_pwd</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Masquer le mot de passe affiché par nickserv</entry>
+  <entry>Masquer le mot de passe affichÃ© par nickserv</entry>
 </row>
 <row>
   <entry><option>irc_display_away</option></entry>
-  <entry>chaîne</entry>
+  <entry>chaÃ®ne</entry>
   <entry>'off', 'local', 'channel'</entry>
   <entry>'off'</entry>
   <entry>Affiche un message pour l'absence/le retour</entry>
 </row>
 <row>
   <entry><option>irc_show_away_once</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Voir le message d'absence distant une seule fois en privé</entry>
+  <entry>Voir le message d'absence distant une seule fois en privÃ©</entry>
 </row>
 <row>
   <entry><option>irc_default_msg_part</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'WeeChat %v'</entry>
-  <entry>Message par défaut pour le part (quitte un canal) ('%v' sera remplacé par la version de WeeChat dans la chaîne)</entry>
+  <entry>Message par dÃ©faut pour le part (quitte un canal) ('%v' sera remplacÃ© par la version de WeeChat dans la chaÃ®ne)</entry>
 </row>
 <row>
   <entry><option>irc_default_msg_quit</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'WeeChat %v'</entry>
-  <entry>Message de fin par défaut ('%v' sera remplacé par la version de WeeChat dans la chaîne)</entry>
+  <entry>Message de fin par dÃ©faut ('%v' sera remplacÃ© par la version de WeeChat dans la chaÃ®ne)</entry>
 </row>
 <row>
   <entry><option>irc_notice_as_pv</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
-  <entry>Afficher les notices comme des messages privés</entry>
+  <entry>Afficher les notices comme des messages privÃ©s</entry>
 </row>
 <row>
   <entry><option>irc_away_check</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 2147483647</entry>
   <entry>0</entry>
-  <entry>Intervalle entre deux vérifications des absences (en minutes, 0 = ne jamais vérifier)</entry>
+  <entry>Intervalle entre deux vÃ©rifications des absences (en minutes, 0 = ne jamais vÃ©rifier)</entry>
 </row>
 <row>
   <entry><option>irc_away_check_max_nicks</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 2147483647</entry>
   <entry>0</entry>
-  <entry>Ne pas vérifier les pseudos absents lorsqu'il y a un nombre important de pseudos (0 = pas de limite)</entry>
+  <entry>Ne pas vÃ©rifier les pseudos absents lorsqu'il y a un nombre important de pseudos (0 = pas de limite)</entry>
 </row>
 <row>
   <entry><option>irc_lag_check</option></entry>
@@ -885,14 +885,14 @@
   <entry>entier</entry>
   <entry>entre 0 et 2147483647</entry>
   <entry>1</entry>
-  <entry>Lag minimum à afficher (en secondes)</entry>
+  <entry>Lag minimum Ã  afficher (en secondes)</entry>
 </row>
 <row>
   <entry><option>irc_lag_disconnect</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 2147483647</entry>
   <entry>5</entry>
-  <entry>Déconnexion après un lag important (en minutes, 0 = ne jamais se déconnecter)</entry>
+  <entry>DÃ©connexion aprÃ¨s un lag important (en minutes, 0 = ne jamais se dÃ©connecter)</entry>
 </row>
 <row>
   <entry><option>irc_anti_flood</option></entry>
@@ -903,148 +903,148 @@
 </row>
 <row>
   <entry><option>irc_fifo_pipe</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
-  <entry>Créer un tube FIFO pour le contrôle à distance</entry>
+  <entry>CrÃ©er un tube FIFO pour le contrÃ´le Ã  distance</entry>
 </row>
 <row>
   <entry><option>irc_highlight</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>Liste des mots pour la notification (séparés par des virgules, la comparaison ne tient pas compte de la casse, les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle)</entry>
+  <entry>Liste des mots pour la notification (sÃ©parÃ©s par des virgules, la comparaison ne tient pas compte de la casse, les mots peuvent commencer ou se terminer par "*" pour une comparaison partielle)</entry>
 </row>
 <row>
   <entry><option>irc_colors_receive</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Si désactivé, les codes couleurs des messages entrants sont ignorés</entry>
+  <entry>Si dÃ©sactivÃ©, les codes couleurs des messages entrants sont ignorÃ©s</entry>
 </row>
 <row>
   <entry><option>irc_colors_send</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Autorise l'utilisateur à envoyer des couleurs avec des codes spéciaux (^Cb=gras, ^Cxx=couleur, ^Ccxx,yy=couleur+fond, ^Cu=souligné, ^Cr=inversé)</entry>
+  <entry>Autorise l'utilisateur Ã  envoyer des couleurs avec des codes spÃ©ciaux (^Cb=gras, ^Cxx=couleur, ^Ccxx,yy=couleur+fond, ^Cu=soulignÃ©, ^Cr=inversÃ©)</entry>
 </row>
 <row>
   <entry><option>irc_send_unknown_commands</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
   <entry>Envoie les commandes inconnues au serveur IRC</entry>
 </row>
 <row>
   <entry><option>dcc_auto_accept_files</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
   <entry>Accepte automatiquement les fichiers dcc entrants</entry>
 </row>
 <row>
   <entry><option>dcc_auto_accept_chats</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
-  <entry>Accepte automatiquement les demandes de discussion dcc (à utiliser avec précaution !)</entry>
+  <entry>Accepte automatiquement les demandes de discussion dcc (Ã  utiliser avec prÃ©caution !)</entry>
 </row>
 <row>
   <entry><option>dcc_timeout</option></entry>
   <entry>entier</entry>
   <entry>entre 5 et 2147483647</entry>
   <entry>300</entry>
-  <entry>Délai d'attente pour les requêtes dcc (en secondes)</entry>
+  <entry>DÃ©lai d'attente pour les requÃªtes dcc (en secondes)</entry>
 </row>
 <row>
   <entry><option>dcc_blocksize</option></entry>
   <entry>entier</entry>
   <entry>entre 1024 et 102400</entry>
   <entry>65536</entry>
-  <entry>Taille de bloc pour les paquets dcc en octets (défaut: 65536)</entry>
+  <entry>Taille de bloc pour les paquets dcc en octets (dÃ©faut: 65536)</entry>
 </row>
 <row>
   <entry><option>dcc_fast_send</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>N'attend pas les accusés de réception lors de l'envoi de fichier</entry>
+  <entry>N'attend pas les accusÃ©s de rÃ©ception lors de l'envoi de fichier</entry>
 </row>
 <row>
   <entry><option>dcc_port_range</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>Restreint le dcc sortant à utiliser des ports dans la plage donnée (pratique pour le NAT) (syntaxe: un port simple, par exemple 5000, une plage de ports, par exemple 5000-5015, si non renseigné tout port peut être utilisé)</entry>
+  <entry>Restreint le dcc sortant Ã  utiliser des ports dans la plage donnÃ©e (pratique pour le NAT) (syntaxe: un port simple, par exemple 5000, une plage de ports, par exemple 5000-5015, si non renseignÃ© tout port peut Ãªtre utilisÃ©)</entry>
 </row>
 <row>
   <entry><option>dcc_own_ip</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>Adresse IP ou DNS utilisée pour le dcc sortant (si non renseigné, l'interface IP locale est utilisée)</entry>
+  <entry>Adresse IP ou DNS utilisÃ©e pour le dcc sortant (si non renseignÃ©, l'interface IP locale est utilisÃ©e)</entry>
 </row>
 <row>
   <entry><option>dcc_download_path</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'%h/dcc'</entry>
-  <entry>Chemin pour écrire les fichiers reçus par dcc (par défaut: répertoire de l'utilisateur)</entry>
+  <entry>Chemin pour Ã©crire les fichiers reÃ§us par dcc (par dÃ©faut: rÃ©pertoire de l'utilisateur)</entry>
 </row>
 <row>
   <entry><option>dcc_upload_path</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'~'</entry>
-  <entry>Chemin pour lire les fichiers lorsqu'ils sont envoyés par dcc (quand aucun chemin n'est spécifié)</entry>
+  <entry>Chemin pour lire les fichiers lorsqu'ils sont envoyÃ©s par dcc (quand aucun chemin n'est spÃ©cifiÃ©)</entry>
 </row>
 <row>
   <entry><option>dcc_convert_spaces</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
   <entry>Convertir les espaces en underscores lors d'envoi de fichiers</entry>
 </row>
 <row>
   <entry><option>dcc_auto_rename</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Renommer les fichiers reçus s'ils existent déjà (ajoute '.1', '.2', ...)</entry>
+  <entry>Renommer les fichiers reÃ§us s'ils existent dÃ©jÃ  (ajoute '.1', '.2', ...)</entry>
 </row>
 <row>
   <entry><option>dcc_auto_resume</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Continuer automatiquement les transferts dcc si la connexion avec l'hôte a été perdue</entry>
+  <entry>Continuer automatiquement les transferts dcc si la connexion avec l'hÃ´te a Ã©tÃ© perdue</entry>
 </row>
 <row>
   <entry><option>proxy_use</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
   <entry>Utiliser un proxy pour se connecter au serveur irc</entry>
 </row>
 <row>
   <entry><option>proxy_type</option></entry>
-  <entry>chaîne</entry>
+  <entry>chaÃ®ne</entry>
   <entry>'http', 'socks4', 'socks5'</entry>
   <entry>'http'</entry>
-  <entry>Type de proxy (http (défaut), socks4, socks5)</entry>
+  <entry>Type de proxy (http (dÃ©faut), socks4, socks5)</entry>
 </row>
 <row>
   <entry><option>proxy_ipv6</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
   <entry>Se connecter au proxy en ipv6</entry>
 </row>
 <row>
   <entry><option>proxy_address</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
   <entry>Adresse du serveur proxy (IP ou nom de machine)</entry>
 </row>
@@ -1057,71 +1057,71 @@
 </row>
 <row>
   <entry><option>proxy_username</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
   <entry>Nom d'utilisateur pour le serveur proxy</entry>
 </row>
 <row>
   <entry><option>proxy_password</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
   <entry>Mot de passe pour le serveur proxy</entry>
 </row>
 <row>
   <entry><option>plugins_path</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'%h/plugins'</entry>
-  <entry>Chemin de recherche des extensions ('%h' sera remplacé par le répertoire de base WeeChat, par défaut: ~/.weechat)</entry>
+  <entry>Chemin de recherche des extensions ('%h' sera remplacÃ© par le rÃ©pertoire de base WeeChat, par dÃ©faut: ~/.weechat)</entry>
 </row>
 <row>
   <entry><option>plugins_autoload</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'*'</entry>
-  <entry>Liste des extensions à charger automatiquement au démarrage, "*" signifie toutes (séparées par des virgules, les noms peuvent être partiels, par exemple "perl" est ok pour "libperl.so")</entry>
+  <entry>Liste des extensions Ã  charger automatiquement au dÃ©marrage, "*" signifie toutes (sÃ©parÃ©es par des virgules, les noms peuvent Ãªtre partiels, par exemple "perl" est ok pour "libperl.so")</entry>
 </row>
 <row>
   <entry><option>plugins_extension</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>'.so'</entry>
-  <entry>Extension standard des extensions dans le nom de fichier, pour le chargement automatique (si vide, alors tous les fichiers sont chargés si autoload vaut "*")</entry>
+  <entry>Extension standard des extensions dans le nom de fichier, pour le chargement automatique (si vide, alors tous les fichiers sont chargÃ©s si autoload vaut "*")</entry>
 </row>
 <row>
   <entry><option>server_name</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>Nom associé au serveur IRC (pour affichage seulement)</entry>
+  <entry>Nom associÃ© au serveur IRC (pour affichage seulement)</entry>
 </row>
 <row>
   <entry><option>server_autoconnect</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Connexion automatique au serveur quand WeeChat démarre</entry>
+  <entry>Connexion automatique au serveur quand WeeChat dÃ©marre</entry>
 </row>
 <row>
   <entry><option>server_autoreconnect</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
-  <entry>Reconnexion automatique au serveur après une déconnexion</entry>
+  <entry>Reconnexion automatique au serveur aprÃ¨s une dÃ©connexion</entry>
 </row>
 <row>
   <entry><option>server_autoreconnect_delay</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 65535</entry>
   <entry>30</entry>
-  <entry>Délai (en secondes) avant de tenter une reconnexion au serveur</entry>
+  <entry>DÃ©lai (en secondes) avant de tenter une reconnexion au serveur</entry>
 </row>
 <row>
   <entry><option>server_address</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
   <entry>Adresse IP ou nom du serveur IRC</entry>
 </row>
@@ -1134,99 +1134,99 @@
 </row>
 <row>
   <entry><option>server_ipv6</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
   <entry>Utiliser le protocole IPv6 pour la communication avec le serveur</entry>
 </row>
 <row>
   <entry><option>server_ssl</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'off'</entry>
   <entry>Utiliser SSL pour la communication avec le serveur</entry>
 </row>
 <row>
   <entry><option>server_password</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
   <entry>Mot de passe pour le serveur IRC</entry>
 </row>
 <row>
   <entry><option>server_nick1</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>Pseudo à utiliser sur le serveur IRC</entry>
+  <entry>Pseudo Ã  utiliser sur le serveur IRC</entry>
 </row>
 <row>
   <entry><option>server_nick2</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>Pseudo alternatif pour le serveur IRC (si le pseudo est déjà utilisé)</entry>
+  <entry>Pseudo alternatif pour le serveur IRC (si le pseudo est dÃ©jÃ  utilisÃ©)</entry>
 </row>
 <row>
   <entry><option>server_nick3</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>2ème pseudo alternatif pour le serveur IRC (si le pseudo alternatif est déjà utilisé)</entry>
+  <entry>2Ã¨me pseudo alternatif pour le serveur IRC (si le pseudo alternatif est dÃ©jÃ  utilisÃ©)</entry>
 </row>
 <row>
   <entry><option>server_username</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
   <entry>Nom d'utilisateur pour le serveur IRC</entry>
 </row>
 <row>
   <entry><option>server_realname</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>Nom réel pour le serveur IRC</entry>
+  <entry>Nom rÃ©el pour le serveur IRC</entry>
 </row>
 <row>
   <entry><option>server_hostname</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>Nom de machine/IP personnalisé pour le serveur (optionnel, si non renseigné, le nom de machine local est utilisé)</entry>
+  <entry>Nom de machine/IP personnalisÃ© pour le serveur (optionnel, si non renseignÃ©, le nom de machine local est utilisÃ©)</entry>
 </row>
 <row>
   <entry><option>server_command</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>Commande(s) à exécuter lorsque connecté au serveur (plusieurs commandes doivent être séparées par ';', utilisez '\;' pour un point-virgule, les variables spéciales $nick, $channel et $server sont remplacées par leur valeur)</entry>
+  <entry>Commande(s) Ã  exÃ©cuter lorsque connectÃ© au serveur (plusieurs commandes doivent Ãªtre sÃ©parÃ©es par ';', utilisez '\;' pour un point-virgule, les variables spÃ©ciales $nick, $channel et $server sont remplacÃ©es par leur valeur)</entry>
 </row>
 <row>
   <entry><option>server_command_delay</option></entry>
   <entry>entier</entry>
   <entry>entre 0 et 3600</entry>
   <entry>0</entry>
-  <entry>Délai (en secondes) après exécution de la commande (exemple: donner du temps pour l'authentification)</entry>
+  <entry>DÃ©lai (en secondes) aprÃ¨s exÃ©cution de la commande (exemple: donner du temps pour l'authentification)</entry>
 </row>
 <row>
   <entry><option>server_autojoin</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>Liste des canaux (séparés par des virgules) à rejoindre lorsque connecté au serveur (exemple: "#chan1,#chan2,#chan3 key1,key2")</entry>
+  <entry>Liste des canaux (sÃ©parÃ©s par des virgules) Ã  rejoindre lorsque connectÃ© au serveur (exemple: "#chan1,#chan2,#chan3 key1,key2")</entry>
 </row>
 <row>
   <entry><option>server_autorejoin</option></entry>
-  <entry>booléen</entry>
+  <entry>boolÃ©en</entry>
   <entry>'on' ou 'off'</entry>
   <entry>'on'</entry>
   <entry>Rejoindre automatiquement les canaux quand mis dehors</entry>
 </row>
 <row>
   <entry><option>server_notify_levels</option></entry>
-  <entry>chaîne</entry>
-  <entry>toute chaîne</entry>
+  <entry>chaÃ®ne</entry>
+  <entry>toute chaÃ®ne</entry>
   <entry>''</entry>
-  <entry>Liste des niveaux de notifications (séparés par des virgules) pour les canaux de ce serveur (format: #canal:1,..), un nom de canal '*' est réservé pour la notification par défaut du serveur</entry>
+  <entry>Liste des niveaux de notifications (sÃ©parÃ©s par des virgules) pour les canaux de ce serveur (format: #canal:1,..), un nom de canal '*' est rÃ©servÃ© pour la notification par dÃ©faut du serveur</entry>
 </row>

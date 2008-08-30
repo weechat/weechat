@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <itemizedlist>
         <listitem>
           <para>
-            <emphasis>FlashCode (Sébastien Helleu)</emphasis>
+            <emphasis>FlashCode (SÃ©bastien Helleu)</emphasis>
             <email>flashcode AT flashtux.org</email> -
             main developer
           </para>

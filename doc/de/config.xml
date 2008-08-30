@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- ********* WARNING! *********
 
@@ -45,14 +45,14 @@
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'off'</entry>
-  <entry>Benutze den gleichen Puffer für alle Server</entry>
+  <entry>Benutze den gleichen Puffer fÃ¼r alle Server</entry>
 </row>
 <row>
   <entry><option>look_open_near_server</option></entry>
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'off'</entry>
-  <entry>öffne neue Channels oder private Nachrichten neben dem Server-Puffer</entry>
+  <entry>Ã¶ffne neue Channels oder private Nachrichten neben dem Server-Puffer</entry>
 </row>
 <row>
   <entry><option>look_scroll_amount</option></entry>
@@ -66,14 +66,14 @@
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'[%H:%M:%S]'</entry>
-  <entry>Timestamp für Puffer</entry>
+  <entry>Timestamp fÃ¼r Puffer</entry>
 </row>
 <row>
   <entry><option>look_color_nicks_number</option></entry>
   <entry>Ganzzahl</entry>
   <entry>zwischen 1 und 10</entry>
   <entry>10</entry>
-  <entry>Anzahl der für Nicknames zu benutzenden Farben</entry>
+  <entry>Anzahl der fÃ¼r Nicknames zu benutzenden Farben</entry>
 </row>
 <row>
   <entry><option>look_color_actions</option></entry>
@@ -101,7 +101,7 @@
   <entry>Ganzzahl</entry>
   <entry>zwischen 0 und 100</entry>
   <entry>0</entry>
-  <entry>Minimale Größe der Nicklist (Breite oder Höhe, je nach look_nicklist_position (0: kein Minimum)</entry>
+  <entry>Minimale GrÃ¶ÃŸe der Nicklist (Breite oder HÃ¶he, je nach look_nicklist_position (0: kein Minimum)</entry>
 </row>
 <row>
   <entry><option>look_nicklist_max_size</option></entry>
@@ -157,28 +157,28 @@
   <entry>Zeichenfolge</entry>
   <entry>'none', 'left', 'right'</entry>
   <entry>'right'</entry>
-  <entry>Ausrichtung des Nicknamens (feste Größe bei Nicks im Chatfenster (none, left, right))</entry>
+  <entry>Ausrichtung des Nicknamens (feste GrÃ¶ÃŸe bei Nicks im Chatfenster (none, left, right))</entry>
 </row>
 <row>
   <entry><option>look_align_other</option></entry>
   <entry>Boolean</entry>
   <entry>'none', 'left', 'right'</entry>
   <entry>'on'</entry>
-  <entry>Ausrichtung für andere Nachrichten, die nicht mit einem Nicknamen beginnen</entry>
+  <entry>Ausrichtung fÃ¼r andere Nachrichten, die nicht mit einem Nicknamen beginnen</entry>
 </row>
 <row>
   <entry><option>look_align_size</option></entry>
   <entry>Ganzzahl</entry>
   <entry>zwischen 8 und 64</entry>
   <entry>14</entry>
-  <entry>Größe zum Ausrichten von Nicknamen und anderen Nachrichten</entry>
+  <entry>GrÃ¶ÃŸe zum Ausrichten von Nicknamen und anderen Nachrichten</entry>
 </row>
 <row>
   <entry><option>look_align_size_max</option></entry>
   <entry>Ganzzahl</entry>
   <entry>zwischen 8 und 64</entry>
   <entry>20</entry>
-  <entry>Maximale Größe zum Ausrichten von Nicknamen und anderen Nachrichten (sollte &gt;= look_align_size sein)</entry>
+  <entry>Maximale GrÃ¶ÃŸe zum Ausrichten von Nicknamen und anderen Nachrichten (sollte &gt;= look_align_size sein)</entry>
 </row>
 <row>
   <entry><option>look_align_text_offset</option></entry>
@@ -192,28 +192,28 @@
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>':'</entry>
-  <entry>Nach Nickvervollständigung anzufügende Zeichenfolge</entry>
+  <entry>Nach NickvervollstÃ¤ndigung anzufÃ¼gende Zeichenfolge</entry>
 </row>
 <row>
   <entry><option>look_nick_completion_ignore</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'[]-^'</entry>
-  <entry>Zeichen, die bei der Nickvervollständigung ignoriert werden</entry>
+  <entry>Zeichen, die bei der NickvervollstÃ¤ndigung ignoriert werden</entry>
 </row>
 <row>
   <entry><option>look_nick_completion_smart</option></entry>
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'on'</entry>
-  <entry>Intelligente vervollständigung der Nicknamen (vervollständigt zuerst mit dem letzten Nick, der einen angesprochen hat)</entry>
+  <entry>Intelligente vervollstÃ¤ndigung der Nicknamen (vervollstÃ¤ndigt zuerst mit dem letzten Nick, der einen angesprochen hat)</entry>
 </row>
 <row>
   <entry><option>look_nick_complete_first</option></entry>
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'off'</entry>
-  <entry>Nur mit dem ersten, passenden Nicknamen vervollständigen</entry>
+  <entry>Nur mit dem ersten, passenden Nicknamen vervollstÃ¤ndigen</entry>
 </row>
 <row>
   <entry><option>look_hotlist_names_count</option></entry>
@@ -227,14 +227,14 @@
   <entry>Ganzzahl</entry>
   <entry>zwischen 1 und 15</entry>
   <entry>12</entry>
-  <entry>Level für Namensanzeige in der Hotlist (Kombination von: 1=join/part, 2=Nachricht, 4=Query, 8=Highlight, z.B. 12=Query+Highlight)</entry>
+  <entry>Level fÃ¼r Namensanzeige in der Hotlist (Kombination von: 1=join/part, 2=Nachricht, 4=Query, 8=Highlight, z.B. 12=Query+Highlight)</entry>
 </row>
 <row>
   <entry><option>look_hotlist_names_length</option></entry>
   <entry>Ganzzahl</entry>
   <entry>zwischen 0 und 32</entry>
   <entry>0</entry>
-  <entry>Maximale Länge der Namen in der Hotlist (0: kein Limit)</entry>
+  <entry>Maximale LÃ¤nge der Namen in der Hotlist (0: kein Limit)</entry>
 </row>
 <row>
   <entry><option>look_hotlist_sort</option></entry>
@@ -255,7 +255,7 @@
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'%a, %d %b %Y'</entry>
-  <entry>Zeitstempel für das Datum, das beim Tageswechsel angezeigt wird</entry>
+  <entry>Zeitstempel fÃ¼r das Datum, das beim Tageswechsel angezeigt wird</entry>
 </row>
 <row>
   <entry><option>look_read_marker</option></entry>
@@ -283,7 +283,7 @@
   <entry>Boolean</entry>
   <entry>zwischen 0 und 2147483647</entry>
   <entry>'off'</entry>
-  <entry>Wenn gesetzt, benutze echtes Weiß, als Voreinstellung jedoch für Terminals mit weißem Hintergrund deaktiviert (solltest du niemals einen weißen Hintergrund benutzen, solltest du diese Option aktivieren um ein echtes Weiß anstelle der voreingestellten Terminal Vordergrundfarbe zu bekommen)</entry>
+  <entry>Wenn gesetzt, benutze echtes WeiÃŸ, als Voreinstellung jedoch fÃ¼r Terminals mit weiÃŸem Hintergrund deaktiviert (solltest du niemals einen weiÃŸen Hintergrund benutzen, solltest du diese Option aktivieren um ein echtes WeiÃŸ anstelle der voreingestellten Terminal Vordergrundfarbe zu bekommen)</entry>
 </row>
 <row>
   <entry><option>col_separator</option></entry>
@@ -332,21 +332,21 @@
   <entry>Farbe</entry>
   <entry>Curses- oder Gtk-Farben</entry>
   <entry>'brown'</entry>
-  <entry>Farbe für den Zeit-Separator im Chatfenster</entry>
+  <entry>Farbe fÃ¼r den Zeit-Separator im Chatfenster</entry>
 </row>
 <row>
   <entry><option>col_chat_prefix1</option></entry>
   <entry>Farbe</entry>
   <entry>Curses- oder Gtk-Farben</entry>
   <entry>'lightcyan'</entry>
-  <entry>Farbe des 1. und 3. Präfixzeichens</entry>
+  <entry>Farbe des 1. und 3. PrÃ¤fixzeichens</entry>
 </row>
 <row>
   <entry><option>col_chat_prefix2</option></entry>
   <entry>Farbe</entry>
   <entry>Curses- oder Gtk-Farben</entry>
   <entry>'white'</entry>
-  <entry>Farbe des 2. Präfixzeichens</entry>
+  <entry>Farbe des 2. PrÃ¤fixzeichens</entry>
 </row>
 <row>
   <entry><option>col_chat_server</option></entry>
@@ -360,14 +360,14 @@
   <entry>Farbe</entry>
   <entry>Curses- oder Gtk-Farben</entry>
   <entry>'lightgreen'</entry>
-  <entry>Farbe des join-Pfeiles (Präfix)</entry>
+  <entry>Farbe des join-Pfeiles (PrÃ¤fix)</entry>
 </row>
 <row>
   <entry><option>col_chat_part</option></entry>
   <entry>Farbe</entry>
   <entry>Curses- oder Gtk-Farben</entry>
   <entry>'lightred'</entry>
-  <entry>Farbe des quit-Pfeiles (Präfix)</entry>
+  <entry>Farbe des quit-Pfeiles (PrÃ¤fix)</entry>
 </row>
 <row>
   <entry><option>col_chat_nick</option></entry>
@@ -528,7 +528,7 @@
   <entry>Farbe</entry>
   <entry>Curses- oder Gtk-Farben</entry>
   <entry>'red'</entry>
-  <entry>Farbe für den Text nicht gefunden</entry>
+  <entry>Farbe fÃ¼r den Text nicht gefunden</entry>
 </row>
 <row>
   <entry><option>col_input_actions</option></entry>
@@ -710,7 +710,7 @@
   <entry>Farbe</entry>
   <entry>Curses- oder Gtk-Farben</entry>
   <entry>'white'</entry>
-  <entry>Farbe des ausgewählten DCCs im Chatfenster</entry>
+  <entry>Farbe des ausgewÃ¤hlten DCCs im Chatfenster</entry>
 </row>
 <row>
   <entry><option>col_dcc_waiting</option></entry>
@@ -808,28 +808,28 @@
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'%h/logs/'</entry>
-  <entry>Pfad für die WeeChat-Log-Dateien ('%h' wird durch WeeChat-Basisverzeichnis ersetztz, Voreinstellung ist ~/.weechat)</entry>
+  <entry>Pfad fÃ¼r die WeeChat-Log-Dateien ('%h' wird durch WeeChat-Basisverzeichnis ersetztz, Voreinstellung ist ~/.weechat)</entry>
 </row>
 <row>
   <entry><option>log_timestamp</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'%Y %b %d %H:%M:%S'</entry>
-  <entry>Timestamp der Logdateien (siehe man strftime für die Syntax der Datum/Uhrzeit-Angaben)</entry>
+  <entry>Timestamp der Logdateien (siehe man strftime fÃ¼r die Syntax der Datum/Uhrzeit-Angaben)</entry>
 </row>
 <row>
   <entry><option>log_hide_nickserv_pwd</option></entry>
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'on'</entry>
-  <entry>Von NickServ angezeigte Passwörter verstecken</entry>
+  <entry>Von NickServ angezeigte PasswÃ¶rter verstecken</entry>
 </row>
 <row>
   <entry><option>irc_display_away</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>'off', 'local', 'channel'</entry>
   <entry>'off'</entry>
-  <entry>Bei Abwesenheit und Rückkehr eine Nachricht anzeigen</entry>
+  <entry>Bei Abwesenheit und RÃ¼ckkehr eine Nachricht anzeigen</entry>
 </row>
 <row>
   <entry><option>irc_show_away_once</option></entry>
@@ -864,14 +864,14 @@
   <entry>Ganzzahl</entry>
   <entry>zwischen 0 und 2147483647</entry>
   <entry>0</entry>
-  <entry>Intervall zwischen zwei Away-Checks (in Minuten, 0 = nie überprüfen)</entry>
+  <entry>Intervall zwischen zwei Away-Checks (in Minuten, 0 = nie Ã¼berprÃ¼fen)</entry>
 </row>
 <row>
   <entry><option>irc_away_check_max_nicks</option></entry>
   <entry>Ganzzahl</entry>
   <entry>zwischen 0 und 2147483647</entry>
   <entry>0</entry>
-  <entry>überprüfe Abwesenheitsnachrichten nur in Channels mit maximal dieser Anzahl an Nicknamen (0 = unbegrenzt)</entry>
+  <entry>Ã¼berprÃ¼fe Abwesenheitsnachrichten nur in Channels mit maximal dieser Anzahl an Nicknamen (0 = unbegrenzt)</entry>
 </row>
 <row>
   <entry><option>irc_lag_check</option></entry>
@@ -906,14 +906,14 @@
   <entry>Boolean</entry>
   <entry>zwischen 0 und 5</entry>
   <entry>'off'</entry>
-  <entry>Einen FIFO zur Fernsteuerung des Clients von anderen Prozessen öffnen</entry>
+  <entry>Einen FIFO zur Fernsteuerung des Clients von anderen Prozessen Ã¶ffnen</entry>
 </row>
 <row>
   <entry><option>irc_highlight</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Durch Kommata getrennte Liste der hervorzuhebenden Wörter (Groß-/Kleinschreibung wird nicht beachtet, die Wörter können mit "*" als Joker beginnen oder enden)</entry>
+  <entry>Durch Kommata getrennte Liste der hervorzuhebenden WÃ¶rter (GroÃŸ-/Kleinschreibung wird nicht beachtet, die WÃ¶rter kÃ¶nnen mit "*" als Joker beginnen oder enden)</entry>
 </row>
 <row>
   <entry><option>irc_colors_receive</option></entry>
@@ -941,7 +941,7 @@
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'off'</entry>
-  <entry>DCC-Dateiübertragungen automatisch annehmen</entry>
+  <entry>DCC-DateiÃ¼bertragungen automatisch annehmen</entry>
 </row>
 <row>
   <entry><option>dcc_auto_accept_chats</option></entry>
@@ -962,7 +962,7 @@
   <entry>Ganzzahl</entry>
   <entry>zwischen 1024 und 102400</entry>
   <entry>65536</entry>
-  <entry>Blockgröße für DCCs</entry>
+  <entry>BlockgrÃ¶ÃŸe fÃ¼r DCCs</entry>
 </row>
 <row>
   <entry><option>dcc_fast_send</option></entry>
@@ -976,28 +976,28 @@
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Beschränkt ausgehenden DCC auf die ausschließliche Benutzung von Ports in einem vorgegebenen Bereich (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000, oder eine Port-Bereich, z.B. 5000-5015,wenn kein Bereich angegeben ist, ist jeder Port möglich)</entry>
+  <entry>BeschrÃ¤nkt ausgehenden DCC auf die ausschlieÃŸliche Benutzung von Ports in einem vorgegebenen Bereich (hilfreich bei NAT) (Syntax: ein einzelner Port, z.B. 5000, oder eine Port-Bereich, z.B. 5000-5015,wenn kein Bereich angegeben ist, ist jeder Port mÃ¶glich)</entry>
 </row>
 <row>
   <entry><option>dcc_own_ip</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>IP- oder DNS-Adresse für ausgehenden DCC (wenn kein Wert angegeben wird, wird die IP des lokalen Interfaces benutzt)</entry>
+  <entry>IP- oder DNS-Adresse fÃ¼r ausgehenden DCC (wenn kein Wert angegeben wird, wird die IP des lokalen Interfaces benutzt)</entry>
 </row>
 <row>
   <entry><option>dcc_download_path</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'%h/dcc'</entry>
-  <entry>Pfad für per DCC eingehende Dateien (Standardwert: Homeverzeichnis)</entry>
+  <entry>Pfad fÃ¼r per DCC eingehende Dateien (Standardwert: Homeverzeichnis)</entry>
 </row>
 <row>
   <entry><option>dcc_upload_path</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'~'</entry>
-  <entry>Pfad, aus dem Dateien standardmäßig gelesen werden, wenn keine explizite Angabe vorliegt</entry>
+  <entry>Pfad, aus dem Dateien standardmÃ¤ÃŸig gelesen werden, wenn keine explizite Angabe vorliegt</entry>
 </row>
 <row>
   <entry><option>dcc_convert_spaces</option></entry>
@@ -1011,14 +1011,14 @@
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'on'</entry>
-  <entry>Eingehende Dateien automatisch umbenennen, falls nötig, um Überschreiben zu vermeiden (durch Hinzufügen von '.1', '.2', ...)</entry>
+  <entry>Eingehende Dateien automatisch umbenennen, falls nÃ¶tig, um Ãœberschreiben zu vermeiden (durch HinzufÃ¼gen von '.1', '.2', ...)</entry>
 </row>
 <row>
   <entry><option>dcc_auto_resume</option></entry>
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'on'</entry>
-  <entry>Abgebrochene Übertragungen automatisch fortsetzen, wenn die Verbindung abgebrochen ist</entry>
+  <entry>Abgebrochene Ãœbertragungen automatisch fortsetzen, wenn die Verbindung abgebrochen ist</entry>
 </row>
 <row>
   <entry><option>proxy_use</option></entry>
@@ -1039,7 +1039,7 @@
   <entry>Boolean</entry>
   <entry>'http', 'socks4', 'socks5'</entry>
   <entry>'off'</entry>
-  <entry>Verbindung zum Proxy über IPv6 aufbauen</entry>
+  <entry>Verbindung zum Proxy Ã¼ber IPv6 aufbauen</entry>
 </row>
 <row>
   <entry><option>proxy_address</option></entry>
@@ -1053,42 +1053,42 @@
   <entry>Ganzzahl</entry>
   <entry>zwischen 0 und 65535</entry>
   <entry>3128</entry>
-  <entry>Port, auf dem der Proxyserver läuft</entry>
+  <entry>Port, auf dem der Proxyserver lÃ¤uft</entry>
 </row>
 <row>
   <entry><option>proxy_username</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Benutzername für die Proxyverbindung</entry>
+  <entry>Benutzername fÃ¼r die Proxyverbindung</entry>
 </row>
 <row>
   <entry><option>proxy_password</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Passwort für die Proxyverbindung</entry>
+  <entry>Passwort fÃ¼r die Proxyverbindung</entry>
 </row>
 <row>
   <entry><option>plugins_path</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'%h/plugins'</entry>
-  <entry>Suchpfad für WeeChat-Plugins ('%h' wird durch das WeeChat-Basisiverzeichnis ersetzt, voreingestellt ist ~/.weechat)</entry>
+  <entry>Suchpfad fÃ¼r WeeChat-Plugins ('%h' wird durch das WeeChat-Basisiverzeichnis ersetzt, voreingestellt ist ~/.weechat)</entry>
 </row>
 <row>
   <entry><option>plugins_autoload</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'*'</entry>
-  <entry>Kommagetrennte Liste der Plugins, die beim Start automatisch geladen werden sollen, "*" lädt alle gefundenen Plugins (es können auch Teile des Namens angegeben werden, "perl" lädt z.B. auch "libperl.so")</entry>
+  <entry>Kommagetrennte Liste der Plugins, die beim Start automatisch geladen werden sollen, "*" lÃ¤dt alle gefundenen Plugins (es kÃ¶nnen auch Teile des Namens angegeben werden, "perl" lÃ¤dt z.B. auch "libperl.so")</entry>
 </row>
 <row>
   <entry><option>plugins_extension</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'.so'</entry>
-  <entry>Standard-Dateinamenserweiterung für Plugins, wird für das automatische Laden verwendet (wenn kein Wert angegeben ist und der Wert für das automatische Laden "*" ist, werden alle Dateien geladen)</entry>
+  <entry>Standard-Dateinamenserweiterung fÃ¼r Plugins, wird fÃ¼r das automatische Laden verwendet (wenn kein Wert angegeben ist und der Wert fÃ¼r das automatische Laden "*" ist, werden alle Dateien geladen)</entry>
 </row>
 <row>
   <entry><option>server_name</option></entry>
@@ -1130,28 +1130,28 @@
   <entry>Ganzzahl</entry>
   <entry>zwischen 0 und 65535</entry>
   <entry>6667</entry>
-  <entry>Port, auf dem der IRC-Server läuft</entry>
+  <entry>Port, auf dem der IRC-Server lÃ¤uft</entry>
 </row>
 <row>
   <entry><option>server_ipv6</option></entry>
   <entry>Boolean</entry>
   <entry>zwischen 0 und 65535</entry>
   <entry>'off'</entry>
-  <entry>Server über IPv6 ansprechen</entry>
+  <entry>Server Ã¼ber IPv6 ansprechen</entry>
 </row>
 <row>
   <entry><option>server_ssl</option></entry>
   <entry>Boolean</entry>
   <entry>zwischen 0 und 65535</entry>
   <entry>'off'</entry>
-  <entry>Server über SSL ansprechen</entry>
+  <entry>Server Ã¼ber SSL ansprechen</entry>
 </row>
 <row>
   <entry><option>server_password</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Passwort für den IRC-Server</entry>
+  <entry>Passwort fÃ¼r den IRC-Server</entry>
 </row>
 <row>
   <entry><option>server_nick1</option></entry>
@@ -1179,35 +1179,35 @@
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Benutzername, der an den Server übermittelt werden soll</entry>
+  <entry>Benutzername, der an den Server Ã¼bermittelt werden soll</entry>
 </row>
 <row>
   <entry><option>server_realname</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Voller Name, der an den Server übermittelt werden soll</entry>
+  <entry>Voller Name, der an den Server Ã¼bermittelt werden soll</entry>
 </row>
 <row>
   <entry><option>server_hostname</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Angepasster Hostname oder angepasste IP-Adresse für den Server (wenn nichts eingetragen ist, wird der lokale Hostname verwendet)</entry>
+  <entry>Angepasster Hostname oder angepasste IP-Adresse fÃ¼r den Server (wenn nichts eingetragen ist, wird der lokale Hostname verwendet)</entry>
 </row>
 <row>
   <entry><option>server_command</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Befehle, die nach der Verbindung zum Server ausgeführt werden sollen (mehrere Befehle müssen mit einem Semikolon getrennt werden, um ein Semikolon zu schreiben, muss man '\;' verwenden, die spezielllen Variablen $nick, $channel und $server werden dabei durch den jeweiligen Wert ersetzt)</entry>
+  <entry>Befehle, die nach der Verbindung zum Server ausgefÃ¼hrt werden sollen (mehrere Befehle mÃ¼ssen mit einem Semikolon getrennt werden, um ein Semikolon zu schreiben, muss man '\;' verwenden, die spezielllen Variablen $nick, $channel und $server werden dabei durch den jeweiligen Wert ersetzt)</entry>
 </row>
 <row>
   <entry><option>server_command_delay</option></entry>
   <entry>Ganzzahl</entry>
   <entry>zwischen 0 und 3600</entry>
   <entry>0</entry>
-  <entry>Wartezeit in Sekunden nach Ausführung des Befehls, um z.B. eine Authentifizierung zu ermöglichen</entry>
+  <entry>Wartezeit in Sekunden nach AusfÃ¼hrung des Befehls, um z.B. eine Authentifizierung zu ermÃ¶glichen</entry>
 </row>
 <row>
   <entry><option>server_autojoin</option></entry>
@@ -1221,12 +1221,12 @@
   <entry>Boolean</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>'on'</entry>
-  <entry>Channels nach Kick automatisch wieder betreten, falls möglich</entry>
+  <entry>Channels nach Kick automatisch wieder betreten, falls mÃ¶glich</entry>
 </row>
 <row>
   <entry><option>server_notify_levels</option></entry>
   <entry>Zeichenfolge</entry>
   <entry>eine beliebige Zeichenfolge</entry>
   <entry>''</entry>
-  <entry>Durch Kommata getrennte Liste der Notify-Levels für die Channels auf diesem Server (Format: #channel:1,...), der Channelname '*' ist für den Default-Server-Notify-Level</entry>
+  <entry>Durch Kommata getrennte Liste der Notify-Levels fÃ¼r die Channels auf diesem Server (Format: #channel:1,...), der Channelname '*' ist fÃ¼r den Default-Server-Notify-Level</entry>
 </row>

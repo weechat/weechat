@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -25,29 +25,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <title>Extension Charset</title>
   
   <para>
-    L'extension Charset vous permet d'encoder et décoder les données en
-    utilisant un jeu de caractères, avec 3 niveaux : global, par serveur,
+    L'extension Charset vous permet d'encoder et dÃ©coder les donnÃ©es en
+    utilisant un jeu de caractÃ¨res, avec 3 niveaux : global, par serveur,
     ou par canal.
-    Cette extension est facultative, mais recommandée : si elle n'est pas
-    chargée, WeeChat pourra uniquement lire/écrire des données UTF-8.
+    Cette extension est facultative, mais recommandÃ©e : si elle n'est pas
+    chargÃ©e, WeeChat pourra uniquement lire/Ã©crire des donnÃ©es UTF-8.
   </para>
   
   <para>
-    L'extension Charset devrait être automatiquement chargée par WeeChat
-    au démarrage.
-    Pour s'assurer que l'extension est bien chargée, essayez :
+    L'extension Charset devrait Ãªtre automatiquement chargÃ©e par WeeChat
+    au dÃ©marrage.
+    Pour s'assurer que l'extension est bien chargÃ©e, essayez :
     "<literal>/charset</literal>".
-    Si la commande n'est pas trouvée, alors chargez l'extension avec la
+    Si la commande n'est pas trouvÃ©e, alors chargez l'extension avec la
     commande :
     <screen>/plugin load charset</screen>
-    Si l'extension n'est pas trouvée, alors vous devriez recompiler
+    Si l'extension n'est pas trouvÃ©e, alors vous devriez recompiler
     WeeChat avec les extensions et le support de Charset.
   </para>
   
   <para>
-    Lorsque l'extension Charset démarre, elle affiche le jeu de caractères
+    Lorsque l'extension Charset dÃ©marre, elle affiche le jeu de caractÃ¨res
     du terminal et l'interne.
-    Le jeu de caractères du terminal dépend de votre locale, et l'interne
+    Le jeu de caractÃ¨res du terminal dÃ©pend de votre locale, et l'interne
     est UTF-8.
     Par exemple :
 <screen>
@@ -61,31 +61,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <itemizedlist>
       <listitem>
         <para>
-          Pour modifier les jeux de caractères de décodage et d'encodage
+          Pour modifier les jeux de caractÃ¨res de dÃ©codage et d'encodage
           globaux, utilisez la commande "<literal>/setp</literal>".
           Par exemple :
 <screen>
 /setp charset.global.decode = ISO-8859-15
 /setp charset.global.encode = ISO-8859-15
 </screen>
-          Si le jeu de caractères de décodage global n'est pas renseigné
+          Si le jeu de caractÃ¨res de dÃ©codage global n'est pas renseignÃ©
           (par exemple pendant le premier chargement de Charset), il sera
-          renseigné automatiquement avec le jeu de caractères du terminal
-          (s'il est différent de UTF-8) ou par défaut à
+          renseignÃ© automatiquement avec le jeu de caractÃ¨res du terminal
+          (s'il est diffÃ©rent de UTF-8) ou par dÃ©faut Ã 
           "<literal>ISO-8859-1</literal>".
-          La valeur d'encodage par défaut est vide, donc WeeChat envoie par
-          défaut avec le jeu de caractères interne (UTF-8).
+          La valeur d'encodage par dÃ©faut est vide, donc WeeChat envoie par
+          dÃ©faut avec le jeu de caractÃ¨res interne (UTF-8).
         </para>
       </listitem>
       <listitem>
         <para>
-          Pour modifier le jeu de caractères d'un serveur, utilisez la
+          Pour modifier le jeu de caractÃ¨res d'un serveur, utilisez la
           commande "<literal>/charset</literal>" sur le tampon serveur.
-          Si vous donnez seulement le jeu de caractères, alors vous
-          modifiez en même temps les valeurs de décodage et d'encodage.
+          Si vous donnez seulement le jeu de caractÃ¨res, alors vous
+          modifiez en mÃªme temps les valeurs de dÃ©codage et d'encodage.
           Par exemple :
           <screen>/charset ISO-8859-15</screen>
-          Ce qui est équivalent à :
+          Ce qui est Ã©quivalent Ã  :
 <screen>
 /charset decode ISO-8859-15
 /charset encode ISO-8859-15
@@ -94,9 +94,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </listitem>
       <listitem>
         <para>
-          Pour modifier le jeu de caractères d'un canal (ou d'une
-          conversation privée), utilisez la même commande que pour le
-          serveur, mais sur le tampon du canal (ou du privé).
+          Pour modifier le jeu de caractÃ¨res d'un canal (ou d'une
+          conversation privÃ©e), utilisez la mÃªme commande que pour le
+          serveur, mais sur le tampon du canal (ou du privÃ©).
         </para>
       </listitem>
     </itemizedlist>
@@ -107,28 +107,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>FAQ</title>
     
     <para>
-      Si vous avez des problèmes avec certains caractères ou les accents en
+      Si vous avez des problÃ¨mes avec certains caractÃ¨res ou les accents en
       utilisant l'extension Charset :
       <itemizedlist>
         <listitem>
           <para>
-            vérifiez que weechat-curses est lié avec libncursesw
-            (attention : nécessaire sur beaucoup de distributions, mais pas
+            vÃ©rifiez que weechat-curses est liÃ© avec libncursesw
+            (attention : nÃ©cessaire sur beaucoup de distributions, mais pas
             toutes) : 
             <screen>ldd /chemin/vers/weechat-curses</screen>
           </para>
         </listitem>
         <listitem>
           <para>
-            vérifiez la ligne charset (sur le tampon serveur), vous devriez
+            vÃ©rifiez la ligne charset (sur le tampon serveur), vous devriez
             voir ISO-XXXXXX ou UTF-8 pour le charset du terminal. Si vous
             voyez ANSI_X3.4-1968 ou d'autres valeurs, votre locale est
-            probablement erronée.
+            probablement erronÃ©e.
           </para>
         </listitem>
         <listitem>
           <para>
-            affectez la valeur pour le décodage global, par exemple :
+            affectez la valeur pour le dÃ©codage global, par exemple :
             <screen>/setp charset.global.decode = ISO-8859-15</screen>
           </para>
         </listitem>

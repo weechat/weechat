@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -57,8 +57,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
       </itemizedlist>
       
-      Pour les autres distributions supportées, merci de vous
-      référer au manuel de la distribution pour la méthode d'installation.
+      Pour les autres distributions supportÃ©es, merci de vous
+      rÃ©fÃ©rer au manuel de la distribution pour la mÃ©thode d'installation.
     </para>
     
   </section>
@@ -108,18 +108,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>Sources GIT</title>
     
     <para>
-      Attention : les sources GIT sont réservés aux utilisateurs
-      avancés : il se peut que WeeChat ne compile pas et qu'il soit
-      très instable. Vous êtes prévenus !
+      Attention : les sources GIT sont rÃ©servÃ©s aux utilisateurs
+      avancÃ©s : il se peut que WeeChat ne compile pas et qu'il soit
+      trÃ¨s instable. Vous Ãªtes prÃ©venus !
     </para>
     
     <para>
-      Pour récupérer les sources GIT, tapez cette commande :
+      Pour rÃ©cupÃ©rer les sources GIT, tapez cette commande :
 <screen><prompt>$ </prompt><userinput>git-clone git://git.sv.gnu.org/weechat.git</userinput></screen>
     </para>
     
     <para>
-      Si vous utilisez les Autotools (et non cmake), exécutez ce script :
+      Si vous utilisez les Autotools (et non cmake), exÃ©cutez ce script :
       <userinput>./autogen.sh</userinput>
     </para>
     

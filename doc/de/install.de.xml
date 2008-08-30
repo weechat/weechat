@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -25,14 +25,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <title>Installation</title>
   
   <para>
-    Dieses Kapitel erklärt die Installation von WeeChat.
+    Dieses Kapitel erklÃ¤rt die Installation von WeeChat.
   </para>
   
   <section id="secBinaryPackages">
-    <title>Binäre Pakete</title>
+    <title>BinÃ¤re Pakete</title>
     
     <para>
-      Binäre Pakete sind für die folgenden Distributionen verfügbar:
+      BinÃ¤re Pakete sind fÃ¼r die folgenden Distributionen verfÃ¼gbar:
       <itemizedlist>
         <listitem>
           <para>
@@ -55,8 +55,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </para>
         </listitem>
       </itemizedlist>
-      FÜr andere Distributionen: sehen sie in die Dokumentation
-      für Installationsanweisungen.
+      FÃœr andere Distributionen: sehen sie in die Dokumentation
+      fÃ¼r Installationsanweisungen.
     </para>
     
   </section>
@@ -108,19 +108,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>GIT Quellen</title>
     
     <para>
-      Warnung: GIT Quellen sind für fortgeschrittene Anwender, das
-      Übersetzen könnte fehlschlagen oder das Ergebnis nicht stabil sein.
+      Warnung: GIT Quellen sind fÃ¼r fortgeschrittene Anwender, das
+      Ãœbersetzen kÃ¶nnte fehlschlagen oder das Ergebnis nicht stabil sein.
       Sie wurden gewarnt!
     </para>
     
     <para>
-      Um die GIT Quellen zu bekommen, sind folgende Kommandos nötig:
+      Um die GIT Quellen zu bekommen, sind folgende Kommandos nÃ¶tig:
 <screen><prompt>$ </prompt><userinput>git-clone git://git.sv.gnu.org/weechat.git</userinput></screen>
     </para>
     
     <para>
       <!-- TRANSLATION NEEDED -->
-      If you're using Autotools (and not cmake), Ausführen des folgenden Skripts:
+      If you're using Autotools (and not cmake), AusfÃ¼hren des folgenden Skripts:
       <userinput>./autogen.sh</userinput>
     </para>
     

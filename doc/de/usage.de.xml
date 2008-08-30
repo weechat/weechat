@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -25,9 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <title>Nutzung</title>
   
   <para>
-    Dieses Kapitel erklärt, wie Weechat zu starten ist, die zu verwendenden
+    Dieses Kapitel erklÃ¤rt, wie Weechat zu starten ist, die zu verwendenden
     Tastenkombinationen, interne und IRC-Kommandos, die Konfigurationsdatei
-    und die FIFO für die remote-Bedienung.
+    und die FIFO fÃ¼r die remote-Bedienung.
   </para>
   
   <section id="secRunWeeChat">
@@ -53,8 +53,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry><literal>-d, --dir &lt;path&gt;</literal></entry>
               <entry>
-                Setzt den Pfad für das Verzeichnis, dass Weechat benutzen
-                soll (relevant für die Konfigurationsdateien, Logs, Plugins
+                Setzt den Pfad fÃ¼r das Verzeichnis, dass Weechat benutzen
+                soll (relevant fÃ¼r die Konfigurationsdateien, Logs, Plugins
                 und Skripte). Der Standardwert
                 "<literal>~/.weechat</literal>". Bitte beachten Sie: dieses
                 Verzeichnis wird automatisch erzeugt, wenn es noch nicht
@@ -97,7 +97,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <para>
-      Es ist auch möglich URLs für einen oder mehrere IRC-Server anzugeben,
+      Es ist auch mÃ¶glich URLs fÃ¼r einen oder mehrere IRC-Server anzugeben,
       so wie:
       <screen>irc[6][s]://[nick[:passwort]@]irc.example.org[:port][/channel][,channel[...]</screen>
       Beispiel um die Channels #weechat and #toto zu betreten
@@ -111,22 +111,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <itemizedlist>
         <listitem>
           <para>
-            für Curses GUI: <userinput>weechat-curses</userinput>
+            fÃ¼r Curses GUI: <userinput>weechat-curses</userinput>
           </para>
         </listitem>
         <listitem>
           <para>
-            für Gtk GUI: <userinput>weechat-gtk</userinput>
+            fÃ¼r Gtk GUI: <userinput>weechat-gtk</userinput>
           </para>
         </listitem>
         <listitem>
           <para>
-            für wxWidgets GUI: <userinput>weechat-wxwidgets</userinput>
+            fÃ¼r wxWidgets GUI: <userinput>weechat-wxwidgets</userinput>
           </para>
         </listitem>
         <listitem>
           <para>
-            für Qt GUI: <userinput>weechat-qt</userinput>
+            fÃ¼r Qt GUI: <userinput>weechat-qt</userinput>
           </para>
         </listitem>
       </itemizedlist>
@@ -139,7 +139,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <para>
-      Sie können diese Datei entsprechend ihren Bedürfnissen editieren,
+      Sie kÃ¶nnen diese Datei entsprechend ihren BedÃ¼rfnissen editieren,
       um Weechat anzupassen oder Parameter zu beeinflussen mit 
       "<literal>/set</literal>" Kommando in WeeChat
       (siehe <xref linkend="secWeeChatCommands" />)
@@ -169,7 +169,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Rechts / Strg + F</entry>
               <entry>
-                Gehe zum nächsten Zeichen in der Kommandozeile
+                Gehe zum nÃ¤chsten Zeichen in der Kommandozeile
               </entry>
             </row>
             <row>
@@ -181,7 +181,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Strg + Rechts</entry>
               <entry>
-                Gehe zum nächsten Wort in der Kommandozeile
+                Gehe zum nÃ¤chsten Wort in der Kommandozeile
               </entry>
             </row>
             <row>
@@ -230,7 +230,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Strg + K</entry>
               <entry>
-                Lösche vom Cursor bis zum Ende der Kommandozeile
+                LÃ¶sche vom Cursor bis zum Ende der Kommandozeile
               </entry>
             </row>
             <row>
@@ -262,38 +262,38 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Strg + U</entry>
               <entry>
-                Lösche vom Cursor bis zum Aanfang der Kommandozeile
+                LÃ¶sche vom Cursor bis zum Aanfang der Kommandozeile
               </entry>
             </row>
             <row>
               <entry>Strg + W</entry>
               <entry>
-                Lösche das vorhergehende Wort in der Kommandozeile
+                LÃ¶sche das vorhergehende Wort in der Kommandozeile
               </entry>
             </row>
             <row>
               <entry>Strg + Y</entry>
               <entry>
-                Inhalt der Zwischenablage einfügen
+                Inhalt der Zwischenablage einfÃ¼gen
               </entry>
             </row>
             <row>
-              <entry>Rückschritt / Strg + H</entry>
+              <entry>RÃ¼ckschritt / Strg + H</entry>
               <entry>
-                Lösche das vorhergehende Zeichen in der Kommandozeile
+                LÃ¶sche das vorhergehende Zeichen in der Kommandozeile
               </entry>
             </row>
             <row>
               <entry>Entfernen / Strg + D</entry>
               <entry>
-                Lösche das nächste Zeichen in der Kommandozeile
+                LÃ¶sche das nÃ¤chste Zeichen in der Kommandozeile
               </entry>
             </row>
             <row>
               <entry>Tabulator / Shift + Tabulator</entry>
               <entry>
-                Vervollständige ein Kommando oder Nick
-                (wiederhole: finde nächste Vervollständigung)
+                VervollstÃ¤ndige ein Kommando oder Nick
+                (wiederhole: finde nÃ¤chste VervollstÃ¤ndigung)
               </entry>
             </row>
             <row>
@@ -305,7 +305,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Eingabe / Strg + J / Strg + M</entry>
               <entry>
-                Führe ein Kommando aus oder sende eine Nachricht
+                FÃ¼hre ein Kommando aus oder sende eine Nachricht
                 (im Suchmodus: Suche anhalten)
               </entry>
             </row>
@@ -313,14 +313,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Hoch / Runter</entry>
               <entry>
                 Rufe das letzte Kommando/die letzte Nachricht wieder auf
-                (im Suchmodus: suche rückwärts/vorwärts)
+                (im Suchmodus: suche rÃ¼ckwÃ¤rts/vorwÃ¤rts)
               </entry>
             </row>
             <row>
               <entry>Strg + Hoch / Strg + Runter</entry>
               <entry>
                 Rufe das letzte Kommando/die letzte Nachricht des globalen
-                Buffers wieder auf (für alle Buffer)
+                Buffers wieder auf (fÃ¼r alle Buffer)
               </entry>
             </row>
             <row>
@@ -350,7 +350,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>F6 / Alt + Rechts</entry>
               <entry>
-                Gehe zum nächsten Puffer
+                Gehe zum nÃ¤chsten Puffer
               </entry>
             </row>
             <row>
@@ -362,19 +362,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>F8</entry>
               <entry>
-                Schalte in das nächste Fenster
+                Schalte in das nÃ¤chste Fenster
               </entry>
             </row>
             <row>
               <entry>F9 / F10</entry>
               <entry>
-                Blättere in der Topic
+                BlÃ¤ttere in der Topic
               </entry>
             </row>
             <row>
               <entry>F11 / F12</entry>
               <entry>
-                Blättere in der Nicklist
+                BlÃ¤ttere in der Nicklist
               </entry>
             </row>
             <row>
@@ -386,8 +386,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Alt + A</entry>
               <entry>
-                Schalte in den nächsten Puffer mit Aktivität
-                (mit der Priorität: highlight, message, other)
+                Schalte in den nÃ¤chsten Puffer mit AktivitÃ¤t
+                (mit der PrioritÃ¤t: highlight, message, other)
               </entry>
             </row>
             <row>
@@ -399,20 +399,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Alt + D</entry>
               <entry>
-                Lösche das nächste Wort in der Kommandozeile
+                LÃ¶sche das nÃ¤chste Wort in der Kommandozeile
               </entry>
             </row>
             <row>
               <entry>Alt + F</entry>
               <entry>
-                Gehe zum nächsten Wort in der Kommandozeile
+                Gehe zum nÃ¤chsten Wort in der Kommandozeile
               </entry>
             </row>
             <row>
               <entry>Alt + H</entry>
               <entry>
-                Lösche den Inhalt der Hotlist
-                (Aktivitätsanzeige für andere Puffer)	
+                LÃ¶sche den Inhalt der Hotlist
+                (AktivitÃ¤tsanzeige fÃ¼r andere Puffer)	
               </entry>
             </row>
             <row>
@@ -449,26 +449,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Alt + K</entry>
               <entry>
-                Setze den Keycode der nächsten Taste in der Kommandozeile
+                Setze den Keycode der nÃ¤chsten Taste in der Kommandozeile
                 ein
               </entry>
             </row>
             <row>
               <entry>Alt + N</entry>
               <entry>
-                Blättere zum nächsten Highlight
+                BlÃ¤ttere zum nÃ¤chsten Highlight
               </entry>
             </row>
             <row>
               <entry>Alt + P</entry>
               <entry>
-                Blättere zum vorigen Highlight
+                BlÃ¤ttere zum vorigen Highlight
               </entry>
             </row>
             <row>
               <entry>Alt + R</entry>
               <entry>
-                Lösche die komplette Kommandozeile
+                LÃ¶sche die komplette Kommandozeile
               </entry>
             </row>
             <row>
@@ -481,7 +481,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Alt + U</entry>
               <entry>
-                Blättere zur ersten ungelesenen Zeile im Puffer
+                BlÃ¤ttere zur ersten ungelesenen Zeile im Puffer
               </entry>
             </row>
             <row>
@@ -516,14 +516,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <para>
       Nachrichten an einen Puffer sind jeder Text, der nicht mit einem "/"
       begint. Um zum Beispiel den Text "<literal>hello</literal>" an den
-      gegenwärtigen Puffer zu senden:
+      gegenwÃ¤rtigen Puffer zu senden:
       <screen><userinput>hello</userinput></screen>
     </para>
     
     <para>
-      Dennoch ist es möglich, eine Nachricht auch mit einem "/" zu beginnen,
+      Dennoch ist es mÃ¶glich, eine Nachricht auch mit einem "/" zu beginnen,
       einfach ein weiteres "/" voranstellen. Um zum Beispiel den Text
-      "<literal>/set</literal>" an den gegenwärtigen Puffer zu
+      "<literal>/set</literal>" an den gegenwÃ¤rtigen Puffer zu
       senden:
       <screen><userinput>//set</userinput></screen>
     </para>
@@ -588,7 +588,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <para>
-      Farbcodes für ^Cc:
+      Farbcodes fÃ¼r ^Cc:
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -612,7 +612,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </row>
             <row>
               <entry>03</entry>
-              <entry>dunkles Grün</entry>
+              <entry>dunkles GrÃ¼n</entry>
             </row>
             <row>
               <entry>04</entry>
@@ -636,7 +636,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </row>
             <row>
               <entry>09</entry>
-              <entry>helles Grün</entry>
+              <entry>helles GrÃ¼n</entry>
             </row>
             <row>
               <entry>10</entry>
@@ -693,7 +693,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>Konfigurationsdatei</title>
     
     <para>
-      Liste der Optionen für die Konfigurationsdatei:
+      Liste der Optionen fÃ¼r die Konfigurationsdatei:
       <informaltable colsep="0" frame="none">
         <tgroup cols="5">
           <thead>
@@ -715,19 +715,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <para>
-      Farben für die Curses GUI:
+      Farben fÃ¼r die Curses GUI:
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
             <row>
-              <entry>Schlüsselwort</entry>
+              <entry>SchlÃ¼sselwort</entry>
               <entry>Farbe</entry>
             </row>
           </thead>
           <tbody>
             <row>
               <entry><literal>default</literal></entry>
-              <entry>default Farbe (Transparent für den Hintergrund)</entry>
+              <entry>default Farbe (Transparent fÃ¼r den Hintergrund)</entry>
             </row>
             <row>
               <entry><literal>black</literal></entry>
@@ -743,11 +743,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </row>
             <row>
               <entry><literal>green</literal></entry>
-              <entry>dunkles Grün</entry>
+              <entry>dunkles GrÃ¼n</entry>
             </row>
             <row>
               <entry><literal>lightgreen</literal></entry>
-              <entry>helles Grün</entry>
+              <entry>helles GrÃ¼n</entry>
             </row>
             <row>
               <entry><literal>brown</literal></entry>

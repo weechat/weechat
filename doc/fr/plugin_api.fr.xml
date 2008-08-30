@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -25,8 +25,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <title>API extension</title>
   
   <para>
-    Ce chapitre décrit l'interface des extensions (API).
-    --- sera complété très prochainement ! ---
+    Ce chapitre dÃ©crit l'interface des extensions (API).
+    --- sera complÃ©tÃ© trÃ¨s prochainement ! ---
   </para>
 </chapter>
 
@@ -43,10 +43,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </command>
     </para>
     <para>
-      Change le jeu de caractères de l'extension.
+      Change le jeu de caractÃ¨res de l'extension.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -56,7 +56,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            <option>charset</option> : nouveau jeu de caractères à
+            <option>charset</option> : nouveau jeu de caractÃ¨res Ã 
             utiliser
           </para>
         </listitem>
@@ -79,11 +79,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </command>
     </para>
     <para>
-      Convertit une chaîne de caractères vers le jeu de caractères
+      Convertit une chaÃ®ne de caractÃ¨res vers le jeu de caractÃ¨res
       interne WeeChat (UTF-8).
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -93,26 +93,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            <option>charset</option> : le jeu de caractères de départ
+            <option>charset</option> : le jeu de caractÃ¨res de dÃ©part
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>string</option> : la chaîne à convertir
+            <option>string</option> : la chaÃ®ne Ã  convertir
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : la chaîne convertie.
+      Valeur renvoyÃ©e : la chaÃ®ne convertie.
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free" aprÃ¨s utilisation.
     </para>
     <para>
       Exemple :
-      <screen>char *str = plugin->iconv_to_internal (plugin, "ISO-8859-1", "chaine iso: é à");</screen>
+      <screen>char *str = plugin->iconv_to_internal (plugin, "ISO-8859-1", "chaine iso: Ã© Ã ");</screen>
     </para>
   </section>
   
@@ -127,11 +127,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </command>
     </para>
     <para>
-      Convertit une chaîne de caractères depuis le jeu de caractères
+      Convertit une chaÃ®ne de caractÃ¨res depuis le jeu de caractÃ¨res
       interne WeeChat (UTF-8) vers un autre.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -141,26 +141,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            <option>charset</option> : le jeu de caractères voulu
+            <option>charset</option> : le jeu de caractÃ¨res voulu
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>string</option> : la chaîne à convertir
+            <option>string</option> : la chaÃ®ne Ã  convertir
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : la chaîne convertie.
+      Valeur renvoyÃ©e : la chaÃ®ne convertie.
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free" aprÃ¨s utilisation.
     </para>
     <para>
       Exemple :
-      <screen>char *str = plugin->iconv_from_internal (plugin, "ISO-8859-1", "chaine utf-8: é à");</screen>
+      <screen>char *str = plugin->iconv_from_internal (plugin, "ISO-8859-1", "chaine utf-8: Ã© Ã ");</screen>
     </para>
   </section>
   
@@ -175,11 +175,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </command>
     </para>
     <para>
-      Effectue une comparaison entre deux chaînes, sans tenir compte des
+      Effectue une comparaison entre deux chaÃ®nes, sans tenir compte des
       majuscules/minuscules ni de la locale.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -189,19 +189,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            <option>chaine1</option> : la première chaîne à comparer
+            <option>chaine1</option> : la premiÃ¨re chaÃ®ne Ã  comparer
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>chaine2</option> : la deuxième chaîne à comparer
+            <option>chaine2</option> : la deuxiÃ¨me chaÃ®ne Ã  comparer
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : la différence entre les deux chaînes : négatif
-      si chaine1 &lt; chaine2, zéro si chaine1 == chaine2, positif si
+      Valeur renvoyÃ©e : la diffÃ©rence entre les deux chaÃ®nes : nÃ©gatif
+      si chaine1 &lt; chaine2, zÃ©ro si chaine1 == chaine2, positif si
       chaine1 &gt; chaine2
     </para>
     <para>
@@ -221,12 +221,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </command>
     </para>
     <para>
-      Effectue une comparaison entre deux chaînes, sans tenir compte des
+      Effectue une comparaison entre deux chaÃ®nes, sans tenir compte des
       majuscules/minuscules ni de la locale, en comparant au plus "max"
-      caractères.
+      caractÃ¨res.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -236,24 +236,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            <option>chaine1</option> : la première chaîne à comparer
+            <option>chaine1</option> : la premiÃ¨re chaÃ®ne Ã  comparer
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>chaine2</option> : la deuxième chaîne à comparer
+            <option>chaine2</option> : la deuxiÃ¨me chaÃ®ne Ã  comparer
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>max</option> : nombre de caractères max à comparer
+            <option>max</option> : nombre de caractÃ¨res max Ã  comparer
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : la différence entre les deux chaînes : négatif
-      si chaine1 &lt; chaine2, zéro si chaine1 == chaine 2, positif si
+      Valeur renvoyÃ©e : la diffÃ©rence entre les deux chaÃ®nes : nÃ©gatif
+      si chaine1 &lt; chaine2, zÃ©ro si chaine1 == chaine 2, positif si
       chaine1 &gt; chaine2
     </para>
     <para>
@@ -273,10 +273,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </command>
     </para>
     <para>
-      Explose une chaîne en plusieurs selon un/des délimiteur(s).
+      Explose une chaÃ®ne en plusieurs selon un/des dÃ©limiteur(s).
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -286,36 +286,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            <option>chaine</option> : la chaîne à exploser
+            <option>chaine</option> : la chaÃ®ne Ã  exploser
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>separateurs</option> : les délimiteurs utilisés
-            pour exploser la chaîne
+            <option>separateurs</option> : les dÃ©limiteurs utilisÃ©s
+            pour exploser la chaÃ®ne
           </para>
         </listitem>
         <listitem>
           <para>
             <option>num_items_max</option> : nombre maximum de
-            sous-chaînes créées (0 = pas de limite)
+            sous-chaÃ®nes crÃ©Ã©es (0 = pas de limite)
           </para>
         </listitem>
         <listitem>
           <para>
             <option>num_items</option> : pointeur vers un entier qui
-            contiendra le nombre de sous-chaînes créées en retour
+            contiendra le nombre de sous-chaÃ®nes crÃ©Ã©es en retour
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : un tableau de chaînes, ou NULL si un problème
-      a été rencontré.
+      Valeur renvoyÃ©e : un tableau de chaÃ®nes, ou NULL si un problÃ¨me
+      a Ã©tÃ© rencontrÃ©.
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free_exploded_string" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free_exploded_string" aprÃ¨s utilisation.
     </para>
     <para>
       Exemple :
@@ -341,10 +341,10 @@ if (argv != NULL)
       </command>
     </para>
     <para>
-      Libère la mémoire utilisée pour une explosion de chaîne.
+      LibÃ¨re la mÃ©moire utilisÃ©e pour une explosion de chaÃ®ne.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -354,14 +354,14 @@ if (argv != NULL)
         </listitem>
         <listitem>
           <para>
-            <option>chaine</option> : la chaîne explosée par la fonction
+            <option>chaine</option> : la chaÃ®ne explosÃ©e par la fonction
             "explode_string"
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -386,10 +386,10 @@ if (argv != NULL)
       </command>
     </para>
     <para>
-      Créé un répertoire dans le répertoire de base de WeeChat.
+      CrÃ©Ã© un rÃ©pertoire dans le rÃ©pertoire de base de WeeChat.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -399,20 +399,20 @@ if (argv != NULL)
         </listitem>
         <listitem>
           <para>
-            <option>repertoire</option> : répertoire à créer
+            <option>repertoire</option> : rÃ©pertoire Ã  crÃ©er
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : 1 si le répertoire a été créé avec succès,
+      Valeur renvoyÃ©e : 1 si le rÃ©pertoire a Ã©tÃ© crÃ©Ã© avec succÃ¨s,
       0 si une erreur s'est produite.
     </para>
     <para>
       Example:
 <screen>
 if (!plugin->mkdir_home (plugin, "temp"))
-    plugin->print_server(plugin, "Impossible de créer le répertoire 'temp' dans la base WeeChat.");
+    plugin->print_server(plugin, "Impossible de crÃ©er le rÃ©pertoire 'temp' dans la base WeeChat.");
 </screen>
     </para>
   </section>
@@ -428,10 +428,10 @@ if (!plugin->mkdir_home (plugin, "temp"))
       </command>
     </para>
     <para>
-      Exécute une fonction sur tous les fichiers d'un répertoire.
+      ExÃ©cute une fonction sur tous les fichiers d'un rÃ©pertoire.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -441,20 +441,20 @@ if (!plugin->mkdir_home (plugin, "temp"))
         </listitem>
         <listitem>
           <para>
-            <option>repertoire</option> : le répertoire où les fichiers
-            sont recherchés
+            <option>repertoire</option> : le rÃ©pertoire oÃ¹ les fichiers
+            sont recherchÃ©s
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>callback</option> : une fonction appelée pour chaque
-            fichier trouvé
+            <option>callback</option> : une fonction appelÃ©e pour chaque
+            fichier trouvÃ©
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -481,11 +481,11 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
       </command>
     </para>
     <para>
-      Affiche un message sur un tampon WeeChat, identifié par le serveur
-      et le canal (tous deux pouvant être NULL pour le tampon courant).
+      Affiche un message sur un tampon WeeChat, identifiÃ© par le serveur
+      et le canal (tous deux pouvant Ãªtre NULL pour le tampon courant).
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -496,18 +496,18 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
         <listitem>
           <para>
             <option>serveur</option> : nom interne du serveur pour
-            trouver le tampon dans lequel afficher (peut être NULL)
+            trouver le tampon dans lequel afficher (peut Ãªtre NULL)
           </para>
         </listitem>
         <listitem>
           <para>
             <option>canal</option> : nom du canal pour trouver le
-            tampon dans lequel afficher (peut être NULL)
+            tampon dans lequel afficher (peut Ãªtre NULL)
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>message</option> : message à afficher
+            <option>message</option> : message Ã  afficher
           </para>
         </listitem>
       </itemizedlist>
@@ -550,30 +550,30 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
             <row>
               <entry>0x0F</entry>
               <entry>
-                désactiver la couleur et tous les attributs
+                dÃ©sactiver la couleur et tous les attributs
               </entry>
             </row>
             <row>
               <entry>0x12</entry>
               <entry>
-                vidéo inverse (inversion de la couleur d'écriture et du
+                vidÃ©o inverse (inversion de la couleur d'Ã©criture et du
                 fond)
               </entry>
             </row>
             <row>
               <entry>0x1F</entry>
               <entry>
-                texte souligné
+                texte soulignÃ©
               </entry>
             </row>
           </tbody>
         </tgroup>
       </informaltable>
-      NB: le même code (sans le numéro pour 0x03) peut être utilisé pour
-      stopper l'attribut défini.
+      NB: le mÃªme code (sans le numÃ©ro pour 0x03) peut Ãªtre utilisÃ© pour
+      stopper l'attribut dÃ©fini.
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemples :
@@ -604,7 +604,7 @@ plugin->print (plugin, NULL, NULL,
       Affiche un message sur le tampon du serveur courant.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -614,7 +614,7 @@ plugin->print (plugin, NULL, NULL,
         </listitem>
         <listitem>
           <para>
-            <option>message</option> : message à afficher
+            <option>message</option> : message Ã  afficher
           </para>
         </listitem>
       </itemizedlist>
@@ -624,7 +624,7 @@ plugin->print (plugin, NULL, NULL,
       <xref linkend="secAPI_print" />.
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple : <screen>plugin->print_server (plugin, "hello");</screen>
@@ -646,7 +646,7 @@ plugin->print (plugin, NULL, NULL,
       canal.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -657,13 +657,13 @@ plugin->print (plugin, NULL, NULL,
         <listitem>
           <para>
             <option>serveur</option> : nom interne du serveur pour
-            trouver le log du tampon (peut être NULL)
+            trouver le log du tampon (peut Ãªtre NULL)
           </para>
         </listitem>
         <listitem>
           <para>
             <option>canal</option> : nom du canal pour trouver le
-            tampon le log du tampon (peut être NULL)
+            tampon le log du tampon (peut Ãªtre NULL)
           </para>
         </listitem>
         <listitem>
@@ -674,7 +674,7 @@ plugin->print (plugin, NULL, NULL,
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -696,11 +696,11 @@ plugin->log (plugin, "freenode", "#weechat", "test");
       </command>
     </para>
     <para>
-      Ajoute un gestionnaire de messages IRC, appelé dès qu'un message
-      IRC est reçu.
+      Ajoute un gestionnaire de messages IRC, appelÃ© dÃ¨s qu'un message
+      IRC est reÃ§u.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -711,15 +711,15 @@ plugin->log (plugin, "freenode", "#weechat", "test");
         <listitem>
           <para>
             <option>message</option> : nom du message IRC pour lequel la
-            fonction est appelée ("*" pour tous les messages).
-            Pour connaître la liste des messages IRC disponibles, merci
+            fonction est appelÃ©e ("*" pour tous les messages).
+            Pour connaÃ®tre la liste des messages IRC disponibles, merci
             de consulter les <acronym>RFC</acronym>s
             <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
             et
             <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-            De plus, vous pouvez utiliser un nom spécial, préfixé par
-            "weechat_" pour capturer des évènements spéciaux, comme
-            décrit dans le tableau ci-dessous :
+            De plus, vous pouvez utiliser un nom spÃ©cial, prÃ©fixÃ© par
+            "weechat_" pour capturer des Ã©vÃ¨nements spÃ©ciaux, comme
+            dÃ©crit dans le tableau ci-dessous :
             <informaltable colsep="0" frame="none">
               <tgroup cols="2">
                 <thead>
@@ -731,24 +731,24 @@ plugin->log (plugin, "freenode", "#weechat", "test");
                 <tbody>
                   <row>
                     <entry><literal>weechat_pv</literal></entry>
-                    <entry>message privé reçu</entry>
+                    <entry>message privÃ© reÃ§u</entry>
                   </row>
                   <row>
                     <entry><literal>weechat_highlight</literal></entry>
                     <entry>
-                      message avec highlight (sur un canal ou en privé)
+                      message avec highlight (sur un canal ou en privÃ©)
                     </entry>
                   </row>
                   <row>
                     <entry><literal>weechat_ctcp</literal></entry>
                     <entry>
-                      message CTCP reçu (VERSION, PING, etc...)
+                      message CTCP reÃ§u (VERSION, PING, etc...)
                     </entry>
                   </row>
                   <row>
                     <entry><literal>weechat_dcc</literal></entry>
                     <entry>
-                      message DCC reçu (discussion ou fichier)
+                      message DCC reÃ§u (discussion ou fichier)
                     </entry>
                   </row>
                 </tbody>
@@ -758,8 +758,8 @@ plugin->log (plugin, "freenode", "#weechat", "test");
         </listitem>
         <listitem>
           <para>
-            <option>fonction</option> : fonction appelée lorsque le
-            message est reçu
+            <option>fonction</option> : fonction appelÃ©e lorsque le
+            message est reÃ§u
           </para>
           <para>
             Elle a le prototype suivant :
@@ -770,8 +770,8 @@ plugin->log (plugin, "freenode", "#weechat", "test");
             </command>
           </para>
           <para>
-            Le paramètre argc vaut 3 et les arguments suivants sont
-            passés dans le tableau argv :
+            Le paramÃ¨tre argc vaut 3 et les arguments suivants sont
+            passÃ©s dans le tableau argv :
             <itemizedlist>
               <listitem>
                 <para>argv[0] = nom du serveur</para>
@@ -787,58 +787,58 @@ plugin->log (plugin, "freenode", "#weechat", "test");
         </listitem>
         <listitem>
           <para>
-            <option>handler_args</option> : paramètres passés à la
-            fonction appelée
+            <option>handler_args</option> : paramÃ¨tres passÃ©s Ã  la
+            fonction appelÃ©e
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>handler_pointer</option> : pointeur passé à la
-            fonction appelée
+            <option>handler_pointer</option> : pointeur passÃ© Ã  la
+            fonction appelÃ©e
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
+      Valeur renvoyÃ©e : le pointeur vers le nouveau gestionnaire de
       messages.
     </para>
     <para>
-      Note : la fonction appelée lorsque le message est reçu doit
+      Note : la fonction appelÃ©e lorsque le message est reÃ§u doit
       renvoyer une des valeurs suivantes :
       <itemizedlist>
         <listitem>
           <para>
-            <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+            <literal>PLUGIN_RC_KO</literal> : la fonction a Ã©chouÃ©
           </para>
         </listitem>
         <listitem>
           <para>
-            <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+            <literal>PLUGIN_RC_OK</literal> : la fonction a rÃ©ussi
           </para>
         </listitem>
         <listitem>
           <para>
             <literal>PLUGIN_RC_OK_IGNORE_WEECHAT</literal> : le message
-            ne sera pas transmis à WeeChat
+            ne sera pas transmis Ã  WeeChat
           </para>
         </listitem>
         <listitem>
           <para>
             <literal>PLUGIN_RC_OK_IGNORE_PLUGINS</literal> : le message
-            ne sera pas transmis à d'autres extensions
+            ne sera pas transmis Ã  d'autres extensions
           </para>
         </listitem>
         <listitem>
           <para>
             <literal>PLUGIN_RC_OK_IGNORE_ALL</literal> : le message
-            ne sera ni transmis à WeeChat ni à d'autres extensions
+            ne sera ni transmis Ã  WeeChat ni Ã  d'autres extensions
           </para>
         </listitem>
         <listitem>
           <para>
             <literal>PLUGIN_RC_OK_WITH_HIGHLIGHT</literal> : la fonction
-            a réussi et provoque un "highlight" sur le message reçu
+            a rÃ©ussi et provoque un "highlight" sur le message reÃ§u
           </para>
         </listitem>
       </itemizedlist>
@@ -849,7 +849,7 @@ plugin->log (plugin, "freenode", "#weechat", "test");
 int msg_kick (t_weechat_plugin *plugin, int argc, char **argv,
               char *handler_args, void *handler_pointer)
 {
-    plugin->print (plugin, argv[0], NULL, "KICK reçu");
+    plugin->print (plugin, argv[0], NULL, "KICK reÃ§u");
     return PLUGIN_RC_OK;
 }
 ...
@@ -874,11 +874,11 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
       </command>
     </para>
     <para>
-      Ajoute un gestionnaire de commande WeeChat, appelé dès que
+      Ajoute un gestionnaire de commande WeeChat, appelÃ© dÃ¨s que
       l'utilisateur utilise la commande (par exemple /commande).
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -889,42 +889,42 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
         <listitem>
           <para>
             <option>commande</option> : nom de la nouvelle commande,
-            qui peut être une commande déjà existante (attention la
-            commande remplacée ne sera plus disponible jusqu'à ce que
-            l'extension soit déchargée)
+            qui peut Ãªtre une commande dÃ©jÃ  existante (attention la
+            commande remplacÃ©e ne sera plus disponible jusqu'Ã  ce que
+            l'extension soit dÃ©chargÃ©e)
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>description</option> : brève description de la
-            commande (affichée par /help commande)
+            <option>description</option> : brÃ¨ve description de la
+            commande (affichÃ©e par /help commande)
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>arguments</option> : brève description des
-            paramètres de la commande (affichée par /help commande)
+            <option>arguments</option> : brÃ¨ve description des
+            paramÃ¨tres de la commande (affichÃ©e par /help commande)
           </para>
         </listitem>
         <listitem>
           <para>
             <option>arguments_description</option> : longue description
-            des paramètres de la commande (affichée par /help commande)
+            des paramÃ¨tres de la commande (affichÃ©e par /help commande)
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>modele_completion</option> : modèle pour la
-            complétion sous la forme "<literal>abc|%w def|%i</literal>"
+            <option>modele_completion</option> : modÃ¨le pour la
+            complÃ©tion sous la forme "<literal>abc|%w def|%i</literal>"
             qui signifie "abc" ou une commande WeeChat pour le premier
-            paramètre, et "def" ou une commande IRC pour le deuxième.
-            Une chaîne vide indique à WeeChat de compléter tout
-            paramètre avec un pseudo du canal courant, une valeur NULL
-            ou égale à "-" désactive toute complétion pour tous les
-            paramètres de la commande.
+            paramÃ¨tre, et "def" ou une commande IRC pour le deuxiÃ¨me.
+            Une chaÃ®ne vide indique Ã  WeeChat de complÃ©ter tout
+            paramÃ¨tre avec un pseudo du canal courant, une valeur NULL
+            ou Ã©gale Ã  "-" dÃ©sactive toute complÃ©tion pour tous les
+            paramÃ¨tres de la commande.
           </para>
           <para>
-            Les codes suivants peuvent être utilisés :
+            Les codes suivants peuvent Ãªtre utilisÃ©s :
             <informaltable colsep="0" frame="none">
               <tgroup cols="2">
                 <thead>
@@ -936,14 +936,14 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                 <tbody>
                   <row>
                     <entry><literal>%-</literal></entry>
-                    <entry>aucune complétion pour le paramètre</entry>
+                    <entry>aucune complÃ©tion pour le paramÃ¨tre</entry>
                   </row>
                   <row>
                     <entry><literal>%*</literal></entry>
                     <entry>
-                      répétition de la dernière complétion pour tous
-                      les paramètres suivants (ce code doit être à la
-                      fin du modèle de complétion, précédé d'un "|")
+                      rÃ©pÃ©tition de la derniÃ¨re complÃ©tion pour tous
+                      les paramÃ¨tres suivants (ce code doit Ãªtre Ã  la
+                      fin du modÃ¨le de complÃ©tion, prÃ©cÃ©dÃ© d'un "|")
                     </entry>
                   </row>
                   <row>
@@ -962,7 +962,7 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                   </row>
                   <row>
                     <entry><literal>%C</literal></entry>
-                    <entry>tous les canaux (y compris les privés)</entry>
+                    <entry>tous les canaux (y compris les privÃ©s)</entry>
                   </row>
                   <row>
                     <entry><literal>%f</literal></entry>
@@ -970,19 +970,19 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                   </row>
                   <row>
                     <entry><literal>%h</literal></entry>
-                    <entry>commandes définies par des extensions</entry>
+                    <entry>commandes dÃ©finies par des extensions</entry>
                   </row>
                   <row>
                     <entry><literal>%i</literal></entry>
-                    <entry>commandes IRC (envoyées)</entry>
+                    <entry>commandes IRC (envoyÃ©es)</entry>
                   </row>
                   <row>
                     <entry><literal>%I</literal></entry>
-                    <entry>commandes IRC (reçues)</entry>
+                    <entry>commandes IRC (reÃ§ues)</entry>
                   </row>
                   <row>
                     <entry><literal>%k</literal></entry>
-                    <entry>fonctions associées aux touches</entry>
+                    <entry>fonctions associÃ©es aux touches</entry>
                   </row>
                   <row>
                     <entry><literal>%m</literal></entry>
@@ -1016,11 +1016,11 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                   </row>
                   <row>
                     <entry><literal>%p</literal></entry>
-                    <entry>message de "part" par défaut</entry>
+                    <entry>message de "part" par dÃ©faut</entry>
                   </row>
                   <row>
                     <entry><literal>%q</literal></entry>
-                    <entry>message de "quit" par défaut</entry>
+                    <entry>message de "quit" par dÃ©faut</entry>
                   </row>
                   <row>
                     <entry><literal>%s</literal></entry>
@@ -1053,8 +1053,8 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
         </listitem>
         <listitem>
           <para>
-            <option>fonction</option> : fonction appelée lorsque la
-            commande est exécutée.
+            <option>fonction</option> : fonction appelÃ©e lorsque la
+            commande est exÃ©cutÃ©e.
           </para>
           <para>
             Elle a le prototype suivant :
@@ -1065,8 +1065,8 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
             </command>
           </para>
           <para>
-            Le paramètre argc vaut 3 et les arguments suivants sont
-            passés dans le tableau argv :
+            Le paramÃ¨tre argc vaut 3 et les arguments suivants sont
+            passÃ©s dans le tableau argv :
             <itemizedlist>
               <listitem>
                 <para>argv[0] = nom du serveur</para>
@@ -1082,34 +1082,34 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
         </listitem>
         <listitem>
           <para>
-            <option>handler_args</option> : paramètres passés à la
-            fonction appelée
+            <option>handler_args</option> : paramÃ¨tres passÃ©s Ã  la
+            fonction appelÃ©e
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>handler_pointer</option> : pointeur passé à la
-            fonction appelée
+            <option>handler_pointer</option> : pointeur passÃ© Ã  la
+            fonction appelÃ©e
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
+      Valeur renvoyÃ©e : le pointeur vers le nouveau gestionnaire de
       commande.
     </para>
     <para>
-      Note : la fonction appelée lorsque la commande est exécutée doit
+      Note : la fonction appelÃ©e lorsque la commande est exÃ©cutÃ©e doit
       renvoyer une des valeurs suivantes :
       <itemizedlist>
         <listitem>
           <para>
-            <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+            <literal>PLUGIN_RC_KO</literal> : la fonction a Ã©chouÃ©
           </para>
         </listitem>
         <listitem>
           <para>
-            <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+            <literal>PLUGIN_RC_OK</literal> : la fonction a rÃ©ussi
           </para>
         </listitem>
       </itemizedlist>
@@ -1146,11 +1146,11 @@ cmd_handler = plugin->cmd_handler_add (plugin, "test", "Commande test",
       </command>
     </para>
     <para>
-      Ajoute un gestionnaire de temps, qui appelle périodiquement une
+      Ajoute un gestionnaire de temps, qui appelle pÃ©riodiquement une
       fonction.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -1166,7 +1166,7 @@ cmd_handler = plugin->cmd_handler_add (plugin, "test", "Commande test",
         </listitem>
         <listitem>
           <para>
-            <option>fonction</option> : fonction appelée
+            <option>fonction</option> : fonction appelÃ©e
           </para>
           <para>
             Elle a le prototype suivant :
@@ -1177,39 +1177,39 @@ cmd_handler = plugin->cmd_handler_add (plugin, "test", "Commande test",
             </command>
           </para>
           <para>
-            Le paramètre argc vaut 0 et argv vaut NULL.
+            Le paramÃ¨tre argc vaut 0 et argv vaut NULL.
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>handler_args</option> : paramètres passés à la
-            fonction appelée
+            <option>handler_args</option> : paramÃ¨tres passÃ©s Ã  la
+            fonction appelÃ©e
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>handler_pointer</option> : pointeur passé à la
-            fonction appelée
+            <option>handler_pointer</option> : pointeur passÃ© Ã  la
+            fonction appelÃ©e
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
+      Valeur renvoyÃ©e : le pointeur vers le nouveau gestionnaire de
       temps.
     </para>
     <para>
-      Note : la fonction appelée doit renvoyer une des valeurs
+      Note : la fonction appelÃ©e doit renvoyer une des valeurs
       suivantes :
       <itemizedlist>
         <listitem>
           <para>
-            <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+            <literal>PLUGIN_RC_KO</literal> : la fonction a Ã©chouÃ©
           </para>
         </listitem>
         <listitem>
           <para>
-            <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+            <literal>PLUGIN_RC_OK</literal> : la fonction a rÃ©ussi
           </para>
         </listitem>
       </itemizedlist>
@@ -1242,11 +1242,11 @@ timer_handler = plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
       </command>
     </para>
     <para>
-      Ajoute un gestionnaire de clavier, appelé dès qu'une touche est
-      pressée.
+      Ajoute un gestionnaire de clavier, appelÃ© dÃ¨s qu'une touche est
+      pressÃ©e.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -1256,7 +1256,7 @@ timer_handler = plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
         </listitem>
         <listitem>
           <para>
-            <option>fonction</option> : fonction appelée
+            <option>fonction</option> : fonction appelÃ©e
           </para>
           <para>
             Elle a le prototype suivant :
@@ -1267,12 +1267,12 @@ timer_handler = plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
             </command>
           </para>
           <para>
-            Le paramètre argc vaut 3 et les arguments suivants sont
-            passés dans le tableau argv :
+            Le paramÃ¨tre argc vaut 3 et les arguments suivants sont
+            passÃ©s dans le tableau argv :
             <itemizedlist>
               <listitem>
                 <para>
-                  argv[0] = touche appuyée (nom d'une fonction interne
+                  argv[0] = touche appuyÃ©e (nom d'une fonction interne
                   ou bien '*' suivi du code d'une touche)
                 </para>
               </listitem>
@@ -1284,7 +1284,7 @@ timer_handler = plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
               </listitem>
               <listitem>
                 <para>
-                  argv[2] = la ligne de commande après l'action de la
+                  argv[2] = la ligne de commande aprÃ¨s l'action de la
                   touche
                 </para>
               </listitem>
@@ -1293,34 +1293,34 @@ timer_handler = plugin->timer_handler_add (plugin, 60, &amp;mon_timer);
         </listitem>
         <listitem>
           <para>
-            <option>handler_args</option> : paramètres passés à la
-            fonction appelée
+            <option>handler_args</option> : paramÃ¨tres passÃ©s Ã  la
+            fonction appelÃ©e
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>handler_pointer</option> : pointeur passé à la
-            fonction appelée
+            <option>handler_pointer</option> : pointeur passÃ© Ã  la
+            fonction appelÃ©e
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : le pointeur vers le nouveau gestionnaire de
+      Valeur renvoyÃ©e : le pointeur vers le nouveau gestionnaire de
       clavier.
     </para>
     <para>
-      Note : la fonction appelée doit renvoyer une des valeurs
+      Note : la fonction appelÃ©e doit renvoyer une des valeurs
       suivantes :
       <itemizedlist>
         <listitem>
           <para>
-            <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+            <literal>PLUGIN_RC_KO</literal> : la fonction a Ã©chouÃ©
           </para>
         </listitem>
         <listitem>
           <para>
-            <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+            <literal>PLUGIN_RC_OK</literal> : la fonction a rÃ©ussi
           </para>
         </listitem>
       </itemizedlist>
@@ -1333,11 +1333,11 @@ int mon_keyb (t_weechat_plugin *plugin, int argc, char **argv,
 {
     if (argc == 2)
     {
-        plugin->print (plugin, NULL, NULL, "touche appuyée: %s", argv[0]);
+        plugin->print (plugin, NULL, NULL, "touche appuyÃ©e: %s", argv[0]);
         if (argv[1] &amp;&amp; (argv[1][0] == '1'))
-            plugin->print (plugin, NULL, NULL, "le texte d'entrée a changé");
+            plugin->print (plugin, NULL, NULL, "le texte d'entrÃ©e a changÃ©");
         else
-            plugin->print (plugin, NULL, NULL, "le texte d'entrée n'a pas changé");
+            plugin->print (plugin, NULL, NULL, "le texte d'entrÃ©e n'a pas changÃ©");
     }
     return PLUGIN_RC_OK;
 }
@@ -1360,11 +1360,11 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;mon_keyb);
       </command>
     </para>
     <para>
-      Ajoute un gestionnaire d'évènement, appelé dès qu'un évènement se
+      Ajoute un gestionnaire d'Ã©vÃ¨nement, appelÃ© dÃ¨s qu'un Ã©vÃ¨nement se
       produit.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -1374,13 +1374,13 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;mon_keyb);
         </listitem>
         <listitem>
           <para>
-            <option>évènement</option> : évènement (voir le tableau
+            <option>Ã©vÃ¨nement</option> : Ã©vÃ¨nement (voir le tableau
             ci-dessous)
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>fonction</option> : fonction appelée
+            <option>fonction</option> : fonction appelÃ©e
           </para>
           <para>
             Elle a le prototype suivant :
@@ -1391,56 +1391,56 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;mon_keyb);
             </command>
           </para>
           <para>
-            Les paramètres passés à la fonction dépendent de l'évènement
+            Les paramÃ¨tres passÃ©s Ã  la fonction dÃ©pendent de l'Ã©vÃ¨nement
             (voir le tableau ci-dessous).
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>handler_args</option> : paramètres passés à la
-            fonction appelée
+            <option>handler_args</option> : paramÃ¨tres passÃ©s Ã  la
+            fonction appelÃ©e
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>handler_pointer</option> : pointeur passé à la
-            fonction appelée
+            <option>handler_pointer</option> : pointeur passÃ© Ã  la
+            fonction appelÃ©e
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Liste des évènements :
+      Liste des Ã©vÃ¨nements :
       <informaltable colsep="0" frame="none">
         <tgroup cols="3">
           <thead>
             <row>
-              <entry>Evènement</entry>
+              <entry>EvÃ¨nement</entry>
               <entry>Description</entry>
-              <entry>Paramètres</entry>
+              <entry>ParamÃ¨tres</entry>
             </row>
           </thead>
           <tbody>
             <row>
               <entry><literal>buffer_open</literal></entry>
-              <entry>un tampon a été ouvert</entry>
+              <entry>un tampon a Ã©tÃ© ouvert</entry>
               <entry>
-                argc = 1, argv = { numéro de tampon }
+                argc = 1, argv = { numÃ©ro de tampon }
               </entry>
             </row>
             <row>
               <entry><literal>buffer_close</literal></entry>
-              <entry>un tampon a été fermé</entry>
+              <entry>un tampon a Ã©tÃ© fermÃ©</entry>
               <entry>
-                argc = 1, argv = { numéro de tampon }
+                argc = 1, argv = { numÃ©ro de tampon }
               </entry>
             </row>
             <row>
               <entry><literal>buffer_move</literal></entry>
-              <entry>un tampon a été déplacé</entry>
+              <entry>un tampon a Ã©tÃ© dÃ©placÃ©</entry>
               <entry>
-                argc = 2, argv = { nouveau numéro de tampon, ancien
-                numéro }
+                argc = 2, argv = { nouveau numÃ©ro de tampon, ancien
+                numÃ©ro }
               </entry>
             </row>
           </tbody>
@@ -1448,21 +1448,21 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;mon_keyb);
       </informaltable>
     </para>
     <para>
-      Valeur renvoyée : le pointeur vers le nouveau gestionnaire
-      d'évènement.
+      Valeur renvoyÃ©e : le pointeur vers le nouveau gestionnaire
+      d'Ã©vÃ¨nement.
     </para>
     <para>
-      Note : la fonction appelée doit renvoyer une des valeurs
+      Note : la fonction appelÃ©e doit renvoyer une des valeurs
       suivantes :
       <itemizedlist>
         <listitem>
           <para>
-            <literal>PLUGIN_RC_KO</literal> : la fonction a échoué
+            <literal>PLUGIN_RC_KO</literal> : la fonction a Ã©chouÃ©
           </para>
         </listitem>
         <listitem>
           <para>
-            <literal>PLUGIN_RC_OK</literal> : la fonction a réussi
+            <literal>PLUGIN_RC_OK</literal> : la fonction a rÃ©ussi
           </para>
         </listitem>
       </itemizedlist>
@@ -1498,7 +1498,7 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
       Supprime un gestionnaire de commande ou message.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -1508,13 +1508,13 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
         </listitem>
         <listitem>
           <para>
-            <option>handler</option> : le gestionnaire à supprimer
+            <option>handler</option> : le gestionnaire Ã  supprimer
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -1535,7 +1535,7 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
       Supprime tous les gestionnaires d'une extension.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -1546,7 +1546,7 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -1569,7 +1569,7 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
       Ajoute un modifieur de message.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -1591,12 +1591,12 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
                 <tbody>
                   <row>
                     <entry><literal>irc_in</literal></entry>
-                    <entry>appelé pour chaque message IRC reçu</entry>
+                    <entry>appelÃ© pour chaque message IRC reÃ§u</entry>
                   </row>
                   <row>
                     <entry><literal>irc_user</literal></entry>
                     <entry>
-                      appelé pour chaque message (ou commande) envoyé par
+                      appelÃ© pour chaque message (ou commande) envoyÃ© par
                       l'utilisateur (avant traitement et affichage par
                       WeeChat)
                     </entry>
@@ -1604,9 +1604,9 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
                   <row>
                     <entry><literal>irc_out</literal></entry>
                     <entry>
-                      appelé pour chaque message sortant juste avant
+                      appelÃ© pour chaque message sortant juste avant
                       envoi au serveur IRC (y compris pour les messages
-                      envoyés automatiquement et de manière transparente
+                      envoyÃ©s automatiquement et de maniÃ¨re transparente
                       par WeeChat)
                     </entry>
                   </row>
@@ -1618,20 +1618,20 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
         <listitem>
           <para>
             <option>message</option> : nom du message IRC pour lequel la
-            fonction est appelée (utilisé uniquement pour les types
+            fonction est appelÃ©e (utilisÃ© uniquement pour les types
             "irc_in" et "irc_out").
-            Pour connaître la liste des messages IRC disponibles, merci
+            Pour connaÃ®tre la liste des messages IRC disponibles, merci
             de consulter les <acronym>RFC</acronym>s
             <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
             et
             <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-            La valeur spéciale "*" signifie tous les messages (pas de
+            La valeur spÃ©ciale "*" signifie tous les messages (pas de
             filtre).
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>fonction</option> : fonction appelée
+            <option>fonction</option> : fonction appelÃ©e
           </para>
           <para>
             Elle a le prototype suivant :
@@ -1642,8 +1642,8 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
             </command>
           </para>
           <para>
-            Le paramètre argc vaut 2 et les arguments suivants sont
-            passés dans le tableau argv :
+            Le paramÃ¨tre argc vaut 2 et les arguments suivants sont
+            passÃ©s dans le tableau argv :
             <itemizedlist>
               <listitem>
                 <para>argv[0] = nom du serveur</para>
@@ -1656,29 +1656,29 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
         </listitem>
         <listitem>
           <para>
-            <option>modifier_args</option> : paramètres passés à la
-            fonction appelée
+            <option>modifier_args</option> : paramÃ¨tres passÃ©s Ã  la
+            fonction appelÃ©e
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>modifier_pointer</option> : pointeur passé à la
-            fonction appelée
+            <option>modifier_pointer</option> : pointeur passÃ© Ã  la
+            fonction appelÃ©e
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : le pointeur vers le nouveau modifieur de message.
+      Valeur renvoyÃ©e : le pointeur vers le nouveau modifieur de message.
     </para>
     <para>
-      Note : la fonction doit retourner une chaîne modifiée, ou NULL si
+      Note : la fonction doit retourner une chaÃ®ne modifiÃ©e, ou NULL si
       elle ne souhaite pas modifier le message.
-      Si elle retourne une chaine vide, alors le message est supprimé et
-      ne sera pas traité du tout par WeeChat (soyez prudent en supprimant
+      Si elle retourne une chaine vide, alors le message est supprimÃ© et
+      ne sera pas traitÃ© du tout par WeeChat (soyez prudent en supprimant
       des messages !).
-      La chaîne renvoyée doit avoir été allouée par malloc() et sera
-      libérée (par appel à free()) automatiquement par WeeChat après
+      La chaÃ®ne renvoyÃ©e doit avoir Ã©tÃ© allouÃ©e par malloc() et sera
+      libÃ©rÃ©e (par appel Ã  free()) automatiquement par WeeChat aprÃ¨s
       utilisation.
     </para>
     <para>
@@ -1715,7 +1715,7 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
       Supprime un modifieur de message.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -1725,13 +1725,13 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
         </listitem>
         <listitem>
           <para>
-            <option>modifier</option> : le modifieur à supprimer
+            <option>modifier</option> : le modifieur Ã  supprimer
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -1752,7 +1752,7 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
       Supprime tous les modifieurs d'une extension.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -1763,7 +1763,7 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -1782,10 +1782,10 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
       </command>
     </para>
     <para>
-      Execute une commande WeeChat ou envoie un message à un canal.
+      Execute une commande WeeChat ou envoie un message Ã  un canal.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -1795,25 +1795,25 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
         </listitem>
         <listitem>
           <para>
-            <option>serveur</option> : nom interne du serveur où
-            exécuter la commande (peut être NULL)
+            <option>serveur</option> : nom interne du serveur oÃ¹
+            exÃ©cuter la commande (peut Ãªtre NULL)
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>canal</option> : nom du canal où exécuter la
-            commande (peut être NULL)
+            <option>canal</option> : nom du canal oÃ¹ exÃ©cuter la
+            commande (peut Ãªtre NULL)
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>commande</option> : la commande à exécuter
+            <option>commande</option> : la commande Ã  exÃ©cuter
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemples :
@@ -1838,7 +1838,7 @@ plugin->exec_command (plugin, "freenode", "#weechat", "bonjour");
       Renvoie une information sur WeeChat ou un canal.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -1848,7 +1848,7 @@ plugin->exec_command (plugin, "freenode", "#weechat", "bonjour");
         </listitem>
         <listitem>
           <para>
-            <option>info</option> : nom de l'info à obtenir :
+            <option>info</option> : nom de l'info Ã  obtenir :
             <informaltable colsep="0" frame="none">
               <tgroup cols="2">
                 <thead>
@@ -1869,7 +1869,7 @@ plugin->exec_command (plugin, "freenode", "#weechat", "bonjour");
                   <row>
                     <entry><literal>channel</literal></entry>
                     <entry>
-                      nom du canal (NULL pour un serveur ou un privé)
+                      nom du canal (NULL pour un serveur ou un privÃ©)
                     </entry>
                   </row>
                   <row>
@@ -1880,7 +1880,7 @@ plugin->exec_command (plugin, "freenode", "#weechat", "bonjour");
                     <entry><literal>type</literal></entry>
                     <entry>
                       type de tampon: 0=standard, 1=DCC,
-                      2=données IRC brutes
+                      2=donnÃ©es IRC brutes
                     </entry>
                   </row>
                   <row>
@@ -1890,14 +1890,14 @@ plugin->exec_command (plugin, "freenode", "#weechat", "bonjour");
                   <row>
                     <entry><literal>inactivity</literal></entry>
                     <entry>
-                      nombre de secondes écoulées depuis que la dernière
-                      touche a été appuyée
+                      nombre de secondes Ã©coulÃ©es depuis que la derniÃ¨re
+                      touche a Ã©tÃ© appuyÃ©e
                     </entry>
                   </row>
                   <row>
                     <entry><literal>input</literal></entry>
                     <entry>
-                      contenu de la ligne de commande de la fenêtre
+                      contenu de la ligne de commande de la fenÃªtre
                       courante
                     </entry>
                   </row>
@@ -1917,17 +1917,17 @@ plugin->exec_command (plugin, "freenode", "#weechat", "bonjour");
                   <row>
                     <entry><literal>weechat_dir</literal></entry>
                     <entry>
-                      répertoire de base de WeeChat
-                      (par défaut: ~/.weechat/)
+                      rÃ©pertoire de base de WeeChat
+                      (par dÃ©faut: ~/.weechat/)
                     </entry>
                   </row>
                   <row>
                     <entry><literal>weechat_libdir</literal></entry>
-                    <entry>répertoire "lib" système de WeeChat</entry>
+                    <entry>rÃ©pertoire "lib" systÃ¨me de WeeChat</entry>
                   </row>
                   <row>
                     <entry><literal>weechat_sharedir</literal></entry>
-                    <entry>répertoire "share" système de WeeChat</entry>
+                    <entry>rÃ©pertoire "share" systÃ¨me de WeeChat</entry>
                   </row>
                 </tbody>
               </tgroup>
@@ -1936,18 +1936,18 @@ plugin->exec_command (plugin, "freenode", "#weechat", "bonjour");
         </listitem>
         <listitem>
           <para>
-            <option>serveur</option> : nom interne du serveur où
-            récupérer l'information (si nécessaire)
+            <option>serveur</option> : nom interne du serveur oÃ¹
+            rÃ©cupÃ©rer l'information (si nÃ©cessaire)
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : l'information recherchée, NULL si non trouvée.
+      Valeur renvoyÃ©e : l'information recherchÃ©e, NULL si non trouvÃ©e.
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free" aprÃ¨s utilisation.
     </para>
     <para>
       Exemples :
@@ -1957,7 +1957,7 @@ char *nick = plugin->get_info (plugin, "nick", "freenode");
 char *inactivity = plugin->get_info (plugin, "inactivity", NULL);
 
 plugin->print (plugin, NULL, NULL,
-               "WeeChat version %s, vous êtes %s sur freenode "
+               "WeeChat version %s, vous Ãªtes %s sur freenode "
                "(inactif depuis %s secondes)",
                version, nick, inactivity);
 
@@ -1981,10 +1981,10 @@ if (inactivity)
       </command>
     </para>
     <para>
-      Renvoie la liste des DCC en cours ou terminés.
+      Renvoie la liste des DCC en cours ou terminÃ©s.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -1995,7 +1995,7 @@ if (inactivity)
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : la liste chaînée des DCC.
+      Valeur renvoyÃ©e : la liste chaÃ®nÃ©e des DCC.
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -2021,10 +2021,10 @@ if (inactivity)
               <entry><literal>type</literal></entry>
               <entry>
                 le type de DCC :
-                0 = discussion reçue,
-                1 = discussion envoyée,
-                2 = fichier reçu,
-                3 = fichier envoyé
+                0 = discussion reÃ§ue,
+                1 = discussion envoyÃ©e,
+                2 = fichier reÃ§u,
+                3 = fichier envoyÃ©
               </entry>
             </row>
             <row>
@@ -2035,20 +2035,20 @@ if (inactivity)
                 0 = en attente,
                 1 = en cours de connexion,
                 2 = actif,
-                3 = terminé,
-                4 = échoué,
+                3 = terminÃ©,
+                4 = Ã©chouÃ©,
                 5 = interrompu par l'utilisateur
               </entry>
             </row>
             <row>
               <entry>time_t</entry>
               <entry><literal>start_time</literal></entry>
-              <entry>la date et heure de création du DCC</entry>
+              <entry>la date et heure de crÃ©ation du DCC</entry>
             </row>
             <row>
               <entry>time_t</entry>
               <entry><literal>start_transfer</literal></entry>
-              <entry>la date et heure de démarrage du transfert</entry>
+              <entry>la date et heure de dÃ©marrage du transfert</entry>
             </row>
             <row>
               <entry>unsigned long</entry>
@@ -2058,7 +2058,7 @@ if (inactivity)
             <row>
               <entry>int</entry>
               <entry><literal>port</literal></entry>
-              <entry>port utilisé pour le DCC</entry>
+              <entry>port utilisÃ© pour le DCC</entry>
             </row>
             <row>
               <entry>char *</entry>
@@ -2093,13 +2093,13 @@ if (inactivity)
             <row>
               <entry>unsigned long</entry>
               <entry><literal>start_resume</literal></entry>
-              <entry>position de démarrage après une interruption</entry>
+              <entry>position de dÃ©marrage aprÃ¨s une interruption</entry>
             </row>
             <row>
               <entry>unsigned long</entry>
               <entry><literal>bytes_per_sec</literal></entry>
               <entry>
-                nombre d'octets transmis par seconde depuis le début
+                nombre d'octets transmis par seconde depuis le dÃ©but
                 du transfert
               </entry>
             </row>
@@ -2107,7 +2107,7 @@ if (inactivity)
               <entry>t_plugin_dcc_info *</entry>
               <entry><literal>prev_dcc</literal></entry>
               <entry>
-                pointeur vers l'info DCC précédente
+                pointeur vers l'info DCC prÃ©cÃ©dente
               </entry>
             </row>
             <row>
@@ -2122,8 +2122,8 @@ if (inactivity)
       </informaltable>
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free_dcc_info" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free_dcc_info" aprÃ¨s utilisation.
     </para>
     <para>
       Exemples :
@@ -2151,10 +2151,10 @@ if (dcc_info)
       </command>
     </para>
     <para>
-      Libère la mémoire utilisée par une liste de DCC.
+      LibÃ¨re la mÃ©moire utilisÃ©e par une liste de DCC.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -2165,13 +2165,13 @@ if (dcc_info)
         <listitem>
           <para>
             <option>dcc_info</option> : pointeur vers la liste DCC
-            renvoyée par la fonction "get_dcc_info"
+            renvoyÃ©e par la fonction "get_dcc_info"
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -2189,10 +2189,10 @@ if (dcc_info)
       </command>
     </para>
     <para>
-      Renvoie la liste des serveurs IRC (connectés ou non).
+      Renvoie la liste des serveurs IRC (connectÃ©s ou non).
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -2203,7 +2203,7 @@ if (dcc_info)
       </itemizedlist>
     </para>
     <para>
-      Valeur retournée : la liste chaînée des serveurs IRC.
+      Valeur retournÃ©e : la liste chaÃ®nÃ©e des serveurs IRC.
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -2222,20 +2222,20 @@ if (dcc_info)
             <row>
               <entry>int</entry>
               <entry><literal>autoconnect</literal></entry>
-              <entry>1 si auto-connexion au démarrage, 0 sinon</entry>
+              <entry>1 si auto-connexion au dÃ©marrage, 0 sinon</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>autoreconnect</literal></entry>
               <entry>
-                1 si auto-reconnexion quand déconnecté,
+                1 si auto-reconnexion quand dÃ©connectÃ©,
                 0 sinon
               </entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>autoreconnect_delay</literal></entry>
-              <entry>délai avant de tenter une reconnexion</entry>
+              <entry>dÃ©lai avant de tenter une reconnexion</entry>
             </row>
             <row>
               <entry>int</entry>
@@ -2293,17 +2293,17 @@ if (dcc_info)
             <row>
               <entry>char *</entry>
               <entry><literal>real name</literal></entry>
-              <entry>nom réel</entry>
+              <entry>nom rÃ©el</entry>
             </row>
             <row>
               <entry>char *</entry>
               <entry><literal>command</literal></entry>
-              <entry>commande exécutée une fois connecté</entry>
+              <entry>commande exÃ©cutÃ©e une fois connectÃ©</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>command_delay</literal></entry>
-              <entry>délai après exécution de la commande</entry>
+              <entry>dÃ©lai aprÃ¨s exÃ©cution de la commande</entry>
             </row>
             <row>
               <entry>char *</entry>
@@ -2314,7 +2314,7 @@ if (dcc_info)
               <entry>int</entry>
               <entry><literal>autorejoin</literal></entry>
               <entry>
-                1 si les canaux sont rejoints après un "kick",
+                1 si les canaux sont rejoints aprÃ¨s un "kick",
                 0 sinon
               </entry>
             </row>
@@ -2327,32 +2327,32 @@ if (dcc_info)
               <entry>char *</entry>
               <entry><literal>charset_decode_iso</literal></entry>
               <entry>
-                jeux de caractères de décodage ISO pour les canaux
+                jeux de caractÃ¨res de dÃ©codage ISO pour les canaux
               </entry>
             </row>
             <row>
               <entry>char *</entry>
               <entry><literal>charset_decode_utf</literal></entry>
               <entry>
-                jeux de caractères de décodage UTF pour les canaux
+                jeux de caractÃ¨res de dÃ©codage UTF pour les canaux
               </entry>
             </row>
             <row>
               <entry>char *</entry>
               <entry><literal>charset_encode</literal></entry>
               <entry>
-                jeux de caractères d'encodage pour les canaux
+                jeux de caractÃ¨res d'encodage pour les canaux
               </entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>is_connected</literal></entry>
-              <entry>1 si connecté au serveur, 0 sinon</entry>
+              <entry>1 si connectÃ© au serveur, 0 sinon</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>ssl_connected</literal></entry>
-              <entry>1 si connecté via SSL, 0 sinon</entry>
+              <entry>1 si connectÃ© via SSL, 0 sinon</entry>
             </row>
             <row>
               <entry>char *</entry>
@@ -2368,7 +2368,7 @@ if (dcc_info)
               <entry>time_t</entry>
               <entry><literal>away_time</literal></entry>
               <entry>
-                date/heure à laquelle l'utilisateur a été marqué absent
+                date/heure Ã  laquelle l'utilisateur a Ã©tÃ© marquÃ© absent
               </entry>
             </row>
             <row>
@@ -2379,7 +2379,7 @@ if (dcc_info)
             <row>
               <entry>t_plugin_server_info *</entry>
               <entry><literal>prev_server</literal></entry>
-              <entry>pointeur vers les infos du serveur précédent</entry>
+              <entry>pointeur vers les infos du serveur prÃ©cÃ©dent</entry>
             </row>
             <row>
               <entry>t_plugin_server_info *</entry>
@@ -2391,8 +2391,8 @@ if (dcc_info)
       </informaltable>
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free_server_info" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free_server_info" aprÃ¨s utilisation.
     </para>
     <para>
       Exemple :
@@ -2409,7 +2409,7 @@ if (server_info)
                        ptr_server_info->name,
                        ptr_server_info->address,
                        ptr_server_info->port,
-                       (ptr_server_info->is_connected) ? "(connecté)" : "");
+                       (ptr_server_info->is_connected) ? "(connectÃ©)" : "");
     }
     plugin->free_server_info (plugin, server_info);
 }
@@ -2428,10 +2428,10 @@ if (server_info)
       </command>
     </para>
     <para>
-      Libère la mémoire utilisée par une liste de serveurs.
+      LibÃ¨re la mÃ©moire utilisÃ©e par une liste de serveurs.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -2442,13 +2442,13 @@ if (server_info)
         <listitem>
           <para>
             <option>server_info</option> : pointeur vers la liste de
-            serveurs retournée par la fonction "get_server_info"
+            serveurs retournÃ©e par la fonction "get_server_info"
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -2470,7 +2470,7 @@ if (server_info)
       Renvoie la liste des canaux IRC pour un serveur.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -2486,7 +2486,7 @@ if (server_info)
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : la liste chaînée des canaux IRC du serveur.
+      Valeur renvoyÃ©e : la liste chaÃ®nÃ©e des canaux IRC du serveur.
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -2500,7 +2500,7 @@ if (server_info)
             <row>
               <entry>int</entry>
               <entry><literal>type</literal></entry>
-              <entry>0 pour un canal, 1 pour un privé</entry>
+              <entry>0 pour un canal, 1 pour un privÃ©</entry>
             </row>
             <row>
               <entry>char *</entry>
@@ -2525,17 +2525,17 @@ if (server_info)
             <row>
               <entry>char *</entry>
               <entry><literal>key</literal></entry>
-              <entry>clé du canal</entry>
+              <entry>clÃ© du canal</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>nicks_count</literal></entry>
-              <entry>nombre de pseudos présents sur le canal</entry>
+              <entry>nombre de pseudos prÃ©sents sur le canal</entry>
             </row>
             <row>
               <entry>t_plugin_channel_info *</entry>
               <entry><literal>prev_channel</literal></entry>
-              <entry>pointeur vers les infos du canal précédent</entry>
+              <entry>pointeur vers les infos du canal prÃ©cÃ©dent</entry>
             </row>
             <row>
               <entry>t_plugin_channel_info *</entry>
@@ -2547,8 +2547,8 @@ if (server_info)
       </informaltable>
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free_channel_info" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free_channel_info" aprÃ¨s utilisation.
     </para>
     <para>
       Exemple :
@@ -2582,7 +2582,7 @@ if (channel_info)
       </command>
     </para>
     <para>
-      Libère la mémoire utilisée par une liste de canaux.
+      LibÃ¨re la mÃ©moire utilisÃ©e par une liste de canaux.
     </para>
     <para>
       Arguments:
@@ -2596,13 +2596,13 @@ if (channel_info)
         <listitem>
           <para>
             <option>channel_info</option> : pointeur vers la liste de
-            canaux retournée par la fonction "get_channel_info"
+            canaux retournÃ©e par la fonction "get_channel_info"
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -2645,7 +2645,7 @@ if (channel_info)
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : la liste chaînée des pseudos présents
+      Valeur renvoyÃ©e : la liste chaÃ®nÃ©e des pseudos prÃ©sents
       sur le canal.
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
@@ -2671,28 +2671,28 @@ if (channel_info)
               <entry>int</entry>
               <entry><literal>flags</literal></entry>
               <entry>
-                propriétés du pseudo, "ou" binaire entre plusieurs
-                valeurs (1 =propriétaire du canal, 2 = administrateur
+                propriÃ©tÃ©s du pseudo, "ou" binaire entre plusieurs
+                valeurs (1 =propriÃ©taire du canal, 2 = administrateur
                 du canal, 4 = op, 8 = demi-op, 16 = voix, 32 = absent)
               </entry>
             </row>
             <row>
               <entry>t_plugin_nick_info *</entry>
               <entry><literal>prev_nick</literal></entry>
-              <entry>pointeur vers les infos du pseudo précédent</entry>
+              <entry>pointeur vers les infos du pseudo prÃ©cÃ©dent</entry>
             </row>
             <row>
               <entry>t_plugin_nick_info *</entry>
               <entry><literal>next_nick</literal></entry>
-              <entry>pointeur vers les infos du pseudo précédent</entry>
+              <entry>pointeur vers les infos du pseudo prÃ©cÃ©dent</entry>
             </row>
           </tbody>
         </tgroup>
       </informaltable>
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free_nick_info" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free_nick_info" aprÃ¨s utilisation.
     </para>
     <para>
       Exemple :
@@ -2726,10 +2726,10 @@ if (nick_info)
       </command>
     </para>
     <para>
-      Libère la mémoire utilisée par une liste de pseudos.
+      LibÃ¨re la mÃ©moire utilisÃ©e par une liste de pseudos.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -2740,13 +2740,13 @@ if (nick_info)
         <listitem>
           <para>
             <option>nick_info</option> : pointeur vers la liste de
-            pseudos retournée par la fonction "get_nick_info"
+            pseudos retournÃ©e par la fonction "get_nick_info"
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -2767,7 +2767,7 @@ if (nick_info)
       Renvoie la valeur d'une option de configuration WeeChat.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -2777,17 +2777,17 @@ if (nick_info)
         </listitem>
         <listitem>
           <para>
-            <option>option</option> : nom de l'option à lire
+            <option>option</option> : nom de l'option Ã  lire
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : la valeur de l'option, NULL si non trouvée.
+      Valeur renvoyÃ©e : la valeur de l'option, NULL si non trouvÃ©e.
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free" aprÃ¨s utilisation.
     </para>
     <para>
       Exemples :
@@ -2812,7 +2812,7 @@ char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");
       Modifie la valeur d'une option de configuration WeeChat.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -2822,7 +2822,7 @@ char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");
         </listitem>
         <listitem>
           <para>
-            <option>option</option> : nom de l'option à mettre à jour
+            <option>option</option> : nom de l'option Ã  mettre Ã  jour
           </para>
         </listitem>
         <listitem>
@@ -2833,7 +2833,7 @@ char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : 1 si l'option a été modifiée avec succès, 0 si
+      Valeur renvoyÃ©e : 1 si l'option a Ã©tÃ© modifiÃ©e avec succÃ¨s, 0 si
       une erreur s'est produite.
     </para>
     <para>
@@ -2858,10 +2858,10 @@ plugin->set_config (plugin, "look_nicklist", "off");
       L'option est lue depuis le fichier
       "<literal>~/.weechat/plugins.rc</literal>" et est
       sous cette forme : "<literal>extension.option=valeur</literal>"
-      (NB : le nom de l'extension est ajouté automatiquement).
+      (NB : le nom de l'extension est ajoutÃ© automatiquement).
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -2871,17 +2871,17 @@ plugin->set_config (plugin, "look_nicklist", "off");
         </listitem>
         <listitem>
           <para>
-            <option>option</option> : nom de l'option à lire
+            <option>option</option> : nom de l'option Ã  lire
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : la valeur de l'option, NULL si non trouvée.
+      Valeur renvoyÃ©e : la valeur de l'option, NULL si non trouvÃ©e.
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free" aprÃ¨s utilisation.
     </para>
     <para>
       Exemple :
@@ -2903,13 +2903,13 @@ char *value = plugin->get_plugin_config (plugin, "ma_variable");
     </para>
     <para>
       Modifie la valeur d'une option de l'extension.
-      L'option est écrite dans le fichier
+      L'option est Ã©crite dans le fichier
       "<literal>~/.weechat/plugins.rc</literal>" et est
       sous cette forme : "<literal>extension.option=valeur</literal>"
-      (NB : le nom de l'extension est ajouté automatiquement).
+      (NB : le nom de l'extension est ajoutÃ© automatiquement).
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -2919,7 +2919,7 @@ char *value = plugin->get_plugin_config (plugin, "ma_variable");
         </listitem>
         <listitem>
           <para>
-            <option>option</option> : nom de l'option à mettre à jour
+            <option>option</option> : nom de l'option Ã  mettre Ã  jour
           </para>
         </listitem>
         <listitem>
@@ -2930,7 +2930,7 @@ char *value = plugin->get_plugin_config (plugin, "ma_variable");
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : 1 si l'option a été modifiée avec succès, 0 si
+      Valeur renvoyÃ©e : 1 si l'option a Ã©tÃ© modifiÃ©e avec succÃ¨s, 0 si
       une erreur s'est produite.
     </para>
     <para>
@@ -2952,10 +2952,10 @@ plugin->set_plugin_config (plugin, "ma_variable", "valeur");
       </command>
     </para>
     <para>
-      Renvoie le numéro d'une couleur IRC avec son nom.
+      Renvoie le numÃ©ro d'une couleur IRC avec son nom.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -2966,7 +2966,7 @@ plugin->set_plugin_config (plugin, "ma_variable", "valeur");
         <listitem>
           <para>
             <option>nom_couleur</option> : nom de la couleur
-            Les couleure autorisées sont :
+            Les couleure autorisÃ©es sont :
             <informaltable colsep="0" frame="none">
               <tgroup cols="2">
                 <thead>
@@ -3048,8 +3048,8 @@ plugin->set_plugin_config (plugin, "ma_variable", "valeur");
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : numéro de la couleur IRC, -1 si la couleur
-      n'est pas trouvée.
+      Valeur renvoyÃ©e : numÃ©ro de la couleur IRC, -1 si la couleur
+      n'est pas trouvÃ©e.
     </para>
     <para>
       Exemple :
@@ -3073,7 +3073,7 @@ int color_blue = plugin->get_irc_color (plugin, "blue"); /* retourne 2 */
       Ajoute de la couleur dans la zone de saisie.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -3090,20 +3090,20 @@ int color_blue = plugin->get_irc_color (plugin, "blue"); /* retourne 2 */
         </listitem>
         <listitem>
           <para>
-            <option>debut</option> : position de début pour la coloration
-            (si &lt; 0, alors le masque est réinitialisé)
+            <option>debut</option> : position de dÃ©but pour la coloration
+            (si &lt; 0, alors le masque est rÃ©initialisÃ©)
           </para>
         </listitem>
         <listitem>
           <para>
             <option>longueur</option> : longueur pour la coloration
-            (si &lt;= 0, alors le masque est réinitialisé)
+            (si &lt;= 0, alors le masque est rÃ©initialisÃ©)
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -3123,10 +3123,10 @@ plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
       </command>
     </para>
     <para>
-      Retourne la liste des fenêtres WeeChat.
+      Retourne la liste des fenÃªtres WeeChat.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -3137,7 +3137,7 @@ plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : liste chaînée des fenêtres WeeChat.
+      Valeur renvoyÃ©e : liste chaÃ®nÃ©e des fenÃªtres WeeChat.
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -3151,55 +3151,55 @@ plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
             <row>
               <entry>int</entry>
               <entry><literal>win_x</literal></entry>
-              <entry>position horizontale de la fenêtre</entry>
+              <entry>position horizontale de la fenÃªtre</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>win_y</literal></entry>
-              <entry>position verticale de la fenêtre</entry>
+              <entry>position verticale de la fenÃªtre</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>win_width</literal></entry>
-              <entry>largeur de la fenêtre</entry>
+              <entry>largeur de la fenÃªtre</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>win_height</literal></entry>
-              <entry>hauteur de la fenêtre</entry>
+              <entry>hauteur de la fenÃªtre</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>win_width_pct</literal></entry>
-              <entry>largeur en % (comparé à la fenêtre parent)</entry>
+              <entry>largeur en % (comparÃ© Ã  la fenÃªtre parent)</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>win_height_pct</literal></entry>
-              <entry>hauteur en % (comparé à la fenêtre parent)</entry>
+              <entry>hauteur en % (comparÃ© Ã  la fenÃªtre parent)</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>num_buffer</literal></entry>
-              <entry>numéro du tampon affiché</entry>
+              <entry>numÃ©ro du tampon affichÃ©</entry>
             </row>
             <row>
               <entry>t_plugin_window_info *</entry>
               <entry><literal>prev_window</literal></entry>
-              <entry>pointeur vers les infos de la fenêtre précédente</entry>
+              <entry>pointeur vers les infos de la fenÃªtre prÃ©cÃ©dente</entry>
             </row>
             <row>
               <entry>t_plugin_window_info *</entry>
               <entry><literal>next_window</literal></entry>
-              <entry>pointeur vers les infos de la fenêtre suivante</entry>
+              <entry>pointeur vers les infos de la fenÃªtre suivante</entry>
             </row>
           </tbody>
         </tgroup>
       </informaltable>
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free_window_info" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free_window_info" aprÃ¨s utilisation.
     </para>
     <para>
       Exemple :
@@ -3211,7 +3211,7 @@ if (window_info)
 {
     for (ptr_window = window_info; ptr_window; ptr_window = ptr_window->next_window)
     {
-        plugin->print (plugin, NULL, NULL, "--- info fenêtre ---");
+        plugin->print (plugin, NULL, NULL, "--- info fenÃªtre ---");
         plugin->print (plugin, NULL, NULL, "(%d,%d), size: %dx%d, %%size: %d%%x%d%%",
                        ptr_window->win_x, ptr_window->win_y,
                        ptr_window->win_width, ptr_window->win_height,
@@ -3221,7 +3221,7 @@ if (window_info)
     plugin->free_window_info (plugin, window_info);
 }
 else
-    plugin->print (plugin, NULL, NULL, "pas d'info fenêtre !");
+    plugin->print (plugin, NULL, NULL, "pas d'info fenÃªtre !");
 </screen>
     </para>
   </section>
@@ -3237,10 +3237,10 @@ else
       </command>
     </para>
     <para>
-      Libère la mémoire utilisée par une liste de fenêtres.
+      LibÃ¨re la mÃ©moire utilisÃ©e par une liste de fenÃªtres.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -3251,13 +3251,13 @@ else
         <listitem>
           <para>
             <option>window_info</option> : pointeur vers la liste des
-            infos fenêtres retournée par la fonction "get_window_info"
+            infos fenÃªtres retournÃ©e par la fonction "get_window_info"
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -3278,7 +3278,7 @@ else
       Retourne la liste des tampons WeeChat.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -3289,7 +3289,7 @@ else
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : liste chaînée des tampons WeeChat.
+      Valeur renvoyÃ©e : liste chaÃ®nÃ©e des tampons WeeChat.
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -3305,28 +3305,28 @@ else
               <entry><literal>type</literal></entry>
               <entry>
                 type de tampon: 0=standard, 1=DCC,
-                2=données IRC brutes
+                2=donnÃ©es IRC brutes
               </entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>number</literal></entry>
-              <entry>numéro de tampon</entry>
+              <entry>numÃ©ro de tampon</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>num_displayed</literal></entry>
-              <entry>nombre de fenêtres affichant ce tampon</entry>
+              <entry>nombre de fenÃªtres affichant ce tampon</entry>
             </row>
             <row>
               <entry>char *</entry>
               <entry><literal>server_name</literal></entry>
-              <entry>nom du serveur pour le tampon (peut être NULL)</entry>
+              <entry>nom du serveur pour le tampon (peut Ãªtre NULL)</entry>
             </row>
             <row>
               <entry>char *</entry>
               <entry><literal>channel_name</literal></entry>
-              <entry>nom du canal pout le tampon (peut être NULL)</entry>
+              <entry>nom du canal pout le tampon (peut Ãªtre NULL)</entry>
             </row>
             <row>
               <entry>int</entry>
@@ -3344,7 +3344,7 @@ else
             <row>
               <entry>t_plugin_buffer_info *</entry>
               <entry><literal>prev_buffer</literal></entry>
-              <entry>pointeur vers les infos du tampon précédent</entry>
+              <entry>pointeur vers les infos du tampon prÃ©cÃ©dent</entry>
             </row>
             <row>
               <entry>t_plugin_buffer_info *</entry>
@@ -3356,8 +3356,8 @@ else
       </informaltable>
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free_buffer_info" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free_buffer_info" aprÃ¨s utilisation.
     </para>
     <para>
       Exemple :
@@ -3397,10 +3397,10 @@ else
       </command>
     </para>
     <para>
-      Libère la mémoire utilisée par une liste de tampons.
+      LibÃ¨re la mÃ©moire utilisÃ©e par une liste de tampons.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -3411,13 +3411,13 @@ else
         <listitem>
           <para>
             <option>buffer_info</option> : pointeur vers la liste des
-            infos tampons retournée par la fonction "get_buffer_info"
+            infos tampons retournÃ©e par la fonction "get_buffer_info"
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :
@@ -3439,7 +3439,7 @@ else
       Renvoie le contenu du tampon.
     </para>
     <para>
-      Paramètres :
+      ParamÃ¨tres :
       <itemizedlist>
         <listitem>
           <para>
@@ -3460,7 +3460,7 @@ else
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : contenu du tampon (liste chaînée de lignes).
+      Valeur renvoyÃ©e : contenu du tampon (liste chaÃ®nÃ©e de lignes).
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -3486,13 +3486,13 @@ else
               <entry><literal>data</literal></entry>
               <entry>
                 contenu de la ligne (les codes couleur sont
-                retirés)
+                retirÃ©s)
               </entry>
             </row>
             <row>
               <entry>t_plugin_buffer_line *</entry>
               <entry><literal>prev_line</literal></entry>
-              <entry>pointeur vers la ligne précédente</entry>
+              <entry>pointeur vers la ligne prÃ©cÃ©dente</entry>
             </row>
             <row>
               <entry>t_plugin_buffer_line *</entry>
@@ -3504,8 +3504,8 @@ else
       </informaltable>
     </para>
     <para>
-      Note : le résultat doit être libéré par un appel à la fonction
-      "free_buffer_data" après utilisation.
+      Note : le rÃ©sultat doit Ãªtre libÃ©rÃ© par un appel Ã  la fonction
+      "free_buffer_data" aprÃ¨s utilisation.
     </para>
     <para>
       Exemple :
@@ -3519,7 +3519,7 @@ if (buffer_line)
     for (ptr_line = buffer_line; ptr_line; ptr_line = ptr_line->next_line)
     {
         strftime (text_time, sizeof (text_time), "%x %X", localtime (&amp;(ptr_line->date)));
-        plugin->print (plugin, NULL, NULL, "date: %s, pseudo: %s, données: %s",
+        plugin->print (plugin, NULL, NULL, "date: %s, pseudo: %s, donnÃ©es: %s",
                        text_time, ptr_line->nick, ptr_line->data);
     }
     plugin->free_buffer_data (plugin, buffer_line);
@@ -3539,7 +3539,7 @@ if (buffer_line)
       </command>
     </para>
     <para>
-      Libère la mémoire utilisée par les lignes d'un tampon.
+      LibÃ¨re la mÃ©moire utilisÃ©e par les lignes d'un tampon.
     </para>
     <para>
       Arguments:
@@ -3553,13 +3553,13 @@ if (buffer_line)
         <listitem>
           <para>
             <option>buffer_line</option> : pointeur vers la liste des
-            lignes du tampon retournée par la fonction "get_buffer_data"
+            lignes du tampon retournÃ©e par la fonction "get_buffer_data"
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Valeur renvoyée : aucune.
+      Valeur renvoyÃ©e : aucune.
     </para>
     <para>
       Exemple :

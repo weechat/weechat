@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -49,10 +49,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <bookinfo>
     
     <title>WeeChat 0.2.7-dev - Guide utilisateur</title>
-    <subtitle>Client de discussion rapide, léger et extensible</subtitle>
+    <subtitle>Client de discussion rapide, lÃ©ger et extensible</subtitle>
     
     <author>
-      <firstname>Sébastien</firstname>
+      <firstname>SÃ©bastien</firstname>
       <surname>Helleu</surname>
       <email>flashcode AT flashtux.org</email>
     </author>
@@ -61,7 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <copyright>
       <year>2008</year>
-      <holder>Sébastien Helleu</holder>
+      <holder>SÃ©bastien Helleu</holder>
     </copyright>
     
     <legalnotice>
@@ -86,11 +86,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <abstract>
       <para>
-        Ce manuel documente le client de messagerie instantanée WeeChat, il
+        Ce manuel documente le client de messagerie instantanÃ©e WeeChat, il
         fait partie de WeeChat.
       </para>
       <para>
-        La dernière version de ce document peut être téléchargée
+        La derniÃ¨re version de ce document peut Ãªtre tÃ©lÃ©chargÃ©e
         sur cette page :
         <ulink url="http://weechat.flashtux.org/doc.php">
           http://weechat.flashtux.org/doc.php

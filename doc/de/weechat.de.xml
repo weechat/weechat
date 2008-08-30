@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -52,7 +52,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <subtitle>Schneller, leichter und erweiterbarer Chat Client</subtitle>
     
     <author>
-      <firstname>Sébastien</firstname>
+      <firstname>SÃ©bastien</firstname>
       <surname>Helleu</surname>
       <email>flashcode AT flashtux.org</email>
     </author>
@@ -61,22 +61,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <copyright>
       <year>2008</year>
-      <holder>Sébastien Helleu</holder>
+      <holder>SÃ©bastien Helleu</holder>
     </copyright>
     
     <legalnotice>
       <para>
-        Dieses Programm ist freie Software. Sie können es unter
+        Dieses Programm ist freie Software. Sie kÃ¶nnen es unter
         den Bedingungen der GNU General Public License,
-        wie von der Free Software Foundation veröffentlicht,
-        weitergeben und/oder modifizieren, entweder gemäß Version 3
-        der Lizenz oder (nach Ihrer Option) jeder späteren Version.
+        wie von der Free Software Foundation verÃ¶ffentlicht,
+        weitergeben und/oder modifizieren, entweder gemÃ¤ÃŸ Version 3
+        der Lizenz oder (nach Ihrer Option) jeder spÃ¤teren Version.
       </para>
       <para>
-        Die Veröffentlichung dieses Programms erfolgt in der
-        Hoffnung, daß es Ihnen von Nutzen sein wird, aber OHNE
+        Die VerÃ¶ffentlichung dieses Programms erfolgt in der
+        Hoffnung, daÃŸ es Ihnen von Nutzen sein wird, aber OHNE
         IRGENDEINE GARANTIE, sogar ohne die implizite Garantie der
-        MARKTREIFE oder der VERWENDBARKEIT FÜR EINEN BESTIMMTEN ZWECK.
+        MARKTREIFE oder der VERWENDBARKEIT FÃœR EINEN BESTIMMTEN ZWECK.
         Details finden Sie in der GNU General Public License.
       </para>
       <para>

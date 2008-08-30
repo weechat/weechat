@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -40,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
       Skripte werden mit den Kommandos <command>/perl</command>, <command>/python</command>, 
       <command>/ruby</command> und <command>/lua</command> geladen oder
-      entfernt. (Benutze <command>/help</command> in WeeChat für Hilfe zu
+      entfernt. (Benutze <command>/help</command> in WeeChat fÃ¼r Hilfe zu
       den Kommandos).
     </para>
     
@@ -119,7 +119,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <title>Python</title>
       
       <para>
-        Ein WeeChat-Pythonskript muss mit einer Importdirektive für WeeChat
+        Ein WeeChat-Pythonskript muss mit einer Importdirektive fÃ¼r WeeChat
         beginnen:
         <screen>import weechat</screen>
       </para>
@@ -138,7 +138,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       
       <para>
         In einem WeeChat-Rubyskript muss der gesamte Code innerhalb von
-        Funktionen stehen. Für den Hauptteil ist die Funktion
+        Funktionen stehen. FÃ¼r den Hauptteil ist die Funktion
         "<literal>weechat_init</literal>" zu definieren, die automatisch
         aufgerufen wird, wenn das Skript in WeeChat geladen wird.
         Beispiel:
@@ -220,7 +220,7 @@ end
       </para>
       <para>
         Das ist die erste Funktion, die in einem Skript aufgerufen wird.
-        Alle WeeChat-Skripte müssen diese Funktion aufrufen.
+        Alle WeeChat-Skripte mÃ¼ssen diese Funktion aufrufen.
       </para>
       <para>
         Argumente:
@@ -259,7 +259,7 @@ end
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 wenn das Skript registriert werden konnte, 0 wenn
+        RÃ¼ckgabewert: 1 wenn das Skript registriert werden konnte, 0 wenn
         ein Fehler aufgetaucht ist.
       </para>
       <para>
@@ -321,7 +321,7 @@ weechat.register("test", "1.0", "end_test", "Test script!", "ISO-8859-1")
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1, wenn der Zeichensatz erfolgreich gesetzt wurd, 0,
+        RÃ¼ckgabewert: 1, wenn der Zeichensatz erfolgreich gesetzt wurd, 0,
         wenn ein Fehler aufgetreten ist
       </para>
       <para>
@@ -384,14 +384,14 @@ weechat.set_charset("ISO-8859-1")
           <listitem>
             <para>
               <option>channel</option>: Name des Channels, zu welchem der
-              Puffer gehört, in dem die
+              Puffer gehÃ¶rt, in dem die
               Nachricht angezeigt werden soll
             </para>
           </listitem>
           <listitem>
             <para>
               <option>server</option>: interner Name des Servers, zu
-              welchem der Puffer gehört, in dem die Nachricht angezeigt
+              welchem der Puffer gehÃ¶rt, in dem die Nachricht angezeigt
               werden soll
             </para>
           </listitem>
@@ -402,7 +402,7 @@ weechat.set_charset("ISO-8859-1")
         To display colored text, see <xref linkend="secAPI_print" />.
       </para>
       <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
+        RÃ¼ckgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
       </para>
       <para>
         Beispiele:
@@ -538,19 +538,19 @@ weechat.print_server("message")
           <listitem>
             <para>
               <option>channel</option>: Name des Channels, zu welchem der
-              Puffer der Logdatei gehört
+              Puffer der Logdatei gehÃ¶rt
             </para>
           </listitem>
           <listitem>
             <para>
               <option>server</option>: interner Name des Servers, zu
-              welchem der Puffer der Logdatei gehört
+              welchem der Puffer der Logdatei gehÃ¶rt
             </para>
           </listitem>
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
+        RÃ¼ckgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
       </para>
       <para>
         Beispiel:
@@ -606,7 +606,7 @@ weechat.log("message", "#weechat", "freenode")
         <itemizedlist>
           <listitem>
             <para>
-              <option>message</option>: Name (Typ) der IRC-Nachricht. Für
+              <option>message</option>: Name (Typ) der IRC-Nachricht. FÃ¼r
               eine Liste
               der bekannten Typen von IRC-Nachrichten konsultieren sie
               bitte die 
@@ -614,7 +614,7 @@ weechat.log("message", "#weechat", "freenode")
               <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
               und
               <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-              Mehr noch, sie können spezielle Ereignisse abfangen, indem
+              Mehr noch, sie kÃ¶nnen spezielle Ereignisse abfangen, indem
               sie einen speziellen Namen verwenden, der mit 
               "weechat_" beginnt (siehe
               <xref linkend="secAPI_msg_handler_add" />).
@@ -629,7 +629,7 @@ weechat.log("message", "#weechat", "freenode")
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
+        RÃ¼ckgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
       </para>
       <para>
         Beispiele:
@@ -671,7 +671,7 @@ end
       </para>
       <para>
         Hinweis: die Funktion, die aufgerufen wird wenn eine Nachricht 
-        empfangen wurde, muss einen der folgenden Werte zurückgeben: 
+        empfangen wurde, muss einen der folgenden Werte zurÃ¼ckgeben: 
         <itemizedlist>
           <listitem>
             <para>
@@ -686,7 +686,7 @@ end
           <listitem>
             <para>
               <literal>PLUGIN_RC_OK_IGNORE_WEECHAT</literal>: Die Nachricht
-              wird nicht an WeeChat übergeben
+              wird nicht an WeeChat Ã¼bergeben
             </para>
           </listitem>
           <listitem>
@@ -699,13 +699,13 @@ end
           <listitem>
             <para>
               <literal>PLUGIN_RC_OK_IGNORE_ALL</literal>: Die Nachricht
-              wird weder an WeeChat noch an andere Plugins übergeben
+              wird weder an WeeChat noch an andere Plugins Ã¼bergeben
             </para>
           </listitem>
           <listitem>
             <para>
               <literal>PLUGIN_RC_OK_WITH_HIGHLIGHT</literal>: Funktion
-              erfolgreich vervollständigt und eine Hervorhebung bei den
+              erfolgreich vervollstÃ¤ndigt und eine Hervorhebung bei den
               empfangenen Nachrichten eingebaut
             </para>
           </listitem>
@@ -760,14 +760,14 @@ end
               <option>command</option>: 
               Name des neuen Kommandos, der auch Name eines bereits 
               existierenden Kommandos sein kann (mit Bedacht zu verwenden, 
-              das ersetzte Kommando ist nicht verfügbar, bis das Plugin
+              das ersetzte Kommando ist nicht verfÃ¼gbar, bis das Plugin
               entfernt wurde)
             </para>
           </listitem>
           <listitem>
             <para>
               <option>function</option>: Funktion, die aufgerufen wird,
-              wenn das Kommando ausgeführt wird
+              wenn das Kommando ausgefÃ¼hrt wird
             </para>
           </listitem>
           <listitem>
@@ -778,7 +778,7 @@ end
           </listitem>
           <listitem>
             <para>
-              <option>arguments_description</option>: eine ausführliche
+              <option>arguments_description</option>: eine ausfÃ¼hrliche
               Beschreibung der Argumente des Kommandos (werden angezeigt
               bei /help command)
             </para>
@@ -786,7 +786,7 @@ end
           <listitem>
             <para>
               <option>completion_template</option>: 
-              Vorlage für die Vervollständigung; zum Beispiel bedeutet 
+              Vorlage fÃ¼r die VervollstÃ¤ndigung; zum Beispiel bedeutet 
               "<literal>abc|%w def|%i</literal>", dass das 
               erste Argument "abc" oder ein WeeChat-Kommando sein kann 
               und das zweite Argument "def" oder ein IRC-Kommando.
@@ -796,7 +796,7 @@ end
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
+        RÃ¼ckgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
       </para>
       <para>
         Beispiele:
@@ -832,7 +832,7 @@ end
       </para>
       <para>
         Hinweis: die Funktion, die aufgerufen wird wenn eine Nachricht 
-        empfangen wurde, muss einen der folgenden Werte zurückgeben: 
+        empfangen wurde, muss einen der folgenden Werte zurÃ¼ckgeben: 
 
         <itemizedlist>
           <listitem>
@@ -897,7 +897,7 @@ end
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
+        RÃ¼ckgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
       </para>
       <para>
         Beispiele:
@@ -934,7 +934,7 @@ end
       <para>
         Note: function called has to return one of following values:
         Hinweis: die Funktion, die aufgerufen wird, muss 
-        einen der folgenden Werte zurückgeben: 
+        einen der folgenden Werte zurÃ¼ckgeben: 
         
         <itemizedlist>
           <listitem>
@@ -980,7 +980,7 @@ end
         </command>
       </para>
       <para>
-        Erzeugt einen Keyboard-Handler, der für jeden Tastendruck
+        Erzeugt einen Keyboard-Handler, der fÃ¼r jeden Tastendruck
         aufgerufen wird.
       </para>
       <para>
@@ -994,7 +994,7 @@ end
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
+        RÃ¼ckgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
       </para>
       <para>
         Beispiele:
@@ -1041,7 +1041,7 @@ end
       </para>
       <para>
         Hinweis: Die aufgerufene Funktion muss einen der folgenden Werte
-        zurückgeben:
+        zurÃ¼ckgeben:
         <itemizedlist>
           <listitem>
             <para>
@@ -1085,7 +1085,7 @@ end
         </command>
       </para>
       <para>
-        Fügt einen Ereignis-Handler hinzu, der beim Auftreten eines
+        FÃ¼gt einen Ereignis-Handler hinzu, der beim Auftreten eines
         Ereignisses aufgerufen wird.
       </para>
       <para>
@@ -1105,7 +1105,7 @@ end
         </itemizedlist>
       </para>
       <para>
-        Rückgabewerte: 1 bei Erfolg, 0 bei aufgetretenen Fehlern
+        RÃ¼ckgabewerte: 1 bei Erfolg, 0 bei aufgetretenen Fehlern
       </para>
       <para>
         Beispiele:
@@ -1141,7 +1141,7 @@ end
       </para>
       <para>
         Bemerkung: aufgerufene Funktion muss einen der folgenden Werte
-        zurückgeben:
+        zurÃ¼ckgeben:
         <itemizedlist>
           <listitem>
             <para>
@@ -1203,7 +1203,7 @@ end
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 bei Erfolg, 0 bei Auftreten eines Fehlers
+        RÃ¼ckgabewert: 1 bei Erfolg, 0 bei Auftreten eines Fehlers
       </para>
       <para>
         Beispiele:
@@ -1264,7 +1264,7 @@ weechat.remove_handler("command", "my_command")
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
+        RÃ¼ckgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
       </para>
       <para>
         Beispiele:
@@ -1325,7 +1325,7 @@ weechat.remove_timer_handler("my_timer")
         </itemizedlist>
       </para>
       <para>
-        Rückgabewerte: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
+        RÃ¼ckgabewerte: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
       </para>
       <para>
         Beispiele:
@@ -1386,7 +1386,7 @@ weechat.remove_keyboard_handler("my_keyboard")
         </itemizedlist>
       </para>
       <para>
-        Rückgabewerte: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
+        RÃ¼ckgabewerte: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist.
       </para>
       <para>
         Beispiele:
@@ -1434,7 +1434,7 @@ weechat.remove_event_handler("my_event")
         </command>
       </para>
       <para>
-        Fügt einen Nachrichtenmodifikator hinzu.
+        FÃ¼gt einen Nachrichtenmodifikator hinzu.
       </para>
       <para>
         Argumente:
@@ -1485,7 +1485,7 @@ weechat.remove_event_handler("my_event")
               <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
               and
               <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-              Außerdem gibt es den Wert "*", der alle Nachrichten
+              AuÃŸerdem gibt es den Wert "*", der alle Nachrichten
               anspricht (ohne Filter).
             </para>
           </listitem>
@@ -1497,7 +1497,7 @@ weechat.remove_event_handler("my_event")
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 bei Erfolg, 0 bei einem aufgetretenem Fehler
+        RÃ¼ckgabewert: 1 bei Erfolg, 0 bei einem aufgetretenem Fehler
       </para>
       <para>
         Beispiele:
@@ -1597,7 +1597,7 @@ end
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 bei Erfolg, 0 bei einem aufgetretenem Fehler
+        RÃ¼ckgabewert: 1 bei Erfolg, 0 bei einem aufgetretenem Fehler
       </para>
       <para>
         Beispiele:
@@ -1645,7 +1645,7 @@ weechat.remove_modifier("irc_in", "privmsg", "mod_in")
         </command>
       </para>
       <para>
-        Führt ein WeeChat-Kommando aus (oder sendet eine Nachricht an einen
+        FÃ¼hrt ein WeeChat-Kommando aus (oder sendet eine Nachricht an einen
         Channel).
       </para>
       <para>
@@ -1658,20 +1658,20 @@ weechat.remove_modifier("irc_in", "privmsg", "mod_in")
           </listitem>
           <listitem>
             <para>
-              <option>channel</option>: Name des Channels, für den das
-              Kommando ausgeführt werden soll
+              <option>channel</option>: Name des Channels, fÃ¼r den das
+              Kommando ausgefÃ¼hrt werden soll
             </para>
           </listitem>
           <listitem>
             <para>
-              <option>server</option>: interner Name des Servers, für den
-              das Kommando ausgeführt werden soll
+              <option>server</option>: interner Name des Servers, fÃ¼r den
+              das Kommando ausgefÃ¼hrt werden soll
             </para>
           </listitem>
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
+        RÃ¼ckgabewert: 1 bei Erfolg, 0 wenn ein Fehler aufgetreten ist
       </para>
       <para>
         Beispiele:
@@ -1727,7 +1727,7 @@ weechat.command("/nick newnick", "", "freenode")
         </command>
       </para>
       <para>
-        Gibt ein Info über WweeChat oder einen Channel zurück.
+        Gibt ein Info Ã¼ber WweeChat oder einen Channel zurÃ¼ck.
       </para>
       <para>
         Argumente:
@@ -1746,7 +1746,7 @@ weechat.command("/nick newnick", "", "freenode")
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: angefragte Infos, oder leerer String, wenn ein
+        RÃ¼ckgabewert: angefragte Infos, oder leerer String, wenn ein
         Fehler aufgetreten ist.
       </para>
       <para>
@@ -1799,10 +1799,10 @@ nick = weechat.get_info("nick", "freenode")
         </command>
       </para>
       <para>
-        Gibt eine Liste der gegenwärtig aktiven oder beendeten DCCs zurück.
+        Gibt eine Liste der gegenwÃ¤rtig aktiven oder beendeten DCCs zurÃ¼ck.
       </para>
       <para>
-        Rückgabewert: Liste der DCCS
+        RÃ¼ckgabewert: Liste der DCCS
         (siehe <xref linkend="secAPI_get_dcc_info" />).
       </para>
       <para>
@@ -1904,10 +1904,10 @@ end
         </command>
       </para>
       <para>
-        Gibt eine Liste der IRC-Server zurück (verbunden oder nicht).
+        Gibt eine Liste der IRC-Server zurÃ¼ck (verbunden oder nicht).
       </para>
       <para>
-        Rückgabewert: Liste der Server
+        RÃ¼ckgabewert: Liste der Server
         (siehe <xref linkend="secAPI_get_server_info" />).
       </para>
       <para>
@@ -2009,10 +2009,10 @@ end
         </command>
       </para>
       <para>
-        Gibt eine Liste der Channels für einen Server zurück.
+        Gibt eine Liste der Channels fÃ¼r einen Server zurÃ¼ck.
       </para>
       <para>
-        Rückgabewert: Liste der Channel für einen Server
+        RÃ¼ckgabewert: Liste der Channel fÃ¼r einen Server
         (siehe <xref linkend="secAPI_get_channel_info" />).
       </para>
       <para>
@@ -2114,10 +2114,10 @@ end
         </command>
       </para>
       <para>
-        Gibt eine Liste der Nicknamen für einen Channel zurück.
+        Gibt eine Liste der Nicknamen fÃ¼r einen Channel zurÃ¼ck.
       </para>
       <para>
-        Rückgabewert: Liste der Nicknamen eines Channels
+        RÃ¼ckgabewert: Liste der Nicknamen eines Channels
         (siehe <xref linkend="secAPI_get_nick_info" />).
       </para>
       <para>
@@ -2219,7 +2219,7 @@ end
         </command>
       </para>
       <para>
-        Gibt den Wert einer Option der WeeChat-Konfiguration zurück.
+        Gibt den Wert einer Option der WeeChat-Konfiguration zurÃ¼ck.
       </para>
       <para>
         Argumente:
@@ -2232,7 +2232,7 @@ end
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: Wert der Option, leerer String wenn nichts gefunden
+        RÃ¼ckgabewert: Wert der Option, leerer String wenn nichts gefunden
         wurde.
       </para>
       <para>
@@ -2304,7 +2304,7 @@ value2 = weechat.get_config("freenode.server_autojoin")
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 wenn der Wert gesetzt wurde, 0 wenn ein Fehler
+        RÃ¼ckgabewert: 1 wenn der Wert gesetzt wurde, 0 wenn ein Fehler
         aufgetreten ist.
       </para>
       <para>
@@ -2357,7 +2357,7 @@ weechat.set_config("freenode.server_autojoin", "#weechat")
         </command>
       </para>
       <para>
-        Gibt den Wert einer Option eines Plugins zurück. Die Option wird
+        Gibt den Wert einer Option eines Plugins zurÃ¼ck. Die Option wird
         aus der Datei "<literal>~/.weechat/plugins.rc</literal>" gelesen
         und sieht so aus: "<literal>plugin.option=value</literal>" 
         (Hinweis: Der Name des Plugins wird automatisch gesetzt).
@@ -2373,7 +2373,7 @@ weechat.set_config("freenode.server_autojoin", "#weechat")
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: Wert der Option, leerer String wenn die Option nicht 
+        RÃ¼ckgabewert: Wert der Option, leerer String wenn die Option nicht 
         gefunden wurde.
       </para>
       <para>
@@ -2444,7 +2444,7 @@ value = weechat.get_plugin_config("my_var")
         </itemizedlist>
       </para>
       <para>
-        Rückgabewert: 1 wenn die Option gesetzt wurde, 0 wenn ein Fehler
+        RÃ¼ckgabewert: 1 wenn die Option gesetzt wurde, 0 wenn ein Fehler
         aufgetreten ist.
       </para>
       <para>
@@ -2496,7 +2496,7 @@ weechat.set_plugin_config("my_var", "value")
         Hole IRC-Farbindex mit dem Farbnamen.
       </para>
       <para>
-        Rückgabewert: IRC-Farbindex, -1 wenn die Farbe nicht gefunden wurde
+        RÃ¼ckgabewert: IRC-Farbindex, -1 wenn die Farbe nicht gefunden wurde
         (siehe <xref linkend="secAPI_get_irc_color" />).
       </para>
       <para>
@@ -2548,7 +2548,7 @@ color_blue = weechat.get_irc_color("blue")
         Erzeugt einen Farbcode im Eingabepuffer.Add color in input buffer.
       </para>
       <para>
-        Rückgabewert: keiner.
+        RÃ¼ckgabewert: keiner.
       </para>
       <para>
         Bespiele:
@@ -2596,10 +2596,10 @@ weechat.input_color(weechat.get_irc_color("blue"), 10, 5)
         </command>
       </para>
       <para>
-        Gibt die Liste der WeeChat-Fenster zurück.
+        Gibt die Liste der WeeChat-Fenster zurÃ¼ck.
       </para>
       <para>
-        Rückgabewert: List der WeeChat-Fenster
+        RÃ¼ckgabewert: List der WeeChat-Fenster
         (see <xref linkend="secAPI_get_window_info" />).
       </para>
       <para>
@@ -2701,7 +2701,7 @@ end
         Gibt eine Liste der WeeChat-Puffer.
       </para>
       <para>
-        Rückgabewert: Liste der WeeChat-Puffer
+        RÃ¼ckgabewert: Liste der WeeChat-Puffer
         (siehe <xref linkend="secAPI_get_buffer_info" />).
       </para>
       <para>
@@ -2729,7 +2729,7 @@ else
 bf = weechat.get_buffer_info()
 if bf != None and bf != {}:
     for b in bf:
-        weechat.prnt ("**** Informationen für Puffer Nr. %d ****" % b)
+        weechat.prnt ("**** Informationen fÃ¼r Puffer Nr. %d ****" % b)
         for c in bf[b]:
             weechat.prnt (" > %s => %s" % (c, bf[b][c]))
         weechat.prnt ("----------------------")
@@ -2740,7 +2740,7 @@ else:
 bf = Weechat.get_buffer_info()
 if bf != nil and bf != {}
     bf.each do |n, c|
-        Weechat.print("**** Informationen für Puffer Nr. #{n} ****")
+        Weechat.print("**** Informationen fÃ¼r Puffer Nr. #{n} ****")
         c.each do |key, value|
             Weechat.print(" > #{key} => #{value}")
         end
@@ -2755,7 +2755,7 @@ bf = weechat.get_buffer_info()
 if bf then
     b, binfos = next (bf, nil)
     while (b) do
-        weechat.print("**** Informationen für Puffer Nr. " .. b .. " ****")
+        weechat.print("**** Informationen fÃ¼r Puffer Nr. " .. b .. " ****")
         key, value = next (binfos, nil)
         while (key) do
             weechat.print(" > " .. key .. " => " .. value)
@@ -2799,10 +2799,10 @@ end
         </command>
       </para>
       <para>
-        Gibt den Inhalt eines Puffers zurück.
+        Gibt den Inhalt eines Puffers zurÃ¼ck.
       </para>
       <para>
-        Rückgabewert: Liste der Pufferzeilen
+        RÃ¼ckgabewert: Liste der Pufferzeilen
         (see <xref linkend="secAPI_get_buffer_data" />).
       </para>
       <para>
@@ -2814,7 +2814,7 @@ my $channel = weechat::get_info("channel");
 my @bc = weechat::get_buffer_data($server, $channel);
 if (@bc)
 {
-    weechat::print("**** Pufferdaten für '$channel'\@'$server' ****");
+    weechat::print("**** Pufferdaten fÃ¼r '$channel'\@'$server' ****");
     foreach my $l (@bc) {
         while ( my ($key, $value) = each %$l) {
             weechat::print(" > $key => $value");
@@ -2832,7 +2832,7 @@ server = weechat.get_info("server")
 channel = weechat.get_info("channel")
 bc = weechat.get_buffer_data(server, channel)
 if bc != None and bc != []:
-    weechat.prnt ("**** Pufferdaten für '%s'@'%s' ****" % (channel, server))
+    weechat.prnt ("**** Pufferdaten fÃ¼r '%s'@'%s' ****" % (channel, server))
     for l in bc:
         for i in l:
             weechat.prnt (" > %s => %s" % (i, l[i]))
@@ -2845,7 +2845,7 @@ server = Weechat.get_info("server")
 channel = Weechat.get_info("channel")
 bc = Weechat.get_buffer_data(server, channel)
 if bc != nil and bc != []   
-    Weechat.print("**** Pufferdaten für '#{channel}'@'#{server}' ****")
+    Weechat.print("**** Pufferdaten fÃ¼r '#{channel}'@'#{server}' ****")
     bc.each do |l|
         l.each do |key, value|
             Weechat.print(" > #{key} => #{value}")
@@ -2862,7 +2862,7 @@ channel = weechat.get_info("channel")
 bc = weechat.get_buffer_data(server, channel)
 if bc then
     b, bdatas = next (bc, nil)
-    weechat.print("**** Pufferdaten für '" .. channel .. "'@'" .. server .. "' ****")
+    weechat.print("**** Pufferdaten fÃ¼r '" .. channel .. "'@'" .. server .. "' ****")
     while (b) do 
         key, value = next (bdatas, nil)
         while (key) do

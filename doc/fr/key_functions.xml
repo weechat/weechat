@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- ********* WARNING! *********
 
@@ -11,35 +11,35 @@
 </row>
 <row>
   <entry><literal>tab</literal></entry>
-  <entry>compléter le mot</entry>
+  <entry>complÃ©ter le mot</entry>
 </row>
 <row>
   <entry><literal>tab_previous</literal></entry>
-  <entry>trouver le mot complété précédent</entry>
+  <entry>trouver le mot complÃ©tÃ© prÃ©cÃ©dent</entry>
 </row>
 <row>
   <entry><literal>backspace</literal></entry>
-  <entry>effacer le caractère précédent</entry>
+  <entry>effacer le caractÃ¨re prÃ©cÃ©dent</entry>
 </row>
 <row>
   <entry><literal>delete</literal></entry>
-  <entry>effacer le caractère suivant</entry>
+  <entry>effacer le caractÃ¨re suivant</entry>
 </row>
 <row>
   <entry><literal>delete_end_line</literal></entry>
-  <entry>effacer jusqu'à la fin de la ligne</entry>
+  <entry>effacer jusqu'Ã  la fin de la ligne</entry>
 </row>
 <row>
   <entry><literal>delete_beginning_line</literal></entry>
-  <entry>effacer jusqu'au début de la ligne</entry>
+  <entry>effacer jusqu'au dÃ©but de la ligne</entry>
 </row>
 <row>
   <entry><literal>delete_line</literal></entry>
-  <entry>effacer la ligne entière</entry>
+  <entry>effacer la ligne entiÃ¨re</entry>
 </row>
 <row>
   <entry><literal>delete_previous_word</literal></entry>
-  <entry>effacer le mot précédent</entry>
+  <entry>effacer le mot prÃ©cÃ©dent</entry>
 </row>
 <row>
   <entry><literal>delete_next_word</literal></entry>
@@ -51,39 +51,39 @@
 </row>
 <row>
   <entry><literal>transpose_chars</literal></entry>
-  <entry>inverser les caractères</entry>
+  <entry>inverser les caractÃ¨res</entry>
 </row>
 <row>
   <entry><literal>home</literal></entry>
-  <entry>aller au début de la ligne</entry>
+  <entry>aller au dÃ©but de la ligne</entry>
 </row>
 <row>
   <entry><literal>end</literal></entry>
-  <entry>aller à la fin de la ligne</entry>
+  <entry>aller Ã  la fin de la ligne</entry>
 </row>
 <row>
   <entry><literal>left</literal></entry>
-  <entry>se déplacer d'un caractère à gauche</entry>
+  <entry>se dÃ©placer d'un caractÃ¨re Ã  gauche</entry>
 </row>
 <row>
   <entry><literal>previous_word</literal></entry>
-  <entry>se déplacer au mot précédent</entry>
+  <entry>se dÃ©placer au mot prÃ©cÃ©dent</entry>
 </row>
 <row>
   <entry><literal>right</literal></entry>
-  <entry>se déplacer d'un caractère à droite</entry>
+  <entry>se dÃ©placer d'un caractÃ¨re Ã  droite</entry>
 </row>
 <row>
   <entry><literal>next_word</literal></entry>
-  <entry>se déplacer au mot suivant</entry>
+  <entry>se dÃ©placer au mot suivant</entry>
 </row>
 <row>
   <entry><literal>up</literal></entry>
-  <entry>appeler la commande précédente dans l'historique</entry>
+  <entry>appeler la commande prÃ©cÃ©dente dans l'historique</entry>
 </row>
 <row>
   <entry><literal>up_global</literal></entry>
-  <entry>appeler la commande précédente dans l'historique global</entry>
+  <entry>appeler la commande prÃ©cÃ©dente dans l'historique global</entry>
 </row>
 <row>
   <entry><literal>down</literal></entry>
@@ -95,39 +95,39 @@
 </row>
 <row>
   <entry><literal>page_up</literal></entry>
-  <entry>faire défiler d'une page vers le haut</entry>
+  <entry>faire dÃ©filer d'une page vers le haut</entry>
 </row>
 <row>
   <entry><literal>page_down</literal></entry>
-  <entry>faire défiler d'une page vers le bas</entry>
+  <entry>faire dÃ©filer d'une page vers le bas</entry>
 </row>
 <row>
   <entry><literal>scroll_up</literal></entry>
-  <entry>faire défiler de quelques lignes vers le haut</entry>
+  <entry>faire dÃ©filer de quelques lignes vers le haut</entry>
 </row>
 <row>
   <entry><literal>scroll_down</literal></entry>
-  <entry>faire défiler de quelques lignes vers le bas</entry>
+  <entry>faire dÃ©filer de quelques lignes vers le bas</entry>
 </row>
 <row>
   <entry><literal>scroll_top</literal></entry>
-  <entry>faire défiler jusqu'au début du tampon</entry>
+  <entry>faire dÃ©filer jusqu'au dÃ©but du tampon</entry>
 </row>
 <row>
   <entry><literal>scroll_bottom</literal></entry>
-  <entry>faire défiler jusqu'à la fin du tampon</entry>
+  <entry>faire dÃ©filer jusqu'Ã  la fin du tampon</entry>
 </row>
 <row>
   <entry><literal>scroll_topic_left</literal></entry>
-  <entry>faire défiler le titre vers la gauche</entry>
+  <entry>faire dÃ©filer le titre vers la gauche</entry>
 </row>
 <row>
   <entry><literal>scroll_topic_right</literal></entry>
-  <entry>faire défiler le titre vers la droite</entry>
+  <entry>faire dÃ©filer le titre vers la droite</entry>
 </row>
 <row>
   <entry><literal>nick_beginning</literal></entry>
-  <entry>afficher le début de la liste des pseudos</entry>
+  <entry>afficher le dÃ©but de la liste des pseudos</entry>
 </row>
 <row>
   <entry><literal>nick_end</literal></entry>
@@ -135,15 +135,15 @@
 </row>
 <row>
   <entry><literal>nick_page_up</literal></entry>
-  <entry>faire défiler la liste des pseudos d'une page vers le haut</entry>
+  <entry>faire dÃ©filer la liste des pseudos d'une page vers le haut</entry>
 </row>
 <row>
   <entry><literal>nick_page_down</literal></entry>
-  <entry>faire défiler la liste des pseudos d'une page vers le bas</entry>
+  <entry>faire dÃ©filer la liste des pseudos d'une page vers le bas</entry>
 </row>
 <row>
   <entry><literal>jump_smart</literal></entry>
-  <entry>sauter au tampon avec de l'activité</entry>
+  <entry>sauter au tampon avec de l'activitÃ©</entry>
 </row>
 <row>
   <entry><literal>jump_dcc</literal></entry>
@@ -159,7 +159,7 @@
 </row>
 <row>
   <entry><literal>jump_previous_buffer</literal></entry>
-  <entry>sauter au tampon précédent</entry>
+  <entry>sauter au tampon prÃ©cÃ©dent</entry>
 </row>
 <row>
   <entry><literal>jump_server</literal></entry>
@@ -175,27 +175,27 @@
 </row>
 <row>
   <entry><literal>scroll_previous_highlight</literal></entry>
-  <entry>faire défiler jusqu'au highlight précédent du tampon</entry>
+  <entry>faire dÃ©filer jusqu'au highlight prÃ©cÃ©dent du tampon</entry>
 </row>
 <row>
   <entry><literal>scroll_next_highlight</literal></entry>
-  <entry>faire défiler jusqu'au highlight suivant du tampon</entry>
+  <entry>faire dÃ©filer jusqu'au highlight suivant du tampon</entry>
 </row>
 <row>
   <entry><literal>scroll_unread</literal></entry>
-  <entry>faire défiler jusqu'à la première ligne non lue du tampon</entry>
+  <entry>faire dÃ©filer jusqu'Ã  la premiÃ¨re ligne non lue du tampon</entry>
 </row>
 <row>
   <entry><literal>set_unread</literal></entry>
-  <entry>positionner le marqueur de données non lues sur tous les tampons</entry>
+  <entry>positionner le marqueur de donnÃ©es non lues sur tous les tampons</entry>
 </row>
 <row>
   <entry><literal>hotlist_clear</literal></entry>
-  <entry>effacer la liste d'activité</entry>
+  <entry>effacer la liste d'activitÃ©</entry>
 </row>
 <row>
   <entry><literal>refresh</literal></entry>
-  <entry>rafraîchir l'écran</entry>
+  <entry>rafraÃ®chir l'Ã©cran</entry>
 </row>
 <row>
   <entry><literal>grab_key</literal></entry>
@@ -203,7 +203,7 @@
 </row>
 <row>
   <entry><literal>insert</literal></entry>
-  <entry>insérer une chaîne dans la ligne de commande</entry>
+  <entry>insÃ©rer une chaÃ®ne dans la ligne de commande</entry>
 </row>
 <row>
   <entry><literal>search_text</literal></entry>

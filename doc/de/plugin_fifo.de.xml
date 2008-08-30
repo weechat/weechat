@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -51,7 +51,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <itemizedlist>
       <listitem>
         <para>
-          Ändern des Nicks auf freenode in "mynick|out" :
+          Ã„ndern des Nicks auf freenode in "mynick|out" :
           <screen><prompt>$ </prompt><userinput>echo 'freenode,freenode */nick mynick|out' &gt;~/.weechat/weechat_fifo_12345</userinput></screen>
         </para>
       </listitem>
@@ -63,10 +63,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </listitem>
       <listitem>
         <para>
-          Senden einer Nachricht an den gegenwärtigen Channel (Puffer, der
+          Senden einer Nachricht an den gegenwÃ¤rtigen Channel (Puffer, der
           in WeeChat angezeigt wird):
           <screen><prompt>$ </prompt><userinput>echo '*hello!' >~/.weechat/weechat_fifo_12345</userinput></screen>
-          <emphasis>Warnung:</emphasis> Das ist gefährlich und sie sollten
+          <emphasis>Warnung:</emphasis> Das ist gefÃ¤hrlich und sie sollten
           das nicht tun, ausgenommen sie wissen was sie tun!
         </para>
       </listitem>
@@ -81,7 +81,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </para>
   
   <para>
-    Sie können ein Skript schreiben, um ein Kommando an alle laufenden WeeChat-Instanzen zu senden,
+    Sie kÃ¶nnen ein Skript schreiben, um ein Kommando an alle laufenden WeeChat-Instanzen zu senden,
     zum Beispiel:
 <screen>
 #!/bin/sh
@@ -92,7 +92,7 @@ if [ $# -eq 1 ]; then
     done
 fi
 </screen>
-    Wenn das Skript "auto_weechat_command" heisst, können sie es
+    Wenn das Skript "auto_weechat_command" heisst, kÃ¶nnen sie es
     folgendermassen aufrufen:
 <screen><prompt>$ </prompt><userinput>./auto_weechat_command "freenode,#weechat *hello"</userinput></screen>
   </para>

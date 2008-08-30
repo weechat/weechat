@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- ********* WARNING! *********
 
@@ -7,7 +7,7 @@
 
 <command>admin  [Ziel]</command>
 <programlisting>
-Information über den Server-Administrator abfragen
+Information Ã¼ber den Server-Administrator abfragen
 
 Ziel: Server
 
@@ -30,7 +30,7 @@ Text: zu sendender Text
 <programlisting>
 Abwesenheitsnachricht ein/ausschalten
 
-   -all: Abwesenheitszustand auf allen Servern ändern
+   -all: Abwesenheitszustand auf allen Servern Ã¤ndern
 Nachricht: Abwesenheitsnachricht (bzw. keine, um den Abwesenheitszustand zu deaktivieren)
 
 </programlisting>
@@ -38,17 +38,17 @@ Nachricht: Abwesenheitsnachricht (bzw. keine, um den Abwesenheitszustand zu deak
 <programlisting>
 Nicknames oder Hosts sperren/verbannen
 
- Channel: Channel für die Sperre
+ Channel: Channel fÃ¼r die Sperre
 Nickname: zu sperrender User oder Host
 
 </programlisting>
-<command>ctcp  Empfänger Typ [Argumente]</command>
+<command>ctcp  EmpfÃ¤nger Typ [Argumente]</command>
 <programlisting>
 CTCP-Nachricht verschicken
 
- Empfänger: User, an den die CTCP-Nachricht geschickt werden soll
+ EmpfÃ¤nger: User, an den die CTCP-Nachricht geschickt werden soll
      Typ: Typ der CTCP-Nachricht (z.B. "version", "ping", ..)
-Argumente: Argumente für CTCP
+Argumente: Argumente fÃ¼r CTCP
 
 </programlisting>
 <command>cycle  [Channel[,Channel]] [Abschiedsnachricht]</command>
@@ -86,7 +86,7 @@ Halb-Operatorstatus verleihen
 </programlisting>
 <command>info  [Ziel]</command>
 <programlisting>
-Information über den Server abfragen
+Information Ã¼ber den Server abfragen
 
 Ziel: Servername
 
@@ -101,7 +101,7 @@ Channel: Channel, in den er eingeladen werden soll
 </programlisting>
 <command>ison  Nickname [Nickname ...]</command>
 <programlisting>
-überprüfen, ob jemand zur Zeit im IRC ist
+Ã¼berprÃ¼fen, ob jemand zur Zeit im IRC ist
 
 Nickname: Nickname
 
@@ -120,7 +120,7 @@ einen User aus einem Channel herauskicken
 
 Channel: Channel des Benutzers
 Nickname: Nickname des Benutzers
-Kommentar: Begründung für den Kick
+Kommentar: BegrÃ¼ndung fÃ¼r den Kick
 
 </programlisting>
 <command>kickban  [Channel] Nickname [Kommentar]</command>
@@ -129,7 +129,7 @@ kickt und verbannt jemanden von einem Channel
 
 Channel: Channel des Benutzers
 Nickname: Nickname des Benutzers
-Kommentar: Begründung für den Kickban
+Kommentar: BegrÃ¼ndung fÃ¼r den Kickban
 
 </programlisting>
 <command>kill  Nickname Kommentar</command>
@@ -137,7 +137,7 @@ Kommentar: Begründung für den Kickban
 Jemanden vom Server werfen
 
 Nickname: Chatname
-Kommentar: Begründung
+Kommentar: BegrÃ¼ndung
 
 </programlisting>
 <command>links  [[Server] Servermaske]</command>
@@ -152,13 +152,13 @@ Servermaske: die aufzulistenden Server sollen diesem Muster entsprechen
 <programlisting>
 Channels mit ihren Topics auflisten
 
-Channel: aufzulistender Channel (reguläre Ausdrücke sind möglich)
+Channel: aufzulistender Channel (regulÃ¤re AusdrÃ¼cke sind mÃ¶glich)
 Server: Servername
 
 </programlisting>
 <command>lusers  [Maske [Ziel]]</command>
 <programlisting>
-Statistik über die Größe dieses IRC-Netzwerks abfragen
+Statistik Ã¼ber die GrÃ¶ÃŸe dieses IRC-Netzwerks abfragen
 
   Maske: Nur Server, die diesem Muster entsprechen
 Ziel: Server, der die Anfrage weiterleiten soll
@@ -173,27 +173,27 @@ zu sendende Nachricht
 </programlisting>
 <command>mode  { Channel {[+|-]|o|p|s|i|t|n|b|v} [Limit] [User] [Bannmaske] } | {Nickname {[+|-]|i|w|s|o} }</command>
 <programlisting>
-Channel- oder Usermode ändern
+Channel- oder Usermode Ã¤ndern
 
 Channelmodi:
-  Channel: zu ändernder Channel
+  Channel: zu Ã¤ndernder Channel
   o: gib/nimm Operatorstatus
   p: privater Channel
   s: geheimer Channel
   i: geschlossener Channel (Zutritt nur mit Einladung)
-  t: nur Operatoren dürfen das Topic setzen
-  n: keine Channelnachrichten von außerhalb des Channels
+  t: nur Operatoren dÃ¼rfen das Topic setzen
+  n: keine Channelnachrichten von auÃŸerhalb des Channels
   m: moderierter Channel (schreiben nur mit Voice)
   l: maximale Anzahl an Usern im Channel festlegen
-  b: Bannmaske für zu sperrende User (in nick!ident@host-Form)
+  b: Bannmaske fÃ¼r zu sperrende User (in nick!ident@host-Form)
   e: lege Ausnahmemaske fest
   v: gib/nimm Voice (d.h. Schreibrecht bei moderierten Channels)
   k: Channelkey/Channelpasswort festlegen
 Usermodi:
-  Nickname: zu ändernder Nickname
+  Nickname: zu Ã¤ndernder Nickname
   i: User als unsichtbar kennzeichnen
-  s: User empfängt Server-Nachrichten
-  w: User empfängt WALLOPS
+  s: User empfÃ¤ngt Server-Nachrichten
+  w: User empfÃ¤ngt WALLOPS
   o: User ist Channeloperator
 
 </programlisting>
@@ -204,11 +204,11 @@ die "Nachricht von heute" abfragen
 Ziel: Servername
 
 </programlisting>
-<command>msg  Empfänger[,Empfänger] Text</command>
+<command>msg  EmpfÃ¤nger[,EmpfÃ¤nger] Text</command>
 <programlisting>
 Nachricht an Nick/Channel verschicken
 
-Empfänger: Nick/Channel (darf eine Maske sein, '*' = aktueller Channel)
+EmpfÃ¤nger: Nick/Channel (darf eine Maske sein, '*' = aktueller Channel)
 Text: zu sendender Text
 
 </programlisting>
@@ -223,7 +223,7 @@ Channel: Channelname
 <programlisting>
 aktuellen Nickname wechseln
 
-    -all: Nickname auf allen verbundenen Servern ändern
+    -all: Nickname auf allen verbundenen Servern Ã¤ndern
 Nickname: neuer Nickname
 
 </programlisting>
@@ -231,7 +231,7 @@ Nickname: neuer Nickname
 <programlisting>
 NOTICE an einen User verschicken
 
-Nickname: Empfänger der Nachricht
+Nickname: EmpfÃ¤nger der Nachricht
     Text: zu sendender Text
 
 </programlisting>
@@ -275,7 +275,7 @@ Daemon2: Nachricht an diesen Daemon weiterleiten
 <programlisting>
 private Nachricht an jemanden schicken
 
-Nickname: Nickname für privaten Chat
+Nickname: Nickname fÃ¼r privaten Chat
     Text: zu sendender Text
 
 </programlisting>
@@ -308,7 +308,7 @@ den Server dazu bringen, sich selbst neu zu starten
 einen neuen Service eintragen
 
 Distribution: Sichtbarkeit des Services
-        Typ: für spätere Verwendung reserviert
+        Typ: fÃ¼r spÃ¤tere Verwendung reserviert
 
 </programlisting>
 <command>servlist  [Maske [Typ]]</command>
@@ -379,7 +379,7 @@ Ziel: Server
 Bann aufheben
 
  Channel: Channel, in dem der Bann aufzuheben ist
-Nickname: User, für den der Bann aufzuheben ist
+Nickname: User, fÃ¼r den der Bann aufzuheben ist
 
 </programlisting>
 <command>userhost  Nickname [Nickname ...]</command>
@@ -420,13 +420,13 @@ zu sendender Text
 <programlisting>
 erweiterte Nicknameliste
 
-Maske: nur Information über betreffende Nicknames abfragen
+Maske: nur Information Ã¼ber betreffende Nicknames abfragen
    o: nur Operatoren ausgeben, die dem Filter entsprechen
 
 </programlisting>
 <command>whois  [Server] Nickname[,Nickname]</command>
 <programlisting>
-Information über User abfragen
+Information Ã¼ber User abfragen
 
   Server: Servername
 Nickname: Nickname (oder eine Maske)
@@ -434,10 +434,10 @@ Nickname: Nickname (oder eine Maske)
 </programlisting>
 <command>whowas  Nickname [,Nickname [,Nickname ...]] [Anzahl [Ziel]]</command>
 <programlisting>
-Information über die Vergangenheit eines Nicknames erfragen
+Information Ã¼ber die Vergangenheit eines Nicknames erfragen
 
 Nickname: abzufragende Nicknames
-   Anzahl: maximale Anzahl an Antworten (negative Zahl für eine vollständige Liste)
+   Anzahl: maximale Anzahl an Antworten (negative Zahl fÃ¼r eine vollstÃ¤ndige Liste)
   Ziel: zu suchende Hostmaske
 
 </programlisting>

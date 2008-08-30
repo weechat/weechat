@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -25,27 +25,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <title>Extensions</title>
   
   <para>
-    Ce chapitre décrit l'API extension de WeeChat et les extensions fournies
-    par défaut avec WeeChat.
+    Ce chapitre dÃ©crit l'API extension de WeeChat et les extensions fournies
+    par dÃ©faut avec WeeChat.
   </para>
   
   <section id="secPluginsInWeeChat">
     <title>Les extensions dans WeeChat</title>
     
     <para>
-      Une extension ("plugin" en anglais) est un programme écrit en C
-      qui peut appeler des fonctions de WeeChat définies dans une interface.
+      Une extension ("plugin" en anglais) est un programme Ã©crit en C
+      qui peut appeler des fonctions de WeeChat dÃ©finies dans une interface.
     </para>
     
     <para>
-      Ce programme C n'a pas besoin des sources WeeChat pour être
-      compilé et peut être chargé/déchargé dynamiquement dans
+      Ce programme C n'a pas besoin des sources WeeChat pour Ãªtre
+      compilÃ© et peut Ãªtre chargÃ©/dÃ©chargÃ© dynamiquement dans
       WeeChat via la commande <command>/plugin</command>.
     </para>
     
     <para>
-      L'extension doit être au format bibliothèque, chargeable
-      dynamiquement par le système d'exploitation.
+      L'extension doit Ãªtre au format bibliothÃ¨que, chargeable
+      dynamiquement par le systÃ¨me d'exploitation.
       Sous GNU/Linux, il s'agit d'un fichier ayant pour extension ".so",
       sous Windows ".dll".
     </para>
@@ -58,14 +58,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <para>
       L'extension doit inclure le fichier "weechat-plugin.h"
       (disponible dans les sources de WeeChat).
-      Ce fichier définit les structures et types dont l'extension aura
+      Ce fichier dÃ©finit les structures et types dont l'extension aura
       besoin pour communiquer avec WeeChat.
     </para>
     
     <para>
-      L'extension doit comporter certaines macros obligatoires (pour définir
-      des variables) et des fonctions (sans quoi l'extension ne peut être
-      chargée) :
+      L'extension doit comporter certaines macros obligatoires (pour dÃ©finir
+      des variables) et des fonctions (sans quoi l'extension ne peut Ãªtre
+      chargÃ©e) :
       
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
@@ -91,7 +91,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry><literal>WEECHAT_PLUGIN_WEECHAT_VERSION</literal></entry>
               <entry>
-                la version de WeeChat pour laquelle l'extension est destinée
+                la version de WeeChat pour laquelle l'extension est destinÃ©e
                 (attention: l'extension ne pourra tourner sur aucune autre
                 version de WeeChat !)
               </entry>
@@ -116,16 +116,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry><literal>int weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])</literal></entry>
               <entry>
-                fonction appelée au chargement de l'extension
-                qui doit renvoyer WEECHAT_RC_OK en cas de succès,
+                fonction appelÃ©e au chargement de l'extension
+                qui doit renvoyer WEECHAT_RC_OK en cas de succÃ¨s,
                 WEECHAT_RC_ERROR en cas d'erreur (si erreur, l'extension
-                ne sera PAS chargée), argv/argv sont les paramètres pour
-                l'extension (donnés sur la ligne de commande par l'utilisateur)
+                ne sera PAS chargÃ©e), argv/argv sont les paramÃ¨tres pour
+                l'extension (donnÃ©s sur la ligne de commande par l'utilisateur)
               </entry>
             </row>
             <row>
               <entry><literal>int weechat_plugin_end (struct t_weechat_plugin *plugin)</literal></entry>
-              <entry>fonction appelée au déchargement de l'extension</entry>
+              <entry>fonction appelÃ©e au dÃ©chargement de l'extension</entry>
             </row>
           </tbody>
         </tgroup>
@@ -136,12 +136,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <title>Compiler l'extension</title>
       
       <para>
-        La compilation ne nécessite pas les sources WeeChat, mais seulement
+        La compilation ne nÃ©cessite pas les sources WeeChat, mais seulement
         le fichier "<literal>weechat-plugin.h</literal>".
       </para>
       
       <para>
-        Pour compiler une extension composée d'un fichier "toto.c" (sous
+        Pour compiler une extension composÃ©e d'un fichier "toto.c" (sous
         GNU/Linux) :
 <screen>
 <prompt>$ </prompt><userinput>gcc -fPIC -Wall -c toto.c</userinput>
@@ -155,7 +155,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <title>Charger l'extension dans WeeChat</title>
       
       <para>
-        Copier le fichier "libtoto.so" dans le répertoire système des
+        Copier le fichier "libtoto.so" dans le rÃ©pertoire systÃ¨me des
         extensions (par exemple
         "<literal>/usr/local/lib/weechat/plugins)</literal>" ou bien dans
         celui de l'utilisateur (par exemple
@@ -174,8 +174,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       
       <para>
         Un exemple complet d'extension, qui ajoute une commande /double
-        affichant deux fois les paramètres passés sur le tampon courant
-        ou exécutant deux fois une commande (d'accord ce n'est pas très utile
+        affichant deux fois les paramÃ¨tres passÃ©s sur le tampon courant
+        ou exÃ©cutant deux fois une commande (d'accord ce n'est pas trÃ¨s utile
         mais ceci est un exemple !) :
 <screen>
 #include &lt;stdlib.h&gt;

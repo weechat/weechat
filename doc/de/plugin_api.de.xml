@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -45,7 +45,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </command>
     </para>
     <para>
-      Legt neuen Zeichensatz für ein Plugin fest.
+      Legt neuen Zeichensatz fÃ¼r ein Plugin fest.
     </para>
     <para>
       Argumente:
@@ -93,7 +93,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            <option>charset</option>: ursprünglicher Zeichensatz, von
+            <option>charset</option>: ursprÃ¼nglicher Zeichensatz, von
             dem konvertiert werden soll
           </para>
         </listitem>
@@ -105,7 +105,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: konvertierte Zeichenkette
+      RÃ¼ckgabewert: konvertierte Zeichenkette
     </para>
     <para>
       Anmerkung: der Speicher, der durch das Ergebnis belegt wird, muss
@@ -113,7 +113,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     <para>
       Beispiel:
-      <screen>char *str = plugin->iconv_to_internal (plugin, "ISO-8859-1", "iso string: é à");</screen>
+      <screen>char *str = plugin->iconv_to_internal (plugin, "ISO-8859-1", "iso string: Ã© Ã ");</screen>
     </para>
   </section>
   
@@ -152,7 +152,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: konvertierte Zeichenkette
+      RÃ¼ckgabewert: konvertierte Zeichenkette
     </para>
     <para>
       Anmerkung: der Speicher, der durch das Ergebnis belegt wird, muss
@@ -160,7 +160,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     <para>
       Beispiel:
-      <screen>char *str = plugin->iconv_from_internal (plugin, "ISO-8859-1", "utf-8 string: é à");</screen>
+      <screen>char *str = plugin->iconv_from_internal (plugin, "ISO-8859-1", "utf-8 string: Ã© Ã ");</screen>
     </para>
   </section>
   
@@ -175,7 +175,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </command>
     </para>
     <para>
-      Vergleich von Zeichenketten unabhängig von Sprache und
+      Vergleich von Zeichenketten unabhÃ¤ngig von Sprache und
       Schreibweise (gross/klein).
     </para>
     <para>
@@ -199,9 +199,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: Unterschied zwischen den zwei Zeichenketten: kleiner
+      RÃ¼ckgabewert: Unterschied zwischen den zwei Zeichenketten: kleiner
       Null wenn
-      string1 &lt; string2, Null wenn string1 == string2, grösser Null
+      string1 &lt; string2, Null wenn string1 == string2, grÃ¶sser Null
       wenn string1 &gt; string2
     </para>
     <para>
@@ -221,8 +221,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </command>
     </para>
     <para>
-      Vergleich von Zeichenketten unabhängig von Sprache und Schreibweise
-      (gross/klein) für höchstens "max" Zeichen.
+      Vergleich von Zeichenketten unabhÃ¤ngig von Sprache und Schreibweise
+      (gross/klein) fÃ¼r hÃ¶chstens "max" Zeichen.
     </para>
     <para>
       Argumente:
@@ -244,16 +244,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            <option>max</option>: maximale Zahl an Zeichen für den
+            <option>max</option>: maximale Zahl an Zeichen fÃ¼r den
             Vergleich
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: Unterschied zwischen den zwei Zeichenketten: kleiner
+      RÃ¼ckgabewert: Unterschied zwischen den zwei Zeichenketten: kleiner
       Null wenn string1 &lt; string2, Null wenn string1 == string2,
-      grösser Null wenn string1 &gt; string2
+      grÃ¶sser Null wenn string1 &gt; string2
     </para>
     <para>
       Beispiel:
@@ -303,16 +303,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           <para>
             <option>num_items</option>: Zeiger auf eine int-Variable,
             die die Anzahl der erzeugten
-            Teile enthält
+            Teile enthÃ¤lt
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: ein Array von Zeichenketten, NULL bei Fehlern.
+      RÃ¼ckgabewert: ein Array von Zeichenketten, NULL bei Fehlern.
     </para>
     <para>
-      Hinweis: Das zurückgegebene Array muss nach der Benutzung mittels
+      Hinweis: Das zurÃ¼ckgegebene Array muss nach der Benutzung mittels
       "free_exloded_string" explizit freigegeben werden.
     </para>
     <para>
@@ -358,7 +358,7 @@ if (argv != NULL)
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner (?).
+      RÃ¼ckgabewert: keiner (?).
     </para>
     <para>
       Beispiel:
@@ -402,7 +402,7 @@ if (argv != NULL)
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: 1 wenn das Verzeichnis erfolgreich erstellt wurde, 0
+      RÃ¼ckgabewert: 1 wenn das Verzeichnis erfolgreich erstellt wurde, 0
       wenn ein Fehler aufgetreten ist.
     </para>
     <para>
@@ -425,7 +425,7 @@ if (!plugin->mkdir_home (plugin, "temp"))
       </command>
     </para>
     <para>
-      Führe eine Funktion auf allen Dateien eines Verzeichnisses aus.
+      FÃ¼hre eine Funktion auf allen Dateien eines Verzeichnisses aus.
     </para>
     <para>
       Argumente:
@@ -449,7 +449,7 @@ if (!plugin->mkdir_home (plugin, "temp"))
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner.
+      RÃ¼ckgabewert: keiner.
     </para>
     <para>
       Beispiel:
@@ -477,7 +477,7 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
     </para>
     <para>
       Sende eine Nachricht an einen WeeChat-Puffer, bezeichnet durch
-      server und channel (beide können NULL sein, dann wird der aktuelle
+      server und channel (beide kÃ¶nnen NULL sein, dann wird der aktuelle
       Puffer verwendet).
     </para>
     <para>
@@ -491,7 +491,7 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
         <listitem>
           <para>
             <option>server</option>: interner Name des Servers, zu
-            welchem der Puffer gehört, in dem die Nachricht angezeigt
+            welchem der Puffer gehÃ¶rt, in dem die Nachricht angezeigt
             werden soll (kann NULL sein)
           </para>
         </listitem>
@@ -566,7 +566,7 @@ plugin->exec_on_files (plugin, "/tmp", &amp;callback);
       the attribute.
     </para>
     <para>
-      Rückgabewert: keiner.
+      RÃ¼ckgabewert: keiner.
     </para>
     <para>
       Beispiele:
@@ -575,7 +575,7 @@ plugin->print (plugin, NULL, NULL, "hello");
 plugin->print (plugin, NULL, "#weechat", "hello");
 plugin->print (plugin, "freenode", "#weechat", "hello");
 plugin->print (plugin, NULL, NULL,
-               "Test: \x02 Fett \x0F\x03%02d Blau \x03%02d Grün",
+               "Test: \x02 Fett \x0F\x03%02d Blau \x03%02d GrÃ¼n",
                plugin->get_irc_color (plugin, "blue"),
                plugin->get_irc_color (plugin, "green"));
 </screen>
@@ -615,7 +615,7 @@ plugin->print (plugin, NULL, NULL,
       To display colored text, see <xref linkend="secAPI_print" />.
     </para>
     <para>
-      Rückgabewert: keiner.
+      RÃ¼ckgabewert: keiner.
     </para>
     <para>
       Beispiel: <screen>plugin->print_server (plugin, "hello");</screen>
@@ -633,7 +633,7 @@ plugin->print (plugin, NULL, NULL,
       </command>
     </para>
     <para>
-      Schreibe eine Nachricht in die Log-Datei (für den entsprechenden
+      Schreibe eine Nachricht in die Log-Datei (fÃ¼r den entsprechenden
       Server/Channel).
     </para>
     <para>
@@ -647,13 +647,13 @@ plugin->print (plugin, NULL, NULL,
         <listitem>
           <para>
             <option>server</option>: interner Name des Servers, zu
-            welchem der Log-Puffer gehört (kann NULL sein)
+            welchem der Log-Puffer gehÃ¶rt (kann NULL sein)
           </para>
         </listitem>
         <listitem>
           <para>
             <option>channel</option>: Name des Channels, zu welchem der
-            Log-Puffer gehört (kann NULL sein)
+            Log-Puffer gehÃ¶rt (kann NULL sein)
           </para>
         </listitem>
         <listitem>
@@ -664,7 +664,7 @@ plugin->print (plugin, NULL, NULL,
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner.
+      RÃ¼ckgabewert: keiner.
     </para>
     <para>
       Beispiel:
@@ -700,16 +700,16 @@ plugin->log (plugin, "freenode", "#weechat", "test");
         <listitem>
           <para>
             <option>message</option>: Name (Typ) der IRC-Nachricht ("*"
-            für alle Nachrichten).
+            fÃ¼r alle Nachrichten).
             Eine Liste der bekannten IRC-Nachrichten ist in den 
             <acronym>RFC</acronym>s
             <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
             und
             <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>
             zu finden.
-            Weiterhin können sie einen speziellen Namen verwenden, der
+            Weiterhin kÃ¶nnen sie einen speziellen Namen verwenden, der
             mit "weechat_" beginnt, um spezielle Ereignisse zu
-            bearbeiten, wie in der folgenden Tabelle aufgeführt:
+            bearbeiten, wie in der folgenden Tabelle aufgefÃ¼hrt:
             <informaltable colsep="0" frame="none">
               <tgroup cols="2">
                 <thead>
@@ -778,7 +778,7 @@ plugin->log (plugin, "freenode", "#weechat", "test");
         <listitem>
           <para>
             <option>handler_args</option>: Argumente, die beim Aufruf
-            an die Funktion übergeben werden
+            an die Funktion Ã¼bergeben werden
           </para>
         </listitem>
         <listitem>
@@ -786,17 +786,17 @@ plugin->log (plugin, "freenode", "#weechat", "test");
             <option>handler_pointer</option>: pointer given to function
             when called
             <option>handler_pointer</option>: Zeiger, der an die Funktion
-            übergeben wird
+            Ã¼bergeben wird
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: Zeiger auf den neuen Handler
+      RÃ¼ckgabewert: Zeiger auf den neuen Handler
     </para>
     <para>
       Hinweis: die Funktion, die aufgerufen wird wenn eine Nachricht
-      empfangen wurde, muss einen der folgenden Werte zurückgeben:
+      empfangen wurde, muss einen der folgenden Werte zurÃ¼ckgeben:
       <itemizedlist>
         <listitem>
           <para>
@@ -811,7 +811,7 @@ plugin->log (plugin, "freenode", "#weechat", "test");
         <listitem>
           <para>
             <literal>PLUGIN_RC_OK_IGNORE_WEECHAT</literal>: Die Nachricht
-            wird nicht an WeeChat übergeben
+            wird nicht an WeeChat Ã¼bergeben
           </para>
         </listitem>
         <listitem>
@@ -830,7 +830,7 @@ plugin->log (plugin, "freenode", "#weechat", "test");
         <listitem>
           <para>
             <literal>PLUGIN_RC_OK_WITH_HIGHLIGHT</literal>: Funktion
-            erfolgreich vervollständigt und eine Hervorhebung bei den
+            erfolgreich vervollstÃ¤ndigt und eine Hervorhebung bei den
             empfangenen Nachrichten eingebaut
           </para>
         </listitem>
@@ -867,8 +867,8 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
       </command>
     </para>
     <para>
-      Erzeugt einen Handler für ein WeeChat-Kommando, der aufgerufen
-      wird, wenn der Anwender das Kommando ausführt (Beispiel: /command).
+      Erzeugt einen Handler fÃ¼r ein WeeChat-Kommando, der aufgerufen
+      wird, wenn der Anwender das Kommando ausfÃ¼hrt (Beispiel: /command).
     </para>
     <para>
       Argumente:
@@ -883,42 +883,42 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
             <option>command</option>: Name des neuen Kommandos, der auch
             Name eines bereits existierenden Kommandos sein kann (mit
             Bedacht zu verwenden, das ersetzte Kommando ist nicht
-            verfügbar, bis das Plugin entfernt wurde)
+            verfÃ¼gbar, bis das Plugin entfernt wurde)
           </para>
         </listitem>
         <listitem>
           <para>
             <option>description</option>: kurze Beschreibung des
-            Kommandos (angezeigt beim Ausführen von /help command)
+            Kommandos (angezeigt beim AusfÃ¼hren von /help command)
           </para>
         </listitem>
         <listitem>
           <para>
             <option>arguments</option>: kurze Beschreibung der Argumente
-            des Kommandos (angezeigt beim Ausführen von /help command)
+            des Kommandos (angezeigt beim AusfÃ¼hren von /help command)
           </para>
         </listitem>
         <listitem>
           <para>
             <option>arguments_description</option>: lange Beschreibung
-            der Argumente des Kommandos (angezeigt beim Ausführen von
+            der Argumente des Kommandos (angezeigt beim AusfÃ¼hren von
             /help command)
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>completion_template</option>: Vorlage für die
-            Vervollständigung; zum Beispiel bedeutet
+            <option>completion_template</option>: Vorlage fÃ¼r die
+            VervollstÃ¤ndigung; zum Beispiel bedeutet
             "<literal>abc|%w def|%i</literal>", dass das erste Argument
             "abc" oder ein WeeChat-Kommando sein kann und das zweite
             Argument "def" oder ein IRC-Kommando. Eine leere
-            Zeichenkette bedeutet, dass WeeChat für jedes Argument
-            einen Nicknamen des gegenwärtigen Channels einsetzt, ein
-            NULL oder "-" schaltet die Vervollständigung für alle
+            Zeichenkette bedeutet, dass WeeChat fÃ¼r jedes Argument
+            einen Nicknamen des gegenwÃ¤rtigen Channels einsetzt, ein
+            NULL oder "-" schaltet die VervollstÃ¤ndigung fÃ¼r alle
             Argumente ab.
           </para>
           <para>
-            Die folgenden Ersetzungen können verwendet werden:
+            Die folgenden Ersetzungen kÃ¶nnen verwendet werden:
             <informaltable colsep="0" frame="none">
               <tgroup cols="2">
                 <thead>
@@ -930,7 +930,7 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                 <tbody>
                   <row>
                     <entry><literal>%-</literal></entry>
-                    <entry>keine Vervollständigung für das Argument</entry>
+                    <entry>keine VervollstÃ¤ndigung fÃ¼r das Argument</entry>
                   </row>
                   <row>
                     <entry><literal>%*</literal></entry>
@@ -953,7 +953,7 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                   </row>
                   <row>
                     <entry><literal>%c</literal></entry>
-                    <entry>gegenwärtiger Channel</entry>
+                    <entry>gegenwÃ¤rtiger Channel</entry>
                   </row>
                   <row>
                     <entry><literal>%C</literal></entry>
@@ -981,23 +981,23 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                   </row>
                   <row>
                     <entry><literal>%m</literal></entry>
-                    <entry>Nicknamen des gegenwärtigen Servers</entry>
+                    <entry>Nicknamen des gegenwÃ¤rtigen Servers</entry>
                   </row>
                   <row>
                     <entry><literal>%M</literal></entry>
                     <entry>
-                      Nicks auf dem gegenwärtigen Server (in allen
+                      Nicks auf dem gegenwÃ¤rtigen Server (in allen
                       offenen Channeln)
                     </entry>
                   </row>
                   <row>
                     <entry><literal>%n</literal></entry>
-                    <entry>Nicknamen des gegenwärtigen Channels</entry>
+                    <entry>Nicknamen des gegenwÃ¤rtigen Channels</entry>
                   </row>
                   <row>
                     <entry><literal>%N</literal></entry>
                     <entry>
-                      Nicknamen und Hostnamen des gegenwärtigen
+                      Nicknamen und Hostnamen des gegenwÃ¤rtigen
                       Channels
                     </entry>
                   </row>
@@ -1019,7 +1019,7 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                   </row>
                   <row>
                     <entry><literal>%s</literal></entry>
-                    <entry>Name des gegenwärtigen Servers</entry>
+                    <entry>Name des gegenwÃ¤rtigen Servers</entry>
                   </row>
                   <row>
                     <entry><literal>%S</literal></entry>
@@ -1027,7 +1027,7 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
                   </row>
                   <row>
                     <entry><literal>%t</literal></entry>
-                    <entry>Topic des gegenwärtigen Channels</entry>
+                    <entry>Topic des gegenwÃ¤rtigen Channels</entry>
                   </row>
                   <row>
                     <entry><literal>%v</literal></entry>
@@ -1049,7 +1049,7 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
         <listitem>
           <para>
             <option>function</option>: Funktion, die aufgerufen wird,
-            wenn das Kommando ausgeführt wird
+            wenn das Kommando ausgefÃ¼hrt wird
           </para>
           <para>
             Sie verwendet den folgenden Prototypen:
@@ -1060,7 +1060,7 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
             </command>
           </para>
           <para>
-            Das Argument argc ist auf 3 gesetzt, das Array argv enthält
+            Das Argument argc ist auf 3 gesetzt, das Array argv enthÃ¤lt
             die folgenden Werte:
             <itemizedlist>
               <listitem>
@@ -1078,23 +1078,23 @@ msg_handler = plugin->msg_handler_add (plugin, "KICK",
         <listitem>
           <para>
             <option>handler_args</option>: Argumente, die an die Funktion
-            übergeben werden
+            Ã¼bergeben werden
           </para>
         </listitem>
         <listitem>
           <para>
             <option>handler_pointer</option>: Zeiger, der an die Funktion
-            übergeben wird
+            Ã¼bergeben wird
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: Zeiger auf den neuen Kommando-Handler.
+      RÃ¼ckgabewert: Zeiger auf den neuen Kommando-Handler.
     </para>
     <para>
       Hinweis: die Funktion, die aufgerufen wird, wenn das Kommando
-      ausgeführt wird, muss einen der folgende Werte zurückgeben:
+      ausgefÃ¼hrt wird, muss einen der folgende Werte zurÃ¼ckgeben:
       <itemizedlist>
         <listitem>
           <para>
@@ -1183,17 +1183,17 @@ cmd_handler = plugin->cmd_handler_add (plugin, "test", "Test command",
         <listitem>
           <para>
             <option>handler_pointer</option>: Zeiger, der an die Funktion
-            übergeben wird
+            Ã¼bergeben wird
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: Zeiger auf den neuen timer-Handler.
+      RÃ¼ckgabewert: Zeiger auf den neuen timer-Handler.
     </para>
     <para>
       Hinweis: die Funktion, die aufgerufen wird, muss einen der folgende
-      Werte zurückgeben:
+      Werte zurÃ¼ckgeben:
       <itemizedlist>
         <listitem>
           <para>
@@ -1235,7 +1235,7 @@ timer_handler = plugin->timer_handler_add (plugin, 60, &amp;my_timer);
       </command>
     </para>
     <para>
-      Erzeugt einen Keyboard-Handler, der nach dem Drücken einer Taste
+      Erzeugt einen Keyboard-Handler, der nach dem DrÃ¼cken einer Taste
       aufgerufen wird.
     </para>
     <para>
@@ -1259,12 +1259,12 @@ timer_handler = plugin->timer_handler_add (plugin, 60, &amp;my_timer);
             </command>
           </para>
           <para>
-            Das Argument argc ist auf 3 gesetzt, argv enthält die
+            Das Argument argc ist auf 3 gesetzt, argv enthÃ¤lt die
             folgenden Werte:
             <itemizedlist>
               <listitem>
                 <para>
-                  argv[0] = Taste, die gedrückt wurde 
+                  argv[0] = Taste, die gedrÃ¼ckt wurde 
                   (Name der internen Funktion oder '*' gefolgt von einem
                   Tastaturcode)
                 </para>
@@ -1285,25 +1285,25 @@ timer_handler = plugin->timer_handler_add (plugin, 60, &amp;my_timer);
         <listitem>
           <para>
             <option>handler_args</option>: Argumente, die bei Aufruf der
-            Funktion übergeben
+            Funktion Ã¼bergeben
             werden
           </para>
         </listitem>
         <listitem>
           <para>
             <option>handler_pointer</option>: Zeiger auf die Funktion,
-            der bei Aufruf übergeben
+            der bei Aufruf Ã¼bergeben
             wird
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: Zeiger auf den Handler.
+      RÃ¼ckgabewert: Zeiger auf den Handler.
     </para>
     <para>
       Hinweis: Die aufgerufene Funktion muss einen der folgenden Werte
-      zurückgeben:
+      zurÃ¼ckgeben:
       <itemizedlist>
         <listitem>
           <para>
@@ -1352,7 +1352,7 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
       </command>
     </para>
     <para>
-      Fügt einen Ereignishandler hinzu, der aufgerufen wird, wenn ein
+      FÃ¼gt einen Ereignishandler hinzu, der aufgerufen wird, wenn ein
       Ereignis eintritt.
     </para>
     <para>
@@ -1388,13 +1388,13 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
         <listitem>
           <para>
             <option>handler_args</option>: Argument, die an die aufgerufene
-            Funktion übergeben werden
+            Funktion Ã¼bergeben werden
           </para>
         </listitem>
         <listitem>
           <para>
             <option>handler_pointer</option>: Pointer, der an die
-            aufgerufene Funktion übergeben werden
+            aufgerufene Funktion Ã¼bergeben werden
           </para>
         </listitem>
       </itemizedlist>
@@ -1414,7 +1414,7 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
           <tbody>
             <row>
               <entry><literal>buffer_open</literal></entry>
-              <entry>ein Puffer wurde geöffnet</entry>
+              <entry>ein Puffer wurde geÃ¶ffnet</entry>
               <entry>
                 argc = 1, argv = { buffer number }
               </entry>
@@ -1438,11 +1438,11 @@ keyb_handler = plugin->keyboard_handler_add (plugin, &amp;my_keyb);
       </informaltable>
     </para>
     <para>
-      Rückgabewert: Pointer auf den neuen Ereignishandler.
+      RÃ¼ckgabewert: Pointer auf den neuen Ereignishandler.
     </para>
     <para>
       Anmerkung: die aufgerufene Function muss einen der folgenden Werte
-      zurückgeben:
+      zurÃ¼ckgeben:
       <itemizedlist>
         <listitem>
           <para>
@@ -1502,7 +1502,7 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner
+      RÃ¼ckgabewert: keiner
     </para>
     <para>
       Beispiel:
@@ -1533,7 +1533,7 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner
+      RÃ¼ckgabewert: keiner
     </para>
     <para>
       Beispiel:
@@ -1553,7 +1553,7 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
       </command>
     </para>
     <para>
-      Füge einen Nachrichtenmodifikator hinzu.
+      FÃ¼ge einen Nachrichtenmodifikator hinzu.
     </para>
     <para>
       Argumente:
@@ -1609,7 +1609,7 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
             <ulink url="http://www.ietf.org/rfc/rfc1459.txt">1459</ulink>
             and
             <ulink url="http://www.ietf.org/rfc/rfc2812.txt">2812</ulink>.
-            Außerdem gibt es den Wert "*", der alle Nachrichten
+            AuÃŸerdem gibt es den Wert "*", der alle Nachrichten
             anspricht (ohne Filter).
           </para>
         </listitem>
@@ -1618,7 +1618,7 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
             <option>function</option>: aufgerufene Funktion
           </para>
           <para>
-            Folgender Prototyp wird dafür benutzt:
+            Folgender Prototyp wird dafÃ¼r benutzt:
             <command>
               int my_function (t_weechat_plugin *plugin,
               int argc, char **argv,
@@ -1640,28 +1640,28 @@ event_handler = plugin->event_handler_add (plugin, "buffer_open",
         </listitem>
         <listitem>
           <para>
-            <option>modifier_args</option>: an die Funktion übergebene
+            <option>modifier_args</option>: an die Funktion Ã¼bergebene
             Werte
           </para>
         </listitem>
         <listitem>
           <para>
             <option>modifier_pointer</option>: an die Funktion
-            übergebener Zeiger
+            Ã¼bergebener Zeiger
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: Zeiger auf den neuen Nachrichtenmodifikator
+      RÃ¼ckgabewert: Zeiger auf den neuen Nachrichtenmodifikator
     </para>
     <para>
-      Anmerkung: Die Funktion muss die veränderte Zeichenkette oder NULL 
-      (wenn keine Änderungen erfolgten) zurückgeben.
-      Wenn die Funktion eine leere Zeichenkette zurückgibt, wird die
+      Anmerkung: Die Funktion muss die verÃ¤nderte Zeichenkette oder NULL 
+      (wenn keine Ã„nderungen erfolgten) zurÃ¼ckgeben.
+      Wenn die Funktion eine leere Zeichenkette zurÃ¼ckgibt, wird die
       Nachricht komplett verworfen und nicht weiter von WeeChat
       verarbeitet. (Seien Sie vorsichtig mit dem Verwerfen von
-      Nachrichten!) Die zurückgegebene Zeichenkette muss mit malloc()
+      Nachrichten!) Die zurÃ¼ckgegebene Zeichenkette muss mit malloc()
       zugewiesen worden sein und wird von WeeChat nach Gebrauch
       automatisch mit free() wieder freigegeben.
     </para>
@@ -1714,7 +1714,7 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner
+      RÃ¼ckgabewert: keiner
     </para>
     <para>
       Beispiel:
@@ -1732,7 +1732,7 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
       </command>
     </para>
     <para>
-      Entfernt alle Modifikatoren für ein Plugin.
+      Entfernt alle Modifikatoren fÃ¼r ein Plugin.
     </para>
     <para>
       Argumente:
@@ -1745,7 +1745,7 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner
+      RÃ¼ckgabewert: keiner
     </para>
     <para>
       Beispiel:
@@ -1764,7 +1764,7 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
       </command>
     </para>
     <para>
-      Führe ein WeeChat-Kommando aus (oder sende eine Nachricht an
+      FÃ¼hre ein WeeChat-Kommando aus (oder sende eine Nachricht an
       einen Channel).
     </para>
     <para>
@@ -1795,7 +1795,7 @@ modifier = plugin->modifier_add (plugin, "irc_in", "privmsg",
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner
+      RÃ¼ckgabewert: keiner
     </para>
     <para>
       Beispiel:
@@ -1817,7 +1817,7 @@ plugin->exec_command (plugin, "freenode", "#weechat", "hello");
       </command>
     </para>
     <para>
-      Gib eine Information über WeeChat oder einen Channel zurück.
+      Gib eine Information Ã¼ber WeeChat oder einen Channel zurÃ¼ck.
     </para>
     <para>
       Argumente:
@@ -1872,19 +1872,19 @@ plugin->exec_command (plugin, "freenode", "#weechat", "hello");
                     <entry><literal>inactivity</literal></entry>
                     <entry>
                       Anzahl der Sekunden seit der letzten
-                      Tastenbetätigung
+                      TastenbetÃ¤tigung
                     </entry>
                   </row>
                   <row>
                     <entry><literal>input</literal></entry>
                     <entry>
-                      Inhalt der Kommandozeile im gegenwärtigen Fenster
+                      Inhalt der Kommandozeile im gegenwÃ¤rtigen Fenster
                     </entry>
                   </row>
                   <row>
                     <entry><literal>input_mask</literal></entry>
                     <entry>
-                      Inhalt der Farbmaske für die Kommandozeile
+                      Inhalt der Farbmaske fÃ¼r die Kommandozeile
                     </entry>
                   </row>
                   <row>
@@ -1915,13 +1915,13 @@ plugin->exec_command (plugin, "freenode", "#weechat", "hello");
         <listitem>
           <para>
             <option>server</option>: interner Name des Servers um
-            Informationen zu lesen (wenn benötigt)
+            Informationen zu lesen (wenn benÃ¶tigt)
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: angeforderte Information oder NULL
+      RÃ¼ckgabewert: angeforderte Information oder NULL
     </para>
     <para>
       Hinweis: das Ergebnis muss nach Nutzung mit "free" wieder
@@ -1959,7 +1959,7 @@ if (inactivity)
       </command>
     </para>
     <para>
-      Gib eine Liste der aktiven oder beendeten DCCs zurück.
+      Gib eine Liste der aktiven oder beendeten DCCs zurÃ¼ck.
     </para>
     <para>
       Argumente:
@@ -1972,7 +1972,7 @@ if (inactivity)
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: verkettete Liste von DCCs.
+      RÃ¼ckgabewert: verkettete Liste von DCCs.
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -2025,7 +2025,7 @@ if (inactivity)
             <row>
               <entry>time_t</entry>
               <entry><literal>start_transfer</literal></entry>
-              <entry>Datum/Zeit des Beginns der Übertragung der DCC</entry>
+              <entry>Datum/Zeit des Beginns der Ãœbertragung der DCC</entry>
             </row>
             <row>
               <entry>unsigned long</entry>
@@ -2060,7 +2060,7 @@ if (inactivity)
             <row>
               <entry>unsigned long</entry>
               <entry><literal>size</literal></entry>
-              <entry>Dateigrösse</entry>
+              <entry>DateigrÃ¶sse</entry>
             </row>
             <row>
               <entry>unsigned long</entry>
@@ -2076,7 +2076,7 @@ if (inactivity)
               <entry>unsigned long</entry>
               <entry><literal>bytes_per_sec</literal></entry>
               <entry>
-                Übertragungsrate (Bytes/s) seit Beginn der Übertragung
+                Ãœbertragungsrate (Bytes/s) seit Beginn der Ãœbertragung
               </entry>
             </row>
             <row>
@@ -2090,7 +2090,7 @@ if (inactivity)
               <entry>t_plugin_dcc_info *</entry>
               <entry><literal>next_dcc</literal></entry>
               <entry>
-                Zeiger auf nächstes DCC-Info
+                Zeiger auf nÃ¤chstes DCC-Info
               </entry>
             </row>
 
@@ -2147,7 +2147,7 @@ if (dcc_info)
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner.
+      RÃ¼ckgabewert: keiner.
     </para>
     <para>
       Beispiel:
@@ -2165,7 +2165,7 @@ if (dcc_info)
       </command>
     </para>
     <para>
-      Gibt die Liste von IRC-Servern zurück (verbunden oder nicht)
+      Gibt die Liste von IRC-Servern zurÃ¼ck (verbunden oder nicht)
     </para>
     <para>
       Argumente:
@@ -2178,7 +2178,7 @@ if (dcc_info)
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: Liste von IRC-Servern.
+      RÃ¼ckgabewert: Liste von IRC-Servern.
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -2217,7 +2217,7 @@ if (dcc_info)
               <entry><literal>command_line</literal></entry>
               <entry>
                 1 wenn der Servername auf der Kommandozeile angegeben
-                wurde (ist somit temporär) 0 sonst
+                wurde (ist somit temporÃ¤r) 0 sonst
               </entry>
             </row>
             <row>
@@ -2248,7 +2248,7 @@ if (dcc_info)
             <row>
               <entry>char *</entry>
               <entry><literal>nick1</literal></entry>
-              <entry>primärer Nickname</entry>
+              <entry>primÃ¤rer Nickname</entry>
             </row>
             <row>
               <entry>char *</entry>
@@ -2268,20 +2268,20 @@ if (dcc_info)
             <row>
               <entry>char *</entry>
               <entry><literal>real name</literal></entry>
-              <entry>tatsächlicher Name</entry>
+              <entry>tatsÃ¤chlicher Name</entry>
             </row>
             <row>
               <entry>char *</entry>
               <entry><literal>command</literal></entry>
               <entry>
                 Kommando, dass bei erfolgreicher Verbindung
-                ausgeführt wurde
+                ausgefÃ¼hrt wurde
               </entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>command_delay</literal></entry>
-              <entry>Verzögerung nach Ausführung des Kommandos</entry>
+              <entry>VerzÃ¶gerung nach AusfÃ¼hrung des Kommandos</entry>
             </row>
             <row>
               <entry>char *</entry>
@@ -2327,12 +2327,12 @@ if (dcc_info)
             <row>
               <entry>int</entry>
               <entry><literal>ssl_connected</literal></entry>
-              <entry>1 wenn verbunden über SSL, 0 sonst</entry>
+              <entry>1 wenn verbunden Ã¼ber SSL, 0 sonst</entry>
             </row>
             <row>
               <entry>char *</entry>
               <entry><literal>nick</literal></entry>
-              <entry>gegenwärtiger Nickname</entry>
+              <entry>gegenwÃ¤rtiger Nickname</entry>
             </row>
             <row>
               <entry>int</entry>
@@ -2357,7 +2357,7 @@ if (dcc_info)
             <row>
               <entry>t_plugin_server_info *</entry>
               <entry><literal>next_server</literal></entry>
-              <entry>Zeiger auf nächsten Knoten der Liste</entry>
+              <entry>Zeiger auf nÃ¤chsten Knoten der Liste</entry>
             </row>
           </tbody>
         </tgroup>
@@ -2414,13 +2414,13 @@ if (server_info)
         <listitem>
           <para>
             <option>server_info</option>: Zeiger auf eine Server-Liste,
-            der von der Funktion "get_server_info" zurückgegeben wurde.
+            der von der Funktion "get_server_info" zurÃ¼ckgegeben wurde.
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner.
+      RÃ¼ckgabewert: keiner.
     </para>
     <para>
       Beispiel:
@@ -2439,7 +2439,7 @@ if (server_info)
       </command>
     </para>
     <para>
-      Gib eine Liste der Channels für einen Server zurück.
+      Gib eine Liste der Channels fÃ¼r einen Server zurÃ¼ck.
     </para>
     <para>
       Argumente:
@@ -2457,7 +2457,7 @@ if (server_info)
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: verkettete Liste von Channels für einen Server.
+      RÃ¼ckgabewert: verkettete Liste von Channels fÃ¼r einen Server.
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -2472,7 +2472,7 @@ if (server_info)
               <entry>int</entry>
               <entry><literal>type</literal></entry>
               <entry>
-                0 für einen normalen Channel, 1 für einen Privaten
+                0 fÃ¼r einen normalen Channel, 1 fÃ¼r einen Privaten
               </entry>
             </row>
             <row>
@@ -2498,7 +2498,7 @@ if (server_info)
             <row>
               <entry>char *</entry>
               <entry><literal>key</literal></entry>
-              <entry>Schlüssel des Channels</entry>
+              <entry>SchlÃ¼ssel des Channels</entry>
             </row>
             <row>
               <entry>int</entry>
@@ -2513,7 +2513,7 @@ if (server_info)
             <row>
               <entry>t_plugin_channel_info *</entry>
               <entry><literal>next_channel</literal></entry>
-              <entry>Zeiger auf nächsten Knoten der Liste</entry>
+              <entry>Zeiger auf nÃ¤chsten Knoten der Liste</entry>
             </row>
           </tbody>
         </tgroup>
@@ -2568,14 +2568,14 @@ if (channel_info)
         <listitem>
           <para>
             <option>channel_info</option>: Zeiger auf eine Liste
-            "channel info", der von "get_channel_info" zurückgegeben
+            "channel info", der von "get_channel_info" zurÃ¼ckgegeben
             wurde
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner.
+      RÃ¼ckgabewert: keiner.
     </para>
     <para>
       Beispiel:
@@ -2594,7 +2594,7 @@ if (channel_info)
       </command>
     </para>
     <para>
-      Gib eine Liste der Nicknamen für einen Channel zurück.
+      Gib eine Liste der Nicknamen fÃ¼r einen Channel zurÃ¼ck.
     </para>
     <para>
       Argumente:
@@ -2617,7 +2617,7 @@ if (channel_info)
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: verkettete Liste von Nicknamen eines Channels.
+      RÃ¼ckgabewert: verkettete Liste von Nicknamen eines Channels.
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -2642,7 +2642,7 @@ if (channel_info)
               <entry>int</entry>
               <entry><literal>Flags</literal></entry>
               <entry>
-                Flags, die für einen Nicknamen gesetzt sind:
+                Flags, die fÃ¼r einen Nicknamen gesetzt sind:
                 Zweierpotenzen "oder" Zwischenwerte 
                 (1 = channel owner, 
                 2 = channel admin, 
@@ -2660,7 +2660,7 @@ if (channel_info)
             <row>
               <entry>t_plugin_nick_info *</entry>
               <entry><literal>next_nick</literal></entry>
-              <entry>Zeiger auf nächsten Knoten der Liste</entry>
+              <entry>Zeiger auf nÃ¤chsten Knoten der Liste</entry>
             </row>
           </tbody>
         </tgroup>
@@ -2714,13 +2714,13 @@ if (nick_info)
         <listitem>
           <para>
             <option>nick_info</option>: Zeiger auf eine Liste
-            "nick info", der von "get_nick_info" zurückgegeben wurde
+            "nick info", der von "get_nick_info" zurÃ¼ckgegeben wurde
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner.
+      RÃ¼ckgabewert: keiner.
     </para>
     <para>
       Beispiel:
@@ -2738,7 +2738,7 @@ if (nick_info)
       </command>
     </para>
     <para>
-      Gibt den Wert einer Option der WeeChat-Konfiguration zurück.
+      Gibt den Wert einer Option der WeeChat-Konfiguration zurÃ¼ck.
     </para>
     <para>
       Argumente:
@@ -2756,7 +2756,7 @@ if (nick_info)
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: Wert der Option, oder NULL, wenn nichts gefunden wurde.
+      RÃ¼ckgabewert: Wert der Option, oder NULL, wenn nichts gefunden wurde.
     </para>
     <para>
       Hinweis: Das Ergebnis muss nach der Benutzung mit "free" wieder
@@ -2805,7 +2805,7 @@ char *value2 = plugin->get_config (plugin, "freenode.server_autojoin");
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: 1 wenn der Wert der Option gesetzt werden konnte,
+      RÃ¼ckgabewert: 1 wenn der Wert der Option gesetzt werden konnte,
       0 bei Auftreten eines Fehlers.
     </para>
     <para>
@@ -2826,7 +2826,7 @@ plugin->set_config (plugin, "look_nicklist", "off");
       </command>
     </para>
     <para>
-      Gibt den Wert einer Option eines Plugins zurück.
+      Gibt den Wert einer Option eines Plugins zurÃ¼ck.
       Die Option wird aus "<literal>~/.weechat/plugins.rc</literal>"
       gelesen und sieht so aus: "<literal>plugin.option=value</literal>"
       (Hinweis: der Name des Plugins wird automatisch gesetzt).
@@ -2848,7 +2848,7 @@ plugin->set_config (plugin, "look_nicklist", "off");
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: Wert der Option, NULL wenn nichts gefunden wurde.
+      RÃ¼ckgabewert: Wert der Option, NULL wenn nichts gefunden wurde.
     </para>
     <para>
       Hinweis: Das Ergebnis muss nach der Benutzung mit "free" wieder
@@ -2900,7 +2900,7 @@ char *value = plugin->get_plugin_config (plugin, "my_var");
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: 1 wenn die Option gesetzt werden konnte, 0 wenn ein
+      RÃ¼ckgabewert: 1 wenn die Option gesetzt werden konnte, 0 wenn ein
       Fehler aufgetreten ist.
     </para>
     <para>
@@ -3017,7 +3017,7 @@ plugin->set_plugin_config (plugin, "my_var", "value");
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: IRC-Farbindex, -1 wenn die Farbe nicht gefunden wurde.
+      RÃ¼ckgabewert: IRC-Farbindex, -1 wenn die Farbe nicht gefunden wurde.
     </para>
     <para>
       Beispiel:
@@ -3051,25 +3051,25 @@ int color_blue = plugin->get_irc_color (plugin, "blue"); /* return 2 */
         <listitem>
           <para>
             <option>color</option>: Textfarbe (wenn der Wert &lt; 0 ist,
-            dann wird der Eingabepuffer aufgefrischt und nicht verändert)
+            dann wird der Eingabepuffer aufgefrischt und nicht verÃ¤ndert)
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>start</option>: Startposition für Einfärbung (wenn
+            <option>start</option>: Startposition fÃ¼r EinfÃ¤rbung (wenn
             der Wert &lt; 0 ist, wird die Maske neu initialisiert)
           </para>
         </listitem>
         <listitem>
           <para>
-            <option>length</option>: Länge der Einfärbung (wenn der Wert
+            <option>length</option>: LÃ¤nge der EinfÃ¤rbung (wenn der Wert
             &lt;= 0 ist, wird die Maske neu initialisiert)
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner.
+      RÃ¼ckgabewert: keiner.
     </para>
     <para>
       Beispiele:
@@ -3089,7 +3089,7 @@ plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
       </command>
     </para>
     <para>
-      Gibt die Liste der WeeChat-Fenster zurück.
+      Gibt die Liste der WeeChat-Fenster zurÃ¼ck.
     </para>
     <para>
       Argumente:
@@ -3102,7 +3102,7 @@ plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: verkettete Liste der WeeChat-Fenster.
+      RÃ¼ckgabewert: verkettete Liste der WeeChat-Fenster.
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -3131,20 +3131,20 @@ plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
             <row>
               <entry>int</entry>
               <entry><literal>win_height</literal></entry>
-              <entry>Fensterhöhe</entry>
+              <entry>FensterhÃ¶he</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>win_width_pct</literal></entry>
               <entry>
-                Breite in % (im Vergleich zum übergeordneten Fenster)
+                Breite in % (im Vergleich zum Ã¼bergeordneten Fenster)
               </entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>win_height_pct</literal></entry>
               <entry>
-                Höhe % (im Vergleich zum übergeordneten Fenster)
+                HÃ¶he % (im Vergleich zum Ã¼bergeordneten Fenster)
               </entry>
             </row>
             <row>
@@ -3163,7 +3163,7 @@ plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
               <entry>t_plugin_window_info *</entry>
               <entry><literal>next_window</literal></entry>
               <entry>
-                Zeiger auf die Informationen des nächsten Fensters
+                Zeiger auf die Informationen des nÃ¤chsten Fensters
               </entry>
             </row>
           </tbody>
@@ -3172,7 +3172,7 @@ plugin->input_color (plugin, plugin->get_irc_color (plugin, "blue"), 10, 5);
     </para>
     <para>
       Anmerkung: Das Ergebnis muss nach Benutzung durch einen Aufruf der
-      "free_window_info"-Funktion gelöscht werden.
+      "free_window_info"-Funktion gelÃ¶scht werden.
     </para>
     <para>
       Example:
@@ -3225,13 +3225,13 @@ else
           <para>
             <option>window_info</option>: Zeiger auf
             Fenster-Informationsliste, der von der
-            "get_window_info"-Funktion zurückgegeben wurde
+            "get_window_info"-Funktion zurÃ¼ckgegeben wurde
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner.
+      RÃ¼ckgabewert: keiner.
     </para>
     <para>
       Beispiel:
@@ -3249,7 +3249,7 @@ else
       </command>
     </para>
     <para>
-      Gibt eine Liste der WeeChat-Puffer zurück.
+      Gibt eine Liste der WeeChat-Puffer zurÃ¼ck.
     </para>
     <para>
       Argumente:
@@ -3262,7 +3262,7 @@ else
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: verkettete Liste der WeeChat-Puffer.
+      RÃ¼ckgabewert: verkettete Liste der WeeChat-Puffer.
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -3291,17 +3291,17 @@ else
             <row>
               <entry>char *</entry>
               <entry><literal>server_name</literal></entry>
-              <entry>Servername für den Puffer (kann NULL sein)</entry>
+              <entry>Servername fÃ¼r den Puffer (kann NULL sein)</entry>
             </row>
             <row>
               <entry>char *</entry>
               <entry><literal>channel_name</literal></entry>
-              <entry>Channelname für den Puffer (kann NULL sein)</entry>
+              <entry>Channelname fÃ¼r den Puffer (kann NULL sein)</entry>
             </row>
             <row>
               <entry>int</entry>
               <entry><literal>notify_level</literal></entry>
-              <entry>Benachrichtigungslevel für den Puffer</entry>
+              <entry>Benachrichtigungslevel fÃ¼r den Puffer</entry>
             </row>
             <row>
               <entry>char *</entry>
@@ -3319,7 +3319,7 @@ else
             <row>
               <entry>t_plugin_buffer_info *</entry>
               <entry><literal>next_buffer</literal></entry>
-              <entry>Zeiger auf die nächsten Pufferinformationen</entry>
+              <entry>Zeiger auf die nÃ¤chsten Pufferinformationen</entry>
             </row>
           </tbody>
         </tgroup>
@@ -3327,7 +3327,7 @@ else
     </para>
     <para>
       Bemerkung: Das Ergebnis muss nach der Auswertung mit der
-      "free_buffer_info"-Funktion wieder gelöscht werden.
+      "free_buffer_info"-Funktion wieder gelÃ¶scht werden.
     </para>
     <para>
       Beispiel:
@@ -3387,7 +3387,7 @@ else
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner.
+      RÃ¼ckgabewert: keiner.
     </para>
     <para>
       Beispiel:
@@ -3406,7 +3406,7 @@ else
       </command>
     </para>
     <para>
-      Gibt den Inhalt des Puffers zurück.
+      Gibt den Inhalt des Puffers zurÃ¼ck.
     </para>
     <para>
       Argumente:
@@ -3429,7 +3429,7 @@ else
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: Pufferinhalt (verkettete Liste mit den Zeilen).
+      RÃ¼ckgabewert: Pufferinhalt (verkettete Liste mit den Zeilen).
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -3463,7 +3463,7 @@ else
             <row>
               <entry>t_plugin_buffer_line *</entry>
               <entry><literal>next_line</literal></entry>
-              <entry>Zeiger auf die nächste Zeile</entry>
+              <entry>Zeiger auf die nÃ¤chste Zeile</entry>
             </row>
           </tbody>
         </tgroup>
@@ -3471,7 +3471,7 @@ else
     </para>
     <para>
       Bemerkung: Das Ergebnis muss nach der Auswertung mit der
-      "free_buffer_data"-Funktion wieder gelöscht werden.
+      "free_buffer_data"-Funktion wieder gelÃ¶scht werden.
     </para>
     <para>
       Example:
@@ -3518,13 +3518,13 @@ if (buffer_line)
         <listitem>
           <para>
             <option>buffer_line</option>: Zeiger auf Pufferzeilen, der
-            von der "get_buffer_data"-Funktion zurückgegeben wurde
+            von der "get_buffer_data"-Funktion zurÃ¼ckgegeben wurde
           </para>
         </listitem>
       </itemizedlist>
     </para>
     <para>
-      Rückgabewert: keiner.
+      RÃ¼ckgabewert: keiner.
     </para>
     <para>
       Beispiele:

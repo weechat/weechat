@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -25,14 +25,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <title>Tube FIFO</title>
   
   <para>
-    Vous pouvez contrôler WeeChat à distance, en envoyant des commandes
+    Vous pouvez contrÃ´ler WeeChat Ã  distance, en envoyant des commandes
     ou du texte dans un tube FIFO (si l'option "plugins.var.fifo.fifo" est
-    activée, elle l'est par défaut).
+    activÃ©e, elle l'est par dÃ©faut).
   </para>
   
   <para>
-    Le tube FIFO est dans le répertoire "<literal>~/.weechat/</literal>"
-    et s'appelle "weechat_fifo_xxxxx" (où xxxxx est l'ID du processus
+    Le tube FIFO est dans le rÃ©pertoire "<literal>~/.weechat/</literal>"
+    et s'appelle "weechat_fifo_xxxxx" (oÃ¹ xxxxx est l'ID du processus
     (PID) du WeeChat qui tourne).
   </para>
   
@@ -40,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     La syntaxe pour envoyer des commandes ou du texte dans le tube FIFO
     est une des suivantes :
     <screen>
-      catégorie,nom *texte ou commande ici
+      catÃ©gorie,nom *texte ou commande ici
       nom *texte ou commande ici
       *texte ou commande ici
     </screen>
@@ -63,7 +63,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </listitem>
       <listitem>
         <para>
-          affichage de texte sur le canal courant (le tampon affiché
+          affichage de texte sur le canal courant (le tampon affichÃ©
           par WeeChat) :
           <screen><prompt>$ </prompt><userinput>echo '*bonjour !' >~/.weechat/weechat_fifo_12345</userinput></screen>
           <emphasis>Attention :</emphasis> ceci est dangereux et vous ne
@@ -72,8 +72,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </listitem>
       <listitem>
         <para>
-          envoyer deux commandes pour décharger/recharger les scripts Perl
-          (vous devez les séparer par "\n") :
+          envoyer deux commandes pour dÃ©charger/recharger les scripts Perl
+          (vous devez les sÃ©parer par "\n") :
           <screen><prompt>$ </prompt><userinput>echo -e "weechat,weechat */perl unload\nweechat,weechat */perl autoload" >~/.weechat/weechat_fifo_12345</userinput></screen>
         </para>
       </listitem>
@@ -81,8 +81,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </para>
   
   <para>
-    Vous pouvez écrire un script qui envoie les commandes à tous les
-    WeeChat qui tournent en même temps, par exemple :
+    Vous pouvez Ã©crire un script qui envoie les commandes Ã  tous les
+    WeeChat qui tournent en mÃªme temps, par exemple :
 <screen>
 #!/bin/sh
 if [ $# -eq 1 ]; then

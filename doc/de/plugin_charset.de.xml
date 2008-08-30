@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <title>Zeichensatz Plugin</title>
   
   <para>
-    Das Zeichensatz-Plugin ermöglicht das Ver- und Entschlüsseln von Daten
+    Das Zeichensatz-Plugin ermÃ¶glicht das Ver- und EntschlÃ¼sseln von Daten
     auf 3 Ebenen: Global, pro Server oder pro Channel.
     Das Plugin ist optional, wird jedoch empfohlen: wenn es nicht geladen
     ist, kann WeeChat nur UTF-8-Daten lesen und schreiben.
@@ -44,7 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   
   <para>
     Wenn das Zeichensatz-Plugin startet, zeigt es den Terminalzeichensatz
-    und den internen Zeichensatz an. Der Terminalzeichensatz hängt von
+    und den internen Zeichensatz an. Der Terminalzeichensatz hÃ¤ngt von
     den LOCALE-Einstellungen ab, der interne ist UTF-8.
     Zum Beispiel:
 <screen>
@@ -92,7 +92,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <listitem>
         <para>
           Um den zeichensatz im Channel (oder einem privatem Chat)
-          festzulegen, müssen Sie den gleichen Befehl wie für den Server
+          festzulegen, mÃ¼ssen Sie den gleichen Befehl wie fÃ¼r den Server
           benutzen, jedoch in dem Channel-Puffer (oder Query-Puffer) 
         </para>
       </listitem>
@@ -108,16 +108,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <itemizedlist>
         <listitem>
           <para>
-            überprüfen Sie, ob weechat-curses zu libcursesw gelinkt ist
+            Ã¼berprÃ¼fen Sie, ob weechat-curses zu libcursesw gelinkt ist
             (Achtung: Wird bei den meisten, jedoch nicht bei allen
-            Distributionen benötigt):
+            Distributionen benÃ¶tigt):
             <screen>ldd /pfad/zu/weechat-curses</screen>
           </para>
         </listitem>
         <listitem>
           <para>
-            überprüfen Sie die Zeichensatz-Zeile im Server-Puffer, dort
-            sollten ISO-XXXXXX oder UTF-8 für den Terminal-Zeichensatz
+            Ã¼berprÃ¼fen Sie die Zeichensatz-Zeile im Server-Puffer, dort
+            sollten ISO-XXXXXX oder UTF-8 fÃ¼r den Terminal-Zeichensatz
             stehen. Wenn Sie dort ANSI_X3.4-1968 oder andere Werte sehen,
             sind Ihre LOCALES eventuell falsch eingestellt.
           </para>

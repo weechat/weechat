@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <title>Introduction</title>
   
   <para>
-    Ce chapitre décrit WeeChat et les pré-requis pour son installation.
+    Ce chapitre dÃ©crit WeeChat et les prÃ©-requis pour son installation.
   </para>
   
   <section id="secDescription">
@@ -33,12 +33,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <para>
       WeeChat (Wee Enhanced Environment for Chat) est un client
-      chat libre, rapide et léger, conçu pour différents systèmes
+      chat libre, rapide et lÃ©ger, conÃ§u pour diffÃ©rents systÃ¨mes
       d'exploitation.
     </para>
     
     <para>
-      Ses principales caractéristiques sont les suivantes :
+      Ses principales caractÃ©ristiques sont les suivantes :
       <itemizedlist>
         <listitem>
           <para>
@@ -47,17 +47,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            plusieurs interfaces : Curses (wxWidgets, Gtk et Qt en développement)
+            plusieurs interfaces : Curses (wxWidgets, Gtk et Qt en dÃ©veloppement)
           </para>
         </listitem>
         <listitem>
           <para>
-            petit, rapide et léger
+            petit, rapide et lÃ©ger
           </para>
         </listitem>
         <listitem>
           <para>
-            paramétrable et extensible avec des extensions et des scripts
+            paramÃ©trable et extensible avec des extensions et des scripts
           </para>
         </listitem>
         <listitem>
@@ -73,7 +73,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <listitem>
           <para>
             multi plates-formes (GNU/Linux, *BSD, MacOS X, Windows et
-            d'autres systèmes)
+            d'autres systÃ¨mes)
           </para>
         </listitem>
         <listitem>
@@ -94,15 +94,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   </section>
   
   <section id="secPreRequisites">
-    <title>Pré-requis</title>
+    <title>PrÃ©-requis</title>
     
     <para>
       Pour installer WeeChat, vous <emphasis>devez</emphasis> avoir :
       <itemizedlist>
         <listitem>
           <para>
-            un système GNU/Linux (avec le compilateur et les outils
-            associés pour le paquet des sources), ou un système compatible
+            un systÃ¨me GNU/Linux (avec le compilateur et les outils
+            associÃ©s pour le paquet des sources), ou un systÃ¨me compatible
             (voir ci-dessus)
           </para>
         </listitem>
@@ -113,30 +113,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
         <listitem>
           <para>
-            selon l'interface, une des bibliothèques
+            selon l'interface, une des bibliothÃ¨ques
             suivantes :
             <itemizedlist>
               <listitem>
                 <para>
-                  Curses : la bibliothèque ncurses
+                  Curses : la bibliothÃ¨que ncurses
                 </para>
               </listitem>
               <listitem>
                 <para>
                   Gtk :
-                  <emphasis>*** interface non développée ***</emphasis>
+                  <emphasis>*** interface non dÃ©veloppÃ©e ***</emphasis>
                 </para>
               </listitem>
               <listitem>
                 <para>
                   WxWidgets :
-                  <emphasis>*** interface non développée ***</emphasis>
+                  <emphasis>*** interface non dÃ©veloppÃ©e ***</emphasis>
                 </para>
               </listitem>
               <listitem>
                 <para>
                   Qt :
-                  <emphasis>*** interface non développée ***</emphasis>
+                  <emphasis>*** interface non dÃ©veloppÃ©e ***</emphasis>
                 </para>
               </listitem>
             </itemizedlist>

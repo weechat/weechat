@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -25,8 +25,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <title>Utilisation</title>
   
   <para>
-    Ce chapitre explique comment lancer WeeChat, les touches utilisées par
-    défaut, les commandes internes et IRC, le fichier de configuration et
+    Ce chapitre explique comment lancer WeeChat, les touches utilisÃ©es par
+    dÃ©faut, les commandes internes et IRC, le fichier de configuration et
     l'utilisation du tube FIFO.
   </para>
   
@@ -34,12 +34,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>Lancer WeeChat</title>
     
     <para>
-      Paramètres de ligne de commande :
+      ParamÃ¨tres de ligne de commande :
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
             <row>
-              <entry>Paramètre</entry>
+              <entry>ParamÃ¨tre</entry>
               <entry>Description</entry>
             </row>
           </thead>
@@ -48,17 +48,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry><literal>-a, --no-connect</literal></entry>
               <entry>
                 Supprimer la connexion automatique aux serveurs lors du
-                démarrage
+                dÃ©marrage
               </entry>
             </row>
             <row>
-              <entry><literal>-d, --dir &lt;répertoire&gt;</literal></entry>
+              <entry><literal>-d, --dir &lt;rÃ©pertoire&gt;</literal></entry>
               <entry>
-                Définir le répertoire comme étant la base de WeeChat
-                (utilisé pour les fichiers de configuration, logs, extensions
-                et scripts de l'utilisateur). La valeur par défaut est
-                "<literal>~/.weechat</literal>". NB: le répertoire est créé
-                s'il n'est pas trouvé par WeeChat.
+                DÃ©finir le rÃ©pertoire comme Ã©tant la base de WeeChat
+                (utilisÃ© pour les fichiers de configuration, logs, extensions
+                et scripts de l'utilisateur). La valeur par dÃ©faut est
+                "<literal>~/.weechat</literal>". NB: le rÃ©pertoire est crÃ©Ã©
+                s'il n'est pas trouvÃ© par WeeChat.
               </entry>
             </row>
             <row>
@@ -70,7 +70,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry><literal>-k, --keys</literal></entry>
               <entry>
-                Afficher les touches par défaut de WeeChat
+                Afficher les touches par dÃ©faut de WeeChat
               </entry>
             </row>
             <row>
@@ -83,7 +83,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry><literal>-p, --no-plugin</literal></entry>
               <entry>
                 Supprimer le chargement automatique des extensions au
-                démarrage
+                dÃ©marrage
               </entry>
             </row>
             <row>
@@ -98,11 +98,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <para>
-      Il est également possible de passer une URL pour un ou plusieurs
+      Il est Ã©galement possible de passer une URL pour un ou plusieurs
       serveurs IRC, de la forme :
       <screen>irc[6][s]://[pseudo[:mot_passe]@]irc.exemple.org[:port][/canal][,canal[...]</screen>
       Exemple pour rejoindre #weechat et #toto sur le serveur
-      "<literal>irc.freenode.net</literal>", port par défaut (6667), sous
+      "<literal>irc.freenode.net</literal>", port par dÃ©faut (6667), sous
       le pseudo "nono" :
       <screen><prompt>$ </prompt><userinput>weechat-curses irc://nono@irc.freenode.net/#weechat,#toto</userinput></screen>
     </para>
@@ -138,15 +138,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <para>
-      Lorsque vous lancez WeeChat pour la première fois, un fichier de
-      configuration par défaut est créé, avec les options par défaut.
-      Le fichier de configuration par défaut est :
+      Lorsque vous lancez WeeChat pour la premiÃ¨re fois, un fichier de
+      configuration par dÃ©faut est crÃ©Ã©, avec les options par dÃ©faut.
+      Le fichier de configuration par dÃ©faut est :
       "<literal>~/.weechat/weechat.conf</literal>"
     </para>
     
     <para>
-      Vous pouvez éditer ce fichier pour configurer WeeChat à votre
-      convenance ou vous pouvez modifier les paramètres dans WeeChat avec la
+      Vous pouvez Ã©diter ce fichier pour configurer WeeChat Ã  votre
+      convenance ou vous pouvez modifier les paramÃ¨tres dans WeeChat avec la
       commande "<literal>/set</literal>"
       (voir <xref linkend="secWeeChatCommands" />)
     </para>
@@ -167,25 +167,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </thead>
           <tbody>
             <row>
-              <entry>Flèche gauche / Ctrl + B</entry>
+              <entry>FlÃ¨che gauche / Ctrl + B</entry>
               <entry>
-                Aller au caractère précédent sur la ligne de commande
+                Aller au caractÃ¨re prÃ©cÃ©dent sur la ligne de commande
               </entry>
             </row>
             <row>
-              <entry>Flèche droite / Ctrl + F</entry>
+              <entry>FlÃ¨che droite / Ctrl + F</entry>
               <entry>
-                Aller au caractère suivant sur la ligne de commande
+                Aller au caractÃ¨re suivant sur la ligne de commande
               </entry>
             </row>
             <row>
-              <entry>Ctrl + flèche gauche</entry>
+              <entry>Ctrl + flÃ¨che gauche</entry>
               <entry>
-                Aller au mot précédent sur la ligne de commande
+                Aller au mot prÃ©cÃ©dent sur la ligne de commande
               </entry>
             </row>
             <row>
-              <entry>Ctrl + flèche droite</entry>
+              <entry>Ctrl + flÃ¨che droite</entry>
               <entry>
                 Aller au mot suivant sur la ligne de commande
               </entry>
@@ -193,55 +193,55 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Home / Ctrl + A</entry>
               <entry>
-                Aller au début de la ligne de commande
+                Aller au dÃ©but de la ligne de commande
               </entry>
             </row>
             <row>
               <entry>Ctrl + C puis B</entry>
               <entry>
-                Insérer le code pour mettre le texte en gras.
+                InsÃ©rer le code pour mettre le texte en gras.
               </entry>
             </row>
             <row>
               <entry>Ctrl + C puis C</entry>
               <entry>
-                Insérer le code pour écrire en couleur.
+                InsÃ©rer le code pour Ã©crire en couleur.
               </entry>
             </row>
             <row>
               <entry>Ctrl + C puis O</entry>
               <entry>
-                Insérer le code pour réinitaliser la couleur.
+                InsÃ©rer le code pour rÃ©initaliser la couleur.
               </entry>
             </row>
             <row>
               <entry>Ctrl + C puis R</entry>
               <entry>
-                Insérer le code pour écrire en couleur inversée.
+                InsÃ©rer le code pour Ã©crire en couleur inversÃ©e.
               </entry>
             </row>
             <row>
               <entry>Ctrl + C puis U</entry>
               <entry>
-                Insérer le code pour écrire en souligné.
+                InsÃ©rer le code pour Ã©crire en soulignÃ©.
               </entry>
             </row>
             <row>
               <entry>End / Ctrl + E</entry>
               <entry>
-                Aller à la fin de la ligne de commande
+                Aller Ã  la fin de la ligne de commande
               </entry>
             </row>
             <row>
               <entry>Ctrl + K</entry>
               <entry>
-                Effacer du curseur jusqu'à la fin de la ligne de commande
+                Effacer du curseur jusqu'Ã  la fin de la ligne de commande
               </entry>
             </row>
             <row>
               <entry>Ctrl + L</entry>
               <entry>
-                Réafficher toute la fenêtre
+                RÃ©afficher toute la fenÃªtre
               </entry>
             </row>
             <row>
@@ -254,26 +254,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Ctrl + S puis Ctrl + U</entry>
               <entry>
-                Positionner le marqueur de données non lues sur tous les
+                Positionner le marqueur de donnÃ©es non lues sur tous les
                 tampons
               </entry>
             </row>
             <row>
               <entry>Ctrl + T</entry>
               <entry>
-                Inverser deux caractères
+                Inverser deux caractÃ¨res
               </entry>
             </row>
             <row>
               <entry>Ctrl + U</entry>
               <entry>
-                Effacer du curseur jusqu'au début de la ligne de commande
+                Effacer du curseur jusqu'au dÃ©but de la ligne de commande
               </entry>
             </row>
             <row>
               <entry>Ctrl + W</entry>
               <entry>
-                Effacer le mot précédent sur la ligne de commande
+                Effacer le mot prÃ©cÃ©dent sur la ligne de commande
               </entry>
             </row>
             <row>
@@ -285,48 +285,48 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Backspace / Ctrl + H</entry>
               <entry>
-                Effacer le caractère précédent sur la ligne de commande
+                Effacer le caractÃ¨re prÃ©cÃ©dent sur la ligne de commande
               </entry>
             </row>
             <row>
               <entry>Delete / Ctrl + D</entry>
               <entry>
-                Effacer le caractère suivant sur la ligne de commande
+                Effacer le caractÃ¨re suivant sur la ligne de commande
               </entry>
             </row>
             <row>
               <entry>Tab / Shift + Tab</entry>
               <entry>
-                Compléter la commande ou le pseudo
-                (Tab de nouveau: trouver la complétion suivante)
+                ComplÃ©ter la commande ou le pseudo
+                (Tab de nouveau: trouver la complÃ©tion suivante)
               </entry>
             </row>
             <row>
-              <entry>Tout caractère</entry>
+              <entry>Tout caractÃ¨re</entry>
               <entry>
-                Insérer le caractère à la position du curseur
+                InsÃ©rer le caractÃ¨re Ã  la position du curseur
                 sur la ligne de commande
               </entry>
             </row>
             <row>
-              <entry>Entrée / Ctrl + J / Ctrl + M</entry>
+              <entry>EntrÃ©e / Ctrl + J / Ctrl + M</entry>
               <entry>
-                Exécuter la commande ou envoyer le message
-                (en mode recherche: arrêter la recherche)
+                ExÃ©cuter la commande ou envoyer le message
+                (en mode recherche: arrÃªter la recherche)
               </entry>
             </row>
             <row>
-              <entry>Flèche haut / flèche bas</entry>
+              <entry>FlÃ¨che haut / flÃ¨che bas</entry>
               <entry>
-                Rappeler les dernières commandes ou messages
+                Rappeler les derniÃ¨res commandes ou messages
                 (en mode recherche: chercher en haut/bas)
               </entry>
             </row>
             <row>
-              <entry>Ctrl + flèche haut / Ctrl + flèche bas</entry>
+              <entry>Ctrl + flÃ¨che haut / Ctrl + flÃ¨che bas</entry>
               <entry>
-                Rappeler les dernières commandes ou messages dans
-                l'historique global (commun à tous les tampons)
+                Rappeler les derniÃ¨res commandes ou messages dans
+                l'historique global (commun Ã  tous les tampons)
               </entry>
             </row>
             <row>
@@ -345,17 +345,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Alt + Home / Alt + End</entry>
               <entry>
-                Aller au début / à la fin du tampon
+                Aller au dÃ©but / Ã  la fin du tampon
               </entry>
             </row>
             <row>
-              <entry>F5 / Alt + flèche gauche</entry>
+              <entry>F5 / Alt + flÃ¨che gauche</entry>
               <entry>
-                Aller au tampon précédent
+                Aller au tampon prÃ©cÃ©dent
               </entry>
             </row>
             <row>
-              <entry>F6 / Alt + flèche droite</entry>
+              <entry>F6 / Alt + flÃ¨che droite</entry>
               <entry>
                 Aller au tampon suivant
               </entry>
@@ -363,44 +363,44 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>F7</entry>
               <entry>
-                Aller à la fenêtre précédente
+                Aller Ã  la fenÃªtre prÃ©cÃ©dente
               </entry>
             </row>
             <row>
               <entry>F8</entry>
               <entry>
-                Aller à la fenêtre suivante
+                Aller Ã  la fenÃªtre suivante
               </entry>
             </row>
             <row>
               <entry>F9 / F10</entry>
               <entry>
-                Faire défiler le titre du canal
+                Faire dÃ©filer le titre du canal
               </entry>
             </row>
             <row>
               <entry>F11 / F12</entry>
               <entry>
-                Faire défiler la liste des pseudos
+                Faire dÃ©filer la liste des pseudos
               </entry>
             </row>
             <row>
               <entry>Alt + F11 / Alt + F12</entry>
               <entry>
-                Aller au début / à la fin de la liste des pseudos
+                Aller au dÃ©but / Ã  la fin de la liste des pseudos
               </entry>
             </row>
             <row>
               <entry>Alt + A</entry>
               <entry>
-                Sauter au prochain tampon avec activité
-                (avec priorité : highlight, message, autre)
+                Sauter au prochain tampon avec activitÃ©
+                (avec prioritÃ© : highlight, message, autre)
               </entry>
             </row>
             <row>
               <entry>Alt + B</entry>
               <entry>
-                Aller au mot précédent
+                Aller au mot prÃ©cÃ©dent
               </entry>
             </row>
             <row>
@@ -419,7 +419,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + H</entry>
               <entry>
                 Vider la hotlist
-                (notification d'activité sur les autres tampons)
+                (notification d'activitÃ© sur les autres tampons)
               </entry>
             </row>
             <row>
@@ -437,25 +437,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Alt + J puis Alt + P</entry>
               <entry>
-                Sauter au tampon affiché précédemment
+                Sauter au tampon affichÃ© prÃ©cÃ©demment
               </entry>
             </row>
             <row>
               <entry>Alt + chiffre (0-9)</entry>
               <entry>
-                Sauter au tampon qui porte ce numéro (0 = 10)
+                Sauter au tampon qui porte ce numÃ©ro (0 = 10)
               </entry>
             </row>
             <row>
               <entry>Alt + J puis nombre (01-99)</entry>
               <entry>
-                Sauter au tampon qui porte ce numéro
+                Sauter au tampon qui porte ce numÃ©ro
               </entry>
             </row>
             <row>
               <entry>Alt + K</entry>
               <entry>
-                Capturer une touche et insérer son code sur la ligne
+                Capturer une touche et insÃ©rer son code sur la ligne
                 de commande
               </entry>
             </row>
@@ -468,32 +468,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>Alt + P</entry>
               <entry>
-                Se positionner sur le highlight précédent
+                Se positionner sur le highlight prÃ©cÃ©dent
               </entry>
             </row>
             <row>
               <entry>Alt + R</entry>
               <entry>
-                Effacer entièrement la ligne de commande
+                Effacer entiÃ¨rement la ligne de commande
               </entry>
             </row>
             <row>
               <entry>Alt + S</entry>
               <entry>
                 Changer de serveur sur le tampon des serveurs
-                (si l'option "look_one_server_buffer" est activée)
+                (si l'option "look_one_server_buffer" est activÃ©e)
               </entry>
             </row>
             <row>
               <entry>Alt + U</entry>
               <entry>
-                Se positionner sur la première ligne non lue du tampon
+                Se positionner sur la premiÃ¨re ligne non lue du tampon
               </entry>
             </row>
             <row>
-              <entry>Alt + W puis Alt + flèche</entry>
+              <entry>Alt + W puis Alt + flÃ¨che</entry>
               <entry>
-                Sauter à une fenêtre avec une direction
+                Sauter Ã  une fenÃªtre avec une direction
               </entry>
             </row>
           </tbody>
@@ -507,25 +507,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <title>La ligne de commande</title>
     
     <para>
-      La ligne de commande WeeChat (située en bas de la fenêtre) permet
-      d'exécuter des commandes ou d'envoyer du texte vers le tampon.
+      La ligne de commande WeeChat (situÃ©e en bas de la fenÃªtre) permet
+      d'exÃ©cuter des commandes ou d'envoyer du texte vers le tampon.
     </para>
     
     <para>
-      Les commandes débutent par un caractère "/", suivi du nom de la
+      Les commandes dÃ©butent par un caractÃ¨re "/", suivi du nom de la
       commande. Par exemple pour afficher la liste de toutes les options :
       <screen><userinput>/set</userinput></screen>
     </para>
     
     <para>
-      Le texte envoyé à un tampon est tout texte ne commençant pas par le
-      caractère "/", par exemple pour envoyer "<literal>bonjour</literal>"
+      Le texte envoyÃ© Ã  un tampon est tout texte ne commenÃ§ant pas par le
+      caractÃ¨re "/", par exemple pour envoyer "<literal>bonjour</literal>"
       sur le tampon courant :
       <screen><userinput>bonjour</userinput></screen>
     </para>
     
     <para>
-      Il est cependant possible de faire débuter un texte par "/" en le
+      Il est cependant possible de faire dÃ©buter un texte par "/" en le
       doublant. Par exemple pour envoyer le texte
       "<literal>/set</literal>" sur le tampon courant :
       <screen><userinput>//set</userinput></screen>
@@ -534,7 +534,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <para>
       Pour certaines extensions comme IRC, il est possible d'utiliser
       des codes couleur et attributs cmome suit (appuyer sur Ctrl-C puis sur
-      la lettre qui suit et éventuellement une valeur) :
+      la lettre qui suit et Ã©ventuellement une valeur) :
       <informaltable colsep="0" frame="none">
         <tgroup cols="2">
           <thead>
@@ -568,26 +568,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <row>
               <entry>^Co</entry>
               <entry>
-                désactiver la couleur et tous les attributs
+                dÃ©sactiver la couleur et tous les attributs
               </entry>
             </row>
             <row>
               <entry>^Cr</entry>
               <entry>
-                vidéo inverse (inversion de la couleur d'écriture et du fond)
+                vidÃ©o inverse (inversion de la couleur d'Ã©criture et du fond)
               </entry>
             </row>
             <row>
               <entry>^Cu</entry>
               <entry>
-                texte souligné
+                texte soulignÃ©
               </entry>
             </row>
           </tbody>
         </tgroup>
       </informaltable>
-      NB: le même code (sans le numéro pour ^Cc) peut être utilisé pour
-      stopper l'attribut défini.
+      NB: le mÃªme code (sans le numÃ©ro pour ^Cc) peut Ãªtre utilisÃ© pour
+      stopper l'attribut dÃ©fini.
     </para>
     
     <para>
@@ -611,11 +611,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </row>
             <row>
               <entry>02</entry>
-              <entry>bleu foncé</entry>
+              <entry>bleu foncÃ©</entry>
             </row>
             <row>
               <entry>03</entry>
-              <entry>vert foncé</entry>
+              <entry>vert foncÃ©</entry>
             </row>
             <row>
               <entry>04</entry>
@@ -623,7 +623,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </row>
             <row>
               <entry>05</entry>
-              <entry>rouge foncé</entry>
+              <entry>rouge foncÃ©</entry>
             </row>
             <row>
               <entry>06</entry>
@@ -673,7 +673,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <para>
       Exemple : affichage de "<literal>bonjour tout le monde !</literal>"
       avec "<literal>bonjour</literal>" en bleu clair gras, et 
-      "<literal>tout le monde</literal>" en rouge clair souligné :
+      "<literal>tout le monde</literal>" en rouge clair soulignÃ© :
 <screen><userinput>^Cc12^Cbbonjour^Cb^Cc04^Cu tout le monde^Cu^Cc !</userinput></screen>
     </para>
     
@@ -704,7 +704,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Option</entry>
               <entry>Type</entry>
               <entry>Valeurs</entry>
-              <entry>Défaut</entry>
+              <entry>DÃ©faut</entry>
               <entry>Description</entry>
             </row>
           </thead>
@@ -723,14 +723,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <tgroup cols="2">
           <thead>
             <row>
-              <entry>Mot clé</entry>
+              <entry>Mot clÃ©</entry>
               <entry>Couleur</entry>
             </row>
           </thead>
           <tbody>
             <row>
               <entry><literal>default</literal></entry>
-              <entry>couleur par défaut (transparent pour le fond)</entry>
+              <entry>couleur par dÃ©faut (transparent pour le fond)</entry>
             </row>
             <row>
               <entry><literal>black</literal></entry>
@@ -738,7 +738,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </row>
             <row>
               <entry><literal>red</literal></entry>
-              <entry>rouge foncé</entry>
+              <entry>rouge foncÃ©</entry>
             </row>
             <row>
               <entry><literal>lightred</literal></entry>
@@ -746,7 +746,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </row>
             <row>
               <entry><literal>green</literal></entry>
-              <entry>vert foncé</entry>
+              <entry>vert foncÃ©</entry>
             </row>
             <row>
               <entry><literal>lightgreen</literal></entry>
@@ -762,7 +762,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </row>
             <row>
               <entry><literal>blue</literal></entry>
-              <entry>bleu foncé</entry>
+              <entry>bleu foncÃ©</entry>
             </row>
             <row>
               <entry><literal>lightblue</literal></entry>
@@ -770,7 +770,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </row>
             <row>
               <entry><literal>magenta</literal></entry>
-              <entry>violet foncé</entry>
+              <entry>violet foncÃ©</entry>
             </row>
             <row>
               <entry><literal>lightmagenta</literal></entry>
@@ -778,7 +778,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </row>
             <row>
               <entry><literal>cyan</literal></entry>
-              <entry>cyan foncé</entry>
+              <entry>cyan foncÃ©</entry>
             </row>
             <row>
               <entry><literal>lightcyan</literal></entry>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!--
 
@@ -25,8 +25,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <title>Autoren / Support</title>
   
   <para>
-    Dieses Kapitel listet Autoren und Beitragende für WeeChat auf, und
-    zeigt die Möglichkeiten um Support zu bekommen.
+    Dieses Kapitel listet Autoren und Beitragende fÃ¼r WeeChat auf, und
+    zeigt die MÃ¶glichkeiten um Support zu bekommen.
   </para>
   
   <section id="secAuthors">
@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       <itemizedlist>
         <listitem>
           <para>
-            <emphasis>FlashCode (Sébastien Helleu)</emphasis>
+            <emphasis>FlashCode (SÃ©bastien Helleu)</emphasis>
             <email>flashcode AT flashtux.org</email> -
             Hauptentwickler
           </para>
@@ -70,25 +70,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <listitem>
           <para>
             <emphasis>Jiri Golembiovsky</emphasis> -
-            Tschechische Übersetzung, Patches
+            Tschechische Ãœbersetzung, Patches
           </para>
         </listitem>
         <listitem>
           <para>
             <emphasis>Pavel Shevchuk</emphasis> -
-            Russisch Übersetzung
+            Russisch Ãœbersetzung
           </para>
         </listitem>
         <listitem>
           <para>
             <emphasis>Frank Zacharias</emphasis> -
-            Deutsche Übersetzung
+            Deutsche Ãœbersetzung
           </para>
         </listitem>
         <listitem>
           <para>
             <emphasis>voroskoi</emphasis> -
-            Ungarische Übersetzung
+            Ungarische Ãœbersetzung
           </para>
         </listitem>
         <listitem>

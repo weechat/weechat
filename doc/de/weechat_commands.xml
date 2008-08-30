@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!-- ********* WARNING! *********
 
@@ -7,11 +7,11 @@
 
 <command>alias  [Aliasname [Befehl [Argumente]]]</command>
 <programlisting>
-einen Alias für einen Befehl anlegen
+einen Alias fÃ¼r einen Befehl anlegen
 
 Aliasname: Name des Alias
-   Befehl: Befehlsname (WeeChat- oder IRC-Befehl ohne führenden '/', mehrere Befehle können durch Semikola getrennt werden)
-Argumente: Argumente für den Befehl
+   Befehl: Befehlsname (WeeChat- oder IRC-Befehl ohne fÃ¼hrenden '/', mehrere Befehle kÃ¶nnen durch Semikola getrennt werden)
+Argumente: Argumente fÃ¼r den Befehl
 
 </programlisting>
 <command>wird durch alle Argumente ersetzt.</command>
@@ -50,7 +50,7 @@ scroll to beginning
 <programlisting>
 starte eingebauten WeeChat/IRC-Befehl (ohne Plugin-Handler oder Aliase)
 
-Befehl: auszuführender Befehl (falls nicht vorhanden wird automatisch ein '/' vorangestellt)
+Befehl: auszufÃ¼hrender Befehl (falls nicht vorhanden wird automatisch ein '/' vorangestellt)
 
 
 </programlisting>
@@ -58,8 +58,8 @@ Befehl: auszuführender Befehl (falls nicht vorhanden wird automatisch ein '/' vo
 <programlisting>
 Fenster leeren
 
-  -all: lösche alle Puffer
-Nummer: lösche den Puffer mit der angegebenen Nummer
+  -all: lÃ¶sche alle Puffer
+Nummer: lÃ¶sche den Puffer mit der angegebenen Nummer
 
 </programlisting>
 <command>connect  [-all [-nojoin] | servername [servername ...] [-nojoin] | hostname [-port port] [-ipv6] [-ssl]]</command>
@@ -88,7 +88,7 @@ servername: Servername, von dem getrennt werden soll
 DCC (Filetransfer oder Chat) starten oder Chat beenden
 
   Aktion: 'send' (Datei) oder 'chat' oder 'close' (Chat)
-Nickname: Empfänger der Datei bzw. Chatpartner
+Nickname: EmpfÃ¤nger der Datei bzw. Chatpartner
     Datei: zu versendende (lokal vorliegende) Datei
 
 </programlisting>
@@ -112,8 +112,8 @@ Befehl: Name eines WeeChat- oder IRC-Befehls
 <programlisting>
 zeigt Befehlsverlauf des Puffers
 
-clear: Löscht Verlauf
-Anzahl: zeigt die gewünschte Anzahl an Verlaufseinträgen
+clear: LÃ¶scht Verlauf
+Anzahl: zeigt die gewÃ¼nschte Anzahl an VerlaufseintrÃ¤gen
 
 </programlisting>
 <command>ignore  [Maske [[Typ | Befehl] [Channel [Server]]]]</command>
@@ -127,7 +127,7 @@ Befehl: IRC-Befehl
  Channel: Channel, in dem ignoriert werden soll
   Server: Server, auf dem ignoriert werden soll
 
-Bei jedem Argument steht '*' für 'alle'.
+Bei jedem Argument steht '*' fÃ¼r 'alle'.
 Ohne Argumente listet /ignore alle definierten /ignore-Regeln auf.
 
 </programlisting>
@@ -137,8 +137,8 @@ belegen/freigeben von Tasten
 
       Taste: diese Taste anzeigen oder mit einer internen Funktion oder einem Befehl, beginnend mit "/", belegen
    unbind: Tastenbelegung aufheben
-functions: interne Funktionen für Tastenbelegungen auflisten
-     call: rufe eine Funktion über ihren Namen auf (mit optionalen Argumenten)
+functions: interne Funktionen fÃ¼r Tastenbelegungen auflisten
+     call: rufe eine Funktion Ã¼ber ihren Namen auf (mit optionalen Argumenten)
     reset: Standardbelegung wiederherstellen und entferne ALLE eigenen Belegungen (Vorsicht!)
 
 </programlisting>
@@ -147,7 +147,7 @@ functions: interne Funktionen für Tastenbelegungen auflisten
 auflisten/laden/entladen von Plugins
 
     list: geladene Plugins auflisten
-listfull: geladene Plugins mit Details für jedes Plugin auflisten
+listfull: geladene Plugins mit Details fÃ¼r jedes Plugin auflisten
     load: lade ein Plugin
 autoload: lade automatisch alle Plugins im System- oder Benutzerverzeichnis
   reload: lade ein Plugin erneut (wenn kein Name vorgegeben ist, werden alle Plugins entladen und autolade die Plugins)
@@ -174,7 +174,7 @@ Datei: Name der zu speichernden Konfigurationsdatei
 </programlisting>
 <command>server  [list [servername]] | [listfull [servername]] | [add servername hostname [-port port] [-temp] [-auto | -noauto] [-ipv6] [-ssl] [-pwd password] [-nicks nick1 nick2 nick3] [-username username] [-realname realname] [-command command] [-autojoin channel[,channel]] ] | [copy servername newservername] | [rename servername newservername] | [keep servername] | [del servername]</command>
 <programlisting>
-Auflisten, Hinzufügen oder Entfernen von Servern
+Auflisten, HinzufÃ¼gen oder Entfernen von Servern
 
       list: list servers (no parameter implies this list)
   listfull: list servers with detailed info for each server
@@ -207,15 +207,15 @@ Konfigurationsparameter setzen
 Option: Name einer Option (wenn der Name vorhanden ist, aber kein Wert, dann wird eine Hilfe zur Option ausgegeben
  Wert: Wert der Option
 
-Option kann Servername.server_xxx lauten, wobei "Servername" der interne Servername ist und "xxx" eine Option für diesen Server.
+Option kann Servername.server_xxx lauten, wobei "Servername" der interne Servername ist und "xxx" eine Option fÃ¼r diesen Server.
 
 </programlisting>
 <command>setp  [Option [ = Wert]]</command>
 <programlisting>
-Konfigurationsparameter für Plugin setzen
+Konfigurationsparameter fÃ¼r Plugin setzen
 
 Option: Name einer Plugin-Option
- Wert: Wert für Option
+ Wert: Wert fÃ¼r Option
 
 Option wird wie folgt formatiert: Plugin.Option, z.B. perl.myscript.item1
 
@@ -224,7 +224,7 @@ Option wird wie folgt formatiert: Plugin.Option, z.B. perl.myscript.item1
 <programlisting>
 einen Alias entfernen
 
-Aliasname: Name des zu löschenden Aliases
+Aliasname: Name des zu lÃ¶schenden Aliases
 
 </programlisting>
 <command>unignore  [Nummer | [Maske [[Typ | Befehl] [Channel [Server]]]]</command>
@@ -238,7 +238,7 @@ Befehl: IRC-Befehl
  Channel: Channel, in dem ignoriert werden soll
   Server: Server, auf dem ignoriert werden soll
 
-Bei jedem Argument steht '*' für 'alle'.
+Bei jedem Argument steht '*' fÃ¼r 'alle'.
 Ohne Argumente listet /unignore alle definierten /ignore-Regeln auf.
 
 </programlisting>
@@ -262,19 +262,19 @@ zeigt die Uptime von Weechat an
 <programlisting>
 Fenster verwalten
 
-  list: listet die geöffneten Fenster (Default, kann auch weggelassen werden)
+  list: listet die geÃ¶ffneten Fenster (Default, kann auch weggelassen werden)
     -1: springt zum vorherigen Fenster
-    +1: springt zum nächsten Fenster
-    b#: springt zum nächsten Fenster, dass Puffer Nummer # anzeigt
-    up: wechselt zum Fenster über dem aktuellen
+    +1: springt zum nÃ¤chsten Fenster
+    b#: springt zum nÃ¤chsten Fenster, dass Puffer Nummer # anzeigt
+    up: wechselt zum Fenster Ã¼ber dem aktuellen
   down: wechselt zum Fenster unter dem aktuellen
   left: wechselt zum linken Fenster
  right: wechselt zum rechten Fenster
 splith: teilt das aktuelle Fenster horizontal
 splitv: teilt das aktuelle Fenster vertikal
-resize: verändert die Größe des aktuellen Fensters, die neue Größe ist &lt;pct&gt; Prozent des Elternfensters groß
+resize: verÃ¤ndert die GrÃ¶ÃŸe des aktuellen Fensters, die neue GrÃ¶ÃŸe ist &lt;pct&gt; Prozent des Elternfensters groÃŸ
  merge: vereinigt Fenster miteinander (all = alle Fenster vereinigen)
 
-Bei splith und splitv gibt pct die neue Größe des Fensters im verhältnis zur aktuellen Größe an. Zum Beispiel würde 25 bedeuten, dass das neue Fenster nur noch ein Viertel der Größe des alten Fensters hätte.
+Bei splith und splitv gibt pct die neue GrÃ¶ÃŸe des Fensters im verhÃ¤ltnis zur aktuellen GrÃ¶ÃŸe an. Zum Beispiel wÃ¼rde 25 bedeuten, dass das neue Fenster nur noch ein Viertel der GrÃ¶ÃŸe des alten Fensters hÃ¤tte.
 
 </programlisting>
