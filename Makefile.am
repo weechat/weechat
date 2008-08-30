@@ -14,7 +14,11 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-SUBDIRS = po doc intl src
+if DOC
+doc_dir = doc
+endif
+
+SUBDIRS = po $(doc_dir) intl src
 
 EXTRA_DIST = config.rpath BUGS FAQ FAQ.fr \
              debian/changelog debian/control \
