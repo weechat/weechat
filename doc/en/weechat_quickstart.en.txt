@@ -1,100 +1,163 @@
 WeeChat quick start guide (english version)
-=========================
+===========================================
 
 1. Launch weechat
 
-     According to choosed GUI, you have to launch:
-     - weechat-curses for Curses GUI
-     - weechat-gtk for Gtk GUI (under development)
-     - weechat-qt for Qt GUI (not developed)
-     - weechat-wxwidgets for WxWidgets GUI (not developed)
+     Run "weechat-curses" from your shell.
+
+     A recommended terminal emulator for X (but not mandatory) is rxvt-unicode
+     (it has good UTF-8 support, and no problem with default keyboard bindings).
 
 2. Online help / options
 
      WeeChat has help for all commands, just issue /help
      To get help on a command, issue /help command
 
-     To set options, use /set option = value
-     You can use /set option with partial name (display all options
-     containg letters), or with only a full option name without value
-     (to see long help for option).
+     To set options, use /set config.section.option = value
+     (where config is configuration name ("weechat" for core, or a plugin
+     name), "section" the section of this configuration and "option" the
+     option name).
 
-     Important note: settings are saved when WeeChat ends (or with "/save"
-     command). Do NOT edit setup file while WeeChat is running, because WeeChat
-     may write this file at any time, and it's not possible to reload it.
-     To change any settings, use "/set" command, WeeChat immediately uses new
-     settings.
+     WeeChat immediately uses new value (you *never* need to restart WeeChat
+     after changes to configuration).
 
-3. Create a server
+     You can use /set option with partial name and wildcard "*" at beginning or
+     end to display all options containg letters.
+     For example:
+       /set            => display all options (WeeChat and plugins)
+       /set weechat.*  => display WeeChat options
+       /set irc.*      => display IRC plugin options
 
-     For example irc.quakenet.org, port 6667:
-       /server add quakenet irc.quakenet.org 6667
-     (/help server for full command help)
+     You can display help for an option with /help, for example:
+       /help weechat.look.highlight
 
-4. Set custom server options
-   
-     Nicks:
-       /set quakenet.server_nick1 = "mynick"
-       /set quakenet.server_nick2 = "mynick2"
-       /set quakenet.server_nick3 = "mynick3"
+     All settings are saved when WeeChat ends (or with "/save" command to force
+     write of options).
 
-     Username/realname:
-       /set quakenet.server_username = "My username"
-       /set quakenet.server_realname = "My real name"
+     You can edit configuration files (*.conf) by hand and reload them by
+     /reload command if you don't want to use /set command.
 
-     Auto-connect to server:
-       /set quakenet.server_autoconnect = on
+3. Core vs plugins
 
-     Auto-join for some channels:
-       /set quakenet.server_autojoin = "#chan1,#chan2"
+     WeeChat "core" is only used to display data on screen and interact with
+     user, that means weechat core without plugins is useless
+     (faithful users: IRC was part of core for versions <= 0.2.6).
+
+     All network protocols like IRC are provided in separate plugins.
+
+     Use /plugin command to list loaded plugins, you should see "irc" and
+     other plugins in list.
+
+4. Create an IRC server
+
+     You can add an IRC server with /server command, for example:
+       /server add oftc irc.oftc.org 6667
+
+     As usual, help is available if you're lost:
+       /help server
+
+5. Set custom IRC server options
+
+     WeeChat uses default values for all servers ("fallbacks"), if you
+     don't specify a specific value for a server option.
+     These default options are "irc.server_default.*".
+
+     For example there's default nicks (based on your un*x login), and you can
+     override them for oftc server with following command:
+       /set irc.server.oftc.nicks = "mynick1,mynick2,mynick3,mynick4,mynick5"
+
+     To set username and realname:
+       /set irc.server.oftc.username = "My user name"
+       /set irc.server.oftc.realname = "My real name"
+
+     To enable auto-connect to server at startup:
+       /set irc.server.oftc.autoconnect = on
+
+     To auto-join some channels when connecting to server:
+       /set irc.server.oftc.autojoin = "#channel1,#channel2"
 
      Other options:
-       You can see servers options and values with /set quakenet
-       To set an option, use /set quakenet.server_option = value
+       You can setup other options with following command:
+         /set irc.server.oftc.xxx = value
+       where "xxx" is option name - you can see all possible options with:
+         /set irc.server_default.*
 
-5. Connect to server and auto-join channels:
+6. Connect to IRC server and auto-join channels
 
-     /connect quakenet
+     /connect oftc
 
-6. Join/part channels
+     Note: this command can be used to create and connect to a new server
+     without using /server command (should I repeat you can see help for
+     this command with /help connect ? ;)
+
+7. Join/part IRC channels
 
      Join a channel:
        /join #channel
      Part a channel:
        /part [quit message]
-     Part a channel and close buffer:
+     Close server or channel buffer:
        /close [quit message]
      (/close is an alias on /buffer close)
 
-7. Buffer/window management
+8. Buffer/window management
 
-     You can manage buffers with "/buffer" command and windows
-     with "/window" command.
+     A buffer is a component linked to a plugin with a number with a category
+     and a name. Buffer contains data displayed on screen.
+
+     A window is a view on a buffer. By default there's only one window
+     displaying one buffer. If you split screen, you will see many windows
+     with many buffers at same time.
+
+     Commands to manage buffers and windows:
+       /buffer
+       /window
+     (I'll not repeat here that you can get help with /help on these commands)
+
      For example, to split verticaly screen into a small window (1/3 width),
      and a large (2/3), use command:
        /window splitv 33
 
-8. Key bindings
+9. Key bindings
+
+     WeeChat uses many keys by default. All these keys are in documentation,
+     but you should know at least some vital keys:
+     - alt + left/right arrows (or F5/F6): switch to previous/next buffer
+     - F7/F8: switch to previous/next window (when screen is splited)
+     - F9/F10: scroll title bar
+     - F11/F12: scroll nicklist
+     - tab: complete text in input bar, like in your shell
+     - page up/down: scroll text in current buffer
+     - alt + A: jump to buffer with activity (in hotlist)
 
      According to your keyboard and/or your needs, you can rebind any key
-     with "/key" command.
+     to a command with "/key" command.
      A useful key is meta-k (alt-k) to find key codes.
 
      For example, to bind meta-y (alt-y) to command "/buffer close":
        /key (press meta-k) (press meta-y) /buffer close
      You'll have a command line like:
        /key meta-y /buffer close
+     To remove key:
+       /key unbind meta-y
 
-9. Plugins/scripts
+10. Plugins/scripts
 
      On some distros like Debian, plugins are available via a separate package
      (like weechat-plugins).
      Plugins are automatically loaded when found.
-     Many plugins/scripts are available for WeeChat, please look at:
+
+     Some plugins let you use scripts in WeeChat (in many languages like Perl,
+     Python, Ruby and Lua). These plugins must be loaded with /plugin command
+     and they provide commands like /perl, used to load scripts.
+
+     Many external plugins/scripts (from contributors) are available for
+     WeeChat, please look at:
        http://weechat.flashtux.org/plugins.php
+
      Please look at WeeChat documentation to load/unload plugins or scripts.
 
-10. More documentation
+11. More documentation
 
      You can now use WeeChat and read FAQ/documentation for any other question:
        http://weechat.flashtux.org/faq.php
@@ -103,5 +166,6 @@ WeeChat quick start guide (english version)
      Enjoy WeeChat!
 
 --
-(c) 2006-05-31, written by FlashCode <flashcode@flashtux.org>
-This document is part of WeeChat and is distributed under GPL licence.
+(c) 2006-2008, written by FlashCode <flashcode@flashtux.org>
+Last edited on 2008-08-30.
+This document is part of WeeChat and is distributed under GPL 3 licence.

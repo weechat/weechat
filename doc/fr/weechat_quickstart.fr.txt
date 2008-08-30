@@ -1,63 +1,101 @@
-Guide de d�marrage rapide WeeChat (version fran�aise)
-=================================
+Guide de démarrage rapide WeeChat (version française)
+=====================================================
 
-1. D�marrer weechat
+1. Démarrer weechat
 
-     Selon l'interface choisie, vous devez lancer :
-     - weechat-curses pour l'interface Curses
-     - weechat-gtk pour l'interface Gtk (en d�veloppement)
-     - weechat-qt pour l'interface Qt (non d�velopp�e)
-     - weechat-wxwidgets pour l'interface WxWidgets (non d�velopp�e)
+     Lancer "weechat-curses" depuis votre shell.
+
+     Un émulateur de terminal recommandé pour X (mais pas obligatoire) est
+     rxvt-unicode (il a un bon support UTF-8, et aucun problème avec les
+     touches par défaut).
 
 2. Aide en ligne / options
 
      WeeChat dispose d'aide pour toutes les commandes, tapez simplement /help
      Pour avoir de l'aide sur une commande, tapez /help commande
 
-     Pour modifier des options, utilisez /set option = valeur
-     Vous pouvez utiliser /set avec un nom partiel d'option (affiche alors
-     les options contenant ces lettres), ou avec un nom complet d'option
-     sans valeur (pour voir l'aide compl�te de l'option).
+     Pour modifier des options, utilisez /set config.section.option = valeur
+     (où "config" est le nom de la configuration ("weechat" pour le coeur, ou
+     un nom d'extension), "section" la section de cette configuration et
+     "option" le nom de l'option).
 
-     Note importante: les options sont sauv�es lorsque WeeChat quitte (ou avec
-     la commande "/save"). N'�ditez PAS le fichier de configuration pendant que
-     WeeChat tourne, car WeeChat peut �crire ce fichier � tout moment, et il
-     n'est pas possible de le recharger.
-     Pour changer toute option, utilisez la commande "/set", WeeChat prend en
-     compte imm�diatement les nouvelles valeurs.
+     WeeChat utilise immédiatement la nouvelle valeur (vous n'avez *jamais*
+     besoin de redémarrer WeeChat après avoir changé la configuration).
 
-3. Cr�er un serveur
+     Vous pouvez utiliser /set avec un nom partiel d'option et le caractère
+     joker "*" au début ou à la fin pour afficher toutes les options contenant
+     ces lettres.
+     Par exemple :
+       /set            => affiche toutes les options (WeeChat et extensions)
+       /set weechat.*  => affiche les options WeeChat
+       /set irc.*      => affiche les options de l'extension IRC
 
-     Par exemple irc.quakenet.org, port 6667:
-       /server add quakenet irc.quakenet.org 6667
-     (/help server pour l'aide compl�te sur la commande)
+     Vous pouvez afficher de l'aide sur une option avec /help, par exemple :
+       /help weechat.look.highlight
 
-4. D�finir les options du serveur
-   
-     Pseudos :
-       /set quakenet.server_nick1 = "mynick"
-       /set quakenet.server_nick2 = "mynick2"
-       /set quakenet.server_nick3 = "mynick3"
+     Toutes les options sont sauvées quand WeeChat quitte (ou avec la commande
+     "/save" pour forcer une écriture des options).
 
-     Nom d'utilisateur/r�el :
-       /set quakenet.server_username = "Mon nom d'utilisateur"
-       /set quakenet.server_realname = "Mon nom r�el"
+     Vous pouvez éditer les fichiers de configuration (*.conf) à la main et les
+     recharger par la commande /reload si vous ne souhaitez pas utiliser la
+     commande /set.
 
-     Connexion auto au serveur :
-       /set quakenet.server_autoconnect = on
+3. Coeur vs extensions
 
-     Rejoindre automatiquement des canaux :
-       /set quakenet.server_autojoin = "#canal1,#canal2"
+     Le coeur de WeeChat ("core") ne fait qu'afficher les données à l'écran et
+     interagir avec l'utilisateur, cela signifie que le coeur sans extension
+     n'a pas grand intérêt (utilisateurs fidèles: IRC faisait partie du coeur
+     dans les versions <= 0.2.6).
+
+     Tous les protocoles réseau comme IRC sont fournis sous forme d'extensions.
+
+     Utilisez la commande /plugin pour voir les extensions chargées, vous
+     devriez voir "irc" et d'autres extensions dans cette liste.
+
+4. Créer un serveur IRC
+
+     Vous pouvez ajouter un serveur IRC par la commande /server, par exemple :
+       /server add oftc irc.oftc.org  6667
+
+     Comme d'habitude, de l'aide est disponible si vous êtes perdus :
+       /help server
+
+5. Définir les options du serveur IRC
+
+     WeeChat utilise des valeurs par défaut pour tous les serveurs, si vous ne
+     spécifiez pas de valeur spécifique pour une option de serveur.
+     Ces options par défaut sont "irc.server_default.*".
+
+     Par exemple il y a des pseudos par défaut (basés sur votre login un*x), et
+     vous pouvez les écraser pour le serveur oftc avec la commande suivante :
+       /set irc.server.oftc.nicks = "pseudo1,pseudo2,pseudo3,pseudo4,pseudo5"
+
+     Pour modifier le nom d'utilisateur et nom réel :
+       /set irc.server.oftc.username = "Mon nom d'utilisateur"
+       /set irc.server.oftc.realname = "Mon nom réel"
+
+     Pour activer la connexion automatique au serveur lors du démarrage :
+       /set irc.server.oftc.autoconnect = on
+
+     Pour rejoindre automatiquement des canaux lors de la connexion au serveur :
+       /set irc.server.oftc.autojoin = "#canal1,#canal2"
 
      Autres options :
-       Vous pouvez voir les options du serveur et les valeurs avec /set quakenet
-       Pour modifier une option, utilisez /set quakenet.server_option = valeur
+       Vous pouvez modifier les autres options avec la commande suivante :
+         /set irc.server.oftc.xxx = valeur
+       où "xxx" est le nom d'une option - vous pouvez vois les options possibles
+       avec :
+         /set irc.server_default.*
 
-5. Se connecter au serveur et rejoindre les canaux
+6. Se connecter au serveur IRC et rejoindre les canaux
 
-     /connect quakenet
+     /connect oftc
 
-6. Rejoindre/quitter les canaux
+     Note : cette commande peut aussi être utilisée pour créer et se connecter
+     au serveur sans utiliser la commande /server (devrais-je répéter que vous
+     pouvez voir l'aide pour cette commande avec /help connect ? ;)
+
+7. Joindre/quitter les canaux IRC
 
      Joindre un canal :
        /join #channel
@@ -67,36 +105,68 @@ Guide de d�marrage rapide WeeChat (version fran�aise)
        /close [message de fin]
      (/close est un alias sur /buffer close)
 
-7. G�rer les tampons/fen�tres
+8. Gérer les tampons/fenêtres
 
-     Vous pouvez g�rer les tampons avec la commande "/buffer" et les fen�tres
-     avec la commande "/window".
-     Par exemple, pour d�couper verticalement l'�cran en une petite fen�tre
-     (1/3 de la largeur) et une large (2/3 de la largeur), utilisez la commande
+     Un tampon ("buffer") est un composant lié à une extension, avec une
+     catégorie et un nom. Le tampon contient les données affichées à l'écran.
+
+     Une fenêtre ("window") est une vue sur un tampon. Par défaut il n'y a
+     qu'une fenêtre affichant un tampon. Si vous divisez l'écran, vous verrez
+     alors plusieurs fenêtres avec plusieurs tampons en même temps.
+
+     Commandes pour gérer les tampons et les fenêtres :
+       /buffer
+       /window
+     (je ne répéterai pas que vous pouvez avoir de l'aide sur ces commandes
+     avec /help)
+
+     Par exemple, pour découper verticalement l'écran en une petite fenêtre
+     (1/3 de la largeur) et une large (2/3), utilisez la commande :
        /window splitv 33
 
-8. G�rer les raccourcis clavier
+9. Raccourcis clavier
 
-     Selon votre clavier et vos besoins, vous pouvez associer n'importe quelle
-     touche � une commande avec la commande "/key".
+     WeeChat utilise un certain nombre de touches par défaut. Toutes ces
+     touches sont dans la documentation, mais vous devriez connaître au moins
+     les touches vitales :
+     - alt + flèches gauche/droite (ou F5/F6): aller au tampon précédent/suivant
+     - F7/F8: aller à la fenêtre précédente/suivante (quand l'écran est divisé)
+     - F9/F10: faire défiler la barre de titre
+     - F11/F12: faire défiler la liste des pseudos
+     - tab: compléter le texte de la barre d'entrée, comme avec votre shell
+     - page préc/suiv: faire défiler le texte dans le tampon courant
+     - alt + A: sauter au tampon avec de l'activité (dans la "hotlist")
+     
+     Selon votre clavier et/ou vos besoins, vous pouvez associer n'importe
+     quelle touche à une commande avec la commande "/key".
      Une touche utile est meta-k (alt-k) pour trouver le code des touches.
 
-     Par exemple, pour associer meta-y (alt-y) � la commande "/buffer close" :
+     Par exemple, pour associer meta-y (alt-y) à la commande "/buffer close" :
        /key (pressez meta-k) (pressez meta-y) /buffer close
-     Vous aurez une ligne de commande qui ressemble � ceci :
+     Vous aurez une ligne de commande qui ressemble à ceci :
        /key meta-y /buffer close
+     Pour enlever la touche :
+       /key unbind meta-y
 
-9. Extensions/scripts
+10. Extensions/scripts
 
      Sur certaines distributions comme Debian, les extensions sont disponibles
-     via un paquet s�par� (par exemple weechat-plugins).
-     Les extensions sont automatiquement charg�es lorsqu'elles sont trouv�es.
-     Plusieurs extensions/scripts sont disponibles pour WeeChat, voir ici :
+     via un paquet séparé (par exemple weechat-plugins).
+     Les extensions sont automatiquement chargées lorsqu'elles sont trouvées.
+
+     Des extensions permettent d'utiliser des scripts dans WeeChat (dans
+     différent langages comme Perl, Python, Ruby et Lua). Ces extensions
+     doivent être chargées avec la commande /plugin et elles fournissent des
+     commandes telles que /perl, utilisées pour charger les scripts.
+
+     Plusieurs extensions/scripts (de contributeurs) sont disponibles pour
+     WeeChat, voir ici :
        http://weechat.flashtux.org/plugins.php
-     Merci de regarder la documentation WeeChat pour charger/d�charger des
+
+     Merci de regarder la documentation WeeChat pour charger/décharger des
      extensions ou des scripts.
 
-10. Plus de documentation
+11. Plus de documentation
 
      Vous pouvez maintenant utiliser WeeChat et lire la FAQ/documentation pour
      toute autre question :
@@ -106,5 +176,6 @@ Guide de d�marrage rapide WeeChat (version fran�aise)
      Bon WeeChat !
 
 --
-(c) 2006-05-31, �crit par FlashCode <flashcode@flashtux.org>
-Ce document fait partie de WeeChat et est distribu� sous license GPL.
+(c) 2006-2008, écrit par FlashCode <flashcode@flashtux.org>
+Dernière édition le 30/08/2008.
+Ce document fait partie de WeeChat et est distribué sous license GPL 3.
