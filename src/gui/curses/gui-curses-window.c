@@ -1682,8 +1682,6 @@ gui_window_refresh_screen ()
         refresh ();
         gui_window_refresh_windows ();
     }
-    
-    gui_window_refresh_needed = 0;    
 }
 
 /*

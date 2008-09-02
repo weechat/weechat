@@ -1022,8 +1022,11 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
         }
         else
         {
-            gui_bar_window_set_current_size (bar_window->bar, 1);
-            gui_bar_window_recreate_bar_windows (bar_window->bar);
+            if (gui_bar_window_get_current_size (bar_window) != 1)
+            {
+                gui_bar_window_set_current_size (bar_window->bar, 1);
+                gui_bar_window_recreate_bar_windows (bar_window->bar);
+            }
             gui_window_clear (bar_window->win_bar,
                               CONFIG_COLOR(bar_window->bar->color_bg));
         }

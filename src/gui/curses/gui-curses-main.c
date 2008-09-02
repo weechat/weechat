@@ -295,7 +295,10 @@ gui_main_loop ()
         
         /* refresh window if needed */
         if (gui_window_refresh_needed)
+        {
             gui_window_refresh_screen ();
+            gui_window_refresh_needed = 0;
+        }
         
         /* wait for keyboard or network activity */
         FD_ZERO (&read_fds);
