@@ -42,6 +42,7 @@
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-filter.h"
+#include "../gui/gui-hotlist.h"
 #include "../gui/gui-keyboard.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-window.h"
@@ -345,6 +346,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
     struct t_gui_window *ptr_window;
+    struct t_gui_hotlist *ptr_hotlist;
     
     /* make C compiler happy */
     (void) data;
@@ -482,6 +484,23 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
                     return ptr_infolist;
                 }
             }
+        }
+    }
+    else if (string_strcasecmp (infolist_name, "hotlist") == 0)
+    {
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            for (ptr_hotlist = gui_hotlist; ptr_hotlist;
+                 ptr_hotlist = ptr_hotlist->next_hotlist)
+            {
+                if (!gui_hotlist_add_to_infolist (ptr_infolist, ptr_hotlist))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+            return ptr_infolist;
         }
     }
     else if (string_strcasecmp (infolist_name, "option") == 0)
@@ -674,6 +693,7 @@ plugin_api_init ()
     hook_infolist (NULL, "buffer",       &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "nicklist",     &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "window",       &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "hotlist",      &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "option",       &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "hook",         &plugin_api_infolist_get_internal, NULL);
 }

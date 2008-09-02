@@ -35,6 +35,7 @@
 #include "../plugins/plugin.h"
 #include "gui-hotlist.h"
 #include "gui-buffer.h"
+#include "gui-color.h"
 #include "gui-status.h"
 #include "gui-window.h"
 
@@ -398,6 +399,29 @@ gui_hotlist_add_to_infolist (struct t_infolist *infolist,
     
     if (!infolist_new_var_integer (ptr_item, "priority", hotlist->priority))
         return 0;
+    switch (hotlist->priority)
+    {
+        case GUI_HOTLIST_LOW:
+            if (!infolist_new_var_string (ptr_item, "color",
+                                          gui_color_get_name (CONFIG_COLOR(config_color_status_data_other))))
+                return 0;
+            break;
+        case GUI_HOTLIST_MESSAGE:
+            if (!infolist_new_var_string (ptr_item, "color",
+                                          gui_color_get_name (CONFIG_COLOR(config_color_status_data_msg))))
+                return 0;
+            break;
+        case GUI_HOTLIST_PRIVATE:
+            if (!infolist_new_var_string (ptr_item, "color",
+                                          gui_color_get_name (CONFIG_COLOR(config_color_status_data_private))))
+                return 0;
+            break;
+        case GUI_HOTLIST_HIGHLIGHT:
+            if (!infolist_new_var_string (ptr_item, "color",
+                                          gui_color_get_name (CONFIG_COLOR(config_color_status_data_highlight))))
+                return 0;
+            break;
+    }
     if (!infolist_new_var_buffer (ptr_item, "creation_time", &(hotlist->creation_time), sizeof (struct timeval)))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "buffer_number", hotlist->buffer->number))
