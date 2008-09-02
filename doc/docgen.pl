@@ -83,7 +83,7 @@ weechat::config_set_plugin("path", $default_path)
 
 # ------------------------------------------------------------------------------
 
-# get list of commands in a hash with 3 indexes: plugin, command, info_name
+# get list of commands in a hash with 3 indexes: plugin, command, xxx
 sub get_commands
 {
     my %commands;
@@ -110,7 +110,7 @@ sub get_commands
     return %commands;
 }
 
-# get list of config options in a hash with 4 indexes: config, section, option, info_name
+# get list of config options in a hash with 4 indexes: config, section, option, xxx
 sub get_options
 {
     my %options;
@@ -148,11 +148,51 @@ sub get_options
     return %options;
 }
 
+# get list of infos hooked by plugins in a hash with 3 indexes: plugin, info_name, xxx
+sub get_infos_hooked
+{
+    my %infos_hooked;
+    
+    my $infolist = weechat::infolist_get("hook", "", "info");
+    while (weechat::infolist_next($infolist))
+    {
+        my $info_name = weechat::infolist_string($infolist, "info_name");
+        my $plugin = weechat::infolist_string($infolist, "plugin_name");
+        $plugin = "weechat" if ($plugin eq "");
+        
+        $infos_hooked{$plugin}{$info_name}{"description"} = weechat::infolist_string($infolist, "description");
+    }
+    weechat::infolist_free($infolist);
+    
+    return %infos_hooked;
+}
+
+# get list of infolists hooked by plugins in a hash with 3 indexes: plugin, infolist_name, xxx
+sub get_infolists_hooked
+{
+    my %infolists_hooked;
+    
+    my $infolist = weechat::infolist_get("hook", "", "infolist");
+    while (weechat::infolist_next($infolist))
+    {
+        my $infolist_name = weechat::infolist_string($infolist, "infolist_name");
+        my $plugin = weechat::infolist_string($infolist, "plugin_name");
+        $plugin = "weechat" if ($plugin eq "");
+        
+        $infolists_hooked{$plugin}{$infolist_name}{"description"} = weechat::infolist_string($infolist, "description");
+    }
+    weechat::infolist_free($infolist);
+    
+    return %infolists_hooked;
+}
+
 # build XML doc files (command /docgen)
 sub docgen
 {
     my %plugin_commands = get_commands();
     my %plugin_options = get_options();
+    my %infos_hooked = get_infos_hooked();
+    my %infolists_hooked = get_infolists_hooked();
     
     # xml header (comment) for all files
     my $xml_header =
@@ -174,6 +214,8 @@ sub docgen
     {
         my $num_files_commands_written = 0;
         my $num_files_options_written = 0;
+        my $num_files_infos_hooked_written = 0;
+        my $num_files_infolists_hooked_written = 0;
         
         setlocale(LC_MESSAGES, $locale.".UTF-8");
         my $d = Locale::gettext->domain_raw("weechat");
@@ -269,13 +311,74 @@ sub docgen
                     weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
                 }
             }
+            
+            # write infos hooked
+            foreach my $plugin (keys %infos_hooked)
+            {
+                $filename = $dir.$plugin."_infos_hooked.xml";
+                if (open(FILE, ">".$filename))
+                {
+                    print FILE $xml_header;
+                    foreach my $info (sort keys %{$infos_hooked{$plugin}})
+                    {
+                        my $description = $infos_hooked{$plugin}{$info}{"description"};
+                        $description = $d->get($description) if ($description ne "");
+                        
+                        print FILE "<row>\n";
+                        print FILE "  <entry>".$info."</entry>\n";
+                        print FILE "  <entry>".$description."</entry>\n";
+                        print FILE "</row>\n";
+                    }
+                    #weechat::print("", "docgen: file ok: '$filename'");
+                    $num_files_written++;
+                    $num_files_infos_hooked_written++;
+                    close(FILE);
+                }
+                else
+                {
+                    weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
+                }
+            }
+            
+            # write infolists hooked
+            foreach my $plugin (keys %infolists_hooked)
+            {
+                $filename = $dir.$plugin."_infolists_hooked.xml";
+                if (open(FILE, ">".$filename))
+                {
+                    print FILE $xml_header;
+                    foreach my $info (sort keys %{$infolists_hooked{$plugin}})
+                    {
+                        my $description = $infolists_hooked{$plugin}{$info}{"description"};
+                        $description = $d->get($description) if ($description ne "");
+                        
+                        print FILE "<row>\n";
+                        print FILE "  <entry>".$info."</entry>\n";
+                        print FILE "  <entry>".$description."</entry>\n";
+                        print FILE "</row>\n";
+                    }
+                    #weechat::print("", "docgen: file ok: '$filename'");
+                    $num_files_written++;
+                    $num_files_infolists_hooked_written++;
+                    close(FILE);
+                }
+                else
+                {
+                    weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
+                }
+            }
         }
         else
         {
             weechat::print("", weechat::prefix("error")."docgen error: directory '$dir' does not exist");
         }
-        my $total = $num_files_commands_written + $num_files_options_written;
-        weechat::print("", "docgen: ".$locale.": ".$total." files written (".$num_files_commands_written." commands, ".$num_files_options_written." options)");
+        my $total = $num_files_commands_written + $num_files_options_written
+            + $num_files_infos_hooked_written + $num_files_infolists_hooked_written;
+        weechat::print("", "docgen: ".$locale.": ".$total." files written ("
+                       .$num_files_commands_written." cmd, "
+                       .$num_files_options_written." opt, "
+                       .$num_files_infos_hooked_written." infos, "
+                       .$num_files_infolists_hooked_written." infolists)");
     }
     weechat::print("", "docgen: total: ".$num_files_written." files written");
     setlocale(LC_MESSAGES, "");
