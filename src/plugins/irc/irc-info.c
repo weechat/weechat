@@ -326,12 +326,18 @@ void
 irc_info_init ()
 {
     /* irc info hooks */
-    weechat_hook_info ("irc_is_channel",     &irc_info_get_info_cb, NULL);
-    weechat_hook_info ("irc_nick_from_host", &irc_info_get_info_cb, NULL);
-    weechat_hook_info ("irc_buffer",         &irc_info_get_info_cb, NULL);
+    weechat_hook_info ("irc_is_channel", N_("1 if string is an IRC channel"),
+                       &irc_info_get_info_cb, NULL);
+    weechat_hook_info ("irc_nick_from_host", N_("get nick from IRC host"),
+                       &irc_info_get_info_cb, NULL);
+    weechat_hook_info ("irc_buffer", N_("get buffer pointer for an IRC server/channel"),
+                       &irc_info_get_info_cb, NULL);
     
     /* irc infolist hooks */
-    weechat_hook_infolist ("irc_server",  &irc_info_get_infolist_cb, NULL);
-    weechat_hook_infolist ("irc_channel", &irc_info_get_infolist_cb, NULL);
-    weechat_hook_infolist ("irc_nick",    &irc_info_get_infolist_cb, NULL);
+    weechat_hook_infolist ("irc_server", N_("list of IRC servers"),
+                           &irc_info_get_infolist_cb, NULL);
+    weechat_hook_infolist ("irc_channel", N_("list of channels for an IRC server"),
+                           &irc_info_get_infolist_cb, NULL);
+    weechat_hook_infolist ("irc_nick", N_("list of nicks for an IRC channel"),
+                           &irc_info_get_infolist_cb, NULL);
 }

@@ -3105,7 +3105,7 @@ weechat_lua_api_hook_info_cb (void *data, const char *info_name,
 static int
 weechat_lua_api_hook_info (lua_State *L)
 {
-    const char *info_name, *function;
+    const char *info_name, *description, *function;
     char *result;
     int n;
     
@@ -3123,18 +3123,20 @@ weechat_lua_api_hook_info (lua_State *L)
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 2)
+    if (n < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_info");
         LUA_RETURN_EMPTY;
     }
     
-    info_name = lua_tostring (lua_current_interpreter, -2);
+    info_name = lua_tostring (lua_current_interpreter, -3);
+    description = lua_tostring (lua_current_interpreter, -2);
     function = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_info (weechat_lua_plugin,
                                                    lua_current_script,
                                                    info_name,
+                                                   description,
                                                    &weechat_lua_api_hook_info_cb,
                                                    function));
     
@@ -3178,7 +3180,7 @@ weechat_lua_api_hook_infolist_cb (void *data, const char *info_name,
 static int
 weechat_lua_api_hook_infolist (lua_State *L)
 {
-    const char *infolist_name, *function;
+    const char *infolist_name, *description, *function;
     char *result;
     int n;
     
@@ -3196,18 +3198,20 @@ weechat_lua_api_hook_infolist (lua_State *L)
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 2)
+    if (n < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_infolist");
         LUA_RETURN_EMPTY;
     }
     
-    infolist_name = lua_tostring (lua_current_interpreter, -2);
+    infolist_name = lua_tostring (lua_current_interpreter, -3);
+    description = lua_tostring (lua_current_interpreter, -2);
     function = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_hook_infolist (weechat_lua_plugin,
                                                        lua_current_script,
                                                        infolist_name,
+                                                       description,
                                                        &weechat_lua_api_hook_infolist_cb,
                                                        function));
     

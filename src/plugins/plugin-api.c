@@ -675,25 +675,42 @@ void
 plugin_api_init ()
 {
     /* WeeChat core info hooks */
-    hook_info (NULL, "version",           &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "date",              &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "dir_separator",     &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_dir",       &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_libdir",    &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_sharedir",  &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "weechat_localedir", &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "charset_terminal",  &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "charset_internal",  &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "inactivity",        &plugin_api_info_get_internal, NULL);
-    hook_info (NULL, "filters_enabled",   &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "version", N_("WeeChat version"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "date", N_("WeeChat compilation date"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "dir_separator", N_("directory separator"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "weechat_dir", N_("WeeChat directory"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "weechat_libdir", N_("WeeChat \"lib\" directory"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "weechat_sharedir", N_("WeeChat \"share\" directory"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "weechat_localedir", N_("WeeChat \"locale\" directory"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "charset_terminal", N_("terminal charset"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "charset_internal", N_("WeeChat internal charset"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "inactivity", N_("keyboard inactivity (seconds)"),
+               &plugin_api_info_get_internal, NULL);
+    hook_info (NULL, "filters_enabled", N_("1 if filters are enabled"),
+               &plugin_api_info_get_internal, NULL);
     
     /* WeeChat core infolist hooks */
-    hook_infolist (NULL, "buffer",       &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "buffer_lines", &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "buffer",       &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "nicklist",     &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "window",       &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "hotlist",      &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "option",       &plugin_api_infolist_get_internal, NULL);
-    hook_infolist (NULL, "hook",         &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "buffer", N_("list of buffers"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "buffer_lines", N_("lines of a buffer"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "nicklist", N_("nicks in nicklist for a buffer"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "window", N_("list of windows"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "hotlist", N_("list of buffers in hotlist"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "option", N_("list of options"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "hook", N_("list of hooks"),
+                   &plugin_api_infolist_get_internal, NULL);
 }

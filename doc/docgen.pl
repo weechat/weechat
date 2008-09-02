@@ -28,9 +28,8 @@
 #           /docgen
 # XML files should be in ~/src/weechat/doc/xx/autogen/ (where xx is language)
 #
-# History:
-# 2008-08-22, FlashCode <flashcode@flashtux.org>:
-#     script creation
+# Script written on 2008-08-22 by FlashCode <flashcode@flashtux.org>
+#
 
 use strict;
 
@@ -70,6 +69,10 @@ my %plugin_list = ("weechat" => "co", "alias"   => "",
                    "python"  => "",   "ruby"    => "",
                    "lua"     => "",   "xfer"    => "co");
 
+# options to ignore
+my @ignore_options = ("weechat\\.bar\\..*",
+                      "irc\\.server\\..*");
+
 # --------------------------------[ init ]--------------------------------------
 
 weechat::register("docgen", "FlashCode <flashcode\@flashtux.org>", $version,
@@ -95,9 +98,9 @@ sub get_commands
         {
             if (($command eq $plugin) || ($plugin_list{$plugin} =~ /c/))
             {
-                $commands{$plugin}{$command}{"description"} = weechat::infolist_string($infolist, "description_en");
-                $commands{$plugin}{$command}{"args"} = weechat::infolist_string($infolist, "args_en");
-                $commands{$plugin}{$command}{"args_description"} = weechat::infolist_string($infolist, "args_description_en");
+                $commands{$plugin}{$command}{"description"} = weechat::infolist_string($infolist, "description");
+                $commands{$plugin}{$command}{"args"} = weechat::infolist_string($infolist, "args");
+                $commands{$plugin}{$command}{"args_description"} = weechat::infolist_string($infolist, "args_description");
                 $commands{$plugin}{$command}{"completion"} = weechat::infolist_string($infolist, "completion");
             }
         }
@@ -115,17 +118,29 @@ sub get_options
     my $infolist = weechat::infolist_get("option", "", "");
     while (weechat::infolist_next($infolist))
     {
-        my $config = weechat::infolist_string($infolist, "config_name");
-        my $section = weechat::infolist_string($infolist, "section_name");
-        my $option = weechat::infolist_string($infolist, "option_name");
-        if ($plugin_list{$config} =~ /o/)
+        my $full_name = weechat::infolist_string($infolist, "full_name");
+        
+        # check if option is ignored or not
+        my $ignore = 0;
+        foreach my $mask (@ignore_options)
         {
-            $options{$config}{$section}{$option}{"type"} = weechat::infolist_string($infolist, "type");
-            $options{$config}{$section}{$option}{"string_values"} = weechat::infolist_string($infolist, "string_values");
-            $options{$config}{$section}{$option}{"default_value"} = weechat::infolist_string($infolist, "default_value");
-            $options{$config}{$section}{$option}{"min"} = weechat::infolist_integer($infolist, "min");
-            $options{$config}{$section}{$option}{"max"} = weechat::infolist_integer($infolist, "max");
-            $options{$config}{$section}{$option}{"description"} = weechat::infolist_string($infolist, "description_en");
+            $ignore = 1 if ($full_name =~ /${mask}/);
+        }
+        
+        if ($ignore ne 1)
+        {
+            my $config = weechat::infolist_string($infolist, "config_name");
+            my $section = weechat::infolist_string($infolist, "section_name");
+            my $option = weechat::infolist_string($infolist, "option_name");
+            if ($plugin_list{$config} =~ /o/)
+            {
+                $options{$config}{$section}{$option}{"type"} = weechat::infolist_string($infolist, "type");
+                $options{$config}{$section}{$option}{"string_values"} = weechat::infolist_string($infolist, "string_values");
+                $options{$config}{$section}{$option}{"default_value"} = weechat::infolist_string($infolist, "default_value");
+                $options{$config}{$section}{$option}{"min"} = weechat::infolist_integer($infolist, "min");
+                $options{$config}{$section}{$option}{"max"} = weechat::infolist_integer($infolist, "max");
+                $options{$config}{$section}{$option}{"description"} = weechat::infolist_string($infolist, "description");
+            }
         }
     }
     weechat::infolist_free($infolist);
@@ -221,10 +236,12 @@ sub docgen
                             my $max = $plugin_options{$config}{$section}{$option}{"max"};
                             my $description = $plugin_options{$config}{$section}{$option}{"description"};
                             $description = $d->get($description) if ($description ne "");
+                            my $type_nls = $type;
+                            $type_nls = $d->get($type_nls) if ($type_nls ne "");
                             
                             print FILE "<row>\n";
                             print FILE "  <entry><option>".$config.".".$section.".".$option."</option></entry>\n";
-                            print FILE "  <entry>".$type."</entry>\n";
+                            print FILE "  <entry>".$type_nls."</entry>\n";
                             print FILE "  <entry>";
                             if ($string_values eq "")
                             {
@@ -237,6 +254,7 @@ sub docgen
                                 print FILE $string_values;
                             }
                             print FILE "</entry>\n";
+                            print FILE "  <entry>".$default_value."</entry>\n";
                             print FILE "  <entry>".$description."</entry>\n";
                             print FILE "</row>\n";
                         }

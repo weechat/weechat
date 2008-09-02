@@ -92,5 +92,6 @@ void
 logger_info_init ()
 {
     /* irc infolist hooks */
-    weechat_hook_infolist ("logger_buffer", &logger_info_get_infolist_cb, NULL);
+    weechat_hook_infolist ("logger_buffer", N_("list of logger buffers"),
+                           &logger_info_get_infolist_cb, NULL);
 }

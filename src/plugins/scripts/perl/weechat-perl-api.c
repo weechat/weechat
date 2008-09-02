@@ -2597,7 +2597,7 @@ weechat_perl_api_hook_info_cb (void *data, const char *info_name,
 
 static XS (XS_weechat_hook_info)
 {
-    char *result, *info_name, *perl_fn;
+    char *result, *info_name, *description, *perl_fn;
     dXSARGS;
     
     /* make C compiler happy */
@@ -2609,17 +2609,19 @@ static XS (XS_weechat_hook_info)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 2)
+    if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_info");
         PERL_RETURN_EMPTY;
     }
     
     info_name = SvPV (ST (0), PL_na);
-    perl_fn = SvPV (ST (1), PL_na);
+    description = SvPV (ST (1), PL_na);
+    perl_fn = SvPV (ST (2), PL_na);
     result = script_ptr2str (script_api_hook_info (weechat_perl_plugin,
                                                    perl_current_script,
                                                    info_name,
+                                                   description,
                                                    &weechat_perl_api_hook_info_cb,
                                                    perl_fn));
     
@@ -2662,7 +2664,7 @@ weechat_perl_api_hook_infolist_cb (void *data, const char *infolist_name,
 
 static XS (XS_weechat_hook_infolist)
 {
-    char *result, *infolist_name, *perl_fn;
+    char *result, *infolist_name, *description, *perl_fn;
     dXSARGS;
     
     /* make C compiler happy */
@@ -2674,17 +2676,19 @@ static XS (XS_weechat_hook_infolist)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 2)
+    if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_infolist");
         PERL_RETURN_EMPTY;
     }
     
     infolist_name = SvPV (ST (0), PL_na);
-    perl_fn = SvPV (ST (1), PL_na);
+    description = SvPV (ST (1), PL_na);
+    perl_fn = SvPV (ST (2), PL_na);
     result = script_ptr2str (script_api_hook_infolist (weechat_perl_plugin,
                                                        perl_current_script,
                                                        infolist_name,
+                                                       description,
                                                        &weechat_perl_api_hook_infolist_cb,
                                                        perl_fn));
     

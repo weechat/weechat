@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-29 14:53+0200\n"
+"POT-Creation-Date: 2008-09-02 16:39+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1573,6 +1573,21 @@ msgstr ""
 msgid "save configuration files when unloading plugins"
 msgstr "uložit soubor s nastavením při ukončení"
 
+msgid "boolean"
+msgstr ""
+
+#, fuzzy
+msgid "integer"
+msgstr "minuta"
+
+#, fuzzy
+msgid "string"
+msgstr "Čekám"
+
+#, fuzzy
+msgid "color"
+msgstr "barva pro text rozhovoru"
+
 #, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
 msgstr "%s nemohu vytvořit soubor \"%s\"\n"
@@ -1916,6 +1931,10 @@ msgstr "jméno_aliasu"
 
 msgid "alias_name: name of alias to remove"
 msgstr "jméno_aliasu: jméno aliasu pro odebrání"
+
+#, fuzzy
+msgid "list of alias"
+msgstr "Seznam pro aliasy:\n"
 
 #, fuzzy, c-format
 msgid "%s: debug enabled"
@@ -3244,6 +3263,29 @@ msgid_plural "channels"
 msgstr[0] "%d kanál"
 msgstr[1] "%d kanálů"
 
+#, fuzzy
+msgid "1 if string is an IRC channel"
+msgstr "seznam uživatelů na kanálu"
+
+#, fuzzy
+msgid "get nick from IRC host"
+msgstr "zakázat přezdívky nebo hosty"
+
+msgid "get buffer pointer for an IRC server/channel"
+msgstr ""
+
+#, fuzzy
+msgid "list of IRC servers"
+msgstr "heslo pro IRC server"
+
+#, fuzzy
+msgid "list of channels for an IRC server"
+msgstr "seznam uživatelů přihlášených k serveru"
+
+#, fuzzy
+msgid "list of nicks for an IRC channel"
+msgstr "seznam uživatelů na kanálu"
+
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s nepřipojen k serveru\n"
@@ -4005,6 +4047,10 @@ msgstr "****  End of log  "
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr "===\t========== Konec zpětného logu (%d řádků) =========="
 
+#, fuzzy
+msgid "list of logger buffers"
+msgstr "časová známka pro buffer"
+
 #, c-format
 msgid "notify: debug: set notify for buffer %s to %d (%s)"
 msgstr "notify: debug: nastavit notifikaci pro buffer %s na %d (%s)"
@@ -4045,6 +4091,70 @@ msgstr ""
 "  message: buffer bude v hotlistu pouze při zvýraznění a uživatelských "
 "zprávách\n"
 "      all: buffer bude v hotlistu pro jakýkoliv vytištěný text"
+
+#, fuzzy
+msgid "WeeChat version"
+msgstr "verze serveru"
+
+#, fuzzy
+msgid "WeeChat compilation date"
+msgstr "datum vytvoření kanálu"
+
+#, fuzzy
+msgid "directory separator"
+msgstr "barva pro dělič času"
+
+msgid "WeeChat directory"
+msgstr ""
+
+msgid "WeeChat \"lib\" directory"
+msgstr ""
+
+msgid "WeeChat \"share\" directory"
+msgstr ""
+
+msgid "WeeChat \"locale\" directory"
+msgstr ""
+
+msgid "terminal charset"
+msgstr ""
+
+msgid "WeeChat internal charset"
+msgstr ""
+
+msgid "keyboard inactivity (seconds)"
+msgstr ""
+
+#, fuzzy
+msgid "1 if filters are enabled"
+msgstr "uživatel byl zablokován"
+
+#, fuzzy
+msgid "list of buffers"
+msgstr "Seznam pro aliasy:\n"
+
+#, fuzzy
+msgid "lines of a buffer"
+msgstr "nevalidní délka pro buffer"
+
+#, fuzzy
+msgid "nicks in nicklist for a buffer"
+msgstr "nevalidní délka pro buffer"
+
+msgid "list of windows"
+msgstr ""
+
+#, fuzzy
+msgid "list of buffers in hotlist"
+msgstr "zobrazit historii příkazů bufferu"
+
+#, fuzzy
+msgid "list of options"
+msgstr "nastaví konfigurační možnosti"
+
+#, fuzzy
+msgid "list of hooks"
+msgstr "Seznam pro aliasy:\n"
 
 #, fuzzy, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -4659,6 +4769,10 @@ msgstr "automaticky akceptovat dcc rozhovor (používejte opatrně!)"
 msgid "automatically accept chat requests (use carefully!)"
 msgstr "automaticky akceptovat dcc rozhovor (používejte opatrně!)"
 
+#, fuzzy
+msgid "list of xfer"
+msgstr "Seznam pro aliasy:\n"
+
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe"
 msgstr "%s DCC: nemohu vytvořit rouru\n"
@@ -4774,9 +4888,6 @@ msgstr "%s chybí argument pro volbu \"%s\"\n"
 
 #~ msgid "wrong type in file (expected: %d, read: %d)"
 #~ msgstr "špatný typ v souboru (očekáván: %d, přečten: %d)"
-
-#~ msgid "invalid length for a buffer"
-#~ msgstr "nevalidní délka pro buffer"
 
 #~ msgid "object read error"
 #~ msgstr "chyba při čtení objektu"

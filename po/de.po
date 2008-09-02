@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-29 14:53+0200\n"
+"POT-Creation-Date: 2008-09-02 16:39+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1523,6 +1523,21 @@ msgstr ""
 msgid "save configuration files when unloading plugins"
 msgstr "Konfiguration beim Verlassen abspeichern"
 
+msgid "boolean"
+msgstr ""
+
+#, fuzzy
+msgid "integer"
+msgstr "Minute"
+
+#, fuzzy
+msgid "string"
+msgstr "warten"
+
+#, fuzzy
+msgid "color"
+msgstr "Farbe vom Chat-Text"
+
 #, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
 msgstr "%s kann die Datei \"%s\" nicht anlegen\n"
@@ -1865,6 +1880,10 @@ msgstr "Aliasname"
 
 msgid "alias_name: name of alias to remove"
 msgstr "Aliasname: Name des zu löschenden Aliases"
+
+#, fuzzy
+msgid "list of alias"
+msgstr "Liste der Aliases:\n"
 
 #, fuzzy, c-format
 msgid "%s: debug enabled"
@@ -3161,6 +3180,29 @@ msgid_plural "channels"
 msgstr[0] "ungültige Channelmaske"
 msgstr[1] "ungültige Channelmaske"
 
+#, fuzzy
+msgid "1 if string is an IRC channel"
+msgstr "Liste von Nicks im Channel"
+
+#, fuzzy
+msgid "get nick from IRC host"
+msgstr "Nicknames oder Hosts sperren/verbannen"
+
+msgid "get buffer pointer for an IRC server/channel"
+msgstr ""
+
+#, fuzzy
+msgid "list of IRC servers"
+msgstr "Port des IRC-Servers"
+
+#, fuzzy
+msgid "list of channels for an IRC server"
+msgstr "Channels, die bei Verbindung zum Server zu betreten sind"
+
+#, fuzzy
+msgid "list of nicks for an IRC channel"
+msgstr "Liste von Nicks im Channel"
+
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s keine Verbindung zum Server \"%s\"!\n"
@@ -3918,6 +3960,10 @@ msgstr "****  End of log  "
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr ""
 
+#, fuzzy
+msgid "list of logger buffers"
+msgstr "Timestamp für Puffer"
+
 #, c-format
 msgid "notify: debug: set notify for buffer %s to %d (%s)"
 msgstr ""
@@ -3952,6 +3998,74 @@ msgid ""
 "  message: buffer will be in hotlist for highlights and user messages only\n"
 "      all: buffer will be in hotlist for any text printed"
 msgstr ""
+
+#, fuzzy
+msgid "WeeChat version"
+msgstr "WeeChat-Slogan"
+
+#, fuzzy
+msgid "WeeChat compilation date"
+msgstr "Konfigurationsdatei gesichert\n"
+
+#, fuzzy
+msgid "directory separator"
+msgstr "Farbe für den Zeit-Separator"
+
+#, fuzzy
+msgid "WeeChat directory"
+msgstr "WeeChat-Fehler:"
+
+msgid "WeeChat \"lib\" directory"
+msgstr ""
+
+#, fuzzy
+msgid "WeeChat \"share\" directory"
+msgstr "WeeChat-Fehler:"
+
+msgid "WeeChat \"locale\" directory"
+msgstr ""
+
+#, fuzzy
+msgid "terminal charset"
+msgstr "Puffer verwalten"
+
+msgid "WeeChat internal charset"
+msgstr ""
+
+msgid "keyboard inactivity (seconds)"
+msgstr ""
+
+#, fuzzy
+msgid "1 if filters are enabled"
+msgstr "/users wurde deaktiviert"
+
+#, fuzzy
+msgid "list of buffers"
+msgstr "Liste der Aliases:\n"
+
+#, fuzzy
+msgid "lines of a buffer"
+msgstr "konnte den Puffer nicht laden"
+
+#, fuzzy
+msgid "nicks in nicklist for a buffer"
+msgstr "Fehlerhafte Pufferlänge"
+
+#, fuzzy
+msgid "list of windows"
+msgstr "Liste der /ignore-Regeln:\n"
+
+#, fuzzy
+msgid "list of buffers in hotlist"
+msgstr "Maximale Länge der Namen in der Hotlist"
+
+#, fuzzy
+msgid "list of options"
+msgstr "Konfigurationsparameter setzen"
+
+#, fuzzy
+msgid "list of hooks"
+msgstr "Liste der Aliases:\n"
 
 #, fuzzy, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -4558,6 +4672,10 @@ msgstr "DCC-CHats automatisch annehmen (Vorsicht!)"
 msgid "automatically accept chat requests (use carefully!)"
 msgstr "DCC-CHats automatisch annehmen (Vorsicht!)"
 
+#, fuzzy
+msgid "list of xfer"
+msgstr "Liste der Aliases:\n"
+
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe"
 msgstr "%s DCC: kann keine Pipe erstellen\n"
@@ -4659,9 +4777,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #~ msgid "wrong type in file (expected: %d, read: %d)"
 #~ msgstr "Falscher Datentyp in der Datei (erwartet: %d, gefunden: %d)"
-
-#~ msgid "invalid length for a buffer"
-#~ msgstr "Fehlerhafte Pufferlänge"
 
 #~ msgid "object read error"
 #~ msgstr "Objekt-Lesefehler"
@@ -5089,10 +5204,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #~ msgstr "Keine Aliases definiert.\n"
 
 #, fuzzy
-#~ msgid "manage charsets"
-#~ msgstr "Puffer verwalten"
-
-#, fuzzy
 #~ msgid "%s%s: error creating server for reading configuration file"
 #~ msgstr "den Server dazu bringen, seine Konfigurationsdatei neu zu laden"
 
@@ -5327,10 +5438,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #, fuzzy
 #~ msgid "%sError: failed to reload WeeChat configuration file"
 #~ msgstr "%s konnte die Konfigurationsdatei nicht sichern\n"
-
-#, fuzzy
-#~ msgid "%sWeeChat configuration file saved"
-#~ msgstr "Konfigurationsdatei gesichert\n"
 
 #, fuzzy
 #~ msgid "%sError: failed to save WeeChat configuration file"
@@ -5732,9 +5839,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #~ msgid "%sFailed to create alias \"%s\" => \"%s\" (not enough memory)"
 #~ msgstr "Kann den Alias \"%s\" => \"%s\" nicht anlegen (Speichermangel)\n"
 
-#~ msgid "WeeChat Error:"
-#~ msgstr "WeeChat-Fehler:"
-
 #~ msgid "WeeChat Warning:"
 #~ msgstr "WeeChat-Warnung:"
 
@@ -5917,9 +6021,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #~ msgid "failed to load history"
 #~ msgstr "konnte den Verlauf nicht laden"
-
-#~ msgid "failed to load buffer"
-#~ msgstr "konnte den Puffer nicht laden"
 
 #~ msgid "failed to load line"
 #~ msgstr "konnte die Zeile nicht laden"
@@ -6331,9 +6432,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #~ msgid "IRC commands:\n"
 #~ msgstr "IRC-Befehle:\n"
 
-#~ msgid "List of ignore:\n"
-#~ msgstr "Liste der /ignore-Regeln:\n"
-
 #~ msgid "No ignore defined.\n"
 #~ msgstr "Keine /ignore-Regeln definiert.\n"
 
@@ -6425,9 +6523,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #~ msgid "%s unable to create server ('%s'), ignored\n"
 #~ msgstr "%s Kann Server nicht anlegen ('%s'), ignoriert\n"
 
-#~ msgid "WeeChat slogan"
-#~ msgstr "WeeChat-Slogan"
-
 #~ msgid "display nicklist window"
 #~ msgstr "Nicklisten-Fenster anzeigen"
 
@@ -6457,9 +6552,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #~ msgid "level for displaying names in hotlist"
 #~ msgstr "Level für Namensanzeige in der Hotlist"
-
-#~ msgid "max length of names in hotlist"
-#~ msgstr "Maximale Länge der Namen in der Hotlist"
 
 #~ msgid "format for input prompt"
 #~ msgstr "Format der Eingabezeile"
@@ -6670,9 +6762,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #~ msgid "server address or hostname"
 #~ msgstr "Serveradresse oder Hostname"
 
-#~ msgid "port for IRC server"
-#~ msgstr "Port des IRC-Servers"
-
 #~ msgid "server password"
 #~ msgstr "Serverpasswort"
 
@@ -6700,9 +6789,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #~ msgid "delay (in seconds) after command was executed"
 #~ msgstr "Wartezeit nach Ausführung des Befehls"
-
-#~ msgid "list of channels to join when connected to server"
-#~ msgstr "Channels, die bei Verbindung zum Server zu betreten sind"
 
 #~ msgid "notify levels for channels of this server"
 #~ msgstr "Notify-Levels für Channels auf diesem Server"

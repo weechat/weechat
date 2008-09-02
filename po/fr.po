@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-29 14:53+0200\n"
-"PO-Revision-Date: 2008-08-29 14:53+0200\n"
+"POT-Creation-Date: 2008-09-02 16:39+0200\n"
+"PO-Revision-Date: 2008-09-02 16:39+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1520,6 +1520,18 @@ msgid "save configuration files when unloading plugins"
 msgstr ""
 "sauvegarder les fichiers de configuration lors du déchargement des extensions"
 
+msgid "boolean"
+msgstr "booléen"
+
+msgid "integer"
+msgstr "entier"
+
+msgid "string"
+msgstr "chaîne"
+
+msgid "color"
+msgstr "couleur"
+
 #, c-format
 msgid "%sError: cannot create file \"%s\""
 msgstr "%sErreur: impossible de créer le fichier \"%s\""
@@ -1853,6 +1865,9 @@ msgstr "nom_alias"
 
 msgid "alias_name: name of alias to remove"
 msgstr "nom_alias: nom de l'alias à supprimer"
+
+msgid "list of alias"
+msgstr "liste des alias"
 
 #, c-format
 msgid "%s: debug enabled"
@@ -3168,6 +3183,24 @@ msgid_plural "channels"
 msgstr[0] "canal"
 msgstr[1] "canaux"
 
+msgid "1 if string is an IRC channel"
+msgstr "1 si la chaîne est un canal IRC"
+
+msgid "get nick from IRC host"
+msgstr "retourne le pseudo à partir d'un host IRC"
+
+msgid "get buffer pointer for an IRC server/channel"
+msgstr "retourne le pointeur vers le tampon pour un serveur/canal IRC"
+
+msgid "list of IRC servers"
+msgstr "liste des serveurs IRC"
+
+msgid "list of channels for an IRC server"
+msgstr "liste des canaux pour un serveur IRC"
+
+msgid "list of nicks for an IRC channel"
+msgstr "liste des pseudos pour un canal IRC"
+
 #, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s%s: vous n'êtes pas connecté au serveur"
@@ -3936,6 +3969,9 @@ msgstr "%s\t****  Fin du log  ****"
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr "===\t========== Fin de l'historique (%d lignes) =========="
 
+msgid "list of logger buffers"
+msgstr "liste des enregistreurs de tampons (loggers)"
+
 #, c-format
 msgid "notify: debug: set notify for buffer %s to %d (%s)"
 msgstr "notify: debug: niveau de notification pour le tampon %s mis à %d (%s)"
@@ -3976,6 +4012,60 @@ msgstr ""
 "  message: le tampon sera dans la hotlist pour les highlights et les "
 "messages d'utilisateurs seulement\n"
 "      all: le tampon sera dans la hotlist pour tout texte affiché"
+
+msgid "WeeChat version"
+msgstr "version de WeeChat"
+
+msgid "WeeChat compilation date"
+msgstr "date de compilation de WeeChat"
+
+msgid "directory separator"
+msgstr "séparateur de répertoire"
+
+msgid "WeeChat directory"
+msgstr "répertoire de WeeChat"
+
+msgid "WeeChat \"lib\" directory"
+msgstr "répertoire \"lib\" de WeeChat"
+
+msgid "WeeChat \"share\" directory"
+msgstr "répertoire \"share\" de WeeChat"
+
+msgid "WeeChat \"locale\" directory"
+msgstr "répertoire \"locale\" de WeeChat"
+
+msgid "terminal charset"
+msgstr "charset du terminal"
+
+msgid "WeeChat internal charset"
+msgstr "charset interne à WeeChat"
+
+msgid "keyboard inactivity (seconds)"
+msgstr "inactivité du clavier (secondes)"
+
+msgid "1 if filters are enabled"
+msgstr "1 si les filtres sont activés"
+
+msgid "list of buffers"
+msgstr "liste des tampons"
+
+msgid "lines of a buffer"
+msgstr "lignes d'un tampon"
+
+msgid "nicks in nicklist for a buffer"
+msgstr "pseudos dans la liste des pseudos pour un tampon"
+
+msgid "list of windows"
+msgstr "liste des fenêtres"
+
+msgid "list of buffers in hotlist"
+msgstr "liste des tampons dans la hotlist"
+
+msgid "list of options"
+msgstr "liste des options"
+
+msgid "list of hooks"
+msgstr "liste des hooks"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -4571,6 +4661,9 @@ msgid "automatically accept chat requests (use carefully!)"
 msgstr ""
 "accepte automatiquement les demandes de discussion (à utiliser avec "
 "précaution !)"
+
+msgid "list of xfer"
+msgstr "liste des xfer"
 
 #, c-format
 msgid "%s%s: unable to create pipe"

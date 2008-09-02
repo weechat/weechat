@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-29 14:53+0200\n"
+"POT-Creation-Date: 2008-09-02 16:39+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1536,6 +1536,21 @@ msgstr ""
 msgid "save configuration files when unloading plugins"
 msgstr "сохранять конфигурационный файл при выходе"
 
+msgid "boolean"
+msgstr ""
+
+#, fuzzy
+msgid "integer"
+msgstr "минута"
+
+#, fuzzy
+msgid "string"
+msgstr "Ожидание"
+
+#, fuzzy
+msgid "color"
+msgstr "цвет чата"
+
 #, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
 msgstr "%s не могу создать файл \"%s\"\n"
@@ -1875,6 +1890,10 @@ msgstr "сокращение"
 
 msgid "alias_name: name of alias to remove"
 msgstr "сокращение: удаляемое сокращение"
+
+#, fuzzy
+msgid "list of alias"
+msgstr "Список сокращений:\n"
 
 #, fuzzy, c-format
 msgid "%s: debug enabled"
@@ -3181,6 +3200,29 @@ msgid_plural "channels"
 msgstr[0] "%d канал"
 msgstr[1] "%d каналов"
 
+#, fuzzy
+msgid "1 if string is an IRC channel"
+msgstr "список ников на канале"
+
+#, fuzzy
+msgid "get nick from IRC host"
+msgstr "банит ник или хост"
+
+msgid "get buffer pointer for an IRC server/channel"
+msgstr ""
+
+#, fuzzy
+msgid "list of IRC servers"
+msgstr "порт IRC сервера"
+
+#, fuzzy
+msgid "list of channels for an IRC server"
+msgstr "Список каналов, на которые заходить при соединении с сервером"
+
+#, fuzzy
+msgid "list of nicks for an IRC channel"
+msgstr "список ников на канале"
+
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s вы не подключены к серверу\n"
@@ -3931,6 +3973,10 @@ msgstr "**** Конец log-файла"
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr ""
 
+#, fuzzy
+msgid "list of logger buffers"
+msgstr "время в буферах"
+
 #, c-format
 msgid "notify: debug: set notify for buffer %s to %d (%s)"
 msgstr ""
@@ -3965,6 +4011,74 @@ msgid ""
 "  message: buffer will be in hotlist for highlights and user messages only\n"
 "      all: buffer will be in hotlist for any text printed"
 msgstr ""
+
+#, fuzzy
+msgid "WeeChat version"
+msgstr "слоган WeeChat"
+
+#, fuzzy
+msgid "WeeChat compilation date"
+msgstr "Конфигурационный файл сохранён\n"
+
+#, fuzzy
+msgid "directory separator"
+msgstr "цвет разделителя времени"
+
+#, fuzzy
+msgid "WeeChat directory"
+msgstr "Ошибка WeeChat:"
+
+msgid "WeeChat \"lib\" directory"
+msgstr ""
+
+#, fuzzy
+msgid "WeeChat \"share\" directory"
+msgstr "Ошибка WeeChat:"
+
+msgid "WeeChat \"locale\" directory"
+msgstr ""
+
+#, fuzzy
+msgid "terminal charset"
+msgstr "управление буферами"
+
+msgid "WeeChat internal charset"
+msgstr ""
+
+msgid "keyboard inactivity (seconds)"
+msgstr ""
+
+#, fuzzy
+msgid "1 if filters are enabled"
+msgstr "команда users отключена"
+
+#, fuzzy
+msgid "list of buffers"
+msgstr "Список сокращений:\n"
+
+#, fuzzy
+msgid "lines of a buffer"
+msgstr "загрузка буфера не удалась"
+
+#, fuzzy
+msgid "nicks in nicklist for a buffer"
+msgstr "некорректная длина буфера"
+
+#, fuzzy
+msgid "list of windows"
+msgstr "Список игнорирования:\n"
+
+#, fuzzy
+msgid "list of buffers in hotlist"
+msgstr "максимальная длина имён в хотлисте"
+
+#, fuzzy
+msgid "list of options"
+msgstr "настроить параметры конфигурации"
+
+#, fuzzy
+msgid "list of hooks"
+msgstr "Список сокращений:\n"
 
 #, fuzzy, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -4561,6 +4675,10 @@ msgstr "автоматически подтверждать dcc-чат (испо
 msgid "automatically accept chat requests (use carefully!)"
 msgstr "автоматически подтверждать dcc-чат (используйте осторожно!)"
 
+#, fuzzy
+msgid "list of xfer"
+msgstr "Список сокращений:\n"
+
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe"
 msgstr "%s DCC: не могу создать pipe\n"
@@ -4663,9 +4781,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #~ msgid "wrong type in file (expected: %d, read: %d)"
 #~ msgstr "некорректный тип в файле (ожидалось: %d, прочитано: %d)"
-
-#~ msgid "invalid length for a buffer"
-#~ msgstr "некорректная длина буфера"
 
 #~ msgid "object read error"
 #~ msgstr "ошибка чтения объекта"
@@ -5092,10 +5207,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgstr "Сокращения не заданы.\n"
 
 #, fuzzy
-#~ msgid "manage charsets"
-#~ msgstr "управление буферами"
-
-#, fuzzy
 #~ msgid "%s%s: error creating server for reading configuration file"
 #~ msgstr "перезагрузить конфигурационный файл сервера"
 
@@ -5320,10 +5431,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #, fuzzy
 #~ msgid "%sError: failed to reload WeeChat configuration file"
 #~ msgstr "%s не могу сохранить конфигурационный файл\n"
-
-#, fuzzy
-#~ msgid "%sWeeChat configuration file saved"
-#~ msgstr "Конфигурационный файл сохранён\n"
 
 #, fuzzy
 #~ msgid "%sError: failed to save WeeChat configuration file"
@@ -5730,9 +5837,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgstr ""
 #~ "Невозможно создать сокращение \"%s\" => \"%s\" (недостаточно памяти)\n"
 
-#~ msgid "WeeChat Error:"
-#~ msgstr "Ошибка WeeChat:"
-
 #~ msgid "WeeChat Warning:"
 #~ msgstr "Предупреждение WeeChat:"
 
@@ -5924,9 +6028,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #~ msgid "failed to load history"
 #~ msgstr "загрузка истории не удалась"
-
-#~ msgid "failed to load buffer"
-#~ msgstr "загрузка буфера не удалась"
 
 #~ msgid "failed to load line"
 #~ msgstr "загрузка строки не удалась"
@@ -6333,9 +6434,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgid "IRC commands:\n"
 #~ msgstr "Команды IRC:\n"
 
-#~ msgid "List of ignore:\n"
-#~ msgstr "Список игнорирования:\n"
-
 #~ msgid "No ignore defined.\n"
 #~ msgstr "Игнорирования не заданы.\n"
 
@@ -6422,9 +6520,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgid "%s unable to create server ('%s'), ignored\n"
 #~ msgstr "%s не могу создать сервер ('%s'), игнорируется\n"
 
-#~ msgid "WeeChat slogan"
-#~ msgstr "слоган WeeChat"
-
 #~ msgid "display nicklist window"
 #~ msgstr "показывать список ников"
 
@@ -6457,9 +6552,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #~ msgid "level for displaying names in hotlist"
 #~ msgstr "уровень отображения имён в хотлисте"
-
-#~ msgid "max length of names in hotlist"
-#~ msgstr "максимальная длина имён в хотлисте"
 
 #~ msgid "hotlist sort type"
 #~ msgstr "тип сортировки хотлиста"
@@ -6670,9 +6762,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgid "server address or hostname"
 #~ msgstr "адрес или хост сервера"
 
-#~ msgid "port for IRC server"
-#~ msgstr "порт IRC сервера"
-
 #~ msgid "server password"
 #~ msgstr "пароль сервера"
 
@@ -6699,9 +6788,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #~ msgid "delay (in seconds) after command was executed"
 #~ msgstr "задержка (в секундах) перед выполнением команды"
-
-#~ msgid "list of channels to join when connected to server"
-#~ msgstr "Список каналов, на которые заходить при соединении с сервером"
 
 #~ msgid "notify levels for channels of this server"
 #~ msgstr "уровни уведомления для каналов этого сервера"

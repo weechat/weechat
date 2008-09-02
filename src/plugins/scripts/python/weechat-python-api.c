@@ -2754,7 +2754,7 @@ weechat_python_api_hook_info_cb (void *data, const char *info_name,
 static PyObject *
 weechat_python_api_hook_info (PyObject *self, PyObject *args)
 {
-    char *info_name, *function, *result;
+    char *info_name, *description, *function, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -2767,9 +2767,10 @@ weechat_python_api_hook_info (PyObject *self, PyObject *args)
     }
     
     info_name = NULL;
+    description = NULL;
     function = NULL;
     
-    if (!PyArg_ParseTuple (args, "ss", &info_name, &function))
+    if (!PyArg_ParseTuple (args, "sss", &info_name, &description, &function))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_info");
         PYTHON_RETURN_EMPTY;
@@ -2778,6 +2779,7 @@ weechat_python_api_hook_info (PyObject *self, PyObject *args)
     result = script_ptr2str(script_api_hook_info (weechat_python_plugin,
                                                   python_current_script,
                                                   info_name,
+                                                  description,
                                                   &weechat_python_api_hook_info_cb,
                                                   function));
     
@@ -2821,7 +2823,7 @@ weechat_python_api_hook_infolist_cb (void *data, const char *infolist_name,
 static PyObject *
 weechat_python_api_hook_infolist (PyObject *self, PyObject *args)
 {
-    char *infolist_name, *function, *result;
+    char *infolist_name, *description, *function, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -2834,9 +2836,10 @@ weechat_python_api_hook_infolist (PyObject *self, PyObject *args)
     }
     
     infolist_name = NULL;
+    description = NULL;
     function = NULL;
     
-    if (!PyArg_ParseTuple (args, "ss", &infolist_name, &function))
+    if (!PyArg_ParseTuple (args, "sss", &infolist_name, &description, &function))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_infolist");
         PYTHON_RETURN_EMPTY;
@@ -2845,6 +2848,7 @@ weechat_python_api_hook_infolist (PyObject *self, PyObject *args)
     result = script_ptr2str(script_api_hook_infolist (weechat_python_plugin,
                                                       python_current_script,
                                                       infolist_name,
+                                                      description,
                                                       &weechat_python_api_hook_infolist_cb,
                                                       function));
     

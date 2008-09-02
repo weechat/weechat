@@ -884,6 +884,7 @@ struct t_hook *
 script_api_hook_info (struct t_weechat_plugin *weechat_plugin,
                       struct t_plugin_script *script,
                       const char *info_name,
+                      const char *description,
                       char *(*callback)(void *data,
                                         const char *info_name,
                                         const char *arguments),
@@ -896,7 +897,8 @@ script_api_hook_info (struct t_weechat_plugin *weechat_plugin,
     if (!new_script_callback)
         return NULL;
     
-    new_hook = weechat_hook_info (info_name, callback, new_script_callback);
+    new_hook = weechat_hook_info (info_name, description,
+                                  callback, new_script_callback);
     if (!new_hook)
     {
         script_callback_free_data (new_script_callback);
@@ -922,6 +924,7 @@ struct t_hook *
 script_api_hook_infolist (struct t_weechat_plugin *weechat_plugin,
                           struct t_plugin_script *script,
                           const char *infolist_name,
+                          const char *description,
                           struct t_infolist *(*callback)(void *data,
                                                          const char *infolist_name,
                                                          void *pointer,
@@ -935,7 +938,7 @@ script_api_hook_infolist (struct t_weechat_plugin *weechat_plugin,
     if (!new_script_callback)
         return NULL;
     
-    new_hook = weechat_hook_infolist (infolist_name,
+    new_hook = weechat_hook_infolist (infolist_name, description,
                                       callback, new_script_callback);
     if (!new_hook)
     {

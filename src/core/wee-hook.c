@@ -1331,6 +1331,7 @@ hook_modifier_exec (struct t_weechat_plugin *plugin, const char *modifier,
 
 struct t_hook *
 hook_info (struct t_weechat_plugin *plugin, const char *info_name,
+           const char *description,
            t_hook_callback_info *callback, void *callback_data)
 {
     struct t_hook *new_hook;
@@ -1354,6 +1355,8 @@ hook_info (struct t_weechat_plugin *plugin, const char *info_name,
     new_hook->hook_data = new_hook_info;
     new_hook_info->callback = callback;
     new_hook_info->info_name = strdup (info_name);
+    new_hook_info->description = (description) ?
+        strdup (description) : strdup ("");
     
     hook_add_to_list (new_hook);
     
@@ -1413,6 +1416,7 @@ hook_info_get (struct t_weechat_plugin *plugin, const char *info_name,
 
 struct t_hook *
 hook_infolist (struct t_weechat_plugin *plugin, const char *infolist_name,
+               const char *description,
                t_hook_callback_infolist *callback, void *callback_data)
 {
     struct t_hook *new_hook;
@@ -1436,6 +1440,8 @@ hook_infolist (struct t_weechat_plugin *plugin, const char *infolist_name,
     new_hook->hook_data = new_hook_infolist;
     new_hook_infolist->callback = callback;
     new_hook_infolist->infolist_name = strdup (infolist_name);
+    new_hook_infolist->description = (description) ?
+        strdup (description) : strdup ("");
     
     hook_add_to_list (new_hook);
     
@@ -1706,26 +1712,26 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                         return 0;
                     if (!infolist_new_var_integer (ptr_item, "level", HOOK_COMMAND(ptr_hook, level)))
                         return 0;
-                    if (!infolist_new_var_string (ptr_item, "description_en",
+                    if (!infolist_new_var_string (ptr_item, "description",
                                                   HOOK_COMMAND(ptr_hook, description)))
                         return 0;
-                    if (!infolist_new_var_string (ptr_item, "description",
+                    if (!infolist_new_var_string (ptr_item, "description_nls",
                                                   (HOOK_COMMAND(ptr_hook, description)
                                                    && HOOK_COMMAND(ptr_hook, description)[0]) ?
                                                   _(HOOK_COMMAND(ptr_hook, description)) : ""))
                         return 0;
-                    if (!infolist_new_var_string (ptr_item, "args_en",
+                    if (!infolist_new_var_string (ptr_item, "args",
                                                   HOOK_COMMAND(ptr_hook, args)))
                         return 0;
-                    if (!infolist_new_var_string (ptr_item, "args",
+                    if (!infolist_new_var_string (ptr_item, "args_nls",
                                                   (HOOK_COMMAND(ptr_hook, args)
                                                    && HOOK_COMMAND(ptr_hook, args)[0]) ?
                                                   _(HOOK_COMMAND(ptr_hook, args)) : ""))
                         return 0;
-                    if (!infolist_new_var_string (ptr_item, "args_description_en",
+                    if (!infolist_new_var_string (ptr_item, "args_description",
                                                   HOOK_COMMAND(ptr_hook, args_description)))
                         return 0;
-                    if (!infolist_new_var_string (ptr_item, "args_description",
+                    if (!infolist_new_var_string (ptr_item, "args_description_nls",
                                                   (HOOK_COMMAND(ptr_hook, args_description)
                                                    && HOOK_COMMAND(ptr_hook, args_description)[0]) ?
                                                   _(HOOK_COMMAND(ptr_hook, args_description)) : ""))
@@ -1854,6 +1860,13 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                         return 0;
                     if (!infolist_new_var_string (ptr_item, "info_name", HOOK_INFO(ptr_hook, info_name)))
                         return 0;
+                    if (!infolist_new_var_string (ptr_item, "description", HOOK_INFO(ptr_hook, description)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "description_nls",
+                                                  (HOOK_INFO(ptr_hook, description)
+                                                   && HOOK_INFO(ptr_hook, description)[0]) ?
+                                                  _(HOOK_INFO(ptr_hook, description)) : ""))
+                        return 0;
                 }
                 break;
             case HOOK_TYPE_INFOLIST:
@@ -1862,6 +1875,13 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                     if (!infolist_new_var_pointer (ptr_item, "callback", HOOK_INFOLIST(ptr_hook, callback)))
                         return 0;
                     if (!infolist_new_var_string (ptr_item, "infolist_name", HOOK_INFOLIST(ptr_hook, infolist_name)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "description", HOOK_INFOLIST(ptr_hook, description)))
+                        return 0;
+                    if (!infolist_new_var_string (ptr_item, "description_nls",
+                                                  (HOOK_INFOLIST(ptr_hook, description)
+                                                   && HOOK_INFOLIST(ptr_hook, description)[0]) ?
+                                                  _(HOOK_INFOLIST(ptr_hook, description)) : ""))
                         return 0;
                 }
                 break;
@@ -2043,6 +2063,7 @@ hook_print_log ()
                         log_printf ("  info data:");
                         log_printf ("    callback . . . . . . : 0x%x", HOOK_INFO(ptr_hook, callback));
                         log_printf ("    info_name. . . . . . : '%s'", HOOK_INFO(ptr_hook, info_name));
+                        log_printf ("    description. . . . . : '%s'", HOOK_INFO(ptr_hook, description));
                     }
                     break;
                 case HOOK_TYPE_INFOLIST:
@@ -2051,6 +2072,7 @@ hook_print_log ()
                         log_printf ("  infolist data:");
                         log_printf ("    callback . . . . . . : 0x%x", HOOK_INFOLIST(ptr_hook, callback));
                         log_printf ("    infolist_name. . . . : '%s'", HOOK_INFOLIST(ptr_hook, infolist_name));
+                        log_printf ("    description. . . . . : '%s'", HOOK_INFOLIST(ptr_hook, description));
                     }
                     break;
                 case HOOK_NUM_TYPES:

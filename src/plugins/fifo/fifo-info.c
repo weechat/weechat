@@ -53,5 +53,6 @@ void
 fifo_info_init ()
 {
     /* fifo info hooks */
-    weechat_hook_info ("fifo_filename", &fifo_info_get_info_cb, NULL);
+    weechat_hook_info ("fifo_filename", N_("fifo filename"),
+                       &fifo_info_get_info_cb, NULL);
 }

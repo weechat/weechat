@@ -45,7 +45,7 @@ struct t_config_file *config_files = NULL;
 struct t_config_file *last_config_file = NULL;
 
 char *config_option_type_string[CONFIG_NUM_OPTION_TYPES] =
-{ "boolean", "integer", "string", "color" };
+{ N_("boolean"), N_("integer"), N_("string"), N_("color") };
 char *config_boolean_true[] = { "on", "yes", "y", "true", "t", "1", NULL };
 char *config_boolean_false[] = { "off", "no", "n", "false", "f", "0", NULL };
 
@@ -2182,16 +2182,16 @@ config_file_add_to_infolist (struct t_infolist *infolist,
                         }
                         if (!infolist_new_var_string (ptr_item,
                                                       "description",
-                                                      (ptr_option->description
-                                                       && ptr_option->description[0]) ?
-                                                      _(ptr_option->description) : ""))
+                                                      ptr_option->description))
                         {
                             free (option_full_name);
                             return 0;
                         }
                         if (!infolist_new_var_string (ptr_item,
-                                                      "description_en",
-                                                      ptr_option->description))
+                                                      "description_nls",
+                                                      (ptr_option->description
+                                                       && ptr_option->description[0]) ?
+                                                      _(ptr_option->description) : ""))
                         {
                             free (option_full_name);
                             return 0;

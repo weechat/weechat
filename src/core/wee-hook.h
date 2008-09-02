@@ -202,6 +202,7 @@ struct t_hook_info
 {
     t_hook_callback_info *callback;    /* info callback                     */
     char *info_name;                   /* name of info returned             */
+    char *description;                 /* description                       */
 };
 
 typedef struct t_infolist *(t_hook_callback_infolist)(void *data,
@@ -213,6 +214,7 @@ struct t_hook_infolist
 {
     t_hook_callback_infolist *callback; /* infolist callback                */
     char *infolist_name;                /* name of infolist returned        */
+    char *description;                  /* description                      */
 };
 
 /* hook variables */
@@ -297,6 +299,7 @@ extern char *hook_modifier_exec (struct t_weechat_plugin *plugin,
                                  const char *string);
 extern struct t_hook *hook_info (struct t_weechat_plugin *plugin,
                                  const char *info_name,
+                                 const char *description,
                                  t_hook_callback_info *callback,
                                  void *callback_data);
 extern char *hook_info_get (struct t_weechat_plugin *plugin,
@@ -304,6 +307,7 @@ extern char *hook_info_get (struct t_weechat_plugin *plugin,
                             const char *arguments);
 extern struct t_hook *hook_infolist (struct t_weechat_plugin *plugin,
                                      const char *infolist_name,
+                                     const char *description,
                                      t_hook_callback_infolist *callback,
                                      void *callback_data);
 extern struct t_infolist *hook_infolist_get (struct t_weechat_plugin *plugin,

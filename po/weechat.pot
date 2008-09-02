@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-29 14:53+0200\n"
+"POT-Creation-Date: 2008-09-02 16:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1255,6 +1255,18 @@ msgstr ""
 msgid "save configuration files when unloading plugins"
 msgstr ""
 
+msgid "boolean"
+msgstr ""
+
+msgid "integer"
+msgstr ""
+
+msgid "string"
+msgstr ""
+
+msgid "color"
+msgstr ""
+
 #, c-format
 msgid "%sError: cannot create file \"%s\""
 msgstr ""
@@ -1559,6 +1571,9 @@ msgid "alias_name"
 msgstr ""
 
 msgid "alias_name: name of alias to remove"
+msgstr ""
+
+msgid "list of alias"
 msgstr ""
 
 #, c-format
@@ -2664,6 +2679,24 @@ msgid_plural "channels"
 msgstr[0] ""
 msgstr[1] ""
 
+msgid "1 if string is an IRC channel"
+msgstr ""
+
+msgid "get nick from IRC host"
+msgstr ""
+
+msgid "get buffer pointer for an IRC server/channel"
+msgstr ""
+
+msgid "list of IRC servers"
+msgstr ""
+
+msgid "list of channels for an IRC server"
+msgstr ""
+
+msgid "list of nicks for an IRC channel"
+msgstr ""
+
 #, c-format
 msgid "%s%s: you are not connected to server"
 msgstr ""
@@ -3405,6 +3438,9 @@ msgstr ""
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr ""
 
+msgid "list of logger buffers"
+msgstr ""
+
 #, c-format
 msgid "notify: debug: set notify for buffer %s to %d (%s)"
 msgstr ""
@@ -3437,6 +3473,60 @@ msgid ""
 "highlight: buffer will be in hotlist for highlights only\n"
 "  message: buffer will be in hotlist for highlights and user messages only\n"
 "      all: buffer will be in hotlist for any text printed"
+msgstr ""
+
+msgid "WeeChat version"
+msgstr ""
+
+msgid "WeeChat compilation date"
+msgstr ""
+
+msgid "directory separator"
+msgstr ""
+
+msgid "WeeChat directory"
+msgstr ""
+
+msgid "WeeChat \"lib\" directory"
+msgstr ""
+
+msgid "WeeChat \"share\" directory"
+msgstr ""
+
+msgid "WeeChat \"locale\" directory"
+msgstr ""
+
+msgid "terminal charset"
+msgstr ""
+
+msgid "WeeChat internal charset"
+msgstr ""
+
+msgid "keyboard inactivity (seconds)"
+msgstr ""
+
+msgid "1 if filters are enabled"
+msgstr ""
+
+msgid "list of buffers"
+msgstr ""
+
+msgid "lines of a buffer"
+msgstr ""
+
+msgid "nicks in nicklist for a buffer"
+msgstr ""
+
+msgid "list of windows"
+msgstr ""
+
+msgid "list of buffers in hotlist"
+msgstr ""
+
+msgid "list of options"
+msgstr ""
+
+msgid "list of hooks"
 msgstr ""
 
 #, c-format
@@ -3972,6 +4062,9 @@ msgid "automatically accept incoming files (use carefully!)"
 msgstr ""
 
 msgid "automatically accept chat requests (use carefully!)"
+msgstr ""
+
+msgid "list of xfer"
 msgstr ""
 
 #, c-format

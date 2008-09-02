@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-08-29 14:53+0200\n"
+"POT-Creation-Date: 2008-09-02 16:39+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1535,6 +1535,21 @@ msgstr ""
 msgid "save configuration files when unloading plugins"
 msgstr "beállítások mentése kilépéskor"
 
+msgid "boolean"
+msgstr ""
+
+#, fuzzy
+msgid "integer"
+msgstr "perc"
+
+#, fuzzy
+msgid "string"
+msgstr "Várakozás"
+
+#, fuzzy
+msgid "color"
+msgstr "üzenetek színe"
+
 #, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
 msgstr "%s nem sikerült a \"%s\" fájlt létrehozni\n"
@@ -1871,6 +1886,10 @@ msgstr "alias_név"
 
 msgid "alias_name: name of alias to remove"
 msgstr "alias_név: az eltávolítandó alias neve"
+
+#, fuzzy
+msgid "list of alias"
+msgstr "Aliaszok listája:\n"
 
 #, fuzzy, c-format
 msgid "%s: debug enabled"
@@ -3187,6 +3206,29 @@ msgid_plural "channels"
 msgstr[0] "%d szoba"
 msgstr[1] "%d szoba"
 
+#, fuzzy
+msgid "1 if string is an IRC channel"
+msgstr "felhasználók listája a szobában"
+
+#, fuzzy
+msgid "get nick from IRC host"
+msgstr "név vagy gép letiltása"
+
+msgid "get buffer pointer for an IRC server/channel"
+msgstr ""
+
+#, fuzzy
+msgid "list of IRC servers"
+msgstr "IRC szerver portja"
+
+#, fuzzy
+msgid "list of channels for an IRC server"
+msgstr "szobák listája ahová be akarunk lépni csatlakozás után"
+
+#, fuzzy
+msgid "list of nicks for an IRC channel"
+msgstr "felhasználók listája a szobában"
+
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
 msgstr "%s nincs csatlakozva szerverhez!\n"
@@ -3943,6 +3985,10 @@ msgstr "****  Naplófájl vége  "
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr ""
 
+#, fuzzy
+msgid "list of logger buffers"
+msgstr "a pufferek időbélyege"
+
 #, c-format
 msgid "notify: debug: set notify for buffer %s to %d (%s)"
 msgstr ""
@@ -3977,6 +4023,74 @@ msgid ""
 "  message: buffer will be in hotlist for highlights and user messages only\n"
 "      all: buffer will be in hotlist for any text printed"
 msgstr ""
+
+#, fuzzy
+msgid "WeeChat version"
+msgstr "WeeChat szlogen"
+
+#, fuzzy
+msgid "WeeChat compilation date"
+msgstr "Konfigurációs fájl elmentve\n"
+
+#, fuzzy
+msgid "directory separator"
+msgstr "időelválasztó színe"
+
+#, fuzzy
+msgid "WeeChat directory"
+msgstr "WeeChat Hiba:"
+
+msgid "WeeChat \"lib\" directory"
+msgstr ""
+
+#, fuzzy
+msgid "WeeChat \"share\" directory"
+msgstr "WeeChat Hiba:"
+
+msgid "WeeChat \"locale\" directory"
+msgstr ""
+
+#, fuzzy
+msgid "terminal charset"
+msgstr "pufferek kezelése"
+
+msgid "WeeChat internal charset"
+msgstr ""
+
+msgid "keyboard inactivity (seconds)"
+msgstr ""
+
+#, fuzzy
+msgid "1 if filters are enabled"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy
+msgid "list of buffers"
+msgstr "Aliaszok listája:\n"
+
+#, fuzzy
+msgid "lines of a buffer"
+msgstr "puffer betöltése sikertelen"
+
+#, fuzzy
+msgid "nicks in nicklist for a buffer"
+msgstr "érvénytelen pufferhossz"
+
+#, fuzzy
+msgid "list of windows"
+msgstr "Mellőzések listája:\n"
+
+#, fuzzy
+msgid "list of buffers in hotlist"
+msgstr "kiemelendő szavak listája"
+
+#, fuzzy
+msgid "list of options"
+msgstr "konfigurációs paraméterek beállítása"
+
+#, fuzzy
+msgid "list of hooks"
+msgstr "Aliaszok listája:\n"
 
 #, fuzzy, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"
@@ -4578,6 +4692,10 @@ msgstr "dcc beszélgetések automatikus fogadása (óvatosan használja!)"
 msgid "automatically accept chat requests (use carefully!)"
 msgstr "dcc beszélgetések automatikus fogadása (óvatosan használja!)"
 
+#, fuzzy
+msgid "list of xfer"
+msgstr "Aliaszok listája:\n"
+
 #, fuzzy, c-format
 msgid "%s%s: unable to create pipe"
 msgstr "%s DCC: nem sikerült a csövet létrehozni\n"
@@ -4676,9 +4794,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #~ msgid "wrong type in file (expected: %d, read: %d)"
 #~ msgstr "rossz típus a fájlban (várt: %d, beolvasott: %d)"
-
-#~ msgid "invalid length for a buffer"
-#~ msgstr "érvénytelen pufferhossz"
 
 #~ msgid "object read error"
 #~ msgstr "objektumolvasási hiba"
@@ -5094,10 +5209,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #~ msgstr "Nincs aliasz definiálva.\n"
 
 #, fuzzy
-#~ msgid "manage charsets"
-#~ msgstr "pufferek kezelése"
-
-#, fuzzy
 #~ msgid "%s%s: error creating server for reading configuration file"
 #~ msgstr "szerver konfigurációs fájljának újraolvastatása"
 
@@ -5325,10 +5436,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #, fuzzy
 #~ msgid "%sError: failed to reload WeeChat configuration file"
 #~ msgstr "%s nem sikerült a konfigurációs fájlt elmenteni\n"
-
-#, fuzzy
-#~ msgid "%sWeeChat configuration file saved"
-#~ msgstr "Konfigurációs fájl elmentve\n"
 
 #, fuzzy
 #~ msgid "%sError: failed to save WeeChat configuration file"
@@ -5726,9 +5833,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #~ msgstr ""
 #~ "A \"%s\" => \"%s\" aliasz elkészítése sikertelen (nincs elég memória)\n"
 
-#~ msgid "WeeChat Error:"
-#~ msgstr "WeeChat Hiba:"
-
 #~ msgid "WeeChat Warning:"
 #~ msgstr "WeeChat Figyelmeztetés:"
 
@@ -5907,9 +6011,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #~ msgid "failed to load history"
 #~ msgstr "nem sikerült az előzményeket beolvasni"
-
-#~ msgid "failed to load buffer"
-#~ msgstr "puffer betöltése sikertelen"
 
 #~ msgid "failed to load line"
 #~ msgstr "nem sikerült a sort beolvasni"
@@ -6317,9 +6418,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #~ msgid "IRC commands:\n"
 #~ msgstr "IRC parancsok:\n"
 
-#~ msgid "List of ignore:\n"
-#~ msgstr "Mellőzések listája:\n"
-
 #~ msgid "No ignore defined.\n"
 #~ msgstr "Nincs mellőzés megadva.\n"
 
@@ -6403,9 +6501,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #~ msgid "%s unable to create server ('%s'), ignored\n"
 #~ msgstr "%s nem sikerült a szervert ('%s') létrehozni, mellőzve\n"
-
-#~ msgid "WeeChat slogan"
-#~ msgstr "WeeChat szlogen"
 
 #~ msgid "display nicklist window"
 #~ msgstr "névlista ablak mutatása"
@@ -6562,9 +6657,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #~ msgid "create a FIFO pipe for remote control"
 #~ msgstr "FIFO cső nyitása távoli felügyelethez"
 
-#~ msgid "list of words to highlight"
-#~ msgstr "kiemelendő szavak listája"
-
 #~ msgid "allow user to send colors"
 #~ msgstr "színek küldésének engedélyezése"
 
@@ -6637,9 +6729,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #~ msgid "server address or hostname"
 #~ msgstr "szerver címe vagy neve"
 
-#~ msgid "port for IRC server"
-#~ msgstr "IRC szerver portja"
-
 #~ msgid "server password"
 #~ msgstr "szerver jelszó"
 
@@ -6666,9 +6755,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #~ msgid "delay (in seconds) after command was executed"
 #~ msgstr "szünet (másodpercben) a parancs futtatása után"
-
-#~ msgid "list of channels to join when connected to server"
-#~ msgstr "szobák listája ahová be akarunk lépni csatlakozás után"
 
 #~ msgid "notify levels for channels of this server"
 #~ msgstr "emlékeztetési szintek ezen szerver szobáira"

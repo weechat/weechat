@@ -90,5 +90,6 @@ void
 xfer_info_init ()
 {
     /* xfer infolist hooks */
-    weechat_hook_infolist ("xfer", &xfer_info_get_infolist_cb, NULL);
+    weechat_hook_infolist ("xfer", N_("list of xfer"),
+                           &xfer_info_get_infolist_cb, NULL);
 }
