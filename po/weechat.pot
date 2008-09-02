@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-02 16:39+0200\n"
+"POT-Creation-Date: 2008-09-02 17:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1759,6 +1759,9 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error opening file, closing it"
+msgstr ""
+
+msgid "name of FIFO pipe"
 msgstr ""
 
 #, c-format
