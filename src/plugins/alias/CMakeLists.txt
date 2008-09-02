@@ -14,7 +14,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(alias MODULE alias.c alias.h)
+ADD_LIBRARY(alias MODULE
+alias.c alias.h
+alias-info.c alias-info.h)
 SET_TARGET_PROPERTIES(alias PROPERTIES PREFIX "")
 
 TARGET_LINK_LIBRARIES(alias)

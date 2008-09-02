@@ -27,12 +27,39 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "../weechat-plugin.h"
+#include "logger.h"
 #include "logger-buffer.h"
 
 
 struct t_logger_buffer *logger_buffers = NULL;
 struct t_logger_buffer *last_logger_buffer = NULL;
 
+
+/*
+ * logger_buffer_valid: check if a logger buffer pointer exists
+ *                      return 1 if logger buffer exists
+ *                             0 if logger buffer is not found
+ */
+
+int
+logger_buffer_valid (struct t_logger_buffer *logger_buffer)
+{
+    struct t_logger_buffer *ptr_logger_buffer;
+    
+    if (!logger_buffer)
+        return 0;
+    
+    for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
+         ptr_logger_buffer = ptr_logger_buffer->next_buffer)
+    {
+        if (ptr_logger_buffer == logger_buffer)
+            return 1;
+    }
+    
+    /* logger_buffer not found */
+    return 0;
+}
 
 /*
  * logger_buffer_add: add a new buffer for logging
@@ -127,4 +154,34 @@ logger_buffer_free_all ()
     {
         logger_buffer_free (logger_buffers);
     }
+}
+
+/*
+ * logger_buffer_add_to_infolist: add a logger buffer in an infolist
+ *                                return 1 if ok, 0 if error
+ */
+
+int
+logger_buffer_add_to_infolist (struct t_infolist *infolist,
+                               struct t_logger_buffer *logger_buffer)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !logger_buffer)
+        return 0;
+    
+    ptr_item = weechat_infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!weechat_infolist_new_var_pointer (ptr_item, "buffer", logger_buffer->buffer))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "log_filename", logger_buffer->log_filename))
+        return 0;
+    if (!weechat_infolist_new_var_pointer (ptr_item, "log_file", logger_buffer->log_file))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "log_enabled", logger_buffer->log_enabled))
+        return 0;
+    
+    return 1;
 }

@@ -36,6 +36,7 @@
 #include "xfer-command.h"
 #include "xfer-config.h"
 #include "xfer-file.h"
+#include "xfer-info.h"
 #include "xfer-network.h"
 #include "xfer-upgrade.h"
 
@@ -73,6 +74,31 @@ int xfer_debug = 0;
 
 int xfer_signal_upgrade_received = 0;  /* signal "upgrade" received ?       */
 
+
+/*
+ * xfer_valid: check if a xfer pointer exists
+ *             return 1 if xfer exists
+ *                    0 if xfer is not found
+ */
+
+int
+xfer_valid (struct t_xfer *xfer)
+{
+    struct t_xfer *ptr_xfer;
+    
+    if (!xfer)
+        return 0;
+    
+    for (ptr_xfer = xfer_list; ptr_xfer;
+         ptr_xfer = ptr_xfer->next_xfer)
+    {
+        if (ptr_xfer == xfer)
+            return 1;
+    }
+    
+    /* xfer not found */
+    return 0;
+}
 
 /*
  * xfer_signal_upgrade_cb: callback for "upgrade" signal
@@ -1135,6 +1161,111 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
 }
 
 /*
+ * xfer_add_to_infolist: add a xfer in an infolist
+ *                       return 1 if ok, 0 if error
+ */
+
+int
+xfer_add_to_infolist (struct t_infolist *infolist, struct t_xfer *xfer)
+{
+    struct t_infolist_item *ptr_item;
+    char value[128];
+    
+    if (!infolist || !xfer)
+        return 0;
+    
+    ptr_item = weechat_infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!weechat_infolist_new_var_string (ptr_item, "plugin_name", xfer->plugin_name))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "plugin_id", xfer->plugin_id))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "type", xfer->type))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "type_string", xfer_type_string[xfer->type]))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "protocol", xfer->protocol))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "protocol_string", xfer_protocol_string[xfer->protocol]))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "remote_nick", xfer->remote_nick))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "local_nick", xfer->local_nick))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "filename", xfer->filename))
+        return 0;
+    snprintf (value, sizeof (value), "%lu", xfer->size);
+    if (!weechat_infolist_new_var_string (ptr_item, "size", value))
+        return 0;
+    snprintf (value, sizeof (value), "%lu", xfer->address);
+    if (!weechat_infolist_new_var_string (ptr_item, "address", value))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "port", xfer->port))
+        return 0;
+
+    if (!weechat_infolist_new_var_integer (ptr_item, "status", xfer->status))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "status_string", xfer_status_string[xfer->status]))
+        return 0;
+    if (!weechat_infolist_new_var_pointer (ptr_item, "buffer", xfer->buffer))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "fast_send", xfer->fast_send))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "blocksize", xfer->blocksize))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "start_time", xfer->start_time))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "start_transfer", xfer->start_transfer))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "sock", xfer->sock))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "child_pid", xfer->child_pid))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "child_read", xfer->child_read))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "child_write", xfer->child_write))
+        return 0;
+    if (!weechat_infolist_new_var_pointer (ptr_item, "hook_fd", xfer->hook_fd))
+        return 0;
+    if (!weechat_infolist_new_var_pointer (ptr_item, "hook_timer", xfer->hook_timer))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "unterminated_message", xfer->unterminated_message))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "file", xfer->file))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "local_filename", xfer->local_filename))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "filename_suffix", xfer->filename_suffix))
+        return 0;
+    snprintf (value, sizeof (value), "%lu", xfer->pos);
+    if (!weechat_infolist_new_var_string (ptr_item, "pos", value))
+        return 0;
+    snprintf (value, sizeof (value), "%lu", xfer->ack);
+    if (!weechat_infolist_new_var_string (ptr_item, "ack", value))
+        return 0;
+    snprintf (value, sizeof (value), "%lu", xfer->start_resume);
+    if (!weechat_infolist_new_var_string (ptr_item, "start_resume", value))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "last_check_time", xfer->last_check_time))
+        return 0;
+    snprintf (value, sizeof (value), "%lu", xfer->last_check_pos);
+    if (!weechat_infolist_new_var_string (ptr_item, "last_check_pos", value))
+        return 0;
+    if (!weechat_infolist_new_var_time (ptr_item, "last_activity", xfer->last_activity))
+        return 0;
+    snprintf (value, sizeof (value), "%lu", xfer->bytes_per_sec);
+    if (!weechat_infolist_new_var_string (ptr_item, "bytes_per_sec", value))
+        return 0;
+    snprintf (value, sizeof (value), "%lu", xfer->eta);
+    if (!weechat_infolist_new_var_string (ptr_item, "eta", value))
+        return 0;
+    
+    return 1;
+}
+
+/*
  * xfer_print_log: print DCC infos in log (usually for crash dump)
  */
 
@@ -1244,6 +1375,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("xfer_start_resume", &xfer_start_resume_cb, NULL);
     weechat_hook_signal ("xfer_accept_resume", &xfer_accept_resume_cb, NULL);
     weechat_hook_signal ("debug_dump", &xfer_debug_dump_cb, NULL);
+    
+    xfer_info_init ();
     
     return WEECHAT_RC_OK;
 }

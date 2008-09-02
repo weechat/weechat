@@ -88,6 +88,8 @@ SET(WEECHAT_SOURCES
 ./src/gui/wxwidgets/gui-input.c
 ./src/plugins/alias/alias.c
 ./src/plugins/alias/alias.h
+./src/plugins/alias/alias-info.c
+./src/plugins/alias/alias-info.h
 ./src/plugins/aspell/aspell.c
 ./src/plugins/aspell/aspell.h
 ./src/plugins/charset/charset.c
@@ -124,10 +126,12 @@ SET(WEECHAT_SOURCES
 ./src/plugins/irc/irc-protocol.h
 ./src/plugins/irc/irc-server.c
 ./src/plugins/irc/irc-server.h
-./src/plugins/logger/logger-buffer.c
-./src/plugins/logger/logger-buffer.h
 ./src/plugins/logger/logger.c
 ./src/plugins/logger/logger.h
+./src/plugins/logger/logger-buffer.c
+./src/plugins/logger/logger-buffer.h
+./src/plugins/logger/logger-info.c
+./src/plugins/logger/logger-info.h
 ./src/plugins/logger/logger-tail.c
 ./src/plugins/logger/logger-tail.h
 ./src/plugins/notify/notify.c
@@ -180,6 +184,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/xfer/xfer-dcc.h
 ./src/plugins/xfer/xfer-file.c
 ./src/plugins/xfer/xfer-file.h
+./src/plugins/xfer/xfer-info.c
+./src/plugins/xfer/xfer-info.h
 ./src/plugins/xfer/xfer.h
 ./src/plugins/xfer/xfer-network.c
 ./src/plugins/xfer/xfer-network.h

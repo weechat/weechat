@@ -34,8 +34,10 @@
 #include <fcntl.h>
 #include <time.h>
 
+#include "../weechat-plugin.h"
 #include "logger.h"
 #include "logger-buffer.h"
+#include "logger-info.h"
 #include "logger-tail.h"
 
 
@@ -746,6 +748,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_print (NULL, NULL, NULL, 1, &logger_print_cb, NULL);
     
     weechat_hook_config ("plugins.var.logger.*", &logger_config_cb, NULL);
+    
+    logger_info_init ();
     
     return WEECHAT_RC_OK;
 }

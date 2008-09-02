@@ -25,6 +25,7 @@
 
 #include "../weechat-plugin.h"
 #include "alias.h"
+#include "alias-info.h"
 
 
 WEECHAT_PLUGIN_NAME("alias");
@@ -37,7 +38,6 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 #define ALIAS_CONFIG_NAME "alias"
 
 struct t_weechat_plugin *weechat_alias_plugin = NULL;
-#define weechat_plugin weechat_alias_plugin
 
 struct t_config_file *alias_config_file = NULL;
 struct t_config_section *alias_config_section_cmd = NULL;
@@ -45,6 +45,31 @@ struct t_config_section *alias_config_section_cmd = NULL;
 struct t_alias *alias_list = NULL;
 struct t_alias *last_alias = NULL;
 
+
+/*
+ * alias_valid: check if an alias pointer exists
+ *              return 1 if alias exists
+ *                     0 if alias is not found
+ */
+
+int
+alias_valid (struct t_alias *alias)
+{
+    struct t_alias *ptr_alias;
+    
+    if (!alias)
+        return 0;
+    
+    for (ptr_alias = alias_list; ptr_alias;
+         ptr_alias = ptr_alias->next_alias)
+    {
+        if (ptr_alias == alias)
+            return 1;
+    }
+    
+    /* alias not found */
+    return 0;
+}
 
 /*
  * alias_search: search an alias
@@ -834,6 +859,35 @@ alias_completion_cb (void *data, const char *completion_item,
 }
 
 /*
+ * alias_add_to_infolist: add an alias in an infolist
+ *                        return 1 if ok, 0 if error
+ */
+
+int
+alias_add_to_infolist (struct t_infolist *infolist, struct t_alias *alias)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !alias)
+        return 0;
+    
+    ptr_item = weechat_infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!weechat_infolist_new_var_pointer (ptr_item, "hook", alias->hook))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "name", alias->name))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "command", alias->command))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "running", alias->running))
+        return 0;
+    
+    return 1;
+}
+
+/*
  * weechat_plugin_init: initialize alias plugin
  */
 
@@ -877,6 +931,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                           &unalias_command_cb, NULL);
     
     weechat_hook_completion ("alias", &alias_completion_cb, NULL);
+    
+    alias_info_init ();
     
     return WEECHAT_RC_OK;
 }

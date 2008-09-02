@@ -16,17 +16,42 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* fifo-info.c: info and infolist hooks for fifo plugin */
 
-#ifndef __WEECHAT_LOGGER_H
-#define __WEECHAT_LOGGER_H 1
 
-#define weechat_plugin weechat_logger_plugin
+#include <stdlib.h>
 
-#define LOGGER_BUF_WRITE_SIZE  (16*1024)
+#include "../weechat-plugin.h"
+#include "fifo.h"
 
-extern struct t_weechat_plugin *weechat_logger_plugin;
 
-extern void logger_start_buffer_all ();
-extern void logger_stop_all ();
+/*
+ * fifo_info_get_info_cb: callback called when fifo info is asked
+ */
 
-#endif /* logger.h */
+char *
+fifo_info_get_info_cb (void *data, const char *info_name,
+                       const char *arguments)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) arguments;
+    
+    if (weechat_strcasecmp (info_name, "fifo_filename") == 0)
+    {
+        return fifo_filename;
+    }
+    
+    return NULL;
+}
+
+/*
+ * fifo_info_init: initialize info and infolist hooks for fifo plugin
+ */
+
+void
+fifo_info_init ()
+{
+    /* fifo info hooks */
+    weechat_hook_info ("fifo_filename", &fifo_info_get_info_cb, NULL);
+}

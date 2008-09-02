@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_ALIAS_H
 #define __WEECHAT_ALIAS_H 1
 
+#define weechat_plugin weechat_alias_plugin
+
 struct t_alias
 {
     struct t_hook *hook;               /* command hook                      */
@@ -29,5 +31,13 @@ struct t_alias
     struct t_alias *prev_alias;        /* link to previous alias            */
     struct t_alias *next_alias;        /* link to next alias                */
 };
+
+extern struct t_alias *alias_list;
+
+extern struct t_weechat_plugin *weechat_alias_plugin;
+
+extern int alias_valid (struct t_alias *alias);
+extern int alias_add_to_infolist (struct t_infolist *infolist,
+                                  struct t_alias *alias);
 
 #endif /* alias.h */

@@ -20,6 +20,9 @@ libdir = ${weechat_libdir}/plugins
 
 lib_LTLIBRARIES = fifo.la
 
-fifo_la_SOURCES = fifo.c
+fifo_la_SOURCES = fifo.c \
+                  fifo.h \
+                  fifo-info.c \
+                  fifo-info.h
 fifo_la_LDFLAGS = -module
 fifo_la_LIBADD  = $(FIFO_LFLAGS)

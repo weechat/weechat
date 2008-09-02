@@ -24,6 +24,8 @@ logger_la_SOURCES = logger.c \
                     logger.h \
                     logger-buffer.c \
                     logger-buffer.h \
+                    logger-info.c \
+                    logger-info.h \
                     logger-tail.c \
                     logger-tail.h
 logger_la_LDFLAGS = -module

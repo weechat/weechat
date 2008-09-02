@@ -28,6 +28,8 @@
 #include <fcntl.h>
 
 #include "../weechat-plugin.h"
+#include "fifo.h"
+#include "fifo-info.h"
 
 
 WEECHAT_PLUGIN_NAME("fifo");
@@ -366,6 +368,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                                         &fifo_read, NULL);
     
     weechat_hook_config ("plugins.var.fifo.fifo", &fifo_config_cb, NULL);
+    
+    fifo_info_init ();
     
     return WEECHAT_RC_OK;
 }

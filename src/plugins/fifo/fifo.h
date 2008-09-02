@@ -17,16 +17,12 @@
  */
 
 
-#ifndef __WEECHAT_LOGGER_H
-#define __WEECHAT_LOGGER_H 1
+#ifndef __WEECHAT_FIFO_H
+#define __WEECHAT_FIFO_H 1
 
-#define weechat_plugin weechat_logger_plugin
+#define weechat_plugin weechat_fifo_plugin
 
-#define LOGGER_BUF_WRITE_SIZE  (16*1024)
+extern struct t_weechat_plugin *weechat_fifo_plugin;
+extern char *fifo_filename;
 
-extern struct t_weechat_plugin *weechat_logger_plugin;
-
-extern void logger_start_buffer_all ();
-extern void logger_stop_all ();
-
-#endif /* logger.h */
+#endif /* fifo.h */

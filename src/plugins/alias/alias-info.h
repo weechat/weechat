@@ -17,16 +17,9 @@
  */
 
 
-#ifndef __WEECHAT_LOGGER_H
-#define __WEECHAT_LOGGER_H 1
+#ifndef __WEECHAT_ALIAS_INFO_H
+#define __WEECHAT_ALIAS_INFO_H 1
 
-#define weechat_plugin weechat_logger_plugin
+extern void alias_info_init ();
 
-#define LOGGER_BUF_WRITE_SIZE  (16*1024)
-
-extern struct t_weechat_plugin *weechat_logger_plugin;
-
-extern void logger_start_buffer_all ();
-extern void logger_stop_all ();
-
-#endif /* logger.h */
+#endif /* alias-info.h */

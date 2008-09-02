@@ -20,6 +20,9 @@ libdir = ${weechat_libdir}/plugins
 
 lib_LTLIBRARIES = alias.la
 
-alias_la_SOURCES = alias.c alias.h
+alias_la_SOURCES = alias.c \
+                   alias.h \
+                   alias-info.c \
+                   alias-info.h
 alias_la_LDFLAGS = -module
 alias_la_LIBADD  = $(ALIAS_LFLAGS)

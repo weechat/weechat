@@ -14,7 +14,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(fifo MODULE fifo.c)
+ADD_LIBRARY(fifo MODULE
+fifo.c fifo.h
+fifo-info.c fifo-info.h)
 SET_TARGET_PROPERTIES(fifo PROPERTIES PREFIX "")
 
 TARGET_LINK_LIBRARIES(fifo)

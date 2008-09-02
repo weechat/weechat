@@ -154,9 +154,12 @@ extern struct t_xfer *xfer_list, *last_xfer;
 extern int xfer_count;
 extern int xfer_debug;
 
+extern int xfer_valid (struct t_xfer *xfer);
 extern struct t_xfer *xfer_search_by_number (int number);
 extern void xfer_close (struct t_xfer *xfer, enum t_xfer_status status);
 extern void xfer_send_signal (struct t_xfer *xfer, const char *signal);
 extern void xfer_free (struct t_xfer *xfer);
+extern int xfer_add_to_infolist (struct t_infolist *infolist,
+                                 struct t_xfer *xfer);
 
 #endif /* xfer.h */

@@ -22,6 +22,7 @@ xfer-command.c xfer-command.h
 xfer-config.c xfer-config.h
 xfer-dcc.c xfer-dcc.h
 xfer-file.c xfer-file.h
+xfer-info.c xfer-info.h
 xfer-network.c xfer-network.h
 xfer-upgrade.c xfer-upgrade.h)
 SET_TARGET_PROPERTIES(xfer PROPERTIES PREFIX "")

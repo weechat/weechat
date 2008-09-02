@@ -25,7 +25,6 @@
 
 #include "../weechat-plugin.h"
 #include "irc.h"
-#include "irc-info.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
 #include "irc-protocol.h"
@@ -177,8 +176,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
     
     /* make C compiler happy */
     (void) data;
-    (void) arguments;
-
+    
     if (!infolist_name || !infolist_name[0])
         return NULL;
     
