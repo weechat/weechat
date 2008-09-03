@@ -29,6 +29,7 @@
 
 #include "../core/weechat.h"
 #include "../core/wee-hook.h"
+#include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
 #include "../plugins/plugin.h"
@@ -405,6 +406,45 @@ gui_filter_free_all ()
     {
         gui_filter_free (gui_filters);
     }
+}
+
+/*
+ * gui_filter_add_to_infolist: add a filter in an infolist
+ *                             return 1 if ok, 0 if error
+ */
+
+int
+gui_filter_add_to_infolist (struct t_infolist *infolist,
+                            struct t_gui_filter *filter)
+{
+    struct t_infolist_item *ptr_item;
+    char option_name[64];
+    int i;
+    
+    if (!infolist || !filter)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!infolist_new_var_string (ptr_item, "buffer", filter->buffer))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "tags", filter->tags))
+        return 0;
+    if (!infolist_new_var_integer (ptr_item, "tags_count", filter->tags_count))
+        return 0;
+    for (i = 0; i < filter->tags_count; i++)
+    {
+        snprintf (option_name, sizeof (option_name), "tag_%05d", i + 1);
+        if (!infolist_new_var_string (ptr_item, option_name,
+                                      filter->tags_array[i]))
+            return 0;
+    }
+    if (!infolist_new_var_string (ptr_item, "regex", filter->regex))
+        return 0;
+    
+    return 1;
 }
 
 /*

@@ -345,6 +345,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     struct t_infolist *ptr_infolist;
     struct t_gui_buffer *ptr_buffer;
     struct t_gui_line *ptr_line;
+    struct t_gui_filter *ptr_filter;
     struct t_gui_window *ptr_window;
     struct t_gui_hotlist *ptr_hotlist;
     
@@ -407,6 +408,23 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
                  ptr_line = ptr_line->next_line)
             {
                 if (!gui_buffer_line_add_to_infolist (ptr_infolist, ptr_line))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+            }
+            return ptr_infolist;
+        }
+    }
+    else if (string_strcasecmp (infolist_name, "filter") == 0)
+    {
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            for (ptr_filter = gui_filters; ptr_filter;
+                 ptr_filter = ptr_filter->next_filter)
+            {
+                if (!gui_filter_add_to_infolist (ptr_infolist, ptr_filter))
                 {
                     infolist_free (ptr_infolist);
                     return NULL;
@@ -702,6 +720,8 @@ plugin_api_init ()
     hook_infolist (NULL, "buffer", N_("list of buffers"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "buffer_lines", N_("lines of a buffer"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "filter", N_("list of filters"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "nicklist", N_("nicks in nicklist for a buffer"),
                    &plugin_api_infolist_get_internal, NULL);

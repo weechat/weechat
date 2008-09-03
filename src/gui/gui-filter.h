@@ -62,6 +62,8 @@ extern struct t_gui_filter *gui_filter_new (const char *buffer,
                                             const char *regex);
 extern void gui_filter_free (struct t_gui_filter *filter);
 extern void gui_filter_free_all ();
+extern int gui_filter_add_to_infolist (struct t_infolist *infolist,
+                                       struct t_gui_filter *filter);
 extern void gui_filter_print_log ();
 
 #endif /* gui-filter.h */
