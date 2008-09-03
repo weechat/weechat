@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-02 17:28+0200\n"
+"POT-Creation-Date: 2008-09-03 10:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3515,6 +3515,9 @@ msgid "list of buffers"
 msgstr ""
 
 msgid "lines of a buffer"
+msgstr ""
+
+msgid "list of filters"
 msgstr ""
 
 msgid "nicks in nicklist for a buffer"

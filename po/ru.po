@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-02 17:28+0200\n"
+"POT-Creation-Date: 2008-09-03 10:09+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4062,6 +4062,10 @@ msgstr "Список сокращений:\n"
 #, fuzzy
 msgid "lines of a buffer"
 msgstr "загрузка буфера не удалась"
+
+#, fuzzy
+msgid "list of filters"
+msgstr "Список сокращений:\n"
 
 #, fuzzy
 msgid "nicks in nicklist for a buffer"

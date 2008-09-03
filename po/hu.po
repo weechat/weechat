@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-02 17:28+0200\n"
+"POT-Creation-Date: 2008-09-03 10:09+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4074,6 +4074,10 @@ msgstr "Aliaszok listája:\n"
 #, fuzzy
 msgid "lines of a buffer"
 msgstr "puffer betöltése sikertelen"
+
+#, fuzzy
+msgid "list of filters"
+msgstr "Aliaszok listája:\n"
 
 #, fuzzy
 msgid "nicks in nicklist for a buffer"
