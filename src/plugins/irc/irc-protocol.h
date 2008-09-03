@@ -20,6 +20,20 @@
 #ifndef __WEECHAT_IRC_PROTOCOL_H
 #define __WEECHAT_IRC_PROTOCOL_H 1
 
+#define IRC_PROTOCOL_GET_HOST                                           \
+    char *nick, *address, *host;                                        \
+    if (argv[0][0] == ':')                                              \
+    {                                                                   \
+        nick = irc_protocol_get_nick_from_host (argv[0]);               \
+        address = irc_protocol_get_address_from_host (argv[0]);         \
+        host = argv[0] + 1;                                             \
+    }                                                                   \
+    else                                                                \
+    {                                                                   \
+        nick = NULL;                                                    \
+        address = NULL;                                                 \
+        host = NULL;                                                    \
+    }
 #define IRC_PROTOCOL_MIN_ARGS(__min_args)                               \
     if (argc < __min_args)                                              \
     {                                                                   \

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 10:09+0200\n"
+"POT-Creation-Date: 2008-09-03 15:15+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -170,7 +170,7 @@ msgid "%sError: wrong size \"%s\" for bar \"%s\""
 msgstr "%s fehlerhafte Anzahl von Argumenten für der \"%s\"-Befehl\n"
 
 #, fuzzy
-msgid "All bars deleted"
+msgid "All bars have been deleted"
 msgstr "/users wurde deaktiviert"
 
 #, fuzzy, c-format
@@ -259,6 +259,14 @@ msgstr ""
 
 #, fuzzy
 msgid "Filter added"
+msgstr "/users wurde deaktiviert"
+
+#, fuzzy, c-format
+msgid "%sError adding filter"
+msgstr "%s falsche Puffernummer\n"
+
+#, fuzzy
+msgid "All filters have been deleted"
 msgstr "/users wurde deaktiviert"
 
 #, fuzzy
@@ -728,7 +736,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number]"
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number|-"
+"all]"
 msgstr ""
 
 msgid ""
@@ -739,6 +748,7 @@ msgid ""
 "    add: add a filter\n"
 "    del: delete a filter\n"
 " number: number of filter to delete (look at list to find it)\n"
+"   -all: delete all filters\n"
 " buffer: buffer where filter is active: it may be a name (category.name) or "
 "\"*\" for all buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
@@ -2154,6 +2164,54 @@ msgid "%s%s: server \"%s\" not found"
 msgstr "%s Server \"%s\" nicht gefunden\n"
 
 #, fuzzy, c-format
+msgid "%s: ignore list:"
+msgstr "Ende der /who-Liste"
+
+#, fuzzy, c-format
+msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
+msgstr "       (kein Message-Handler)\n"
+
+#, fuzzy, c-format
+msgid "%s: no ignore in list"
+msgstr "%s Keine /ignore-Regel gefunden.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing arguments for \"%s\" command"
+msgstr "%s fehlende Argumente für den \"%s\"-Befehl\n"
+
+#, fuzzy, c-format
+msgid "%s%s: ignore already exists"
+msgstr "%s diese /ignore-Regel existiert bereits\n"
+
+#, fuzzy, c-format
+msgid "%s: ignore added"
+msgstr "Keine /ignore-Regeln definiert.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error adding ignore"
+msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
+
+#, fuzzy, c-format
+msgid "%s: all ignore deleted"
+msgstr "/users wurde deaktiviert"
+
+#, fuzzy, c-format
+msgid "%s: ignore deleted"
+msgstr "Keine /ignore-Regeln definiert.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: ignore not found"
+msgstr "Sitzungssignatur nicht gefunden"
+
+#, fuzzy, c-format
+msgid "%s%s: wrong ignore number"
+msgstr "%s falsche Puffernummer\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown option for \"%s\" command"
+msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
+
+#, fuzzy, c-format
 msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
 msgstr "%s \"%s\" ist kein korrekter regulärer Ausdruck (%s)\n"
 
@@ -2231,10 +2289,6 @@ msgid ""
 "%s: messages outqueue DELETED for all servers. Some messages from you or "
 "WeeChat may have been lost!"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "%s%s: unknown option for \"%s\" command"
-msgstr "%s unbekannte Option für den \"%s\"-Befehl\n"
 
 #, fuzzy, c-format
 msgid "%s%s: wrong argument count for \"%s\" command"
@@ -2396,6 +2450,31 @@ msgstr ""
 #, fuzzy
 msgid "give half channel operator status to nickname(s)"
 msgstr "Halb-Operatorstatus verleihen"
+
+msgid "ignore nicks/hosts from servers or channels"
+msgstr ""
+
+msgid "[list] | [add nick/host [server [channel]]] | [del number|-all]"
+msgstr ""
+
+msgid ""
+"     list: list all ignore\n"
+"      add: add a ignore\n"
+"      del: del a ignore\n"
+"   number: number of ignore to delete (look at list to find it)\n"
+"     -all: delete all ignore\n"
+"nick/host: nick or host to ignore (regular expression allowed)\n"
+"   server: internal server name where ignore is working\n"
+"  channel: channel name where ignore is working\n"
+"\n"
+"Examples:\n"
+"  ignore nick \"toto\" everywhere:\n"
+"    /ignore add toto\n"
+"  ignore host \"toto@domain.com\" on freenode server:\n"
+"    /ignore add toto@domain.com freenode\n"
+"  ignore host \"toto*@*.domain.com\" on freenode/#weechat:\n"
+"    /ignore add toto*@*.domain.com freenode #weechat"
+msgstr ""
 
 msgid "get information describing the server"
 msgstr "Information über den Server abfragen"
@@ -3205,6 +3284,10 @@ msgstr "Channels, die bei Verbindung zum Server zu betreten sind"
 #, fuzzy
 msgid "list of nicks for an IRC channel"
 msgstr "Liste von Nicks im Channel"
+
+#, fuzzy
+msgid "list of IRC ignore"
+msgstr "Port des IRC-Servers"
 
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
@@ -6005,9 +6088,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #~ msgid "session file not found"
 #~ msgstr "Sitzungsdatei nicht gefunden"
 
-#~ msgid "signature not found"
-#~ msgstr "Sitzungssignatur nicht gefunden"
-
 #~ msgid "bad session signature"
 #~ msgstr "Fehlerhafte Sitzungssignatur"
 
@@ -6439,9 +6519,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #~ msgid "IRC commands:\n"
 #~ msgstr "IRC-Befehle:\n"
 
-#~ msgid "No ignore defined.\n"
-#~ msgstr "Keine /ignore-Regeln definiert.\n"
-
 #~ msgid "New ignore:"
 #~ msgstr "Neue /ignore-Regel:"
 
@@ -6481,9 +6558,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #~ msgid_plural "%s%d%s ignore were removed.\n"
 #~ msgstr[0] "/ignore-Regel entfernt.\n"
 #~ msgstr[1] "/ignore-Regel entfernt.\n"
-
-#~ msgid "%s no ignore found\n"
-#~ msgstr "%s Keine /ignore-Regel gefunden.\n"
 
 #~ msgid "%s can't upgrade: connection to at least one server is pending\n"
 #~ msgstr ""

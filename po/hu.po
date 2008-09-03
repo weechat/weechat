@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 10:09+0200\n"
+"POT-Creation-Date: 2008-09-03 15:15+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -171,7 +171,7 @@ msgid "%sError: wrong size \"%s\" for bar \"%s\""
 msgstr "%s rossz argumentum szám a \"%s\" parancsnak\n"
 
 #, fuzzy
-msgid "All bars deleted"
+msgid "All bars have been deleted"
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
@@ -260,6 +260,14 @@ msgstr ""
 
 #, fuzzy
 msgid "Filter added"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%sError adding filter"
+msgstr "%s helytelen pufferszám\n"
+
+#, fuzzy
+msgid "All filters have been deleted"
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy
@@ -743,7 +751,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number]"
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number|-"
+"all]"
 msgstr ""
 
 msgid ""
@@ -754,6 +763,7 @@ msgid ""
 "    add: add a filter\n"
 "    del: delete a filter\n"
 " number: number of filter to delete (look at list to find it)\n"
+"   -all: delete all filters\n"
 " buffer: buffer where filter is active: it may be a name (category.name) or "
 "\"*\" for all buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
@@ -2159,6 +2169,54 @@ msgid "%s%s: server \"%s\" not found"
 msgstr "%s a \"%s\" szerver nem található\n"
 
 #, fuzzy, c-format
+msgid "%s: ignore list:"
+msgstr "a /who lista vége"
+
+#, fuzzy, c-format
+msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
+msgstr "       (nincs üzenetkezelő)\n"
+
+#, fuzzy, c-format
+msgid "%s: no ignore in list"
+msgstr "%s nem található ilyen mellőzés\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing arguments for \"%s\" command"
+msgstr "%s hiányzó argumentum a \"%s\" parancsnak\n"
+
+#, fuzzy, c-format
+msgid "%s%s: ignore already exists"
+msgstr "%s az ignore már létezik\n"
+
+#, fuzzy, c-format
+msgid "%s: ignore added"
+msgstr "Nincs mellőzés megadva.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error adding ignore"
+msgstr "%s nincs elég memória az információs pult üzenethez\n"
+
+#, fuzzy, c-format
+msgid "%s: all ignore deleted"
+msgstr "a felhasználók le lettek tiltva"
+
+#, fuzzy, c-format
+msgid "%s: ignore deleted"
+msgstr "Nincs mellőzés megadva.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: ignore not found"
+msgstr "aláírás nem található"
+
+#, fuzzy, c-format
+msgid "%s%s: wrong ignore number"
+msgstr "%s helytelen pufferszám\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown option for \"%s\" command"
+msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
+
+#, fuzzy, c-format
 msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
 msgstr "%s a(z) \"%s\" érvénytelen reguláris kifejezés (%s)\n"
 
@@ -2234,10 +2292,6 @@ msgid ""
 msgstr ""
 "Minden szerver kimenő üzenetlistája TÖRÖLVE. Néhány üzenete vagy WeeChat "
 "üzenetek elveszhettek!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown option for \"%s\" command"
-msgstr "%s ismeretlen opció a \"%s\" parancsnak\n"
 
 #, fuzzy, c-format
 msgid "%s%s: wrong argument count for \"%s\" command"
@@ -2407,6 +2461,31 @@ msgstr ""
 #, fuzzy
 msgid "give half channel operator status to nickname(s)"
 msgstr "féloperátori jog biztosítása a felhasználó(k)nak"
+
+msgid "ignore nicks/hosts from servers or channels"
+msgstr ""
+
+msgid "[list] | [add nick/host [server [channel]]] | [del number|-all]"
+msgstr ""
+
+msgid ""
+"     list: list all ignore\n"
+"      add: add a ignore\n"
+"      del: del a ignore\n"
+"   number: number of ignore to delete (look at list to find it)\n"
+"     -all: delete all ignore\n"
+"nick/host: nick or host to ignore (regular expression allowed)\n"
+"   server: internal server name where ignore is working\n"
+"  channel: channel name where ignore is working\n"
+"\n"
+"Examples:\n"
+"  ignore nick \"toto\" everywhere:\n"
+"    /ignore add toto\n"
+"  ignore host \"toto@domain.com\" on freenode server:\n"
+"    /ignore add toto@domain.com freenode\n"
+"  ignore host \"toto*@*.domain.com\" on freenode/#weechat:\n"
+"    /ignore add toto*@*.domain.com freenode #weechat"
+msgstr ""
 
 msgid "get information describing the server"
 msgstr "szerverleíró információ lekérdezése"
@@ -3231,6 +3310,10 @@ msgstr "szobák listája ahová be akarunk lépni csatlakozás után"
 #, fuzzy
 msgid "list of nicks for an IRC channel"
 msgstr "felhasználók listája a szobában"
+
+#, fuzzy
+msgid "list of IRC ignore"
+msgstr "IRC szerver portja"
 
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
@@ -5995,9 +6078,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #~ msgid "session file not found"
 #~ msgstr "folyamatfájl nem található"
 
-#~ msgid "signature not found"
-#~ msgstr "aláírás nem található"
-
 #~ msgid "bad session signature"
 #~ msgstr "hibás folyamatellenőrző"
 
@@ -6425,9 +6505,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #~ msgid "IRC commands:\n"
 #~ msgstr "IRC parancsok:\n"
 
-#~ msgid "No ignore defined.\n"
-#~ msgstr "Nincs mellőzés megadva.\n"
-
 #~ msgid "New ignore:"
 #~ msgstr "Új mellőzés:"
 
@@ -6461,9 +6538,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #~ msgid "  . type color (Curses or Gtk color, look at WeeChat doc)\n"
 #~ msgstr "  . típus szín (Curses vagy Gtk szín, lásd WeeChat dokumentáció)\n"
-
-#~ msgid "%s no ignore found\n"
-#~ msgstr "%s nem található ilyen mellőzés\n"
 
 #~ msgid "%s can't upgrade: connection to at least one server is pending\n"
 #~ msgstr ""

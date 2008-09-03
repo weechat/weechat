@@ -38,6 +38,7 @@
 #include "irc-channel.h"
 #include "irc-nick.h"
 #include "irc-display.h"
+#include "irc-ignore.h"
 
 
 /*
@@ -1283,6 +1284,159 @@ irc_command_halfop (void *data, struct t_gui_buffer *buffer, int argc,
         return WEECHAT_RC_ERROR;
     }
     return WEECHAT_RC_OK;
+}
+
+/*
+ * irc_command_ignore: add or remove ignore
+ */
+
+int
+irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
+                    char **argv, char **argv_eol)
+{
+    int i;
+    struct t_irc_ignore *ptr_ignore;
+    char *mask, *server, *channel, *error;
+    long number;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    (void) argv_eol;
+    
+    if ((argc == 1)
+        || ((argc == 2) && (weechat_strcasecmp (argv[1], "list") == 0)))
+    {
+        /* display all key bindings */
+        if (irc_ignore_list)
+        {
+            weechat_printf (NULL, "");
+            weechat_printf (NULL, _("%s: ignore list:"), "irc");
+            i = 0;
+            for (ptr_ignore = irc_ignore_list; ptr_ignore;
+                 ptr_ignore = ptr_ignore->next_ignore)
+            {
+                i++;
+                weechat_printf (NULL,
+                                _("  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"),
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT,
+                                i,
+                                IRC_COLOR_CHAT_DELIMITERS,
+                                IRC_COLOR_CHAT,
+                                ptr_ignore->mask,
+                                (ptr_ignore->server) ?
+                                ptr_ignore->server : "*",
+                                (ptr_ignore->channel) ?
+                                ptr_ignore->channel : "*");
+            }
+        }
+        else
+            weechat_printf (NULL, _("%s: no ignore in list"), "irc");
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* add ignore */
+    if (weechat_strcasecmp (argv[1], "add") == 0)
+    {
+        if (argc < 3)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: missing arguments for \"%s\" "
+                              "command"),
+                            weechat_prefix ("error"), "irc",
+                            "ignore add");
+            return WEECHAT_RC_ERROR;
+        }
+        
+        mask = argv[2];
+        server = (argc > 3) ? argv[3] : NULL;
+        channel = (argc > 4) ? argv[4] : NULL;
+        
+        if (irc_ignore_search (mask, server, channel))
+        {
+            weechat_printf (NULL,
+                            _("%s%s: ignore already exists"),
+                            weechat_prefix ("error"), "irc");
+            return WEECHAT_RC_ERROR;
+        }
+        
+        if (irc_ignore_new (mask, server, channel))
+        {
+            weechat_printf (NULL, _("%s: ignore added"), "irc");
+        }
+        else
+        {
+            weechat_printf (NULL, _("%s%s: error adding ignore"),
+                            weechat_prefix ("error"), "irc");
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* delete ignore */
+    if (weechat_strcasecmp (argv[1], "del") == 0)
+    {
+        if (argc < 3)
+        {
+            weechat_printf (NULL,
+                            _("%s%s: missing arguments for \"%s\" "
+                              "command"),
+                            weechat_prefix ("error"), "irc",
+                            "ignore del");
+            return WEECHAT_RC_ERROR;
+        }
+        
+        if (weechat_strcasecmp (argv[2], "-all") == 0)
+        {
+            if (irc_ignore_list)
+            {
+                irc_ignore_free_all ();
+                weechat_printf (NULL, _("%s: all ignore deleted"), "irc");
+            }
+            else
+            {
+                weechat_printf (NULL, _("%s: no ignore in list"), "irc");
+            }
+        }
+        else
+        {
+            error = NULL;
+            number = strtol (argv[2], &error, 10);
+            if (error && !error[0])
+            {
+                ptr_ignore = irc_ignore_search_by_number (number);
+                if (ptr_ignore)
+                {
+                    irc_ignore_free (ptr_ignore);
+                    weechat_printf (NULL, _("%s: ignore deleted"), "irc");
+                }
+                else
+                {
+                    weechat_printf (NULL,
+                                    _("%s%s: ignore not found"),
+                                    weechat_prefix ("error"), "irc");
+                    return WEECHAT_RC_ERROR;
+                }
+            }
+            else
+            {
+                weechat_printf (NULL,
+                                _("%s%s: wrong ignore number"),
+                                weechat_prefix ("error"), "irc");
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    weechat_printf (NULL,
+                    _("%s%s: unknown option for \"%s\" "
+                      "command"),
+                    weechat_prefix ("error"), "irc", "ignore");
+    return WEECHAT_RC_ERROR;
 }
 
 /*
@@ -3602,6 +3756,30 @@ irc_command_init ()
                           N_("[nickname [nickname]]"),
                           "",
                           NULL, &irc_command_halfop, NULL);
+    weechat_hook_command ("ignore",
+                          N_("ignore nicks/hosts from servers or channels"),
+                          N_("[list] | [add nick/host [server [channel]]] | "
+                             "[del number|-all]"),
+                          N_("     list: list all ignore\n"
+                             "      add: add a ignore\n"
+                             "      del: del a ignore\n"
+                             "   number: number of ignore to delete (look at "
+                             "list to find it)\n"
+                             "     -all: delete all ignore\n"
+                             "nick/host: nick or host to ignore (regular "
+                             "expression allowed)\n"
+                             "   server: internal server name where ignore "
+                             "is working\n"
+                             "  channel: channel name where ignore is "
+                             "working\n\n"
+                             "Examples:\n"
+                             "  ignore nick \"toto\" everywhere:\n"
+                             "    /ignore add toto\n"
+                             "  ignore host \"toto@domain.com\" on freenode server:\n"
+                             "    /ignore add toto@domain.com freenode\n"
+                             "  ignore host \"toto*@*.domain.com\" on freenode/#weechat:\n"
+                             "    /ignore add toto*@*.domain.com freenode #weechat"),
+                          NULL, &irc_command_ignore, NULL);
     weechat_hook_command ("info",
                           N_("get information describing the server"),
                           N_("[target]"),

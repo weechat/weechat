@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 10:09+0200\n"
+"POT-Creation-Date: 2008-09-03 15:15+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -142,7 +142,7 @@ msgstr ""
 msgid "%sError: wrong size \"%s\" for bar \"%s\""
 msgstr ""
 
-msgid "All bars deleted"
+msgid "All bars have been deleted"
 msgstr ""
 
 #, c-format
@@ -225,6 +225,13 @@ msgid "%sError: you must specify at least tag(s) or regex for filter"
 msgstr ""
 
 msgid "Filter added"
+msgstr ""
+
+#, c-format
+msgid "%sError adding filter"
+msgstr ""
+
+msgid "All filters have been deleted"
 msgstr ""
 
 msgid "Filter deleted"
@@ -635,7 +642,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number]"
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number|-"
+"all]"
 msgstr ""
 
 msgid ""
@@ -646,6 +654,7 @@ msgid ""
 "    add: add a filter\n"
 "    del: delete a filter\n"
 " number: number of filter to delete (look at list to find it)\n"
+"   -all: delete all filters\n"
 " buffer: buffer where filter is active: it may be a name (category.name) or "
 "\"*\" for all buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
@@ -1829,6 +1838,54 @@ msgid "%s%s: server \"%s\" not found"
 msgstr ""
 
 #, c-format
+msgid "%s: ignore list:"
+msgstr ""
+
+#, c-format
+msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
+msgstr ""
+
+#, c-format
+msgid "%s: no ignore in list"
+msgstr ""
+
+#, c-format
+msgid "%s%s: missing arguments for \"%s\" command"
+msgstr ""
+
+#, c-format
+msgid "%s%s: ignore already exists"
+msgstr ""
+
+#, c-format
+msgid "%s: ignore added"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error adding ignore"
+msgstr ""
+
+#, c-format
+msgid "%s: all ignore deleted"
+msgstr ""
+
+#, c-format
+msgid "%s: ignore deleted"
+msgstr ""
+
+#, c-format
+msgid "%s%s: ignore not found"
+msgstr ""
+
+#, c-format
+msgid "%s%s: wrong ignore number"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unknown option for \"%s\" command"
+msgstr ""
+
+#, c-format
 msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
 msgstr ""
 
@@ -1897,10 +1954,6 @@ msgstr ""
 msgid ""
 "%s: messages outqueue DELETED for all servers. Some messages from you or "
 "WeeChat may have been lost!"
-msgstr ""
-
-#, c-format
-msgid "%s%s: unknown option for \"%s\" command"
 msgstr ""
 
 #, c-format
@@ -2036,6 +2089,31 @@ msgid ""
 msgstr ""
 
 msgid "give half channel operator status to nickname(s)"
+msgstr ""
+
+msgid "ignore nicks/hosts from servers or channels"
+msgstr ""
+
+msgid "[list] | [add nick/host [server [channel]]] | [del number|-all]"
+msgstr ""
+
+msgid ""
+"     list: list all ignore\n"
+"      add: add a ignore\n"
+"      del: del a ignore\n"
+"   number: number of ignore to delete (look at list to find it)\n"
+"     -all: delete all ignore\n"
+"nick/host: nick or host to ignore (regular expression allowed)\n"
+"   server: internal server name where ignore is working\n"
+"  channel: channel name where ignore is working\n"
+"\n"
+"Examples:\n"
+"  ignore nick \"toto\" everywhere:\n"
+"    /ignore add toto\n"
+"  ignore host \"toto@domain.com\" on freenode server:\n"
+"    /ignore add toto@domain.com freenode\n"
+"  ignore host \"toto*@*.domain.com\" on freenode/#weechat:\n"
+"    /ignore add toto*@*.domain.com freenode #weechat"
 msgstr ""
 
 msgid "get information describing the server"
@@ -2698,6 +2776,9 @@ msgid "list of channels for an IRC server"
 msgstr ""
 
 msgid "list of nicks for an IRC channel"
+msgstr ""
+
+msgid "list of IRC ignore"
 msgstr ""
 
 #, c-format

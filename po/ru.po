@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 10:09+0200\n"
+"POT-Creation-Date: 2008-09-03 15:15+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -167,7 +167,7 @@ msgid "%sError: wrong size \"%s\" for bar \"%s\""
 msgstr "%s некорректное количество аргументов команды \"%s\"\n"
 
 #, fuzzy
-msgid "All bars deleted"
+msgid "All bars have been deleted"
 msgstr "команда users отключена"
 
 #, fuzzy, c-format
@@ -256,6 +256,14 @@ msgstr ""
 
 #, fuzzy
 msgid "Filter added"
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "%sError adding filter"
+msgstr "%s неправильный номер буфера\n"
+
+#, fuzzy
+msgid "All filters have been deleted"
 msgstr "команда users отключена"
 
 #, fuzzy
@@ -737,7 +745,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number]"
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number|-"
+"all]"
 msgstr ""
 
 msgid ""
@@ -748,6 +757,7 @@ msgid ""
 "    add: add a filter\n"
 "    del: delete a filter\n"
 " number: number of filter to delete (look at list to find it)\n"
+"   -all: delete all filters\n"
 " buffer: buffer where filter is active: it may be a name (category.name) or "
 "\"*\" for all buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
@@ -2164,6 +2174,54 @@ msgid "%s%s: server \"%s\" not found"
 msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy, c-format
+msgid "%s: ignore list:"
+msgstr "конец списка /who"
+
+#, fuzzy, c-format
+msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
+msgstr "       (нет обработчика сообщений)\n"
+
+#, fuzzy, c-format
+msgid "%s: no ignore in list"
+msgstr "%s игнорирования не найдены\n"
+
+#, fuzzy, c-format
+msgid "%s%s: missing arguments for \"%s\" command"
+msgstr "%s нет аргументов для \"%s\" команды\n"
+
+#, fuzzy, c-format
+msgid "%s%s: ignore already exists"
+msgstr "%s игнорирование уже существует\n"
+
+#, fuzzy, c-format
+msgid "%s: ignore added"
+msgstr "Игнорирования не заданы.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error adding ignore"
+msgstr "%s недостаточно памяти для сообщения в строке информации\n"
+
+#, fuzzy, c-format
+msgid "%s: all ignore deleted"
+msgstr "команда users отключена"
+
+#, fuzzy, c-format
+msgid "%s: ignore deleted"
+msgstr "Игнорирования не заданы.\n"
+
+#, fuzzy, c-format
+msgid "%s%s: ignore not found"
+msgstr "подпись не найдена"
+
+#, fuzzy, c-format
+msgid "%s%s: wrong ignore number"
+msgstr "%s неправильный номер буфера\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown option for \"%s\" command"
+msgstr "%s неизвестный параметр для команды \"%s\"\n"
+
+#, fuzzy, c-format
 msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
 msgstr "%s \"%s\" не является регулярным выражением (%s)\n"
 
@@ -2240,10 +2298,6 @@ msgid ""
 msgstr ""
 "Исходящая очередь сообщений УДАЛЕНА на всех серверах. Некоторые исходящие "
 "сообщения могли быть утеряны!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown option for \"%s\" command"
-msgstr "%s неизвестный параметр для команды \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: wrong argument count for \"%s\" command"
@@ -2411,6 +2465,31 @@ msgstr ""
 #, fuzzy
 msgid "give half channel operator status to nickname(s)"
 msgstr "даёт статус полу-оператора канала пользователю(-ям)"
+
+msgid "ignore nicks/hosts from servers or channels"
+msgstr ""
+
+msgid "[list] | [add nick/host [server [channel]]] | [del number|-all]"
+msgstr ""
+
+msgid ""
+"     list: list all ignore\n"
+"      add: add a ignore\n"
+"      del: del a ignore\n"
+"   number: number of ignore to delete (look at list to find it)\n"
+"     -all: delete all ignore\n"
+"nick/host: nick or host to ignore (regular expression allowed)\n"
+"   server: internal server name where ignore is working\n"
+"  channel: channel name where ignore is working\n"
+"\n"
+"Examples:\n"
+"  ignore nick \"toto\" everywhere:\n"
+"    /ignore add toto\n"
+"  ignore host \"toto@domain.com\" on freenode server:\n"
+"    /ignore add toto@domain.com freenode\n"
+"  ignore host \"toto*@*.domain.com\" on freenode/#weechat:\n"
+"    /ignore add toto*@*.domain.com freenode #weechat"
+msgstr ""
 
 msgid "get information describing the server"
 msgstr "получить описание сервера"
@@ -3225,6 +3304,10 @@ msgstr "Список каналов, на которые заходить при
 #, fuzzy
 msgid "list of nicks for an IRC channel"
 msgstr "список ников на канале"
+
+#, fuzzy
+msgid "list of IRC ignore"
+msgstr "порт IRC сервера"
 
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"
@@ -6012,9 +6095,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgid "session file not found"
 #~ msgstr "файл сессии не найден"
 
-#~ msgid "signature not found"
-#~ msgstr "подпись не найдена"
-
 #~ msgid "bad session signature"
 #~ msgstr "некорректная подпись сессии"
 
@@ -6441,9 +6521,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgid "IRC commands:\n"
 #~ msgstr "Команды IRC:\n"
 
-#~ msgid "No ignore defined.\n"
-#~ msgstr "Игнорирования не заданы.\n"
-
 #~ msgid "New ignore:"
 #~ msgstr "Новое игнорирование:"
 
@@ -6481,9 +6558,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgid_plural "%s%d%s ignore were removed.\n"
 #~ msgstr[0] "%s%d%s игнорирование удалено.\n"
 #~ msgstr[1] "%s%d%s игнорирований удалено.\n"
-
-#~ msgid "%s no ignore found\n"
-#~ msgstr "%s игнорирования не найдены\n"
 
 #~ msgid "%s can't upgrade: connection to at least one server is pending\n"
 #~ msgstr "%s не могу обновиться: подключение к серверам в процессе\n"

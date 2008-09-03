@@ -218,7 +218,7 @@ gui_filter_search (const char *buffer, const char *tags, const char *regex)
             return ptr_filter;
     }
     
-    /* no filter found */
+    /* filter not found */
     return NULL;
 }
 
@@ -241,7 +241,7 @@ gui_filter_search_by_number (int number)
         i++;
     }
     
-    /* no filter found */
+    /* filter not found */
     return NULL;
 }
 
@@ -311,7 +311,7 @@ gui_filter_new (const char *buffer, const char *tags, const char *regex)
     }
     
     /* create new filter */
-    new_filter = (malloc (sizeof (*new_filter)));
+    new_filter = malloc (sizeof (*new_filter));
     if (new_filter)
     {
         /* init filter */

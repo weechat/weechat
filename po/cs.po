@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 10:09+0200\n"
+"POT-Creation-Date: 2008-09-03 15:15+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -165,7 +165,7 @@ msgid "%sError: wrong size \"%s\" for bar \"%s\""
 msgstr "%s špatný počet parametrů pro příkaz \"%s\"\n"
 
 #, fuzzy
-msgid "All bars deleted"
+msgid "All bars have been deleted"
 msgstr "uživatel byl zablokován"
 
 #, fuzzy, c-format
@@ -254,6 +254,14 @@ msgstr "%sChyba: musíte specifikovat buď tag(y) nebo regulární výrazpro fil
 
 #, fuzzy
 msgid "Filter added"
+msgstr "uživatel byl zablokován"
+
+#, fuzzy, c-format
+msgid "%sError adding filter"
+msgstr "%s nekorektní číslo bufferu\n"
+
+#, fuzzy
+msgid "All filters have been deleted"
 msgstr "uživatel byl zablokován"
 
 #, fuzzy
@@ -738,8 +746,10 @@ msgstr ""
 "filtrovat zprávy v bufferu, pro jejich schováni/zobrazení podle tagů nebo "
 "regulárního výrazu"
 
+#, fuzzy
 msgid ""
-"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number]"
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number|-"
+"all]"
 msgstr ""
 "[list] | [enable|disable|toggle] | [add buffer tagy regex] | [del číslo]"
 
@@ -752,6 +762,7 @@ msgid ""
 "    add: add a filter\n"
 "    del: delete a filter\n"
 " number: number of filter to delete (look at list to find it)\n"
+"   -all: delete all filters\n"
 " buffer: buffer where filter is active: it may be a name (category.name) or "
 "\"*\" for all buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
@@ -2210,6 +2221,54 @@ msgid "%s%s: server \"%s\" not found"
 msgstr "%s server \"%s\" nenalezen\n"
 
 #, fuzzy, c-format
+msgid "%s: ignore list:"
+msgstr "konec /who seznamu"
+
+#, fuzzy, c-format
+msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
+msgstr "       (není obsluhovač zprávy)\n"
+
+#, c-format
+msgid "%s: no ignore in list"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: missing arguments for \"%s\" command"
+msgstr "%s chybí argumenty pro příkaz \"%s\"\n"
+
+#, fuzzy, c-format
+msgid "%s%s: ignore already exists"
+msgstr "%s ignorování již existuje\n"
+
+#, c-format
+msgid "%s: ignore added"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error adding ignore"
+msgstr "%s nedostatek paměti pro infobar zprávu\n"
+
+#, fuzzy, c-format
+msgid "%s: all ignore deleted"
+msgstr "uživatel byl zablokován"
+
+#, fuzzy, c-format
+msgid "%s: ignore deleted"
+msgstr "uživatel byl zablokován"
+
+#, fuzzy, c-format
+msgid "%s%s: ignore not found"
+msgstr "%s IP adresa nenalezena\n"
+
+#, fuzzy, c-format
+msgid "%s%s: wrong ignore number"
+msgstr "%s nekorektní číslo bufferu\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unknown option for \"%s\" command"
+msgstr "%s neznámá volba pro příkaz \"%s\"\n"
+
+#, fuzzy, c-format
 msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
 msgstr "%s \"%s\" není validní regulární výraz (%s)\n"
 
@@ -2287,10 +2346,6 @@ msgid ""
 msgstr ""
 "Fronty odchozích zpráv všech serverů byly SMAZÁNY. Některé zprávy od Vás "
 "nebo WeeChat mohou být ztraceny!\n"
-
-#, fuzzy, c-format
-msgid "%s%s: unknown option for \"%s\" command"
-msgstr "%s neznámá volba pro příkaz \"%s\"\n"
 
 #, fuzzy, c-format
 msgid "%s%s: wrong argument count for \"%s\" command"
@@ -2458,6 +2513,31 @@ msgstr ""
 #, fuzzy
 msgid "give half channel operator status to nickname(s)"
 msgstr "dát přezdívce (přezdívkám) status operátora polovičního kanálu"
+
+msgid "ignore nicks/hosts from servers or channels"
+msgstr ""
+
+msgid "[list] | [add nick/host [server [channel]]] | [del number|-all]"
+msgstr ""
+
+msgid ""
+"     list: list all ignore\n"
+"      add: add a ignore\n"
+"      del: del a ignore\n"
+"   number: number of ignore to delete (look at list to find it)\n"
+"     -all: delete all ignore\n"
+"nick/host: nick or host to ignore (regular expression allowed)\n"
+"   server: internal server name where ignore is working\n"
+"  channel: channel name where ignore is working\n"
+"\n"
+"Examples:\n"
+"  ignore nick \"toto\" everywhere:\n"
+"    /ignore add toto\n"
+"  ignore host \"toto@domain.com\" on freenode server:\n"
+"    /ignore add toto@domain.com freenode\n"
+"  ignore host \"toto*@*.domain.com\" on freenode/#weechat:\n"
+"    /ignore add toto*@*.domain.com freenode #weechat"
+msgstr ""
 
 msgid "get information describing the server"
 msgstr "získat informace popisující server"
@@ -3288,6 +3368,10 @@ msgstr "seznam uživatelů přihlášených k serveru"
 #, fuzzy
 msgid "list of nicks for an IRC channel"
 msgstr "seznam uživatelů na kanálu"
+
+#, fuzzy
+msgid "list of IRC ignore"
+msgstr "heslo pro IRC server"
 
 #, fuzzy, c-format
 msgid "%s%s: you are not connected to server"

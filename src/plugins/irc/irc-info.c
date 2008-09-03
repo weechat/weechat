@@ -26,6 +26,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-channel.h"
+#include "irc-ignore.h"
 #include "irc-nick.h"
 #include "irc-protocol.h"
 #include "irc-server.h"
@@ -172,6 +173,7 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_ignore *ptr_ignore;
     char *pos_comma, *server_name;
     
     /* make C compiler happy */
@@ -314,6 +316,40 @@ irc_info_get_infolist_cb (void *data, const char *infolist_name,
             }
         }
     }
+    else if (weechat_strcasecmp (infolist_name, "irc_ignore") == 0)
+    {
+        if (pointer && !irc_ignore_valid (pointer))
+            return NULL;
+        
+        ptr_infolist = weechat_infolist_new ();
+        if (ptr_infolist)
+        {
+            if (pointer)
+            {
+                /* build list with only one ignore */
+                if (!irc_ignore_add_to_infolist (ptr_infolist, pointer))
+                {
+                    weechat_infolist_free (ptr_infolist);
+                    return NULL;
+                }
+                return ptr_infolist;
+            }
+            else
+            {
+                /* build list with all ignore */
+                for (ptr_ignore = irc_ignore_list; ptr_ignore;
+                     ptr_ignore = ptr_ignore->next_ignore)
+                {
+                    if (!irc_ignore_add_to_infolist (ptr_infolist, ptr_ignore))
+                    {
+                        weechat_infolist_free (ptr_infolist);
+                        return NULL;
+                    }
+                }
+                return ptr_infolist;
+            }
+        }
+    }
     
     return NULL;
 }
@@ -339,5 +375,7 @@ irc_info_init ()
     weechat_hook_infolist ("irc_channel", N_("list of channels for an IRC server"),
                            &irc_info_get_infolist_cb, NULL);
     weechat_hook_infolist ("irc_nick", N_("list of nicks for an IRC channel"),
+                           &irc_info_get_infolist_cb, NULL);
+    weechat_hook_infolist ("irc_ignore", N_("list of IRC ignore"),
                            &irc_info_get_infolist_cb, NULL);
 }

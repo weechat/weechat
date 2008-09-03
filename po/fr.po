@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 10:09+0200\n"
-"PO-Revision-Date: 2008-09-03 10:10+0200\n"
+"POT-Creation-Date: 2008-09-03 15:15+0200\n"
+"PO-Revision-Date: 2008-09-03 15:22+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -161,7 +161,7 @@ msgstr "%sErreur: impossible de créer la barre \"%s\""
 msgid "%sError: wrong size \"%s\" for bar \"%s\""
 msgstr "%sErreur: taille erronée \"%s\" pour la barre \"%s\""
 
-msgid "All bars deleted"
+msgid "All bars have been deleted"
 msgstr "Toutes les barres ont été supprimées"
 
 #, c-format
@@ -247,6 +247,13 @@ msgstr ""
 
 msgid "Filter added"
 msgstr "Filtre ajouté"
+
+#, c-format
+msgid "%sError adding filter"
+msgstr "%sErreur d'ajout du filtre"
+
+msgid "All filters have been deleted"
+msgstr "Tous les filtres ont été supprimés"
 
 msgid "Filter deleted"
 msgstr "Filtre supprimé"
@@ -743,9 +750,11 @@ msgstr ""
 "tags ou expressions régulières"
 
 msgid ""
-"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number]"
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del number|-"
+"all]"
 msgstr ""
-"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del numéro]"
+"[list] | [enable|disable|toggle] | [add buffer tags regex] | [del numéro|-"
+"all]"
 
 msgid ""
 "   list: list all filters\n"
@@ -755,6 +764,7 @@ msgid ""
 "    add: add a filter\n"
 "    del: delete a filter\n"
 " number: number of filter to delete (look at list to find it)\n"
+"   -all: delete all filters\n"
 " buffer: buffer where filter is active: it may be a name (category.name) or "
 "\"*\" for all buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
@@ -780,6 +790,7 @@ msgstr ""
 "    del: supprime un filtre\n"
 " numéro: numéro du filtre à supprimer (voir la liste des filtres pour le "
 "trouver)\n"
+"   -all: supprime tous les filtres\n"
 " buffer: tampon où le filtre est actif: cela peut être un nom (catégorie."
 "nom) ou \"*\" pour tous les tampons\n"
 "   tags: liste de tags, séparés par des virgules, par exemple: \"irc_join,"
@@ -2142,6 +2153,54 @@ msgid "%s%s: server \"%s\" not found"
 msgstr "%s%s: serveur \"%s\" non trouvé"
 
 #, c-format
+msgid "%s: ignore list:"
+msgstr "%s: liste ignore:"
+
+#, c-format
+msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
+msgstr "  %s[%s%d%s]%s masque: %s / serveur: %s / canal: %s"
+
+#, c-format
+msgid "%s: no ignore in list"
+msgstr "%s: pas d'ignore dans la liste"
+
+#, c-format
+msgid "%s%s: missing arguments for \"%s\" command"
+msgstr "%s%s: paramètres manquants pour la commande \"%s\""
+
+#, c-format
+msgid "%s%s: ignore already exists"
+msgstr "%s%s: le ignore existe déjà"
+
+#, c-format
+msgid "%s: ignore added"
+msgstr "%s: ignore ajouté"
+
+#, c-format
+msgid "%s%s: error adding ignore"
+msgstr "%s%s: erreur d'ajout du ignore"
+
+#, c-format
+msgid "%s: all ignore deleted"
+msgstr "%s: ignore supprimés"
+
+#, c-format
+msgid "%s: ignore deleted"
+msgstr "%s: ignore supprimé"
+
+#, c-format
+msgid "%s%s: ignore not found"
+msgstr "%s%s: ignore non trouvé"
+
+#, c-format
+msgid "%s%s: wrong ignore number"
+msgstr "%s%s: numéro d'ignore incorrect"
+
+#, c-format
+msgid "%s%s: unknown option for \"%s\" command"
+msgstr "%s%s: option inconnue pour la commande \"%s\""
+
+#, c-format
 msgid "%s%s: \"%s\" is not a valid regular expression (%s)"
 msgstr "%s%s: \"%s\" n'est pas une expression régulière valide (%s)"
 
@@ -2217,10 +2276,6 @@ msgid ""
 msgstr ""
 "%s: la file d'attente de messages sortants a été SUPPRIMEE. Quelques "
 "messages de vous ou WeeChat risquent d'être perdus !"
-
-#, c-format
-msgid "%s%s: unknown option for \"%s\" command"
-msgstr "%s%s: option inconnue pour la commande \"%s\""
 
 #, c-format
 msgid "%s%s: wrong argument count for \"%s\" command"
@@ -2382,6 +2437,49 @@ msgstr ""
 
 msgid "give half channel operator status to nickname(s)"
 msgstr "donner le statut de demi-opérateur à un/des pseudo(s)"
+
+msgid "ignore nicks/hosts from servers or channels"
+msgstr "ignore des pseudos/hôtes de serveurs ou canaux"
+
+msgid "[list] | [add nick/host [server [channel]]] | [del number|-all]"
+msgstr "[list] | [add pseudo/hote [server [channel]]] | [del numéro|-all]"
+
+msgid ""
+"     list: list all ignore\n"
+"      add: add a ignore\n"
+"      del: del a ignore\n"
+"   number: number of ignore to delete (look at list to find it)\n"
+"     -all: delete all ignore\n"
+"nick/host: nick or host to ignore (regular expression allowed)\n"
+"   server: internal server name where ignore is working\n"
+"  channel: channel name where ignore is working\n"
+"\n"
+"Examples:\n"
+"  ignore nick \"toto\" everywhere:\n"
+"    /ignore add toto\n"
+"  ignore host \"toto@domain.com\" on freenode server:\n"
+"    /ignore add toto@domain.com freenode\n"
+"  ignore host \"toto*@*.domain.com\" on freenode/#weechat:\n"
+"    /ignore add toto*@*.domain.com freenode #weechat"
+msgstr ""
+"       list: liste tous les ignore\n"
+"        add: ajoute un ignore\n"
+"        del: supprime un ignore\n"
+"     numéro: numéro du ignore à supprimer (voir la liste des ignore pour le "
+"trouver)\n"
+"       -all: supprime tous les ignore\n"
+"pseudo/hôte: pseudo ou hôte à ignorer (une expression régulière est "
+"autorisée)\n"
+"    serveur: nom de serveur interne où le ignore fonctionnera\n"
+"      canal: canal où le ignore fonctionnera\n"
+"\n"
+"Exemples:\n"
+"  ignorer le pseudo \"toto\" partout:\n"
+"    /ignore add toto\n"
+"  ignorer le hôte \"toto@domain.com\" sur le serveur freenode:\n"
+"    /ignore add toto@domain.com freenode\n"
+"  ignorer le hôte \"toto*@*.domain.com\" sur freenode/#weechat:\n"
+"    /ignore add toto*@*.domain.com freenode #weechat"
 
 msgid "get information describing the server"
 msgstr "voir les informations décrivant le serveur"
@@ -3203,6 +3301,9 @@ msgstr "liste des canaux pour un serveur IRC"
 
 msgid "list of nicks for an IRC channel"
 msgstr "liste des pseudos pour un canal IRC"
+
+msgid "list of IRC ignore"
+msgstr "liste des ignore IRC"
 
 #, c-format
 msgid "%s%s: you are not connected to server"

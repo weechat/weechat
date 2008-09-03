@@ -37,8 +37,8 @@ struct t_gui_filter
     char *regex;                       /* regex                             */
     regex_t *regex_prefix;             /* regex for line prefix             */
     regex_t *regex_message;            /* regex for line message            */
-    struct t_gui_filter *prev_filter;  /* link to previous line             */
-    struct t_gui_filter *next_filter;  /* link to next line                 */
+    struct t_gui_filter *prev_filter;  /* link to previous filter           */
+    struct t_gui_filter *next_filter;  /* link to next filter               */
 };
 
 /* filter variables */

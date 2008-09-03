@@ -38,6 +38,8 @@ irc_la_SOURCES = irc.c \
                  irc-debug.h \
                  irc-display.c \
                  irc-display.h \
+                 irc-ignore.c \
+                 irc-ignore.h \
                  irc-info.c \
                  irc-info.h \
                  irc-input.c \

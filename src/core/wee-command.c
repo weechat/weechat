@@ -302,7 +302,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         if (string_strcasecmp (argv[2], "-all") == 0)
         {
             gui_bar_free_all ();
-            gui_chat_printf (NULL, _("All bars deleted"));
+            gui_chat_printf (NULL, _("All bars have been deleted"));
             //gui_bar_create_default ();
         }
         else
@@ -891,9 +891,17 @@ command_filter (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_ERROR;
         }
         
-        gui_filter_new (argv[2], argv[3], argv_eol[4]);
-        gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                   _("Filter added"));
+        if (gui_filter_new (argv[2], argv[3], argv_eol[4]))
+        {
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("Filter added"));
+        }
+        else
+        {
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError adding filter"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        }
         
         return WEECHAT_RC_OK;
     }
@@ -910,33 +918,49 @@ command_filter (void *data, struct t_gui_buffer *buffer,
                                        "filter del");
             return WEECHAT_RC_ERROR;
         }
-        error = NULL;
-        number = strtol (argv[2], &error, 10);
-        if (error && !error[0])
+        if (string_strcasecmp (argv[2], "-all") == 0)
         {
-            ptr_filter = gui_filter_search_by_number (number);
-            if (ptr_filter)
+            if (gui_filters)
             {
-                gui_filter_free (ptr_filter);
+                gui_filter_free_all ();
                 gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("Filter deleted"));
+                                           _("All filters have been deleted"));
             }
             else
             {
                 gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("%sError: filter not found"),
-                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                return WEECHAT_RC_ERROR;
+                                           _("No message filter defined"));
             }
         }
         else
         {
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError: wrong filter number"),
-                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-            return WEECHAT_RC_ERROR;
+            error = NULL;
+            number = strtol (argv[2], &error, 10);
+            if (error && !error[0])
+            {
+                ptr_filter = gui_filter_search_by_number (number);
+                if (ptr_filter)
+                {
+                    gui_filter_free (ptr_filter);
+                    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                               _("Filter deleted"));
+                }
+                else
+                {
+                    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                               _("%sError: filter not found"),
+                                               gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                    return WEECHAT_RC_ERROR;
+                }
+            }
+            else
+            {
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("%sError: wrong filter number"),
+                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                return WEECHAT_RC_ERROR;
+            }
         }
-        
         return WEECHAT_RC_OK;
     }
     
@@ -2816,7 +2840,7 @@ command_init ()
                      "to tags or regex"),
                   N_("[list] | [enable|disable|toggle] | "
                      "[add buffer tags regex] | "
-                     "[del number]"),
+                     "[del number|-all]"),
                   N_("   list: list all filters\n"
                      " enable: enable filters (filters are enabled by "
                       "default)\n"
@@ -2826,6 +2850,7 @@ command_init ()
                      "    del: delete a filter\n"
                      " number: number of filter to delete (look at list to "
                      "find it)\n"
+                     "   -all: delete all filters\n"
                      " buffer: buffer where filter is active: it may be "
                      "a name (category.name) or \"*\" for all buffers\n"
                      "   tags: comma separated list of tags, for "

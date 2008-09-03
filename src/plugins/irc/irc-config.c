@@ -29,6 +29,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-config.h"
+#include "irc-ignore.h"
 #include "irc-server.h"
 
 
@@ -444,6 +445,8 @@ irc_config_reload (void *data, struct t_config_file *config_file)
         ptr_server->reloaded_from_config = 0;
     }
     
+    irc_ignore_free_all ();
+    
     rc = weechat_config_reload (config_file);
     
     if (rc == WEECHAT_CONFIG_READ_OK)
@@ -476,6 +479,72 @@ irc_config_reload (void *data, struct t_config_file *config_file)
     }
     
     return rc;
+}
+
+/*
+ * irc_config_ignore_read: read ignore option from config file
+ *                         return 1 if ok, 0 if error
+ */
+
+int
+irc_config_ignore_read (void *data,
+                        struct t_config_file *config_file,
+                        struct t_config_section *section,
+                        const char *option_name, const char *value)
+{
+    char **argv, **argv_eol;
+    int argc;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) config_file;
+    (void) section;
+    
+    if (option_name)
+    {
+        if (value && value[0])
+        {
+            argv = weechat_string_explode (value, ";", 0, 0, &argc);
+            argv_eol = weechat_string_explode (value, ";", 1, 0, NULL);
+            if (argv && argv_eol && (argc >= 3))
+            {
+                irc_ignore_new (argv_eol[2], argv[0], argv[1]);
+            }
+            if (argv)
+                weechat_string_free_exploded (argv);
+            if (argv_eol)
+                weechat_string_free_exploded (argv_eol);
+        }
+    }
+    
+    return 1;
+}
+
+/*
+ * irc_config_ignore_write: write ignore section in configuration file
+ */
+
+void
+irc_config_ignore_write (void *data, struct t_config_file *config_file,
+                         const char *section_name)
+{
+    struct t_irc_ignore *ptr_ignore;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    weechat_config_write_line (config_file, section_name, NULL);
+    
+    for (ptr_ignore = irc_ignore_list; ptr_ignore;
+         ptr_ignore = ptr_ignore->next_ignore)
+    {
+        weechat_config_write_line (config_file,
+                                   "ignore",
+                                   "%s;%s;%s",
+                                   (ptr_ignore->server) ? ptr_ignore->server : "*",
+                                   (ptr_ignore->channel) ? ptr_ignore->channel : "*",
+                                   ptr_ignore->mask);
+    }
 }
 
 /*
@@ -847,6 +916,7 @@ irc_config_init ()
     if (!irc_config_file)
         return 0;
     
+    /* look */
     ptr_section = weechat_config_new_section (irc_config_file, "look",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -905,6 +975,7 @@ irc_config_init ()
         N_("display notices as private messages"),
         NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
     
+    /* network */
     ptr_section = weechat_config_new_section (irc_config_file, "network",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -980,6 +1051,7 @@ irc_config_init ()
         N_("send unknown commands to IRC server"),
         NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
     
+    /* log */
     ptr_section = weechat_config_new_section (irc_config_file, "log",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -1010,7 +1082,21 @@ irc_config_init ()
         "hide_nickserv_pwd", "boolean",
         N_("hide password displayed by nickserv"),
         NULL, 0, 0, "on", NULL, NULL, &irc_config_change_log, NULL, NULL, NULL);
+
+    /* filters */
+    ptr_section = weechat_config_new_section (irc_config_file, "ignore",
+                                              0, 0,
+                                              &irc_config_ignore_read, NULL,
+                                              &irc_config_ignore_write, NULL,
+                                              &irc_config_ignore_write, NULL,
+                                              NULL, NULL);
+    if (!ptr_section)
+    {
+        weechat_config_free (irc_config_file);
+        return 0;
+    }
     
+    /* server_default */
     ptr_section = weechat_config_new_section (irc_config_file, "server_default",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
@@ -1025,6 +1111,7 @@ irc_config_init ()
     
     irc_config_server_create_default_options (ptr_section);
     
+    /* server */
     ptr_section = weechat_config_new_section (irc_config_file, "server",
                                               1, 1,
                                               NULL, NULL,
