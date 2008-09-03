@@ -790,37 +790,42 @@ command_filter (void *data, struct t_gui_buffer *buffer,
         || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
     {
         /* display all key bindings */
-        gui_chat_printf (NULL, "");
-        gui_chat_printf (NULL, "%s",
-                         (gui_filters_enabled) ?
-                         _("Filters are enabled") : _("Filters are disabled"));
+        gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER, "");
+        gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                   "%s",
+                                   (gui_filters_enabled) ?
+                                   _("Filters are enabled") : _("Filters are disabled"));
         
         if (gui_filters)
         {
-            gui_chat_printf (NULL, _("Message filters:"));
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("Message filters:"));
             i = 0;
             for (ptr_filter = gui_filters; ptr_filter;
                  ptr_filter = ptr_filter->next_filter)
             {
                 i++;
-                gui_chat_printf (NULL,
-                                 _("  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / "
-                                   "regex: %s"),
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 i,
-                                 GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                 ptr_filter->buffer,
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 ptr_filter->tags,
-                                 ptr_filter->regex);
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("  %s[%s%d%s]%s buffer: %s%s%s "
+                                             "/ tags: %s / regex: %s"),
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                           GUI_COLOR(GUI_COLOR_CHAT),
+                                           i,
+                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                                           GUI_COLOR(GUI_COLOR_CHAT),
+                                           GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                                           ptr_filter->buffer,
+                                           GUI_COLOR(GUI_COLOR_CHAT),
+                                           ptr_filter->tags,
+                                           ptr_filter->regex);
             }
         }
         else
-            gui_chat_printf (NULL, _("No message filter defined"));
-                             
+        {
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("No message filter defined"));
+        }
+        
         return WEECHAT_RC_OK;
     }
     
@@ -830,7 +835,8 @@ command_filter (void *data, struct t_gui_buffer *buffer,
         if (!gui_filters_enabled)
         {
             gui_filter_enable ();
-            gui_chat_printf (NULL, _("Filters enabled"));
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("Filters enabled"));
         }
         return WEECHAT_RC_OK;
     }
@@ -841,7 +847,8 @@ command_filter (void *data, struct t_gui_buffer *buffer,
         if (gui_filters_enabled)
         {
             gui_filter_disable ();
-            gui_chat_printf (NULL, _("Filters disabled"));
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("Filters disabled"));
         }
         return WEECHAT_RC_OK;
     }
@@ -861,31 +868,32 @@ command_filter (void *data, struct t_gui_buffer *buffer,
     {
         if (argc < 5)
         {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "filter add");
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError: missing arguments for \"%s\" "
+                                         "command"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                       "filter add");
             return WEECHAT_RC_ERROR;
         }
         if (gui_filter_search (argv[2], argv[3], argv_eol[4]))
         {
-            gui_chat_printf (NULL,
-                             _("%sError: filter already exists"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError: filter already exists"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_ERROR;
         }
         if ((strcmp (argv[3], "*") == 0) && (strcmp (argv_eol[4], "*") == 0))
         {
-            gui_chat_printf (NULL,
-                             _("%sError: you must specify at least tag(s) or "
-                               "regex for filter"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError: you must specify at least tag(s) or "
+                                         "regex for filter"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_ERROR;
         }
         
         gui_filter_new (argv[2], argv[3], argv_eol[4]);
-        gui_chat_printf (NULL, _("Filter added"));
+        gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                   _("Filter added"));
         
         return WEECHAT_RC_OK;
     }
@@ -895,11 +903,11 @@ command_filter (void *data, struct t_gui_buffer *buffer,
     {
         if (argc < 3)
         {
-            gui_chat_printf (NULL,
-                             _("%sError: missing arguments for \"%s\" "
-                               "command"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                             "filter del");
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError: missing arguments for \"%s\" "
+                                         "command"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                       "filter del");
             return WEECHAT_RC_ERROR;
         }
         error = NULL;
@@ -910,32 +918,33 @@ command_filter (void *data, struct t_gui_buffer *buffer,
             if (ptr_filter)
             {
                 gui_filter_free (ptr_filter);
-                gui_chat_printf (NULL, _("Filter deleted"));
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("Filter deleted"));
             }
             else
             {
-                gui_chat_printf (NULL,
-                                 _("%sError: filter not found"),
-                                 gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("%sError: filter not found"),
+                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
                 return WEECHAT_RC_ERROR;
             }
         }
         else
         {
-            gui_chat_printf (NULL,
-                             _("%sError: wrong filter number"),
-                             gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError: wrong filter number"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_ERROR;
         }
         
         return WEECHAT_RC_OK;
     }
     
-    gui_chat_printf (NULL,
-                     _("%sError: unknown option for \"%s\" "
-                       "command"),
-                     gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                     "filter");
+    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                               _("%sError: unknown option for \"%s\" "
+                                 "command"),
+                               gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                               "filter");
     return WEECHAT_RC_ERROR;
 
 }

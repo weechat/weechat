@@ -43,6 +43,27 @@ int gui_filters_enabled = 1;                       /* filters enabled?      */
 
 
 /*
+ * gui_filter_line_has_tag_no_filter: return 1 if line has tag "no_filter",
+ *                                    which means that line should never
+ *                                    been filtered (always displayed)
+ */
+
+int
+gui_filter_line_has_tag_no_filter (struct t_gui_line *line)
+{
+    int i;
+    
+    for (i = 0; i < line->tags_count; i++)
+    {
+        if (strcmp (line->tags_array[i], GUI_FILTER_TAG_NO_FILTER) == 0)
+            return 1;
+    }
+    
+    /* tag not found, line may be filtered */
+    return 0;
+}
+
+/*
  * gui_filter_check_line: return 1 if a line should be displayed, or
  *                        0 if line is hidden (tag or regex found)
  */
@@ -52,11 +73,11 @@ gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
     struct t_gui_filter *ptr_filter;
     
-    /* make C compiler happy */
-    (void) buffer;
-    
     /* line is always displayed if filters are disabled */
     if (!gui_filters_enabled)
+        return 1;
+    
+    if (gui_filter_line_has_tag_no_filter (line))
         return 1;
     
     for (ptr_filter = gui_filters; ptr_filter;

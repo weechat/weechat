@@ -22,6 +22,8 @@
 
 #include <regex.h>
 
+#define GUI_FILTER_TAG_NO_FILTER "no_filter"
+
 /* filter structures */
 
 struct t_gui_line;
