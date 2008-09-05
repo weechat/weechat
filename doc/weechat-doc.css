@@ -4,12 +4,12 @@
  */
 
 body {
-  font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
-  font-size: 12px;
+    font-family: Verdana, Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 12px;
 }
 
 table {
-  font-size: 12px;
+    font-size: 12px;
 }
 
 a {
@@ -55,38 +55,38 @@ a:hover {
 }
 
 .informaltable table {
-  font-size: 11px;
-  font-family: Verdana;
-  border-collapse: collapse;
+    font-size: 11px;
+    font-family: Verdana;
+    border-collapse: collapse;
 }
 
 .informaltable table th {
-  padding: 2px 5px 2px 5px;
-  border: solid 1px #AAAAAA;
-  background-color: #DDDDFF;
+    padding: 2px 5px 2px 5px;
+    border: solid 1px #AAAAAA;
+    background-color: #DDDDFF;
 }
 
 .informaltable table td {
-  padding: 2px 5px 2px 5px;
-  border: solid 1px #AAAAAA;
+    padding: 2px 5px 2px 5px;
+    border: solid 1px #AAAAAA;
 }
 
 .oddrow {
-  background-color: #F0F0F0;
+    background-color: #F0F0F0;
 }
 
 .synopsis { 
-  font-size: 11px;
+    font-size: 11px;
 }
 
 .programlisting {
-  font-size: 11px;
+    font-size: 11px;
 }
 
 pre.screen {
-  font-size: 11px;
-  background-color: #FAFAFA;
-  border: dotted 1px #CCCCCC;
-  padding: 4px;
-  margin: 0 40px 0 40px;
+    font-size: 11px;
+    background-color: #FAFAFA;
+    border: dotted 1px #CCCCCC;
+    padding: 4px;
+    margin: 0 40px 0 40px;
 }

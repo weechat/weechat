@@ -133,6 +133,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
       </informaltable>
     </para>
     
+    <!-- &plugin_api.de.xml; -->
+    
     <section id="secCompilePlugin">
       <title>Übersetzen eines Plugins</title>
       
@@ -240,22 +242,16 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
       
     </section>
     
-    <!-- &plugin_api.de.xml; -->
-    
   </section>
   
-  <!-- TRANSLATION NEEDED -->
-  <section id="secDefaultPlugins">
-    <title>Default plugins</title>
-    
-    &plugin_irc.de.xml;
-    
-    <!-- &plugin_charset.de.xml; -->
-    
-    &plugin_fifo.de.xml;
-    
-    <!-- &plugin_scripts.de.xml; -->
-    
-  </section>
+  &plugin_irc.de.xml;
+  
+  <!-- &plugin_charset.de.xml; -->
+  
+  &plugin_fifo.de.xml;
+  
+  <!-- &plugin_scripts.de.xml; -->
+  
+  &plugin_xfer.de.xml;
   
 </chapter>

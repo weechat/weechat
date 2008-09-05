@@ -26,12 +26,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 [
   <!-- ***** auto-built: *****  -->
   <!ENTITY date.xml SYSTEM "date.xml">
-  <!ENTITY config.xml SYSTEM "config.xml">
-  <!ENTITY weechat_commands.xml SYSTEM "weechat_commands.xml">
-  <!ENTITY irc_commands.xml SYSTEM "irc_commands.xml">
-  <!ENTITY key_functions.xml SYSTEM "key_functions.xml">
+  <!ENTITY % include_autogen.xml SYSTEM "include_autogen.xml">
+    %include_autogen.xml;
 
-  <!-- **** written by hand: **** -->
+  <!-- ***** written by hand: ***** -->
   <!ENTITY intro.de.xml SYSTEM "intro.de.xml">
   <!ENTITY install.de.xml SYSTEM "install.de.xml">
   <!ENTITY usage.de.xml SYSTEM "usage.de.xml">
@@ -41,6 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   <!ENTITY plugin_charset.de.xml SYSTEM "plugin_charset.de.xml">
   <!ENTITY plugin_fifo.de.xml SYSTEM "plugin_fifo.de.xml">
   <!ENTITY plugin_scripts.de.xml SYSTEM "plugin_scripts.de.xml">
+  <!ENTITY plugin_xfer.de.xml SYSTEM "plugin_xfer.de.xml">
   <!ENTITY authors.de.xml SYSTEM "authors.de.xml">
 ]>
 

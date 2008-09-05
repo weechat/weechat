@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 15:15+0200\n"
+"POT-Creation-Date: 2008-09-04 18:00+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -304,48 +304,57 @@ msgid "plugin:"
 msgstr "  (nem található bővítőmodul)\n"
 
 #, fuzzy, c-format
-msgid "Option \"%s%s%s\": %s"
+msgid "Option \"%s%s%s\":"
 msgstr "Felhasználók a %s%s%s szobában: %s["
 
 #, fuzzy
-msgid "  type: boolean ('on' or 'off')"
-msgstr "  . típus logikai (értékek: 'on' vagy 'off')\n"
+msgid "description"
+msgstr "  . leírás : %s\n"
 
-#, c-format
-msgid "  value: %s%s%s (default: %s)"
+msgid "type"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "  type: string (%s)"
-msgstr "  . típus: szöveg\n"
-
-#, c-format
-msgid "  value: '%s%s%s' (default: '%s')"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "  type: integer (between %d and %d)"
-msgstr "  . típus szám (értékek: %d és %d között)\n"
-
-#, c-format
-msgid "  value: %s%d%s (default: %d)"
+msgid "boolean"
 msgstr ""
 
 #, fuzzy
-msgid "  type: string (any string)"
-msgstr "  . típus szöveg (bármilyen szöveg)\n"
+msgid "values"
+msgstr "  . értékek: "
 
 #, fuzzy
-msgid "  type: char (any char)"
-msgstr "  . típus: karakter (bármilyen karakter)\n"
+msgid "default value"
+msgstr "  . alapérték: %d\n"
 
-#, fuzzy, c-format
-msgid "  type: string (limit: %d chars)"
-msgstr "  . típus szöveg (bármilyen szöveg, korlát: %d karakter)\n"
+msgid "current value"
+msgstr ""
 
 #, fuzzy
-msgid "  type: color (values depend on GUI used)"
-msgstr "  . értékek: %d és %d között\n"
+msgid "string"
+msgstr "Várakozás"
+
+#, fuzzy
+msgid "integer"
+msgstr "perc"
+
+#, fuzzy
+msgid "any string"
+msgstr "Várakozás"
+
+#, fuzzy
+msgid "any char"
+msgstr "karakterek felcserélése"
+
+#, fuzzy
+msgid "max chars"
+msgstr "pufferek kezelése"
+
+#, fuzzy
+msgid "color"
+msgstr "üzenetek színe"
+
+#, fuzzy
+msgid "a color name"
+msgstr "gépnevek színe"
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -1544,21 +1553,6 @@ msgstr ""
 #, fuzzy
 msgid "save configuration files when unloading plugins"
 msgstr "beállítások mentése kilépéskor"
-
-msgid "boolean"
-msgstr ""
-
-#, fuzzy
-msgid "integer"
-msgstr "perc"
-
-#, fuzzy
-msgid "string"
-msgstr "Várakozás"
-
-#, fuzzy
-msgid "color"
-msgstr "üzenetek színe"
 
 #, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
@@ -4831,6 +4825,38 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #, fuzzy
+#~ msgid "  type: string (%s)"
+#~ msgstr "  . típus: szöveg\n"
+
+#, fuzzy
+#~ msgid "  type: integer (between %d and %d)"
+#~ msgstr "  . típus szám (értékek: %d és %d között)\n"
+
+#, fuzzy
+#~ msgid "  type: string (any string)"
+#~ msgstr "  . típus szöveg (bármilyen szöveg)\n"
+
+#, fuzzy
+#~ msgid "  type: char (any char)"
+#~ msgstr "  . típus: karakter (bármilyen karakter)\n"
+
+#, fuzzy
+#~ msgid "  type: string (limit: %d chars)"
+#~ msgstr "  . típus szöveg (bármilyen szöveg, korlát: %d karakter)\n"
+
+#, fuzzy
+#~ msgid "  type: color (values depend on GUI used)"
+#~ msgstr "  . értékek: %d és %d között\n"
+
+#, fuzzy
+#~ msgid "  type: boolean ('on' or 'off')"
+#~ msgstr "  . típus logikai (értékek: 'on' vagy 'off')\n"
+
+#, fuzzy
+#~ msgid "  %s: %s%s%s (default: %s)"
+#~ msgstr " a következőtől: %s%s %s(%s%s%s)"
+
+#, fuzzy
 #~ msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 #~ msgstr "%s hiányzó argumentum a \"%s\" parancsnak\n"
 
@@ -5122,9 +5148,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 
 #~ msgid "paste current clipboard content"
 #~ msgstr "következő vágólapelem beillesztése"
-
-#~ msgid "transpose chars"
-#~ msgstr "karakterek felcserélése"
 
 #~ msgid "go to beginning of line"
 #~ msgstr "ugrás a sor elejére"
@@ -5552,10 +5575,6 @@ msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
 #~ msgstr ""
 #~ "-all: minden puffer törlése\n"
 #~ "szám: a megadott sorszámú puffer törlése"
-
-#, fuzzy
-#~ msgid "  %s%s%s v%s - %s"
-#~ msgstr " a következőtől: %s%s %s(%s%s%s)"
 
 #, fuzzy
 #~ msgid ""

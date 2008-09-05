@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 15:15+0200\n"
+"POT-Creation-Date: 2008-09-04 18:00+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -303,48 +303,57 @@ msgid "plugin:"
 msgstr "  (kein Plugin)\n"
 
 #, fuzzy, c-format
-msgid "Option \"%s%s%s\": %s"
+msgid "Option \"%s%s%s\":"
 msgstr "Nicks %s%s%s: %s["
 
 #, fuzzy
-msgid "  type: boolean ('on' or 'off')"
-msgstr "  . boolesche Werte ('on' or 'off')\n"
+msgid "description"
+msgstr "  . Beschreibung: %s\n"
 
-#, c-format
-msgid "  value: %s%s%s (default: %s)"
+msgid "type"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "  type: string (%s)"
-msgstr "  . Typ: Zeichenfolge\n"
-
-#, c-format
-msgid "  value: '%s%s%s' (default: '%s')"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "  type: integer (between %d and %d)"
-msgstr "  . Ganzzahl (Werte zwischen %d und %d)\n"
-
-#, c-format
-msgid "  value: %s%d%s (default: %d)"
+msgid "boolean"
 msgstr ""
 
 #, fuzzy
-msgid "  type: string (any string)"
-msgstr "  . Zeichenfolge (beliebig)\n"
+msgid "values"
+msgstr "  . Werte: "
 
 #, fuzzy
-msgid "  type: char (any char)"
-msgstr "  . Zeichenfolge (beliebig)\n"
+msgid "default value"
+msgstr "  . Standardwert: %d\n"
 
-#, fuzzy, c-format
-msgid "  type: string (limit: %d chars)"
-msgstr "  . Zeichenfolge (beliebig)\n"
+msgid "current value"
+msgstr ""
 
 #, fuzzy
-msgid "  type: color (values depend on GUI used)"
-msgstr "  . Werte: zwischen %d und %d\n"
+msgid "string"
+msgstr "warten"
+
+#, fuzzy
+msgid "integer"
+msgstr "Minute"
+
+#, fuzzy
+msgid "any string"
+msgstr "warten"
+
+#, fuzzy
+msgid "any char"
+msgstr "Zeichen vertauschen"
+
+#, fuzzy
+msgid "max chars"
+msgstr "Puffer verwalten"
+
+#, fuzzy
+msgid "color"
+msgstr "Farbe vom Chat-Text"
+
+#, fuzzy
+msgid "a color name"
+msgstr "Farbe der Hostnames"
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -1532,21 +1541,6 @@ msgstr ""
 #, fuzzy
 msgid "save configuration files when unloading plugins"
 msgstr "Konfiguration beim Verlassen abspeichern"
-
-msgid "boolean"
-msgstr ""
-
-#, fuzzy
-msgid "integer"
-msgstr "Minute"
-
-#, fuzzy
-msgid "string"
-msgstr "warten"
-
-#, fuzzy
-msgid "color"
-msgstr "Farbe vom Chat-Text"
 
 #, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
@@ -4811,6 +4805,38 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #, fuzzy
+#~ msgid "  type: string (%s)"
+#~ msgstr "  . Typ: Zeichenfolge\n"
+
+#, fuzzy
+#~ msgid "  type: integer (between %d and %d)"
+#~ msgstr "  . Ganzzahl (Werte zwischen %d und %d)\n"
+
+#, fuzzy
+#~ msgid "  type: string (any string)"
+#~ msgstr "  . Zeichenfolge (beliebig)\n"
+
+#, fuzzy
+#~ msgid "  type: char (any char)"
+#~ msgstr "  . Zeichenfolge (beliebig)\n"
+
+#, fuzzy
+#~ msgid "  type: string (limit: %d chars)"
+#~ msgstr "  . Zeichenfolge (beliebig)\n"
+
+#, fuzzy
+#~ msgid "  type: color (values depend on GUI used)"
+#~ msgstr "  . Werte: zwischen %d und %d\n"
+
+#, fuzzy
+#~ msgid "  type: boolean ('on' or 'off')"
+#~ msgstr "  . boolesche Werte ('on' or 'off')\n"
+
+#, fuzzy
+#~ msgid "  %s: %s%s%s (default: %s)"
+#~ msgstr " durch %s%s %s(%s%s%s)"
+
+#, fuzzy
 #~ msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 #~ msgstr "%s fehlende Argumente für den \"%s\"-Befehl\n"
 
@@ -5116,9 +5142,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 
 #~ msgid "paste current clipboard content"
 #~ msgstr "einfügen"
-
-#~ msgid "transpose chars"
-#~ msgstr "Zeichen vertauschen"
 
 #~ msgid "go to beginning of line"
 #~ msgstr "zum Zeilenanfang gehen"
@@ -5555,10 +5578,6 @@ msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
 #~ msgstr ""
 #~ "  -all: lösche alle Puffer\n"
 #~ "Nummer: lösche den Puffer mit der angegebenen Nummer"
-
-#, fuzzy
-#~ msgid "  %s%s%s v%s - %s"
-#~ msgstr " durch %s%s %s(%s%s%s)"
 
 #, fuzzy
 #~ msgid ""

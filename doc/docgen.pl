@@ -35,6 +35,7 @@ use strict;
 
 use Locale::gettext;
 use POSIX;            # needed for setlocale()
+use File::Basename;
 
 my $version = "0.1";
 
@@ -148,11 +149,12 @@ sub get_options
     return %options;
 }
 
-# get list of infos hooked by plugins in a hash with 3 indexes: plugin, info_name, xxx
-sub get_infos_hooked
+# get list of infos and infolists hooked by plugins in a hash with 4 indexes: plugin, info/infolist, name, xxx
+sub get_infos
 {
-    my %infos_hooked;
+    my %infos;
     
+    # get infos hooked
     my $infolist = weechat::infolist_get("hook", "", "info");
     while (weechat::infolist_next($infolist))
     {
@@ -160,30 +162,32 @@ sub get_infos_hooked
         my $plugin = weechat::infolist_string($infolist, "plugin_name");
         $plugin = "weechat" if ($plugin eq "");
         
-        $infos_hooked{$plugin}{$info_name}{"description"} = weechat::infolist_string($infolist, "description");
+        $infos{$plugin}{"info"}{$info_name}{"description"} = weechat::infolist_string($infolist, "description");
     }
     weechat::infolist_free($infolist);
     
-    return %infos_hooked;
-}
-
-# get list of infolists hooked by plugins in a hash with 3 indexes: plugin, infolist_name, xxx
-sub get_infolists_hooked
-{
-    my %infolists_hooked;
-    
-    my $infolist = weechat::infolist_get("hook", "", "infolist");
+    # get infolists hooked
+    $infolist = weechat::infolist_get("hook", "", "infolist");
     while (weechat::infolist_next($infolist))
     {
         my $infolist_name = weechat::infolist_string($infolist, "infolist_name");
         my $plugin = weechat::infolist_string($infolist, "plugin_name");
         $plugin = "weechat" if ($plugin eq "");
         
-        $infolists_hooked{$plugin}{$infolist_name}{"description"} = weechat::infolist_string($infolist, "description");
+        $infos{$plugin}{"infolist"}{$infolist_name}{"description"} = weechat::infolist_string($infolist, "description");
     }
     weechat::infolist_free($infolist);
     
-    return %infolists_hooked;
+    return %infos;
+}
+
+# escape string for XML output
+sub escape
+{
+    my $str = $_[0];
+    $str =~ s/</&lt;/g;
+    $str =~ s/>/&gt;/g;
+    return $str;
 }
 
 # build XML doc files (command /docgen)
@@ -191,8 +195,7 @@ sub docgen
 {
     my %plugin_commands = get_commands();
     my %plugin_options = get_options();
-    my %infos_hooked = get_infos_hooked();
-    my %infolists_hooked = get_infolists_hooked();
+    my %plugin_infos = get_infos();
     
     # xml header (comment) for all files
     my $xml_header =
@@ -214,8 +217,7 @@ sub docgen
     {
         my $num_files_commands_written = 0;
         my $num_files_options_written = 0;
-        my $num_files_infos_hooked_written = 0;
-        my $num_files_infolists_hooked_written = 0;
+        my $num_files_infos_written = 0;
         
         setlocale(LC_MESSAGES, $locale.".UTF-8");
         my $d = Locale::gettext->domain_raw("weechat");
@@ -242,11 +244,11 @@ sub docgen
                         $args_description = $d->get($args_description) if ($args_description ne "");
                         
                         print FILE "<command>".$command;
-                        print FILE "  ".$args if ($args ne "");
+                        print FILE escape("  ".$args) if ($args ne "");
                         print FILE "</command>\n";
                         print FILE "<programlisting>\n";
-                        print FILE $description."\n" if ($description ne "");
-                        print FILE "\n".$args_description."\n" if ($args_description ne "");
+                        print FILE escape($description."\n") if ($description ne "");
+                        print FILE escape("\n".$args_description."\n") if ($args_description ne "");
                         print FILE "</programlisting>\n";
                     }
                     #weechat::print("", "docgen: file ok: '$filename'");
@@ -280,25 +282,50 @@ sub docgen
                             $description = $d->get($description) if ($description ne "");
                             my $type_nls = $type;
                             $type_nls = $d->get($type_nls) if ($type_nls ne "");
+                            my $values = "";
+                            if ($type eq "boolean")
+                            {
+                                $values = "on, off";
+                            }
+                            if ($type eq "integer")
+                            {
+                                if ($string_values ne "")
+                                {
+                                    $string_values =~ s/\|/, /g;
+                                    $values = $string_values;
+                                }
+                                else
+                                {
+                                    $values = $min." .. ".$max;
+                                }
+                            }
+                            if ($type eq "string")
+                            {
+                                $values = $d->get("any string") if ($max <= 0);
+                                $values = $d->get("any char") if ($max == 1);
+                                $values = $d->get("any string")." (".$d->get("max chars").": ".$max.")" if ($max > 1);
+                                $default_value = "'".$default_value."'";
+                            }
+                            if ($type eq "color")
+                            {
+                                $values = $d->get("a color name");
+                            }
                             
-                            print FILE "<row>\n";
-                            print FILE "  <entry><option>".$config.".".$section.".".$option."</option></entry>\n";
-                            print FILE "  <entry>".$type_nls."</entry>\n";
-                            print FILE "  <entry>";
-                            if ($string_values eq "")
-                            {
-                                print FILE "on, off" if ($type eq "boolean");
-                                print FILE $min." .. ".$max if ($type eq "integer");
-                            }
-                            else
-                            {
-                                $string_values =~ s/\|/, /g;
-                                print FILE $string_values;
-                            }
-                            print FILE "</entry>\n";
-                            print FILE "  <entry>".$default_value."</entry>\n";
-                            print FILE "  <entry>".$description."</entry>\n";
-                            print FILE "</row>\n";
+                            print FILE "<command>".$config.".".$section.".".$option."</command>\n";
+                            print FILE "<itemizedlist>\n";
+                            print FILE "  <listitem>\n";
+                            print FILE "    <para>".$d->get("description").": ".escape($description)."</para>\n";
+                            print FILE "  </listitem>\n";
+                            print FILE "  <listitem>\n";
+                            print FILE "    <para>".$d->get("type").": ".$type_nls."</para>\n";
+                            print FILE "  </listitem>\n";
+                            print FILE "  <listitem>\n";
+                            print FILE "    <para>".$d->get("values").": ".escape($values)."</para>\n";
+                            print FILE "  </listitem>\n";
+                            print FILE "  <listitem>\n";
+                            print FILE "    <para>".$d->get("default value").": ".escape($default_value)."</para>\n";
+                            print FILE "  </listitem>\n";
+                            print FILE "</itemizedlist>\n\n";
                         }
                     }
                     #weechat::print("", "docgen: file ok: '$filename'");
@@ -312,54 +339,30 @@ sub docgen
                 }
             }
             
-            # write infos hooked
-            foreach my $plugin (keys %infos_hooked)
+            # write infos/infolists hooked
+            foreach my $plugin (keys %plugin_infos)
             {
-                $filename = $dir.$plugin."_infos_hooked.xml";
+                $filename = $dir.$plugin."_infos.xml";
                 if (open(FILE, ">".$filename))
                 {
                     print FILE $xml_header;
-                    foreach my $info (sort keys %{$infos_hooked{$plugin}})
+                    foreach my $type (sort keys %{$plugin_infos{$plugin}})
                     {
-                        my $description = $infos_hooked{$plugin}{$info}{"description"};
-                        $description = $d->get($description) if ($description ne "");
-                        
-                        print FILE "<row>\n";
-                        print FILE "  <entry>".$info."</entry>\n";
-                        print FILE "  <entry>".$description."</entry>\n";
-                        print FILE "</row>\n";
+                        foreach my $info (sort keys %{$plugin_infos{$plugin}{$type}})
+                        {
+                            my $description = $plugin_infos{$plugin}{$type}{$info}{"description"};
+                            $description = $d->get($description) if ($description ne "");
+                            
+                            print FILE "<row>\n";
+                            print FILE "  <entry>".escape($type)."</entry>\n";
+                            print FILE "  <entry>".escape($info)."</entry>\n";
+                            print FILE "  <entry>".escape($description)."</entry>\n";
+                            print FILE "</row>\n";
+                        }
                     }
                     #weechat::print("", "docgen: file ok: '$filename'");
                     $num_files_written++;
-                    $num_files_infos_hooked_written++;
-                    close(FILE);
-                }
-                else
-                {
-                    weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
-                }
-            }
-            
-            # write infolists hooked
-            foreach my $plugin (keys %infolists_hooked)
-            {
-                $filename = $dir.$plugin."_infolists_hooked.xml";
-                if (open(FILE, ">".$filename))
-                {
-                    print FILE $xml_header;
-                    foreach my $info (sort keys %{$infolists_hooked{$plugin}})
-                    {
-                        my $description = $infolists_hooked{$plugin}{$info}{"description"};
-                        $description = $d->get($description) if ($description ne "");
-                        
-                        print FILE "<row>\n";
-                        print FILE "  <entry>".$info."</entry>\n";
-                        print FILE "  <entry>".$description."</entry>\n";
-                        print FILE "</row>\n";
-                    }
-                    #weechat::print("", "docgen: file ok: '$filename'");
-                    $num_files_written++;
-                    $num_files_infolists_hooked_written++;
+                    $num_files_infos_written++;
                     close(FILE);
                 }
                 else
@@ -373,13 +376,40 @@ sub docgen
             weechat::print("", weechat::prefix("error")."docgen error: directory '$dir' does not exist");
         }
         my $total = $num_files_commands_written + $num_files_options_written
-            + $num_files_infos_hooked_written + $num_files_infolists_hooked_written;
+            + $num_files_infos_written;
         weechat::print("", "docgen: ".$locale.": ".$total." files written ("
                        .$num_files_commands_written." cmd, "
                        .$num_files_options_written." opt, "
-                       .$num_files_infos_hooked_written." infos, "
-                       .$num_files_infolists_hooked_written." infolists)");
+                       .$num_files_infos_written." infos)");
     }
     weechat::print("", "docgen: total: ".$num_files_written." files written");
+    
+    # write "include_autogen.xml" file (with includes for all files built)
+    $filename = $path."/include_autogen.xml";
+    if (open(FILE, ">".$filename))
+    {
+        print FILE "<!-- commands -->\n\n";
+        foreach my $plugin (keys %plugin_commands)
+        {
+            print FILE "<!ENTITY ".$plugin."_commands.xml SYSTEM \"autogen/".$plugin."_commands.xml\">\n";
+        }
+        print FILE "\n<!-- config options -->\n\n";
+        foreach my $config (keys %plugin_options)
+        {
+            print FILE "<!ENTITY ".$config."_options.xml SYSTEM \"autogen/".$config."_options.xml\">\n";
+        }
+        print FILE "\n<!-- infos/infolists hooked -->\n\n";
+        foreach my $plugin (keys %plugin_infos)
+        {
+            print FILE "<!ENTITY ".$plugin."_infos.xml SYSTEM \"autogen/".$plugin."_infos.xml\">\n";
+        }
+        close(FILE);
+        weechat::print("", "docgen: file ".basename($filename)." written");
+    }
+    else
+    {
+        weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
+    }
+    
     setlocale(LC_MESSAGES, "");
 }

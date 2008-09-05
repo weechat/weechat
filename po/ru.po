@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 15:15+0200\n"
+"POT-Creation-Date: 2008-09-04 18:00+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -300,48 +300,57 @@ msgid "plugin:"
 msgstr "  (нет pluginа)\n"
 
 #, fuzzy, c-format
-msgid "Option \"%s%s%s\": %s"
+msgid "Option \"%s%s%s\":"
 msgstr "Ники %s%s%s: %s["
 
 #, fuzzy
-msgid "  type: boolean ('on' or 'off')"
-msgstr "  . булевый тип (значения: 'on' или 'off')\n"
+msgid "description"
+msgstr "  . описание: %s\n"
 
-#, c-format
-msgid "  value: %s%s%s (default: %s)"
+msgid "type"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "  type: string (%s)"
-msgstr "  . тип: строка\n"
-
-#, c-format
-msgid "  value: '%s%s%s' (default: '%s')"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "  type: integer (between %d and %d)"
-msgstr "  . целочисленное значение (значения: от %d до %d)\n"
-
-#, c-format
-msgid "  value: %s%d%s (default: %d)"
+msgid "boolean"
 msgstr ""
 
 #, fuzzy
-msgid "  type: string (any string)"
-msgstr "  . строковой тип (любая строка)\n"
+msgid "values"
+msgstr "  . значения: "
 
 #, fuzzy
-msgid "  type: char (any char)"
-msgstr "  . тип: символ (любой символ)\n"
+msgid "default value"
+msgstr "  . значение по умолчанию: %d\n"
 
-#, fuzzy, c-format
-msgid "  type: string (limit: %d chars)"
-msgstr "  . строковой тип (любая строка, ограничение: %d символов)\n"
+msgid "current value"
+msgstr ""
 
 #, fuzzy
-msgid "  type: color (values depend on GUI used)"
-msgstr "  . значения: от %d до %d\n"
+msgid "string"
+msgstr "Ожидание"
+
+#, fuzzy
+msgid "integer"
+msgstr "минута"
+
+#, fuzzy
+msgid "any string"
+msgstr "Ожидание"
+
+#, fuzzy
+msgid "any char"
+msgstr "развернуть символы"
+
+#, fuzzy
+msgid "max chars"
+msgstr "управление буферами"
+
+#, fuzzy
+msgid "color"
+msgstr "цвет чата"
+
+#, fuzzy
+msgid "a color name"
+msgstr "цвет hostname"
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -1545,21 +1554,6 @@ msgstr ""
 #, fuzzy
 msgid "save configuration files when unloading plugins"
 msgstr "сохранять конфигурационный файл при выходе"
-
-msgid "boolean"
-msgstr ""
-
-#, fuzzy
-msgid "integer"
-msgstr "минута"
-
-#, fuzzy
-msgid "string"
-msgstr "Ожидание"
-
-#, fuzzy
-msgid "color"
-msgstr "цвет чата"
 
 #, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
@@ -4814,6 +4808,38 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #, fuzzy
+#~ msgid "  type: string (%s)"
+#~ msgstr "  . тип: строка\n"
+
+#, fuzzy
+#~ msgid "  type: integer (between %d and %d)"
+#~ msgstr "  . целочисленное значение (значения: от %d до %d)\n"
+
+#, fuzzy
+#~ msgid "  type: string (any string)"
+#~ msgstr "  . строковой тип (любая строка)\n"
+
+#, fuzzy
+#~ msgid "  type: char (any char)"
+#~ msgstr "  . тип: символ (любой символ)\n"
+
+#, fuzzy
+#~ msgid "  type: string (limit: %d chars)"
+#~ msgstr "  . строковой тип (любая строка, ограничение: %d символов)\n"
+
+#, fuzzy
+#~ msgid "  type: color (values depend on GUI used)"
+#~ msgstr "  . значения: от %d до %d\n"
+
+#, fuzzy
+#~ msgid "  type: boolean ('on' or 'off')"
+#~ msgstr "  . булевый тип (значения: 'on' или 'off')\n"
+
+#, fuzzy
+#~ msgid "  %s: %s%s%s (default: %s)"
+#~ msgstr " пользователем %s%s %s(%s%s%s)"
+
+#, fuzzy
 #~ msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 #~ msgstr "%s нет аргументов для \"%s\" команды\n"
 
@@ -5120,9 +5146,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 
 #~ msgid "paste current clipboard content"
 #~ msgstr "вставить содержимое буфера обмена"
-
-#~ msgid "transpose chars"
-#~ msgstr "развернуть символы"
 
 #~ msgid "go to beginning of line"
 #~ msgstr "перейти к началу строки"
@@ -5547,10 +5570,6 @@ msgstr "%s нет аргумента для параметра \"%s\"\n"
 #~ msgstr ""
 #~ " -all: очистить все буферы\n"
 #~ "номер: очистить буфер с определённым номером"
-
-#, fuzzy
-#~ msgid "  %s%s%s v%s - %s"
-#~ msgstr " пользователем %s%s %s(%s%s%s)"
 
 #, fuzzy
 #~ msgid ""

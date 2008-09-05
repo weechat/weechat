@@ -93,7 +93,7 @@ script_init (struct t_weechat_plugin *weechat_plugin,
              int (*callback_signal_buffer_closed)(void *data, const char *signal,
                                                const char *type_data,
                                                void *signal_data),
-             int (*callback_load_file)(void *data, const char *filename))
+             void (*callback_load_file)(void *data, const char *filename))
 {
     char *string, *completion = "list|listfull|load|autoload|reload|unload %f";
     int length;
@@ -208,7 +208,7 @@ script_str2ptr (const char *pointer_str)
 
 void
 script_auto_load (struct t_weechat_plugin *weechat_plugin,
-                  int (*callback)(void *data, const char *filename))
+                  void (*callback)(void *data, const char *filename))
 {
     char *dir_home, *dir_name;
     int dir_length;

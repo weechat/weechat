@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 15:15+0200\n"
+"POT-Creation-Date: 2008-09-04 18:00+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -298,48 +298,57 @@ msgid "plugin:"
 msgstr "  (není plugin)\n"
 
 #, fuzzy, c-format
-msgid "Option \"%s%s%s\": %s"
+msgid "Option \"%s%s%s\":"
 msgstr "Přezdívkz %s%s%s: %s["
 
 #, fuzzy
-msgid "  type: boolean ('on' or 'off')"
-msgstr "  . typ boolean (hodnota: 'on' nebo 'off')\n"
+msgid "description"
+msgstr "  . popis: %s\n"
 
-#, c-format
-msgid "  value: %s%s%s (default: %s)"
-msgstr "  hodnota: %s%s%s (výchozí: %s)"
+msgid "type"
+msgstr ""
 
-#, fuzzy, c-format
-msgid "  type: string (%s)"
-msgstr "  . typ: řetězec\n"
-
-#, c-format
-msgid "  value: '%s%s%s' (default: '%s')"
-msgstr "  hodnota: '%s%s%s' (výhozí: '%s')"
-
-#, fuzzy, c-format
-msgid "  type: integer (between %d and %d)"
-msgstr "  . typ celočíselný (hodnoty: mezi %d a %d)\n"
-
-#, c-format
-msgid "  value: %s%d%s (default: %d)"
-msgstr "  hodnota: %s%d%s (výchozí: %d)"
+msgid "boolean"
+msgstr ""
 
 #, fuzzy
-msgid "  type: string (any string)"
-msgstr "  . typ řetězec (jakýkoliv řetězec)\n"
+msgid "values"
+msgstr "  . hodnoty: "
 
 #, fuzzy
-msgid "  type: char (any char)"
-msgstr "  . typ: znak (jakýkoliv znak)\n"
-
-#, fuzzy, c-format
-msgid "  type: string (limit: %d chars)"
-msgstr "  . typ řetězec (jakýkoliv řetězec, limit: %d znaků)\n"
+msgid "default value"
+msgstr "  . výchozí hodnota: %d\n"
 
 #, fuzzy
-msgid "  type: color (values depend on GUI used)"
-msgstr "  . hodnoty: mezi %d a %d\n"
+msgid "current value"
+msgstr "hodnota vlastnosti"
+
+#, fuzzy
+msgid "string"
+msgstr "Čekám"
+
+#, fuzzy
+msgid "integer"
+msgstr "minuta"
+
+#, fuzzy
+msgid "any string"
+msgstr "Čekám"
+
+msgid "any char"
+msgstr ""
+
+#, fuzzy
+msgid "max chars"
+msgstr "řídit buffery"
+
+#, fuzzy
+msgid "color"
+msgstr "barva pro text rozhovoru"
+
+#, fuzzy
+msgid "a color name"
+msgstr "jméno kategorie"
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -1583,21 +1592,6 @@ msgstr ""
 #, fuzzy
 msgid "save configuration files when unloading plugins"
 msgstr "uložit soubor s nastavením při ukončení"
-
-msgid "boolean"
-msgstr ""
-
-#, fuzzy
-msgid "integer"
-msgstr "minuta"
-
-#, fuzzy
-msgid "string"
-msgstr "Čekám"
-
-#, fuzzy
-msgid "color"
-msgstr "barva pro text rozhovoru"
 
 #, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
@@ -4907,6 +4901,47 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "  type: string (%s)"
+#~ msgstr "  . typ: řetězec\n"
+
+#~ msgid "  value: '%s%s%s' (default: '%s')"
+#~ msgstr "  hodnota: '%s%s%s' (výhozí: '%s')"
+
+#, fuzzy
+#~ msgid "  type: integer (between %d and %d)"
+#~ msgstr "  . typ celočíselný (hodnoty: mezi %d a %d)\n"
+
+#~ msgid "  value: %s%d%s (default: %d)"
+#~ msgstr "  hodnota: %s%d%s (výchozí: %d)"
+
+#, fuzzy
+#~ msgid "  type: string (any string)"
+#~ msgstr "  . typ řetězec (jakýkoliv řetězec)\n"
+
+#, fuzzy
+#~ msgid "  type: char (any char)"
+#~ msgstr "  . typ: znak (jakýkoliv znak)\n"
+
+#, fuzzy
+#~ msgid "  type: string (limit: %d chars)"
+#~ msgstr "  . typ řetězec (jakýkoliv řetězec, limit: %d znaků)\n"
+
+#, fuzzy
+#~ msgid "  type: color (values depend on GUI used)"
+#~ msgstr "  . hodnoty: mezi %d a %d\n"
+
+#~ msgid "  value: %s%s%s (default: %s)"
+#~ msgstr "  hodnota: %s%s%s (výchozí: %s)"
+
+#, fuzzy
+#~ msgid "  type: boolean ('on' or 'off')"
+#~ msgstr "  . typ boolean (hodnota: 'on' nebo 'off')\n"
+
+#, fuzzy
+#~ msgid "  %s: %s%s%s (default: %s)"
+#~ msgstr "  hodnota: %s%s%s (výchozí: %s)"
 
 #, fuzzy
 #~ msgid "%s%s: missing argument for \"%s\" command (try /help %s)"

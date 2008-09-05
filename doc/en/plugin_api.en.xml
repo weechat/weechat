@@ -21,434 +21,1699 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<chapter id="chapPluginAPI">
+<section id="secPluginAPI">
   <title>Plugin API</title>
   
-  <para>
-    This chapter describes WeeChat plugins interface (API).
-    --- will be completed soon! ---
-  </para>
-</chapter>
-
-<section id="secAPIFunctions">
-  <title>API functions</title>
+  <!-- =============================[ strings ]============================ -->
   
-  <section id="secAPI_set_charset">
-    <title>set_charset</title>
+  <section id="secAPI_strings">
+    <title>Strings</title>
     
     <para>
-      Prototype:
-      <command>
-        void set_charset (t_weechat_plugin *plugin, char *charset)
-      </command>
+      Many string functions below are already available thru standard C
+      functions, but it's recommended to use functions in this API because
+      they are ok with UTF-8 and locale.
     </para>
-    <para>
-      Set new plugin charset.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>charset</option>: new charset to use
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Example:
-      <screen>plugin->set_charset (plugin, "ISO-8859-1");</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_iconv_to_internal">
-    <title>iconv_to_internal</title>
     
-    <para>
-      Prototype:
-      <command>
-        void iconv_to_internal (t_weechat_plugin *plugin, char *charset,
-        char *string)
-      </command>
-    </para>
-    <para>
-      Convert string to WeeChat internal charset (UTF-8).
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>charset</option>: charset to convert
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>string</option>: string to convert
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: converted string.
-    </para>
-    <para>
-      Note: result has to be free by a call to "free" after use.
-    </para>
-    <para>
-      Example:
-      <screen>char *str = plugin->iconv_to_internal (plugin, "ISO-8859-1", "iso string: é à");</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_iconv_from_internal">
-    <title>iconv_from_internal</title>
+    <section id="secAPI_weechat_charset_set">
+      <title>weechat_charset_set</title>
+      
+      <para>
+        Prototype:
+        <command>
+          void weechat_charset_set (const char *charset)
+        </command>
+      </para>
+      <para>
+        Set new plugin charset.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>charset</option>: new charset to use
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Example:
+        <screen>weechat_charset_set (plugin, "iso-8859-1");</screen>
+      </para>
+    </section>
     
-    <para>
-      Prototype:
-      <command>
-        void iconv_from_internal (t_weechat_plugin *plugin, char *charset,
-        char *string)
-      </command>
-    </para>
-    <para>
-      Convert string from internal WeeChat charset (UTF-8) to another.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>charset</option>: target charset
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>string</option>: string to convert
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: converted string.
-    </para>
-    <para>
-      Note: result has to be free by a call to "free" after use.
-    </para>
-    <para>
-      Example:
-      <screen>char *str = plugin->iconv_from_internal (plugin, "ISO-8859-1", "utf-8 string: é à");</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_ascii_strcasecmp">
-    <title>ascii_strcasecmp</title>
+    <section id="secAPI_weechat_iconv_to_internal">
+      <title>weechat_iconv_to_internal</title>
+      
+      <para>
+        Prototype:
+        <command>
+          void weechat_iconv_to_internal (const char *charset,
+          const char *string)
+        </command>
+      </para>
+      <para>
+        Convert string to WeeChat internal charset (UTF-8).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>charset</option>: charset to convert
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>string</option>: string to convert
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: converted string.
+      </para>
+      <para>
+        Note: result has to be free by a call to "free" after use.
+      </para>
+      <para>
+        Example:
+        <screen>char *str = weechat_iconv_to_internal (plugin, "iso-8859-1", "iso string: é à");</screen>
+      </para>
+    </section>
     
-    <para>
-      Prototype:
-      <command>
-        int ascii_strcasecmp (t_weechat_plugin *plugin,
-        char *string1, char *string2)
-      </command>
-    </para>
-    <para>
-      Locale and case independent string comparison.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>string1</option>: first string for comparison
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>string2</option>: second string for comparison
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: difference between two strings: negative if
-      string1 &lt; string2, zero if string1 == string2, positive if
-      string1 &gt; string2
-    </para>
-    <para>
-      Example:
-      <screen>if (plugin->ascii_strcasecmp (plugin, "abc", "def") != 0) ...</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_ascii_strncasecmp">
-    <title>ascii_strncasecmp</title>
+    <section id="secAPI_weechat_iconv_from_internal">
+      <title>weechat_iconv_from_internal</title>
+      
+      <para>
+        Prototype:
+        <command>
+          void weechat_iconv_from_internal (const char *charset,
+          const char *string)
+        </command>
+      </para>
+      <para>
+        Convert string from internal WeeChat charset (UTF-8) to another.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>charset</option>: target charset
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>string</option>: string to convert
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: converted string.
+      </para>
+      <para>
+        Note: result has to be free by a call to "free" after use.
+      </para>
+      <para>
+        Example:
+        <screen>char *str = weechat_iconv_from_internal ("iso-8859-1", "utf-8 string: é à");</screen>
+      </para>
+    </section>
     
-    <para>
-      Prototype:
-      <command>
-        int ascii_strncasecmp (t_weechat_plugin *plugin,
-        char *string1, char *string2, int max)
-      </command>
-    </para>
-    <para>
-      Locale and case independent string comparison, for "max" chars.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin struct
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>string1</option>: first string for comparison
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>string2</option>: second string for comparison
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>max</option>: max number of chars for comparison
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: difference between two strings: negative if
-      string1 &lt; string2, zero if string1 == string2, positive if
-      string1 &gt; string2
-    </para>
-    <para>
-      Example:
-      <screen>if (plugin->ascii_strncasecmp (plugin, "abc", "def", 2) != 0) ...</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_explode_string">
-    <title>explode_string</title>
+    <section id="secAPI_weechat_gettext">
+      <title>weechat_gettext</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_gettext (const char *string)
+        </command>
+      </para>
+      <para>
+        Return translated string (depends on local language).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string to translate
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: translated string.
+      </para>
+      <para>
+        Example:
+        <screen>char *str = weechat_gettext ("hello !");</screen>
+      </para>
+    </section>
     
-    <para>
-      Prototype:
-      <command>
-        char **explode_string (t_weechat_plugin *plugin, char *string,
-        char *separators, int num_items_max, int *num_items)
-      </command>
-    </para>
-    <para>
-      Explode a string according to one or more delimiter(s).
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin struct
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>string</option>: string to explode
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>separators</option>: delimiters used for explosion
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>num_items_max</option>: maximum number of items
-            created (0 = no limit)
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>num_items</option>: pointer to int which will
-            contain number of items created
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: array of strings, NULL if problem.
-    </para>
-    <para>
-      Note: result has to be free by a call to "free_exloded_string"
-      after use.
-    </para>
-    <para>
-      Example:
+    <section id="secAPI_weechat_ngettext">
+      <title>weechat_ngettext</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_ngettext (const char *string, const char *plural,
+          int count)
+        </command>
+      </para>
+      <para>
+        Return translated string, using single or plural form, according to
+        count.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>single</option>: string to translate (single form)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>plural</option>: string to translate (plural form)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>count</option>: used to choose between single and plural
+              form
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: translated string.
+      </para>
+      <para>
+        Example:
+        <screen>char *str = weechat_ngettext ("file", "files", num_files);</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_strndup">
+      <title>weechat_strndup</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_strndup (const char *string, int length)
+        </command>
+      </para>
+      <para>
+        Return duplicated string, with max "length" chars.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string to duplicate
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>length</option>: max chars to duplicate
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: duplicated string.
+      </para>
+      <para>
+        Note: result has to be free by a call to "free" after use.
+      </para>
+      <para>
+        Example:
+        <screen>char *str = weechat_strndup ("abcdef", 3); /* result: "abc" */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_string_tolower">
+      <title>weechat_string_tolower</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_string_tolower (const char *string)
+        </command>
+      </para>
+      <para>
+        Convert UTF-8 string to lower case.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string to convert
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: none.
+      </para>
+      <para>
+        Example:
+        <screen>weechat_string_tolower ("AbCdEé"); /* result: "abcdeé" */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_string_toupper">
+      <title>weechat_string_toupper</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_string_toupper (const char *string)
+        </command>
+      </para>
+      <para>
+        Convert UTF-8 string to upper case.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string to convert
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: none.
+      </para>
+      <para>
+        Example:
+        <screen>weechat_string_toupper ("AbCdEé"); /* result: "ABCDEé" */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_strcasecmp">
+      <title>weechat_strcasecmp</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_strcasecmp (const char *string1, const char *string2)
+        </command>
+      </para>
+      <para>
+        Locale and case independent string comparison.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string1</option>: first string for comparison
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>string2</option>: second string for comparison
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: difference between two strings: negative if
+        string1 &lt; string2, zero if string1 == string2, positive if
+        string1 &gt; string2
+      </para>
+      <para>
+        Example:
+        <screen>int diff = weechat_strcasecmp ("aaa", "CCC"); /* == -2 */ </screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_strncasecmp">
+      <title>weechat_strncasecmp</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_strncasecmp (const char *string1, const char *string2,
+          int max)
+        </command>
+      </para>
+      <para>
+        Locale and case independent string comparison, for "max" chars.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string1</option>: first string for comparison
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>string2</option>: second string for comparison
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>max</option>: max number of chars for comparison
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: difference between two strings: negative if
+        string1 &lt; string2, zero if string1 == string2, positive if
+        string1 &gt; string2
+      </para>
+      <para>
+        Example:
+        <screen>int diff = weechat_strncasecmp ("aaa", "CCC", 2); /* == -2 */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_strcmp_ignore_chars">
+      <title>weechat_strcmp_ignore_chars</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_strcmp_ignore_chars (const char *string1,
+          const char *string2, const char *chars_ignored, int case_sensitive)
+        </command>
+      </para>
+      <para>
+        Locale (and optionally case independent) string comparison, ignoring
+        some chars.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string1</option>: first string for comparison
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>string2</option>: second string for comparison
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>chars_ignored</option>: string with chars to ignore
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>case_sensitive</option>: 1 for case sensitive comparison,
+              0 otherwise
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: difference between two strings: negative if
+        string1 &lt; string2, zero if string1 == string2, positive if
+        string1 &gt; string2
+      </para>
+      <para>
+        Example:
+        <screen>int diff = weechat_strcmp_ignore_chars ("a-b", "--a-e", "-", 1); /* == -3 */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_strcasestr">
+      <title>weechat_strcasestr</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_strcasestr (const char *string, const char *search)
+        </command>
+      </para>
+      <para>
+        Locale and case independent string search.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>search</option>: string to search in "string"
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to string found, or NULL if not found
+      </para>
+      <para>
+        Example:
+        <screen>char *pos = weechat_strcasestr ("aBcDeF", "de"); /* result: pointer to "DeF" */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_string_match">
+      <title>weechat_string_match</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_string_match (const char *string, const char *mask,
+          int case_sensitive)
+        </command>
+      </para>
+      <para>
+        Check if a string matches a mask. Mask may begin or end with "*" (no
+        other "*" are allowed inside mask).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>mask</option>: mask
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>case_sensitive</option>: 1 for case sensitive search,
+              otherwise 0
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if string matches mask, otherwise 0.
+      </para>
+      <para>
+        Examples:
 <screen>
+int match1 = weechat_string_match ("abcdef", "abc*", 0); /* == 1 */
+int match2 = weechat_string_match ("abcdef", "*dd*", 0); /* == 0 */
+int match3 = weechat_string_match ("abcdef", "*def", 0); /* == 1 */
+</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_string_replace">
+      <title>weechat_string_replace</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_string_replace (const char *string, const char *search,
+          const char *replace)
+        </command>
+      </para>
+      <para>
+        Replace "search" string by new one in a string.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>search</option>: string to replace
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>replace</option>: replacement for "search" string
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: string with "search" replaced by "replace".
+      </para>
+      <para>
+        Note: result has to be free by a call to "free" after use.
+      </para>
+      <para>
+        Example:
+        <screen>char *str = weechat_string_replace ("test", "s", "x"); /* result: "text" */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_string_remove_quotes">
+      <title>weechat_string_remove_quotes</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_string_remove_quotes (const char *string,
+          const char *quotes)
+        </command>
+      </para>
+      <para>
+        Remove quotes at beginning/end of string (ignore spaces if there are
+        before first quote or after last quote).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>quotes</option>: string with list of quotes
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: string without quotes at beginning/end.
+      </para>
+      <para>
+        Note: result has to be free by a call to "free" after use.
+      </para>
+      <para>
+        Example:
+        <screen>char *str = weechat_string_remove_quotes (string, "  'abc'  ", "'"); /* result: "abc" */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_string_strip">
+      <title>weechat_string_strip</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_string_strip (const char *string, int left, int right,
+          const char *chars)
+        </command>
+      </para>
+      <para>
+        Strip chars at beginning and/or end of string.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>left</option>: strip left chars if different from 0
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>right</option>: strip right chars if different from 0
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>chars</option>: string with chars to strip
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: stripped string.
+      </para>
+      <para>
+        Note: result has to be free by a call to "free" after use.
+      </para>
+      <para>
+        Example:
+        <screen>char *str = weechat_strip (string, " ", 0, 1); /* remove spaces at end of string */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_string_has_highlight">
+      <title>weechat_string_has_highlight</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_string_has_highlight (const char *string,
+          const char highlight_words)
+        </command>
+      </para>
+      <para>
+        Check if a string has highlights, using list of highlight words.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>highlight_words</option>: list of highlight words,
+              separated by comma
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if string has one or more highlights, 0 otherwise.
+      </para>
+      <para>
+        Example:
+        <screen>if (weechat_string_has_highlight (string, "word1,word2")) ...</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_string_explode">
+      <title>weechat_string_explode</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char **weechat_string_explode (const char *string,
+          const char *separators, int keep_eol, int num_items_max,
+          int *num_items)
+        </command>
+      </para>
+      <para>
+        Explode a string according to one or more delimiter(s).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string to explode
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>separators</option>: delimiters used for explosion
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>keep_eol</option>: if different from 0, then each argument
+              will contain all string until end of line (see example below)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>num_items_max</option>: maximum number of items
+              created (0 = no limit)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>num_items</option>: pointer to int which will
+              contain number of items created
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: array of strings, NULL if problem.
+      </para>
+      <para>
+        Note: result has to be free by a call to "weechat_string_free_exploded"
+        after use.
+      </para>
+      <para>
+        Examples:
+        <screen>
 char **argv;
 int argc;
-argv = plugin->explode_string (plugin, string, " ", 0, &amp;argc);
-...
-if (argv != NULL)
-    plugin->free_exploded_string (plugin, argv);
-</screen>
-    </para>
-  </section>
-  
-  <section id="secAPI_free_exploded_string">
-    <title>free_exploded_string</title>
+argv = weechat_string_explode ("abc de  fghi", " ", 0, 0, &amp;argc);
+/* result:  argv[0] == "abc"
+            argv[1] == "de"
+            argv[2] == "fghi"
+            argv[3] == NULL
+            argc == 3
+*/
+weechat_string_free_exploded (argv);
+
+argv = weechat_string_explode ("abc de  fghi", " ", 1, 0, &amp;argc);
+/* result:  argv[0] == "abc de  fghi"
+            argv[1] == "de  fghi"
+            argv[2] == "fghi"
+            argv[3] == NULL
+            argc == 3
+*/
+weechat_string_free_exploded (argv);
+        </screen>
+      </para>
+    </section>
     
-    <para>
-      Prototype:
-      <command>
-        char **free_exploded_string (t_weechat_plugin *plugin,
-        char **string)
-      </command>
-    </para>
-    <para>
-      Free memory used by a string explosion.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>string</option>: string exploded by
-            "explode_string" function
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
-<screen>
+    <section id="secAPI_weechat_string_free_exploded">
+      <title>weechat_string_free_exploded</title>
+      
+      <para>
+        Prototype:
+        <command>
+          void weechat_string_free_exploded (char **exploded_string)
+        </command>
+      </para>
+      <para>
+        Free memory used by a string explosion.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>exploded_string</option>: string exploded by
+              "weechat_string_explode" function
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: none.
+      </para>
+      <para>
+        Example:
+        <screen>
 char *argv;
 int argc;
-argv = plugin->explode_string (plugin, string, " ", 0, &amp;argc);
+argv = weechat_string_explode (string, " ", 0, 0, &amp;argc);
 ...
-if (argv != NULL)
-    plugin->free_exploded_string (plugin, argv);
-</screen>
-    </para>
+weechat_string_free_exploded (, argv);
+        </screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_string_build_with_exploded">
+      <title>weechat_string_build_with_exploded</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char **weechat_string_build_with_exploded (char **exploded_string,
+          const char *separator)
+        </command>
+      </para>
+      <para>
+        Build a string with exploded string.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>exploded_string</option>: string exploded by
+              "weechat_string_explode" function
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>separator</option>: string used to separate strings
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: string built with exploded string.
+      </para>
+      <para>
+        Note: result has to be free by a call to "free" after use.
+      </para>
+      <para>
+        Example:
+        <screen>
+char **argv;
+int argc;
+argv = weechat_string_explode ("abc def ghi", " ", 0, 0, &amp;argc);
+char *string = weechat_string_build_with_exploded (argv, ";");
+/* string == "abc;def;ghi" */
+        </screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_string_split_command">
+      <title>weechat_string_split_command</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char **weechat_string_split_command (const char *command,
+          char separator)
+        </command>
+      </para>
+      <para>
+        Split a list of commands separated by 'separator' (which can be escaped
+        by '\' in string).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>command</option>: command to split
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>separator</option>: separator
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: array of strings, NULL if problem.
+      </para>
+      <para>
+        Note: result has to be free by a call to
+        "weechat_string_free_splitted_command" after use.
+      </para>
+      <para>
+        Example:
+        <screen>char **argv = weechat_string_split_command ("/command1;/command2", ';');</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_string_splitted_command">
+      <title>weechat_string_free_splitted_command</title>
+      
+      <para>
+        Prototype:
+        <command>
+          void weechat_string_free_splitted_command (char **splitted_command)
+        </command>
+      </para>
+      <para>
+        Free memory used by a splitted command.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>splitted_command</option>: command splitted by
+              "weechat_string_split_commaand" function
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: none.
+      </para>
+      <para>
+        Example:
+        <screen>
+char **argv = weechat_string_split_command ("/command1;/command2", ';');
+...
+weechat_string_free_splitted_command (argv);
+        </screen>
+      </para>
+    </section>
+    
   </section>
   
-  <section id="secAPI_mkdir_home">
-    <title>mkdir_home</title>
+  <!-- ==============================[ UTF-8 ]============================= -->
+  
+  <section id="secAPI_utf8">
+    <title>UTF-8</title>
     
     <para>
-      Prototype:
-      <command>
-        int mkdir_home (t_weechat_plugin *plugin, char *directory)
-      </command>
+      Some UTF-8 string functions.
     </para>
-    <para>
-      Create a directory in WeeChat home.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>directory</option>: directory to create
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: 1 if directory was successfully created, 0 if an
-      error occurred.
-    </para>
-    <para>
-      Example:
-<screen>
-if (!plugin->mkdir_home (plugin, "temp"))
-    plugin->print_server(plugin, "Failed to create 'temp' directory in WeeChat home.");
-</screen>
-    </para>
+    
+    <section id="secAPI_weechat_utf8_has_8bits">
+      <title>weechat_utf8_has_8bits</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_utf8_has_8bits (const char *string)
+        </command>
+      </para>
+      <para>
+        Check if a string has 8-bits chars.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if string has 8-buts chars, 0 if only 7-bits chars.
+      </para>
+      <para>
+        Example:
+        <screen>if (weechat_utf8_has_8bits (string)) ...</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_is_valid">
+      <title>weechat_utf8_is_valid</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_utf8_is_valid (const char *string, char **error)
+        </command>
+      </para>
+      <para>
+        Check if a string is UTF-8 valid.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>error</option>: if not NULL, it is set with first non
+              valid UTF-8 char in string, if any
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if UTF-8 string is valid, 0 otherwise.
+      </para>
+      <para>
+        Example:
+        <screen>
+char *error;
+if (weechat_utf8_is_valid (string, &amp;error)) ...
+        </screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_normalize">
+      <title>weechat_utf8_normalize</title>
+      
+      <para>
+        Prototype:
+        <command>
+          void weechat_utf8_normalize (const char *string, char replacement)
+        </command>
+      </para>
+      <para>
+        Normalize UTF-8 string: remove non UTF-8 chars and replace them by a
+        char
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>replacement</option>: replacement char for non UTF-8 chars
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: none.
+      </para>
+      <para>
+        Example:
+        <screen>weechat_utf8_normalize (string, '?');</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_prev_char">
+      <title>weechat_utf8_prev_char</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_utf8_prev_char (const char *string_start,
+          const char *string)
+        </command>
+      </para>
+      <para>
+        Return previous UTF-8 char in a string.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string_start</option>: start of string (function will not
+              return a char before this pointer)
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>string</option>: pointer to string (must be >=
+              string_start)
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to previous UTF-8 char, NULL if not found
+        (start of string reached)
+      </para>
+      <para>
+        Example:
+        <screen>char *prev_char = weechat_utf8_prev_char (string, ptr_in_string);</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_next_char">
+      <title>weechat_utf8_next_char</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_utf8_next_char (const char *string)
+        </command>
+      </para>
+      <para>
+        Return next UTF-8 char in a string.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to next UTF-8 char, NULL if not found
+        (end of string reached)
+      </para>
+      <para>
+        Example:
+        <screen>char *next_char = weechat_utf8_next_char (string);</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_char_size">
+      <title>weechat_utf8_char_size</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_utf8_char_size (const char *string)
+        </command>
+      </para>
+      <para>
+        Return UTF-8 char size (in bytes).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: UTF-8 char size (in bytes).
+      </para>
+      <para>
+        Example:
+        <screen>int char_size = weechat_utf8_char_size ("être"); /* == 2 */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_strlen">
+      <title>weechat_utf8_strlen</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_utf8_strlen (const char *string)
+        </command>
+      </para>
+      <para>
+        Return UTF-8 string length (multi-byte char is considered as 1 char).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: UTF-8 string length (number of real chars).
+      </para>
+      <para>
+        Example:
+        <screen>int length = weechat_utf8_strlen ("chêne"); /* == 5 */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_strnlen">
+      <title>weechat_utf8_strnlen</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_utf8_strnlen (const char *string, int bytes)
+        </command>
+      </para>
+      <para>
+        Return UTF-8 string length (multi-byte char is considered as 1 char),
+        for max bytes in string
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>bytes</option>: max bytes in string
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: UTF-8 string length (number of real chars).
+      </para>
+      <para>
+        Example:
+        <screen>int length = weechat_utf8_strnlen ("chêne", 4); /* == 3 */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_strlen_screen">
+      <title>weechat_utf8_strlen_screen</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_utf8_strlen_screen (const char *string)
+        </command>
+      </para>
+      <para>
+        Return number of chars needed on screen to display UTF-8 string.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: number of chars needed on screen to display UTF-8 string.
+      </para>
+      <para>
+        Example:
+        <screen>int length_on_screen = weechat_utf8_strlen_screen ("&#x4E1C;"); /* == 2 */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_charcasecmp">
+      <title>weechat_utf8_charcasecmp</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_utf8_charcasecmp (const char *string1,
+          const char *string2)
+        </command>
+      </para>
+      <para>
+        Compare two UTF-8 chars (case is ignored).
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string1</option>: first string for comparison
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>string2</option>: second string for comparison
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: difference between first char of each string: negative if
+        char1 &lt; char2, zero if char1 == char2, positive if char1 &gt; char2
+      </para>
+      <para>
+        Example:
+        <screen>if (weechat_utf8_charcasecmp (string1, string2) != 0) ...</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_char_size_screen">
+      <title>weechat_utf8_char_size_screen</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_utf8_char_size_screen (const char *string)
+        </command>
+      </para>
+      <para>
+        Return number of chars needed on screen to display UTF-8 char.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: number of chars needed on screen to display UTF-8 char.
+      </para>
+      <para>
+        Example:
+        <screen>int length_on_screen = weechat_utf8_char_size_screen (string)</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_add_offset">
+      <title>weechat_utf8_add_offset</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_utf8_add_offset (const char *string, int offset)
+        </command>
+      </para>
+      <para>
+        Move forward N chars in an UTF-8 string.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>offset</option>: number of chars
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: pointer to string, N chars after (NULL if it's not
+        reachable).
+      </para>
+      <para>
+        Example:
+        <screen>char *ptr = weechat_utf8_add_offset ("chêne", 3); /* points to "ne" */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_real_pos">
+      <title>weechat_utf8_real_pos</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_utf8_real_pos (const char *string, int pos)
+        </command>
+      </para>
+      <para>
+        Get real position in UTF-8 string.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>pos</option>: position in chars
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: real position (in bytes) for "pos" chars in string.
+      </para>
+      <para>
+        Example:
+        <screen>int pos = weechat_utf8_real_pos ("chêne", 3); /* == 4 */</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_utf8_pos">
+      <title>weechat_utf8_pos</title>
+      
+      <para>
+        Prototype:
+        <command>
+          char *weechat_utf8_pos (const char *string, int real_pos)
+        </command>
+      </para>
+      <para>
+        Get position in UTF-8 string.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>string</option>: string
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>real_pos</option>: position in bytes
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: position (in chars) for "real_pos" bytes in string.
+      </para>
+      <para>
+        Example:
+        <screen>int pos = weechat_utf8_real_pos ("chêne", 4); /* == 3 */</screen>
+      </para>
+    </section>
+    
   </section>
   
-  <section id="secAPI_exec_on_files">
-    <title>exec_on_files</title>
+  <!-- ===========================[ directories ]========================== -->
+  
+  <section id="secAPI_directories">
+    <title>Directories</title>
     
     <para>
-      Prototype:
-      <command>
-        void exec_on_files (t_weechat_plugin *plugin, char *directory,
-        int (*callback)(t_weechat_plugin *, char *))
-      </command>
+      Some functions related to directories.
     </para>
-    <para>
-      Execute a function on all files of a directory.
-    </para>
-    <para>
-      Arguments:
-      <itemizedlist>
-        <listitem>
-          <para>
-            <option>plugin</option>: pointer to plugin structure
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>directory</option>: directory for searching files
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <option>callback</option>: function called for each file
-            found
-          </para>
-        </listitem>
-      </itemizedlist>
-    </para>
-    <para>
-      Return value: none.
-    </para>
-    <para>
-      Example:
+    
+    <section id="secAPI_weechat_mkdir_home">
+      <title>weechat_mkdir_home</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_mkdir_home (char *directory, int mode)
+        </command>
+      </para>
+      <para>
+        Create a directory in WeeChat home.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>directory</option>: directory to create
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>mode</option>: mode for new directory
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if directory was successfully created, 0 if an
+        error occurred.
+      </para>
+      <para>
+        Example:
+        <screen>if (!weechat_mkdir_home ("temp")) ... </screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_mkdir">
+      <title>weechat_mkdir</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_mkdir (char *directory, int mode)
+        </command>
+      </para>
+      <para>
+        Create a directory.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>directory</option>: directory to create
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>mode</option>: mode for new directory
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: 1 if directory was successfully created, 0 if an
+        error occurred.
+      </para>
+      <para>
+        Example:
+        <screen>if (!weechat_mkdir ("/tmp/mydir")) ... </screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_exec_on_files">
+      <title>weechat_exec_on_files</title>
+      
+      <para>
+        Prototype:
+        <command>
+          void weechat_exec_on_files (const char *directory, void *data,
+          int (*callback)(void *data, const char *filename))
+        </command>
+      </para>
+      <para>
+        Find files in a directory and execute a callback on each file.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>directory</option>: directory for searching files
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>data</option>: pointer given to callback when calling it
+              found
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>callback</option>: function called for each file
+              found
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: none.
+      </para>
+      <para>
+        Example:
 <screen>
-int callback (t_weechat_plugin *plugin, char *file)
+int callback (void *data, const char *filename)
 {
-    plugin->print_server (plugin, "file: %s", file);
+    /* ... */
     return 1;
 }
 ...
 plugin->exec_on_files (plugin, "/tmp", &amp;callback);
 </screen>
-    </para>
+      </para>
+    </section>
+    
   </section>
+  
+  <!-- ==============================[ util ]============================== -->
+  
+  <section id="secAPI_util">
+    <title>Util</title>
+    
+    <para>
+      Some useful functions.
+    </para>
+    
+    <section id="secAPI_weechat_timeval_cmp">
+      <title>weechat_timeval_cmp</title>
+      
+      <para>
+        Prototype:
+        <command>
+          int weechat_timeval_cmp (struct timeval *tv1, struct timeval *tv2)
+        </command>
+      </para>
+      <para>
+        Compare 2 timeval structures.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>tv1</option>: first timeval structure
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>tv2</option>: second timeval structure
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: -1 if tv1 &lt; char2, zero if tv1 == tv2, +1 if tv1 &gt;
+        tv2
+      </para>
+      <para>
+        Example:
+        <screen>if (weechat_timeval_cmp (&amp;tv1, &amp;tv2) > 0) ...</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_timeval_diff">
+      <title>weechat_timeval_diff</title>
+      
+      <para>
+        Prototype:
+        <command>
+          long weechat_timeval_diff (struct timeval *tv1, struct timeval *tv2)
+        </command>
+      </para>
+      <para>
+        Return difference (in milliseconds) between 2 timeval structures.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>tv1</option>: first timeval structure
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>tv2</option>: second timeval structure
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: difference in milliseconds.
+      </para>
+      <para>
+        Example:
+        <screen>long diff = weechat_timeval_diff (&amp;tv1, &amp;tv2);</screen>
+      </para>
+    </section>
+    
+    <section id="secAPI_weechat_timeval_add">
+      <title>weechat_timeval_add</title>
+      
+      <para>
+        Prototype:
+        <command>
+          void weechat_timeval_add (struct timeval *tv, long interval)
+        </command>
+      </para>
+      <para>
+        Add interval (in milliseconds) to a timeval structure.
+      </para>
+      <para>
+        Arguments:
+        <itemizedlist>
+          <listitem>
+            <para>
+              <option>tv</option>: timeval structure
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              <option>interval</option>: interval (in milliseconds)
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+      <para>
+        Return value: none.
+      </para>
+      <para>
+        Example:
+        <screen>weechat_timeval_add (&amp;tv, 2000); /* add 2 seconds */</screen>
+      </para>
+    </section>
+    
+  </section>
+    
+    To be continued...
+    
+    <!--
   
   <section id="secAPI_print">
     <title>print</title>
@@ -3116,7 +4381,7 @@ if (window_info)
 {
     for (ptr_window = window_info; ptr_window; ptr_window = ptr_window->next_window)
     {
-        plugin->print (plugin, NULL, NULL, "--- window info ---");
+        plugin->print (plugin, NULL, NULL, "window info");
         plugin->print (plugin, NULL, NULL, "(%d,%d), size: %dx%d, %%size: %d%%x%d%%",
                        ptr_window->win_x, ptr_window->win_y,
                        ptr_window->win_width, ptr_window->win_height,
@@ -3266,7 +4531,7 @@ if (buffer_info)
 {
     for (ptr_buffer = buffer_info; ptr_buffer; ptr_buffer = ptr_buffer->next_buffer)
     {
-        plugin->print (plugin, NULL, NULL, "--- buffer info ---");
+        plugin->print (plugin, NULL, NULL, "buffer info");
         plugin->print (plugin, NULL, NULL, "type: %d", ptr_buffer->type);
         plugin->print (plugin, NULL, NULL, "number: %d", ptr_buffer->number);
         plugin->print (plugin, NULL, NULL, "num_displayed: %d", ptr_buffer->num_displayed);
@@ -3457,5 +4722,7 @@ if (buffer_line)
       <screen>plugin->free_buffer_data (plugin, buffer_line);</screen>
     </para>
   </section>
+
+  -->
   
 </section>

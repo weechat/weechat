@@ -132,7 +132,7 @@ struct t_weechat_plugin
     int (*strncasecmp) (const char *string1, const char *string2, int max);
     int (*strcmp_ignore_chars) (const char *string1, const char *string2,
                                 const char *chars_ignored, int case_sensitive);
-    char *(*strcasestr) (const char *string1, const char *string2);
+    char *(*strcasestr) (const char *string, const char *search);
     int (*string_match) (const char *string, const char *mask,
                          int case_sensitive);
     char *(*string_replace) (const char *string, const char *search,
@@ -170,7 +170,7 @@ struct t_weechat_plugin
     int (*mkdir_home) (const char *directory, int mode);
     int (*mkdir) (const char *directory, int mode);
     void (*exec_on_files) (const char *directory, void *data,
-                           int (*callback)(void *data, const char *filename));
+                           void (*callback)(void *data, const char *filename));
     
     /* util */
     int (*timeval_cmp) (struct timeval *tv1, struct timeval *tv2);
@@ -179,7 +179,8 @@ struct t_weechat_plugin
     
     /* sorted list */
     struct t_weelist *(*list_new) ();
-    struct t_weelist_item *(*list_add) (struct t_weelist *weelist, const char *data,
+    struct t_weelist_item *(*list_add) (struct t_weelist *weelist,
+                                        const char *data,
                                         const char *where);
     struct t_weelist_item *(*list_search) (struct t_weelist *weelist,
                                            const char *data);
@@ -262,8 +263,8 @@ struct t_weechat_plugin
     int (*config_string_to_boolean) (const char *text);
     int (*config_option_reset) (struct t_config_option *option,
                                 int run_callback);
-    int (*config_option_set) (struct t_config_option *option, const char *value,
-                              int run_callback);
+    int (*config_option_set) (struct t_config_option *option,
+                              const char *value, int run_callback);
     int (*config_option_unset) (struct t_config_option *option);
     void (*config_option_rename) (struct t_config_option *option,
                                   const char *new_name);
@@ -274,7 +275,8 @@ struct t_weechat_plugin
     char *(*config_string) (struct t_config_option *option);
     int (*config_color) (struct t_config_option *option);
     void (*config_write_line) (struct t_config_file *config_file,
-                               const char *option_name, const char *value, ...);
+                               const char *option_name,
+                               const char *value, ...);
     int (*config_write) (struct t_config_file *config_file);
     int (*config_read) (struct t_config_file *config_file);
     int (*config_reload) (struct t_config_file *config_file);
@@ -300,8 +302,10 @@ struct t_weechat_plugin
     
     /* hooks */
     struct t_hook *(*hook_command) (struct t_weechat_plugin *plugin,
-                                    const char *command, const char *description,
-                                    const char *args, const char *args_description,
+                                    const char *command,
+                                    const char *description,
+                                    const char *args,
+                                    const char *args_description,
                                     const char *completion,
                                     int (*callback)(void *data,
                                                     struct t_gui_buffer *buffer,
@@ -333,11 +337,13 @@ struct t_weechat_plugin
                                                   time_t date,
                                                   int tags_count,
                                                   char **tags,
-                                                  const char *prefix, const char *message),
+                                                  const char *prefix,
+                                                  const char *message),
                                   void *callback_data);
     struct t_hook *(*hook_signal) (struct t_weechat_plugin *plugin,
                                    const char *signal,
-                                   int (*callback)(void *data, const char *signal,
+                                   int (*callback)(void *data,
+                                                   const char *signal,
                                                    const char *type_data,
                                                    void *signal_data),
                                    void *callback_data);
@@ -345,7 +351,8 @@ struct t_weechat_plugin
                               void *signal_data);
     struct t_hook *(*hook_config) (struct t_weechat_plugin *plugin,
                                    const char *option,
-                                   int (*callback)(void *data, const char *option,
+                                   int (*callback)(void *data,
+                                                   const char *option,
                                                    const char *value),
                                    void *callback_data);
     struct t_hook *(*hook_completion) (struct t_weechat_plugin *plugin,
@@ -366,7 +373,8 @@ struct t_weechat_plugin
                                                        const char *string),
                                      void *callback_data);
     char *(*hook_modifier_exec) (struct t_weechat_plugin *plugin,
-                                 const char *modifier, const char *modifier_data,
+                                 const char *modifier,
+                                 const char *modifier_data,
                                  const char *string);
     struct t_hook *(*hook_info) (struct t_weechat_plugin *plugin,
                                  const char *info_name,
@@ -396,27 +404,34 @@ struct t_weechat_plugin
                                         int (*close_callback)(void *data,
                                                               struct t_gui_buffer *buffer),
                                         void *close_callback_data);
-    struct t_gui_buffer *(*buffer_search) (const char *category, const char *name);
+    struct t_gui_buffer *(*buffer_search) (const char *category,
+                                           const char *name);
     void (*buffer_clear) (struct t_gui_buffer *buffer);
     void (*buffer_close) (struct t_gui_buffer *buffer, int switch_to_another);
-    int (*buffer_get_integer) (struct t_gui_buffer *buffer, const char *property);
-    char *(*buffer_get_string) (struct t_gui_buffer *buffer, const char *property);
-    void *(*buffer_get_pointer) (struct t_gui_buffer *buffer, const char *property);
+    int (*buffer_get_integer) (struct t_gui_buffer *buffer,
+                               const char *property);
+    char *(*buffer_get_string) (struct t_gui_buffer *buffer,
+                                const char *property);
+    void *(*buffer_get_pointer) (struct t_gui_buffer *buffer,
+                                 const char *property);
     void (*buffer_set) (struct t_gui_buffer *buffer, const char *property,
                         void *value);
     
     /* nicklist */
     struct t_gui_nick_group *(*nicklist_add_group) (struct t_gui_buffer *buffer,
                                                     struct t_gui_nick_group *parent_group,
-                                                    const char *name, const char *color,
+                                                    const char *name,
+                                                    const char *color,
                                                     int visible);
     struct t_gui_nick_group *(*nicklist_search_group) (struct t_gui_buffer *buffer,
                                                        struct t_gui_nick_group *from_group,
                                                        const char *name);
     struct t_gui_nick *(*nicklist_add_nick) (struct t_gui_buffer *buffer,
                                              struct t_gui_nick_group *group,
-                                             const char *name, const char *color,
-                                             char prefix, const char *prefix_color,
+                                             const char *name,
+                                             const char *color,
+                                             char prefix,
+                                             const char *prefix_color,
                                              int visible);
     struct t_gui_nick *(*nicklist_search_nick) (struct t_gui_buffer *buffer,
                                                 struct t_gui_nick_group *from_group,
@@ -434,7 +449,8 @@ struct t_weechat_plugin
                                             char *(*build_callback)(void *data,
                                                                     struct t_gui_bar_item *item,
                                                                     struct t_gui_window *window,
-                                                                    int max_width, int max_height),
+                                                                    int max_width,
+                                                                    int max_height),
                                             void *build_callback_data);
     void (*bar_item_update) (const char *name);
     void (*bar_item_remove) (struct t_gui_bar_item *item);
@@ -560,8 +576,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->strcmp_ignore_chars(__string1, __string2,           \
                                         __chars_ignored,                \
                                         __case_sensitive)
-#define weechat_strcasestr(__string1, __string2)                        \
-    weechat_plugin->strcasestr(__string1, __string2)
+#define weechat_strcasestr(__string, __search)                          \
+    weechat_plugin->strcasestr(__string, __search)
 #define weechat_string_match(__string, __mask, __case_sensitive)        \
     weechat_plugin->string_match(__string, __mask, __case_sensitive)
 #define weechat_string_replace(__string, __search, __replace)           \

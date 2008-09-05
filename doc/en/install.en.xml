@@ -56,6 +56,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </listitem>
       </itemizedlist>
       
+      Some additional packages may be useful, like weechat-plugins.
+      
       For other distributions, please look at your manual for
       installation instructions.
     </para>

@@ -27,8 +27,8 @@ extern int util_get_time_length (const char *time_format);
 extern void util_catch_signal (int signum, void (*handler)(int));
 extern int util_create_dir (const char *directory, int permissions);
 extern void util_exec_on_files (const char *directory, void *data,
-                                int (*callback)(void *data,
-                                                const char *filename));
+                                void (*callback)(void *data,
+                                                 const char *filename));
 extern char *util_search_full_lib_name (const char *filename,
                                         const char *sys_directory);
 extern int util_weechat_version_cmp (const char *version1,

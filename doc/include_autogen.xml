@@ -1,0 +1,29 @@
+<!-- commands -->
+
+<!ENTITY python_commands.xml SYSTEM "autogen/python_commands.xml">
+<!ENTITY weechat_commands.xml SYSTEM "autogen/weechat_commands.xml">
+<!ENTITY demo_commands.xml SYSTEM "autogen/demo_commands.xml">
+<!ENTITY charset_commands.xml SYSTEM "autogen/charset_commands.xml">
+<!ENTITY ruby_commands.xml SYSTEM "autogen/ruby_commands.xml">
+<!ENTITY xfer_commands.xml SYSTEM "autogen/xfer_commands.xml">
+<!ENTITY perl_commands.xml SYSTEM "autogen/perl_commands.xml">
+<!ENTITY irc_commands.xml SYSTEM "autogen/irc_commands.xml">
+<!ENTITY debug_commands.xml SYSTEM "autogen/debug_commands.xml">
+<!ENTITY alias_commands.xml SYSTEM "autogen/alias_commands.xml">
+<!ENTITY notify_commands.xml SYSTEM "autogen/notify_commands.xml">
+<!ENTITY lua_commands.xml SYSTEM "autogen/lua_commands.xml">
+
+<!-- config options -->
+
+<!ENTITY xfer_options.xml SYSTEM "autogen/xfer_options.xml">
+<!ENTITY irc_options.xml SYSTEM "autogen/irc_options.xml">
+<!ENTITY weechat_options.xml SYSTEM "autogen/weechat_options.xml">
+
+<!-- infos/infolists hooked -->
+
+<!ENTITY fifo_infos.xml SYSTEM "autogen/fifo_infos.xml">
+<!ENTITY xfer_infos.xml SYSTEM "autogen/xfer_infos.xml">
+<!ENTITY irc_infos.xml SYSTEM "autogen/irc_infos.xml">
+<!ENTITY weechat_infos.xml SYSTEM "autogen/weechat_infos.xml">
+<!ENTITY alias_infos.xml SYSTEM "autogen/alias_infos.xml">
+<!ENTITY logger_infos.xml SYSTEM "autogen/logger_infos.xml">

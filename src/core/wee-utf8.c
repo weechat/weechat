@@ -62,7 +62,7 @@ utf8_has_8bits (const char *string)
 
 /*
  * utf8_is_valid: return 1 if UTF-8 string is valid, 0 otherwise
- *                if error is not NULL, it's set with first non valid UTF-8
+ *                if error is not NULL, it is set with first non valid UTF-8
  *                char in string, if any
  */
 
@@ -404,7 +404,7 @@ utf8_add_offset (const char *string, int offset)
 }
 
 /*
- * utf8_real_pos: get real position in UTF-8
+ * utf8_real_pos: get real position in UTF-8 string
  *                for example: ("aébc", 2) returns 3
  */
 

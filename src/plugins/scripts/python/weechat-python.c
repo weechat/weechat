@@ -440,13 +440,13 @@ weechat_python_load (const char *filename)
  * weechat_python_load_cb: callback for script_auto_load() function
  */
 
-int
+void
 weechat_python_load_cb (void *data, const char *filename)
 {
     /* make C compiler happy */
     (void) data;
     
-    return weechat_python_load (filename);
+    weechat_python_load (filename);
 }
 
 /*

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 15:15+0200\n"
+"POT-Creation-Date: 2008-09-04 18:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -263,43 +263,46 @@ msgid "plugin:"
 msgstr ""
 
 #, c-format
-msgid "Option \"%s%s%s\": %s"
+msgid "Option \"%s%s%s\":"
 msgstr ""
 
-msgid "  type: boolean ('on' or 'off')"
+msgid "description"
 msgstr ""
 
-#, c-format
-msgid "  value: %s%s%s (default: %s)"
+msgid "type"
 msgstr ""
 
-#, c-format
-msgid "  type: string (%s)"
+msgid "boolean"
 msgstr ""
 
-#, c-format
-msgid "  value: '%s%s%s' (default: '%s')"
+msgid "values"
 msgstr ""
 
-#, c-format
-msgid "  type: integer (between %d and %d)"
+msgid "default value"
 msgstr ""
 
-#, c-format
-msgid "  value: %s%d%s (default: %d)"
+msgid "current value"
 msgstr ""
 
-msgid "  type: string (any string)"
+msgid "string"
 msgstr ""
 
-msgid "  type: char (any char)"
+msgid "integer"
 msgstr ""
 
-#, c-format
-msgid "  type: string (limit: %d chars)"
+msgid "any string"
 msgstr ""
 
-msgid "  type: color (values depend on GUI used)"
+msgid "any char"
+msgstr ""
+
+msgid "max chars"
+msgstr ""
+
+msgid "color"
+msgstr ""
+
+msgid "a color name"
 msgstr ""
 
 #, c-format
@@ -1262,18 +1265,6 @@ msgid ""
 msgstr ""
 
 msgid "save configuration files when unloading plugins"
-msgstr ""
-
-msgid "boolean"
-msgstr ""
-
-msgid "integer"
-msgstr ""
-
-msgid "string"
-msgstr ""
-
-msgid "color"
 msgstr ""
 
 #, c-format

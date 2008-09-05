@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 15:15+0200\n"
+"POT-Creation-Date: 2008-09-04 18:00+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -299,48 +299,57 @@ msgid "plugin:"
 msgstr "  (sin plugins)\n"
 
 #, fuzzy, c-format
-msgid "Option \"%s%s%s\": %s"
+msgid "Option \"%s%s%s\":"
 msgstr "Usuarios %s%s%s: %s["
 
 #, fuzzy
-msgid "  type: boolean ('on' or 'off')"
-msgstr "  . tipo booleano (valores: 'on' u 'off')\n"
+msgid "description"
+msgstr "  . descripciÃ³n: %s\n"
 
-#, c-format
-msgid "  value: %s%s%s (default: %s)"
+msgid "type"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "  type: string (%s)"
-msgstr "  . tipo: cadena\n"
-
-#, c-format
-msgid "  value: '%s%s%s' (default: '%s')"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "  type: integer (between %d and %d)"
-msgstr "  . tipo entero (valores: entre %d y %d)\n"
-
-#, c-format
-msgid "  value: %s%d%s (default: %d)"
+msgid "boolean"
 msgstr ""
 
 #, fuzzy
-msgid "  type: string (any string)"
-msgstr "  . tipo cadena (cualquier cadena)\n"
+msgid "values"
+msgstr "  . valores: "
 
 #, fuzzy
-msgid "  type: char (any char)"
-msgstr "  . tipo cadena (cualquier cadena)\n"
+msgid "default value"
+msgstr "  . valor por defecto: %d\n"
 
-#, fuzzy, c-format
-msgid "  type: string (limit: %d chars)"
-msgstr "  . tipo cadena (cualquier cadena)\n"
+msgid "current value"
+msgstr ""
 
 #, fuzzy
-msgid "  type: color (values depend on GUI used)"
-msgstr "  . valores: entre %d y %d\n"
+msgid "string"
+msgstr "Esperando"
+
+#, fuzzy
+msgid "integer"
+msgstr "minuto"
+
+#, fuzzy
+msgid "any string"
+msgstr "Esperando"
+
+#, fuzzy
+msgid "any char"
+msgstr "transponer caracteres"
+
+#, fuzzy
+msgid "max chars"
+msgstr "gestionar los bÃºfers"
+
+#, fuzzy
+msgid "color"
+msgstr "color para el texto de conversaciÃ³n"
+
+#, fuzzy
+msgid "a color name"
+msgstr "color para los nombres de mÃ¡quina"
 
 #, fuzzy, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -1137,8 +1146,8 @@ msgstr "la cadena mostrada tras la finalizaciÃ³n de los nombres de usuario"
 #, fuzzy
 msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
-"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea "
-"sin leer"
+"usar un marcador en los servidores/canales para mostrar la primera lÃ­nea sin "
+"leer"
 
 #, fuzzy
 msgid "save configuration file on exit"
@@ -1520,21 +1529,6 @@ msgstr ""
 #, fuzzy
 msgid "save configuration files when unloading plugins"
 msgstr "guardar configuraciÃ³n a disco"
-
-msgid "boolean"
-msgstr ""
-
-#, fuzzy
-msgid "integer"
-msgstr "minuto"
-
-#, fuzzy
-msgid "string"
-msgstr "Esperando"
-
-#, fuzzy
-msgid "color"
-msgstr "color para el texto de conversaciÃ³n"
 
 #, fuzzy, c-format
 msgid "%sError: cannot create file \"%s\""
@@ -4821,6 +4815,38 @@ msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #, fuzzy
+#~ msgid "  type: string (%s)"
+#~ msgstr "  . tipo: cadena\n"
+
+#, fuzzy
+#~ msgid "  type: integer (between %d and %d)"
+#~ msgstr "  . tipo entero (valores: entre %d y %d)\n"
+
+#, fuzzy
+#~ msgid "  type: string (any string)"
+#~ msgstr "  . tipo cadena (cualquier cadena)\n"
+
+#, fuzzy
+#~ msgid "  type: char (any char)"
+#~ msgstr "  . tipo cadena (cualquier cadena)\n"
+
+#, fuzzy
+#~ msgid "  type: string (limit: %d chars)"
+#~ msgstr "  . tipo cadena (cualquier cadena)\n"
+
+#, fuzzy
+#~ msgid "  type: color (values depend on GUI used)"
+#~ msgstr "  . valores: entre %d y %d\n"
+
+#, fuzzy
+#~ msgid "  type: boolean ('on' or 'off')"
+#~ msgstr "  . tipo booleano (valores: 'on' u 'off')\n"
+
+#, fuzzy
+#~ msgid "  %s: %s%s%s (default: %s)"
+#~ msgstr "%s%s %s(%s%s%s)%s ha salido"
+
+#, fuzzy
 #~ msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 #~ msgstr "%s faltan argumentos para el comando \"%s\"\n"
 
@@ -5124,9 +5150,6 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #~ msgid "paste current clipboard content"
 #~ msgstr "pegar el contenido actual del portapapeles"
-
-#~ msgid "transpose chars"
-#~ msgstr "transponer caracteres"
 
 #~ msgid "go to beginning of line"
 #~ msgstr "ir al principio de lÃ­nea"
@@ -5562,10 +5585,6 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ msgstr "[-all] usuarios"
 
 #, fuzzy
-#~ msgid "  %s%s%s v%s - %s"
-#~ msgstr "%s%s %s(%s%s%s)%s ha salido"
-
-#, fuzzy
 #~ msgid ""
 #~ "[list [name]] | [listfull [name]] [load filename] | [autoload] | [reload] "
 #~ "| [unload [script]]"
@@ -5776,8 +5795,8 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ "maximum number of lines in history for one server/channel/private window "
 #~ "(0 = unlimited)"
 #~ msgstr ""
-#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/"
-#~ "privado (0 = ilimitado)"
+#~ "nÃºmero mÃ¡ximo de lÃ­neas en el histÃ³rico para un servidor/canal/privado "
+#~ "(0 = ilimitado)"
 
 #, fuzzy
 #~ msgid "log messages from plugins"
@@ -5968,8 +5987,8 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 #~ "max size for aligning nick and other messages (should be >= to "
 #~ "look_align_size)"
 #~ msgstr ""
-#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a "
-#~ "ser >= a look_align_size)"
+#~ "tamaÃ±o mÃ¡ximo para la alineaciÃ³n de nick y otros mensajes (deberÃ­a ser "
+#~ ">= a look_align_size)"
 
 #~ msgid "server name not found"
 #~ msgstr "nombre de servidor no encontrado"
@@ -6723,8 +6742,7 @@ msgstr "%s falta un argumento para la opciÃ³n --dir\n"
 
 #~ msgid "color for chan owner symbol (specific to unrealircd)"
 #~ msgstr ""
-#~ "color para el sÃ­mbolo de propietario de canal (especificado en "
-#~ "unrealircd)"
+#~ "color para el sÃ­mbolo de propietario de canal (especificado en unrealircd)"
 
 #~ msgid "color for chan admin symbol"
 #~ msgstr "color para el sÃ­mbolo de administrador de canal"

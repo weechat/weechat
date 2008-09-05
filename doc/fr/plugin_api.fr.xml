@@ -21,17 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<chapter id="chapPluginAPI">
+<section id="secPluginAPI">
   <title>API extension</title>
-  
-  <para>
-    Ce chapitre décrit l'interface des extensions (API).
-    --- sera complété très prochainement ! ---
-  </para>
-</chapter>
-
-<section id="secFonctionsInterface">
-  <title>Fonctions de l'interface (API)</title>
   
   <section id="secAPI_set_charset">
     <title>set_charset</title>

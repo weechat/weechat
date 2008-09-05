@@ -1104,22 +1104,28 @@ command_help (void *data, struct t_gui_buffer *buffer,
     if (ptr_option)
     {
         gui_chat_printf (NULL, "");
-        gui_chat_printf (NULL,
-                         _("Option \"%s%s%s\": %s"),
+        gui_chat_printf (NULL, _("Option \"%s%s%s\":"),
                          GUI_COLOR(GUI_COLOR_CHAT_CHANNEL),
                          argv[1],
-                         GUI_COLOR(GUI_COLOR_CHAT),
+                         GUI_COLOR(GUI_COLOR_CHAT));
+        gui_chat_printf (NULL, "  %s: %s",
+                         _("description"),
                          _(ptr_option->description));
         switch (ptr_option->type)
         {
             case CONFIG_OPTION_TYPE_BOOLEAN:
-                gui_chat_printf (NULL, _("  type: boolean ('on' or 'off')"));
-                gui_chat_printf (NULL, _("  value: %s%s%s (default: %s)"),
+                gui_chat_printf (NULL, "  %s: %s",
+                                 _("type"), _("boolean"));
+                gui_chat_printf (NULL, "  %s: on, off",
+                                 _("values"));
+                gui_chat_printf (NULL, "  %s: %s",
+                                 _("default value"),
+                                 (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
+                                 "on" : "off");
+                gui_chat_printf (NULL, "  %s: %s%s",
+                                 _("current value"),
                                  GUI_COLOR(GUI_COLOR_CHAT_HOST),
                                  (CONFIG_BOOLEAN(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
-                                 "on" : "off",
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
                                  "on" : "off");
                 break;
             case CONFIG_OPTION_TYPE_INTEGER:
@@ -1146,60 +1152,83 @@ command_help (void *data, struct t_gui_buffer *buffer,
                                 strcat (string, ", ");
                             i++;
                         }
+                        gui_chat_printf (NULL, "  %s: %s",
+                                         _("type"), _("string"));
+                        gui_chat_printf (NULL, "  %s: %s",
+                                         _("values"), string);
+                        gui_chat_printf (NULL, "  %s: '%s'",
+                                         _("default value"),
+                                         ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]);
                         gui_chat_printf (NULL,
-                                         _("  type: string (%s)"),
-                                         string);
-                        gui_chat_printf (NULL,
-                                         _("  value: '%s%s%s' (default: '%s')"),
+                                         "  %s: '%s%s%s'",
+                                         _("current value"),
                                          GUI_COLOR(GUI_COLOR_CHAT_HOST),
                                          ptr_option->string_values[CONFIG_INTEGER(ptr_option)],
-                                         GUI_COLOR(GUI_COLOR_CHAT),
-                                         ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]);
+                                         GUI_COLOR(GUI_COLOR_CHAT));
                         free (string);
                     }
                 }
                 else
                 {
-                    gui_chat_printf (NULL, _("  type: integer (between %d and %d)"),
-                                     ptr_option->min,
-                                     ptr_option->max);
-                    gui_chat_printf (NULL, _("  value: %s%d%s (default: %d)"),
-                                     GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                     CONFIG_INTEGER(ptr_option),
-                                     GUI_COLOR(GUI_COLOR_CHAT),
+                    gui_chat_printf (NULL, "  %s: %s",
+                                     _("type"), _("integer"));
+                    gui_chat_printf (NULL, "  %s: %d .. %d",
+                                     _("values"),
+                                     ptr_option->min, ptr_option->max);
+                    gui_chat_printf (NULL, "  %s: %d",
+                                     _("default value"),
                                      CONFIG_INTEGER_DEFAULT(ptr_option));
+                    gui_chat_printf (NULL, "  %s: %s%d",
+                                     _("current value"),
+                                     GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                     CONFIG_INTEGER(ptr_option));
                 }
                 break;
             case CONFIG_OPTION_TYPE_STRING:
                 switch (ptr_option->max)
                 {
                     case 0:
-                        gui_chat_printf (NULL, _("  type: string (any string)"));
+                        gui_chat_printf (NULL, "  %s: %s",
+                                         _("type"), _("string"));
+                        gui_chat_printf (NULL, "  %s: %s",
+                                         _("values"), _("any string"));
                         break;
                     case 1:
-                        gui_chat_printf (NULL, _("  type: char (any char)"));
+                        gui_chat_printf (NULL, "  %s: %s",
+                                         _("type"), _("string"));
+                        gui_chat_printf (NULL, "  %s: %s",
+                                         _("values"), _("any char"));
                         break;
                     default:
-                        gui_chat_printf (NULL, _("  type: string (limit: %d chars)"),
+                        gui_chat_printf (NULL, "  %s: %s",
+                                         _("type"), _("string"));
+                        gui_chat_printf (NULL, "  %s: %s (%s: %d)",
+                                         _("values"), _("any string"),
+                                         _("max chars"),
                                          ptr_option->max);
                         break;
                 }
-                gui_chat_printf (NULL,
-                                 _("  value: '%s%s%s' (default: '%s')"),
+                gui_chat_printf (NULL, "  %s: '%s'",
+                                 _("default value"),
+                                 CONFIG_STRING_DEFAULT(ptr_option));
+                gui_chat_printf (NULL, "  %s: '%s%s%s'",
+                                 _("current value"),
                                  GUI_COLOR(GUI_COLOR_CHAT_HOST),
                                  CONFIG_STRING(ptr_option),
-                                 GUI_COLOR(GUI_COLOR_CHAT),
-                                 CONFIG_STRING_DEFAULT(ptr_option));
+                                 GUI_COLOR(GUI_COLOR_CHAT));
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
-                gui_chat_printf (NULL,
-                                 _("  type: color (values depend on GUI used)"));
-                gui_chat_printf (NULL,
-                                 _("  value: %s%s%s (default: %s)"),
-                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
-                                 gui_color_get_name (CONFIG_COLOR(ptr_option)),
-                                 GUI_COLOR(GUI_COLOR_CHAT),
+                gui_chat_printf (NULL, "  %s: %s",
+                                 _("type"), _("color"));
+                gui_chat_printf (NULL, "  %s: %s",
+                                 _("values"), _("a color name"));
+                gui_chat_printf (NULL, "  %s: %s",
+                                 _("default value"),
                                  gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option)));
+                gui_chat_printf (NULL, "  %s: %s%s",
+                                 _("current value"),
+                                 GUI_COLOR(GUI_COLOR_CHAT_HOST),
+                                 gui_color_get_name (CONFIG_COLOR(ptr_option)));
                 break;
             case CONFIG_NUM_OPTION_TYPES:
                 break;

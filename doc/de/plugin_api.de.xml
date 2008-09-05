@@ -21,19 +21,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
 
-<chapter id="chapPluginAPI">
-  <title>Plugin API</title>
-  
-  <para>
-    Dieses Kapitel beschreibt das Plugin-Interface (API).
-    --- will be completed soon! ---
-  </para>
-</chapter>
-
-<!--
-
 <section id="secAPIFunctions">
-  <title>API Funktionen</title>
+  <!-- TRANSLATION NEEDED -->
+  <title>Plugin API</title>
   
   <section id="secAPI_set_charset">
     <title>set_charset</title>

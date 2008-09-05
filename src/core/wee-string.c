@@ -887,7 +887,7 @@ string_build_with_exploded (char **exploded_string, const char *separator)
 }
 
 /*
- * string_split_command: split a list of commands separated by 'sep'
+ * string_split_command: split a list of commands separated by 'separator'
  *                       and ecscaped with '\'
  *                       - empty commands are removed
  *                       - spaces on the left of each commands are stripped

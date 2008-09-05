@@ -421,13 +421,13 @@ weechat_ruby_load (const char *filename)
  * weechat_ruby_load_cb: callback for weechat_script_auto_load() function
  */
 
-int
+void
 weechat_ruby_load_cb (void *data, const char *filename)
 {
     /* make C compiler happy */
     (void) data;
     
-    return weechat_ruby_load (filename);
+    weechat_ruby_load (filename);
 }
 
 /*

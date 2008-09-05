@@ -170,13 +170,12 @@ util_create_dir (const char *directory, int permissions)
 
 void
 util_exec_on_files (const char *directory, void *data,
-                    int (*callback)(void *data, const char *filename))
+                    void (*callback)(void *data, const char *filename))
 {
     char complete_filename[1024];
     DIR *dir;
     struct dirent *entry;
     struct stat statbuf;
-    int rc;
     
     if (!directory || !callback)
         return;
@@ -191,7 +190,7 @@ util_exec_on_files (const char *directory, void *data,
             lstat (complete_filename, &statbuf);
             if (!S_ISDIR(statbuf.st_mode))
             {
-                rc = (*callback) (data, complete_filename);
+                (*callback) (data, complete_filename);
             }
         }
         closedir (dir);

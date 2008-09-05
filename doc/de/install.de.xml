@@ -56,6 +56,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </para>
         </listitem>
       </itemizedlist>
+      
+      <!-- TRANSLATION NEEDED -->
+      Some additional packages may be useful, like weechat-plugins.
+      
       FÜr andere Distributionen: sehen sie in die Dokumentation
       für Installationsanweisungen.
     </para>

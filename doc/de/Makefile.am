@@ -21,12 +21,18 @@ BOOK_INCLUDE = intro.$(LANGCODE).xml \
                usage.$(LANGCODE).xml \
                plugins.$(LANGCODE).xml \
                plugin_api.$(LANGCODE).xml \
-               plugin_irc.$(LANGCODE).xml \
                plugin_charset.$(LANGCODE).xml \
                plugin_fifo.$(LANGCODE).xml \
+               plugin_irc.$(LANGCODE).xml \
                plugin_scripts.$(LANGCODE).xml \
-               weechat_commands.xml \
-               config.xml
+               plugin_xfer.$(LANGCODE).xml \
+               ../include_autogen.xml \
+               autogen/weechat_commands.xml \
+               autogen/weechat_options.xml \
+               autogen/weechat_infos.xml \
+               autogen/irc_commands.xml \
+               autogen/irc_options.xml \
+               autogen/irc_infos.xml
 QUICKSTART = weechat_quickstart.$(LANGCODE).txt
 
 EXTRA_DIST = $(BOOK).xml $(BOOK_INCLUDE) $(QUICKSTART)
@@ -43,8 +49,9 @@ all-local: html-stamp $(PDF)
 
 html: html-stamp
 
-html-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html.xsl ../weechat-doc.css
+html-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html.xsl ../weechat-doc.css ../include_autogen.xml
 	echo "<pubdate>`date '+%F %T'`</pubdate>" >date.xml
+	cp ../include_autogen.xml .
 	mkdir -p html/
 	xsltproc -o html/ ../weechat-html.xsl $(BOOK).xml || true
 	cp ../weechat-doc.css html/
@@ -54,8 +61,9 @@ html-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html.xsl ../weechat-doc.css
 
 html1: html1-stamp
 
-html1-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html-one.xsl ../weechat-doc.css
+html1-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html-one.xsl ../weechat-doc.css ../include_autogen.xml
 	echo "<pubdate>`date '+%F %T'`</pubdate>" >date.xml
+	cp ../include_autogen.xml .
 	mkdir -p html1/
 	xsltproc -o html1/$(BOOK).html ../weechat-html-one.xsl $(BOOK).xml || true
 	cp ../weechat-doc.css html1/
@@ -65,9 +73,10 @@ html1-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html-one.xsl ../weechat-doc.
 
 pdf: pdf-stamp
 
-pdf-stamp: $(BOOK).xml $(BOOK_INCLUDE)
+pdf-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../include_autogen.xml
 	echo "<pubdate>`date '+%F %T'`</pubdate>" >date.xml
-	dblatex -c ../dblatex.conf $(BOOK).xml || true
+	cp ../include_autogen.xml .
+	dblatex -P draft.mode=no -c ../dblatex.conf $(BOOK).xml || true
 	touch pdf-stamp
 
 # install docs
@@ -83,6 +92,6 @@ endif
 # clean
 
 clean-local:
-	-rm -f $(BOOK).html $(BOOK).pdf $(BOOK).txt date.xml
+	-rm -f $(BOOK).html $(BOOK).pdf $(BOOK).txt date.xml include_autogen.xml
 	-rm -rf html/ html1/
 	-rm -f html-stamp html1-stamp pdf-stamp

@@ -73,11 +73,11 @@ extern void script_init (struct t_weechat_plugin *weechat_plugin,
                                                               const char *signal,
                                                               const char *type_data,
                                                               void *signal_data),
-                         int (*callback_load_file)(void *data, const char *filename));
+                         void (*callback_load_file)(void *data, const char *filename));
 extern char *script_ptr2str (void *pointer);
 extern void *script_str2ptr (const char *pointer_str);
 extern void script_auto_load (struct t_weechat_plugin *weechat_plugin,
-                              int (*callback)(void *data, const char *filename));
+                              void (*callback)(void *data, const char *filename));
 extern struct t_plugin_script *script_search (struct t_weechat_plugin *weechat_plugin,
                                               struct t_plugin_script *scripts,
                                               const char *name);

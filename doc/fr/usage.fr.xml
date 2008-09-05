@@ -92,6 +92,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 Afficher la version de WeeChat
               </entry>
             </row>
+            <row>
+              <entry><literal>extension:option</literal></entry>
+              <entry>
+                Option pour l'extension (voir la doc de chaque extension)
+              </entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -494,6 +500,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + W puis Alt + flèche</entry>
               <entry>
                 Sauter à une fenêtre avec une direction
+              </entry>
+            </row>
+            <row>
+              <entry>Alt + =</entry>
+              <entry>
+                Active/désactive les filtres
               </entry>
             </row>
           </tbody>

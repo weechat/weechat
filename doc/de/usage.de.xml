@@ -91,6 +91,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 Zeigt die Programmversion an
               </entry>
             </row>
+            <!-- TRANSLATION NEEDED -->
+            <row>
+              <entry><literal>plugin:option</literal></entry>
+              <entry>
+                Option for plugin (see doc for each plugin)
+              </entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -488,6 +495,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               <entry>Alt + W dann Alt + Pfeil</entry>
               <entry>
                 Schalte zum Fenster in der entsprechenden Richtung
+              </entry>
+            </row>
+            <row>
+              <entry>Alt + =</entry>
+              <entry>
+                <!-- TRANSLATION NEEDED -->
+                Toggle filters on/off
               </entry>
             </row>
           </tbody>

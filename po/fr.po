@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-03 15:15+0200\n"
-"PO-Revision-Date: 2008-09-03 15:22+0200\n"
+"POT-Creation-Date: 2008-09-04 18:00+0200\n"
+"PO-Revision-Date: 2008-09-04 18:01+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -284,44 +284,47 @@ msgid "plugin:"
 msgstr "extension:"
 
 #, c-format
-msgid "Option \"%s%s%s\": %s"
-msgstr "Option \"%s%s%s\": %s"
+msgid "Option \"%s%s%s\":"
+msgstr "Option \"%s%s%s\":"
 
-msgid "  type: boolean ('on' or 'off')"
-msgstr "  type: booléen ('on' ou 'off')"
+msgid "description"
+msgstr "description"
 
-#, c-format
-msgid "  value: %s%s%s (default: %s)"
-msgstr "  valeur: %s%s%s (défaut: %s)"
+msgid "type"
+msgstr "type"
 
-#, c-format
-msgid "  type: string (%s)"
-msgstr "  type: chaîne (%s)"
+msgid "boolean"
+msgstr "booléen"
 
-#, c-format
-msgid "  value: '%s%s%s' (default: '%s')"
-msgstr "  valeur: '%s%s%s' (défaut: '%s')"
+msgid "values"
+msgstr "valeurs"
 
-#, c-format
-msgid "  type: integer (between %d and %d)"
-msgstr "  type: entier (entre %d et %d)"
+msgid "default value"
+msgstr "valeur par défaut"
 
-#, c-format
-msgid "  value: %s%d%s (default: %d)"
-msgstr "  valeur: %s%d%s (défaut: %d)"
+msgid "current value"
+msgstr "valeur courante"
 
-msgid "  type: string (any string)"
-msgstr "  type: chaîne (toute chaîne)"
+msgid "string"
+msgstr "chaîne"
 
-msgid "  type: char (any char)"
-msgstr "  type: caractère (tout caractère)"
+msgid "integer"
+msgstr "entier"
 
-#, c-format
-msgid "  type: string (limit: %d chars)"
-msgstr "  type: chaîne (limite: %d caractères)"
+msgid "any string"
+msgstr "toute chaîne"
 
-msgid "  type: color (values depend on GUI used)"
-msgstr "  type: couleur (les valeurs dépendent de l'interface utilisée)"
+msgid "any char"
+msgstr "tout caractère"
+
+msgid "max chars"
+msgstr "caractères max"
+
+msgid "color"
+msgstr "couleur"
+
+msgid "a color name"
+msgstr "un nom de couleur"
 
 #, c-format
 msgid "%sNo help available, \"%s\" is not a command or an option"
@@ -1190,7 +1193,7 @@ msgid "prefix for quit messages"
 msgstr "préfixe pour les messages de départ"
 
 msgid "prefix alignment (none, left, right (default))"
-msgstr "alignement de préfixe (non, left, right (par défaut))"
+msgstr "alignement de préfixe (none, left, right (par défaut))"
 
 msgid "max size for prefix (0 = no max size)"
 msgstr "taille maximum pour le préfixe (0 = pas de taille maximum)"
@@ -1530,18 +1533,6 @@ msgstr ""
 msgid "save configuration files when unloading plugins"
 msgstr ""
 "sauvegarder les fichiers de configuration lors du déchargement des extensions"
-
-msgid "boolean"
-msgstr "booléen"
-
-msgid "integer"
-msgstr "entier"
-
-msgid "string"
-msgstr "chaîne"
-
-msgid "color"
-msgstr "couleur"
 
 #, c-format
 msgid "%sError: cannot create file \"%s\""
@@ -4815,6 +4806,39 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "  type: string (%s)"
+#~ msgstr "  type: chaîne (%s)"
+
+#~ msgid "  value: '%s%s%s' (default: '%s')"
+#~ msgstr "  valeur: '%s%s%s' (défaut: '%s')"
+
+#~ msgid "  type: integer (between %d and %d)"
+#~ msgstr "  type: entier (entre %d et %d)"
+
+#~ msgid "  value: %s%d%s (default: %d)"
+#~ msgstr "  valeur: %s%d%s (défaut: %d)"
+
+#~ msgid "  type: string (any string)"
+#~ msgstr "  type: chaîne (toute chaîne)"
+
+#~ msgid "  type: char (any char)"
+#~ msgstr "  type: caractère (tout caractère)"
+
+#~ msgid "  type: string (limit: %d chars)"
+#~ msgstr "  type: chaîne (limite: %d caractères)"
+
+#~ msgid "  type: color (values depend on GUI used)"
+#~ msgstr "  type: couleur (les valeurs dépendent de l'interface utilisée)"
+
+#~ msgid "  value: %s%s%s (default: %s)"
+#~ msgstr "  valeur: %s%s%s (défaut: %s)"
+
+#~ msgid "  type: boolean ('on' or 'off')"
+#~ msgstr "  type: booléen ('on' ou 'off')"
+
+#~ msgid "  %s: %s%s%s (default: %s)"
+#~ msgstr "  %s: %s%s%s (défaut: %s)"
 
 #~ msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
 #~ msgstr "%s%s: paramètre manquant pour la commande \"%s\" (essayez /help %s)"

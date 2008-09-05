@@ -88,19 +88,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 Display WeeChat version
               </entry>
             </row>
+            <row>
+              <entry><literal>plugin:option</literal></entry>
+              <entry>
+                Option for plugin (see doc for each plugin)
+              </entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
-    </para>
-    
-    <para>
-      It is also possible to give URL for one or many IRC servers, as
-      follow:
-      <screen>irc[6][s]://[pseudo[:mot_passe]@]irc.example.org[:port][/channel][,channel[...]</screen>
-      Example to join #weechat and #toto on
-      "<literal>irc.freenode.net</literal>" server, default port (6667),
-      with "nono" nick:
-      <screen><prompt>$ </prompt><userinput>weechat-curses irc://nono@irc.freenode.net/#weechat,#toto</userinput></screen>
     </para>
     
     <para>
@@ -477,6 +473,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 Switch to window with direction
               </entry>
             </row>
+            <row>
+              <entry>Alt + =</entry>
+              <entry>
+                Toggle filters on/off
+              </entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -667,7 +669,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </para>
     
     <para>
-      <!-- &weechat_commands.xml; -->
+      &weechat_commands.xml;
     </para>
       
   </section>
@@ -690,7 +692,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
           </thead>
           <tbody>
             
-            <!-- &config.xml; -->
+            &weechat_options.xml;
             
           </tbody>
         </tgroup>

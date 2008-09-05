@@ -536,7 +536,7 @@ plugin_load (const char *filename)
  *                        but only it this is really a dynamic library
  */
 
-int
+void
 plugin_auto_load_file (void *plugin, const char *filename)
 {
     char *pos;
@@ -559,8 +559,6 @@ plugin_auto_load_file (void *plugin, const char *filename)
     }
     else
         plugin_load (filename);
-    
-    return 1;
 }
 
 /*
