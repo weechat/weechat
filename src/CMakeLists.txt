@@ -62,6 +62,11 @@ CHECK_FUNCTION_EXISTS(strstr HAVE_STRSTR)
 # FIXME: weechat_gui_common MUST be the first lib in the list
 SET(STATIC_LIBS weechat_gui_common)
 
+# Check for Large File Support
+IF (NOT DISABLE_LARGEFILE)
+  ADD_DEFINITIONS(-D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -D_LARGE_FILES)
+ENDIF (NOT DISABLE_LARGEFILE)
+
 # Check for Gettext
 IF(NOT DISABLE_NLS)
   FIND_PACKAGE(Gettext)
