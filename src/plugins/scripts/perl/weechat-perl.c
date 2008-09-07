@@ -53,6 +53,9 @@ static PerlInterpreter *perl_main = NULL;
 int perl_num = 0;
 #endif
 
+char *perl_args[] = { "", "-e", "0", "-w", NULL };
+int perl_args_count = 4;
+
 char *perl_weechat_code =
 {
 #ifndef MULTIPLICITY
@@ -234,7 +237,6 @@ weechat_perl_load (const char *filename)
     
 #ifdef MULTIPLICITY
     PerlInterpreter *perl_current_interpreter;
-    char *perl_args[] = { "", "-e", "0" };
 #else
     char pkgname[64];
 #endif
@@ -270,8 +272,8 @@ weechat_perl_load (const char *filename)
     PERL_SET_CONTEXT (perl_current_interpreter);
     perl_construct (perl_current_interpreter);
     tempscript.interpreter = (PerlInterpreter *) perl_current_interpreter;
-    perl_parse (perl_current_interpreter, weechat_perl_api_init, 3, perl_args,
-                NULL);
+    perl_parse (perl_current_interpreter, weechat_perl_api_init,
+		perl_args_count, perl_args, NULL);
     
     eval_pv (perl_weechat_code, TRUE);
     perl_argv[0] = (char *)filename;
@@ -613,13 +615,15 @@ weechat_perl_buffer_closed_cb (void *data, const char *signal, const char *type_
 int
 weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-#ifndef MULTIPLICITY
-    char *perl_args[] = { "", "-e", "0" };
-#endif
-    
     /* make C compiler happy */
     (void) argc;
     (void) argv;
+    
+#ifdef PERL_SYS_INIT3
+    int a = perl_args_count;
+    char *perl_env[] = {};
+    PERL_SYS_INIT3 (&a, (char ***)&perl_args, (char ***)&perl_env);
+#endif
     
     weechat_perl_plugin = plugin;
     
@@ -635,7 +639,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     }
     
     perl_construct (perl_main);
-    perl_parse (perl_main, weechat_perl_api_init, 3, perl_args, NULL);
+    perl_parse (perl_main, weechat_perl_api_init, perl_args_count,
+		perl_args, NULL);
     eval_pv (perl_weechat_code, TRUE);
 #endif
     
@@ -671,6 +676,10 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 	perl_free (perl_main);
 	perl_main = NULL;
     }
+#endif
+
+#ifdef PERL_SYS_TERM
+    PERL_SYS_TERM ();
 #endif
     
     return WEECHAT_RC_OK;
