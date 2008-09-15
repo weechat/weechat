@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-04 18:00+0200\n"
+"POT-Creation-Date: 2008-09-15 14:19+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2106,11 +2106,12 @@ msgid "get and display an infolist"
 msgstr "maximální počtet příkazů, který zobarzit"
 
 #, fuzzy
-msgid "[infolist]"
-msgstr "seznam zakázaných"
+msgid "[infolist [arguments]]"
+msgstr "příjemce typ [argumenty]"
 
 msgid ""
-"infolist: infolist to display\n"
+" infolist: infolist to display\n"
+"arguments: optional arguments for infolist\n"
 "\n"
 "Without argument, this command displays list of available infolists"
 msgstr ""
@@ -4901,6 +4902,10 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "[infolist]"
+#~ msgstr "seznam zakázaných"
 
 #, fuzzy
 #~ msgid "  type: string (%s)"

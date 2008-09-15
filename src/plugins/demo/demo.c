@@ -447,8 +447,9 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_hook_command ("demo_infolist",
                           N_("get and display an infolist"),
-                          N_("[infolist]"),
-                          N_("infolist: infolist to display\n\n"
+                          N_("[infolist [arguments]]"),
+                          N_(" infolist: infolist to display\n"
+                             "arguments: optional arguments for infolist\n\n"
                              "Without argument, this command displays list "
                              "of available infolists"),
                           "%I",

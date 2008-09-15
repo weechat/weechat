@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-04 18:00+0200\n"
+"POT-Creation-Date: 2008-09-15 14:19+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2059,11 +2059,12 @@ msgid "get and display an infolist"
 msgstr "количество отображаемых команд"
 
 #, fuzzy
-msgid "[infolist]"
-msgstr "баны"
+msgid "[infolist [arguments]]"
+msgstr "адресат тип [аргументы]"
 
 msgid ""
-"infolist: infolist to display\n"
+" infolist: infolist to display\n"
+"arguments: optional arguments for infolist\n"
 "\n"
 "Without argument, this command displays list of available infolists"
 msgstr ""
@@ -4806,6 +4807,10 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "[infolist]"
+#~ msgstr "баны"
 
 #, fuzzy
 #~ msgid "  type: string (%s)"
