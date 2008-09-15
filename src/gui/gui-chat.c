@@ -529,21 +529,35 @@ gui_chat_line_match_regex (struct t_gui_line *line, regex_t *regex_prefix,
     if (!line || (!regex_prefix && !regex_message))
         return 0;
     
+    prefix = NULL;
+    message = NULL;
+    
     match_prefix = 1;
     match_message = 1;
-    
-    prefix = (line->prefix) ?
-        (char *)gui_color_decode ((unsigned char *)line->prefix) : NULL;
-    if (prefix && regex_prefix)
+
+    if (line->prefix)
     {
-        if (regexec (regex_prefix, prefix, 0, NULL, 0) != 0)
+        prefix = (char *)gui_color_decode ((unsigned char *)line->prefix);
+        if (!prefix
+            || (regex_prefix && (regexec (regex_prefix, prefix, 0, NULL, 0) != 0)))
             match_prefix = 0;
     }
-    
-    message = (char *)gui_color_decode ((unsigned char *)line->message);
-    if (message && regex_message)
+    else
     {
-        if (regexec (regex_message, message, 0, NULL, 0) != 0)
+        if (regex_prefix)
+            match_prefix = 0;
+    }
+
+    if (line->message)
+    {
+        message = (char *)gui_color_decode ((unsigned char *)line->message);
+        if (!message
+            || (regex_message && (regexec (regex_message, message, 0, NULL, 0) != 0)))
+            match_message = 0;
+    }
+    else
+    {
+        if (regex_message)
             match_message = 0;
     }
     
@@ -842,6 +856,7 @@ gui_chat_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
         new_line->prefix = NULL;
         new_line->prefix_length = 0;
         new_line->message = NULL;
+        new_line->highlight = 0;
         
         /* add line to lines list */
         if (ptr_line)
@@ -870,6 +885,11 @@ gui_chat_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
         ptr_line = new_line;
     }
     
+    /* set message for line */
+    if (ptr_line->message)
+        free (ptr_line->message);
+    ptr_line->message = strdup (message);
+    
     /* check if line is filtered or not */
     ptr_line->displayed = gui_filter_check_line (buffer, ptr_line);
     if (!ptr_line->displayed)
@@ -881,11 +901,6 @@ gui_chat_line_add_y (struct t_gui_buffer *buffer, int y, const char *message)
                               WEECHAT_HOOK_SIGNAL_POINTER, buffer);
         }
     }
-    
-    /* set message for line */
-    if (ptr_line->message)
-        free (ptr_line->message);
-    ptr_line->message = strdup (message);
     
     ptr_line->refresh_needed = 1;
 }
@@ -1009,7 +1024,6 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
 void
 gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
 {
-    char *buf;
     va_list argptr;
     struct t_gui_line *ptr_line;
     
@@ -1025,19 +1039,19 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
             return;
     }
     
-    /* with message: create line or merge content with existing line */
-    buf = malloc (GUI_CHAT_BUFFER_PRINTF_SIZE);
-    if (!buf)
+    if (!gui_chat_buffer)
+        gui_chat_buffer = malloc (GUI_CHAT_BUFFER_PRINTF_SIZE);
+    if (!gui_chat_buffer)
         return;
     
     va_start (argptr, message);
-    vsnprintf (buf, GUI_CHAT_BUFFER_PRINTF_SIZE, message, argptr);
+    vsnprintf (gui_chat_buffer, GUI_CHAT_BUFFER_PRINTF_SIZE, message, argptr);
     va_end (argptr);
     
-    utf8_normalize (buf, '?');
+    utf8_normalize (gui_chat_buffer, '?');
 
     /* no message: delete line */
-    if (!buf[0])
+    if (!gui_chat_buffer[0])
     {
         if (gui_init_ok)
         {
@@ -1058,12 +1072,10 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
     {
         if (gui_init_ok)
         {
-            gui_chat_line_add_y (buffer, y, buf);
+            gui_chat_line_add_y (buffer, y, gui_chat_buffer);
             gui_buffer_ask_chat_refresh (buffer, 1);
         }
         else
-            string_iconv_fprintf (stdout, "%s\n", buf);
+            string_iconv_fprintf (stdout, "%s\n", gui_chat_buffer);
     }
-    
-    free (buf);
 }
