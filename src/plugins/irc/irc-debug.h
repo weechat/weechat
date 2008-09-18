@@ -20,6 +20,8 @@
 #ifndef __WEECHAT_IRC_DEBUG_H
 #define __WEECHAT_IRC_DEBUG_H 1
 
+#define IRC_DEBUG_BUFFER_NAME "irc_debug"
+
 #define IRC_DEBUG_PREFIX_RECV     "-->"
 #define IRC_DEBUG_PREFIX_RECV_MOD "==>"
 #define IRC_DEBUG_PREFIX_SEND     "<--"

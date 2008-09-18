@@ -902,22 +902,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_category</command>
-<itemizedlist>
-  <listitem>
-    <para>description: text color for current buffer category in status bar</para>
-  </listitem>
-  <listitem>
-    <para>type: color</para>
-  </listitem>
-  <listitem>
-    <para>values: a color name</para>
-  </listitem>
-  <listitem>
-    <para>default value: lightgreen</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.color.status_data_highlight</command>
 <itemizedlist>
   <listitem>
@@ -1411,6 +1395,22 @@
   </listitem>
   <listitem>
     <para>default value: 12</para>
+  </listitem>
+</itemizedlist>
+
+<command>weechat.look.hotlist_short_names</command>
+<itemizedlist>
+  <listitem>
+    <para>description: if set, uses short names to display buffer names in hotlist (start after first '.' in name)</para>
+  </listitem>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off</para>
+  </listitem>
+  <listitem>
+    <para>default value: on</para>
   </listitem>
 </itemizedlist>
 

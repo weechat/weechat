@@ -339,7 +339,7 @@ xfer_buffer_open ()
 {
     if (!xfer_buffer)
     {
-        xfer_buffer = weechat_buffer_new ("xfer", "list",
+        xfer_buffer = weechat_buffer_new ("xfer.list",
                                           &xfer_buffer_input_cb, NULL,
                                           &xfer_buffer_close_cb, NULL);
         

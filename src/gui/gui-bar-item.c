@@ -753,12 +753,9 @@ gui_bar_item_default_buffer_name (void *data, struct t_gui_bar_item *item,
     if (!window)
         window = gui_current_window;
     
-    snprintf (buf, sizeof (buf), "%s%d%s:%s%s%s/%s%s",
+    snprintf (buf, sizeof (buf), "%s%d%s:%s%s",
               gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_number))),
               window->buffer->number,
-              GUI_COLOR_CUSTOM_BAR_DELIM,
-              gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_category))),
-              window->buffer->category,
               GUI_COLOR_CUSTOM_BAR_DELIM,
               gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_status_name))),
               window->buffer->name);
@@ -867,7 +864,7 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                               struct t_gui_window *window,
                               int max_width, int max_height)
 {
-    char buf[1024], format[32];
+    char buf[1024], format[32], *pos_point;
     struct t_gui_hotlist *ptr_hotlist;
     int names_count, display_name;
     
@@ -929,7 +926,11 @@ gui_bar_item_default_hotlist (void *data, struct t_gui_bar_item *item,
                 snprintf (format, sizeof (format) - 1,
                           "%%.%ds",
                           CONFIG_INTEGER(config_look_hotlist_names_length));
-            sprintf (buf + strlen (buf), format, ptr_hotlist->buffer->name);
+            pos_point = NULL;
+            if (CONFIG_BOOLEAN(config_look_hotlist_short_names))
+                pos_point = strchr (ptr_hotlist->buffer->name, '.');
+            sprintf (buf + strlen (buf), format,
+                     (pos_point) ? pos_point + 1 : ptr_hotlist->buffer->name);
         }
         
         if (ptr_hotlist->next_hotlist)

@@ -6,35 +6,35 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>bar  [add nombarre type[,cond1,cond2,...] position taille separateur objet1,objet2,...] | [default] | [del nombarre|-all] | [set nombarre name|priority|condition|position|filling|size|separator|items valeur] | [hide|show nombarre] | [scroll nombarre categorie.nom valeur] | [list] | [listitems]</command>
+<command>bar  [add nombarre type[,cond1,cond2,...] position taille separateur objet1,objet2,...] | [default] | [del nombarre|-all] | [set nombarre nom|priorité|condition|position|remplissage|taille|séparateur|items valeur] | [hide|show nombarre] | [scroll nombarre tampon valeur] | [list] | [listitems]</command>
 <programlisting>
 gestion des barres
 
-          add: ajoute une nouvelle barre
-     nombarre: nom de la barre (doit être unique)
-         type:   root: en dehors des fenêtres
-               window: dans les fenêtres, avec condition(s) optionnelle(s) (voir ci-dessous)
-    cond1,...: condition(s) pour afficher cette barre (seulement pour le type "window") :
-                 active: sur la fenêtre active
-               inactive: sur les fenêtres inactives
-               nicklist: sue les fenêtres avec liste de pseudos
-               sans condition, la barre est toujours affichée
-     position: bottom (bas), top (haut), left (gauche) ou right (droite)
-      filling: horizontal ou vertical
-       taille: taille de la barre (en caractères)
-   separateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie sans séparateur
-   objet1,...: objets pour cette barre
-      default: créer les barres par défaut
-          del: supprime une barre (ou toutes les barres avec -all)
-          set: changer la valeur d'une propriété de la barre
-         hide: cacher la barre
-         show: montrer une barre cachée
-       scroll: faire défiler la barre vers le haut/bas
-catégorie.nom: catégorie et nom du tampon ('*' signifie le tampon courant, vous devez utiliser '*' pour les barres de type root)
-       valeur: valeur pour le défilement: 'x' ou 'y', suivi par '+', '-', 'b' (début) ou 'e' (fin), valeur (pour +/-), et un %% optionnel (pour faire défiler par %% de la largeur/hauteur, sinon la valeur est un nombre de caractères)
-         list: liste toutes les barres
-     listfull: liste toutes les barres (verbeux)
-    listitems: liste tous les objets de barre
+        add: ajoute une nouvelle barre
+   nombarre: nom de la barre (doit être unique)
+       type:   root: en dehors des fenêtres
+             window: dans les fenêtres, avec condition(s) optionnelle(s) (voir ci-dessous)
+  cond1,...: condition(s) pour afficher cette barre (seulement pour le type "window") :
+               active: sur la fenêtre active
+             inactive: sur les fenêtres inactives
+             nicklist: sue les fenêtres avec liste de pseudos
+             sans condition, la barre est toujours affichée
+   position: bottom (bas), top (haut), left (gauche) ou right (droite)
+remplissage: horizontal ou vertical
+     taille: taille de la barre (en caractères)
+ séparateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie sans séparateur
+ objet1,...: objets pour cette barre
+    default: créer les barres par défaut
+        del: supprime une barre (ou toutes les barres avec -all)
+        set: changer la valeur d'une propriété de la barre
+       hide: cacher la barre
+       show: montrer une barre cachée
+     scroll: faire défiler la barre vers le haut/bas
+     tampon: catégorie et nom du tampon ('*' signifie le tampon courant, vous devez utiliser '*' pour les barres de type root)
+     valeur: valeur pour le défilement: 'x' ou 'y', suivi par '+', '-', 'b' (début) ou 'e' (fin), valeur (pour +/-), et un %% optionnel (pour faire défiler par %% de la largeur/hauteur, sinon la valeur est un nombre de caractères)
+       list: liste toutes les barres
+   listfull: liste toutes les barres (verbeux)
+  listitems: liste tous les objets de barre
 
 Exemples :
   créer une barre avec l'heure et la complétion :
@@ -93,7 +93,7 @@ disable: désactive les filtres
     del: supprime un filtre
  numéro: numéro du filtre à supprimer (voir la liste des filtres pour le trouver)
    -all: supprime tous les filtres
- buffer: tampon où le filtre est actif: cela peut être un nom (catégorie.nom) ou "*" pour tous les tampons
+ buffer: tampon où le filtre est actif: cela peut être un nom ou "*" pour tous les tampons
    tags: liste de tags, séparés par des virgules, par exemple: "irc_join,irc_part,irc_quit"
   regex: expressoin régulière à rechercher dans la ligne (utiliser \t pour séparer le préfixe du message)
 

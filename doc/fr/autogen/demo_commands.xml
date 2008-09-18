@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>demo_buffer  catégorie nom</command>
+<command>demo_buffer  nom</command>
 <programlisting>
 ouvrir un nouveau tampon
 </programlisting>
@@ -23,11 +23,12 @@ paramètres: paramètres optionnels pour l'info
 
 Sans paramètre, cette commande affiche la liste des infos disponibles
 </programlisting>
-<command>demo_infolist  [infolist]</command>
+<command>demo_infolist  [infolist [paramètres]]</command>
 <programlisting>
 lit et affiche une infolist
 
-infolist: infolist à afficher
+  infolist: infolist à afficher
+paramètres: paramètres optionnels pour l'infolist
 
 Sans paramètre, cette commande affiche la liste des infolists disponibles
 </programlisting>

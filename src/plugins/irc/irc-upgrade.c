@@ -180,7 +180,7 @@ irc_upgrade_read_cb (int object_id,
                 irc_upgrade_current_server = irc_server_search (weechat_infolist_string (infolist, "name"));
                 if (irc_upgrade_current_server)
                 {
-                    irc_upgrade_current_server->buffer = weechat_buffer_search (irc_upgrade_current_server->name,
+                    irc_upgrade_current_server->buffer = weechat_buffer_search (IRC_PLUGIN_NAME,
                                                                                 irc_upgrade_current_server->name);
                     irc_upgrade_current_server->current_address = weechat_infolist_integer (infolist, "current_address");
                     

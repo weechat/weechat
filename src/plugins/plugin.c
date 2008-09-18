@@ -392,7 +392,7 @@ plugin_load (const char *filename)
         new_plugin->unhook_all = &unhook_all_plugin;
         
         new_plugin->buffer_new = &gui_buffer_new;
-        new_plugin->buffer_search = &gui_buffer_search_by_category_name;
+        new_plugin->buffer_search = &gui_buffer_search_by_name;
         new_plugin->buffer_clear = &gui_buffer_clear;
         new_plugin->buffer_close = &gui_buffer_close;
         new_plugin->buffer_get_integer = &gui_buffer_get_integer;

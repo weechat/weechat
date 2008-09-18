@@ -21,6 +21,7 @@
 #define __WEECHAT_RUBY_H 1
 
 #define weechat_plugin weechat_ruby_plugin
+#define RUBY_PLUGIN_NAME "ruby"
 
 extern struct t_weechat_plugin *weechat_ruby_plugin;
 

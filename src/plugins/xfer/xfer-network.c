@@ -54,7 +54,7 @@ xfer_network_create_pipe (struct t_xfer *xfer)
     {
         weechat_printf (NULL,
                         _("%s%s: unable to create pipe"),
-                        weechat_prefix ("error"), "xfer");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME);
         xfer_close (xfer, XFER_STATUS_FAILED);
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
         return 0;
@@ -109,33 +109,33 @@ xfer_network_child_read_cb (void *arg_xfer)
             case XFER_ERROR_READ_LOCAL:
                 weechat_printf (NULL,
                                 _("%s%s: unable to read local file"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 break;
             case XFER_ERROR_SEND_BLOCK:
                 weechat_printf (NULL,
                                 _("%s%s: unable to send block to receiver"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 break;
             case XFER_ERROR_READ_ACK:
                 weechat_printf (NULL,
                                 _("%s%s: unable to read ACK from receiver"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 break;
             /* errors for receiver */
             case XFER_ERROR_CONNECT_SENDER:
                 weechat_printf (NULL,
                                 _("%s%s: unable to connect to sender"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 break;
             case XFER_ERROR_RECV_BLOCK:
                 weechat_printf (NULL,
                                 _("%s%s: unable to receive block from sender"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 break;
             case XFER_ERROR_WRITE_LOCAL:
                 weechat_printf (NULL,
                                 _("%s%s: unable to write local file"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 break;
         }
         
@@ -188,7 +188,7 @@ xfer_network_send_file_fork (struct t_xfer *xfer)
         case -1:
             weechat_printf (NULL,
                             _("%s%s: unable to fork"),
-                            weechat_prefix ("error"), "xfer");
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
             xfer_close (xfer, XFER_STATUS_FAILED);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             return;
@@ -243,7 +243,7 @@ xfer_network_recv_file_fork (struct t_xfer *xfer)
         case -1:
             weechat_printf (NULL,
                             _("%s%s: unable to fork"),
-                            weechat_prefix ("error"), "xfer");
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
             xfer_close (xfer, XFER_STATUS_FAILED);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             return;
@@ -331,7 +331,7 @@ xfer_network_fd_cb (void *arg_xfer)
                 weechat_printf (NULL,
                                 _("%s%s: unable to create socket for sending "
                                   "file"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 xfer_close (xfer, XFER_STATUS_FAILED);
                 xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 return WEECHAT_RC_OK;
@@ -342,7 +342,7 @@ xfer_network_fd_cb (void *arg_xfer)
                 weechat_printf (NULL,
                                 _("%s%s: unable to set option \"nonblock\" "
                                   "for socket"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 xfer_close (xfer, XFER_STATUS_FAILED);
                 xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 return WEECHAT_RC_OK;
@@ -377,7 +377,7 @@ xfer_network_fd_cb (void *arg_xfer)
                 weechat_printf (NULL,
                                 _("%s%s: unable to create socket for sending "
                                   "file"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 xfer_close (xfer, XFER_STATUS_FAILED);
                 xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 return WEECHAT_RC_OK;
@@ -388,7 +388,7 @@ xfer_network_fd_cb (void *arg_xfer)
                 weechat_printf (NULL,
                                 _("%s%s: unable to set option \"nonblock\" "
                                   "for socket"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 xfer_close (xfer, XFER_STATUS_FAILED);
                 xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
                 return WEECHAT_RC_OK;
@@ -434,7 +434,7 @@ xfer_network_timer_cb (void *arg_xfer)
     {
         weechat_printf (NULL,
                         _("%s%s: timeout for \"%s\" with %s"),
-                        weechat_prefix ("error"), "xfer",
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
                         xfer->filename, xfer->remote_nick);
         xfer_close (xfer, XFER_STATUS_FAILED);
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);

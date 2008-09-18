@@ -143,8 +143,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
 {
     int type, position;
     long number;
-    char *error, *str_type, *pos_condition, *pos_point, *category;
-    char *ptr_buffer_name;
+    char *error, *str_type, *pos_condition;
     struct t_gui_bar *ptr_bar;
     struct t_gui_bar_item *ptr_item;
     struct t_gui_buffer *ptr_buffer;
@@ -441,23 +440,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
             if (strcmp (argv[3], "*") == 0)
                 ptr_buffer = buffer;
             else
-            {
-                pos_point = strchr (argv[3], '.');
-                if (pos_point)
-                {
-                    category = string_strndup (argv[3], pos_point - argv[3]);
-                    ptr_buffer_name = pos_point + 1;
-                }
-                else
-                {
-                    category = NULL;
-                    ptr_buffer_name = argv[3];
-                }
-                ptr_buffer = gui_buffer_search_by_category_name (category,
-                                                                 ptr_buffer_name);
-                if (category)
-                    free (category);
-            }
+                ptr_buffer = gui_buffer_search_by_name (NULL, argv[3]);
             if (!ptr_buffer)
             {
                 gui_chat_printf (NULL,
@@ -512,7 +495,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
              ptr_buffer = ptr_buffer->next_buffer)
         {
             gui_chat_printf (NULL,
-                             "  %s[%s%d%s]%s (%s) %s / %s",
+                             "  %s[%s%d%s]%s (%s) %s",
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
                              ptr_buffer->number,
@@ -520,7 +503,6 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                              GUI_COLOR(GUI_COLOR_CHAT),
                              (ptr_buffer->plugin) ?
                              ptr_buffer->plugin->name : "core",
-                             ptr_buffer->category,
                              ptr_buffer->name);
         }
         
@@ -689,7 +671,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
 
-    /* jump to buffer by number or server/channel name */
+    /* jump to buffer by number or name */
     error = NULL;
     number = strtol (argv[1], &error, 10);
     if (error && !error[0])
@@ -698,17 +680,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
     else
     {
         ptr_buffer = NULL;
-        if (argc > 2)
-            ptr_buffer = gui_buffer_search_by_category_name (argv[1],
-                                                             argv[2]);
-        else
-        {
-            ptr_buffer = gui_buffer_search_by_category_name (argv[1],
-                                                             NULL);
-            if (!ptr_buffer)
-                ptr_buffer = gui_buffer_search_by_category_name (NULL,
-                                                                 argv[1]);
-        }
+        ptr_buffer = gui_buffer_search_by_partial_name (NULL, argv_eol[1]);
         if (ptr_buffer)
         {
             gui_window_switch_to_buffer (gui_current_window,
@@ -1676,8 +1648,7 @@ command_plugin_list (const char *name, int full)
                         hook_found = 1;
                         if (HOOK_PRINT(ptr_hook, buffer))
                             gui_chat_printf (NULL,
-                                             _("      buffer: %s / %s, message: \"%s\""),
-                                             HOOK_PRINT(ptr_hook, buffer)->category,
+                                             _("      buffer: %s, message: \"%s\""),
                                              HOOK_PRINT(ptr_hook, buffer)->name,
                                              HOOK_PRINT(ptr_hook, message) ?
                                              HOOK_PRINT(ptr_hook, message) : _("(none)"));
@@ -2775,7 +2746,7 @@ command_init ()
                      "[del barname|-all] | [set barname name|priority|"
                      "condition|position|filling|size|separator|"
                      "items value] | [hide|show barname] | [scroll barname "
-                     "category.name value] | [list] | [listitems]"),
+                     "buffer value] | [list] | [listitems]"),
                   N_("          add: add a new bar\n"
                      "      barname: name of bar (must be unique)\n"
                      "         type:   root: outside windows),\n"
@@ -2799,7 +2770,7 @@ command_init ()
                      "         hide: hide a bar\n"
                      "         show: show an hidden bar\n"
                      "       scroll: scroll bar up/down\n"
-                     "category.name: category and name of buffer to scroll ('*' "
+                     "       buffer: name of buffer to scroll ('*' "
                      "means current buffer, you should use '*' for root bars)\n"
                      "        value: value for scroll: 'x' or 'y', followed by "
                      "'+', '-', 'b' (beginning) or 'e' (end), value (for +/-), "
@@ -2853,7 +2824,7 @@ command_init ()
                      "  scroll 15 min down: /buffer scroll +15m\n"
                      "   scroll 20 msgs up: /buffer scroll -20\n"
                      "    jump to #weechat: /buffer #weechat"),
-                  "clear|move|close|list|notify|scroll|set|%b|%c %b|%c",
+                  "clear|move|close|list|notify|scroll|set|%b %b",
                   &command_buffer, NULL);
     hook_command (NULL, "command",
                   N_("launch explicit WeeChat or plugin command"),
@@ -2881,7 +2852,7 @@ command_init ()
                      "find it)\n"
                      "   -all: delete all filters\n"
                      " buffer: buffer where filter is active: it may be "
-                     "a name (category.name) or \"*\" for all buffers\n"
+                     "a name or \"*\" for all buffers\n"
                      "   tags: comma separated list of tags, for "
                      "example: \"irc_join,irc_part,irc_quit\"\n"
                      "  regex: regular expression to search in "
@@ -2974,7 +2945,7 @@ command_init ()
                   N_("file: configuration file to reload\n\n"
                      "Without argument, all files (WeeChat and plugins) are "
                      "reloaded."),
-                  "%C|%*",
+                  "%c|%*",
                   &command_reload, NULL);
     hook_command (NULL, "save",
                   N_("save configuration files to disk"),
@@ -2982,7 +2953,7 @@ command_init ()
                   N_("file: configuration file to save\n\n"
                      "Without argument, all files (WeeChat and plugins) are "
                      "saved."),
-                  "%C|%*",
+                  "%c|%*",
                   &command_save, NULL);
     hook_command (NULL, "set",
                   N_("set config options"),

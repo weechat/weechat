@@ -77,6 +77,7 @@ struct t_config_option *config_look_highlight;
 struct t_config_option *config_look_hotlist_names_count;
 struct t_config_option *config_look_hotlist_names_length;
 struct t_config_option *config_look_hotlist_names_level;
+struct t_config_option *config_look_hotlist_short_names;
 struct t_config_option *config_look_hotlist_sort;
 struct t_config_option *config_look_input_format;
 struct t_config_option *config_look_item_time_format;
@@ -127,7 +128,6 @@ struct t_config_option *config_color_status;
 struct t_config_option *config_color_status_bg;
 struct t_config_option *config_color_status_delimiters;
 struct t_config_option *config_color_status_number;
-struct t_config_option *config_color_status_category;
 struct t_config_option *config_color_status_name;
 struct t_config_option *config_color_status_data_msg;
 struct t_config_option *config_color_status_data_private;
@@ -798,6 +798,12 @@ config_weechat_init ()
            "of: 1=join/part, 2=message, 4=private, 8=highlight, "
            "for example: 12=private+highlight)"),
         NULL, 1, 15, "12", NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_hotlist_short_names = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "hotlist_short_names", "boolean",
+        N_("if set, uses short names to display buffer names in hotlist (start "
+           "after first '.' in name)"),
+        NULL, 0, 0, "on", NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_hotlist_sort = config_file_new_option (
         weechat_config_file, ptr_section,
         "hotlist_sort", "integer",
@@ -1188,12 +1194,6 @@ config_weechat_init ()
         "status_number", "color",
         N_("text color for current buffer number in status bar"),
         NULL, GUI_COLOR_STATUS_NUMBER, 0, "yellow",
-        NULL, NULL, &config_change_color, NULL, NULL, NULL);
-    config_color_status_category = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "status_category", "color",
-        N_("text color for current buffer category in status bar"),
-        NULL, GUI_COLOR_STATUS_CATEGORY, 0, "lightgreen",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_name = config_file_new_option (
         weechat_config_file, ptr_section,

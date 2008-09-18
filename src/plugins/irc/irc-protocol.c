@@ -285,7 +285,8 @@ irc_protocol_cmd_join (struct t_irc_server *server, const char *command,
         {
             weechat_printf (server->buffer,
                             _("%s%s: cannot create new channel \"%s\""),
-                            weechat_prefix ("error"), "irc", pos_channel);
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                            pos_channel);
             return WEECHAT_RC_ERROR;
         }
     }
@@ -353,7 +354,7 @@ irc_protocol_cmd_kick (struct t_irc_server *server, const char *command,
         weechat_printf (server->buffer,
                         _("%s%s: channel \"%s\" not found for "
                           "\"%s\" command"),
-                        weechat_prefix ("error"), "irc", argv[2],
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME, argv[2],
                         "kick");
         return WEECHAT_RC_ERROR;
     }
@@ -772,8 +773,8 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                         weechat_printf (server->buffer,
                                         _("%s%s: cannot create new "
                                           "private buffer \"%s\""),
-                                        weechat_prefix ("error"), "irc",
-                                        nick);
+                                        weechat_prefix ("error"),
+                                        IRC_PLUGIN_NAME, nick);
                         return WEECHAT_RC_ERROR;
                     }
                 }
@@ -1284,7 +1285,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
             weechat_printf (server->buffer,
                             _("%s%s: channel \"%s\" not found for \"%s\" "
                               "command"),
-                            weechat_prefix ("error"), "irc",
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
                             argv[2], "privmsg");
             return WEECHAT_RC_ERROR;
         }
@@ -1355,7 +1356,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
@@ -1368,7 +1369,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     weechat_printf (server->buffer,
                                     _("%s%s: not enough memory for \"%s\" "
                                       "command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
@@ -1386,7 +1387,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     free (dcc_args);
                     return WEECHAT_RC_ERROR;
@@ -1405,7 +1406,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     free (dcc_args);
                     return WEECHAT_RC_ERROR;
@@ -1424,7 +1425,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     free (dcc_args);
                     return WEECHAT_RC_ERROR;
@@ -1484,7 +1485,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
@@ -1497,7 +1498,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     weechat_printf (server->buffer,
                                     _("%s%s: not enough memory for \"%s\" "
                                       "command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
@@ -1515,7 +1516,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     free (dcc_args);
                     return WEECHAT_RC_ERROR;
@@ -1534,7 +1535,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     free (dcc_args);
                     return WEECHAT_RC_ERROR;
@@ -1590,7 +1591,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
@@ -1603,7 +1604,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     weechat_printf (server->buffer,
                                     _("%s%s: not enough memory for \"%s\" "
                                       "command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
@@ -1621,7 +1622,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     free (dcc_args);
                     return WEECHAT_RC_ERROR;
@@ -1640,7 +1641,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     free (dcc_args);
                     return WEECHAT_RC_ERROR;
@@ -1696,7 +1697,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
@@ -1709,7 +1710,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     weechat_printf (server->buffer,
                                     _("%s%s: not enough memory for \"%s\" "
                                       "command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     return WEECHAT_RC_ERROR;
                 }
@@ -1727,7 +1728,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     free (dcc_args);
                     return WEECHAT_RC_ERROR;
@@ -1745,7 +1746,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     weechat_printf (server->buffer,
                                     _("%s%s: cannot parse \"%s\" command"),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     "privmsg");
                     free (dcc_args);
                     return WEECHAT_RC_ERROR;
@@ -1762,7 +1763,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     weechat_printf (server->buffer,
                                     _("%s%s: unknown DCC CHAT type "
                                       "received from %s%s%s: \"%s\""),
-                                    weechat_prefix ("error"), "irc",
+                                    weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                     IRC_COLOR_CHAT_NICK,
                                     nick,
                                     IRC_COLOR_CHAT,
@@ -1821,8 +1822,8 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                         weechat_printf (server->buffer,
                                         _("%s%s: cannot create new "
                                           "private buffer \"%s\""),
-                                        weechat_prefix ("error"), "irc",
-                                        nick);
+                                        weechat_prefix ("error"),
+                                        IRC_PLUGIN_NAME, nick);
                         return WEECHAT_RC_ERROR;
                     }
                 }
@@ -1930,7 +1931,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                                             _("%s%s: cannot create new "
                                               "private buffer \"%s\""),
                                             weechat_prefix ("error"),
-                                            "irc", nick);
+                                            IRC_PLUGIN_NAME, nick);
                             return WEECHAT_RC_ERROR;
                         }
                     }
@@ -2126,7 +2127,7 @@ irc_protocol_cmd_topic (struct t_irc_server *server, const char *command,
     {
         weechat_printf (server->buffer,
                         _("%s%s: \"%s\" command received without channel"),
-                        weechat_prefix ("error"), "irc", "topic");
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME, "topic");
         return WEECHAT_RC_ERROR;
     }
     
@@ -3585,7 +3586,7 @@ irc_protocol_cmd_353 (struct t_irc_server *server, const char *command,
                 weechat_printf (server->buffer,
                                 _("%s%s: cannot create nick \"%s\" "
                                   "for channel \"%s\""),
-                                weechat_prefix ("error"), "irc",
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                 pos_nick, ptr_channel->name);
             }
         }
@@ -3895,7 +3896,7 @@ irc_protocol_cmd_432 (struct t_irc_server *server, const char *command,
                             _("%s%s: all declared nicknames are "
                               "already in use or invalid, closing "
                               "connection with server"),
-                            weechat_prefix ("error"), "irc");
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
             irc_server_disconnect (server, 1);
             return WEECHAT_RC_OK;
         }
@@ -3903,8 +3904,9 @@ irc_protocol_cmd_432 (struct t_irc_server *server, const char *command,
         weechat_printf (server->buffer,
                         _("%s%s: nickname \"%s\" is invalid, "
                           "trying nickname #%d (\"%s\")"),
-                        weechat_prefix ("error"), "irc", server->nick,
-                        nick_to_use + 1, server->nicks_array[nick_to_use]);
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                        server->nick, nick_to_use + 1,
+                        server->nicks_array[nick_to_use]);
         
         irc_server_set_nick (server, server->nicks_array[nick_to_use]);
         
@@ -3949,7 +3951,7 @@ irc_protocol_cmd_433 (struct t_irc_server *server, const char *command,
                             _("%s%s: all declared nicknames are "
                               "already in use, closing "
                               "connection with server"),
-                            weechat_prefix ("error"), "irc");
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
             irc_server_disconnect (server, 1);
             return WEECHAT_RC_OK;
         }
@@ -3957,7 +3959,7 @@ irc_protocol_cmd_433 (struct t_irc_server *server, const char *command,
         weechat_printf (server->buffer,
                         _("%s: nickname \"%s\" is already in use, "
                           "trying nickname #%d (\"%s\")"),
-                        "irc", server->nick,
+                        IRC_PLUGIN_NAME, server->nick,
                         nick_to_use + 1, server->nicks_array[nick_to_use]);
         
         irc_server_set_nick (server, server->nicks_array[nick_to_use]);
@@ -4010,6 +4012,34 @@ irc_protocol_cmd_438 (struct t_irc_server *server, const char *command,
 }
 
 /*
+ * irc_protocol_cmd_901: '901' command received (you are now logged in)
+ */
+
+int
+irc_protocol_cmd_901 (struct t_irc_server *server, const char *command,
+                      int argc, char **argv, char **argv_eol)
+{
+    /* 901 message looks like:
+       :server 901 mynick nick user host :You are now logged in. (id nick, username user, hostname host)
+    */
+    
+    IRC_PROTOCOL_MIN_ARGS(6);
+    
+    if (argc >= 7)
+    {
+        weechat_printf_tags (server->buffer,
+                             irc_protocol_tags (command, "irc_numeric"),
+                             "%s%s",
+                             weechat_prefix ("network"),
+                             (argv_eol[6][0] == ':') ? argv_eol[6] + 1 : argv_eol[6]);
+    }
+    else
+        irc_protocol_cmd_numeric (server, command, argc, argv, argv_eol);
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_protocol_is_numeric_command: return 1 if given string is 100% numeric
  */
 
@@ -4045,123 +4075,124 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
     const char *cmd_name;
     char **argv, **argv_eol;
     struct t_irc_protocol_msg irc_protocol_messages[] =
-        { { "error", N_("error received from IRC server"), 1, &irc_protocol_cmd_error },
-          { "invite", N_("invite a nick on a channel"), 1, &irc_protocol_cmd_invite },
-          { "join", N_("join a channel"), 1, &irc_protocol_cmd_join },
-          { "kick", N_("forcibly remove a user from a channel"), 1, &irc_protocol_cmd_kick },
-          { "kill", N_("close client-server connection"), 1, &irc_protocol_cmd_kill },
-          { "mode", N_("change channel or user mode"), 1, &irc_protocol_cmd_mode },
-          { "nick", N_("change current nickname"), 1, &irc_protocol_cmd_nick },
-          { "notice", N_("send notice message to user"), 1, &irc_protocol_cmd_notice },
-          { "part", N_("leave a channel"), 1, &irc_protocol_cmd_part },
-          { "ping", N_("ping server"), 1, &irc_protocol_cmd_ping },
-          { "pong", N_("answer to a ping message"), 1, &irc_protocol_cmd_pong },
-          { "privmsg", N_("message received"), 1, &irc_protocol_cmd_privmsg },
-          { "quit", N_("close all connections and quit"), 1, &irc_protocol_cmd_quit },
-          { "topic", N_("get/set channel topic"), 0, &irc_protocol_cmd_topic },
-          { "wallops", N_("send a message to all currently connected users who have "
+        { { "error", /* error received from IRC server */ 1, &irc_protocol_cmd_error },
+          { "invite", /* invite a nick on a channel */ 1, &irc_protocol_cmd_invite },
+          { "join", /* join a channel */ 1, &irc_protocol_cmd_join },
+          { "kick", /* forcibly remove a user from a channel */ 1, &irc_protocol_cmd_kick },
+          { "kill", /* close client-server connection */ 1, &irc_protocol_cmd_kill },
+          { "mode", /* change channel or user mode */ 1, &irc_protocol_cmd_mode },
+          { "nick", /* change current nickname */ 1, &irc_protocol_cmd_nick },
+          { "notice", /* send notice message to user */ 1, &irc_protocol_cmd_notice },
+          { "part", /* leave a channel */ 1, &irc_protocol_cmd_part },
+          { "ping", /* ping server */ 1, &irc_protocol_cmd_ping },
+          { "pong", /* answer to a ping message */ 1, &irc_protocol_cmd_pong },
+          { "privmsg", /* message received */ 1, &irc_protocol_cmd_privmsg },
+          { "quit", /* close all connections and quit */ 1, &irc_protocol_cmd_quit },
+          { "topic", /* get/set channel topic */ 0, &irc_protocol_cmd_topic },
+          { "wallops", /* send a message to all currently connected users who have "
                           "set the 'w' user mode "
-                          "for themselves"), 1, &irc_protocol_cmd_wallops },
-          { "001", N_("a server message"), 1, &irc_protocol_cmd_001 },
-          { "005", N_("a server message"), 1, &irc_protocol_cmd_005 },
-          { "221", N_("user mode string"), 1, &irc_protocol_cmd_221 },
-          { "301", N_("away message"), 1, &irc_protocol_cmd_301 },
-          { "303", N_("ison"), 1, &irc_protocol_cmd_303 },
-          { "305", N_("unaway"), 1, &irc_protocol_cmd_305 },
-          { "306", N_("now away"), 1, &irc_protocol_cmd_306 },
-          { "307", N_("whois (registered nick)"), 1, &irc_protocol_cmd_whois_nick_msg },
-          { "310", N_("whois (help mode)"), 1, &irc_protocol_cmd_whois_nick_msg },
-          { "311", N_("whois (user)"), 1, &irc_protocol_cmd_311 },
-          { "312", N_("whois (server)"), 1, &irc_protocol_cmd_312 },
-          { "313", N_("whois (operator)"), 1, &irc_protocol_cmd_whois_nick_msg },
-          { "314", N_("whowas"), 1, &irc_protocol_cmd_314 },
-          { "315", N_("end of /who list"), 1, &irc_protocol_cmd_315 },
-          { "317", N_("whois (idle)"), 1, &irc_protocol_cmd_317 },
-          { "318", N_("whois (end)"), 1, &irc_protocol_cmd_whois_nick_msg },
-          { "319", N_("whois (channels)"), 1, &irc_protocol_cmd_whois_nick_msg },
-          { "320", N_("whois (identified user)"), 1, &irc_protocol_cmd_whois_nick_msg },
-          { "321", N_("/list start"), 1, &irc_protocol_cmd_321 },  
-          { "322", N_("channel (for /list)"), 1, &irc_protocol_cmd_322 },
-          { "323", N_("end of /list"), 1, &irc_protocol_cmd_323 },
-          { "324", N_("channel mode"), 1, &irc_protocol_cmd_324 },
-          { "326", N_("whois (has oper privs)"), 1, &irc_protocol_cmd_whois_nick_msg },
-          { "327", N_("whois (host)"), 1, &irc_protocol_cmd_327 },
-          { "329", N_("channel creation date"), 1, &irc_protocol_cmd_329 },
-          { "331", N_("no topic for channel"), 1, &irc_protocol_cmd_331 },
-          { "332", N_("topic of channel"), 1, &irc_protocol_cmd_332 },
-          { "333", N_("infos about topic (nick and date changed)"), 1, &irc_protocol_cmd_333 },
-          { "338", N_("whois (host)"), 1, &irc_protocol_cmd_338 },
-          { "341", N_("inviting"), 1, &irc_protocol_cmd_341 },
-          { "344", N_("channel reop"), 1, &irc_protocol_cmd_344 },
-          { "345", N_("end of channel reop list"), 1, &irc_protocol_cmd_345 },
-          { "348", N_("channel exception list"), 1, &irc_protocol_cmd_348 },
-          { "349", N_("end of channel exception list"), 1, &irc_protocol_cmd_349 },
-          { "351", N_("server version"), 1, &irc_protocol_cmd_351 },
-          { "352", N_("who"), 1, &irc_protocol_cmd_352 },
-          { "353", N_("list of nicks on channel"), 1, &irc_protocol_cmd_353 },
-          { "366", N_("end of /names list"), 1, &irc_protocol_cmd_366 },
-          { "367", N_("banlist"), 1, &irc_protocol_cmd_367 },
-          { "368", N_("end of banlist"), 1, &irc_protocol_cmd_368 },
-          { "378", N_("whois (connecting from)"), 1, &irc_protocol_cmd_whois_nick_msg },
-          { "379", N_("whois (using modes)"), 1, &irc_protocol_cmd_whois_nick_msg },
-          { "401", N_("no such nick/channel"), 1, &irc_protocol_cmd_error },
-          { "402", N_("no such server"), 1, &irc_protocol_cmd_error },
-          { "403", N_("no such channel"), 1, &irc_protocol_cmd_error },
-          { "404", N_("cannot send to channel"), 1, &irc_protocol_cmd_error },
-          { "405", N_("too many channels"), 1, &irc_protocol_cmd_error },
-          { "406", N_("was no such nick"), 1, &irc_protocol_cmd_error },
-          { "407", N_("was no such nick"), 1, &irc_protocol_cmd_error },
-          { "409", N_("no origin"), 1, &irc_protocol_cmd_error },
-          { "410", N_("no services"), 1, &irc_protocol_cmd_error },
-          { "411", N_("no recipient"), 1, &irc_protocol_cmd_error },
-          { "412", N_("no text to send"), 1, &irc_protocol_cmd_error },
-          { "413", N_("no toplevel"), 1, &irc_protocol_cmd_error },
-          { "414", N_("wilcard in toplevel domain"), 1, &irc_protocol_cmd_error },
-          { "421", N_("unknown command"), 1, &irc_protocol_cmd_error },
-          { "422", N_("MOTD is missing"), 1, &irc_protocol_cmd_error },
-          { "423", N_("no administrative info"), 1, &irc_protocol_cmd_error },
-          { "424", N_("file error"), 1, &irc_protocol_cmd_error },
-          { "431", N_("no nickname given"), 1, &irc_protocol_cmd_error },
-          { "432", N_("erroneous nickname"), 1, &irc_protocol_cmd_432 },
-          { "433", N_("nickname already in use"), 1, &irc_protocol_cmd_433 },
-          { "436", N_("nickname collision"), 1, &irc_protocol_cmd_error },
-          { "437", N_("resource unavailable"), 1, &irc_protocol_cmd_error },
-          { "438", N_("not authorized to change nickname"), 1, &irc_protocol_cmd_438 },
-          { "441", N_("user not in channel"), 1, &irc_protocol_cmd_error },
-          { "442", N_("not on channel"), 1, &irc_protocol_cmd_error },
-          { "443", N_("user already on channel"), 1, &irc_protocol_cmd_error },
-          { "444", N_("user not logged in"), 1, &irc_protocol_cmd_error },
-          { "445", N_("summon has been disabled"), 1, &irc_protocol_cmd_error },
-          { "446", N_("users has been disabled"), 1, &irc_protocol_cmd_error },
-          { "451", N_("you are not registered"), 1, &irc_protocol_cmd_error },
-          { "461", N_("not enough parameters"), 1, &irc_protocol_cmd_error },
-          { "462", N_("you may not register"), 1, &irc_protocol_cmd_error },
-          { "463", N_("your host isn't among the privileged"), 1, &irc_protocol_cmd_error },
-          { "464", N_("password incorrect"), 1, &irc_protocol_cmd_error },
-          { "465", N_("you are banned from this server"), 1, &irc_protocol_cmd_error },
-          { "467", N_("channel key already set"), 1, &irc_protocol_cmd_error },
-          { "470", N_("forwarding to another channel"), 1, &irc_protocol_cmd_error },
-          { "471", N_("channel is already full"), 1, &irc_protocol_cmd_error },
-          { "472", N_("unknown mode char to me"), 1, &irc_protocol_cmd_error },
-          { "473", N_("cannot join channel (invite only)"), 1, &irc_protocol_cmd_error },
-          { "474", N_("cannot join channel (banned from channel)"), 1, &irc_protocol_cmd_error },
-          { "475", N_("cannot join channel (bad channel key)"), 1, &irc_protocol_cmd_error },
-          { "476", N_("bad channel mask"), 1, &irc_protocol_cmd_error },
-          { "477", N_("channel doesn't support modes"), 1, &irc_protocol_cmd_error },
-          { "481", N_("you're not an IRC operator"), 1, &irc_protocol_cmd_error },
-          { "482", N_("you're not channel operator"), 1, &irc_protocol_cmd_error },
-          { "483", N_("you can't kill a server!"), 1, &irc_protocol_cmd_error },
-          { "484", N_("your connection is restricted!"), 1, &irc_protocol_cmd_error },
-          { "485", N_("user is immune from kick/deop"), 1, &irc_protocol_cmd_error },
-          { "487", N_("network split"), 1, &irc_protocol_cmd_error },
-          { "491", N_("no O-lines for your host"), 1, &irc_protocol_cmd_error },
-          { "501", N_("unknown mode flag"), 1, &irc_protocol_cmd_error },
-          { "502", N_("can't change mode for other users"), 1, &irc_protocol_cmd_error },
-          { "671", N_("whois (secure connection)"), 1, &irc_protocol_cmd_whois_nick_msg },
-          { "973", N_("whois (secure connection)"), 1, &irc_protocol_cmd_server_mode_reason },
-          { "974", N_("whois (secure connection)"), 1, &irc_protocol_cmd_server_mode_reason },
-          { "975", N_("whois (secure connection)"), 1, &irc_protocol_cmd_server_mode_reason },
-          { NULL, NULL, 0, NULL }
+                          "for themselves */ 1, &irc_protocol_cmd_wallops },
+          { "001", /* a server message */ 1, &irc_protocol_cmd_001 },
+          { "005", /* a server message */ 1, &irc_protocol_cmd_005 },
+          { "221", /* user mode string */ 1, &irc_protocol_cmd_221 },
+          { "301", /* away message */ 1, &irc_protocol_cmd_301 },
+          { "303", /* ison */ 1, &irc_protocol_cmd_303 },
+          { "305", /* unaway */ 1, &irc_protocol_cmd_305 },
+          { "306", /* now away */ 1, &irc_protocol_cmd_306 },
+          { "307", /* whois (registered nick) */ 1, &irc_protocol_cmd_whois_nick_msg },
+          { "310", /* whois (help mode) */ 1, &irc_protocol_cmd_whois_nick_msg },
+          { "311", /* whois (user) */ 1, &irc_protocol_cmd_311 },
+          { "312", /* whois (server) */ 1, &irc_protocol_cmd_312 },
+          { "313", /* whois (operator) */ 1, &irc_protocol_cmd_whois_nick_msg },
+          { "314", /* whowas */ 1, &irc_protocol_cmd_314 },
+          { "315", /* end of /who list */ 1, &irc_protocol_cmd_315 },
+          { "317", /* whois (idle) */ 1, &irc_protocol_cmd_317 },
+          { "318", /* whois (end) */ 1, &irc_protocol_cmd_whois_nick_msg },
+          { "319", /* whois (channels) */ 1, &irc_protocol_cmd_whois_nick_msg },
+          { "320", /* whois (identified user) */ 1, &irc_protocol_cmd_whois_nick_msg },
+          { "321", /* /list start */ 1, &irc_protocol_cmd_321 },  
+          { "322", /* channel (for /list) */ 1, &irc_protocol_cmd_322 },
+          { "323", /* end of /list */ 1, &irc_protocol_cmd_323 },
+          { "324", /* channel mode */ 1, &irc_protocol_cmd_324 },
+          { "326", /* whois (has oper privs) */ 1, &irc_protocol_cmd_whois_nick_msg },
+          { "327", /* whois (host) */ 1, &irc_protocol_cmd_327 },
+          { "329", /* channel creation date */ 1, &irc_protocol_cmd_329 },
+          { "331", /* no topic for channel */ 1, &irc_protocol_cmd_331 },
+          { "332", /* topic of channel */ 1, &irc_protocol_cmd_332 },
+          { "333", /* infos about topic (nick and date changed) */ 1, &irc_protocol_cmd_333 },
+          { "338", /* whois (host) */ 1, &irc_protocol_cmd_338 },
+          { "341", /* inviting */ 1, &irc_protocol_cmd_341 },
+          { "344", /* channel reop */ 1, &irc_protocol_cmd_344 },
+          { "345", /* end of channel reop list */ 1, &irc_protocol_cmd_345 },
+          { "348", /* channel exception list */ 1, &irc_protocol_cmd_348 },
+          { "349", /* end of channel exception list */ 1, &irc_protocol_cmd_349 },
+          { "351", /* server version */ 1, &irc_protocol_cmd_351 },
+          { "352", /* who */ 1, &irc_protocol_cmd_352 },
+          { "353", /* list of nicks on channel */ 1, &irc_protocol_cmd_353 },
+          { "366", /* end of /names list */ 1, &irc_protocol_cmd_366 },
+          { "367", /* banlist */ 1, &irc_protocol_cmd_367 },
+          { "368", /* end of banlist */ 1, &irc_protocol_cmd_368 },
+          { "378", /* whois (connecting from) */ 1, &irc_protocol_cmd_whois_nick_msg },
+          { "379", /* whois (using modes) */ 1, &irc_protocol_cmd_whois_nick_msg },
+          { "401", /* no such nick/channel */ 1, &irc_protocol_cmd_error },
+          { "402", /* no such server */ 1, &irc_protocol_cmd_error },
+          { "403", /* no such channel */ 1, &irc_protocol_cmd_error },
+          { "404", /* cannot send to channel */ 1, &irc_protocol_cmd_error },
+          { "405", /* too many channels */ 1, &irc_protocol_cmd_error },
+          { "406", /* was no such nick */ 1, &irc_protocol_cmd_error },
+          { "407", /* was no such nick */ 1, &irc_protocol_cmd_error },
+          { "409", /* no origin */ 1, &irc_protocol_cmd_error },
+          { "410", /* no services */ 1, &irc_protocol_cmd_error },
+          { "411", /* no recipient */ 1, &irc_protocol_cmd_error },
+          { "412", /* no text to send */ 1, &irc_protocol_cmd_error },
+          { "413", /* no toplevel */ 1, &irc_protocol_cmd_error },
+          { "414", /* wilcard in toplevel domain */ 1, &irc_protocol_cmd_error },
+          { "421", /* unknown command */ 1, &irc_protocol_cmd_error },
+          { "422", /* MOTD is missing */ 1, &irc_protocol_cmd_error },
+          { "423", /* no administrative info */ 1, &irc_protocol_cmd_error },
+          { "424", /* file error */ 1, &irc_protocol_cmd_error },
+          { "431", /* no nickname given */ 1, &irc_protocol_cmd_error },
+          { "432", /* erroneous nickname */ 1, &irc_protocol_cmd_432 },
+          { "433", /* nickname already in use */ 1, &irc_protocol_cmd_433 },
+          { "436", /* nickname collision */ 1, &irc_protocol_cmd_error },
+          { "437", /* resource unavailable */ 1, &irc_protocol_cmd_error },
+          { "438", /* not authorized to change nickname */ 1, &irc_protocol_cmd_438 },
+          { "441", /* user not in channel */ 1, &irc_protocol_cmd_error },
+          { "442", /* not on channel */ 1, &irc_protocol_cmd_error },
+          { "443", /* user already on channel */ 1, &irc_protocol_cmd_error },
+          { "444", /* user not logged in */ 1, &irc_protocol_cmd_error },
+          { "445", /* summon has been disabled */ 1, &irc_protocol_cmd_error },
+          { "446", /* users has been disabled */ 1, &irc_protocol_cmd_error },
+          { "451", /* you are not registered */ 1, &irc_protocol_cmd_error },
+          { "461", /* not enough parameters */ 1, &irc_protocol_cmd_error },
+          { "462", /* you may not register */ 1, &irc_protocol_cmd_error },
+          { "463", /* your host isn't among the privileged */ 1, &irc_protocol_cmd_error },
+          { "464", /* password incorrect */ 1, &irc_protocol_cmd_error },
+          { "465", /* you are banned from this server */ 1, &irc_protocol_cmd_error },
+          { "467", /* channel key already set */ 1, &irc_protocol_cmd_error },
+          { "470", /* forwarding to another channel */ 1, &irc_protocol_cmd_error },
+          { "471", /* channel is already full */ 1, &irc_protocol_cmd_error },
+          { "472", /* unknown mode char to me */ 1, &irc_protocol_cmd_error },
+          { "473", /* cannot join channel (invite only) */ 1, &irc_protocol_cmd_error },
+          { "474", /* cannot join channel (banned from channel) */ 1, &irc_protocol_cmd_error },
+          { "475", /* cannot join channel (bad channel key) */ 1, &irc_protocol_cmd_error },
+          { "476", /* bad channel mask */ 1, &irc_protocol_cmd_error },
+          { "477", /* channel doesn't support modes */ 1, &irc_protocol_cmd_error },
+          { "481", /* you're not an IRC operator */ 1, &irc_protocol_cmd_error },
+          { "482", /* you're not channel operator */ 1, &irc_protocol_cmd_error },
+          { "483", /* you can't kill a server! */ 1, &irc_protocol_cmd_error },
+          { "484", /* your connection is restricted! */ 1, &irc_protocol_cmd_error },
+          { "485", /* user is immune from kick/deop */ 1, &irc_protocol_cmd_error },
+          { "487", /* network split */ 1, &irc_protocol_cmd_error },
+          { "491", /* no O-lines for your host */ 1, &irc_protocol_cmd_error },
+          { "501", /* unknown mode flag */ 1, &irc_protocol_cmd_error },
+          { "502", /* can't change mode for other users */ 1, &irc_protocol_cmd_error },
+          { "671", /* whois (secure connection) */ 1, &irc_protocol_cmd_whois_nick_msg },
+          { "901", /* you are now logged in */ 1, &irc_protocol_cmd_901 },
+          { "973", /* whois (secure connection) */ 1, &irc_protocol_cmd_server_mode_reason },
+          { "974", /* whois (secure connection) */ 1, &irc_protocol_cmd_server_mode_reason },
+          { "975", /* whois (secure connection) */ 1, &irc_protocol_cmd_server_mode_reason },
+          { NULL, 0, NULL }
         };
     
     if (!command)
@@ -4195,7 +4226,8 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
         {
             weechat_printf (server->buffer,
                             _("%s%s: command \"%s\" not found:"),
-                            weechat_prefix ("error"), "irc", command);
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                            command);
             weechat_printf (server->buffer,
                             "%s%s",
                             weechat_prefix ("error"), entire_line);
@@ -4242,7 +4274,8 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
             weechat_printf (server->buffer,
                             _("%s%s: failed to parse command \"%s\" (please "
                               "report to developers):"),
-                            weechat_prefix ("error"), "irc", command);
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME,
+                            command);
             weechat_printf (server->buffer,
                             "%s%s",
                             weechat_prefix ("error"), entire_line);

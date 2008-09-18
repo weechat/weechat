@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-15 14:19+0200\n"
-"PO-Revision-Date: 2008-09-15 14:20+0200\n"
+"POT-Creation-Date: 2008-09-17 10:21+0200\n"
+"PO-Revision-Date: 2008-09-17 10:22+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -416,8 +416,8 @@ msgid "    prints hooked:"
 msgstr "    impressions accrochées:"
 
 #, c-format
-msgid "      buffer: %s / %s, message: \"%s\""
-msgstr "      tampon: %s / %s, message: \"%s\""
+msgid "      buffer: %s, message: \"%s\""
+msgstr "      tampon: %s, message: \"%s\""
 
 msgid "(none)"
 msgstr "(aucun)"
@@ -572,12 +572,12 @@ msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
 "| [default] | [del barname|-all] | [set barname name|priority|condition|"
 "position|filling|size|separator|items value] | [hide|show barname] | [scroll "
-"barname category.name value] | [list] | [listitems]"
+"barname buffer value] | [list] | [listitems]"
 msgstr ""
 "[add nombarre type[,cond1,cond2,...] position taille separateur objet1,"
-"objet2,...] | [default] | [del nombarre|-all] | [set nombarre name|priority|"
-"condition|position|filling|size|separator|items valeur] | [hide|show "
-"nombarre] | [scroll nombarre categorie.nom valeur] | [list] | [listitems]"
+"objet2,...] | [default] | [del nombarre|-all] | [set nombarre nom|priorité|"
+"condition|position|remplissage|taille|séparateur|items valeur] | [hide|show "
+"nombarre] | [scroll nombarre tampon valeur] | [list] | [listitems]"
 
 msgid ""
 "          add: add a new bar\n"
@@ -601,8 +601,8 @@ msgid ""
 "         hide: hide a bar\n"
 "         show: show an hidden bar\n"
 "       scroll: scroll bar up/down\n"
-"category.name: category and name of buffer to scroll ('*' means current "
-"buffer, you should use '*' for root bars)\n"
+"       buffer: name of buffer to scroll ('*' means current buffer, you "
+"should use '*' for root bars)\n"
 "        value: value for scroll: 'x' or 'y', followed by '+', '-', "
 "'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by "
 "%% of width/height, otherwise value is number of chars)\n"
@@ -622,38 +622,38 @@ msgid ""
 "  scroll to end of nicklist on current buffer:\n"
 "    /bar scroll nicklist * ye"
 msgstr ""
-"          add: ajoute une nouvelle barre\n"
-"     nombarre: nom de la barre (doit être unique)\n"
-"         type:   root: en dehors des fenêtres\n"
-"               window: dans les fenêtres, avec condition(s) optionnelle(s) "
+"        add: ajoute une nouvelle barre\n"
+"   nombarre: nom de la barre (doit être unique)\n"
+"       type:   root: en dehors des fenêtres\n"
+"             window: dans les fenêtres, avec condition(s) optionnelle(s) "
 "(voir ci-dessous)\n"
-"    cond1,...: condition(s) pour afficher cette barre (seulement pour le "
-"type \"window\") :\n"
-"                 active: sur la fenêtre active\n"
-"               inactive: sur les fenêtres inactives\n"
-"               nicklist: sue les fenêtres avec liste de pseudos\n"
-"               sans condition, la barre est toujours affichée\n"
-"     position: bottom (bas), top (haut), left (gauche) ou right (droite)\n"
-"      filling: horizontal ou vertical\n"
-"       taille: taille de la barre (en caractères)\n"
-"   separateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie "
-"sans séparateur\n"
-"   objet1,...: objets pour cette barre\n"
-"      default: créer les barres par défaut\n"
-"          del: supprime une barre (ou toutes les barres avec -all)\n"
-"          set: changer la valeur d'une propriété de la barre\n"
-"         hide: cacher la barre\n"
-"         show: montrer une barre cachée\n"
-"       scroll: faire défiler la barre vers le haut/bas\n"
-"catégorie.nom: catégorie et nom du tampon ('*' signifie le tampon courant, "
+"  cond1,...: condition(s) pour afficher cette barre (seulement pour le type "
+"\"window\") :\n"
+"               active: sur la fenêtre active\n"
+"             inactive: sur les fenêtres inactives\n"
+"             nicklist: sue les fenêtres avec liste de pseudos\n"
+"             sans condition, la barre est toujours affichée\n"
+"   position: bottom (bas), top (haut), left (gauche) ou right (droite)\n"
+"remplissage: horizontal ou vertical\n"
+"     taille: taille de la barre (en caractères)\n"
+" séparateur: 1 pour utiliser un séparateur (ligne), 0 ou rien signifie sans "
+"séparateur\n"
+" objet1,...: objets pour cette barre\n"
+"    default: créer les barres par défaut\n"
+"        del: supprime une barre (ou toutes les barres avec -all)\n"
+"        set: changer la valeur d'une propriété de la barre\n"
+"       hide: cacher la barre\n"
+"       show: montrer une barre cachée\n"
+"     scroll: faire défiler la barre vers le haut/bas\n"
+"     tampon: catégorie et nom du tampon ('*' signifie le tampon courant, "
 "vous devez utiliser '*' pour les barres de type root)\n"
-"       valeur: valeur pour le défilement: 'x' ou 'y', suivi par '+', '-', "
+"     valeur: valeur pour le défilement: 'x' ou 'y', suivi par '+', '-', "
 "'b' (début) ou 'e' (fin), valeur (pour +/-), et un %% optionnel (pour faire "
 "défiler par %% de la largeur/hauteur, sinon la valeur est un nombre de "
 "caractères)\n"
-"         list: liste toutes les barres\n"
-"     listfull: liste toutes les barres (verbeux)\n"
-"    listitems: liste tous les objets de barre\n"
+"       list: liste toutes les barres\n"
+"   listfull: liste toutes les barres (verbeux)\n"
+"  listitems: liste tous les objets de barre\n"
 "\n"
 "Exemples :\n"
 "  créer une barre avec l'heure et la complétion :\n"
@@ -768,8 +768,8 @@ msgid ""
 "    del: delete a filter\n"
 " number: number of filter to delete (look at list to find it)\n"
 "   -all: delete all filters\n"
-" buffer: buffer where filter is active: it may be a name (category.name) or "
-"\"*\" for all buffers\n"
+" buffer: buffer where filter is active: it may be a name or \"*\" for all "
+"buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
 "irc_quit\"\n"
 "  regex: regular expression to search in line (use \\t to separate prefix "
@@ -794,8 +794,8 @@ msgstr ""
 " numéro: numéro du filtre à supprimer (voir la liste des filtres pour le "
 "trouver)\n"
 "   -all: supprime tous les filtres\n"
-" buffer: tampon où le filtre est actif: cela peut être un nom (catégorie."
-"nom) ou \"*\" pour tous les tampons\n"
+" buffer: tampon où le filtre est actif: cela peut être un nom ou \"*\" pour "
+"tous les tampons\n"
 "   tags: liste de tags, séparés par des virgules, par exemple: \"irc_join,"
 "irc_part,irc_quit\"\n"
 "  regex: expressoin régulière à rechercher dans la ligne (utiliser \\t pour "
@@ -1119,6 +1119,13 @@ msgstr ""
 "+highlight)"
 
 msgid ""
+"if set, uses short names to display buffer names in hotlist (start after "
+"first '.' in name)"
+msgstr ""
+"si défini, utilie des noms courts pour afficher les noms de tampons dans la "
+"hotlist (commence après le premier '.' dans le nom)"
+
+msgid ""
 "hotlist sort type (group_time_asc (default), group_time_desc, "
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 msgstr ""
@@ -1340,10 +1347,6 @@ msgstr "couleur du texte pour les délimiteurs de la barre de statut"
 msgid "text color for current buffer number in status bar"
 msgstr ""
 "couleur du texte pour le numéro du tampon courant dans la barre de statut"
-
-msgid "text color for current buffer category in status bar"
-msgstr ""
-"couleur du texte pour la catégorie du tampon courant dans la barre de statut"
 
 msgid "text color for current buffer name in status bar"
 msgstr "couleur du texte pour le nom du tampon courant dans la barre de statut"
@@ -1656,12 +1659,12 @@ msgstr ""
 "dir\".\n"
 
 #, c-format
-msgid "%sError upgrading WeeChat:"
-msgstr "%sErreur de mise à jour de WeeChat:"
+msgid "%sError upgrading WeeChat with file '%s':"
+msgstr "%sErreur de mise à jour de WeeChat avec le fichier '%s':"
 
 #, c-format
-msgid "%s    error: %s"
-msgstr "%s    erreur: %s"
+msgid "%s    error: %s%s%s%s"
+msgstr "%s    erreur: %s%s%s%s"
 
 #, c-format
 msgid "%s    last read: position: %ld, length: %d"
@@ -1672,8 +1675,57 @@ msgid "%s    source: %s, line: %d"
 msgstr "%s    source: %s, ligne: %d"
 
 #, c-format
-msgid "%s*** Please report above info to developers ***"
-msgstr "%s*** Merci de reporter les erreurs ci-dessus aux développeurs ***"
+msgid "%s    *** Please report above info to developers ***"
+msgstr "%s    *** Merci de reporter les erreurs ci-dessus aux développeurs ***"
+
+msgid "write - object type"
+msgstr "écriture - type d'objet"
+
+msgid "write - object id"
+msgstr "écriture - id objet"
+
+msgid "write - variable name"
+msgstr "écriture - nom de variable"
+
+msgid "write - infolist type"
+msgstr "écriture - type d'infolist"
+
+msgid "write - variable"
+msgstr "écriture - variable"
+
+msgid "read - object type"
+msgstr "lecture - type d'objet"
+
+msgid "read - bad object type ('object start' expected)"
+msgstr "lecture - mauvais type d'objet ('object start' attendu)"
+
+msgid "read - object id"
+msgstr "lecture - id objet"
+
+msgid "read - infolist creation"
+msgstr "lecture - création infolist"
+
+msgid "read - infolist item creation"
+msgstr "lecture - création d'item infolist"
+
+msgid "read - variable name"
+msgstr "lecture - nom de variable"
+
+msgid "read - variable type"
+msgstr "lecture - type de variable"
+
+msgid "read - variable"
+msgstr "lecture - variable"
+
+msgid "read - signature not found"
+msgstr "lecture - signature non trouvée"
+
+msgid ""
+"read - bad signature (upgrade file format may have changed since last "
+"version)"
+msgstr ""
+"lecture - mauvaise signature (le format de fichier upgrade a peut-être "
+"changé depuis la dernière version)"
 
 #, c-format
 msgid "Error: cannot create directory \"%s\"\n"
@@ -1784,8 +1836,8 @@ msgid "%s-MORE(%d)-"
 msgstr "%s-PLUS(%d)-"
 
 #, c-format
-msgid "%sError: a buffer with same name already exists (%s / %s)"
-msgstr "%sErreur: un tampon avec le même nom existe déjà (%s / %s)"
+msgid "%sError: a buffer with same name (%s) already exists"
+msgstr "%sErreur: un tampon avec le même nom (%s) existe déjà"
 
 msgid "Not enough memory for new line"
 msgstr "Pas assez de mémoire pour une nouvelle ligne"
@@ -2001,8 +2053,8 @@ msgstr "texte: affiche ce texte"
 msgid "open a new buffer"
 msgstr "ouvrir un nouveau tampon"
 
-msgid "category name"
-msgstr "catégorie nom"
+msgid "name"
+msgstr "nom"
 
 msgid "set a buffer property"
 msgstr "définir une propriété de tampon"
@@ -2082,6 +2134,14 @@ msgstr "nom du tube FIFO"
 #, c-format
 msgid "%s%s: error with IRC server from URL (\"%s\"), ignored"
 msgstr "%s%s: erreur avec le serveur IRC de l'URL (\"%s\"), ignoré"
+
+#, c-format
+msgid ""
+"%s%s: WARNING: some network connections may still be open and not visible, "
+"you should restart WeeChat now (with /quit)."
+msgstr ""
+"%s%s: ATTENTION: des connexions réseau peuvent encore être ouvertes et non "
+"visibles, vous devriez redémarrer Weechat maintenant (avec /quit)."
 
 #, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -3591,294 +3651,6 @@ msgstr ""
 "%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le pseudo n°"
 "%d (\"%s\")"
 
-msgid "error received from IRC server"
-msgstr "erreur reçue du serveur IRC"
-
-msgid "message received"
-msgstr "message reçu"
-
-msgid "close all connections and quit"
-msgstr "fermer toutes les connexions et quitter"
-
-msgid "a server message"
-msgstr "un message du serveur"
-
-msgid "user mode string"
-msgstr "chaîne de mode utilisateur"
-
-msgid "away message"
-msgstr "message d'absence"
-
-msgid "ison"
-msgstr "est présent"
-
-msgid "unaway"
-msgstr "non absent"
-
-msgid "now away"
-msgstr "maintenant absent"
-
-msgid "whois (registered nick)"
-msgstr "whois (pseudo enregistré)"
-
-msgid "whois (help mode)"
-msgstr "whois (mode aide)"
-
-msgid "whois (user)"
-msgstr "whois (utilisateur)"
-
-msgid "whois (server)"
-msgstr "whois (serveur)"
-
-msgid "whois (operator)"
-msgstr "whois (opérateur)"
-
-msgid "whowas"
-msgstr "whowas"
-
-msgid "end of /who list"
-msgstr "fin de la liste /who"
-
-msgid "whois (idle)"
-msgstr "whois (inactif)"
-
-msgid "whois (end)"
-msgstr "whois (fin)"
-
-msgid "whois (channels)"
-msgstr "whois (canaux)"
-
-msgid "whois (identified user)"
-msgstr "whois (utilisateur identifié)"
-
-msgid "/list start"
-msgstr "/list début"
-
-msgid "channel (for /list)"
-msgstr "canal (pour /list)"
-
-msgid "end of /list"
-msgstr "fin de /list"
-
-msgid "channel mode"
-msgstr "mode du canal"
-
-msgid "whois (has oper privs)"
-msgstr "whois (a les privilèges oper)"
-
-msgid "whois (host)"
-msgstr "whois (hôte)"
-
-msgid "channel creation date"
-msgstr "date de création du canal"
-
-msgid "no topic for channel"
-msgstr "pas de titre pour le canal"
-
-msgid "topic of channel"
-msgstr "titre du canal"
-
-msgid "infos about topic (nick and date changed)"
-msgstr "informations sur le titre (pseudo et date de changement)"
-
-msgid "inviting"
-msgstr "invitation"
-
-msgid "channel reop"
-msgstr "reop canal"
-
-msgid "end of channel reop list"
-msgstr "fin du reop canal"
-
-msgid "channel exception list"
-msgstr "liste d'exception de canal"
-
-msgid "end of channel exception list"
-msgstr "fin de liste d'exception de canal"
-
-msgid "server version"
-msgstr "version du serveur"
-
-msgid "who"
-msgstr "qui"
-
-msgid "list of nicks on channel"
-msgstr "liste des pseudos sur un canal"
-
-msgid "end of /names list"
-msgstr "fin de la liste /names"
-
-msgid "banlist"
-msgstr "liste de bannissement"
-
-msgid "end of banlist"
-msgstr "fin de la liste de bannissement"
-
-msgid "whois (connecting from)"
-msgstr "whois (connexion depuis)"
-
-msgid "whois (using modes)"
-msgstr "whois (utilise les modes)"
-
-msgid "no such nick/channel"
-msgstr "pas de tel pseudo/canal"
-
-msgid "no such server"
-msgstr "pas de tel serveur"
-
-msgid "no such channel"
-msgstr "pas de tel canal"
-
-msgid "cannot send to channel"
-msgstr "impossible d'envoyer au canal"
-
-msgid "too many channels"
-msgstr "trop de canaux"
-
-msgid "was no such nick"
-msgstr "n'y avait pas de tel pseudo"
-
-msgid "no origin"
-msgstr "pas d'origine"
-
-msgid "no services"
-msgstr "pas de service"
-
-msgid "no recipient"
-msgstr "pas de destinataire"
-
-msgid "no text to send"
-msgstr "pas de texte à envoyer"
-
-msgid "no toplevel"
-msgstr "pas de niveau supérieur"
-
-msgid "wilcard in toplevel domain"
-msgstr "caractère joker dans le domaine de niveau supérieur"
-
-msgid "unknown command"
-msgstr "commande inconnue"
-
-msgid "MOTD is missing"
-msgstr "MOTD est manquant"
-
-msgid "no administrative info"
-msgstr "pas d'information administrative"
-
-msgid "file error"
-msgstr "erreur de fichier"
-
-msgid "no nickname given"
-msgstr "pas de pseudo donné"
-
-msgid "erroneous nickname"
-msgstr "pseudo erroné"
-
-msgid "nickname already in use"
-msgstr "pseudo déjà en cours d'utilisation"
-
-msgid "nickname collision"
-msgstr "collision sur le pseudo"
-
-msgid "resource unavailable"
-msgstr "ressource non disponible"
-
-msgid "not authorized to change nickname"
-msgstr "non autorisé à changer de pseudo"
-
-msgid "user not in channel"
-msgstr "utilisateur non présent dans le canal"
-
-msgid "not on channel"
-msgstr "non présent sur le canal"
-
-msgid "user already on channel"
-msgstr "utilisateur déjà sur le canal"
-
-msgid "user not logged in"
-msgstr "utilisateur non enregistré"
-
-msgid "summon has been disabled"
-msgstr "summon a été désactivé"
-
-msgid "users has been disabled"
-msgstr "users a été désactivé"
-
-msgid "you are not registered"
-msgstr "vous n'êtes pas enregistré"
-
-msgid "not enough parameters"
-msgstr "pas assez de paramètres"
-
-msgid "you may not register"
-msgstr "vous ne pouvez pas vous enregistrer"
-
-msgid "your host isn't among the privileged"
-msgstr "votre nom de machine n'est pas parmi les privilégiés"
-
-msgid "password incorrect"
-msgstr "mot de passe incorrect"
-
-msgid "you are banned from this server"
-msgstr "vous êtes banni de ce serveur"
-
-msgid "channel key already set"
-msgstr "clé du canal déjà définie"
-
-msgid "forwarding to another channel"
-msgstr "redirection vers un autre canal"
-
-msgid "channel is already full"
-msgstr "le canal est déjà plein"
-
-msgid "unknown mode char to me"
-msgstr "caractère de mode inconnu pour moi"
-
-msgid "cannot join channel (invite only)"
-msgstr "impossible de rejoindre le canal (invités seulement)"
-
-msgid "cannot join channel (banned from channel)"
-msgstr "impossible de rejoindre le canal (banni du canal)"
-
-msgid "cannot join channel (bad channel key)"
-msgstr "impossible de rejoindre le canal (mauvaise clé pour le canal)"
-
-msgid "bad channel mask"
-msgstr "mauvais masque de canal"
-
-msgid "channel doesn't support modes"
-msgstr "le canal ne supporte pas les modes"
-
-msgid "you're not an IRC operator"
-msgstr "vous n'êtres pas opérateur IRC"
-
-msgid "you're not channel operator"
-msgstr "vous n'êtes pas opérateur du canal"
-
-msgid "you can't kill a server!"
-msgstr "vous ne pouvez pas supprimer un serveur !"
-
-msgid "your connection is restricted!"
-msgstr "votre connexion est restreinte !"
-
-msgid "user is immune from kick/deop"
-msgstr "l'utilisateur est protégé des kick/deop"
-
-msgid "network split"
-msgstr "network split"
-
-msgid "no O-lines for your host"
-msgstr "pas de O-lines pour votre nom de machine"
-
-msgid "unknown mode flag"
-msgstr "drapeau de mode inconnu"
-
-msgid "can't change mode for other users"
-msgstr "impossible de changer le mode pour les autres utilisateurs"
-
-msgid "whois (secure connection)"
-msgstr "whois (connexion sécurisée)"
-
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
 msgstr "%s%s: commande \"%s\" non trouvée:"
@@ -4808,68 +4580,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "[infolist]"
-#~ msgstr "[infolist]"
-
-#~ msgid ""
-#~ "infolist: infolist to display\n"
-#~ "\n"
-#~ "Without argument, this command displays list of available infolists"
-#~ msgstr ""
-#~ "infolist: infolist à afficher\n"
-#~ "\n"
-#~ "Sans paramètre, cette commande affiche la liste des infolists disponibles"
-
-#~ msgid "  type: string (%s)"
-#~ msgstr "  type: chaîne (%s)"
-
-#~ msgid "  value: '%s%s%s' (default: '%s')"
-#~ msgstr "  valeur: '%s%s%s' (défaut: '%s')"
-
-#~ msgid "  type: integer (between %d and %d)"
-#~ msgstr "  type: entier (entre %d et %d)"
-
-#~ msgid "  value: %s%d%s (default: %d)"
-#~ msgstr "  valeur: %s%d%s (défaut: %d)"
-
-#~ msgid "  type: string (any string)"
-#~ msgstr "  type: chaîne (toute chaîne)"
-
-#~ msgid "  type: char (any char)"
-#~ msgstr "  type: caractère (tout caractère)"
-
-#~ msgid "  type: string (limit: %d chars)"
-#~ msgstr "  type: chaîne (limite: %d caractères)"
-
-#~ msgid "  type: color (values depend on GUI used)"
-#~ msgstr "  type: couleur (les valeurs dépendent de l'interface utilisée)"
-
-#~ msgid "  value: %s%s%s (default: %s)"
-#~ msgstr "  valeur: %s%s%s (défaut: %s)"
-
-#~ msgid "  type: boolean ('on' or 'off')"
-#~ msgstr "  type: booléen ('on' ou 'off')"
-
-#~ msgid "  %s: %s%s%s (default: %s)"
-#~ msgstr "  %s: %s%s%s (défaut: %s)"
-
-#~ msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
-#~ msgstr "%s%s: paramètre manquant pour la commande \"%s\" (essayez /help %s)"
-
-#~ msgid "infolist: infolist to display (values: buffer, buffer_lines)"
-#~ msgstr "infolist: infolist à afficher (valeurs: buffer, buffer_lines)"
-
-#~ msgid ""
-#~ "     info: info to display (values: version, weechat_dir, weechat_libdir, "
-#~ "weechat_sharedir, charset_terminal, charset_internal, inactivity, input, "
-#~ "input_mask, input_pos)\n"
-#~ "arguments: optional arguments for info"
-#~ msgstr ""
-#~ "      info: info à afficher (valeurs: version, weechat_dir, "
-#~ "weechat_libdir, weechat_sharedir, charset_terminal, charset_internal, "
-#~ "inactivity, input, input_mask, input_pos)\n"
-#~ "paramètres: paramètres optionnels pour l'info"
-
-#~ msgid "info"
-#~ msgstr "info"

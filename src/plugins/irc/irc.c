@@ -35,7 +35,7 @@
 #include "irc-upgrade.h"
 
 
-WEECHAT_PLUGIN_NAME("irc");
+WEECHAT_PLUGIN_NAME(IRC_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("IRC (Internet Relay Chat) plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
@@ -138,14 +138,14 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         {
             auto_connect = 0;
         }
-        else if ((weechat_strncasecmp (argv[i], "irc", 3) == 0))
+        else if ((weechat_strncasecmp (argv[i], IRC_PLUGIN_NAME, 3) == 0))
         {
             if (!irc_server_alloc_with_url (argv[i]))
             {
                 weechat_printf (NULL,
                                 _("%s%s: error with IRC server from URL "
                                   "(\"%s\"), ignored"),
-                                weechat_prefix ("error"), "irc",
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                 argv[i]);
             }
         }
@@ -156,7 +156,16 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     }
     
     if (upgrading)
-        irc_upgrade_load ();
+    {
+        if (!irc_upgrade_load ())
+        {
+            weechat_printf (NULL,
+                            _("%s%s: WARNING: some network connections may "
+                              "still be open and not visible, you should "
+                              "restart WeeChat now (with /quit)."),
+                            weechat_prefix ("error"), IRC_PLUGIN_NAME);
+        }
+    }
     else
         irc_server_auto_connect (auto_connect);
     

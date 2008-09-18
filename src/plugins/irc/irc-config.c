@@ -372,8 +372,8 @@ irc_config_reload_servers_from_config ()
                             weechat_printf (NULL,
                                             _("%s%s: error creating server "
                                               "\"%s\""),
-                                            weechat_prefix ("error"), "irc",
-                                            server_name);
+                                            weechat_prefix ("error"),
+                                            IRC_PLUGIN_NAME, server_name);
                         }
                     }
                     if (ptr_server)
@@ -413,7 +413,7 @@ irc_config_reload_servers_from_config ()
                                         _("%s%s: error creating option "
                                           "\"%s\" for server \"%s\" (server "
                                           "not found)"),
-                                        weechat_prefix ("error"), "irc",
+                                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                         pos_option, server_name);
                     }
                     free (server_name);
@@ -465,7 +465,7 @@ irc_config_reload (void *data, struct t_config_file *config_file)
                                 _("%s%s: warning: server \"%s\" not found "
                                   "in configuration file, not deleted in "
                                   "memory because it's currently used"),
-                                weechat_prefix ("error"), "irc",
+                                weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                 ptr_server->name);
                 /* TODO: create options for server in section (options that
                    are not default one */
@@ -772,7 +772,7 @@ irc_config_server_create_option (void *data, struct t_config_file *config_file,
                         weechat_printf (NULL,
                                         _("%s%s: error creating server "
                                           "\"%s\""),
-                                        weechat_prefix ("error"), "irc",
+                                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
                                         server_name);
                     }
                     ptr_option = weechat_config_search_option (config_file,
@@ -818,7 +818,7 @@ irc_config_server_create_option (void *data, struct t_config_file *config_file,
     {
         weechat_printf (NULL,
                         _("%s%s: error creating server option \"%s\""),
-                        weechat_prefix ("error"), "irc",
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,
                         option_name);
     }
     

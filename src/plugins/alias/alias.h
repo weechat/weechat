@@ -21,6 +21,9 @@
 #define __WEECHAT_ALIAS_H 1
 
 #define weechat_plugin weechat_alias_plugin
+#define ALIAS_PLUGIN_NAME "alias"
+
+#define ALIAS_CONFIG_NAME "alias"
 
 struct t_alias
 {

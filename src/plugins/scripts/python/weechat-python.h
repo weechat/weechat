@@ -21,6 +21,7 @@
 #define __WEECHAT_PYTHON_H 1
 
 #define weechat_plugin weechat_python_plugin
+#define PYTHON_PLUGIN_NAME "python"
 
 extern struct t_weechat_plugin *weechat_python_plugin;
 

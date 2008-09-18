@@ -902,22 +902,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.color.status_category</command>
-<itemizedlist>
-  <listitem>
-    <para>description: couleur du texte pour la catégorie du tampon courant dans la barre de statut</para>
-  </listitem>
-  <listitem>
-    <para>type: couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: un nom de couleur</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: lightgreen</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.color.status_data_highlight</command>
 <itemizedlist>
   <listitem>
@@ -1411,6 +1395,22 @@
   </listitem>
   <listitem>
     <para>valeur par défaut: 12</para>
+  </listitem>
+</itemizedlist>
+
+<command>weechat.look.hotlist_short_names</command>
+<itemizedlist>
+  <listitem>
+    <para>description: si défini, utilie des noms courts pour afficher les noms de tampons dans la hotlist (commence après le premier '.' dans le nom)</para>
+  </listitem>
+  <listitem>
+    <para>type: booléen</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: on, off</para>
+  </listitem>
+  <listitem>
+    <para>valeur par défaut: on</para>
   </listitem>
 </itemizedlist>
 

@@ -21,6 +21,7 @@
 #define __WEECHAT_LOGGER_H 1
 
 #define weechat_plugin weechat_logger_plugin
+#define LOGGER_PLUGIN_NAME "logger"
 
 #define LOGGER_BUF_WRITE_SIZE  (16*1024)
 

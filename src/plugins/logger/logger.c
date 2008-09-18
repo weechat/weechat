@@ -41,7 +41,7 @@
 #include "logger-tail.h"
 
 
-WEECHAT_PLUGIN_NAME("logger");
+WEECHAT_PLUGIN_NAME(LOGGER_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Logger plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
@@ -240,7 +240,7 @@ logger_get_filename (struct t_gui_buffer *buffer)
     struct t_infolist *ptr_infolist;
     char *res;
     char *dir_separator, *weechat_dir, *log_path, *log_path2;
-    char *plugin_name, *plugin_name2, *category, *category2, *name, *name2;
+    char *plugin_name, *plugin_name2, *name, *name2;
     int length;
     
     res = NULL;
@@ -256,16 +256,12 @@ logger_get_filename (struct t_gui_buffer *buffer)
         ptr_infolist = weechat_infolist_get ("buffer", buffer, NULL);
         if (ptr_infolist)
         {
-            category2 = NULL;
             name2 = NULL;
             if (weechat_infolist_next (ptr_infolist))
             {
                 plugin_name = weechat_infolist_string (ptr_infolist, "plugin_name");
                 plugin_name2 = (plugin_name) ?
-                    weechat_string_replace (plugin_name, dir_separator, "_") : NULL;
-                category = weechat_infolist_string (ptr_infolist, "category");
-                category2 = (category) ?
-                    weechat_string_replace (category, dir_separator, "_") : NULL;
+                    weechat_string_replace (plugin_name, dir_separator, "_") : strdup ("core");
                 name = weechat_infolist_string (ptr_infolist, "name");
                 name2 = (name) ?
                     weechat_string_replace (name, dir_separator, "_") : NULL;
@@ -273,8 +269,6 @@ logger_get_filename (struct t_gui_buffer *buffer)
             length = strlen (log_path2);
             if (plugin_name2)
                 length += strlen (plugin_name2) + 1;
-            if (category2)
-                length += strlen (category2) + 1;
             if (name2)
                 length += strlen (name2) + 1;
             length += 16;
@@ -289,13 +283,6 @@ logger_get_filename (struct t_gui_buffer *buffer)
                     strcat (res, plugin_name2);
                     strcat (res, ".");
                 }
-                if (category2)
-                {
-                    if (logger_option_name_lower_case)
-                        weechat_string_tolower (category2);
-                    strcat (res, category2);
-                    strcat (res, ".");
-                }
                 if (name2)
                 {
                     if (logger_option_name_lower_case)
@@ -305,8 +292,6 @@ logger_get_filename (struct t_gui_buffer *buffer)
                 }
                 strcat (res, "weechatlog");
             }
-            if (category2)
-                free (category2);
             if (name2)
                 free (name2);
             weechat_infolist_free (ptr_infolist);
@@ -352,7 +337,7 @@ logger_write_line (struct t_logger_buffer *logger_buffer,
             {
                 weechat_printf (NULL,
                                 _("%s%s: unable to write log file \"%s\""),
-                                weechat_prefix ("error"), "logger",
+                                weechat_prefix ("error"), LOGGER_PLUGIN_NAME,
                                 logger_buffer->log_filename);
                 free (logger_buffer->log_filename);
                 logger_buffer->log_filename = NULL;

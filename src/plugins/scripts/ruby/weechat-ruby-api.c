@@ -104,7 +104,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
                                          "exists with this name)"),
-                        weechat_prefix ("error"), "ruby", c_name);
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME, c_name);
         RUBY_RETURN_ERROR;
     }
     
@@ -122,7 +122,7 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
         weechat_printf (NULL,
                         weechat_gettext ("%s: registered script \"%s\", "
                                          "version %s (%s)"),
-                        "ruby", c_name, c_version, c_description);
+                        RUBY_PLUGIN_NAME, c_name, c_version, c_description);
     }
     else
     {
@@ -2108,12 +2108,6 @@ weechat_ruby_api_print (VALUE class, VALUE buffer, VALUE message)
     /* make C compiler happy */
     (void) class;
     
-    if (!ruby_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print");
-        RUBY_RETURN_ERROR;
-    }
-    
     c_buffer = NULL;
     c_message = NULL;
     
@@ -3416,10 +3410,10 @@ weechat_ruby_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
  */
 
 static VALUE
-weechat_ruby_api_buffer_new (VALUE class, VALUE category, VALUE name,
-                             VALUE function_input, VALUE function_close)
+weechat_ruby_api_buffer_new (VALUE class, VALUE name, VALUE function_input,
+                             VALUE function_close)
 {
-    char *c_category, *c_name, *c_function_input, *c_function_close, *result;
+    char *c_name, *c_function_input, *c_function_close, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -3431,31 +3425,26 @@ weechat_ruby_api_buffer_new (VALUE class, VALUE category, VALUE name,
         RUBY_RETURN_EMPTY;
     }
     
-    c_category = NULL;
     c_name = NULL;
     c_function_input = NULL;
     c_function_close = NULL;
     
-    if (NIL_P (category) || NIL_P (name) || NIL_P (function_input)
-        || NIL_P (function_close))
+    if (NIL_P (name) || NIL_P (function_input) || NIL_P (function_close))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_new");
         RUBY_RETURN_EMPTY;
     }
     
-    Check_Type (category, T_STRING);
     Check_Type (name, T_STRING);
     Check_Type (function_input, T_STRING);
     Check_Type (function_close, T_STRING);
     
-    c_category = STR2CSTR (category);
     c_name = STR2CSTR (name);
     c_function_input = STR2CSTR (function_input);
     c_function_close = STR2CSTR (function_close);
     
     result = script_ptr2str (script_api_buffer_new (weechat_ruby_plugin,
                                                     ruby_current_script,
-                                                    c_category,
                                                     c_name,
                                                     &weechat_ruby_api_buffer_input_data_cb,
                                                     c_function_input,
@@ -3470,9 +3459,9 @@ weechat_ruby_api_buffer_new (VALUE class, VALUE category, VALUE name,
  */
 
 static VALUE
-weechat_ruby_api_buffer_search (VALUE class, VALUE category, VALUE name)
+weechat_ruby_api_buffer_search (VALUE class, VALUE plugin, VALUE name)
 {
-    char *c_category, *c_name, *result;
+    char *c_plugin, *c_name, *result;
     VALUE return_value;
     
     /* make C compiler happy */
@@ -3483,23 +3472,23 @@ weechat_ruby_api_buffer_search (VALUE class, VALUE category, VALUE name)
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_search");
         RUBY_RETURN_EMPTY;
     }
-    
-    c_category = NULL;
+
+    c_plugin = NULL;
     c_name = NULL;
     
-    if (NIL_P (category) || NIL_P (name))
+    if (NIL_P (plugin) || NIL_P (name))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_search");
         RUBY_RETURN_EMPTY;
     }
     
-    Check_Type (category, T_STRING);
+    Check_Type (plugin, T_STRING);
     Check_Type (name, T_STRING);
     
-    c_category = STR2CSTR (category);
+    c_plugin = STR2CSTR (plugin);
     c_name = STR2CSTR (name);
     
-    result = script_ptr2str (weechat_buffer_search (c_category, c_name));
+    result = script_ptr2str (weechat_buffer_search (c_plugin, c_name));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -4978,7 +4967,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "hook_infolist", &weechat_ruby_api_hook_infolist, 3);
     rb_define_module_function (ruby_mWeechat, "unhook", &weechat_ruby_api_unhook, 1);
     rb_define_module_function (ruby_mWeechat, "unhook_all", &weechat_ruby_api_unhook_all, 0);
-    rb_define_module_function (ruby_mWeechat, "buffer_new", &weechat_ruby_api_buffer_new, 4);
+    rb_define_module_function (ruby_mWeechat, "buffer_new", &weechat_ruby_api_buffer_new, 3);
     rb_define_module_function (ruby_mWeechat, "buffer_search", &weechat_ruby_api_buffer_search, 2);
     rb_define_module_function (ruby_mWeechat, "buffer_clear", &weechat_ruby_api_buffer_clear, 1);
     rb_define_module_function (ruby_mWeechat, "buffer_close", &weechat_ruby_api_buffer_close, 1);

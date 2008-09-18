@@ -21,6 +21,7 @@
 #define __WEECHAT_LUA_H 1
 
 #define weechat_plugin weechat_lua_plugin
+#define LUA_PLUGIN_NAME "lua"
 
 extern struct t_weechat_plugin *weechat_lua_plugin;
 

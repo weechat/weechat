@@ -31,7 +31,7 @@
 #include "weechat-ruby-api.h"
 
 
-WEECHAT_PLUGIN_NAME("ruby");
+WEECHAT_PLUGIN_NAME(RUBY_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Ruby plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
@@ -181,12 +181,13 @@ weechat_ruby_exec (struct t_plugin_script *script,
     {
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to run function \"%s\""),
-                        weechat_prefix ("error"), "ruby", function);
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME, function);
 	
 	err = rb_inspect(rb_gv_get("$!"));
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: error: \"%s\""),
-                        weechat_prefix ("error"), "ruby", STR2CSTR(err));
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME,
+                        STR2CSTR(err));
         
 	return NULL;
     }
@@ -210,7 +211,7 @@ weechat_ruby_exec (struct t_plugin_script *script,
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"%s\" must return a "
                                          "valid value"),
-                        weechat_prefix ("error"), "ruby", function);
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME, function);
         ruby_current_script = old_ruby_current_script;
 	return WEECHAT_RC_OK;
     }
@@ -220,7 +221,7 @@ weechat_ruby_exec (struct t_plugin_script *script,
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: not enough memory in function "
                                          "\"%s\""),
-                        weechat_prefix ("error"), "ruby", function);
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME, function);
         ruby_current_script = old_ruby_current_script;
 	return NULL;
     }
@@ -252,7 +253,7 @@ weechat_ruby_output (VALUE self, VALUE str)
         {
             weechat_printf (NULL,
                             weechat_gettext ("%s%s: stdout/stderr: %s%s"),
-                            weechat_prefix ("error"), "ruby",
+                            weechat_prefix ("error"), RUBY_PLUGIN_NAME,
                             ruby_buffer_output, m);
         }
 	*p = '\n';
@@ -264,7 +265,7 @@ weechat_ruby_output (VALUE self, VALUE str)
     {
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: stdout/stderr: %s%s"),
-                        weechat_prefix ("error"), "ruby",
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME,
                         ruby_buffer_output, m);
 	ruby_buffer_output[0] = '\0';
     }
@@ -307,13 +308,13 @@ weechat_ruby_load (const char *filename)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" not found"),
-                        weechat_prefix ("error"), "ruby", filename);
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME, filename);
         return 0;
     }
     
     weechat_printf (NULL,
                     weechat_gettext ("%s: loading script \"%s\""),
-                    "ruby", filename);
+                    RUBY_PLUGIN_NAME, filename);
     
     ruby_current_script = NULL;
     
@@ -332,7 +333,8 @@ weechat_ruby_load (const char *filename)
 	err = rb_inspect(rb_gv_get("$!"));
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: error: \"%s\""),
-                        weechat_prefix ("error"), "ruby", STR2CSTR(err));
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME,
+                        STR2CSTR(err));
 	return 0;
     }
     
@@ -346,20 +348,23 @@ weechat_ruby_load (const char *filename)
                 weechat_printf (NULL,
                                 weechat_gettext ("%s%s: unable to read file "
                                                  "\"%s\""),
-                                weechat_prefix ("error"), "ruby", filename);
+                                weechat_prefix ("error"), RUBY_PLUGIN_NAME,
+                                filename);
                 break;
             case 2:
                 weechat_printf (NULL,
                                 weechat_gettext ("%s%s: error while loading "
                                                  "file \"%s\""),
-                                weechat_prefix ("error"), "ruby", filename);
+                                weechat_prefix ("error"), RUBY_PLUGIN_NAME,
+                                filename);
                 break;
             case 3:
                 weechat_printf (NULL,
                                 weechat_gettext ("%s%s: function "
                                                  "\"weechat_init\" is missing "
                                                  "in file \"%s\""),
-                                weechat_prefix ("error"), "ruby", filename);
+                                weechat_prefix ("error"), RUBY_PLUGIN_NAME,
+                                filename);
                 break;
 	}
 	
@@ -370,7 +375,7 @@ weechat_ruby_load (const char *filename)
             {
 		weechat_printf (NULL,
                                 weechat_gettext ("%s%s: error: %s"),
-                                weechat_prefix ("error"), "ruby",
+                                weechat_prefix ("error"), RUBY_PLUGIN_NAME,
                                 STR2CSTR(ruby_eval_error));
             }
 	}
@@ -386,12 +391,13 @@ weechat_ruby_load (const char *filename)
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to eval function "
                                          "\"weechat_init\" in file \"%s\""),
-                        weechat_prefix ("error"), "ruby", filename);
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME, filename);
 	
 	err = rb_inspect(rb_gv_get("$!"));
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: error: \"%s\""),
-                        weechat_prefix ("error"), "ruby", STR2CSTR(err));
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME,
+                        STR2CSTR(err));
 	
 	if (ruby_current_script != NULL)
         {
@@ -407,7 +413,7 @@ weechat_ruby_load (const char *filename)
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"register\" not "
                                          "found (or failed) in file \"%s\""),
-                        weechat_prefix ("error"), "ruby", filename);
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME, filename);
         return 0;
     }
     
@@ -443,7 +449,7 @@ weechat_ruby_unload (struct t_plugin_script *script)
     
     weechat_printf (NULL,
                     weechat_gettext ("%s: unloading script \"%s\""),
-                    "ruby", script->name);
+                    RUBY_PLUGIN_NAME, script->name);
     
     if (script->shutdown_func && script->shutdown_func[0])
     {
@@ -478,13 +484,13 @@ weechat_ruby_unload_name (const char *name)
         weechat_ruby_unload (ptr_script);
         weechat_printf (NULL,
                         weechat_gettext ("%s: script \"%s\" unloaded"),
-                        "ruby", name);
+                        RUBY_PLUGIN_NAME, name);
     }
     else
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" not loaded"),
-                        weechat_prefix ("error"), "ruby", name);
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME, name);
     }
 }
 
@@ -577,7 +583,7 @@ weechat_ruby_command_cb (void *data, struct t_gui_buffer *buffer,
             weechat_printf (NULL,
                             weechat_gettext ("%s%s: unknown option for "
                                              "command \"%s\""),
-                            weechat_prefix ("error"), "ruby", "ruby");
+                            weechat_prefix ("error"), RUBY_PLUGIN_NAME, "ruby");
         }
     }
     
@@ -724,10 +730,10 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to eval WeeChat ruby "
                                          "internal code"),
-                        weechat_prefix ("error"), "ruby");
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME);
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: error: %s"),
-                        weechat_prefix ("error"), "ruby",
+                        weechat_prefix ("error"), RUBY_PLUGIN_NAME,
                         STR2CSTR(ruby_error_info));
 	return WEECHAT_RC_ERROR;
     }

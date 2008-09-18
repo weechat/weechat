@@ -43,7 +43,7 @@ alias_info_get_infolist_cb (void *data, const char *infolist_name,
     if (!infolist_name || !infolist_name[0])
         return NULL;
     
-    if (weechat_strcasecmp (infolist_name, "alias") == 0)
+    if (weechat_strcasecmp (infolist_name, ALIAS_PLUGIN_NAME) == 0)
     {
         if (pointer && !alias_valid (pointer))
             return NULL;

@@ -31,7 +31,9 @@
 #include "../weechat-plugin.h"
 
 
-WEECHAT_PLUGIN_NAME("demo");
+#define DEMO_PLUGIN_NAME "demo"
+
+WEECHAT_PLUGIN_NAME(DEMO_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Demo plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
@@ -58,13 +60,13 @@ demo_debug_signal_debug_cb (void *data, const char *signal,
     
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
-        if (weechat_strcasecmp ((char *)signal_data, "demo") == 0)
+        if (weechat_strcasecmp ((char *)signal_data, DEMO_PLUGIN_NAME) == 0)
         {
             demo_debug ^= 1;
             if (demo_debug)
-                weechat_printf (NULL, _("%s: debug enabled"), "demo");
+                weechat_printf (NULL, _("%s: debug enabled"), DEMO_PLUGIN_NAME);
             else
-                weechat_printf (NULL, _("%s: debug disabled"), "demo");
+                weechat_printf (NULL, _("%s: debug disabled"), DEMO_PLUGIN_NAME);
         }
     }
     
@@ -118,10 +120,9 @@ demo_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
     (void) data;
     
     weechat_printf (buffer,
-                    "buffer_input_data_cb: buffer = %x (%s / %s), "
+                    "buffer_input_data_cb: buffer = %x (%s), "
                     "input_data = '%s'",
                     buffer,
-                    weechat_buffer_get_string (buffer, "category"),
                     weechat_buffer_get_string (buffer, "name"),
                     input_data);
     
@@ -141,9 +142,8 @@ demo_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     if (demo_debug)
     {
         weechat_printf (NULL,
-                        "buffer_close_cb: buffer = %x (%s / %s)",
+                        "buffer_close_cb: buffer = %x (%s)",
                         buffer,
-                        weechat_buffer_get_string (buffer, "category"),
                         weechat_buffer_get_string (buffer, "name"));
     }
     
@@ -165,9 +165,9 @@ demo_buffer_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     (void) buffer;
     (void) argv_eol;
     
-    if (argc > 2)
+    if (argc > 1)
     {
-        new_buffer = weechat_buffer_new (argv[1], argv[2],
+        new_buffer = weechat_buffer_new (argv[1],
                                          &demo_buffer_input_data_cb, NULL,
                                          &demo_buffer_close_cb, NULL);
         if (new_buffer)
@@ -423,7 +423,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_hook_command ("demo_buffer",
                           N_("open a new buffer"),
-                          N_("category name"),
+                          N_("name"),
                           "",
                           "",
                           &demo_buffer_command_cb, NULL);

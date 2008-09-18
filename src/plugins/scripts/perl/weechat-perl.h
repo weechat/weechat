@@ -21,6 +21,7 @@
 #define __WEECHAT_PERL_H 1
 
 #define weechat_plugin weechat_perl_plugin
+#define PERL_PLUGIN_NAME "perl"
 
 extern struct t_weechat_plugin *weechat_perl_plugin;
 

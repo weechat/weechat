@@ -396,7 +396,7 @@ struct t_weechat_plugin
     
     /* buffers */
     struct t_gui_buffer *(*buffer_new) (struct t_weechat_plugin *plugin,
-                                        const char *category, const char *name,
+                                        const char *name,
                                         int (*input_callback)(void *data,
                                                               struct t_gui_buffer *buffer,
                                                               const char *input_data),
@@ -404,8 +404,7 @@ struct t_weechat_plugin
                                         int (*close_callback)(void *data,
                                                               struct t_gui_buffer *buffer),
                                         void *close_callback_data);
-    struct t_gui_buffer *(*buffer_search) (const char *category,
-                                           const char *name);
+    struct t_gui_buffer *(*buffer_search) (const char *plugin, const char *name);
     void (*buffer_clear) (struct t_gui_buffer *buffer);
     void (*buffer_close) (struct t_gui_buffer *buffer, int switch_to_another);
     int (*buffer_get_integer) (struct t_gui_buffer *buffer,
@@ -868,14 +867,14 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->unhook_all_plugin(weechat_plugin)
 
 /* buffers */
-#define weechat_buffer_new(__category, __name, __input_callback,        \
+#define weechat_buffer_new(__name, __input_callback,                    \
                            __input_callback_data, __close_callback,     \
                            __close_callback_data)                       \
-    weechat_plugin->buffer_new(weechat_plugin, __category, __name,      \
+    weechat_plugin->buffer_new(weechat_plugin, __name,                  \
                                __input_callback, __input_callback_data, \
                                __close_callback, __close_callback_data)
-#define weechat_buffer_search(__category, __name)                       \
-    weechat_plugin->buffer_search(__category, __name)
+#define weechat_buffer_search(__plugin, __name)                         \
+    weechat_plugin->buffer_search(__plugin, __name)
 #define weechat_current_buffer                                          \
     weechat_plugin->buffer_search(NULL, NULL)
 #define weechat_buffer_clear(__buffer)                                  \

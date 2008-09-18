@@ -27,7 +27,9 @@
 #include "../weechat-plugin.h"
 
 
-WEECHAT_PLUGIN_NAME("notify");
+#define NOTIFY_PLUGIN_NAME "notify"
+
+WEECHAT_PLUGIN_NAME(NOTIFY_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Notify plugin for WeeChat (set/save buffer notify levels)");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
@@ -76,25 +78,22 @@ notify_search (const char *notify_name)
 char *
 notify_build_option_name (struct t_gui_buffer *buffer)
 {
-    char *option_name, *plugin_name, *category, *name;
+    char *option_name, *plugin_name, *name;
     int length;
     
     plugin_name = weechat_buffer_get_string (buffer, "plugin");
-    category = weechat_buffer_get_string (buffer, "category");
     name = weechat_buffer_get_string (buffer, "name");
     
-    length = ((plugin_name) ? strlen (plugin_name) : 0) + 1 +
-        strlen (category) + 1 + strlen (name) + 1;
+    length = ((plugin_name) ? strlen (plugin_name) : strlen ("core")) + 1 +
+        strlen (name) + 1;
     option_name = malloc (length);
     if (!option_name)
         return NULL;
     
-    snprintf (option_name, length, "%s%s%s.%s",
-              (plugin_name) ? plugin_name : "",
-              (plugin_name) ? "." : "",
-              category,
+    snprintf (option_name, length, "%s.%s",
+              (plugin_name) ? plugin_name : "core",
               name);
-
+    
     return option_name;
 }
 
@@ -112,13 +111,13 @@ notify_debug_cb (void *data, const char *signal, const char *type_data,
 
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
-        if (weechat_strcasecmp ((char *)signal_data, "notify") == 0)
+        if (weechat_strcasecmp ((char *)signal_data, NOTIFY_PLUGIN_NAME) == 0)
         {
             notify_debug ^= 1;
             if (notify_debug)
-                weechat_printf (NULL, _("%s: debug enabled"), "notify");
+                weechat_printf (NULL, _("%s: debug enabled"), NOTIFY_PLUGIN_NAME);
             else
-                weechat_printf (NULL, _("%s: debug disabled"), "notify");
+                weechat_printf (NULL, _("%s: debug disabled"), NOTIFY_PLUGIN_NAME);
         }
     }
     
@@ -308,7 +307,7 @@ notify_config_create_option (void *data, struct t_config_file *config_file,
     {
         weechat_printf (NULL,
                         _("%s%s: unable to set notify level \"%s\" => \"%s\""),
-                        weechat_prefix ("error"), "notify",
+                        weechat_prefix ("error"), NOTIFY_PLUGIN_NAME,
                         option_name, value);
     }
     
@@ -434,7 +433,7 @@ notify_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     {
         weechat_printf (NULL,
                         _("%s%s: missing parameters"),
-                        weechat_prefix ("error"), "notify");
+                        weechat_prefix ("error"), NOTIFY_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
     }
 
@@ -448,7 +447,7 @@ notify_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         {
             weechat_printf (NULL,
                             _("%s%s: unknown notify level \"%s\""),
-                            weechat_prefix ("error"), "notify",
+                            weechat_prefix ("error"), NOTIFY_PLUGIN_NAME,
                             argv_eol[1]);
             return WEECHAT_RC_ERROR;
         }
@@ -487,7 +486,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     {
         weechat_printf (NULL,
                         _("%s%s: error creating configuration file"),
-                        weechat_prefix("error"), "notify");
+                        weechat_prefix("error"), NOTIFY_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
     }
     notify_config_read ();

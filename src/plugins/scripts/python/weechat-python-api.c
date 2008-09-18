@@ -88,7 +88,7 @@ weechat_python_api_register (PyObject *self, PyObject *args)
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
                                          "exists with this name)"),
-                        weechat_prefix ("error"), "python", name);
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME, name);
         PYTHON_RETURN_ERROR;
     }
     
@@ -104,7 +104,7 @@ weechat_python_api_register (PyObject *self, PyObject *args)
         weechat_printf (NULL,
                         weechat_gettext ("%s: registered script \"%s\", "
                                          "version %s (%s)"),
-                        "python", name, version, description);
+                        PYTHON_PLUGIN_NAME, name, version, description);
     }
     else
     {
@@ -1834,12 +1834,6 @@ weechat_python_api_prnt (PyObject *self, PyObject *args)
     /* make C compiler happy */
     (void) self;
     
-    if (!python_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("prnt");
-        PYTHON_RETURN_ERROR;
-    }
-    
     buffer = NULL;
     message = NULL;
     
@@ -2985,7 +2979,7 @@ weechat_python_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 static PyObject *
 weechat_python_api_buffer_new (PyObject *self, PyObject *args)
 {
-    char *category, *name, *function_input, *function_close, *result;
+    char *name, *function_input, *function_close, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -2997,12 +2991,11 @@ weechat_python_api_buffer_new (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    category = NULL;
     name = NULL;
     function_input = NULL;
     function_close = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssss", &category, &name, &function_input,
+    if (!PyArg_ParseTuple (args, "sss", &name, &function_input,
                            &function_close))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_new");
@@ -3011,7 +3004,6 @@ weechat_python_api_buffer_new (PyObject *self, PyObject *args)
     
     result = script_ptr2str (script_api_buffer_new (weechat_python_plugin,
                                                     python_current_script,
-                                                    category,
                                                     name,
                                                     &weechat_python_api_buffer_input_data_cb,
                                                     function_input,
@@ -3028,7 +3020,7 @@ weechat_python_api_buffer_new (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_buffer_search (PyObject *self, PyObject *args)
 {
-    char *category, *name;
+    char *plugin, *name;
     char *result;
     PyObject *object;
     
@@ -3041,16 +3033,16 @@ weechat_python_api_buffer_search (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    category = NULL;
+    plugin = NULL;
     name = NULL;
     
-    if (!PyArg_ParseTuple (args, "ss", &category, &name))
+    if (!PyArg_ParseTuple (args, "ss", &plugin, &name))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_search");
         PYTHON_RETURN_EMPTY;
     }
     
-    result = script_ptr2str (weechat_buffer_search (category, name));
+    result = script_ptr2str (weechat_buffer_search (plugin, name));
     
     PYTHON_RETURN_STRING_FREE(result);
 }

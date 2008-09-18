@@ -41,8 +41,8 @@
                         _("%s%s: too few arguments received from IRC "  \
                           "server for command \"%s\" (received: %d "    \
                           "arguments, expected: at least %d)"),         \
-                        weechat_prefix ("error"), "irc", command,       \
-                        argc, __min_args);                              \
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
+                        command, argc, __min_args);                     \
         return WEECHAT_RC_ERROR;                                        \
     }
 
@@ -52,7 +52,8 @@
         weechat_printf (server->buffer,                                 \
                         _("%s%s: \"%s\" command received without "      \
                           "host"),                                      \
-                        weechat_prefix ("error"), "irc", command);      \
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
+                        command);                                       \
         return WEECHAT_RC_ERROR;                                        \
     }
 
@@ -64,7 +65,6 @@ typedef int (t_irc_recv_func)(struct t_irc_server *server, const char *comand,
 struct t_irc_protocol_msg
 {
     char *name;                     /* IRC message name                      */
-    char *description;              /* message description                   */
     int decode_color;               /* decode color before calling function  */
     t_irc_recv_func *recv_function; /* function called when msg is received  */
 };

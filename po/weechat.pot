@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-15 14:19+0200\n"
+"POT-Creation-Date: 2008-09-17 10:21+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -393,7 +393,7 @@ msgid "    prints hooked:"
 msgstr ""
 
 #, c-format
-msgid "      buffer: %s / %s, message: \"%s\""
+msgid "      buffer: %s, message: \"%s\""
 msgstr ""
 
 msgid "(none)"
@@ -545,7 +545,7 @@ msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
 "| [default] | [del barname|-all] | [set barname name|priority|condition|"
 "position|filling|size|separator|items value] | [hide|show barname] | [scroll "
-"barname category.name value] | [list] | [listitems]"
+"barname buffer value] | [list] | [listitems]"
 msgstr ""
 
 msgid ""
@@ -570,8 +570,8 @@ msgid ""
 "         hide: hide a bar\n"
 "         show: show an hidden bar\n"
 "       scroll: scroll bar up/down\n"
-"category.name: category and name of buffer to scroll ('*' means current "
-"buffer, you should use '*' for root bars)\n"
+"       buffer: name of buffer to scroll ('*' means current buffer, you "
+"should use '*' for root bars)\n"
 "        value: value for scroll: 'x' or 'y', followed by '+', '-', "
 "'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by "
 "%% of width/height, otherwise value is number of chars)\n"
@@ -658,8 +658,8 @@ msgid ""
 "    del: delete a filter\n"
 " number: number of filter to delete (look at list to find it)\n"
 "   -all: delete all filters\n"
-" buffer: buffer where filter is active: it may be a name (category.name) or "
-"\"*\" for all buffers\n"
+" buffer: buffer where filter is active: it may be a name or \"*\" for all "
+"buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
 "irc_quit\"\n"
 "  regex: regular expression to search in line (use \\t to separate prefix "
@@ -903,6 +903,11 @@ msgid ""
 msgstr ""
 
 msgid ""
+"if set, uses short names to display buffer names in hotlist (start after "
+"first '.' in name)"
+msgstr ""
+
+msgid ""
 "hotlist sort type (group_time_asc (default), group_time_desc, "
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 msgstr ""
@@ -1102,9 +1107,6 @@ msgid "text color for status bar delimiters"
 msgstr ""
 
 msgid "text color for current buffer number in status bar"
-msgstr ""
-
-msgid "text color for current buffer category in status bar"
 msgstr ""
 
 msgid "text color for current buffer name in status bar"
@@ -1383,11 +1385,11 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sError upgrading WeeChat:"
+msgid "%sError upgrading WeeChat with file '%s':"
 msgstr ""
 
 #, c-format
-msgid "%s    error: %s"
+msgid "%s    error: %s%s%s%s"
 msgstr ""
 
 #, c-format
@@ -1399,7 +1401,54 @@ msgid "%s    source: %s, line: %d"
 msgstr ""
 
 #, c-format
-msgid "%s*** Please report above info to developers ***"
+msgid "%s    *** Please report above info to developers ***"
+msgstr ""
+
+msgid "write - object type"
+msgstr ""
+
+msgid "write - object id"
+msgstr ""
+
+msgid "write - variable name"
+msgstr ""
+
+msgid "write - infolist type"
+msgstr ""
+
+msgid "write - variable"
+msgstr ""
+
+msgid "read - object type"
+msgstr ""
+
+msgid "read - bad object type ('object start' expected)"
+msgstr ""
+
+msgid "read - object id"
+msgstr ""
+
+msgid "read - infolist creation"
+msgstr ""
+
+msgid "read - infolist item creation"
+msgstr ""
+
+msgid "read - variable name"
+msgstr ""
+
+msgid "read - variable type"
+msgstr ""
+
+msgid "read - variable"
+msgstr ""
+
+msgid "read - signature not found"
+msgstr ""
+
+msgid ""
+"read - bad signature (upgrade file format may have changed since last "
+"version)"
 msgstr ""
 
 #, c-format
@@ -1499,7 +1548,7 @@ msgid "%s-MORE(%d)-"
 msgstr ""
 
 #, c-format
-msgid "%sError: a buffer with same name already exists (%s / %s)"
+msgid "%sError: a buffer with same name (%s) already exists"
 msgstr ""
 
 msgid "Not enough memory for new line"
@@ -1695,7 +1744,7 @@ msgstr ""
 msgid "open a new buffer"
 msgstr ""
 
-msgid "category name"
+msgid "name"
 msgstr ""
 
 msgid "set a buffer property"
@@ -1767,6 +1816,12 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: error with IRC server from URL (\"%s\"), ignored"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: WARNING: some network connections may still be open and not visible, "
+"you should restart WeeChat now (with /quit)."
 msgstr ""
 
 #, c-format
@@ -3052,294 +3107,6 @@ msgstr ""
 
 #, c-format
 msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
-msgstr ""
-
-msgid "error received from IRC server"
-msgstr ""
-
-msgid "message received"
-msgstr ""
-
-msgid "close all connections and quit"
-msgstr ""
-
-msgid "a server message"
-msgstr ""
-
-msgid "user mode string"
-msgstr ""
-
-msgid "away message"
-msgstr ""
-
-msgid "ison"
-msgstr ""
-
-msgid "unaway"
-msgstr ""
-
-msgid "now away"
-msgstr ""
-
-msgid "whois (registered nick)"
-msgstr ""
-
-msgid "whois (help mode)"
-msgstr ""
-
-msgid "whois (user)"
-msgstr ""
-
-msgid "whois (server)"
-msgstr ""
-
-msgid "whois (operator)"
-msgstr ""
-
-msgid "whowas"
-msgstr ""
-
-msgid "end of /who list"
-msgstr ""
-
-msgid "whois (idle)"
-msgstr ""
-
-msgid "whois (end)"
-msgstr ""
-
-msgid "whois (channels)"
-msgstr ""
-
-msgid "whois (identified user)"
-msgstr ""
-
-msgid "/list start"
-msgstr ""
-
-msgid "channel (for /list)"
-msgstr ""
-
-msgid "end of /list"
-msgstr ""
-
-msgid "channel mode"
-msgstr ""
-
-msgid "whois (has oper privs)"
-msgstr ""
-
-msgid "whois (host)"
-msgstr ""
-
-msgid "channel creation date"
-msgstr ""
-
-msgid "no topic for channel"
-msgstr ""
-
-msgid "topic of channel"
-msgstr ""
-
-msgid "infos about topic (nick and date changed)"
-msgstr ""
-
-msgid "inviting"
-msgstr ""
-
-msgid "channel reop"
-msgstr ""
-
-msgid "end of channel reop list"
-msgstr ""
-
-msgid "channel exception list"
-msgstr ""
-
-msgid "end of channel exception list"
-msgstr ""
-
-msgid "server version"
-msgstr ""
-
-msgid "who"
-msgstr ""
-
-msgid "list of nicks on channel"
-msgstr ""
-
-msgid "end of /names list"
-msgstr ""
-
-msgid "banlist"
-msgstr ""
-
-msgid "end of banlist"
-msgstr ""
-
-msgid "whois (connecting from)"
-msgstr ""
-
-msgid "whois (using modes)"
-msgstr ""
-
-msgid "no such nick/channel"
-msgstr ""
-
-msgid "no such server"
-msgstr ""
-
-msgid "no such channel"
-msgstr ""
-
-msgid "cannot send to channel"
-msgstr ""
-
-msgid "too many channels"
-msgstr ""
-
-msgid "was no such nick"
-msgstr ""
-
-msgid "no origin"
-msgstr ""
-
-msgid "no services"
-msgstr ""
-
-msgid "no recipient"
-msgstr ""
-
-msgid "no text to send"
-msgstr ""
-
-msgid "no toplevel"
-msgstr ""
-
-msgid "wilcard in toplevel domain"
-msgstr ""
-
-msgid "unknown command"
-msgstr ""
-
-msgid "MOTD is missing"
-msgstr ""
-
-msgid "no administrative info"
-msgstr ""
-
-msgid "file error"
-msgstr ""
-
-msgid "no nickname given"
-msgstr ""
-
-msgid "erroneous nickname"
-msgstr ""
-
-msgid "nickname already in use"
-msgstr ""
-
-msgid "nickname collision"
-msgstr ""
-
-msgid "resource unavailable"
-msgstr ""
-
-msgid "not authorized to change nickname"
-msgstr ""
-
-msgid "user not in channel"
-msgstr ""
-
-msgid "not on channel"
-msgstr ""
-
-msgid "user already on channel"
-msgstr ""
-
-msgid "user not logged in"
-msgstr ""
-
-msgid "summon has been disabled"
-msgstr ""
-
-msgid "users has been disabled"
-msgstr ""
-
-msgid "you are not registered"
-msgstr ""
-
-msgid "not enough parameters"
-msgstr ""
-
-msgid "you may not register"
-msgstr ""
-
-msgid "your host isn't among the privileged"
-msgstr ""
-
-msgid "password incorrect"
-msgstr ""
-
-msgid "you are banned from this server"
-msgstr ""
-
-msgid "channel key already set"
-msgstr ""
-
-msgid "forwarding to another channel"
-msgstr ""
-
-msgid "channel is already full"
-msgstr ""
-
-msgid "unknown mode char to me"
-msgstr ""
-
-msgid "cannot join channel (invite only)"
-msgstr ""
-
-msgid "cannot join channel (banned from channel)"
-msgstr ""
-
-msgid "cannot join channel (bad channel key)"
-msgstr ""
-
-msgid "bad channel mask"
-msgstr ""
-
-msgid "channel doesn't support modes"
-msgstr ""
-
-msgid "you're not an IRC operator"
-msgstr ""
-
-msgid "you're not channel operator"
-msgstr ""
-
-msgid "you can't kill a server!"
-msgstr ""
-
-msgid "your connection is restricted!"
-msgstr ""
-
-msgid "user is immune from kick/deop"
-msgstr ""
-
-msgid "network split"
-msgstr ""
-
-msgid "no O-lines for your host"
-msgstr ""
-
-msgid "unknown mode flag"
-msgstr ""
-
-msgid "can't change mode for other users"
-msgstr ""
-
-msgid "whois (secure connection)"
 msgstr ""
 
 #, c-format

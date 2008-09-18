@@ -74,7 +74,8 @@ xfer_chat_sendf (struct t_xfer *xfer, const char *format, ...)
     {
         weechat_printf (NULL,
                         _("%s%s: error sending data to \"%s\" via xfer chat"),
-                        weechat_prefix ("error"), "xfer", xfer->remote_nick);
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        xfer->remote_nick);
         xfer_close (xfer, XFER_STATUS_FAILED);
     }
 }
@@ -219,7 +220,7 @@ xfer_chat_open_buffer (struct t_xfer *xfer)
     if (name)
     {
         snprintf (name, length, "%s_%s", xfer->plugin_name, xfer->remote_nick);
-        xfer->buffer = weechat_buffer_new ("xfer", name,
+        xfer->buffer = weechat_buffer_new (name,
                                            &xfer_chat_buffer_input_cb, xfer,
                                            &xfer_chat_buffer_close_cb, xfer);
         if (xfer->buffer)

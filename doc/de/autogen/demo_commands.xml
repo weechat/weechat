@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>demo_buffer  category name</command>
+<command>demo_buffer  name</command>
 <programlisting>
 open a new buffer
 </programlisting>
@@ -23,11 +23,12 @@ arguments: optional arguments for info
 
 Without argument, this command displays list of available infos
 </programlisting>
-<command>demo_infolist  [infolist]</command>
+<command>demo_infolist  [infolist [arguments]]</command>
 <programlisting>
 get and display an infolist
 
-infolist: infolist to display
+ infolist: infolist to display
+arguments: optional arguments for infolist
 
 Without argument, this command displays list of available infolists
 </programlisting>

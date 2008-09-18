@@ -50,17 +50,20 @@ struct t_upgrade_file *last_upgrade_file = NULL;
  */
 
 void
-upgrade_file_error (struct t_upgrade_file *upgrade_file, char *message,
-                    char *file, int line)
+upgrade_file_error (struct t_upgrade_file *upgrade_file, char *message1,
+                    char *message2, char *file, int line)
 {
     gui_chat_printf (NULL,
-                     _("%sError upgrading WeeChat:"),
+                     _("%sError upgrading WeeChat with file '%s':"),
                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                     message, file, line);
+                     upgrade_file->filename);
     gui_chat_printf (NULL,
-                     _("%s    error: %s"),
+                     _("%s    error: %s%s%s%s"),
                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                     message);
+                     message1,
+                     (message2 && message2[0]) ? " (" : "",
+                     (message2 && message2[0]) ? message2 : "",
+                     (message2 && message2[0]) ? ")" : "");
     if ((upgrade_file->last_read_pos > 0)
         || (upgrade_file->last_read_length > 0))
     {
@@ -75,7 +78,7 @@ upgrade_file_error (struct t_upgrade_file *upgrade_file, char *message,
                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                      file, line);
     gui_chat_printf (NULL,
-                     _("%s*** Please report above info to developers ***"),
+                     _("%s    *** Please report above info to developers ***"),
                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
 }
 
@@ -246,12 +249,12 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
         /* write object start with id */
         if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_START))
         {
-            UPGRADE_ERROR("write - object type - 'object start'");
+            UPGRADE_ERROR(_("write - object type"), "object start");
             return 0;
         }
         if (!upgrade_file_write_integer (upgrade_file, object_id))
         {
-            UPGRADE_ERROR("write - object id");
+            UPGRADE_ERROR(_("write - object id"), "");
             return 0;
         }
         
@@ -268,46 +271,46 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                         case 'i': /* integer */
                             if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_VAR))
                             {
-                                UPGRADE_ERROR("write - object type - 'object var'");
+                                UPGRADE_ERROR(_("write - object type"), "object var");
                                 return 0;
                             }
                             if (!upgrade_file_write_string (upgrade_file, argv[i] + 2))
                             {
-                                UPGRADE_ERROR("write - variable name");
+                                UPGRADE_ERROR(_("write - variable name"), "");
                                 return 0;
                             }
                             if (!upgrade_file_write_integer (upgrade_file, INFOLIST_INTEGER))
                             {
-                                UPGRADE_ERROR("write - infolist type - 'integer'");
+                                UPGRADE_ERROR(_("write - infolist type"), "integer");
                                 return 0;
                             }
                             if (!upgrade_file_write_integer (upgrade_file,
                                                              infolist_integer (infolist, argv[i] + 2)))
                             {
-                                UPGRADE_ERROR("write - integer variable");
+                                UPGRADE_ERROR(_("write - variable"), "integer");
                                 return 0;
                             }
                             break;
                         case 's': /* string */
                             if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_VAR))
                             {
-                                UPGRADE_ERROR("write - object type - 'object var'");
+                                UPGRADE_ERROR(_("write - object type"), "object var");
                                 return 0;
                             }
                             if (!upgrade_file_write_string (upgrade_file, argv[i] + 2))
                             {
-                                UPGRADE_ERROR("write - variable name");
+                                UPGRADE_ERROR(_("write - variable name"), "");
                                 return 0;
                             }
                             if (!upgrade_file_write_integer (upgrade_file, INFOLIST_STRING))
                             {
-                                UPGRADE_ERROR("write - infolist type - 'string'");
+                                UPGRADE_ERROR(_("write - infolist type"), "string");
                                 return 0;
                             }
                             if (!upgrade_file_write_string (upgrade_file,
                                                             infolist_string (infolist, argv[i] + 2)))
                             {
-                                UPGRADE_ERROR("write - string variable");
+                                UPGRADE_ERROR(_("write - variable"), "string");
                                 return 0;
                             }
                             break;
@@ -320,22 +323,22 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                             {
                                 if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_VAR))
                                 {
-                                    UPGRADE_ERROR("write - object type - 'object var'");
+                                    UPGRADE_ERROR(_("write - object type"), "object var");
                                     return 0;
                                 }
                                 if (!upgrade_file_write_string (upgrade_file, argv[i] + 2))
                                 {
-                                    UPGRADE_ERROR("write - variable name");
+                                    UPGRADE_ERROR(_("write - variable name"), "");
                                     return 0;
                                 }
                                 if (!upgrade_file_write_integer (upgrade_file, INFOLIST_BUFFER))
                                 {
-                                    UPGRADE_ERROR("write - infolist type - 'buffer'");
+                                    UPGRADE_ERROR(_("write - infolist type"), "buffer");
                                     return 0;
                                 }
                                 if (!upgrade_file_write_buffer (upgrade_file, buf, length))
                                 {
-                                    UPGRADE_ERROR("write - buffer variable");
+                                    UPGRADE_ERROR(_("write - variable"), "buffer");
                                     return 0;
                                 }
                             }
@@ -343,23 +346,23 @@ upgrade_file_write_object (struct t_upgrade_file *upgrade_file, int object_id,
                         case 't': /* time */
                             if (!upgrade_file_write_integer (upgrade_file, UPGRADE_TYPE_OBJECT_VAR))
                             {
-                                UPGRADE_ERROR("write - object type - 'object var'");
+                                UPGRADE_ERROR(_("write - object type"), "object var");
                                 return 0;
                             }
                             if (!upgrade_file_write_string (upgrade_file, argv[i] + 2))
                             {
-                                UPGRADE_ERROR("write - variable name");
+                                UPGRADE_ERROR(_("write - variable name"), "");
                                 return 0;
                             }
                             if (!upgrade_file_write_integer (upgrade_file, INFOLIST_TIME))
                             {
-                                UPGRADE_ERROR("write - infolist type - 'time'");
+                                UPGRADE_ERROR(_("write - infolist type"), "time");
                                 return 0;
                             }
                             if (!upgrade_file_write_time (upgrade_file,
                                                           infolist_time (infolist, argv[i] + 2)))
                             {
-                                UPGRADE_ERROR("write - time variable");
+                                UPGRADE_ERROR(_("write - variable"), "time");
                                 return 0;
                             }
                             break;
@@ -554,32 +557,32 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
         if (feof (upgrade_file->file))
             rc = 1;
         else
-            UPGRADE_ERROR("read - object type");
+            UPGRADE_ERROR(_("read - object type"), "");
         goto end;
     }
     
     if (type != UPGRADE_TYPE_OBJECT_START)
     {
-        UPGRADE_ERROR("read - bad object type (not 'object start')");
+        UPGRADE_ERROR(_("read - bad object type ('object start' expected)"), "");
         goto end;
     }
     
     if (!upgrade_file_read_integer (upgrade_file, &object_id))
     {
-        UPGRADE_ERROR("read - object id");
+        UPGRADE_ERROR(_("read - object id"), "");
         goto end;
     }
     
     infolist = infolist_new ();
     if (!infolist)
     {
-        UPGRADE_ERROR("read - infolist creation");
+        UPGRADE_ERROR(_("read - infolist creation"), "");
         goto end;
     }
     item = infolist_new_item (infolist);
     if (!item)
     {
-        UPGRADE_ERROR("read - infolist item creation");
+        UPGRADE_ERROR(_("read - infolist item creation"), "");
         goto end;
     }
     
@@ -587,7 +590,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
     {
         if (!upgrade_file_read_integer (upgrade_file, &type))
         {
-            UPGRADE_ERROR("read - object type");
+            UPGRADE_ERROR(_("read - object type"), "");
             goto end;
         }
         
@@ -598,17 +601,17 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
         {
             if (!upgrade_file_read_string (upgrade_file, &name))
             {
-                UPGRADE_ERROR("read - variable name");
+                UPGRADE_ERROR(_("read - variable name"), "");
                 goto end;
             }
             if (!name)
             {
-                UPGRADE_ERROR("read - variable name");
+                UPGRADE_ERROR(_("read - variable name"), "");
                 goto end;
             }
             if (!upgrade_file_read_integer (upgrade_file, &type_var))
             {
-                UPGRADE_ERROR("read - variable type");
+                UPGRADE_ERROR(_("read - variable type"), "");
                 goto end;
             }
             
@@ -617,7 +620,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                 case INFOLIST_INTEGER:
                     if (!upgrade_file_read_integer (upgrade_file, &value))
                     {
-                        UPGRADE_ERROR("read - integer value");
+                        UPGRADE_ERROR(_("read - variable"), "integer");
                         goto end;
                     }
                     infolist_new_var_integer (item, name, value);
@@ -625,7 +628,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                 case INFOLIST_STRING:
                     if (!upgrade_file_read_string (upgrade_file, &value_str))
                     {
-                        UPGRADE_ERROR("read - string value");
+                        UPGRADE_ERROR(_("read - variable"), "string");
                         goto end;
                     }
                     infolist_new_var_string (item, name, value_str);
@@ -635,7 +638,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                 case INFOLIST_BUFFER:
                     if (!upgrade_file_read_buffer (upgrade_file, &buffer, &size))
                     {
-                        UPGRADE_ERROR("read - buffer value");
+                        UPGRADE_ERROR(_("read - variable"), "buffer");
                         goto end;
                     }
                     infolist_new_var_buffer (item, name, buffer, size);
@@ -643,7 +646,7 @@ upgrade_file_read_object (struct t_upgrade_file *upgrade_file)
                 case INFOLIST_TIME:
                     if (!upgrade_file_read_time (upgrade_file, &time))
                     {
-                        UPGRADE_ERROR("read - time value");
+                        UPGRADE_ERROR(_("read - variable"), "time");
                         goto end;
                     }
                     infolist_new_var_time (item, name, time);
@@ -688,10 +691,17 @@ upgrade_file_read (struct t_upgrade_file *upgrade_file,
     
     signature = NULL;
     if (!upgrade_file_read_string (upgrade_file, &signature))
+    {
+        UPGRADE_ERROR(_("read - signature not found"), "");
         return 0;
+    }
     
     if (!signature || (strcmp (signature, UPGRADE_SIGNATURE) != 0))
+    {
+        UPGRADE_ERROR(_("read - bad signature (upgrade file format may have "
+                        "changed since last version)"), "");
         return 0;
+    }
     
     free (signature);
     

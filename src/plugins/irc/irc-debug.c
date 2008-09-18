@@ -63,9 +63,13 @@ irc_debug_printf (struct t_irc_server *server, int send, int modified,
     
     if (!irc_debug_buffer)
     {
-        irc_debug_buffer = weechat_buffer_new ("irc", "debug",
-                                               NULL, NULL,
-                                               &irc_debug_buffer_close_cb, NULL);
+        irc_debug_buffer = weechat_buffer_search ("irc", IRC_DEBUG_BUFFER_NAME);
+        if (!irc_debug_buffer)
+        {
+            irc_debug_buffer = weechat_buffer_new (IRC_DEBUG_BUFFER_NAME,
+                                                   NULL, NULL,
+                                                   &irc_debug_buffer_close_cb, NULL);
+        }
         
         /* failed to create buffer ? then exit */
         if (!irc_debug_buffer)
@@ -109,13 +113,13 @@ irc_debug_signal_debug_cb (void *data, const char *signal,
 
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
-        if (weechat_strcasecmp ((char *)signal_data, "irc") == 0)
+        if (weechat_strcasecmp ((char *)signal_data, IRC_PLUGIN_NAME) == 0)
         {
             irc_debug ^= 1;
             if (irc_debug)
-                weechat_printf (NULL, _("%s: debug enabled"), "irc");
+                weechat_printf (NULL, _("%s: debug enabled"), IRC_PLUGIN_NAME);
             else
-                weechat_printf (NULL, _("%s: debug disabled"), "irc");
+                weechat_printf (NULL, _("%s: debug disabled"), IRC_PLUGIN_NAME);
         }
     }
     

@@ -32,7 +32,7 @@
 #include "weechat-lua-api.h"
 
 
-WEECHAT_PLUGIN_NAME("lua");
+WEECHAT_PLUGIN_NAME(LUA_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Lua plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
@@ -96,10 +96,10 @@ weechat_lua_exec (struct t_plugin_script *script,
     {
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to run function \"%s\""),
-                        weechat_prefix ("error"), "lua", function);
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME, function);
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: error: %s"),
-                        weechat_prefix ("error"), "lua",
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME,
                         lua_tostring (lua_current_interpreter, -1));
         lua_current_script = old_lua_current_script;
         return NULL;
@@ -144,13 +144,13 @@ weechat_lua_load (const char *filename)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" not found"),
-                        weechat_prefix ("error"), "lua", filename);
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME, filename);
         return 0;
     }
     
     weechat_printf (NULL,
                     weechat_gettext ("%s: loading script \"%s\""),
-                    "lua", filename);
+                    LUA_PLUGIN_NAME, filename);
     
     lua_current_script = NULL;
     
@@ -161,7 +161,7 @@ weechat_lua_load (const char *filename)
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to create new "
                                          "sub-interpreter"),
-                        weechat_prefix ("error"), "lua");
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME);
         fclose (fp);
         return 0;
     }
@@ -188,7 +188,7 @@ weechat_lua_load (const char *filename)
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to redirect stdout "
                                          "and stderr"),
-                        weechat_prefix ("error"), "lua");
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME);
     }
     
     lua_current_script_filename = filename;
@@ -197,10 +197,10 @@ weechat_lua_load (const char *filename)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to load file \"%s\""),
-                        weechat_prefix ("error"), "lua", filename);
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME, filename);
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: error: %s"),
-                        weechat_prefix ("error"), "lua",
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME,
                         lua_tostring (lua_current_interpreter, -1));
         lua_close (lua_current_interpreter);
         fclose (fp);
@@ -212,10 +212,10 @@ weechat_lua_load (const char *filename)
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to execute file "
                                          "\"%s\""),
-                        weechat_prefix ("error"), "lua", filename);
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME, filename);
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: error: %s"),
-                        weechat_prefix ("error"), "lua",
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME,
                         lua_tostring (lua_current_interpreter, -1));
         lua_close (lua_current_interpreter);
         fclose (fp);
@@ -232,7 +232,7 @@ weechat_lua_load (const char *filename)
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"register\" not "
                                          "found (or failed) in file \"%s\""),
-                        weechat_prefix ("error"), "lua", filename);
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME, filename);
 	lua_close (lua_current_interpreter);
         return 0;
     }
@@ -268,7 +268,7 @@ weechat_lua_unload (struct t_plugin_script *script)
     
     weechat_printf (NULL,
                     weechat_gettext ("%s: unloading script \"%s\""),
-                    "lua", script->name);
+                    LUA_PLUGIN_NAME, script->name);
     
     if (script->shutdown_func && script->shutdown_func[0])
     {
@@ -302,13 +302,13 @@ weechat_lua_unload_name (const char *name)
         weechat_lua_unload (ptr_script);
         weechat_printf (NULL,
                         weechat_gettext ("%s: script \"%s\" unloaded"),
-                        "lua", name);
+                        LUA_PLUGIN_NAME, name);
     }
     else
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" not loaded"),
-                        weechat_prefix ("error"), "lua", name);
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME, name);
     }
 }
 
@@ -401,7 +401,7 @@ weechat_lua_command_cb (void *data, struct t_gui_buffer *buffer,
             weechat_printf (NULL,
                             weechat_gettext ("%s%s: unknown option for "
                                              "command \"%s\""),
-                            weechat_prefix ("error"), "lua", "lua");
+                            weechat_prefix ("error"), LUA_PLUGIN_NAME, "lua");
         }
     }
     

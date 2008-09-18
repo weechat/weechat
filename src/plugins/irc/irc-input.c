@@ -24,6 +24,7 @@
 
 #include "../weechat-plugin.h"
 #include "irc.h"
+#include "irc-buffer.h"
 #include "irc-server.h"
 #include "irc-channel.h"
 #include "irc-nick.h"
@@ -87,7 +88,7 @@ irc_input_send_user_message (struct t_gui_buffer *buffer, char *text)
     {
         weechat_printf (buffer,
                         _("%s%s: you are not connected to server"),
-                        weechat_prefix ("error"), "irc");
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
         return;
     }
     
@@ -166,7 +167,7 @@ irc_input_data_cb (void *data, struct t_gui_buffer *buffer,
     {
         weechat_printf (buffer,
                         _("%s: this buffer is not a channel!"),
-                        "irc");
+                        IRC_PLUGIN_NAME);
     }
     
     return WEECHAT_RC_OK;

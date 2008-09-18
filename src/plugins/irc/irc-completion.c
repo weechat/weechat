@@ -25,6 +25,7 @@
 
 #include "../weechat-plugin.h"
 #include "irc.h"
+#include "irc-buffer.h"
 #include "irc-color.h"
 #include "irc-completion.h"
 #include "irc-config.h"
@@ -75,8 +76,7 @@ irc_completion_server_nicks_cb (void *data, const char *completion_item,
     /* make C compiler happy */
     (void) data;
     (void) completion_item;
-    (void) buffer;
-
+    
     if (ptr_server)
     {
         for (ptr_channel2 = ptr_server->channels; ptr_channel2;

@@ -100,7 +100,7 @@ weechat_lua_api_register (lua_State *L)
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
                                          "exists with this name)"),
-                        weechat_prefix ("error"), "lua", name);
+                        weechat_prefix ("error"), LUA_PLUGIN_NAME, name);
         LUA_RETURN_ERROR;
     }
     
@@ -121,7 +121,7 @@ weechat_lua_api_register (lua_State *L)
         weechat_printf (NULL,
                         weechat_gettext ("%s: registered script \"%s\", "
                                          "version %s (%s)"),
-                        "lua", name, version, description);
+                        LUA_PLUGIN_NAME, name, version, description);
     }
     else
     {
@@ -2092,12 +2092,6 @@ weechat_lua_api_print (lua_State *L)
     /* make C compiler happy */
     (void) L;
     
-    if (!lua_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print");
-        LUA_RETURN_ERROR;
-    }
-    
     buffer = NULL;
     message = NULL;
     
@@ -3354,7 +3348,7 @@ weechat_lua_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 static int
 weechat_lua_api_buffer_new (lua_State *L)
 {
-    const char *category, *name, *function_input, *function_close;
+    const char *name, *function_input, *function_close;
     char *result;
     int n;
     
@@ -3367,27 +3361,24 @@ weechat_lua_api_buffer_new (lua_State *L)
         LUA_RETURN_EMPTY;
     }
     
-    category = NULL;
     name = NULL;
     function_input = NULL;
     function_close = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 4)
+    if (n < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_new");
         LUA_RETURN_EMPTY;
     }
     
-    category = lua_tostring (lua_current_interpreter, -4);
     name = lua_tostring (lua_current_interpreter, -3);
     function_input = lua_tostring (lua_current_interpreter, -2);
     function_close = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_buffer_new (weechat_lua_plugin,
                                                     lua_current_script,
-                                                    category,
                                                     name,
                                                     &weechat_lua_api_buffer_input_data_cb,
                                                     function_input,
@@ -3404,20 +3395,20 @@ weechat_lua_api_buffer_new (lua_State *L)
 static int
 weechat_lua_api_buffer_search (lua_State *L)
 {
-    const char *category, *name;
+    const char *plugin, *name;
     char *result;
     int n;
     
     /* make C compiler happy */
     (void) L;
-        
+    
     if (!lua_current_script)
     {
         WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("buffer_search");
         LUA_RETURN_EMPTY;
     }
     
-    category = NULL;
+    plugin = NULL;
     name = NULL;
     
     n = lua_gettop (lua_current_interpreter);
@@ -3428,11 +3419,10 @@ weechat_lua_api_buffer_search (lua_State *L)
         LUA_RETURN_EMPTY;
     }
     
-    category = lua_tostring (lua_current_interpreter, -2);
+    plugin = lua_tostring (lua_current_interpreter, -2);
     name = lua_tostring (lua_current_interpreter, -1);
     
-    result = script_ptr2str (weechat_buffer_search (category,
-                                                    name));
+    result = script_ptr2str (weechat_buffer_search (plugin, name));
     
     LUA_RETURN_STRING_FREE(result);
 }

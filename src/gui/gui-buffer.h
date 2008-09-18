@@ -76,7 +76,6 @@ struct t_gui_buffer
     char *plugin_name_for_upgrade;     /* plugin name when upgrading        */
     
     int number;                        /* buffer number (for jump/switch)   */
-    char *category;                    /* category name                     */
     char *name;                        /* buffer name                       */
     enum t_gui_buffer_type type;       /* buffer type (formated, free, ..)  */
     int notify;                        /* 0 = never                         */
@@ -170,7 +169,7 @@ extern char *gui_buffer_notify_string[];
 /* buffer functions */
 
 extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
-                                            const char *category, const char *name,
+                                            const char *name,
                                             int (*input_callback)(void *data,
                                                                   struct t_gui_buffer *buffer,
                                                                   const char *input_data),
@@ -195,8 +194,6 @@ extern void gui_buffer_ask_nicklist_refresh (struct t_gui_buffer *buffer,
                                              int refresh);
 extern void gui_buffer_ask_input_refresh (struct t_gui_buffer *buffer,
                                           int refresh);
-extern void gui_buffer_set_category (struct t_gui_buffer *buffer,
-                                     const char *category);
 extern void gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name);
 extern void gui_buffer_set_title (struct t_gui_buffer *buffer,
                                   const char *new_title);
@@ -208,14 +205,13 @@ extern void gui_buffer_set_nick (struct t_gui_buffer *buffer, const char *new_ni
 extern void gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                             void *value);
 extern struct t_gui_buffer *gui_buffer_search_main ();
-extern struct t_gui_buffer *gui_buffer_search_by_category_name (const char *category,
-                                                                const char *name);
+extern struct t_gui_buffer *gui_buffer_search_by_name (const char *plugin,
+                                                       const char *name);
+extern struct t_gui_buffer *gui_buffer_search_by_partial_name (const char *plugin,
+                                                               const char *name);
 extern struct t_gui_buffer *gui_buffer_search_by_number (int number);
 extern struct t_gui_window *gui_buffer_find_window (struct t_gui_buffer *buffer);
 extern int gui_buffer_is_scrolled (struct t_gui_buffer *buffer);
-extern int gui_buffer_match_category_name (struct t_gui_buffer *buffer,
-                                           const char *mask,
-                                           int case_sensitive);
 extern void gui_buffer_clear (struct t_gui_buffer *buffer);
 extern void gui_buffer_clear_all ();
 extern void gui_buffer_close (struct t_gui_buffer *buffer,

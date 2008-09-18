@@ -455,7 +455,7 @@ script_api_printf (struct t_weechat_plugin *weechat_plugin,
 {
     va_list argptr;
     char *buf, *buf2;
-
+    
     buf = malloc (128 * 1024);
     if (!buf)
         return;
@@ -464,7 +464,7 @@ script_api_printf (struct t_weechat_plugin *weechat_plugin,
     vsnprintf (buf, 128 * 1024, format, argptr);
     va_end (argptr);
     
-    buf2 = (script->charset && script->charset[0]) ?
+    buf2 = (script && script->charset && script->charset[0]) ?
         weechat_iconv_to_internal (script->charset, buf) : NULL;
     weechat_printf (buffer, "%s", (buf2) ? buf2 : buf);
     
@@ -1011,7 +1011,7 @@ script_api_unhook_all (struct t_plugin_script *script)
 struct t_gui_buffer *
 script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
                        struct t_plugin_script *script,
-                       const char *category, const char *name,
+                       const char *name,
                        int (*input_callback)(void *data,
                                              struct t_gui_buffer *buffer,
                                              const char *input_data),
@@ -1026,7 +1026,7 @@ script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
     
     if ((!function_input || !function_input[0])
         && (!function_close || !function_close[0]))
-        return weechat_buffer_new (category, name, NULL, NULL, NULL, NULL);
+        return weechat_buffer_new (name, NULL, NULL, NULL, NULL);
     
     new_script_callback_input = NULL;
     new_script_callback_close = NULL;
@@ -1052,7 +1052,7 @@ script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
         }
     }
     
-    new_buffer = weechat_buffer_new (category, name,
+    new_buffer = weechat_buffer_new (name,
                                      (new_script_callback_input) ?
                                      input_callback : NULL,
                                      (new_script_callback_input) ?

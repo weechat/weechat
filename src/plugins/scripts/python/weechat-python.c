@@ -28,7 +28,7 @@
 #include "weechat-python-api.h"
 
 
-WEECHAT_PLUGIN_NAME("python");
+WEECHAT_PLUGIN_NAME(PYTHON_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Python plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
@@ -72,7 +72,7 @@ weechat_python_exec (struct t_plugin_script *script,
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s unable to run function \"%s\""),
-                        weechat_prefix ("error"), "python", function);
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
 	return NULL;
     }
@@ -151,7 +151,7 @@ weechat_python_exec (struct t_plugin_script *script,
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"%s\" must return "
                                          "a valid value"),
-                        weechat_prefix ("error"), "python", function);
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
         python_current_script = old_python_current_script;
         if (python_current_script)
@@ -164,7 +164,7 @@ weechat_python_exec (struct t_plugin_script *script,
 	weechat_printf (NULL,
                         weechat_gettext ("%s%s: not enough memory in "
                                          "function \"%s\""),
-                        weechat_prefix ("error"), "python", function);
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME, function);
 	/* PyEval_ReleaseThread (python_current_script->interpreter); */
         python_current_script = old_python_current_script;
         if (python_current_script)
@@ -204,7 +204,7 @@ weechat_python_output (PyObject *self, PyObject *args)
 	{
 	    weechat_printf (NULL,
                             weechat_gettext ("%s: stdout/stderr: %s%s"),
-                            "python", python_buffer_output, "");
+                            PYTHON_PLUGIN_NAME, python_buffer_output, "");
 	    python_buffer_output[0] = '\0';
 	}
     }
@@ -218,7 +218,7 @@ weechat_python_output (PyObject *self, PyObject *args)
             {
 		weechat_printf (NULL,
                                 weechat_gettext ("%s: stdout/stderr: %s%s"),
-                                "python", python_buffer_output, m);
+                                PYTHON_PLUGIN_NAME, python_buffer_output, m);
             }
 	    *p = '\n';
 	    python_buffer_output[0] = '\0';
@@ -229,7 +229,7 @@ weechat_python_output (PyObject *self, PyObject *args)
 	{
 	    weechat_printf (NULL,
                             weechat_gettext ("%s: stdout/stderr: %s%s"),
-                            "python", python_buffer_output, m);
+                            PYTHON_PLUGIN_NAME, python_buffer_output, m);
 	    python_buffer_output[0] = '\0';
 	}
 	else
@@ -269,13 +269,13 @@ weechat_python_load (const char *filename)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" not found"),
-                        weechat_prefix ("error"), "python", filename);
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME, filename);
         return 0;
     }
     
     weechat_printf (NULL,
                     weechat_gettext ("%s: loading script \"%s\""),
-                    "python", filename);
+                    PYTHON_PLUGIN_NAME, filename);
     
     python_current_script = NULL;
     
@@ -288,7 +288,7 @@ weechat_python_load (const char *filename)
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to create new "
                                          "sub-interpreter"),
-                        weechat_prefix ("error"), "python");
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
         fclose (fp);
         /* PyEval_ReleaseLock (); */
         return 0;
@@ -303,7 +303,7 @@ weechat_python_load (const char *filename)
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to initialize WeeChat "
                                          "module"),
-                        weechat_prefix ("error"), "python");
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
         fclose (fp);
 	
         Py_EndInterpreter (python_current_interpreter);
@@ -317,7 +317,7 @@ weechat_python_load (const char *filename)
     w_home = weechat_info_get ("weechat_dir", "");
     if (w_home)
     {
-        len = strlen (w_home) + 1 + strlen("python") + 1;
+        len = strlen (w_home) + 1 + strlen(PYTHON_PLUGIN_NAME) + 1;
         p_home = malloc (len);
         if (p_home)
         {
@@ -371,7 +371,7 @@ weechat_python_load (const char *filename)
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to redirect stdout and "
                                          "stderr"),
-                        weechat_prefix ("error"), "python");
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
     }
     else
     {
@@ -379,13 +379,13 @@ weechat_python_load (const char *filename)
         {
             weechat_printf (NULL,
                             weechat_gettext ("%s%s: unable to redirect stdout"),
-                            weechat_prefix ("error"), "python");
+                            weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
         }
         if (PySys_SetObject("stderr", weechat_outputs) == -1)
         {
             weechat_printf (NULL,
                             weechat_gettext ("%s%s: unable to redirect stderr"),
-                            weechat_prefix ("error"), "python");
+                            weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
         }
     }
     
@@ -395,7 +395,7 @@ weechat_python_load (const char *filename)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to parse file \"%s\""),
-                        weechat_prefix ("error"), "python", filename);
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME, filename);
         fclose (fp);
 
         if (PyErr_Occurred ())
@@ -420,7 +420,7 @@ weechat_python_load (const char *filename)
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: function \"register\" not "
                                          "found (or failed) in file \"%s\""),
-                        weechat_prefix ("error"), "python", filename);
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME, filename);
 	
         if (PyErr_Occurred ())
             PyErr_Print ();
@@ -461,7 +461,7 @@ weechat_python_unload (struct t_plugin_script *script)
     
     weechat_printf (NULL,
                     weechat_gettext ("%s: unloading script \"%s\""),
-                    "python", script->name);
+                    PYTHON_PLUGIN_NAME, script->name);
     
     if (script->shutdown_func && script->shutdown_func[0])
     {
@@ -494,13 +494,13 @@ weechat_python_unload_name (const char *name)
         weechat_python_unload (ptr_script);
         weechat_printf (NULL,
                         weechat_gettext ("%s: script \"%s\" unloaded"),
-                        "python", name);
+                        PYTHON_PLUGIN_NAME, name);
     }
     else
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: script \"%s\" not loaded"),
-                        weechat_prefix ("error"), "python", name);
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME, name);
     }
 }
 
@@ -593,7 +593,8 @@ weechat_python_command_cb (void *data, struct t_gui_buffer *buffer,
             weechat_printf (NULL,
                             weechat_gettext ("%s%s: unknown option for "
                                              "command \"%s\""),
-                            weechat_prefix ("error"), "python", "python");
+                            weechat_prefix ("error"), PYTHON_PLUGIN_NAME,
+                            "python");
         }
     }
     
@@ -679,7 +680,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to launch global "
                                          "interpreter"),
-                        weechat_prefix ("error"), "python");
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
     }
     
@@ -693,7 +694,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to get current "
                                          "interpreter state"),
-                        weechat_prefix ("error"), "python");
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
     }
     
@@ -735,7 +736,7 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
     {
         weechat_printf (NULL,
                         weechat_gettext ("%s%s: unable to free interpreter"),
-                        weechat_prefix ("error"), "python");
+                        weechat_prefix ("error"), PYTHON_PLUGIN_NAME);
     }
     
     return WEECHAT_RC_OK;

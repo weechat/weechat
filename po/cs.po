@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-15 14:19+0200\n"
-"PO-Revision-Date: 2007-09-06 12:44+0200\n"
+"POT-Creation-Date: 2008-09-17 10:21+0200\n"
+"PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -452,7 +452,7 @@ msgid "    prints hooked:"
 msgstr "     obsluhovače časovače:\n"
 
 #, fuzzy, c-format
-msgid "      buffer: %s / %s, message: \"%s\""
+msgid "      buffer: %s, message: \"%s\""
 msgstr "       (není obsluhovač zprávy)\n"
 
 #, fuzzy
@@ -622,7 +622,7 @@ msgid ""
 "[add barname type[,cond1,cond2,...] position size separator item1,item2,...] "
 "| [default] | [del barname|-all] | [set barname name|priority|condition|"
 "position|filling|size|separator|items value] | [hide|show barname] | [scroll "
-"barname category.name value] | [list] | [listitems]"
+"barname buffer value] | [list] | [listitems]"
 msgstr ""
 
 msgid ""
@@ -647,8 +647,8 @@ msgid ""
 "         hide: hide a bar\n"
 "         show: show an hidden bar\n"
 "       scroll: scroll bar up/down\n"
-"category.name: category and name of buffer to scroll ('*' means current "
-"buffer, you should use '*' for root bars)\n"
+"       buffer: name of buffer to scroll ('*' means current buffer, you "
+"should use '*' for root bars)\n"
 "        value: value for scroll: 'x' or 'y', followed by '+', '-', "
 "'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by "
 "%% of width/height, otherwise value is number of chars)\n"
@@ -772,8 +772,8 @@ msgid ""
 "    del: delete a filter\n"
 " number: number of filter to delete (look at list to find it)\n"
 "   -all: delete all filters\n"
-" buffer: buffer where filter is active: it may be a name (category.name) or "
-"\"*\" for all buffers\n"
+" buffer: buffer where filter is active: it may be a name or \"*\" for all "
+"buffers\n"
 "   tags: comma separated list of tags, for example: \"irc_join,irc_part,"
 "irc_quit\"\n"
 "  regex: regular expression to search in line (use \\t to separate prefix "
@@ -1114,6 +1114,11 @@ msgstr ""
 "2=zpráva, 4=soukromé, 8=zvýraznění, příklad: 12=soukromé+zvýraznění)"
 
 msgid ""
+"if set, uses short names to display buffer names in hotlist (start after "
+"first '.' in name)"
+msgstr ""
+
+msgid ""
 "hotlist sort type (group_time_asc (default), group_time_desc, "
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 msgstr ""
@@ -1379,10 +1384,6 @@ msgstr "barva děličů status barů"
 
 #, fuzzy
 msgid "text color for current buffer number in status bar"
-msgstr "barva pro aktuální kanál v stavovém řádku"
-
-#, fuzzy
-msgid "text color for current buffer category in status bar"
 msgstr "barva pro aktuální kanál v stavovém řádku"
 
 #, fuzzy
@@ -1713,12 +1714,12 @@ msgstr ""
 "Pokud používá tento soubor jiný proces WeeChat, skuste WeeChat pustit\n"
 "s jiným domovským adresářem pomocí \"--dir\" volby příkazové řádky.\n"
 
-#, c-format
-msgid "%sError upgrading WeeChat:"
-msgstr ""
+#, fuzzy, c-format
+msgid "%sError upgrading WeeChat with file '%s':"
+msgstr "%s nemohu vytvořit soubor \"%s\"\n"
 
 #, fuzzy, c-format
-msgid "%s    error: %s"
+msgid "%s    error: %s%s%s%s"
 msgstr "%sServer: %s%s\n"
 
 #, c-format
@@ -1730,7 +1731,59 @@ msgid "%s    source: %s, line: %d"
 msgstr "    napsal \"%s\", licence: %s"
 
 #, c-format
-msgid "%s*** Please report above info to developers ***"
+msgid "%s    *** Please report above info to developers ***"
+msgstr ""
+
+#, fuzzy
+msgid "write - object type"
+msgstr "  . typ: celočíselný\n"
+
+msgid "write - object id"
+msgstr ""
+
+msgid "write - variable name"
+msgstr ""
+
+#, fuzzy
+msgid "write - infolist type"
+msgstr "  . typ: celočíselný\n"
+
+#, fuzzy
+msgid "write - variable"
+msgstr "  . typ: celočíselný\n"
+
+msgid "read - object type"
+msgstr ""
+
+msgid "read - bad object type ('object start' expected)"
+msgstr ""
+
+msgid "read - object id"
+msgstr ""
+
+msgid "read - infolist creation"
+msgstr ""
+
+msgid "read - infolist item creation"
+msgstr ""
+
+msgid "read - variable name"
+msgstr ""
+
+msgid "read - variable type"
+msgstr ""
+
+#, fuzzy
+msgid "read - variable"
+msgstr "  . typ: celočíselný\n"
+
+#, fuzzy
+msgid "read - signature not found"
+msgstr "%s IP adresa nenalezena\n"
+
+msgid ""
+"read - bad signature (upgrade file format may have changed since last "
+"version)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -1845,7 +1898,7 @@ msgid "%s-MORE(%d)-"
 msgstr "-VÍCE-"
 
 #, fuzzy, c-format
-msgid "%sError: a buffer with same name already exists (%s / %s)"
+msgid "%sError: a buffer with same name (%s) already exists"
 msgstr ""
 "%s nemohu načíst plugin \"%s\": plugin se stejným jménem již existuje\n"
 
@@ -2076,8 +2129,8 @@ msgstr "časová značka pro čas v infobaru"
 msgid "open a new buffer"
 msgstr "nemohu vytvořit nový buffer"
 
-msgid "category name"
-msgstr "jméno kategorie"
+msgid "name"
+msgstr ""
 
 #, fuzzy
 msgid "set a buffer property"
@@ -2154,6 +2207,12 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: error with IRC server from URL (\"%s\"), ignored"
 msgstr "%s nevalidní syntaxe pro IRC server ('%s'), ignorován\n"
+
+#, c-format
+msgid ""
+"%s%s: WARNING: some network connections may still be open and not visible, "
+"you should restart WeeChat now (with /quit)."
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%s%s: cannot allocate new channel"
@@ -3658,295 +3717,6 @@ msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr ""
 "%s: přezdívka \"%s\" je již používaná, zkouším druhou přezdívku \"%s\"\n"
 
-msgid "error received from IRC server"
-msgstr "přijata chyba z IRC serveru"
-
-msgid "message received"
-msgstr "zpráva přijata"
-
-msgid "close all connections and quit"
-msgstr "zavřít všechny spojení a ukončit"
-
-msgid "a server message"
-msgstr "zpráva serveru"
-
-msgid "user mode string"
-msgstr "řetězec uživatelského módu"
-
-msgid "away message"
-msgstr "zpráva nepřítomnosti"
-
-msgid "ison"
-msgstr "ison"
-
-msgid "unaway"
-msgstr "zrušit nepřitomnost"
-
-msgid "now away"
-msgstr "nyní nepřítomen"
-
-msgid "whois (registered nick)"
-msgstr "kdo je (registrovaná přezdívka)"
-
-msgid "whois (help mode)"
-msgstr "kdo je (mód nápovědy)"
-
-msgid "whois (user)"
-msgstr "kdo je (uživatel)"
-
-msgid "whois (server)"
-msgstr "kdo je (server)"
-
-msgid "whois (operator)"
-msgstr "kdo je (operator)"
-
-msgid "whowas"
-msgstr "kdo byl"
-
-msgid "end of /who list"
-msgstr "konec /who seznamu"
-
-msgid "whois (idle)"
-msgstr "kdo je (nečinný)"
-
-msgid "whois (end)"
-msgstr "kdo je (konec)"
-
-msgid "whois (channels)"
-msgstr "kdo je (kanály)"
-
-msgid "whois (identified user)"
-msgstr "kdo je (identifikovaný uživatel)"
-
-msgid "/list start"
-msgstr "/list začátek"
-
-msgid "channel (for /list)"
-msgstr "kanál (pro /list)"
-
-#, fuzzy
-msgid "end of /list"
-msgstr "konec /who seznamu"
-
-msgid "channel mode"
-msgstr "mód kanálu"
-
-msgid "whois (has oper privs)"
-msgstr "kdo je (má privilegia operátora)"
-
-msgid "whois (host)"
-msgstr "kdo je (host)"
-
-msgid "channel creation date"
-msgstr "datum vytvoření kanálu"
-
-msgid "no topic for channel"
-msgstr "na kanálu není nastaveno téma"
-
-msgid "topic of channel"
-msgstr "téma kanálu"
-
-msgid "infos about topic (nick and date changed)"
-msgstr "informace o tématu (uživatel a datum změnění)"
-
-msgid "inviting"
-msgstr "pozvání"
-
-msgid "channel reop"
-msgstr "reop kanálu"
-
-msgid "end of channel reop list"
-msgstr "konec seznamu lidí při opnutých při reopu kanálu"
-
-msgid "channel exception list"
-msgstr "seznam vyjímek kanálu"
-
-msgid "end of channel exception list"
-msgstr "konec seznamu vyjímek kanálu"
-
-msgid "server version"
-msgstr "verze serveru"
-
-msgid "who"
-msgstr "kdo"
-
-msgid "list of nicks on channel"
-msgstr "seznam uživatelů na kanálu"
-
-msgid "end of /names list"
-msgstr "konec /names sezanmu"
-
-msgid "banlist"
-msgstr "seznam zakázaných"
-
-msgid "end of banlist"
-msgstr "konec seznamu zakázaných"
-
-msgid "whois (connecting from)"
-msgstr "kdo je (Připojujený z)"
-
-msgid "whois (using modes)"
-msgstr "kdo je (použité módy)"
-
-msgid "no such nick/channel"
-msgstr "neexistující přezdívka/kanál"
-
-msgid "no such server"
-msgstr "neexistující server"
-
-msgid "no such channel"
-msgstr "neexistující kanál"
-
-msgid "cannot send to channel"
-msgstr "nemohu poslat na kanál"
-
-msgid "too many channels"
-msgstr "příliš mnoho kanálů"
-
-msgid "was no such nick"
-msgstr "byl neznámá přezdívka"
-
-msgid "no origin"
-msgstr "žádný původ"
-
-msgid "no services"
-msgstr "žádné služby"
-
-msgid "no recipient"
-msgstr "žádný příjemce"
-
-msgid "no text to send"
-msgstr "není text k poslání"
-
-msgid "no toplevel"
-msgstr "žádný nejvyšší level"
-
-msgid "wilcard in toplevel domain"
-msgstr "žnačka pro výběr souboru v nejvyšší doméně"
-
-msgid "unknown command"
-msgstr "neznámý přkaz"
-
-msgid "MOTD is missing"
-msgstr "MOTD chybí"
-
-msgid "no administrative info"
-msgstr "žádné administrativní informace"
-
-msgid "file error"
-msgstr "chyba souboru"
-
-msgid "no nickname given"
-msgstr "žádná přezdívka nebyla dána"
-
-msgid "erroneous nickname"
-msgstr "chybová přezdívka"
-
-msgid "nickname already in use"
-msgstr "přezdívka je zrovna používaná"
-
-msgid "nickname collision"
-msgstr "kolize přezdívek"
-
-msgid "resource unavailable"
-msgstr "zdroj nedostupny"
-
-msgid "not authorized to change nickname"
-msgstr "chybí autorizace pro změnu přezdívky"
-
-msgid "user not in channel"
-msgstr "uživatel není na kanále"
-
-msgid "not on channel"
-msgstr "není na kanále"
-
-msgid "user already on channel"
-msgstr "uživatel již je na kanále"
-
-msgid "user not logged in"
-msgstr "uživatel není přihlášen"
-
-msgid "summon has been disabled"
-msgstr "svolávání bylo zakázáno"
-
-msgid "users has been disabled"
-msgstr "uživatel byl zablokován"
-
-msgid "you are not registered"
-msgstr "nejsi registrován"
-
-msgid "not enough parameters"
-msgstr "nedostatek parametrů"
-
-msgid "you may not register"
-msgstr "nemůžeš se registrovat"
-
-msgid "your host isn't among the privileged"
-msgstr "tvůj host není mezi privilegovanými"
-
-msgid "password incorrect"
-msgstr "nezprávné heslo"
-
-msgid "you are banned from this server"
-msgstr "dle tohoto serveru jsi zakázaný"
-
-msgid "channel key already set"
-msgstr "klíč kanálu je již nastaven"
-
-msgid "forwarding to another channel"
-msgstr "předávám na dalsí kanál"
-
-msgid "channel is already full"
-msgstr "kanál je již plný"
-
-msgid "unknown mode char to me"
-msgstr "neznámý znak módu"
-
-msgid "cannot join channel (invite only)"
-msgstr "nemohu se přidat na kanál (pouze na pozvání)"
-
-msgid "cannot join channel (banned from channel)"
-msgstr "nemohu se přidat na kanál (zakázaný dle kanálu)"
-
-msgid "cannot join channel (bad channel key)"
-msgstr "nemohu se přidat na kanál (špatný klíč kanálu)"
-
-msgid "bad channel mask"
-msgstr "špatná maska kanálu"
-
-msgid "channel doesn't support modes"
-msgstr "kanál nepodporuje módy"
-
-msgid "you're not an IRC operator"
-msgstr "nejsi IRC operátor"
-
-msgid "you're not channel operator"
-msgstr "nejsi operátor kanálu"
-
-msgid "you can't kill a server!"
-msgstr "nemůžeš zabít server!"
-
-msgid "your connection is restricted!"
-msgstr "tvé připojení je omezené"
-
-msgid "user is immune from kick/deop"
-msgstr "uživatel je imunní na kick/deop"
-
-msgid "network split"
-msgstr "rozdělení sítě"
-
-msgid "no O-lines for your host"
-msgstr "žádné O-řádky pro tvůj host"
-
-msgid "unknown mode flag"
-msgstr "neznámá značka módu"
-
-msgid "can't change mode for other users"
-msgstr "nemůžu změnit mód přo ostatní uživatele"
-
-msgid "whois (secure connection)"
-msgstr "whois (zabezpečená část)"
-
 #, fuzzy, c-format
 msgid "%s%s: command \"%s\" not found:"
 msgstr "%s plugin \"%s\" nenalezen\n"
@@ -4902,132 +4672,3 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
-
-#, fuzzy
-#~ msgid "[infolist]"
-#~ msgstr "seznam zakázaných"
-
-#, fuzzy
-#~ msgid "  type: string (%s)"
-#~ msgstr "  . typ: řetězec\n"
-
-#~ msgid "  value: '%s%s%s' (default: '%s')"
-#~ msgstr "  hodnota: '%s%s%s' (výhozí: '%s')"
-
-#, fuzzy
-#~ msgid "  type: integer (between %d and %d)"
-#~ msgstr "  . typ celočíselný (hodnoty: mezi %d a %d)\n"
-
-#~ msgid "  value: %s%d%s (default: %d)"
-#~ msgstr "  hodnota: %s%d%s (výchozí: %d)"
-
-#, fuzzy
-#~ msgid "  type: string (any string)"
-#~ msgstr "  . typ řetězec (jakýkoliv řetězec)\n"
-
-#, fuzzy
-#~ msgid "  type: char (any char)"
-#~ msgstr "  . typ: znak (jakýkoliv znak)\n"
-
-#, fuzzy
-#~ msgid "  type: string (limit: %d chars)"
-#~ msgstr "  . typ řetězec (jakýkoliv řetězec, limit: %d znaků)\n"
-
-#, fuzzy
-#~ msgid "  type: color (values depend on GUI used)"
-#~ msgstr "  . hodnoty: mezi %d a %d\n"
-
-#~ msgid "  value: %s%s%s (default: %s)"
-#~ msgstr "  hodnota: %s%s%s (výchozí: %s)"
-
-#, fuzzy
-#~ msgid "  type: boolean ('on' or 'off')"
-#~ msgstr "  . typ boolean (hodnota: 'on' nebo 'off')\n"
-
-#, fuzzy
-#~ msgid "  %s: %s%s%s (default: %s)"
-#~ msgstr "  hodnota: %s%s%s (výchozí: %s)"
-
-#, fuzzy
-#~ msgid "%s%s: missing argument for \"%s\" command (try /help %s)"
-#~ msgstr "%s chybí argumenty pro příkaz \"%s\"\n"
-
-#~ msgid "infolist: infolist to display (values: buffer, buffer_lines)"
-#~ msgstr "infolist: infolist pro zobrazení (hodnoty: buffer, buffer_lines)"
-
-#, fuzzy
-#~ msgid ""
-#~ "     info: info to display (values: version, weechat_dir, weechat_libdir, "
-#~ "weechat_sharedir, charset_terminal, charset_internal, inactivity, input, "
-#~ "input_mask, input_pos)\n"
-#~ "arguments: optional arguments for info"
-#~ msgstr ""
-#~ "info: info pro zobrazení (hodnoty: version, weechat_dir, weechat_libdir, "
-#~ "weechat_sharedir, charset_terminal, charset_internal, inactivity, input, "
-#~ "input_mask, input_pos)"
-
-#~ msgid "info"
-#~ msgstr "info"
-
-#, fuzzy
-#~ msgid "%s: server %s%s%s created (temporary server, NOT SAVED!)"
-#~ msgstr "Server %s%s%s vytvořen (dočasný server, NEUKLÁDÁ SE!)\n"
-
-#, fuzzy
-#~ msgid "%s%s: nick \"%s\" not found for \"%s\" command"
-#~ msgstr "%s přezdívka \"%s\" nebyla nalezena pro příkaz \"%s\"\n"
-
-#, fuzzy
-#~ msgid "%s%s: server \"%s\" is not a temporary server"
-#~ msgstr "%s server \"%s\" není dočasným serverem\n"
-
-#, fuzzy
-#~ msgid "%s: server %s%s%s is not temporary any more"
-#~ msgstr "Server %s%s%s již není dočasný\n"
-
-#~ msgid " (temporary server, will not be saved)"
-#~ msgstr " (dočasný server, nebude uložen)"
-
-#~ msgid " (temporary)"
-#~ msgstr " (dočasný)"
-
-#, fuzzy
-#~ msgid "write of infolist type 'integer'"
-#~ msgstr "  . typ: celočíselný\n"
-
-#, fuzzy
-#~ msgid "unable to create infolist"
-#~ msgstr "%s DCC: nemohu vytvořit rouru\n"
-
-#, fuzzy
-#~ msgid "unable to create infolist item"
-#~ msgstr "%s DCC: nemohu vytvořit rouru\n"
-
-#~ msgid ""
-#~ "Last operation with session file was at position %ld, read of %d bytes\n"
-#~ msgstr ""
-#~ "Poslední operace se souborem sezení bzla na pozici %ld, čtu %d bytů\n"
-
-#~ msgid ""
-#~ "Please send %s/%s, %s/%s and above messages to WeeChat developers for "
-#~ "support.\n"
-#~ "Be careful, private info may be in these files.\n"
-#~ msgstr ""
-#~ "Prosím pošlete %s/%s, %s/%s a zprávu nahoře vývojářům WeeChat pro "
-#~ "podporu.\n"
-#~ "Opatrně v souborech můžou být soukromé informace.\n"
-
-#~ msgid "wrong type in file (expected: %d, read: %d)"
-#~ msgstr "špatný typ v souboru (očekáván: %d, přečten: %d)"
-
-#~ msgid "object read error"
-#~ msgstr "chyba při čtení objektu"
-
-#~ msgid "wrong object (expected: %d, read: %d)"
-#~ msgstr "špatný objekt (očekáván: %d, přečten: %d)"
-
-#~ msgid "type read error"
-#~ msgstr "chyba při čtení typu"
-
-#~ msgid "wrong type (expected: %d, read: %d)"
-#~ msgstr "špatný typ (očekáván: %d, přečten: %d)"

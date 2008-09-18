@@ -33,8 +33,8 @@
 
 use strict;
 
-use Locale::gettext;
 use POSIX;            # needed for setlocale()
+use Locale::gettext;
 use File::Basename;
 
 my $version = "0.1";
@@ -133,7 +133,7 @@ sub get_options
             my $config = weechat::infolist_string($infolist, "config_name");
             my $section = weechat::infolist_string($infolist, "section_name");
             my $option = weechat::infolist_string($infolist, "option_name");
-            if ($plugin_list{$config} =~ /o/)
+            if (defined $plugin_list{$config} && ($plugin_list{$config} =~ /o/))
             {
                 $options{$config}{$section}{$option}{"type"} = weechat::infolist_string($infolist, "type");
                 $options{$config}{$section}{$option}{"string_values"} = weechat::infolist_string($infolist, "string_values");
@@ -211,6 +211,8 @@ sub docgen
     my $path = weechat::config_get_plugin("path");
     $path =~ s/^~\//$ENV{"HOME"}\//;
     
+    my $old_locale = setlocale(LC_MESSAGES);
+    
     # write to doc files, by locale
     my $num_files_written = 0;
     foreach my $locale (@locale_list)
@@ -230,7 +232,7 @@ sub docgen
             # write commands
             foreach my $plugin (keys %plugin_commands)
             {
-                $filename = $dir.$plugin."_commands.xml";
+                my $filename = $dir.$plugin."_commands.xml";
                 if (open(FILE, ">".$filename))
                 {
                     print FILE $xml_header;
@@ -265,7 +267,7 @@ sub docgen
             # write config options
             foreach my $config (keys %plugin_options)
             {
-                $filename = $dir.$config."_options.xml";
+                my $filename = $dir.$config."_options.xml";
                 if (open(FILE, ">".$filename))
                 {
                     print FILE $xml_header;
@@ -342,7 +344,7 @@ sub docgen
             # write infos/infolists hooked
             foreach my $plugin (keys %plugin_infos)
             {
-                $filename = $dir.$plugin."_infos.xml";
+                my $filename = $dir.$plugin."_infos.xml";
                 if (open(FILE, ">".$filename))
                 {
                     print FILE $xml_header;
@@ -385,31 +387,36 @@ sub docgen
     weechat::print("", "docgen: total: ".$num_files_written." files written");
     
     # write "include_autogen.xml" file (with includes for all files built)
-    $filename = $path."/include_autogen.xml";
-    if (open(FILE, ">".$filename))
+    if ($num_files_written > 0)
     {
-        print FILE "<!-- commands -->\n\n";
-        foreach my $plugin (keys %plugin_commands)
+        my $filename = $path."/include_autogen.xml";
+        if (open(FILE, ">".$filename))
         {
-            print FILE "<!ENTITY ".$plugin."_commands.xml SYSTEM \"autogen/".$plugin."_commands.xml\">\n";
+            print FILE "<!-- commands -->\n\n";
+            foreach my $plugin (sort keys %plugin_commands)
+            {
+                print FILE "<!ENTITY ".$plugin."_commands.xml SYSTEM \"autogen/".$plugin."_commands.xml\">\n";
+            }
+            print FILE "\n<!-- config options -->\n\n";
+            foreach my $config (sort keys %plugin_options)
+            {
+                print FILE "<!ENTITY ".$config."_options.xml SYSTEM \"autogen/".$config."_options.xml\">\n";
+            }
+            print FILE "\n<!-- infos/infolists hooked -->\n\n";
+            foreach my $plugin (sort keys %plugin_infos)
+            {
+                print FILE "<!ENTITY ".$plugin."_infos.xml SYSTEM \"autogen/".$plugin."_infos.xml\">\n";
+            }
+            close(FILE);
+            weechat::print("", "docgen: file ".basename($filename)." written");
         }
-        print FILE "\n<!-- config options -->\n\n";
-        foreach my $config (keys %plugin_options)
+        else
         {
-            print FILE "<!ENTITY ".$config."_options.xml SYSTEM \"autogen/".$config."_options.xml\">\n";
+            weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
         }
-        print FILE "\n<!-- infos/infolists hooked -->\n\n";
-        foreach my $plugin (keys %plugin_infos)
-        {
-            print FILE "<!ENTITY ".$plugin."_infos.xml SYSTEM \"autogen/".$plugin."_infos.xml\">\n";
-        }
-        close(FILE);
-        weechat::print("", "docgen: file ".basename($filename)." written");
-    }
-    else
-    {
-        weechat::print("", weechat::prefix("error")."docgen error: unable to write file '$filename'");
     }
     
-    setlocale(LC_MESSAGES, "");
+    setlocale(LC_MESSAGES, $old_locale);
+    
+    return weechat::WEECHAT_RC_OK;
 }

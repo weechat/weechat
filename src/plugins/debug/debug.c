@@ -25,7 +25,9 @@
 #include "../weechat-plugin.h"
 
 
-WEECHAT_PLUGIN_NAME("debug");
+#define DEBUG_PLUGIN_NAME "debug"
+
+WEECHAT_PLUGIN_NAME(DEBUG_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Debug plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);

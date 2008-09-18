@@ -21,6 +21,7 @@
 #define __WEECHAT_FIFO_H 1
 
 #define weechat_plugin weechat_fifo_plugin
+#define FIFO_PLUGIN_NAME "fifo"
 
 extern struct t_weechat_plugin *weechat_fifo_plugin;
 extern char *fifo_filename;

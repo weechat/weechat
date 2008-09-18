@@ -68,7 +68,7 @@ char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 
 struct t_gui_buffer *
 gui_buffer_new (struct t_weechat_plugin *plugin,
-                const char *category, const char *name,
+                const char *name,
                 int (*input_callback)(void *data,
                                       struct t_gui_buffer *buffer,
                                       const char *input_data),
@@ -80,16 +80,16 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     struct t_gui_buffer *new_buffer;
     struct t_gui_completion *new_completion;
     
-    if (!category || !name)
+    if (!name)
         return NULL;
     
-    if (gui_buffer_search_by_category_name (category, name))
+    if (gui_buffer_search_by_name ((plugin) ? plugin->name : "core", name))
     {
         gui_chat_printf (NULL,
-                         _("%sError: a buffer with same name already exists "
-                           "(%s / %s)"),
+                         _("%sError: a buffer with same name (%s) already "
+                           "exists"),
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
-                         category, name);
+                         name);
         return NULL;
     }
     
@@ -101,7 +101,6 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->plugin = plugin;
         new_buffer->plugin_name_for_upgrade = NULL;
         new_buffer->number = (last_gui_buffer) ? last_gui_buffer->number + 1 : 1;
-        new_buffer->category = (category) ? strdup (category) : NULL;
         new_buffer->name = strdup (name);
         new_buffer->type = GUI_BUFFER_TYPE_FORMATED;
         new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
@@ -283,8 +282,6 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 {
     if (string_strcasecmp (property, "plugin") == 0)
         return (buffer->plugin) ? buffer->plugin->name : NULL;
-    else if (string_strcasecmp (property, "category") == 0)
-        return buffer->category;
     else if (string_strcasecmp (property, "name") == 0)
         return buffer->name;
     else if (string_strcasecmp (property, "title") == 0)
@@ -350,25 +347,6 @@ gui_buffer_ask_input_refresh (struct t_gui_buffer *buffer, int refresh)
 {
     if (refresh > buffer->input_refresh_needed)
         buffer->input_refresh_needed = refresh;
-}
-
-/*
- * gui_buffer_set_category: set category for a buffer
- */
-
-void
-gui_buffer_set_category (struct t_gui_buffer *buffer, const char *category)
-{
-    if (category && category[0])
-    {
-        if (buffer->category)
-            free (buffer->category);
-        buffer->category = strdup (category);
-    }
-    gui_status_refresh_needed = 1;
-    
-    hook_signal_send ("buffer_renamed",
-                      WEECHAT_HOOK_SIGNAL_POINTER, buffer);
 }
 
 /*
@@ -566,10 +544,6 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         gui_window_switch_to_buffer (gui_current_window, buffer);
         gui_window_redraw_buffer (buffer);
     }
-    else if (string_strcasecmp (property, "category") == 0)
-    {
-        gui_buffer_set_category (buffer, value_str);
-    }
     else if (string_strcasecmp (property, "name") == 0)
     {
         gui_buffer_set_name (buffer, value_str);
@@ -673,31 +647,94 @@ gui_buffer_search_main ()
 }
 
 /*
- * gui_buffer_search_by_category_name: search a buffer by category and/or name
+ * gui_buffer_search_by_name: search a buffer by name
  */
 
 struct t_gui_buffer *
-gui_buffer_search_by_category_name (const char *category, const char *name)
+gui_buffer_search_by_name (const char *plugin, const char *name)
 {
     struct t_gui_buffer *ptr_buffer;
+    int plugin_match;
     
-    if ((!category || !category[0]) && (!name || !name[0]))
+    if (!name || !name[0])
         return gui_current_window->buffer;
     
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        if ((!category || !category[0]
-             || (ptr_buffer->category
-                 && (strcmp (ptr_buffer->category, category) == 0)))
-            && (!name || !name[0]
-                || (ptr_buffer->name
-                    && (strcmp (ptr_buffer->name, name) == 0))))
-            return ptr_buffer;
+        if (ptr_buffer->name)
+        {
+            plugin_match = 1;
+            if (plugin && plugin[0])
+            {
+                if (ptr_buffer->plugin)
+                {
+                    if (strcmp (plugin, ptr_buffer->plugin->name) != 0)
+                        plugin_match = 0;
+                }
+                else
+                {
+                    if (strcmp (plugin, "core") != 0)
+                        plugin_match = 0;
+                }
+            }
+            if (plugin_match && (strcmp (ptr_buffer->name, name) == 0))
+            {
+                return ptr_buffer;
+            }
+        }
     }
     
     /* buffer not found */
     return NULL;
+}
+
+/*
+ * gui_buffer_search_by_partial_name: search a buffer by name (may be partial)
+ */
+
+struct t_gui_buffer *
+gui_buffer_search_by_partial_name (const char *plugin, const char *name)
+{
+    struct t_gui_buffer *ptr_buffer, *buffer_partial_match;
+    int plugin_match;
+    
+    if (!name || !name[0])
+        return gui_current_window->buffer;
+    
+    buffer_partial_match = NULL;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (ptr_buffer->name)
+        {
+            plugin_match = 1;
+            if (plugin && plugin[0])
+            {
+                if (ptr_buffer->plugin)
+                {
+                    if (strcmp (plugin, ptr_buffer->plugin->name) != 0)
+                        plugin_match = 0;
+                }
+                else
+                {
+                    if (strcmp (plugin, "core") != 0)
+                        plugin_match = 0;
+                }
+            }
+            if (plugin_match)
+            {
+                if (strcmp (ptr_buffer->name, name) == 0)
+                    return ptr_buffer;
+                if (!buffer_partial_match && strstr (ptr_buffer->name, name))
+                    buffer_partial_match = ptr_buffer;
+            }
+        }
+    }
+    
+    /* return buffer partially matching (may be NULL if no buffer was found */
+    return buffer_partial_match;
 }
 
 /*
@@ -776,55 +813,6 @@ gui_buffer_is_scrolled (struct t_gui_buffer *buffer)
     
     /* buffer not found */
     return 0;
-}
-
-/*
- * gui_buffer_match_category_name: return 1 if buffer matches category.name
- *                                 otherwise 0
- *                                 category or name may begin or end with "*"
- *                                 examples:
- *                                     *.#weechat
- *                                     freenode.*
- *                                     freenode.#weechat*
- *                                     freenode.*chat*
- */
-
-int
-gui_buffer_match_category_name (struct t_gui_buffer *buffer, const char *mask,
-                                int case_sensitive)
-{
-    char *pos_point, *category;
-    const char *pos_name;
-    int rc;
-    
-    if (!mask || !mask[0])
-        return 0;
-    
-    pos_point = strchr (mask, '.');
-    if (pos_point)
-    {
-        category = string_strndup (mask, pos_point - mask);
-        pos_name = pos_point + 1;
-    }
-    else
-    {
-        category = NULL;
-        pos_name = mask;
-    }
-    
-    rc = 1;
-    
-    if (category && buffer->category
-        && !string_match (buffer->category, category, case_sensitive))
-        rc = 0;
-    
-    if (rc && !string_match (buffer->name, pos_name, case_sensitive))
-        rc = 0;
-    
-    if (category)
-        free (category);
-    
-    return rc;
 }
 
 /*
@@ -924,8 +912,6 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     /* free some data */
     if (buffer->title)
         free (buffer->title);
-    if (buffer->category)
-        free (buffer->category);
     if (buffer->name)
         free (buffer->name);
     if (buffer->input_buffer)
@@ -1151,6 +1137,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
                             struct t_gui_buffer *buffer)
 {
     struct t_infolist_item *ptr_item;
+    char *pos_point;
     
     if (!infolist || !buffer)
         return 0;
@@ -1172,9 +1159,11 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "number", buffer->number))
         return 0;
-    if (!infolist_new_var_string (ptr_item, "category", buffer->category))
-        return 0;
     if (!infolist_new_var_string (ptr_item, "name", buffer->name))
+        return 0;
+    pos_point = strchr (buffer->name, '.');
+    if (!infolist_new_var_string (ptr_item, "short_name",
+                                  (pos_point) ? pos_point + 1 : buffer->name))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "type", buffer->type))
         return 0;
@@ -1349,7 +1338,6 @@ gui_buffer_print_log ()
         log_printf ("[buffer (addr:0x%x)]", ptr_buffer);
         log_printf ("  plugin . . . . . . . . : 0x%x", ptr_buffer->plugin);
         log_printf ("  number . . . . . . . . : %d",   ptr_buffer->number);
-        log_printf ("  category . . . . . . . : '%s'", ptr_buffer->category);
         log_printf ("  name . . . . . . . . . : '%s'", ptr_buffer->name);
         log_printf ("  type . . . . . . . . . : %d",   ptr_buffer->type);
         log_printf ("  notify . . . . . . . . : %d",   ptr_buffer->notify);

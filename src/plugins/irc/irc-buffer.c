@@ -20,6 +20,7 @@
 
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 #include "../weechat-plugin.h"
@@ -29,6 +30,79 @@
 #include "irc-command.h"
 #include "irc-server.h"
 
+
+/*
+ * irc_buffer_get_server_channel: get IRC server and channel pointers with a
+ *                                buffer pointer
+ *                                (buffer may be a server or a channel)
+ */
+
+void
+irc_buffer_get_server_channel (struct t_gui_buffer *buffer,
+                               struct t_irc_server **server,
+                               struct t_irc_channel **channel)
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+
+    if (server)
+        *server = NULL;
+    if (channel)
+        *channel = NULL;
+    
+    if (!buffer)
+        return;
+    
+    /* look for a server or channel using this buffer */
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->buffer == buffer)
+        {
+            if (server)
+                *server = ptr_server;
+            return;
+        }
+        
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if (ptr_channel->buffer == buffer)
+            {
+                if (server)
+                    *server = ptr_server;
+                if (channel)
+                    *channel = ptr_channel;
+                return;
+            }
+        }
+    }
+    
+    /* no server or channel found */
+}
+
+/*
+ * irc_buffer_build_name: build buffer name with a server and a channel
+ */
+
+char *
+irc_buffer_build_name (const char *server, const char *channel)
+{
+    static char buffer[128];
+    
+    buffer[0] = '\0';
+    
+    if (!server && !channel)
+        return buffer;
+    
+    if (server && channel)
+        snprintf (buffer, sizeof (buffer), "%s.%s", server, channel);
+    else
+        snprintf (buffer, sizeof (buffer), "%s",
+                  (server) ? server : channel);
+    
+    return buffer;
+}
 
 /*
  * irc_buffer_merge_servers: merge server buffers in one buffer

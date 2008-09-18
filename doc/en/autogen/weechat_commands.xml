@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>bar  [add barname type[,cond1,cond2,...] position size separator item1,item2,...] | [default] | [del barname|-all] | [set barname name|priority|condition|position|filling|size|separator|items value] | [hide|show barname] | [scroll barname category.name value] | [list] | [listitems]</command>
+<command>bar  [add barname type[,cond1,cond2,...] position size separator item1,item2,...] | [default] | [del barname|-all] | [set barname name|priority|condition|position|filling|size|separator|items value] | [hide|show barname] | [scroll barname buffer value] | [list] | [listitems]</command>
 <programlisting>
 manage bars
 
@@ -30,7 +30,7 @@ manage bars
          hide: hide a bar
          show: show an hidden bar
        scroll: scroll bar up/down
-category.name: category and name of buffer to scroll ('*' means current buffer, you should use '*' for root bars)
+       buffer: name of buffer to scroll ('*' means current buffer, you should use '*' for root bars)
         value: value for scroll: 'x' or 'y', followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by %% of width/height, otherwise value is number of chars)
          list: list all bars
      listfull: list all bars (verbose)
@@ -95,7 +95,7 @@ disable: disable filters
     del: delete a filter
  number: number of filter to delete (look at list to find it)
    -all: delete all filters
- buffer: buffer where filter is active: it may be a name (category.name) or "*" for all buffers
+ buffer: buffer where filter is active: it may be a name or "*" for all buffers
    tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
   regex: regular expression to search in line (use \t to separate prefix from message)
 

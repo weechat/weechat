@@ -97,7 +97,7 @@ static XS (XS_weechat_register)
                         weechat_gettext ("%s%s: unable to register script "
                                          "\"%s\" (another script already "
                                          "exists with this name)"),
-                        weechat_prefix ("error"), "perl", name);
+                        weechat_prefix ("error"), PERL_PLUGIN_NAME, name);
         PERL_RETURN_ERROR;
     }
     
@@ -113,7 +113,7 @@ static XS (XS_weechat_register)
         weechat_printf (NULL,
                         weechat_gettext ("%s: registered script \"%s\", "
                                          "version %s (%s)"),
-                        "perl", name, version, description);
+                        PERL_PLUGIN_NAME, name, version, description);
     }
     else
     {
@@ -1727,12 +1727,6 @@ static XS (XS_weechat_print)
     /* make C compiler happy */
     (void) cv;
     
-    if (!perl_current_script)
-    {
-        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("print");
-        PERL_RETURN_ERROR;
-    }
-    
     if (items < 2)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("print");
@@ -2822,7 +2816,7 @@ weechat_perl_api_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
 
 static XS (XS_weechat_buffer_new)
 {
-    char *result, *category, *name, *function_input, *function_close;
+    char *result, *name, *function_input, *function_close;
     dXSARGS;
     
     /* make C compiler happy */
@@ -2834,19 +2828,17 @@ static XS (XS_weechat_buffer_new)
         PERL_RETURN_EMPTY;
     }
     
-    if (items < 4)
+    if (items < 3)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("buffer_new");
         PERL_RETURN_EMPTY;
     }
     
-    category = SvPV (ST (0), PL_na);
-    name = SvPV (ST (1), PL_na);
-    function_input = SvPV (ST (2), PL_na);
-    function_close = SvPV (ST (3), PL_na);
+    name = SvPV (ST (0), PL_na);
+    function_input = SvPV (ST (1), PL_na);
+    function_close = SvPV (ST (2), PL_na);
     result = script_ptr2str (script_api_buffer_new (weechat_perl_plugin,
                                                     perl_current_script,
-                                                    category,
                                                     name,
                                                     &weechat_perl_api_buffer_input_data_cb,
                                                     function_input,
@@ -2862,7 +2854,7 @@ static XS (XS_weechat_buffer_new)
 
 static XS (XS_weechat_buffer_search)
 {
-    char *result, *category, *name;
+    char *result, *plugin, *name;
     dXSARGS;
     
     /* make C compiler happy */
@@ -2880,9 +2872,9 @@ static XS (XS_weechat_buffer_search)
         PERL_RETURN_EMPTY;
     }
     
-    category = SvPV (ST (0), PL_na);
+    plugin = SvPV (ST (0), PL_na);
     name = SvPV (ST (1), PL_na);
-    result = script_ptr2str (weechat_buffer_search (category, name));
+    result = script_ptr2str (weechat_buffer_search (plugin, name));
     
     PERL_RETURN_STRING_FREE(result);
 }

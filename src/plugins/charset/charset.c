@@ -30,7 +30,9 @@
 #include "../weechat-plugin.h"
 
 
-WEECHAT_PLUGIN_NAME("charset");
+#define CHARSET_PLUGIN_NAME "charset"
+
+WEECHAT_PLUGIN_NAME(CHARSET_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Charset plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
@@ -68,13 +70,19 @@ charset_debug_cb (void *data, const char *signal, const char *type_data,
 
     if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
-        if (weechat_strcasecmp ((char *)signal_data, "charset") == 0)
+        if (weechat_strcasecmp ((char *)signal_data, CHARSET_PLUGIN_NAME) == 0)
         {
             charset_debug ^= 1;
             if (charset_debug)
-                weechat_printf (NULL, _("%s: debug enabled"), "charset");
+            {
+                weechat_printf (NULL, _("%s: debug enabled"),
+                                CHARSET_PLUGIN_NAME);
+            }
             else
-                weechat_printf (NULL, _("%s: debug disabled"), "charset");
+            {
+                weechat_printf (NULL, _("%s: debug disabled"),
+                                CHARSET_PLUGIN_NAME);
+            }
         }
     }
     
@@ -149,7 +157,7 @@ charset_config_create_option (void *data, struct t_config_file *config_file,
     {
         weechat_printf (NULL,
                         _("%s%s: error creating charset \"%s\" => \"%s\""),
-                        weechat_prefix ("error"), "charset",
+                        weechat_prefix ("error"), CHARSET_PLUGIN_NAME,
                         option_name, value);
     }
     
@@ -417,7 +425,7 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 {
     struct t_config_section *ptr_section;
     int length;
-    char *ptr_charset, *option_name, *plugin_name, *category, *name;
+    char *ptr_charset, *option_name, *plugin_name, *name;
     
     /* make C compiler happy */
     (void) data;
@@ -426,26 +434,23 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     {
         weechat_printf (NULL,
                         _("%s%s: missing parameters"),
-                        weechat_prefix ("error"), "charset");
+                        weechat_prefix ("error"), CHARSET_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
     }
     
     ptr_section = NULL;
     
     plugin_name = weechat_buffer_get_string (buffer, "plugin");
-    category = weechat_buffer_get_string (buffer, "category");
     name = weechat_buffer_get_string (buffer, "name");
     
-    length = ((plugin_name) ? strlen (plugin_name) : 0) + 1 +
-        strlen (category) + 1 + strlen (name) + 1;
+    length = ((plugin_name) ? strlen (plugin_name) : strlen ("core")) + 1 +
+        strlen (name) + 1;
     option_name = malloc (length);
     if (!option_name)
         return WEECHAT_RC_ERROR;
     
-    snprintf (option_name, length, "%s%s%s.%s",
-              (plugin_name) ? plugin_name : "",
-              (plugin_name) ? "." : "",
-              category,
+    snprintf (option_name, length, "%s.%s",
+              (plugin_name) ? plugin_name : "core",
               name);
     
     if ((argc > 1) && (weechat_strcasecmp (argv[1], "reset") == 0))
@@ -474,7 +479,7 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                 weechat_printf (NULL,
                                 _("%s%s: wrong charset type (decode or encode "
                                   "expected)"),
-                                weechat_prefix ("error"), "charset");
+                                weechat_prefix ("error"), CHARSET_PLUGIN_NAME);
                 if (option_name)
                     free (option_name);
                 return WEECHAT_RC_ERROR;
@@ -487,7 +492,8 @@ charset_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
         {
             weechat_printf (NULL,
                             _("%s%s: invalid charset: \"%s\""),
-                            weechat_prefix ("error"), "charset", ptr_charset);
+                            weechat_prefix ("error"), CHARSET_PLUGIN_NAME,
+                            ptr_charset);
             if (option_name)
                 free (option_name);
             return WEECHAT_RC_ERROR;
@@ -532,13 +538,13 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* display message */
     weechat_printf (NULL,
                     _("%s: terminal: %s, internal: %s"),
-                    "charset", charset_terminal, charset_internal);
+                    CHARSET_PLUGIN_NAME, charset_terminal, charset_internal);
     
     if (!charset_config_init ())
     {
         weechat_printf (NULL,
                         _("%s%s: error creating configuration file"),
-                        weechat_prefix("error"), "charset");
+                        weechat_prefix("error"), CHARSET_PLUGIN_NAME);
         return WEECHAT_RC_ERROR;
     }
     charset_config_read ();

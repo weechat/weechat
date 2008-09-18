@@ -69,23 +69,25 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
 {
     struct t_irc_channel *new_channel;
     struct t_gui_buffer *new_buffer;
+    char *buffer_name;
     
     /* alloc memory for new channel */
     if ((new_channel = malloc (sizeof (*new_channel))) == NULL)
     {
         weechat_printf (NULL,
                         _("%s%s: cannot allocate new channel"),
-                        weechat_prefix ("error"), "irc");
+                        weechat_prefix ("error"), IRC_PLUGIN_NAME);
         return NULL;
     }
     
     /* create buffer for channel (or use existing one) */
-    new_buffer = weechat_buffer_search (server->name, channel_name);
+    buffer_name = irc_buffer_build_name (server->name, channel_name);
+    new_buffer = weechat_buffer_search (IRC_PLUGIN_NAME, buffer_name);
     if (new_buffer)
         weechat_nicklist_remove_all (new_buffer);
     else
     {
-        new_buffer = weechat_buffer_new (server->name, channel_name,
+        new_buffer = weechat_buffer_new (buffer_name,
                                          &irc_input_data_cb, NULL,
                                          &irc_buffer_close_cb, NULL);
         if (!new_buffer)

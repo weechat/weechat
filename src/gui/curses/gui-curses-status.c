@@ -48,7 +48,7 @@ gui_status_draw (int erase)
 {
     struct t_gui_window *ptr_win;
     struct t_gui_hotlist *ptr_hotlist;
-    char format[32], *more;
+    char format[32], *more, *pos_point;
     int x;
     int display_name, names_count;
     
@@ -87,7 +87,7 @@ gui_status_draw (int erase)
                                       GUI_COLOR_STATUS_DELIMITERS);
         wprintw (GUI_CURSES(ptr_win)->win_status, "] ");
         
-        /* display buffer number/category/name */
+        /* display buffer number/name */
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                       GUI_COLOR_STATUS_NUMBER);
         wprintw (GUI_CURSES(ptr_win)->win_status, "%d",
@@ -95,13 +95,6 @@ gui_status_draw (int erase)
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                       GUI_COLOR_STATUS_DELIMITERS);
         wprintw (GUI_CURSES(ptr_win)->win_status, ":");
-        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                      GUI_COLOR_STATUS_CATEGORY);
-        wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
-                 ptr_win->buffer->category);
-        gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
-                                      GUI_COLOR_STATUS_DELIMITERS);
-        wprintw (GUI_CURSES(ptr_win)->win_status, "/");
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                       GUI_COLOR_STATUS_NAME);
         gui_window_wprintw (GUI_CURSES(ptr_win)->win_status, "%s ",
@@ -147,7 +140,7 @@ gui_status_draw (int erase)
                         display_name = 0;
                         break;
                 }
-
+                
                 wprintw (GUI_CURSES(ptr_win)->win_status, "%d",
                          ptr_hotlist->buffer->number);
                 
@@ -169,9 +162,12 @@ gui_status_draw (int erase)
                         snprintf (format, sizeof (format) - 1,
                                   "%%.%ds",
                                   CONFIG_INTEGER(config_look_hotlist_names_length));
+                    pos_point = NULL;
+                    if (CONFIG_BOOLEAN(config_look_hotlist_short_names))
+                        pos_point = strchr (ptr_hotlist->buffer->name, '.');
                     gui_window_wprintw (GUI_CURSES(ptr_win)->win_status,
                                         format,
-                                        ptr_hotlist->buffer->name);
+                                        (pos_point) ? pos_point + 1 : ptr_hotlist->buffer->name);
                 }
                 
                 if (ptr_hotlist->next_hotlist)

@@ -386,7 +386,6 @@ gui_color_init_weechat ()
     gui_color_build (GUI_COLOR_STATUS, CONFIG_COLOR(config_color_status), CONFIG_COLOR(config_color_status_bg));
     gui_color_build (GUI_COLOR_STATUS_DELIMITERS, CONFIG_COLOR(config_color_status_delimiters), CONFIG_COLOR(config_color_status_bg));
     gui_color_build (GUI_COLOR_STATUS_NUMBER, CONFIG_COLOR(config_color_status_number), CONFIG_COLOR(config_color_status_bg));
-    gui_color_build (GUI_COLOR_STATUS_CATEGORY, CONFIG_COLOR(config_color_status_category), CONFIG_COLOR(config_color_status_bg));
     gui_color_build (GUI_COLOR_STATUS_NAME, CONFIG_COLOR(config_color_status_name), CONFIG_COLOR(config_color_status_bg));
     gui_color_build (GUI_COLOR_STATUS_DATA_MSG, CONFIG_COLOR(config_color_status_data_msg), CONFIG_COLOR(config_color_status_bg));
     gui_color_build (GUI_COLOR_STATUS_DATA_PRIVATE, CONFIG_COLOR(config_color_status_data_private), CONFIG_COLOR(config_color_status_bg));

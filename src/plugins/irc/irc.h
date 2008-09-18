@@ -25,14 +25,14 @@
 #endif
 
 #define weechat_plugin weechat_irc_plugin
+#define IRC_PLUGIN_NAME "irc"
 
 #define IRC_GET_SERVER(__buffer)                                        \
     struct t_weechat_plugin *buffer_plugin = NULL;                      \
     struct t_irc_server *ptr_server = NULL;                             \
     buffer_plugin = weechat_buffer_get_pointer (__buffer, "plugin");    \
     if (buffer_plugin == weechat_irc_plugin)                            \
-        ptr_server = irc_server_search (                                \
-            weechat_buffer_get_string (__buffer, "category"));
+        irc_buffer_get_server_channel (__buffer, &ptr_server, NULL);
 
 #define IRC_GET_SERVER_CHANNEL(__buffer)                                \
     struct t_weechat_plugin *buffer_plugin = NULL;                      \
@@ -41,10 +41,8 @@
     buffer_plugin = weechat_buffer_get_pointer (__buffer, "plugin");    \
     if (buffer_plugin == weechat_irc_plugin)                            \
     {                                                                   \
-        ptr_server = irc_server_search (                                \
-            weechat_buffer_get_string (__buffer, "category"));          \
-        ptr_channel = irc_channel_search (                              \
-            ptr_server, weechat_buffer_get_string (__buffer, "name"));  \
+        irc_buffer_get_server_channel (__buffer, &ptr_server,           \
+                                       &ptr_channel);                   \
     }
 
 #define IRC_COLOR_CHAT weechat_color("chat")

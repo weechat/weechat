@@ -85,8 +85,7 @@ gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
          ptr_filter = ptr_filter->next_filter)
     {
         /* check buffer name */
-        if (gui_buffer_match_category_name (buffer,
-                                            ptr_filter->buffer, 0))
+        if (string_match (buffer->name, ptr_filter->buffer, 0))
         {
             if ((strcmp (ptr_filter->tags, "*") == 0)
                 || (gui_chat_line_match_tags (line,

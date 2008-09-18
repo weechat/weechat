@@ -32,7 +32,7 @@
 #include "fifo-info.h"
 
 
-WEECHAT_PLUGIN_NAME("fifo");
+WEECHAT_PLUGIN_NAME(FIFO_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Fifo plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
@@ -97,21 +97,21 @@ fifo_create ()
                 {
                     weechat_printf (NULL,
                                     _("%s: pipe open"),
-                                    "fifo"),
+                                    FIFO_PLUGIN_NAME),
                     rc = 1;
                 }
                 else
                     weechat_printf (NULL,
                                     _("%s%s: unable to open pipe (%s) for "
                                       "reading"),
-                                    weechat_prefix ("error"), "fifo",
+                                    weechat_prefix ("error"), FIFO_PLUGIN_NAME,
                                     fifo_filename);
             }
             else
                 weechat_printf (NULL,
                                 _("%s%s: unable to create pipe for remote "
                                   "control (%s)"),
-                                weechat_prefix ("error"), "fifo",
+                                weechat_prefix ("error"), FIFO_PLUGIN_NAME,
                                 fifo_filename);
         }
     }
@@ -151,7 +151,7 @@ fifo_remove ()
     
     weechat_printf (NULL,
                     _("%s: pipe closed"),
-                    "fifo");
+                    FIFO_PLUGIN_NAME);
 }
 
 /*
@@ -171,14 +171,12 @@ fifo_exec (const char *text)
     pos = NULL;
     ptr_buffer = NULL;
     
-    /* look for category/name at beginning of text
-       text may be: "category,name *text" or "name *text" or "*text" */
+    /* look for buffer name at beginning of text
+       text may be: "name *text" or "name *text" or "*text" */
     if (text2[0] == '*')
     {
         pos_msg = text2 + 1;
-        ptr_buffer = weechat_buffer_search (NULL, NULL);
-        if (!ptr_buffer)
-            ptr_buffer = weechat_current_buffer;
+        ptr_buffer = weechat_current_buffer;
     }
     else
     {
@@ -187,29 +185,16 @@ fifo_exec (const char *text)
         {
             weechat_printf (NULL,
                             _("%s%s: error, invalid text received on pipe"),
-                            weechat_prefix ("error"), "fifo");
+                            weechat_prefix ("error"), FIFO_PLUGIN_NAME);
             free (text2);
             return;
         }
         pos_msg[0] = '\0';
-        pos = pos_msg - 1;
         pos_msg += 2;
-        while ((pos >= text2) && (pos[0] == ' '))
-        {
-            pos[0] = '\0';
-            pos--;
-        }
         
         if (text2[0])
         {
-            pos = strchr (text2, ',');
-            if (pos)
-            {
-                pos[0] = '\0';
-                ptr_buffer = weechat_buffer_search (text2, pos + 1);
-            }
-            else
-                ptr_buffer = weechat_buffer_search (NULL, text2);
+            ptr_buffer = weechat_buffer_search (NULL, text2);
             if (!ptr_buffer)
                 ptr_buffer = weechat_current_buffer;
         }
@@ -219,7 +204,7 @@ fifo_exec (const char *text)
     {
         weechat_printf (NULL,
                         _("%s%s: error, buffer not found for pipe data"),
-                        weechat_prefix ("error"), "fifo");
+                        weechat_prefix ("error"), FIFO_PLUGIN_NAME);
         free (text2);
         return;
     }
@@ -301,7 +286,7 @@ fifo_read ()
         {
             weechat_printf (NULL,
                             _("%s%s: error reading pipe, closing it"),
-                            weechat_prefix ("error"), "fifo");
+                            weechat_prefix ("error"), FIFO_PLUGIN_NAME);
             fifo_remove ();
         }
         else
@@ -313,7 +298,7 @@ fifo_read ()
             {
                 weechat_printf (NULL,
                                 _("%s%s: error opening file, closing it"),
-                                weechat_prefix ("error"), "fifo");
+                                weechat_prefix ("error"), FIFO_PLUGIN_NAME);
                 fifo_remove ();
             }
             else

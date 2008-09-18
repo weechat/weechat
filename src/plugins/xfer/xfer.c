@@ -41,7 +41,7 @@
 #include "xfer-upgrade.h"
 
 
-WEECHAT_PLUGIN_NAME("xfer");
+WEECHAT_PLUGIN_NAME(XFER_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Xfer (file transfert and direct chat) plugin for "
                            "WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
@@ -260,7 +260,7 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
                             _("%s%s: file %s %s %s: %s"),
                             (xfer->status == XFER_STATUS_DONE) ?
                             "" : weechat_prefix ("error"),
-                            "xfer",
+                            XFER_PLUGIN_NAME,
                             xfer->filename,
                             (xfer->type == XFER_TYPE_FILE_SEND) ?
                             _("sent to") : _("received from"),
@@ -277,7 +277,7 @@ xfer_close (struct t_xfer *xfer, enum t_xfer_status status)
             weechat_printf (xfer->buffer,
                             _("%s: chat closed with %s "
                               "(%d.%d.%d.%d)"),
-                            "xfer",
+                            XFER_PLUGIN_NAME,
                             xfer->remote_nick,
                             xfer->address >> 24,
                             (xfer->address >> 16) & 0xff,
@@ -470,7 +470,7 @@ xfer_new (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
     {
         weechat_printf (NULL,
                         _("%s%s: not enough memory for new xfer"),
-                        weechat_prefix ("error"), "xfer");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME);
         return NULL;
     }
     
@@ -509,7 +509,7 @@ xfer_new (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
             weechat_printf (NULL,
                             _("%s: incoming file from %s "
                               "(%d.%d.%d.%d): %s, %lu bytes (protocol: %s)"),
-                            "xfer",
+                            XFER_PLUGIN_NAME,
                             remote_nick,
                             address >> 24,
                             (address >> 16) & 0xff,
@@ -524,7 +524,7 @@ xfer_new (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
             weechat_printf (NULL,
                             _("%s: sending file to %s: %s "
                               "(local filename: %s), %lu bytes (protocol: %s)"),
-                            "xfer",
+                            XFER_PLUGIN_NAME,
                             remote_nick,
                             filename,
                             local_filename,
@@ -536,7 +536,7 @@ xfer_new (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
             weechat_printf (NULL,
                             _("%s: incoming chat request from %s "
                               "(%d.%d.%d.%d)"),
-                            "xfer",
+                            XFER_PLUGIN_NAME,
                             remote_nick,
                             address >> 24,
                             (address >> 16) & 0xff,
@@ -547,7 +547,7 @@ xfer_new (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
         case XFER_TYPE_CHAT_SEND:
             weechat_printf (NULL,
                             _("%s: sending chat request to %s"),
-                            "xfer",
+                            XFER_PLUGIN_NAME,
                             remote_nick);
             xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
             break;
@@ -567,7 +567,7 @@ xfer_new (const char *plugin_name, const char *plugin_id, enum t_xfer_type type,
         weechat_printf (NULL,
                         _("%s: file %s (local filename: %s) "
                           "will be resumed at position %lu"),
-                        "xfer",
+                        XFER_PLUGIN_NAME,
                         new_xfer->filename,
                         new_xfer->local_filename,
                         new_xfer->start_resume);
@@ -680,7 +680,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
     {
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
-                        weechat_prefix ("error"), "xfer", "xfer_add");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME, "xfer_add");
         return WEECHAT_RC_ERROR;
     }
     
@@ -690,7 +690,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
     {
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
-                        weechat_prefix ("error"), "xfer", "xfer_add");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME, "xfer_add");
         return WEECHAT_RC_ERROR;
     }
 
@@ -714,7 +714,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
     {
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
-                        weechat_prefix ("error"), "xfer", "xfer_add");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME, "xfer_add");
         return WEECHAT_RC_ERROR;
     }
 
@@ -723,7 +723,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
     {
         weechat_printf (NULL,
                         _("%s%s: unknown xfer type \"%s\""),
-                        weechat_prefix ("error"), "xfer", str_type);
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME, str_type);
         return WEECHAT_RC_ERROR;
     }
     
@@ -731,7 +731,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
     {
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
-                        weechat_prefix ("error"), "xfer", "xfer_add");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME, "xfer_add");
         return WEECHAT_RC_ERROR;
     }
     
@@ -742,7 +742,8 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
         {
             weechat_printf (NULL,
                             _("%s%s: unknown xfer protocol \"%s\""),
-                            weechat_prefix ("error"), "xfer", str_protocol);
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                            str_protocol);
             return WEECHAT_RC_ERROR;
         }
     }
@@ -776,7 +777,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
             {
                 weechat_printf (NULL,
                                 _("%s%s: not enough memory"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 return WEECHAT_RC_ERROR;
             }
             
@@ -786,7 +787,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
             {
                 weechat_printf (NULL,
                                 _("%s%s: not enough memory"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 free (dir1);
                 return WEECHAT_RC_ERROR;
             }
@@ -795,7 +796,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
             {
                 weechat_printf (NULL,
                                 _("%s%s: not enough memory"),
-                                weechat_prefix ("error"), "xfer");
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME);
                 free (dir1);
                 free (dir2);
                 return WEECHAT_RC_ERROR;
@@ -815,7 +816,8 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
         {
             weechat_printf (NULL,
                             _("%s%s: cannot access file \"%s\""),
-                            weechat_prefix ("error"), "xfer", filename2);
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                            filename2);
             if (filename2)
                 free (filename2);
             return WEECHAT_RC_ERROR;
@@ -848,7 +850,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
                 weechat_printf (NULL,
                                 _("%s%s: could not find address for \"%s\", "
                                   "falling back to local IP"),
-                                weechat_prefix ("error"), "xfer",
+                                weechat_prefix ("error"), XFER_PLUGIN_NAME,
                                 weechat_config_string (xfer_config_network_own_ip));
             }
         }
@@ -859,7 +861,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
         {
             weechat_printf (NULL,
                             _("%s%s: cannot create socket for xfer"),
-                            weechat_prefix ("error"), "xfer");
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
             if (filename2)
                 free (filename2);
             return WEECHAT_RC_ERROR;
@@ -922,7 +924,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
             /* Could not find any port to bind */
             weechat_printf (NULL,
                             _("%s%s: cannot find available port for xfer"),
-                            weechat_prefix ("error"), "xfer");
+                            weechat_prefix ("error"), XFER_PLUGIN_NAME);
             close (sock);
             if (filename2)
                 free (filename2);
@@ -978,7 +980,7 @@ xfer_add_cb (void *data, const char *signal, const char *type_data, void *signal
     {
         weechat_printf (NULL,
                         _("%s%s: error creating xfer"),
-                        weechat_prefix ("error"), "xfer");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME);
         close (sock);
         if (short_filename)
             free (short_filename);
@@ -1023,7 +1025,8 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
     {
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
-                        weechat_prefix ("error"), "xfer", "xfer_start_resume");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        "xfer_start_resume");
         return WEECHAT_RC_ERROR;
     }
     
@@ -1033,7 +1036,8 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
     {
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
-                        weechat_prefix ("error"), "xfer", "xfer_start_resume");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        "xfer_start_resume");
         return WEECHAT_RC_ERROR;
     }
 
@@ -1047,7 +1051,8 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
     {
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
-                        weechat_prefix ("error"), "xfer", "xfer_start_resume");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        "xfer_start_resume");
         return WEECHAT_RC_ERROR;
     }
     
@@ -1069,8 +1074,8 @@ xfer_start_resume_cb (void *data, const char *signal, const char *type_data,
                         _("%s%s: unable to resume file \"%s\" (port: %d, "
                            "start position: %lu): xfer not found or not ready "
                           "for transfert"),
-                        weechat_prefix ("error"), "xfer", filename, port,
-                        start_resume);
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME, filename,
+                        port, start_resume);
     }
     
     return WEECHAT_RC_OK;
@@ -1100,7 +1105,8 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
     {
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
-                        weechat_prefix ("error"), "xfer", "xfer_accept_resume");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        "xfer_accept_resume");
         return WEECHAT_RC_ERROR;
     }
     
@@ -1110,7 +1116,8 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
     {
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
-                        weechat_prefix ("error"), "xfer", "xfer_accept_resume");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        "xfer_accept_resume");
         return WEECHAT_RC_ERROR;
     }
 
@@ -1124,7 +1131,8 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
     {
         weechat_printf (NULL,
                         _("%s%s: missing arguments (%s)"),
-                        weechat_prefix ("error"), "xfer", "xfer_accept_resume");
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME,
+                        "xfer_accept_resume");
         return WEECHAT_RC_ERROR;
     }
     
@@ -1142,7 +1150,7 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
         
         weechat_printf (NULL,
                         _("%s: file %s resumed at position %lu"),
-                        "xfer",
+                        XFER_PLUGIN_NAME,
                         ptr_xfer->filename,
                         ptr_xfer->start_resume);
         xfer_buffer_refresh (WEECHAT_HOTLIST_MESSAGE);
@@ -1153,8 +1161,8 @@ xfer_accept_resume_cb (void *data, const char *signal, const char *type_data,
                         _("%s%s: unable to accept resume file \"%s\" (port: %d, "
                            "start position: %lu): xfer not found or not ready "
                           "for transfert"),
-                        weechat_prefix ("error"), "xfer", filename, port,
-                        start_resume);
+                        weechat_prefix ("error"), XFER_PLUGIN_NAME, filename,
+                        port, start_resume);
     }
     
     return WEECHAT_RC_OK;
@@ -1407,11 +1415,12 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
                 {
                     weechat_printf (NULL,
                                     _("%s%s: aborting active xfer: \"%s\" from %s"),
-                                    weechat_prefix ("error"), "xfer",
+                                    weechat_prefix ("error"), XFER_PLUGIN_NAME,
                                     ptr_xfer->filename, ptr_xfer->remote_nick);
                     weechat_log_printf (_("%s%s: aborting active xfer: \"%s\" from %s"),
-                                        "", "xfer",
-                                        ptr_xfer->filename, ptr_xfer->remote_nick);
+                                        "", XFER_PLUGIN_NAME,
+                                        ptr_xfer->filename,
+                                        ptr_xfer->remote_nick);
                 }
                 xfer_close (ptr_xfer, XFER_STATUS_FAILED);
             }

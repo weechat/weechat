@@ -308,7 +308,6 @@ upgrade_weechat_read_cb (int object_id,
                 {
                     upgrade_current_buffer = gui_buffer_new (
                         NULL,
-                        infolist_string (infolist, "category"),
                         infolist_string (infolist, "name"),
                         NULL, NULL,
                         NULL, NULL);

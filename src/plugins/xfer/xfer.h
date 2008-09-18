@@ -21,6 +21,7 @@
 #define __WEECHAT_XFER_H 1
 
 #define weechat_plugin weechat_xfer_plugin
+#define XFER_PLUGIN_NAME "xfer"
 
 /* xfer types */
 

@@ -173,7 +173,7 @@ extern void script_api_unhook (struct t_weechat_plugin *weechat_plugin,
 extern void script_api_unhook_all (struct t_plugin_script *script);
 extern struct t_gui_buffer *script_api_buffer_new (struct t_weechat_plugin *weechat_plugin,
                                                    struct t_plugin_script *script,
-                                                   const char *category, const char *name,
+                                                   const char *name,
                                                    int (*input_callback)(void *data,
                                                                          struct t_gui_buffer *buffer,
                                                                          const char *input_data),
