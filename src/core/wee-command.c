@@ -3004,10 +3004,10 @@ command_init ()
                      "splith: split current window horizontally\n"
                      "splitv: split current window vertically\n"
                      "resize: resize window size, new size is <pct> "
-                     "pourcentage of parent window\n"
+                     "percentage of parent window\n"
                      " merge: merge window with another (all = keep only one "
                      "window)\n\n"
-                     "For splith and splitv, pct is a pourcentage which "
+                     "For splith and splitv, pct is a percentage which "
                      "represents size of new window, computed with current "
                      "window as size reference. For example 25 means create a "
                      "new window with size = current_size / 4"),

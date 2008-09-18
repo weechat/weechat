@@ -1299,7 +1299,7 @@ gui_window_refresh_windows ()
  */
 
 void
-gui_window_split_horiz (struct t_gui_window *window, int pourcentage)
+gui_window_split_horiz (struct t_gui_window *window, int percentage)
 {
     struct t_gui_window *new_window;
     int height1, height2;
@@ -1307,21 +1307,21 @@ gui_window_split_horiz (struct t_gui_window *window, int pourcentage)
     if (!gui_ok)
         return;
     
-    height1 = (window->win_height * pourcentage) / 100;
+    height1 = (window->win_height * percentage) / 100;
     height2 = window->win_height - height1;
     
     if ((height1 >= GUI_WINDOW_MIN_HEIGHT) && (height2 >= GUI_WINDOW_MIN_HEIGHT)
-        && (pourcentage > 0) && (pourcentage <= 100))
+        && (percentage > 0) && (percentage <= 100))
     {
         if ((new_window = gui_window_new (window,
                                           window->win_x, window->win_y,
                                           window->win_width, height1,
-                                          100, pourcentage)))
+                                          100, percentage)))
         {
             /* reduce old window height (bottom window) */
             window->win_y = new_window->win_y + new_window->win_height;
             window->win_height = height2;
-            window->win_height_pct = 100 - pourcentage;
+            window->win_height_pct = 100 - percentage;
             
             /* assign same buffer for new window (top window) */
             new_window->buffer = window->buffer;
@@ -1339,7 +1339,7 @@ gui_window_split_horiz (struct t_gui_window *window, int pourcentage)
  */
 
 void
-gui_window_split_vertic (struct t_gui_window *window, int pourcentage)
+gui_window_split_vertic (struct t_gui_window *window, int percentage)
 {
     struct t_gui_window *new_window;
     int width1, width2;
@@ -1347,20 +1347,20 @@ gui_window_split_vertic (struct t_gui_window *window, int pourcentage)
     if (!gui_ok)
         return;
     
-    width1 = (window->win_width * pourcentage) / 100;
+    width1 = (window->win_width * percentage) / 100;
     width2 = window->win_width - width1 - 1;
     
     if ((width1 >= GUI_WINDOW_MIN_WIDTH) && (width2 >= GUI_WINDOW_MIN_WIDTH)
-        && (pourcentage > 0) && (pourcentage <= 100))
+        && (percentage > 0) && (percentage <= 100))
     {
         if ((new_window = gui_window_new (window,
                                           window->win_x + width1 + 1, window->win_y,
                                           width2, window->win_height,
-                                          pourcentage, 100)))
+                                          percentage, 100)))
         {
             /* reduce old window height (left window) */
             window->win_width = width1;
-            window->win_width_pct = 100 - pourcentage;
+            window->win_width_pct = 100 - percentage;
             
             /* assign same buffer for new window (right window) */
             new_window->buffer = window->buffer;
@@ -1381,7 +1381,7 @@ gui_window_split_vertic (struct t_gui_window *window, int pourcentage)
  */
 
 void
-gui_window_resize (struct t_gui_window *window, int pourcentage)
+gui_window_resize (struct t_gui_window *window, int percentage)
 {
     struct t_gui_window_tree *parent;
     int old_split_pct, add_bottom, add_top, add_left, add_right;
@@ -1395,9 +1395,9 @@ gui_window_resize (struct t_gui_window *window, int pourcentage)
         old_split_pct = parent->split_pct;
         if (((parent->split_horiz) && (window->ptr_tree == parent->child2))
             || ((!(parent->split_horiz)) && (window->ptr_tree == parent->child1)))
-            parent->split_pct = pourcentage;
+            parent->split_pct = percentage;
         else
-            parent->split_pct = 100 - pourcentage;
+            parent->split_pct = 100 - percentage;
         
         add_bottom = gui_bar_root_get_size (NULL, GUI_BAR_POSITION_BOTTOM);
         add_top = gui_bar_root_get_size (NULL, GUI_BAR_POSITION_TOP);

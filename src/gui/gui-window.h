@@ -171,10 +171,10 @@ extern void gui_window_nicklist_end (struct t_gui_window *window);
 extern void gui_window_init_subwindows (struct t_gui_window *window);
 extern void gui_window_refresh_windows ();
 extern void gui_window_split_horiz (struct t_gui_window *window,
-                                    int pourcentage);
+                                    int percentage);
 extern void gui_window_split_vertic (struct t_gui_window *window,
-                                     int pourcentage);
-extern void gui_window_resize (struct t_gui_window *window, int pourcentage);
+                                     int percentage);
+extern void gui_window_resize (struct t_gui_window *window, int percentage);
 extern int gui_window_merge (struct t_gui_window *window);
 extern void gui_window_merge_all (struct t_gui_window *window);
 extern void gui_window_switch_up (struct t_gui_window *window);

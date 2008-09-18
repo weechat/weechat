@@ -169,7 +169,7 @@ xfer_buffer_refresh (const char *hotlist)
                     strcat (progress_bar, "] ");
                 }
                 
-                /* computes pourcentage */
+                /* computes percentage */
                 if (ptr_xfer->size < 1024*10)
                     num_unit = 0;
                 else if (ptr_xfer->size < 1024*1024)
