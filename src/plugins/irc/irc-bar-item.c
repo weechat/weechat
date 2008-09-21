@@ -40,7 +40,7 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                           struct t_gui_window *window,
                           int max_width, int max_height)
 {
-    char buf[256], buf_name[256], *name;
+    char buf[256], buf_name[256], away[128], *name;
     int number;
     struct t_gui_buffer *buffer;
     struct t_irc_server *server;
@@ -92,6 +92,14 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                               IRC_COLOR_BAR_DELIM);
                 }
             }
+            if (server && server->is_away)
+            {
+                snprintf (away, sizeof (away), " %s(%s%s%s)",
+                          IRC_COLOR_BAR_DELIM,
+                          IRC_COLOR_BAR_FG,
+                          _("away"),
+                          IRC_COLOR_BAR_DELIM);
+            }
         }
         else
         {
@@ -100,12 +108,13 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                 snprintf (buf_name, sizeof (buf_name), "%s", name);
         }
         
-        snprintf (buf, sizeof (buf), "%s%d%s:%s%s",
+        snprintf (buf, sizeof (buf), "%s%d%s:%s%s%s",
                   IRC_COLOR_STATUS_NUMBER,
                   number,
                   IRC_COLOR_BAR_DELIM,
                   IRC_COLOR_STATUS_NAME,
-                  buf_name);
+                  buf_name,
+                  away);
         return strdup (buf);
     }
     
