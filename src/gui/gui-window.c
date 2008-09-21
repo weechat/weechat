@@ -37,6 +37,7 @@
 #include "../core/wee-hook.h"
 #include "../core/wee-infolist.h"
 #include "../core/wee-log.h"
+#include "../core/wee-string.h"
 #include "../core/wee-utf8.h"
 #include "../plugins/plugin.h"
 #include "gui-window.h"
@@ -301,6 +302,56 @@ gui_window_valid (struct t_gui_window *window)
     
     /* window not found */
     return 0;
+}
+
+/*
+ * gui_window_get_integer: get a window property as integer
+ */
+
+int
+gui_window_get_integer (struct t_gui_window *window, const char *property)
+{
+    if (window && property)
+    {
+    }
+    
+    return 0;
+}
+
+/*
+ * gui_window_get_string: get a window property as string
+ */
+
+char *
+gui_window_get_string (struct t_gui_window *window, const char *property)
+{
+    if (window && property)
+    {
+    }
+    
+    return NULL;
+}
+
+/*
+ * gui_windowr_get_pointer: get a window property as pointer
+ */
+
+void *
+gui_window_get_pointer (struct t_gui_window *window, const char *property)
+{
+    if (property)
+    {
+        if (string_strcasecmp (property, "current") == 0)
+            return gui_current_window;
+        
+        if (window)
+        {
+            if (string_strcasecmp (property, "buffer") == 0)
+                return window->buffer;
+        }
+    }
+    
+    return NULL;
 }
 
 /*

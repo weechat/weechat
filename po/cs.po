@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-18 18:49+0200\n"
+"POT-Creation-Date: 2008-09-21 19:29+0200\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2203,6 +2203,9 @@ msgid "%s%s: error opening file, closing it"
 msgstr "%s chyba při čtení FIFO roury, zavírám ji\n"
 
 msgid "name of FIFO pipe"
+msgstr ""
+
+msgid "Lag"
 msgstr ""
 
 #, fuzzy, c-format

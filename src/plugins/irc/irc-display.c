@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-display.c: display functions for IRC */
+/* irc-display.c: display functions for IRC plugin */
 
 
 #include <stdlib.h>

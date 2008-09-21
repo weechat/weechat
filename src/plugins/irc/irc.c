@@ -24,6 +24,7 @@
 
 #include "../weechat-plugin.h"
 #include "irc.h"
+#include "irc-bar-item.h"
 #include "irc-command.h"
 #include "irc-completion.h"
 #include "irc-config.h"
@@ -127,6 +128,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     /* hook completions */
     irc_completion_init ();
+    
+    irc_bar_item_init ();
     
     /* look at arguments */
     auto_connect = 1;

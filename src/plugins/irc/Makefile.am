@@ -22,6 +22,8 @@ lib_LTLIBRARIES = irc.la
 
 irc_la_SOURCES = irc.c \
                  irc.h \
+                 irc-bar-item.c \
+                 irc-bar-item.h \
                  irc-buffer.c \
                  irc-buffer.h \
                  irc-channel.c \

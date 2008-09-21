@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-nick.c: manages nick list for channels */
+/* irc-nick.c: manages nick list for channels for IRC plugin */
 
 
 #include <stdlib.h>

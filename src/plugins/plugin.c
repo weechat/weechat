@@ -49,6 +49,7 @@
 #include "../gui/gui-buffer.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-nicklist.h"
+#include "../gui/gui-window.h"
 #include "plugin.h"
 #include "plugin-api.h"
 #include "plugin-config.h"
@@ -399,7 +400,11 @@ plugin_load (const char *filename)
         new_plugin->buffer_get_string = &gui_buffer_get_string;
         new_plugin->buffer_get_pointer = &gui_buffer_get_pointer;
         new_plugin->buffer_set = &gui_buffer_set;
-
+        
+        new_plugin->window_get_integer = &gui_window_get_integer;
+        new_plugin->window_get_string = &gui_window_get_string;
+        new_plugin->window_get_pointer = &gui_window_get_pointer;
+        
         new_plugin->nicklist_add_group = &gui_nicklist_add_group;
         new_plugin->nicklist_search_group = &gui_nicklist_search_group;
         new_plugin->nicklist_add_nick = &gui_nicklist_add_nick;

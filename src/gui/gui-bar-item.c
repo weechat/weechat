@@ -145,26 +145,49 @@ gui_bar_item_string_is_item (const char *string, const char *item_name)
 
 /*
  * gui_bar_item_search_with_plugin: search a bar item for a plugin
+ *                                  if exact_plugin == 1, then search only for
+ *                                  this plugin, otherwise, if plugin is not
+ *                                  found, function may return item for core
+ *                                  (plugin == NULL)
  */
 
 struct t_gui_bar_item *
 gui_bar_item_search_with_plugin (struct t_weechat_plugin *plugin,
+                                 int exact_plugin,
                                  const char *item_name)
 {
-    struct t_gui_bar_item *ptr_item;
+    struct t_gui_bar_item *ptr_item, *item_found_plugin;
+    struct t_gui_bar_item *item_found_without_plugin;
     
     if (!item_name || !item_name[0])
         return NULL;
     
+    item_found_plugin = NULL;
+    item_found_without_plugin = NULL;
+    
     for (ptr_item = gui_bar_items; ptr_item; ptr_item = ptr_item->next_item)
     {
-        if ((ptr_item->plugin == plugin)
-            && (strcmp (ptr_item->name, item_name) == 0))
-            return ptr_item;
+        if (strcmp (ptr_item->name, item_name) == 0)
+        {
+            if (ptr_item->plugin == plugin)
+            {
+                log_printf("item found 1: %x", ptr_item);
+                return ptr_item;
+            }
+            if (!exact_plugin)
+            {
+                if (ptr_item->plugin)
+                    item_found_plugin = ptr_item;
+                else
+                    item_found_without_plugin = ptr_item;
+            }
+        }
     }
     
-    /* bar item not found */
-    return NULL;
+    if (item_found_without_plugin)
+        return item_found_without_plugin;
+    
+    return item_found_plugin;
 }
 
 /*
@@ -374,7 +397,9 @@ gui_bar_item_get_value (const char *name, struct t_gui_bar *bar,
     item_value = NULL;
     if (item_name)
     {
-        ptr_item = gui_bar_item_search (item_name);
+        ptr_item = gui_bar_item_search_with_plugin ((window) ? window->buffer->plugin : NULL,
+                                                    0,
+                                                    item_name);
         if (ptr_item)
         {
             if  (ptr_item->build_callback)
@@ -490,7 +515,7 @@ gui_bar_item_new (struct t_weechat_plugin *plugin, const char *name,
         return NULL;
     
     /* it's not possible to create 2 bar items with same name for same plugin */
-    if (gui_bar_item_search_with_plugin (plugin, name))
+    if (gui_bar_item_search_with_plugin (plugin, 1, name))
         return NULL;
     
     /* create bar item */
@@ -1333,7 +1358,9 @@ gui_bar_item_print_log ()
     {
         log_printf ("");
         log_printf ("[bar item (addr:0x%x)]", ptr_item);
-        log_printf ("  plugin . . . . . . . . : 0x%x", ptr_item->plugin);
+        log_printf ("  plugin . . . . . . . . : 0x%x ('%s')",
+                    ptr_item->plugin,
+                    (ptr_item->plugin) ? ptr_item->plugin->name : "");
         log_printf ("  name . . . . . . . . . : '%s'", ptr_item->name);
         log_printf ("  build_callback . . . . : 0x%x", ptr_item->build_callback);
         log_printf ("  build_callback_data. . : 0x%x", ptr_item->build_callback_data);

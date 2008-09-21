@@ -123,6 +123,12 @@ extern struct t_gui_window *gui_window_new (struct t_gui_window *parent,
                                             int x, int y, int width, int height,
                                             int width_pct, int height_pct);
 extern int gui_window_valid (struct t_gui_window *window);
+extern int gui_window_get_integer (struct t_gui_window *window,
+                                   const char *property);
+extern char *gui_window_get_string (struct t_gui_window *window,
+                                    const char *property);
+extern void *gui_window_get_pointer (struct t_gui_window *window,
+                                     const char *property);
 extern void gui_window_free (struct t_gui_window *window);
 extern struct t_gui_window *gui_window_search_by_buffer (struct t_gui_buffer *buffer);
 extern void gui_window_switch_server (struct t_gui_window *window);

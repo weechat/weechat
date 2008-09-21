@@ -265,10 +265,15 @@ gui_buffer_set_plugin_for_upgrade (char *name, struct t_weechat_plugin *plugin)
 int
 gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
 {
-    if (string_strcasecmp (property, "notify") == 0)
-        return buffer->notify;
-    else if (string_strcasecmp (property, "lines_hidden") == 0)
-        return buffer->lines_hidden;
+    if (buffer && property)
+    {
+        if (string_strcasecmp (property, "number") == 0)
+            return buffer->number;
+        else if (string_strcasecmp (property, "notify") == 0)
+            return buffer->notify;
+        else if (string_strcasecmp (property, "lines_hidden") == 0)
+            return buffer->lines_hidden;
+    }
     
     return 0;
 }
@@ -280,14 +285,17 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
 char *
 gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 {
-    if (string_strcasecmp (property, "plugin") == 0)
-        return (buffer->plugin) ? buffer->plugin->name : NULL;
-    else if (string_strcasecmp (property, "name") == 0)
-        return buffer->name;
-    else if (string_strcasecmp (property, "title") == 0)
-        return buffer->title;
-    else if (string_strcasecmp (property, "nick") == 0)
-        return buffer->input_nick;
+    if (buffer && property)
+    {
+        if (string_strcasecmp (property, "plugin") == 0)
+            return (buffer->plugin) ? buffer->plugin->name : NULL;
+        else if (string_strcasecmp (property, "name") == 0)
+            return buffer->name;
+        else if (string_strcasecmp (property, "title") == 0)
+            return buffer->title;
+        else if (string_strcasecmp (property, "nick") == 0)
+            return buffer->input_nick;
+    }
     
     return NULL;
 }
@@ -299,8 +307,11 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 void *
 gui_buffer_get_pointer (struct t_gui_buffer *buffer, const char *property)
 {
-    if (string_strcasecmp (property, "plugin") == 0)
-        return buffer->plugin;
+    if (buffer && property)
+    {
+        if (string_strcasecmp (property, "plugin") == 0)
+            return buffer->plugin;
+    }
     
     return NULL;
 }

@@ -415,6 +415,14 @@ struct t_weechat_plugin
                                  const char *property);
     void (*buffer_set) (struct t_gui_buffer *buffer, const char *property,
                         void *value);
+
+    /* windows */
+    int (*window_get_integer) (struct t_gui_window *window,
+                               const char *property);
+    char *(*window_get_string) (struct t_gui_window *window,
+                                const char *property);
+    void *(*window_get_pointer) (struct t_gui_window *window,
+                                 const char *property);
     
     /* nicklist */
     struct t_gui_nick_group *(*nicklist_add_group) (struct t_gui_buffer *buffer,
@@ -889,6 +897,16 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->buffer_get_pointer(__buffer, __property)
 #define weechat_buffer_set(__buffer, __property, __value)               \
     weechat_plugin->buffer_set(__buffer, __property, __value)
+
+/* windows */
+#define weechat_window_get_integer(__window, __property)                \
+    weechat_plugin->window_get_integer(__window, __property)
+#define weechat_window_get_string(__window, __property)                 \
+    weechat_plugin->window_get_string(__window, __property)
+#define weechat_window_get_pointer(__window, __property)                \
+    weechat_plugin->window_get_pointer(__window, __property)
+#define weechat_current_window                                          \
+    weechat_plugin->window_get_pointer(NULL, "current")
 
 /* nicklist */
 #define weechat_nicklist_add_group(__buffer, __parent_group, __name,    \

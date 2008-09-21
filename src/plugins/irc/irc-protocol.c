@@ -16,8 +16,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-protocol.c: description of IRC commands, according to RFC 1459, 2810,
-                   2811 2812 */
+/* irc-protocol.c: implementation of IRC protocol, according to
+                   RFC 1459, 2810, 2811 2812 */
 
 
 #ifndef __USE_XOPEN
@@ -989,10 +989,10 @@ irc_protocol_cmd_pong (struct t_irc_server *server, const char *command,
         /* calculate lag (time diff with lag check) */
         old_lag = server->lag;
         gettimeofday (&tv, NULL);
-        server->lag = (int) weechat_timeval_diff (&(server->lag_check_time), &tv);
-        /* TODO: update lag indicator */
-        //if (old_lag != server->lag)
-        //    gui_status_draw (gui_current_window->buffer, 1);
+        server->lag = (int) weechat_timeval_diff (&(server->lag_check_time),
+                                                  &tv);
+        if (old_lag != server->lag)
+            weechat_bar_item_update ("lag");
         
         /* schedule next lag check */
         server->lag_check_time.tv_sec = 0;

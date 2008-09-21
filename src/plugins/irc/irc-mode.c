@@ -206,6 +206,8 @@ irc_mode_channel_set (struct t_irc_server *server,
         free (str_modes);
     if (argv)
         weechat_string_free_exploded (argv);
+    
+    weechat_bar_item_update ("buffer_name");
 }
 
 /*

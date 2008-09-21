@@ -99,6 +99,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/fifo/fifo.h
 ./src/plugins/fifo/fifo-info.c
 ./src/plugins/fifo/fifo-info.h
+./src/plugins/irc/irc-bar-item.c
+./src/plugins/irc/irc-bar-item.h
 ./src/plugins/irc/irc-buffer.c
 ./src/plugins/irc/irc-buffer.h
 ./src/plugins/irc/irc.c

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* irc-color.c: IRC color decoding/encidong in messages */
+/* irc-color.c: IRC color decoding/encoding in messages */
 
 
 #include <stdlib.h>
