@@ -628,6 +628,8 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 #ifdef PERL_SYS_INIT3
     int a = perl_args_count;
     char *perl_env[] = {};
+    (void) a;
+    (void) perl_env;
     PERL_SYS_INIT3 (&a, (char ***)&perl_args, (char ***)&perl_env);
 #endif
     
