@@ -510,7 +510,7 @@ network_connect_to (int sock, unsigned long address, int port)
 void
 network_connect_child (struct t_hook *hook_connect)
 {
-    struct addrinfo hints, *res, *res_local;
+    struct addrinfo hints, *res, *res_local, *ptr_res;
     char status_str[2], *ptr_address, *status_ok_with_address;
     char ipv4_address[INET_ADDRSTRLEN + 1], ipv6_address[INET6_ADDRSTRLEN + 1];
     char status_ok_without_address[1 + 5 + 1];
@@ -518,6 +518,7 @@ network_connect_child (struct t_hook *hook_connect)
     
     res = NULL;
     res_local = NULL;
+    
     status_str[1] = '\0';
     
     if (CONFIG_BOOLEAN(config_proxy_use))
@@ -626,92 +627,92 @@ network_connect_child (struct t_hook *hook_connect)
             write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
             if (res)
                 freeaddrinfo (res);
-            return;
-        }
-        if ((HOOK_CONNECT(hook_connect, ipv6) && (res->ai_family != AF_INET6))
-            || ((!HOOK_CONNECT(hook_connect, ipv6) && (res->ai_family != AF_INET))))
-        {
-            /* IP address not found */
-            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND;
-            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
-            if (res)
-                freeaddrinfo (res);
             if (res_local)
                 freeaddrinfo (res_local);
             return;
         }
         
-        /* connect to peer */
+        status_str[0] = '0' + WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND;
+        
+        /* try all IP addresses found, stop when connection is ok */
+        for (ptr_res = res; ptr_res; ptr_res = ptr_res->ai_next)
+        {
+            /* skip IP address if it's not good family */
+            if ((HOOK_CONNECT(hook_connect, ipv6) && (ptr_res->ai_family != AF_INET6))
+                || ((!HOOK_CONNECT(hook_connect, ipv6) && (ptr_res->ai_family != AF_INET))))
+                continue;
+            
+            /* connect to peer */
+            if (HOOK_CONNECT(hook_connect, ipv6))
+                ((struct sockaddr_in6 *)(ptr_res->ai_addr))->sin6_port =
+                    htons (HOOK_CONNECT(hook_connect, port));
+            else
+                ((struct sockaddr_in *)(ptr_res->ai_addr))->sin_port =
+                    htons (HOOK_CONNECT(hook_connect, port));
+            
+            if (connect (HOOK_CONNECT(hook_connect, sock),
+                         ptr_res->ai_addr, ptr_res->ai_addrlen) == 0)
+            {
+                status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
+                break;
+            }
+            else
+                status_str[0] = '0' + WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED;
+        }
+    }
+    
+    if (status_str[0] == '0' + WEECHAT_HOOK_CONNECT_OK)
+    {
+        status_ok_with_address = NULL;
+        ptr_address = NULL;
         if (HOOK_CONNECT(hook_connect, ipv6))
-            ((struct sockaddr_in6 *)(res->ai_addr))->sin6_port =
-                htons (HOOK_CONNECT(hook_connect, port));
+        {
+            if (inet_ntop (AF_INET6,
+                           &((struct sockaddr_in6 *)(res->ai_addr))->sin6_addr,
+                           ipv6_address,
+                           INET6_ADDRSTRLEN))
+            {
+                ptr_address = ipv6_address;
+            }
+        }
         else
-            ((struct sockaddr_in *)(res->ai_addr))->sin_port =
-                htons (HOOK_CONNECT(hook_connect, port));
-
-        if (connect (HOOK_CONNECT(hook_connect, sock),
-                     res->ai_addr, res->ai_addrlen) != 0)
         {
-            /* connection refused */
-            status_str[0] = '0' + WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED;
-            write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
-            if (res)
-                freeaddrinfo (res);
-            if (res_local)
-                freeaddrinfo (res_local);
-            return;
+            if (inet_ntop (AF_INET,
+                           &((struct sockaddr_in *)(res->ai_addr))->sin_addr,
+                           ipv4_address,
+                           INET_ADDRSTRLEN))
+            {
+                ptr_address = ipv4_address;
+            }
         }
-    }
-    
-    /* connection ok */
-    status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
-    
-    status_ok_with_address = NULL;
-    ptr_address = NULL;
-    if (HOOK_CONNECT(hook_connect, ipv6))
-    {
-        if (inet_ntop (AF_INET6,
-                       &((struct sockaddr_in6 *)(res->ai_addr))->sin6_addr,
-                       ipv6_address,
-                       INET6_ADDRSTRLEN))
+        if (ptr_address)
         {
-            ptr_address = ipv6_address;
+            length = strlen (status_str) + 5 + strlen (ptr_address) + 1;
+            status_ok_with_address = malloc (length);
+            if (status_ok_with_address)
+            {
+                snprintf (status_ok_with_address, length, "%s%05d%s",
+                          status_str, strlen (ptr_address), ptr_address);
+            }
         }
-    }
-    else
-    {
-        //ip = inet_ntoa (((struct sockaddr_in *)(res->ai_addr))->sin_addr);
-        if (inet_ntop (AF_INET,
-                       &((struct sockaddr_in *)(res->ai_addr))->sin_addr,
-                       ipv4_address,
-                       INET_ADDRSTRLEN))
-        {
-            ptr_address = ipv4_address;
-        }
-    }
-    if (ptr_address)
-    {
-        length = strlen (status_str) + 5 + strlen (ptr_address) + 1;
-        status_ok_with_address = malloc (length);
+        
         if (status_ok_with_address)
         {
-            snprintf (status_ok_with_address, length, "%s%05d%s",
-                      status_str, strlen (ptr_address), ptr_address);
+            write (HOOK_CONNECT(hook_connect, child_write),
+                   status_ok_with_address, strlen (status_ok_with_address));
+            free (status_ok_with_address);
         }
-    }
-    
-    if (status_ok_with_address)
-    {
-        write (HOOK_CONNECT(hook_connect, child_write),
-               status_ok_with_address, strlen (status_ok_with_address));
-        free (status_ok_with_address);
+        else
+        {
+            snprintf (status_ok_without_address, sizeof (status_ok_without_address),
+                      "%s%05d", status_str, 0);
+            write (HOOK_CONNECT(hook_connect, child_write),
+                   status_ok_without_address, strlen (status_ok_without_address));
+        }
     }
     else
     {
-        snprintf (status_ok_without_address, sizeof (status_ok_without_address),
-                  "%s%05d", status_str, 0);
-        write (HOOK_CONNECT(hook_connect, child_write),
-               status_ok_without_address, strlen (status_ok_without_address));
+        write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
     }
     
     if (res)
