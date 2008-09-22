@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-21 21:30+0200\n"
+"POT-Creation-Date: 2008-09-22 16:26+0200\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3794,6 +3794,10 @@ msgstr "%s: Navazuji nové spojení se serverem za %d sekund\n"
 #, fuzzy, c-format
 msgid "%s: switching address to %s/%d"
 msgstr "%s IP adresa nenalezena\n"
+
+#, fuzzy, c-format
+msgid "%s: connected to %s (%s)"
+msgstr "%s nepřipojen k serveru \"%s\"!\n"
 
 #, fuzzy, c-format
 msgid "%s%s: proxy address \"%s\" not found"

@@ -1956,7 +1956,7 @@ irc_server_switch_address (struct t_irc_server *server)
  */
 
 int
-irc_server_connect_cb (void *arg_server, int status)
+irc_server_connect_cb (void *arg_server, int status, char *ip_address)
 {
     struct t_irc_server *server;
     int config_proxy_use;
@@ -1972,6 +1972,11 @@ irc_server_connect_cb (void *arg_server, int status)
     {
         case WEECHAT_HOOK_CONNECT_OK:
             /* login to server */
+            weechat_printf (server->buffer,
+                            _("%s: connected to %s (%s)"),
+                            IRC_PLUGIN_NAME,
+                            server->addresses_array[server->current_address],
+                            (ip_address) ? ip_address : "?");
             irc_server_login (server);
             server->hook_fd = weechat_hook_fd (server->sock,
                                                1, 0, 0,

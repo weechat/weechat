@@ -120,7 +120,7 @@ struct t_hook_fd
     int flags;                         /* fd flags (read,write,..)          */
 };
 
-typedef int (t_hook_callback_connect)(void *data, int status);
+typedef int (t_hook_callback_connect)(void *data, int status, char *ip_address);
 
 struct t_hook_connect
 {

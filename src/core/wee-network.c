@@ -511,8 +511,10 @@ void
 network_connect_child (struct t_hook *hook_connect)
 {
     struct addrinfo hints, *res, *res_local;
-    char status_str[2];
-    int rc;
+    char status_str[2], *ptr_address, *status_ok_with_address;
+    char ipv4_address[INET_ADDRSTRLEN + 1], ipv6_address[INET6_ADDRSTRLEN + 1];
+    char status_ok_without_address[1 + 5 + 1];
+    int rc, length;
     
     res = NULL;
     res_local = NULL;
@@ -663,7 +665,55 @@ network_connect_child (struct t_hook *hook_connect)
     
     /* connection ok */
     status_str[0] = '0' + WEECHAT_HOOK_CONNECT_OK;
-    write (HOOK_CONNECT(hook_connect, child_write), status_str, 1);
+    
+    status_ok_with_address = NULL;
+    ptr_address = NULL;
+    if (HOOK_CONNECT(hook_connect, ipv6))
+    {
+        if (inet_ntop (AF_INET6,
+                       &((struct sockaddr_in6 *)(res->ai_addr))->sin6_addr,
+                       ipv6_address,
+                       INET6_ADDRSTRLEN))
+        {
+            ptr_address = ipv6_address;
+        }
+    }
+    else
+    {
+        //ip = inet_ntoa (((struct sockaddr_in *)(res->ai_addr))->sin_addr);
+        if (inet_ntop (AF_INET,
+                       &((struct sockaddr_in *)(res->ai_addr))->sin_addr,
+                       ipv4_address,
+                       INET_ADDRSTRLEN))
+        {
+            ptr_address = ipv4_address;
+        }
+    }
+    if (ptr_address)
+    {
+        length = strlen (status_str) + 5 + strlen (ptr_address) + 1;
+        status_ok_with_address = malloc (length);
+        if (status_ok_with_address)
+        {
+            snprintf (status_ok_with_address, length, "%s%05d%s",
+                      status_str, strlen (ptr_address), ptr_address);
+        }
+    }
+    
+    if (status_ok_with_address)
+    {
+        write (HOOK_CONNECT(hook_connect, child_write),
+               status_ok_with_address, strlen (status_ok_with_address));
+        free (status_ok_with_address);
+    }
+    else
+    {
+        snprintf (status_ok_without_address, sizeof (status_ok_without_address),
+                  "%s%05d", status_str, 0);
+        write (HOOK_CONNECT(hook_connect, child_write),
+               status_ok_without_address, strlen (status_ok_without_address));
+    }
+    
     if (res)
         freeaddrinfo (res);
     if (res_local)
@@ -678,13 +728,16 @@ int
 network_connect_child_read_cb (void *arg_hook_connect)
 {
     struct t_hook *hook_connect;
-    char buffer[1];
+    char buffer[1], buf_size_ip[6], *ip_address, *error;
     int num_read;
+    long size_ip;
 #ifdef HAVE_GNUTLS
     int rc;
 #endif
     
     hook_connect = (struct t_hook *)arg_hook_connect;
+    
+    ip_address = NULL;
     
     num_read = read (HOOK_CONNECT(hook_connect, child_read),
                      buffer, sizeof (buffer));
@@ -692,6 +745,30 @@ network_connect_child_read_cb (void *arg_hook_connect)
     {
         if (buffer[0] - '0' == WEECHAT_HOOK_CONNECT_OK)
         {
+            buf_size_ip[5] = '\0';
+            num_read = read (HOOK_CONNECT(hook_connect, child_read),
+                             buf_size_ip, 5);
+            if (num_read == 5)
+            {
+                error = NULL;
+                size_ip = strtol (buf_size_ip, &error, 10);
+                if (error && !error[0])
+                {
+                    ip_address = malloc (size_ip + 1);
+                    if (ip_address)
+                    {
+                        num_read = read (HOOK_CONNECT(hook_connect, child_read),
+                                         ip_address, size_ip);
+                        if (num_read == size_ip)
+                            ip_address[size_ip] = '\0';
+                        else
+                        {
+                            free (ip_address);
+                            ip_address = NULL;
+                        }
+                    }
+                }
+            }
 #ifdef HAVE_GNUTLS
             if (HOOK_CONNECT(hook_connect, gnutls_sess))
             {
@@ -708,17 +785,24 @@ network_connect_child_read_cb (void *arg_hook_connect)
                 if (rc != GNUTLS_E_SUCCESS)
                 {
                     (void) (HOOK_CONNECT(hook_connect, callback))
-                        (hook_connect->callback_data, WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR);
+                        (hook_connect->callback_data,
+                         WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR,
+                         ip_address);
                     unhook (hook_connect);
+                    if (ip_address)
+                        free (ip_address);
                     return WEECHAT_RC_OK;
                 }
             }
 #endif
         }
         (void) (HOOK_CONNECT(hook_connect, callback))
-            (hook_connect->callback_data, buffer[0] - '0');
+            (hook_connect->callback_data, buffer[0] - '0', ip_address);
         unhook (hook_connect);
     }
+    
+    if (ip_address)
+        free (ip_address);
     
     return WEECHAT_RC_OK;
 }
@@ -743,7 +827,8 @@ network_connect_with_fork (struct t_hook *hook_connect)
         {
             (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_data,
-                 '0' + WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR);
+                 '0' + WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR,
+                 NULL);
             unhook (hook_connect);
             return;
         }
@@ -765,7 +850,8 @@ network_connect_with_fork (struct t_hook *hook_connect)
     {
         (void) (HOOK_CONNECT(hook_connect, callback))
             (hook_connect->callback_data,
-             '0' + WEECHAT_HOOK_CONNECT_MEMORY_ERROR);
+             '0' + WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
+             NULL);
         unhook (hook_connect);
         return;
     }
@@ -786,7 +872,8 @@ network_connect_with_fork (struct t_hook *hook_connect)
         case -1:
             (void) (HOOK_CONNECT(hook_connect, callback))
                 (hook_connect->callback_data,
-                 '0' + WEECHAT_HOOK_CONNECT_MEMORY_ERROR);
+                 '0' + WEECHAT_HOOK_CONNECT_MEMORY_ERROR,
+                 NULL);
             unhook (hook_connect);
             return;
         /* child process */
