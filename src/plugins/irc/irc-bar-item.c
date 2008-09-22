@@ -54,8 +54,9 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
     
     if (!window)
         window = weechat_current_window;
-
+    
     buf_name[0] = '\0';
+    away[0] = '\0';
     
     buffer = weechat_window_get_pointer (window, "buffer");
 
