@@ -61,8 +61,8 @@
 #define IRC_COLOR_BAR_FG weechat_color("bar_fg")
 #define IRC_COLOR_BAR_BG weechat_color("bar_bg")
 #define IRC_COLOR_BAR_DELIM weechat_color("bar_delim")
-#define IRC_COLOR_STATUS_NUMBER weechat_color("status_number")
-#define IRC_COLOR_STATUS_NAME weechat_color("status_name")
+#define IRC_COLOR_STATUS_NUMBER weechat_color(weechat_config_string(weechat_config_get("weechat.color.status_number")))
+#define IRC_COLOR_STATUS_NAME weechat_color(weechat_config_string(weechat_config_get("weechat.color.status_name")))
 
 extern struct t_weechat_plugin *weechat_irc_plugin;
 extern struct t_hook *irc_hook_timer_check_away;
