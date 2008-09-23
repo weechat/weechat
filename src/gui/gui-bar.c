@@ -1830,6 +1830,9 @@ gui_bar_update (const char *name)
 void
 gui_bar_free (struct t_gui_bar *bar)
 {
+    if (!bar)
+        return;
+    
     /* remove bar window(s) */
     if (bar->bar_window)
     {
