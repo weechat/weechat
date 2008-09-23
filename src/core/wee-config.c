@@ -205,7 +205,7 @@ config_change_save_on_exit (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
     
-    if (!config_look_save_on_exit)
+    if (!CONFIG_BOOLEAN(config_look_save_on_exit))
     {
         gui_chat_printf (NULL,
                          _("Warning: you should now issue /save to write "
@@ -224,7 +224,7 @@ config_change_title (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
     
-    if (config_look_set_title)
+    if (CONFIG_BOOLEAN(config_look_set_title))
 	gui_window_title_set ();
     else
 	gui_window_title_reset ();
