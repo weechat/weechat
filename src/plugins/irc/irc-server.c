@@ -2840,6 +2840,17 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
     
     if (!weechat_infolist_new_var_string (ptr_item, "name", server->name))
         return 0;
+    if (!weechat_infolist_new_var_pointer (ptr_item, "buffer", server->buffer))
+        return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "buffer_name",
+                                          (server->buffer) ?
+                                          weechat_buffer_get_string (server->buffer, "name") : ""))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "selected",
+                                           (weechat_config_boolean (irc_config_look_one_server_buffer)
+                                            && (irc_current_server != server)) ?
+                                           0 : 1))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "autoconnect", server->autoconnect))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "autoreconnect", server->autoreconnect))

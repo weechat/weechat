@@ -146,6 +146,7 @@ struct t_gui_buffer
     
     /* highlight settings for buffer */
     char *highlight_words;             /* list of words to highlight        */
+    char *highlight_tags;              /* tags to highlight                 */
     int highlight_tags_count;          /* number of tags to highlight       */
                                        /* (if 0, any tag is highlighted)    */
     char **highlight_tags_array;       /* tags to highlight                 */
@@ -202,6 +203,10 @@ extern void gui_buffer_set_nicklist (struct t_gui_buffer *buffer,
 extern void gui_buffer_set_nicklist_case_sensitive (struct t_gui_buffer * buffer,
                                                     int case_sensitive);
 extern void gui_buffer_set_nick (struct t_gui_buffer *buffer, const char *new_nick);
+extern void gui_buffer_set_highlight_words (struct t_gui_buffer *buffer,
+                                            const char *new_highlight_words);
+extern void gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
+                                           const char *new_highlight_tags);
 extern void gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                             void *value);
 extern struct t_gui_buffer *gui_buffer_search_main ();

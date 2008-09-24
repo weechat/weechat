@@ -25,6 +25,7 @@
 #include "irc.h"
 #include "irc-upgrade.h"
 #include "irc-buffer.h"
+#include "irc-config.h"
 #include "irc-input.h"
 #include "irc-server.h"
 #include "irc-channel.h"
@@ -168,8 +169,9 @@ irc_upgrade_read_cb (int object_id,
                      struct t_infolist *infolist)
 {
     int flags, sock, size;
-    char *str, *buf;
+    char *str, *buf, *buffer_name;
     struct t_irc_nick *ptr_nick;
+    struct t_gui_buffer *ptr_buffer;
     
     weechat_infolist_reset_item_cursor (infolist);
     while (weechat_infolist_next (infolist))
@@ -180,8 +182,24 @@ irc_upgrade_read_cb (int object_id,
                 irc_upgrade_current_server = irc_server_search (weechat_infolist_string (infolist, "name"));
                 if (irc_upgrade_current_server)
                 {
-                    irc_upgrade_current_server->buffer = weechat_buffer_search (IRC_PLUGIN_NAME,
-                                                                                irc_upgrade_current_server->name);
+                    irc_upgrade_current_server->buffer = NULL;
+                    buffer_name = weechat_infolist_string (infolist, "buffer_name");
+                    if (buffer_name && buffer_name[0])
+                    {
+                        ptr_buffer = weechat_buffer_search (IRC_PLUGIN_NAME,
+                                                            buffer_name);
+                        if (ptr_buffer)
+                        {
+                            irc_upgrade_current_server->buffer = ptr_buffer;
+                            if (weechat_config_boolean (irc_config_look_one_server_buffer)
+                                && !irc_buffer_servers)
+                            {
+                                irc_buffer_servers = ptr_buffer;
+                            }
+                            if (weechat_infolist_integer (infolist, "selected"))
+                                irc_current_server = irc_upgrade_current_server;
+                        }
+                    }
                     irc_upgrade_current_server->current_address = weechat_infolist_integer (infolist, "current_address");
                     
                     sock = weechat_infolist_integer (infolist, "sock");

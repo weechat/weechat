@@ -23,6 +23,7 @@
 #include "config.h"
 #endif
 
+#include <stdlib.h>
 #include <string.h>
 
 #include "weechat.h"
@@ -278,12 +279,13 @@ int
 upgrade_weechat_read_cb (int object_id,
                          struct t_infolist *infolist)
 {
-    char *type, *name, *prefix, *group_name;
+    char *type, *name, *prefix, *group_name, option_name[32], *key;
+    char *option_key;
     struct t_gui_nick_group *ptr_group;
     struct t_gui_buffer *ptr_buffer;
     struct timeval creation_time;
     void *buf;
-    int size;
+    int size, key_index, length;
     
     infolist_reset_item_cursor (infolist);
     while (infolist_next (infolist))
@@ -321,6 +323,32 @@ upgrade_weechat_read_cb (int object_id,
                             infolist_integer (infolist, "nicklist_case_sensitive");
                         upgrade_current_buffer->nicklist_display_groups =
                             infolist_integer (infolist, "nicklist_display_groups");
+                        gui_buffer_set_highlight_words (upgrade_current_buffer,
+                                                        infolist_string (infolist, "highlight_words"));
+                        gui_buffer_set_highlight_tags (upgrade_current_buffer,
+                                                       infolist_string (infolist, "highlight_tags"));
+                        key_index = 0;
+                        while (1)
+                        {
+                            snprintf (option_name, sizeof (option_name),
+                                      "key_%05d", key_index);
+                            key = infolist_string (infolist, option_name);
+                            if (!key)
+                                break;
+                            length = 16 + strlen (key) + 1;
+                            option_key = malloc (length);
+                            if (option_key)
+                            {
+                                snprintf (option_key, length, "key_bind_%s", key);
+                                snprintf (option_name, sizeof (option_name),
+                                          "key_command_%05d", key_index);
+                                gui_buffer_set (upgrade_current_buffer,
+                                                option_key,
+                                                infolist_string (infolist, option_name));
+                                free (option_key);
+                            }
+                            key_index++;
+                        }
                     }
                 }
                 else

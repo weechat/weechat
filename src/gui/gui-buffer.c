@@ -171,6 +171,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         
         /* highlight */
         new_buffer->highlight_words = NULL;
+        new_buffer->highlight_tags = NULL;
         new_buffer->highlight_tags_count = 0;
         new_buffer->highlight_tags_array = NULL;
         
@@ -481,17 +482,24 @@ void
 gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
                                const char *new_highlight_tags)
 {
+    if (buffer->highlight_tags)
+        free (buffer->highlight_tags);
     if (buffer->highlight_tags_array)
         string_free_exploded (buffer->highlight_tags_array);
     
     if (new_highlight_tags)
     {
-        buffer->highlight_tags_array = string_explode (new_highlight_tags,
-                                                       ",", 0, 0,
-                                                       &buffer->highlight_tags_count);
+        buffer->highlight_tags = strdup (new_highlight_tags);
+        if (buffer->highlight_tags)
+        {
+            buffer->highlight_tags_array = string_explode (new_highlight_tags,
+                                                           ",", 0, 0,
+                                                           &buffer->highlight_tags_count);
+        }
     }
     else
     {
+        buffer->highlight_tags = NULL;
         buffer->highlight_tags_count = 0;
         buffer->highlight_tags_array = NULL;
     }
@@ -1148,7 +1156,9 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
                             struct t_gui_buffer *buffer)
 {
     struct t_infolist_item *ptr_item;
-    char *pos_point;
+    struct t_gui_key *ptr_key;
+    char *pos_point, option_name[32];
+    int i;
     
     if (!infolist || !buffer)
         return 0;
@@ -1196,6 +1206,20 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_string (ptr_item, "input_string", buffer->input_buffer))
         return 0;
+    if (!infolist_new_var_string (ptr_item, "highlight_words", buffer->highlight_words))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "highlight_tags", buffer->highlight_tags))
+        return 0;
+    i = 0;
+    for (ptr_key = buffer->keys; ptr_key; ptr_key = ptr_key->next_key)
+    {
+        snprintf (option_name, sizeof (option_name), "key_%05d", i);
+        if (!infolist_new_var_string (ptr_item, option_name, ptr_key->key))
+            return 0;
+        snprintf (option_name, sizeof (option_name), "key_command_%05d", i);
+        if (!infolist_new_var_string (ptr_item, option_name, ptr_key->command))
+            return 0;
+    }
     
     return 1;
 }
