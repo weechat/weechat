@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-23 15:34+0200\n"
-"PO-Revision-Date: 2008-09-23 15:41+0200\n"
+"POT-Creation-Date: 2008-09-24 14:15+0200\n"
+"PO-Revision-Date: 2008-09-24 14:16+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -2136,6 +2136,9 @@ msgstr "%s%s: erreur d'ouverture du fichier, fermeture"
 msgid "name of FIFO pipe"
 msgstr "nom du tube FIFO"
 
+msgid "servers"
+msgstr "serveurs"
+
 msgid "away"
 msgstr "absent"
 
@@ -2163,12 +2166,12 @@ msgid "%s%s: cannot find nick for sending message"
 msgstr "%s%s: impossible de trouver le pseudo pour envoyer le message"
 
 #, c-format
-msgid "%s: future away on %s%s%s: %s"
-msgstr "%s: future absence sur %s%s%s: %s"
+msgid "%s%s: future away: %s"
+msgstr "%s%s: future absence: %s"
 
 #, c-format
-msgid "%s: future away on %s%s%s removed"
-msgstr "%s: future absence sur %s%s%s supprimée"
+msgid "%s%s: future away removed"
+msgstr "%s%s: future absence supprimée"
 
 #, c-format
 msgid "%s%s: \"%s\" command can only be executed in a channel buffer"
@@ -2209,8 +2212,8 @@ msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s%s: non connecté au serveur \"%s\" !"
 
 #, c-format
-msgid "%s: auto-reconnection is cancelled"
-msgstr "%s: la reconnexion automatique est annulée"
+msgid "%s%s: auto-reconnection is cancelled"
+msgstr "%s%s: la reconnexion automatique est annulée"
 
 #, c-format
 msgid "%s%s: server \"%s\" not found"
@@ -2890,12 +2893,12 @@ msgstr "liste, ajoute ou retire des serveurs"
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
-"[rename servername newservername] | [del servername]"
+"[rename servername newservername] | [del servername] | [deloutq] | [switch]"
 msgstr ""
 "[list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom[/"
 "port] [-temp] [-auto | -noauto] [-ipv6] [-ssl]] | [copy nom_serveur "
 "nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [del "
-"nom_serveur]"
+"nom_serveur] | [deloutq] | [switch]"
 
 msgid ""
 "      list: list servers (no parameter implies this list)\n"
@@ -2913,6 +2916,8 @@ msgid ""
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
+"    switch: switch active server (when one buffer is used for all servers, "
+"default key: alt-s on server buffer)\n"
 "\n"
 "Examples:\n"
 "  /server listfull\n"
@@ -2922,7 +2927,8 @@ msgid ""
 "  /server copy oftc oftcbis\n"
 "  /server rename oftc newoftc\n"
 "  /server del freenode\n"
-"  /server deloutq"
+"  /server deloutq\n"
+"  /server switch"
 msgstr ""
 "       list: afficher les serveurs (pas de paramètre implique cette liste)\n"
 "   listfull: afficher les serveurs avec de l'info détaillée pour chaque\n"
@@ -2941,6 +2947,8 @@ msgstr ""
 "    deloutq: supprimer la file d'attente des messages sortants pour tous les "
 "serveurs (tous les messages que WeeChat est actuellement en train "
 "d'envoyer)\n"
+"     switch: changer le serveur actif (quand un tampon est utilisé pour tous "
+"les serveurs, touche par défaut: alt-s sur le tampon serveur)\n"
 "\n"
 "Exemples :\n"
 "  /server listfull\n"
@@ -2950,7 +2958,8 @@ msgstr ""
 "  /server copy oftc oftcbis\n"
 "  /server rename oftc newoftc\n"
 "  /server del freenode\n"
-"  /server deloutq"
+"  /server deloutq\n"
+"  /server switch"
 
 msgid "list services currently connected to the network"
 msgstr "lister les services actuellement connectés au réseau"
@@ -3657,10 +3666,10 @@ msgstr ""
 "de la connexion avec le serveur"
 
 #, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr ""
-"%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le pseudo n°"
-"%d (\"%s\")"
+"%s%s: le pseudo \"%s\" est déjà en cours d'utilisation, essai avec le pseudo "
+"n°%d (\"%s\")"
 
 #, c-format
 msgid "%s%s: command \"%s\" not found:"
@@ -3725,20 +3734,20 @@ msgstr ""
 "%s%s: impossible de lire des données sur la socket, déconnexion du serveur..."
 
 #, c-format
-msgid "%s: lag is high, disconnecting from server..."
-msgstr "%s: le lag est élevé, déconnexion du serveur..."
+msgid "%s%s: lag is high, disconnecting from server..."
+msgstr "%s%s: le lag est élevé, déconnexion du serveur..."
 
 #, c-format
-msgid "%s: reconnecting to server in %d %s"
-msgstr "%s: reconnexion au serveur dans %d %s"
+msgid "%s%s: reconnecting to server in %d %s"
+msgstr "%s%s: reconnexion au serveur dans %d %s"
 
 #, c-format
-msgid "%s: switching address to %s/%d"
-msgstr "%s: bascule vers l'adresse %s/%d"
+msgid "%s%s: switching address to %s/%d"
+msgstr "%s%s: bascule vers l'adresse %s/%d"
 
 #, c-format
-msgid "%s: connected to %s (%s)"
-msgstr "%s: connecté à %s (%s)"
+msgid "%s%s: connected to %s (%s)"
+msgstr "%s%s: connecté à %s (%s)"
 
 #, c-format
 msgid "%s%s: proxy address \"%s\" not found"
@@ -3806,16 +3815,16 @@ msgstr ""
 "avec le support GnuTLS"
 
 #, c-format
-msgid "%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
-msgstr "%s: connexion au serveur %s/%d%s%s via le proxy %s %s/%d%s..."
+msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
+msgstr "%s%s: connexion au serveur %s/%d%s%s via le proxy %s %s/%d%s..."
 
 #, c-format
 msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "Connexion au serveur %s/%d%s%s via le proxy %s %s/%d%s..."
 
 #, c-format
-msgid "%s: connecting to server %s/%d%s%s..."
-msgstr "%s: connexion au serveur %s/%d%s%s..."
+msgid "%s%s: connecting to server %s/%d%s%s..."
+msgstr "%s%s: connexion au serveur %s/%d%s%s..."
 
 #, c-format
 msgid "%s%s: cannot create socket"
@@ -3830,12 +3839,12 @@ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
 msgstr "%s%s: impossible d'activer l'option socket \"SO_KEEPALIVE\""
 
 #, c-format
-msgid "%s: reconnecting to server..."
-msgstr "%s: reconnexion au serveur..."
+msgid "%s%s: reconnecting to server..."
+msgstr "%s%s: reconnexion au serveur..."
 
 #, c-format
-msgid "%s: disconnected from server"
-msgstr "%s: déconnecté du serveur"
+msgid "%s%s: disconnected from server"
+msgstr "%s%s: déconnecté du serveur"
 
 #, c-format
 msgid "%s%s: unable to write log file \"%s\""

@@ -24,10 +24,16 @@ struct t_gui_buffer;
 struct t_irc_server;
 struct t_irc_channel;
 
+extern struct t_gui_buffer *irc_buffer_servers;
+
 extern void irc_buffer_get_server_channel (struct t_gui_buffer *buffer,
                                            struct t_irc_server **server,
                                            struct t_irc_channel **channel);
 extern char *irc_buffer_build_name (const char *server, const char *channel);
+extern char *irc_buffer_get_server_prefix (struct t_irc_server *server,
+                                           char *prefix_code);
+extern void irc_buffer_merge_servers ();
+extern void irc_buffer_split_server ();
 extern int irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer);
 
 #endif /* irc-buffer.h */

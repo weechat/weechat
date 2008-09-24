@@ -25,7 +25,8 @@ struct t_irc_server;
 #define IRC_COMMAND_TOO_FEW_ARGUMENTS(__buffer, __command)              \
     weechat_printf (__buffer,                                           \
                     _("%sirc: too few arguments for \"%s\" command"),   \
-                    weechat_prefix ("error"), __command);               \
+                    irc_buffer_get_server_prefix (ptr_server, "error"), \
+                    __command);                                         \
     return WEECHAT_RC_ERROR;
 
 

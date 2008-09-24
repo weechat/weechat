@@ -29,6 +29,7 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-config.h"
+#include "irc-buffer.h"
 #include "irc-ignore.h"
 #include "irc-server.h"
 
@@ -144,11 +145,10 @@ irc_config_get_server_from_option_name (const char *name)
 void
 irc_config_change_one_server_buffer ()
 {
-    /*if (irc_config_irc_one_server_buffer)
-        irc_buffer_merge_servers (gui_current_window);
+    if (weechat_config_boolean (irc_config_look_one_server_buffer))
+        irc_buffer_merge_servers ();
     else
-        irc_buffer_split_server (gui_current_window);
-    */
+        irc_buffer_split_server ();
 }
 
 /*

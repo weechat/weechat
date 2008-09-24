@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-23 15:34+0200\n"
+"POT-Creation-Date: 2008-09-24 14:15+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -2148,6 +2148,10 @@ msgstr "%s Fehler beim Lesen vom FIFO, FIFO wird geschlossen\n"
 msgid "name of FIFO pipe"
 msgstr ""
 
+#, fuzzy
+msgid "servers"
+msgstr "Server"
+
 msgid "away"
 msgstr ""
 
@@ -2175,11 +2179,11 @@ msgstr ""
 "%s kann keinen Nickname finden, an den die Nachricht gesendet werden soll\n"
 
 #, fuzzy, c-format
-msgid "%s: future away on %s%s%s: %s"
+msgid "%s%s: future away: %s"
 msgstr "/ignore-Regel entfernt.\n"
 
 #, fuzzy, c-format
-msgid "%s: future away on %s%s%s removed"
+msgid "%s%s: future away removed"
 msgstr "/ignore-Regel entfernt.\n"
 
 #, fuzzy, c-format
@@ -2219,7 +2223,7 @@ msgid "%s%s: not connected to server \"%s\"!"
 msgstr "%s keine Verbindung zum Server \"%s\"!\n"
 
 #, fuzzy, c-format
-msgid "%s: auto-reconnection is cancelled"
+msgid "%s%s: auto-reconnection is cancelled"
 msgstr "Automatisches Neuverbinden abgebrochen\n"
 
 #, fuzzy, c-format
@@ -2882,7 +2886,7 @@ msgstr "Auflisten, Hinzufügen oder Entfernen von Servern"
 msgid ""
 "[list [servername]] | [listfull [servername]] | [add servername hostname[/"
 "port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | "
-"[rename servername newservername] | [del servername]"
+"[rename servername newservername] | [del servername] | [deloutq] | [switch]"
 msgstr ""
 "[Servername] | [Servername Hostname Port [-auto | -noauto] [-ipv6] [-ssl] [-"
 "pwd Passwort] [-nicks Nick1 Nick2 Nick3] [-username Benutzername] [-realname "
@@ -2905,6 +2909,8 @@ msgid ""
 "       del: delete a server\n"
 "   deloutq: delete messages out queue for all servers (all messages WeeChat "
 "is currently sending)\n"
+"    switch: switch active server (when one buffer is used for all servers, "
+"default key: alt-s on server buffer)\n"
 "\n"
 "Examples:\n"
 "  /server listfull\n"
@@ -2914,7 +2920,8 @@ msgid ""
 "  /server copy oftc oftcbis\n"
 "  /server rename oftc newoftc\n"
 "  /server del freenode\n"
-"  /server deloutq"
+"  /server deloutq\n"
+"  /server switch"
 msgstr ""
 "Servername: anzuzeigender Servername\n"
 "  Hostname: Name oder IP-Adresse des Servers\n"
@@ -3638,7 +3645,7 @@ msgstr ""
 "getrennt!\n"
 
 #, fuzzy, c-format
-msgid "%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
+msgid "%s%s: nickname \"%s\" is already in use, trying nickname #%d (\"%s\")"
 msgstr ""
 "%s: Nickname \"%s\" wird bereits verwendet, versuche 2. Nickname \"%s\"\n"
 
@@ -3696,19 +3703,19 @@ msgid "%s%s: cannot read data from socket, disconnecting from server..."
 msgstr "%s Socket-Lesefehler, die Serververbindung wird getrennt...\n"
 
 #, fuzzy, c-format
-msgid "%s: lag is high, disconnecting from server..."
+msgid "%s%s: lag is high, disconnecting from server..."
 msgstr "%s der Lag ist hoch, die Verbindung wird getrennt...\n"
 
 #, fuzzy, c-format
-msgid "%s: reconnecting to server in %d %s"
+msgid "%s%s: reconnecting to server in %d %s"
 msgstr "%s: Neuverbinden in %d Sekunden\n"
 
 #, fuzzy, c-format
-msgid "%s: switching address to %s/%d"
+msgid "%s%s: switching address to %s/%d"
 msgstr "%s IP-Adresse nicht gefunden\n"
 
 #, fuzzy, c-format
-msgid "%s: connected to %s (%s)"
+msgid "%s%s: connected to %s (%s)"
 msgstr "%s keine Verbindung zum Server \"%s\"!\n"
 
 #, fuzzy, c-format
@@ -3775,7 +3782,7 @@ msgstr ""
 "kompiliert wurde\n"
 
 #, fuzzy, c-format
-msgid "%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
+msgid "%s%s: connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "%s: verbinden zu Server %s:%d%s%s via %s-Proxy %s:%d%s...\n"
 
 #, fuzzy, c-format
@@ -3783,7 +3790,7 @@ msgid "Connecting to server %s/%d%s%s via %s proxy %s/%d%s..."
 msgstr "verbinden zu Server %s:%d%s%s via %s-Proxy %s:%d%s...\n"
 
 #, fuzzy, c-format
-msgid "%s: connecting to server %s/%d%s%s..."
+msgid "%s%s: connecting to server %s/%d%s%s..."
 msgstr "%s: verbinden zu Server %s:%d%s%s...\n"
 
 #, fuzzy, c-format
@@ -3799,11 +3806,11 @@ msgid "%s%s: cannot set socket option \"SO_KEEPALIVE\""
 msgstr "%s Fehler beim Setzen der Socketoption \"SO_KEEPALIVE\"\n"
 
 #, fuzzy, c-format
-msgid "%s: reconnecting to server..."
+msgid "%s%s: reconnecting to server..."
 msgstr "%s: Neuverbinden zum Server...\n"
 
 #, fuzzy, c-format
-msgid "%s: disconnected from server"
+msgid "%s%s: disconnected from server"
 msgstr "Vom Server getrennt!\n"
 
 #, fuzzy, c-format
@@ -4585,3 +4592,11 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid "%s: disconnected from server"
+#~ msgstr "Vom Server getrennt!\n"
+
+#, fuzzy
+#~ msgid "%s: connecting to server %s/%d%s%s..."
+#~ msgstr "%s: verbinden zu Server %s:%d%s%s...\n"

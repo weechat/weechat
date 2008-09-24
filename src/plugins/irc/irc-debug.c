@@ -69,16 +69,17 @@ irc_debug_printf (struct t_irc_server *server, int send, int modified,
             irc_debug_buffer = weechat_buffer_new (IRC_DEBUG_BUFFER_NAME,
                                                    NULL, NULL,
                                                    &irc_debug_buffer_close_cb, NULL);
+
+            /* failed to create buffer ? then return */
+            if (!irc_debug_buffer)
+                return;
+            
+            weechat_buffer_set (irc_debug_buffer,
+                                "title", _("IRC debug messages"));
+            
+            /* disabled all highlights on this debug buffer */
+            weechat_buffer_set (irc_debug_buffer, "highlight_words", "-");
         }
-        
-        /* failed to create buffer ? then exit */
-        if (!irc_debug_buffer)
-            return;
-        
-        weechat_buffer_set (irc_debug_buffer,
-                            "title", _("IRC debug messages"));
-        /* disabled all highlights on this debug buffer */
-        weechat_buffer_set (irc_debug_buffer, "highlight_words", "-");
     }
     
     buf = weechat_iconv_to_internal (NULL, message);

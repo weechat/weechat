@@ -129,6 +129,7 @@ struct t_irc_message
 };
 
 extern struct t_irc_server *irc_servers;
+extern struct t_irc_server *irc_current_server;
 #ifdef HAVE_GNUTLS
 extern const int gnutls_cert_type_prio[];
 extern const int gnutls_prot_prio[];
@@ -175,6 +176,8 @@ extern void irc_server_send_signal (struct t_irc_server *server,
                                     const char *full_message);
 extern void irc_server_sendf (struct t_irc_server *server, const char *format, ...);
 extern struct t_irc_server *irc_server_search (const char *server_name);
+extern struct t_gui_buffer *irc_server_create_buffer (struct t_irc_server *server,
+                                                      int all_servers);
 extern int irc_server_connect (struct t_irc_server *server,
                                int disable_autojoin);
 extern void irc_server_auto_connect (int auto_connect);

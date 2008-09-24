@@ -41,8 +41,8 @@
                         _("%s%s: too few arguments received from IRC "  \
                           "server for command \"%s\" (received: %d "    \
                           "arguments, expected: at least %d)"),         \
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
-                        command, argc, __min_args);                     \
+                        irc_buffer_get_server_prefix (server, "error"), \
+                        IRC_PLUGIN_NAME, command, argc, __min_args);    \
         return WEECHAT_RC_ERROR;                                        \
     }
 
@@ -52,8 +52,8 @@
         weechat_printf (server->buffer,                                 \
                         _("%s%s: \"%s\" command received without "      \
                           "host"),                                      \
-                        weechat_prefix ("error"), IRC_PLUGIN_NAME,      \
-                        command);                                       \
+                        irc_buffer_get_server_prefix (server, "error"), \
+                        IRC_PLUGIN_NAME, command);                      \
         return WEECHAT_RC_ERROR;                                        \
     }
 

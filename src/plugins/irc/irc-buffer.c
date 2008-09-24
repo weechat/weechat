@@ -28,7 +28,12 @@
 #include "irc-buffer.h"
 #include "irc-channel.h"
 #include "irc-command.h"
+#include "irc-config.h"
 #include "irc-server.h"
+
+
+/* buffer for all servers (if using one buffer for all servers) */
+struct t_gui_buffer *irc_buffer_servers = NULL;
 
 
 /*
@@ -44,7 +49,7 @@ irc_buffer_get_server_channel (struct t_gui_buffer *buffer,
 {
     struct t_irc_server *ptr_server;
     struct t_irc_channel *ptr_channel;
-
+    
     if (server)
         *server = NULL;
     if (channel)
@@ -60,7 +65,12 @@ irc_buffer_get_server_channel (struct t_gui_buffer *buffer,
         if (ptr_server->buffer == buffer)
         {
             if (server)
-                *server = ptr_server;
+            {
+                if (weechat_config_boolean (irc_config_look_one_server_buffer))
+                    *server = irc_current_server;
+                else
+                    *server = ptr_server;
+            }
             return;
         }
         
@@ -105,131 +115,122 @@ irc_buffer_build_name (const char *server, const char *channel)
 }
 
 /*
+ * irc_buffer_get_server_prefix: return prefix, with server name if server
+ *                               buffers are displayed in only one buffer
+ */
+
+char *
+irc_buffer_get_server_prefix (struct t_irc_server *server, char *prefix_code)
+{
+    static char buf[256];
+    char *prefix;
+    
+    prefix = (prefix_code && prefix_code[0]) ?
+        weechat_prefix (prefix_code) : NULL;
+    
+    if (weechat_config_boolean (irc_config_look_one_server_buffer) && server)
+    {
+        snprintf (buf, sizeof (buf), "%s%s[%s%s%s]%s ",
+                  (prefix) ? prefix : "",
+                  IRC_COLOR_CHAT_DELIMITERS,
+                  IRC_COLOR_CHAT_SERVER,
+                  server->name,
+                  IRC_COLOR_CHAT_DELIMITERS,
+                  IRC_COLOR_CHAT);
+    }
+    else
+    {
+        snprintf (buf, sizeof (buf), "%s",
+                  (prefix) ? prefix : "");
+    }
+    return buf;
+}
+
+/*
  * irc_buffer_merge_servers: merge server buffers in one buffer
  */
 
-/*
 void
-irc_buffer_merge_servers (t_gui_window *window)
+irc_buffer_merge_servers ()
 {
-    t_gui_buffer *ptr_buffer_server, *ptr_buffer, *new_ptr_buffer;
-    t_irc_server *ptr_server;
+    struct t_irc_server *ptr_server;
+    struct t_gui_buffer *ptr_buffer;
+    int number, number_selected;
     
-    // new server buffer is the first server buffer found
-    for (ptr_buffer_server = gui_buffers; ptr_buffer_server;
-         ptr_buffer_server = ptr_buffer_server->next_buffer)
+    irc_buffer_servers = NULL;
+    irc_current_server = NULL;
+    
+    /* choose server buffer with lower number (should be first created) */
+    number_selected = -1;
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
     {
-        if ((ptr_buffer_server->protocol == irc_protocol)
-            && (IRC_BUFFER_SERVER(ptr_buffer_server))
-            && (!IRC_BUFFER_CHANNEL(ptr_buffer_server)))
-            break;
-    }
-    
-    // no server buffer found
-    if (!ptr_buffer_server)
-        return;
-    
-    ptr_buffer = gui_buffers;
-    while (ptr_buffer)
-    {
-        if ((ptr_buffer->protocol == irc_protocol)
-            && (ptr_buffer != ptr_buffer_server)
-            && (IRC_BUFFER_SERVER(ptr_buffer))
-            && (!IRC_BUFFER_CHANNEL(ptr_buffer)))
+        if (ptr_server->buffer)
         {
-            ptr_server = IRC_BUFFER_SERVER(ptr_buffer);
-            
-            // add (by pointer artefact) lines from buffer found to server buffer
-            if (ptr_buffer->lines)
+            number = weechat_buffer_get_integer (ptr_server->buffer, "number");
+            if ((number_selected == -1) || (number < number_selected))
             {
-                if (ptr_buffer_server->lines)
-                {
-                    ptr_buffer->lines->prev_line =
-                        ptr_buffer_server->last_line;
-                    ptr_buffer_server->last_line->next_line =
-                        ptr_buffer->lines;
-                    ptr_buffer_server->last_line =
-                        ptr_buffer->last_line;
-                }
-                else
-                {
-                    ptr_buffer_server->lines = ptr_buffer->lines;
-                    ptr_buffer_server->last_line = ptr_buffer->last_line;
-                }
+                irc_buffer_servers = ptr_server->buffer;
+                irc_current_server = ptr_server;
+                number_selected = number;
             }
-            
-            // free buffer but not lines, because they're now used by 
-            // our unique server buffer
-            new_ptr_buffer = ptr_buffer->next_buffer;
-            ptr_buffer->lines = NULL;
-            gui_buffer_free (ptr_buffer, 1);
-            ptr_buffer = new_ptr_buffer;
-            
-            // asociate server with new server buffer
-            ptr_server->buffer = ptr_buffer_server;
         }
-        else
-            ptr_buffer = ptr_buffer->next_buffer;
     }
     
-    IRC_BUFFER_ALL_SERVERS(ptr_buffer_server) = 1;
-    gui_window_redraw_buffer (window->buffer);
+    if (irc_buffer_servers)
+    {
+        weechat_buffer_set (irc_buffer_servers, "name", "servers");
+        weechat_buffer_set (irc_buffer_servers, "key_bind_meta-s",
+                            "/command irc /server switch");
+        
+        for (ptr_server = irc_servers; ptr_server;
+             ptr_server = ptr_server->next_server)
+        {
+            if (ptr_server->buffer
+                && (ptr_server->buffer != irc_buffer_servers))
+            {
+                ptr_buffer = ptr_server->buffer;
+                ptr_server->buffer = irc_buffer_servers;
+                weechat_buffer_close (ptr_buffer, 1);
+            }
+        }
+    }
 }
-*/
 
 /*
  * irc_buffer_split_server: split the server buffer into many buffers (one by server)
  */
 
-/*
 void
-irc_buffer_split_server (t_gui_window *window)
+irc_buffer_split_server ()
 {
-    t_gui_buffer *ptr_buffer;
-    t_irc_server *ptr_server;
-    char *log_filename;
+    struct t_irc_server *ptr_server;
+    char buffer_name[256];
     
-    ptr_buffer = gui_buffer_servers_search ();
-    
-    if (ptr_buffer)
+    if (irc_buffer_servers)
     {
-        if (IRC_BUFFER_SERVER(ptr_buffer))
-        {
-            for (ptr_server = irc_servers; ptr_server;
-                 ptr_server = ptr_server->next_server)
-            {
-                if (ptr_server->buffer
-                    && (ptr_server != IRC_BUFFER_SERVER(ptr_buffer))
-                    && (ptr_server->buffer == ptr_buffer))
-                {
-                    ptr_server->buffer = NULL;
-                    log_filename = irc_log_get_filename (ptr_server->name,
-                                                         NULL,
-                                                         0);
-                    gui_buffer_new (window, 0,
-                                    ptr_server->name,
-                                    ptr_server->name,
-                                    GUI_BUFFER_ATTRIB_TEXT |
-                                    GUI_BUFFER_ATTRIB_INPUT |
-                                    GUI_BUFFER_ATTRIB_NICKS,
-                                    irc_protocol,
-                                    irc_buffer_data_create (ptr_server),
-                                    &irc_buffer_data_free,
-                                    GUI_NOTIFY_LEVEL_DEFAULT,
-                                    NULL, ptr_server->nick,
-                                    irc_cfg_log_auto_server, log_filename,
-                                    0);
-                    if (log_filename)
-                        free (log_filename);
-                }
-            }
-        }
-        IRC_BUFFER_ALL_SERVERS(ptr_buffer) = 0;
-        gui_status_draw (window->buffer, 1);
-        gui_input_draw (window->buffer, 1);
+        weechat_buffer_set (irc_buffer_servers, "key_unbind_meta-s", NULL);
     }
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->buffer && (ptr_server != irc_current_server))
+        {
+            irc_server_create_buffer (ptr_server, 0);
+        }
+    }
+    
+    if (irc_current_server)
+    {
+        snprintf (buffer_name, sizeof (buffer_name),
+                  "server.%s", irc_current_server->name);
+        weechat_buffer_set (irc_current_server->buffer, "name", buffer_name);
+    }
+    
+    irc_buffer_servers = NULL;
+    irc_current_server = NULL;
 }
-*/
 
 /*
  * irc_buffer_close_cb: callback called when a buffer is closed
@@ -271,6 +272,11 @@ irc_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
             ptr_server->buffer = NULL;
         }
     }
+
+    if (irc_buffer_servers == buffer)
+        irc_buffer_servers = NULL;
+    if (ptr_server && (irc_current_server == ptr_server))
+        irc_current_server = NULL;
     
     return WEECHAT_RC_OK;
 }
