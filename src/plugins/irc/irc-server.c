@@ -2387,6 +2387,7 @@ irc_server_disconnect (struct t_irc_server *server, int reconnect)
     {
         free (server->nick_modes);
         server->nick_modes = NULL;
+        weechat_bar_item_update ("input_prompt");
     }
     if (server->prefix)
     {

@@ -175,6 +175,67 @@ irc_bar_item_lag (void *data, struct t_gui_bar_item *item,
 }
 
 /*
+ * irc_bar_item_input_prompt: bar item with input prompt
+ */
+
+char *
+irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
+                           struct t_gui_window *window,
+                           int max_width, int max_height)
+{
+    struct t_gui_buffer *buffer;
+    struct t_irc_server *server;
+    char *buf;
+    int length;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) max_width;
+    (void) max_height;
+    
+    if (!window)
+        window = weechat_current_window;
+    
+    buffer = weechat_window_get_pointer (window, "buffer");
+    
+    if (buffer)
+    {
+        irc_buffer_get_server_channel (buffer, &server, NULL);
+        if (!server || !server->nick)
+            return NULL;
+        
+        length = strlen (server->nick) + 64 +
+            ((server->nick_modes) ? strlen (server->nick_modes) : 0) + 64 + 1;
+        
+        buf = malloc (length);
+        if (buf)
+        {
+            if (server->nick_modes)
+            {
+                snprintf (buf, length, "%s%s%s(%s%s%s)",
+                          IRC_COLOR_INPUT_NICK,
+                          server->nick,
+                          IRC_COLOR_BAR_DELIM,
+                          IRC_COLOR_BAR_FG,
+                          server->nick_modes,
+                          IRC_COLOR_BAR_DELIM);
+            }
+            else
+            {
+                snprintf (buf, length, "%s%s",
+                          IRC_COLOR_INPUT_NICK,
+                          server->nick);
+            }
+        }
+        
+        return buf;
+    }
+    
+    return NULL;
+}
+
+/*
  * irc_bar_item_init: initialize IRC bar items
  */
 
@@ -183,4 +244,5 @@ irc_bar_item_init ()
 {
     weechat_bar_item_new ("buffer_name", &irc_bar_item_buffer_name, NULL);
     weechat_bar_item_new ("lag", &irc_bar_item_lag, NULL);
+    weechat_bar_item_new ("input_prompt", &irc_bar_item_input_prompt, NULL);
 }
