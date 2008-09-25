@@ -1322,7 +1322,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                 {
                     pos_args++;
                 }
-                pos_end_01 = strchr (pos, '\01');
+                pos_end_01 = strchr (pos_args, '\01');
                 if (pos_end_01)
                     pos_end_01[0] = '\0';
                 else
@@ -1842,7 +1842,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     irc_channel_set_topic (ptr_channel, address);
                 
                 pos_args += 8;
-                pos_end_01 = strchr (pos, '\01');
+                pos_end_01 = strchr (pos_args, '\01');
                 if (pos_end_01)
                     pos_end_01[0] = '\0';
                 
