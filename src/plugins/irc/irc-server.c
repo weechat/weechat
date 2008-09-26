@@ -1969,7 +1969,7 @@ irc_server_switch_address (struct t_irc_server *server)
  */
 
 int
-irc_server_connect_cb (void *arg_server, int status, char *ip_address)
+irc_server_connect_cb (void *arg_server, int status, const char *ip_address)
 {
     struct t_irc_server *server;
     int config_proxy_use;

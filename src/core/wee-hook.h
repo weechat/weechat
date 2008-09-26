@@ -120,7 +120,8 @@ struct t_hook_fd
     int flags;                         /* fd flags (read,write,..)          */
 };
 
-typedef int (t_hook_callback_connect)(void *data, int status, char *ip_address);
+typedef int (t_hook_callback_connect)(void *data, int status,
+                                      const char *ip_address);
 
 struct t_hook_connect
 {
@@ -246,7 +247,7 @@ extern void hook_timer_exec ();
 extern struct t_hook *hook_fd (struct t_weechat_plugin *plugin, int fd,
                                int flag_read, int flag_write,
                                int flag_exception,
-                               t_hook_callback_fd * callback,
+                               t_hook_callback_fd *callback,
                                void *callback_data);
 extern int hook_fd_set (fd_set *read_fds, fd_set *write_fds,
                         fd_set *exception_fds);
@@ -256,7 +257,7 @@ extern struct t_hook *hook_connect (struct t_weechat_plugin *plugin,
                                     const char *address, int port,
                                     int sock, int ipv6, void *gnutls_session,
                                     const char *local_hostname,
-                                    t_hook_callback_connect * callback,
+                                    t_hook_callback_connect *callback,
                                     void *callback_data);
 extern struct t_hook *hook_print (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,

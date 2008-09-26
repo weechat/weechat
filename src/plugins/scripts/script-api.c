@@ -681,6 +681,45 @@ script_api_hook_fd (struct t_weechat_plugin *weechat_plugin,
 }
 
 /*
+ * script_api_hook_connect: hook a connection
+ *                          return new hook, NULL if error
+ */
+
+struct t_hook *
+script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
+                         struct t_plugin_script *script,
+                         const char *address, int port, int sock, int ipv6,
+                         void *gnutls_sess, const char *local_hostname,
+                         int (*callback)(void *data, int status, const char *ip_address),
+                         const char *function)
+{
+    struct t_script_callback *new_script_callback;
+    struct t_hook *new_hook;
+
+    new_script_callback = script_callback_alloc ();
+    if (!new_script_callback)
+        return NULL;
+    
+    new_hook = weechat_hook_connect (address, port, sock, ipv6, gnutls_sess,
+                                     local_hostname, callback,
+                                     new_script_callback);
+    if (!new_hook)
+    {
+        script_callback_free_data (new_script_callback);
+        free (new_script_callback);
+        return NULL;
+    }
+    
+    new_script_callback->script = script;
+    new_script_callback->function = strdup (function);
+    new_script_callback->hook = new_hook;
+    
+    script_callback_add (script, new_script_callback);
+    
+    return new_hook;
+}
+
+/*
  * script_api_hook_print: hook a print
  *                        return new hook, NULL if error
  */

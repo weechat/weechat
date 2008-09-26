@@ -360,6 +360,16 @@ weechat_python_load (const char *filename)
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOTLIST_MESSAGE", PyString_FromString(WEECHAT_HOTLIST_MESSAGE));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOTLIST_PRIVATE", PyString_FromString(WEECHAT_HOTLIST_PRIVATE));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOTLIST_HIGHLIGHT", PyString_FromString(WEECHAT_HOTLIST_HIGHLIGHT));
+
+    PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_OK", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_OK));
+    PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND));
+    PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND));
+    PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED));
+    PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_PROXY_ERROR", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_PROXY_ERROR));
+    PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR));
+    PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR));
+    PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR));
+    PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_CONNECT_MEMORY_ERROR", PyInt_FromLong((long) WEECHAT_HOOK_CONNECT_MEMORY_ERROR));
     
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_SIGNAL_STRING", PyString_FromString(WEECHAT_HOOK_SIGNAL_STRING));
     PyDict_SetItemString(weechat_dict, "WEECHAT_HOOK_SIGNAL_INT", PyString_FromString(WEECHAT_HOOK_SIGNAL_INT));

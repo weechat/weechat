@@ -105,6 +105,18 @@ extern struct t_hook *script_api_hook_fd (struct t_weechat_plugin *weechat_plugi
                                           int flag_write, int flag_exception,
                                           int (*callback)(void *data),
                                           const char *function);
+extern struct t_hook *script_api_hook_connect (struct t_weechat_plugin *weechat_plugin,
+                                               struct t_plugin_script *script,
+                                               const char *address,
+                                               int port,
+                                               int sock,
+                                               int ipv6,
+                                               void *gnutls_sess,
+                                               const char *local_hostname,
+                                               int (*callback)(void *data,
+                                                               int status,
+                                                               const char *ip_address),
+                                               const char *function);
 extern struct t_hook *script_api_hook_print (struct t_weechat_plugin *weechat_plugin,
                                              struct t_plugin_script *script,
                                              struct t_gui_buffer *buffer,

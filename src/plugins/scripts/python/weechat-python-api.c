@@ -1438,7 +1438,7 @@ weechat_python_api_config_integer (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_config_string (PyObject *self, PyObject *args)
 {
-    char *option, *value;
+    char *option, *result;
     
     /* make C compiler happy */
     (void) self;
@@ -1457,9 +1457,9 @@ weechat_python_api_config_string (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    value = weechat_config_string (script_str2ptr (option));
+    result = weechat_config_string (script_str2ptr (option));
     
-    PYTHON_RETURN_STRING(value);
+    PYTHON_RETURN_STRING(result);
 }
 
 /*
@@ -1698,7 +1698,7 @@ weechat_python_api_config_get (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_config_get_plugin (PyObject *self, PyObject *args)
 {
-    char *option, *value;
+    char *option, *result;
     
     /* make C compiler happy */
     (void) self;
@@ -1717,11 +1717,11 @@ weechat_python_api_config_get_plugin (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    value = script_api_config_get_plugin (weechat_python_plugin,
-                                          python_current_script,
-                                          option);
+    result = script_api_config_get_plugin (weechat_python_plugin,
+                                           python_current_script,
+                                           option);
     
-    PYTHON_RETURN_STRING(value);
+    PYTHON_RETURN_STRING(result);
 }
 
 /*
@@ -2195,6 +2195,90 @@ weechat_python_api_hook_fd (PyObject *self, PyObject *args)
                                                  exception,
                                                  &weechat_python_api_hook_fd_cb,
                                                  function));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_hook_connect_cb: callback for connect hooked
+ */
+
+int
+weechat_python_api_hook_connect_cb (void *data, int status,
+                                    const char *ip_address)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[3], str_status[32];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    snprintf (str_status, sizeof (str_status), "%d", status);
+    
+    python_argv[0] = str_status;
+    python_argv[1] = (char *)ip_address;
+    python_argv[2] = NULL;
+    
+    rc = (int *) weechat_python_exec (script_callback->script,
+                                      WEECHAT_SCRIPT_EXEC_INT,
+                                      script_callback->function,
+                                      python_argv);
+    
+    if (!rc)
+        ret = WEECHAT_RC_ERROR;
+    else
+    {
+        ret = *rc;
+        free (rc);
+    }
+    
+    return ret;
+}
+
+/*
+ * weechat_python_api_hook_connect: hook a connection
+ */
+
+static PyObject *
+weechat_python_api_hook_connect (PyObject *self, PyObject *args)
+{
+    char *address, *local_hostname, *function, *result;
+    int port, sock, ipv6;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_connect");
+        PYTHON_RETURN_EMPTY;
+    }
+
+    address = NULL;
+    port = 0;
+    sock = 0;
+    ipv6 = 0;
+    local_hostname = NULL;
+    function = NULL;
+    
+    if (!PyArg_ParseTuple (args, "siiiss", &address, &port, &sock, &ipv6,
+                           &local_hostname, &function))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_connect");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (script_api_hook_connect (weechat_python_plugin,
+                                                      python_current_script,
+                                                      address,
+                                                      port,
+                                                      sock,
+                                                      ipv6,
+                                                      NULL, /* gnutls session */
+                                                      local_hostname,
+                                                      &weechat_python_api_hook_connect_cb,
+                                                      function));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -2790,7 +2874,7 @@ weechat_python_api_hook_infolist_cb (void *data, const char *infolist_name,
 {
     struct t_script_callback *script_callback;
     char *python_argv[4];
-    struct t_infolist *value;
+    struct t_infolist *result;
     
     script_callback = (struct t_script_callback *)data;
     
@@ -2799,15 +2883,15 @@ weechat_python_api_hook_infolist_cb (void *data, const char *infolist_name,
     python_argv[2] = (char *)arguments;
     python_argv[3] = NULL;
     
-    value = (struct t_infolist *)weechat_python_exec (script_callback->script,
-                                                      WEECHAT_SCRIPT_EXEC_STRING,
-                                                      script_callback->function,
-                                                      python_argv);
+    result = (struct t_infolist *)weechat_python_exec (script_callback->script,
+                                                       WEECHAT_SCRIPT_EXEC_STRING,
+                                                       script_callback->function,
+                                                       python_argv);
     
     if (python_argv[1])
         free (python_argv[1]);
     
-    return value;
+    return result;
 }
 
 /*
@@ -3154,7 +3238,7 @@ weechat_python_api_buffer_get_integer (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_buffer_get_string (PyObject *self, PyObject *args)
 {
-    char *buffer, *property, *value;
+    char *buffer, *property, *result;
     
     /* make C compiler happy */
     (void) self;
@@ -3174,9 +3258,9 @@ weechat_python_api_buffer_get_string (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    value = weechat_buffer_get_string (script_str2ptr (buffer), property);
+    result = weechat_buffer_get_string (script_str2ptr (buffer), property);
     
-    PYTHON_RETURN_STRING(value);
+    PYTHON_RETURN_STRING(result);
 }
 
 /*
@@ -3186,7 +3270,7 @@ weechat_python_api_buffer_get_string (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_buffer_get_pointer (PyObject *self, PyObject *args)
 {
-    char *buffer, *property, *value;
+    char *buffer, *property, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -3207,10 +3291,10 @@ weechat_python_api_buffer_get_pointer (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    value = script_ptr2str (weechat_buffer_get_pointer (script_str2ptr (buffer),
-                                                        property));
+    result = script_ptr2str (weechat_buffer_get_pointer (script_str2ptr (buffer),
+                                                         property));
     
-    PYTHON_RETURN_STRING_FREE(value);
+    PYTHON_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -3917,7 +4001,7 @@ weechat_python_api_command (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_info_get (PyObject *self, PyObject *args)
 {
-    char *info_name, *arguments, *value;
+    char *info_name, *arguments, *result;
     
     /* make C compiler happy */
     (void) self;
@@ -3936,9 +4020,184 @@ weechat_python_api_info_get (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    value = weechat_info_get (info_name, arguments);
+    result = weechat_info_get (info_name, arguments);
     
-    PYTHON_RETURN_STRING(value);
+    PYTHON_RETURN_STRING(result);
+}
+
+/*
+ * weechat_python_api_infolist_new: create new infolist
+ */
+
+static PyObject *
+weechat_python_api_infolist_new (PyObject *self, PyObject *args)
+{
+    char *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    (void) args;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_infolist_new ());
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_infolist_new_var_integer: create new integer variable in
+ *                                              infolist
+ */
+
+static PyObject *
+weechat_python_api_infolist_new_var_integer (PyObject *self, PyObject *args)
+{
+    char *infolist, *name, *result;
+    int value;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_integer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    infolist = NULL;
+    name = NULL;
+    value = 0;
+    
+    if (!PyArg_ParseTuple (args, "ssi", &infolist, &name, &value))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_integer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_infolist_new_var_integer (script_str2ptr (infolist),
+                                                               name,
+                                                               value));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_infolist_new_var_string: create new string variable in
+ *                                             infolist
+ */
+
+static PyObject *
+weechat_python_api_infolist_new_var_string (PyObject *self, PyObject *args)
+{
+    char *infolist, *name, *value, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    infolist = NULL;
+    name = NULL;
+    value = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &infolist, &name, &value))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_string");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_infolist_new_var_string (script_str2ptr (infolist),
+                                                              name,
+                                                              value));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_infolist_new_var_pointer: create new pointer variable in
+ *                                              infolist
+ */
+
+static PyObject *
+weechat_python_api_infolist_new_var_pointer (PyObject *self, PyObject *args)
+{
+    char *infolist, *name, *value, *result;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_pointer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    infolist = NULL;
+    name = NULL;
+    value = NULL;
+    
+    if (!PyArg_ParseTuple (args, "sss", &infolist, &name, &value))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_pointer");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_infolist_new_var_pointer (script_str2ptr (infolist),
+                                                               name,
+                                                               script_str2ptr (value)));
+    
+    PYTHON_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_python_api_infolist_new_var_time: create new time variable in
+ *                                           infolist
+ */
+
+static PyObject *
+weechat_python_api_infolist_new_var_time (PyObject *self, PyObject *args)
+{
+    char *infolist, *name, *result;
+    int value;
+    PyObject *object;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_time");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    infolist = NULL;
+    name = NULL;
+    value = 0;
+    
+    if (!PyArg_ParseTuple (args, "ssi", &infolist, &name, &value))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_time");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_infolist_new_var_time (script_str2ptr (infolist),
+                                                            name,
+                                                            value));
+    
+    PYTHON_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -3948,7 +4207,7 @@ weechat_python_api_info_get (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_infolist_get (PyObject *self, PyObject *args)
 {
-    char *name, *pointer, *arguments, *value;
+    char *name, *pointer, *arguments, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -3970,11 +4229,11 @@ weechat_python_api_infolist_get (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    value = script_ptr2str (weechat_infolist_get (name,
-                                                  script_str2ptr (pointer),
-                                                  arguments));
+    result = script_ptr2str (weechat_infolist_get (name,
+                                                   script_str2ptr (pointer),
+                                                   arguments));
     
-    PYTHON_RETURN_STRING_FREE(value);
+    PYTHON_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -4048,7 +4307,7 @@ weechat_python_api_infolist_prev (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_infolist_fields (PyObject *self, PyObject *args)
 {
-    char *infolist, *value;
+    char *infolist, *result;
     
     /* make C compiler happy */
     (void) self;
@@ -4067,9 +4326,9 @@ weechat_python_api_infolist_fields (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    value = weechat_infolist_fields (script_str2ptr (infolist));
+    result = weechat_infolist_fields (script_str2ptr (infolist));
     
-    PYTHON_RETURN_STRING(value);
+    PYTHON_RETURN_STRING(result);
 }
 
 /*
@@ -4113,7 +4372,7 @@ weechat_python_api_infolist_integer (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_infolist_string (PyObject *self, PyObject *args)
 {
-    char *infolist, *variable, *value;
+    char *infolist, *variable, *result;
     
     /* make C compiler happy */
     (void) self;
@@ -4133,10 +4392,10 @@ weechat_python_api_infolist_string (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    value = weechat_infolist_string (script_str2ptr (infolist),
-                                     variable);
+    result = weechat_infolist_string (script_str2ptr (infolist),
+                                      variable);
     
-    PYTHON_RETURN_STRING(value);
+    PYTHON_RETURN_STRING(result);
 }
 
 /*
@@ -4146,7 +4405,7 @@ weechat_python_api_infolist_string (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_infolist_pointer (PyObject *self, PyObject *args)
 {
-    char *infolist, *variable, *value;
+    char *infolist, *variable, *result;
     PyObject *object;
     
     /* make C compiler happy */
@@ -4167,10 +4426,10 @@ weechat_python_api_infolist_pointer (PyObject *self, PyObject *args)
         PYTHON_RETURN_EMPTY;
     }
     
-    value = script_ptr2str (weechat_infolist_string (script_str2ptr (infolist),
-                                                     variable));
+    result = script_ptr2str (weechat_infolist_string (script_str2ptr (infolist),
+                                                      variable));
     
-    PYTHON_RETURN_STRING_FREE(value);
+    PYTHON_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -4180,7 +4439,7 @@ weechat_python_api_infolist_pointer (PyObject *self, PyObject *args)
 static PyObject *
 weechat_python_api_infolist_time (PyObject *self, PyObject *args)
 {
-    char *infolist, *variable, timebuffer[64], *value;
+    char *infolist, *variable, timebuffer[64], *result;
     time_t time;
     PyObject *object;
     
@@ -4205,9 +4464,9 @@ weechat_python_api_infolist_time (PyObject *self, PyObject *args)
     time = weechat_infolist_time (script_str2ptr (infolist),
                                   variable);
     strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
-    value = strdup (timebuffer);
+    result = strdup (timebuffer);
     
-    PYTHON_RETURN_STRING_FREE(value);
+    PYTHON_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -4299,6 +4558,7 @@ PyMethodDef weechat_python_funcs[] =
     { "hook_command", &weechat_python_api_hook_command, METH_VARARGS, "" },
     { "hook_timer", &weechat_python_api_hook_timer, METH_VARARGS, "" },
     { "hook_fd", &weechat_python_api_hook_fd, METH_VARARGS, "" },
+    { "hook_connect", &weechat_python_api_hook_connect, METH_VARARGS, "" },
     { "hook_print", &weechat_python_api_hook_print, METH_VARARGS, "" },
     { "hook_signal", &weechat_python_api_hook_signal, METH_VARARGS, "" },
     { "hook_signal_send", &weechat_python_api_hook_signal_send, METH_VARARGS, "" },
@@ -4337,6 +4597,11 @@ PyMethodDef weechat_python_funcs[] =
     { "bar_remove", &weechat_python_api_bar_remove, METH_VARARGS, "" },
     { "command", &weechat_python_api_command, METH_VARARGS, "" },
     { "info_get", &weechat_python_api_info_get, METH_VARARGS, "" },
+    { "infolist_new", &weechat_python_api_infolist_new, METH_VARARGS, "" },
+    { "infolist_new_var_integer", &weechat_python_api_infolist_new_var_integer, METH_VARARGS, "" },
+    { "infolist_new_var_string", &weechat_python_api_infolist_new_var_string, METH_VARARGS, "" },
+    { "infolist_new_var_pointer", &weechat_python_api_infolist_new_var_pointer, METH_VARARGS, "" },
+    { "infolist_new_var_time", &weechat_python_api_infolist_new_var_time, METH_VARARGS, "" },
     { "infolist_get", &weechat_python_api_infolist_get, METH_VARARGS, "" },
     { "infolist_next", &weechat_python_api_infolist_next, METH_VARARGS, "" },
     { "infolist_prev", &weechat_python_api_infolist_prev, METH_VARARGS, "" },

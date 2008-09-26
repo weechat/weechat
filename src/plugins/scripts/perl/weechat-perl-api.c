@@ -1360,7 +1360,7 @@ static XS (XS_weechat_config_integer)
 
 static XS (XS_weechat_config_string)
 {
-    char *value;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -1378,9 +1378,9 @@ static XS (XS_weechat_config_string)
         PERL_RETURN_EMPTY;
     }
     
-    value = weechat_config_string (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
+    result = weechat_config_string (script_str2ptr (SvPV (ST (0), PL_na))); /* option */
     
-    PERL_RETURN_STRING(value);
+    PERL_RETURN_STRING(result);
 }
 
 /*
@@ -1597,7 +1597,7 @@ static XS (XS_weechat_config_get)
 
 static XS (XS_weechat_config_get_plugin)
 {
-    char *value;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -1615,11 +1615,11 @@ static XS (XS_weechat_config_get_plugin)
         PERL_RETURN_EMPTY;
     }
     
-    value = script_api_config_get_plugin (weechat_perl_plugin,
-                                          perl_current_script,
-                                          SvPV (ST (0), PL_na));
+    result = script_api_config_get_plugin (weechat_perl_plugin,
+                                           perl_current_script,
+                                           SvPV (ST (0), PL_na));
     
-    PERL_RETURN_STRING(value);
+    PERL_RETURN_STRING(result);
 }
 
 /*
@@ -2058,6 +2058,83 @@ static XS (XS_weechat_hook_fd)
                                                  SvIV (ST (3)), /* exception */
                                                  &weechat_perl_api_hook_fd_cb,
                                                  SvPV (ST (4), PL_na))); /* perl function */
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat_perl_api_hook_connect_cb: callback for connect hooked
+ */
+
+int
+weechat_perl_api_hook_connect_cb (void *data, int status,
+                                  const char *ip_address)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[3], str_status[32];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    snprintf (str_status, sizeof (str_status), "%d", status);
+    
+    perl_argv[0] = str_status;
+    perl_argv[1] = (char *)ip_address;
+    perl_argv[2] = NULL;
+    
+    rc = (int *) weechat_perl_exec (script_callback->script,
+                                    WEECHAT_SCRIPT_EXEC_INT,
+                                    script_callback->function,
+                                    perl_argv);
+    
+    if (!rc)
+        ret = WEECHAT_RC_ERROR;
+    else
+    {
+        ret = *rc;
+        free (rc);
+    }
+    
+    return ret;
+}
+
+/*
+ * weechat::hook_connect: hook a connection
+ */
+
+static XS (XS_weechat_hook_connect)
+{
+    char *address, *local_hostname, *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("hook_connect");
+        PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 6)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("hook_connect");
+        PERL_RETURN_EMPTY;
+    }
+    
+    address = SvPV (ST (0), PL_na);
+    local_hostname = SvPV (ST (4), PL_na);
+    
+    result = script_ptr2str (script_api_hook_connect (weechat_perl_plugin,
+                                                      perl_current_script,
+                                                      address,
+                                                      SvIV (ST (1)), /* port */
+                                                      SvIV (ST (2)), /* sock */
+                                                      SvIV (ST (3)), /* ipv6 */
+                                                      NULL, /* gnutls session */
+                                                      local_hostname,
+                                                      &weechat_perl_api_hook_connect_cb,
+                                                      SvPV (ST (5), PL_na))); /* perl function */
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -2632,7 +2709,7 @@ weechat_perl_api_hook_infolist_cb (void *data, const char *infolist_name,
 {
     struct t_script_callback *script_callback;
     char *perl_argv[4];
-    struct t_infolist *value;
+    struct t_infolist *result;
     
     script_callback = (struct t_script_callback *)data;
     
@@ -2641,15 +2718,15 @@ weechat_perl_api_hook_infolist_cb (void *data, const char *infolist_name,
     perl_argv[2] = (char *)arguments;
     perl_argv[3] = NULL;
     
-    value = (struct t_infolist *)weechat_perl_exec (script_callback->script,
-                                                    WEECHAT_SCRIPT_EXEC_STRING,
-                                                    script_callback->function,
-                                                    perl_argv);
+    result = (struct t_infolist *)weechat_perl_exec (script_callback->script,
+                                                     WEECHAT_SCRIPT_EXEC_STRING,
+                                                     script_callback->function,
+                                                     perl_argv);
     
     if (perl_argv[1])
         free (perl_argv[1]);
     
-    return value;
+    return result;
 }
 
 /*
@@ -2976,7 +3053,7 @@ static XS (XS_weechat_buffer_get_integer)
 
 static XS (XS_weechat_buffer_get_string)
 {
-    char *value, *buffer, *property;
+    char *result, *buffer, *property;
     dXSARGS;
     
     /* make C compiler happy */
@@ -2996,9 +3073,9 @@ static XS (XS_weechat_buffer_get_string)
     
     buffer = SvPV (ST (0), PL_na);
     property = SvPV (ST (1), PL_na); 
-    value = weechat_buffer_get_string (script_str2ptr (buffer), property);
+    result = weechat_buffer_get_string (script_str2ptr (buffer), property);
     
-    PERL_RETURN_STRING(value);
+    PERL_RETURN_STRING(result);
 }
 
 /*
@@ -3007,7 +3084,7 @@ static XS (XS_weechat_buffer_get_string)
 
 static XS (XS_weechat_buffer_get_pointer)
 {
-    char *value, *buffer, *property;
+    char *result, *buffer, *property;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3027,10 +3104,10 @@ static XS (XS_weechat_buffer_get_pointer)
     
     buffer = SvPV (ST (0), PL_na);
     property = SvPV (ST (1), PL_na); 
-    value = script_ptr2str (weechat_buffer_get_pointer (script_str2ptr (buffer),
-                                                        property));
+    result = script_ptr2str (weechat_buffer_get_pointer (script_str2ptr (buffer),
+                                                         property));
     
-    PERL_RETURN_STRING_FREE(value);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -3685,7 +3762,7 @@ static XS (XS_weechat_command)
 
 static XS (XS_weechat_info_get)
 {
-    char *value;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3703,10 +3780,172 @@ static XS (XS_weechat_info_get)
         PERL_RETURN_EMPTY;
     }
     
-    value = weechat_info_get (SvPV (ST (0), PL_na),
-                              SvPV (ST (1), PL_na));
+    result = weechat_info_get (SvPV (ST (0), PL_na),
+                               SvPV (ST (1), PL_na));
     
-    PERL_RETURN_STRING(value);
+    PERL_RETURN_STRING(result);
+}
+
+/*
+ * weechat::infolist_new: create new infolist
+ */
+
+static XS (XS_weechat_infolist_new)
+{
+    char *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) items;
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new");
+	PERL_RETURN_EMPTY;
+    }
+    
+    result = script_ptr2str (weechat_infolist_new ());
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::infolist_new_var_integer: create new integer variable in infolist
+ */
+
+static XS (XS_weechat_infolist_new_var_integer)
+{
+    char *infolist, *name, *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_integer");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_integer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    infolist = SvPV (ST (0), PL_na);
+    name = SvPV (ST (1), PL_na);
+    
+    result = script_ptr2str (weechat_infolist_new_var_integer (script_str2ptr (infolist),
+                                                               name,
+                                                               SvIV (ST (2)))); /* value */
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::infolist_new_var_string: create new string variable in infolist
+ */
+
+static XS (XS_weechat_infolist_new_var_string)
+{
+    char *infolist, *name, *value, *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_string");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_string");
+        PERL_RETURN_EMPTY;
+    }
+    
+    infolist = SvPV (ST (0), PL_na);
+    name = SvPV (ST (1), PL_na);
+    value = SvPV (ST (2), PL_na);
+    
+    result = script_ptr2str (weechat_infolist_new_var_string (script_str2ptr (infolist),
+                                                              name,
+                                                              value));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::infolist_new_var_pointer: create new pointer variable in infolist
+ */
+
+static XS (XS_weechat_infolist_new_var_pointer)
+{
+    char *infolist, *name, *value, *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_pointer");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_pointer");
+        PERL_RETURN_EMPTY;
+    }
+    
+    infolist = SvPV (ST (0), PL_na);
+    name = SvPV (ST (1), PL_na);
+    value = SvPV (ST (2), PL_na);
+    
+    result = script_ptr2str (weechat_infolist_new_var_pointer (script_str2ptr (infolist),
+                                                               name,
+                                                               script_str2ptr (value)));
+    
+    PERL_RETURN_STRING_FREE(result);
+}
+
+/*
+ * weechat::infolist_new_var_time: create new time variable in infolist
+ */
+
+static XS (XS_weechat_infolist_new_var_time)
+{
+    char *infolist, *name, *result;
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("infolist_new_var_time");
+	PERL_RETURN_EMPTY;
+    }
+    
+    if (items < 3)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("infolist_new_var_time");
+        PERL_RETURN_EMPTY;
+    }
+    
+    infolist = SvPV (ST (0), PL_na);
+    name = SvPV (ST (1), PL_na);
+    
+    result = script_ptr2str (weechat_infolist_new_var_time (script_str2ptr (infolist),
+                                                            name,
+                                                            SvIV (ST (2)))); /* value */
+    
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -3715,7 +3954,7 @@ static XS (XS_weechat_info_get)
 
 static XS (XS_weechat_infolist_get)
 {
-    char *value, *name, *pointer, *arguments;
+    char *result, *name, *pointer, *arguments;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3736,11 +3975,11 @@ static XS (XS_weechat_infolist_get)
     name = SvPV (ST (0), PL_na);
     pointer = SvPV (ST (1), PL_na);
     arguments = SvPV (ST (2), PL_na);
-    value = script_ptr2str (weechat_infolist_get (name,
-                                                  script_str2ptr (pointer),
-                                                  arguments));
+    result = script_ptr2str (weechat_infolist_get (name,
+                                                   script_str2ptr (pointer),
+                                                   arguments));
     
-    PERL_RETURN_STRING_FREE(value);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -3807,7 +4046,7 @@ static XS (XS_weechat_infolist_prev)
 
 static XS (XS_weechat_infolist_fields)
 {
-    char *value;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3825,9 +4064,9 @@ static XS (XS_weechat_infolist_fields)
         PERL_RETURN_EMPTY;
     }
     
-    value = weechat_infolist_fields (script_str2ptr (SvPV (ST (0), PL_na))); /* infolist */
+    result = weechat_infolist_fields (script_str2ptr (SvPV (ST (0), PL_na))); /* infolist */
     
-    PERL_RETURN_STRING(value);
+    PERL_RETURN_STRING(result);
 }
 
 /*
@@ -3869,7 +4108,7 @@ static XS (XS_weechat_infolist_integer)
 static XS (XS_weechat_infolist_string)
 {
     char *infolist, *variable;
-    char *value;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3889,9 +4128,9 @@ static XS (XS_weechat_infolist_string)
     
     infolist = SvPV (ST (0), PL_na);
     variable = SvPV (ST (1), PL_na);
-    value = weechat_infolist_string (script_str2ptr (infolist), variable);
+    result = weechat_infolist_string (script_str2ptr (infolist), variable);
     
-    PERL_RETURN_STRING(value);
+    PERL_RETURN_STRING(result);
 }
 
 /*
@@ -3901,7 +4140,7 @@ static XS (XS_weechat_infolist_string)
 static XS (XS_weechat_infolist_pointer)
 {
     char *infolist, *variable;
-    char *value;
+    char *result;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3921,9 +4160,9 @@ static XS (XS_weechat_infolist_pointer)
     
     infolist = SvPV (ST (0), PL_na);
     variable = SvPV (ST (1), PL_na);
-    value = script_ptr2str (weechat_infolist_pointer (script_str2ptr (infolist), variable));
+    result = script_ptr2str (weechat_infolist_pointer (script_str2ptr (infolist), variable));
     
-    PERL_RETURN_STRING_FREE(value);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -3933,7 +4172,7 @@ static XS (XS_weechat_infolist_pointer)
 static XS (XS_weechat_infolist_time)
 {
     time_t time;
-    char timebuffer[64], *value, *infolist, *variable;
+    char timebuffer[64], *result, *infolist, *variable;
     dXSARGS;
     
     /* make C compiler happy */
@@ -3955,9 +4194,9 @@ static XS (XS_weechat_infolist_time)
     variable = SvPV (ST (1), PL_na);
     time = weechat_infolist_time (script_str2ptr (infolist), variable);
     strftime (timebuffer, sizeof (timebuffer), "%F %T", localtime (&time));
-    value = strdup (timebuffer);
+    result = strdup (timebuffer);
     
-    PERL_RETURN_STRING_FREE(value);
+    PERL_RETURN_STRING_FREE(result);
 }
 
 /*
@@ -4052,6 +4291,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::hook_command", XS_weechat_hook_command, "weechat");
     newXS ("weechat::hook_timer", XS_weechat_hook_timer, "weechat");
     newXS ("weechat::hook_fd", XS_weechat_hook_fd, "weechat");
+    newXS ("weechat::hook_connect", XS_weechat_hook_connect, "weechat");
     newXS ("weechat::hook_print", XS_weechat_hook_print, "weechat");
     newXS ("weechat::hook_signal", XS_weechat_hook_signal, "weechat");
     newXS ("weechat::hook_signal_send", XS_weechat_hook_signal_send, "weechat");
@@ -4090,6 +4330,11 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::bar_remove", XS_weechat_bar_remove, "weechat");
     newXS ("weechat::command", XS_weechat_command, "weechat");
     newXS ("weechat::info_get", XS_weechat_info_get, "weechat");
+    newXS ("weechat::infolist_new", XS_weechat_infolist_new, "weechat");
+    newXS ("weechat::infolist_new_var_integer", XS_weechat_infolist_new_var_integer, "weechat");
+    newXS ("weechat::infolist_new_var_string", XS_weechat_infolist_new_var_string, "weechat");
+    newXS ("weechat::infolist_new_var_pointer", XS_weechat_infolist_new_var_pointer, "weechat");
+    newXS ("weechat::infolist_new_var_time", XS_weechat_infolist_new_var_time, "weechat");
     newXS ("weechat::infolist_get", XS_weechat_infolist_get, "weechat");
     newXS ("weechat::infolist_next", XS_weechat_infolist_next, "weechat");
     newXS ("weechat::infolist_prev", XS_weechat_infolist_prev, "weechat");
@@ -4128,6 +4373,16 @@ weechat_perl_api_init (pTHX)
     newCONSTSUB (stash, "weechat::WEECHAT_HOTLIST_MESSAGE", newSVpv (WEECHAT_HOTLIST_MESSAGE, PL_na));
     newCONSTSUB (stash, "weechat::WEECHAT_HOTLIST_PRIVATE", newSVpv (WEECHAT_HOTLIST_PRIVATE, PL_na));
     newCONSTSUB (stash, "weechat::WEECHAT_HOTLIST_HIGHLIGHT", newSVpv (WEECHAT_HOTLIST_HIGHLIGHT, PL_na));
+
+    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_OK", newSViv (WEECHAT_HOOK_CONNECT_OK));
+    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND", newSViv (WEECHAT_HOOK_CONNECT_ADDRESS_NOT_FOUND));
+    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND", newSViv (WEECHAT_HOOK_CONNECT_IP_ADDRESS_NOT_FOUND));
+    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED", newSViv (WEECHAT_HOOK_CONNECT_CONNECTION_REFUSED));
+    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_PROXY_ERROR", newSViv (WEECHAT_HOOK_CONNECT_PROXY_ERROR));
+    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR", newSViv (WEECHAT_HOOK_CONNECT_LOCAL_HOSTNAME_ERROR));
+    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR", newSViv (WEECHAT_HOOK_CONNECT_GNUTLS_INIT_ERROR));
+    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR", newSViv (WEECHAT_HOOK_CONNECT_GNUTLS_HANDSHAKE_ERROR));
+    newCONSTSUB (stash, "weechat::WEECHAT_HOOK_CONNECT_MEMORY_ERROR", newSViv (WEECHAT_HOOK_CONNECT_MEMORY_ERROR));
     
     newCONSTSUB (stash, "weechat::WEECHAT_HOOK_SIGNAL_STRING", newSVpv (WEECHAT_HOOK_SIGNAL_STRING, PL_na));
     newCONSTSUB (stash, "weechat::WEECHAT_HOOK_SIGNAL_INT", newSVpv (WEECHAT_HOOK_SIGNAL_INT, PL_na));

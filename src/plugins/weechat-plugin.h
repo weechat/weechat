@@ -328,7 +328,7 @@ struct t_weechat_plugin
                                     const char *local_hostname,
                                     int (*callback)(void *data,
                                                     int status,
-                                                    char *ip_address),
+                                                    const char *ip_address),
                                     void *callback_data);
     struct t_hook *(*hook_print) (struct t_weechat_plugin *plugin,
                                   struct t_gui_buffer *buffer,
