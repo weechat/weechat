@@ -170,10 +170,7 @@ gui_bar_item_search_with_plugin (struct t_weechat_plugin *plugin,
         if (strcmp (ptr_item->name, item_name) == 0)
         {
             if (ptr_item->plugin == plugin)
-            {
-                log_printf("item found 1: %x", ptr_item);
                 return ptr_item;
-            }
             if (!exact_plugin)
             {
                 if (ptr_item->plugin)
