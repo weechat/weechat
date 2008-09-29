@@ -396,7 +396,7 @@ script_api_config_new_option (struct t_weechat_plugin *weechat_plugin,
     if (new_script_callback2)
     {
         new_script_callback2->script = script;
-        new_script_callback2->function = strdup (function_check_value);
+        new_script_callback2->function = strdup (function_change);
         new_script_callback2->config_file = config_file;
         new_script_callback2->config_section = section;
         new_script_callback2->config_option = new_option;
@@ -406,7 +406,7 @@ script_api_config_new_option (struct t_weechat_plugin *weechat_plugin,
     if (new_script_callback3)
     {
         new_script_callback3->script = script;
-        new_script_callback3->function = strdup (function_check_value);
+        new_script_callback3->function = strdup (function_delete);
         new_script_callback3->config_file = config_file;
         new_script_callback3->config_section = section;
         new_script_callback3->config_option = new_option;

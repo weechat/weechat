@@ -1028,26 +1028,98 @@ static XS (XS_weechat_config_search_section)
 }
 
 /*
- * weechat_perl_api_config_option_change_cb: callback for option changed
+ * weechat_perl_api_config_option_check_value_cb: callback for checking new
+ *                                                value for option
  */
 
 void
-weechat_perl_api_config_option_change_cb (void *data)
+weechat_perl_api_config_option_check_value_cb (void *data,
+                                               struct t_config_option *option,
+                                               const char *value)
 {
     struct t_script_callback *script_callback;
-    char *perl_argv[1];
+    char *perl_argv[3];
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
     
     if (script_callback->function && script_callback->function[0])
     {
-        perl_argv[0] = NULL;
+        perl_argv[0] = script_ptr2str (option);
+        perl_argv[1] = (char *)value;
+        perl_argv[2] = NULL;
         
         rc = (int *) weechat_perl_exec (script_callback->script,
                                         WEECHAT_SCRIPT_EXEC_INT,
                                         script_callback->function,
                                         perl_argv);
+        
+        if (perl_argv[0])
+            free (perl_argv[0]);
+        
+        if (rc)
+            free (rc);
+    }
+}
+
+/*
+ * weechat_perl_api_config_option_change_cb: callback for option changed
+ */
+
+void
+weechat_perl_api_config_option_change_cb (void *data,
+                                          struct t_config_option *option)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[2];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        perl_argv[0] = script_ptr2str (option);
+        perl_argv[1] = NULL;
+        
+        rc = (int *) weechat_perl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        perl_argv);
+        
+        if (perl_argv[0])
+            free (perl_argv[0]);
+        
+        if (rc)
+            free (rc);
+    }
+}
+
+/*
+ * weechat_perl_api_config_option_delete_cb: callback when option is deleted
+ */
+
+void
+weechat_perl_api_config_option_delete_cb (void *data,
+                                          struct t_config_option *option)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[2];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        perl_argv[0] = script_ptr2str (option);
+        perl_argv[1] = NULL;
+        
+        rc = (int *) weechat_perl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        perl_argv);
+        
+        if (perl_argv[0])
+            free (perl_argv[0]);
         
         if (rc)
             free (rc);
@@ -1061,7 +1133,8 @@ weechat_perl_api_config_option_change_cb (void *data)
 static XS (XS_weechat_config_new_option)
 {
     char *result, *config_file, *section, *name, *type;
-    char *description, *string_values, *default_value, *function;
+    char *description, *string_values, *default_value;
+    char *function_check_value, *function_change, *function_delete;
     dXSARGS;
     
     /* make C compiler happy */
@@ -1073,7 +1146,7 @@ static XS (XS_weechat_config_new_option)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 10)
+    if (items < 12)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
         PERL_RETURN_EMPTY;
@@ -1086,7 +1159,9 @@ static XS (XS_weechat_config_new_option)
     description = SvPV (ST (4), PL_na);
     string_values = SvPV (ST (5), PL_na);
     default_value = SvPV (ST (8), PL_na);
-    function = SvPV (ST (9), PL_na);
+    function_check_value = SvPV (ST (9), PL_na);
+    function_change = SvPV (ST (10), PL_na);
+    function_delete = SvPV (ST (12), PL_na);
     result = script_ptr2str (script_api_config_new_option (weechat_perl_plugin,
                                                            perl_current_script,
                                                            script_str2ptr (config_file),
@@ -1098,8 +1173,12 @@ static XS (XS_weechat_config_new_option)
                                                            SvIV (ST (6)), /* min */
                                                            SvIV (ST (7)), /* max */
                                                            default_value,
+                                                           &weechat_perl_api_config_option_check_value_cb,
+                                                           function_check_value,
                                                            &weechat_perl_api_config_option_change_cb,
-                                                           function)); /* perl function */
+                                                           function_change,
+                                                           &weechat_perl_api_config_option_delete_cb,
+                                                           function_delete));
     
     PERL_RETURN_STRING_FREE(result);
 }

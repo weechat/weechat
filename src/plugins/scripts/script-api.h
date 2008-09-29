@@ -60,10 +60,17 @@ extern struct t_config_option *script_api_config_new_option (struct t_weechat_pl
                                                              const char *type,
                                                              const char *description,
                                                              const char *string_values,
-                                                             int min, int max,
-                                                             const char *default_value,
-                                                             void (*callback_change)(void *data),
-                                                             const char *function);
+                                                             int min, int max, const char *default_value,
+                                                             void (*callback_check_value)(void *data,
+                                                                                          struct t_config_option *option,
+                                                                                          const char *value),
+                                                             const char *function_check_value,
+                                                             void (*callback_change)(void *data,
+                                                                                     struct t_config_option *option),
+                                                             const char *function_change,
+                                                             void (*callback_delete)(void *data,
+                                                                                     struct t_config_option *option),
+                                                             const char *function_delete);
 extern void script_api_config_free (struct t_weechat_plugin *weechat_plugin,
                                     struct t_plugin_script *script,
                                     struct t_config_file *config_file);

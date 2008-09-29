@@ -1083,26 +1083,98 @@ weechat_python_api_config_search_section (PyObject *self, PyObject *args)
 }
 
 /*
- * weechat_python_api_config_option_change_cb: callback for option changed
+ * weechat_python_api_config_option_check_cb: callback for checking new value
+ *                                            for option
  */
 
 void
-weechat_python_api_config_option_change_cb (void *data)
+weechat_python_api_config_option_check_value_cb (void *data,
+                                                 struct t_config_option *option,
+                                                 const char *value)
 {
     struct t_script_callback *script_callback;
-    char *python_argv[1];
+    char *python_argv[3];
     int *rc;
     
     script_callback = (struct t_script_callback *)data;
 
     if (script_callback->function && script_callback->function[0])
     {
-        python_argv[0] = NULL;
+        python_argv[0] = script_ptr2str (option);
+        python_argv[1] = (char *)value;
+        python_argv[2] = NULL;
         
         rc = (int *) weechat_python_exec (script_callback->script,
                                           WEECHAT_SCRIPT_EXEC_INT,
                                           script_callback->function,
                                           python_argv);
+        
+        if (python_argv[0])
+            free (python_argv[0]);
+        
+        if (rc)
+            free (rc);
+    }
+}
+
+/*
+ * weechat_python_api_config_option_change_cb: callback for option changed
+ */
+
+void
+weechat_python_api_config_option_change_cb (void *data,
+                                            struct t_config_option *option)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[2];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback->function && script_callback->function[0])
+    {
+        python_argv[0] = script_ptr2str (option);
+        python_argv[1] = NULL;
+        
+        rc = (int *) weechat_python_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          script_callback->function,
+                                          python_argv);
+        
+        if (python_argv[0])
+            free (python_argv[0]);
+        
+        if (rc)
+            free (rc);
+    }
+}
+
+/*
+ * weechat_python_api_config_option_delete_cb: callback when option is deleted
+ */
+
+void
+weechat_python_api_config_option_delete_cb (void *data,
+                                            struct t_config_option *option)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[2];
+    int *rc;
+    
+    script_callback = (struct t_script_callback *)data;
+
+    if (script_callback->function && script_callback->function[0])
+    {
+        python_argv[0] = script_ptr2str (option);
+        python_argv[1] = NULL;
+        
+        rc = (int *) weechat_python_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          script_callback->function,
+                                          python_argv);
+        
+        if (python_argv[0])
+            free (python_argv[0]);
         
         if (rc)
             free (rc);
@@ -1117,7 +1189,8 @@ static PyObject *
 weechat_python_api_config_new_option (PyObject *self, PyObject *args)
 {
     char *config_file, *section, *name, *type, *description, *string_values;
-    char *default_value, *function, *result;
+    char *default_value, *result;
+    char *function_check_value, *function_change, *function_delete;
     int min, max;
     PyObject *object;
     
@@ -1137,11 +1210,14 @@ weechat_python_api_config_new_option (PyObject *self, PyObject *args)
     description = NULL;
     string_values = NULL;
     default_value = NULL;
-    function = NULL;
+    function_check_value = NULL;
+    function_change = NULL;
+    function_delete = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssssssiiss", &config_file, &section, &name,
+    if (!PyArg_ParseTuple (args, "ssssssiissss", &config_file, &section, &name,
                            &type, &description, &string_values, &min, &max,
-                           &default_value, &function))
+                           &default_value, &function_check_value,
+                           &function_change, &function_delete))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
         PYTHON_RETURN_EMPTY;
@@ -1158,8 +1234,12 @@ weechat_python_api_config_new_option (PyObject *self, PyObject *args)
                                                            min,
                                                            max,
                                                            default_value,
+                                                           &weechat_python_api_config_option_check_value_cb,
+                                                           function_check_value,
                                                            &weechat_python_api_config_option_change_cb,
-                                                           function));
+                                                           function_change,
+                                                           &weechat_python_api_config_option_delete_cb,
+                                                           function_delete));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
