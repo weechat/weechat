@@ -553,8 +553,8 @@ irc_protocol_cmd_mode (struct t_irc_server *server, const char *command,
                                  IRC_COLOR_CHAT_NICK,
                                  nick);
         }
+        irc_mode_user_set (server, pos_modes);
     }
-    irc_mode_user_set (server, pos_modes);
     
     return WEECHAT_RC_OK;
 }
