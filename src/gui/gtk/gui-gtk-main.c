@@ -38,7 +38,7 @@
 #include "../gui-chat.h"
 #include "../gui-main.h"
 #include "../gui-buffer.h"
-#include "../gui/gui-filter.h"
+#include "../gui-filter.h"
 #include "../gui-history.h"
 #include "../gui-input.h"
 #include "../gui-window.h"
