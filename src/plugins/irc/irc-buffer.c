@@ -209,7 +209,7 @@ irc_buffer_split_server ()
     
     if (irc_buffer_servers)
     {
-        weechat_buffer_set (irc_buffer_servers, "key_unbind_meta-s", NULL);
+        weechat_buffer_set (irc_buffer_servers, "key_unbind_meta-s", "");
     }
     
     for (ptr_server = irc_servers; ptr_server;

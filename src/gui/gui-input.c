@@ -1373,8 +1373,7 @@ gui_input_set_unread ()
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATED)
-            ptr_buffer->last_read_line = ptr_buffer->last_line;
+        gui_buffer_set_unread (ptr_buffer);
     }
     
     /* refresh all windows */
@@ -1388,12 +1387,11 @@ gui_input_set_unread ()
 void
 gui_input_set_unread_current_buffer ()
 {
-    if (gui_current_window
-        && (gui_current_window->buffer->type == GUI_BUFFER_TYPE_FORMATED))
-        gui_current_window->buffer->last_read_line = gui_current_window->buffer->last_line;
-    
-    /* refresh all windows */
-    gui_window_redraw_buffer (gui_current_window->buffer);
+    if (gui_current_window)
+    {
+        gui_buffer_set_unread (gui_current_window->buffer);
+        gui_window_redraw_buffer (gui_current_window->buffer);
+    }
 }
 
 /*

@@ -506,6 +506,17 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
 }
 
 /*
+ * gui_buffer_set_unread: set unread marker for a buffer
+ */
+
+void
+gui_buffer_set_unread (struct t_gui_buffer *buffer)
+{
+    if (buffer->type == GUI_BUFFER_TYPE_FORMATED)
+        buffer->last_read_line = buffer->last_line;
+}
+
+/*
  * gui_buffer_set: set a buffer property
  */
 
@@ -536,6 +547,10 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
             if (error && !error[0])
                 gui_hotlist_add (buffer, number, NULL, 1);
         }
+    }
+    else if (string_strcasecmp (property, "unread") == 0)
+    {
+        gui_buffer_set_unread (buffer);
     }
     
     if (!buffer)

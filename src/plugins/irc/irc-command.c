@@ -256,6 +256,7 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments)
 {
     char *string, buffer[4096];
     time_t time_now, elapsed;
+    struct t_irc_channel *ptr_channel;
     
     if (!server)
         return;
@@ -291,14 +292,16 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments)
                     free (string);
             }
             irc_server_set_away (server, server->nick, 1);
-            /*for (ptr_window = gui_windows; ptr_window;
-                 ptr_window = ptr_window->next_window)
+
+            /* reset "unread" indicator on server and channels/pv buffers */
+            if (!weechat_config_boolean (irc_config_look_one_server_buffer))
+                weechat_buffer_set (server->buffer, "unread", "");
+            for (ptr_channel = server->channels; ptr_channel;
+                 ptr_channel = ptr_channel->next_channel)
             {
-                if (strcmp (ptr_window->buffer->category, server->name) == 0)
-                    ptr_window->buffer->last_read_line =
-                        ptr_window->buffer->last_line;
+                weechat_buffer_set (ptr_channel->buffer, "unread", "");
             }
-            */
+            weechat_printf (NULL, "set unread");
         }
         else
         {
