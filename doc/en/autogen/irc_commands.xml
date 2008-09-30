@@ -315,7 +315,7 @@ tell the server to reload its config file
 <programlisting>
 tell the server to restart itself
 </programlisting>
-<command>server  [list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [del servername]</command>
+<command>server  [list [servername]] | [listfull [servername]] | [add servername hostname[/port] [-auto | -noauto] [-ipv6] [-ssl]] | [copy servername newservername] | [rename servername newservername] | [del servername] | [deloutq] | [switch]</command>
 <programlisting>
 list, add or remove servers
 
@@ -332,6 +332,7 @@ servername: server name, for internal and display use
     rename: rename a server
        del: delete a server
    deloutq: delete messages out queue for all servers (all messages WeeChat is currently sending)
+    switch: switch active server (when one buffer is used for all servers, default key: alt-s on server buffer)
 
 Examples:
   /server listfull
@@ -342,6 +343,7 @@ Examples:
   /server rename oftc newoftc
   /server del freenode
   /server deloutq
+  /server switch
 </programlisting>
 <command>service  nickname reserved distribution type reserved info</command>
 <programlisting>

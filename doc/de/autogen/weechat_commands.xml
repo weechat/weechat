@@ -6,7 +6,7 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>bar  [add barname type[,cond1,cond2,...] position size separator item1,item2,...] | [default] | [del barname|-all] | [set barname name|priority|condition|position|filling|size|separator|items value] | [hide|show barname] | [scroll barname buffer value] | [list] | [listitems]</command>
+<command>bar  [add barname type[,cond1,cond2,...] position size separator item1,item2,...] | [default] | [del barname|-all] | [set barname option value] | [hide|show barname] | [scroll barname buffer scroll_value] | [list] | [listitems]</command>
 <programlisting>
 manage bars
 
@@ -27,11 +27,13 @@ manage bars
       default: create default bars
           del: delete a bar (or all bars with -all)
           set: set a value for a bar property
+       option: option to change (for options list, look at /set weechat.bar.&lt;barname&gt;.*)
+        value: new value for option
          hide: hide a bar
          show: show an hidden bar
        scroll: scroll bar up/down
        buffer: name of buffer to scroll ('*' means current buffer, you should use '*' for root bars)
-        value: value for scroll: 'x' or 'y', followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by %% of width/height, otherwise value is number of chars)
+ scroll_value: value for scroll: 'x' or 'y', followed by '+', '-', 'b' (beginning) or 'e' (end), value (for +/-), and optional %% (to scroll by %% of width/height, otherwise value is number of chars)
          list: list all bars
      listfull: list all bars (verbose)
     listitems: list all bar items
@@ -203,18 +205,18 @@ zeigt die Uptime von Weechat an
 <programlisting>
 Fenster verwalten
 
-  list: listet die geöffneten Fenster (Default, kann auch weggelassen werden)
-    -1: springt zum vorherigen Fenster
-    +1: springt zum nächsten Fenster
-    b#: springt zum nächsten Fenster, dass Puffer Nummer # anzeigt
-    up: wechselt zum Fenster über dem aktuellen
-  down: wechselt zum Fenster unter dem aktuellen
-  left: wechselt zum linken Fenster
- right: wechselt zum rechten Fenster
-splith: teilt das aktuelle Fenster horizontal
-splitv: teilt das aktuelle Fenster vertikal
-resize: verändert die Größe des aktuellen Fensters, die neue Größe ist &lt;pct&gt; Prozent des Elternfensters groß
- merge: vereinigt Fenster miteinander (all = alle Fenster vereinigen)
+  list: list open windows (no parameter implies this list)
+    -1: jump to previous window
+    +1: jump to next window
+    b#: jump to next window displaying buffer number #
+    up: switch to window above current one
+  down: switch to window below current one
+  left: switch to window on the left
+ right: switch to window on the right
+splith: split current window horizontally
+splitv: split current window vertically
+resize: resize window size, new size is &lt;pct&gt; percentage of parent window
+ merge: merge window with another (all = keep only one window)
 
-Bei splith und splitv gibt pct die neue Größe des Fensters im verhältnis zur aktuellen Größe an. Zum Beispiel würde 25 bedeuten, dass das neue Fenster nur noch ein Viertel der Größe des alten Fensters hätte.
+For splith and splitv, pct is a percentage which represents size of new window, computed with current window as size reference. For example 25 means create a new window with size = current_size / 4
 </programlisting>

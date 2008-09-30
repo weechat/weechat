@@ -315,7 +315,7 @@ demander au serveur de recharger son fichier de configuration
 <programlisting>
 demander au serveur de redémarrer
 </programlisting>
-<command>server  [list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom[/port] [-temp] [-auto | -noauto] [-ipv6] [-ssl]] | [copy nom_serveur nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [del nom_serveur]</command>
+<command>server  [list [nom_serveur]] | [listfull [nom_serveur]] | [add nom_serveur nom[/port] [-temp] [-auto | -noauto] [-ipv6] [-ssl]] | [copy nom_serveur nouveau_nom_serveur] | [rename nom_serveur nouveau_nom_serveur] | [del nom_serveur] | [deloutq] | [switch]</command>
 <programlisting>
 liste, ajoute ou retire des serveurs
 
@@ -332,6 +332,7 @@ nom_serveur: nom du serveur, pour usage interne et affichage
      rename: renommer un serveur
         del: supprimer un serveur
     deloutq: supprimer la file d'attente des messages sortants pour tous les serveurs (tous les messages que WeeChat est actuellement en train d'envoyer)
+     switch: changer le serveur actif (quand un tampon est utilisé pour tous les serveurs, touche par défaut: alt-s sur le tampon serveur)
 
 Exemples :
   /server listfull
@@ -342,6 +343,7 @@ Exemples :
   /server rename oftc newoftc
   /server del freenode
   /server deloutq
+  /server switch
 </programlisting>
 <command>service  pseudo réservé distribution type réservé info</command>
 <programlisting>
