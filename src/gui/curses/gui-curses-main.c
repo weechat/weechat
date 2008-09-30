@@ -44,6 +44,7 @@
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
+#include "../gui-filter.h"
 #include "../gui-input.h"
 #include "../gui-history.h"
 #include "../gui-nicklist.h"
@@ -334,18 +335,25 @@ gui_main_end (int clean_exit)
         gui_bar_item_end ();
         gui_bar_free_all ();
         
+        /* remove filters */
+        gui_filter_free_all ();
+        
         /* free clipboard buffer */
         if (gui_input_clipboard)
             free (gui_input_clipboard);
         
         /* delete all windows */
         while (gui_windows)
+        {
             gui_window_free (gui_windows);
+        }
         gui_window_tree_free (&gui_windows_tree);
         
         /* delete all buffers */
         while (gui_buffers)
+        {
             gui_buffer_close (gui_buffers, 0);
+        }
         
         /* delete global history */
         gui_history_global_free ();

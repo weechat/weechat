@@ -33,9 +33,12 @@
 #include "../../core/wee-config.h"
 #include "../../core/wee-utf8.h"
 #include "../../plugins/plugin.h"
+#include "../gui-bar.h"
+#include "../gui-bar-item.h"
 #include "../gui-chat.h"
 #include "../gui-main.h"
 #include "../gui-buffer.h"
+#include "../gui/gui-filter.h"
 #include "../gui-history.h"
 #include "../gui-input.h"
 #include "../gui-window.h"
@@ -207,28 +210,32 @@ gui_main_loop ()
 void
 gui_main_end (int clean_exit)
 {
-    struct t_gui_window *ptr_win;
-
     if (clean_exit)
     {
+        /* remove bar items and bars */
+        gui_bar_item_end ();
+        gui_bar_free_all ();
+        
+        /* remove filters */
+        gui_filter_free_all ();
+        
         /* free clipboard buffer */
         if (gui_input_clipboard)
             free(gui_input_clipboard);
-        
+
         /* delete all windows */
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        while (gui_windows)
         {
+            gui_window_free (gui_windows);
             /* TODO: destroy Gtk widgets */
         }
+        gui_window_tree_free (&gui_windows_tree);
         
         /* delete all buffers */
         while (gui_buffers)
+        {
             gui_buffer_close (gui_buffers, 0);
-        
-        /* delete all windows */
-        while (gui_windows)
-            gui_window_free (gui_windows);
-        gui_window_tree_free (&gui_windows_tree);
+        }
         
         /* delete global history */
         gui_history_global_free ();
@@ -236,5 +243,8 @@ gui_main_end (int clean_exit)
         /* reset title */
         if (CONFIG_BOOLEAN(config_look_set_title))
             gui_window_title_reset ();
+        
+        /* end color */
+        gui_color_end ();
     }
 }

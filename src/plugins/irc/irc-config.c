@@ -899,6 +899,13 @@ irc_config_server_create_default_options (struct t_config_section *section)
             NULL,
             NULL);
     }
+    
+    if (nicks)
+        free (nicks);
+    if (username)
+        free (username);
+    if (realname)
+        free (realname);
 }
 
 /*

@@ -1122,6 +1122,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
             case GUI_BAR_NUM_OPTIONS:
                 break;
         }
+        free (option_name);
     }
     
     return ptr_option;

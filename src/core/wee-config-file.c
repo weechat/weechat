@@ -101,8 +101,14 @@ config_file_new (struct t_weechat_plugin *plugin, const char *name,
         new_config_file->name = strdup (name);
         length = strlen (name) + 8 + 1;
         filename = malloc (length);
-        snprintf (filename, length, "%s.conf", name);
-        new_config_file->filename = strdup (filename);
+        if (filename)
+        {
+            snprintf (filename, length, "%s.conf", name);
+            new_config_file->filename = strdup (filename);
+            free (filename);
+        }
+        else
+            new_config_file->filename = strdup (name);
         new_config_file->file = NULL;
         new_config_file->callback_reload = callback_reload;
         new_config_file->callback_reload_data = callback_reload_data;

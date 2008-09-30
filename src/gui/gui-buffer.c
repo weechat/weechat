@@ -943,6 +943,7 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     if (buffer->text_search_input)
         free (buffer->text_search_input);
     gui_nicklist_remove_all (buffer);
+    gui_nicklist_remove_group (buffer, buffer->nicklist_root);
     if (buffer->highlight_words)
         free (buffer->highlight_words);
     if (buffer->highlight_tags_array)

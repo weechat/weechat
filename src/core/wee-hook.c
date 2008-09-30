@@ -1594,11 +1594,15 @@ unhook (struct t_hook *hook)
             case HOOK_TYPE_INFO:
                 if (HOOK_INFO(hook, info_name))
                     free (HOOK_INFO(hook, info_name));
+                if (HOOK_INFO(hook, description))
+                    free (HOOK_INFO(hook, description));
                 free ((struct t_hook_info *)hook->hook_data);
                 break;
             case HOOK_TYPE_INFOLIST:
                 if (HOOK_INFOLIST(hook, infolist_name))
                     free (HOOK_INFOLIST(hook, infolist_name));
+                if (HOOK_INFOLIST(hook, description))
+                    free (HOOK_INFOLIST(hook, description));
                 free ((struct t_hook_infolist *)hook->hook_data);
                 break;
             case HOOK_NUM_TYPES:

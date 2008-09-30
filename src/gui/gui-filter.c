@@ -364,6 +364,8 @@ gui_filter_free (struct t_gui_filter *filter)
         free (filter->buffer);
     if (filter->tags)
         free (filter->tags);
+    if (filter->tags_array)
+        string_free_exploded (filter->tags_array);
     if (filter->regex)
         free (filter->regex);
     if (filter->regex_prefix)
