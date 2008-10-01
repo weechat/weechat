@@ -664,7 +664,8 @@ gui_bar_window_add_missing_bars (struct t_gui_window *window)
 int
 gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              int *x, int *y,
-                             const char *string)
+                             const char *string,
+                             int reset_color_before_display)
 {
     int weechat_color, size_on_screen, fg, bg;
     char str_fg[3], str_bg[3], utf_char[16], *next_char, *output;
@@ -673,10 +674,13 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
         return 1;
     
     wmove (bar_window->win_bar, *y, *x);
-    
-    gui_window_set_custom_color_fg_bg (bar_window->win_bar,
-                                       CONFIG_COLOR(bar_window->bar->color_fg),
-                                       CONFIG_COLOR(bar_window->bar->color_bg));
+
+    if (reset_color_before_display)
+    {
+        gui_window_set_custom_color_fg_bg (bar_window->win_bar,
+                                           CONFIG_COLOR(bar_window->bar->color_fg),
+                                           CONFIG_COLOR(bar_window->bar->color_bg));
+    }
     
     while (string && string[0])
     {
@@ -977,19 +981,25 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         || (line >= bar_window->scroll_y))
                     {
                         if (!gui_bar_window_print_string (bar_window, &x, &y,
-                                                          items[line]))
+                                                          items[line], 1))
                         {
                             some_data_not_displayed = 1;
                         }
                         if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_VERTICAL)
                         {
+                            while (x < bar_window->width)
+                            {
+                                gui_bar_window_print_string (bar_window,
+                                                             &x, &y,
+                                                             " ", 0);
+                            }
                             x = 0;
                             y++;
                         }
                         else
                         {
                             gui_bar_window_print_string (bar_window, &x, &y,
-                                                         space_with_reinit_color);
+                                                         space_with_reinit_color, 0);
                         }
                     }
                 }
@@ -1081,19 +1091,25 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                             || (line >= bar_window->scroll_y))
                         {
                             if (!gui_bar_window_print_string (bar_window, &x, &y,
-                                                              items[line]))
+                                                              items[line], 1))
                             {
                                 some_data_not_displayed = 1;
                             }
                             if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_VERTICAL)
                             {
+                                while (x < bar_window->width)
+                                {
+                                    gui_bar_window_print_string (bar_window,
+                                                                 &x, &y,
+                                                                 " ", 0);
+                                }
                                 x = 0;
                                 y++;
                             }
                             else
                             {
                                 gui_bar_window_print_string (bar_window, &x, &y,
-                                                             space_with_reinit_color);
+                                                             space_with_reinit_color, 0);
                             }
                         }
                     }
@@ -1209,6 +1225,8 @@ gui_bar_draw (struct t_gui_bar *bar)
             }
         }
     }
+    
+    bar->bar_refresh_needed = 0;
 }
 
 /*
