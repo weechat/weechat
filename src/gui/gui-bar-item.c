@@ -1188,11 +1188,11 @@ gui_bar_item_signal_cb (void *data, const char *signal,
 }
 
 /*
- * gui_bar_item_hook: hook a signal to update bar items
+ * gui_bar_item_hook_signal: hook a signal to update bar items
  */
 
 void
-gui_bar_item_hook (const char *signal, const char *item)
+gui_bar_item_hook_signal (const char *signal, const char *item)
 {
     struct t_gui_bar_item_hook *bar_item_hook;
     
@@ -1218,17 +1218,17 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
                       &gui_bar_item_default_input_prompt, NULL);
-    gui_bar_item_hook ("input_prompt_changed",
-                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
+    gui_bar_item_hook_signal ("input_prompt_changed",
+                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
     
     /* input text */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT],
                       &gui_bar_item_default_input_text, NULL);
-    gui_bar_item_hook ("input_text_changed",
-                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
-    gui_bar_item_hook ("input_text_cursor_moved",
-                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
+    gui_bar_item_hook_signal ("input_text_*",
+                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
     
     /* time */
     gui_bar_item_new (NULL,
@@ -1241,81 +1241,81 @@ gui_bar_item_init ()
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT],
                       &gui_bar_item_default_buffer_count, NULL);
-    gui_bar_item_hook ("buffer_open",
-                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT]);
-    gui_bar_item_hook ("buffer_closed",
-                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT]);
+    gui_bar_item_hook_signal ("buffer_open",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT]);
+    gui_bar_item_hook_signal ("buffer_closed",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_COUNT]);
     
     /* buffer plugin */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN],
                       &gui_bar_item_default_buffer_plugin, NULL);
-    gui_bar_item_hook ("buffer_switch",
-                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN]);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_PLUGIN]);
     
     /* buffer name */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME],
                       &gui_bar_item_default_buffer_name, NULL);
-    gui_bar_item_hook ("buffer_switch",
-                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
-    gui_bar_item_hook ("buffer_renamed",
-                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
-    gui_bar_item_hook ("buffer_moved",
-                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
+    gui_bar_item_hook_signal ("buffer_renamed",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
+    gui_bar_item_hook_signal ("buffer_moved",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NAME]);
     
     /* buffer filter */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER],
                       &gui_bar_item_default_buffer_filter, NULL);
-    gui_bar_item_hook ("buffer_lines_hidden",
-                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
-    gui_bar_item_hook ("filters_*",
-                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
+    gui_bar_item_hook_signal ("buffer_lines_hidden",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
+    gui_bar_item_hook_signal ("filters_*",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_FILTER]);
     
     /* buffer nicklist count */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT],
                       &gui_bar_item_default_buffer_nicklist_count, NULL);
-    gui_bar_item_hook ("buffer_switch",
-                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT]);
-    gui_bar_item_hook ("nicklist_changed",
-                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT]);
+    gui_bar_item_hook_signal ("buffer_switch",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT]);
+    gui_bar_item_hook_signal ("nicklist_changed",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST_COUNT]);
     
     /* scroll indicator */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_SCROLL],
                       &gui_bar_item_default_scroll, NULL);
-    gui_bar_item_hook ("window_scrolled",
-                       gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
+    gui_bar_item_hook_signal ("window_scrolled",
+                              gui_bar_item_names[GUI_BAR_ITEM_SCROLL]);
     
     /* hotlist */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_HOTLIST],
                       &gui_bar_item_default_hotlist, NULL);
-    gui_bar_item_hook ("hotlist_changed",
-                       gui_bar_item_names[GUI_BAR_ITEM_HOTLIST]);
+    gui_bar_item_hook_signal ("hotlist_changed",
+                              gui_bar_item_names[GUI_BAR_ITEM_HOTLIST]);
     
     /* completion (possible words when a partial completion occurs) */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_COMPLETION],
                       &gui_bar_item_default_completion, NULL);
-    gui_bar_item_hook ("partial_completion",
-                       gui_bar_item_names[GUI_BAR_ITEM_COMPLETION]);
+    gui_bar_item_hook_signal ("partial_completion",
+                              gui_bar_item_names[GUI_BAR_ITEM_COMPLETION]);
     
     /* buffer title */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE],
                       &gui_bar_item_default_buffer_title, NULL);
-    gui_bar_item_hook ("buffer_title_changed",
-                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]);
+    gui_bar_item_hook_signal ("buffer_title_changed",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE]);
     
     /* buffer nicklist */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST],
                       &gui_bar_item_default_buffer_nicklist, NULL);
-    gui_bar_item_hook ("nicklist_changed",
-                       gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
+    gui_bar_item_hook_signal ("nicklist_changed",
+                              gui_bar_item_names[GUI_BAR_ITEM_BUFFER_NICKLIST]);
 }
 
 /*
