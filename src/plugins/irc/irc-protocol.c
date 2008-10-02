@@ -2914,9 +2914,6 @@ irc_protocol_cmd_324 (struct t_irc_server *server, const char *command,
     
     IRC_PROTOCOL_MIN_ARGS(4);
     
-    /* make C compiler happy */
-    (void) argv_eol;
-    
     ptr_channel = irc_channel_search (server, argv[3]);
     if (ptr_channel)
     {
@@ -2924,7 +2921,7 @@ irc_protocol_cmd_324 (struct t_irc_server *server, const char *command,
         {
             if (ptr_channel->modes)
                 free (ptr_channel->modes);
-            ptr_channel->modes = strdup (argv[4]);
+            ptr_channel->modes = strdup (argv_eol[4]);
             irc_mode_channel_set (server, ptr_channel,
                                   ptr_channel->modes);
         }
