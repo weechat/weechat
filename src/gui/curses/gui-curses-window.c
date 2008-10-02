@@ -762,9 +762,17 @@ void
 gui_window_page_up (struct t_gui_window *window)
 {
     char scroll[32];
+    int num_lines;
     
     if (!gui_ok)
         return;
+    
+    num_lines = ((window->win_chat_height - 1) *
+                 CONFIG_INTEGER(config_look_scroll_page_percent)) / 100;
+    if (num_lines < 1)
+        num_lines = 1;
+    else if (num_lines > window->win_chat_height - 1)
+        num_lines = window->win_chat_height - 1;
     
     switch (window->buffer->type)
     {
@@ -774,8 +782,8 @@ gui_window_page_up (struct t_gui_window *window)
                 gui_chat_calculate_line_diff (window, &window->start_line,
                                               &window->start_line_pos,
                                               (window->start_line) ?
-                                              (-1) * (window->win_chat_height - 1) :
-                                              (-1) * ((window->win_chat_height - 1) * 2));
+                                              (-1) * (num_lines) :
+                                              (-1) * (num_lines + window->win_chat_height - 1));
                 gui_chat_draw (window->buffer, 0);
                 if (!window->scroll)
                 {
@@ -789,7 +797,7 @@ gui_window_page_up (struct t_gui_window *window)
             if (window->start_line)
             {
                 snprintf (scroll, sizeof (scroll), "-%d",
-                          window->win_chat_height);
+                          num_lines + 1);
                 gui_window_scroll (window, scroll);
                 hook_signal_send ("window_scrolled",
                                   WEECHAT_HOOK_SIGNAL_POINTER, window);
@@ -808,11 +816,18 @@ void
 gui_window_page_down (struct t_gui_window *window)
 {
     struct t_gui_line *ptr_line;
-    int line_pos;
+    int line_pos, num_lines;
     char scroll[32];
     
     if (!gui_ok)
         return;
+    
+    num_lines = ((window->win_chat_height - 1) *
+                 CONFIG_INTEGER(config_look_scroll_page_percent)) / 100;
+    if (num_lines < 1)
+        num_lines = 1;
+    else if (num_lines > window->win_chat_height - 1)
+        num_lines = window->win_chat_height - 1;
     
     switch (window->buffer->type)
     {
@@ -821,14 +836,14 @@ gui_window_page_down (struct t_gui_window *window)
             {
                 gui_chat_calculate_line_diff (window, &window->start_line,
                                               &window->start_line_pos,
-                                              window->win_chat_height - 1);
+                                              num_lines);
                 
                 /* check if we can display all */
                 ptr_line = window->start_line;
                 line_pos = window->start_line_pos;
                 gui_chat_calculate_line_diff (window, &ptr_line,
                                               &line_pos,
-                                              window->win_chat_height - 1);
+                                              num_lines);
                 if (!ptr_line)
                 {
                     window->start_line = NULL;
@@ -847,7 +862,7 @@ gui_window_page_down (struct t_gui_window *window)
             break;
         case GUI_BUFFER_TYPE_FREE:
             snprintf (scroll, sizeof (scroll), "+%d",
-                      window->win_chat_height);
+                      num_lines + 1);
             gui_window_scroll (window, scroll);
             hook_signal_send ("window_scrolled",
                               WEECHAT_HOOK_SIGNAL_POINTER, window);

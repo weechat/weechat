@@ -98,6 +98,7 @@ struct t_config_option *config_look_read_marker;
 struct t_config_option *config_look_save_config_on_exit;
 struct t_config_option *config_look_save_layout_on_exit;
 struct t_config_option *config_look_scroll_amount;
+struct t_config_option *config_look_scroll_page_percent;
 struct t_config_option *config_look_set_title;
 
 /* config, colors section */
@@ -1061,6 +1062,12 @@ config_weechat_init ()
         N_("how many lines to scroll by with scroll_up and "
            "scroll_down"),
         NULL, 1, INT_MAX, "3", NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
+    config_look_scroll_page_percent = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "scroll_page_percent", "integer",
+        N_("percent of screen to scroll when scrolling one page up or down "
+           "(for example 100 means one page, 50 half-page)"),
+        NULL, 1, 100, "100", NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_set_title = config_file_new_option (
         weechat_config_file, ptr_section,
         "set_title", "boolean",

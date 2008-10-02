@@ -1782,6 +1782,22 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.look.scroll_page_percent</command>
+<itemizedlist>
+  <listitem>
+    <para>description: percent of screen to scroll when scrolling one page up or down (for example 100 means one page, 50 half-page)</para>
+  </listitem>
+  <listitem>
+    <para>type: integer</para>
+  </listitem>
+  <listitem>
+    <para>values: 1 .. 100</para>
+  </listitem>
+  <listitem>
+    <para>default value: 100</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.look.set_title</command>
 <itemizedlist>
   <listitem>
