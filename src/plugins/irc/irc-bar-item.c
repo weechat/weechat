@@ -101,7 +101,7 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                               channel->name,
                               IRC_COLOR_BAR_DELIM,
                               IRC_COLOR_STATUS_NAME,
-                              channel->modes,
+                              (channel->modes) ? channel->modes : "",
                               IRC_COLOR_BAR_DELIM);
                 }
             }
