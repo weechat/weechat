@@ -137,6 +137,18 @@ associer/libérer des touches
    unbind: supprimer l'association à une touche
     reset: restaure les touches aux valeurs par défaut et supprime TOUTES les touches personnelles (utiliser avec précaution !)
 </programlisting>
+<command>layout  [[save | apply | reset] [buffers | windows]]</command>
+<programlisting>
+sauve/applique/réinitialise la disposition des tampons et fenêtres
+
+   save: sauve la disposition courante
+  apply: applique la disposition sauvegardée
+  reset: supprime la disposition sauvegardée
+buffers: sauve/applique seulement pour les tampons (ordre des tampons)
+windows: sauve/applique seulement pour les fenêtres (le tampon affiché par chaque fenêtre)
+
+Sans paramètre, cette commande affiche la disposition sauvegardée.
+</programlisting>
 <command>plugin  [list [nom]] | [listfull [nom]] | [load fichier] | [autoload] | [reload [nom]] | [unload [nom]]</command>
 <programlisting>
 liste/charge/décharge des extensions
@@ -148,7 +160,7 @@ autoload: charger automatiquement les extensions dans un répertoire système ou
   reload: recharger une extension (si pas de nom donné, décharger toutes les extensions, puis puis recharger automatiquement les extensions)
   unload: décharger une ou plusieurs exteneions
 
-Sans paramètre, la commande /plugin liste les extensions chargées.
+Sans paramètre, cette commande liste les extensions chargées.
 </programlisting>
 <command>quit</command>
 <programlisting>

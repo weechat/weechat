@@ -40,21 +40,31 @@
 
 /*
  * gui_nicklist_draw: draw nick window for a buffer
+ *                    return 1 if chat window has been refreshed, 0 if only
+ *                    nicklist has been refreshed
  */
 
-void
+int
 gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
 {
     struct t_gui_window *ptr_win;
     struct t_gui_nick_group *ptr_group, *save_ptr_group;
     struct t_gui_nick *ptr_nick, *save_ptr_nick;
     struct t_config_option *ptr_option;
-    int i, j, k, x, y, x2, max_y, column, max_length, max_chars;
+    int rc, i, j, k, x, y, x2, max_y, column, max_length, max_chars;
     int nicks_displayed, num_to_display, chars_left;
     char format_empty[32], *buf, *ptr_buf, *ptr_next, saved_char;
     
-    if (!gui_ok || (!buffer->nicklist))
-        return;
+    rc = 0;
+    
+    if (!gui_ok)
+        return 0;
+    
+    if (!buffer->nicklist)
+    {
+        buffer->nicklist_refresh_needed = 0;
+        return 0;
+    }
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -80,6 +90,7 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
                                                             ptr_win->win_nick_x);
                     gui_chat_draw (buffer, 1);
                     erase = 1;
+                    rc = 1;
                 }
             }
             
@@ -334,4 +345,6 @@ gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
     }
     
     buffer->nicklist_refresh_needed = 0;
+
+    return rc;
 }

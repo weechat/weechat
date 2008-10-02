@@ -180,7 +180,6 @@ gui_main_init ()
             gui_buffer_set_title (ptr_buffer,
                                   PACKAGE_STRING " " WEECHAT_COPYRIGHT_DATE
                                   " - " WEECHAT_WEBSITE);
-            gui_window_redraw_buffer (ptr_buffer);
         }
         else
             gui_init_ok = 0;

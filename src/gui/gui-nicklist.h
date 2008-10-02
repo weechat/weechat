@@ -86,6 +86,6 @@ extern void gui_nicklist_print_log (struct t_gui_nick_group *group, int indent);
 
 /* nicklist functions (GUI dependent) */
 
-extern void gui_nicklist_draw (struct t_gui_buffer *buffer, int erase);
+extern int gui_nicklist_draw (struct t_gui_buffer *buffer, int erase);
 
 #endif /* gui-nicklist.h */

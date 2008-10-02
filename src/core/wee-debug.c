@@ -39,6 +39,7 @@
 #include "../gui/gui-filter.h"
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-keyboard.h"
+#include "../gui/gui-layout.h"
 #include "../gui/gui-main.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
@@ -78,6 +79,7 @@ debug_dump (int crash)
 
     gui_window_print_log ();
     gui_buffer_print_log ();
+    gui_layout_print_log ();
     gui_keyboard_print_log (NULL);
     gui_filter_print_log ();
     gui_bar_print_log ();

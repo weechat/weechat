@@ -122,7 +122,6 @@ gui_main_init ()
             gui_buffer_set_title (ptr_buffer,
                                   "WeeChat " WEECHAT_COPYRIGHT_DATE
                                   " - " WEECHAT_WEBSITE);
-            gui_window_redraw_buffer (ptr_buffer);
         }
         else
             gui_init_ok = 0;
@@ -246,57 +245,56 @@ gui_main_loop ()
         /* execute hook timers */
         hook_timer_exec ();
         
-        /* refresh status bar if needed */
-        if (gui_status_refresh_needed)
-            gui_status_draw (1);
-        
-        for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-        {
-            if (ptr_bar->bar_refresh_needed)
-            {
-                gui_bar_draw (ptr_bar);
-                ptr_bar->bar_refresh_needed = 0;
-            }
-        }
-        
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-        {
-            if (ptr_win->refresh_needed)
-            {
-                gui_window_switch_to_buffer (ptr_win, ptr_win->buffer);
-                gui_window_redraw_buffer (ptr_win->buffer);
-                ptr_win->refresh_needed = 0;
-            }
-        }
-        
-        for (ptr_buffer = gui_buffers; ptr_buffer;
-             ptr_buffer = ptr_buffer->next_buffer)
-        {
-            /* refresh title if needed */
-            if (ptr_buffer->title_refresh_needed)
-                gui_chat_draw_title (ptr_buffer, 1);
-            
-            /* refresh chat if needed */
-            if (ptr_buffer->chat_refresh_needed)
-            {
-                gui_chat_draw (ptr_buffer,
-                               (ptr_buffer->chat_refresh_needed) > 1 ? 1 : 0);
-            }
-            
-            /* refresh nicklist if needed */
-            if (ptr_buffer->nicklist_refresh_needed)
-                gui_nicklist_draw (ptr_buffer, 1);
-            
-            /* refresh input if needed */
-            if (ptr_buffer->input_refresh_needed)
-                gui_input_draw (ptr_buffer, 1);
-        }
-        
         /* refresh window if needed */
         if (gui_window_refresh_needed)
         {
             gui_window_refresh_screen ();
             gui_window_refresh_needed = 0;
+        }
+        else
+        {
+            /* refresh status bar if needed */
+            if (gui_status_refresh_needed)
+                gui_status_draw (1);
+            
+            for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+            {
+                if (ptr_bar->bar_refresh_needed)
+                    gui_bar_draw (ptr_bar);
+            }
+            
+            for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+            {
+                if (ptr_win->refresh_needed)
+                {
+                    gui_window_switch_to_buffer (ptr_win, ptr_win->buffer);
+                    gui_window_redraw_buffer (ptr_win->buffer);
+                    ptr_win->refresh_needed = 0;
+                }
+            }
+            
+            for (ptr_buffer = gui_buffers; ptr_buffer;
+                 ptr_buffer = ptr_buffer->next_buffer)
+            {
+                /* refresh title if needed */
+                if (ptr_buffer->title_refresh_needed)
+                    gui_chat_draw_title (ptr_buffer, 1);
+                
+                /* refresh nicklist if needed */
+                if (ptr_buffer->nicklist_refresh_needed)
+                    gui_nicklist_draw (ptr_buffer, 1);
+                
+                /* refresh chat if needed */
+                if (ptr_buffer->chat_refresh_needed)
+                {
+                    gui_chat_draw (ptr_buffer,
+                                   (ptr_buffer->chat_refresh_needed) > 1 ? 1 : 0);
+                }
+                
+                /* refresh input if needed */
+                if (ptr_buffer->input_refresh_needed)
+                    gui_input_draw (ptr_buffer, 1);
+            }
         }
         
         /* wait for keyboard or network activity */

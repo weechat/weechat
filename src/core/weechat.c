@@ -63,6 +63,7 @@
 #include "wee-util.h"
 #include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
+#include "../gui/gui-layout.h"
 #include "../gui/gui-main.h"
 #include "../gui/gui-keyboard.h"
 #include "../plugins/plugin.h"
@@ -397,11 +398,13 @@ main (int argc, char *argv[])
     plugin_init (weechat_auto_load_plugins, /* init plugin interface(s)     */
                  argc, argv); 
     command_startup (1);                /* command executed after plugins   */
+    gui_layout_window_apply ();         /* apply saved layout for windows   */
     
     gui_main_loop ();                   /* WeeChat main loop                */
     
+    gui_layout_save_on_exit ();         /* save layout                      */
     plugin_end ();                      /* end plugin interface(s)          */
-    if (CONFIG_BOOLEAN(config_look_save_on_exit))
+    if (CONFIG_BOOLEAN(config_look_save_config_on_exit))
         (void) config_weechat_write (NULL); /* save WeeChat config file     */
     gui_main_end (1);                   /* shut down WeeChat GUI            */
     config_file_free_all ();            /* free all configuration files     */

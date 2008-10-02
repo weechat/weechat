@@ -24,26 +24,46 @@
 
 #define WEECHAT_CONFIG_NAME "weechat"
 
-#define CONFIG_LOOK_NICKLIST_LEFT   0
-#define CONFIG_LOOK_NICKLIST_RIGHT  1
-#define CONFIG_LOOK_NICKLIST_TOP    2
-#define CONFIG_LOOK_NICKLIST_BOTTOM 3
+enum t_config_look_nicklist
+{
+    CONFIG_LOOK_NICKLIST_LEFT = 0,
+    CONFIG_LOOK_NICKLIST_RIGHT,
+    CONFIG_LOOK_NICKLIST_TOP,
+    CONFIG_LOOK_NICKLIST_BOTTOM,
+};
 
-#define CONFIG_LOOK_PREFIX_ALIGN_NONE  0
-#define CONFIG_LOOK_PREFIX_ALIGN_LEFT  1
-#define CONFIG_LOOK_PREFIX_ALIGN_RIGHT 2
+enum t_config_look_prefix_align
+{
+    CONFIG_LOOK_PREFIX_ALIGN_NONE = 0,
+    CONFIG_LOOK_PREFIX_ALIGN_LEFT,
+    CONFIG_LOOK_PREFIX_ALIGN_RIGHT,
+};
 
-#define CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_ASC    0
-#define CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_DESC   1
-#define CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_ASC  2
-#define CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_DESC 3
-#define CONFIG_LOOK_HOTLIST_SORT_NUMBER_ASC        4
-#define CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC       5
+enum t_config_look_hotlist_sort
+{
+    CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_ASC = 0,
+    CONFIG_LOOK_HOTLIST_SORT_GROUP_TIME_DESC,
+    CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_ASC,
+    CONFIG_LOOK_HOTLIST_SORT_GROUP_NUMBER_DESC,
+    CONFIG_LOOK_HOTLIST_SORT_NUMBER_ASC,
+    CONFIG_LOOK_HOTLIST_SORT_NUMBER_DESC,
+};
 
-#define CONFIG_LOOK_READ_MARKER_NONE        0
-#define CONFIG_LOOK_READ_MARKER_LINE        1
-#define CONFIG_LOOK_READ_MARKER_DOTTED_LINE 2
-#define CONFIG_LOOK_READ_MARKER_CHAR        3
+enum t_config_look_read_marker
+{
+    CONFIG_LOOK_READ_MARKER_NONE = 0,
+    CONFIG_LOOK_READ_MARKER_LINE,
+    CONFIG_LOOK_READ_MARKER_DOTTED_LINE,
+    CONFIG_LOOK_READ_MARKER_CHAR,
+};
+
+enum t_config_look_save_layout_on_exit
+{
+    CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_NONE = 0,
+    CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_BUFFERS,
+    CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_WINDOWS,
+    CONFIG_LOOK_SAVE_LAYOUT_ON_EXIT_ALL,
+};
 
 extern struct t_config_file *weechat_config_file;
 extern struct t_config_section *weechat_config_section_bar;
@@ -81,7 +101,8 @@ extern struct t_config_option *config_look_prefix_align;
 extern struct t_config_option *config_look_prefix_align_max;
 extern struct t_config_option *config_look_prefix_suffix;
 extern struct t_config_option *config_look_read_marker;
-extern struct t_config_option *config_look_save_on_exit;
+extern struct t_config_option *config_look_save_config_on_exit;
+extern struct t_config_option *config_look_save_layout_on_exit;
 extern struct t_config_option *config_look_scroll_amount;
 extern struct t_config_option *config_look_set_title;
 

@@ -31,12 +31,16 @@
 
 /*
  * gui_nicklist_draw: draw nick window for a buffer
+ *                    return 1 if chat window has been refreshed, 0 if only
+ *                    nicklist has been refreshed
  */
 
-void
+int
 gui_nicklist_draw (struct t_gui_buffer *buffer, int erase)
 {
     /* TODO: write this function for Gtk */
     (void) buffer;
     (void) erase;
+    
+    return 0;
 }

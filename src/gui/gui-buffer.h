@@ -76,6 +76,8 @@ struct t_gui_buffer
     char *plugin_name_for_upgrade;     /* plugin name when upgrading        */
     
     int number;                        /* buffer number (for jump/switch)   */
+    int layout_number;                 /* the number of buffer saved in     */
+                                       /* layout                            */
     char *name;                        /* buffer name                       */
     enum t_gui_buffer_type type;       /* buffer type (formated, free, ..)  */
     int notify;                        /* 0 = never                         */

@@ -73,8 +73,8 @@ gui_window_tree_init (struct t_gui_window *window)
     if (!gui_windows_tree)
         return 0;
     gui_windows_tree->parent_node = NULL;
-    gui_windows_tree->split_horiz = 0;
     gui_windows_tree->split_pct = 0;
+    gui_windows_tree->split_horiz = 0;
     gui_windows_tree->child1 = NULL;
     gui_windows_tree->child2 = NULL;
     gui_windows_tree->window = window;
@@ -90,8 +90,8 @@ void
 gui_window_tree_node_to_leaf (struct t_gui_window_tree *node,
                               struct t_gui_window *window)
 {
-    node->split_horiz = 0;
     node->split_pct = 0;
+    node->split_horiz = 0;
     if (node->child1)
     {
         free (node->child1);
@@ -201,6 +201,7 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
             return NULL;
         }
         
+        /* position & size */
         new_window->win_x = x;
         new_window->win_y = y;
         new_window->win_width = width;
@@ -212,42 +213,52 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         new_window->new_y = -1;
         new_window->new_width = -1;
         new_window->new_height = -1;
-        
+
+        /* chat window */
         new_window->win_chat_x = 0;
         new_window->win_chat_y = 0;
         new_window->win_chat_width = 0;
         new_window->win_chat_height = 0;
         new_window->win_chat_cursor_x = 0;
         new_window->win_chat_cursor_y = 0;
-        
+
+        /* nicklist */
         new_window->win_nick_x = 0;
         new_window->win_nick_y = 0;
         new_window->win_nick_width = 0;
         new_window->win_nick_height = 0;
         new_window->win_nick_num_max = 0;
         new_window->win_nick_start = 0;
-        
+
+        /* title */
         new_window->win_title_x = 0;
         new_window->win_title_y = 0;
         new_window->win_title_width = 0;
         new_window->win_title_height = 0;
         new_window->win_title_start = 0;
-        
+
+        /* status */
         new_window->win_status_x = 0;
         new_window->win_status_y = 0;
         new_window->win_status_width = 0;
         new_window->win_status_height = 0;
-        
+
+        /* input */
         new_window->win_input_x = 0;
         new_window->win_input_y = 0;
         new_window->win_input_width = 0;
         new_window->win_input_height = 0;
         new_window->win_input_cursor_x = 0;
         
+        /* refresh */
         new_window->refresh_needed = 0;
         
+        /* buffer and layout infos */
         new_window->buffer = NULL;
+        new_window->layout_plugin_name = NULL;
+        new_window->layout_buffer_name = NULL;
         
+        /* scroll */
         new_window->first_line_displayed = 0;
         new_window->start_line = NULL;
         new_window->start_line_pos = 0;
@@ -355,6 +366,42 @@ gui_window_get_pointer (struct t_gui_window *window, const char *property)
 }
 
 /*
+ * gui_window_set_layout_plugin_name: set layout plugin name for window
+ */
+
+void
+gui_window_set_layout_plugin_name (struct t_gui_window *window,
+                                   const char *plugin_name)
+{
+    if (window->layout_plugin_name)
+    {
+        free (window->layout_plugin_name);
+        window->layout_plugin_name = NULL;
+    }
+    
+    if (plugin_name)
+        window->layout_plugin_name = strdup (plugin_name);
+}
+
+/*
+ * gui_window_set_layout_buffer_name: set layout buffer name for window
+ */
+
+void
+gui_window_set_layout_buffer_name (struct t_gui_window *window,
+                                   const char *buffer_name)
+{
+    if (window->layout_buffer_name)
+    {
+        free (window->layout_buffer_name);
+        window->layout_buffer_name = NULL;
+    }
+    
+    if (buffer_name)
+        window->layout_buffer_name = strdup (buffer_name);
+}
+
+/*
  * gui_window_free: delete a window
  */
 
@@ -409,50 +456,6 @@ gui_window_search_by_buffer (struct t_gui_buffer *buffer)
     
     /* window not found */
     return NULL;
-}
-
-/*
- * gui_window_switch_server: switch server on servers buffer
- *                           (if same buffer is used for all buffers)
- */
-
-void
-gui_window_switch_server (struct t_gui_window *window)
-{
-    (void) window;
-    /*struct t_gui_buffer *ptr_buffer;
-    t_irc_server *ptr_server;
-    
-    ptr_buffer = gui_buffer_servers_search ();
-    
-    if (ptr_buffer)
-    {
-        ptr_server = (GUI_SERVER(ptr_buffer)
-                      && GUI_SERVER(ptr_buffer)->next_server) ?
-            GUI_SERVER(ptr_buffer)->next_server : irc_servers;
-        while (ptr_server != GUI_SERVER(window->buffer))
-        {
-            if (ptr_server->buffer)
-                break;
-            if (ptr_server->next_server)
-                ptr_server = ptr_server->next_server;
-            else
-            {
-                if (GUI_SERVER(ptr_buffer) == NULL)
-                {
-                    ptr_server = NULL;
-                    break;
-                }
-                ptr_server = irc_servers;
-            }
-        }
-        if (ptr_server && (ptr_server != GUI_SERVER(ptr_buffer)))
-        {
-            ptr_buffer->server = ptr_server;
-            gui_status_draw (window->buffer, 1);
-            gui_input_draw (window->buffer, 1);
-        }
-    }*/
 }
 
 /*
@@ -1067,6 +1070,8 @@ gui_window_print_log ()
         log_printf ("  win_input_height. . : %d",   ptr_window->win_input_height);
         log_printf ("  win_input_cursor_x. : %d",   ptr_window->win_input_cursor_x);
         log_printf ("  buffer. . . . . . . : 0x%x", ptr_window->buffer);
+        log_printf ("  layout_plugin_name. : '%s'", ptr_window->layout_plugin_name);
+        log_printf ("  layout_buffer_name. : '%s'", ptr_window->layout_buffer_name);
         log_printf ("  first_line_displayed: %d",   ptr_window->first_line_displayed);
         log_printf ("  start_line. . . . . : 0x%x", ptr_window->start_line);
         log_printf ("  start_line_pos. . . : %d",   ptr_window->start_line_pos);

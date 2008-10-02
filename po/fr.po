@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-24 14:15+0200\n"
-"PO-Revision-Date: 2008-09-24 14:16+0200\n"
+"POT-Creation-Date: 2008-10-02 17:51+0200\n"
+"PO-Revision-Date: 2008-10-02 17:58+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -366,6 +366,43 @@ msgstr "Aucune touche trouvée"
 #, c-format
 msgid "%sError: unable to bind key \"%s\""
 msgstr "%sErreur: impossible de créer la touche \"%s\""
+
+#, c-format
+msgid "leaf: id: %d, parent: %d, plugin: '%s', buffer: '%s'"
+msgstr "feuille: id: %d, parent: %d, extension: '%s', tampon: '%s'"
+
+#, c-format
+msgid "node: id: %d, parent: %d, child1: %d, child2: %d, size: %d%% (%s)"
+msgstr "noeud: id: %d, parent: %d, enfant1: %d, enfant2: %d, taille: %d%% (%s)"
+
+msgid "horizontal split"
+msgstr "découpage horizontal"
+
+msgid "vertical split"
+msgstr "découpage vertical"
+
+msgid "Saved layout for buffers:"
+msgstr "Disposition sauvegardée pour les tampons :"
+
+msgid "Saved layout for windows:"
+msgstr "Disposition sauvegardée pour les fenêtres :"
+
+msgid "No layout saved"
+msgstr "Pas de disposition sauvée"
+
+msgid "Layout saved for buffers (order of buffers)"
+msgstr "Disposition sauvegardée pour les tampons (ordre des tampons)"
+
+msgid "Layout saved for windows (buffer displayed by each window)"
+msgstr ""
+"Disposition sauvegardée pour les fenêtres (le tampon affiché par chaque "
+"fenêtre)"
+
+msgid "Layout reset for buffers"
+msgstr "Disposition réinitialisée pour les tampons"
+
+msgid "Layout reset for windows"
+msgstr "Disposition réinitialisée pour les fenêtres"
 
 msgid "Plugins loaded:"
 msgstr "Extensions chargées:"
@@ -867,6 +904,30 @@ msgstr ""
 "    reset: restaure les touches aux valeurs par défaut et supprime TOUTES "
 "les touches personnelles (utiliser avec précaution !)"
 
+msgid "save/apply/reset layout for buffers and windows"
+msgstr "sauve/applique/réinitialise la disposition des tampons et fenêtres"
+
+msgid "[[save | apply | reset] [buffers | windows]]"
+msgstr "[[save | apply | reset] [buffers | windows]]"
+
+msgid ""
+"   save: save current layout\n"
+"  apply: apply saved layout\n"
+"  reset: remove saved layout\n"
+"buffers: save/apply only buffers (order of buffers)\n"
+"windows: save/apply only windows (buffer displayed by each window)\n"
+"\n"
+"Without argument, this command displays saved layout."
+msgstr ""
+"   save: sauve la disposition courante\n"
+"  apply: applique la disposition sauvegardée\n"
+"  reset: supprime la disposition sauvegardée\n"
+"buffers: sauve/applique seulement pour les tampons (ordre des tampons)\n"
+"windows: sauve/applique seulement pour les fenêtres (le tampon affiché par "
+"chaque fenêtre)\n"
+"\n"
+"Sans paramètre, cette commande affiche la disposition sauvegardée."
+
 msgid "list/load/unload plugins"
 msgstr "liste/charge/décharge des extensions"
 
@@ -886,7 +947,7 @@ msgid ""
 "autoload plugins)\n"
 "  unload: unload one or all plugins\n"
 "\n"
-"Without argument, /plugin command lists loaded plugins."
+"Without argument, this command lists loaded plugins."
 msgstr ""
 "    list: lister les extensions chargées\n"
 "listfull: lister les extensions chargées (verbeux)\n"
@@ -897,7 +958,7 @@ msgstr ""
 "extensions, puis puis recharger automatiquement les extensions)\n"
 "  unload: décharger une ou plusieurs exteneions\n"
 "\n"
-"Sans paramètre, la commande /plugin liste les extensions chargées."
+"Sans paramètre, cette commande liste les extensions chargées."
 
 msgid "quit WeeChat"
 msgstr "quitter WeeChat"
@@ -1038,11 +1099,11 @@ msgstr ""
 "taille_courante / 4"
 
 msgid ""
-"Warning: you should now issue /save to write \"save_on_exit\" option in "
-"configuration file"
+"Warning: you should now issue /save to write \"save_config_on_exit\" option "
+"in configuration file"
 msgstr ""
 "Attention: vous devriez taper /save maintenant pour écrire l'option "
-"\"save_on_exit\" dans le fichier de configuration"
+"\"save_config_on_exit\" dans le fichier de configuration"
 
 #, c-format
 msgid "\t\tDay changed to %s"
@@ -1220,6 +1281,9 @@ msgstr ""
 
 msgid "save configuration file on exit"
 msgstr "sauvegarder la configuration en quittant"
+
+msgid "save layout on exit (buffers, windows, or both)"
+msgstr "sauve la disposition en quittant (tampons, fenêtres, ou les deux)"
 
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "nombre de lignes pour le défilement avec scroll_up et scroll_down"

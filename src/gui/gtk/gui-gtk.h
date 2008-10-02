@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 struct t_gui_window;
+struct t_gui_buffer;
 struct t_gui_line;
 
 /* TODO: remove these temporary defines */
@@ -82,9 +83,6 @@ struct t_gui_gtk_objects
     int current_color_attr;         /* attr sum of last color(s) used       */
 };
 
-//extern t_gui_color gui_weechat_colors[];
-//extern int gui_irc_colors[GUI_NUM_IRC_COLORS][2];
-
 extern GtkWidget *gui_gtk_main_window;
 extern GtkWidget *gui_gtk_vbox1;
 extern GtkWidget *gui_gtk_entry_topic;
@@ -114,6 +112,7 @@ extern void gui_keyboard_read ();
 extern void gui_keyboard_flush ();
 
 /* window functions */
+extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
 extern void gui_window_title_set ();
 extern void gui_window_title_reset ();
 

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-24 14:15+0200\n"
+"POT-Creation-Date: 2008-10-02 17:51+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -342,6 +342,41 @@ msgstr ""
 
 #, c-format
 msgid "%sError: unable to bind key \"%s\""
+msgstr ""
+
+#, c-format
+msgid "leaf: id: %d, parent: %d, plugin: '%s', buffer: '%s'"
+msgstr ""
+
+#, c-format
+msgid "node: id: %d, parent: %d, child1: %d, child2: %d, size: %d%% (%s)"
+msgstr ""
+
+msgid "horizontal split"
+msgstr ""
+
+msgid "vertical split"
+msgstr ""
+
+msgid "Saved layout for buffers:"
+msgstr ""
+
+msgid "Saved layout for windows:"
+msgstr ""
+
+msgid "No layout saved"
+msgstr ""
+
+msgid "Layout saved for buffers (order of buffers)"
+msgstr ""
+
+msgid "Layout saved for windows (buffer displayed by each window)"
+msgstr ""
+
+msgid "Layout reset for buffers"
+msgstr ""
+
+msgid "Layout reset for windows"
 msgstr ""
 
 msgid "Plugins loaded:"
@@ -719,6 +754,22 @@ msgid ""
 "bindings (use carefully!)"
 msgstr ""
 
+msgid "save/apply/reset layout for buffers and windows"
+msgstr ""
+
+msgid "[[save | apply | reset] [buffers | windows]]"
+msgstr ""
+
+msgid ""
+"   save: save current layout\n"
+"  apply: apply saved layout\n"
+"  reset: remove saved layout\n"
+"buffers: save/apply only buffers (order of buffers)\n"
+"windows: save/apply only windows (buffer displayed by each window)\n"
+"\n"
+"Without argument, this command displays saved layout."
+msgstr ""
+
 msgid "list/load/unload plugins"
 msgstr ""
 
@@ -736,7 +787,7 @@ msgid ""
 "autoload plugins)\n"
 "  unload: unload one or all plugins\n"
 "\n"
-"Without argument, /plugin command lists loaded plugins."
+"Without argument, this command lists loaded plugins."
 msgstr ""
 
 msgid "quit WeeChat"
@@ -838,8 +889,8 @@ msgid ""
 msgstr ""
 
 msgid ""
-"Warning: you should now issue /save to write \"save_on_exit\" option in "
-"configuration file"
+"Warning: you should now issue /save to write \"save_config_on_exit\" option "
+"in configuration file"
 msgstr ""
 
 #, c-format
@@ -980,6 +1031,9 @@ msgid "use a marker (line or char) on buffers to show first unread line"
 msgstr ""
 
 msgid "save configuration file on exit"
+msgstr ""
+
+msgid "save layout on exit (buffers, windows, or both)"
 msgstr ""
 
 msgid "how many lines to scroll by with scroll_up and scroll_down"

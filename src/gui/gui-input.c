@@ -1256,7 +1256,7 @@ gui_input_jump_smart ()
             gui_window_switch_to_buffer (gui_current_window,
                                          gui_hotlist->buffer);
             gui_window_scroll_bottom (gui_current_window);
-            gui_window_redraw_buffer (gui_current_window->buffer);
+            gui_status_refresh_needed = 1;
         }
         else
         {
@@ -1265,7 +1265,7 @@ gui_input_jump_smart ()
                 gui_window_switch_to_buffer (gui_current_window,
                                              gui_hotlist_initial_buffer);
                 gui_window_scroll_bottom (gui_current_window);
-                gui_window_redraw_buffer (gui_current_window->buffer);
+                gui_status_refresh_needed = 1;
                 gui_hotlist_initial_buffer = NULL;
             }
         }
@@ -1315,7 +1315,7 @@ gui_input_hotlist_clear ()
     if (gui_hotlist)
     {
         gui_hotlist_free_all (&gui_hotlist, &last_gui_hotlist);
-        gui_window_redraw_buffer (gui_current_window->buffer);
+        gui_status_refresh_needed = 1;
     }
     gui_hotlist_initial_buffer = gui_current_window->buffer;
 }
@@ -1377,7 +1377,7 @@ gui_input_set_unread ()
     }
     
     /* refresh all windows */
-    gui_window_redraw_all_buffers ();
+    gui_window_refresh_needed = 1;
 }
 
 /*
@@ -1388,10 +1388,7 @@ void
 gui_input_set_unread_current_buffer ()
 {
     if (gui_current_window)
-    {
         gui_buffer_set_unread (gui_current_window->buffer);
-        gui_window_redraw_buffer (gui_current_window->buffer);
-    }
 }
 
 /*

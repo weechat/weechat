@@ -1734,7 +1734,7 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.save_on_exit</command>
+<command>weechat.look.save_config_on_exit</command>
 <itemizedlist>
   <listitem>
     <para>description: sauvegarder la configuration en quittant</para>
@@ -1747,6 +1747,22 @@
   </listitem>
   <listitem>
     <para>valeur par défaut: on</para>
+  </listitem>
+</itemizedlist>
+
+<command>weechat.look.save_layout_on_exit</command>
+<itemizedlist>
+  <listitem>
+    <para>description: sauve la disposition en quittant (tampons, fenêtres, ou les deux)</para>
+  </listitem>
+  <listitem>
+    <para>type: entier</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: none, buffers, windows, all</para>
+  </listitem>
+  <listitem>
+    <para>valeur par défaut: all</para>
   </listitem>
 </itemizedlist>
 

@@ -48,6 +48,7 @@
 #include "../gui/gui-filter.h"
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-keyboard.h"
+#include "../gui/gui-layout.h"
 #include "../gui/gui-nicklist.h"
 #include "../gui/gui-status.h"
 #include "../gui/gui-window.h"
@@ -94,7 +95,8 @@ struct t_config_option *config_look_prefix_align;
 struct t_config_option *config_look_prefix_align_max;
 struct t_config_option *config_look_prefix_suffix;
 struct t_config_option *config_look_read_marker;
-struct t_config_option *config_look_save_on_exit;
+struct t_config_option *config_look_save_config_on_exit;
+struct t_config_option *config_look_save_layout_on_exit;
 struct t_config_option *config_look_scroll_amount;
 struct t_config_option *config_look_set_title;
 
@@ -195,21 +197,22 @@ struct t_hook *config_day_change_timer = NULL;
 
 
 /*
- * config_change_save_on_exit: called when "save_on_exit" flag is changed
+ * config_change_save_config_on_exit: called when "save_config_on_exit" flag is changed
  */
 
 void
-config_change_save_on_exit (void *data, struct t_config_option *option)
+config_change_save_config_on_exit (void *data, struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
     (void) option;
     
-    if (!CONFIG_BOOLEAN(config_look_save_on_exit))
+    if (!CONFIG_BOOLEAN(config_look_save_config_on_exit))
     {
         gui_chat_printf (NULL,
                          _("Warning: you should now issue /save to write "
-                           "\"save_on_exit\" option in configuration file"));
+                           "\"save_config_on_exit\" option in configuration "
+                           "file"));
     }
 }
 
@@ -256,7 +259,7 @@ config_change_buffer_content (void *data, struct t_config_option *option)
     (void) option;
     
     if (gui_ok)
-        gui_window_redraw_buffer (gui_current_window->buffer);
+        gui_current_window->refresh_needed = 1;
 }
 
 /*
@@ -273,7 +276,7 @@ config_change_buffer_time_format (void *data, struct t_config_option *option)
     gui_chat_time_length = util_get_time_length (CONFIG_STRING(config_look_buffer_time_format));
     gui_chat_change_time_format ();
     if (gui_ok)
-        gui_window_redraw_buffer (gui_current_window->buffer);
+        gui_window_refresh_needed = 1;
 }
 
 /*
@@ -302,7 +305,7 @@ config_change_read_marker (void *data, struct t_config_option *option)
     (void) data;
     (void) option;
     
-    gui_window_redraw_all_buffers ();
+    gui_window_refresh_needed = 1;
 }
 
 /*
@@ -463,6 +466,10 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     /* remove all bars */
     gui_bar_free_all ();
     
+    /* remove layout */
+    gui_layout_buffer_reset ();
+    gui_layout_window_reset ();
+    
     /* remove all filters */
     gui_filter_free_all ();
     
@@ -479,7 +486,6 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
 
 /*
  * config_weechat_bar_read: read bar option in config file
- *                          return: 1 if ok, 0 if error
  */
 
 int
@@ -544,12 +550,140 @@ config_weechat_bar_read (void *data, struct t_config_file *config_file,
         }
     }
     
-    return 1;
+    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+}
+
+/*
+ * config_weechat_layout_read: read layout option in config file
+ */
+
+int
+config_weechat_layout_read (void *data, struct t_config_file *config_file,
+                            struct t_config_section *section,
+                            const char *option_name, const char *value)
+{
+    int argc;
+    char **argv, *error1, *error2, *error3, *error4;
+    long number1, number2, number3, number4;
+    struct t_gui_layout_window *parent;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) config_file;
+    (void) section;
+    
+    if (option_name && value && value[0])
+    {
+        if (string_strcasecmp (option_name, "buffer") == 0)
+        {
+            argv = string_explode (value, ";", 0, 0, &argc);
+            if (argv)
+            {
+                if (argc >= 3)
+                {
+                    error1 = NULL;
+                    number1 = strtol (argv[2], &error1, 10);
+                    if (error1 && !error1[0])
+                    {
+                        gui_layout_buffer_add (argv[0], argv[1], number1);
+                    }
+                }
+                string_free_exploded (argv);
+            }
+        }
+        else if (string_strcasecmp (option_name, "window") == 0)
+        {
+            argv = string_explode (value, ";", 0, 0, &argc);
+            if (argv)
+            {
+                if (argc >= 6)
+                {
+                    error1 = NULL;
+                    number1 = strtol (argv[0], &error1, 10);
+                    error2 = NULL;
+                    number2 = strtol (argv[1], &error2, 10);
+                    error3 = NULL;
+                    number3 = strtol (argv[2], &error3, 10);
+                    error4 = NULL;
+                    number4 = strtol (argv[3], &error4, 10);
+                    if (error1 && !error1[0] && error2 && !error2[0]
+                        && error3 && !error3[0] && error4 && !error4[0])
+                    {
+                        parent = gui_layout_window_search_by_id (number2);
+                        gui_layout_window_add (number1,
+                                               parent,
+                                               number3,
+                                               number4,
+                                               (strcmp (argv[4], "-") != 0) ?
+                                               argv[4] : NULL,
+                                               (strcmp (argv[4], "-") != 0) ?
+                                               argv[5] : NULL);
+                    }
+                }
+                string_free_exploded (argv);
+            }
+        }
+    }
+    
+    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+}
+
+/*
+ * config_weechat_layout_write: write windows layout in configuration file
+ */
+
+void
+config_weechat_layout_write_tree (struct t_config_file *config_file,
+                                  struct t_gui_layout_window *layout_window)
+{
+    config_file_write_line (config_file, "window", "\"%d;%d;%d;%d;%s;%s\"",
+                            layout_window->internal_id,
+                            (layout_window->parent_node) ?
+                            layout_window->parent_node->internal_id : 0,
+                            layout_window->split_pct,
+                            layout_window->split_horiz,
+                            (layout_window->plugin_name) ?
+                            layout_window->plugin_name : "-",
+                            (layout_window->buffer_name) ?
+                            layout_window->buffer_name : "-");
+    
+    if (layout_window->child1)
+        config_weechat_layout_write_tree (config_file, layout_window->child1);
+    
+    if (layout_window->child2)
+        config_weechat_layout_write_tree (config_file, layout_window->child2);
+}
+
+/*
+ * config_weechat_layout_write: write layout section in configuration file
+ */
+
+void
+config_weechat_layout_write (void *data, struct t_config_file *config_file,
+                             const char *section_name)
+{
+    struct t_gui_layout_buffer *ptr_layout_buffer;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    config_file_write_line (config_file, section_name, NULL);
+    
+    for (ptr_layout_buffer = gui_layout_buffers; ptr_layout_buffer;
+         ptr_layout_buffer = ptr_layout_buffer->next_layout)
+    {
+        config_file_write_line (config_file, "buffer", "\"%s;%s;%d\"",
+                                ptr_layout_buffer->plugin_name,
+                                ptr_layout_buffer->buffer_name,
+                                ptr_layout_buffer->number);
+    }
+    
+    if (gui_layout_windows)
+        config_weechat_layout_write_tree (config_file, gui_layout_windows);
 }
 
 /*
  * config_weechat_filter_read: read filter option from config file
- *                             return 1 if ok, 0 if error
  */
 
 int
@@ -566,24 +700,21 @@ config_weechat_filter_read (void *data,
     (void) config_file;
     (void) section;
     
-    if (option_name)
+    if (option_name && value && value[0])
     {
-        if (value && value[0])
+        argv = string_explode (value, ";", 0, 0, &argc);
+        argv_eol = string_explode (value, ";", 1, 0, NULL);
+        if (argv && argv_eol && (argc >= 3))
         {
-            argv = string_explode (value, ";", 0, 0, &argc);
-            argv_eol = string_explode (value, ";", 1, 0, NULL);
-            if (argv && argv_eol && (argc >= 3))
-            {
-                gui_filter_new (argv[0], argv[1], argv_eol[2]);
-            }
-            if (argv)
-                string_free_exploded (argv);
-            if (argv_eol)
-                string_free_exploded (argv_eol);
+            gui_filter_new (argv[0], argv[1], argv_eol[2]);
         }
+        if (argv)
+            string_free_exploded (argv);
+        if (argv_eol)
+            string_free_exploded (argv_eol);
     }
     
-    return 1;
+    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 }
 
 /*
@@ -615,7 +746,6 @@ config_weechat_filter_write (void *data, struct t_config_file *config_file,
 
 /*
  * config_weechat_key_read: read key option in config file
- *                          return 1 if ok, 0 if error
  */
 
 int
@@ -642,7 +772,7 @@ config_weechat_key_read (void *data, struct t_config_file *config_file,
         }
     }
     
-    return 1;
+    return WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
 }
 
 /*
@@ -915,11 +1045,16 @@ config_weechat_init ()
         N_("use a marker (line or char) on buffers to show first unread line"),
         "none|line|dotted-line|char",
         0, 0, "dotted-line", NULL, NULL, &config_change_read_marker, NULL, NULL, NULL);
-    config_look_save_on_exit = config_file_new_option (
+    config_look_save_config_on_exit = config_file_new_option (
         weechat_config_file, ptr_section,
-        "save_on_exit", "boolean",
+        "save_config_on_exit", "boolean",
         N_("save configuration file on exit"),
-        NULL, 0, 0, "on", NULL, NULL, &config_change_save_on_exit, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, NULL, &config_change_save_config_on_exit, NULL, NULL, NULL);
+    config_look_save_layout_on_exit = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "save_layout_on_exit", "integer",
+        N_("save layout on exit (buffers, windows, or both)"),
+        "none|buffers|windows|all", 0, 0, "all", NULL, NULL, NULL, NULL, NULL, NULL);
     config_look_scroll_amount = config_file_new_option (
         weechat_config_file, ptr_section,
         "scroll_amount", "integer",
@@ -1544,6 +1679,19 @@ config_weechat_init ()
     }
     
     weechat_config_section_bar = ptr_section;
+    
+    /* layout */
+    ptr_section = config_file_new_section (weechat_config_file, "layout",
+                                           0, 0,
+                                           &config_weechat_layout_read, NULL,
+                                           &config_weechat_layout_write, NULL,
+                                           NULL, NULL,
+                                           NULL, NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        return 0;
+    }
     
     /* filters */
     ptr_section = config_file_new_section (weechat_config_file, "filter",

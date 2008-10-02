@@ -139,6 +139,18 @@ bind/unbind keys
    unbind: unbind a key
     reset: restore bindings to the default values and delete ALL personal bindings (use carefully!)
 </programlisting>
+<command>layout  [[save | apply | reset] [buffers | windows]]</command>
+<programlisting>
+save/apply/reset layout for buffers and windows
+
+   save: save current layout
+  apply: apply saved layout
+  reset: remove saved layout
+buffers: save/apply only buffers (order of buffers)
+windows: save/apply only windows (buffer displayed by each window)
+
+Without argument, this command displays saved layout.
+</programlisting>
 <command>plugin  [list [name]] | [listfull [name]] | [load filename] | [autoload] | [reload [name]] | [unload [name]]</command>
 <programlisting>
 list/load/unload plugins
@@ -150,7 +162,7 @@ autoload: autoload plugins in system or user directory
   reload: reload one plugin (if no name given, unload all plugins, then autoload plugins)
   unload: unload one or all plugins
 
-Without argument, /plugin command lists loaded plugins.
+Without argument, this command lists loaded plugins.
 </programlisting>
 <command>quit</command>
 <programlisting>

@@ -610,24 +610,27 @@ gui_window_refresh_windows ()
  * gui_window_split_horiz: split a window horizontally
  */
 
-void
+struct t_gui_window *
 gui_window_split_horiz (struct t_gui_window *window, int percentage)
 {
     struct t_gui_window *new_window;
     int height1, height2;
     
     if (!gui_ok)
-        return;
+        return NULL;
+    
+    new_window = NULL;
     
     height1 = (window->win_height * percentage) / 100;
     height2 = window->win_height - height1;
     
     if ((percentage > 0) && (percentage <= 100))
     {
-        if ((new_window = gui_window_new (window,
-                                          window->win_x, window->win_y,
-                                          window->win_width, height1,
-                                          100, percentage)))
+        new_window = gui_window_new (window,
+                                     window->win_x, window->win_y,
+                                     window->win_width, height1,
+                                     100, percentage);
+        if (new_window)
         {
             /* reduce old window height (bottom window) */
             window->win_y = new_window->win_y + new_window->win_height;
@@ -645,30 +648,35 @@ gui_window_split_horiz (struct t_gui_window *window, int percentage)
             gui_window_redraw_buffer (gui_current_window->buffer);
         }
     }
+    
+    return new_window;
 }
 
 /*
  * gui_window_split_vertic: split a window vertically
  */
 
-void
+struct t_gui_window *
 gui_window_split_vertic (struct t_gui_window *window, int percentage)
 {
     struct t_gui_window *new_window;
     int width1, width2;
     
     if (!gui_ok)
-        return;
+        return NULL;
+    
+    new_window = NULL;
     
     width1 = (window->win_width * percentage) / 100;
     width2 = window->win_width - width1 - 1;
     
     if ((percentage > 0) && (percentage <= 100))
     {
-        if ((new_window = gui_window_new (window,
-                                          window->win_x + width1 + 1, window->win_y,
-                                          width2, window->win_height,
-                                          percentage, 100)))
+        new_window = gui_window_new (window,
+                                     window->win_x + width1 + 1, window->win_y,
+                                     width2, window->win_height,
+                                     percentage, 100);
+        if (new_window)
         {
             /* reduce old window height (left window) */
             window->win_width = width1;
@@ -688,6 +696,8 @@ gui_window_split_vertic (struct t_gui_window *window, int percentage)
             gui_window_draw_separator (gui_current_window);
         }
     }
+    
+    return new_window;
 }
 
 /*

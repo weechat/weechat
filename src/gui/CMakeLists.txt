@@ -14,10 +14,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-IF(NOT DISABLE_NCURSES)
-  SUBDIRS( curses )
-ENDIF(NOT DISABLE_NCURSES)
-
 SET(LIB_GUI_COMMON_SRC
 gui-bar.c gui-bar.h
 gui-bar-item.c gui-bar-item.h
@@ -30,6 +26,7 @@ gui-history.c gui-history.h
 gui-hotlist.c gui-hotlist.h
 gui-input.c gui-input.h
 gui-keyboard.c gui-keyboard.h
+gui-layout.c gui-layout.h
 gui-main.h
 gui-nicklist.c gui-nicklist.h
 gui-status.c gui-status.h
@@ -37,6 +34,10 @@ gui-window.c gui-window.h)
 
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
 ADD_LIBRARY(weechat_gui_common STATIC ${LIB_GUI_COMMON_SRC})
+
+IF(NOT DISABLE_NCURSES)
+  SUBDIRS( curses )
+ENDIF(NOT DISABLE_NCURSES)
 
 IF(ENABLE_GTK)
   ADD_SUBDIRECTORY( gtk )

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-09-24 14:15+0200\n"
+"POT-Creation-Date: 2008-10-02 17:51+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -395,6 +395,45 @@ msgstr "NingÃºn alias definido.\n"
 #, fuzzy, c-format
 msgid "%sError: unable to bind key \"%s\""
 msgstr "%s No ha sido posible atar la clave \"%s\"\n"
+
+#, c-format
+msgid "leaf: id: %d, parent: %d, plugin: '%s', buffer: '%s'"
+msgstr ""
+
+#, c-format
+msgid "node: id: %d, parent: %d, child1: %d, child2: %d, size: %d%% (%s)"
+msgstr ""
+
+msgid "horizontal split"
+msgstr ""
+
+msgid "vertical split"
+msgstr ""
+
+#, fuzzy
+msgid "Saved layout for buffers:"
+msgstr "fecha y hora para las bÃºfers"
+
+#, fuzzy
+msgid "Saved layout for windows:"
+msgstr "fin de la lista /who"
+
+msgid "No layout saved"
+msgstr ""
+
+msgid "Layout saved for buffers (order of buffers)"
+msgstr ""
+
+msgid "Layout saved for windows (buffer displayed by each window)"
+msgstr ""
+
+#, fuzzy
+msgid "Layout reset for buffers"
+msgstr "fecha y hora para las bÃºfers"
+
+#, fuzzy
+msgid "Layout reset for windows"
+msgstr "fin de la lista /who"
 
 #, fuzzy
 msgid "Plugins loaded:"
@@ -829,6 +868,22 @@ msgstr ""
 "    reset: restaura anclajes a los valores por defecto y elimina todos los "
 "anclajes personales (usar cuidadosamente)"
 
+msgid "save/apply/reset layout for buffers and windows"
+msgstr ""
+
+msgid "[[save | apply | reset] [buffers | windows]]"
+msgstr ""
+
+msgid ""
+"   save: save current layout\n"
+"  apply: apply saved layout\n"
+"  reset: remove saved layout\n"
+"buffers: save/apply only buffers (order of buffers)\n"
+"windows: save/apply only windows (buffer displayed by each window)\n"
+"\n"
+"Without argument, this command displays saved layout."
+msgstr ""
+
 msgid "list/load/unload plugins"
 msgstr "listar/cargar/descargar plugins"
 
@@ -847,7 +902,7 @@ msgid ""
 "autoload plugins)\n"
 "  unload: unload one or all plugins\n"
 "\n"
-"Without argument, /plugin command lists loaded plugins."
+"Without argument, this command lists loaded plugins."
 msgstr ""
 
 msgid "quit WeeChat"
@@ -977,8 +1032,8 @@ msgstr ""
 "ejemplo 25 significa crear una nueva ventana de tamaÃ±o = tamaÃ±o_actual / 4"
 
 msgid ""
-"Warning: you should now issue /save to write \"save_on_exit\" option in "
-"configuration file"
+"Warning: you should now issue /save to write \"save_config_on_exit\" option "
+"in configuration file"
 msgstr ""
 
 #, fuzzy, c-format
@@ -1159,6 +1214,9 @@ msgstr ""
 #, fuzzy
 msgid "save configuration file on exit"
 msgstr "guardar configuraciÃ³n a disco"
+
+msgid "save layout on exit (buffers, windows, or both)"
+msgstr ""
 
 msgid "how many lines to scroll by with scroll_up and scroll_down"
 msgstr "cuÃ¡ntas lÃ­neas a desplazar con scroll_up and scroll_down"

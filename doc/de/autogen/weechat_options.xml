@@ -1734,7 +1734,7 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.save_on_exit</command>
+<command>weechat.look.save_config_on_exit</command>
 <itemizedlist>
   <listitem>
     <para>description: save configuration file on exit</para>
@@ -1747,6 +1747,22 @@
   </listitem>
   <listitem>
     <para>default value: on</para>
+  </listitem>
+</itemizedlist>
+
+<command>weechat.look.save_layout_on_exit</command>
+<itemizedlist>
+  <listitem>
+    <para>description: save layout on exit (buffers, windows, or both)</para>
+  </listitem>
+  <listitem>
+    <para>type: integer</para>
+  </listitem>
+  <listitem>
+    <para>values: none, buffers, windows, all</para>
+  </listitem>
+  <listitem>
+    <para>default value: all</para>
   </listitem>
 </itemizedlist>
 

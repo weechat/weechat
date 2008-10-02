@@ -51,6 +51,7 @@
 #include "../gui/gui-hotlist.h"
 #include "../gui/gui-input.h"
 #include "../gui/gui-keyboard.h"
+#include "../gui/gui-layout.h"
 #include "../gui/gui-main.h"
 #include "../gui/gui-status.h"
 #include "../gui/gui-window.h"
@@ -685,7 +686,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         {
             gui_window_switch_to_buffer (gui_current_window,
                                          ptr_buffer);
-            gui_window_redraw_buffer (ptr_buffer);
+            gui_status_refresh_needed = 1;
         }
     }
     
@@ -1496,6 +1497,175 @@ command_key (void *data, struct t_gui_buffer *buffer,
                          gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                          argv[1]);
         return WEECHAT_RC_ERROR;
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
+ * command_layout_display_tree: display tree of windows
+ */
+
+void
+command_layout_display_tree (struct t_gui_layout_window *layout_window,
+                             int indent)
+{
+    char format[128];
+    
+    if (layout_window)
+    {
+        if (layout_window->plugin_name)
+        {
+            /* leaf */
+            snprintf (format, sizeof (format), "%%-%ds%s",
+                      indent * 2,
+                      _("leaf: id: %d, parent: %d, plugin: '%s', buffer: '%s'"));
+            gui_chat_printf (NULL, format,
+                             " ",
+                             layout_window->internal_id,
+                             (layout_window->parent_node) ?
+                             layout_window->parent_node->internal_id : 0,
+                             (layout_window->plugin_name) ?
+                             layout_window->plugin_name : "-",
+                             (layout_window->buffer_name) ?
+                             layout_window->buffer_name : "-");
+        }
+        else
+        {
+            /* node */
+            snprintf (format, sizeof (format), "%%-%ds%s",
+                      indent * 2,
+                      _("node: id: %d, parent: %d, child1: %d, child2: %d, "
+                        "size: %d%% (%s)"));
+            gui_chat_printf (NULL, format,
+                             " ",
+                             layout_window->internal_id,
+                             (layout_window->parent_node) ?
+                             layout_window->parent_node->internal_id : 0,
+                             (layout_window->child1) ?
+                             layout_window->child1->internal_id : 0,
+                             (layout_window->child2) ?
+                             layout_window->child2->internal_id : 0,
+                             layout_window->split_pct,
+                             (layout_window->split_horiz) ?
+                             _("horizontal split") : _("vertical split"));
+        }
+        
+        if (layout_window->child1)
+            command_layout_display_tree (layout_window->child1, indent + 1);
+        
+        if (layout_window->child2)
+            command_layout_display_tree (layout_window->child2, indent + 1);
+    }
+}
+
+/*
+ * command_layout: save/apply buffers/windows layout
+ */
+
+int
+command_layout (void *data, struct t_gui_buffer *buffer,
+                int argc, char **argv, char **argv_eol)
+{
+    struct t_gui_layout_buffer *ptr_layout_buffer;
+    int flag_buffers, flag_windows;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) buffer;
+    (void) argv_eol;
+    
+    /* display all key bindings */
+    if (argc == 1)
+    {
+        if (gui_layout_buffers || gui_layout_windows)
+        {
+            if (gui_layout_buffers)
+            {
+                gui_chat_printf (NULL, "");
+                gui_chat_printf (NULL, _("Saved layout for buffers:"));
+                for (ptr_layout_buffer = gui_layout_buffers;
+                     ptr_layout_buffer;
+                     ptr_layout_buffer = ptr_layout_buffer->next_layout)
+                {
+                    gui_chat_printf (NULL, "  %d. %s / %s",
+                                     ptr_layout_buffer->number,
+                                     ptr_layout_buffer->plugin_name,
+                                     ptr_layout_buffer->buffer_name);
+                }
+            }
+            if (gui_layout_windows)
+            {
+                gui_chat_printf (NULL, "");
+                gui_chat_printf (NULL, _("Saved layout for windows:"));
+                command_layout_display_tree (gui_layout_windows, 1);
+            }
+        }
+        else
+            gui_chat_printf (NULL, _("No layout saved"));
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    flag_buffers = 1;
+    flag_windows = 1;
+    
+    if (argc > 2)
+    {
+        if (string_strcasecmp (argv[2], "buffers") == 0)
+            flag_windows = 0;
+        else if (string_strcasecmp (argv[2], "windows") == 0)
+            flag_buffers = 0;
+    }
+    
+    /* save layout */
+    if (string_strcasecmp (argv[1], "save") == 0)
+    {
+        if (flag_buffers)
+        {
+            gui_layout_buffer_save ();
+            gui_chat_printf (NULL,
+                             _("Layout saved for buffers (order of buffers)"));
+        }
+        if (flag_windows)
+        {
+            gui_layout_window_save ();
+            gui_chat_printf (NULL,
+                             _("Layout saved for windows (buffer displayed by "
+                               "each window)"));
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+    
+    /* apply layout */
+    if (string_strcasecmp (argv[1], "apply") == 0)
+    {
+        if (flag_buffers)
+            gui_layout_buffer_apply ();
+        if (flag_windows)
+            gui_layout_window_apply ();
+        
+        return WEECHAT_RC_OK;
+    }
+
+    /* reset layout */
+    if (string_strcasecmp (argv[1], "reset") == 0)
+    {
+        if (flag_buffers)
+        {
+            gui_layout_buffer_reset ();
+            gui_chat_printf (NULL,
+                             _("Layout reset for buffers"));
+        }
+        if (flag_windows)
+        {
+            gui_layout_window_reset ();
+            gui_chat_printf (NULL,
+                             _("Layout reset for windows"));
+        }
+        
+        return WEECHAT_RC_OK;
     }
     
     return WEECHAT_RC_OK;
@@ -2346,9 +2516,10 @@ command_upgrade (void *data, struct t_gui_buffer *buffer,
     exec_args[0] = strdup (ptr_binary);
     exec_args[3] = strdup (weechat_home);
     
-    /* unload plugins, save config, then upgrade */
+    /* save layout, unload plugins, save config, then upgrade */
+    gui_layout_save_on_exit ();
     plugin_end ();
-    if (CONFIG_BOOLEAN(config_look_save_on_exit))
+    if (CONFIG_BOOLEAN(config_look_save_config_on_exit))
         (void) config_weechat_write ();
     gui_main_end (1);
     log_close ();
@@ -2922,6 +3093,18 @@ command_init ()
                      "delete ALL personal bindings (use carefully!)"),
                   "unbind|reset",
                   &command_key, NULL);
+    hook_command (NULL, "layout",
+                  N_("save/apply/reset layout for buffers and windows"),
+                  N_("[[save | apply | reset] [buffers | windows]]"),
+                  N_("   save: save current layout\n"
+                     "  apply: apply saved layout\n"
+                     "  reset: remove saved layout\n"
+                     "buffers: save/apply only buffers (order of buffers)\n"
+                     "windows: save/apply only windows (buffer displayed by "
+                     "each window)\n\n"
+                     "Without argument, this command displays saved layout."),
+                  "save|apply|reset buffers|windows",
+                  &command_layout, NULL);
     hook_command (NULL, "plugin",
                   N_("list/load/unload plugins"),
                   N_("[list [name]] | [listfull [name]] | [load filename] | "
@@ -2933,7 +3116,7 @@ command_init ()
                      "  reload: reload one plugin (if no name given, unload "
                      "all plugins, then autoload plugins)\n"
                      "  unload: unload one or all plugins\n\n"
-                     "Without argument, /plugin command lists loaded plugins."),
+                     "Without argument, this command lists loaded plugins."),
                   "list|listfull|load|autoload|reload|unload %f|%p",
                   &command_plugin, NULL);
     hook_command (NULL, "quit",

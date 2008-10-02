@@ -585,9 +585,8 @@ gui_window_redraw_buffer (struct t_gui_buffer *buffer)
         return;
     
     gui_chat_draw_title (buffer, 1);
-    gui_chat_draw (buffer, 1);
-    if (buffer->nicklist)
-        gui_nicklist_draw (buffer, 1);
+    if (!gui_nicklist_draw (buffer, 1))
+        gui_chat_draw (buffer, 1);
     gui_status_draw (1);
     gui_input_draw (buffer, 1);
 }
@@ -714,8 +713,10 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
          ptr_bar_win = ptr_bar_win->next_bar_window)
     {
-        gui_bar_draw (ptr_bar_win->bar);
+        ptr_bar_win->bar->bar_refresh_needed = 1;
     }
+    
+    window->refresh_needed = 1;
     
     hook_signal_send ("buffer_switch",
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
@@ -750,7 +751,7 @@ gui_window_switch (struct t_gui_window *window)
     gui_window_switch_to_buffer (gui_current_window,
                                  gui_current_window->buffer);
     
-    gui_window_redraw_buffer (gui_current_window->buffer);
+    gui_current_window->refresh_needed = 1;
 }
 
 /*
@@ -1298,14 +1299,16 @@ gui_window_refresh_windows ()
  * gui_window_split_horiz: split a window horizontally
  */
 
-void
+struct t_gui_window *
 gui_window_split_horiz (struct t_gui_window *window, int percentage)
 {
     struct t_gui_window *new_window;
     int height1, height2;
     
     if (!gui_ok)
-        return;
+        return NULL;
+    
+    new_window = NULL;
     
     height1 = (window->win_height * percentage) / 100;
     height2 = window->win_height - height1;
@@ -1313,10 +1316,11 @@ gui_window_split_horiz (struct t_gui_window *window, int percentage)
     if ((height1 >= GUI_WINDOW_MIN_HEIGHT) && (height2 >= GUI_WINDOW_MIN_HEIGHT)
         && (percentage > 0) && (percentage <= 100))
     {
-        if ((new_window = gui_window_new (window,
-                                          window->win_x, window->win_y,
-                                          window->win_width, height1,
-                                          100, percentage)))
+        new_window = gui_window_new (window,
+                                     window->win_x, window->win_y,
+                                     window->win_width, height1,
+                                     100, percentage);
+        if (new_window)
         {
             /* reduce old window height (bottom window) */
             window->win_y = new_window->win_y + new_window->win_height;
@@ -1332,20 +1336,24 @@ gui_window_split_horiz (struct t_gui_window *window, int percentage)
             gui_window_switch (new_window);
         }
     }
+    
+    return new_window;
 }
 
 /*
  * gui_window_split_vertic: split a window vertically
  */
 
-void
+struct t_gui_window *
 gui_window_split_vertic (struct t_gui_window *window, int percentage)
 {
     struct t_gui_window *new_window;
     int width1, width2;
     
     if (!gui_ok)
-        return;
+        return NULL;
+    
+    new_window = NULL;
     
     width1 = (window->win_width * percentage) / 100;
     width2 = window->win_width - width1 - 1;
@@ -1353,10 +1361,11 @@ gui_window_split_vertic (struct t_gui_window *window, int percentage)
     if ((width1 >= GUI_WINDOW_MIN_WIDTH) && (width2 >= GUI_WINDOW_MIN_WIDTH)
         && (percentage > 0) && (percentage <= 100))
     {
-        if ((new_window = gui_window_new (window,
-                                          window->win_x + width1 + 1, window->win_y,
-                                          width2, window->win_height,
-                                          percentage, 100)))
+        new_window = gui_window_new (window,
+                                     window->win_x + width1 + 1, window->win_y,
+                                     width2, window->win_height,
+                                     percentage, 100);
+        if (new_window)
         {
             /* reduce old window height (left window) */
             window->win_width = width1;
@@ -1374,6 +1383,8 @@ gui_window_split_vertic (struct t_gui_window *window, int percentage)
             gui_window_draw_separator (gui_current_window);
         }
     }
+    
+    return new_window;
 }
 
 /*
@@ -1410,7 +1421,7 @@ gui_window_resize (struct t_gui_window *window, int percentage)
                                     1) < 0)
             parent->split_pct = old_split_pct;
         else
-            gui_window_refresh_windows ();
+            gui_window_refresh_needed = 1;
     }
 }
 
@@ -1456,7 +1467,7 @@ gui_window_merge (struct t_gui_window *window)
         gui_window_tree_node_to_leaf (parent, window);
         
         gui_window_switch_to_buffer (window, window->buffer);
-        gui_window_redraw_buffer (window->buffer);
+        window->refresh_needed = 1;
         return 1;
     }
     return 0;
@@ -1501,7 +1512,7 @@ gui_window_merge_all (struct t_gui_window *window)
         
         gui_current_window = window;
         gui_window_switch_to_buffer (window, window->buffer);
-        gui_window_redraw_buffer (window->buffer);
+        window->refresh_needed = 1;
     }
 }
 

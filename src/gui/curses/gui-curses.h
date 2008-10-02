@@ -28,6 +28,8 @@
 #include <curses.h>
 #endif
 
+struct t_gui_buffer;
+
 #define GUI_WINDOW_MIN_WIDTH          10
 #define GUI_WINDOW_MIN_HEIGHT         5
 
@@ -92,6 +94,7 @@ extern void gui_keyboard_default_bindings ();
 extern int gui_keyboard_read_cb (void *data);
 
 /* window functions */
+extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
 extern int gui_window_utf_char_valid (const char *utf_char);
 extern void gui_window_wprintw (WINDOW *window, const char *data, ...);
 extern void gui_window_clear_weechat (WINDOW *window, int num_color);

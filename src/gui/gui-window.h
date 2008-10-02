@@ -78,9 +78,15 @@ struct t_gui_window
     
     /* GUI specific objects */
     void *gui_objects;                 /* pointer to a GUI specific struct  */
-    
+
+    /* buffer and layout infos */
     struct t_gui_buffer *buffer;       /* buffer currently displayed        */
+    char *layout_plugin_name;          /* plugin and buffer that should be  */
+    char *layout_buffer_name;          /* displayed in this window (even if */
+                                       /* buffer does not exist yet, it will*/
+                                       /* be assigned later)                */
     
+    /* scroll */
     int first_line_displayed;          /* = 1 if first line is displayed    */
     struct t_gui_line *start_line;     /* pointer to line if scrolling      */
     int start_line_pos;                /* position in first line displayed  */
@@ -98,10 +104,10 @@ struct t_gui_window_tree
     struct t_gui_window_tree *parent_node; /* pointer to parent node        */
     
     /* node info */
-    int split_horiz;                   /* 1 if horizontal, 0 if vertical    */
     int split_pct;                     /* % of split size (child1)          */
-    struct t_gui_window_tree *child1;  /* first child, NULL if a leaf     */
-    struct t_gui_window_tree *child2;  /* second child, NULL if a leaf    */
+    int split_horiz;                   /* 1 if horizontal, 0 if vertical    */
+    struct t_gui_window_tree *child1;  /* first child, NULL if a leaf       */
+    struct t_gui_window_tree *child2;  /* second child, NULL if a leaf      */
     
     /* leaf info */
     struct t_gui_window *window;       /* pointer to window, NULL if a node */
@@ -129,6 +135,10 @@ extern char *gui_window_get_string (struct t_gui_window *window,
                                     const char *property);
 extern void *gui_window_get_pointer (struct t_gui_window *window,
                                      const char *property);
+extern void gui_window_set_layout_plugin_name (struct t_gui_window *window,
+                                               const char *plugin_name);
+extern void gui_window_set_layout_buffer_name (struct t_gui_window *window,
+                                               const char *buffer_name);
 extern void gui_window_free (struct t_gui_window *window);
 extern struct t_gui_window *gui_window_search_by_buffer (struct t_gui_buffer *buffer);
 extern void gui_window_switch_server (struct t_gui_window *window);
@@ -157,8 +167,6 @@ extern void gui_window_objects_free (struct t_gui_window *window,
                                      int free_bar_windows);
 extern int gui_window_calculate_pos_size (struct t_gui_window *window,
                                           int force_calculate);
-extern void gui_window_redraw_buffer (struct t_gui_buffer *buffer);
-extern void gui_window_redraw_all_buffers ();
 extern void gui_window_switch_to_buffer (struct t_gui_window *window,
                                          struct t_gui_buffer *buffer);
 extern void gui_window_switch (struct t_gui_window *window);
@@ -176,10 +184,10 @@ extern void gui_window_nicklist_beginning (struct t_gui_window *window);
 extern void gui_window_nicklist_end (struct t_gui_window *window);
 extern void gui_window_init_subwindows (struct t_gui_window *window);
 extern void gui_window_refresh_windows ();
-extern void gui_window_split_horiz (struct t_gui_window *window,
-                                    int percentage);
-extern void gui_window_split_vertic (struct t_gui_window *window,
-                                     int percentage);
+extern struct t_gui_window *gui_window_split_horiz (struct t_gui_window *window,
+                                                    int percentage);
+extern struct t_gui_window *gui_window_split_vertic (struct t_gui_window *window,
+                                                     int percentage);
 extern void gui_window_resize (struct t_gui_window *window, int percentage);
 extern int gui_window_merge (struct t_gui_window *window);
 extern void gui_window_merge_all (struct t_gui_window *window);

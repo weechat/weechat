@@ -48,6 +48,7 @@
 #include "gui-hotlist.h"
 #include "gui-input.h"
 #include "gui-keyboard.h"
+#include "gui-layout.h"
 #include "gui-main.h"
 #include "gui-nicklist.h"
 #include "gui-status.h"
@@ -61,6 +62,71 @@ struct t_gui_buffer *gui_previous_buffer = NULL;   /* previous buffer       */
 char *gui_buffer_notify_string[GUI_BUFFER_NUM_NOTIFY] =
 { "none", "highlight", "message", "all" };
 
+
+/*
+ * gui_buffer_find_pos: find position for buffer in list
+ */
+
+struct t_gui_buffer *
+gui_buffer_find_pos (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer *ptr_buffer;
+    
+    /* if no number is asked by layout, then add to the end by default */
+    if (buffer->layout_number < 1)
+        return NULL;
+    
+    for (ptr_buffer = gui_buffers; ptr_buffer;
+         ptr_buffer = ptr_buffer->next_buffer)
+    {
+        if (buffer->layout_number <= ptr_buffer->number)
+            return ptr_buffer;
+    }
+    
+    /* position not found, add to the end */
+    return NULL;
+}
+
+/*
+ * gui_buffer_insert: insert buffer in good position in list of buffers
+ */
+
+void
+gui_buffer_insert (struct t_gui_buffer *buffer)
+{
+    struct t_gui_buffer *pos, *ptr_buffer;
+    
+    pos = gui_buffer_find_pos (buffer);
+    if (pos)
+    {
+        /* add buffer into the list (before position found) */
+        buffer->number = pos->number;
+        buffer->prev_buffer = pos->prev_buffer;
+        buffer->next_buffer = pos;
+        if (pos->prev_buffer)
+            (pos->prev_buffer)->next_buffer = buffer;
+        else
+            gui_buffers = buffer;
+        pos->prev_buffer = buffer;
+        for (ptr_buffer = pos; ptr_buffer;
+             ptr_buffer = ptr_buffer->next_buffer)
+        {
+            ptr_buffer->number++;
+        }
+    }
+    else
+    {
+        /* add buffer to the end */
+        buffer->number = (last_gui_buffer) ? last_gui_buffer->number + 1 : 1;
+        buffer->prev_buffer = last_gui_buffer;
+        if (gui_buffers)
+            last_gui_buffer->next_buffer = buffer;
+        else
+            gui_buffers = buffer;
+        last_gui_buffer = buffer;
+        buffer->next_buffer = NULL;
+    }
+}
 
 /*
  * gui_buffer_new: create a new buffer in current window
@@ -100,7 +166,9 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         /* init buffer */
         new_buffer->plugin = plugin;
         new_buffer->plugin_name_for_upgrade = NULL;
-        new_buffer->number = (last_gui_buffer) ? last_gui_buffer->number + 1 : 1;
+        /* number will be set later (when inserting buffer in list) */
+        new_buffer->layout_number = gui_layout_buffer_get_number ((plugin) ? plugin->name : "core",
+                                                                  name);
         new_buffer->name = strdup (name);
         new_buffer->type = GUI_BUFFER_TYPE_FORMATED;
         new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
@@ -180,13 +248,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->last_key = NULL;
         
         /* add buffer to buffers list */
-        new_buffer->prev_buffer = last_gui_buffer;
-        if (gui_buffers)
-            last_gui_buffer->next_buffer = new_buffer;
-        else
-            gui_buffers = new_buffer;
-        last_gui_buffer = new_buffer;
-        new_buffer->next_buffer = NULL;
+        gui_buffer_insert (new_buffer);
         
         /* first buffer creation ? */
         if (!gui_current_window->buffer)
@@ -197,8 +259,11 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
             gui_current_window->start_line_pos = 0;
             gui_window_calculate_pos_size (gui_current_window, 1);
             gui_window_switch_to_buffer (gui_current_window, new_buffer);
-            gui_window_redraw_buffer (new_buffer);
         }
+        
+        /* check if this buffer should be assigned to a window,
+           according to windows layout saved */
+        gui_layout_window_check_buffer (new_buffer);
         
         hook_signal_send ("buffer_open",
                           WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
@@ -576,7 +641,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "display") == 0)
     {
         gui_window_switch_to_buffer (gui_current_window, buffer);
-        gui_window_redraw_buffer (buffer);
+        gui_status_refresh_needed = 1;
     }
     else if (string_strcasecmp (property, "name") == 0)
     {
@@ -1010,7 +1075,7 @@ gui_buffer_switch_previous (struct t_gui_window *window)
     else
         gui_window_switch_to_buffer (window, last_gui_buffer);
     
-    gui_window_redraw_buffer (window->buffer);
+    gui_status_refresh_needed = 1;
 }
 
 /*
@@ -1032,7 +1097,7 @@ gui_buffer_switch_next (struct t_gui_window *window)
     else
         gui_window_switch_to_buffer (window, gui_buffers);
     
-    gui_window_redraw_buffer (window->buffer);
+    gui_status_refresh_needed = 1;
 }
 
 /*
@@ -1058,7 +1123,7 @@ gui_buffer_switch_by_number (struct t_gui_window *window, int number)
         if ((ptr_buffer != window->buffer) && (number == ptr_buffer->number))
         {
             gui_window_switch_to_buffer (window, ptr_buffer);
-            gui_window_redraw_buffer (window->buffer);
+            gui_status_refresh_needed = 1;
             return;
         }
     }
@@ -1152,7 +1217,7 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
         ptr_buffer->number = i++;
     }
     
-    gui_window_redraw_buffer (buffer);
+    gui_status_refresh_needed = 1;
     
     snprintf (buf1_str, sizeof (buf1_str) - 1, "%d", buffer->number);
     argv[0] = buf1_str;
@@ -1388,12 +1453,17 @@ gui_buffer_print_log ()
         log_printf ("");
         log_printf ("[buffer (addr:0x%x)]", ptr_buffer);
         log_printf ("  plugin . . . . . . . . : 0x%x", ptr_buffer->plugin);
+        log_printf ("  plugin_name_for_upgrade: '%s'", ptr_buffer->plugin_name_for_upgrade);
         log_printf ("  number . . . . . . . . : %d",   ptr_buffer->number);
+        log_printf ("  layout_number. . . . . : %d",   ptr_buffer->layout_number);
         log_printf ("  name . . . . . . . . . : '%s'", ptr_buffer->name);
         log_printf ("  type . . . . . . . . . : %d",   ptr_buffer->type);
         log_printf ("  notify . . . . . . . . : %d",   ptr_buffer->notify);
         log_printf ("  num_displayed. . . . . : %d",   ptr_buffer->num_displayed);
+        log_printf ("  close_callback . . . . : 0x%x", ptr_buffer->close_callback);
+        log_printf ("  close_callback_data. . : 0x%x", ptr_buffer->close_callback_data);
         log_printf ("  title. . . . . . . . . : '%s'", ptr_buffer->title);
+        log_printf ("  title_refresh_needed . : %d",   ptr_buffer->title_refresh_needed);
         log_printf ("  lines. . . . . . . . . : 0x%x", ptr_buffer->lines);
         log_printf ("  last_line. . . . . . . : 0x%x", ptr_buffer->last_line);
         log_printf ("  last_read_line . . . . : 0x%x", ptr_buffer->last_read_line);
@@ -1419,6 +1489,7 @@ gui_buffer_print_log ()
         log_printf ("  input_buffer_length. . : %d",   ptr_buffer->input_buffer_length);
         log_printf ("  input_buffer_pos . . . : %d",   ptr_buffer->input_buffer_pos);
         log_printf ("  input_buffer_1st_disp. : %d",   ptr_buffer->input_buffer_1st_display);
+        log_printf ("  input_refresh_needed . : %d",   ptr_buffer->input_refresh_needed);
         log_printf ("  completion . . . . . . : 0x%x", ptr_buffer->completion);
         log_printf ("  history. . . . . . . . : 0x%x", ptr_buffer->history);
         log_printf ("  last_history . . . . . : 0x%x", ptr_buffer->last_history);
@@ -1429,8 +1500,11 @@ gui_buffer_print_log ()
         log_printf ("  text_search_found. . . : %d",   ptr_buffer->text_search_found);
         log_printf ("  text_search_input. . . : '%s'", ptr_buffer->text_search_input);
         log_printf ("  highlight_words. . . . : '%s'", ptr_buffer->highlight_words);
+        log_printf ("  highlight_tags . . . . : '%s'", ptr_buffer->highlight_tags);
         log_printf ("  highlight_tags_count . : %d",   ptr_buffer->highlight_tags_count);
         log_printf ("  highlight_tags_array . : 0x%x", ptr_buffer->highlight_tags_array);
+        log_printf ("  keys . . . . . . . . . : 0x%x", ptr_buffer->keys);
+        log_printf ("  last_key . . . . . . . : 0x%x", ptr_buffer->last_key);
         log_printf ("  prev_buffer. . . . . . : 0x%x", ptr_buffer->prev_buffer);
         log_printf ("  next_buffer. . . . . . : 0x%x", ptr_buffer->next_buffer);
 
