@@ -2255,12 +2255,10 @@ irc_command_notice (void *data, struct t_gui_buffer *buffer, int argc,
         string = irc_color_decode (argv_eol[2],
                                    weechat_config_boolean (irc_config_network_colors_receive));
         weechat_printf (ptr_server->buffer,
-                        "%snotice%s(%s%s%s)%s: %s",
+                        "%sNotice -> %s%s%s: %s",
                         irc_buffer_get_server_prefix (ptr_server, NULL),
-                        IRC_COLOR_CHAT_DELIMITERS,
                         IRC_COLOR_CHAT_NICK,
                         argv[1],
-                        IRC_COLOR_CHAT_DELIMITERS,
                         IRC_COLOR_CHAT,
                         (string) ? string : argv_eol[2]);
         if (string)

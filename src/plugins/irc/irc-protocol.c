@@ -659,7 +659,7 @@ int
 irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                          int argc, char **argv, char **argv_eol)
 {
-    char *pos_args, *pos_end, *pos_usec, tags[128];
+    char *pos_target, *pos_args, *pos_end, *pos_usec, tags[128];
     struct timeval tv;
     long sec1, usec1, sec2, usec2, difftime;
     struct t_irc_channel *ptr_channel;
@@ -667,15 +667,22 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
     /* NOTICE message looks like:
        NOTICE AUTH :*** Looking up your hostname...
        :nick!user@host NOTICE mynick :notice text
+       :nick!user@host NOTICE #channel :notice text
     */
     
     IRC_PROTOCOL_GET_HOST;
     IRC_PROTOCOL_MIN_ARGS(3);
-
+    
     if (argv[0][0] == ':')
+    {
+        pos_target = argv[2];
         pos_args = (argv_eol[3][0] == ':') ? argv_eol[3] + 1 : argv_eol[3];
+    }
     else
+    {
+        pos_target = NULL;
         pos_args = (argv_eol[2][0] == ':') ? argv_eol[2] + 1 : argv_eol[2];
+    }
     
     if (nick && irc_ignore_check (server, NULL, nick, host))
         return WEECHAT_RC_OK;
@@ -699,56 +706,73 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
         if (pos_end)
             pos_end[0] = '\01';
     }
+    else if (nick && strncmp (pos_args, "\01PING", 5) == 0)
+    {
+        pos_args += 5;
+        while (pos_args[0] == ' ')
+        {
+            pos_args++;
+        }
+        pos_usec = strchr (pos_args, ' ');
+        if (pos_usec)
+        {
+            pos_usec[0] = '\0';
+            pos_end = strchr (pos_usec + 1, '\01');
+            if (pos_end)
+            {
+                pos_end[0] = '\0';
+                
+                gettimeofday (&tv, NULL);
+                sec1 = atol (pos_args);
+                usec1 = atol (pos_usec + 1);
+                sec2 = tv.tv_sec;
+                usec2 = tv.tv_usec;
+                
+                difftime = ((sec2 * 1000000) + usec2) -
+                    ((sec1 * 1000000) + usec1);
+                
+                weechat_printf_tags (server->buffer,
+                                     "irc_notice,irc_ctcp",
+                                     _("%sCTCP %sPING%s reply from "
+                                       "%s%s%s: %ld.%ld %s"),
+                                     irc_buffer_get_server_prefix (server,
+                                                                   "network"),
+                                     IRC_COLOR_CHAT_CHANNEL,
+                                     IRC_COLOR_CHAT,
+                                     IRC_COLOR_CHAT_NICK,
+                                     nick,
+                                     IRC_COLOR_CHAT,
+                                     difftime / 1000000,
+                                     (difftime % 1000000) / 1000,
+                                     (NG_("second", "seconds",
+                                          (difftime / 1000000))));
+                
+                pos_end[0] = '\01';
+            }
+            pos_usec[0] = ' ';
+        }
+    }
     else
     {
-        if (nick && strncmp (pos_args, "\01PING", 5) == 0)
+        if (pos_target && irc_channel_is_channel (pos_target))
         {
-            pos_args += 5;
-            while (pos_args[0] == ' ')
-            {
-                pos_args++;
-            }
-            pos_usec = strchr (pos_args, ' ');
-            if (pos_usec)
-            {
-                pos_usec[0] = '\0';
-                pos_end = strchr (pos_usec + 1, '\01');
-                if (pos_end)
-                {
-                    pos_end[0] = '\0';
-                        
-                    gettimeofday (&tv, NULL);
-                    sec1 = atol (pos_args);
-                    usec1 = atol (pos_usec + 1);
-                    sec2 = tv.tv_sec;
-                    usec2 = tv.tv_usec;
-                        
-                    difftime = ((sec2 * 1000000) + usec2) -
-                        ((sec1 * 1000000) + usec1);
-                        
-                    weechat_printf_tags (server->buffer,
-                                         "irc_notice,irc_ctcp",
-                                         _("%sCTCP %sPING%s reply from "
-                                           "%s%s%s: %ld.%ld %s"),
-                                         irc_buffer_get_server_prefix (server,
-                                                                       "network"),
-                                         IRC_COLOR_CHAT_CHANNEL,
-                                         IRC_COLOR_CHAT,
-                                         IRC_COLOR_CHAT_NICK,
-                                         nick,
-                                         IRC_COLOR_CHAT,
-                                         difftime / 1000000,
-                                         (difftime % 1000000) / 1000,
-                                         (NG_("second", "seconds",
-                                              (difftime / 1000000))));
-                        
-                    pos_end[0] = '\01';
-                }
-                pos_usec[0] = ' ';
-            }
+            /* notice for channel */
+            ptr_channel = irc_channel_search (server, pos_target);
+            weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : server->buffer,
+                                 "irc_notice",
+                                 "%sNotice%s(%s%s%s)%s: %s",
+                                 (ptr_channel) ?
+                                 weechat_prefix ("network") : irc_buffer_get_server_prefix (server, "network"),
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 IRC_COLOR_CHAT_NICK,
+                                 (nick && nick[0]) ? nick : "?",
+                                 IRC_COLOR_CHAT_DELIMITERS,
+                                 IRC_COLOR_CHAT,
+                                 pos_args);
         }
         else
         {
+            /* notice for user */
             if (nick
                 && (weechat_strcasecmp (nick, "nickserv") != 0)
                 && (weechat_strcasecmp (nick, "chanserv") != 0)
@@ -762,6 +786,7 @@ irc_protocol_cmd_notice (struct t_irc_server *server, const char *command,
                 snprintf (tags, sizeof (tags),
                           "%s", "irc_notice");
             }
+            
             if (nick && weechat_config_boolean (irc_config_look_notice_as_pv))
             {
                 ptr_channel = irc_channel_search (server, nick);
