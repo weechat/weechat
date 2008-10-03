@@ -1099,6 +1099,9 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
                 || (ptr_group && window->buffer->nicklist_display_groups
                     && ptr_group->visible))
             {
+                if (buf[0])
+                    strcat (buf, "\n");
+                
                 if (ptr_nick)
                 {
                     if (window->buffer->nicklist_display_groups)
@@ -1127,7 +1130,6 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
                     }
                     strcat (buf, gui_nicklist_get_group_start (ptr_group->name));
                 }
-                strcat (buf, "\n");
             }
             gui_nicklist_get_next_item (window->buffer, &ptr_group, &ptr_nick);
         }
