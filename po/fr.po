@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-02 18:44+0200\n"
-"PO-Revision-Date: 2008-10-02 18:45+0200\n"
+"POT-Creation-Date: 2008-10-03 14:40+0200\n"
+"PO-Revision-Date: 2008-10-03 14:41+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3621,6 +3621,10 @@ msgid ""
 msgstr ""
 "%s%s[%s%s%s]%s inactivité: %s%02d %s%s %s%02d %s%s %s%02d %s%s, signé le: %s%"
 "s"
+
+#, c-format
+msgid "%sURL for %s%s%s: %s"
+msgstr "%sURL pour %s%s%s: %s"
 
 #, c-format
 msgid "%sChannel created on %s"

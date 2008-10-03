@@ -2994,6 +2994,39 @@ irc_protocol_cmd_327 (struct t_irc_server *server, const char *command,
 }
 
 /*
+ * irc_protocol_cmd_328: '328' channel URL
+ */
+
+int
+irc_protocol_cmd_328 (struct t_irc_server *server, const char *command,
+                      int argc, char **argv, char **argv_eol)
+{
+    struct t_irc_channel *ptr_channel;
+    
+    /* 328 message looks like:
+       :server 328 mynick #channel :http://sample.url.com
+    */
+    
+    IRC_PROTOCOL_MIN_ARGS(5);
+    
+    ptr_channel = irc_channel_search (server, argv[3]);
+    if (ptr_channel)
+    {
+        weechat_printf_tags (ptr_channel->buffer,
+                             irc_protocol_tags(command, "irc_numeric"),
+                             _("%sURL for %s%s%s: %s"),
+                             weechat_prefix ("network"),
+                             IRC_COLOR_CHAT_CHANNEL,
+                             argv[3],
+                             IRC_COLOR_CHAT,
+                             (argv_eol[4][0] == ':') ?
+                             argv_eol[4] + 1 : argv_eol[4]);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_protocol_cmd_329: '329' command received (channel creation date)
  */
 
@@ -4154,6 +4187,7 @@ irc_protocol_recv_command (struct t_irc_server *server, const char *entire_line,
           { "324", /* channel mode */ 1, &irc_protocol_cmd_324 },
           { "326", /* whois (has oper privs) */ 1, &irc_protocol_cmd_whois_nick_msg },
           { "327", /* whois (host) */ 1, &irc_protocol_cmd_327 },
+          { "328", /* channel url */ 1, &irc_protocol_cmd_328 },
           { "329", /* channel creation date */ 1, &irc_protocol_cmd_329 },
           { "331", /* no topic for channel */ 1, &irc_protocol_cmd_331 },
           { "332", /* topic of channel */ 1, &irc_protocol_cmd_332 },
