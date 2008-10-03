@@ -127,6 +127,8 @@ struct t_config_option *config_color_chat_highlight;
 struct t_config_option *config_color_chat_highlight_bg;
 struct t_config_option *config_color_chat_read_marker;
 struct t_config_option *config_color_chat_read_marker_bg;
+struct t_config_option *config_color_chat_text_found;
+struct t_config_option *config_color_chat_text_found_bg;
 struct t_config_option *config_color_status;
 struct t_config_option *config_color_status_bg;
 struct t_config_option *config_color_status_delimiters;
@@ -1311,6 +1313,18 @@ config_weechat_init ()
         "chat_read_marker_bg", "color",
         N_("background color for unread data marker"),
         NULL, -1, 0, "default",
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_chat_text_found = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_text_found", "color",
+        N_("text color for marker on lines where text sought is found"),
+        NULL, GUI_COLOR_CHAT_TEXT_FOUND, 0, "yellow",
+        NULL, NULL, &config_change_color, NULL, NULL, NULL);
+    config_color_chat_text_found_bg = config_file_new_option (
+        weechat_config_file, ptr_section,
+        "chat_text_found_bg", "color",
+        N_("background color for marker on lines where text sought is found"),
+        NULL, -1, 0, "lightmagenta",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* status window */
     config_color_status = config_file_new_option (

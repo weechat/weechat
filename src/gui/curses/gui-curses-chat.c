@@ -918,7 +918,7 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
                                       window->buffer->text_search_exact))
             {
                 gui_window_set_weechat_color (GUI_CURSES(window)->win_chat,
-                                              GUI_COLOR_CHAT_READ_MARKER);
+                                              GUI_COLOR_CHAT_TEXT_FOUND);
                 mvwprintw (GUI_CURSES(window)->win_chat,
                            read_marker_y, read_marker_x,
                            "*");
