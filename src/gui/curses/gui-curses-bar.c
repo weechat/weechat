@@ -1015,7 +1015,8 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         }
                     }
                 }
-                if ((bar_window->scroll_x > 0) || (bar_window->scroll_y > 0))
+                if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
+                    && ((bar_window->scroll_x > 0) || (bar_window->scroll_y > 0)))
                 {
                     x = (bar_window->height > 1) ? bar_window->width - 2 : 0;
                     if (x < 0)
@@ -1026,7 +1027,8 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                                                        CONFIG_INTEGER(bar_window->bar->color_bg));
                     mvwprintw (bar_window->win_bar, y, x, "--");
                 }
-                if (some_data_not_displayed || (line < items_count))
+                if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
+                    && (some_data_not_displayed || (line < items_count)))
                 {
                     x = bar_window->width - 2;
                     if (x < 0)
@@ -1125,7 +1127,8 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                             }
                         }
                     }
-                    if ((bar_window->scroll_x > 0) || (bar_window->scroll_y > 0))
+                    if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
+                        && ((bar_window->scroll_x > 0) || (bar_window->scroll_y > 0)))
                     {
                         x = (bar_window->height > 1) ? bar_window->width - 2 : 0;
                         if (x < 0)
@@ -1136,7 +1139,8 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                                                            CONFIG_INTEGER(bar_window->bar->color_bg));
                         mvwprintw (bar_window->win_bar, y, x, "--");
                     }
-                    if (some_data_not_displayed || (line < items_count))
+                    if ((bar_window->cursor_x < 0) && (bar_window->cursor_y < 0)
+                        && (some_data_not_displayed || (line < items_count)))
                     {
                         x = bar_window->width - 2;
                         if (x < 0)
