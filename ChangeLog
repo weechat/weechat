@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-10-02
+ChangeLog - 2008-10-03
 
 
 Version 0.2.7 (under dev!):
@@ -45,6 +45,7 @@ Version 0.2.7 (under dev!):
    * new plugin API with many new functions: hooks, buffer management, bars,
      config files, lists
    * new display engine, with prefix and message for each line
+   * add missing IRC commands (328, 369)
    * fix nick completion bug (missing space after nick)
 
 Version 0.2.6 (2007-09-06):
