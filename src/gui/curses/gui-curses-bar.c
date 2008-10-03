@@ -667,7 +667,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              const char *string,
                              int reset_color_before_display)
 {
-    int weechat_color, size_on_screen, fg, bg;
+    int weechat_color, x_with_hidden, size_on_screen, fg, bg;
     char str_fg[3], str_bg[3], utf_char[16], *next_char, *output;
     
     if (!string || !string[0])
@@ -681,6 +681,8 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                                            CONFIG_COLOR(bar_window->bar->color_fg),
                                            CONFIG_COLOR(bar_window->bar->color_bg));
     }
+    
+    x_with_hidden = *x;
     
     while (string && string[0])
     {
@@ -789,26 +791,36 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
             
             if (!gui_window_utf_char_valid (utf_char))
                 snprintf (utf_char, sizeof (utf_char), ".");
-
+            
             size_on_screen = utf8_char_size_screen (utf_char);
             if (size_on_screen > 0)
             {
-                if (*x + size_on_screen > bar_window->width)
+                if (x_with_hidden < bar_window->scroll_x)
                 {
-                    if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_VERTICAL)
-                        return 0;
-                    if (*y >= bar_window->height - 1)
-                        return 0;
-                    *x = 0;
-                    (*y)++;
-                    wmove (bar_window->win_bar, *y, *x);
+                    /* hidden char (before scroll_x value) */
+                    x_with_hidden++;
                 }
-                output = string_iconv_from_internal (NULL, utf_char);
-                wprintw (bar_window->win_bar, "%s",
-                         (output) ? output : utf_char);
-                if (output)
-                    free (output);
-                *x += size_on_screen;
+                else
+                {
+                    if (*x + size_on_screen > bar_window->width)
+                    {
+                        if (CONFIG_INTEGER(gui_bar_get_option_filling (bar_window->bar)) == GUI_BAR_FILLING_VERTICAL)
+                            return 0;
+                        if (*y >= bar_window->height - 1)
+                            return 0;
+                        *x = 0;
+                        (*y)++;
+                        wmove (bar_window->win_bar, *y, *x);
+                    }
+                    
+                    output = string_iconv_from_internal (NULL, utf_char);
+                    wprintw (bar_window->win_bar, "%s",
+                             (output) ? output : utf_char);
+                    if (output)
+                        free (output);
+                    
+                    *x += size_on_screen;
+                }
             }
             
             string = next_char;
@@ -1003,7 +1015,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                         }
                     }
                 }
-                if (bar_window->scroll_y > 0)
+                if ((bar_window->scroll_x > 0) || (bar_window->scroll_y > 0))
                 {
                     x = (bar_window->height > 1) ? bar_window->width - 2 : 0;
                     if (x < 0)
@@ -1113,7 +1125,7 @@ gui_bar_window_draw (struct t_gui_bar_window *bar_window,
                             }
                         }
                     }
-                    if (bar_window->scroll_y > 0)
+                    if ((bar_window->scroll_x > 0) || (bar_window->scroll_y > 0))
                     {
                         x = (bar_window->height > 1) ? bar_window->width - 2 : 0;
                         if (x < 0)
@@ -1396,9 +1408,12 @@ gui_bar_scroll (struct t_gui_bar *bar, struct t_gui_buffer *buffer,
                 for (ptr_bar_win = GUI_CURSES(ptr_win)->bar_windows;
                      ptr_bar_win; ptr_bar_win = ptr_bar_win->next_bar_window)
                 {
-                    gui_bar_window_scroll (ptr_bar_win, ptr_win,
-                                           add_x, scroll_beginning, scroll_end,
-                                           add, percent, number);
+                    if (ptr_bar_win->bar == bar)
+                    {
+                        gui_bar_window_scroll (ptr_bar_win, ptr_win,
+                                               add_x, scroll_beginning, scroll_end,
+                                               add, percent, number);
+                    }
                 }
             }
         }
@@ -1418,7 +1433,9 @@ gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
 {
     log_printf ("");
     log_printf ("  [window bar (addr:0x%x)]",   bar_window);
-    log_printf ("    bar . . . . . . . : 0x%x", bar_window->bar);
+    log_printf ("    bar . . . . . . . : 0x%x ('%s')",
+                bar_window->bar,
+                (bar_window->bar) ? bar_window->bar->name : "");
     log_printf ("    x . . . . . . . . : %d",   bar_window->x);
     log_printf ("    y . . . . . . . . : %d",   bar_window->y);
     log_printf ("    width . . . . . . : %d",   bar_window->width);
