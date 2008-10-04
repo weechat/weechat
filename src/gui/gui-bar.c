@@ -1630,11 +1630,11 @@ gui_bar_use_temp_bars ()
 }
 
 /*
- * gui_bar_create_default: create default bars if they do not exist
+ * gui_bar_create_default_input: create default input bar if it does not exist
  */
 
 void
-gui_bar_create_default ()
+gui_bar_create_default_input ()
 {
     struct t_gui_bar *ptr_bar;
     int length;
@@ -1703,6 +1703,54 @@ gui_bar_create_default ()
             }
         }
     }
+}
+
+/*
+ * gui_bar_create_default_title: create default title bar if it does not exist
+ */
+
+void
+gui_bar_create_default_title ()
+{
+    struct t_gui_bar *ptr_bar;
+    
+    /* search title bar */
+    ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_TITLE);
+    if (!ptr_bar)
+    {
+        /* create title bar */
+        if (gui_bar_new (NULL, GUI_BAR_DEFAULT_NAME_TITLE,
+                         "0",          /* hidden */
+                         "500",        /* priority */
+                         "window",     /* type */
+                         "",           /* conditions */
+                         "top",        /* position */
+                         "horizontal", /* filling_top_bottom */
+                         "vertical"  , /* filling_left_right */
+                         "1",          /* size */
+                         "0",          /* size_max */
+                         gui_color_get_name (CONFIG_COLOR(config_color_title)),
+                         gui_color_get_name (CONFIG_COLOR(config_color_title)),
+                         gui_color_get_name (CONFIG_COLOR(config_color_title_bg)),
+                         "0",          /* separators */
+                         gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE])) /* items */
+        {
+            gui_chat_printf (NULL, _("Bar \"%s\" created"),
+                             GUI_BAR_DEFAULT_NAME_TITLE);
+        }
+    }
+}
+
+/*
+ * gui_bar_create_default_status: create default status bar if it does not exist
+ */
+
+void
+gui_bar_create_default_status ()
+{
+    struct t_gui_bar *ptr_bar;
+    int length;
+    char *buf;
     
     /* search status bar */
     ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_STATUS);
@@ -1754,32 +1802,16 @@ gui_bar_create_default ()
             free (buf);
         }
     }
-    
-    /* search title bar */
-    ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_TITLE);
-    if (!ptr_bar)
-    {
-        /* create title bar */
-        if (gui_bar_new (NULL, GUI_BAR_DEFAULT_NAME_TITLE,
-                         "0",          /* hidden */
-                         "500",        /* priority */
-                         "window",     /* type */
-                         "",           /* conditions */
-                         "top",        /* position */
-                         "horizontal", /* filling_top_bottom */
-                         "vertical"  , /* filling_left_right */
-                         "1",          /* size */
-                         "0",          /* size_max */
-                         gui_color_get_name (CONFIG_COLOR(config_color_title)),
-                         gui_color_get_name (CONFIG_COLOR(config_color_title)),
-                         gui_color_get_name (CONFIG_COLOR(config_color_title_bg)),
-                         "0",          /* separators */
-                         gui_bar_item_names[GUI_BAR_ITEM_BUFFER_TITLE])) /* items */
-        {
-            gui_chat_printf (NULL, _("Bar \"%s\" created"),
-                             GUI_BAR_DEFAULT_NAME_TITLE);
-        }
-    }
+}
+
+/*
+ * gui_bar_create_default_nicklist: create default nicklist bar if it does not exist
+ */
+
+void
+gui_bar_create_default_nicklist ()
+{
+    struct t_gui_bar *ptr_bar;
     
     /* search nicklist bar */
     ptr_bar = gui_bar_search (GUI_BAR_DEFAULT_NAME_NICKLIST);
@@ -1806,6 +1838,19 @@ gui_bar_create_default ()
                              GUI_BAR_DEFAULT_NAME_NICKLIST);
         }
     }
+}
+
+/*
+ * gui_bar_create_default: create default bars if they do not exist
+ */
+
+void
+gui_bar_create_default ()
+{
+    gui_bar_create_default_input ();
+    gui_bar_create_default_title ();
+    gui_bar_create_default_status ();
+    gui_bar_create_default_nicklist ();
 }
 
 /*
