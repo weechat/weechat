@@ -518,6 +518,38 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.color.chat_text_found</command>
+<itemizedlist>
+  <listitem>
+    <para>description: text color for marker on lines where text sought is found</para>
+  </listitem>
+  <listitem>
+    <para>type: color</para>
+  </listitem>
+  <listitem>
+    <para>values: a color name</para>
+  </listitem>
+  <listitem>
+    <para>default value: yellow</para>
+  </listitem>
+</itemizedlist>
+
+<command>weechat.color.chat_text_found_bg</command>
+<itemizedlist>
+  <listitem>
+    <para>description: background color for marker on lines where text sought is found</para>
+  </listitem>
+  <listitem>
+    <para>type: color</para>
+  </listitem>
+  <listitem>
+    <para>values: a color name</para>
+  </listitem>
+  <listitem>
+    <para>default value: lightmagenta</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.color.chat_time</command>
 <itemizedlist>
   <listitem>

@@ -18,7 +18,6 @@
 *.xsl
 
 ABOUT-NLS
-doc/*/*autogen*
 autom4te*
 build/*
 config.guess
