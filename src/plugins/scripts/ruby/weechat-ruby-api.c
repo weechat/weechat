@@ -18,6 +18,7 @@
 
 /* weechat-ruby-api.c: Ruby API functions */
 
+
 #undef _
 
 #include <ruby.h>

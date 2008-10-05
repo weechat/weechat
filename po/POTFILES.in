@@ -171,6 +171,10 @@
 ./src/plugins/scripts/script-callback.c
 ./src/plugins/scripts/script-callback.h
 ./src/plugins/scripts/script.h
+./src/plugins/scripts/tcl/weechat-tcl-api.c
+./src/plugins/scripts/tcl/weechat-tcl-api.h
+./src/plugins/scripts/tcl/weechat-tcl.c
+./src/plugins/scripts/tcl/weechat-tcl.h
 ./src/plugins/trigger/dump.c
 ./src/plugins/trigger/trigger.c
 ./src/plugins/trigger/trigger.h

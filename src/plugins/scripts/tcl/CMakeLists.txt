@@ -14,35 +14,15 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-INCLUDES = -DLOCALEDIR=\"$(datadir)/locale\"
+ADD_LIBRARY(tcl MODULE weechat-tcl.c weechat-tcl.h
+weechat-tcl-api.c weechat-tcl-api.h)
 
-noinst_LTLIBRARIES = lib_weechat_plugins_scripts.la
+SET_TARGET_PROPERTIES(tcl PROPERTIES PREFIX "")
 
-lib_weechat_plugins_scripts_la_SOURCES = script.c \
-                                         script.h \
-                                         script-callback.c \
-                                         script-callback.h \
-                                         script-api.c \
-                                         script-api.h
+IF(TCL_FOUND)
+  INCLUDE_DIRECTORIES(${TCL_INCLUDE_PATH})
+  SET(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${TCL_LFLAGS}")
+  TARGET_LINK_LIBRARIES(tcl ${TCL_LIBRARY} weechat_scripts)
+ENDIF(TCL_FOUND)
 
-if PLUGIN_PERL
-perl_dir = perl
-endif
-
-if PLUGIN_PYTHON
-python_dir = python
-endif
-
-if PLUGIN_RUBY
-ruby_dir = ruby
-endif
-
-if PLUGIN_LUA
-lua_dir = lua
-endif
-
-if PLUGIN_TCL
-tcl_dir = tcl
-endif
-
-SUBDIRS = . $(perl_dir) $(python_dir) $(ruby_dir) $(lua_dir) $(tcl_dir)
+INSTALL(TARGETS tcl LIBRARY DESTINATION lib/weechat/plugins)

@@ -10,6 +10,7 @@
 <!ENTITY perl_commands.xml SYSTEM "autogen/perl_commands.xml">
 <!ENTITY python_commands.xml SYSTEM "autogen/python_commands.xml">
 <!ENTITY ruby_commands.xml SYSTEM "autogen/ruby_commands.xml">
+<!ENTITY tcl_commands.xml SYSTEM "autogen/tcl_commands.xml">
 <!ENTITY weechat_commands.xml SYSTEM "autogen/weechat_commands.xml">
 <!ENTITY xfer_commands.xml SYSTEM "autogen/xfer_commands.xml">
 

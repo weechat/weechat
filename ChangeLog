@@ -1,7 +1,7 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-10-03
+ChangeLog - 2008-10-05
 
 
 Version 0.2.7 (under dev!):
@@ -39,7 +39,8 @@ Version 0.2.7 (under dev!):
    * improve main loop: higher timout in select(), less CPU usage
    * add /reload command to reload WeeChat and plugins config files
      (signal SIGHUP is catched to reload config files)
-   * new plugins: alias, debug, demo, fifo, irc, logger, notify, trigger, xfer
+   * new plugins: alias, debug, demo, fifo, irc, logger, notify, tcl, trigger,
+     xfer
    * add hooks: command, timer, file descriptor, connection, print, signal,
      config, completion, modifier, info, infolist
    * new plugin API with many new functions: hooks, buffer management, bars,

@@ -18,6 +18,7 @@
 
 /* weechat-ruby.c: Ruby plugin for WeeChat */
 
+
 #undef _
 
 #include <ruby.h>

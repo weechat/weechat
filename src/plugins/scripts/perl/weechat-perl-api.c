@@ -18,6 +18,7 @@
 
 /* weechat-perl-api.c: Perl API functions */
 
+
 #undef _
 
 #include <EXTERN.h>

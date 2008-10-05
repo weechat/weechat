@@ -68,7 +68,8 @@ my %plugin_list = ("weechat" => "co", "alias"   => "",
                    "irc"     => "co", "logger"  => "co",
                    "notify"  => "co", "perl"    => "",
                    "python"  => "",   "ruby"    => "",
-                   "lua"     => "",   "xfer"    => "co");
+                   "lua"     => "",   "tcl"     => "",
+                   "xfer"    => "co");
 
 # options to ignore
 my @ignore_options = ("weechat\\.bar\\..*",

@@ -18,6 +18,7 @@
 
 /* weechat-lua.c: Lua plugin for WeeChat */
 
+
 #undef _
 
 #include <lua.h>

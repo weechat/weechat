@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-03 17:17+0200\n"
+"POT-Creation-Date: 2008-10-05 17:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3714,6 +3714,18 @@ msgstr ""
 
 #, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
+msgstr ""
+
+#, c-format
+msgid "%s%s unable to run function \"%s\": %s"
+msgstr ""
+
+#, c-format
+msgid "%s%s: unable to create new interpreter"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error occured while parsing file \"%s\": %s"
 msgstr ""
 
 msgid "bytes"

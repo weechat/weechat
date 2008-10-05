@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-03 17:17+0200\n"
+"POT-Creation-Date: 2008-10-05 17:39+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4308,6 +4308,18 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: wrong arguments for function \"%s\""
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
+
+#, fuzzy, c-format
+msgid "%s%s unable to run function \"%s\": %s"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: unable to create new interpreter"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
+msgid "%s%s: error occured while parsing file \"%s\": %s"
+msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
 msgid "bytes"
 msgstr "byte"

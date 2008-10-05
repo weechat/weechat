@@ -20,6 +20,7 @@
 #ifndef __WEECHAT_IRC_SERVER_H
 #define __WEECHAT_IRC_SERVER_H 1
 
+#include <sys/time.h>
 #include <regex.h>
 
 #ifdef HAVE_GNUTLS

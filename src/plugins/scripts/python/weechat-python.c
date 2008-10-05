@@ -18,6 +18,7 @@
 
 /* weechat-python.c: Python plugin for WeeChat */
 
+
 #undef _
 
 #include <Python.h>

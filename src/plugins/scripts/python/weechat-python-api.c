@@ -18,6 +18,7 @@
 
 /* weechat-python-api.c: Python API functions */
 
+
 #undef _
 
 #include <Python.h>

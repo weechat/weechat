@@ -78,6 +78,10 @@ if PLUGIN_LUA
 script_dir = scripts
 endif
 
+if PLUGIN_TCL
+script_dir = scripts
+endif
+
 if PLUGIN_TRIGGER
 trigger_dir = trigger
 endif

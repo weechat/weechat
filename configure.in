@@ -106,6 +106,7 @@ AH_VERBATIM([PLUGIN_PERL], [#undef PLUGIN_PERL])
 AH_VERBATIM([PLUGIN_PYTHON], [#undef PLUGIN_PYTHON])
 AH_VERBATIM([PLUGIN_RUBY], [#undef PLUGIN_RUBY])
 AH_VERBATIM([PLUGIN_LUA], [#undef PLUGIN_LUA])
+AH_VERBATIM([PLUGIN_TCL], [#undef PLUGIN_TCL])
 AH_VERBATIM([PLUGIN_TRIGGER], [#undef PLUGIN_TRIGGER])
 AH_VERBATIM([PLUGIN_XFER], [#undef PLUGIN_XFER])
 AH_VERBATIM([DOC], [#undef DOC])
@@ -132,6 +133,7 @@ AC_ARG_ENABLE(perl,         [  --disable-perl          turn off Perl script plug
 AC_ARG_ENABLE(python,       [  --disable-python        turn off Python script plugin (default=compiled if found)],enable_python=$enableval,enable_python=yes)
 AC_ARG_ENABLE(ruby,         [  --disable-ruby          turn off Ruby script plugin (default=compiled if found)],enable_ruby=$enableval,enable_ruby=yes)
 AC_ARG_ENABLE(lua,          [  --disable-lua           turn off Lua script plugin (default=compiled if found)],enable_lua=$enableval,enable_lua=yes)
+AC_ARG_ENABLE(tcl,          [  --disable-tcl           turn off Tcl script plugin (default=compiled if found)],enable_tcl=$enableval,enable_tcl=yes)
 AC_ARG_ENABLE(trigger,      [  --enable-trigger        turn on Trigger plugin (default=off)],enable_trigger=$enableval,enable_trigger=no)
 AC_ARG_ENABLE(xfer,         [  --disable-xfer          turn off Xfer (file transfer) plugin (default=compiled if found)],enable_xfer=$enableval,enable_xfer=yes)
 AC_ARG_WITH(lua-inc,        [  --with-lua-inc=DIR,     lua include files are in DIR (default=autodetect)],lua_inc=$withval,lua_inc='')
@@ -281,6 +283,7 @@ if test "x$enable_scripts" = "xno" ; then
     enable_python="no"
     enable_ruby="no"
     enable_lua="no"
+    enable_tcl="no"
 fi
 
 # ---------------------------------- alias -------------------------------------
@@ -684,6 +687,60 @@ if test "x$enable_lua" = "xyes" ; then
     AC_DEFINE(PLUGIN_LUA)
 fi
 
+# --------------------------------- tcl -------------------------------------
+TCL_VERSION=
+
+if test "x$enable_tcl" = "xyes" ; then
+    enable_plugins="yes"
+    
+    AC_PATH_PROGS(TCL, tclsh tclsh8.5 tclsh8.4)
+    if test -z $TCL ; then
+        AC_MSG_WARN([
+*** Tcl must be installed on your system but tcl interpreter couldn't be found in path.
+*** Please check that tclsh is in path, or install it with your software package manager.
+*** WeeChat will be built without Tcl support.])
+        enable_tcl="no"
+        not_found="$not_found tcl"
+    else
+	echo "for grepp"
+        TCL_VERSION=`echo 'puts $tcl_version' | $TCL`
+        TCL_PATCHLEVEL=`echo 'puts $tcl_patchLevel' | $TCL`
+        
+	AC_MSG_CHECKING(for Tcl headers files)
+        TCL_HEADER_TEST=`TT=tcltest.c ; echo "#include <tcl.h>" > $TT; echo "int main() { return 0; }" >> $TT ; $CC -Wall $TT -o $TT.out 1>/dev/null 2>&1; echo $?; rm -f $TT $TT.out 1>/dev/null 2>&1`
+        if test "x$TCL_HEADER_TEST" = "x0" ; then
+            TCL_CFLAGS="-fPIC"
+            AC_MSG_RESULT(found)
+            AC_MSG_CHECKING(for Tcl library)
+            TCL_LIB_TEST=`TT=tcltest.c ; echo "int main() { return 0; }" > $TT ; $CC -Wall $TT -o $TT.out -ltcl$TCL_VERSION 1>/dev/null 2>&1; echo $?; rm -f $TT $TT.out 1>/dev/null 2>&1`
+            if test "x$TCL_LIB_TEST" = "x0" ; then	        
+                TCL_LFLAGS="-ltcl$TCL_VERSION -ldl -export-dynamic"
+                AC_MSG_RESULT(found)
+            else
+                AC_MSG_WARN([
+*** Tcl library couldn't be found in your system.
+*** Try to install it with your software package manager.
+*** WeeChat will be built without Tcl support.])
+                enable_tcl="no"
+                not_found="$not_found tcl"
+            fi
+        else
+            AC_MSG_WARN([
+*** Tcl headers couldn't be found in your system.
+*** Try to install it with your software package manager.
+*** WeeChat will be built without Tcl support.])
+            enable_tcl="no"
+            not_found="$not_found tcl"
+        fi
+    fi
+fi
+
+if test "x$enable_tcl" = "xyes" ; then
+    AC_SUBST(TCL_CFLAGS)
+    AC_SUBST(TCL_LFLAGS)
+    AC_DEFINE(PLUGIN_TCL)
+fi
+
 # --------------------------------- trigger ------------------------------------
 
 if test "x$enable_trigger" = "xyes" ; then
@@ -923,6 +980,7 @@ AM_CONDITIONAL(PLUGIN_PERL,    test "$enable_perl" = "yes")
 AM_CONDITIONAL(PLUGIN_PYTHON,  test "$enable_python" = "yes")
 AM_CONDITIONAL(PLUGIN_RUBY,    test "$enable_ruby" = "yes")
 AM_CONDITIONAL(PLUGIN_LUA,     test "$enable_lua" = "yes")
+AM_CONDITIONAL(PLUGIN_TCL,     test "$enable_tcl" = "yes")
 AM_CONDITIONAL(PLUGIN_TRIGGER, test "$enable_trigger" = "yes")
 AM_CONDITIONAL(PLUGIN_XFER,    test "$enable_xfer" = "yes")
 AM_CONDITIONAL(DOC,            test "$enable_doc" = "yes")
@@ -954,6 +1012,7 @@ AC_OUTPUT([Makefile
            src/plugins/scripts/python/Makefile
            src/plugins/scripts/ruby/Makefile
            src/plugins/scripts/lua/Makefile
+           src/plugins/scripts/tcl/Makefile
            src/plugins/trigger/Makefile
            src/plugins/xfer/Makefile
            src/gui/Makefile
@@ -1027,6 +1086,9 @@ if test "x$enable_ruby" = "xyes"; then
 fi
 if test "x$enable_lua" = "xyes"; then
     listplugins="$listplugins lua($LUA_VERSION)"
+fi
+if test "x$enable_tcl" = "xyes"; then
+    listplugins="$listplugins tcl($TCL_PATCHLEVEL)"
 fi
 if test "x$enable_trigger" = "xyes"; then
     listplugins="$listplugins trigger"

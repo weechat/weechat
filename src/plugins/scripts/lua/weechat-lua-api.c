@@ -18,6 +18,7 @@
 
 /* weechat-lua-api.c: Lua API functions */
 
+
 #undef _
 
 #include <lua.h>

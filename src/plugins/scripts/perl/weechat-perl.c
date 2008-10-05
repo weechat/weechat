@@ -18,6 +18,7 @@
 
 /* weechat-perl.c: Perl plugin for WeeChat */
 
+
 #undef _
 
 #include <EXTERN.h>
