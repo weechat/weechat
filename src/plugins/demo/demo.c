@@ -171,9 +171,11 @@ demo_buffer_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
                                          &demo_buffer_input_data_cb, NULL,
                                          &demo_buffer_close_cb, NULL);
         if (new_buffer)
+        {
             weechat_buffer_set (new_buffer, "display", "1");
-        weechat_hook_signal_send ("logger_backlog",
-                                  WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
+            weechat_hook_signal_send ("logger_backlog",
+                                      WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
+        }
     }
     
     return WEECHAT_RC_OK;

@@ -95,6 +95,9 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
             free (new_channel);
             return NULL;
         }
+        
+        weechat_hook_signal_send ("logger_backlog",
+                                  WEECHAT_HOOK_SIGNAL_POINTER, new_buffer);
     }
     
     if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
