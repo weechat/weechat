@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-05 17:39+0200\n"
+"POT-Creation-Date: 2008-10-08 13:12+0200\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3979,6 +3979,10 @@ msgid "%s%s: disconnected from server"
 msgstr "Odpojen od serveru!\n"
 
 #, fuzzy, c-format
+msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgstr "%s nemohu vytvořit server \"%s\"\n"
+
+#, fuzzy, c-format
 msgid "%s%s: unable to write log file \"%s\""
 msgstr "Nemůžu zapsat log soubor \"%s\"\n"
 
@@ -3993,6 +3997,33 @@ msgstr "****  End of log  "
 #, c-format
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr "===\t========== Konec zpětného logu (%d řádků) =========="
+
+#, fuzzy
+msgid ""
+"maximum number of lines to display from log file when creating new buffer (0 "
+"= no backlog)"
+msgstr "maximální počet uživatelských příkazů v historii (0 = nekonečně)"
+
+msgid ""
+"automatically save content of buffers to files (unless a buffer disables log)"
+msgstr ""
+
+msgid "use only lower case for log filenames"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/."
+"weechat by default)"
+msgstr ""
+"cesta pro hledání pluginů ('%h' bude nahrazeno domácím adresářem WeeChat, ~/."
+"weechat je výchozí)"
+
+msgid "write information line in log file when log starts or ends for a buffer"
+msgstr ""
+
+msgid "timestamp used in log files (see man strftime for date/time specifiers)"
+msgstr ""
 
 #, fuzzy
 msgid "list of logger buffers"

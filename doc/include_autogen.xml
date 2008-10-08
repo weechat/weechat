@@ -17,6 +17,7 @@
 <!-- config options -->
 
 <!ENTITY irc_options.xml SYSTEM "autogen/irc_options.xml">
+<!ENTITY logger_options.xml SYSTEM "autogen/logger_options.xml">
 <!ENTITY weechat_options.xml SYSTEM "autogen/weechat_options.xml">
 <!ENTITY xfer_options.xml SYSTEM "autogen/xfer_options.xml">
 

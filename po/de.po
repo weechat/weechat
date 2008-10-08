@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-05 17:39+0200\n"
+"POT-Creation-Date: 2008-10-08 13:12+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3889,6 +3889,10 @@ msgid "%s%s: disconnected from server"
 msgstr "Vom Server getrennt!\n"
 
 #, fuzzy, c-format
+msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgstr "%s kann den Server nicht anlegen\n"
+
+#, fuzzy, c-format
 msgid "%s%s: unable to write log file \"%s\""
 msgstr "Kann das Logfile nicht schreiben\n"
 
@@ -3902,6 +3906,33 @@ msgstr "****  End of log  "
 
 #, c-format
 msgid "===\t========== End of backlog (%d lines) =========="
+msgstr ""
+
+#, fuzzy
+msgid ""
+"maximum number of lines to display from log file when creating new buffer (0 "
+"= no backlog)"
+msgstr "maximale Anzahl an Befehlen im Verlauf (0: kein Limit)"
+
+msgid ""
+"automatically save content of buffers to files (unless a buffer disables log)"
+msgstr ""
+
+msgid "use only lower case for log filenames"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/."
+"weechat by default)"
+msgstr ""
+"Suchpfad für WeeChat-Plugins ('%h' wird durch das WeeChat-Basisiverzeichnis "
+"ersetzt, voreingestellt ist ~/.weechat)"
+
+msgid "write information line in log file when log starts or ends for a buffer"
+msgstr ""
+
+msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
 
 #, fuzzy

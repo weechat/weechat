@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-05 17:39+0200\n"
-"PO-Revision-Date: 2008-10-05 17:39+0200\n"
+"POT-Creation-Date: 2008-10-08 13:12+0200\n"
+"PO-Revision-Date: 2008-10-08 13:13+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -3932,6 +3932,10 @@ msgid "%s%s: disconnected from server"
 msgstr "%s%s: déconnecté du serveur"
 
 #, c-format
+msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgstr "%s%s: impossible de créer le répertoire pour les logs (\"%s\")"
+
+#, c-format
 msgid "%s%s: unable to write log file \"%s\""
 msgstr "%s%s: impossible d'écrire le fichier log \"%s\""
 
@@ -3946,6 +3950,39 @@ msgstr "%s\t****  Fin du log  ****"
 #, c-format
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr "===\t========== Fin de l'historique (%d lignes) =========="
+
+msgid ""
+"maximum number of lines to display from log file when creating new buffer (0 "
+"= no backlog)"
+msgstr ""
+"nombre maximum de lignes à afficher du fichier de log lors de l'ouverture du "
+"tampon (0 = ne rien afficher)"
+
+msgid ""
+"automatically save content of buffers to files (unless a buffer disables log)"
+msgstr ""
+"sauve automatiquement le contenu des tampons dans des fichiers (sauf si un "
+"tampon désactive le log)"
+
+msgid "use only lower case for log filenames"
+msgstr "utiliser seulement des minuscules dans le nom des fichiers de log"
+
+msgid ""
+"path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/."
+"weechat by default)"
+msgstr ""
+"chemin pour les fichiers de log WeeChat ('%h' sera remplacé par le "
+"répertoire de base WeeChat, par défaut: ~/.weechat)"
+
+msgid "write information line in log file when log starts or ends for a buffer"
+msgstr ""
+"écrire une ligne d'information dans le fichier log quand le log démarre ou "
+"se termine pour un tampon"
+
+msgid "timestamp used in log files (see man strftime for date/time specifiers)"
+msgstr ""
+"format de date/heure utilisé dans les fichiers log (voir strftime(3) pour le "
+"format de date/heure)"
 
 msgid "list of logger buffers"
 msgstr "liste des enregistreurs de tampons (loggers)"

@@ -139,6 +139,8 @@ SET(WEECHAT_SOURCES
 ./src/plugins/logger/logger.h
 ./src/plugins/logger/logger-buffer.c
 ./src/plugins/logger/logger-buffer.h
+./src/plugins/logger/logger-config.c
+./src/plugins/logger/logger-config.h
 ./src/plugins/logger/logger-info.c
 ./src/plugins/logger/logger-info.h
 ./src/plugins/logger/logger-tail.c

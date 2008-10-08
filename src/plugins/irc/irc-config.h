@@ -108,5 +108,6 @@ struct t_config_option *irc_config_server_new_option (struct t_config_file *conf
 extern int irc_config_init ();
 extern int irc_config_read ();
 extern int irc_config_write ();
+extern void irc_config_free ();
 
 #endif /* irc-config.h */

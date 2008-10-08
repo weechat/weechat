@@ -1155,3 +1155,13 @@ irc_config_write ()
 {
     return weechat_config_write (irc_config_file);
 }
+
+/*
+ * irc_config_free: free IRC configuration
+ */
+
+void
+irc_config_free ()
+{
+    weechat_config_free (irc_config_file);
+}

@@ -110,7 +110,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     if (!irc_config_init ())
         return WEECHAT_RC_ERROR;
-
+    
     if (irc_config_read () < 0)
         return WEECHAT_RC_ERROR;
     
@@ -204,6 +204,8 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
         irc_server_disconnect_all ();
     
     irc_server_free_all ();
+    
+    irc_config_free ();
     
     return WEECHAT_RC_OK;
 }

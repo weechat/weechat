@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-05 17:39+0200\n"
+"POT-Creation-Date: 2008-10-08 13:12+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -3916,6 +3916,10 @@ msgid "%s%s: disconnected from server"
 msgstr "Lekapcsolódott a szerverről!\n"
 
 #, fuzzy, c-format
+msgid "%s%s: unable to create directory for logs (\"%s\")"
+msgstr "%s nem sikerült a szervert létrehozni\n"
+
+#, fuzzy, c-format
 msgid "%s%s: unable to write log file \"%s\""
 msgstr "Nem sikerült a(z) \"%s\" naplófájlt írni\n"
 
@@ -3929,6 +3933,34 @@ msgstr "****  Naplófájl vége  "
 
 #, c-format
 msgid "===\t========== End of backlog (%d lines) =========="
+msgstr ""
+
+#, fuzzy
+msgid ""
+"maximum number of lines to display from log file when creating new buffer (0 "
+"= no backlog)"
+msgstr ""
+"felhasználói parancsok maximális száma az előzményekben (0 = korlátlan)"
+
+msgid ""
+"automatically save content of buffers to files (unless a buffer disables log)"
+msgstr ""
+
+msgid "use only lower case for log filenames"
+msgstr ""
+
+#, fuzzy
+msgid ""
+"path for WeeChat log files ('%h' will be replaced by WeeChat home, ~/."
+"weechat by default)"
+msgstr ""
+"modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
+"könyvtára, alapértelmezésben ~/.weechat, kerül)"
+
+msgid "write information line in log file when log starts or ends for a buffer"
+msgstr ""
+
+msgid "timestamp used in log files (see man strftime for date/time specifiers)"
 msgstr ""
 
 #, fuzzy
