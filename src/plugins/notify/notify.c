@@ -84,15 +84,12 @@ notify_build_option_name (struct t_gui_buffer *buffer)
     plugin_name = weechat_buffer_get_string (buffer, "plugin");
     name = weechat_buffer_get_string (buffer, "name");
     
-    length = ((plugin_name) ? strlen (plugin_name) : strlen ("core")) + 1 +
-        strlen (name) + 1;
+    length = strlen (plugin_name) + 1 + strlen (name) + 1;
     option_name = malloc (length);
     if (!option_name)
         return NULL;
     
-    snprintf (option_name, length, "%s.%s",
-              (plugin_name) ? plugin_name : "core",
-              name);
+    snprintf (option_name, length, "%s.%s", plugin_name, name);
     
     return option_name;
 }

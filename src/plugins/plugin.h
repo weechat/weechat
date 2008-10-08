@@ -22,6 +22,8 @@
 
 #include "weechat-plugin.h"
 
+#define PLUGIN_CORE "core"
+
 typedef int (t_weechat_init_func) (struct t_weechat_plugin *plugin,
                                    int argc, char *argv[]);
 typedef int (t_weechat_end_func) (struct t_weechat_plugin *plugin);
@@ -32,6 +34,7 @@ extern struct t_weechat_plugin *last_weechat_plugin;
 //extern t_plugin_irc_color plugins_irc_colors[GUI_NUM_IRC_COLORS];
 
 extern struct t_weechat_plugin *plugin_search (const char *name);
+extern char *plugin_get_name (struct t_weechat_plugin *plugin);
 extern struct t_weechat_plugin *plugin_load (const char *filename);
 extern void plugin_auto_load ();
 extern void plugin_remove (struct t_weechat_plugin *plugin);

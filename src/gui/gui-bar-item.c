@@ -742,6 +742,8 @@ gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
                                     struct t_gui_window *window,
                                     int max_width, int max_height)
 {
+    char *plugin_name;
+    
     /* make C compiler happy */
     (void) data;
     (void) item;
@@ -750,9 +752,9 @@ gui_bar_item_default_buffer_plugin (void *data, struct t_gui_bar_item *item,
     
     if (!window)
         window = gui_current_window;
-    
-    return (window->buffer->plugin) ?
-        strdup (window->buffer->plugin->name) : strdup ("core");
+
+    plugin_name = plugin_get_name (window->buffer->plugin);
+    return (plugin_name) ? strdup (plugin_name) : strdup ("");
 }
 
 /*

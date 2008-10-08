@@ -148,8 +148,7 @@ gui_layout_buffer_save ()
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        gui_layout_buffer_add ((ptr_buffer->plugin) ?
-                               ptr_buffer->plugin->name : "core",
+        gui_layout_buffer_add (plugin_get_name (ptr_buffer->plugin),
                                ptr_buffer->name,
                                ptr_buffer->number);
     }
@@ -187,14 +186,14 @@ void
 gui_layout_buffer_apply ()
 {
     struct t_gui_buffer *ptr_buffer;
-    char *plugin_core = "core", *plugin_name;
+    char *plugin_name;
     
     if (gui_layout_buffers)
     {
         for (ptr_buffer = gui_buffers; ptr_buffer;
              ptr_buffer = ptr_buffer->next_buffer)
         {
-            plugin_name = (ptr_buffer->plugin) ? ptr_buffer->plugin->name : plugin_core;
+            plugin_name = plugin_get_name (ptr_buffer->plugin);
             ptr_buffer->layout_number = gui_layout_buffer_get_number (plugin_name,
                                                                       ptr_buffer->name);
             if ((ptr_buffer->layout_number > 0)
@@ -370,8 +369,7 @@ gui_layout_window_save_tree (struct t_gui_layout_window *parent_layout,
         layout_window = gui_layout_window_add (internal_id++,
                                                parent_layout,
                                                0, 0,
-                                               (tree->window->buffer->plugin) ?
-                                               tree->window->buffer->plugin->name : "core",
+                                               plugin_get_name (tree->window->buffer->plugin),
                                                tree->window->buffer->name);
     }
     else
@@ -412,9 +410,9 @@ void
 gui_layout_window_check_buffer (struct t_gui_buffer *buffer)
 {
     struct t_gui_window *ptr_win;
-    char *plugin_core = "core", *plugin_name;
+    char *plugin_name;
     
-    plugin_name = (buffer->plugin) ? buffer->plugin->name : plugin_core;
+    plugin_name = plugin_get_name (buffer->plugin);
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -440,7 +438,7 @@ gui_layout_window_check_all_buffers ()
 {
     struct t_gui_window *ptr_win;
     struct t_gui_buffer *ptr_buffer;
-    char *plugin_core = "core", *plugin_name;
+    char *plugin_name;
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
@@ -449,7 +447,7 @@ gui_layout_window_check_all_buffers ()
             for (ptr_buffer = gui_buffers; ptr_buffer;
                  ptr_buffer = ptr_buffer->next_buffer)
             {
-                plugin_name = (ptr_buffer->plugin) ? ptr_buffer->plugin->name : plugin_core;
+                plugin_name = plugin_get_name (ptr_buffer->plugin);
                 
                 if ((strcmp (ptr_win->layout_plugin_name, plugin_name) == 0)
                     && (strcmp (ptr_win->layout_buffer_name, ptr_buffer->name) == 0))

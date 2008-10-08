@@ -81,8 +81,7 @@ gui_status_draw (int erase)
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                       GUI_COLOR_STATUS);
         wprintw (GUI_CURSES(ptr_win)->win_status, "%s",
-                 (ptr_win->buffer->plugin) ?
-                 ptr_win->buffer->plugin->name : "core");
+                 plugin_get_name (ptr_win->buffer->plugin));
         gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_status,
                                       GUI_COLOR_STATUS_DELIMITERS);
         wprintw (GUI_CURSES(ptr_win)->win_status, "] ");

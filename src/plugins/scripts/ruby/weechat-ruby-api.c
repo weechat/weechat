@@ -134,6 +134,42 @@ weechat_ruby_api_register (VALUE class, VALUE name, VALUE author,
 }
 
 /*
+ * weechat_ruby_api_plugin_get_name: get name of plugin (return "core" for
+ *                                   WeeChat core)
+ */
+
+static VALUE
+weechat_ruby_api_plugin_get_name (VALUE class, VALUE plugin)
+{
+    char *c_plugin, *result;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("plugin_get_name");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    c_plugin = NULL;
+    
+    if (NIL_P (plugin))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("plugin_get_name");
+        RUBY_RETURN_EMPTY;
+    }
+    
+    Check_Type (plugin, T_STRING);
+    
+    c_plugin = STR2CSTR (plugin);
+    
+    result = weechat_plugin_get_name (script_str2ptr (c_plugin));
+    
+    RUBY_RETURN_STRING(result);
+}
+
+/*
  * weechat_ruby_api_charset_set: set script charset
  */
 
@@ -5294,6 +5330,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_const(ruby_mWeechat, "WEECHAT_HOOK_SIGNAL_POINTER", rb_str_new2(WEECHAT_HOOK_SIGNAL_POINTER));
     
     rb_define_module_function (ruby_mWeechat, "register", &weechat_ruby_api_register, 7);
+    rb_define_module_function (ruby_mWeechat, "plugin_get_name", &weechat_ruby_api_plugin_get_name, 1);
     rb_define_module_function (ruby_mWeechat, "charset_set", &weechat_ruby_api_charset_set, 1);
     rb_define_module_function (ruby_mWeechat, "iconv_to_internal", &weechat_ruby_api_iconv_to_internal, 2);
     rb_define_module_function (ruby_mWeechat, "iconv_from_internal", &weechat_ruby_api_iconv_from_internal, 2);

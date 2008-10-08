@@ -149,7 +149,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
     if (!name)
         return NULL;
     
-    if (gui_buffer_search_by_name ((plugin) ? plugin->name : "core", name))
+    if (gui_buffer_search_by_name (plugin_get_name (plugin), name))
     {
         gui_chat_printf (NULL,
                          _("%sError: a buffer with same name (%s) already "
@@ -167,7 +167,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->plugin = plugin;
         new_buffer->plugin_name_for_upgrade = NULL;
         /* number will be set later (when inserting buffer in list) */
-        new_buffer->layout_number = gui_layout_buffer_get_number ((plugin) ? plugin->name : "core",
+        new_buffer->layout_number = gui_layout_buffer_get_number (plugin_get_name (plugin),
                                                                   name);
         new_buffer->name = strdup (name);
         new_buffer->type = GUI_BUFFER_TYPE_FORMATED;
@@ -354,7 +354,7 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
     if (buffer && property)
     {
         if (string_strcasecmp (property, "plugin") == 0)
-            return (buffer->plugin) ? buffer->plugin->name : NULL;
+            return plugin_get_name (buffer->plugin);
         else if (string_strcasecmp (property, "name") == 0)
             return buffer->name;
         else if (string_strcasecmp (property, "title") == 0)
@@ -773,7 +773,7 @@ gui_buffer_search_by_name (const char *plugin, const char *name)
                 }
                 else
                 {
-                    if (strcmp (plugin, "core") != 0)
+                    if (strcmp (plugin, PLUGIN_CORE) != 0)
                         plugin_match = 0;
                 }
             }
@@ -818,7 +818,7 @@ gui_buffer_search_by_partial_name (const char *plugin, const char *name)
                 }
                 else
                 {
-                    if (strcmp (plugin, "core") != 0)
+                    if (strcmp (plugin, PLUGIN_CORE) != 0)
                         plugin_match = 0;
                 }
             }
@@ -1256,8 +1256,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!infolist_new_var_pointer (ptr_item, "plugin", buffer->plugin))
         return 0;
     if (!infolist_new_var_string (ptr_item, "plugin_name",
-                                  (buffer->plugin) ?
-                                  buffer->plugin->name : NULL))
+                                  plugin_get_name (buffer->plugin)))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "number", buffer->number))
         return 0;

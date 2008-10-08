@@ -133,6 +133,44 @@ weechat_lua_api_register (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_plugin_get_name: get name of plugin (return "core" for
+ *                                  WeeChat core)
+ */
+
+static int
+weechat_lua_api_plugin_get_name (lua_State *L)
+{
+    const char *plugin;
+    char *result;
+    int n;
+    
+    /* make C compiler happy */
+    (void) L;
+    
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("plugin_get_name");
+        LUA_RETURN_EMPTY;
+    }
+    
+    plugin = NULL;
+    
+    n = lua_gettop (lua_current_interpreter);
+    
+    if (n < 1)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("plugin_get_name");
+        LUA_RETURN_EMPTY;
+    }
+    
+    plugin = lua_tostring (lua_current_interpreter, -1);
+    
+    result = weechat_plugin_get_name (script_str2ptr (plugin));
+    
+    LUA_RETURN_STRING(result);
+}
+
+/*
  * weechat_lua_api_charset_set: set script charset
  */
 
@@ -5554,6 +5592,7 @@ weechat_lua_api_constant_weechat_hook_signal_pointer (lua_State *L)
 
 const struct luaL_reg weechat_lua_api_funcs[] = {
     { "register", &weechat_lua_api_register },
+    { "plugin_get_name", &weechat_lua_api_plugin_get_name },
     { "charset_set", &weechat_lua_api_charset_set },
     { "iconv_to_internal", &weechat_lua_api_iconv_to_internal },
     { "iconv_from_internal", &weechat_lua_api_iconv_from_internal },

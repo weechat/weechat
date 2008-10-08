@@ -131,7 +131,7 @@ logger_get_filename (struct t_gui_buffer *buffer)
             {
                 plugin_name = weechat_infolist_string (ptr_infolist, "plugin_name");
                 plugin_name2 = (plugin_name) ?
-                    weechat_string_replace (plugin_name, dir_separator, "_") : strdup ("core");
+                    weechat_string_replace (plugin_name, dir_separator, "_") : NULL;
                 name = weechat_infolist_string (ptr_infolist, "name");
                 name2 = (name) ?
                     weechat_string_replace (name, dir_separator, "_") : NULL;

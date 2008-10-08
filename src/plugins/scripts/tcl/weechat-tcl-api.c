@@ -220,6 +220,40 @@ weechat_tcl_api_register (ClientData clientData, Tcl_Interp *interp, int objc,
 }
 
 /*
+ * weechat::plugin_get_name: get name of plugin (return "core" for WeeChat core)
+ */
+
+static int
+weechat_tcl_api_plugin_get_name (ClientData clientData, Tcl_Interp *interp,
+                                 int objc, Tcl_Obj *CONST objv[])
+{
+    Tcl_Obj* objp;
+    char *result, *plugin;
+    int i; 
+
+    /* make C compiler happy */
+    (void) clientData;
+    
+    if (!tcl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("plugin_get_name");
+        TCL_RETURN_EMPTY;
+    }
+    
+    if (objc < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("plugin_get_name");
+        TCL_RETURN_EMPTY;
+    }
+    
+    plugin = Tcl_GetStringFromObj (objv[1], &i);
+    
+    result = weechat_plugin_get_name (script_str2ptr (plugin));
+    
+    TCL_RETURN_STRING(result);
+}
+
+/*
  * weechat::charset_set: set script charset
  */
 
@@ -4951,6 +4985,8 @@ void weechat_tcl_api_init (Tcl_Interp *interp) {
     /* interface functions */
     Tcl_CreateObjCommand (interp,"weechat::register",
                           weechat_tcl_api_register, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
+    Tcl_CreateObjCommand (interp,"weechat::plugin_get_name",
+                          weechat_tcl_api_plugin_get_name, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::charset_set",
                           weechat_tcl_api_charset_set, (ClientData)NULL, (Tcl_CmdDeleteProc*)NULL);
     Tcl_CreateObjCommand (interp,"weechat::iconv_to_internal",

@@ -119,6 +119,9 @@ struct t_weechat_plugin
        at the END of functions, for keeping backward compatibility with
        existing plugins */
     
+    /* plugins */
+    char *(*plugin_get_name) (struct t_weechat_plugin *plugin);
+    
     /* strings */
     void (*charset_set) (struct t_weechat_plugin *plugin, const char *charset);
     char *(*iconv_to_internal) (const char *charset, const char *string);
@@ -551,6 +554,10 @@ extern int weechat_plugin_init (struct t_weechat_plugin *plugin,
 extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
 
 /* macros for easy call to plugin API */
+
+/* plugins */
+#define weechat_plugin_get_name(__plugin)                               \
+    weechat_plugin->plugin_get_name(__plugin)
 
 /* strings */
 #define weechat_charset_set(__charset)                                  \

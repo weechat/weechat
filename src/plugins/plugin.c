@@ -86,6 +86,18 @@ plugin_search (const char *name)
 }
 
 /*
+ * plugin_get_name: get name of plugin with a pointer
+ */
+
+char *
+plugin_get_name (struct t_weechat_plugin *plugin)
+{
+    static char *plugin_core = PLUGIN_CORE;
+    
+    return (plugin) ? plugin->name : plugin_core;
+}
+
+/*
  * plugin_load: load a WeeChat plugin (a dynamic library)
  *              return: pointer to new WeeChat plugin, NULL if error
  */
@@ -281,6 +293,8 @@ plugin_load (const char *filename)
         new_plugin->charset = (charset) ? strdup (charset) : NULL;
         
         /* functions */
+        new_plugin->plugin_get_name = &plugin_get_name;
+        
         new_plugin->charset_set = &plugin_api_charset_set;
         new_plugin->iconv_to_internal = &string_iconv_to_internal;
         new_plugin->iconv_from_internal = &string_iconv_from_internal;

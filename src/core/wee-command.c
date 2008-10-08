@@ -502,8 +502,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                              ptr_buffer->number,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
-                             (ptr_buffer->plugin) ?
-                             ptr_buffer->plugin->name : "core",
+                             plugin_get_name (ptr_buffer->plugin),
                              ptr_buffer->name);
         }
         

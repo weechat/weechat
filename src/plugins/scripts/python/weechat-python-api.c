@@ -116,6 +116,38 @@ weechat_python_api_register (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_plugin_get_name: get name of plugin (return "core" for
+ *                                     WeeChat core)
+ */
+
+static PyObject *
+weechat_python_api_plugin_get_name (PyObject *self, PyObject *args)
+{
+    char *plugin, *result;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("plugin_get_name");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    plugin = NULL;
+    
+    if (!PyArg_ParseTuple (args, "s", &plugin))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("plugin_get_name");
+        PYTHON_RETURN_EMPTY;
+    }
+    
+    result = weechat_plugin_get_name (script_str2ptr (plugin));
+    
+    PYTHON_RETURN_STRING(result);
+}
+
+/*
  * weechat_python_api_charset_set: set script charset
  */
 
@@ -4588,6 +4620,7 @@ weechat_python_api_infolist_free (PyObject *self, PyObject *args)
 PyMethodDef weechat_python_funcs[] =
 {
     { "register", &weechat_python_api_register, METH_VARARGS, "" },
+    { "plugin_get_name", &weechat_python_api_plugin_get_name, METH_VARARGS, "" },
     { "charset_set", &weechat_python_api_charset_set, METH_VARARGS, "" },
     { "iconv_to_internal", &weechat_python_api_iconv_to_internal, METH_VARARGS, "" },
     { "iconv_from_internal", &weechat_python_api_iconv_from_internal, METH_VARARGS, "" },
