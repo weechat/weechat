@@ -573,23 +573,6 @@ logger_print_cb (void *data, struct t_gui_buffer *buffer, time_t date,
 }
 
 /*
- * logger_config_cb: callback for config hook
- */
-
-int
-logger_config_cb (void *data, const char *option, const char *value)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-    (void) value;
-    
-    logger_config_read ();
-    
-    return WEECHAT_RC_OK;
-}
-
-/*
  * weechat_plugin_init: initialize logger plugin
  */
 
@@ -617,8 +600,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     weechat_hook_signal ("logger_stop", &logger_stop_signal_cb, NULL);
     
     weechat_hook_print (NULL, NULL, NULL, 1, &logger_print_cb, NULL);
-    
-    weechat_hook_config ("plugins.var.logger.*", &logger_config_cb, NULL);
     
     logger_info_init ();
     

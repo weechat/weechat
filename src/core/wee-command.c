@@ -2007,8 +2007,15 @@ command_quit (void *data, struct t_gui_buffer *buffer,
 void
 command_reload_file (struct t_config_file *config_file)
 {
-    if ((int) (config_file->callback_reload)
-        (config_file->callback_reload_data, config_file) == 0)
+    int rc;
+    
+    if (config_file->callback_reload)
+        rc = (int) (config_file->callback_reload)
+            (config_file->callback_reload_data, config_file);
+    else
+        rc = config_file_reload (config_file);
+    
+    if (rc == 0)
     {
         gui_chat_printf (NULL,
                          _("Options reloaded from %s"),
@@ -2061,10 +2068,7 @@ command_reload (void *data, struct t_gui_buffer *buffer,
         for (ptr_config_file = config_files; ptr_config_file;
              ptr_config_file = ptr_config_file->next_config)
         {
-            if (ptr_config_file->callback_reload)
-            {
-                command_reload_file (ptr_config_file);
-            }
+            command_reload_file (ptr_config_file);
         }
     }
     
