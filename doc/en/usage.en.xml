@@ -281,10 +281,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry>Tab / Shift + Tab</entry>
+              <entry>Tab</entry>
               <entry>
                 Complete command or nick
                 (Tab again: find next completion)
+              </entry>
+            </row>
+            <row>
+              <entry>Shift + Tab</entry>
+              <entry>
+                Without completion, do a partial completion.
+                With pending completion, complete with previous completion.
               </entry>
             </row>
             <row>

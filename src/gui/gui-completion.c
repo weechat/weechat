@@ -592,8 +592,6 @@ gui_completion_list_add_option (struct t_gui_completion *completion)
     int length;
     char *option_full_name;
     
-    completion->force_partial_completion = 1;
-    
     for (ptr_config = config_files; ptr_config;
          ptr_config = ptr_config->next_config)
     {
@@ -1567,6 +1565,7 @@ gui_completion_search (struct t_gui_completion *completion, int direction,
             free (completion->word_found);
         completion->word_found = NULL;
         gui_completion_find_context (completion, data, size, pos);
+        completion->force_partial_completion = (direction < 0);
     }
     
     /* completion */

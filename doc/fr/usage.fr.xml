@@ -301,10 +301,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry>Tab / Shift + Tab</entry>
+              <entry>Tab</entry>
               <entry>
                 Compléter la commande ou le pseudo
                 (Tab de nouveau: trouver la complétion suivante)
+              </entry>
+            </row>
+            <row>
+              <entry>Shift + Tab</entry>
+              <entry>
+                Sans complétion, effectue une complétion partielle.
+                Avec une complétion en cours, complète avec la complétion
+                précécente.
               </entry>
             </row>
             <row>

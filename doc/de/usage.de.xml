@@ -297,10 +297,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               </entry>
             </row>
             <row>
-              <entry>Tabulator / Shift + Tabulator</entry>
+              <entry>Tabulator</entry>
               <entry>
                 Vervollständige ein Kommando oder Nick
                 (wiederhole: finde nächste Vervollständigung)
+              </entry>
+            </row>
+            <!-- TRANSLATION NEEDED -->
+            <row>
+              <entry>Shift + Tab</entry>
+              <entry>
+                Without completion, do a partial completion.
+                With pending completion, complete with previous completion.
               </entry>
             </row>
             <row>
