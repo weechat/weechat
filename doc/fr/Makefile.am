@@ -54,6 +54,7 @@ html-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html.xsl ../weechat-doc.css .
 	cp ../include_autogen.xml .
 	mkdir -p html/
 	xsltproc -o html/ ../weechat-html.xsl $(BOOK).xml || true
+	rm -f include_autogen.xml
 	cp ../weechat-doc.css html/
 	touch html-stamp
 
@@ -66,6 +67,7 @@ html1-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html-one.xsl ../weechat-doc.
 	cp ../include_autogen.xml .
 	mkdir -p html1/
 	xsltproc -o html1/$(BOOK).html ../weechat-html-one.xsl $(BOOK).xml || true
+	rm -f include_autogen.xml
 	cp ../weechat-doc.css html1/
 	touch html1-stamp
 
@@ -77,6 +79,7 @@ pdf-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../include_autogen.xml
 	echo "<pubdate>`date '+%F %T'`</pubdate>" >date.xml
 	cp ../include_autogen.xml .
 	dblatex -P draft.mode=no -c ../dblatex.conf $(BOOK).xml || true
+	rm -f include_autogen.xml
 	touch pdf-stamp
 
 # install docs
