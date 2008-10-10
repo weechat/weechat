@@ -1670,15 +1670,21 @@ gui_bar_create_default_input ()
         {
             /* create input bar */
             length = 1 /* "[" */
+                + strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_PASTE])
+                + 3 /* "],[" */
                 + strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT])
+                + 3 /* "],[" */
+                + strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH])
                 + 2 /* "]," */
                 + strlen (gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT])
                 + 1 /* \0 */;
             buf = malloc (length);
             if (buf)
             {
-                snprintf (buf, length, "[%s],%s",
+                snprintf (buf, length, "[%s],[%s],[%s],%s",
+                          gui_bar_item_names[GUI_BAR_ITEM_INPUT_PASTE],
                           gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
+                          gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH],
                           gui_bar_item_names[GUI_BAR_ITEM_INPUT_TEXT]);
                 if (gui_bar_new (NULL, GUI_BAR_DEFAULT_NAME_INPUT,
                                  "0",          /* hidden */

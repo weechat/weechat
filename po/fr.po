@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-08 13:12+0200\n"
-"PO-Revision-Date: 2008-10-08 13:13+0200\n"
+"POT-Creation-Date: 2008-10-10 15:52+0200\n"
+"PO-Revision-Date: 2008-10-10 15:52+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1913,6 +1913,16 @@ msgstr "objets de la barre"
 #, c-format
 msgid "Bar \"%s\" updated"
 msgstr "Barre \"%s\" mise à jour"
+
+#, c-format
+msgid "%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No"
+msgstr "%sColler %d lignes ? [ctrl-Y] Oui [ctrl-N] Non"
+
+msgid "Text search"
+msgstr "Recherche texte"
+
+msgid "Text search (exact)"
+msgstr "Recherche texte (exact)"
 
 msgid "filtered"
 msgstr "filtré"

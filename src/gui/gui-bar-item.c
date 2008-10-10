@@ -42,6 +42,7 @@
 #include "gui-completion.h"
 #include "gui-filter.h"
 #include "gui-hotlist.h"
+#include "gui-keyboard.h"
 #include "gui-nicklist.h"
 #include "gui-window.h"
 
@@ -49,9 +50,10 @@
 struct t_gui_bar_item *gui_bar_items = NULL;     /* first bar item          */
 struct t_gui_bar_item *last_gui_bar_item = NULL; /* last bar item           */
 char *gui_bar_item_names[GUI_BAR_NUM_ITEMS] =
-{ "input_prompt", "input_text", "time", "buffer_count", "buffer_plugin",
-  "buffer_name", "buffer_filter", "buffer_nicklist_count", "scroll", "hotlist",
-  "completion", "buffer_title", "buffer_nicklist"
+{ "input_paste", "input_prompt", "input_search", "input_text", "time",
+  "buffer_count", "buffer_plugin", "buffer_name", "buffer_filter",
+  "buffer_nicklist_count", "scroll", "hotlist", "completion", "buffer_title",
+  "buffer_nicklist"
 };
 struct t_gui_bar_item_hook *gui_bar_item_hooks = NULL;
 struct t_hook *gui_bar_item_timer = NULL;
@@ -618,6 +620,45 @@ gui_bar_item_free_all_plugin (struct t_weechat_plugin *plugin)
 }
 
 /*
+ * gui_bar_item_default_input_paste: default item for input paste question
+ */
+
+char *
+gui_bar_item_default_input_paste (void *data, struct t_gui_bar_item *item,
+                                  struct t_gui_window *window,
+                                  int max_width, int max_height)
+{
+    char *text_paste_pending = N_("%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No");
+    char *ptr_message, *buf;
+    int length;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) max_width;
+    (void) max_height;
+    
+    if (!window)
+        return NULL;
+    
+    if (window != gui_current_window)
+        return NULL;
+    
+    if (!gui_keyboard_paste_pending)
+        return NULL;
+
+    ptr_message = _(text_paste_pending);
+    length = strlen (ptr_message) + 16 + 1;
+    buf = malloc (length);
+    if (buf)
+        snprintf (buf, length, ptr_message,
+                  gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_actions))),
+                  gui_keyboard_get_paste_lines ());
+    
+    return buf;
+}
+
+/*
  * gui_bar_item_default_input_prompt: default item for input prompt
  */
 
@@ -652,6 +693,50 @@ gui_bar_item_default_input_prompt (void *data, struct t_gui_bar_item *item,
         snprintf (buf, length, "%s%s",
                   gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_nick))),
                   window->buffer->input_nick);
+    }
+    
+    return buf;
+}
+
+/*
+ * gui_bar_item_default_input_search: default item for input search status
+ */
+
+char *
+gui_bar_item_default_input_search (void *data, struct t_gui_bar_item *item,
+                                   struct t_gui_window *window,
+                                   int max_width, int max_height)
+{
+    char *text_search = N_("Text search");
+    char *text_search_exact = N_("Text search (exact)");
+    char *ptr_message, *buf;
+    int length;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) max_width;
+    (void) max_height;
+    
+    if (!window)
+        window = gui_current_window;
+    
+    if (window->buffer->text_search == GUI_TEXT_SEARCH_DISABLED)
+        return NULL;
+    
+    ptr_message = (window->buffer->text_search_exact) ?
+        _(text_search_exact) : _(text_search);
+    length = 16 + strlen (ptr_message) + 1;
+    buf = malloc (length);
+    if (buf)
+    {
+        snprintf (buf, length, "%s%s",
+                  (window->buffer->text_search_found
+                   || !window->buffer->input_buffer
+                   || !window->buffer->input_buffer[0]) ?
+                  gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input))) :
+                  gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_text_not_found))),
+                  ptr_message);
     }
     
     return buf;
@@ -1218,12 +1303,28 @@ gui_bar_item_hook_signal (const char *signal, const char *item)
 void
 gui_bar_item_init ()
 {
+    /* input paste */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_INPUT_PASTE],
+                      &gui_bar_item_default_input_paste, NULL);
+    gui_bar_item_hook_signal ("input_paste_pending",
+                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_PASTE]);
+    
     /* input prompt */
     gui_bar_item_new (NULL,
                       gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT],
                       &gui_bar_item_default_input_prompt, NULL);
     gui_bar_item_hook_signal ("input_prompt_changed",
                               gui_bar_item_names[GUI_BAR_ITEM_INPUT_PROMPT]);
+    
+    /* input search */
+    gui_bar_item_new (NULL,
+                      gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH],
+                      &gui_bar_item_default_input_search, NULL);
+    gui_bar_item_hook_signal ("input_search",
+                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH]);
+    gui_bar_item_hook_signal ("input_text_changed",
+                              gui_bar_item_names[GUI_BAR_ITEM_INPUT_SEARCH]);
     
     /* input text */
     gui_bar_item_new (NULL,

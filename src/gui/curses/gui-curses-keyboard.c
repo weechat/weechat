@@ -413,6 +413,7 @@ gui_keyboard_read_cb (void *data)
             {
                 gui_keyboard_paste_pending = 1;
                 gui_input_draw (gui_current_window->buffer, 1);
+                gui_input_paste_pending_signal ();
             }
         }
     }

@@ -28,8 +28,10 @@ extern char *gui_input_clipboard;
 
 /* input functions */
 
+extern void gui_input_paste_pending_signal ();
 extern void gui_input_prompt_changed_signal ();
 extern void gui_input_text_changed_signal ();
+extern void gui_input_search_signal ();
 extern void gui_input_optimize_size (struct t_gui_buffer *buffer);
 extern void gui_input_init_color_mask (struct t_gui_buffer *buffer);
 extern void gui_input_move (struct t_gui_buffer *buffer, char *target,

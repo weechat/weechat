@@ -48,6 +48,16 @@ char *gui_input_clipboard = NULL;      /* clipboard content                 */
 
 
 /*
+ * gui_input_paste_pending_signal: send signal "input_paste_pending"
+ */
+
+void
+gui_input_paste_pending_signal ()
+{
+    hook_signal_send ("input_paste_pending", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+}
+
+/*
  * gui_input_prompt_changed_signal: send signal "input_prompt_changed"
  */
 
@@ -75,6 +85,16 @@ void
 gui_input_text_cursor_moved_signal ()
 {
     hook_signal_send ("input_text_cursor_moved", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+}
+
+/*
+ * gui_input_search_signal: send signal "input_search"
+ */
+
+void
+gui_input_search_signal ()
+{
+    hook_signal_send ("input_search", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*
@@ -334,7 +354,10 @@ gui_input_return ()
     if (gui_current_window->buffer->input)
     {
         if (gui_current_window->buffer->text_search != GUI_TEXT_SEARCH_DISABLED)
+        {
             gui_window_search_stop (gui_current_window);
+            gui_input_search_signal ();
+        }
         else if (gui_current_window->buffer->input_buffer_size > 0)
         {
             gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
@@ -539,6 +562,7 @@ gui_input_search_text ()
             gui_window_search_restart (gui_current_window);
             gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
         }
+        gui_input_search_signal ();
     }
 }
 

@@ -635,6 +635,7 @@ void
 gui_keyboard_paste_accept ()
 {
     gui_keyboard_paste_pending = 0;
+    gui_input_paste_pending_signal ();
 }
 
 
@@ -647,6 +648,7 @@ gui_keyboard_paste_cancel ()
 {
     gui_keyboard_buffer_reset ();
     gui_keyboard_paste_pending = 0;
+    gui_input_paste_pending_signal ();
 }
 
 /*

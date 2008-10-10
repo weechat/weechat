@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-08 13:12+0200\n"
+"POT-Creation-Date: 2008-10-10 15:52+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1891,6 +1891,16 @@ msgstr "Lista de alias:\n"
 #, fuzzy, c-format
 msgid "Bar \"%s\" updated"
 msgstr "Alias \"%s\" => \"%s\" creado\n"
+
+#, c-format
+msgid "%sPaste %d lines ? [ctrl-Y] Yes [ctrl-N] No"
+msgstr ""
+
+msgid "Text search"
+msgstr ""
+
+msgid "Text search (exact)"
+msgstr ""
 
 #, fuzzy
 msgid "filtered"
