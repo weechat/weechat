@@ -92,17 +92,31 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
             {
                 if (channel)
                 {
-                    snprintf (buf_name, sizeof (buf_name),
-                              "%s%s%s/%s%s%s(%s%s%s)",
-                              IRC_COLOR_STATUS_NAME,
-                              server->name,
-                              IRC_COLOR_BAR_DELIM,
-                              IRC_COLOR_STATUS_NAME,
-                              channel->name,
-                              IRC_COLOR_BAR_DELIM,
-                              IRC_COLOR_STATUS_NAME,
-                              (channel->modes) ? channel->modes : "",
-                              IRC_COLOR_BAR_DELIM);
+                    if (channel->modes && channel->modes[0]
+                        && (strcmp (channel->modes, "+") != 0))
+                    {
+                        snprintf (buf_name, sizeof (buf_name),
+                                  "%s%s%s/%s%s%s(%s%s%s)",
+                                  IRC_COLOR_STATUS_NAME,
+                                  server->name,
+                                  IRC_COLOR_BAR_DELIM,
+                                  IRC_COLOR_STATUS_NAME,
+                                  channel->name,
+                                  IRC_COLOR_BAR_DELIM,
+                                  IRC_COLOR_STATUS_NAME,
+                                  (channel->modes) ? channel->modes : "",
+                                  IRC_COLOR_BAR_DELIM);
+                    }
+                    else
+                    {
+                        snprintf (buf_name, sizeof (buf_name),
+                                  "%s%s%s/%s%s",
+                                  IRC_COLOR_STATUS_NAME,
+                                  server->name,
+                                  IRC_COLOR_BAR_DELIM,
+                                  IRC_COLOR_STATUS_NAME,
+                                  channel->name);
+                    }
                 }
             }
             if (server && server->is_away)
