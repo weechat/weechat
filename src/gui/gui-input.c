@@ -1399,9 +1399,6 @@ gui_input_set_unread ()
     {
         gui_buffer_set_unread (ptr_buffer);
     }
-    
-    /* refresh all windows */
-    gui_window_refresh_needed = 1;
 }
 
 /*

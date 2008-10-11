@@ -577,8 +577,18 @@ gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
 void
 gui_buffer_set_unread (struct t_gui_buffer *buffer)
 {
+    int refresh;
+
     if (buffer->type == GUI_BUFFER_TYPE_FORMATED)
+    {
+        refresh = ((buffer->last_read_line != NULL)
+                   && (buffer->last_read_line != buffer->last_line));
+        
         buffer->last_read_line = buffer->last_line;
+        
+        if (refresh)
+            gui_buffer_ask_chat_refresh (buffer, 2);
+    }
 }
 
 /*
