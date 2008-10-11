@@ -92,7 +92,8 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
             {
                 if (channel)
                 {
-                    if (channel->modes && channel->modes[0]
+                    if (channel->nicks
+                        && channel->modes && channel->modes[0]
                         && (strcmp (channel->modes, "+") != 0))
                     {
                         snprintf (buf_name, sizeof (buf_name),
@@ -110,12 +111,16 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                     else
                     {
                         snprintf (buf_name, sizeof (buf_name),
-                                  "%s%s%s/%s%s",
+                                  "%s%s%s%s%s/%s%s%s%s",
+                                  (channel->nicks) ? "" : IRC_COLOR_BAR_DELIM,
+                                  (channel->nicks) ? "" : "(",
                                   IRC_COLOR_STATUS_NAME,
                                   server->name,
                                   IRC_COLOR_BAR_DELIM,
                                   IRC_COLOR_STATUS_NAME,
-                                  channel->name);
+                                  channel->name,
+                                  (channel->nicks) ? "" : IRC_COLOR_BAR_DELIM,
+                                  (channel->nicks) ? "" : ")");
                     }
                 }
             }
