@@ -36,6 +36,7 @@
 #include "../gui-buffer.h"
 #include "../gui-chat.h"
 #include "../gui-color.h"
+#include "../gui-hotlist.h"
 #include "../gui-main.h"
 #include "../gui-window.h"
 #include "gui-curses.h"
@@ -1184,6 +1185,13 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                     {
                         hook_signal_send ("window_scrolled",
                                           WEECHAT_HOOK_SIGNAL_POINTER, ptr_win);
+                    }
+                    
+                    if (!ptr_win->scroll)
+                    {
+                        ptr_win->start_line = NULL;
+                        ptr_win->start_line_pos = 0;
+                        gui_hotlist_remove_buffer (ptr_win->buffer);
                     }
                     
                     /* cursor is below end line of chat window? */

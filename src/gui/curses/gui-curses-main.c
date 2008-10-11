@@ -253,16 +253,6 @@ gui_main_loop ()
         }
         else
         {
-            /* refresh status bar if needed */
-            if (gui_status_refresh_needed)
-                gui_status_draw (1);
-            
-            for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
-            {
-                if (ptr_bar->bar_refresh_needed)
-                    gui_bar_draw (ptr_bar);
-            }
-            
             for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
             {
                 if (ptr_win->refresh_needed)
@@ -294,6 +284,17 @@ gui_main_loop ()
                 /* refresh input if needed */
                 if (ptr_buffer->input_refresh_needed)
                     gui_input_draw (ptr_buffer, 1);
+            }
+            
+            /* refresh status bar if needed */
+            if (gui_status_refresh_needed)
+                gui_status_draw (1);
+            
+            /* refresh bars if needed */
+            for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+            {
+                if (ptr_bar->bar_refresh_needed)
+                    gui_bar_draw (ptr_bar);
             }
         }
         
