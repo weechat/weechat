@@ -253,6 +253,13 @@ gui_main_loop ()
         }
         else
         {
+            /* refresh bars if needed */
+            for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
+            {
+                if (ptr_bar->bar_refresh_needed)
+                    gui_bar_draw (ptr_bar);
+            }
+            
             for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
             {
                 if (ptr_win->refresh_needed)
