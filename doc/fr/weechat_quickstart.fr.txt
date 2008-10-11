@@ -77,6 +77,10 @@ Guide de démarrage rapide WeeChat (version française)
      Pour activer la connexion automatique au serveur lors du démarrage :
        /set irc.server.oftc.autoconnect = on
 
+     Pour lancer une commande après connexion au serveur, par exemple pour
+     s'identifier auprès de nickserv :
+       /set irc.server.oftc.command = "/msg nickserv identify xxxxxx"
+
      Pour rejoindre automatiquement des canaux lors de la connexion au serveur :
        /set irc.server.oftc.autojoin = "#canal1,#canal2"
 
@@ -177,5 +181,5 @@ Guide de démarrage rapide WeeChat (version française)
 
 --
 (c) 2006-2008, écrit par FlashCode <flashcode@flashtux.org>
-Dernière édition le 30/08/2008.
+Dernière édition le 11/10/2008.
 Ce document fait partie de WeeChat et est distribué sous license GPL 3.

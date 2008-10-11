@@ -73,6 +73,10 @@ WeeChat quick start guide (english version)
      To enable auto-connect to server at startup:
        /set irc.server.oftc.autoconnect = on
 
+     To run a command after connection to server, for example to identify
+     with nickserv:
+       /set irc.server.oftc.command = "/msg nickserv identify xxxxxx"
+
      To auto-join some channels when connecting to server:
        /set irc.server.oftc.autojoin = "#channel1,#channel2"
 
@@ -167,5 +171,5 @@ WeeChat quick start guide (english version)
 
 --
 (c) 2006-2008, written by FlashCode <flashcode@flashtux.org>
-Last edited on 2008-08-30.
+Last edited on 2008-10-11.
 This document is part of WeeChat and is distributed under GPL 3 licence.
