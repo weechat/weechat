@@ -652,7 +652,11 @@ gui_chat_line_has_highlight (struct t_gui_buffer *buffer,
 void
 gui_chat_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
 {
+    int update_prefix_max_length;
+    struct t_gui_line *ptr_line;
     struct t_gui_window *ptr_win;
+    
+    update_prefix_max_length = (line->prefix_length == buffer->prefix_max_length);
     
     /* reset scroll for any window starting with this line */
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
@@ -689,6 +693,17 @@ gui_chat_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
     free (line);
     
     buffer->lines_count--;
+
+    if (update_prefix_max_length)
+    {
+        buffer->prefix_max_length = 0;
+        for (ptr_line = buffer->lines; ptr_line;
+             ptr_line = ptr_line->next_line)
+        {
+            if (ptr_line->prefix_length > buffer->prefix_max_length)
+                buffer->prefix_max_length = ptr_line->prefix_length;
+        }
+    }
 }
 
 /*
@@ -739,6 +754,7 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
                    const char *prefix, const char *message)
 {
     struct t_gui_line *new_line;
+    struct t_gui_window *ptr_win;
     
     new_line = malloc (sizeof (*new_line));
     if (!new_line)
@@ -811,6 +827,15 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
         && (buffer->lines_count > CONFIG_INTEGER(config_history_max_lines)))
     {
         gui_chat_line_free (buffer, buffer->lines);
+        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        {
+            if ((ptr_win->buffer == buffer)
+                && (buffer->lines_count < ptr_win->win_chat_height))
+            {
+                gui_buffer_ask_chat_refresh (buffer, 2);
+                break;
+            }
+        }
     }
 }
 

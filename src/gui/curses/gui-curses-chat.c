@@ -142,7 +142,7 @@ gui_chat_get_real_width (struct t_gui_window *window)
 }
 
 /*
- * gui_chat_marker_for_line: return 1 if marker must be displayed before this
+ * gui_chat_marker_for_line: return 1 if marker must be displayed after this
  *                           line, or 0 if it must not
  */
 
@@ -158,7 +158,6 @@ gui_chat_marker_for_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
         && (CONFIG_INTEGER(config_look_read_marker) != CONFIG_LOOK_READ_MARKER_DOTTED_LINE))
         return 0;
     
-    line = line->prev_line;
     while (line)
     {
         if (buffer->last_read_line == line)
@@ -167,7 +166,7 @@ gui_chat_marker_for_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
         if (line->displayed)
             break;
         
-        line = line->prev_line;
+        line = line->next_line;
     }
     return 0;
 }
@@ -804,14 +803,6 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
     
     marker_line = gui_chat_marker_for_line (window->buffer, line);
     
-    if (marker_line)
-    {
-        gui_chat_display_horizontal_line (window, simulate);
-        gui_chat_display_new_line (window, num_lines, count,
-                                   &lines_displayed, simulate);
-        lines_displayed--;
-    }
-    
     /* display time and prefix */
     gui_chat_display_time_and_prefix (window, line, num_lines, count,
                                       &lines_displayed, simulate);
@@ -904,6 +895,13 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
         }
     }
     
+    if (marker_line && gui_chat_get_next_line_displayed (line))
+    {
+        gui_chat_display_horizontal_line (window, simulate);
+        gui_chat_display_new_line (window, num_lines, count,
+                                   &lines_displayed, simulate);
+    }
+    
     if (simulate)
     {
         window->win_chat_cursor_x = x;
@@ -939,9 +937,6 @@ gui_chat_display_line (struct t_gui_window *window, struct t_gui_line *line,
             }
         }
     }
-    
-    if (marker_line)
-        lines_displayed++;
     
     return lines_displayed;
 }
