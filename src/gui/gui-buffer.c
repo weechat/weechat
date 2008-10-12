@@ -51,7 +51,6 @@
 #include "gui-layout.h"
 #include "gui-main.h"
 #include "gui-nicklist.h"
-#include "gui-status.h"
 #include "gui-window.h"
 
 
@@ -180,7 +179,6 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         
         /* title */
         new_buffer->title = NULL;
-        new_buffer->title_refresh_needed = 1;
         
         /* chat lines (formated) */
         new_buffer->lines = NULL;
@@ -198,7 +196,6 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->nicklist_max_length = 0;
         new_buffer->nicklist_display_groups = 1;
         new_buffer->nicklist_visible_count = 0;
-        new_buffer->nicklist_refresh_needed = 1;
         gui_nicklist_add_group (new_buffer, NULL, "root", NULL, 0);
         
         /* input */
@@ -257,7 +254,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
             gui_current_window->first_line_displayed = 1;
             gui_current_window->start_line = NULL;
             gui_current_window->start_line_pos = 0;
-            gui_window_calculate_pos_size (gui_current_window, 1);
+            gui_window_calculate_pos_size (gui_current_window);
             gui_window_switch_to_buffer (gui_current_window, new_buffer);
         }
         
@@ -383,17 +380,6 @@ gui_buffer_get_pointer (struct t_gui_buffer *buffer, const char *property)
 }
 
 /*
- * gui_buffer_ask_title_refresh: set "title_refresh_needed" flag
- */
-
-void
-gui_buffer_ask_title_refresh (struct t_gui_buffer *buffer, int refresh)
-{
-    if (refresh > buffer->title_refresh_needed)
-        buffer->title_refresh_needed = refresh;
-}
-
-/*
  * gui_buffer_ask_chat_refresh: set "chat_refresh_needed" flag
  */
 
@@ -402,17 +388,6 @@ gui_buffer_ask_chat_refresh (struct t_gui_buffer *buffer, int refresh)
 {
     if (refresh > buffer->chat_refresh_needed)
         buffer->chat_refresh_needed = refresh;
-}
-
-/*
- * gui_buffer_ask_nicklist_refresh: set "nicklist_refresh_needed" flag
- */
-
-void
-gui_buffer_ask_nicklist_refresh (struct t_gui_buffer *buffer, int refresh)
-{
-    if (refresh > buffer->nicklist_refresh_needed)
-        buffer->nicklist_refresh_needed = refresh;
 }
 
 /*
@@ -438,8 +413,6 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
         if (buffer->name)
             free (buffer->name);
         buffer->name = strdup (name);
-        
-        gui_status_refresh_needed = 1;
         
         hook_signal_send ("buffer_renamed",
                           WEECHAT_HOOK_SIGNAL_POINTER, buffer);
@@ -472,7 +445,6 @@ gui_buffer_set_title (struct t_gui_buffer *buffer, const char *new_title)
     if (buffer->title)
         free (buffer->title);
     buffer->title = (new_title && new_title[0]) ? strdup (new_title) : NULL;
-    gui_buffer_ask_title_refresh (buffer, 1);
     hook_signal_send ("buffer_title_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
@@ -509,7 +481,6 @@ gui_buffer_set_nicklist_display_groups (struct t_gui_buffer *buffer,
     buffer->nicklist_display_groups = (display_groups) ? 1 : 0;
     buffer->nicklist_visible_count = 0;
     gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
-    gui_buffer_ask_nicklist_refresh (buffer, 1);
 }
 
 /*
@@ -651,7 +622,6 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "display") == 0)
     {
         gui_window_switch_to_buffer (gui_current_window, buffer);
-        gui_status_refresh_needed = 1;
     }
     else if (string_strcasecmp (property, "name") == 0)
     {
@@ -954,7 +924,6 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
     }
     
     gui_buffer_ask_chat_refresh (buffer, 2);
-    gui_status_refresh_needed = 1;
 }
 
 /*
@@ -1061,9 +1030,6 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
                       WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     
     free (buffer);
-    
-    if (gui_windows && gui_current_window && gui_current_window->buffer)
-        gui_status_refresh_needed = 1;
 }
 
 /*
@@ -1084,8 +1050,6 @@ gui_buffer_switch_previous (struct t_gui_window *window)
         gui_window_switch_to_buffer (window, window->buffer->prev_buffer);
     else
         gui_window_switch_to_buffer (window, last_gui_buffer);
-    
-    gui_status_refresh_needed = 1;
 }
 
 /*
@@ -1106,8 +1070,6 @@ gui_buffer_switch_next (struct t_gui_window *window)
         gui_window_switch_to_buffer (window, window->buffer->next_buffer);
     else
         gui_window_switch_to_buffer (window, gui_buffers);
-    
-    gui_status_refresh_needed = 1;
 }
 
 /*
@@ -1133,7 +1095,6 @@ gui_buffer_switch_by_number (struct t_gui_window *window, int number)
         if ((ptr_buffer != window->buffer) && (number == ptr_buffer->number))
         {
             gui_window_switch_to_buffer (window, ptr_buffer);
-            gui_status_refresh_needed = 1;
             return;
         }
     }
@@ -1226,8 +1187,6 @@ gui_buffer_move_to_number (struct t_gui_buffer *buffer, int number)
     {
         ptr_buffer->number = i++;
     }
-    
-    gui_status_refresh_needed = 1;
     
     snprintf (buf1_str, sizeof (buf1_str) - 1, "%d", buffer->number);
     argv[0] = buf1_str;
@@ -1472,7 +1431,6 @@ gui_buffer_print_log ()
         log_printf ("  close_callback . . . . : 0x%x", ptr_buffer->close_callback);
         log_printf ("  close_callback_data. . : 0x%x", ptr_buffer->close_callback_data);
         log_printf ("  title. . . . . . . . . : '%s'", ptr_buffer->title);
-        log_printf ("  title_refresh_needed . : %d",   ptr_buffer->title_refresh_needed);
         log_printf ("  lines. . . . . . . . . : 0x%x", ptr_buffer->lines);
         log_printf ("  last_line. . . . . . . : 0x%x", ptr_buffer->last_line);
         log_printf ("  last_read_line . . . . : 0x%x", ptr_buffer->last_read_line);
@@ -1486,7 +1444,6 @@ gui_buffer_print_log ()
         log_printf ("  nicklist_max_length. . : %d",   ptr_buffer->nicklist_max_length);
         log_printf ("  nicklist_display_groups: %d",   ptr_buffer->nicklist_display_groups);
         log_printf ("  nicklist_visible_count.: %d",   ptr_buffer->nicklist_visible_count);
-        log_printf ("  nicklist_refresh_needed: %d",   ptr_buffer->nicklist_refresh_needed);
         log_printf ("  input. . . . . . . . . : %d",   ptr_buffer->input);
         log_printf ("  input_callback . . . . : 0x%x", ptr_buffer->input_callback);
         log_printf ("  input_callback_data. . : 0x%x", ptr_buffer->input_callback_data);

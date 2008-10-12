@@ -176,18 +176,6 @@ gui_chat_set_weechat_color (struct t_gui_window *window, int weechat_color)
 }
 
 /*
- * gui_chat_draw_title: draw title window for a buffer
- */
-
-void
-gui_chat_draw_title (struct t_gui_buffer *buffer, int erase)
-{
-    /* TODO: write this function for Gtk */
-    (void) buffer;
-    (void) erase;
-}
-
-/*
  * gui_chat_string_next_char: returns next char of a word (for display)
  *                            special chars like colors, bold, .. are skipped
  *                            and optionaly applied

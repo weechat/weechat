@@ -90,7 +90,6 @@ extern void gui_chat_printf_y (struct t_gui_buffer *buffer, int y,
 
 /* chat functions (GUI dependent) */
 
-extern void gui_chat_draw_title (struct t_gui_buffer *buffer, int erase);
 extern char *gui_chat_string_next_char (struct t_gui_window *window,
                                         const unsigned char *string,
                                         int apply_style);

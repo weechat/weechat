@@ -93,7 +93,6 @@ struct t_gui_buffer
     
     /* buffer title */
     char *title;                       /* buffer title                      */
-    int title_refresh_needed;          /* refresh for title is needed ?     */
     
     /* chat content */
     struct t_gui_line *lines;          /* lines of chat window              */
@@ -112,7 +111,6 @@ struct t_gui_buffer
     int nicklist_max_length;           /* max length for a nick             */
     int nicklist_display_groups;       /* display groups ?                  */
     int nicklist_visible_count;        /* number of nicks/groups to display */
-    int nicklist_refresh_needed;       /* refresh for nicklist is needed ?  */
     
     /* inupt */
     int input;                         /* = 1 if input is enabled           */
@@ -189,8 +187,6 @@ extern char *gui_buffer_get_string (struct t_gui_buffer *buffer,
                                     const char *property);
 extern void *gui_buffer_get_pointer (struct t_gui_buffer *buffer,
                                      const char *property);
-extern void gui_buffer_ask_title_refresh (struct t_gui_buffer *buffer,
-                                          int refresh);
 extern void gui_buffer_ask_chat_refresh (struct t_gui_buffer *buffer,
                                          int refresh);
 extern void gui_buffer_ask_nicklist_refresh (struct t_gui_buffer *buffer,

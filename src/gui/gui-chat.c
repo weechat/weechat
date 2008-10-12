@@ -43,7 +43,6 @@
 #include "gui-filter.h"
 #include "gui-hotlist.h"
 #include "gui-main.h"
-#include "gui-status.h"
 #include "gui-window.h"
 
 
@@ -666,7 +665,6 @@ gui_chat_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
             ptr_win->start_line = ptr_win->start_line->next_line;
             ptr_win->start_line_pos = 0;
             gui_buffer_ask_chat_refresh (buffer, 2);
-            gui_status_refresh_needed = 1;
         }
     }
     

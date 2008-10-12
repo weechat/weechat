@@ -73,8 +73,6 @@ struct t_gui_gtk_objects
     GtkWidget *textview_chat;       /* textview widget for chat             */
     GtkTextBuffer *textbuffer_chat; /* textbuffer widget for chat           */
     GtkTextTag *texttag_chat;       /* texttag widget for chat              */
-    GtkWidget *textview_nicklist;   /* textview widget for nicklist         */
-    GtkTextBuffer *textbuffer_nicklist; /* textbuffer widget for nicklist   */
     struct t_gui_bar_window *bar_windows;     /* bar windows                */
     struct t_gui_bar_window *last_bar_window; /* last bar window            */
     int current_style_fg;           /* current foreground color             */
@@ -85,13 +83,11 @@ struct t_gui_gtk_objects
 
 extern GtkWidget *gui_gtk_main_window;
 extern GtkWidget *gui_gtk_vbox1;
-extern GtkWidget *gui_gtk_entry_topic;
 extern GtkWidget *gui_gtk_notebook1;
 extern GtkWidget *gui_gtk_vbox2;
 extern GtkWidget *gui_gtk_hbox1;
 extern GtkWidget *gui_gtk_hpaned1;
 extern GtkWidget *gui_gtk_scrolledwindow_chat;
-extern GtkWidget *gui_gtk_scrolledwindow_nick;
 extern GtkWidget *gui_gtk_entry_input;
 extern GtkWidget *gui_gtk_label1;
 

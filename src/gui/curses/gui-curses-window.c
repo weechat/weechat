@@ -42,7 +42,6 @@
 #include "../gui-input.h"
 #include "../gui-main.h"
 #include "../gui-nicklist.h"
-#include "../gui-status.h"
 #include "gui-curses.h"
 
 
@@ -85,11 +84,7 @@ gui_window_objects_init (struct t_gui_window *window)
     if (new_objects)
     {
         window->gui_objects = new_objects;
-        GUI_CURSES(window)->win_title = NULL;
         GUI_CURSES(window)->win_chat = NULL;
-        GUI_CURSES(window)->win_nick = NULL;
-        GUI_CURSES(window)->win_status = NULL;
-        GUI_CURSES(window)->win_input = NULL;
         GUI_CURSES(window)->win_separator = NULL;
         GUI_CURSES(window)->bar_windows = NULL;
         GUI_CURSES(window)->last_bar_window = NULL;
@@ -106,30 +101,10 @@ void
 gui_window_objects_free (struct t_gui_window *window, int free_separator,
                          int free_bar_windows)
 {
-    if (GUI_CURSES(window)->win_title)
-    {
-        delwin (GUI_CURSES(window)->win_title);
-        GUI_CURSES(window)->win_title = NULL;
-    }
     if (GUI_CURSES(window)->win_chat)
     {
         delwin (GUI_CURSES(window)->win_chat);
         GUI_CURSES(window)->win_chat = NULL;
-    }
-    if (GUI_CURSES(window)->win_nick)
-    {
-        delwin (GUI_CURSES(window)->win_nick);
-        GUI_CURSES(window)->win_nick = NULL;
-    }
-    if (GUI_CURSES(window)->win_status)
-    {
-        delwin (GUI_CURSES(window)->win_status);
-        GUI_CURSES(window)->win_status = NULL;
-    }
-    if (GUI_CURSES(window)->win_input)
-    {
-        delwin (GUI_CURSES(window)->win_input);
-        GUI_CURSES(window)->win_input = NULL;
     }
     if (free_separator && GUI_CURSES(window)->win_separator)
     {
@@ -380,19 +355,18 @@ gui_window_clrtoeol_with_current_bg (WINDOW *window)
 }
 
 /*
- * gui_window_calculate_pos_size: calculate position and size for a buffer & subwindows
- *                                return 1 if pos/size changed, 0 if no change
+ * gui_window_calculate_pos_size: calculate position and size for a buffer and
+ *                                subwindows
  */
 
-int
-gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
+void
+gui_window_calculate_pos_size (struct t_gui_window *window)
 {
     struct t_gui_bar_window *ptr_bar_win;
-    int max_length, max_height, lines, width_used;
     int add_top, add_bottom, add_left, add_right;
     
     if (!gui_ok)
-        return 0;
+        return;
     
     for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
          ptr_bar_win = ptr_bar_win->next_bar_window)
@@ -405,148 +379,12 @@ gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
     add_left = gui_bar_window_get_size (NULL, window, GUI_BAR_POSITION_LEFT);
     add_right = gui_bar_window_get_size (NULL, window, GUI_BAR_POSITION_RIGHT);
     
-    /* init chat & nicklist settings */
-    if (window->buffer->nicklist)
-    {
-        max_length = window->buffer->nicklist_max_length;
-        
-        lines = 0;
-        
-        if ((CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_LEFT) ||
-            (CONFIG_INTEGER(config_look_nicklist_position) == CONFIG_LOOK_NICKLIST_RIGHT))
-        {
-            if ((CONFIG_INTEGER(config_look_nicklist_min_size) > 0)
-                && (max_length < CONFIG_INTEGER(config_look_nicklist_min_size)))
-                max_length = CONFIG_INTEGER(config_look_nicklist_min_size);
-            else if ((CONFIG_INTEGER(config_look_nicklist_max_size) > 0)
-                     && (max_length > CONFIG_INTEGER(config_look_nicklist_max_size)))
-                max_length = CONFIG_INTEGER(config_look_nicklist_max_size);
-            if (!force_calculate
-                && (window->win_nick_width ==
-                    max_length + ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0)))
-                return 0;
-        }
-        else
-        {
-            width_used = (window->win_width - add_left - add_right)
-                - ((window->win_width - add_left - add_right) % (max_length + 2));
-            if (((max_length + 2) * window->buffer->nicklist_visible_count) % width_used == 0)
-                lines = ((max_length + 2) * window->buffer->nicklist_visible_count) / width_used;
-            else
-                lines = (((max_length + 2) * window->buffer->nicklist_visible_count) / width_used) + 1;
-            if ((CONFIG_INTEGER(config_look_nicklist_max_size) > 0)
-                && (lines > CONFIG_INTEGER(config_look_nicklist_max_size)))
-                lines = CONFIG_INTEGER(config_look_nicklist_max_size);
-            if ((CONFIG_INTEGER(config_look_nicklist_min_size) > 0)
-                && (lines < CONFIG_INTEGER(config_look_nicklist_min_size)))
-                lines = CONFIG_INTEGER(config_look_nicklist_min_size);
-            max_height = window->win_height - add_top - add_bottom - 2 - 4;
-            if (lines > max_height)
-                lines = max_height;
-            if (!force_calculate
-                && (window->win_nick_height ==
-                    lines + ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0)))
-                return 0;
-        }
-        
-        switch (CONFIG_INTEGER(config_look_nicklist_position))
-        {
-            case CONFIG_LOOK_NICKLIST_LEFT:
-                window->win_chat_x = window->win_x + add_left + max_length +
-                    ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_chat_y = window->win_y + add_top + 1;
-                window->win_chat_width = window->win_width - max_length -
-                    ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_nick_x = window->win_x + add_left + 0;
-                window->win_nick_y = window->win_y + add_top + 1;
-                window->win_nick_width = max_length +
-                    ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_chat_height = window->win_height - add_top - add_bottom - 3;
-                window->win_nick_height = window->win_height - add_top - add_bottom - 3;
-                window->win_nick_num_max = window->win_nick_height;
-                break;
-            case CONFIG_LOOK_NICKLIST_RIGHT:
-                window->win_chat_x = window->win_x + add_left;
-                window->win_chat_y = window->win_y + add_top + 1;
-                window->win_chat_width = window->win_width - add_left - add_right - max_length -
-                    ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_nick_x = window->win_x + window->win_width - add_right - max_length -
-                    ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_nick_y = window->win_y + add_top + 1;
-                window->win_nick_width = max_length +
-                    ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_chat_height = window->win_height - add_top - add_bottom - 3;
-                window->win_nick_height = window->win_height - add_top - add_bottom - 3;
-                window->win_nick_num_max = window->win_nick_height;
-                break;
-            case CONFIG_LOOK_NICKLIST_TOP:
-                window->win_chat_x = window->win_x + add_left;
-                window->win_chat_y = window->win_y + add_top + 1 + lines +
-                    ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_chat_width = window->win_width - add_left - add_right;
-                window->win_chat_height = window->win_height - add_top - add_bottom - 3 - lines -
-                    ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_nick_x = window->win_x + add_left;
-                window->win_nick_y = window->win_y + add_top + 1;
-                window->win_nick_width = window->win_width - add_left - add_right;
-                window->win_nick_height = lines +
-                    ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_nick_num_max = lines * (window->win_nick_width / (max_length + 1));
-                break;
-            case CONFIG_LOOK_NICKLIST_BOTTOM:
-                window->win_chat_x = window->win_x + add_left;
-                window->win_chat_y = window->win_y + add_top + 1;
-                window->win_chat_width = window->win_width - add_left - add_right;
-                window->win_chat_height = window->win_height - add_top - add_bottom - 3 - lines -
-                    ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_nick_x = window->win_x;
-                window->win_nick_y = window->win_y + window->win_height - add_bottom -
-                    2 - lines -
-                    ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_nick_width = window->win_width;
-                window->win_nick_height = lines +
-                    ((CONFIG_BOOLEAN(config_look_nicklist_separator)) ? 1 : 0);
-                window->win_nick_num_max = lines * (window->win_nick_width / (max_length + 1));
-                break;
-        }
-        
-        window->win_chat_cursor_x = window->win_x + add_left;
-        window->win_chat_cursor_y = window->win_y + add_top;
-    }
-    else
-    {
-        window->win_chat_x = window->win_x + add_left;
-        window->win_chat_y = window->win_y + add_top + 1;
-        window->win_chat_width = window->win_width - add_left - add_right;
-        window->win_chat_height = window->win_height - add_top - add_bottom - 3;
-        window->win_chat_cursor_x = window->win_x + add_left;
-        window->win_chat_cursor_y = window->win_y + add_top;
-        window->win_nick_x = -1;
-        window->win_nick_y = -1;
-        window->win_nick_width = -1;
-        window->win_nick_height = -1;
-        window->win_nick_num_max = -1;
-    }
-
-    /* title window */
-    window->win_title_x = window->win_x + add_left;
-    window->win_title_y = window->win_y + add_top;
-    window->win_title_width = window->win_width - add_left - add_right;
-    window->win_title_height = 1;
-    
-    /* status window */
-    window->win_status_x = window->win_x + add_left;
-    window->win_status_y = window->win_y + window->win_height - add_bottom - 2;
-    window->win_status_width = window->win_width - add_left - add_right;
-    window->win_status_height = 1;
-    
-    /* input window */
-    window->win_input_x = window->win_x + add_left;
-    window->win_input_y = window->win_y + window->win_height - add_bottom - 1;
-    window->win_input_width = window->win_width - add_left - add_right;
-    window->win_input_height = 1;
-    
-    return 1;
+    window->win_chat_x = window->win_x + add_left;
+    window->win_chat_y = window->win_y + add_top;
+    window->win_chat_width = window->win_width - add_left - add_right;
+    window->win_chat_height = window->win_height - add_top - add_bottom;
+    window->win_chat_cursor_x = window->win_x + add_left;
+    window->win_chat_cursor_y = window->win_y + add_top;
 }
 
 /*
@@ -584,11 +422,7 @@ gui_window_redraw_buffer (struct t_gui_buffer *buffer)
     if (!gui_ok)
         return;
     
-    gui_chat_draw_title (buffer, 1);
-    if (!gui_nicklist_draw (buffer, 1))
-        gui_chat_draw (buffer, 1);
-    gui_status_draw (1);
-    gui_input_draw (buffer, 1);
+    gui_chat_draw (buffer, 1);
 }
 
 /*
@@ -641,8 +475,6 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     }
     
     window->buffer = buffer;
-    window->win_title_start = 0;
-    window->win_nick_start = 0;
     
     if (old_buffer == buffer)
     {
@@ -650,7 +482,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
         gui_bar_window_add_missing_bars (window);
     }
     
-    gui_window_calculate_pos_size (window, 1);
+    gui_window_calculate_pos_size (window);
     
     /* create bar windows */
     for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
@@ -663,42 +495,12 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     gui_window_objects_free (window, 0, 0);
     
     /* create Curses windows */
-    GUI_CURSES(window)->win_title = newwin (window->win_title_height,
-                                            window->win_title_width,
-                                            window->win_title_y,
-                                            window->win_title_x);
-    GUI_CURSES(window)->win_input = newwin (window->win_input_height,
-                                            window->win_input_width,
-                                            window->win_input_y,
-                                            window->win_input_x);
-    if (buffer->nicklist)
-    {
-        if (GUI_CURSES(window)->win_chat)
-            delwin (GUI_CURSES(window)->win_chat);
-        GUI_CURSES(window)->win_chat = newwin (window->win_chat_height,
-                                               window->win_chat_width,
-                                               window->win_chat_y,
-                                               window->win_chat_x);
-        GUI_CURSES(window)->win_nick = newwin (window->win_nick_height,
-                                               window->win_nick_width,
-                                               window->win_nick_y,
-                                               window->win_nick_x);
-    }
-    else
-    {
-        if (GUI_CURSES(window)->win_chat)
-            delwin (GUI_CURSES(window)->win_chat);
-        GUI_CURSES(window)->win_chat = newwin (window->win_chat_height,
-                                               window->win_chat_width,
-                                               window->win_chat_y,
-                                               window->win_chat_x);
-    }
-    
-    /* create status window */
-    GUI_CURSES(window)->win_status = newwin (window->win_status_height,
-                                             window->win_status_width,
-                                             window->win_status_y,
-                                             window->win_status_x);
+    if (GUI_CURSES(window)->win_chat)
+        delwin (GUI_CURSES(window)->win_chat);
+    GUI_CURSES(window)->win_chat = newwin (window->win_chat_height,
+                                           window->win_chat_width,
+                                           window->win_chat_y,
+                                           window->win_chat_x);
     
     buffer->num_displayed++;
     
@@ -785,8 +587,8 @@ gui_window_page_up (struct t_gui_window *window)
                                               (window->start_line) ?
                                               (-1) * (num_lines) :
                                               (-1) * (num_lines + window->win_chat_height - 1));
+                window->scroll_reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
-                gui_status_refresh_needed = 1;
             }
             break;
         case GUI_BUFFER_TYPE_FREE:
@@ -845,8 +647,8 @@ gui_window_page_down (struct t_gui_window *window)
                     window->start_line = NULL;
                     window->start_line_pos = 0;
                 }
+                window->scroll_reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
-                gui_status_refresh_needed = 1;
             }
             break;
         case GUI_BUFFER_TYPE_FREE:
@@ -884,8 +686,8 @@ gui_window_scroll_up (struct t_gui_window *window)
                                               (-1) * CONFIG_INTEGER(config_look_scroll_amount) :
                                               (-1) * ( (window->win_chat_height - 1) +
                                                        CONFIG_INTEGER(config_look_scroll_amount)));
+                window->scroll_reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
-                gui_status_refresh_needed = 1;
             }
             break;
         case GUI_BUFFER_TYPE_FREE:
@@ -938,9 +740,8 @@ gui_window_scroll_down (struct t_gui_window *window)
                     window->start_line = NULL;
                     window->start_line_pos = 0;
                 }
-                
+                window->scroll_reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
-                gui_status_refresh_needed = 1;
             }
             break;
         case GUI_BUFFER_TYPE_FREE:
@@ -972,8 +773,8 @@ gui_window_scroll_top (struct t_gui_window *window)
             {
                 window->start_line = gui_chat_get_first_line_displayed (window->buffer);
                 window->start_line_pos = 0;
+                window->scroll_reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
-                gui_status_refresh_needed = 1;
             }
             break;
         case GUI_BUFFER_TYPE_FREE:
@@ -1009,8 +810,8 @@ gui_window_scroll_bottom (struct t_gui_window *window)
             {
                 window->start_line = NULL;
                 window->start_line_pos = 0;
+                window->scroll_reset_allowed = 1;
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
-                gui_status_refresh_needed = 1;
             }
             break;
         case GUI_BUFFER_TYPE_FREE:
@@ -1024,140 +825,12 @@ gui_window_scroll_bottom (struct t_gui_window *window)
             else
             {
                 gui_buffer_ask_chat_refresh (window->buffer, 2);
-                gui_status_refresh_needed = 1;
             }
             hook_signal_send ("window_scrolled",
                               WEECHAT_HOOK_SIGNAL_POINTER, window);
             break;
         case GUI_BUFFER_NUM_TYPES:
             break;
-    }
-}
-
-/*
- * gui_window_scroll_topic_left: scroll left topic
- */
-
-void
-gui_window_scroll_topic_left (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    if (window->win_title_start > 0)
-        window->win_title_start -= (window->win_width * 3) / 4;
-    if (window->win_title_start < 0)
-        window->win_title_start = 0;
-    gui_buffer_ask_title_refresh (window->buffer, 1);
-}
-
-/*
- * gui_window_scroll_topic_right: scroll right topic
- */
-
-void
-gui_window_scroll_topic_right (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    window->win_title_start += (window->win_width * 3) / 4;
-    gui_buffer_ask_title_refresh (window->buffer, 1);
-}
-
-/*
- * gui_window_nicklist_page_up: scroll one page up in nicklist
- */
-
-void
-gui_window_nicklist_page_up (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    if (window->buffer->nicklist)
-    {
-        if (window->win_nick_start > 0)
-        {
-            window->win_nick_start -= (window->win_nick_num_max - 1);
-            if (window->win_nick_start <= 1)
-                window->win_nick_start = 0;
-            gui_buffer_ask_nicklist_refresh (window->buffer, 1);
-        }
-    }
-}
-
-/*
- * gui_window_nicklist_page_down: scroll one page down in nicklist
- */
-
-void
-gui_window_nicklist_page_down (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    if (window->buffer->nicklist)
-    {
-        if ((window->buffer->nicklist_visible_count > window->win_nick_num_max)
-            && (window->win_nick_start + window->win_nick_num_max - 1
-                < window->buffer->nicklist_visible_count))
-        {
-            if (window->win_nick_start == 0)
-                window->win_nick_start += (window->win_nick_num_max - 1);
-            else
-                window->win_nick_start += (window->win_nick_num_max - 2);
-            gui_buffer_ask_nicklist_refresh (window->buffer, 1);
-        }
-    }
-}
-
-/*
- * gui_window_nicklist_beginning: go to beginning of nicklist
- */
-
-void
-gui_window_nicklist_beginning (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    if (window->buffer->nicklist)
-    {
-        if (window->win_nick_start > 0)
-        {
-            window->win_nick_start = 0;
-            gui_buffer_ask_nicklist_refresh (window->buffer, 1);
-        }
-    }
-}
-
-/*
- * gui_window_nicklist_end: go to the end of nicklist
- */
-
-void
-gui_window_nicklist_end (struct t_gui_window *window)
-{
-    int new_start;
-    
-    if (!gui_ok)
-        return;
-    
-    if (window->buffer->nicklist)
-    {
-        new_start =
-            window->buffer->nicklist_visible_count - window->win_nick_num_max;
-        if (new_start < 0)
-            new_start = 0;
-        else if (new_start >= 1)
-            new_start++;
-        
-        if (new_start != window->win_nick_start)
-        {
-            window->win_nick_start = new_start;
-            gui_buffer_ask_nicklist_refresh (window->buffer, 1);
-        }
     }
 }
 
@@ -1770,11 +1443,7 @@ gui_window_objects_print_log (struct t_gui_window *window)
     
     log_printf ("");
     log_printf ("  window specific objects:");
-    log_printf ("  win_title . . . . . : 0x%x", GUI_CURSES(window)->win_title);
     log_printf ("  win_chat. . . . . . : 0x%x", GUI_CURSES(window)->win_chat);
-    log_printf ("  win_nick. . . . . . : 0x%x", GUI_CURSES(window)->win_nick);
-    log_printf ("  win_status. . . . . : 0x%x", GUI_CURSES(window)->win_status);
-    log_printf ("  win_input . . . . . : 0x%x", GUI_CURSES(window)->win_input);
     log_printf ("  win_separator . . . : 0x%x", GUI_CURSES(window)->win_separator);
     log_printf ("  bar_windows . . . . : 0x%x", GUI_CURSES(window)->bar_windows);
     log_printf ("  last_bar_windows. . : 0x%x", GUI_CURSES(window)->last_bar_window);

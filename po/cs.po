@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-10 15:52+0200\n"
+"POT-Creation-Date: 2008-10-12 11:42+0200\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1864,16 +1864,6 @@ msgstr ""
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s nemohu vytvořit adresář \"%s\"\n"
 
-msgid "Text search (exact): "
-msgstr "Vyhledávání textu (rozlišování velikosti znaků): "
-
-msgid "Text search: "
-msgstr "Vyhledávání textu: "
-
-#, c-format
-msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
-msgstr "  Vložit %d řádků ? [ctrl-Y] Ano  [ctrl-N] Ne"
-
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminál ztracen, ukončuji WeeChat..."
 
@@ -1884,12 +1874,6 @@ msgstr "Obdržen signál %s, ukončuji WeeChat.."
 #, fuzzy
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "%s selhalo uložení konfiguračního souboru\n"
-
-msgid "Act: "
-msgstr "Aktivní: "
-
-msgid "-MORE-"
-msgstr "-VÍCE-"
 
 msgid "server"
 msgstr "server"
@@ -1983,6 +1967,9 @@ msgstr "uživatel byl zablokován"
 msgid "%s-MORE(%d)-"
 msgstr "-VÍCE-"
 
+msgid "Act: "
+msgstr "Aktivní: "
+
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
 msgstr ""
@@ -1995,6 +1982,12 @@ msgstr "Nedostatek paměti pro nový řádek\n"
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nemohu přidat buffer do hotlistu\n"
+
+msgid "Text search (exact): "
+msgstr "Vyhledávání textu (rozlišování velikosti znaků): "
+
+msgid "Text search: "
+msgstr "Vyhledávání textu: "
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
@@ -4822,6 +4815,12 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#~ msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
+#~ msgstr "  Vložit %d řádků ? [ctrl-Y] Ano  [ctrl-N] Ne"
+
+#~ msgid "-MORE-"
+#~ msgstr "-VÍCE-"
 
 #, fuzzy
 #~ msgid "Saved buffers layout:"

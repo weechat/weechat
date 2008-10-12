@@ -36,7 +36,6 @@
 #include "../gui-hotlist.h"
 #include "../gui-nicklist.h"
 #include "../gui-main.h"
-#include "../gui-status.h"
 #include "gui-gtk.h"
 
 
@@ -75,8 +74,6 @@ gui_window_objects_init (struct t_gui_window *window)
         GUI_GTK(window)->textview_chat = NULL;
         GUI_GTK(window)->textbuffer_chat = NULL;
         GUI_GTK(window)->texttag_chat = NULL;
-        GUI_GTK(window)->textview_nicklist = NULL;
-        GUI_GTK(window)->textbuffer_nicklist = NULL;
         GUI_GTK(window)->bar_windows = NULL;
         GUI_GTK(window)->last_bar_window = NULL;
         return 1;
@@ -118,14 +115,11 @@ gui_window_set_weechat_color (WINDOW *window, int num_color)
  * gui_window_calculate_pos_size: calculate position and size for a window & sub-win
  */
 
-int
-gui_window_calculate_pos_size (struct t_gui_window *window, int force_calculate)
+void
+gui_window_calculate_pos_size (struct t_gui_window *window)
 {
     /* TODO: write this function for Gtk */
     (void) window;
-    (void) force_calculate;
-    
-    return 0;
 }
 
 /*
@@ -214,8 +208,7 @@ gui_window_switch_to_buffer (struct t_gui_window *window, struct t_gui_buffer *b
     }
     
     window->buffer = buffer;
-    window->win_nick_start = 0;
-    gui_window_calculate_pos_size (window, 1);
+    gui_window_calculate_pos_size (window);
     
     if (!GUI_GTK(window)->textview_chat)
     {
@@ -232,17 +225,6 @@ gui_window_switch_to_buffer (struct t_gui_window *window, struct t_gui_buffer *b
         /*GUI_GTK(window)->texttag_chat = gtk_text_buffer_create_tag(GUI_GTK(window)->textbuffer_chat, "courier", "font_family", "lucida");*/
         gtk_text_buffer_get_bounds (GUI_GTK(window)->textbuffer_chat, &start, &end);
         gtk_text_buffer_apply_tag (GUI_GTK(window)->textbuffer_chat, GUI_GTK(window)->texttag_chat, &start, &end);
-    }
-    if (buffer->nicklist && !GUI_GTK(window)->textbuffer_nicklist)
-    {
-        GUI_GTK(window)->textview_nicklist = gtk_text_view_new ();
-        gtk_widget_show (GUI_GTK(window)->textview_nicklist);
-        gtk_container_add (GTK_CONTAINER (gui_gtk_scrolledwindow_nick), GUI_GTK(window)->textview_nicklist);
-        gtk_text_view_set_editable (GTK_TEXT_VIEW (GUI_GTK(window)->textview_nicklist), FALSE);
-        gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (GUI_GTK(window)->textview_nicklist), FALSE);
-        
-        GUI_GTK(window)->textbuffer_nicklist = gtk_text_buffer_new (NULL);
-        gtk_text_view_set_buffer (GTK_TEXT_VIEW (GUI_GTK(window)->textview_nicklist), GUI_GTK(window)->textbuffer_nicklist);
     }
     
     window->start_line = NULL;
@@ -271,7 +253,6 @@ gui_window_page_up (struct t_gui_window *window)
                                       (-1) * (window->win_chat_height - 1) :
                                       (-1) * ((window->win_chat_height - 1) * 2));
         gui_chat_draw (window->buffer, 0);
-        gui_status_refresh_needed = 1;
     }
 }
 
@@ -307,7 +288,6 @@ gui_window_page_down (struct t_gui_window *window)
         }
         
         gui_chat_draw (window->buffer, 0);
-        gui_status_refresh_needed = 1;
     }
 }
 
@@ -330,7 +310,6 @@ gui_window_scroll_up (struct t_gui_window *window)
                                       (-1) * ( (window->win_chat_height - 1) +
                                                CONFIG_INTEGER(config_look_scroll_amount)));
         gui_chat_draw (window->buffer, 0);
-        gui_status_refresh_needed = 1;
     }
 }
 
@@ -367,7 +346,6 @@ gui_window_scroll_down (struct t_gui_window *window)
         }
         
         gui_chat_draw (window->buffer, 0);
-        gui_status_refresh_needed = 1;
     }
 }
 
@@ -386,7 +364,6 @@ gui_window_scroll_top (struct t_gui_window *window)
         window->start_line = window->buffer->lines;
         window->start_line_pos = 0;
         gui_chat_draw (window->buffer, 0);
-        gui_status_refresh_needed = 1;
     }
 }
 
@@ -405,134 +382,6 @@ gui_window_scroll_bottom (struct t_gui_window *window)
         window->start_line = NULL;
         window->start_line_pos = 0;
         gui_chat_draw (window->buffer, 0);
-        gui_status_refresh_needed = 1;
-    }
-}
-
-/*
- * gui_window_scroll_topic_left: scroll left topic
- */
-
-void
-gui_window_scroll_topic_left (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    if (window->win_title_start > 0)
-        window->win_title_start -= (window->win_width * 3) / 4;
-    if (window->win_title_start < 0)
-        window->win_title_start = 0;
-    gui_chat_draw_title (window->buffer, 1);
-}
-
-/*
- * gui_window_scroll_topic_right: scroll right topic
- */
-
-void
-gui_window_scroll_topic_right (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    window->win_title_start += (window->win_width * 3) / 4;
-    gui_chat_draw_title (window->buffer, 1);
-}
-
-/*
- * gui_window_nicklist_page_up: scroll one page up in nicklist
- */
-
-void
-gui_window_nicklist_page_up (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    if (window->buffer->nicklist)
-    {
-        if (window->win_nick_start > 0)
-        {
-            window->win_nick_start -= (window->win_nick_height - 1);
-            if (window->win_nick_start <= 1)
-                window->win_nick_start = 0;
-            gui_nicklist_draw (window->buffer, 1);
-        }
-    }
-}
-
-/*
- * gui_window_nicklist_page_down: scroll one page down in nicklist
- */
-
-void
-gui_window_nicklist_page_down (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    if (window->buffer->nicklist)
-    {
-        if ((window->buffer->nicklist_visible_count > window->win_nick_height)
-            && (window->win_nick_start + window->win_nick_height - 1
-                < window->buffer->nicklist_visible_count))
-        {
-            if (window->win_nick_start == 0)
-                window->win_nick_start += (window->win_nick_height - 1);
-            else
-                window->win_nick_start += (window->win_nick_height - 2);
-            gui_nicklist_draw (window->buffer, 1);
-        }
-    }
-}
-
-/*
- * gui_window_nicklist_beginning: go to beginning of nicklist
- */
-
-void
-gui_window_nicklist_beginning (struct t_gui_window *window)
-{
-    if (!gui_ok)
-        return;
-    
-    if (window->buffer->nicklist)
-    {
-        if (window->win_nick_start > 0)
-        {
-            window->win_nick_start = 0;
-            gui_nicklist_draw (window->buffer, 1);
-        }
-    }
-}
-
-/*
- * gui_window_nicklist_end: go to the end of nicklist
- */
-
-void
-gui_window_nicklist_end (struct t_gui_window *window)
-{
-    int new_start;
-    
-    if (!gui_ok)
-        return;
-    
-    if (window->buffer->nicklist)
-    {
-        new_start =
-            window->buffer->nicklist_visible_count - window->win_nick_height;
-        if (new_start < 0)
-            new_start = 0;
-        else if (new_start >= 1)
-            new_start++;
-        
-        if (new_start != window->win_nick_start)
-        {
-            window->win_nick_start = new_start;
-            gui_nicklist_draw (window->buffer, 1);
-        }
     }
 }
 
@@ -958,8 +807,6 @@ gui_window_objects_print_log (struct t_gui_window *window)
     log_printf ("  textview_chat . . . : 0x%x", GUI_GTK(window)->textview_chat);
     log_printf ("  textbuffer_chat . . : 0x%x", GUI_GTK(window)->textbuffer_chat);
     log_printf ("  texttag_chat. . . . : 0x%x", GUI_GTK(window)->texttag_chat);
-    log_printf ("  textview_nicklist . : 0x%x", GUI_GTK(window)->textview_nicklist);
-    log_printf ("  textbuffer_nicklist : 0x%x", GUI_GTK(window)->textbuffer_nicklist);
     log_printf ("  bar_windows . . . . : 0x%x", GUI_GTK(window)->bar_windows);
     log_printf ("  last_bar_windows. . : 0x%x", GUI_GTK(window)->last_bar_window);
     log_printf ("  current_style_fg. . : %d",   GUI_GTK(window)->current_style_fg);

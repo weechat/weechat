@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-10 15:52+0200\n"
+"POT-Creation-Date: 2008-10-12 11:42+0200\n"
 "PO-Revision-Date: 2008-10-10 15:52+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1817,16 +1817,6 @@ msgstr ""
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Erreur: impossible de créer le répertoire \"%s\"\n"
 
-msgid "Text search (exact): "
-msgstr "Recherche texte (exact): "
-
-msgid "Text search: "
-msgstr "Recherche texte: "
-
-#, c-format
-msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
-msgstr "  Coller %d lignes ? [ctrl-Y] Oui  [ctrl-N] Non"
-
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal perdu, sortie de WeeChat..."
 
@@ -1836,12 +1826,6 @@ msgstr "Signal %s reçu, sortie de WeeChat..."
 
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "Signal SIGHUP reçu, rechargement des fichiers de configuration"
-
-msgid "Act: "
-msgstr "Act: "
-
-msgid "-MORE-"
-msgstr "-PLUS-"
 
 msgid "server"
 msgstr "serveur"
@@ -1931,6 +1915,9 @@ msgstr "filtré"
 msgid "%s-MORE(%d)-"
 msgstr "%s-PLUS(%d)-"
 
+msgid "Act: "
+msgstr "Act: "
+
 #, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
 msgstr "%sErreur: un tampon avec le même nom (%s) existe déjà"
@@ -1940,6 +1927,12 @@ msgstr "Pas assez de mémoire pour une nouvelle ligne"
 
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Erreur: impossible d'ajouter le tampon à la liste des tampons actifs"
+
+msgid "Text search (exact): "
+msgstr "Recherche texte (exact): "
+
+msgid "Text search: "
+msgstr "Recherche texte: "
 
 #, c-format
 msgid "Error: unable to bind key \"%s\""
@@ -4748,3 +4741,9 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
+#~ msgstr "  Coller %d lignes ? [ctrl-Y] Oui  [ctrl-N] Non"
+
+#~ msgid "-MORE-"
+#~ msgstr "-PLUS-"

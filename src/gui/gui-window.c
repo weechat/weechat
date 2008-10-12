@@ -47,7 +47,6 @@
 #include "gui-filter.h"
 #include "gui-input.h"
 #include "gui-hotlist.h"
-#include "gui-status.h"
 
 
 int gui_init_ok = 0;                            /* = 1 if GUI is initialized*/
@@ -209,11 +208,6 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         new_window->win_width_pct = width_pct;
         new_window->win_height_pct = height_pct;
         
-        new_window->new_x = -1;
-        new_window->new_y = -1;
-        new_window->new_width = -1;
-        new_window->new_height = -1;
-
         /* chat window */
         new_window->win_chat_x = 0;
         new_window->win_chat_y = 0;
@@ -221,34 +215,6 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         new_window->win_chat_height = 0;
         new_window->win_chat_cursor_x = 0;
         new_window->win_chat_cursor_y = 0;
-
-        /* nicklist */
-        new_window->win_nick_x = 0;
-        new_window->win_nick_y = 0;
-        new_window->win_nick_width = 0;
-        new_window->win_nick_height = 0;
-        new_window->win_nick_num_max = 0;
-        new_window->win_nick_start = 0;
-
-        /* title */
-        new_window->win_title_x = 0;
-        new_window->win_title_y = 0;
-        new_window->win_title_width = 0;
-        new_window->win_title_height = 0;
-        new_window->win_title_start = 0;
-
-        /* status */
-        new_window->win_status_x = 0;
-        new_window->win_status_y = 0;
-        new_window->win_status_width = 0;
-        new_window->win_status_height = 0;
-
-        /* input */
-        new_window->win_input_x = 0;
-        new_window->win_input_y = 0;
-        new_window->win_input_width = 0;
-        new_window->win_input_height = 0;
-        new_window->win_input_cursor_x = 0;
         
         /* refresh */
         new_window->refresh_needed = 0;
@@ -264,6 +230,7 @@ gui_window_new (struct t_gui_window *parent, int x, int y, int width, int height
         new_window->start_line_pos = 0;
         new_window->scroll = 0;
         new_window->scroll_lines_after = 0;
+        new_window->scroll_reset_allowed = 0;
         
         new_window->ptr_tree = ptr_leaf;
         ptr_leaf->window = new_window;
@@ -712,7 +679,6 @@ gui_window_scroll (struct t_gui_window *window, char *scroll)
                     window->first_line_displayed =
                         (window->start_line == gui_chat_get_first_line_displayed (window->buffer));
                     gui_buffer_ask_chat_refresh (window->buffer, 2);
-                    gui_status_refresh_needed = 1;
                     return;
                 }
             }
@@ -810,11 +776,8 @@ gui_window_search_text (struct t_gui_window *window)
             && window->buffer->input_buffer && window->buffer->input_buffer[0])
         {
             ptr_line = (window->start_line) ?
-                window->start_line->prev_line : window->buffer->last_line;
-            while (ptr_line && !gui_chat_line_displayed (ptr_line))
-            {
-                ptr_line = ptr_line->prev_line;
-            }
+                gui_chat_get_prev_line_displayed (window->start_line) :
+                gui_chat_get_last_line_displayed (window->buffer);
             while (ptr_line)
             {
                 if (gui_chat_line_search (ptr_line,
@@ -826,7 +789,6 @@ gui_window_search_text (struct t_gui_window *window)
                     window->first_line_displayed =
                         (window->start_line == gui_chat_get_first_line_displayed (window->buffer));
                     gui_buffer_ask_chat_refresh (window->buffer, 2);
-                    gui_status_refresh_needed = 1;
                     return 1;
                 }
                 ptr_line = gui_chat_get_prev_line_displayed (ptr_line);
@@ -839,11 +801,8 @@ gui_window_search_text (struct t_gui_window *window)
             && window->buffer->input_buffer && window->buffer->input_buffer[0])
         {
             ptr_line = (window->start_line) ?
-                window->start_line->next_line : window->buffer->lines->next_line;
-            while (ptr_line && !gui_chat_line_displayed (ptr_line))
-            {
-                ptr_line = ptr_line->next_line;
-            }
+                gui_chat_get_next_line_displayed (window->start_line) :
+                gui_chat_get_first_line_displayed (window->buffer);
             while (ptr_line)
             {
                 if (gui_chat_line_search (ptr_line,
@@ -855,7 +814,6 @@ gui_window_search_text (struct t_gui_window *window)
                     window->first_line_displayed =
                         (window->start_line == window->buffer->lines);
                     gui_buffer_ask_chat_refresh (window->buffer, 2);
-                    gui_status_refresh_needed = 1;
                     return 1;
                 }
                 ptr_line = gui_chat_get_next_line_displayed (ptr_line);
@@ -884,7 +842,6 @@ gui_window_search_start (struct t_gui_window *window)
         window->buffer->text_search_input =
             strdup (window->buffer->input_buffer);
     gui_input_delete_line (window->buffer);
-    gui_status_refresh_needed = 1;
     gui_buffer_ask_input_refresh (window->buffer, 1);
 }
 
@@ -903,10 +860,7 @@ gui_window_search_restart (struct t_gui_window *window)
     if (gui_window_search_text (window))
         window->buffer->text_search_found = 1;
     else
-    {
         gui_buffer_ask_chat_refresh (window->buffer, 2);
-        gui_status_refresh_needed = 1;
-    }
 }
 
 /*
@@ -931,7 +885,6 @@ gui_window_search_stop (struct t_gui_window *window)
     window->start_line_pos = 0;
     gui_hotlist_remove_buffer (window->buffer);
     gui_buffer_ask_chat_refresh (window->buffer, 2);
-    gui_status_refresh_needed = 1;
     gui_buffer_ask_input_refresh (window->buffer, 1);
 }
 
@@ -975,42 +928,6 @@ gui_window_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "chat_height", window->win_chat_height))
         return 0;
-    if (!infolist_new_var_integer (ptr_item, "nick_x", window->win_nick_x))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "nick_y", window->win_nick_y))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "nick_width", window->win_nick_width))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "nick_height", window->win_nick_height))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "nick_start", window->win_nick_start))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "title_x", window->win_title_x))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "title_y", window->win_title_y))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "title_width", window->win_title_width))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "title_start", window->win_title_start))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "status_x", window->win_status_x))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "status_y", window->win_status_y))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "status_width", window->win_status_width))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "status_height", window->win_status_height))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "input_x", window->win_input_x))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "input_y", window->win_input_y))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "input_width", window->win_input_width))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "input_height", window->win_input_height))
-        return 0;
-    if (!infolist_new_var_integer (ptr_item, "input_cursor_x", window->win_input_cursor_x))
-        return 0;
     if (!infolist_new_var_pointer (ptr_item, "buffer", window->buffer))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "start_line_y",
@@ -1050,31 +967,18 @@ gui_window_print_log ()
         log_printf ("  win_chat_height . . : %d",   ptr_window->win_chat_height);
         log_printf ("  win_chat_cursor_x . : %d",   ptr_window->win_chat_cursor_x);
         log_printf ("  win_chat_cursor_y . : %d",   ptr_window->win_chat_cursor_y);
-        log_printf ("  win_nick_x. . . . . : %d",   ptr_window->win_nick_x);
-        log_printf ("  win_nick_y. . . . . : %d",   ptr_window->win_nick_y);
-        log_printf ("  win_nick_width. . . : %d",   ptr_window->win_nick_width);
-        log_printf ("  win_nick_height . . : %d",   ptr_window->win_nick_height);
-        log_printf ("  win_nick_start. . . : %d",   ptr_window->win_nick_start);
-        log_printf ("  win_title_x . . . . : %d",   ptr_window->win_title_x);
-        log_printf ("  win_title_y . . . . : %d",   ptr_window->win_title_y);
-        log_printf ("  win_title_width . . : %d",   ptr_window->win_title_width);
-        log_printf ("  win_title_height. . : %d",   ptr_window->win_title_height);
-        log_printf ("  win_title_start . . : %d",   ptr_window->win_title_start);
-        log_printf ("  win_status_x. . . . : %d",   ptr_window->win_status_x);
-        log_printf ("  win_status_y. . . . : %d",   ptr_window->win_status_y);
-        log_printf ("  win_status_width. . : %d",   ptr_window->win_status_width);
-        log_printf ("  win_status_height . : %d",   ptr_window->win_status_height);
-        log_printf ("  win_input_x . . . . : %d",   ptr_window->win_input_x);
-        log_printf ("  win_input_y . . . . : %d",   ptr_window->win_input_y);
-        log_printf ("  win_input_width . . : %d",   ptr_window->win_input_width);
-        log_printf ("  win_input_height. . : %d",   ptr_window->win_input_height);
-        log_printf ("  win_input_cursor_x. : %d",   ptr_window->win_input_cursor_x);
+        log_printf ("  refresh_needed. . . : %d",   ptr_window->refresh_needed);
+        log_printf ("  gui_objects . . . . : 0x%x", ptr_window->gui_objects);
         log_printf ("  buffer. . . . . . . : 0x%x", ptr_window->buffer);
         log_printf ("  layout_plugin_name. : '%s'", ptr_window->layout_plugin_name);
         log_printf ("  layout_buffer_name. : '%s'", ptr_window->layout_buffer_name);
         log_printf ("  first_line_displayed: %d",   ptr_window->first_line_displayed);
         log_printf ("  start_line. . . . . : 0x%x", ptr_window->start_line);
         log_printf ("  start_line_pos. . . : %d",   ptr_window->start_line_pos);
+        log_printf ("  scroll. . . . . . . : %d",   ptr_window->scroll);
+        log_printf ("  scroll_lines_after. : %d",   ptr_window->scroll_lines_after);
+        log_printf ("  scroll_reset_allowed: %d",   ptr_window->scroll_reset_allowed);
+        log_printf ("  ptr_tree. . . . . . : 0x%x", ptr_window->ptr_tree);
         log_printf ("  prev_window . . . . : 0x%x", ptr_window->prev_window);
         log_printf ("  next_window . . . . : 0x%x", ptr_window->next_window);
         gui_window_objects_print_log (ptr_window);

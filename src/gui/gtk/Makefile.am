@@ -31,10 +31,7 @@ weechat_gtk_LDADD = ./../../core/lib_weechat_core.a \
 weechat_gtk_SOURCES = gui-gtk-bar.c \
                       gui-gtk-chat.c \
                       gui-gtk-color.c \
-                      gui-gtk-input.c \
                       gui-gtk-keyboard.c \
                       gui-gtk-main.c \
-                      gui-gtk-nicklist.c \
-                      gui-gtk-status.c \
                       gui-gtk-window.c \
                       gui-gtk.h

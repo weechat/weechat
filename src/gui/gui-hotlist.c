@@ -36,7 +36,6 @@
 #include "gui-hotlist.h"
 #include "gui-buffer.h"
 #include "gui-color.h"
-#include "gui-status.h"
 #include "gui-window.h"
 
 
@@ -47,6 +46,16 @@ struct t_gui_buffer *gui_hotlist_initial_buffer = NULL;
 int gui_add_hotlist = 1;                    /* 0 is for temporarly disable  */
                                             /* hotlist add for all buffers  */
 
+
+/*
+ * gui_hotlist_changed_signal: send signal "hotlist_changed"
+ */
+
+void
+gui_hotlist_changed_signal ()
+{
+    hook_signal_send ("hotlist_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+}
 
 /*
  * gui_hotlist_search: find hotlist with buffer pointer
@@ -64,6 +73,50 @@ gui_hotlist_search (struct t_gui_hotlist *hotlist, struct t_gui_buffer *buffer)
             return ptr_hotlist;
     }
     return NULL;
+}
+
+/*
+ * gui_hotlist_free: free a hotlist and remove it from hotlist queue
+ */
+
+void
+gui_hotlist_free (struct t_gui_hotlist **hotlist,
+                  struct t_gui_hotlist **last_hotlist,
+                  struct t_gui_hotlist *ptr_hotlist)
+{
+    struct t_gui_hotlist *new_hotlist;
+
+    /* remove hotlist from queue */
+    if (*last_hotlist == ptr_hotlist)
+        *last_hotlist = ptr_hotlist->prev_hotlist;
+    if (ptr_hotlist->prev_hotlist)
+    {
+        (ptr_hotlist->prev_hotlist)->next_hotlist = ptr_hotlist->next_hotlist;
+        new_hotlist = *hotlist;
+    }
+    else
+        new_hotlist = ptr_hotlist->next_hotlist;
+    
+    if (ptr_hotlist->next_hotlist)
+        (ptr_hotlist->next_hotlist)->prev_hotlist = ptr_hotlist->prev_hotlist;
+    
+    free (ptr_hotlist);
+    *hotlist = new_hotlist;
+}
+
+/*
+ * gui_hotlist_free_all: free all hotlists
+ */
+
+void
+gui_hotlist_free_all (struct t_gui_hotlist **hotlist,
+                      struct t_gui_hotlist **last_hotlist)
+{
+    /* remove all hotlists */
+    while (*hotlist)
+    {
+        gui_hotlist_free (hotlist, last_hotlist, *hotlist);
+    }
 }
 
 /*
@@ -206,8 +259,6 @@ gui_hotlist_add_hotlist (struct t_gui_hotlist **hotlist,
         *hotlist = new_hotlist;
         *last_hotlist = new_hotlist;
     }
-    
-    hook_signal_send ("hotlist_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
 }
 
 /*
@@ -267,7 +318,7 @@ gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
     
     gui_hotlist_add_hotlist (&gui_hotlist, &last_gui_hotlist, new_hotlist);
     
-    gui_status_refresh_needed = 1;
+    gui_hotlist_changed_signal ();
 }
 
 /*
@@ -312,57 +363,24 @@ gui_hotlist_resort ()
         element = gui_hotlist_dup (ptr_hotlist);
         gui_hotlist_add_hotlist (&new_hotlist, &last_new_hotlist, element);
     }
-
+    
     gui_hotlist_free_all (&gui_hotlist, &last_gui_hotlist);
-
+    
     gui_hotlist = new_hotlist;
     last_gui_hotlist = last_new_hotlist;
+    
+    gui_hotlist_changed_signal ();
 }
 
 /*
- * gui_hotlist_free: free a hotlist and remove it from hotlist queue
+ * gui_hotlist_clear: clear hotlist
  */
 
 void
-gui_hotlist_free (struct t_gui_hotlist **hotlist,
-                  struct t_gui_hotlist **last_hotlist,
-                  struct t_gui_hotlist *ptr_hotlist)
+gui_hotlist_clear ()
 {
-    struct t_gui_hotlist *new_hotlist;
-
-    /* remove hotlist from queue */
-    if (*last_hotlist == ptr_hotlist)
-        *last_hotlist = ptr_hotlist->prev_hotlist;
-    if (ptr_hotlist->prev_hotlist)
-    {
-        (ptr_hotlist->prev_hotlist)->next_hotlist = ptr_hotlist->next_hotlist;
-        new_hotlist = *hotlist;
-    }
-    else
-        new_hotlist = ptr_hotlist->next_hotlist;
-    
-    if (ptr_hotlist->next_hotlist)
-        (ptr_hotlist->next_hotlist)->prev_hotlist = ptr_hotlist->prev_hotlist;
-    
-    free (ptr_hotlist);
-    *hotlist = new_hotlist;
-    
-    hook_signal_send ("hotlist_changed", WEECHAT_HOOK_SIGNAL_STRING, NULL);
-}
-
-/*
- * gui_hotlist_free_all: free all hotlists
- */
-
-void
-gui_hotlist_free_all (struct t_gui_hotlist **hotlist,
-                      struct t_gui_hotlist **last_hotlist)
-{
-    /* remove all hotlists */
-    while (*hotlist)
-    {
-        gui_hotlist_free (hotlist, last_hotlist, *hotlist);
-    }
+    gui_hotlist_free_all (&gui_hotlist, &last_gui_hotlist);
+    gui_hotlist_changed_signal ();
 }
 
 /*
@@ -376,7 +394,10 @@ gui_hotlist_remove_buffer (struct t_gui_buffer *buffer)
 
     pos_hotlist = gui_hotlist_search (gui_hotlist, buffer);
     if (pos_hotlist)
+    {
         gui_hotlist_free (&gui_hotlist, &last_gui_hotlist, pos_hotlist);
+        gui_hotlist_changed_signal ();
+    }
 }
 
 /*

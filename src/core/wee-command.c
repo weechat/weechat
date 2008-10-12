@@ -53,7 +53,6 @@
 #include "../gui/gui-keyboard.h"
 #include "../gui/gui-layout.h"
 #include "../gui/gui-main.h"
-#include "../gui/gui-status.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
 #include "../plugins/plugin-config.h"
@@ -303,7 +302,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
         {
             gui_bar_free_all ();
             gui_chat_printf (NULL, _("All bars have been deleted"));
-            //gui_bar_create_default ();
+            gui_bar_create_default_input ();
         }
         else
         {
@@ -318,6 +317,7 @@ command_bar (void *data, struct t_gui_buffer *buffer,
             }
             gui_bar_free (ptr_bar);
             gui_chat_printf (NULL, _("Bar deleted"));
+            gui_bar_create_default_input ();
         }
         
         return WEECHAT_RC_OK;
@@ -589,7 +589,6 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_ERROR;
         }
         gui_buffer_close (buffer, 1);
-        gui_status_refresh_needed = 1;
         gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
         
         return WEECHAT_RC_OK;
@@ -685,7 +684,6 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         {
             gui_window_switch_to_buffer (gui_current_window,
                                          ptr_buffer);
-            gui_status_refresh_needed = 1;
         }
     }
     
@@ -2709,48 +2707,6 @@ command_window (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
-    /* scroll topic left for current window */
-    if (string_strcasecmp (argv[1], "scroll_topic_left") == 0)
-    {
-        gui_window_scroll_topic_left (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* scroll topic right for current window */
-    if (string_strcasecmp (argv[1], "scroll_topic_right") == 0)
-    {
-        gui_window_scroll_topic_right (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* page up for nicklist in current window */
-    if (string_strcasecmp (argv[1], "nicklist_page_up") == 0)
-    {
-        gui_window_nicklist_page_up (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* page down for nicklist in current window */
-    if (string_strcasecmp (argv[1], "nicklist_page_down") == 0)
-    {
-        gui_window_nicklist_page_down (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* beginning of nicklist for current window */
-    if (string_strcasecmp (argv[1], "nicklist_beginning") == 0)
-    {
-        gui_window_nicklist_beginning (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
-    /* end of nicklist for current window */
-    if (string_strcasecmp (argv[1], "nicklist_end") == 0)
-    {
-        gui_window_nicklist_end (gui_current_window);
-        return WEECHAT_RC_OK;
-    }
-    
     /* refresh screen */
     if (string_strcasecmp (argv[1], "refresh") == 0)
     {
@@ -2967,8 +2923,9 @@ command_init ()
                      "  scroll to end of nicklist on current buffer:\n"
                      "    /bar scroll nicklist * ye"),
                   "add|default|del|set|hide|show|scroll|list|listfull|"
-                  "listitems %r name|priority|conditions|position|filling|"
-                  "size|separator|items",
+                  "listitems %r name|hidden|priority|conditions|position|"
+                  "filling_top_bottom|filling_left_right|size|size_max|"
+                  "color_fg|color_delim|color_bg|separator|items",
                   &command_bar, NULL);
     hook_command (NULL, "buffer",
                   N_("manage buffers"),

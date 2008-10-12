@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-10 15:52+0200\n"
+"POT-Creation-Date: 2008-10-12 11:42+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1825,16 +1825,6 @@ msgstr ""
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s nem sikerült a \"%s\" könyvtárat létrehozni\n"
 
-msgid "Text search (exact): "
-msgstr "Szöveg keresése (pontos): "
-
-msgid "Text search: "
-msgstr "Szöveg keresése: "
-
-#, c-format
-msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
-msgstr "  Beszúrható %d sor? [ctrl-Y] Igen  [ctrl-N] Nem"
-
 msgid "Terminal lost, exiting WeeChat..."
 msgstr ""
 
@@ -1845,12 +1835,6 @@ msgstr ""
 #, fuzzy
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "%s nem sikerült a konfigurációs fájlt elmenteni\n"
-
-msgid "Act: "
-msgstr "Akt: "
-
-msgid "-MORE-"
-msgstr "-TOVÁBB-"
 
 msgid "server"
 msgstr "szerver"
@@ -1937,6 +1921,9 @@ msgstr "a felhasználók le lettek tiltva"
 msgid "%s-MORE(%d)-"
 msgstr "-TOVÁBB-"
 
+msgid "Act: "
+msgstr "Akt: "
+
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
 msgstr "%s nem sikerült a \"%s\" modult betölteni: már van ilyen nevű modul\n"
@@ -1948,6 +1935,12 @@ msgstr "Nincs elég memória az új sorhoz\n"
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nincs elég memória az ignore elkészítéséhez\n"
+
+msgid "Text search (exact): "
+msgstr "Szöveg keresése (pontos): "
+
+msgid "Text search: "
+msgstr "Szöveg keresése: "
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
@@ -4745,6 +4738,12 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#~ msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
+#~ msgstr "  Beszúrható %d sor? [ctrl-Y] Igen  [ctrl-N] Nem"
+
+#~ msgid "-MORE-"
+#~ msgstr "-TOVÁBB-"
 
 #, fuzzy
 #~ msgid "%s: disconnected from server"

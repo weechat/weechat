@@ -43,91 +43,6 @@
 
 
 /*
- * gui_chat_draw_title: draw title window for a buffer
- */
-
-void
-gui_chat_draw_title (struct t_gui_buffer *buffer, int erase)
-{
-    struct t_gui_window *ptr_win;
-    char format[32], *buf, *title_decoded, *ptr_title;
-    
-    if (!gui_ok)
-        return;
-    
-    title_decoded = (buffer->title) ?
-        (char *)gui_color_decode ((unsigned char *)buffer->title) : NULL;
-    
-    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
-    {
-        if (ptr_win->buffer == buffer)
-        {
-            if (erase)
-                gui_window_clear_weechat (GUI_CURSES(ptr_win)->win_title,
-                                          GUI_COLOR_TITLE);
-            
-            snprintf (format, sizeof (format), "%%-%ds", ptr_win->win_title_width);
-            wmove (GUI_CURSES(ptr_win)->win_title, 0, 0);
-            
-            if (title_decoded)
-            {
-                ptr_title = utf8_add_offset (title_decoded,
-                                             ptr_win->win_title_start);
-                if (!ptr_title || !ptr_title[0])
-                {
-                    ptr_win->win_title_start = 0;
-                    ptr_title = title_decoded;
-                }
-                buf = string_iconv_from_internal (NULL,
-                                                  ptr_title);
-                if (buf)
-                    ptr_title = buf;
-                
-                if (ptr_win->win_title_start > 0)
-                {
-                    //gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
-                    //                              GUI_COLOR_TITLE_MORE);
-                    wprintw (GUI_CURSES(ptr_win)->win_title, "%s", "++");
-                }
-                
-                if (utf8_strlen_screen (ptr_title) > ptr_win->win_width)
-                {
-                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
-                                                  GUI_COLOR_TITLE);
-                    wprintw (GUI_CURSES(ptr_win)->win_title, "%s", ptr_title);
-                    //gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
-                    //                              GUI_COLOR_TITLE_MORE);
-                    mvwprintw (GUI_CURSES(ptr_win)->win_title, 0,
-                               ptr_win->win_width - 2,
-                               "%s", "++");
-                }
-                else
-                {
-                    gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
-                                                  GUI_COLOR_TITLE);
-                    wprintw (GUI_CURSES(ptr_win)->win_title, "%s", ptr_title);
-                }
-                if (buf)
-                    free (buf);
-            }
-            else
-            {
-                gui_window_set_weechat_color (GUI_CURSES(ptr_win)->win_title,
-                                              GUI_COLOR_TITLE);
-                wprintw (GUI_CURSES(ptr_win)->win_title, format, " ");
-            }
-            wnoutrefresh (GUI_CURSES(ptr_win)->win_title);
-            refresh ();
-        }
-    }
-    
-    if (title_decoded)
-        free (title_decoded);
-    
-    buffer->title_refresh_needed = 0;
-}
-
-/*
  * gui_chat_get_real_width: return real width: width - 1 if nicklist is at right,
  *                          for good copy/paste (without nicklist separator)
  */
@@ -417,13 +332,15 @@ gui_chat_string_next_char (struct t_gui_window *window,
 /*
  * gui_chat_display_word_raw: display word on chat buffer, letter by letter
  *                            special chars like color, bold, .. are interpreted
+ *                            return number of chars displayed on screen
  */
 
-void
+int
 gui_chat_display_word_raw (struct t_gui_window *window, const char *string,
                            int max_chars_on_screen, int display)
 {
-    char *next_char, *output, utf_char[16], chars_displayed, size_on_screen;
+    char *next_char, *output, utf_char[16];
+    int chars_displayed, size_on_screen;
     
     if (display)
         wmove (GUI_CURSES(window)->win_chat,
@@ -437,7 +354,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, const char *string,
         string = gui_chat_string_next_char (window,
                                             (unsigned char *)string, 1);
         if (!string)
-            return;
+            return chars_displayed;
         
         next_char = utf8_next_char (string);
         if (display && next_char)
@@ -450,7 +367,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, const char *string,
                 if (max_chars_on_screen > 0)
                 {
                     if (chars_displayed + size_on_screen > max_chars_on_screen)
-                        return;
+                        return chars_displayed;
                     chars_displayed += size_on_screen;
                 }
                 if (size_on_screen > 0)
@@ -467,7 +384,7 @@ gui_chat_display_word_raw (struct t_gui_window *window, const char *string,
                 if (max_chars_on_screen > 0)
                 {
                     if (chars_displayed + 1 > max_chars_on_screen)
-                        return;
+                        return chars_displayed;
                     chars_displayed++;
                 }
                 wprintw (GUI_CURSES(window)->win_chat, ".");
@@ -476,6 +393,8 @@ gui_chat_display_word_raw (struct t_gui_window *window, const char *string,
         
         string = next_char;
     }
+    
+    return chars_displayed;
 }
 
 /*
@@ -971,10 +890,11 @@ gui_chat_display_line_y (struct t_gui_window *window, struct t_gui_line *line,
            window->win_chat_cursor_x);
     wclrtoeol (GUI_CURSES(window)->win_chat);
     
-    gui_chat_display_word_raw (window, line->message,
-                               window->win_chat_width, 1);
-    
-    gui_window_clrtoeol_with_current_bg (GUI_CURSES(window)->win_chat);
+    if (gui_chat_display_word_raw (window, line->message,
+                                   window->win_chat_width, 1) < window->win_chat_width)
+    {
+        gui_window_clrtoeol_with_current_bg (GUI_CURSES(window)->win_chat);
+    }
 }
 
 /*
@@ -1196,7 +1116,7 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                                           WEECHAT_HOOK_SIGNAL_POINTER, ptr_win);
                     }
                     
-                    if (!ptr_win->scroll)
+                    if (!ptr_win->scroll && ptr_win->scroll_reset_allowed)
                     {
                         ptr_win->start_line = NULL;
                         ptr_win->start_line_pos = 0;
@@ -1209,6 +1129,9 @@ gui_chat_draw (struct t_gui_buffer *buffer, int erase)
                         ptr_win->win_chat_cursor_x = 0;
                         ptr_win->win_chat_cursor_y = ptr_win->win_chat_height - 1;
                     }
+                    
+                    ptr_win->scroll_reset_allowed = 0;
+                    
                     break;
                 case GUI_BUFFER_TYPE_FREE:
                     /* display at position of scrolling */

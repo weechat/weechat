@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-10 15:52+0200\n"
+"POT-Creation-Date: 2008-10-12 11:42+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1798,16 +1798,6 @@ msgstr ""
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s no es posible crear el directorio \"%s\"\n"
 
-msgid "Text search (exact): "
-msgstr ""
-
-msgid "Text search: "
-msgstr ""
-
-#, c-format
-msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
-msgstr ""
-
 msgid "Terminal lost, exiting WeeChat..."
 msgstr ""
 
@@ -1818,12 +1808,6 @@ msgstr ""
 #, fuzzy
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "%s fallÃ³ al salvar el archivo de configuraciÃ³n\n"
-
-msgid "Act: "
-msgstr "Act: "
-
-msgid "-MORE-"
-msgstr "-MÃS-"
 
 msgid "server"
 msgstr "servidor"
@@ -1910,6 +1894,9 @@ msgstr "los usuarios han sido desactivados"
 msgid "%s-MORE(%d)-"
 msgstr "-MÃS-"
 
+msgid "Act: "
+msgstr "Act: "
+
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
 msgstr ""
@@ -1923,6 +1910,12 @@ msgstr "No hay suficiente memoria para una nueva lÃ­nea\n"
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s no es posible aÃ±adir un bÃºfer a la lista caliente (hotlist)\n"
+
+msgid "Text search (exact): "
+msgstr ""
+
+msgid "Text search: "
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
@@ -4726,6 +4719,9 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#~ msgid "-MORE-"
+#~ msgstr "-MÃS-"
 
 #, fuzzy
 #~ msgid "%s: disconnected from server"

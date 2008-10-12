@@ -419,7 +419,7 @@ upgrade_weechat_read_cb (int object_id,
             case UPGRADE_WEECHAT_TYPE_HOTLIST:
                 if (!hotlist_reset)
                 {
-                    gui_hotlist_free_all (&gui_hotlist, &last_gui_hotlist);
+                    gui_hotlist_clear ();
                     hotlist_reset = 1;
                 }
                 ptr_buffer = gui_buffer_search_by_number (infolist_integer (infolist, "buffer_number"));

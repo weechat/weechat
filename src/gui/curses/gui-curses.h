@@ -59,11 +59,7 @@ struct t_gui_bar_window
 
 struct t_gui_curses_objects
 {
-    WINDOW *win_title;              /* title window                         */
     WINDOW *win_chat;               /* chat window (example: channel)       */
-    WINDOW *win_nick;               /* nick window                          */
-    WINDOW *win_status;             /* status window                        */
-    WINDOW *win_input;              /* input window                         */
     WINDOW *win_separator;          /* separation between 2 splited (V) win */
     struct t_gui_bar_window *bar_windows;     /* bar windows                */
     struct t_gui_bar_window *last_bar_window; /* last bar window            */

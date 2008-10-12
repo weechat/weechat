@@ -72,8 +72,4 @@ extern void gui_input_set_unread ();
 extern void gui_input_set_unread_current_buffer ();
 extern void gui_input_insert ();
 
-/* input functions (GUI dependent) */
-
-extern void gui_input_draw (struct t_gui_buffer *buffer, int erase);
-
 #endif /* gui-input.h */

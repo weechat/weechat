@@ -50,7 +50,6 @@
 #include "../gui/gui-keyboard.h"
 #include "../gui/gui-layout.h"
 #include "../gui/gui-nicklist.h"
-#include "../gui/gui-status.h"
 #include "../gui/gui-window.h"
 #include "../plugins/plugin.h"
 
@@ -294,7 +293,6 @@ config_change_hotlist (void *data, struct t_config_option *option)
     (void) option;
     
     gui_hotlist_resort ();
-    gui_status_refresh_needed = 1;
 }
 
 /*
@@ -481,7 +479,7 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
         gui_bar_use_temp_bars ();
-        //gui_bar_create_default ();
+        gui_bar_create_default ();
     }
     
     return rc;
@@ -1107,7 +1105,7 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "title", "color",
         N_("text color for title bar"),
-        NULL, GUI_COLOR_TITLE, 0, "default",
+        NULL, -1, 0, "default",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_title_bg = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -1331,7 +1329,7 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "status", "color",
         N_("text color for status bar"),
-        NULL, GUI_COLOR_STATUS, 0, "default",
+        NULL, -1, 0, "default",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_bg = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -1343,57 +1341,57 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "status_delimiters", "color",
         N_("text color for status bar delimiters"),
-        NULL, GUI_COLOR_STATUS_DELIMITERS, 0, "cyan",
+        NULL, -1, 0, "cyan",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_number = config_file_new_option (
         weechat_config_file, ptr_section,
         "status_number", "color",
         N_("text color for current buffer number in status bar"),
-        NULL, GUI_COLOR_STATUS_NUMBER, 0, "yellow",
+        NULL, -1, 0, "yellow",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_name = config_file_new_option (
         weechat_config_file, ptr_section,
         "status_name", "color",
         N_("text color for current buffer name in status bar"),
-        NULL, GUI_COLOR_STATUS_NAME, 0, "white",
+        NULL, -1, 0, "white",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_data_msg = config_file_new_option (
         weechat_config_file, ptr_section,
         "status_data_msg", "color",
         N_("text color for buffer with new messages (status bar)"),
-        NULL, GUI_COLOR_STATUS_DATA_MSG, 0, "yellow",
+        NULL, -1, 0, "yellow",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_data_private = config_file_new_option (
         weechat_config_file, ptr_section,
         "status_data_private", "color",
         N_("text color for buffer with private message (status bar)"),
-        NULL, GUI_COLOR_STATUS_DATA_PRIVATE, 0, "lightgreen",
+        NULL, -1, 0, "lightgreen",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_data_highlight = config_file_new_option (
         weechat_config_file, ptr_section,
         "status_data_highlight", "color",
         N_("text color for buffer with highlight (status bar)"),
-        NULL, GUI_COLOR_STATUS_DATA_HIGHLIGHT, 0, "lightmagenta",
+        NULL, -1, 0, "lightmagenta",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_data_other = config_file_new_option (
         weechat_config_file, ptr_section,
         "status_data_other", "color",
         N_("text color for buffer with new data (not messages) "
            "(status bar)"),
-        NULL, GUI_COLOR_STATUS_DATA_OTHER, 0, "default",
+        NULL, -1, 0, "default",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_status_more = config_file_new_option (
         weechat_config_file, ptr_section,
         "status_more", "color",
         N_("text color for buffer with new data (status bar)"),
-        NULL, GUI_COLOR_STATUS_MORE, 0, "yellow",
+        NULL, -1, 0, "yellow",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* input window */
     config_color_input = config_file_new_option (
         weechat_config_file, ptr_section,
         "input", "color",
         N_("text color for input line"),
-        NULL, GUI_COLOR_INPUT, 0, "default",
+        NULL, -1, 0, "default",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_input_bg = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -1405,44 +1403,44 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "input_server", "color",
         N_("text color for server name in input line"),
-        NULL, GUI_COLOR_INPUT_SERVER, 0, "brown",
+        NULL, -1, 0, "brown",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_input_channel = config_file_new_option (
         weechat_config_file, ptr_section,
         "input_channel", "color",
         N_("text color for channel name in input line"),
-        NULL, GUI_COLOR_INPUT_CHANNEL, 0, "white",
+        NULL, -1, 0, "white",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_input_nick = config_file_new_option (
         weechat_config_file, ptr_section,
         "input_nick", "color",
         N_("text color for nick name in input line"),
-        NULL, GUI_COLOR_INPUT_NICK, 0, "lightcyan",
+        NULL, -1, 0, "lightcyan",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_input_delimiters = config_file_new_option (
         weechat_config_file, ptr_section,
         "input_delimiters", "color",
         N_("text color for delimiters in input line"),
-        NULL, GUI_COLOR_INPUT_DELIMITERS, 0, "cyan",
+        NULL, -1, 0, "cyan",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_input_text_not_found = config_file_new_option (
         weechat_config_file, ptr_section,
         "input_text_not_found", "color",
         N_("text color for unsucessful text search in input line"),
-        NULL, GUI_COLOR_INPUT_TEXT_NOT_FOUND, 0, "red",
+        NULL, -1, 0, "red",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_input_actions = config_file_new_option (
         weechat_config_file, ptr_section,
         "input_actions", "color",
         N_("text color for actions in input line"),
-        NULL, GUI_COLOR_INPUT_ACTIONS, 0, "lightgreen",
+        NULL, -1, 0, "lightgreen",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     /* nicklist window */
     config_color_nicklist = config_file_new_option (
         weechat_config_file, ptr_section,
         "nicklist", "color",
         N_("text color for nicklist"),
-        NULL, GUI_COLOR_NICKLIST, 0, "default",
+        NULL, -1, 0, "default",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_nicklist_bg = config_file_new_option (
         weechat_config_file, ptr_section,
@@ -1454,55 +1452,55 @@ config_weechat_init ()
         weechat_config_file, ptr_section,
         "nicklist_group", "color",
         N_("text color for groups in nicklist"),
-        NULL, GUI_COLOR_NICKLIST_GROUP, 0, "green",
+        NULL, -1, 0, "green",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_nicklist_away = config_file_new_option (
         weechat_config_file, ptr_section,
         "nicklist_away", "color",
         N_("text color for away nicknames"),
-        NULL, GUI_COLOR_NICKLIST_AWAY, 0, "cyan",
+        NULL, -1, 0, "cyan",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_nicklist_prefix1 = config_file_new_option (
         weechat_config_file, ptr_section,
         "nicklist_prefix1", "color",
         N_("text color for prefix #1 in nicklist"),
-        NULL, GUI_COLOR_NICKLIST_PREFIX1, 0, "lightgreen",
+        NULL, -1, 0, "lightgreen",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_nicklist_prefix2 = config_file_new_option (
         weechat_config_file, ptr_section,
         "nicklist_prefix2", "color",
         N_("text color for prefix #2 in nicklist"),
-        NULL, GUI_COLOR_NICKLIST_PREFIX2, 0, "lightmagenta",
+        NULL, -1, 0, "lightmagenta",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_nicklist_prefix3 = config_file_new_option (
         weechat_config_file, ptr_section,
         "nicklist_prefix3", "color",
         N_("text color for prefix #3 in nicklist"),
-        NULL, GUI_COLOR_NICKLIST_PREFIX3, 0, "yellow",
+        NULL, -1, 0, "yellow",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_nicklist_prefix4 = config_file_new_option (
         weechat_config_file, ptr_section,
         "nicklist_prefix4", "color",
         N_("text color for prefix #4 in nicklist"),
-        NULL, GUI_COLOR_NICKLIST_PREFIX4, 0, "blue",
+        NULL, -1, 0, "blue",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_nicklist_prefix5 = config_file_new_option (
         weechat_config_file, ptr_section,
         "nicklist_prefix5", "color",
         N_("text color for prefix #5 in nicklist"),
-        NULL, GUI_COLOR_NICKLIST_PREFIX5, 0, "brown",
+        NULL, -1, 0, "brown",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_nicklist_more = config_file_new_option (
         weechat_config_file, ptr_section,
         "nicklist_more", "color",
         N_("text color for '+' when scrolling nicks in nicklist"),
-        NULL, GUI_COLOR_NICKLIST_MORE, 0, "lightmagenta",
+        NULL, -1, 0, "lightmagenta",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     config_color_nicklist_separator = config_file_new_option (
         weechat_config_file, ptr_section,
         "nicklist_separator", "color",
         N_("text color for nicklist separator"),
-        NULL, GUI_COLOR_NICKLIST_SEPARATOR, 0, "blue",
+        NULL, -1, 0, "blue",
         NULL, NULL, &config_change_color, NULL, NULL, NULL);
     
     /* completion */
@@ -1761,7 +1759,7 @@ config_weechat_read ()
     {
         config_change_day_change (NULL, NULL);
         gui_bar_use_temp_bars ();
-        //gui_bar_create_default ();
+        gui_bar_create_default ();
     }
     
     return rc;

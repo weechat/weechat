@@ -121,8 +121,8 @@ gui_keyboard_default_bindings ()
     gui_keyboard_bind (NULL, /* m-end         */ "meta-meta2-8~",      "/window scroll_bottom");
     gui_keyboard_bind (NULL, /* m-n           */ "meta-n",             "/window scroll_next_highlight");
     gui_keyboard_bind (NULL, /* m-p           */ "meta-p",             "/window scroll_previous_highlight");
-    gui_keyboard_bind (NULL, /* F9            */ "meta2-20~",          "/window scroll_topic_left");
-    gui_keyboard_bind (NULL, /* F10           */ "meta2-21~",          "/window scroll_topic_right");
+    gui_keyboard_bind (NULL, /* F9            */ "meta2-20~",          "/bar scroll title * x-50%");
+    gui_keyboard_bind (NULL, /* F10           */ "meta2-21~",          "/bar scroll title * x+50%");
     gui_keyboard_bind (NULL, /* F11           */ "meta2-23~",          "/bar scroll nicklist * y-100%");
     gui_keyboard_bind (NULL, /* F12           */ "meta2-24~",          "/bar scroll nicklist * y+100%");
     gui_keyboard_bind (NULL, /* m-F11         */ "meta-meta2-23~",     "/bar scroll nicklist * yb");
@@ -162,7 +162,7 @@ gui_keyboard_default_bindings ()
 void
 gui_keyboard_flush ()
 {
-    int i, key, insert_ok, input_draw;
+    int i, key, insert_ok;
     char key_str[32], *key_utf, *input_old;
     
     /* if there's no paste pending, then we use buffer and do actions
@@ -286,8 +286,6 @@ gui_keyboard_flush ()
             else
                 input_old = NULL;
             
-            input_draw = 0;
-            
             if ((gui_keyboard_pressed (key_str) != 0) && (insert_ok))
             {
                 if (strcmp (key_str, "^^") == 0)
@@ -298,7 +296,6 @@ gui_keyboard_flush ()
                 if (gui_current_window->buffer->completion)
                     gui_completion_stop (gui_current_window->buffer->completion, 0);
                 gui_input_text_changed_signal ();
-                input_draw = 1;
             }
             
             /* incremental text search in buffer */
@@ -307,11 +304,7 @@ gui_keyboard_flush ()
                     || (strcmp (input_old, gui_current_window->buffer->input_buffer) != 0)))
             {
                 gui_window_search_restart (gui_current_window);
-                input_draw = 1;
             }
-            
-            if (input_draw)
-                gui_input_draw (gui_current_window->buffer, 0);
             
             if (input_old)
                 free (input_old);
@@ -389,18 +382,12 @@ gui_keyboard_read_cb (void *data)
     {
         /* user is ok for pasting text, let's paste! */
         if (accept_paste)
-        {
             gui_keyboard_paste_accept ();
-            gui_input_draw (gui_current_window->buffer, 1);
-        }
         /* user doesn't want to paste text: clear whole buffer! */
         else if (cancel_paste)
-        {
             gui_keyboard_paste_cancel ();
-            gui_input_draw (gui_current_window->buffer, 1);
-        }
         else if (text_added_to_buffer)
-            gui_input_draw (gui_current_window->buffer, 1);
+            gui_input_text_changed_signal ();
     }
     else
     {
@@ -412,7 +399,6 @@ gui_keyboard_read_cb (void *data)
             if (paste_lines > CONFIG_INTEGER(config_look_paste_max_lines))
             {
                 gui_keyboard_paste_pending = 1;
-                gui_input_draw (gui_current_window->buffer, 1);
                 gui_input_paste_pending_signal ();
             }
         }

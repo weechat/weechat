@@ -43,12 +43,10 @@ lib_weechat_gui_common_a_SOURCES = gui-bar.c \
                                    gui-layout.c \
                                    gui-layout.h \
                                    gui-main.h \
-                                   gui-status.c \
-                                   gui-status.h \
-                                   gui-window.c \
-                                   gui-window.h \
                                    gui-nicklist.c \
-                                   gui-nicklist.h
+                                   gui-nicklist.h \
+                                   gui-window.c \
+                                   gui-window.h
 
 if GUI_NCURSES
 curses_dir=curses

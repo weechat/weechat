@@ -47,15 +47,12 @@ extern int gui_add_hotlist;
 
 /* hotlist functions */
 
+extern void gui_hotlist_changed_signal ();
 extern void gui_hotlist_add (struct t_gui_buffer *buffer, int priority,
                              struct timeval *creation_time,
                              int allow_current_buffer);
 extern void gui_hotlist_resort ();
-extern void gui_hotlist_free (struct t_gui_hotlist **hotlist,
-                              struct t_gui_hotlist **last_hotlist,
-                              struct t_gui_hotlist *ptr_hotlist);
-extern void gui_hotlist_free_all (struct t_gui_hotlist **hotlist,
-                                  struct t_gui_hotlist **last_hotlist);
+extern void gui_hotlist_clear ();
 extern void gui_hotlist_remove_buffer (struct t_gui_buffer *buffer);
 extern int gui_hotlist_add_to_infolist (struct t_infolist *infolist,
                                         struct t_gui_hotlist *hotlist);

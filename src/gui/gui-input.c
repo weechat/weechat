@@ -40,7 +40,6 @@
 #include "gui-history.h"
 #include "gui-hotlist.h"
 #include "gui-keyboard.h"
-#include "gui-status.h"
 #include "gui-window.h"
 
 
@@ -1280,7 +1279,6 @@ gui_input_jump_smart ()
             gui_window_switch_to_buffer (gui_current_window,
                                          gui_hotlist->buffer);
             gui_window_scroll_bottom (gui_current_window);
-            gui_status_refresh_needed = 1;
         }
         else
         {
@@ -1289,7 +1287,6 @@ gui_input_jump_smart ()
                 gui_window_switch_to_buffer (gui_current_window,
                                              gui_hotlist_initial_buffer);
                 gui_window_scroll_bottom (gui_current_window);
-                gui_status_refresh_needed = 1;
                 gui_hotlist_initial_buffer = NULL;
             }
         }
@@ -1336,11 +1333,7 @@ gui_input_jump_previous_buffer ()
 void
 gui_input_hotlist_clear ()
 {
-    if (gui_hotlist)
-    {
-        gui_hotlist_free_all (&gui_hotlist, &last_gui_hotlist);
-        gui_status_refresh_needed = 1;
-    }
+    gui_hotlist_clear ();
     gui_hotlist_initial_buffer = gui_current_window->buffer;
 }
 
@@ -1378,7 +1371,6 @@ gui_input_scroll_unread ()
             gui_current_window->first_line_displayed =
                 (gui_current_window->start_line == gui_chat_get_first_line_displayed (gui_current_window->buffer));
             gui_buffer_ask_chat_refresh (gui_current_window->buffer, 2);
-            gui_status_refresh_needed = 1;
         }
     }
 }

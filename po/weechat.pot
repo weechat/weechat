@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-10 15:52+0200\n"
+"POT-Creation-Date: 2008-10-12 11:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1522,16 +1522,6 @@ msgstr ""
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr ""
 
-msgid "Text search (exact): "
-msgstr ""
-
-msgid "Text search: "
-msgstr ""
-
-#, c-format
-msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
-msgstr ""
-
 msgid "Terminal lost, exiting WeeChat..."
 msgstr ""
 
@@ -1540,12 +1530,6 @@ msgid "Signal %s received, exiting WeeChat..."
 msgstr ""
 
 msgid "Signal SIGHUP received, reloading configuration files"
-msgstr ""
-
-msgid "Act: "
-msgstr ""
-
-msgid "-MORE-"
 msgstr ""
 
 msgid "server"
@@ -1624,6 +1608,9 @@ msgstr ""
 msgid "%s-MORE(%d)-"
 msgstr ""
 
+msgid "Act: "
+msgstr ""
+
 #, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
 msgstr ""
@@ -1632,6 +1619,12 @@ msgid "Not enough memory for new line"
 msgstr ""
 
 msgid "Error: not enough memory to add a buffer to hotlist"
+msgstr ""
+
+msgid "Text search (exact): "
+msgstr ""
+
+msgid "Text search: "
 msgstr ""
 
 #, c-format

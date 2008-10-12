@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-10 15:52+0200\n"
+"POT-Creation-Date: 2008-10-12 11:42+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1827,16 +1827,6 @@ msgstr ""
 msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s не могу создать директорию \"%s\"\n"
 
-msgid "Text search (exact): "
-msgstr "Поиск текста (регистрозависимый): "
-
-msgid "Text search: "
-msgstr "Поиск текста: "
-
-#, c-format
-msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
-msgstr "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
-
 msgid "Terminal lost, exiting WeeChat..."
 msgstr ""
 
@@ -1847,12 +1837,6 @@ msgstr ""
 #, fuzzy
 msgid "Signal SIGHUP received, reloading configuration files"
 msgstr "%s не могу сохранить конфигурационный файл\n"
-
-msgid "Act: "
-msgstr "Активны: "
-
-msgid "-MORE-"
-msgstr "-ДАЛЬШЕ-"
 
 msgid "server"
 msgstr "сервер"
@@ -1941,6 +1925,9 @@ msgstr "команда users отключена"
 msgid "%s-MORE(%d)-"
 msgstr "-ДАЛЬШЕ-"
 
+msgid "Act: "
+msgstr "Активны: "
+
 #, fuzzy, c-format
 msgid "%sError: a buffer with same name (%s) already exists"
 msgstr ""
@@ -1953,6 +1940,12 @@ msgstr "Недостаточно памяти для новой строчки\n
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s не могу добавить буфер в хотлист\n"
+
+msgid "Text search (exact): "
+msgstr "Поиск текста (регистрозависимый): "
+
+msgid "Text search: "
+msgstr "Поиск текста: "
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
@@ -4727,6 +4720,12 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#~ msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
+#~ msgstr "  Вставить %d строк ? [ctrl-Y] Да  [ctrl-N] Нет"
+
+#~ msgid "-MORE-"
+#~ msgstr "-ДАЛЬШЕ-"
 
 #, fuzzy
 #~ msgid "%s: disconnected from server"

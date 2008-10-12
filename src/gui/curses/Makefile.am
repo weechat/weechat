@@ -31,10 +31,7 @@ weechat_curses_LDADD = ./../../core/lib_weechat_core.a \
 weechat_curses_SOURCES = gui-curses-bar.c \
                          gui-curses-chat.c \
                          gui-curses-color.c \
-                         gui-curses-input.c \
                          gui-curses-keyboard.c \
                          gui-curses-main.c \
-                         gui-curses-nicklist.c \
-                         gui-curses-status.c \
                          gui-curses-window.c \
                          gui-curses.h

@@ -29,7 +29,6 @@ gui-keyboard.c gui-keyboard.h
 gui-layout.c gui-layout.h
 gui-main.h
 gui-nicklist.c gui-nicklist.h
-gui-status.c gui-status.h
 gui-window.c gui-window.h)
 
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
