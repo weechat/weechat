@@ -304,10 +304,17 @@ upgrade_weechat_read_cb (int object_id,
                 }
                 break;
             case UPGRADE_WEECHAT_TYPE_BUFFER:
-                /* create buffer if it was created by a plugin (ie not weechat
-                   main buffer) */
-                if (infolist_string (infolist, "plugin_name"))
+                if (!infolist_string (infolist, "plugin_name")
+                    || (strcmp (infolist_string (infolist, "plugin_name"),
+                                plugin_get_name (NULL)) == 0))
                 {
+                    /* use WeeChat main buffer (plugin is "core") */
+                    upgrade_current_buffer = gui_buffers;
+                }
+                else
+                {
+                    /* create buffer if it was created by a plugin (ie not
+                       WeeChat main buffer) */
                     upgrade_current_buffer = gui_buffer_new (
                         NULL,
                         infolist_string (infolist, "name"),
@@ -351,8 +358,6 @@ upgrade_weechat_read_cb (int object_id,
                         }
                     }
                 }
-                else
-                    upgrade_current_buffer = gui_buffers;
                 break;
             case UPGRADE_WEECHAT_TYPE_BUFFER_LINE:
                 /* add line to current buffer */
