@@ -755,7 +755,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
     (void) data;
     (void) modifier;
     
-    if (!string)
+    if (!string || !string[0])
         return NULL;
     
     sscanf (modifier_data, "%x", &value);
@@ -795,11 +795,12 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
     length_color_error = strlen (color_error);
     
     length = strlen (string);
-    result = malloc (length + (length * length_color_error));
-    result[0] = '\0';
+    result = malloc (length + (length * length_color_error) + 1);
     
     if (result)
     {
+        result[0] = '\0';
+        
         ptr_string = aspell_last_modifier_string;
         index_result = 0;
         
@@ -881,7 +882,7 @@ weechat_aspell_modifier_cb (void *data, const char *modifier,
         
         result[index_result] = '\0';
     }
-
+    
     if (!result)
         return NULL;
     
