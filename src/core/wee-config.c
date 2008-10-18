@@ -79,7 +79,6 @@ struct t_config_option *config_look_hotlist_names_length;
 struct t_config_option *config_look_hotlist_names_level;
 struct t_config_option *config_look_hotlist_short_names;
 struct t_config_option *config_look_hotlist_sort;
-struct t_config_option *config_look_input_format;
 struct t_config_option *config_look_item_time_format;
 struct t_config_option *config_look_nicklist;
 struct t_config_option *config_look_nicklist_max_size;
@@ -944,12 +943,6 @@ config_weechat_init ()
         "group_time_asc|group_time_desc|group_number_asc|"
         "group_number_desc|number_asc|number_desc",
         0, 0, "group_time_asc", NULL, NULL, NULL, &config_change_hotlist, NULL, NULL, NULL);
-    config_look_input_format = config_file_new_option (
-        weechat_config_file, ptr_section,
-        "input_format", "string",
-        N_("format for input prompt ('%c' is replaced by channel "
-           "or server, '%n' by nick and '%m' by nick modes)"),
-        NULL, 0, 0, "[%n(%m)] ", NULL, NULL, NULL, &config_change_buffer_content, NULL, NULL, NULL);
     config_look_item_time_format = config_file_new_option (
         weechat_config_file, ptr_section,
         "item_time_format", "string",

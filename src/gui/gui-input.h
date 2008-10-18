@@ -37,7 +37,6 @@ extern void gui_input_move (struct t_gui_buffer *buffer, char *target,
                             const char *source, int size);
 extern int gui_input_insert_string (struct t_gui_buffer *buffer,
                                     const char *string, int pos);
-extern int gui_input_get_prompt_length (struct t_gui_buffer *buffer);
 extern void gui_input_return ();
 extern void gui_input_clipboard_paste ();
 extern void gui_input_complete_next ();

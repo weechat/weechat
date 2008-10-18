@@ -3956,7 +3956,7 @@ irc_command_init ()
                              "  s: mark a user for receive server notices\n"
                              "  w: user receives wallops\n"
                              "  o: operator flag"),
-                          "%(irc_channel)|%m", &irc_command_mode, NULL);
+                          "%(irc_channel)|%(irc_server_nick)", &irc_command_mode, NULL);
     weechat_hook_command ("motd",
                           N_("get the \"Message Of The Day\""),
                           N_("[target]"),

@@ -667,35 +667,14 @@ gui_bar_item_default_input_prompt (void *data, struct t_gui_bar_item *item,
                                    struct t_gui_window *window,
                                    int max_width, int max_height)
 {
-    char *buf;
-    int length;
-    
     /* make C compiler happy */
     (void) data;
     (void) item;
+    (void) window;
     (void) max_width;
     (void) max_height;
     
-    if (!window)
-        window = gui_current_window;
-
-    if (!window->buffer->input_nick)
-        return NULL;
-    
-    length = strlen (window->buffer->input_nick);
-    if (length == 0)
-        return NULL;
-    
-    length += 64 + 1;
-    buf = malloc (length);
-    if (buf)
-    {
-        snprintf (buf, length, "%s%s",
-                  gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(config_color_input_nick))),
-                  window->buffer->input_nick);
-    }
-    
-    return buf;
+    return NULL;
 }
 
 /*

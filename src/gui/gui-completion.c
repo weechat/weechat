@@ -527,19 +527,6 @@ gui_completion_list_add_infolist_hooks (struct t_gui_completion *completion)
 }
 
 /*
- * gui_completion_list_add_self_nick: add self nick on server to completion list
- */
-
-void
-gui_completion_list_add_self_nick (struct t_gui_completion *completion)
-{
-    if (completion->buffer->input_nick)
-        gui_completion_list_add (completion,
-                                 completion->buffer->input_nick,
-                                 0, WEECHAT_LIST_POS_SORT);
-}
-
-/*
  * gui_completion_list_add_nicks: add nicks to completion list
  */
 
@@ -952,9 +939,6 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                             break;
                         case 'I': /* infolists hooked */
                             gui_completion_list_add_infolist_hooks (completion);
-                            break;
-                        case 'm': /* self nickname */
-                            gui_completion_list_add_self_nick (completion);
                             break;
                         case 'n': /* nick */
                             gui_completion_list_add_nicks (completion);

@@ -102,7 +102,6 @@ irc_channel_new (struct t_irc_server *server, int channel_type,
     
     if (channel_type == IRC_CHANNEL_TYPE_CHANNEL)
     {
-        weechat_buffer_set (new_buffer, "nick", server->nick);
         if (weechat_config_integer (weechat_config_get ("weechat.look.nicklist")))
             weechat_buffer_set (new_buffer, "nicklist", "1");
         weechat_buffer_set (new_buffer, "nicklist_display_groups", "0");

@@ -202,7 +202,6 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->input = 1;
         new_buffer->input_callback = input_callback;
         new_buffer->input_callback_data = input_callback_data;
-        new_buffer->input_nick = NULL;
         new_buffer->input_buffer_alloc = GUI_BUFFER_INPUT_BLOCK_SIZE;
         new_buffer->input_buffer = malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
         new_buffer->input_buffer[0] = '\0';
@@ -354,8 +353,6 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
             return buffer->name;
         else if (string_strcasecmp (property, "title") == 0)
             return buffer->title;
-        else if (string_strcasecmp (property, "nick") == 0)
-            return buffer->input_nick;
     }
     
     return NULL;
@@ -479,19 +476,6 @@ gui_buffer_set_nicklist_display_groups (struct t_gui_buffer *buffer,
     buffer->nicklist_display_groups = (display_groups) ? 1 : 0;
     buffer->nicklist_visible_count = 0;
     gui_nicklist_compute_visible_count (buffer, buffer->nicklist_root);
-}
-
-/*
- * gui_buffer_set_nick: set nick for a buffer
- */
-
-void
-gui_buffer_set_nick (struct t_gui_buffer *buffer, const char *new_nick)
-{
-    if (buffer->input_nick)
-        free (buffer->input_nick);
-    buffer->input_nick = (new_nick && new_nick[0]) ? strdup (new_nick) : NULL;
-    gui_buffer_ask_input_refresh (buffer, 1);
 }
 
 /*
@@ -669,10 +653,6 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         number = strtol (value_str, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist_display_groups (buffer, number);
-    }
-    else if (string_strcasecmp (property, "nick") == 0)
-    {
-        gui_buffer_set_nick (buffer, value_str);
     }
     else if (string_strcasecmp (property, "highlight_words") == 0)
     {
@@ -1247,8 +1227,6 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_integer (ptr_item, "input", buffer->input))
         return 0;
-    if (!infolist_new_var_string (ptr_item, "input_nick", buffer->input_nick))
-        return 0;
     if (!infolist_new_var_string (ptr_item, "input_string", buffer->input_buffer))
         return 0;
     if (!infolist_new_var_string (ptr_item, "highlight_words", buffer->highlight_words))
@@ -1443,7 +1421,6 @@ gui_buffer_print_log ()
         log_printf ("  input. . . . . . . . . : %d",   ptr_buffer->input);
         log_printf ("  input_callback . . . . : 0x%x", ptr_buffer->input_callback);
         log_printf ("  input_callback_data. . : 0x%x", ptr_buffer->input_callback_data);
-        log_printf ("  input_nick . . . . . . : '%s'", ptr_buffer->input_nick);
         log_printf ("  input_buffer . . . . . : '%s'", ptr_buffer->input_buffer);
         log_printf ("  input_buffer_alloc . . : %d",   ptr_buffer->input_buffer_alloc);
         log_printf ("  input_buffer_size. . . : %d",   ptr_buffer->input_buffer_size);

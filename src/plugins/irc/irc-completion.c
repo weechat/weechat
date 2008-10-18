@@ -59,6 +59,31 @@ irc_completion_server_cb (void *data, const char *completion_item,
 }
 
 /*
+ * irc_completion_server_nick_cb: callback for completion with self nick
+ *                                of current IRC server
+ */
+
+int
+irc_completion_server_nick_cb (void *data, const char *completion_item,
+                               struct t_gui_buffer *buffer,
+                               struct t_gui_completion *completion)
+{
+    IRC_GET_SERVER(buffer);
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) completion_item;
+    
+    if (ptr_server && ptr_server->nick)
+    {
+        weechat_hook_completion_list_add (completion, ptr_server->nick,
+                                          1, WEECHAT_LIST_POS_SORT);
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * irc_completion_server_nicks_cb: callback for completion with nicks
  *                                 of current IRC server
  */
@@ -363,6 +388,8 @@ void
 irc_completion_init ()
 {
     weechat_hook_completion ("irc_server", &irc_completion_server_cb, NULL);
+    weechat_hook_completion ("irc_server_nick",
+                             &irc_completion_server_nick_cb, NULL);
     weechat_hook_completion ("irc_server_nicks",
                              &irc_completion_server_nicks_cb, NULL);
     weechat_hook_completion ("irc_servers", &irc_completion_servers_cb, NULL);

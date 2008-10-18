@@ -119,7 +119,6 @@ struct t_gui_buffer
                           const char *input_data);
     void *input_callback_data;         /* data for callback                 */
                                        /* to this buffer                    */
-    char *input_nick;                  /* self nick                         */
     char *input_buffer;                /* input buffer                      */
     int input_buffer_alloc;            /* input buffer: allocated size      */
     int input_buffer_size;             /* buffer size in bytes              */
