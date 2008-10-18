@@ -1102,3 +1102,17 @@ gui_chat_printf_y (struct t_gui_buffer *buffer, int y, const char *message, ...)
             string_iconv_fprintf (stdout, "%s\n", gui_chat_buffer);
     }
 }
+
+/*
+ * gui_chat_free_buffer: free buffer used by chat functions
+ */
+
+void
+gui_chat_free_buffer ()
+{
+    if (gui_chat_buffer)
+    {
+        free (gui_chat_buffer);
+        gui_chat_buffer = NULL;
+    }
+}

@@ -87,6 +87,7 @@ extern void gui_chat_printf_date_tags (struct t_gui_buffer *buffer,
                                        const char *message, ...);
 extern void gui_chat_printf_y (struct t_gui_buffer *buffer, int y,
                                const char *message, ...);
+extern void gui_chat_free_buffer ();
 
 /* chat functions (GUI dependent) */
 

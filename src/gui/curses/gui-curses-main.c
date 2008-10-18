@@ -46,6 +46,7 @@
 #include "../gui-color.h"
 #include "../gui-filter.h"
 #include "../gui-input.h"
+#include "../gui-layout.h"
 #include "../gui-history.h"
 #include "../gui-nicklist.h"
 #include "../gui-window.h"
@@ -331,6 +332,10 @@ gui_main_end (int clean_exit)
         if (gui_input_clipboard)
             free (gui_input_clipboard);
         
+        /* delete layout saved */
+        gui_layout_window_remove_all ();
+        gui_layout_buffer_remove_all ();
+        
         /* delete all windows */
         while (gui_windows)
         {
@@ -353,6 +358,9 @@ gui_main_end (int clean_exit)
         
         /* end color */
         gui_color_end ();
+        
+        /* free chat buffer */
+        gui_chat_free_buffer ();
     }
     
     /* end of Curses output */

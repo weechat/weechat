@@ -56,6 +56,7 @@ extern struct t_gui_layout_window *gui_layout_windows;
 
 /* layout functions */
 
+extern void gui_layout_buffer_remove_all ();
 extern void gui_layout_buffer_reset ();
 extern struct t_gui_layout_buffer *gui_layout_buffer_add (const char *plugin_name,
                                                           const char *buffer_name,
@@ -65,6 +66,7 @@ extern int gui_layout_buffer_get_number (const char *plugin_name,
                                          const char *buffer_name);
 extern void gui_layout_buffer_apply ();
 
+extern void gui_layout_window_remove_all ();
 extern void gui_layout_window_reset ();
 extern struct t_gui_layout_window *gui_layout_window_search_by_id (int id);
 extern struct t_gui_layout_window *gui_layout_window_add (int internal_id,
