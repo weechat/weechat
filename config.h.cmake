@@ -19,6 +19,7 @@
 #cmakedefine HAVE_LANGINFO_CODESET
 #cmakedefine HAVE_STRNDUP
 #cmakedefine ICONV_2ARG_IS_CONST 1
+#cmakedefine HAVE_TCL_CREATE_NS
 #define PACKAGE_VERSION "@VERSION@"
 #define PACKAGE "@PROJECT_NAME@"
 #define PACKAGE_NAME "@PROJECT_NAME@"

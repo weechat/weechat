@@ -4896,8 +4896,10 @@ void weechat_tcl_api_init (Tcl_Interp *interp) {
     /* standard initializer */ 
     Tcl_Init (interp);
     
+#ifdef HAVE_TCL_CREATE_NS
     /* create weechat namespace */
     Tcl_CreateNamespace (interp, "weechat",(ClientData)0,NULL);
+#endif
 
     /* interface constants */
     /* set variables, TODO: make them unmodifiable (thru Tcl_TraceVar) ? */
