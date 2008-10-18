@@ -1,6 +1,7 @@
 <!-- commands -->
 
 <!ENTITY alias_commands.xml SYSTEM "autogen/alias_commands.xml">
+<!ENTITY aspell_commands.xml SYSTEM "autogen/aspell_commands.xml">
 <!ENTITY charset_commands.xml SYSTEM "autogen/charset_commands.xml">
 <!ENTITY debug_commands.xml SYSTEM "autogen/debug_commands.xml">
 <!ENTITY demo_commands.xml SYSTEM "autogen/demo_commands.xml">
@@ -16,6 +17,7 @@
 
 <!-- config options -->
 
+<!ENTITY aspell_options.xml SYSTEM "autogen/aspell_options.xml">
 <!ENTITY irc_options.xml SYSTEM "autogen/irc_options.xml">
 <!ENTITY logger_options.xml SYSTEM "autogen/logger_options.xml">
 <!ENTITY weechat_options.xml SYSTEM "autogen/weechat_options.xml">

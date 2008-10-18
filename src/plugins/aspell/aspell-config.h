@@ -25,8 +25,8 @@
 
 extern struct t_config_option *weechat_aspell_config_look_color;
 
+extern struct t_config_option *weechat_aspell_config_check_commands;
 extern struct t_config_option *weechat_aspell_config_check_default_dict;
-extern struct t_config_option *weechat_aspell_config_check_real_time;
 extern struct t_config_option *weechat_aspell_config_check_word_min_length;
 
 extern char **weechat_aspell_commands_to_check;

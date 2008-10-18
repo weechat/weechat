@@ -63,13 +63,13 @@ my @locale_list = qw(en_US fr_FR de_DE);
 # /name (where "name" # is name of plugin)
 # Note: we consider core is a plugin called "weechat"
 my %plugin_list = ("weechat" => "co", "alias"   => "",
-                   "charset" => "c",  "debug"   => "co",
-                   "demo"    => "co", "fifo"    => "co",
-                   "irc"     => "co", "logger"  => "co",
-                   "notify"  => "co", "perl"    => "",
-                   "python"  => "",   "ruby"    => "",
-                   "lua"     => "",   "tcl"     => "",
-                   "xfer"    => "co");
+                   "aspell"  => "o",  "charset" => "c",
+                   "debug"   => "co", "demo"    => "co",
+                   "fifo"    => "co", "irc"     => "co",
+                   "logger"  => "co", "notify"  => "co",
+                   "perl"    => "",   "python"  => "",
+                   "ruby"    => "",   "lua"     => "",
+                   "tcl"     => "",   "xfer"    => "co");
 
 # options to ignore
 my @ignore_options = ("weechat\\.bar\\..*",

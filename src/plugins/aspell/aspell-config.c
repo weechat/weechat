@@ -40,7 +40,6 @@ struct t_config_option *weechat_aspell_config_look_color;
 
 struct t_config_option *weechat_aspell_config_check_commands;
 struct t_config_option *weechat_aspell_config_check_default_dict;
-struct t_config_option *weechat_aspell_config_check_real_time;
 struct t_config_option *weechat_aspell_config_check_word_min_length;
 
 
@@ -269,12 +268,6 @@ weechat_aspell_config_init ()
         N_("minimum length for a word to be spell checked (use 0 to check all "
            "words)"),
         NULL, 0, INT_MAX, "2", NULL, NULL, NULL, NULL, NULL, NULL);
-    weechat_aspell_config_check_real_time = weechat_config_new_option (
-        weechat_aspell_config_file, ptr_section,
-        "real_time", "boolean",
-        N_("real-time spell checking of words (slower, disabled by default: "
-           "words are checked only if there's delimiter after)"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "dict",
                                               1, 1,
