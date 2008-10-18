@@ -118,12 +118,12 @@ gui_buffer_insert (struct t_gui_buffer *buffer)
         /* add buffer to the end */
         buffer->number = (last_gui_buffer) ? last_gui_buffer->number + 1 : 1;
         buffer->prev_buffer = last_gui_buffer;
+        buffer->next_buffer = NULL;
         if (gui_buffers)
             last_gui_buffer->next_buffer = buffer;
         else
             gui_buffers = buffer;
         last_gui_buffer = buffer;
-        buffer->next_buffer = NULL;
     }
 }
 
@@ -205,9 +205,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->input_nick = NULL;
         new_buffer->input_buffer_alloc = GUI_BUFFER_INPUT_BLOCK_SIZE;
         new_buffer->input_buffer = malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
-        new_buffer->input_buffer_color_mask = malloc (GUI_BUFFER_INPUT_BLOCK_SIZE);
         new_buffer->input_buffer[0] = '\0';
-        new_buffer->input_buffer_color_mask[0] = '\0';
         new_buffer->input_buffer_size = 0;
         new_buffer->input_buffer_length = 0;
         new_buffer->input_buffer_pos = 0;
@@ -994,8 +992,6 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
         free (buffer->name);
     if (buffer->input_buffer)
         free (buffer->input_buffer);
-    if (buffer->input_buffer_color_mask)
-        free (buffer->input_buffer_color_mask);
     if (buffer->completion)
         gui_completion_free (buffer->completion);
     gui_history_buffer_free (buffer);
@@ -1011,9 +1007,9 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     
     /* remove buffer from buffers list */
     if (buffer->prev_buffer)
-        buffer->prev_buffer->next_buffer = buffer->next_buffer;
+        (buffer->prev_buffer)->next_buffer = buffer->next_buffer;
     if (buffer->next_buffer)
-        buffer->next_buffer->prev_buffer = buffer->prev_buffer;
+        (buffer->next_buffer)->prev_buffer = buffer->prev_buffer;
     if (gui_buffers == buffer)
         gui_buffers = buffer->next_buffer;
     if (last_gui_buffer == buffer)
@@ -1449,7 +1445,6 @@ gui_buffer_print_log ()
         log_printf ("  input_callback_data. . : 0x%x", ptr_buffer->input_callback_data);
         log_printf ("  input_nick . . . . . . : '%s'", ptr_buffer->input_nick);
         log_printf ("  input_buffer . . . . . : '%s'", ptr_buffer->input_buffer);
-        log_printf ("  input_buffer_color_mask: '%s'", ptr_buffer->input_buffer_color_mask);
         log_printf ("  input_buffer_alloc . . : %d",   ptr_buffer->input_buffer_alloc);
         log_printf ("  input_buffer_size. . . : %d",   ptr_buffer->input_buffer_size);
         log_printf ("  input_buffer_length. . : %d",   ptr_buffer->input_buffer_length);

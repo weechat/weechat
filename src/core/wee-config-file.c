@@ -2393,8 +2393,8 @@ config_file_print_stdout (struct t_config_file *config_file)
             {
                 case CONFIG_OPTION_TYPE_BOOLEAN:
                     string_iconv_fprintf (stdout, _("  . type: boolean\n"));
-                    string_iconv_fprintf (stdout, _("  . values: 'on' or 'off'\n"));
-                    string_iconv_fprintf (stdout, _("  . default value: '%s'\n"),
+                    string_iconv_fprintf (stdout, _("  . values: \"on\" or \"off\"\n"));
+                    string_iconv_fprintf (stdout, _("  . default value: \"%s\"\n"),
                                           (CONFIG_BOOLEAN_DEFAULT(ptr_option) == CONFIG_BOOLEAN_TRUE) ?
                                           "on" : "off");
                     break;
@@ -2406,14 +2406,14 @@ config_file_print_stdout (struct t_config_file *config_file)
                         i = 0;
                         while (ptr_option->string_values[i])
                         {
-                            string_iconv_fprintf (stdout, "'%s'",
+                            string_iconv_fprintf (stdout, "\"%s\"",
                                                   ptr_option->string_values[i]);
                             if (ptr_option->string_values[i + 1])
                                 string_iconv_fprintf (stdout, ", ");
                             i++;
                         }
                         string_iconv_fprintf (stdout, "\n");
-                        string_iconv_fprintf (stdout, _("  . default value: '%s'\n"),
+                        string_iconv_fprintf (stdout, _("  . default value: \"%s\"\n"),
                                               ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]);
                     }
                     else
@@ -2443,14 +2443,14 @@ config_file_print_stdout (struct t_config_file *config_file)
                                                   ptr_option->max);
                             break;
                     }
-                    string_iconv_fprintf (stdout, _("  . default value: '%s'\n"),
+                    string_iconv_fprintf (stdout, _("  . default value: \"%s\"\n"),
                                           CONFIG_STRING_DEFAULT(ptr_option));
                     break;
                 case CONFIG_OPTION_TYPE_COLOR:
                     color_name = gui_color_get_name (CONFIG_COLOR_DEFAULT(ptr_option));
                     string_iconv_fprintf (stdout, _("  . type: color\n"));
                     string_iconv_fprintf (stdout, _("  . values: color (depends on GUI used)\n"));
-                    string_iconv_fprintf (stdout, _("  . default value: '%s'\n"),
+                    string_iconv_fprintf (stdout, _("  . default value: \"%s\"\n"),
                                           color_name);
                     break;
                 case CONFIG_NUM_OPTION_TYPES:

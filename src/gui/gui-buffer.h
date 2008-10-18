@@ -121,7 +121,6 @@ struct t_gui_buffer
                                        /* to this buffer                    */
     char *input_nick;                  /* self nick                         */
     char *input_buffer;                /* input buffer                      */
-    char *input_buffer_color_mask;     /* color mask for input buffer       */
     int input_buffer_alloc;            /* input buffer: allocated size      */
     int input_buffer_size;             /* buffer size in bytes              */
     int input_buffer_length;           /* number of chars in buffer         */

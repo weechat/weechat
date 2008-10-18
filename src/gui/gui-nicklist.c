@@ -276,11 +276,21 @@ gui_nicklist_search_nick (struct t_gui_buffer *buffer,
                           const char *name)
 {
     struct t_gui_nick *ptr_nick;
+    struct t_gui_nick_group *ptr_group;
     
     for (ptr_nick = (from_group) ? from_group->nicks : buffer->nicklist_root->nicks;
          ptr_nick; ptr_nick = ptr_nick->next_nick)
     {
         if (strcmp (ptr_nick->name, name) == 0)
+            return ptr_nick;
+    }
+
+    /* search nick in child groups */
+    for (ptr_group = (from_group) ? from_group->childs : buffer->nicklist_root->childs;
+         ptr_group; ptr_group = ptr_group->next_group)
+    {
+        ptr_nick = gui_nicklist_search_nick (buffer, ptr_group, name);
+        if (ptr_nick)
             return ptr_nick;
     }
     
@@ -337,13 +347,13 @@ gui_nicklist_remove_nick (struct t_gui_buffer *buffer,
     
     /* remove nick from list */
     if (nick->prev_nick)
-        nick->prev_nick->next_nick = nick->next_nick;
+        (nick->prev_nick)->next_nick = nick->next_nick;
     if (nick->next_nick)
-        nick->next_nick->prev_nick = nick->prev_nick;
-    if (nick->group->nicks == nick)
-        nick->group->nicks = nick->next_nick;
-    if (nick->group->last_nick == nick)
-        nick->group->last_nick = nick->prev_nick;
+        (nick->next_nick)->prev_nick = nick->prev_nick;
+    if ((nick->group)->nicks == nick)
+        (nick->group)->nicks = nick->next_nick;
+    if ((nick->group)->last_nick == nick)
+        (nick->group)->last_nick = nick->prev_nick;
     
     /* free data */
     if (nick->name)
@@ -391,13 +401,13 @@ gui_nicklist_remove_group (struct t_gui_buffer *buffer,
     {
         /* remove group from list */
         if (group->prev_group)
-            group->prev_group->next_group = group->next_group;
+            (group->prev_group)->next_group = group->next_group;
         if (group->next_group)
-            group->next_group->prev_group = group->prev_group;
-        if (group->parent->childs == group)
-            group->parent->childs = group->next_group;
-        if (group->parent->last_child == group)
-            group->parent->last_child = group->prev_group;
+            (group->next_group)->prev_group = group->prev_group;
+        if ((group->parent)->childs == group)
+            (group->parent)->childs = group->next_group;
+        if ((group->parent)->last_child == group)
+            (group->parent)->last_child = group->prev_group;
     }
     else
     {

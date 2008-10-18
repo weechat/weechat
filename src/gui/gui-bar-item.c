@@ -570,9 +570,9 @@ gui_bar_item_free (struct t_gui_bar_item *item)
 {
     /* remove bar item from bar items list */
     if (item->prev_item)
-        item->prev_item->next_item = item->next_item;
+        (item->prev_item)->next_item = item->next_item;
     if (item->next_item)
-        item->next_item->prev_item = item->prev_item;
+        (item->next_item)->prev_item = item->prev_item;
     if (gui_bar_items == item)
         gui_bar_items = item->next_item;
     if (last_gui_bar_item == item)
@@ -751,6 +751,8 @@ gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
                                  struct t_gui_window *window,
                                  int max_width, int max_height)
 {
+    char *new_input, str_buffer[128];
+    
     /* make C compiler happy */
     (void) data;
     (void) item;
@@ -759,6 +761,17 @@ gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
     
     if (!window)
         window = gui_current_window;
+
+    snprintf (str_buffer, sizeof (str_buffer),
+              "0x%x", (unsigned int)(window->buffer));
+    
+    new_input = hook_modifier_exec (NULL,
+                                    "weechat_input_text_display",
+                                    str_buffer,
+                                    (window->buffer->input_buffer) ?
+                                    window->buffer->input_buffer : "");
+    if (new_input)
+        return new_input;
     
     return (window->buffer->input_buffer) ?
         strdup (window->buffer->input_buffer) : NULL;

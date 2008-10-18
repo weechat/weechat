@@ -179,7 +179,7 @@ script_ptr2str (void *pointer)
     if (!pointer)
         return strdup ("");
     
-    snprintf (pointer_str, sizeof (pointer_str) - 1,
+    snprintf (pointer_str, sizeof (pointer_str),
               "0x%x", (unsigned int)pointer);
     
     return strdup (pointer_str);

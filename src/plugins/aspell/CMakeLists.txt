@@ -14,7 +14,10 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ADD_LIBRARY(aspell MODULE aspell.c aspell.h)
+ADD_LIBRARY(aspell MODULE
+aspell.c aspell.h
+aspell-config.c aspell-config.h
+aspell-speller.c aspell-speller.h)
 SET_TARGET_PROPERTIES(aspell PROPERTIES PREFIX "")
 
 IF(ASPELL_FOUND)

@@ -1126,11 +1126,11 @@ command_help (void *data, struct t_gui_buffer *buffer,
                                          _("type"), _("string"));
                         gui_chat_printf (NULL, "  %s: %s",
                                          _("values"), string);
-                        gui_chat_printf (NULL, "  %s: '%s'",
+                        gui_chat_printf (NULL, "  %s: \"%s\"",
                                          _("default value"),
                                          ptr_option->string_values[CONFIG_INTEGER_DEFAULT(ptr_option)]);
                         gui_chat_printf (NULL,
-                                         "  %s: '%s%s%s'",
+                                         "  %s: \"%s%s%s\"",
                                          _("current value"),
                                          GUI_COLOR(GUI_COLOR_CHAT_HOST),
                                          ptr_option->string_values[CONFIG_INTEGER(ptr_option)],
@@ -1178,10 +1178,10 @@ command_help (void *data, struct t_gui_buffer *buffer,
                                          ptr_option->max);
                         break;
                 }
-                gui_chat_printf (NULL, "  %s: '%s'",
+                gui_chat_printf (NULL, "  %s: \"%s\"",
                                  _("default value"),
                                  CONFIG_STRING_DEFAULT(ptr_option));
-                gui_chat_printf (NULL, "  %s: '%s%s%s'",
+                gui_chat_printf (NULL, "  %s: \"%s%s%s\"",
                                  _("current value"),
                                  GUI_COLOR(GUI_COLOR_CHAT_HOST),
                                  CONFIG_STRING(ptr_option),
@@ -1516,7 +1516,8 @@ command_layout_display_tree (struct t_gui_layout_window *layout_window,
             /* leaf */
             snprintf (format, sizeof (format), "%%-%ds%s",
                       indent * 2,
-                      _("leaf: id: %d, parent: %d, plugin: '%s', buffer: '%s'"));
+                      _("leaf: id: %d, parent: %d, plugin: \"%s\", "
+                        "buffer: \"%s\""));
             gui_chat_printf (NULL, format,
                              " ",
                              layout_window->internal_id,

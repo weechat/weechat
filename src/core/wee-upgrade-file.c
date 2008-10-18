@@ -54,7 +54,7 @@ upgrade_file_error (struct t_upgrade_file *upgrade_file, char *message1,
                     char *message2, char *file, int line)
 {
     gui_chat_printf (NULL,
-                     _("%sError upgrading WeeChat with file '%s':"),
+                     _("%sError upgrading WeeChat with file \"%s\":"),
                      gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
                      upgrade_file->filename);
     gui_chat_printf (NULL,

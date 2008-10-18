@@ -387,9 +387,9 @@ gui_window_free (struct t_gui_window *window)
     
     /* remove window from windows list */
     if (window->prev_window)
-        window->prev_window->next_window = window->next_window;
+        (window->prev_window)->next_window = window->next_window;
     if (window->next_window)
-        window->next_window->prev_window = window->prev_window;
+        (window->next_window)->prev_window = window->prev_window;
     if (gui_windows == window)
         gui_windows = window->next_window;
     if (last_gui_window == window)

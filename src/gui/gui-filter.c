@@ -381,9 +381,9 @@ gui_filter_free (struct t_gui_filter *filter)
     
     /* remove filter from filters list */
     if (filter->prev_filter)
-        filter->prev_filter->next_filter = filter->next_filter;
+        (filter->prev_filter)->next_filter = filter->next_filter;
     if (filter->next_filter)
-        filter->next_filter->prev_filter = filter->prev_filter;
+        (filter->next_filter)->prev_filter = filter->prev_filter;
     if (gui_filters == filter)
         gui_filters = filter->next_filter;
     if (last_gui_filter == filter)

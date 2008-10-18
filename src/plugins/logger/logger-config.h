@@ -23,8 +23,6 @@
 #define LOGGER_CONFIG_NAME "logger"
 
 
-extern struct t_config_file *logger_config_file;
-
 extern struct t_config_option *logger_config_look_backlog;
 
 extern struct t_config_option *logger_config_file_auto_log;

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-12 11:42+0200\n"
+"POT-Creation-Date: 2008-10-18 15:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -345,7 +345,7 @@ msgid "%sError: unable to bind key \"%s\""
 msgstr ""
 
 #, c-format
-msgid "leaf: id: %d, parent: %d, plugin: '%s', buffer: '%s'"
+msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
 msgstr ""
 
 #, c-format
@@ -1386,11 +1386,11 @@ msgstr ""
 msgid "  . type: boolean\n"
 msgstr ""
 
-msgid "  . values: 'on' or 'off'\n"
+msgid "  . values: \"on\" or \"off\"\n"
 msgstr ""
 
 #, c-format
-msgid "  . default value: '%s'\n"
+msgid "  . default value: \"%s\"\n"
 msgstr ""
 
 msgid "  . type: string\n"
@@ -1452,7 +1452,7 @@ msgid ""
 msgstr ""
 
 #, c-format
-msgid "%sError upgrading WeeChat with file '%s':"
+msgid "%sError upgrading WeeChat with file \"%s\":"
 msgstr ""
 
 #, c-format
@@ -1704,6 +1704,90 @@ msgid "%s: debug disabled"
 msgstr ""
 
 #, c-format
+msgid "%s: %s: removed"
+msgstr ""
+
+#. TRANSLATORS: %s is "aspell"
+#, c-format
+msgid "%s dictionnaries list:"
+msgstr ""
+
+#, c-format
+msgid "%s: error: dictionary \"%s\" is not available on your system"
+msgstr ""
+
+#, c-format
+msgid "%s: word \"%s\" added to personal dictionary"
+msgstr ""
+
+#, c-format
+msgid "%s%s: failed to add word to personal dictionary"
+msgstr ""
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+
+msgid "aspell plugin configuration"
+msgstr ""
+
+msgid "[list | enable lang | disable | addword [lang] word]"
+msgstr ""
+
+msgid ""
+"   list: show installed dictionnaries\n"
+" enable: enable aspell on current buffer\n"
+"disable: disable aspell on current buffer\n"
+"addword: add a word in your personnal aspell dictionary\n"
+"\n"
+"Input line beginning with a '/' is not checked, except for some commands."
+msgstr ""
+
+msgid "comma separated list of dictionaries to use on this buffer"
+msgstr ""
+
+#, c-format
+msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
+msgstr ""
+
+msgid "color used for mispelled words"
+msgstr ""
+
+msgid ""
+"comma separated list of commands for which spell checking is enabled (spell "
+"checking is disabled for all other commands)"
+msgstr ""
+
+msgid ""
+"default dictionary (or comma separated list of dictionaries) to use when "
+"buffer has no dictionary defined (leave blank to disable aspell on buffers "
+"for which you didn't explicitely enabled it)"
+msgstr ""
+
+msgid ""
+"minimum length for a word to be spell checked (use 0 to check all words)"
+msgstr ""
+
+msgid ""
+"real-time spell checking of words (slower, disabled by default: words are "
+"checked only if there's delimiter after)"
+msgstr ""
+
+#, c-format
+msgid "%s: warning: dictionary \"%s\" is not available on your system"
+msgstr ""
+
+#, c-format
+msgid "%s%s: not enough memory to create new speller"
+msgstr ""
+
+#, c-format
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
 msgstr ""
 
@@ -1714,11 +1798,7 @@ msgid "global encoding charset"
 msgstr ""
 
 #, c-format
-msgid "Charset: %s, %s => %s"
-msgstr ""
-
-#, c-format
-msgid "Charset: %s, %s: removed"
+msgid "%s: %s, %s: removed"
 msgstr ""
 
 #, c-format
@@ -1786,7 +1866,7 @@ msgid "Available infolists:"
 msgstr ""
 
 #, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: '%s'"
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: \"%s\""
 msgstr ""
 
 #, c-format
@@ -2035,7 +2115,7 @@ msgid "No server"
 msgstr ""
 
 #, c-format
-msgid "Servers with '%s':"
+msgid "Servers with \"%s\":"
 msgstr ""
 
 #, c-format

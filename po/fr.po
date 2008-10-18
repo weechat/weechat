@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-12 11:42+0200\n"
-"PO-Revision-Date: 2008-10-10 15:52+0200\n"
+"POT-Creation-Date: 2008-10-18 15:34+0200\n"
+"PO-Revision-Date: 2008-10-18 15:35+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -368,8 +368,8 @@ msgid "%sError: unable to bind key \"%s\""
 msgstr "%sErreur: impossible de créer la touche \"%s\""
 
 #, c-format
-msgid "leaf: id: %d, parent: %d, plugin: '%s', buffer: '%s'"
-msgstr "feuille: id: %d, parent: %d, extension: '%s', tampon: '%s'"
+msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
+msgstr "feuille: id: %d, parent: %d, extension: \"%s\", tampon: \"%s\""
 
 #, c-format
 msgid "node: id: %d, parent: %d, child1: %d, child2: %d, size: %d%% (%s)"
@@ -1674,12 +1674,12 @@ msgstr "Rechargement du fichier de configuration %s"
 msgid "  . type: boolean\n"
 msgstr "  . type: booléen\n"
 
-msgid "  . values: 'on' or 'off'\n"
-msgstr "  . valeurs: 'on' ou 'off'\n"
+msgid "  . values: \"on\" or \"off\"\n"
+msgstr "  . valeurs: \"on\" ou \"off\"\n"
 
 #, c-format
-msgid "  . default value: '%s'\n"
-msgstr "  . valeur par défaut: '%s'\n"
+msgid "  . default value: \"%s\"\n"
+msgstr "  . valeur par défaut: \"%s\"\n"
 
 msgid "  . type: string\n"
 msgstr "  . type: chaîne\n"
@@ -1745,8 +1745,8 @@ msgstr ""
 "dir\".\n"
 
 #, c-format
-msgid "%sError upgrading WeeChat with file '%s':"
-msgstr "%sErreur de mise à jour de WeeChat avec le fichier '%s':"
+msgid "%sError upgrading WeeChat with file \"%s\":"
+msgstr "%sErreur de mise à jour de WeeChat avec le fichier \"%s\":"
 
 #, c-format
 msgid "%s    error: %s%s%s%s"
@@ -2021,6 +2021,114 @@ msgid "%s: debug disabled"
 msgstr "%s: debug désactivé"
 
 #, c-format
+msgid "%s: %s: removed"
+msgstr "%s: %s: supprimé"
+
+#. TRANSLATORS: %s is "aspell"
+#, c-format
+msgid "%s dictionnaries list:"
+msgstr "Liste des dictionnaires %s:"
+
+#, c-format
+msgid "%s: error: dictionary \"%s\" is not available on your system"
+msgstr ""
+"%s: erreur: le dictionnaire \"%s\" n'est pas disponible sur votre système"
+
+#, c-format
+msgid "%s: word \"%s\" added to personal dictionary"
+msgstr "%s: mot \"%s\" ajouté dans le dictionnaire personnel"
+
+#, c-format
+msgid "%s%s: failed to add word to personal dictionary"
+msgstr "%s%s: impossible d'ajouter le mot dans le dictionnaire personnel"
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr "%s%s: pas de dictionnaire sur ce tampon pour ajouter le mot"
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+"%s%s: plusieurs dictionnaires sont définis pour ce tampon, merci de préciser "
+"le dictionnaire"
+
+msgid "aspell plugin configuration"
+msgstr "configuration de l'extension aspell"
+
+msgid "[list | enable lang | disable | addword [lang] word]"
+msgstr "[list | enable lang | disable | addword [lang] word]"
+
+msgid ""
+"   list: show installed dictionnaries\n"
+" enable: enable aspell on current buffer\n"
+"disable: disable aspell on current buffer\n"
+"addword: add a word in your personnal aspell dictionary\n"
+"\n"
+"Input line beginning with a '/' is not checked, except for some commands."
+msgstr ""
+"   list: affichier les dictionnaires installés\n"
+" enable: active aspell sur le tampon courant\n"
+"disable: désactive aspell sur le tampon courant\n"
+"addword: ajoute un mot dans le dictionnaire personnel aspell\n"
+"\n"
+"Les lignes d'entrée commençant par '/' ne sont pas vérifiées, excepté pour "
+"certaines commandes."
+
+msgid "comma separated list of dictionaries to use on this buffer"
+msgstr ""
+"liste de dictionnaires (séparés par des virgules) à utiliser sur ce tampon"
+
+#, c-format
+msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
+msgstr "%s%s: erreur en création du dictionnaire aspell \"%s\" => \"%s\""
+
+msgid "color used for mispelled words"
+msgstr "couleur utilisée pour les mots mal orthographiés"
+
+msgid ""
+"comma separated list of commands for which spell checking is enabled (spell "
+"checking is disabled for all other commands)"
+msgstr ""
+"liste de commandes (séparées par des virgules) pour lesquelles la "
+"vérification orthographique est activée (la vérification est désactivée pour "
+"toutes les autres commandes)"
+
+msgid ""
+"default dictionary (or comma separated list of dictionaries) to use when "
+"buffer has no dictionary defined (leave blank to disable aspell on buffers "
+"for which you didn't explicitely enabled it)"
+msgstr ""
+"dictionnaire par défaut (ou liste de dictionnaires séparés par une virgule) "
+"à utiliser quand le tampon courant n'a pas de dictionnaire défini (laissez "
+"blanc pour désactiver aspell sur les tampons pour lesquels vous ne l'avez "
+"pas explicitement activé)"
+
+msgid ""
+"minimum length for a word to be spell checked (use 0 to check all words)"
+msgstr ""
+"longueur minimum d'un mot pour que l'otrhographe soit vérifiée (utilisez 0 "
+"pour vérifier tous les mots)"
+
+msgid ""
+"real-time spell checking of words (slower, disabled by default: words are "
+"checked only if there's delimiter after)"
+msgstr ""
+"vérification orthographique des mots en temps réel (plus lent, désactivé par "
+"défaut: les mots sont vérifiés seulement s'il y a un délimiteur après)"
+
+#, c-format
+msgid "%s: warning: dictionary \"%s\" is not available on your system"
+msgstr ""
+"%s: attention: le dictionnaire \\\"%s\\\" n'est pas disponible sur votre "
+"système"
+
+#, c-format
+msgid "%s%s: not enough memory to create new speller"
+msgstr "%s%s: pas assez de mémoire pour créer un nouveau speller"
+
+#, c-format
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
 msgstr "%s%s: erreur en création du charset \"%s\" => \"%s\""
 
@@ -2031,12 +2139,8 @@ msgid "global encoding charset"
 msgstr "charset d'encodage global"
 
 #, c-format
-msgid "Charset: %s, %s => %s"
-msgstr "Charset %s, %s => %s"
-
-#, c-format
-msgid "Charset: %s, %s: removed"
-msgstr "Charset: %s, %s: supprimé"
+msgid "%s: %s, %s: removed"
+msgstr "%s: %s, %s: supprimé"
 
 #, c-format
 msgid "%s%s: missing parameters"
@@ -2113,8 +2217,8 @@ msgid "Available infolists:"
 msgstr "Infolists disponibles:"
 
 #, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: '%s'"
-msgstr "demo_signal: signal: %s, type_data: %s, signal_data: '%s'"
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: \"%s\""
+msgstr "demo_signal: signal: %s, type_data: %s, signal_data: \"%s\""
 
 #, c-format
 msgid "demo_signal: signal: %s, type_data: %s, signal_data: %d"
@@ -2377,8 +2481,8 @@ msgid "No server"
 msgstr "Pas de serveur"
 
 #, c-format
-msgid "Servers with '%s':"
-msgstr "Serveurs avec '%s':"
+msgid "Servers with \"%s\":"
+msgstr "Serveurs avec \"%s\":"
 
 #, c-format
 msgid "No server found with \"%s\""
@@ -4741,9 +4845,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "  Paste %d lines ? [ctrl-Y] Yes  [ctrl-N] No"
-#~ msgstr "  Coller %d lignes ? [ctrl-Y] Oui  [ctrl-N] Non"
-
-#~ msgid "-MORE-"
-#~ msgstr "-PLUS-"

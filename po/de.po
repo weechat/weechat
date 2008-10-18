@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-12 11:42+0200\n"
+"POT-Creation-Date: 2008-10-18 15:34+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -402,7 +402,7 @@ msgid "%sError: unable to bind key \"%s\""
 msgstr "%s kann die Taste \"%s\" nicht zuordnen\n"
 
 #, c-format
-msgid "leaf: id: %d, parent: %d, plugin: '%s', buffer: '%s'"
+msgid "leaf: id: %d, parent: %d, plugin: \"%s\", buffer: \"%s\""
 msgstr ""
 
 #, c-format
@@ -1667,11 +1667,12 @@ msgstr "Konfiguration wird gespeichert\n"
 msgid "  . type: boolean\n"
 msgstr "  . Typ: Boolean\n"
 
-msgid "  . values: 'on' or 'off'\n"
+#, fuzzy
+msgid "  . values: \"on\" or \"off\"\n"
 msgstr "  . Werte ('on' oder 'off')\n"
 
-#, c-format
-msgid "  . default value: '%s'\n"
+#, fuzzy, c-format
+msgid "  . default value: \"%s\"\n"
 msgstr "  . Standardwert: '%s'\n"
 
 msgid "  . type: string\n"
@@ -1742,7 +1743,7 @@ msgstr ""
 "Verzeichnis zu starten.\n"
 
 #, fuzzy, c-format
-msgid "%sError upgrading WeeChat with file '%s':"
+msgid "%sError upgrading WeeChat with file \"%s\":"
 msgstr "Aktualisiere WeeChat...\n"
 
 #, fuzzy, c-format
@@ -2030,6 +2031,91 @@ msgid "%s: debug disabled"
 msgstr ""
 
 #, fuzzy, c-format
+msgid "%s: %s: removed"
+msgstr "Alias \"%s\" entfernt\n"
+
+#. TRANSLATORS: %s is "aspell"
+#, fuzzy, c-format
+msgid "%s dictionnaries list:"
+msgstr "Ende der /who-Liste"
+
+#, c-format
+msgid "%s: error: dictionary \"%s\" is not available on your system"
+msgstr ""
+
+#, c-format
+msgid "%s: word \"%s\" added to personal dictionary"
+msgstr ""
+
+#, c-format
+msgid "%s%s: failed to add word to personal dictionary"
+msgstr ""
+
+#, c-format
+msgid "%s%s: no dictionary on this buffer for adding word"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: many dictionaries are defined for this buffer, please specify "
+"dictionary"
+msgstr ""
+
+#, fuzzy
+msgid "aspell plugin configuration"
+msgstr "Konfiguration wird gespeichert\n"
+
+msgid "[list | enable lang | disable | addword [lang] word]"
+msgstr ""
+
+msgid ""
+"   list: show installed dictionnaries\n"
+" enable: enable aspell on current buffer\n"
+"disable: disable aspell on current buffer\n"
+"addword: add a word in your personnal aspell dictionary\n"
+"\n"
+"Input line beginning with a '/' is not checked, except for some commands."
+msgstr ""
+
+msgid "comma separated list of dictionaries to use on this buffer"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: error creating aspell dictionary \"%s\" => \"%s\""
+msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
+
+msgid "color used for mispelled words"
+msgstr ""
+
+msgid ""
+"comma separated list of commands for which spell checking is enabled (spell "
+"checking is disabled for all other commands)"
+msgstr ""
+
+msgid ""
+"default dictionary (or comma separated list of dictionaries) to use when "
+"buffer has no dictionary defined (leave blank to disable aspell on buffers "
+"for which you didn't explicitely enabled it)"
+msgstr ""
+
+msgid ""
+"minimum length for a word to be spell checked (use 0 to check all words)"
+msgstr ""
+
+msgid ""
+"real-time spell checking of words (slower, disabled by default: words are "
+"checked only if there's delimiter after)"
+msgstr ""
+
+#, c-format
+msgid "%s: warning: dictionary \"%s\" is not available on your system"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s%s: not enough memory to create new speller"
+msgstr "%s nicht genug Speicher für neuen DCC\n"
+
+#, fuzzy, c-format
 msgid "%s%s: error creating charset \"%s\" => \"%s\""
 msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
 
@@ -2040,11 +2126,7 @@ msgid "global encoding charset"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Charset: %s, %s => %s"
-msgstr "Alias \"%s\" => \"%s\" angelegt\n"
-
-#, fuzzy, c-format
-msgid "Charset: %s, %s: removed"
+msgid "%s: %s, %s: removed"
 msgstr "Alias \"%s\" entfernt\n"
 
 #, fuzzy, c-format
@@ -2118,7 +2200,7 @@ msgid "Available infolists:"
 msgstr ""
 
 #, c-format
-msgid "demo_signal: signal: %s, type_data: %s, signal_data: '%s'"
+msgid "demo_signal: signal: %s, type_data: %s, signal_data: \"%s\""
 msgstr ""
 
 #, c-format
@@ -2382,7 +2464,7 @@ msgid "No server"
 msgstr "Kein Server.\n"
 
 #, fuzzy, c-format
-msgid "Servers with '%s':"
+msgid "Servers with \"%s\":"
 msgstr "Server '%s' nicht gefunden.\n"
 
 #, fuzzy, c-format
@@ -4715,6 +4797,18 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid "%s: creating new speller for lang \"%s\""
+#~ msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
+
+#, fuzzy
+#~ msgid "%s: removing speller for lang \"%s\""
+#~ msgstr "%s nicht genügend Speicher für Infobar-Nachricht\n"
+
+#, fuzzy
+#~ msgid "Charset: %s, %s => %s"
+#~ msgstr "Alias \"%s\" => \"%s\" angelegt\n"
 
 #~ msgid "-MORE-"
 #~ msgstr "-MEHR-"

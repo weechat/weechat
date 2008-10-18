@@ -61,9 +61,9 @@ gui_layout_buffer_remove (struct t_gui_layout_buffer *layout_buffer)
     
     /* remove layout from list */
     if (layout_buffer->prev_layout)
-        layout_buffer->prev_layout->next_layout = layout_buffer->next_layout;
+        (layout_buffer->prev_layout)->next_layout = layout_buffer->next_layout;
     if (layout_buffer->next_layout)
-        layout_buffer->next_layout->prev_layout = layout_buffer->prev_layout;
+        (layout_buffer->next_layout)->prev_layout = layout_buffer->prev_layout;
     if (gui_layout_buffers == layout_buffer)
         gui_layout_buffers = layout_buffer->next_layout;
     if (last_gui_layout_buffer == layout_buffer)

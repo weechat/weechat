@@ -680,9 +680,9 @@ gui_chat_line_free (struct t_gui_buffer *buffer, struct t_gui_line *line)
     
     /* remove line from lines list */
     if (line->prev_line)
-        line->prev_line->next_line = line->next_line;
+        (line->prev_line)->next_line = line->next_line;
     if (line->next_line)
-        line->next_line->prev_line = line->prev_line;
+        (line->next_line)->prev_line = line->prev_line;
     if (buffer->lines == line)
         buffer->lines = line->next_line;
     if (buffer->last_line == line)

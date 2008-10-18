@@ -230,9 +230,9 @@ irc_ignore_free (struct t_irc_ignore *ignore)
     
     /* remove filter from filters list */
     if (ignore->prev_ignore)
-        ignore->prev_ignore->next_ignore = ignore->next_ignore;
+        (ignore->prev_ignore)->next_ignore = ignore->next_ignore;
     if (ignore->next_ignore)
-        ignore->next_ignore->prev_ignore = ignore->prev_ignore;
+        (ignore->next_ignore)->prev_ignore = ignore->prev_ignore;
     if (irc_ignore_list == ignore)
         irc_ignore_list = ignore->next_ignore;
     if (last_irc_ignore == ignore)

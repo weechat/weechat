@@ -354,7 +354,7 @@ charset_decode_cb (void *data, const char *modifier, const char *modifier_data,
     {
         weechat_printf (NULL,
                         "charset: debug: using 'decode' charset: %s "
-                        "(modifier='%s', modifier_data='%s', string='%s')",
+                        "(modifier=\"%s\", modifier_data=\"%s\", string=\"%s\")",
                         charset, modifier, modifier_data, string);
     }
     if (charset && charset[0])
@@ -383,7 +383,7 @@ charset_encode_cb (void *data, const char *modifier, const char *modifier_data,
     {
         weechat_printf (NULL,
                         "charset: debug: using 'encode' charset: %s "
-                        "(modifier='%s', modifier_data='%s', string='%s')",
+                        "(modifier=\"%s\", modifier_data=\"%s\", string=\"%s\")",
                         charset, modifier, modifier_data, string);
     }
     if (charset && charset[0])
@@ -407,11 +407,11 @@ charset_set (struct t_config_section *section, const char *type,
                                       value) > 0)
     {
         if (value && value[0])
-            weechat_printf (NULL, _("Charset: %s, %s => %s"),
-                            type, name, value);
+            weechat_printf (NULL, "%s: %s, %s => %s",
+                            CHARSET_PLUGIN_NAME, type, name, value);
         else
-            weechat_printf (NULL, _("Charset: %s, %s: removed"),
-                            type, name);
+            weechat_printf (NULL, _("%s: %s, %s: removed"),
+                            CHARSET_PLUGIN_NAME, type, name);
     }
 }
 

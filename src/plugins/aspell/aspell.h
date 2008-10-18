@@ -16,180 +16,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* weechat-aspell.h: Aspell plugin support for WeeChat */
 
 #ifndef __WEECHAT_ASPELL_H
 #define __WEECHAT_ASPELL_H 1
 
 #include <aspell.h>
 
-#define _PLUGIN_OPTION_WORD_SIZE 2
-#define _PLUGIN_OPTION_CHECK_SYNC 0
-#define _PLUGIN_OPTION_COLOR "red"
+#define weechat_plugin weechat_aspell_plugin
+#define ASPELL_PLUGIN_NAME "aspell"
 
-typedef struct aspell_speller_t
-{
-    AspellSpeller *speller;
-    char *lang;
-    int refs;
-
-    struct aspell_speller_t *prev_speller;
-    struct aspell_speller_t *next_speller;
-} aspell_speller_t;
-
-typedef struct aspell_config_t
-{
-    char *server;
-    char *channel;
-    aspell_speller_t *speller;
-    
-    struct aspell_config_t *prev_config;
-    struct aspell_config_t *next_config;
-} aspell_config_t;
-
-typedef struct aspell_options_t
-{
-    int word_size;
-    int check_sync;
-    int color;
-    char *color_name;
-} aspell_options_t;
-
-typedef struct iso_langs_t
+struct t_aspell_code
 {
     char *code;
     char *name;
-} iso_langs_t;
-
-typedef struct iso_countries_t
-{
-    char *code;
-    char *name;
-} iso_countries_t;
-
-typedef struct cmds_keep_t
-{
-    char *cmd;
-    int len;
-} cmds_keep_t;
-
-/* aspell supported langs 2006-05-27 */
-iso_langs_t langs_avail[] = 
-{
-    { "af", "Afrikaans"},
-    { "am", "Amharic"},
-    { "az", "Azerbaijani"},
-    { "be", "Belarusian"},
-    { "bg", "Bulgarian"},
-    { "bn", "Bengali"},
-    { "br", "Breton"},
-    { "ca", "Catalan"},
-    { "cs", "Czech"},
-    { "csb", "Kashubian"},
-    { "cy", "Welsh"},
-    { "da", "Danish"},
-    { "de", "German"},
-    { "el", "Greek Modern"},
-    { "en", "English"},
-    { "eo", "Esperanto"},
-    { "es", "Spanish"},
-    { "et", "Estonian"},
-    { "fa", "Persian"},
-    { "fi", "Finnish"},
-    { "fo", "Faroese"},
-    { "fr", "French"},
-    { "ga", "Irish"},
-    { "gd", "Gaelic"},
-    { "gl", "Galician"},
-    { "gu", "Gujarati"},
-    { "gv", "Manx"},
-    { "he", "Hebrew"},
-    { "hi", "Hiligaynon"},
-    { "hr", "Croatian"},
-    { "hsb", "Upper Sorbian"},
-    { "hu", "Hungarian"},
-    { "ia", "Interlingua"},
-    { "id", "Indonesian"},
-    { "is", "Icelandic"},
-    { "it", "Italian"},
-    { "ku", "Kurdish"},
-    { "la", "Latin"},
-    { "lt", "Lithuanian"},
-    { "lv", "Latvian"},
-    { "mg", "Malagasy"},
-    { "mi", "Maori"},
-    { "mk", "Macedonian"},
-    { "mn", "Mongolian"},
-    { "mr", "Marathi"},
-    { "ms", "Malay"},
-    { "mt", "Maltese"},
-    { "nb", "Norwegian Bokmal"},
-    { "nds", "Saxon Low"},
-    { "nl", "Flemish"},
-    { "nn", "Norwegian Nynorsk"},
-    { "no", "Norwegian"},
-    { "ny", "Nyanja"},
-    { "or", "Oriya"},
-    { "pa", "Panjabi"},
-    { "pl", "Polish"},
-    { "pt", "Portuguese"},
-    { "qu", "Quechua"},
-    { "ro", "Romanian"},
-    { "ru", "Russian"},
-    { "rw", "Kinyarwanda"},
-    { "sc", "Sardinian"},
-    { "sk", "Slovak"},
-    { "sl", "Slovenian"},
-    { "sr", "Serbian"},
-    { "sv", "Swedish"},
-    { "sw", "Swahili"},
-    { "ta", "Tamil"},
-    { "te", "Telugu"},
-    { "tet", "Tetum"},
-    { "tl", "Tagalog"},
-    { "tn", "Tswana"},
-    { "tr", "Turkish"},
-    { "uk", "Ukrainian"},
-    { "uz", "Uzbek"},
-    { "vi", "Vietnamese"},
-    { "wa", "Walloon"},
-    { "yi", "Yiddish"},
-    { "zu", "Zulu"},
-    { NULL, NULL}
 };
 
-iso_countries_t countries_avail[] = 
-{
-    { "AT", "Austria" },
-    { "BR", "Brazil" },
-    { "CA", "Canada" },
-    { "CH", "Switzerland" },
-    { "DE", "Germany" },
-    { "FR", "France" },
-    { "GB", "Great Britain" },
-    { "PT", "Portugal" },
-    { "SK", "Slovakia" },
-    { "US", "United States of America" },
-    { NULL, NULL}
-};
+extern int aspell_debug;
 
-/* internal or irc commands to be use with spellchecking */
-cmds_keep_t cmd_tokeep[] = 
-{
-    { "/builtin ",  9 },
-    { "/ame " ,     5 },
-    { "/amsg " ,    6 },
-    { "/away " ,    6 },
-    { "/cycle " ,   7 },
-    { "/kick " ,    6 },
-    { "/kickban " , 9 },
-    { "/me " ,      4 },
-    { "/notice " ,  8 },
-    { "/part " ,    6 },
-    { "/query " ,   7 },
-    { "/quit " ,    6 },
-    { "/topic " ,   7 },
-    { NULL, 0}
-};
+extern struct t_weechat_plugin *weechat_aspell_plugin;
+
+extern struct t_aspell_code langs_avail[];
+extern struct t_aspell_code countries_avail[];
+
+extern void weechat_aspell_create_spellers (struct t_gui_buffer *buffer);
 
 #endif /* aspell.h */

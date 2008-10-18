@@ -156,9 +156,9 @@ gui_completion_partial_list_free (struct t_gui_completion_partial *item)
 {
     /* remove partial completion item from list */
     if (item->prev_item)
-        item->prev_item->next_item = item->next_item;
+        (item->prev_item)->next_item = item->next_item;
     if (item->next_item)
-        item->next_item->prev_item = item->prev_item;
+        (item->next_item)->prev_item = item->prev_item;
     if (gui_completion_partial_list == item)
         gui_completion_partial_list = item->next_item;
     if (last_gui_completion_partial == item)

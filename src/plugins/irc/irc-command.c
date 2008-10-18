@@ -2795,7 +2795,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                     {
                         weechat_printf (NULL, "");
                         weechat_printf (NULL,
-                                        _("Servers with '%s':"),
+                                        _("Servers with \"%s\":"),
                                         server_name);
                     }
                     one_server_found = 1;

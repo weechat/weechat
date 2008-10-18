@@ -87,7 +87,7 @@ demo_printf_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (argc > 1)
         weechat_printf (buffer,
-                        "demo_printf: '%s'", argv_eol[1]);
+                        "demo_printf: \"%s\"", argv_eol[1]);
     else
     {
         weechat_printf (buffer,
@@ -121,7 +121,7 @@ demo_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
     
     weechat_printf (buffer,
                     "buffer_input_data_cb: buffer = %x (%s), "
-                    "input_data = '%s'",
+                    "input_data = \"%s\"",
                     buffer,
                     weechat_buffer_get_string (buffer, "name"),
                     input_data);
@@ -372,7 +372,7 @@ demo_signal_cb (void *data, const char *signal, const char *type_data,
         {
             weechat_printf (NULL,
                             _("demo_signal: signal: %s, type_data: %s, "
-                              "signal_data: '%s'"),
+                              "signal_data: \"%s\""),
                             signal, type_data, (char *)signal_data);
         }
         else if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_INT) == 0)

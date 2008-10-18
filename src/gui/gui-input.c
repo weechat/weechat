@@ -114,26 +114,7 @@ gui_input_optimize_size (struct t_gui_buffer *buffer)
         {
             buffer->input_buffer_alloc = optimal_size;
             buffer->input_buffer = realloc (buffer->input_buffer, optimal_size);
-            buffer->input_buffer_color_mask = realloc (buffer->input_buffer_color_mask,
-                                                       optimal_size);
         }
-    }
-}
-
-/*
- * gui_input_init_color_mask: initialize color mask for input buffer
- */
-
-void
-gui_input_init_color_mask (struct t_gui_buffer *buffer)
-{
-    int i;
-    
-    if (buffer->input)
-    {
-        for (i = 0; i < buffer->input_buffer_size; i++)
-            buffer->input_buffer_color_mask[i] = ' ';
-        buffer->input_buffer_color_mask[buffer->input_buffer_size] = '\0';
     }
 }
 
@@ -151,8 +132,6 @@ gui_input_move (struct t_gui_buffer *buffer, char *target, const char *source,
     pos_source = source - buffer->input_buffer;
     
     memmove (target, source, size);
-    memmove (buffer->input_buffer_color_mask + pos_target,
-             buffer->input_buffer_color_mask + pos_source, size);
 }
 
 /*
@@ -166,7 +145,7 @@ int
 gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
                          int pos)
 {
-    int i, pos_start, size, length;
+    int pos_start, size, length;
     char *ptr_start;
     char *buffer_before_insert, *string2;
     
@@ -187,24 +166,16 @@ gui_input_insert_string (struct t_gui_buffer *buffer, const char *string,
         buffer->input_buffer_length += length;
         gui_input_optimize_size (buffer);
         buffer->input_buffer[buffer->input_buffer_size] = '\0';
-        buffer->input_buffer_color_mask[buffer->input_buffer_size] = '\0';
         
         /* move end of string to the right */
         ptr_start = utf8_add_offset (buffer->input_buffer, pos);
         pos_start = ptr_start - buffer->input_buffer;
         memmove (ptr_start + size, ptr_start, strlen (ptr_start));
-        memmove (buffer->input_buffer_color_mask + pos_start + size,
-                 buffer->input_buffer_color_mask + pos_start,
-                 strlen (buffer->input_buffer_color_mask + pos_start));
         
         /* insert new string */
         ptr_start = utf8_add_offset (buffer->input_buffer, pos);
         pos_start = ptr_start - buffer->input_buffer;
         strncpy (ptr_start, string, size);
-        for (i = 0; i < size; i++)
-        {
-            buffer->input_buffer_color_mask[pos_start + i] = ' ';
-        }
         
         buffer->input_buffer_pos += length;
         
@@ -360,7 +331,6 @@ gui_input_return ()
         else if (gui_current_window->buffer->input_buffer_size > 0)
         {
             gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
-            gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
             command = strdup (gui_current_window->buffer->input_buffer);
             if (!command)
                 return;
@@ -368,7 +338,6 @@ gui_input_return ()
                                     gui_current_window->buffer->input_buffer);
             gui_history_global_add (gui_current_window->buffer->input_buffer);
             gui_current_window->buffer->input_buffer[0] = '\0';
-            gui_current_window->buffer->input_buffer_color_mask[0] = '\0';
             gui_current_window->buffer->input_buffer_size = 0;
             gui_current_window->buffer->input_buffer_length = 0;
             gui_current_window->buffer->input_buffer_pos = 0;
@@ -407,15 +376,12 @@ gui_input_complete (struct t_gui_buffer *buffer)
                 buffer->completion->diff_length;
             gui_input_optimize_size (buffer);
             buffer->input_buffer[buffer->input_buffer_size] = '\0';
-            buffer->input_buffer_color_mask[buffer->input_buffer_size] = '\0';
             for (i = buffer->input_buffer_size - 1;
                  i >=  buffer->completion->position_replace +
                      (int)strlen (buffer->completion->word_found); i--)
             {
                 buffer->input_buffer[i] =
                     buffer->input_buffer[i - buffer->completion->diff_size];
-                buffer->input_buffer_color_mask[i] =
-                    buffer->input_buffer_color_mask[i - buffer->completion->diff_size];
             }
         }
         else
@@ -426,23 +392,16 @@ gui_input_complete (struct t_gui_buffer *buffer)
             {
                 buffer->input_buffer[i] =
                     buffer->input_buffer[i - buffer->completion->diff_size];
-                buffer->input_buffer_color_mask[i] =
-                    buffer->input_buffer_color_mask[i - buffer->completion->diff_size];
             }
             buffer->input_buffer_size += buffer->completion->diff_size;
             buffer->input_buffer_length += buffer->completion->diff_length;
             gui_input_optimize_size (buffer);
             buffer->input_buffer[buffer->input_buffer_size] = '\0';
-            buffer->input_buffer_color_mask[buffer->input_buffer_size] = '\0';
         }
             
         strncpy (buffer->input_buffer + buffer->completion->position_replace,
                  buffer->completion->word_found,
                  strlen (buffer->completion->word_found));
-        for (i = 0; i < (int)strlen (buffer->completion->word_found); i++)
-        {
-            buffer->input_buffer_color_mask[buffer->completion->position_replace + i] = ' ';
-        }
         buffer->input_buffer_pos =
             utf8_pos (buffer->input_buffer,
                       buffer->completion->position_replace) +
@@ -590,7 +549,6 @@ gui_input_delete_previous_char ()
             gui_current_window->buffer->input_buffer_length--;
             gui_current_window->buffer->input_buffer_pos--;
             gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
-            gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
             gui_input_optimize_size (gui_current_window->buffer);
             gui_completion_stop (gui_current_window->buffer->completion, 1);
             gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
@@ -623,7 +581,6 @@ gui_input_delete_next_char ()
             gui_current_window->buffer->input_buffer_size -= char_size;
             gui_current_window->buffer->input_buffer_length--;
             gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
-            gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
             gui_input_optimize_size (gui_current_window->buffer);
             gui_completion_stop (gui_current_window->buffer->completion, 1);
             gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
@@ -683,7 +640,6 @@ gui_input_delete_previous_word ()
             gui_current_window->buffer->input_buffer_size -= size_deleted;
             gui_current_window->buffer->input_buffer_length -= length_deleted;
             gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
-            gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
             gui_current_window->buffer->input_buffer_pos -= length_deleted;
             gui_input_optimize_size (gui_current_window->buffer);
             gui_completion_stop (gui_current_window->buffer->completion, 1);
@@ -725,7 +681,6 @@ gui_input_delete_next_word ()
         gui_current_window->buffer->input_buffer_size -= size_deleted;
         gui_current_window->buffer->input_buffer_length -= length_deleted;
         gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
-        gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
         gui_input_optimize_size (gui_current_window->buffer);
         gui_completion_stop (gui_current_window->buffer->completion, 1);
         gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
@@ -762,7 +717,6 @@ gui_input_delete_beginning_of_line ()
             gui_current_window->buffer->input_buffer_size -= size_deleted;
             gui_current_window->buffer->input_buffer_length -= length_deleted;
             gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
-            gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
             gui_current_window->buffer->input_buffer_pos = 0;
             gui_input_optimize_size (gui_current_window->buffer);
             gui_completion_stop (gui_current_window->buffer->completion, 1);
@@ -795,7 +749,6 @@ gui_input_delete_end_of_line (const char *args)
         length_deleted = utf8_strlen (start);
         gui_input_clipboard_copy (start, size_deleted);
         start[0] = '\0';
-        gui_current_window->buffer->input_buffer_color_mask[pos_start] = '\0';
         gui_current_window->buffer->input_buffer_size = strlen (gui_current_window->buffer->input_buffer);
         gui_current_window->buffer->input_buffer_length = utf8_strlen (gui_current_window->buffer->input_buffer);
         gui_input_optimize_size (gui_current_window->buffer);
@@ -815,7 +768,6 @@ gui_input_delete_line ()
     if (gui_current_window->buffer->input)
     {
         gui_current_window->buffer->input_buffer[0] = '\0';
-        gui_current_window->buffer->input_buffer_color_mask[0] = '\0';
         gui_current_window->buffer->input_buffer_size = 0;
         gui_current_window->buffer->input_buffer_length = 0;
         gui_current_window->buffer->input_buffer_pos = 0;
@@ -858,12 +810,6 @@ gui_input_transpose_chars ()
             memcpy (saved_char, prev_char, size_prev_char);
             memcpy (prev_char, start, size_start_char);
             memcpy (prev_char + size_start_char, saved_char, size_prev_char);
-            
-            memcpy (saved_char, gui_current_window->buffer->input_buffer_color_mask + pos_prev_char, size_prev_char);
-            memcpy (gui_current_window->buffer->input_buffer_color_mask + pos_prev_char,
-                    gui_current_window->buffer->input_buffer_color_mask + pos_start, size_start_char);
-            memcpy (gui_current_window->buffer->input_buffer_color_mask + pos_prev_char + size_start_char,
-                    saved_char, size_prev_char);
             
             gui_current_window->buffer->input_buffer_pos++;
             
@@ -1072,7 +1018,6 @@ gui_input_history_previous ()
                     if (gui_current_window->buffer->input_buffer_size > 0)
                     {
                         gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
-                        gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
                         gui_history_buffer_add (gui_current_window->buffer, gui_current_window->buffer->input_buffer);
                         gui_history_global_add (gui_current_window->buffer->input_buffer);
                     }
@@ -1082,7 +1027,6 @@ gui_input_history_previous ()
                     if (gui_current_window->buffer->input_buffer_size > 0)
                     {
                         gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
-                        gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
                         if (gui_current_window->buffer->ptr_history->prev_history->text)
                             free(gui_current_window->buffer->ptr_history->prev_history->text);
                         gui_current_window->buffer->ptr_history->prev_history->text = strdup (gui_current_window->buffer->input_buffer);
@@ -1098,7 +1042,6 @@ gui_input_history_previous ()
                 gui_current_window->buffer->input_buffer_1st_display = 0;
                 strcpy (gui_current_window->buffer->input_buffer,
                         gui_current_window->buffer->ptr_history->text);
-                gui_input_init_color_mask (gui_current_window->buffer);
                 gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             }
             gui_input_text_changed_signal ();
@@ -1137,7 +1080,6 @@ gui_input_history_next ()
                 else
                 {
                     gui_current_window->buffer->input_buffer[0] = '\0';
-                    gui_current_window->buffer->input_buffer_color_mask[0] = '\0';
                     gui_current_window->buffer->input_buffer_size = 0;
                     gui_current_window->buffer->input_buffer_length = 0;
                 }
@@ -1149,7 +1091,6 @@ gui_input_history_next ()
                 {
                     strcpy (gui_current_window->buffer->input_buffer,
                             gui_current_window->buffer->ptr_history->text);
-                    gui_input_init_color_mask (gui_current_window->buffer);
                 }
                 gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             }
@@ -1159,11 +1100,9 @@ gui_input_history_next ()
                 if (gui_current_window->buffer->input_buffer_size > 0)
                 {
                     gui_current_window->buffer->input_buffer[gui_current_window->buffer->input_buffer_size] = '\0';
-                    gui_current_window->buffer->input_buffer_color_mask[gui_current_window->buffer->input_buffer_size] = '\0';
                     gui_history_buffer_add (gui_current_window->buffer, gui_current_window->buffer->input_buffer);
                     gui_history_global_add (gui_current_window->buffer->input_buffer);
                     gui_current_window->buffer->input_buffer[0] = '\0';
-                    gui_current_window->buffer->input_buffer_color_mask[0] = '\0';
                     gui_current_window->buffer->input_buffer_size = 0;
                     gui_current_window->buffer->input_buffer_length = 0;
                     gui_current_window->buffer->input_buffer_pos = 0;
@@ -1214,7 +1153,6 @@ gui_input_history_global_previous ()
             gui_current_window->buffer->input_buffer_1st_display = 0;
             strcpy (gui_current_window->buffer->input_buffer,
                     history_global_ptr->text);
-            gui_input_init_color_mask (gui_current_window->buffer);
             gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_changed_signal ();
         }
@@ -1255,7 +1193,6 @@ gui_input_history_global_next ()
             {
                 strcpy (gui_current_window->buffer->input_buffer,
                         history_global_ptr->text);
-                gui_input_init_color_mask (gui_current_window->buffer);
             }
             gui_buffer_ask_input_refresh (gui_current_window->buffer, 1);
             gui_input_text_changed_signal ();

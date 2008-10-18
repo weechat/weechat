@@ -16,7 +16,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* aspell.c: Aspell plugin support for WeeChat */
+/* aspell.c: aspell plugin for WeeChat */
 
 
 #include <stdio.h>
@@ -27,1432 +27,1008 @@
 
 #include "../weechat-plugin.h"
 #include "aspell.h"
+#include "aspell-config.h"
+#include "aspell-speller.h"
 
 
-WEECHAT_PLUGIN_NAME("aspell");
+WEECHAT_PLUGIN_NAME(ASPELL_PLUGIN_NAME);
 WEECHAT_PLUGIN_DESCRIPTION("Aspell plugin for WeeChat");
 WEECHAT_PLUGIN_AUTHOR("FlashCode <flashcode@flashtux.org>");
 WEECHAT_PLUGIN_VERSION(WEECHAT_VERSION);
 WEECHAT_PLUGIN_WEECHAT_VERSION(WEECHAT_VERSION);
-WEECHAT_LICENSE("GPL");
+WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_aspell_plugin = NULL;
-#define weechat_plugin weechat_aspell_plugin
 
-aspell_speller_t *aspell_plugin_speller = NULL;
-aspell_config_t *aspell_plugin_config = NULL;
-aspell_options_t aspell_plugin_options;
+int aspell_debug = 0;
+
+char *aspell_last_modifier_string = NULL; /* last str. received by modifier */
+char *aspell_last_modifier_result = NULL; /* last str. built by modifier    */
+
+/* aspell supported langs (updated on of 2008-10-17) */
+struct t_aspell_code langs_avail[] =
+{
+    { "af",     "Afrikaans" },
+    { "am",     "Amharic" },
+    { "ar",     "Arabic" },
+    { "az",     "Azerbaijani" },
+    { "be",     "Belarusian" },
+    { "bg",     "Bulgarian" },
+    { "bn",     "Bengali" },
+    { "br",     "Breton" },
+    { "ca",     "Catalan" },
+    { "cs",     "Czech" },
+    { "csb",    "Kashubian" },
+    { "cy",     "Welsh" },
+    { "da",     "Danish" },
+    { "de",     "German" },
+    { "de-alt", "German - Old Spelling" },
+    { "el",     "Greek" },
+    { "en",     "English" },
+    { "eo",     "Esperanto" },
+    { "es",     "Spanish" },
+    { "et",     "Estonian" },
+    { "fa",     "Persian" },
+    { "fi",     "Finnish" },
+    { "fo",     "Faroese" },
+    { "fr",     "French" },
+    { "fy",     "Frisian" },
+    { "ga",     "Irish" },
+    { "gd",     "Scottish Gaelic" },
+    { "gl",     "Galician" },
+    { "gu",     "Gujarati" },
+    { "gv",     "Manx Gaelic" },
+    { "he",     "Hebrew" },
+    { "hi",     "Hindi" },
+    { "hil",    "Hiligaynon" },
+    { "hr",     "Croatian" },
+    { "hsb",    "Upper Sorbian" },
+    { "hu",     "Hungarian" },
+    { "hy",     "Armenian" },
+    { "ia",     "Interlingua" },
+    { "id",     "Indonesian" },
+    { "is",     "Icelandic" },
+    { "it",     "Italian" },
+    { "ku",     "Kurdi" },
+    { "la",     "Latin" },
+    { "lt",     "Lithuanian" },
+    { "lv",     "Latvian" },
+    { "mg",     "Malagasy" },
+    { "mi",     "Maori" },
+    { "mk",     "Macedonian" },
+    { "ml",     "Malayalam" },
+    { "mn",     "Mongolian" },
+    { "mr",     "Marathi" },
+    { "ms",     "Malay" },
+    { "mt",     "Maltese" },
+    { "nb",     "Norwegian Bokmal" },
+    { "nds",    "Low Saxon" },
+    { "nl",     "Dutch" },
+    { "nn",     "Norwegian Nynorsk" },
+    { "ny",     "Chichewa" },
+    { "or",     "Oriya" },
+    { "pa",     "Punjabi" },
+    { "pl",     "Polish" },
+    { "pt_BR",  "Brazilian Portuguese" },
+    { "pt_PT",  "Portuguese" },
+    { "qu",     "Quechua" },
+    { "ro",     "Romanian" },
+    { "ru",     "Russian" },
+    { "rw",     "Kinyarwanda" },
+    { "sc",     "Sardinian" },
+    { "sk",     "Slovak" },
+    { "sl",     "Slovenian" },
+    { "sr",     "Serbian" },
+    { "sv",     "Swedish" },
+    { "sw",     "Swahili" },
+    { "ta",     "Tamil" },
+    { "te",     "Telugu" },
+    { "tet",    "Tetum" },
+    { "tk",     "Turkmen" },
+    { "tl",     "Tagalog" },
+    { "tn",     "Setswana" },
+    { "tr",     "Turkish" },
+    { "uk",     "Ukrainian" },
+    { "uz",     "Uzbek" },
+    { "vi",     "Vietnamese" },
+    { "wa",     "Walloon" },
+    { "yi",     "Yiddish" },
+    { "zu",     "Zulu" },
+    { NULL,     NULL}
+};
+
+struct t_aspell_code countries_avail[] = 
+{
+    { "AT", "Austria" },
+    { "BR", "Brazil" },
+    { "CA", "Canada" },
+    { "CH", "Switzerland" },
+    { "DE", "Germany" },
+    { "FR", "France" },
+    { "GB", "Great Britain" },
+    { "PT", "Portugal" },
+    { "SK", "Slovakia" },
+    { "US", "United States of America" },
+    { NULL, NULL}
+};
 
 
 /*
- * weechat_aspell_new_speller : create a new speller cell
+ * weechat_aspell_debug_cb: callback for "debug" signal
  */
 
-aspell_speller_t *
-weechat_aspell_new_speller (void)
+int
+weechat_aspell_debug_cb (void *data, const char *signal, const char *type_data,
+                         void *signal_data)
 {
-    aspell_speller_t *s;
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
     
-    s = malloc (sizeof (*s));
-    if (!s)
+    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
     {
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		       "[%s] [ERROR] : unable to alloc memory.", _PLUGIN_NAME);
-	return NULL;
+        if (weechat_strcasecmp ((char *)signal_data, ASPELL_PLUGIN_NAME) == 0)
+        {
+            aspell_debug ^= 1;
+            if (aspell_debug)
+            {
+                weechat_printf (NULL, _("%s: debug enabled"),
+                                ASPELL_PLUGIN_NAME);
+            }
+            else
+            {
+                weechat_printf (NULL, _("%s: debug disabled"),
+                                ASPELL_PLUGIN_NAME);
+            }
+        }
     }
     
-    s->speller= NULL;
-    s->lang = NULL;
-    s->refs = 0;
-    s->prev_speller = NULL;
-    s->next_speller = NULL;
-    
-    return s;
+    return WEECHAT_RC_OK;
 }
 
 /*
- * weechat_aspell_free_speller : free a speller cell 
+ * weechat_aspell_build_option_name: build option name with a buffer
+ */
+
+char *
+weechat_aspell_build_option_name (struct t_gui_buffer *buffer)
+{
+    char *plugin_name, *name, *option_name;
+    int length;
+    
+    if (!buffer)
+        return NULL;
+    
+    plugin_name = weechat_buffer_get_string (buffer, "plugin");
+    name = weechat_buffer_get_string (buffer, "name");
+    
+    length = strlen (plugin_name) + 1 + strlen (name) + 1;
+    option_name = malloc (length);
+    if (!option_name)
+        return NULL;
+    
+    snprintf (option_name, length, "%s.%s", plugin_name, name);
+    
+    return option_name;
+}
+
+/*
+ * weechat_aspell_get_dict: get dictionary list for a buffer
+ *                          we first try with all arguments, then remove one by
+ *                          one to find dict (from specific to general dict)
+ */
+
+char *
+weechat_aspell_get_dict (struct t_gui_buffer *buffer)
+{
+    char *name, *option_name, *ptr_end;
+    struct t_config_option *ptr_option;
+    
+    name = weechat_aspell_build_option_name (buffer);
+    if (!name)
+        return NULL;
+    
+    option_name = strdup (name);
+    if (option_name)
+    {
+        ptr_end = option_name + strlen (option_name);
+        while (ptr_end >= option_name)
+        {
+            ptr_option = weechat_aspell_config_get_dict (option_name);
+            if (ptr_option)
+            {
+                free (option_name);
+                free (name);
+                return weechat_config_string (ptr_option);
+            }
+            ptr_end--;
+            while ((ptr_end >= option_name) && (ptr_end[0] != '.'))
+            {
+                ptr_end--;
+            }
+            if ((ptr_end >= option_name) && (ptr_end[0] == '.'))
+                ptr_end[0] = '\0';
+        }
+        ptr_option = weechat_aspell_config_get_dict (option_name);
+        
+        free (option_name);
+        free (name);
+        
+        if (ptr_option)
+            return weechat_config_string (ptr_option);
+    }
+    
+    /* nothing found => return default dictionary (if set) */
+    if (weechat_config_string (weechat_aspell_config_check_default_dict)
+        && weechat_config_string (weechat_aspell_config_check_default_dict)[0])
+        return weechat_config_string (weechat_aspell_config_check_default_dict);
+    
+    /* no default dictionary set */
+    return NULL;
+}
+
+/*
+ * weechat_aspell_set_dict: set a dictionary list for a buffer
  */
 
 void
-weechat_aspell_free_speller (aspell_speller_t *s)
+weechat_aspell_set_dict (struct t_gui_buffer *buffer, const char *value)
 {
-    if (s)
+    char *name;
+    
+    name = weechat_aspell_build_option_name (buffer);
+    if (!name)
+        return;
+    
+    if (weechat_aspell_config_set_dict (name, value) > 0)
     {
-	if (s->speller) 
-	{
-	    aspell_speller_save_all_word_lists (s->speller);
-	    delete_aspell_speller (s->speller);
-	}
-	if (s->lang)
-	    free(s->lang);
-	free(s);
+        if (value && value[0])
+            weechat_printf (NULL, "%s: %s => %s",
+                            ASPELL_PLUGIN_NAME, name, value);
+        else
+            weechat_printf (NULL, _("%s: %s: removed"),
+                            ASPELL_PLUGIN_NAME, name);
     }
+    
+    free (name);
 }
 
 /*
- * weechat_aspell_speller_list_search : search a speller cell
- */
-
-aspell_speller_t *
-weechat_aspell_speller_list_search (char *lang)
-{
-    aspell_speller_t *p, *r = NULL;
-    
-    for(p = aspell_plugin_speller; p; p = p->next_speller)
-    {
-	if (strcmp(p->lang, lang) == 0)
-	{
-	    r = p;
-	    break;
-	}
-    }
-    
-    return r;
-}
-
-/*
- * weechat_aspell_speller_list_add : create and add a new speller instance
- */
-
-int 
-weechat_aspell_speller_list_add (char *lang)
-{
-    aspell_speller_t *s;
-    AspellConfig *config;
-    AspellCanHaveError *ret;
-
-    /* create a speller instance for the newly created cell */
-    config = new_aspell_config();
-    aspell_config_replace (config, "lang", lang);   
-    
-    ret = new_aspell_speller (config);
-
-    if (aspell_error (ret) != 0)
-    {
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL,
-		       "[%s] [ERROR] : %s", 
-		       _PLUGIN_NAME, aspell_error_message (ret));
-	delete_aspell_config (config);
-	delete_aspell_can_have_error (ret);
-	return 0;
-    }
-
-    /* create and add a new speller cell */
-    s = weechat_aspell_new_speller();
-    if (!s)
-	return 0;
-    
-    s->next_speller = aspell_plugin_speller;
-    if (aspell_plugin_speller)
-	aspell_plugin_speller->prev_speller = s;
-    aspell_plugin_speller = s;
-    
-    s->lang = strdup (lang);
-    s->refs = 1;
-    s->speller = to_aspell_speller (ret);
-    
-    delete_aspell_config (config);
-    
-    return 1;
-}
-
-/*
- * weechat_aspell_speller_list_remove : remove a speller instance
+ * weechat_aspell_spellers_already_ok: check if current spellers are already ok
+ *                                     return 1 if already ok, 0 if spellers
+ *                                     must be free then created again
  */
 
 int
-weechat_aspell_speller_list_remove(char *lang)
+weechat_aspell_spellers_already_ok (const char *dict_list)
 {
-    aspell_speller_t *p;
-    int r = 0;
-
-    if (!aspell_plugin_speller || !lang)
-	return 0;
+    char **argv;
+    int argc, rc, i;
+    struct t_aspell_speller *ptr_speller;
     
-    if (!aspell_plugin_speller->prev_speller 
-	&& !aspell_plugin_speller->next_speller)
+    if (!dict_list && !weechat_aspell_spellers)
+        return 1;
+    
+    if (!dict_list || !weechat_aspell_spellers)
+        return 0;
+    
+    rc = 0;
+    
+    argv = weechat_string_explode (dict_list, ",", 0, 0, &argc);
+    if (argv)
     {
-	weechat_aspell_free_speller (aspell_plugin_speller);
-	aspell_plugin_speller = NULL;
-	return 1;
-    }
-
-    for(p = aspell_plugin_speller; p; p = p->next_speller)
-    {
-	if (strcmp(p->lang, lang) == 0)
-	{
-	    if (p->prev_speller)
-		p->prev_speller->next_speller = p->next_speller;
-	    else
-		aspell_plugin_speller = p->next_speller;
-
-	    if (p->next_speller)
-		p->next_speller->prev_speller = p->prev_speller;
-	    
-	    weechat_aspell_free_speller (p);
-	    r = 1;
-	    break;
-	}
+        ptr_speller = weechat_aspell_spellers;
+        for (i = 0; (i < argc) && ptr_speller; i++)
+        {
+            if (strcmp (ptr_speller->lang, argv[i]) == 0)
+            {
+                rc = 1;
+                break;
+            }
+            ptr_speller = ptr_speller->next_speller;
+        }
+        weechat_string_free_exploded (argv);
     }
     
-    return r;
+    return rc;
 }
 
 /*
- * weechat_aspell_new_config : create a new config cell
+ * weechat_aspell_create_spellers: create spellers for a buffer
  */
 
-aspell_config_t *
-weechat_aspell_new_config (void)
+void
+weechat_aspell_create_spellers (struct t_gui_buffer *buffer)
 {
-    aspell_config_t *c;
+    char *dict_list, **argv;
+    int argc, i;
     
-    c = malloc (sizeof (*c));
-    if (!c)
+    if (buffer)
     {
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		       "[%s] [ERROR] : unable to alloc memory.", _PLUGIN_NAME);
-	return NULL;
-    }
-
-    c->server = NULL;
-    c->channel = NULL;
-    c->speller = NULL;
-    c->prev_config = NULL;
-    c->next_config = NULL;
-    
-    return c;
-}
-
-/*
- * weechat_aspell_free_config : free a config cell
- */
-
-void 
-weechat_aspell_free_config (aspell_config_t *c)
-{
-    if (c) 
-    {
-	if (c->server)
-	    free(c->server);
-	if (c->channel)
-	    free(c->channel);
-	
-	free(c);
+        dict_list = weechat_aspell_get_dict (buffer);
+        if (!weechat_aspell_spellers_already_ok (dict_list))
+        {
+            weechat_aspell_speller_free_all ();
+            if (dict_list)
+            {
+                argv = weechat_string_explode (dict_list, ",", 0, 0, &argc);
+                if (argv)
+                {
+                    for (i = 0; i < argc; i++)
+                    {
+                        weechat_aspell_speller_new (argv[i]);
+                    }
+                    weechat_string_free_exploded (argv);
+                }
+            }
+        }
     }
 }
 
 /*
- * weechat_aspell_config_list_search : search a config cell
- */
-
-aspell_config_t *
-weechat_aspell_config_list_search (char *server, char *channel)
-{
-    aspell_config_t *p, *r = NULL;
-
-    if (!server || !channel)
-	return NULL;
-    
-    for(p = aspell_plugin_config; p; p = p->next_config)
-    {
-	if (strcmp(p->server, server) == 0 
-	    && strcmp(p->channel, channel) == 0)
-	{
-	    r = p;
-	    break;
-	}
-    }
-    
-    return r;
-}
-
-/*
- * weechat_aspell_config_list_add : create and add a new config
+ * weechat_aspell_buffer_switch_cb: callback for "buffer_switch" signel
  */
 
 int
-weechat_aspell_config_list_add (char *server, char *channel)
+weechat_aspell_buffer_switch_cb (void *data, const char *signal,
+                                 const char *type_data, void *signal_data)
 {
-    aspell_config_t *c;
+    /* make C compiler happy */
+    (void) data;
+    (void) signal;
+    (void) type_data;
     
-    c = weechat_aspell_new_config();
-    if (!c)
-	return 0;
-
-    c->channel = strdup (channel);
-    c->server = strdup (server);
+    weechat_aspell_create_spellers (signal_data);
     
-    c->next_config = aspell_plugin_config;
-    if (aspell_plugin_config)
-	aspell_plugin_config->prev_config = c;
-    aspell_plugin_config = c;
-    
-    return 1;
+    return WEECHAT_RC_OK;
 }
 
 /*
- * weechat_aspell_config_list_remove : remove a speller config
- */
-
-int
-weechat_aspell_config_list_remove(char *server, char *channel)
-{
-    aspell_config_t *p;
-    int r = 0;
-
-    if (!aspell_plugin_config || !server || !channel)
-	return 0;
-
-    if (!aspell_plugin_config->prev_config 
-	&& !aspell_plugin_config) 
-    {
-	weechat_aspell_free_config (aspell_plugin_config);
-	aspell_plugin_config = NULL;
-	return 1;
-    }
-    
-    for(p = aspell_plugin_config; p; p = p->next_config)
-    {	
-	if (strcmp(p->server, server) == 0
-	    && strcmp(p->channel, channel) == 0)
-	{
-	    if (p->prev_config)
-		p->prev_config->next_config = p->next_config;
-	    else
-		aspell_plugin_config = p->next_config;
-
-	    if (p->next_config)
-		p->next_config->prev_config = p->prev_config;
-	    weechat_aspell_free_config (p);
-	    r = 1;
-	    break;
-	}
-    }
-
-    return r;
-}
-
-/*
- * weechat_aspell_iso_to_lang : 
- *               convert an aspell iso lang code
- *               in its english full name
+ * weechat_aspell_iso_to_lang: convert an aspell iso lang code in its english
+ *                             full name
  *
  */
 
 char *
-weechat_aspell_iso_to_lang (char *code)
+weechat_aspell_iso_to_lang (const char *code)
 {
-    iso_langs_t *p;
-    char *l;
+    int i;
     
-    l = NULL;
-    
-    for(p = langs_avail; p->code; ++p)
+    for (i = 0; langs_avail[i].code; i++)
     {
-	if (strcmp(p->code, code) == 0)
-	{
-	    l = strdup(p->name);
-	    break;
-	}
+        if (strcmp (langs_avail[i].code, code) == 0)
+            return strdup (langs_avail[i].name);
     }
-
-    if (!l)
-	l = strdup ("Unknown");
-
-    return l;
+    
+    /* lang code not found */
+    return strdup ("Unknown");
 }
 
 
 /*
- * weechat_aspell_iso_to_country : 
- *                  convert an aspell iso country
- *                  code in its english full name
+ * weechat_aspell_iso_to_country: convert an aspell iso country code in its
+ *                                english full name
  */
 
 char *
-weechat_aspell_iso_to_country (char *code)
+weechat_aspell_iso_to_country (const char *code)
 {
-    iso_countries_t *p;
-    char *c;
-
-    c = NULL;
+    int i;
     
-    for(p = countries_avail; p->code; ++p)
+    for (i = 0; countries_avail[i].code; i++)
     {
-	if (strcmp(p->code, code) == 0)
-	{
-	    c = strdup(p->name);
-	    break;
-	}
+        if (strcmp (countries_avail[i].code, code) == 0)
+            return strdup (countries_avail[i].name);
     }
-
-    if (!c)
-	c = strdup ("Unknown");
-
-    return c;
+    
+    /* country code not found */
+    return strdup ("Unknown");
 }
 
 /*
- * weechat_aspell_speller_exists : 
- *                  return 1 if an aspell dict exists 
- *                  for a lang, 0 otherwise
- */
-
-int
-weechat_aspell_speller_exists (char *lang) 
-{
-    struct AspellConfig *config;
-    AspellDictInfoList *l;
-    AspellDictInfoEnumeration *el;
-    const AspellDictInfo *di;
-    int r;
-    
-    r = 0;
-    config = new_aspell_config();
-    l = get_aspell_dict_info_list (config);
-    el = aspell_dict_info_list_elements (l);
-    
-    di = NULL;    
-    while (( di = aspell_dict_info_enumeration_next (el)))
-    {
-	if (strcmp(di->name, lang) == 0)
-	{
-	    r = 1;
-	    break;
-	}
-    }
-
-    delete_aspell_dict_info_enumeration (el);    
-    delete_aspell_config (config);
-
-    return r;
-}
-
-/*
- * weechat_aspell_speller_list_dicts : 
- *      list all aspell dict installed on system and display them
+ * weechat_aspell_speller_list_dicts: list all aspell dict installed on system
+ *                                    and display them
  */
 
 void
-weechat_aspell_speller_list_dicts (void) 
+weechat_aspell_speller_list_dicts ()
 {
-    char *country, *lang, *p;
+    char *country, *lang, *pos;
     char buffer[192];
     struct AspellConfig *config;
-    AspellDictInfoList *l;
+    AspellDictInfoList *list;
     AspellDictInfoEnumeration *el;
-    const AspellDictInfo *di;    
+    const AspellDictInfo *dict;    
     
     config = new_aspell_config();
-    l = get_aspell_dict_info_list (config);
-    el = aspell_dict_info_list_elements (l);    
-    di = NULL;
+    list = get_aspell_dict_info_list (config);
+    el = aspell_dict_info_list_elements (list);
     
-    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, "[%s] *** dictionnaries list :", _PLUGIN_NAME);
-
-    while (( di = aspell_dict_info_enumeration_next (el)))
+    weechat_printf (NULL, "");
+    weechat_printf (NULL,
+                    /* TRANSLATORS: %s is "aspell" */
+                    _( "%s dictionnaries list:"),
+                    ASPELL_PLUGIN_NAME);
+    
+    while ((dict = aspell_dict_info_enumeration_next (el)))
     {
-	country = NULL;
-	p = strchr (di->code, '_');
-		
-	if (p)
-	{
-	    *p = '\0';
-	    lang = weechat_aspell_iso_to_lang ((char*) di->code);
-	    *p = '_';
-	    country = weechat_aspell_iso_to_country (p+1); 
-	}
-	else
-	    lang = weechat_aspell_iso_to_lang ((char*) di->code);
-
-	if (strlen (di->jargon) == 0)
-	{
-	    if (p)
-		snprintf (buffer, sizeof(buffer), "%-22s %s (%s)", di->name, lang, country);
-	    else
-		snprintf (buffer, sizeof(buffer), "%-22s %s", di->name, lang);
-	}
-	else
-	{
-	    if (p)
-		snprintf (buffer, sizeof(buffer), "%-22s %s (%s - %s)", di->name, lang, country, di->jargon);
-	    else
-		snprintf (buffer, sizeof(buffer), "%-22s %s (%s)", di->name, lang, di->jargon);
-	}
-	
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, "[%s]  - %s", _PLUGIN_NAME, buffer);
-	
-	if (lang)
-	    free (lang);
-	if (country)
-	    free (country);
+        country = NULL;
+        pos = strchr (dict->code, '_');
+        
+        if (pos)
+        {
+            pos[0] = '\0';
+            lang = weechat_aspell_iso_to_lang ((char*)dict->code);
+            pos[0] = '_';
+            country = weechat_aspell_iso_to_country (pos + 1);
+        }
+        else
+            lang = weechat_aspell_iso_to_lang ((char*)dict->code);
+        
+        if (strlen (dict->jargon) == 0)
+        {
+            if (pos)
+            {
+                snprintf (buffer, sizeof (buffer), "%-22s %s (%s)",
+                          dict->name, lang, country);
+            }
+            else
+            {
+                snprintf (buffer, sizeof (buffer), "%-22s %s",
+                          dict->name, lang);
+            }
+        }
+        else
+        {
+            if (pos)
+            {
+                snprintf (buffer, sizeof (buffer), "%-22s %s (%s - %s)",
+                          dict->name, lang, country, dict->jargon);
+            }
+            else
+            {
+                snprintf (buffer, sizeof (buffer), "%-22s %s (%s)",
+                          dict->name, lang, dict->jargon);
+            }
+        }
+        
+        weechat_printf (NULL, "  %s", buffer);
+        
+        if (lang)
+            free (lang);
+        if (country)
+            free (country);
     }
-
-    delete_aspell_dict_info_enumeration (el);    
+    
+    delete_aspell_dict_info_enumeration (el);
     delete_aspell_config (config);
 }
 
 /*
- * weechat_aspell_config_show : display plugin settings
+ * weechat_aspell_add_word : add a word in personnal dictionary
  */
 
 void
-weechat_aspell_config_show (void) 
+weechat_aspell_add_word (const char *lang, const char *word)
 {
-    aspell_config_t *p;
-    
-    if (!aspell_plugin_config)
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		       "[%s] [SHOW] *** No buffers with spellchecking enable",
-		       _PLUGIN_NAME);
-    else
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		       "[%s] [SHOW] *** Spellchecking is active on the following buffers :",
-		       _PLUGIN_NAME);
-	
-    for(p = aspell_plugin_config; p; p = p->next_config)
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL,
-		       "[%s] [SHOW]    -> %s@%s with lang '%s'",
-		       _PLUGIN_NAME, p->channel, p->server, p->speller->lang);
+    struct t_aspell_speller *new_speller, *ptr_speller;
 
-    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL,
-		   "[%s] [SHOW] *** plugin options :", _PLUGIN_NAME);
-    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL,
-		   "[%s] [SHOW]     -> word-size = %d", 
-		   _PLUGIN_NAME, aspell_plugin_options.word_size);
-    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL,
-		   "[%s] [SHOW]     ->     color = %s",
-		   _PLUGIN_NAME, aspell_plugin_options.color_name);
-    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL,
-		   aspell_plugin_options.check_sync == 1
-		   ? "[%s] [SHOW]     -> realtime spellchecking is enable"
-		   : "[%s] [SHOW]     -> asynchronous spellchecking is enable"
-		   , 
-		   _PLUGIN_NAME);
+    new_speller = NULL;
+    ptr_speller = weechat_aspell_speller_search (lang);
+    if (!ptr_speller)
+    {
+        if (!weechat_aspell_speller_exists (lang))
+        {
+            weechat_printf (NULL,
+                            _("%s: error: dictionary \"%s\" is not "
+                              "available on your system"),
+                            ASPELL_PLUGIN_NAME, lang);
+            return;
+        }
+        new_speller = weechat_aspell_speller_new (lang);
+        if (!new_speller)
+            return;
+        ptr_speller = new_speller;
+    }
+
+    if (aspell_speller_add_to_personal (ptr_speller->speller,
+                                        word,
+                                        strlen (word)) == 1)
+    {
+        weechat_printf (NULL,
+                        _("%s: word \"%s\" added to personal dictionary"),
+                        ASPELL_PLUGIN_NAME, word);
+    }
+    else
+    {
+        weechat_printf (NULL,
+                        _("%s%s: failed to add word to personal "
+                          "dictionary"),
+                        weechat_prefix ("error"), ASPELL_PLUGIN_NAME);
+    }
+    
+    if (new_speller)
+        weechat_aspell_speller_free (new_speller);
 }
 
 /*
- * weechat_aspell_config_addword : adding a word in personnal dictionaries
+ * weechat_aspell_command_authorized: return 1 if command is authorized for
+ *                                    spell checking, otherwise 0
  */
 
 int
-weechat_aspell_config_addword(char *word)
+weechat_aspell_command_authorized (const char *command)
 {
-    char *server, *channel;
-    aspell_config_t *c;    
-    int ret;
+    int length_command, i;
     
-    ret = 0;
-    channel = weechat_aspell_plugin->get_info (weechat_aspell_plugin, "channel", NULL);
-    server = weechat_aspell_plugin->get_info (weechat_aspell_plugin, "server", NULL); 
+    if (!command)
+        return 1;
     
-    if (!server || !channel)
-	return 0;
-
-    c = weechat_aspell_config_list_search (server, channel);
-    if (c) {
-	if (aspell_speller_add_to_personal (
-		c->speller->speller, (const char *) word, strlen(word)) == 1)
-	    ret = 1;
+    length_command = strlen (command);
+    
+    for (i = 0; i < weechat_aspell_count_commands_to_check; i++)
+    {
+        if ((weechat_aspell_length_commands_to_check[i] == length_command)
+            && (weechat_strcasecmp (command,
+                                    weechat_aspell_commands_to_check[i]) == 0))
+        {
+            /* command is authorized */
+            return 1;
+        }
     }
     
-    if (ret)
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL,
-		       "[%s] [ADD-WORD] word '%s' successfully added in your personnal dictionnary",
-		       _PLUGIN_NAME, word);
-    else
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL,
-		       "[%s] [ADD-WORD] an error occured while adding word '%s' in your personnal dict",
-		       _PLUGIN_NAME, word);
-    
-    if (server)
-	free (server);
-    if (channel)
-	free (channel);
-	
-    return ret;
+    /* command is not authorized */
+    return 0;
 }
 
 /*
- * weechat_aspell_config_dump : display debug infos
- */
-
-void
-weechat_aspell_config_dump (void) 
-{
-    aspell_config_t *p;
-    aspell_speller_t *s;
-    
-    if (!aspell_plugin_config)
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		       "[%s] [DEBUG] [CONFIG] no config",
-		       _PLUGIN_NAME);
-
-    for(p = aspell_plugin_config; p; p = p->next_config)
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL,
-		       "[%s] [DEBUG] [CONFIG] @%p server='%s' channel='%s' @speller=%p lang='%s' @p=%p @n=%p",
-		       _PLUGIN_NAME, p, p->server, p->channel, p->speller, p->speller->lang, p->prev_config, p->next_config);
-
-    if (!aspell_plugin_speller)
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		       "[%s] [DEBUG] [SPELLER] no speller",
-		       _PLUGIN_NAME);
-    
-    for(s = aspell_plugin_speller; s; s = s->next_speller)
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL,
-		       "[%s] [DEBUG] [SPELLER] @%p lang='%s' refs=%d @engine=%p @p=%p @n=%p",
-		       _PLUGIN_NAME, s, s->lang, s->refs, s->speller, s->prev_speller, s->next_speller);
-}
-
-/*
- * weechat_aspell_config_enable_for : internal subroutine
- */
-
-void
-weechat_aspell_config_enable_for (char *server, char *channel, char *lang)
-{
-    aspell_config_t *c;
-    aspell_speller_t *s;
-    
-    if (!weechat_aspell_speller_exists (lang))
-    {
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		       "[%s] [WARN] '%s' dictionary doesn't seems to be available on your system", 
-		       _PLUGIN_NAME, lang);
-       	return;
-    }
-    
-    c = weechat_aspell_config_list_search (server, channel);
-    if (c)
-    {
-	c->speller->refs--;
-	if (c->speller->refs == 0)
-	    weechat_aspell_speller_list_remove (c->speller->lang);
-	weechat_aspell_config_list_remove (server, channel);
-    }
-
-    if (!weechat_aspell_config_list_add (server, channel))
-    {
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		       "[%s] [ERROR] enabling spell checking on %s@%s failed", 
-		       _PLUGIN_NAME, channel, server);
-	return;
-    }
-
-    s = weechat_aspell_speller_list_search (lang);
-    
-    if (!s) {
-	weechat_aspell_speller_list_add (lang);
-	s = aspell_plugin_speller;
-    }
-    else
-	s->refs++;
-
-    aspell_plugin_config->speller = s;
-    
-}
-
-/*
- * weechat_aspell_config_enable : 
- *        enabling given lang spell checking on current server/channel
- */
-
-void
-weechat_aspell_config_enable (char *lang) 
-{
-    char *channel, *server;
-    
-    channel = weechat_aspell_plugin->get_info (weechat_aspell_plugin, "channel", NULL);
-    server = weechat_aspell_plugin->get_info (weechat_aspell_plugin, "server", NULL);
-        
-    if (!server || !channel)
-    {
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		       "[%s] [WARN] you are not in a channel", 
-		       _PLUGIN_NAME);
-	return;
-    }
-    
-    weechat_aspell_config_enable_for (server, channel, lang);
-
-    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		   "[%s] spell checking '%s' is now active on %s@%s",
-		   _PLUGIN_NAME, lang, channel, server);
-    
-    if (channel)
-	free (channel);
-    if (server)
-	free (server);
-}
-
-/*
- * weechat_aspell_config_disable : 
- *        disabling spell checking on current server/channel
- */
-
-void
-weechat_aspell_config_disable (void) 
-{
-    aspell_config_t *c;
-    char *channel, *server;
-    
-    channel = weechat_aspell_plugin->get_info (weechat_aspell_plugin, "channel", NULL);
-    server = weechat_aspell_plugin->get_info (weechat_aspell_plugin, "server", NULL);
-
-    if (!server || !channel)
-    {
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		       "[%s] [WARN] you are not in a channel", 
-		       _PLUGIN_NAME, NULL, NULL);
-	return;
-    }
-    
-    c = weechat_aspell_config_list_search (server, channel);
-    if (!c)
-    {
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		       "[%s] [WARN] spell checking is not active on %s@%s", 
-		       _PLUGIN_NAME, channel, server);
-	if (channel)
-	    free (channel);
-	if (server)
-	    free (server);
-	return;
-    }
-    
-    c->speller->refs--;
-    if (c->speller->refs == 0)
-	weechat_aspell_speller_list_remove (c->speller->lang);
-    
-    weechat_aspell_config_list_remove (server, channel);
-    
-    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		   "[%s] spell checking is now inactive on %s@%s",
-		   _PLUGIN_NAME, channel, server);
-    
-    if (channel)
-	free (channel);
-    if (server)
-	free (server);
-}
-
-/*
- * weechat_aspell_config_set : setting options values
- */
-
-int
-weechat_aspell_config_set(char *option, char *value)
-{
-    int c;
-    
-    if (strcmp (option, "word-size") == 0)
-    {
-	aspell_plugin_options.word_size = atoi ((value == NULL) ? "" : value);
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-		       "[%s] [SET] setting %s = %d", 
-		       _PLUGIN_NAME, option, aspell_plugin_options.word_size);
-    }
-    else if (strcmp (option, "toggle-check-mode") == 0)
-    {
-	aspell_plugin_options.check_sync = aspell_plugin_options.check_sync == 1 ? 0 : 1;
-	weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL,
-		       aspell_plugin_options.check_sync == 1
-		       ? "[%s] [SET] spellchecking is now set in realtime mode"
-		       : "[%s] [SET] spellchecking is now set in asynchronous mode",
-                       _PLUGIN_NAME, option);
-    }
-    else if (strcmp (option, "color") == 0)
-    {
-	c = weechat_aspell_plugin->get_irc_color (weechat_aspell_plugin, (value == NULL) ? "" : value);
-	if (c == -1)
-	    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-			   "[%s] [SET] setting %s = %s failed : color '%s' is unknown", 
-			   _PLUGIN_NAME, option, 
-			   (value == NULL) ? "" : value,
-			   (value == NULL) ? "" : value);
-	else
-	{
-	    aspell_plugin_options.color = c;
-	    if (aspell_plugin_options.color_name)
-		free (aspell_plugin_options.color_name);
-	    aspell_plugin_options.color_name = strdup (value);
-	    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, 
-			   "[%s] [SET] setting %s = %s",
-			   _PLUGIN_NAME, option, aspell_plugin_options.color_name);
-	}
-    }
-    else
-	return 0;
-    
-    return 1;
-}
-
-/*
- * weechat_aspell_config_save : saving plugin config
- */
-
-int 
-weechat_aspell_config_save (void) 
-{
-    aspell_config_t *p, *q;
-    char *servers, *channels, *option;
-    char **servers_list;
-    int n, i, s, found;
-    
-    servers = NULL;
-
-    weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, "servers", ""); 
-    
-    for(p = aspell_plugin_config; p; p = p->next_config)
-    {
-	servers = weechat_aspell_plugin->get_plugin_config (weechat_aspell_plugin, "servers");
-	
-	if (!servers)
-	    weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, "servers", p->server);
-	else if (strlen (servers) == 0) 
-	{
-	    weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, "servers", p->server);
-	    free (servers);
-	}
-	else 
-	{
-	    servers_list = weechat_aspell_plugin->explode_string (weechat_aspell_plugin, servers, " ", 0, &s);
-	    if (servers_list)
-	    {
-		found = 0;
-		for (i=0; i<s; i++)
-		{
-		    if (strcmp (servers_list[i], p->server) == 0)
-		    {
-			found = 1;
-			break;
-		    }
-		}
-		if (found == 0)
-		{
-		    n = strlen (servers) + strlen (p->server) + 2;
-		    servers = realloc (servers, n);
-		    strcat (servers, " ");
-		    strcat (servers, p->server);
-		    weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, "servers", servers);
-		}
-		free (servers_list);
-	    }
-	    free (servers);
-	}
-	
-	channels = NULL;
-	for(q = aspell_plugin_config; q; q = q->next_config)
-	{
-	    if (strcmp (p->server, q->server) == 0)
-	    {
-		if (!channels)
-		    channels = strdup (q->channel);
-		else
-		{
-		    n = strlen (channels) + strlen (q->channel) + 2;
-		    channels = realloc (channels, n);
-		    strcat (channels, " ");
-		    strcat (channels, q->channel);
-		}
-		
-		n = 7 + strlen (p->server) + strlen (q->channel);
-		option = malloc (n);
-		snprintf (option, n, "lang_%s_%s", p->server, q->channel);
-		weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, option, q->speller->lang);
-		free (option);
-	    }
-	}
-	
-	if (channels)
-	{
-	    n = 10 + strlen (p->server);
-	    option = malloc (n);
-	    snprintf (option, n, "channels_%s", p->server);
-	    weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, option, channels);
-	    free (option);
-	    free (channels);
-	}
-    }
-    
-    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, "[%s] [SAVE] configuration saved", _PLUGIN_NAME);
-    return 1;
-}
-
-/*
- * weechat_aspell_config_load : loading plugin config
- */
-
-int 
-weechat_aspell_config_load(void)
-{
-    char *servers, *channels, *lang;
-    char *option_s,  *option_l;
-    char **servers_list, **channels_list;
-    int i, j, s, c, n;
-    
-    servers = weechat_aspell_plugin->get_plugin_config (weechat_aspell_plugin, "servers");
-    if (!servers)
-	return 0;
-    
-    servers_list = weechat_aspell_plugin->explode_string (weechat_aspell_plugin, servers, " ", 0, &s);
-    
-    if (servers_list)
-    {
-	for (i=0; i<s; i++)
-	{
-	    n = 10 + strlen (servers_list[i]);
-	    option_s = malloc (n);
-	    snprintf (option_s, n, "channels_%s", servers_list[i]);
-	    
-	    channels = weechat_aspell_plugin->get_plugin_config (weechat_aspell_plugin, option_s);
-	    if (channels)
-	    {
-		channels_list = weechat_aspell_plugin->explode_string (weechat_aspell_plugin, channels, " ", 0, &c);
-		if (channels_list)
-		{
-		    for (j=0; j<c; j++)
-		    {
-			n = 7 + strlen (servers_list[i]) + strlen (channels_list[j]);
-			option_l = malloc (n);
-			snprintf (option_l, n, "lang_%s_%s", servers_list[i], channels_list[j]);
-			
-			lang = weechat_aspell_plugin->get_plugin_config (weechat_aspell_plugin, option_l);
-			if (lang)
-			{
-			    weechat_aspell_config_enable_for (servers_list[i], channels_list[j], lang);
-			    free (lang);
-			}
-			free (option_l);
-		    }
-		    weechat_aspell_plugin->free_exploded_string (weechat_aspell_plugin, channels_list);
-		}
-		free (channels);
-	    }
-	    free (option_s);
-	}
-
-	weechat_aspell_plugin->free_exploded_string (weechat_aspell_plugin, servers_list);
-    }
-
-    weechat_aspell_plugin->print_server (weechat_aspell_plugin, "[%s] [LOAD] configuration loaded", _PLUGIN_NAME);
-    return 1;
-}
-
-/*
- * weechat_aspell_options_save : saving plugin options
- */
-
-int
-weechat_aspell_options_save(void)
-{
-    char buf[8];
-    
-    snprintf (buf, sizeof(buf), "%d", aspell_plugin_options.word_size);
-    weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, "word-size", buf);
-    
-    snprintf (buf, sizeof(buf), "%d", aspell_plugin_options.check_sync);
-    weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, "check-sync", buf);
-    
-    weechat_aspell_plugin->set_plugin_config (weechat_aspell_plugin, "color", aspell_plugin_options.color_name);
-
-    weechat_aspell_plugin->print (weechat_aspell_plugin, NULL, NULL, "[%s] [SAVE] options saved", _PLUGIN_NAME);
-    return 1;
-}
-
-/*
- * weechat_aspell_options_load : loading plugin options
- */
-
-int
-weechat_aspell_options_load(void)
-{
-    char *buffer;
-    int n;
-    
-    buffer = weechat_aspell_plugin->get_plugin_config (weechat_aspell_plugin, "word-size");
-    if (buffer)
-    {
-	aspell_plugin_options.word_size = atoi (buffer);
-	free (buffer);
-    }
-    else
-	aspell_plugin_options.word_size = _PLUGIN_OPTION_WORD_SIZE;
-    
-    buffer = weechat_aspell_plugin->get_plugin_config (weechat_aspell_plugin, "check-sync");
-    if (buffer)
-    {	
-	aspell_plugin_options.check_sync = atoi (buffer);
-	if (aspell_plugin_options.check_sync != 0 && aspell_plugin_options.check_sync != 1)
-	    aspell_plugin_options.check_sync = _PLUGIN_OPTION_CHECK_SYNC;
-	free (buffer);
-    }
-    else
-	aspell_plugin_options.check_sync = _PLUGIN_OPTION_CHECK_SYNC;
-    
-    
-    buffer = weechat_aspell_plugin->get_plugin_config (weechat_aspell_plugin, "color");    
-    if (buffer)
-    {	
-	n = weechat_aspell_plugin->get_irc_color (weechat_aspell_plugin, buffer);
-	if (n == -1)
-	{
-	    aspell_plugin_options.color = weechat_aspell_plugin->get_irc_color (weechat_aspell_plugin, _PLUGIN_OPTION_COLOR);
-	    aspell_plugin_options.color_name = strdup (_PLUGIN_OPTION_COLOR);
-	}
-	else 
-	{
-	    aspell_plugin_options.color = n;
-	    aspell_plugin_options.color_name = strdup (buffer);
-	}
-	free (buffer);
-    }
-    else {
-	aspell_plugin_options.color = weechat_aspell_plugin->get_irc_color (weechat_aspell_plugin, _PLUGIN_OPTION_COLOR);
-	aspell_plugin_options.color_name = strdup (_PLUGIN_OPTION_COLOR);
-    }
-    
-    weechat_aspell_plugin->print_server (weechat_aspell_plugin, "[%s] [LOAD] options loaded", _PLUGIN_NAME);
-    return 1;
-}
-
-/*
- * weechat_aspell_speller_command : manage "/aspell" uses
- */
-
-int
-weechat_aspell_speller_command (t_weechat_plugin *p, 
-				int argc, char **argv, 
-				char *handler_args, 
-				void *handler_pointer)
-{
-    char helpcmd[32];
-    char **args;
-    int c, r;
-    
-    /* make C compiler happy */
-    (void) p;
-    (void) handler_args;
-    (void) handler_pointer;
-
-    snprintf(helpcmd, sizeof(helpcmd), "/help %s", plugin_command);
-    r = 0;
-
-    if ((argc == 3) && argv[1] && argv[2])
-    {
-	args = weechat_aspell_plugin->explode_string (weechat_aspell_plugin, argv[2], " ", 0, &c);
-	if (args)
-	{
-	    if (c >= 1)
-	    {
-		if (strcmp (args[0], "dictlist") == 0)
-		{ 
-		    weechat_aspell_speller_list_dicts (); 
-		    r = 1; 
-		}
-		else if (strcmp (args[0], "show") == 0)
-		{ 
-		    weechat_aspell_config_show (); 
-		    r = 1; 
-		}
-		else if (strcmp (args[0], "save") == 0)
-		{ 
-		    weechat_aspell_config_save (); 
-		    weechat_aspell_options_save(); 
-		    r = 1; 
-		}
-		else if (strcmp (args[0], "dump") == 0)
-		{ 
-		    weechat_aspell_config_dump (); 
-		    r = 1; 
-		}
-		else if (strcmp (args[0], "enable") == 0) 
-		{
-		    if (c >= 2) 
-		    { 
-			weechat_aspell_config_enable (args[1]); 
-			r = 1; 
-		    }
-		}
-		else if (strcmp (args[0], "disable") == 0)
-		    weechat_aspell_config_disable ();
-		else if (strcmp (args[0], "set") == 0) 
-		{
-		    if (c >= 2) 
-		    { 
-			r = weechat_aspell_config_set (args[1], args[2]); 
-		    }
-		}
-		else if (strcmp (args[0], "add-word") == 0) 
-		{
-		    if (c >= 2) 
-		    { 
-			weechat_aspell_config_addword (args[1]);
-			r = 1; 
-		    }
-		}
-
-	    }
-	    weechat_aspell_plugin->free_exploded_string (weechat_aspell_plugin, args);
-	}
-    }
-
-    if (r == 0)
-	weechat_aspell_plugin->exec_command (weechat_aspell_plugin, NULL, NULL, helpcmd);
-    
-    return PLUGIN_RC_OK;
-}
-
-/*
- * weechat_aspell_nick_in_server_channel : 
- *    check presence of a nick in a server/channel
- */
-
-int
-weechat_aspell_nick_in_channel (char *nick, char *server, char *channel)
-{
-    t_plugin_nick_info *nick_info, *ptr_nick;
-    int ret;
-    
-    ret = 0;
-    if (!nick || !server || ! channel)
-	return ret;
-    
-    nick_info = weechat_aspell_plugin->get_nick_info (
-	weechat_aspell_plugin, server, channel);
-    if  (!nick_info)
-	return ret;
-
-    for(ptr_nick = nick_info; ptr_nick; ptr_nick = ptr_nick->next_nick)
-    {
-	if (strcmp (nick, ptr_nick->nick) == 0) {
-	    ret = 1;
-	    break;
-	}
-    }
-    
-    weechat_aspell_plugin->free_nick_info (weechat_aspell_plugin, nick_info);
-
-    return ret;
-}    
-
-/*
- * weechat_aspell_clean_word : 
- *    strip punct chars at the begining and at the end of a word
+ * weechat_aspell_string_strip_punctuation: strip punctuation chars at the
+ *                                          begining and at the end of a word
  */
 
 char *
-weechat_aspell_clean_word (char *word, int *offset)
+weechat_aspell_string_strip_punctuation (const char *word)
 {
-    int len;
-    char *buffer, *w, *p;
-
-    if (!word)
-	return NULL;
-    
-    buffer = strdup (word);
-
-    *offset = 0;    
-    p = buffer;    
-    while (p)
-    {
-	if (!ispunct(*p))
-	    break;
-	p++;
-	(*offset)++;
-    }
-
-    p = buffer + strlen(buffer) - 1;
-    while (p >= buffer)
-    {
-	if (!ispunct(*p))
-	    break;
-	p--;
-    }
-
-    len = p - buffer - *offset + 1;
-    if (len <= 0)
-    {
-	free (buffer);
-	return NULL;
-    }
-    
-    w = malloc (len+1);
-
-    if (w) {
-	memcpy (w, buffer + *offset, len);
-	w[len] = '\0';
-    }    
-    
-    free (buffer);
-
-    return w;
-}
-
-/*
- * weechat_aspell_is_simili_number : 
- *    detect if a word is made of chars and punctation
- */
-
-int
-weechat_aspell_is_simili_number (char *word)
-{
-    int len, ret, i;
-    
-    ret = 1;
-    len = strlen (word);
+    const char *ptr_start, *ptr_end;
     
     if (!word)
-	return 0;
+        return NULL;
     
-    for (i=0; i<len; i++)
+    ptr_start = word;
+    while (ptr_start[0])
     {
-	if (!ispunct(word[i]) && !isdigit(word[i]))
-	{
-	    ret = 0;
-	    break;
-	}
+        if (!ispunct (ptr_start[0]))
+            break;
+        ptr_start++;
     }
 
-    return ret;
+    if (!ptr_start[0])
+        return strdup ("");
+    
+    ptr_end = ptr_start + strlen (ptr_start) - 1;
+    
+    while (ptr_end >= ptr_start)
+    {
+        if (!ispunct (ptr_end[0]))
+            break;
+        ptr_end--;
+    }
+    
+    if (ptr_end < ptr_start)
+        return strdup ("");
+    
+    return weechat_strndup (ptr_start, ptr_end - ptr_start + 1);
 }
 
 /*
- * weechat_aspell_is_url : 
- *    detect if a word is an url
+ * weechat_aspell_string_is_url: detect if a word is an url
  */
 
 int
-weechat_aspell_is_url (char *word)
+weechat_aspell_string_is_url (const char *word)
 {
-    int ret;
-
-    ret = 0;
-    if (strncasecmp(word,    "http://",    7) == 0
-	|| strncasecmp(word, "https://",   8) == 0
-	|| strncasecmp(word, "ftp://",     6) == 0
-	|| strncasecmp(word, "tftp://",    7) == 0
-	|| strncasecmp(word, "ftps://",    7) == 0
-	|| strncasecmp(word, "ssh://",     6) == 0
-	|| strncasecmp(word, "fish://",    7) == 0
-	|| strncasecmp(word, "dict://",    7) == 0
-	|| strncasecmp(word, "ldap://",    7) == 0
-	|| strncasecmp(word, "file://",    7) == 0
-	|| strncasecmp(word, "telnet://",  9) == 0
-	|| strncasecmp(word, "gopher://",  9) == 0
-	|| strncasecmp(word, "irc://",     6) == 0
-	|| strncasecmp(word, "ircs://",    7) == 0
-	|| strncasecmp(word, "irc6://",    7) == 0
-	|| strncasecmp(word, "irc6s://",   8) == 0
-	|| strncasecmp(word, "cvs://",     6) == 0
-	|| strncasecmp(word, "svn://",     6) == 0
-	|| strncasecmp(word, "svn+ssh://", 10) == 0)
-	ret = 1;
-    return ret;
+    if ((weechat_strncasecmp(word,    "http://",     7) == 0)
+        || (weechat_strncasecmp(word, "https://",    8) == 0)
+        || (weechat_strncasecmp(word, "ftp://",      6) == 0)
+        || (weechat_strncasecmp(word, "tftp://",     7) == 0)
+        || (weechat_strncasecmp(word, "ftps://",     7) == 0)
+        || (weechat_strncasecmp(word, "ssh://",      6) == 0)
+        || (weechat_strncasecmp(word, "fish://",     7) == 0)
+        || (weechat_strncasecmp(word, "dict://",     7) == 0)
+        || (weechat_strncasecmp(word, "ldap://",     7) == 0)
+        || (weechat_strncasecmp(word, "file://",     7) == 0)
+        || (weechat_strncasecmp(word, "telnet://",   9) == 0)
+        || (weechat_strncasecmp(word, "gopher://",   9) == 0)
+        || (weechat_strncasecmp(word, "irc://",      6) == 0)
+        || (weechat_strncasecmp(word, "ircs://",     7) == 0)
+        || (weechat_strncasecmp(word, "irc6://",     7) == 0)
+        || (weechat_strncasecmp(word, "irc6s://",    8) == 0)
+        || (weechat_strncasecmp(word, "cvs://",      6) == 0)
+        || (weechat_strncasecmp(word, "svn://",      6) == 0)
+        || (weechat_strncasecmp(word, "svn+ssh://", 10) == 0)
+        || (weechat_strncasecmp(word, "git://",      6) == 0))
+        return 1;
+    
+    return 0;
 }
 
 /*
- * weechat_aspell_keyb_check : handler to check spelling on input line
+ * weechat_aspell_string_is_simili_number: detect if a word is made of chars and
+ *                                         punctuation
  */
 
 int
-weechat_aspell_keyb_check (t_weechat_plugin *p, int argc, char **argv,
-			       char *handler_args, void *handler_pointer)
+weechat_aspell_string_is_simili_number (const char *word)
 {
-    char *server, *channel;
-    aspell_config_t *c;
-    cmds_keep_t *cmd;
-    int keep_cmd_found;
-    char *input, *ptr_input, *pos_space, *clword;
-    int count, offset;
+    const char *ptr_word;
+    
+    if (!word)
+        return 0;
+    
+    ptr_word = word;
+    while (ptr_word[0])
+    {
+        if (!ispunct (ptr_word[0]) && !isdigit (ptr_word[0]))
+            return 0;
+        ptr_word++;
+    }
+    
+    /* there's only digit or punctuation */
+    return 1;
+}
+
+/*
+ * weechat_aspell_check_word: spell check a word
+ *                            return 1 if word is ok, 0 if word is mispelled
+ */
+
+int
+weechat_aspell_check_word (struct t_gui_buffer *buffer, const char *word)
+{
+    char *clean_word;
+    struct t_aspell_speller *ptr_speller;
+    int rc;
+    
+    clean_word = weechat_aspell_string_strip_punctuation (word);
+    
+    if (!clean_word)
+        return 1;
+    
+    rc = 0;
+    
+    /* word too small? then do not check word */
+    if ((weechat_config_integer (weechat_aspell_config_check_word_min_length) > 0)
+        && ((int)strlen (clean_word) < weechat_config_integer (weechat_aspell_config_check_word_min_length)))
+        rc = 1;
+    else
+    {
+        /* word is URL? then do not check word */
+        if (weechat_aspell_string_is_url (clean_word))
+            rc = 1;
+        else
+        {
+            /* word is a number? then do not check word */
+            if (weechat_aspell_string_is_simili_number (clean_word))
+                rc = 1;
+            else
+            {
+                /* word is a nick of nicklist on this buffer? then do not check word */
+                if (weechat_nicklist_search_nick (buffer, NULL, clean_word))
+                    rc = 1;
+                else
+                {
+                    /* check word with all spellers for this buffer (order is important) */
+                    for (ptr_speller = weechat_aspell_spellers; ptr_speller;
+                         ptr_speller = ptr_speller->next_speller)
+                    {
+                        if (aspell_speller_check (ptr_speller->speller, clean_word, -1) == 1)
+                        {
+                            rc = 1;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    free (clean_word);
+    
+    return rc;
+}
+
+/*
+ * weechat_aspell_modifier_cb: modifier for input text
+ */
+
+char *
+weechat_aspell_modifier_cb (void *data, const char *modifier,
+                            const char *modifier_data, const char *string)
+{
+    struct t_gui_buffer *buffer;
+    unsigned int value;
+    char *result, *ptr_string, *pos_space, *color_normal, *color_error;
+    int length, index_result, length_word, word_ok;
+    int length_color_normal, length_color_error;
     
     /* make C compiler happy */
-    (void) p;
-    (void) handler_args;
-    (void) handler_pointer;
-
-    channel = weechat_aspell_plugin->get_info (weechat_aspell_plugin, "channel", NULL);
-    server = weechat_aspell_plugin->get_info (weechat_aspell_plugin, "server", NULL);
-
-    if (!server || !channel)
-	return PLUGIN_RC_OK;
-
-    c = weechat_aspell_config_list_search (server, channel);
-    if (!c)
-	return PLUGIN_RC_OK;
-
-    if (aspell_plugin_options.check_sync == 0 && argv[0] && argv[0][0])
+    (void) data;
+    (void) modifier;
+    
+    if (!string)
+        return NULL;
+    
+    sscanf (modifier_data, "%x", &value);
+    buffer = (struct t_gui_buffer *)value;
+    
+    if (!weechat_aspell_spellers)
+        return NULL;
+    
+    /* for performance: return last stirng built if input string is the
+       same (for example user just change cursor position, or input text is
+       refreshed with same content */
+    if (aspell_last_modifier_string
+        && (strcmp (string, aspell_last_modifier_string) == 0))
     {
-	if (argv[0][0] == '*' && !ispunct (argv[0][1]) && !isspace (argv[0][1]))
-	    return PLUGIN_RC_OK;
+        return (aspell_last_modifier_result) ?
+            strdup (aspell_last_modifier_result) : NULL;
     }
-
-    if (!(argc == 3 && argv[1] && argv[2]))
-	return PLUGIN_RC_OK;
     
-    if (strcmp (argv[1], argv[2]) == 0)
-	return PLUGIN_RC_OK;
-    
-    input = weechat_aspell_plugin->get_info (weechat_aspell_plugin, "input", NULL);
-    if (!input)
-	return PLUGIN_RC_OK;
-
-    if (!input[0])
-	return PLUGIN_RC_OK;
-
-    if (input[0] == '/')
+    /* free last modifier string and result */
+    if (aspell_last_modifier_string)
     {
-	keep_cmd_found = 0;
-	for(cmd = cmd_tokeep; cmd->cmd; ++cmd)
-	{
-	    if (strncasecmp (input, cmd->cmd, cmd->len) == 0) {
-		keep_cmd_found = 1;
-		break;
-	    }
-	}
-	if (keep_cmd_found == 0)
-	    return PLUGIN_RC_OK;
+        free (aspell_last_modifier_string);
+        aspell_last_modifier_string = NULL;
+    }
+    if (aspell_last_modifier_result)
+    {
+        free (aspell_last_modifier_result);
+        aspell_last_modifier_result = NULL;
     }
     
-    count = 0;
-    ptr_input = input;
-    weechat_aspell_plugin->input_color (weechat_aspell_plugin, 0, 0, 0);
-    while (ptr_input && ptr_input[0])
-    {	
-	pos_space = strchr (ptr_input, ' ');
-	if (pos_space)
-	    pos_space[0] = '\0';
-	
-	if (ptr_input[0] != '/' && ptr_input[0] != '-' && ptr_input[0] != '#')
-	{
-	    clword = weechat_aspell_clean_word (ptr_input, &offset);
-	    if (clword)
-	    {
-		if ( (int) strlen (clword) >= aspell_plugin_options.word_size)
-		{
-		    if (!weechat_aspell_is_url (clword))
-		    {
-			if (!weechat_aspell_is_simili_number (clword))
-			{
-			    if (!weechat_aspell_nick_in_channel (clword, server, channel))
-			    {
-				if (aspell_speller_check (c->speller->speller, clword, -1) != 1)
-				{
-				    if (count == 0)
-					weechat_aspell_plugin->input_color (weechat_aspell_plugin, 0, 0, 0);
-				    weechat_aspell_plugin->input_color (weechat_aspell_plugin, aspell_plugin_options.color,
-									ptr_input - input + offset, strlen (clword));
-				    count++;
-				}
-			    }
-			}
-		    }
-		}
-		free (clword);
-	    }
-	}
-	
-	if (pos_space)
-	{
-	    pos_space[0] = ' ';
-	    ptr_input = pos_space + 1;
-	    while (ptr_input[0] == ' ')
-		ptr_input++;
-	}
-	else
-	    ptr_input = NULL;	
+    /* save last modifier string received */
+    aspell_last_modifier_string = strdup (string);
+    
+    color_normal = weechat_color (weechat_config_string (weechat_config_get ("weechat.color.input")));
+    length_color_normal = strlen (color_normal);
+    color_error = weechat_color (weechat_config_string (weechat_aspell_config_look_color));
+    length_color_error = strlen (color_error);
+    
+    length = strlen (string);
+    result = malloc (length + (length * length_color_error));
+    result[0] = '\0';
+    
+    if (result)
+    {
+        ptr_string = aspell_last_modifier_string;
+        index_result = 0;
+        
+        /* check if string is a command */
+        if ((ptr_string[0] == '/') && ptr_string[1] && (ptr_string[1] != '/')
+            && (ptr_string[1] != ' '))
+        {
+            ptr_string++;
+            pos_space = strchr (ptr_string, ' ');
+            if (!pos_space)
+            {
+                free (result);
+                return NULL;
+            }
+
+            pos_space[0] = '\0';
+            
+            /* exit if command is not authorized for spell checking */
+            if (!weechat_aspell_command_authorized (ptr_string))
+            {
+                free (result);
+                return NULL;
+            }
+            result[index_result++] = '/';
+            strcpy (result + index_result, ptr_string);
+            index_result += strlen (ptr_string);
+
+            pos_space[0] = ' ';
+            ptr_string = pos_space;
+        }
+        
+        while (ptr_string[0])
+        {
+            while (ptr_string[0] == ' ')
+            {
+                result[index_result++] = ' ';
+                ptr_string++;
+            }
+            if (!ptr_string[0])
+                break;
+            
+            pos_space = strchr (ptr_string, ' ');
+            if (pos_space)
+            {
+                pos_space[0] = '\0';
+                length_word = pos_space - ptr_string;
+            }
+            else
+                length_word = strlen (ptr_string);
+            
+            word_ok = weechat_aspell_check_word (buffer, ptr_string);
+            
+            /* add error color */
+            if (!word_ok)
+            {
+                strcpy (result + index_result, color_error);
+                index_result += length_color_error;
+            }
+            
+            /* add word */
+            strcpy (result + index_result, ptr_string);
+            index_result += length_word;
+            
+            /* add normal color (after mispelled word) */
+            if (!word_ok)
+            {
+                strcpy (result + index_result, color_normal);
+                index_result += length_color_normal;
+            }
+            
+            if (pos_space)
+            {
+                pos_space[0] = ' ';
+                ptr_string = pos_space;
+            }
+            else
+                break;
+        }
+        
+        result[index_result] = '\0';
     }
-    weechat_aspell_plugin->input_color (weechat_aspell_plugin, -1, 0, 0);
+
+    if (!result)
+        return NULL;
     
-    free (input);
+    aspell_last_modifier_result = strdup (result);
+    return result;
+}
+
+/*
+ * weechat_aspell_command_cb: callback for /aspell command
+ */
+
+int
+weechat_aspell_command_cb (void *data, struct t_gui_buffer *buffer,
+                           int argc, char **argv, char **argv_eol)
+{
+    char *dicts;
     
-    return PLUGIN_RC_OK;
+    /* make C compiler happy */
+    (void) data;
+    
+    if (argc > 1)
+    {
+        if (weechat_strcasecmp (argv[1], "dictlist") == 0)
+        { 
+            weechat_aspell_speller_list_dicts ();
+            return WEECHAT_RC_OK;
+        }
+        if (weechat_strcasecmp (argv[1], "addword") == 0) 
+        {
+            if (argc > 3)
+                weechat_aspell_add_word (argv[2], argv_eol[3]);
+            else
+            {
+                if (!weechat_aspell_spellers)
+                {
+                    weechat_printf (NULL,
+                                    _("%s%s: no dictionary on this buffer for "
+                                      "adding word"),
+                                    weechat_prefix ("error"),
+                                    ASPELL_PLUGIN_NAME);
+                }
+                else if (weechat_aspell_spellers->next_speller)
+                {
+                    weechat_printf (NULL,
+                                    _("%s%s: many dictionaries are defined for "
+                                      "this buffer, please specify dictionary"),
+                                    weechat_prefix ("error"),
+                                    ASPELL_PLUGIN_NAME);
+                }
+                else
+                    weechat_aspell_add_word (weechat_aspell_spellers->lang,
+                                             argv_eol[2]);
+            }
+            return WEECHAT_RC_OK;
+        }
+        if (weechat_strcasecmp (argv[1], "enable") == 0)
+        {
+            if (argc > 2)
+            {
+                dicts = weechat_string_replace (argv_eol[2], " ", "");
+                weechat_aspell_set_dict (buffer,
+                                         (dicts) ? dicts : argv[2]);
+                if (dicts)
+                    free (dicts);
+            }
+            return WEECHAT_RC_OK;
+        }
+        if (weechat_strcasecmp (argv[1], "disable") == 0)
+        {
+            weechat_aspell_set_dict (buffer, NULL);
+            return WEECHAT_RC_OK;
+        }
+    }
+    
+    return WEECHAT_RC_OK;
 }
 
 /* 
- * weechat_plugin_init : init function, called when plugin is loaded
+ * weechat_plugin_init : init aspell plugin
  */
 
 int
-weechat_plugin_init (t_weechat_plugin *plugin)
+weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 {
-    char help[1024];
-    aspell_plugin_speller = NULL; 
-    aspell_plugin_config = NULL; 
-    weechat_aspell_plugin = plugin;
+    /* make C compiler happy */
+    (void) argc;
+    (void) argv;
     
-    snprintf (help, sizeof(help),	      
-	      "    show : show plugin configuration\n"
-	      "dictlist : show installed dictionnaries\n"
-	      "    save : save plugin configuration\n"			     
-	      "  enable : enable aspell on current channel/server\n"
-	      " disable : disable aspell on current channel/server\n"
-	      "add-word : add a word in your personnal aspell dict\n"
-	      "    dump : show plugins internals (usefull for debug)\n"
-	      "     set : setting options\n"
-	      "           OPTION := { word-size SIZE | toogle-check-mode  | color COLOR }\n"
-	      "           word-size : minimum size for a word to be checked (default : %d)\n" 	      
-	      "   toggle-check-mode : switch between a realtime or an asynchronous checking\n"
-	      "               color : color of the mispelled words\n"
-	      "\n"
-	      " *NB : input line beginning with a '/' is not checked\n",
-	      _PLUGIN_OPTION_WORD_SIZE);
+    weechat_plugin = plugin;
     
-    weechat_aspell_plugin->cmd_handler_add (weechat_aspell_plugin, "aspell",
-					    "Aspell Plugin configuration",
-					    "{ show | save | dictlist | set [OPTION [VALUE]] | add-word WORD | enable LANG | disable | dump }",
-					    help,
-					    "show|dictlist|save|enable|disable|set|add-word|dump word-size|toggle-check-mode|color",
-					    &weechat_aspell_speller_command, NULL, NULL);
+    if (!weechat_aspell_config_init ())
+        return WEECHAT_RC_ERROR;
     
-    weechat_aspell_plugin->keyboard_handler_add (
-	weechat_aspell_plugin, &weechat_aspell_keyb_check, NULL, NULL);
+    if (weechat_aspell_config_read () < 0)
+        return WEECHAT_RC_ERROR;
     
-    weechat_aspell_options_load ();
-    weechat_aspell_config_load ();
-
-    return PLUGIN_RC_OK;
+    /* callback for debug */
+    weechat_hook_signal ("debug", &weechat_aspell_debug_cb, NULL);
+    
+    /* command /aspell */
+    weechat_hook_command ("aspell",
+                          N_("aspell plugin configuration"),
+                          N_("[list | enable lang | disable | addword [lang] "
+                             "word]"),
+                          N_("   list: show installed dictionnaries\n"
+                             " enable: enable aspell on current buffer\n"
+                             "disable: disable aspell on current buffer\n"
+                             "addword: add a word in your personnal aspell dictionary\n"
+                             "\n"
+                             "Input line beginning with a '/' is not checked, "
+                             "except for some commands."),
+                          "list|enable|disable|addword",
+                          &weechat_aspell_command_cb, NULL);
+    
+    /* callback for buffer_switch */
+    weechat_hook_signal ("buffer_switch",
+                         &weechat_aspell_buffer_switch_cb, NULL);
+    
+    /* callback for spell checking input text */
+    weechat_hook_modifier ("weechat_input_text_display",
+                           &weechat_aspell_modifier_cb, NULL);
+    
+    weechat_aspell_create_spellers (weechat_current_buffer);
+    
+    return WEECHAT_RC_OK;
 }
 
 /* 
- * weechat_plugin_end : end function, called when plugin is unloaded
+ * weechat_plugin_end : end aspell plugin
  */
 
-void
-weechat_plugin_end (t_weechat_plugin *p)
+int
+weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
-    aspell_speller_t *s, *t;
-    aspell_config_t *c, *d;
-    
     /* make C compiler happy */
-    (void) p;
+    (void) plugin;
     
-    weechat_aspell_options_save ();
-    weechat_aspell_config_save ();
-
-    /* freeing memory */
+    weechat_aspell_config_write ();
     
-    /* options */
-    if (aspell_plugin_options.color_name)
-	free (aspell_plugin_options.color_name);
-
-    /* spellers */
-    s = aspell_plugin_speller;
-    while ( s != NULL) 
-    {
-	t = s;
-	s = s->next_speller;
-	weechat_aspell_free_speller (t);
-    }
+    weechat_aspell_speller_free_all ();
     
-    /* config */
-    c = aspell_plugin_config;
-    while ( c != NULL) 
-    {
-	d = c;
-	c = c->next_config;
-	weechat_aspell_free_config (c);
-    }
+    if (aspell_last_modifier_string)
+        free (aspell_last_modifier_string);
+    if (aspell_last_modifier_result)
+        free (aspell_last_modifier_result);
+    
+    weechat_aspell_config_free ();
+    
+    return WEECHAT_RC_OK;
 }
