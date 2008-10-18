@@ -1369,7 +1369,7 @@ static int
 weechat_lua_api_config_new_option (lua_State *L)
 {
     const char *config_file, *section, *name, *type, *description;
-    const char *string_values, *default_value;
+    const char *string_values, *default_value, *value;
     const char *function_check_value, *function_change, *function_delete;
     char *result;
     int n, min, max;
@@ -1392,27 +1392,29 @@ weechat_lua_api_config_new_option (lua_State *L)
     min = 0;
     max = 0;
     default_value = NULL;
+    value = NULL;
     function_check_value = NULL;
     function_change = NULL;
     function_delete = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 12)
+    if (n < 13)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
         LUA_RETURN_EMPTY;
     }
     
-    config_file = lua_tostring (lua_current_interpreter, -12);
-    section = lua_tostring (lua_current_interpreter, -11);
-    name = lua_tostring (lua_current_interpreter, -10);
-    type = lua_tostring (lua_current_interpreter, -9);
-    description = lua_tostring (lua_current_interpreter, -8);
-    string_values = lua_tostring (lua_current_interpreter, -7);
-    min = lua_tonumber (lua_current_interpreter, -6);
-    max = lua_tonumber (lua_current_interpreter, -5);
-    default_value = lua_tostring (lua_current_interpreter, -4);
+    config_file = lua_tostring (lua_current_interpreter, -13);
+    section = lua_tostring (lua_current_interpreter, -12);
+    name = lua_tostring (lua_current_interpreter, -11);
+    type = lua_tostring (lua_current_interpreter, -10);
+    description = lua_tostring (lua_current_interpreter, -9);
+    string_values = lua_tostring (lua_current_interpreter, -8);
+    min = lua_tonumber (lua_current_interpreter, -7);
+    max = lua_tonumber (lua_current_interpreter, -6);
+    default_value = lua_tostring (lua_current_interpreter, -5);
+    value = lua_tostring (lua_current_interpreter, -4);
     function_check_value = lua_tostring (lua_current_interpreter, -3);
     function_change = lua_tostring (lua_current_interpreter, -2);
     function_delete = lua_tostring (lua_current_interpreter, -1);
@@ -1428,6 +1430,7 @@ weechat_lua_api_config_new_option (lua_State *L)
                                                            min,
                                                            max,
                                                            default_value,
+                                                           value,
                                                            &weechat_lua_api_config_option_check_value_cb,
                                                            function_check_value,
                                                            &weechat_lua_api_config_option_change_cb,

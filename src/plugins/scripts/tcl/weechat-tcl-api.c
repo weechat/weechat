@@ -1375,7 +1375,8 @@ weechat_tcl_api_config_new_option (ClientData clientData, Tcl_Interp *interp,
 {
     Tcl_Obj* objp;
     char *result, *config_file, *section, *name, *type;
-    char *description, *string_values, *default_value, *function_check_value, *function_change, *function_delete;
+    char *description, *string_values, *default_value, *value;
+    char *function_check_value, *function_change, *function_delete;
     int i,min,max;
     
     /* make C compiler happy */
@@ -1387,19 +1388,19 @@ weechat_tcl_api_config_new_option (ClientData clientData, Tcl_Interp *interp,
 	TCL_RETURN_EMPTY;
     }
     
-    if (objc < 13)
+    if (objc < 14)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
         TCL_RETURN_EMPTY;
     }
-
+    
     if ((Tcl_GetIntFromObj (interp, objv[7], &min) != TCL_OK)
         || (Tcl_GetIntFromObj (interp, objv[8], &max) != TCL_OK))
     {
 	WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
         TCL_RETURN_EMPTY;
     }
-
+    
     config_file = Tcl_GetStringFromObj (objv[1], &i);
     section = Tcl_GetStringFromObj (objv[2], &i);
     name = Tcl_GetStringFromObj (objv[3], &i);
@@ -1407,9 +1408,10 @@ weechat_tcl_api_config_new_option (ClientData clientData, Tcl_Interp *interp,
     description = Tcl_GetStringFromObj (objv[5], &i);
     string_values = Tcl_GetStringFromObj (objv[6], &i);
     default_value = Tcl_GetStringFromObj (objv[9], &i);
-    function_check_value = Tcl_GetStringFromObj (objv[10], &i);
-    function_change = Tcl_GetStringFromObj (objv[11], &i);
-    function_delete = Tcl_GetStringFromObj (objv[12], &i);
+    value = Tcl_GetStringFromObj (objv[10], &i);
+    function_check_value = Tcl_GetStringFromObj (objv[11], &i);
+    function_change = Tcl_GetStringFromObj (objv[12], &i);
+    function_delete = Tcl_GetStringFromObj (objv[13], &i);
 
     result = script_ptr2str (script_api_config_new_option (weechat_tcl_plugin,
                                                            tcl_current_script,
@@ -1419,9 +1421,10 @@ weechat_tcl_api_config_new_option (ClientData clientData, Tcl_Interp *interp,
                                                            type,
                                                            description,
                                                            string_values,
-                                                           min, /* min */
-                                                           max, /* max */
+                                                           min,
+                                                           max,
                                                            default_value,
+                                                           value,
                                                            &weechat_tcl_api_config_option_check_value_cb,
                                                            function_check_value,
                                                            &weechat_tcl_api_config_option_change_cb,

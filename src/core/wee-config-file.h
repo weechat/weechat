@@ -175,6 +175,7 @@ extern struct t_config_option *config_file_new_option (struct t_config_file *con
                                                        const char *string_values,
                                                        int min, int max,
                                                        const char *default_value,
+                                                       const char *value,
                                                        int (*callback_check_value)(void *data,
                                                                                    struct t_config_option *option,
                                                                                    const char *value),

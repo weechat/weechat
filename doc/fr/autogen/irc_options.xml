@@ -562,7 +562,7 @@
     <para>valeurs: toute chaîne</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: 'flashcode,flashcode1,flashcode2,flashcode3,flashcode4'</para>
+    <para>valeur par défaut: ''</para>
   </listitem>
 </itemizedlist>
 
@@ -594,7 +594,7 @@
     <para>valeurs: toute chaîne</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: 'flashcode'</para>
+    <para>valeur par défaut: ''</para>
   </listitem>
 </itemizedlist>
 
@@ -626,7 +626,7 @@
     <para>valeurs: toute chaîne</para>
   </listitem>
   <listitem>
-    <para>valeur par défaut: 'flashcode'</para>
+    <para>valeur par défaut: ''</para>
   </listitem>
 </itemizedlist>
 

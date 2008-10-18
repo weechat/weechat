@@ -1163,7 +1163,7 @@ weechat_perl_api_config_option_delete_cb (void *data,
 static XS (XS_weechat_api_config_new_option)
 {
     char *result, *config_file, *section, *name, *type;
-    char *description, *string_values, *default_value;
+    char *description, *string_values, *default_value, *value;
     char *function_check_value, *function_change, *function_delete;
     dXSARGS;
     
@@ -1176,7 +1176,7 @@ static XS (XS_weechat_api_config_new_option)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 12)
+    if (items < 13)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
         PERL_RETURN_EMPTY;
@@ -1189,8 +1189,9 @@ static XS (XS_weechat_api_config_new_option)
     description = SvPV (ST (4), PL_na);
     string_values = SvPV (ST (5), PL_na);
     default_value = SvPV (ST (8), PL_na);
-    function_check_value = SvPV (ST (9), PL_na);
-    function_change = SvPV (ST (10), PL_na);
+    value = SvPV (ST (9), PL_na);
+    function_check_value = SvPV (ST (10), PL_na);
+    function_change = SvPV (ST (11), PL_na);
     function_delete = SvPV (ST (12), PL_na);
     result = script_ptr2str (script_api_config_new_option (weechat_perl_plugin,
                                                            perl_current_script,
@@ -1203,6 +1204,7 @@ static XS (XS_weechat_api_config_new_option)
                                                            SvIV (ST (6)), /* min */
                                                            SvIV (ST (7)), /* max */
                                                            default_value,
+                                                           value,
                                                            &weechat_perl_api_config_option_check_value_cb,
                                                            function_check_value,
                                                            &weechat_perl_api_config_option_change_cb,

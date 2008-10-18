@@ -54,38 +54,6 @@
   </listitem>
 </itemizedlist>
 
-<command>aspell.dict.irc.local.#test</command>
-<itemizedlist>
-  <listitem>
-    <para>description: liste de dictionnaires (séparés par des virgules) à utiliser sur ce tampon</para>
-  </listitem>
-  <listitem>
-    <para>type: chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 'fr'</para>
-  </listitem>
-</itemizedlist>
-
-<command>aspell.dict.irc.local.#test2</command>
-<itemizedlist>
-  <listitem>
-    <para>description: liste de dictionnaires (séparés par des virgules) à utiliser sur ce tampon</para>
-  </listitem>
-  <listitem>
-    <para>type: chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 'fr'</para>
-  </listitem>
-</itemizedlist>
-
 <command>aspell.look.color</command>
 <itemizedlist>
   <listitem>

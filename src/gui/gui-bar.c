@@ -997,7 +997,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "boolean",
                     N_("true if bar is hidden, false if it is displayed"),
-                    NULL, 0, 0, value,
+                    NULL, 0, 0, value, NULL,
                     NULL, NULL, &gui_bar_config_change_hidden, NULL, NULL, NULL);
                 break;
             case GUI_BAR_OPTION_PRIORITY:
@@ -1005,7 +1005,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "integer",
                     N_("bar priority (high number means bar displayed first)"),
-                    NULL, 0, INT_MAX, value,
+                    NULL, 0, INT_MAX, value, NULL,
                     NULL, NULL, &gui_bar_config_change_priority, NULL, NULL, NULL);
                 break;
             case GUI_BAR_OPTION_TYPE:
@@ -1013,7 +1013,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "integer",
                     N_("bar type (root, window, window_active, window_inactive)"),
-                    "root|window|window_active|window_inactive", 0, 0, value,
+                    "root|window|window_active|window_inactive", 0, 0, value, NULL,
                     &gui_bar_config_check_type, NULL, NULL, NULL, NULL, NULL);
                 break;
             case GUI_BAR_OPTION_CONDITIONS:
@@ -1022,7 +1022,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     option_name, "string",
                     N_("condition(s) for displaying bar (for bars of type "
                        "\"window\")"),
-                    NULL, 0, 0, value,
+                    NULL, 0, 0, value, NULL,
                     NULL, NULL, &gui_bar_config_change_conditions, NULL, NULL, NULL);
                 break;
             case GUI_BAR_OPTION_POSITION:
@@ -1030,7 +1030,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "integer",
                     N_("bar position (bottom, top, left, right)"),
-                    "bottom|top|left|right", 0, 0, value,
+                    "bottom|top|left|right", 0, 0, value, NULL,
                     NULL, NULL, &gui_bar_config_change_position, NULL, NULL, NULL);
                 break;
             case GUI_BAR_OPTION_FILLING_TOP_BOTTOM:
@@ -1040,7 +1040,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     N_("bar filling direction (\"horizontal\" (from left to "
                        "right) or \"vertical\" (from top to bottom)) when bar "
                        "position is top or bottom"),
-                    "horizontal|vertical", 0, 0, value,
+                    "horizontal|vertical", 0, 0, value, NULL,
                     NULL, NULL, &gui_bar_config_change_filling, NULL, NULL, NULL);
                 break;
             case GUI_BAR_OPTION_FILLING_LEFT_RIGHT:
@@ -1050,7 +1050,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     N_("bar filling direction (\"horizontal\" (from left to "
                        "right) or \"vertical\" (from top to bottom)) when bar "
                        "position is left or right"),
-                    "horizontal|vertical", 0, 0, value,
+                    "horizontal|vertical", 0, 0, value, NULL,
                     NULL, NULL, &gui_bar_config_change_filling, NULL, NULL, NULL);
                 break;
             case GUI_BAR_OPTION_SIZE:
@@ -1058,7 +1058,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "integer",
                     N_("bar size in chars (0 = auto size)"),
-                    NULL, 0, INT_MAX, value,
+                    NULL, 0, INT_MAX, value, NULL,
                     &gui_bar_config_check_size, NULL,
                     &gui_bar_config_change_size, NULL,
                     NULL, NULL);
@@ -1068,7 +1068,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "integer",
                     N_("max bar size in chars (0 = no limit)"),
-                    NULL, 0, INT_MAX, value,
+                    NULL, 0, INT_MAX, value, NULL,
                     NULL, NULL,
                     &gui_bar_config_change_size_max, NULL,
                     NULL, NULL);
@@ -1078,7 +1078,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "color",
                     N_("default text color for bar"),
-                    NULL, 0, 0, value,
+                    NULL, 0, 0, value, NULL,
                     NULL, NULL,
                     &gui_bar_config_change_color, NULL,
                     NULL, NULL);
@@ -1088,7 +1088,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "color",
                     N_("default delimiter color for bar"),
-                    NULL, 0, 0, value,
+                    NULL, 0, 0, value, NULL,
                     NULL, NULL,
                     &gui_bar_config_change_color, NULL,
                     NULL, NULL);
@@ -1098,7 +1098,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "color",
                     N_("default background color for bar"),
-                    NULL, 0, 0, value,
+                    NULL, 0, 0, value, NULL,
                     NULL, NULL,
                     &gui_bar_config_change_color, NULL,
                     NULL, NULL);
@@ -1108,7 +1108,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "boolean",
                     N_("separator line between bar and other bars/windows"),
-                    NULL, 0, 0, value,
+                    NULL, 0, 0, value, NULL,
                     NULL, NULL, &gui_bar_config_change_separator, NULL, NULL, NULL);
                 break;
             case GUI_BAR_OPTION_ITEMS:
@@ -1116,7 +1116,7 @@ gui_bar_create_option (const char *bar_name, int index_option, const char *value
                     weechat_config_file, weechat_config_section_bar,
                     option_name, "string",
                     N_("items of bar"),
-                    NULL, 0, 0, value,
+                    NULL, 0, 0, value, NULL,
                     NULL, NULL, &gui_bar_config_change_items, NULL, NULL, NULL);
                 break;
             case GUI_BAR_NUM_OPTIONS:

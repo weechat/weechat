@@ -240,6 +240,7 @@ struct t_weechat_plugin
                                                   const char *string_values,
                                                   int min, int max,
                                                   const char *default_value,
+                                                  const char *value,
                                                   int (*callback_check_value)(void *data,
                                                                               struct t_config_option *option,
                                                                               const char *value),
@@ -721,7 +722,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->config_search_section(__config, __name)
 #define weechat_config_new_option(__config, __section, __name, __type,  \
                                   __desc, __string_values, __min,       \
-                                  __max, __default, __callback_check,   \
+                                  __max, __default, __value,            \
+                                  __callback_check,                     \
                                   __callback_check_data,                \
                                   __callback_change,                    \
                                   __callback_change_data,               \
@@ -729,7 +731,7 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                   __callback_delete_data)               \
     weechat_plugin->config_new_option(__config, __section, __name,      \
                                       __type, __desc, __string_values,  \
-                                      __min, __max, __default,          \
+                                      __min, __max, __default, __value, \
                                       __callback_check,                 \
                                       __callback_check_data,            \
                                       __callback_change,                \

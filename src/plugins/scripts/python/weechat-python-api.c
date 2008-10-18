@@ -1222,7 +1222,7 @@ static PyObject *
 weechat_python_api_config_new_option (PyObject *self, PyObject *args)
 {
     char *config_file, *section, *name, *type, *description, *string_values;
-    char *default_value, *result;
+    char *default_value, *value, *result;
     char *function_check_value, *function_change, *function_delete;
     int min, max;
     PyObject *object;
@@ -1243,13 +1243,14 @@ weechat_python_api_config_new_option (PyObject *self, PyObject *args)
     description = NULL;
     string_values = NULL;
     default_value = NULL;
+    value = NULL;
     function_check_value = NULL;
     function_change = NULL;
     function_delete = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssssssiissss", &config_file, &section, &name,
+    if (!PyArg_ParseTuple (args, "ssssssiisssss", &config_file, &section, &name,
                            &type, &description, &string_values, &min, &max,
-                           &default_value, &function_check_value,
+                           &default_value, &value, &function_check_value,
                            &function_change, &function_delete))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_option");
@@ -1267,6 +1268,7 @@ weechat_python_api_config_new_option (PyObject *self, PyObject *args)
                                                            min,
                                                            max,
                                                            default_value,
+                                                           value,
                                                            &weechat_python_api_config_option_check_value_cb,
                                                            function_check_value,
                                                            &weechat_python_api_config_option_change_cb,

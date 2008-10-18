@@ -144,7 +144,7 @@ charset_config_create_option (void *data, struct t_config_file *config_file,
                 ptr_option = weechat_config_new_option (
                     config_file, section,
                     option_name, "string", NULL,
-                    NULL, 0, 0, value, NULL, NULL, NULL, NULL, NULL, NULL);
+                    NULL, 0, 0, "", value, NULL, NULL, NULL, NULL, NULL, NULL);
                 rc = (ptr_option) ?
                     WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
             }
@@ -199,13 +199,13 @@ charset_config_init ()
         (charset_terminal && charset_internal
          && (strcasecmp (charset_terminal,
                          charset_internal) != 0)) ?
-        charset_terminal : "iso-8859-1",
+        charset_terminal : "iso-8859-1", NULL,
         NULL, NULL, NULL, NULL, NULL, NULL);
     charset_default_encode = weechat_config_new_option (
         charset_config_file, ptr_section,
         "encode", "string",
         N_("global encoding charset"),
-        NULL, 0, 0, "",
+        NULL, 0, 0, "", NULL,
         NULL, NULL, NULL, NULL, NULL, NULL);
     
     ptr_section = weechat_config_new_section (charset_config_file, "decode",

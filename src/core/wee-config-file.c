@@ -349,6 +349,7 @@ config_file_new_option (struct t_config_file *config_file,
                         const char *type, const char *description,
                         const char *string_values, int min, int max,
                         const char *default_value,
+                        const char *value,
                         int (*callback_check_value)(void *data,
                                                     struct t_config_option *option,
                                                     const char *value),
@@ -389,6 +390,11 @@ config_file_new_option (struct t_config_file *config_file,
         return NULL;
     }
     
+    if (default_value && !value)
+        value = default_value;
+    else if (!default_value && value)
+        default_value = value;
+    
     new_option = malloc (sizeof (*new_option));
     if (new_option)
     {
@@ -407,6 +413,7 @@ config_file_new_option (struct t_config_file *config_file,
                 int_value = config_file_string_to_boolean (default_value);
                 new_option->default_value = malloc (sizeof (int));
                 *((int *)new_option->default_value) = int_value;
+                int_value = config_file_string_to_boolean (value);
                 new_option->value = malloc (sizeof (int));
                 *((int *)new_option->value) = int_value;
                 break;
@@ -429,6 +436,16 @@ config_file_new_option (struct t_config_file *config_file,
                     }
                     new_option->default_value = malloc (sizeof (int));
                     *((int *)new_option->default_value) = index_value;
+                    index_value = 0;
+                    for (i = 0; i < argc; i++)
+                    {
+                        if (string_strcasecmp (new_option->string_values[i],
+                                               value) == 0)
+                        {
+                            index_value = i;
+                            break;
+                        }
+                    }
                     new_option->value = malloc (sizeof (int));
                     *((int *)new_option->value) = index_value;
                 }
@@ -443,6 +460,10 @@ config_file_new_option (struct t_config_file *config_file,
                         number = 0;
                     new_option->default_value = malloc (sizeof (int));
                     *((int *)new_option->default_value) = number;
+                    error = NULL;
+                    number = strtol (value, &error, 10);
+                    if (!error || error[0])
+                        number = 0;
                     new_option->value = malloc (sizeof (int));
                     *((int *)new_option->value) = number;
                 }
@@ -453,8 +474,8 @@ config_file_new_option (struct t_config_file *config_file,
                 new_option->max = max;
                 new_option->default_value = (default_value) ?
                     strdup (default_value) : NULL;
-                new_option->value = (default_value) ?
-                    strdup (default_value) : NULL;
+                new_option->value = (value) ?
+                    strdup (value) : NULL;
                 break;
             case CONFIG_OPTION_TYPE_COLOR:
                 new_option->string_values = NULL;
@@ -464,7 +485,8 @@ config_file_new_option (struct t_config_file *config_file,
                 if (!gui_color_assign (new_option->default_value, default_value))
                     *((int *)new_option->default_value) = 0;
                 new_option->value = malloc (sizeof (int));
-                *((int *)new_option->value) = *((int *)new_option->default_value);
+                if (!gui_color_assign (new_option->value, value))
+                    *((int *)new_option->value) = 0;
                 break;
             case CONFIG_NUM_OPTION_TYPES:
                 break;

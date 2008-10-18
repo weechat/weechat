@@ -562,7 +562,7 @@
     <para>values: any string</para>
   </listitem>
   <listitem>
-    <para>default value: 'flashcode,flashcode1,flashcode2,flashcode3,flashcode4'</para>
+    <para>default value: ''</para>
   </listitem>
 </itemizedlist>
 
@@ -594,7 +594,7 @@
     <para>values: any string</para>
   </listitem>
   <listitem>
-    <para>default value: 'flashcode'</para>
+    <para>default value: ''</para>
   </listitem>
 </itemizedlist>
 
@@ -626,7 +626,7 @@
     <para>values: any string</para>
   </listitem>
   <listitem>
-    <para>default value: 'flashcode'</para>
+    <para>default value: ''</para>
   </listitem>
 </itemizedlist>
 
