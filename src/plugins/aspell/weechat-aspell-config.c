@@ -24,9 +24,9 @@
 #include <limits.h>
 
 #include "../weechat-plugin.h"
-#include "aspell.h"
-#include "aspell-config.h"
-#include "aspell-speller.h"
+#include "weechat-aspell.h"
+#include "weechat-aspell-config.h"
+#include "weechat-aspell-speller.h"
 
 
 struct t_config_file *weechat_aspell_config_file = NULL;

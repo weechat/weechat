@@ -15,9 +15,9 @@
 #
 
 ADD_LIBRARY(aspell MODULE
-aspell.c aspell.h
-aspell-config.c aspell-config.h
-aspell-speller.c aspell-speller.h)
+weechat-aspell.c weechat-aspell.h
+weechat-aspell-config.c weechat-aspell-config.h
+weechat-aspell-speller.c weechat-aspell-speller.h)
 SET_TARGET_PROPERTIES(aspell PROPERTIES PREFIX "")
 
 IF(ASPELL_FOUND)

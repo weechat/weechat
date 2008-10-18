@@ -23,8 +23,8 @@
 #include <string.h>
 
 #include "../weechat-plugin.h"
-#include "aspell.h"
-#include "aspell-speller.h"
+#include "weechat-aspell.h"
+#include "weechat-aspell-speller.h"
 
 
 struct t_aspell_speller *weechat_aspell_spellers = NULL;
