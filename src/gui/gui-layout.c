@@ -42,8 +42,6 @@ struct t_gui_layout_buffer *last_gui_layout_buffer = NULL;
 struct t_gui_layout_window *gui_layout_windows = NULL;
 
 int internal_id = 0;
-struct t_gui_window *window1 = NULL;
-struct t_gui_window *window2 = NULL;
 
 
 /*
@@ -468,11 +466,13 @@ gui_layout_window_check_all_buffers ()
 void
 gui_layout_window_apply_tree (struct t_gui_layout_window *layout_window)
 {
-    struct t_gui_window *new_window;
+    struct t_gui_window *new_window, *old_window;
     
     if (layout_window->split_pct != 0)
     {
         /* node */
+        old_window = gui_current_window;
+        
         if (layout_window->split_horiz)
         {
             new_window = gui_window_split_horiz (gui_current_window,
@@ -484,32 +484,23 @@ gui_layout_window_apply_tree (struct t_gui_layout_window *layout_window)
                                                   layout_window->split_pct);
         }
         
-        if (new_window)
-        {
-            if (window2)
-                window1 = window2;
-            window2 = new_window;
-        }
+        if (layout_window->child2)
+            gui_layout_window_apply_tree (layout_window->child2);
+        
+        if (old_window != gui_current_window)
+            gui_window_switch (old_window);
+        
+        if (layout_window->child1)
+            gui_layout_window_apply_tree (layout_window->child1);
     }
     else
     {
         /* leaf */
-        if (window1)
-        {
-            gui_window_set_layout_plugin_name (window1,
-                                               layout_window->plugin_name);
-            gui_window_set_layout_buffer_name (window1,
-                                               layout_window->buffer_name);
-            window1 = window2;
-            window2 = NULL;
-        }
+        gui_window_set_layout_plugin_name (gui_current_window,
+                                           layout_window->plugin_name);
+        gui_window_set_layout_buffer_name (gui_current_window,
+                                           layout_window->buffer_name);
     }
-    
-    if (layout_window->child1)
-        gui_layout_window_apply_tree (layout_window->child1);
-    
-    if (layout_window->child2)
-        gui_layout_window_apply_tree (layout_window->child2);
 }
 
 /*
@@ -526,11 +517,9 @@ gui_layout_window_apply ()
         gui_window_merge_all (gui_current_window);
         
         old_window = gui_current_window;
-        window1 = gui_current_window;
-        window2 = NULL;
         
         gui_layout_window_apply_tree (gui_layout_windows);
-
+        
         gui_layout_window_check_all_buffers ();
         
         gui_window_switch (old_window);
