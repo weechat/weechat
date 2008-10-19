@@ -5,6 +5,7 @@ ChangeLog - 2008-10-19
 
 
 Version 0.2.7 (under dev!):
+   * add color decoding in title for IRC channels (task #6030)
    * fix lock with SSL servers when connection fails, and when disconnecting
      during connection problem (bug #17584)
    * add new option scroll_page_percent to choose percent of height to scroll

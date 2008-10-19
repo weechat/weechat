@@ -26,10 +26,48 @@
 #include "../weechat-plugin.h"
 #include "irc.h"
 #include "irc-buffer.h"
+#include "irc-color.h"
 #include "irc-config.h"
 #include "irc-server.h"
 #include "irc-channel.h"
 
+
+/*
+ * irc_bar_item_buffer_title: bar item with buffer title
+ */
+
+char *
+irc_bar_item_buffer_title (void *data, struct t_gui_bar_item *item,
+                           struct t_gui_window *window,
+                           int max_width, int max_height)
+{
+    struct t_gui_buffer *buffer;
+    char *title, *title_color;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) item;
+    (void) max_width;
+    (void) max_height;
+    
+    if (!window)
+        window = weechat_current_window;
+    
+    buffer = weechat_window_get_pointer (window, "buffer");
+    
+    if (buffer)
+    {
+        title = weechat_buffer_get_string (buffer, "title");
+        if (!title)
+            return NULL;
+        
+        title_color = irc_color_decode (title, 1);
+
+        return (title_color) ? title_color : strdup (title);
+    }
+    
+    return NULL;
+}
 
 /*
  * irc_bar_item_buffer_name: bar item with buffer name
@@ -261,6 +299,7 @@ irc_bar_item_input_prompt (void *data, struct t_gui_bar_item *item,
 void
 irc_bar_item_init ()
 {
+    weechat_bar_item_new ("buffer_title", &irc_bar_item_buffer_title, NULL);
     weechat_bar_item_new ("buffer_name", &irc_bar_item_buffer_name, NULL);
     weechat_bar_item_new ("lag", &irc_bar_item_lag, NULL);
     weechat_bar_item_new ("input_prompt", &irc_bar_item_input_prompt, NULL);
