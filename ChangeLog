@@ -1,10 +1,12 @@
 WeeChat - Wee Enhanced Environment for Chat
 ===========================================
 
-ChangeLog - 2008-10-05
+ChangeLog - 2008-10-19
 
 
 Version 0.2.7 (under dev!):
+   * fix lock with SSL servers when connection fails, and when disconnecting
+     during connection problem (bug #17584)
    * add new option scroll_page_percent to choose percent of height to scroll
      with page_up and page_down keys (task #8702)
    * add new /layout command and save_layout_on_exit config option, to

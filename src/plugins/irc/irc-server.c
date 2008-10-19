@@ -1842,30 +1842,34 @@ irc_server_timer_check_away (void *empty)
 void
 irc_server_close_connection (struct t_irc_server *server)
 {
-    if (server->hook_connect)
-    {
-        weechat_unhook (server->hook_connect);
-        server->hook_connect = NULL;
-    }
     if (server->hook_fd)
     {
         weechat_unhook (server->hook_fd);
         server->hook_fd = NULL;
     }
     
-    /* close network socket */
-    if (server->sock != -1)
+    if (server->hook_connect)
+    {
+        weechat_unhook (server->hook_connect);
+        server->hook_connect = NULL;
+    }
+    else
     {
 #ifdef HAVE_GNUTLS
-        if (server->ssl_connected)
-            gnutls_bye (server->gnutls_sess, GNUTLS_SHUT_WR);
+        /* close SSL connection */
+        if ((server->sock != -1) && (server->ssl_connected))
+        {
+            if (server->ssl_connected)
+                gnutls_bye (server->gnutls_sess, GNUTLS_SHUT_WR);
+            if (server->ssl_connected)
+                gnutls_deinit (server->gnutls_sess);
+        }
 #endif
+    }
+    if (server->sock != -1)
+    {
         close (server->sock);
         server->sock = -1;
-#ifdef HAVE_GNUTLS
-        if (server->ssl_connected)
-            gnutls_deinit (server->gnutls_sess);
-#endif
     }
     
     /* free any pending message */
