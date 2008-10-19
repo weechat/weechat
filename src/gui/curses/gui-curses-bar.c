@@ -692,7 +692,7 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                              const char *string,
                              int reset_color_before_display)
 {
-    int weechat_color, x_with_hidden, size_on_screen, fg, bg;
+    int weechat_color, x_with_hidden, size_on_screen, fg, bg, low_char;
     char str_fg[3], str_bg[3], utf_char[16], *next_char, *output;
     
     if (!string || !string[0])
@@ -814,8 +814,18 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
             memcpy (utf_char, string, next_char - string);
             utf_char[next_char - string] = '\0';
             
-            if (!gui_window_utf_char_valid (utf_char))
-                snprintf (utf_char, sizeof (utf_char), ".");
+            if ((((unsigned char)utf_char[0]) < 32) && (!utf_char[1]))
+            {
+                low_char = 1;
+                snprintf (utf_char, sizeof (utf_char), "%c",
+                          'A' + ((unsigned char)utf_char[0]) - 1);
+            }
+            else
+            {
+                low_char = 0;
+                if (!gui_window_utf_char_valid (utf_char))
+                    snprintf (utf_char, sizeof (utf_char), ".");
+            }
             
             size_on_screen = utf8_char_size_screen (utf_char);
             if (size_on_screen > 0)
@@ -839,8 +849,12 @@ gui_bar_window_print_string (struct t_gui_bar_window *bar_window,
                     }
                     
                     output = string_iconv_from_internal (NULL, utf_char);
+                    if (low_char)
+                        wattron (bar_window->win_bar, A_REVERSE);
                     wprintw (bar_window->win_bar, "%s",
                              (output) ? output : utf_char);
+                    if (low_char)
+                        wattroff (bar_window->win_bar, A_REVERSE);
                     if (output)
                         free (output);
                     

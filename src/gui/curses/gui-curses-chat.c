@@ -316,10 +316,7 @@ gui_chat_string_next_char (struct t_gui_window *window,
                 }
                 break;
             default:
-                if (string[0] < 32)
-                    string++;
-                else
-                    return (char *)string;
+                return (char *)string;
                 break;
         }
             
