@@ -2845,6 +2845,10 @@ irc_server_add_to_infolist (struct t_infolist *infolist,
                                           (server->buffer) ?
                                           weechat_buffer_get_string (server->buffer, "name") : ""))
         return 0;
+    if (!weechat_infolist_new_var_string (ptr_item, "buffer_short_name",
+                                          (server->buffer) ?
+                                          weechat_buffer_get_string (server->buffer, "short_name") : ""))
+        return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "selected",
                                            (weechat_config_boolean (irc_config_look_one_server_buffer)
                                             && (irc_current_server != server)) ?
