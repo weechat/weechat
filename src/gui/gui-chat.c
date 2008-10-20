@@ -495,21 +495,38 @@ int
 gui_chat_line_search (struct t_gui_line *line, const char *text,
                       int case_sensitive)
 {
-    char *message;
+    char *prefix, *message;
     int rc;
     
     if (!line || !line->message || !text || !text[0])
         return 0;
     
     rc = 0;
-    message = (char *)gui_color_decode ((unsigned char *)line->message);
-    if (message)
+    
+    if (line->prefix)
     {
-        if ((case_sensitive && (strstr (message, text)))
-            || (!case_sensitive && (string_strcasestr (message, text))))
-            rc = 1;
-        free (message);
+        prefix = (char *)gui_color_decode ((unsigned char *)line->prefix);
+        if (prefix)
+        {
+            if ((case_sensitive && (strstr (prefix, text)))
+                || (!case_sensitive && (string_strcasestr (prefix, text))))
+                rc = 1;
+            free (prefix);
+        }
     }
+    
+    if (!rc)
+    {
+        message = (char *)gui_color_decode ((unsigned char *)line->message);
+        if (message)
+        {
+            if ((case_sensitive && (strstr (message, text)))
+                || (!case_sensitive && (string_strcasestr (message, text))))
+                rc = 1;
+            free (message);
+        }
+    }
+    
     return rc;
 }
 
