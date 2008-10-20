@@ -3137,6 +3137,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             }
         }
         weechat_bar_item_update ("buffer_name");
+        weechat_bar_item_update ("input_prompt");
         return WEECHAT_RC_OK;
     }
     
