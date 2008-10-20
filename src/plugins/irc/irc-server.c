@@ -2179,6 +2179,8 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
                 irc_buffer_servers = server->buffer;
         }
         
+        weechat_buffer_set (server->buffer, "short_name", server->name);
+        
         weechat_buffer_set (server->buffer, "display", "1");
         
         weechat_bar_item_update ("buffer_name");

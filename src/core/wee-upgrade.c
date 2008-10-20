@@ -324,6 +324,10 @@ upgrade_weechat_read_cb (int object_id,
                     {
                         if (infolist_integer (infolist, "current_buffer"))
                             upgrade_set_current_buffer = upgrade_current_buffer;
+                        upgrade_current_buffer->short_name =
+                            (infolist_string (infolist, "short_name")) ?
+                            strdup (infolist_string (infolist, "short_name")) :
+                            strdup (infolist_string (infolist, "name"));
                         upgrade_current_buffer->plugin_name_for_upgrade =
                             strdup (infolist_string (infolist, "plugin_name"));
                         upgrade_current_buffer->nicklist_case_sensitive =

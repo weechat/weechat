@@ -169,6 +169,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->layout_number = gui_layout_buffer_get_number (plugin_get_name (plugin),
                                                                   name);
         new_buffer->name = strdup (name);
+        new_buffer->short_name = strdup (name);
         new_buffer->type = GUI_BUFFER_TYPE_FORMATED;
         new_buffer->notify = CONFIG_INTEGER(config_look_buffer_notify_default);
         new_buffer->num_displayed = 0;
@@ -351,6 +352,8 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
             return plugin_get_name (buffer->plugin);
         else if (string_strcasecmp (property, "name") == 0)
             return buffer->name;
+        else if (string_strcasecmp (property, "short_name") == 0)
+            return buffer->short_name;
         else if (string_strcasecmp (property, "title") == 0)
             return buffer->title;
     }
@@ -408,6 +411,24 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
         if (buffer->name)
             free (buffer->name);
         buffer->name = strdup (name);
+        
+        hook_signal_send ("buffer_renamed",
+                          WEECHAT_HOOK_SIGNAL_POINTER, buffer);
+    }
+}
+
+/*
+ * gui_buffer_set_short_name: set short name for a buffer
+ */
+
+void
+gui_buffer_set_short_name (struct t_gui_buffer *buffer, const char *short_name)
+{
+    if (short_name && short_name[0])
+    {
+        if (buffer->short_name)
+            free (buffer->short_name);
+        buffer->short_name = strdup (short_name);
         
         hook_signal_send ("buffer_renamed",
                           WEECHAT_HOOK_SIGNAL_POINTER, buffer);
@@ -608,6 +629,10 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "name") == 0)
     {
         gui_buffer_set_name (buffer, value_str);
+    }
+    else if (string_strcasecmp (property, "short_name") == 0)
+    {
+        gui_buffer_set_short_name (buffer, value_str);
     }
     else if (string_strcasecmp (property, "type") == 0)
     {
@@ -970,6 +995,8 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
         free (buffer->title);
     if (buffer->name)
         free (buffer->name);
+    if (buffer->short_name)
+        free (buffer->short_name);
     if (buffer->input_buffer)
         free (buffer->input_buffer);
     if (buffer->completion)
@@ -1183,7 +1210,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
 {
     struct t_infolist_item *ptr_item;
     struct t_gui_key *ptr_key;
-    char *pos_point, option_name[32];
+    char option_name[32];
     int i;
     
     if (!infolist || !buffer)
@@ -1207,9 +1234,7 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         return 0;
     if (!infolist_new_var_string (ptr_item, "name", buffer->name))
         return 0;
-    pos_point = strchr (buffer->name, '.');
-    if (!infolist_new_var_string (ptr_item, "short_name",
-                                  (pos_point) ? pos_point + 1 : buffer->name))
+    if (!infolist_new_var_string (ptr_item, "short_name", buffer->short_name))
         return 0;
     if (!infolist_new_var_integer (ptr_item, "type", buffer->type))
         return 0;
@@ -1399,6 +1424,7 @@ gui_buffer_print_log ()
         log_printf ("  number . . . . . . . . : %d",   ptr_buffer->number);
         log_printf ("  layout_number. . . . . : %d",   ptr_buffer->layout_number);
         log_printf ("  name . . . . . . . . . : '%s'", ptr_buffer->name);
+        log_printf ("  short_name . . . . . . : '%s'", ptr_buffer->short_name);
         log_printf ("  type . . . . . . . . . : %d",   ptr_buffer->type);
         log_printf ("  notify . . . . . . . . : %d",   ptr_buffer->notify);
         log_printf ("  num_displayed. . . . . : %d",   ptr_buffer->num_displayed);

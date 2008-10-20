@@ -79,6 +79,7 @@ struct t_gui_buffer
     int layout_number;                 /* the number of buffer saved in     */
                                        /* layout                            */
     char *name;                        /* buffer name                       */
+    char *short_name;                  /* short buffer name                 */
     enum t_gui_buffer_type type;       /* buffer type (formated, free, ..)  */
     int notify;                        /* 0 = never                         */
                                        /* 1 = highlight only                */
