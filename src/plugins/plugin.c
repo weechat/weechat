@@ -414,6 +414,7 @@ plugin_load (const char *filename)
         new_plugin->buffer_get_string = &gui_buffer_get_string;
         new_plugin->buffer_get_pointer = &gui_buffer_get_pointer;
         new_plugin->buffer_set = &gui_buffer_set;
+        new_plugin->buffer_set_pointer = &gui_buffer_set_pointer;
         
         new_plugin->window_get_integer = &gui_window_get_integer;
         new_plugin->window_get_string = &gui_window_get_string;

@@ -304,7 +304,7 @@ irc_server_set_nick (struct t_irc_server *server, const char *nick)
         free (server->nick);
     server->nick = (nick) ? strdup (nick) : NULL;
     
-    weechat_buffer_set (server->buffer, "highlight_words", (void *)nick);
+    weechat_buffer_set (server->buffer, "highlight_words", nick);
     
     weechat_bar_item_update ("input_prompt");
 }

@@ -566,33 +566,30 @@ gui_buffer_set_unread (struct t_gui_buffer *buffer)
 }
 
 /*
- * gui_buffer_set: set a buffer property
+ * gui_buffer_set: set a buffer property (string)
  */
 
 void
 gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
-                void *value)
+                const char *value)
 {
-    const char *value_str;
     long number;
     char *error;
     
     if (!property || !value)
         return;
     
-    value_str = (const char *)value;
-    
     /* properties that does NOT need a buffer */
     if (string_strcasecmp (property, "hotlist") == 0)
     {
-        if (strcmp (value_str, "-") == 0)
+        if (strcmp (value, "-") == 0)
             gui_add_hotlist = 0;
-        else if (strcmp (value_str, "+") == 0)
+        else if (strcmp (value, "+") == 0)
             gui_add_hotlist = 1;
         else
         {
             error = NULL;
-            number = strtol (value_str, &error, 10);
+            number = strtol (value, &error, 10);
             if (error && !error[0])
                 gui_hotlist_add (buffer, number, NULL, 1);
         }
@@ -606,45 +603,29 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         return;
     
     /* properties that need a buffer */
-    if (string_strcasecmp (property, "close_callback") == 0)
-    {
-        buffer->close_callback = value;
-    }
-    else if (string_strcasecmp (property, "close_callback_data") == 0)
-    {
-        buffer->close_callback_data = value;
-    }
-    else if (string_strcasecmp (property, "input_callback") == 0)
-    {
-        buffer->input_callback = value;
-    }
-    else if (string_strcasecmp (property, "input_callback_data") == 0)
-    {
-        buffer->input_callback_data = value;
-    }
-    else if (string_strcasecmp (property, "display") == 0)
+    if (string_strcasecmp (property, "display") == 0)
     {
         gui_window_switch_to_buffer (gui_current_window, buffer);
     }
     else if (string_strcasecmp (property, "name") == 0)
     {
-        gui_buffer_set_name (buffer, value_str);
+        gui_buffer_set_name (buffer, value);
     }
     else if (string_strcasecmp (property, "short_name") == 0)
     {
-        gui_buffer_set_short_name (buffer, value_str);
+        gui_buffer_set_short_name (buffer, value);
     }
     else if (string_strcasecmp (property, "type") == 0)
     {
-        if (string_strcasecmp (value_str, "formated") == 0)
+        if (string_strcasecmp (value, "formated") == 0)
             gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FORMATED);
-        else if (string_strcasecmp (value_str, "free") == 0)
+        else if (string_strcasecmp (value, "free") == 0)
             gui_buffer_set_type (buffer, GUI_BUFFER_TYPE_FREE);
     }
     else if (string_strcasecmp (property, "notify") == 0)
     {
         error = NULL;
-        number = strtol (value_str, &error, 10);
+        number = strtol (value, &error, 10);
         if (error && !error[0]
             && (number < GUI_BUFFER_NUM_NOTIFY))
         {
@@ -656,40 +637,40 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     }
     else if (string_strcasecmp (property, "title") == 0)
     {
-        gui_buffer_set_title (buffer, value_str);
+        gui_buffer_set_title (buffer, value);
     }
     else if (string_strcasecmp (property, "nicklist") == 0)
     {
         error = NULL;
-        number = strtol (value_str, &error, 10);
+        number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist (buffer, number);
     }
     else if (string_strcasecmp (property, "nicklist_case_sensitive") == 0)
     {
         error = NULL;
-        number = strtol (value_str, &error, 10);
+        number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist_case_sensitive (buffer, number);
     }
     else if (string_strcasecmp (property, "nicklist_display_groups") == 0)
     {
         error = NULL;
-        number = strtol (value_str, &error, 10);
+        number = strtol (value, &error, 10);
         if (error && !error[0])
             gui_buffer_set_nicklist_display_groups (buffer, number);
     }
     else if (string_strcasecmp (property, "highlight_words") == 0)
     {
-        gui_buffer_set_highlight_words (buffer, value_str);
+        gui_buffer_set_highlight_words (buffer, value);
     }
     else if (string_strcasecmp (property, "highlight_tags") == 0)
     {
-        gui_buffer_set_highlight_tags (buffer, value_str);
+        gui_buffer_set_highlight_tags (buffer, value);
     }
     else if (string_strncasecmp (property, "key_bind_", 9) == 0)
     {
-        gui_keyboard_bind (buffer, property + 9, value_str);
+        gui_keyboard_bind (buffer, property + 9, value);
     }
     else if (string_strncasecmp (property, "key_unbind_", 11) == 0)
     {
@@ -701,9 +682,38 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
     else if (string_strcasecmp (property, "input") == 0)
     {
         gui_input_delete_line (buffer);
-        gui_input_insert_string (buffer, value_str, 0);
+        gui_input_insert_string (buffer, value, 0);
         gui_input_text_changed_signal ();
         gui_buffer_ask_input_refresh (buffer, 1);
+    }
+}
+
+/*
+ * gui_buffer_set: set a buffer property (pointer)
+ */
+
+void
+gui_buffer_set_pointer (struct t_gui_buffer *buffer, const char *property,
+                        void *pointer)
+{
+    if (!buffer || !property)
+        return;
+    
+    if (string_strcasecmp (property, "close_callback") == 0)
+    {
+        buffer->close_callback = pointer;
+    }
+    else if (string_strcasecmp (property, "close_callback_data") == 0)
+    {
+        buffer->close_callback_data = pointer;
+    }
+    else if (string_strcasecmp (property, "input_callback") == 0)
+    {
+        buffer->input_callback = pointer;
+    }
+    else if (string_strcasecmp (property, "input_callback_data") == 0)
+    {
+        buffer->input_callback_data = pointer;
     }
 }
 

@@ -81,8 +81,8 @@ xfer_upgrade_set_buffer_callbacks ()
             if (weechat_infolist_pointer (infolist, "plugin") == weechat_xfer_plugin)
             {
                 ptr_buffer = weechat_infolist_pointer (infolist, "pointer");
-                weechat_buffer_set (ptr_buffer, "close_callback", &xfer_buffer_close_cb);
-                weechat_buffer_set (ptr_buffer, "input_callback", &xfer_buffer_input_cb);
+                weechat_buffer_set_pointer (ptr_buffer, "close_callback", &xfer_buffer_close_cb);
+                weechat_buffer_set_pointer (ptr_buffer, "input_callback", &xfer_buffer_input_cb);
             }
         }
     }

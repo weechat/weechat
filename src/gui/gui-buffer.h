@@ -206,7 +206,9 @@ extern void gui_buffer_set_highlight_tags (struct t_gui_buffer *buffer,
                                            const char *new_highlight_tags);
 extern void gui_buffer_set_unread (struct t_gui_buffer *buffer);
 extern void gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
-                            void *value);
+                            const char *value);
+extern void gui_buffer_set_pointer (struct t_gui_buffer *buffer,
+                                    const char *property, void *pointer);
 extern struct t_gui_buffer *gui_buffer_search_main ();
 extern struct t_gui_buffer *gui_buffer_search_by_name (const char *plugin,
                                                        const char *name);

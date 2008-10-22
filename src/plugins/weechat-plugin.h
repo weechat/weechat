@@ -420,8 +420,10 @@ struct t_weechat_plugin
     void *(*buffer_get_pointer) (struct t_gui_buffer *buffer,
                                  const char *property);
     void (*buffer_set) (struct t_gui_buffer *buffer, const char *property,
-                        void *value);
-
+                        const char *value);
+    void (*buffer_set_pointer) (struct t_gui_buffer *buffer,
+                                const char *property, void *pointer);
+    
     /* windows */
     int (*window_get_integer) (struct t_gui_window *window,
                                const char *property);
@@ -908,6 +910,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->buffer_get_pointer(__buffer, __property)
 #define weechat_buffer_set(__buffer, __property, __value)               \
     weechat_plugin->buffer_set(__buffer, __property, __value)
+#define weechat_buffer_set_pointer(__buffer, __property, __pointer)     \
+    weechat_plugin->buffer_set_pointer(__buffer, __property, __pointer)
 
 /* windows */
 #define weechat_window_get_integer(__window, __property)                \
