@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-18 16:15+0200\n"
+"POT-Creation-Date: 2008-10-23 18:35+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1152,14 +1152,6 @@ msgid ""
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 msgstr ""
 
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
-msgstr ""
-"beviteli mező kinézete ('%c' helyére a szoba vagy a szerver, '%n' helyére a "
-"név és '%m' helyére a mód kerül)"
-
 #, fuzzy
 msgid "time format for \"time\" bar item"
 msgstr "időbélyeg a információs pult idejéhez"
@@ -1936,12 +1928,6 @@ msgstr "Nincs elég memória az új sorhoz\n"
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nincs elég memória az ignore elkészítéséhez\n"
-
-msgid "Text search (exact): "
-msgstr "Szöveg keresése (pontos): "
-
-msgid "Text search: "
-msgstr "Szöveg keresése: "
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
@@ -3413,6 +3399,9 @@ msgstr "okos névkiegészítés (először az utolsó partnerre egészít ki)"
 msgid "display message when (un)marking as away"
 msgstr "üzenet mutatása távollétkor/visszatéréskor"
 
+msgid "display channel modes in \"buffer_name\" bar item"
+msgstr ""
+
 msgid ""
 "comma separated list of tags for messages that may produce highlight "
 "(usually any message from another user, not server messages,..)"
@@ -4815,6 +4804,19 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#~ msgid ""
+#~ "format for input prompt ('%c' is replaced by channel or server, '%n' by "
+#~ "nick and '%m' by nick modes)"
+#~ msgstr ""
+#~ "beviteli mező kinézete ('%c' helyére a szoba vagy a szerver, '%n' helyére "
+#~ "a név és '%m' helyére a mód kerül)"
+
+#~ msgid "Text search (exact): "
+#~ msgstr "Szöveg keresése (pontos): "
+
+#~ msgid "Text search: "
+#~ msgstr "Szöveg keresése: "
 
 #, fuzzy
 #~ msgid "%s: creating new speller for lang \"%s\""

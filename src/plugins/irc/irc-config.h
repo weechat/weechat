@@ -68,6 +68,7 @@ extern struct t_config_option *irc_config_look_nick_prefix;
 extern struct t_config_option *irc_config_look_nick_suffix;
 extern struct t_config_option *irc_config_look_nick_completion_smart;
 extern struct t_config_option *irc_config_look_display_away;
+extern struct t_config_option *irc_config_look_display_channel_modes;
 extern struct t_config_option *irc_config_look_highlight_tags;
 extern struct t_config_option *irc_config_look_show_away_once;
 extern struct t_config_option *irc_config_look_notice_as_pv;

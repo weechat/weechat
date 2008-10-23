@@ -131,6 +131,7 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                 if (channel)
                 {
                     if (channel->nicks
+                        && weechat_config_boolean (irc_config_look_display_channel_modes)
                         && channel->modes && channel->modes[0]
                         && (strcmp (channel->modes, "+") != 0))
                     {

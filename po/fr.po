@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-18 16:15+0200\n"
-"PO-Revision-Date: 2008-10-18 15:35+0200\n"
+"POT-Creation-Date: 2008-10-23 18:35+0200\n"
+"PO-Revision-Date: 2008-10-23 18:38+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1199,14 +1199,6 @@ msgstr ""
 "group_time_desc, group_number_asc, group_number_desc, number_asc, "
 "number_desc)"
 
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
-msgstr ""
-"format pour l'invite de la zone de saisie ('%c' est remplacé par le canal ou "
-"serveur, '%n' par le pseudo et '%m' par les modes du pseudo)"
-
 msgid "time format for \"time\" bar item"
 msgstr "format de date/heure pour l'objet de barre \"time\""
 
@@ -1927,12 +1919,6 @@ msgstr "Pas assez de mémoire pour une nouvelle ligne"
 
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "Erreur: impossible d'ajouter le tampon à la liste des tampons actifs"
-
-msgid "Text search (exact): "
-msgstr "Recherche texte (exact): "
-
-msgid "Text search: "
-msgstr "Recherche texte: "
 
 #, c-format
 msgid "Error: unable to bind key \"%s\""
@@ -3433,6 +3419,9 @@ msgstr ""
 msgid "display message when (un)marking as away"
 msgstr "affiche un message pour l'absence/le retour"
 
+msgid "display channel modes in \"buffer_name\" bar item"
+msgstr "affiche les modes du canal dans l'objet de barre \"buffer_name\""
+
 msgid ""
 "comma separated list of tags for messages that may produce highlight "
 "(usually any message from another user, not server messages,..)"
@@ -4838,3 +4827,16 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid ""
+#~ "format for input prompt ('%c' is replaced by channel or server, '%n' by "
+#~ "nick and '%m' by nick modes)"
+#~ msgstr ""
+#~ "format pour l'invite de la zone de saisie ('%c' est remplacé par le canal "
+#~ "ou serveur, '%n' par le pseudo et '%m' par les modes du pseudo)"
+
+#~ msgid "Text search (exact): "
+#~ msgstr "Recherche texte (exact): "
+
+#~ msgid "Text search: "
+#~ msgstr "Recherche texte: "

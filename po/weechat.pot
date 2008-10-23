@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-18 16:15+0200\n"
+"POT-Creation-Date: 2008-10-23 18:35+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -965,12 +965,6 @@ msgid ""
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 msgstr ""
 
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
-msgstr ""
-
 msgid "time format for \"time\" bar item"
 msgstr ""
 
@@ -1619,12 +1613,6 @@ msgid "Not enough memory for new line"
 msgstr ""
 
 msgid "Error: not enough memory to add a buffer to hotlist"
-msgstr ""
-
-msgid "Text search (exact): "
-msgstr ""
-
-msgid "Text search: "
 msgstr ""
 
 #, c-format
@@ -2875,6 +2863,9 @@ msgid "smart completion for nicks (completes with last speakers first)"
 msgstr ""
 
 msgid "display message when (un)marking as away"
+msgstr ""
+
+msgid "display channel modes in \"buffer_name\" bar item"
 msgstr ""
 
 msgid ""

@@ -56,6 +56,7 @@ struct t_config_option *irc_config_look_nick_prefix;
 struct t_config_option *irc_config_look_nick_suffix;
 struct t_config_option *irc_config_look_nick_completion_smart;
 struct t_config_option *irc_config_look_display_away;
+struct t_config_option *irc_config_look_display_channel_modes;
 struct t_config_option *irc_config_look_highlight_tags;
 struct t_config_option *irc_config_look_show_away_once;
 struct t_config_option *irc_config_look_notice_as_pv;
@@ -149,6 +150,17 @@ irc_config_change_one_server_buffer ()
         irc_buffer_merge_servers ();
     else
         irc_buffer_split_server ();
+}
+
+/*
+ * irc_config_change_display_channel_modes: called when the "display channel modes"
+ *                                          setting is changed
+ */
+
+void
+irc_config_change_display_channel_modes ()
+{
+    weechat_bar_item_update ("buffer_name");
 }
 
 /*
@@ -994,6 +1006,11 @@ irc_config_init ()
         "display_away", "integer",
         N_("display message when (un)marking as away"),
         "off|local|channel", 0, 0, "local", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_display_channel_modes = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "display_channel_modes", "boolean",
+        N_("display channel modes in \"buffer_name\" bar item"),
+        NULL, 0, 0, "on", NULL, NULL, NULL, &irc_config_change_display_channel_modes, NULL, NULL, NULL);
     irc_config_look_highlight_tags = weechat_config_new_option (
         irc_config_file, ptr_section,
         "highlight_tags", "string",

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-18 16:15+0200\n"
+"POT-Creation-Date: 2008-10-23 18:35+0200\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1185,14 +1185,6 @@ msgstr ""
 "[skupina_číslo_vzestupně], group_number_desc [skupina_číslo_sestupně], "
 "number_asc [číslo_vzestupně], number_desc [číslo_sestupně] ) "
 
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
-msgstr ""
-"formát vstupního řádku ('%c' se přepíše na jeméno kanálu nebo serveru, '%n' "
-"se přepíše na přezdívku a '%m' na módy přezdívky"
-
 #, fuzzy
 msgid "time format for \"time\" bar item"
 msgstr "časová značka pro čas v infobaru"
@@ -1983,12 +1975,6 @@ msgstr "Nedostatek paměti pro nový řádek\n"
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s nemohu přidat buffer do hotlistu\n"
-
-msgid "Text search (exact): "
-msgstr "Vyhledávání textu (rozlišování velikosti znaků): "
-
-msgid "Text search: "
-msgstr "Vyhledávání textu: "
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
@@ -3463,6 +3449,9 @@ msgstr "chytré doplňování přezdívek (doplňovat posledně mluvící jako p
 msgid "display message when (un)marking as away"
 msgstr "zobrazit zprávu, když označen/odznačen jako nepřítomen"
 
+msgid "display channel modes in \"buffer_name\" bar item"
+msgstr ""
+
 msgid ""
 "comma separated list of tags for messages that may produce highlight "
 "(usually any message from another user, not server messages,..)"
@@ -4892,6 +4881,19 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#~ msgid ""
+#~ "format for input prompt ('%c' is replaced by channel or server, '%n' by "
+#~ "nick and '%m' by nick modes)"
+#~ msgstr ""
+#~ "formát vstupního řádku ('%c' se přepíše na jeméno kanálu nebo serveru, '%"
+#~ "n' se přepíše na přezdívku a '%m' na módy přezdívky"
+
+#~ msgid "Text search (exact): "
+#~ msgstr "Vyhledávání textu (rozlišování velikosti znaků): "
+
+#~ msgid "Text search: "
+#~ msgstr "Vyhledávání textu: "
 
 #, fuzzy
 #~ msgid "%s: creating new speller for lang \"%s\""

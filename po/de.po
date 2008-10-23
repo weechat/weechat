@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-18 16:15+0200\n"
+"POT-Creation-Date: 2008-10-23 18:35+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1144,14 +1144,6 @@ msgid ""
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 msgstr ""
 
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
-msgstr ""
-"Format der Eingabezeile ('%c' wird durch den Channel- oder Servernamen "
-"ersetzt, '%n' durch den Nicknamen und '%m' durch die Nick-Modi)"
-
 #, fuzzy
 msgid "time format for \"time\" bar item"
 msgstr "Timestamp in der Infobar"
@@ -1931,12 +1923,6 @@ msgstr "Nicht genügend Speicher für neue Zeile\n"
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s Puffer kann nicht zur Hotlist hinzugefügt werden\n"
-
-msgid "Text search (exact): "
-msgstr "Textsuche (genau)"
-
-msgid "Text search: "
-msgstr "Textsuche"
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
@@ -3380,6 +3366,9 @@ msgstr ""
 msgid "display message when (un)marking as away"
 msgstr "bei Abwesenheit und Rückkehr eine Nachricht anzeigen"
 
+msgid "display channel modes in \"buffer_name\" bar item"
+msgstr ""
+
 msgid ""
 "comma separated list of tags for messages that may produce highlight "
 "(usually any message from another user, not server messages,..)"
@@ -4792,6 +4781,19 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#~ msgid ""
+#~ "format for input prompt ('%c' is replaced by channel or server, '%n' by "
+#~ "nick and '%m' by nick modes)"
+#~ msgstr ""
+#~ "Format der Eingabezeile ('%c' wird durch den Channel- oder Servernamen "
+#~ "ersetzt, '%n' durch den Nicknamen und '%m' durch die Nick-Modi)"
+
+#~ msgid "Text search (exact): "
+#~ msgstr "Textsuche (genau)"
+
+#~ msgid "Text search: "
+#~ msgstr "Textsuche"
 
 #, fuzzy
 #~ msgid "%s: creating new speller for lang \"%s\""

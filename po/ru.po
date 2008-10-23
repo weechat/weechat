@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-18 16:15+0200\n"
+"POT-Creation-Date: 2008-10-23 18:35+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1153,14 +1153,6 @@ msgstr ""
 "тип сортировки хотлиста (group_time_asc (по-умолчанию), group_time_desc, "
 "group_number_asc, group_number_desc, number_asc, number_desc)"
 
-#, c-format
-msgid ""
-"format for input prompt ('%c' is replaced by channel or server, '%n' by nick "
-"and '%m' by nick modes)"
-msgstr ""
-"формат приглашения ввода ('%c' заменяется на сервер или канал, '%n' на ник, "
-"а '%m' - на режимы ника"
-
 #, fuzzy
 msgid "time format for \"time\" bar item"
 msgstr "время в информационной строке"
@@ -1941,12 +1933,6 @@ msgstr "Недостаточно памяти для новой строчки\n
 #, fuzzy
 msgid "Error: not enough memory to add a buffer to hotlist"
 msgstr "%s не могу добавить буфер в хотлист\n"
-
-msgid "Text search (exact): "
-msgstr "Поиск текста (регистрозависимый): "
-
-msgid "Text search: "
-msgstr "Поиск текста: "
 
 #, fuzzy, c-format
 msgid "Error: unable to bind key \"%s\""
@@ -3407,6 +3393,9 @@ msgstr "умное дополнение ников (начинает переб�
 msgid "display message when (un)marking as away"
 msgstr "показывать сообщение во все каналы при установке/снятии отсутствия"
 
+msgid "display channel modes in \"buffer_name\" bar item"
+msgstr ""
+
 msgid ""
 "comma separated list of tags for messages that may produce highlight "
 "(usually any message from another user, not server messages,..)"
@@ -4797,6 +4786,19 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#~ msgid ""
+#~ "format for input prompt ('%c' is replaced by channel or server, '%n' by "
+#~ "nick and '%m' by nick modes)"
+#~ msgstr ""
+#~ "формат приглашения ввода ('%c' заменяется на сервер или канал, '%n' на "
+#~ "ник, а '%m' - на режимы ника"
+
+#~ msgid "Text search (exact): "
+#~ msgstr "Поиск текста (регистрозависимый): "
+
+#~ msgid "Text search: "
+#~ msgstr "Поиск текста: "
 
 #, fuzzy
 #~ msgid "%s: creating new speller for lang \"%s\""
