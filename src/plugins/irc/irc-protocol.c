@@ -181,6 +181,7 @@ irc_protocol_cmd_error (struct t_irc_server *server, const char *command,
 {
     int first_arg;
     char *chan_nick, *args;
+    struct t_irc_channel *ptr_channel;
     
     IRC_PROTOCOL_MIN_ARGS(4);
     
@@ -202,10 +203,14 @@ irc_protocol_cmd_error (struct t_irc_server *server, const char *command,
     if (args[0] == ':')
         args++;
     
-    weechat_printf_tags (server->buffer,
+    ptr_channel = NULL;
+    if (chan_nick)
+        ptr_channel = irc_channel_search (server, chan_nick);
+    
+    weechat_printf_tags ((ptr_channel) ? ptr_channel->buffer : server->buffer,
                          irc_protocol_tags (command, "irc_error"),
                          "%s%s%s%s",
-                         irc_buffer_get_server_prefix (server, "network"),
+                         (ptr_channel) ? weechat_prefix ("network") : irc_buffer_get_server_prefix (server, "network"),
                          (chan_nick) ? chan_nick : "",
                          (chan_nick) ? ": " : "",
                          args);
