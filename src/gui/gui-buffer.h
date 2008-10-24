@@ -66,6 +66,14 @@ struct t_gui_line
     struct t_gui_line *next_line;      /* link to next line                 */
 };
 
+struct t_gui_buffer_local_var
+{
+    char *name;                        /* variable name                     */
+    char *value;                       /* value                             */
+    struct t_gui_buffer_local_var *prev_var; /* link to previous variable   */
+    struct t_gui_buffer_local_var *next_var; /* link to next variable       */
+};
+
 struct t_gui_buffer
 {
     struct t_weechat_plugin *plugin;   /* plugin which created this buffer  */
@@ -154,6 +162,10 @@ struct t_gui_buffer
     struct t_gui_key *keys;            /* keys specific to buffer           */
     struct t_gui_key *last_key;        /* last key for buffer               */
     
+    /* local variables */
+    struct t_gui_buffer_local_var *local_variables; /* local variables      */
+    struct t_gui_buffer_local_var *last_local_var;  /* last local variable  */
+    
     /* link to previous/next buffer */
     struct t_gui_buffer *prev_buffer;  /* link to previous buffer           */
     struct t_gui_buffer *next_buffer;  /* link to next buffer               */
@@ -178,6 +190,8 @@ extern struct t_gui_buffer *gui_buffer_new (struct t_weechat_plugin *plugin,
                                                                   struct t_gui_buffer *buffer),
                                             void *close_callback_data);
 extern int gui_buffer_valid (struct t_gui_buffer *buffer);
+extern char *gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
+                                                  const char *string);
 extern void gui_buffer_set_plugin_for_upgrade (char *name,
                                                struct t_weechat_plugin *plugin);
 extern int gui_buffer_get_integer (struct t_gui_buffer *buffer,

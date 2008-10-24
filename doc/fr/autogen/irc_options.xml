@@ -86,6 +86,22 @@
   </listitem>
 </itemizedlist>
 
+<command>irc.look.display_channel_modes</command>
+<itemizedlist>
+  <listitem>
+    <para>description: affiche les modes du canal dans l'objet de barre "buffer_name"</para>
+  </listitem>
+  <listitem>
+    <para>type: booléen</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: on, off</para>
+  </listitem>
+  <listitem>
+    <para>valeur par défaut: on</para>
+  </listitem>
+</itemizedlist>
+
 <command>irc.look.highlight_tags</command>
 <itemizedlist>
   <listitem>

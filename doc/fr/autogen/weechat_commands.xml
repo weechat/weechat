@@ -54,17 +54,18 @@ Exemples :
 <programlisting>
 gestion des tampons
 
- action: action à effectuer:
-  clear: efface le contenu du tampon (-all pour tous les tampons, un numéro pour un tampon, ou rien pour le tampon courant)
-   move: déplace le tampon dans la liste (peut être relatif, par exemple -1)
-  close: ferme le tampon
-   list: liste les tampons ouverts (pas de paramètre affiche cette liste)
- notify: affiche les niveaux de notification pour tous les tampons ouverts
- scroll: fait défiler l'historique (peut être relatif, et peut se terminer par une lettre: s=sec, m=min, h=heure, d=jour, M=mois, y=année); s'il y a seulement une lettre, alors fait défiler jusqu'au début de cet élément
+  action: action à effectuer:
+   clear: efface le contenu du tampon (-all pour tous les tampons, un numéro pour un tampon, ou rien pour le tampon courant)
+    move: déplace le tampon dans la liste (peut être relatif, par exemple -1)
+   close: ferme le tampon
+    list: liste les tampons ouverts (pas de paramètre affiche cette liste)
+  notify: affiche les niveaux de notification pour tous les tampons ouverts
+localvar: affiche la liste des variables locales pour le tampon courant
+  scroll: fait défiler l'historique (peut être relatif, et peut se terminer par une lettre: s=sec, m=min, h=heure, d=jour, M=mois, y=année); s'il y a seulement une lettre, alors fait défiler jusqu'au début de cet élément
 
- nombre: saute au tampon qui a ce numéro
+  nombre: saute au tampon qui a ce numéro
 serveur,
-  canal: saute au tampon par serveur et/ou nom de canal
+   canal: saute au tampon par serveur et/ou nom de canal
 
 Exemples:
      déplacer tampon: /buffer move 5

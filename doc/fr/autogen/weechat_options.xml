@@ -1462,22 +1462,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.input_format</command>
-<itemizedlist>
-  <listitem>
-    <para>description: format pour l'invite de la zone de saisie ('%c' est remplacé par le canal ou serveur, '%n' par le pseudo et '%m' par les modes du pseudo)</para>
-  </listitem>
-  <listitem>
-    <para>type: chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: '[%n(%m)] '</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.look.item_time_format</command>
 <itemizedlist>
   <listitem>

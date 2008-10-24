@@ -242,6 +242,10 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         new_buffer->keys = NULL;
         new_buffer->last_key = NULL;
         
+        /* local variables */
+        new_buffer->local_variables = NULL;
+        new_buffer->last_local_var = NULL;
+        
         /* add buffer to buffers list */
         gui_buffer_insert (new_buffer);
         
@@ -296,6 +300,195 @@ gui_buffer_valid (struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_buffer_local_var_search: search a local variable with name
+ */
+
+struct t_gui_buffer_local_var *
+gui_buffer_local_var_search (struct t_gui_buffer *buffer, const char *name)
+{
+    struct t_gui_buffer_local_var *ptr_local_var;
+    
+    if (!buffer || !name)
+        return NULL;
+    
+    for (ptr_local_var = buffer->local_variables; ptr_local_var;
+         ptr_local_var = ptr_local_var->next_var)
+    {
+        if (strcmp (ptr_local_var->name, name) == 0)
+            return ptr_local_var;
+    }
+    
+    /* local variable not found */
+    return NULL;
+}
+
+
+/*
+ * gui_buffer_local_var_add: add a new local variable to a buffer
+ */
+
+struct t_gui_buffer_local_var *
+gui_buffer_local_var_add (struct t_gui_buffer *buffer, const char *name,
+                          const char *value)
+{
+    struct t_gui_buffer_local_var *new_local_var;
+    
+    if (!buffer || !name || !value)
+        return NULL;
+    
+    new_local_var = gui_buffer_local_var_search (buffer, name);
+    if (new_local_var)
+    {
+        if (new_local_var->name)
+            free (new_local_var->name);
+        if (new_local_var->value)
+            free (new_local_var->value);
+        new_local_var->name = strdup (name);
+        new_local_var->value = strdup (value);
+    }
+    else
+    {
+        new_local_var = malloc (sizeof (*new_local_var));
+        if (new_local_var)
+        {
+            new_local_var->name = strdup (name);
+            new_local_var->value = strdup (value);
+            
+            new_local_var->prev_var = buffer->last_local_var;
+            new_local_var->next_var = NULL;
+            if (buffer->local_variables)
+                buffer->last_local_var->next_var = new_local_var;
+            else
+                buffer->local_variables = new_local_var;
+            buffer->last_local_var = new_local_var;
+        }
+    }
+    
+    return new_local_var;
+}
+
+/*
+ * gui_buffer_local_var_remove: remove a local variable in a buffer
+ */
+
+void
+gui_buffer_local_var_remove (struct t_gui_buffer *buffer,
+                             struct t_gui_buffer_local_var *local_var)
+{
+    if (!buffer || !local_var)
+        return;
+    
+    /* free data */
+    if (local_var->name)
+        free (local_var->name);
+    if (local_var->value)
+        free (local_var->value);
+    
+    /* remove local variable from list */
+    if (local_var->prev_var)
+        (local_var->prev_var)->next_var = local_var->next_var;
+    if (local_var->next_var)
+        (local_var->next_var)->prev_var = local_var->prev_var;
+    if (buffer->local_variables == local_var)
+        buffer->local_variables = local_var->next_var;
+    if (buffer->last_local_var == local_var)
+        buffer->last_local_var = local_var->prev_var;
+}
+
+/*
+ * gui_buffer_local_var_remove_all: remove all local variables in a buffer
+ */
+
+void
+gui_buffer_local_var_remove_all (struct t_gui_buffer *buffer)
+{
+    if (buffer)
+    {
+        while (buffer->local_variables)
+        {
+            gui_buffer_local_var_remove (buffer, buffer->local_variables);
+        }
+    }
+}
+
+/*
+ * gui_buffer_string_replace_local_var: replace local variables ($var) in a
+ *                                      string, using value of local variables
+ */
+
+char *
+gui_buffer_string_replace_local_var (struct t_gui_buffer *buffer,
+                                     const char *string)
+{
+    int length, length_var, index_string, index_result;
+    char *result, *local_var;
+    const char *pos_end_name;
+    struct t_gui_buffer_local_var *ptr_local_var;
+    
+    length = strlen (string) + 1;
+    result = malloc (length);
+    if (result)
+    {
+        index_string = 0;
+        index_result = 0;
+        while (string[index_string])
+        {
+            if ((string[index_string] == '$')
+                && ((index_string == 0) || (string[index_string - 1] != '\\')))
+            {
+                pos_end_name = string + index_string + 1;
+                while (pos_end_name[0])
+                {
+                    if (isalnum (pos_end_name[0])
+                        && (pos_end_name[0] != '_')
+                        && (pos_end_name[0] != '$'))
+                        pos_end_name++;
+                    else
+                        break;
+                }
+                if (pos_end_name > string + index_string + 1)
+                {
+                    local_var = string_strndup (string + index_string + 1,
+                                                pos_end_name - (string + index_string + 1));
+                    if (local_var)
+                    {
+                        ptr_local_var = gui_buffer_local_var_search (buffer,
+                                                                     local_var);
+                        if (ptr_local_var)
+                        {
+                            length_var = strlen (ptr_local_var->value);
+                            length += length_var;
+                            result = realloc (result, length);
+                            if (!result)
+                            {
+                                free (local_var);
+                                return NULL;
+                            }
+                            strcpy (result + index_result, ptr_local_var->value);
+                            index_result += length_var;
+                            index_string += strlen (local_var) + 1;
+                        }
+                        else
+                            result[index_result++] = string[index_string++];
+                        
+                        free (local_var);
+                    }
+                    else
+                        result[index_result++] = string[index_string++];
+                }
+                else
+                    result[index_result++] = string[index_string++];
+            }
+            else
+                result[index_result++] = string[index_string++];
+        }
+        result[index_result] = '\0';
+    }
+    
+    return result;
+}
+
+/*
  * gui_buffer_set_plugin_for_upgrade: set plugin pointer for buffers with a
  *                                    given name (used after /upgrade)
  */
@@ -346,6 +539,8 @@ gui_buffer_get_integer (struct t_gui_buffer *buffer, const char *property)
 char *
 gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
 {
+    struct t_gui_buffer_local_var *ptr_local_var;
+    
     if (buffer && property)
     {
         if (string_strcasecmp (property, "plugin") == 0)
@@ -356,6 +551,12 @@ gui_buffer_get_string (struct t_gui_buffer *buffer, const char *property)
             return buffer->short_name;
         else if (string_strcasecmp (property, "title") == 0)
             return buffer->title;
+        else if (string_strncasecmp (property, "localvar_", 9) == 0)
+        {
+            ptr_local_var = gui_buffer_local_var_search (buffer, property + 9);
+            if (ptr_local_var)
+                return ptr_local_var->value;
+        }
     }
     
     return NULL;
@@ -575,6 +776,7 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
 {
     long number;
     char *error;
+    struct t_gui_buffer_local_var *ptr_local_var;
     
     if (!property || !value)
         return;
@@ -685,6 +887,17 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
         gui_input_insert_string (buffer, value, 0);
         gui_input_text_changed_signal ();
         gui_buffer_ask_input_refresh (buffer, 1);
+    }
+    else if (string_strncasecmp (property, "localvar_set_", 13) == 0)
+    {
+        if (value)
+            gui_buffer_local_var_add (buffer, property + 13, value);
+    }
+    else if (string_strncasecmp (property, "localvar_del_", 13) == 0)
+    {
+        ptr_local_var = gui_buffer_local_var_search (buffer, property + 13);
+        if (ptr_local_var)
+            gui_buffer_local_var_remove (buffer, ptr_local_var);
     }
 }
 
@@ -1021,6 +1234,7 @@ gui_buffer_close (struct t_gui_buffer *buffer, int switch_to_another)
     if (buffer->highlight_tags_array)
         string_free_exploded (buffer->highlight_tags_array);
     gui_keyboard_free_all (&buffer->keys, &buffer->last_key);
+    gui_buffer_local_var_remove_all (buffer);
     
     /* remove buffer from buffers list */
     if (buffer->prev_buffer)
@@ -1220,8 +1434,9 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
 {
     struct t_infolist_item *ptr_item;
     struct t_gui_key *ptr_key;
-    char option_name[32];
-    int i;
+    struct t_gui_buffer_local_var *ptr_local_var;
+    char option_name[32], *var_name;
+    int i, length;
     
     if (!infolist || !buffer)
         return 0;
@@ -1277,6 +1492,23 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         snprintf (option_name, sizeof (option_name), "key_command_%05d", i);
         if (!infolist_new_var_string (ptr_item, option_name, ptr_key->command))
             return 0;
+    }
+    for (ptr_local_var = buffer->local_variables; ptr_local_var;
+         ptr_local_var = ptr_local_var->next_var)
+    {
+        length = strlen (ptr_local_var->name) + 16 + 1;
+        var_name = malloc (length);
+        if (var_name)
+        {
+            snprintf (var_name, length, "localvar_%s", ptr_local_var->name);
+            if (!infolist_new_var_string (ptr_item, var_name,
+                                          ptr_local_var->value))
+            {
+                free (var_name);
+                return 0;
+            }
+            free (var_name);
+        }
     }
     
     return 1;
@@ -1420,6 +1652,7 @@ void
 gui_buffer_print_log ()
 {
     struct t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer_local_var *ptr_local_var;
     struct t_gui_line *ptr_line;
     char *tags;
     int num;
@@ -1481,11 +1714,7 @@ gui_buffer_print_log ()
         log_printf ("  last_key . . . . . . . : 0x%x", ptr_buffer->last_key);
         log_printf ("  prev_buffer. . . . . . : 0x%x", ptr_buffer->prev_buffer);
         log_printf ("  next_buffer. . . . . . : 0x%x", ptr_buffer->next_buffer);
-
-        log_printf ("");
-        log_printf ("  => nicklist_root (addr:0x%x):", ptr_buffer->nicklist_root);
-        gui_nicklist_print_log (ptr_buffer->nicklist_root, 0);
-
+        
         if (ptr_buffer->keys)
         {
             log_printf ("");
@@ -1493,6 +1722,26 @@ gui_buffer_print_log ()
                         ptr_buffer->keys, ptr_buffer->last_key);
             gui_keyboard_print_log (ptr_buffer);
         }
+
+        if (ptr_buffer->local_variables)
+        {
+            log_printf ("");
+            log_printf ("  => local_variables = 0x%x, last_local_var = 0x%x:",
+                        ptr_buffer->local_variables, ptr_buffer->last_local_var);
+            for (ptr_local_var = ptr_buffer->local_variables; ptr_local_var;
+                 ptr_local_var = ptr_local_var->next_var)
+            {
+                log_printf ("");
+                log_printf ("    [local variable (addr:0x%x)]",
+                            ptr_local_var);
+                log_printf ("      name . . . . . . . : '%s'", ptr_local_var->name);
+                log_printf ("      value. . . . . . . : '%s'", ptr_local_var->value);
+            }
+        }
+        
+        log_printf ("");
+        log_printf ("  => nicklist_root (addr:0x%x):", ptr_buffer->nicklist_root);
+        gui_nicklist_print_log (ptr_buffer->nicklist_root, 0);
         
         log_printf ("");
         log_printf ("  => last 100 lines:");

@@ -3138,6 +3138,8 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         }
         weechat_buffer_set (irc_current_server->buffer, "short_name",
                             irc_current_server->name);
+        weechat_buffer_set (irc_current_server->buffer, "localvar_set_server",
+                            irc_current_server->name);
         weechat_bar_item_update ("buffer_name");
         weechat_bar_item_update ("input_prompt");
         return WEECHAT_RC_OK;

@@ -1462,22 +1462,6 @@
   </listitem>
 </itemizedlist>
 
-<command>weechat.look.input_format</command>
-<itemizedlist>
-  <listitem>
-    <para>description: format for input prompt ('%c' is replaced by channel or server, '%n' by nick and '%m' by nick modes)</para>
-  </listitem>
-  <listitem>
-    <para>type: string</para>
-  </listitem>
-  <listitem>
-    <para>values: any string</para>
-  </listitem>
-  <listitem>
-    <para>default value: '[%n(%m)] '</para>
-  </listitem>
-</itemizedlist>
-
 <command>weechat.look.item_time_format</command>
 <itemizedlist>
   <listitem>

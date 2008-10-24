@@ -300,11 +300,21 @@ irc_server_set_with_option (struct t_irc_server *server,
 void
 irc_server_set_nick (struct t_irc_server *server, const char *nick)
 {
+    struct t_irc_channel *ptr_channel;
+    
     if (server->nick)
         free (server->nick);
     server->nick = (nick) ? strdup (nick) : NULL;
     
     weechat_buffer_set (server->buffer, "highlight_words", nick);
+    
+    /* set local variable "nick" for server and all channels/pv */
+    weechat_buffer_set (server->buffer, "localvar_set_nick", nick);
+    for (ptr_channel = server->channels; ptr_channel;
+         ptr_channel = ptr_channel->next_channel)
+    {
+        weechat_buffer_set (ptr_channel->buffer, "localvar_set_nick", nick);
+    }
     
     weechat_bar_item_update ("input_prompt");
 }
@@ -2180,6 +2190,7 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
         }
         
         weechat_buffer_set (server->buffer, "short_name", server->name);
+        weechat_buffer_set (server->buffer, "localvar_set_server", server->name);
         
         weechat_buffer_set (server->buffer, "display", "1");
         

@@ -213,6 +213,23 @@ alias_replace_args (const char *alias_args, const char *user_args)
 }
 
 /*
+ * alias_run_command: replace local buffer variables in string, then run
+ *                    command on buffer
+ */
+
+void
+alias_run_command (struct t_gui_buffer *buffer, const char *command)
+{
+    char *string;
+    
+    string = weechat_buffer_string_replace_local_var (buffer, command);
+    weechat_command (buffer,
+                     (string) ? string : command);
+    if (string)
+        free (string);
+}
+
+/*
  * alias_cb: callback for alias (called when user uses an alias)
  */
 
@@ -226,7 +243,6 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
     int some_args_replaced, length1, length2;
     
     /* make C compiler happy */
-    (void) buffer;
     (void) argc;
     (void) argv;
     
@@ -260,7 +276,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                 {
                     some_args_replaced = 1;
                     if (*ptr_cmd[0] == '/')
-                        weechat_command (weechat_current_buffer, args_replaced);
+                        alias_run_command (buffer, args_replaced);
                     else
                     {
                         alias_command = malloc (1 + strlen(args_replaced) + 1);
@@ -268,7 +284,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                         {
                             strcpy (alias_command, "/");
                             strcat (alias_command, args_replaced);
-                            weechat_command (weechat_current_buffer, alias_command);
+                            alias_run_command (buffer, alias_command);
                             free (alias_command);
                         }
                     }
@@ -295,16 +311,14 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                             strcat (alias_command, " ");
                             strcat (alias_command, argv_eol[1]);
                             
-                            weechat_command (weechat_current_buffer,
-                                             alias_command);
+                            alias_run_command (buffer, alias_command);
                             free (alias_command);
                         }
                     }
                     else
                     {
                         if (*ptr_cmd[0] == '/')
-                            (void) weechat_command(weechat_current_buffer,
-                                                   *ptr_cmd);
+                            alias_run_command (buffer, *ptr_cmd);
                         else
                         {
                             alias_command = malloc (1 + strlen (*ptr_cmd) + 1);
@@ -312,8 +326,7 @@ alias_cb (void *data, struct t_gui_buffer *buffer, int argc, char **argv,
                             {
                                 strcpy (alias_command, "/");
                                 strcat (alias_command, *ptr_cmd);
-                                weechat_command (weechat_current_buffer,
-                                                 alias_command);
+                                alias_run_command (buffer, alias_command);
                                 free (alias_command);
                             }
                         }
@@ -706,6 +719,7 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
 {
     char *alias_name;
     struct t_alias *ptr_alias;
+    struct t_config_option *ptr_option;
     
     /* make C compiler happy */
     (void) data;
@@ -728,6 +742,11 @@ alias_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
             }
             
             /* create config option */
+            ptr_option = weechat_config_search_option (alias_config_file,
+                                                       alias_config_section_cmd,
+                                                       alias_name);
+            if (ptr_option)
+                weechat_config_option_free (ptr_option);
             weechat_config_new_option (
                 alias_config_file, alias_config_section_cmd,
                 alias_name, "string", NULL,

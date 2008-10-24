@@ -478,6 +478,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
                 int argc, char **argv, char **argv_eol)
 {
     struct t_gui_buffer *ptr_buffer;
+    struct t_gui_buffer_local_var *ptr_local_var;
     long number;
     char *error, *value;
     int i, target_buffer;
@@ -594,7 +595,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
 
-    /* display/change buffer notify */
+    /* display buffer notify */
     if (string_strcasecmp (argv[1], "notify") == 0)
     {
         /* display notify level for all buffers */
@@ -612,6 +613,31 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         }
         gui_chat_printf (NULL, "");
         
+        return WEECHAT_RC_OK;
+    }
+    
+    /* display local variables on buffer */
+    if (string_strcasecmp (argv[1], "localvar") == 0)
+    {
+        if (buffer->local_variables)
+        {
+            gui_chat_printf (NULL, "");
+            gui_chat_printf (NULL, _("Local variables for buffer \"%s\":"),
+                             buffer->name);
+            for (ptr_local_var = buffer->local_variables; ptr_local_var;
+                 ptr_local_var = ptr_local_var->next_var)
+            {
+                gui_chat_printf (NULL,
+                                 "  %s: \"%s\"",
+                                 ptr_local_var->name,
+                                 ptr_local_var->value);
+            }
+        }
+        else
+        {
+            gui_chat_printf (NULL, _("No local variable defined for buffer \"%s\""),
+                             buffer->name);
+        }
         return WEECHAT_RC_OK;
     }
     
@@ -634,7 +660,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         
         return WEECHAT_RC_OK;
     }
-
+    
     /* relative jump '-' */
     if (argv[1][0] == '-')
     {
@@ -2931,21 +2957,22 @@ command_init ()
     hook_command (NULL, "buffer",
                   N_("manage buffers"),
                   N_("[action [args] | number | [[server] [channel]]]"),
-                  N_(" action: action to do:\n"
-                     "  clear: clear buffer content (-all for all buffers, "
+                  N_("  action: action to do:\n"
+                     "   clear: clear buffer content (-all for all buffers, "
                      "number for a buffer, or nothing for current buffer)\n"
-                     "   move: move buffer in the list (may be relative, for "
+                     "    move: move buffer in the list (may be relative, for "
                      "example -1)\n"
-                     "  close: close buffer\n"
-                     "   list: list buffers (no parameter implies this list)\n"
-                     " notify: display notify levels for all open buffers\n"
-                     " scroll: scroll in history (may be relative, and may "
+                     "   close: close buffer\n"
+                     "    list: list buffers (no parameter implies this list)\n"
+                     "  notify: display notify levels for all open buffers\n"
+                     "localvar: display local variables for current buffer\n"
+                     "  scroll: scroll in history (may be relative, and may "
                      "end by a letter: s=sec, m=min, h=hour, d=day, M=month, "
                      "y=year); if there is only letter, then scroll to "
                      "beginning of this item\n\n"
-                     " number: jump to buffer by number\n"
+                     "  number: jump to buffer by number\n"
                      "server,\n"
-                     "channel: jump to buffer by server and/or channel name\n\n"
+                     " channel: jump to buffer by server and/or channel name\n\n"
                      "Examples:\n"
                      "clear current buffer: /buffer clear\n"
                      "   clear all buffers: /buffer clear -all\n"
@@ -2958,7 +2985,7 @@ command_init ()
                      "  scroll 15 min down: /buffer scroll +15m\n"
                      "   scroll 20 msgs up: /buffer scroll -20\n"
                      "    jump to #weechat: /buffer #weechat"),
-                  "clear|move|close|list|notify|scroll|set|%b %b",
+                  "clear|move|close|list|notify|localvar|scroll|set|%b %b",
                   &command_buffer, NULL);
     hook_command (NULL, "command",
                   N_("launch explicit WeeChat or plugin command"),

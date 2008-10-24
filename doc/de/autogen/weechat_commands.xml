@@ -54,17 +54,18 @@ Examples:
 <programlisting>
 Puffer verwalten
 
- action: action to do:
-  clear: clear buffer content (-all for all buffers, number for a buffer, or nothing for current buffer)
-   move: move buffer in the list (may be relative, for example -1)
-  close: close buffer
-   list: list buffers (no parameter implies this list)
- notify: display notify levels for all open buffers
- scroll: scroll in history (may be relative, and may end by a letter: s=sec, m=min, h=hour, d=day, M=month, y=year); if there is only letter, then scroll to beginning of this item
+  action: action to do:
+   clear: clear buffer content (-all for all buffers, number for a buffer, or nothing for current buffer)
+    move: move buffer in the list (may be relative, for example -1)
+   close: close buffer
+    list: list buffers (no parameter implies this list)
+  notify: display notify levels for all open buffers
+localvar: display local variables for current buffer
+  scroll: scroll in history (may be relative, and may end by a letter: s=sec, m=min, h=hour, d=day, M=month, y=year); if there is only letter, then scroll to beginning of this item
 
- number: jump to buffer by number
+  number: jump to buffer by number
 server,
-channel: jump to buffer by server and/or channel name
+ channel: jump to buffer by server and/or channel name
 
 Examples:
 clear current buffer: /buffer clear
