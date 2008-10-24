@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-24 12:58+0200\n"
+"POT-Creation-Date: 2008-10-24 18:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -202,26 +202,39 @@ msgstr ""
 msgid "%sPlugin \"%s\" not found"
 msgstr ""
 
-msgid "Filters are enabled"
+msgid "Message filtering enabled"
 msgstr ""
 
-msgid "Filters are disabled"
+msgid "Message filtering disabled"
 msgstr ""
 
 msgid "Message filters:"
 msgstr ""
 
 #, c-format
-msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s"
+msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
+msgstr ""
+
+msgid "(disabled)"
 msgstr ""
 
 msgid "No message filter defined"
 msgstr ""
 
-msgid "Filters enabled"
+#, c-format
+msgid "Filter %d enabled"
 msgstr ""
 
-msgid "Filters disabled"
+#, c-format
+msgid "%sError: filter not found"
+msgstr ""
+
+#, c-format
+msgid "%sError: wrong filter number"
+msgstr ""
+
+#, c-format
+msgid "Filter %d disabled"
 msgstr ""
 
 #, c-format
@@ -243,14 +256,6 @@ msgid "All filters have been deleted"
 msgstr ""
 
 msgid "Filter deleted"
-msgstr ""
-
-#, c-format
-msgid "%sError: filter not found"
-msgstr ""
-
-#, c-format
-msgid "%sError: wrong filter number"
 msgstr ""
 
 #. TRANSLATORS: %s is "weechat"

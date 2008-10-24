@@ -84,22 +84,25 @@ gui_filter_check_line (struct t_gui_buffer *buffer, struct t_gui_line *line)
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
     {
-        /* check buffer name */
-        if (string_match (buffer->name, ptr_filter->buffer, 0))
+        if (ptr_filter->enabled)
         {
-            if ((strcmp (ptr_filter->tags, "*") == 0)
-                || (gui_chat_line_match_tags (line,
-                                              ptr_filter->tags_count,
-                                              ptr_filter->tags_array)))
+            /* check buffer name */
+            if (string_match (buffer->name, ptr_filter->buffer, 0))
             {
-                /* check line with regex */
-                if (!ptr_filter->regex_prefix && !ptr_filter->regex_message)
-                    return 0;
-                
-                if (gui_chat_line_match_regex (line,
-                                               ptr_filter->regex_prefix,
-                                               ptr_filter->regex_message))
-                    return 0;
+                if ((strcmp (ptr_filter->tags, "*") == 0)
+                    || (gui_chat_line_match_tags (line,
+                                                  ptr_filter->tags_count,
+                                                  ptr_filter->tags_array)))
+                {
+                    /* check line with regex */
+                    if (!ptr_filter->regex_prefix && !ptr_filter->regex_message)
+                        return 0;
+                    
+                    if (gui_chat_line_match_regex (line,
+                                                   ptr_filter->regex_prefix,
+                                                   ptr_filter->regex_message))
+                        return 0;
+                }
             }
         }
     }
@@ -168,11 +171,11 @@ gui_filter_all_buffers ()
 }
 
 /*
- * gui_filter_enable: enable filters
+ * gui_filter_global_enable: enable message filtering
  */
 
 void
-gui_filter_enable ()
+gui_filter_global_enable ()
 {
     if (!gui_filters_enabled)
     {
@@ -184,11 +187,11 @@ gui_filter_enable ()
 }
 
 /*
- * gui_filter_disable: disable filters
+ * gui_filter_global_disable: disable message filtering
  */
 
 void
-gui_filter_disable ()
+gui_filter_global_disable ()
 {
     if (gui_filters_enabled)
     {
@@ -196,6 +199,34 @@ gui_filter_disable ()
         gui_filter_all_buffers ();
         hook_signal_send ("filters_disabled",
                           WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    }
+}
+
+/*
+ * gui_filter_enable: enable a filter
+ */
+
+void
+gui_filter_enable (struct t_gui_filter *filter)
+{
+    if (filter && !filter->enabled)
+    {
+        filter->enabled = 1;
+        gui_filter_all_buffers ();
+    }
+}
+
+/*
+ * gui_filter_disable: disable a filter
+ */
+
+void
+gui_filter_disable (struct t_gui_filter *filter)
+{
+    if (filter && filter->enabled)
+    {
+        filter->enabled = 0;
+        gui_filter_all_buffers ();
     }
 }
 
@@ -249,7 +280,8 @@ gui_filter_search_by_number (int number)
  */
 
 struct t_gui_filter *
-gui_filter_new (const char *buffer, const char *tags, const char *regex)
+gui_filter_new (int enabled, const char *buffer, const char *tags,
+                const char *regex)
 {
     struct t_gui_filter *new_filter;
     regex_t *regex1, *regex2;
@@ -314,6 +346,7 @@ gui_filter_new (const char *buffer, const char *tags, const char *regex)
     if (new_filter)
     {
         /* init filter */
+        new_filter->enabled = enabled;
         new_filter->buffer = (buffer) ? strdup (buffer) : strdup ("*");
         if (tags)
         {
@@ -429,6 +462,8 @@ gui_filter_add_to_infolist (struct t_infolist *infolist,
     if (!ptr_item)
         return 0;
     
+    if (!infolist_new_var_integer (ptr_item, "enabled", filter->enabled))
+        return 0;
     if (!infolist_new_var_string (ptr_item, "buffer", filter->buffer))
         return 0;
     if (!infolist_new_var_string (ptr_item, "tags", filter->tags))
@@ -465,6 +500,7 @@ gui_filter_print_log ()
     {
         log_printf ("");
         log_printf ("[filter (addr:0x%x)]", ptr_filter);
+        log_printf ("  enabled. . . . . . . . : %d",   ptr_filter->enabled);
         log_printf ("  buffer . . . . . . . . : '%s'", ptr_filter->buffer);
         log_printf ("  tags . . . . . . . . . : '%s'", ptr_filter->tags);
         log_printf ("  regex. . . . . . . . . : '%s'", ptr_filter->regex);

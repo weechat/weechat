@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-24 12:58+0200\n"
-"PO-Revision-Date: 2008-10-23 18:38+0200\n"
+"POT-Creation-Date: 2008-10-24 18:03+0200\n"
+"PO-Revision-Date: 2008-10-24 18:03+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -221,27 +221,40 @@ msgstr "Pas de variable locale définie pour le tampon \"%s\""
 msgid "%sPlugin \"%s\" not found"
 msgstr "%sExtension \"%s\" non trouvée"
 
-msgid "Filters are enabled"
-msgstr "Les filtres sont activés"
+msgid "Message filtering enabled"
+msgstr "Filtrage de messages activé"
 
-msgid "Filters are disabled"
-msgstr "Les filtres sont désactivés"
+msgid "Message filtering disabled"
+msgstr "Filtrage de message désactivé"
 
 msgid "Message filters:"
 msgstr "Filtres de messages:"
 
 #, c-format
-msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s"
-msgstr "  %s[%s%d%s]%s tampon: %s%s%s / tags: %s / regex: %s"
+msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
+msgstr "  %s[%s%d%s]%s tampon: %s%s%s / tags: %s / regex: %s %s"
+
+msgid "(disabled)"
+msgstr "(désactivé)"
 
 msgid "No message filter defined"
 msgstr "Pas de filtre de message défini"
 
-msgid "Filters enabled"
-msgstr "Filtres activés"
+#, c-format
+msgid "Filter %d enabled"
+msgstr "Filtre %d activé"
 
-msgid "Filters disabled"
-msgstr "Filtres désactivés"
+#, c-format
+msgid "%sError: filter not found"
+msgstr "%sErreur: filtre non trouvé"
+
+#, c-format
+msgid "%sError: wrong filter number"
+msgstr "%sErreur: numéro de filtre incorrect"
+
+#, c-format
+msgid "Filter %d disabled"
+msgstr "Filtre %d désactivé"
 
 #, c-format
 msgid "%sError: filter already exists"
@@ -265,14 +278,6 @@ msgstr "Tous les filtres ont été supprimés"
 
 msgid "Filter deleted"
 msgstr "Filtre supprimé"
-
-#, c-format
-msgid "%sError: filter not found"
-msgstr "%sErreur: filtre non trouvé"
-
-#, c-format
-msgid "%sError: wrong filter number"
-msgstr "%sErreur: numéro de filtre incorrect"
 
 #. TRANSLATORS: %s is "weechat"
 #, c-format
@@ -4837,16 +4842,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid ""
-#~ "format for input prompt ('%c' is replaced by channel or server, '%n' by "
-#~ "nick and '%m' by nick modes)"
-#~ msgstr ""
-#~ "format pour l'invite de la zone de saisie ('%c' est remplacé par le canal "
-#~ "ou serveur, '%n' par le pseudo et '%m' par les modes du pseudo)"
-
-#~ msgid "Text search (exact): "
-#~ msgstr "Recherche texte (exact): "
-
-#~ msgid "Text search: "
-#~ msgstr "Recherche texte: "

@@ -30,6 +30,7 @@ struct t_gui_line;
 
 struct t_gui_filter
 {
+    int enabled;                       /* 1 if filter enabled, otherwise 0  */
     char *buffer;                      /* name of buffer                    */
     char *tags;                        /* tags                              */
     int tags_count;                    /* number of tags                    */
@@ -51,13 +52,16 @@ extern int gui_filters_enabled;
 
 extern int gui_filter_check_line (struct t_gui_buffer *buffer,
                                   struct t_gui_line *line);
-extern void gui_filter_enable ();
-extern void gui_filter_disable ();
+extern void gui_filter_global_enable ();
+extern void gui_filter_global_disable ();
+extern void gui_filter_enable (struct t_gui_filter *filter);
+extern void gui_filter_disable (struct t_gui_filter *filter);
 extern struct t_gui_filter *gui_filter_search (const char *buffer,
                                                const char *tags,
                                                const char *regex);
 extern struct t_gui_filter *gui_filter_search_by_number (int number);
-extern struct t_gui_filter *gui_filter_new (const char *buffer,
+extern struct t_gui_filter *gui_filter_new (int enabled,
+                                            const char *buffer,
                                             const char *tags,
                                             const char *regex);
 extern void gui_filter_free (struct t_gui_filter *filter);

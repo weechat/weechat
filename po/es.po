@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-24 12:58+0200\n"
+"POT-Creation-Date: 2008-10-24 18:03+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -228,29 +228,42 @@ msgid "%sPlugin \"%s\" not found"
 msgstr "%s direcciÃ³n \"%s\" no encontrada\n"
 
 #, fuzzy
-msgid "Filters are enabled"
-msgstr "los usuarios han sido desactivados"
+msgid "Message filtering enabled"
+msgstr "NingÃºn alias definido.\n"
 
 #, fuzzy
-msgid "Filters are disabled"
-msgstr "los usuarios han sido desactivados"
+msgid "Message filtering disabled"
+msgstr "NingÃºn alias definido.\n"
 
 msgid "Message filters:"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s"
+msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
 msgstr "       (sin manejador de mensaje)\n"
+
+#, fuzzy
+msgid "(disabled)"
+msgstr "los usuarios han sido desactivados"
 
 #, fuzzy
 msgid "No message filter defined"
 msgstr "NingÃºn alias definido.\n"
 
-msgid "Filters enabled"
-msgstr ""
+#, fuzzy, c-format
+msgid "Filter %d enabled"
+msgstr "los usuarios han sido desactivados"
 
-#, fuzzy
-msgid "Filters disabled"
+#, fuzzy, c-format
+msgid "%sError: filter not found"
+msgstr "%s plugin \"%s\" no encontrado\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong filter number"
+msgstr "%s nÃºmero de bÃºfer incorrecto\n"
+
+#, fuzzy, c-format
+msgid "Filter %d disabled"
 msgstr "los usuarios han sido desactivados"
 
 #, fuzzy, c-format
@@ -276,14 +289,6 @@ msgstr "los usuarios han sido desactivados"
 #, fuzzy
 msgid "Filter deleted"
 msgstr "los usuarios han sido desactivados"
-
-#, fuzzy, c-format
-msgid "%sError: filter not found"
-msgstr "%s plugin \"%s\" no encontrado\n"
-
-#, fuzzy, c-format
-msgid "%sError: wrong filter number"
-msgstr "%s nÃºmero de bÃºfer incorrecto\n"
 
 #. TRANSLATORS: %s is "weechat"
 #, fuzzy, c-format
@@ -4795,6 +4800,18 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "Message filtering is enabled"
+#~ msgstr "NingÃºn alias definido.\n"
+
+#, fuzzy
+#~ msgid "Message filtering is disabled"
+#~ msgstr "NingÃºn alias definido.\n"
+
+#, fuzzy
+#~ msgid "Filters are disabled"
+#~ msgstr "los usuarios han sido desactivados"
 
 #~ msgid ""
 #~ "format for input prompt ('%c' is replaced by channel or server, '%n' by "

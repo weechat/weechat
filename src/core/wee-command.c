@@ -790,7 +790,8 @@ command_filter (void *data, struct t_gui_buffer *buffer,
         gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                    "%s",
                                    (gui_filters_enabled) ?
-                                   _("Filters are enabled") : _("Filters are disabled"));
+                                   _("Message filtering enabled") :
+                                   _("Message filtering disabled"));
         
         if (gui_filters)
         {
@@ -803,7 +804,7 @@ command_filter (void *data, struct t_gui_buffer *buffer,
                 i++;
                 gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                            _("  %s[%s%d%s]%s buffer: %s%s%s "
-                                             "/ tags: %s / regex: %s"),
+                                             "/ tags: %s / regex: %s %s"),
                                            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                            GUI_COLOR(GUI_COLOR_CHAT),
                                            i,
@@ -813,7 +814,9 @@ command_filter (void *data, struct t_gui_buffer *buffer,
                                            ptr_filter->buffer,
                                            GUI_COLOR(GUI_COLOR_CHAT),
                                            ptr_filter->tags,
-                                           ptr_filter->regex);
+                                           ptr_filter->regex,
+                                           (ptr_filter->enabled) ?
+                                           "" : _("(disabled)"));
             }
         }
         else
@@ -825,26 +828,102 @@ command_filter (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
     
-    /* enable filters */
+    /* enable global filtering or a filter */
     if (string_strcasecmp (argv[1], "enable") == 0)
     {
-        if (!gui_filters_enabled)
+        if (argc > 2)
         {
-            gui_filter_enable ();
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("Filters enabled"));
+            /* enable a filter */
+            error = NULL;
+            number = strtol (argv[2], &error, 10);
+            if (error && !error[0])
+            {
+                ptr_filter = gui_filter_search_by_number (number);
+                if (ptr_filter)
+                {
+                    if (!ptr_filter->enabled)
+                    {
+                        gui_filter_enable (ptr_filter);
+                        gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                                   _("Filter %d enabled"),
+                                                   number);
+                    }
+                }
+                else
+                {
+                    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                               _("%sError: filter not found"),
+                                               gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                    return WEECHAT_RC_ERROR;
+                }
+            }
+            else
+            {
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("%sError: wrong filter number"),
+                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        else
+        {
+            /* enable global filtering */
+            if (!gui_filters_enabled)
+            {
+                gui_filter_global_enable ();
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("Message filtering enabled"));
+            }
         }
         return WEECHAT_RC_OK;
     }
 
-    /* disable filters */
+    /* disable global filtering or a filter */
     if (string_strcasecmp (argv[1], "disable") == 0)
     {
-        if (gui_filters_enabled)
+        if (argc > 2)
         {
-            gui_filter_disable ();
-            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("Filters disabled"));
+            /* enable a filter */
+            error = NULL;
+            number = strtol (argv[2], &error, 10);
+            if (error && !error[0])
+            {
+                ptr_filter = gui_filter_search_by_number (number);
+                if (ptr_filter)
+                {
+                    if (ptr_filter->enabled)
+                    {
+                        gui_filter_disable (ptr_filter);
+                        gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                                   _("Filter %d disabled"),
+                                                   number);
+                    }
+                }
+                else
+                {
+                    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                               _("%sError: filter not found"),
+                                               gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                    return WEECHAT_RC_ERROR;
+                }
+            }
+            else
+            {
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("%sError: wrong filter number"),
+                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        else
+        {
+            /* disable global filtering */
+            if (gui_filters_enabled)
+            {
+                gui_filter_global_disable ();
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("Message filtering disabled"));
+            }
         }
         return WEECHAT_RC_OK;
     }
@@ -853,9 +932,9 @@ command_filter (void *data, struct t_gui_buffer *buffer,
     if (string_strcasecmp (argv[1], "toggle") == 0)
     {
         if (gui_filters_enabled)
-            gui_filter_disable ();
+            gui_filter_global_disable ();
         else
-            gui_filter_enable ();
+            gui_filter_global_enable ();
         return WEECHAT_RC_OK;
     }
     
@@ -887,7 +966,7 @@ command_filter (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_ERROR;
         }
         
-        if (gui_filter_new (argv[2], argv[3], argv_eol[4]))
+        if (gui_filter_new (1, argv[2], argv[3], argv_eol[4]))
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                        _("Filter added"));

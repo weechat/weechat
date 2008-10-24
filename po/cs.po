@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-24 12:58+0200\n"
+"POT-Creation-Date: 2008-10-24 18:03+0200\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -227,29 +227,42 @@ msgid "%sPlugin \"%s\" not found"
 msgstr "%s adresa \"%s\" nenalezena\n"
 
 #, fuzzy
-msgid "Filters are enabled"
-msgstr "uživatel byl zablokován"
+msgid "Message filtering enabled"
+msgstr "Žádné aliasy nejsou definovány.\n"
 
 #, fuzzy
-msgid "Filters are disabled"
-msgstr "uživatel byl zablokován"
+msgid "Message filtering disabled"
+msgstr "Filtry zpráv:"
 
 msgid "Message filters:"
 msgstr "Filtry zpráv:"
 
 #, fuzzy, c-format
-msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s"
+msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
 msgstr "       (není obsluhovač zprávy)\n"
+
+#, fuzzy
+msgid "(disabled)"
+msgstr "uživatel byl zablokován"
 
 #, fuzzy
 msgid "No message filter defined"
 msgstr "Žádné aliasy nejsou definovány.\n"
 
-msgid "Filters enabled"
+#, fuzzy, c-format
+msgid "Filter %d enabled"
 msgstr "Filtry povoleny"
 
-#, fuzzy
-msgid "Filters disabled"
+#, fuzzy, c-format
+msgid "%sError: filter not found"
+msgstr "%s plugin \"%s\" nenalezen\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong filter number"
+msgstr "%s nekorektní číslo bufferu\n"
+
+#, fuzzy, c-format
+msgid "Filter %d disabled"
 msgstr "uživatel byl zablokován"
 
 #, fuzzy, c-format
@@ -275,14 +288,6 @@ msgstr "uživatel byl zablokován"
 #, fuzzy
 msgid "Filter deleted"
 msgstr "uživatel byl zablokován"
-
-#, fuzzy, c-format
-msgid "%sError: filter not found"
-msgstr "%s plugin \"%s\" nenalezen\n"
-
-#, fuzzy, c-format
-msgid "%sError: wrong filter number"
-msgstr "%s nekorektní číslo bufferu\n"
 
 #. TRANSLATORS: %s is "weechat"
 #, fuzzy, c-format
@@ -4890,6 +4895,22 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Message filtering is enabled"
+#~ msgstr "Filtry zpráv:"
+
+#, fuzzy
+#~ msgid "Message filtering is disabled"
+#~ msgstr "Filtry zpráv:"
+
+#, fuzzy
+#~ msgid "Filters are enabled"
+#~ msgstr "uživatel byl zablokován"
+
+#, fuzzy
+#~ msgid "Filters are disabled"
+#~ msgstr "uživatel byl zablokován"
 
 #~ msgid ""
 #~ "format for input prompt ('%c' is replaced by channel or server, '%n' by "

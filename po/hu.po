@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-24 12:58+0200\n"
+"POT-Creation-Date: 2008-10-24 18:03+0200\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -233,29 +233,42 @@ msgid "%sPlugin \"%s\" not found"
 msgstr "%s cím \"%s\" nem található\n"
 
 #, fuzzy
-msgid "Filters are enabled"
-msgstr "a felhasználók le lettek tiltva"
+msgid "Message filtering enabled"
+msgstr "Nincs aliasz definiálva.\n"
 
 #, fuzzy
-msgid "Filters are disabled"
-msgstr "a felhasználók le lettek tiltva"
+msgid "Message filtering disabled"
+msgstr "Nincs aliasz definiálva.\n"
 
 msgid "Message filters:"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s"
+msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
 msgstr "       (nincs üzenetkezelő)\n"
+
+#, fuzzy
+msgid "(disabled)"
+msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy
 msgid "No message filter defined"
 msgstr "Nincs aliasz definiálva.\n"
 
-msgid "Filters enabled"
-msgstr ""
+#, fuzzy, c-format
+msgid "Filter %d enabled"
+msgstr "a felhasználók le lettek tiltva"
 
-#, fuzzy
-msgid "Filters disabled"
+#, fuzzy, c-format
+msgid "%sError: filter not found"
+msgstr "%s a \"%s\" modul nem található\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong filter number"
+msgstr "%s helytelen pufferszám\n"
+
+#, fuzzy, c-format
+msgid "Filter %d disabled"
 msgstr "a felhasználók le lettek tiltva"
 
 #, fuzzy, c-format
@@ -281,14 +294,6 @@ msgstr "a felhasználók le lettek tiltva"
 #, fuzzy
 msgid "Filter deleted"
 msgstr "a felhasználók le lettek tiltva"
-
-#, fuzzy, c-format
-msgid "%sError: filter not found"
-msgstr "%s a \"%s\" modul nem található\n"
-
-#, fuzzy, c-format
-msgid "%sError: wrong filter number"
-msgstr "%s helytelen pufferszám\n"
 
 #. TRANSLATORS: %s is "weechat"
 #, fuzzy, c-format
@@ -4813,6 +4818,18 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#, fuzzy
+#~ msgid "Message filtering is enabled"
+#~ msgstr "Nincs aliasz definiálva.\n"
+
+#, fuzzy
+#~ msgid "Message filtering is disabled"
+#~ msgstr "Nincs aliasz definiálva.\n"
+
+#, fuzzy
+#~ msgid "Filters are disabled"
+#~ msgstr "a felhasználók le lettek tiltva"
 
 #~ msgid ""
 #~ "format for input prompt ('%c' is replaced by channel or server, '%n' by "

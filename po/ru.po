@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-24 12:58+0200\n"
+"POT-Creation-Date: 2008-10-24 18:03+0200\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -229,29 +229,42 @@ msgid "%sPlugin \"%s\" not found"
 msgstr "%s адрес \"%s\" не найден\n"
 
 #, fuzzy
-msgid "Filters are enabled"
-msgstr "команда users отключена"
+msgid "Message filtering enabled"
+msgstr "Сокращения не заданы.\n"
 
 #, fuzzy
-msgid "Filters are disabled"
-msgstr "команда users отключена"
+msgid "Message filtering disabled"
+msgstr "Сокращения не заданы.\n"
 
 msgid "Message filters:"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s"
+msgid "  %s[%s%d%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
 msgstr "       (нет обработчика сообщений)\n"
+
+#, fuzzy
+msgid "(disabled)"
+msgstr "команда users отключена"
 
 #, fuzzy
 msgid "No message filter defined"
 msgstr "Сокращения не заданы.\n"
 
-msgid "Filters enabled"
-msgstr ""
+#, fuzzy, c-format
+msgid "Filter %d enabled"
+msgstr "команда users отключена"
 
-#, fuzzy
-msgid "Filters disabled"
+#, fuzzy, c-format
+msgid "%sError: filter not found"
+msgstr "%s plugin \"%s\" не найден\n"
+
+#, fuzzy, c-format
+msgid "%sError: wrong filter number"
+msgstr "%s неправильный номер буфера\n"
+
+#, fuzzy, c-format
+msgid "Filter %d disabled"
 msgstr "команда users отключена"
 
 #, fuzzy, c-format
@@ -277,14 +290,6 @@ msgstr "команда users отключена"
 #, fuzzy
 msgid "Filter deleted"
 msgstr "команда users отключена"
-
-#, fuzzy, c-format
-msgid "%sError: filter not found"
-msgstr "%s plugin \"%s\" не найден\n"
-
-#, fuzzy, c-format
-msgid "%sError: wrong filter number"
-msgstr "%s неправильный номер буфера\n"
 
 #. TRANSLATORS: %s is "weechat"
 #, fuzzy, c-format
@@ -4795,6 +4800,18 @@ msgstr "%s DCC: не могу установить неблокирующий р
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s нет аргумента для параметра \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Message filtering is enabled"
+#~ msgstr "Сокращения не заданы.\n"
+
+#, fuzzy
+#~ msgid "Message filtering is disabled"
+#~ msgstr "Сокращения не заданы.\n"
+
+#, fuzzy
+#~ msgid "Filters are disabled"
+#~ msgstr "команда users отключена"
 
 #~ msgid ""
 #~ "format for input prompt ('%c' is replaced by channel or server, '%n' by "
