@@ -928,13 +928,47 @@ command_filter (void *data, struct t_gui_buffer *buffer,
         return WEECHAT_RC_OK;
     }
 
-    /* toggle filters on/off */
+    /* toggle global filtering or a filter on/off */
     if (string_strcasecmp (argv[1], "toggle") == 0)
     {
-        if (gui_filters_enabled)
-            gui_filter_global_disable ();
+        if (argc > 2)
+        {
+            /* toggle a filter */
+            error = NULL;
+            number = strtol (argv[2], &error, 10);
+            if (error && !error[0])
+            {
+                ptr_filter = gui_filter_search_by_number (number);
+                if (ptr_filter)
+                {
+                    if (ptr_filter->enabled)
+                        gui_filter_disable (ptr_filter);
+                    else
+                        gui_filter_enable (ptr_filter);
+                }
+                else
+                {
+                    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                               _("%sError: filter not found"),
+                                               gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                    return WEECHAT_RC_ERROR;
+                }
+            }
+            else
+            {
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("%sError: wrong filter number"),
+                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                return WEECHAT_RC_ERROR;
+            }
+        }
         else
-            gui_filter_global_enable ();
+        {
+            if (gui_filters_enabled)
+                gui_filter_global_disable ();
+            else
+                gui_filter_global_enable ();
+        }
         return WEECHAT_RC_OK;
     }
     
