@@ -393,6 +393,8 @@ gui_buffer_local_var_remove (struct t_gui_buffer *buffer,
         buffer->local_variables = local_var->next_var;
     if (buffer->last_local_var == local_var)
         buffer->last_local_var = local_var->prev_var;
+    
+    free (local_var);
 }
 
 /*
