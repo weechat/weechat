@@ -279,13 +279,13 @@ int
 upgrade_weechat_read_cb (int object_id,
                          struct t_infolist *infolist)
 {
-    char *type, *name, *prefix, *group_name, option_name[32], *key;
-    char *option_key;
+    char *type, *name, *prefix, *group_name, option_name[64], *key;
+    char *option_key, *var_name, *option_var;
     struct t_gui_nick_group *ptr_group;
     struct t_gui_buffer *ptr_buffer;
     struct timeval creation_time;
     void *buf;
-    int size, key_index, length;
+    int size, index, length;
     
     infolist_reset_item_cursor (infolist);
     while (infolist_next (infolist))
@@ -338,11 +338,11 @@ upgrade_weechat_read_cb (int object_id,
                                                         infolist_string (infolist, "highlight_words"));
                         gui_buffer_set_highlight_tags (upgrade_current_buffer,
                                                        infolist_string (infolist, "highlight_tags"));
-                        key_index = 0;
+                        index = 0;
                         while (1)
                         {
                             snprintf (option_name, sizeof (option_name),
-                                      "key_%05d", key_index);
+                                      "key_%05d", index);
                             key = infolist_string (infolist, option_name);
                             if (!key)
                                 break;
@@ -352,13 +352,35 @@ upgrade_weechat_read_cb (int object_id,
                             {
                                 snprintf (option_key, length, "key_bind_%s", key);
                                 snprintf (option_name, sizeof (option_name),
-                                          "key_command_%05d", key_index);
+                                          "key_command_%05d", index);
                                 gui_buffer_set (upgrade_current_buffer,
                                                 option_key,
                                                 infolist_string (infolist, option_name));
                                 free (option_key);
                             }
-                            key_index++;
+                            index++;
+                        }
+                        index = 0;
+                        while (1)
+                        {
+                            snprintf (option_name, sizeof (option_name),
+                                      "localvar_name_%05d", index);
+                            var_name = infolist_string (infolist, option_name);
+                            if (!var_name)
+                                break;
+                            length = 32 + strlen (var_name) + 1;
+                            option_var = malloc (length);
+                            if (option_var)
+                            {
+                                snprintf (option_var, length, "localvar_set_%s", var_name);
+                                snprintf (option_name, sizeof (option_name),
+                                          "localvar_value_%05d", index);
+                                gui_buffer_set (upgrade_current_buffer,
+                                                option_var,
+                                                infolist_string (infolist, option_name));
+                                free (option_var);
+                            }
+                            index++;
                         }
                     }
                 }

@@ -1437,8 +1437,8 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
     struct t_infolist_item *ptr_item;
     struct t_gui_key *ptr_key;
     struct t_gui_buffer_local_var *ptr_local_var;
-    char option_name[32], *var_name;
-    int i, length;
+    char option_name[64];
+    int i;
     
     if (!infolist || !buffer)
         return 0;
@@ -1494,23 +1494,21 @@ gui_buffer_add_to_infolist (struct t_infolist *infolist,
         snprintf (option_name, sizeof (option_name), "key_command_%05d", i);
         if (!infolist_new_var_string (ptr_item, option_name, ptr_key->command))
             return 0;
+        i++;
     }
+    i = 0;
     for (ptr_local_var = buffer->local_variables; ptr_local_var;
          ptr_local_var = ptr_local_var->next_var)
     {
-        length = strlen (ptr_local_var->name) + 16 + 1;
-        var_name = malloc (length);
-        if (var_name)
-        {
-            snprintf (var_name, length, "localvar_%s", ptr_local_var->name);
-            if (!infolist_new_var_string (ptr_item, var_name,
-                                          ptr_local_var->value))
-            {
-                free (var_name);
-                return 0;
-            }
-            free (var_name);
-        }
+        snprintf (option_name, sizeof (option_name), "localvar_name_%05d", i);
+        if (!infolist_new_var_string (ptr_item, option_name,
+                                      ptr_local_var->name))
+            return 0;
+        snprintf (option_name, sizeof (option_name), "localvar_value_%05d", i);
+        if (!infolist_new_var_string (ptr_item, option_name,
+                                      ptr_local_var->value))
+            return 0;
+        i++;
     }
     
     return 1;
