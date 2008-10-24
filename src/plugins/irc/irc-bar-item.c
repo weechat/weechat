@@ -78,8 +78,8 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                           struct t_gui_window *window,
                           int max_width, int max_height)
 {
-    char buf[256], buf_name[256], away[128], *name;
-    int number;
+    char buf[512], buf_name[256], modes[128], away[128], *name;
+    int number, part_from_channel;
     struct t_gui_buffer *buffer;
     struct t_irc_server *server;
     struct t_irc_channel *channel;
@@ -94,10 +94,11 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
         window = weechat_current_window;
     
     buf_name[0] = '\0';
+    modes[0] = '\0';
     away[0] = '\0';
     
     buffer = weechat_window_get_pointer (window, "buffer");
-
+    
     if (buffer)
     {
         number = weechat_buffer_get_integer (buffer, "number");
@@ -130,36 +131,30 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
             {
                 if (channel)
                 {
-                    if (channel->nicks
+                    part_from_channel = ((channel->type == IRC_CHANNEL_TYPE_CHANNEL)
+                                         && !channel->nicks);
+                    snprintf (buf_name, sizeof (buf_name),
+                              "%s%s%s%s%s/%s%s%s%s",
+                              (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
+                              (part_from_channel) ? "(" : "",
+                              IRC_COLOR_STATUS_NAME,
+                              server->name,
+                              IRC_COLOR_BAR_DELIM,
+                              IRC_COLOR_STATUS_NAME,
+                              channel->name,
+                              (part_from_channel) ? IRC_COLOR_BAR_DELIM : "",
+                              (part_from_channel) ? ")" : "");
+                    if (!part_from_channel
                         && weechat_config_boolean (irc_config_look_display_channel_modes)
                         && channel->modes && channel->modes[0]
                         && (strcmp (channel->modes, "+") != 0))
                     {
-                        snprintf (buf_name, sizeof (buf_name),
-                                  "%s%s%s/%s%s%s(%s%s%s)",
-                                  IRC_COLOR_STATUS_NAME,
-                                  server->name,
+                        snprintf (modes, sizeof (modes),
+                                  "%s(%s%s%s)",
                                   IRC_COLOR_BAR_DELIM,
                                   IRC_COLOR_STATUS_NAME,
-                                  channel->name,
-                                  IRC_COLOR_BAR_DELIM,
-                                  IRC_COLOR_STATUS_NAME,
-                                  (channel->modes) ? channel->modes : "",
+                                  channel->modes,
                                   IRC_COLOR_BAR_DELIM);
-                    }
-                    else
-                    {
-                        snprintf (buf_name, sizeof (buf_name),
-                                  "%s%s%s%s%s/%s%s%s%s",
-                                  (channel->nicks) ? "" : IRC_COLOR_BAR_DELIM,
-                                  (channel->nicks) ? "" : "(",
-                                  IRC_COLOR_STATUS_NAME,
-                                  server->name,
-                                  IRC_COLOR_BAR_DELIM,
-                                  IRC_COLOR_STATUS_NAME,
-                                  channel->name,
-                                  (channel->nicks) ? "" : IRC_COLOR_BAR_DELIM,
-                                  (channel->nicks) ? "" : ")");
                     }
                 }
             }
@@ -179,12 +174,13 @@ irc_bar_item_buffer_name (void *data, struct t_gui_bar_item *item,
                 snprintf (buf_name, sizeof (buf_name), "%s", name);
         }
         
-        snprintf (buf, sizeof (buf), "%s%d%s:%s%s%s",
+        snprintf (buf, sizeof (buf), "%s%d%s:%s%s%s%s",
                   IRC_COLOR_STATUS_NUMBER,
                   number,
                   IRC_COLOR_BAR_DELIM,
                   IRC_COLOR_STATUS_NAME,
                   buf_name,
+                  modes,
                   away);
         return strdup (buf);
     }
