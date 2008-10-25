@@ -267,7 +267,9 @@ irc_protocol_cmd_join (struct t_irc_server *server, const char *command,
 {
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_channel_speaking *ptr_nick_speaking;
     char *pos_channel;
+    int local_join;
     
     /* JOIN message looks like:
        :nick!user@host JOIN :#channel
@@ -299,8 +301,14 @@ irc_protocol_cmd_join (struct t_irc_server *server, const char *command,
     
     if (!irc_ignore_check (server, ptr_channel, nick, host))
     {
+        local_join = (strcmp (nick, server->nick) == 0);
+        ptr_nick_speaking = (weechat_config_boolean (irc_config_look_smart_filter)) ?
+            irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
         weechat_printf_tags (ptr_channel->buffer,
-                             "irc_join",
+                             (local_join
+                              || !weechat_config_boolean (irc_config_look_smart_filter)
+                              || ptr_nick_speaking) ?
+                             "irc_join" : "irc_join,irc_smart_filter",
                              _("%s%s%s %s(%s%s%s)%s has joined %s%s"),
                              weechat_prefix ("join"),
                              IRC_COLOR_CHAT_NICK,
@@ -575,7 +583,7 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
     char *new_nick;
-    int nick_is_me;
+    int local_nick;
     
     /* NICK message looks like:
        :oldnick!user@host NICK :newnick
@@ -590,7 +598,7 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
     
     new_nick = (argv[2][0] == ':') ? argv[2] + 1 : argv[2];
     
-    nick_is_me = (strcmp (nick, server->nick) == 0) ? 1 : 0;
+    local_nick = (strcmp (nick, server->nick) == 0) ? 1 : 0;
     
     for (ptr_channel = server->channels; ptr_channel;
          ptr_channel = ptr_channel->next_channel)
@@ -616,7 +624,7 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
                     
                     /* change nick and display message on all channels */
                     irc_nick_change (server, ptr_channel, ptr_nick, new_nick);
-                    if (nick_is_me)
+                    if (local_nick)
                     {
                         weechat_printf_tags (ptr_channel->buffer,
                                              "irc_nick",
@@ -641,6 +649,10 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
                                                  IRC_COLOR_CHAT_NICK,
                                                  new_nick);
                         }
+                        irc_channel_nick_speaking_rename (ptr_channel,
+                                                          nick, new_nick);
+                        irc_channel_nick_speaking_time_rename (ptr_channel,
+                                                               nick, new_nick);
                     }
                     
                     /* enable hotlist */
@@ -650,7 +662,7 @@ irc_protocol_cmd_nick (struct t_irc_server *server, const char *command,
         }
     }
     
-    if (nick_is_me)
+    if (local_nick)
         irc_server_set_nick (server, new_nick);
     
     return WEECHAT_RC_OK;
@@ -879,9 +891,10 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
                        int argc, char **argv, char **argv_eol)
 {
     char *pos_comment, *join_string;
-    int join_length;
+    int join_length, local_part;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_channel_speaking *ptr_nick_speaking;
     
     /* PART message looks like:
        :nick!user@host PART #channel :part message
@@ -900,13 +913,20 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
         ptr_nick = irc_nick_search (ptr_channel, nick);
         if (ptr_nick)
         {
+            local_part = (strcmp (nick, server->nick) == 0);
+            
             /* display part message */
             if (!irc_ignore_check (server, ptr_channel, nick, host))
             {
+                ptr_nick_speaking = (weechat_config_boolean (irc_config_look_smart_filter)) ?
+                    irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
                 if (pos_comment)
                 {
                     weechat_printf_tags (ptr_channel->buffer,
-                                         "irc_part",
+                                         (local_part
+                                          || !weechat_config_boolean (irc_config_look_smart_filter)
+                                          || ptr_nick_speaking) ?
+                                         "irc_part" : "irc_part,irc_smart_filter",
                                          _("%s%s%s %s(%s%s%s)%s has left %s%s "
                                            "%s(%s%s%s)"),
                                          weechat_prefix ("quit"),
@@ -927,7 +947,10 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
                 else
                 {
                     weechat_printf_tags (ptr_channel->buffer,
-                                         "irc_part",
+                                         (local_part
+                                          || !weechat_config_boolean (irc_config_look_smart_filter)
+                                          || ptr_nick_speaking) ?
+                                         "irc_part" : "irc_part,irc_smart_filter",
                                          _("%s%s%s %s(%s%s%s)%s has left "
                                            "%s%s"),
                                          weechat_prefix ("quit"),
@@ -944,7 +967,7 @@ irc_protocol_cmd_part (struct t_irc_server *server, const char *command,
             }
             
             /* part request was issued by local client ? */
-            if (strcmp (ptr_nick->name, server->nick) == 0)
+            if (local_part)
             {
                 irc_nick_free_all (ptr_channel);
                 
@@ -1158,7 +1181,10 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                                          IRC_COLOR_CHAT,
                                          pos_args);
                     
-                    irc_channel_add_nick_speaking (ptr_channel, nick);
+                    irc_channel_nick_speaking_add (ptr_channel, nick);
+                    irc_channel_nick_speaking_time_remove_old (ptr_channel);
+                    irc_channel_nick_speaking_time_add (ptr_channel, nick,
+                                                        time (NULL));
                     
                     if (pos_end_01)
                         pos_end_01[0] = '\01';
@@ -1315,7 +1341,10 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                                                          NULL),
                                      pos_args);
                 
-                irc_channel_add_nick_speaking (ptr_channel, nick);
+                irc_channel_nick_speaking_add (ptr_channel, nick);
+                irc_channel_nick_speaking_time_remove_old (ptr_channel);
+                irc_channel_nick_speaking_time_add (ptr_channel, nick,
+                                                    time (NULL));
             }
         }
         else
@@ -2011,6 +2040,8 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
     char *pos_comment;
     struct t_irc_channel *ptr_channel;
     struct t_irc_nick *ptr_nick;
+    struct t_irc_channel_speaking *ptr_nick_speaking;
+    int local_quit;
     
     /* QUIT message looks like:
        :nick!user@host QUIT :quit message
@@ -2039,10 +2070,16 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
             /* display quit message */
             if (!irc_ignore_check (server, ptr_channel, nick, host))
             {
+                local_quit = (strcmp (nick, server->nick) == 0);
+                ptr_nick_speaking = (weechat_config_boolean (irc_config_look_smart_filter)) ?
+                    irc_channel_nick_speaking_time_search (ptr_channel, nick, 1) : NULL;
                 if (pos_comment && pos_comment[0])
                 {
                     weechat_printf_tags (ptr_channel->buffer,
-                                         "irc_quit",
+                                         (local_quit
+                                          || !weechat_config_boolean (irc_config_look_smart_filter)
+                                          || ptr_nick_speaking) ?
+                                         "irc_quit" : "irc_quit,irc_smart_filter",
                                          _("%s%s%s %s(%s%s%s)%s has quit "
                                            "%s(%s%s%s)"),
                                          weechat_prefix ("quit"),
@@ -2061,7 +2098,10 @@ irc_protocol_cmd_quit (struct t_irc_server *server, const char *command,
                 else
                 {
                     weechat_printf_tags (ptr_channel->buffer,
-                                         "irc_quit",
+                                         (local_quit
+                                          || !weechat_config_boolean (irc_config_look_smart_filter)
+                                          || ptr_nick_speaking) ?
+                                         "irc_quit" : "irc_quit,irc_smart_filter",
                                          _("%s%s%s %s(%s%s%s)%s has quit"),
                                          weechat_prefix ("quit"),
                                          IRC_COLOR_CHAT_NICK,

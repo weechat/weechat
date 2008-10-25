@@ -43,6 +43,7 @@
 #include "gui-bar.h"
 #include "gui-buffer.h"
 #include "gui-color.h"
+#include "gui-filter.h"
 #include "gui-keyboard.h"
 #include "gui-nicklist.h"
 
@@ -461,6 +462,23 @@ gui_completion_list_add_filename (struct t_gui_completion *completion)
     free (path_d);
     free (path_b);
     free (buffer);
+}
+
+/*
+ * gui_completion_list_add_filters: add filters to completion list
+ */
+
+void
+gui_completion_list_add_filters (struct t_gui_completion *completion)
+{
+    struct t_gui_filter *ptr_filter;
+    
+    for (ptr_filter = gui_filters; ptr_filter;
+         ptr_filter = ptr_filter->next_filter)
+    {
+        gui_completion_list_add (completion, ptr_filter->name,
+                                 0, WEECHAT_LIST_POS_SORT);
+    }
 }
 
 /*
@@ -930,6 +948,9 @@ gui_completion_build_list_template (struct t_gui_completion *completion,
                             break;
                         case 'f': /* filename */
                             gui_completion_list_add_filename (completion);
+                            break;
+                        case 'F': /* filters */
+                            gui_completion_list_add_filters (completion);
                             break;
                         case 'h': /* command hooks */
                             gui_completion_list_add_command_hooks (completion);

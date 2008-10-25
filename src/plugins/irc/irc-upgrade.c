@@ -19,6 +19,7 @@
 /* irc-upgrade.c: save/restore IRC plugin data */
 
 
+#include <stdio.h>
 #include <string.h>
 
 #include "../weechat-plugin.h"
@@ -168,8 +169,8 @@ int
 irc_upgrade_read_cb (int object_id,
                      struct t_infolist *infolist)
 {
-    int flags, sock, size;
-    char *str, *buf, *buffer_name;
+    int flags, sock, size, index;
+    char *str, *buf, *buffer_name, option_name[64], *nick;
     struct t_irc_nick *ptr_nick;
     struct t_gui_buffer *ptr_buffer;
     
@@ -269,6 +270,34 @@ irc_upgrade_read_cb (int object_id,
                         irc_upgrade_current_channel->cycle = weechat_infolist_integer (infolist, "cycle");
                         irc_upgrade_current_channel->display_creation_date = weechat_infolist_integer (infolist, "display_creation_date");
                         irc_upgrade_current_channel->nick_completion_reset = weechat_infolist_integer (infolist, "nick_completion_reset");
+                        index = 0;
+                        while (1)
+                        {
+                            snprintf (option_name, sizeof (option_name),
+                                      "nick_speaking_%05d", index);
+                            nick = weechat_infolist_string (infolist, option_name);
+                            if (!nick)
+                                break;
+                            irc_channel_nick_speaking_add (irc_upgrade_current_channel,
+                                                           nick);
+                            index++;
+                        }
+                        index = 0;
+                        while (1)
+                        {
+                            snprintf (option_name, sizeof (option_name),
+                                      "nick_speaking_time_nick_%05d", index);
+                            nick = weechat_infolist_string (infolist, option_name);
+                            if (!nick)
+                                break;
+                            snprintf (option_name, sizeof (option_name),
+                                      "nick_speaking_time_time_%05d", index);
+                            irc_channel_nick_speaking_time_add (irc_upgrade_current_channel,
+                                                                nick,
+                                                                weechat_infolist_time (infolist,
+                                                                                       option_name));
+                            index++;
+                        }
                     }
                 }
                 break;

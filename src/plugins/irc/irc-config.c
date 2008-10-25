@@ -59,6 +59,8 @@ struct t_config_option *irc_config_look_display_away;
 struct t_config_option *irc_config_look_display_channel_modes;
 struct t_config_option *irc_config_look_highlight_tags;
 struct t_config_option *irc_config_look_show_away_once;
+struct t_config_option *irc_config_look_smart_filter;
+struct t_config_option *irc_config_look_smart_filter_delay;
 struct t_config_option *irc_config_look_notice_as_pv;
 
 /* IRC config, network section */
@@ -140,7 +142,7 @@ irc_config_get_server_from_option_name (const char *name)
 
 /*
  * irc_config_change_one_server_buffer: called when the "one server buffer"
- *                                      setting is changed
+ *                                      option is changed
  */
 
 void
@@ -154,13 +156,29 @@ irc_config_change_one_server_buffer ()
 
 /*
  * irc_config_change_display_channel_modes: called when the "display channel modes"
- *                                          setting is changed
+ *                                          option is changed
  */
 
 void
 irc_config_change_display_channel_modes ()
 {
     weechat_bar_item_update ("buffer_name");
+}
+
+/*
+ * irc_config_change_smart_filter: called when the "smart_filter" option is
+ *                                 changed
+ */
+
+void
+irc_config_change_smart_filter ()
+{
+    if (weechat_config_boolean (irc_config_look_smart_filter))
+    {
+        weechat_printf (NULL,
+                        _("You should now create filter on tag "
+                          "\"irc_smart_filter\" with command /filter."));
+    }
 }
 
 /*
@@ -1023,6 +1041,17 @@ irc_config_init ()
         "show_away_once", "boolean",
         N_("show remote away message only once in private"),
         NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+    irc_config_look_smart_filter = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "smart_filter", "boolean",
+        N_("filter join/part/quit messages for a nick if not speaking for "
+           "some minutes on channel"),
+        NULL, 0, 0, "off", NULL, NULL, NULL, &irc_config_change_smart_filter, NULL, NULL, NULL);
+    irc_config_look_smart_filter_delay = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "smart_filter_delay", "integer",
+        N_("delay for filtering join/part/quit messages (in minutes)"),
+        NULL, 1, 60*24*7, "5", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_notice_as_pv = weechat_config_new_option (
         irc_config_file, ptr_section,
         "notice_as_pv", "boolean",

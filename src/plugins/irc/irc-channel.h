@@ -31,6 +31,14 @@
 
 struct t_irc_server;
 
+struct t_irc_channel_speaking
+{
+    char *nick;                        /* nick speaking                     */
+    time_t time_last_message;          /* time                              */
+    struct t_irc_channel_speaking *prev_nick; /* pointer to previous nick   */
+    struct t_irc_channel_speaking *next_nick; /* pointer to next nick       */
+};
+
 struct t_irc_channel
 {
     int type;                          /* channel type                      */
@@ -49,6 +57,9 @@ struct t_irc_channel
     struct t_irc_nick *nicks;          /* nicks on the channel              */
     struct t_irc_nick *last_nick;      /* last nick on the channel          */
     struct t_weelist *nicks_speaking;  /* for smart completion              */
+    struct t_irc_channel_speaking *nicks_speaking_time; /* for smart filter */
+                                       /* of join/part/quit messages        */
+    struct t_irc_channel_speaking *last_nick_speaking_time;
     struct t_gui_buffer *buffer;       /* buffer allocated for channel      */
     char *buffer_as_string;            /* used to return buffer info        */
     struct t_irc_channel *prev_channel; /* link to previous channel         */
@@ -77,8 +88,21 @@ extern void irc_channel_check_away (struct t_irc_server *server,
                                     struct t_irc_channel *channel, int force);
 extern void irc_channel_set_away (struct t_irc_channel *channel, const char *nick,
                                   int is_away);
-extern void irc_channel_add_nick_speaking (struct t_irc_channel *channel,
+extern void irc_channel_nick_speaking_add (struct t_irc_channel *channel,
                                            const char *nick);
+extern void irc_channel_nick_speaking_rename (struct t_irc_channel *channel,
+                                              const char *old_nick,
+                                              const char *new_nick);
+extern struct t_irc_channel_speaking *irc_channel_nick_speaking_time_search (struct t_irc_channel *channel,
+                                                                             const char *nick,
+                                                                             int check_time);
+extern void irc_channel_nick_speaking_time_remove_old (struct t_irc_channel *channel);
+extern void irc_channel_nick_speaking_time_add (struct t_irc_channel *channel,
+                                                const char *nick,
+                                                time_t time_last_message);
+extern void irc_channel_nick_speaking_time_rename (struct t_irc_channel *channel,
+                                                   const char *old_nick,
+                                                   const char *new_nick);
 extern int irc_channel_add_to_infolist (struct t_infolist *infolist,
                                         struct t_irc_channel *channel);
 extern void irc_channel_print_log (struct t_irc_channel *channel);

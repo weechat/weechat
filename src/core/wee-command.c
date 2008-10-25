@@ -774,9 +774,6 @@ command_filter (void *data, struct t_gui_buffer *buffer,
                 int argc, char **argv, char **argv_eol)
 {
     struct t_gui_filter *ptr_filter;
-    int i;
-    long number;
-    char *error;
     
     /* make C compiler happy */
     (void) data;
@@ -797,17 +794,15 @@ command_filter (void *data, struct t_gui_buffer *buffer,
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                        _("Message filters:"));
-            i = 0;
             for (ptr_filter = gui_filters; ptr_filter;
                  ptr_filter = ptr_filter->next_filter)
             {
-                i++;
                 gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("  %s[%s%d%s]%s buffer: %s%s%s "
+                                           _("  %s[%s%s%s]%s buffer: %s%s%s "
                                              "/ tags: %s / regex: %s %s"),
                                            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                            GUI_COLOR(GUI_COLOR_CHAT),
-                                           i,
+                                           ptr_filter->name,
                                            GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                                            GUI_COLOR(GUI_COLOR_CHAT),
                                            GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
@@ -834,34 +829,23 @@ command_filter (void *data, struct t_gui_buffer *buffer,
         if (argc > 2)
         {
             /* enable a filter */
-            error = NULL;
-            number = strtol (argv[2], &error, 10);
-            if (error && !error[0])
+            ptr_filter = gui_filter_search_by_name (argv[2]);
+            if (ptr_filter)
             {
-                ptr_filter = gui_filter_search_by_number (number);
-                if (ptr_filter)
+                if (!ptr_filter->enabled)
                 {
-                    if (!ptr_filter->enabled)
-                    {
-                        gui_filter_enable (ptr_filter);
-                        gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                                   _("Filter %d enabled"),
-                                                   number);
-                    }
-                }
-                else
-                {
+                    gui_filter_enable (ptr_filter);
                     gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                               _("%sError: filter not found"),
-                                               gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                    return WEECHAT_RC_ERROR;
+                                               _("Filter \"%s\" enabled"),
+                                               ptr_filter->name);
                 }
             }
             else
             {
                 gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("%sError: wrong filter number"),
-                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                                           _("%sError: filter \"%s\" not found"),
+                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                           argv[2]);
                 return WEECHAT_RC_ERROR;
             }
         }
@@ -884,34 +868,23 @@ command_filter (void *data, struct t_gui_buffer *buffer,
         if (argc > 2)
         {
             /* enable a filter */
-            error = NULL;
-            number = strtol (argv[2], &error, 10);
-            if (error && !error[0])
+            ptr_filter = gui_filter_search_by_name (argv[2]);
+            if (ptr_filter)
             {
-                ptr_filter = gui_filter_search_by_number (number);
-                if (ptr_filter)
+                if (ptr_filter->enabled)
                 {
-                    if (ptr_filter->enabled)
-                    {
-                        gui_filter_disable (ptr_filter);
-                        gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                                   _("Filter %d disabled"),
-                                                   number);
-                    }
-                }
-                else
-                {
+                    gui_filter_disable (ptr_filter);
                     gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                               _("%sError: filter not found"),
-                                               gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                    return WEECHAT_RC_ERROR;
+                                               _("Filter \"%s\" disabled"),
+                                               ptr_filter->name);
                 }
             }
             else
             {
                 gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("%sError: wrong filter number"),
-                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                                           _("%sError: filter \"%s\" not found"),
+                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                           argv[2]);
                 return WEECHAT_RC_ERROR;
             }
         }
@@ -927,38 +900,27 @@ command_filter (void *data, struct t_gui_buffer *buffer,
         }
         return WEECHAT_RC_OK;
     }
-
+    
     /* toggle global filtering or a filter on/off */
     if (string_strcasecmp (argv[1], "toggle") == 0)
     {
         if (argc > 2)
         {
             /* toggle a filter */
-            error = NULL;
-            number = strtol (argv[2], &error, 10);
-            if (error && !error[0])
+            ptr_filter = gui_filter_search_by_name (argv[2]);
+            if (ptr_filter)
             {
-                ptr_filter = gui_filter_search_by_number (number);
-                if (ptr_filter)
-                {
-                    if (ptr_filter->enabled)
-                        gui_filter_disable (ptr_filter);
-                    else
-                        gui_filter_enable (ptr_filter);
-                }
+                if (ptr_filter->enabled)
+                    gui_filter_disable (ptr_filter);
                 else
-                {
-                    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                               _("%sError: filter not found"),
-                                               gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                    return WEECHAT_RC_ERROR;
-                }
+                    gui_filter_enable (ptr_filter);
             }
             else
             {
                 gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("%sError: wrong filter number"),
-                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                                           _("%sError: filter \"%s\" not found"),
+                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                           argv[2]);
                 return WEECHAT_RC_ERROR;
             }
         }
@@ -975,7 +937,7 @@ command_filter (void *data, struct t_gui_buffer *buffer,
     /* add filter */
     if (string_strcasecmp (argv[1], "add") == 0)
     {
-        if (argc < 5)
+        if (argc < 6)
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                        _("%sError: missing arguments for \"%s\" "
@@ -984,32 +946,78 @@ command_filter (void *data, struct t_gui_buffer *buffer,
                                        "filter add");
             return WEECHAT_RC_ERROR;
         }
-        if (gui_filter_search (argv[2], argv[3], argv_eol[4]))
+        if (gui_filter_search (argv[3], argv[4], argv_eol[5]))
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                        _("%sError: filter already exists"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_ERROR;
         }
-        if ((strcmp (argv[3], "*") == 0) && (strcmp (argv_eol[4], "*") == 0))
+        if ((strcmp (argv[4], "*") == 0) && (strcmp (argv_eol[5], "*") == 0))
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError: you must specify at least tag(s) or "
-                                         "regex for filter"),
+                                       _("%sError: you must specify at least "
+                                         "tag(s) or regex for filter"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
             return WEECHAT_RC_ERROR;
         }
         
-        if (gui_filter_new (1, argv[2], argv[3], argv_eol[4]))
+        if (gui_filter_new (1, argv[2], argv[3], argv[4], argv_eol[5]))
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("Filter added"));
+                                       _("Filter \"%s\" added"),
+                                       argv[2]);
         }
         else
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                        _("%sError adding filter"),
                                        gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+        }
+        
+        return WEECHAT_RC_OK;
+    }
+
+    /* rename a filter */
+    if (string_strcasecmp (argv[1], "rename") == 0)
+    {
+        if (argc < 4)
+        {
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError: missing arguments for \"%s\" "
+                                         "command"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                       "filter rename");
+            return WEECHAT_RC_ERROR;
+        }
+        
+        /* rename filter */
+        ptr_filter = gui_filter_search_by_name (argv[2]);
+        if (ptr_filter)
+        {
+            if (gui_filter_rename (ptr_filter, argv[3]))
+            {
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("Filter \"%s\" renamed to \"%s\""),
+                                           argv[2], argv[3]);
+            }
+            else
+            {
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("%sError: unable to rename filter "
+                                             "\"%s\" to \"%s\""),
+                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                           argv[2], argv[3]);
+                return WEECHAT_RC_ERROR;
+            }
+        }
+        else
+        {
+            gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                       _("%sError: filter \"%s\" not found"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                       argv[2]);
+            return WEECHAT_RC_ERROR;
         }
         
         return WEECHAT_RC_OK;
@@ -1043,31 +1051,21 @@ command_filter (void *data, struct t_gui_buffer *buffer,
         }
         else
         {
-            error = NULL;
-            number = strtol (argv[2], &error, 10);
-            if (error && !error[0])
+            ptr_filter = gui_filter_search_by_name (argv[2]);
+            if (ptr_filter)
             {
-                ptr_filter = gui_filter_search_by_number (number);
-                if (ptr_filter)
-                {
-                    gui_filter_free (ptr_filter);
-                    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                               _("Filter deleted"));
-                }
-                else
-                {
-                    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                               _("%sError: filter not found"),
-                                               gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                    return WEECHAT_RC_ERROR;
-                }
+                gui_filter_free (ptr_filter);
+                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                                           _("Filter \"%s\" deleted"),
+                                           argv[2]);
             }
             else
             {
                 gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("%sError: wrong filter number"),
-                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
-                return WEECHAT_RC_ERROR;
+                                           _("%sError: filter \"%s\" not found"),
+                                           gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                           argv[2]);
+                    return WEECHAT_RC_ERROR;
             }
         }
         return WEECHAT_RC_OK;
@@ -3112,18 +3110,17 @@ command_init ()
     hook_command (NULL, "filter",
                   N_("filter messages in buffers, to hide/show them according "
                      "to tags or regex"),
-                  N_("[list] | [enable|disable|toggle] | "
-                     "[add buffer tags regex] | "
-                     "[del number|-all]"),
+                  N_("[list] | [enable|disable|toggle [name]] | "
+                     "[add name buffer tags regex] | "
+                     "[del name|-all]"),
                   N_("   list: list all filters\n"
                      " enable: enable filters (filters are enabled by "
                       "default)\n"
                      "disable: disable filters\n"
                      " toggle: toggle filters\n"
+                     "   name: filter name\n"
                      "    add: add a filter\n"
                      "    del: delete a filter\n"
-                     " number: number of filter to delete (look at list to "
-                     "find it)\n"
                      "   -all: delete all filters\n"
                      " buffer: buffer where filter is active: it may be "
                      "a name or \"*\" for all buffers\n"
@@ -3132,16 +3129,18 @@ command_init ()
                      "  regex: regular expression to search in "
                      "line (use \\t to separate prefix from message)\n\n"
                      "Examples:\n"
-                     "  filter IRC join/part/quit messages:\n"
-                     "    /filter add * irc_join,irc_part,irc_quit *\n"
+                     "  use IRC smart filter for join/part/quit messages:\n"
+                     "    /filter add irc_smart * irc_smart_filter *\n"
+                     "  filter all IRC join/part/quit messages:\n"
+                     "    /filter add joinquit * irc_join,irc_part,irc_quit *\n"
                      "  filter nick \"toto\" on channel #weechat:\n"
-                     "    /filter add freenode.#weechat * toto\\t\n"
+                     "    /filter add toto freenode.#weechat * toto\\t\n"
                      "  filter lines containing word \"spam\":\n"
-                     "    /filter add * * spam\n"
+                     "    /filter add filterspam * * spam\n"
                      "  filter lines containing \"weechat sucks\" on channel "
                      "#weechat:\n"
-                     "    /filter add freenode.#weechat * weechat sucks"),
-                  "list|enable|disable|toggle|add|del",
+                     "    /filter add sucks freenode.#weechat * weechat sucks"),
+                  "list|enable|disable|toggle|add|rename|del %F",
                   &command_filter, NULL);
     hook_command (NULL, "help",
                   N_("display help about commands and options"),

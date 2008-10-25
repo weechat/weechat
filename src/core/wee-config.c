@@ -704,13 +704,10 @@ config_weechat_filter_read (void *data,
     {
         argv = string_explode (value, ";", 0, 0, &argc);
         argv_eol = string_explode (value, ";", 1, 0, NULL);
-        if (argv && argv_eol && (argc >= 3))
+        if (argv && argv_eol && (argc >= 4))
         {
-            if (argc == 3)
-                gui_filter_new (1, argv[0], argv[1], argv_eol[2]);
-            else
-                gui_filter_new ((string_strcasecmp (argv[0], "on") == 0) ? 1 : 0,
-                                argv[1], argv[2], argv_eol[3]);
+            gui_filter_new ((string_strcasecmp (argv[0], "on") == 0) ? 1 : 0,
+                            option_name, argv[1], argv[2], argv_eol[3]);
         }
         if (argv)
             string_free_exploded (argv);
@@ -740,7 +737,7 @@ config_weechat_filter_write (void *data, struct t_config_file *config_file,
          ptr_filter = ptr_filter->next_filter)
     {
         config_file_write_line (config_file,
-                                "filter",
+                                ptr_filter->name,
                                 "%s;%s;%s;%s",
                                 (ptr_filter->enabled) ? "on" : "off",
                                 ptr_filter->buffer,

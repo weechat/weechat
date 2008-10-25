@@ -253,22 +253,19 @@ gui_filter_search (const char *buffer, const char *tags, const char *regex)
 }
 
 /*
- * gui_filter_search_by_number: search a filter by number (first is #1)
+ * gui_filter_search_by_name: search a filter by name
  */
 
 struct t_gui_filter *
-gui_filter_search_by_number (int number)
+gui_filter_search_by_name (const char *name)
 {
     struct t_gui_filter *ptr_filter;
-    int i;
-
-    i = 1;
+    
     for (ptr_filter = gui_filters; ptr_filter;
          ptr_filter = ptr_filter->next_filter)
     {
-        if (i == number)
+        if (strcmp (ptr_filter->name, name) == 0)
             return ptr_filter;
-        i++;
     }
     
     /* filter not found */
@@ -280,15 +277,18 @@ gui_filter_search_by_number (int number)
  */
 
 struct t_gui_filter *
-gui_filter_new (int enabled, const char *buffer, const char *tags,
-                const char *regex)
+gui_filter_new (int enabled, const char *name, const char *buffer,
+                const char *tags, const char *regex)
 {
     struct t_gui_filter *new_filter;
     regex_t *regex1, *regex2;
     char *pos_tab, *regex_prefix;
     const char *pos_regex_message;
 
-    if (!buffer || !tags || !regex)
+    if (!name || !buffer || !tags || !regex)
+        return NULL;
+    
+    if (gui_filter_search_by_name (name))
         return NULL;
     
     regex1 = NULL;
@@ -347,6 +347,7 @@ gui_filter_new (int enabled, const char *buffer, const char *tags,
     {
         /* init filter */
         new_filter->enabled = enabled;
+        new_filter->name = strdup (name);
         new_filter->buffer = (buffer) ? strdup (buffer) : strdup ("*");
         if (tags)
         {
@@ -383,6 +384,25 @@ gui_filter_new (int enabled, const char *buffer, const char *tags,
 }
 
 /*
+ * gui_filter_rename: rename a filter
+ */
+
+int
+gui_filter_rename (struct t_gui_filter *filter, const char *new_name)
+{
+    if (!filter || !new_name)
+        return 0;
+    
+    if (gui_filter_search_by_name (new_name))
+        return 0;
+    
+    free (filter->name);
+    filter->name = strdup (new_name);
+    
+    return 1;
+}
+
+/*
  * gui_filter_free: remove a filter
  */
 
@@ -393,6 +413,8 @@ gui_filter_free (struct t_gui_filter *filter)
                       WEECHAT_HOOK_SIGNAL_POINTER, filter);
     
     /* free data */
+    if (filter->name)
+        free (filter->name);
     if (filter->buffer)
         free (filter->buffer);
     if (filter->tags)
@@ -501,6 +523,7 @@ gui_filter_print_log ()
         log_printf ("");
         log_printf ("[filter (addr:0x%x)]", ptr_filter);
         log_printf ("  enabled. . . . . . . . : %d",   ptr_filter->enabled);
+        log_printf ("  name . . . . . . . . . : '%s'", ptr_filter->name);
         log_printf ("  buffer . . . . . . . . : '%s'", ptr_filter->buffer);
         log_printf ("  tags . . . . . . . . . : '%s'", ptr_filter->tags);
         log_printf ("  regex. . . . . . . . . : '%s'", ptr_filter->regex);
