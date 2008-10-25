@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-25 17:52+0200\n"
-"PO-Revision-Date: 2008-10-25 17:52+0200\n"
+"POT-Creation-Date: 2008-10-25 20:09+0200\n"
+"PO-Revision-Date: 2008-10-25 20:09+0200\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -253,8 +253,8 @@ msgid "Filter \"%s\" disabled"
 msgstr "Filtre \"%s\" désactivé"
 
 #, c-format
-msgid "%sError: filter already exists"
-msgstr "%sErreur: le filtre existe déjà"
+msgid "%sError: filter \"%s\" already exists"
+msgstr "%sErreur: le filtre \"%s\" existe déjà"
 
 #, c-format
 msgid "%sError: you must specify at least tag(s) or regex for filter"

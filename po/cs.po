@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-25 17:52+0200\n"
+"POT-Creation-Date: 2008-10-25 20:09+0200\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -262,7 +262,7 @@ msgid "Filter \"%s\" disabled"
 msgstr "uživatel byl zablokován"
 
 #, fuzzy, c-format
-msgid "%sError: filter already exists"
+msgid "%sError: filter \"%s\" already exists"
 msgstr "%s ignorování již existuje\n"
 
 #, c-format

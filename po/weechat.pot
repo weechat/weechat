@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-25 17:52+0200\n"
+"POT-Creation-Date: 2008-10-25 20:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -234,7 +234,7 @@ msgid "Filter \"%s\" disabled"
 msgstr ""
 
 #, c-format
-msgid "%sError: filter already exists"
+msgid "%sError: filter \"%s\" already exists"
 msgstr ""
 
 #, c-format

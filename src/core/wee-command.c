@@ -946,11 +946,12 @@ command_filter (void *data, struct t_gui_buffer *buffer,
                                        "filter add");
             return WEECHAT_RC_ERROR;
         }
-        if (gui_filter_search (argv[3], argv[4], argv_eol[5]))
+        if (gui_filter_search_by_name (argv[2]))
         {
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("%sError: filter already exists"),
-                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR]);
+                                       _("%sError: filter \"%s\" already exists"),
+                                       gui_chat_prefix[GUI_CHAT_PREFIX_ERROR],
+                                       argv[2]);
             return WEECHAT_RC_ERROR;
         }
         if ((strcmp (argv[4], "*") == 0) && (strcmp (argv_eol[5], "*") == 0))

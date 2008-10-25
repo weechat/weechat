@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-25 17:52+0200\n"
+"POT-Creation-Date: 2008-10-25 20:09+0200\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -263,7 +263,7 @@ msgid "Filter \"%s\" disabled"
 msgstr "los usuarios han sido desactivados"
 
 #, fuzzy, c-format
-msgid "%sError: filter already exists"
+msgid "%sError: filter \"%s\" already exists"
 msgstr "el ignore %s ya existe\n"
 
 #, c-format
