@@ -1916,9 +1916,15 @@ command_plugin_list (const char *name, int full)
                                              _("    fd hooked:"));
                         hook_found = 1;
                         gui_chat_printf (NULL,
-                                         _("      %d (flags: %d)"),
+                                         _("      %d (flags: 0x%x:%s%s%s)"),
                                          HOOK_FD(ptr_hook, fd),
-                                         HOOK_FD(ptr_hook, flags));
+                                         HOOK_FD(ptr_hook, flags),
+                                         (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_READ) ?
+                                         _(" read") : "",
+                                         (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_WRITE) ?
+                                         _(" write") : "",
+                                         (HOOK_FD(ptr_hook, flags) & HOOK_FD_FLAG_EXCEPTION) ?
+                                         _(" exception") : "");
                     }
                 }
 

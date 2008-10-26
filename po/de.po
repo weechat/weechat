@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-25 20:09+0200\n"
+"POT-Creation-Date: 2008-10-26 17:42+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -498,8 +498,18 @@ msgid "    fd hooked:"
 msgstr "     Befehls-Handler:\n"
 
 #, fuzzy, c-format
-msgid "      %d (flags: %d)"
+msgid "      %d (flags: 0x%x:%s%s%s)"
 msgstr "       %d Sekunden\n"
+
+msgid " read"
+msgstr ""
+
+msgid " write"
+msgstr ""
+
+#, fuzzy
+msgid " exception"
+msgstr "  . Beschreibung: %s\n"
 
 #, fuzzy
 msgid "    connect hooked:"
