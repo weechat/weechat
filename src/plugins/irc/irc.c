@@ -173,15 +173,7 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
         irc_server_auto_connect (auto_connect);
     
     irc_hook_timer = weechat_hook_timer (1 * 1000, 0, 0,
-                                         &irc_server_timer_cb, NULL);
-    
-    /*
-    if (irc_cfg_irc_away_check != 0)
-        irc_hook_timer_check_away = weechat_hook_timer (irc_cfg_irc_away_check * 60 * 1000,
-                                                        0,
-                                                        &irc_server_timer_check_away,
-                                                        NULL);
-    */
+                                         &irc_server_timer_cb, NULL);    
     
     return WEECHAT_RC_OK;
 }
@@ -195,6 +187,11 @@ weechat_plugin_end (struct t_weechat_plugin *plugin)
 {
     /* make C compiler happy */
     (void) plugin;
+    
+    if (irc_hook_timer)
+        weechat_unhook (irc_hook_timer);
+    if (irc_hook_timer_check_away)
+        weechat_unhook (irc_hook_timer_check_away);
     
     irc_config_write ();
     

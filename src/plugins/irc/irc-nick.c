@@ -181,7 +181,7 @@ struct t_irc_nick *
 irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
               const char *nick_name, int is_chanowner, int is_chanadmin,
               int is_chanadmin2, int is_op, int is_halfop, int has_voice,
-              int is_chanuser)
+              int is_chanuser, int is_away)
 {
     struct t_irc_nick *new_nick, *ptr_nick;
     char prefix, str_prefix_color[64];
@@ -208,6 +208,7 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
         IRC_NICK_SET_FLAG(ptr_nick, is_halfop, IRC_NICK_HALFOP);
         IRC_NICK_SET_FLAG(ptr_nick, has_voice, IRC_NICK_VOICE);
         IRC_NICK_SET_FLAG(ptr_nick, is_chanuser, IRC_NICK_CHANUSER);
+        IRC_NICK_SET_FLAG(ptr_nick, is_away, IRC_NICK_AWAY);
         
         /* add new nick in nicklist */
         irc_nick_get_gui_infos (ptr_nick, &prefix,
@@ -216,7 +217,9 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
                   "weechat.color.nicklist_prefix%d",
                   prefix_color);
         weechat_nicklist_add_nick (channel->buffer, ptr_group,
-                                   ptr_nick->name, "weechat.color.nicklist",
+                                   ptr_nick->name,
+                                   (is_away) ?
+                                   "weechat.color.nicklist_away" : "weechat.color.nicklist",
                                    prefix, str_prefix_color, 1);
         
         return ptr_nick;
@@ -237,11 +240,12 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
     IRC_NICK_SET_FLAG(new_nick, is_halfop, IRC_NICK_HALFOP);
     IRC_NICK_SET_FLAG(new_nick, has_voice, IRC_NICK_VOICE);
     IRC_NICK_SET_FLAG(new_nick, is_chanuser, IRC_NICK_CHANUSER);
+    IRC_NICK_SET_FLAG(new_nick, is_away, IRC_NICK_AWAY);
     if (weechat_strcasecmp (new_nick->name, server->nick) == 0)
         new_nick->color = IRC_COLOR_CHAT_NICK_SELF;
     else
         new_nick->color = irc_nick_find_color (new_nick);
-
+    
     /* add nick to end of list */
     new_nick->prev_nick = channel->last_nick;
     if (channel->nicks)
@@ -262,7 +266,9 @@ irc_nick_new (struct t_irc_server *server, struct t_irc_channel *channel,
               "weechat.color.nicklist_prefix%d",
               prefix_color);
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
-                               new_nick->name, "weechat.color.nicklist",
+                               new_nick->name,
+                               (is_away) ?
+                               "weechat.color.nicklist_away" : "weechat.color.nicklist",
                                prefix, str_prefix_color, 1);
     
     /* all is ok, return address of new nick */
@@ -348,7 +354,9 @@ irc_nick_set (struct t_irc_channel *channel,
               "weechat.color.nicklist_prefix%d",
               prefix_color);
     weechat_nicklist_add_nick (channel->buffer, ptr_group,
-                               nick->name, "weechat.color.nicklist",
+                               nick->name,
+                               (nick->flags & IRC_NICK_AWAY) ?
+                               "weechat.color.nicklist_away" : "weechat.color.nicklist",
                                prefix, str_prefix_color, 1);
 }
 
@@ -489,33 +497,16 @@ void
 irc_nick_set_away (struct t_irc_channel *channel, struct t_irc_nick *nick,
                    int is_away)
 {
-    (void) channel;
-    (void) nick;
-    (void) is_away;
-    
-    /*
-    t_gui_nick *ptr_nick;
-    
-    if ((irc_cfg_irc_away_check > 0)
-        && ((irc_cfg_irc_away_check_max_nicks == 0) ||
-            (channel->nicks_count <= irc_cfg_irc_away_check_max_nicks)))
+    if ((weechat_config_integer (irc_config_network_away_check) > 0)
+        && ((weechat_config_integer (irc_config_network_away_check_max_nicks) == 0) ||
+            (channel->nicks_count <= weechat_config_integer (irc_config_network_away_check_max_nicks))))
     {
         if (((is_away) && (!(nick->flags & IRC_NICK_AWAY))) ||
             ((!is_away) && (nick->flags & IRC_NICK_AWAY)))
         {
-            IRC_NICK_SET_FLAG(nick, is_away, IRC_NICK_AWAY);
-            ptr_nick = gui_nicklist_search (channel->buffer, nick->nick);
-            if (ptr_nick)
-                gui_nicklist_update (channel->buffer, ptr_nick, NULL,
-                                     ptr_nick->sort_index,
-                                     (is_away) ? GUI_COLOR_NICKLIST_AWAY :
-                                     GUI_COLOR_NICKLIST,
-                                     ptr_nick->prefix,
-                                     ptr_nick->color_prefix);
-            gui_nicklist_draw (channel->buffer, 0, 0);
+            irc_nick_set (channel, nick, is_away, IRC_NICK_AWAY);
         }
     }
-    */
 }
 
 /*

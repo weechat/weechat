@@ -1832,17 +1832,20 @@ irc_server_timer_cb (void *data)
 }
 
 /*
- * irc_server_timer_check_away: timer called to check away on servers
- *                              (according to option "irc_check_away")
+ * irc_server_timer_check_away_cb: timer called to check away on servers
+ *                                 (according to option "irc_check_away")
  */
 
-void
-irc_server_timer_check_away (void *empty)
+int
+irc_server_timer_check_away_cb (void *data)
 {
-    (void) empty;
+    /* make C compiler happy */
+    (void) data;
     
     if (weechat_config_integer (irc_config_network_away_check) > 0)
         irc_server_check_away ();
+    
+    return WEECHAT_RC_OK;
 }
 
 /*

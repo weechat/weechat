@@ -311,13 +311,10 @@ irc_channel_check_away (struct t_irc_server *server,
  */
 
 void
-irc_channel_set_away (struct t_irc_channel *channel, const char *nick, int is_away)
+irc_channel_set_away (struct t_irc_channel *channel, const char *nick,
+                      int is_away)
 {
-    (void) channel;
-    (void) nick;
-    (void) is_away;
-    
-    /*struct t_irc_nick *ptr_nick;
+    struct t_irc_nick *ptr_nick;
     
     if (channel->type == IRC_CHANNEL_TYPE_CHANNEL)
     {
@@ -325,7 +322,6 @@ irc_channel_set_away (struct t_irc_channel *channel, const char *nick, int is_aw
         if (ptr_nick)
             irc_nick_set_away (channel, ptr_nick, is_away);
     }
-    */
 }
 
 /*

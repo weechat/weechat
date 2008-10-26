@@ -522,6 +522,9 @@ hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
     struct t_hook_timer *new_hook_timer;
     struct timezone tz;
     
+    if (interval <= 0)
+        return NULL;
+    
     new_hook = malloc (sizeof (*new_hook));
     if (!new_hook)
         return NULL;

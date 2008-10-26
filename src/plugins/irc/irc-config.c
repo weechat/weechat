@@ -146,8 +146,13 @@ irc_config_get_server_from_option_name (const char *name)
  */
 
 void
-irc_config_change_one_server_buffer ()
+irc_config_change_one_server_buffer (void *data,
+                                     struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     if (weechat_config_boolean (irc_config_look_one_server_buffer))
         irc_buffer_merge_servers ();
     else
@@ -160,8 +165,13 @@ irc_config_change_one_server_buffer ()
  */
 
 void
-irc_config_change_display_channel_modes ()
+irc_config_change_display_channel_modes (void *data,
+                                         struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     weechat_bar_item_update ("buffer_name");
 }
 
@@ -171,8 +181,13 @@ irc_config_change_display_channel_modes ()
  */
 
 void
-irc_config_change_smart_filter ()
+irc_config_change_smart_filter (void *data,
+                                struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     if (weechat_config_boolean (irc_config_look_smart_filter))
     {
         weechat_printf (NULL,
@@ -186,23 +201,30 @@ irc_config_change_smart_filter ()
  */
 
 void
-irc_config_change_away_check ()
+irc_config_change_away_check (void *data,
+                              struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     if (irc_hook_timer_check_away)
     {
         weechat_unhook (irc_hook_timer_check_away);
         irc_hook_timer_check_away = NULL;
     }
-    if (weechat_config_integer (irc_config_network_away_check) == 0)
+    if (weechat_config_integer (irc_config_network_away_check) > 0)
+    {
+        irc_hook_timer_check_away = weechat_hook_timer (weechat_config_integer (irc_config_network_away_check) * 60 * 1000,
+                                                        0, 0,
+                                                        &irc_server_timer_check_away_cb,
+                                                        NULL);
+    }
+    else
     {
         /* reset away flag for all nicks/chans/servers */
-        //irc_server_remove_away ();
+        irc_server_remove_away ();
     }
-    /*irc_hook_timer_check_away = weechat_hook_timer (weechat_config_integer (irc_config_irc_away_check) * 60 * 1000,
-                                                      0,
-                                                      irc_server_timer_check_away,
-                                                      NULL);
-    */
 }
 
 /*
@@ -211,8 +233,13 @@ irc_config_change_away_check ()
  */
 
 void
-irc_config_change_log ()
+irc_config_change_log (void *data,
+                       struct t_config_option *option)
 {
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
     /*t_gui_buffer *ptr_buffer;
     t_irc_server *ptr_server;
     t_irc_channel *ptr_channel;
@@ -1219,7 +1246,15 @@ irc_config_init ()
 int
 irc_config_read ()
 {
-    return weechat_config_read (irc_config_file);
+    int rc;
+    
+    rc = weechat_config_read (irc_config_file);
+    if (rc == WEECHAT_CONFIG_READ_OK)
+    {
+        irc_config_change_away_check (NULL, NULL);
+    }
+    
+    return rc;
 }
 
 /*

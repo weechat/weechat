@@ -185,6 +185,7 @@ extern void irc_server_auto_connect (int auto_connect);
 extern void irc_server_autojoin_channels ();
 extern int irc_server_recv_cb (void *arg_server);
 extern int irc_server_timer_cb (void *data);
+extern int irc_server_timer_check_away_cb (void *data);
 extern void irc_server_outqueue_free_all (struct t_irc_server *server);
 extern int irc_server_get_channel_count (struct t_irc_server *server);
 extern int irc_server_get_pv_count (struct t_irc_server *server);

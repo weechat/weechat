@@ -314,7 +314,8 @@ irc_upgrade_read_cb (int object_id,
                                              flags & IRC_NICK_OP,
                                              flags & IRC_NICK_HALFOP,
                                              flags & IRC_NICK_VOICE,
-                                             flags & IRC_NICK_CHANUSER);
+                                             flags & IRC_NICK_CHANUSER,
+                                             flags & IRC_NICK_AWAY);
                     if (ptr_nick)
                     {
                         str = weechat_infolist_string (infolist, "host");

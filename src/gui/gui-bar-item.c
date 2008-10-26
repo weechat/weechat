@@ -1196,7 +1196,11 @@ gui_bar_item_default_buffer_nicklist (void *data, struct t_gui_bar_item *item,
                     str_prefix[0] = ptr_nick->prefix;
                     str_prefix[1] = '\0';
                     strcat (buf, str_prefix);
-                    strcat (buf, GUI_COLOR_CUSTOM_BAR_FG);
+                    config_file_search_with_string (ptr_nick->color,
+                                                    NULL, NULL, &ptr_option,
+                                                    NULL);
+                    if (ptr_option)
+                        strcat (buf, gui_color_get_custom (gui_color_get_name (CONFIG_COLOR(ptr_option))));
                     strcat (buf, ptr_nick->name);
                 }
                 else

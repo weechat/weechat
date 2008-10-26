@@ -332,7 +332,7 @@ irc_protocol_cmd_join (struct t_irc_server *server, const char *command,
     }
     
     /* add nick in channel */
-    ptr_nick = irc_nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0, 0, 0);
+    ptr_nick = irc_nick_new (server, ptr_channel, nick, 0, 0, 0, 0, 0, 0, 0, 0);
     if (ptr_nick)
         ptr_nick->host = strdup (address);
     
@@ -3713,7 +3713,7 @@ irc_protocol_cmd_353 (struct t_irc_server *server, const char *command,
         {
             if (!irc_nick_new (server, ptr_channel, pos_nick,
                                is_chanowner, is_chanadmin, is_chanadmin2,
-                               is_op, is_halfop, has_voice, is_chanuser))
+                               is_op, is_halfop, has_voice, is_chanuser, 0))
             {
                 weechat_printf (server->buffer,
                                 _("%s%s: cannot create nick \"%s\" "
