@@ -5,7 +5,7 @@ ChangeLog - 2008-10-25
 
 
 Version 0.2.7 (under dev!):
-   * add smart join/part/quit filter in IRC plugin (task #8503)
+   * add smart join/part/quit message filter in IRC plugin (task #8503)
    * add color decoding in title for IRC channels (task #6030)
    * fix lock with SSL servers when connection fails, and when disconnecting
      during connection problem (bug #17584)
