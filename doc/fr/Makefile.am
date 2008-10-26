@@ -16,7 +16,8 @@
 
 LANGCODE = fr
 BOOK = weechat.$(LANGCODE)
-BOOK_INCLUDE = intro.$(LANGCODE).xml \
+BOOK_INCLUDE = authors.$(LANGCODE).xml \
+               intro.$(LANGCODE).xml \
                install.$(LANGCODE).xml \
                usage.$(LANGCODE).xml \
                plugins.$(LANGCODE).xml \
