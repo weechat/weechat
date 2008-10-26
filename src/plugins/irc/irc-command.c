@@ -3111,6 +3111,8 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             if (irc_current_server)
             {
                 ptr_server = irc_current_server->next_server;
+                if (!ptr_server)
+                    ptr_server = irc_servers;
                 while (ptr_server != irc_current_server)
                 {
                     if (ptr_server->buffer)
