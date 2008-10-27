@@ -67,6 +67,7 @@ weechat_lua_exec (struct t_plugin_script *script,
     old_lua_current_script = lua_current_script;
     lua_current_script = script;
     
+    argc = 0;
     if (argv && argv[0])
     {
         lua_pushstring (lua_current_interpreter, argv[0]);

@@ -126,6 +126,7 @@ logger_get_filename (struct t_gui_buffer *buffer)
         ptr_infolist = weechat_infolist_get ("buffer", buffer, NULL);
         if (ptr_infolist)
         {
+            plugin_name2 = NULL;
             name2 = NULL;
             if (weechat_infolist_next (ptr_infolist))
             {

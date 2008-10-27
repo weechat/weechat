@@ -1548,6 +1548,7 @@ gui_buffer_line_add_to_infolist (struct t_infolist *infolist,
     /* write tags */
     if (!infolist_new_var_integer (ptr_item, "tags_count", line->tags_count))
         return 0;
+    length = 0;
     for (i = 0; i < line->tags_count; i++)
     {
         snprintf (option_name, sizeof (option_name), "tag_%05d", i + 1);

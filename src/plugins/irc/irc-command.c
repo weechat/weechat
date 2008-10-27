@@ -2739,10 +2739,12 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
 {
     int i, detailed_list, one_server_found, length;
     int default_autoconnect, default_ipv6, default_ssl;
-    struct t_irc_server server_tmp, *ptr_server, *server_found, *new_server;
+    struct t_irc_server server_tmp, *ptr_server2, *server_found, *new_server;
     char *server_name, *mask, value[16];
     struct t_infolist *infolist;
     struct t_config_option *ptr_option;
+    
+    IRC_GET_SERVER_CHANNEL(buffer);
     
     /* make C compiler happy */
     (void) data;
@@ -2774,10 +2776,10 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
             {
                 weechat_printf (NULL, "");
                 weechat_printf (NULL, _("All servers:"));
-                for (ptr_server = irc_servers; ptr_server;
-                     ptr_server = ptr_server->next_server)
+                for (ptr_server2 = irc_servers; ptr_server2;
+                     ptr_server2 = ptr_server2->next_server)
                 {
-                    irc_display_server (ptr_server, detailed_list);
+                    irc_display_server (ptr_server2, detailed_list);
                 }
             }
             else
@@ -2786,10 +2788,10 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         else
         {
             one_server_found = 0;
-            for (ptr_server = irc_servers; ptr_server;
-                 ptr_server = ptr_server->next_server)
+            for (ptr_server2 = irc_servers; ptr_server2;
+                 ptr_server2 = ptr_server2->next_server)
             {
-                if (weechat_strcasestr (ptr_server->name, server_name))
+                if (weechat_strcasestr (ptr_server2->name, server_name))
                 {
                     if (!one_server_found)
                     {
@@ -2799,7 +2801,7 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                                         server_name);
                     }
                     one_server_found = 1;
-                    irc_display_server (ptr_server, detailed_list);
+                    irc_display_server (ptr_server2, detailed_list);
                 }
             }
             if (!one_server_found)
@@ -2853,7 +2855,6 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
                             IRC_COLOR_CHAT,
                             IRC_COLOR_CHAT_SERVER,
                             argv[3]);
-            //gui_window_redraw_all_buffers ();
             return WEECHAT_RC_OK;
         }
         
@@ -3091,10 +3092,10 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
     
     if (weechat_strcasecmp (argv[1], "deloutq") == 0)
     {
-        for (ptr_server = irc_servers; ptr_server;
-             ptr_server = ptr_server->next_server)
+        for (ptr_server2 = irc_servers; ptr_server2;
+             ptr_server2 = ptr_server2->next_server)
         {
-            irc_server_outqueue_free_all (ptr_server);
+            irc_server_outqueue_free_all (ptr_server2);
         }
         weechat_printf (NULL,
                         _("%s: messages outqueue DELETED for all "
@@ -3110,29 +3111,29 @@ irc_command_server (void *data, struct t_gui_buffer *buffer, int argc,
         {
             if (irc_current_server)
             {
-                ptr_server = irc_current_server->next_server;
-                if (!ptr_server)
-                    ptr_server = irc_servers;
-                while (ptr_server != irc_current_server)
+                ptr_server2 = irc_current_server->next_server;
+                if (!ptr_server2)
+                    ptr_server2 = irc_servers;
+                while (ptr_server2 != irc_current_server)
                 {
-                    if (ptr_server->buffer)
+                    if (ptr_server2->buffer)
                     {
-                        irc_current_server = ptr_server;
+                        irc_current_server = ptr_server2;
                         break;
                     }
-                    ptr_server = ptr_server->next_server;
-                    if (!ptr_server)
-                        ptr_server = irc_servers;
+                    ptr_server2 = ptr_server2->next_server;
+                    if (!ptr_server2)
+                        ptr_server2 = irc_servers;
                 }
             }
             else
             {
-                for (ptr_server = irc_servers; ptr_server;
-                     ptr_server = ptr_server->next_server)
+                for (ptr_server2 = irc_servers; ptr_server2;
+                     ptr_server2 = ptr_server2->next_server)
                 {
-                    if (ptr_server->buffer)
+                    if (ptr_server2->buffer)
                     {
-                        irc_current_server = ptr_server;
+                        irc_current_server = ptr_server2;
                         break;
                     }
                 }
