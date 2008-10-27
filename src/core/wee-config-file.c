@@ -497,7 +497,7 @@ config_file_new_option (struct t_config_file *config_file,
         new_option->callback_change_data = callback_change_data;
         new_option->callback_delete = callback_delete;
         new_option->callback_delete_data = callback_delete_data;
-        new_option->loaded = 0;
+        new_option->loaded = 1;
 
         if (section)
         {
