@@ -2501,7 +2501,9 @@ config_file_print_log ()
     {
         log_printf ("");
         log_printf ("[config (addr:0x%x)]", ptr_config_file);
-        log_printf ("  plugin . . . . . . . . : 0x%x", ptr_config_file->plugin);
+        log_printf ("  plugin . . . . . . . . : 0x%x ('%s')",
+                    ptr_config_file->plugin,
+                    plugin_get_name (ptr_config_file->plugin));
         log_printf ("  name . . . . . . . . . : '%s'", ptr_config_file->name);
         log_printf ("  filename . . . . . . . : '%s'", ptr_config_file->filename);
         log_printf ("  file . . . . . . . . . : 0x%x", ptr_config_file->file);

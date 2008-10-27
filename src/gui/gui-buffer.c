@@ -1666,7 +1666,8 @@ gui_buffer_print_log ()
     {
         log_printf ("");
         log_printf ("[buffer (addr:0x%x)]", ptr_buffer);
-        log_printf ("  plugin . . . . . . . . : 0x%x", ptr_buffer->plugin);
+        log_printf ("  plugin . . . . . . . . : 0x%x ('%s')",
+                    ptr_buffer->plugin, plugin_get_name (ptr_buffer->plugin));
         log_printf ("  plugin_name_for_upgrade: '%s'", ptr_buffer->plugin_name_for_upgrade);
         log_printf ("  number . . . . . . . . : %d",   ptr_buffer->number);
         log_printf ("  layout_number. . . . . : %d",   ptr_buffer->layout_number);

@@ -31,6 +31,7 @@
 #include "../core/wee-config.h"
 #include "../core/wee-log.h"
 #include "../core/wee-string.h"
+#include "../plugins/plugin.h"
 #include "gui-bar.h"
 #include "gui-bar-item.h"
 #include "gui-buffer.h"
@@ -1990,7 +1991,8 @@ gui_bar_print_log ()
     {
         log_printf ("");
         log_printf ("[bar (addr:0x%x)]", ptr_bar);
-        log_printf ("  plugin . . . . . . . . : 0x%x", ptr_bar->plugin);
+        log_printf ("  plugin . . . . . . . . : 0x%x ('%s')",
+                    ptr_bar->plugin, plugin_get_name (ptr_bar->plugin));
         log_printf ("  name . . . . . . . . . : '%s'", ptr_bar->name);
         log_printf ("  hidden . . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->hidden));
         log_printf ("  priority . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->priority));

@@ -1948,8 +1948,7 @@ hook_print_log ()
             log_printf ("");
             log_printf ("[hook (addr:0x%x)]", ptr_hook);
             log_printf ("  plugin . . . . . . . . : 0x%x ('%s')",
-                        ptr_hook->plugin,
-                        (ptr_hook->plugin) ? ptr_hook->plugin->name : "");
+                        ptr_hook->plugin, plugin_get_name (ptr_hook->plugin));
             log_printf ("  deleted. . . . . . . . : %d",   ptr_hook->deleted);
             log_printf ("  running. . . . . . . . : %d",   ptr_hook->running);
             log_printf ("  type . . . . . . . . . : %d (%s)",

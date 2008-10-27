@@ -1455,8 +1455,7 @@ gui_bar_item_print_log ()
         log_printf ("");
         log_printf ("[bar item (addr:0x%x)]", ptr_item);
         log_printf ("  plugin . . . . . . . . : 0x%x ('%s')",
-                    ptr_item->plugin,
-                    (ptr_item->plugin) ? ptr_item->plugin->name : "");
+                    ptr_item->plugin, plugin_get_name (ptr_item->plugin));
         log_printf ("  name . . . . . . . . . : '%s'", ptr_item->name);
         log_printf ("  build_callback . . . . : 0x%x", ptr_item->build_callback);
         log_printf ("  build_callback_data. . : 0x%x", ptr_item->build_callback_data);
