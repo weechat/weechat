@@ -126,9 +126,16 @@ fifo_create ()
 void
 fifo_remove ()
 {
+    /* remove fd hook */
+    if (fifo_fd_hook)
+    {
+        weechat_unhook (fifo_fd_hook);
+        fifo_fd_hook = NULL;
+    }
+
+    /* close FIFO pipe */
     if (fifo_fd != -1)
     {
-        /* close FIFO pipe */
         close (fifo_fd);
         fifo_fd = -1;
     }
@@ -137,12 +144,14 @@ fifo_remove ()
     if (fifo_filename)
         unlink (fifo_filename);
     
+    /* remove any unterminated message */
     if (fifo_unterminated)
     {
         free (fifo_unterminated);
         fifo_unterminated = NULL;
     }
-    
+
+    /* free filename */
     if (fifo_filename)
     {
         free (fifo_filename);
@@ -292,6 +301,7 @@ fifo_read ()
         else
         {
             weechat_unhook (fifo_fd_hook);
+            fifo_fd_hook = NULL;
             close (fifo_fd);
             fifo_fd = open (fifo_filename, O_RDONLY | O_NONBLOCK);
             if (fifo_fd < 0)
