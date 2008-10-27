@@ -533,14 +533,15 @@ irc_nick_as_prefix (struct t_irc_nick *nick, const char *nickname,
                 && !weechat_config_boolean (weechat_config_get ("weechat.look.nickmode_empty")))
                 prefix[0] = '\0';
             snprintf (str_prefix_color, sizeof (str_prefix_color),
-                      "nicklist_prefix%d",
+                      "weechat.color.nicklist_prefix%d",
                       prefix_color);
         }
         else
         {
             prefix[0] = (weechat_config_boolean (weechat_config_get ("weechat.look.nickmode_empty"))) ?
                 ' ' : '\0';
-            snprintf (str_prefix_color, sizeof (str_prefix_color), "chat");
+            snprintf (str_prefix_color, sizeof (str_prefix_color),
+                      "weechat.color.chat");
         }
     }
     else
@@ -556,7 +557,7 @@ irc_nick_as_prefix (struct t_irc_nick *nick, const char *nickname,
               (weechat_config_string (irc_config_look_nick_prefix)
                && weechat_config_string (irc_config_look_nick_prefix)[0]) ?
               weechat_config_string (irc_config_look_nick_prefix) : "",
-              weechat_color(str_prefix_color),
+              weechat_color(weechat_config_string(weechat_config_get(str_prefix_color))),
               prefix,
               (force_color) ? force_color : ((nick) ? nick->color : IRC_COLOR_CHAT_NICK),
               (nick) ? nick->name : nickname,
