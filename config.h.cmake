@@ -18,6 +18,7 @@
 #cmakedefine HAVE_FLOCK
 #cmakedefine HAVE_LANGINFO_CODESET
 #cmakedefine HAVE_STRNDUP
+#cmakedefine HAVE_BACKTRACE
 #cmakedefine ICONV_2ARG_IS_CONST 1
 #cmakedefine HAVE_TCL_CREATE_NS
 #define PACKAGE_VERSION "@VERSION@"

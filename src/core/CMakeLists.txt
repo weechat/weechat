@@ -37,6 +37,7 @@ wee-util.c wee-util.h)
 INCLUDE(CheckSymbolExists)
 CHECK_INCLUDE_FILES("sys/file.h" HAVE_SYS_FILE_H)
 CHECK_SYMBOL_EXISTS(flock "sys/file.h" HAVE_FLOCK)
+CHECK_SYMBOL_EXISTS(backtrace "execinfo.h" HAVE_BACKTRACE)
 
 IF(GNUTLS_FOUND)
   INCLUDE_DIRECTORIES(${GNUTLS_INCLUDE_PATH})
