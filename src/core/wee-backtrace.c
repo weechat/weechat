@@ -59,7 +59,7 @@ weechat_backtrace_printf (const char *message, ...)
     vsnprintf (buffer, sizeof (buffer) - 1, message, argptr);
     va_end (argptr);
 
-    string_iconv_fprintf (stderr, "%s", buffer);
+    string_iconv_fprintf (stderr, "%s\n", buffer);
     log_printf ("%s", buffer);
 }
 
@@ -84,7 +84,7 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
     rc = dladdr (address, &info);
     if ((rc == 0) || !info.dli_fname || !info.dli_fname[0])
     {
-        weechat_backtrace_printf ("%03d  %s\n", number, symbol);
+        weechat_backtrace_printf ("%03d  %s", number, symbol);
         return;
     }
     
@@ -100,7 +100,7 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
     output = popen (cmd_line, "r");
     if (!output)
     {
-        weechat_backtrace_printf ("%03d  %s\n", number, symbol);
+        weechat_backtrace_printf ("%03d  %s", number, symbol);
         return;
     }
     function_name[0] = '\0';
@@ -116,7 +116,7 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
             if (strchr (ptr_line, ':'))
             {
                 file_line = 1;
-                weechat_backtrace_printf ("%03d  %s%s%s%s\n",
+                weechat_backtrace_printf ("%03d  %s%s%s%s",
                                           number,
                                           ptr_line,
                                           (function_name[0]) ? " [function " : "",
@@ -135,7 +135,7 @@ weechat_backtrace_addr2line (int number, void *address, const char *symbol)
         }
     }
     if (function_name[0])
-        weechat_backtrace_printf ("%03d  %s\n",
+        weechat_backtrace_printf ("%03d  %s",
                                   number, function_name);
     pclose (output);
 #else
@@ -161,8 +161,8 @@ weechat_backtrace ()
     char **symbols;
 #endif
 
-    weechat_backtrace_printf ("======= WeeChat backtrace =======\n");
-    weechat_backtrace_printf ("(written by %s, compiled on %s %s)\n",
+    weechat_backtrace_printf ("======= WeeChat backtrace =======");
+    weechat_backtrace_printf ("(written by %s, compiled on %s %s)",
                               PACKAGE_STRING, __DATE__, __TIME__);
 
 #ifdef HAVE_BACKTRACE
@@ -175,8 +175,8 @@ weechat_backtrace ()
     }
 #else
     weechat_backtrace_printf ("  No backtrace info (no debug info available "
-                              "or no backtrace possible on your system).\n");
+                              "or no backtrace possible on your system).");
 #endif
     
-    weechat_backtrace_printf ("======= End of  backtrace =======\n");
+    weechat_backtrace_printf ("======= End of  backtrace =======");
 }
