@@ -301,7 +301,6 @@ irc_command_away_server (struct t_irc_server *server, const char *arguments)
             {
                 weechat_buffer_set (ptr_channel->buffer, "unread", "");
             }
-            weechat_printf (NULL, "set unread");
         }
         else
         {
