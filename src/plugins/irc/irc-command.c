@@ -389,13 +389,14 @@ irc_command_away (void *data, struct t_gui_buffer *buffer, int argc,
     
     weechat_buffer_set (NULL, "hotlist", "-");
     
-    if ((argc > 2) && (weechat_strcasecmp (argv[1], "-all") == 0))
+    if ((argc >= 2) && (weechat_strcasecmp (argv[1], "-all") == 0))
     {
         for (ptr_server = irc_servers; ptr_server;
              ptr_server = ptr_server->next_server)
         {
             if (ptr_server->is_connected)
-                irc_command_away_server (ptr_server, argv_eol[2]);
+                irc_command_away_server (ptr_server,
+                                         (argc > 2) ? argv_eol[2] : NULL);
         }
     }
     else
