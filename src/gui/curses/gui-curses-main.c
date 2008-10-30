@@ -264,7 +264,7 @@ gui_main_loop ()
             {
                 if (ptr_win->refresh_needed)
                 {
-                    gui_window_switch_to_buffer (ptr_win, ptr_win->buffer);
+                    gui_window_switch_to_buffer (ptr_win, ptr_win->buffer, 0);
                     gui_window_redraw_buffer (ptr_win->buffer);
                     ptr_win->refresh_needed = 0;
                 }

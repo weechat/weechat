@@ -27,10 +27,6 @@ extern char *plugin_api_gettext (const char *string);
 extern char *plugin_api_ngettext (const char *single, const char *plural,
                                   int count);
 
-/* directories */
-extern int plugin_api_mkdir_home (const char *directory, int mode);
-extern int plugin_api_mkdir (const char *directory, int mode);
-
 /* config */
 extern struct t_config_option *plugin_api_config_get (const char *option_name);
 extern char *plugin_api_config_get_plugin (struct t_weechat_plugin *plugin,

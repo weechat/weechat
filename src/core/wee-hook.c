@@ -921,7 +921,8 @@ hook_print (struct t_weechat_plugin *plugin, struct t_gui_buffer *buffer,
 
 void
 hook_print_exec (struct t_gui_buffer *buffer, time_t date, int tags_count,
-                 char **tags_array, const char *prefix, const char *message)
+                 const char **tags_array, const char *prefix,
+                 const char *message)
 {
     struct t_hook *ptr_hook, *next_hook;
     char *prefix_no_color, *message_no_color;

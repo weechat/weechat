@@ -69,6 +69,7 @@ extern struct t_config_option *irc_config_look_nick_suffix;
 extern struct t_config_option *irc_config_look_nick_completion_smart;
 extern struct t_config_option *irc_config_look_display_away;
 extern struct t_config_option *irc_config_look_display_channel_modes;
+extern struct t_config_option *irc_config_look_hide_nickserv_pwd;
 extern struct t_config_option *irc_config_look_highlight_tags;
 extern struct t_config_option *irc_config_look_show_away_once;
 extern struct t_config_option *irc_config_look_smart_filter;
@@ -86,11 +87,6 @@ extern struct t_config_option *irc_config_network_anti_flood;
 extern struct t_config_option *irc_config_network_colors_receive;
 extern struct t_config_option *irc_config_network_colors_send;
 extern struct t_config_option *irc_config_network_send_unknown_commands;
-
-extern struct t_config_option *irc_config_log_auto_log_server;
-extern struct t_config_option *irc_config_log_auto_log_channel;
-extern struct t_config_option *irc_config_log_auto_log_private;
-extern struct t_config_option *irc_config_log_hide_nickserv_pwd;
 
 extern struct t_config_option *irc_config_server_default[];
 

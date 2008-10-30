@@ -28,6 +28,7 @@
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #include <dirent.h>
 #include <signal.h>
 #include <ctype.h>
@@ -138,28 +139,113 @@ util_catch_signal (int signum, void (*handler)(int))
 }
 
 /*
- * util_create_dir: create a directory
- *                  return: 1 if ok (or directory already exists)
- *                          0 if error
+ * util_mkdir_home: create a directory in WeeChat home
+ *                  return 1 if ok, 0 if error
  */
 
 int
-util_create_dir (const char *directory, int permissions)
+util_mkdir_home (const char *directory, int mode)
 {
-    if (mkdir (directory, 0755) < 0)
+    char *dir_name;
+    int dir_length;
+    
+    if (!directory)
+        return 0;
+    
+    /* build directory, adding WeeChat home */
+    dir_length = strlen (weechat_home) + strlen (directory) + 2;
+    dir_name = malloc (dir_length);
+    if (!dir_name)
+        return 0;
+    
+    snprintf (dir_name, dir_length, "%s/%s", weechat_home, directory);
+    
+    if (mkdir (dir_name, mode) < 0)
     {
-        /* exit if error (except if directory already exists) */
         if (errno != EEXIST)
         {
-            string_iconv_fprintf (stderr,
-                                  _("Error: cannot create directory \"%s\"\n"),
-                                  directory);
+            free (dir_name);
             return 0;
         }
-        return 1;
     }
-    if ((permissions != 0) && (strcmp (directory, getenv ("HOME")) != 0))
-        chmod (directory, permissions);
+    
+    free (dir_name);
+    return 1;
+}
+
+/*
+ * util_mkdir: create a directory
+ *             return 1 if ok, 0 if error
+ */
+
+int
+util_mkdir (const char *directory, int mode)
+{
+    if (!directory)
+        return 0;
+    
+    if (mkdir (directory, mode) < 0)
+    {
+        if (errno != EEXIST)
+            return 0;
+    }
+    
+    return 1;
+}
+
+/*
+ * util_mkdir_parents: create a directory and make parent directories as needed
+ *                     return 1 if ok, 0 if error
+ */
+
+int
+util_mkdir_parents (const char *directory, int mode)
+{
+    char *string, *ptr_string, *pos_sep;
+    struct stat buf;
+    int rc;
+    
+    if (!directory)
+        return 0;
+    
+    string = strdup (directory);
+    if (!string)
+        return 0;
+    
+    ptr_string = string;
+    while (ptr_string[0] == DIR_SEPARATOR_CHAR)
+    {
+        ptr_string++;
+    }
+    
+    while (ptr_string && ptr_string[0])
+    {
+        pos_sep = strchr (ptr_string, DIR_SEPARATOR_CHAR);
+        if (pos_sep)
+            pos_sep[0] = '\0';
+        
+        rc = stat (string, &buf);
+        if ((rc < 0) || !S_ISDIR(buf.st_mode))
+        {
+            /* try to create directory */
+            if (!util_mkdir (string, mode))
+            {
+                free (string);
+                return 0;
+            }
+        }
+        
+        if (pos_sep)
+        {
+            pos_sep[0] = DIR_SEPARATOR_CHAR;
+            ptr_string = pos_sep + 1;
+        }
+        else
+            ptr_string = NULL;
+    }
+    
+    free (string);
+    
     return 1;
 }
 

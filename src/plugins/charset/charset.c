@@ -181,9 +181,8 @@ charset_config_init ()
     
     ptr_section = weechat_config_new_section (charset_config_file, "default",
                                               0, 0,
-                                              NULL, NULL,
-                                              NULL, NULL,
-                                              NULL, NULL,
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL, NULL, NULL,
                                               NULL, NULL);
     if (!ptr_section)
     {
@@ -210,10 +209,10 @@ charset_config_init ()
     
     ptr_section = weechat_config_new_section (charset_config_file, "decode",
                                               1, 1,
+                                              NULL, NULL, NULL, NULL,
                                               NULL, NULL,
-                                              NULL, NULL,
-                                              NULL, NULL,
-                                              &charset_config_create_option, NULL);
+                                              &charset_config_create_option, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (charset_config_file);
@@ -224,10 +223,10 @@ charset_config_init ()
     
     ptr_section = weechat_config_new_section (charset_config_file, "encode",
                                               1, 1,
+                                              NULL, NULL, NULL, NULL,
                                               NULL, NULL,
-                                              NULL, NULL,
-                                              NULL, NULL,
-                                              &charset_config_create_option, NULL);
+                                              &charset_config_create_option, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (charset_config_file);
@@ -407,10 +406,10 @@ charset_set (struct t_config_section *section, const char *type,
                                       value) > 0)
     {
         if (value && value[0])
-            weechat_printf (NULL, "%s: %s, %s => %s",
+            weechat_printf (NULL, "%s: %s, \"%s\" => %s",
                             CHARSET_PLUGIN_NAME, type, name, value);
         else
-            weechat_printf (NULL, _("%s: %s, %s: removed"),
+            weechat_printf (NULL, _("%s: %s, \"%s\": removed"),
                             CHARSET_PLUGIN_NAME, type, name);
     }
 }

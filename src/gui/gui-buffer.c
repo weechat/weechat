@@ -87,6 +87,119 @@ gui_buffer_find_pos (struct t_gui_buffer *buffer)
 }
 
 /*
+ * gui_buffer_local_var_search: search a local variable with name
+ */
+
+struct t_gui_buffer_local_var *
+gui_buffer_local_var_search (struct t_gui_buffer *buffer, const char *name)
+{
+    struct t_gui_buffer_local_var *ptr_local_var;
+    
+    if (!buffer || !name)
+        return NULL;
+    
+    for (ptr_local_var = buffer->local_variables; ptr_local_var;
+         ptr_local_var = ptr_local_var->next_var)
+    {
+        if (strcmp (ptr_local_var->name, name) == 0)
+            return ptr_local_var;
+    }
+    
+    /* local variable not found */
+    return NULL;
+}
+
+/*
+ * gui_buffer_local_var_add: add a new local variable to a buffer
+ */
+
+struct t_gui_buffer_local_var *
+gui_buffer_local_var_add (struct t_gui_buffer *buffer, const char *name,
+                          const char *value)
+{
+    struct t_gui_buffer_local_var *new_local_var;
+    
+    if (!buffer || !name || !value)
+        return NULL;
+    
+    new_local_var = gui_buffer_local_var_search (buffer, name);
+    if (new_local_var)
+    {
+        if (new_local_var->name)
+            free (new_local_var->name);
+        if (new_local_var->value)
+            free (new_local_var->value);
+        new_local_var->name = strdup (name);
+        new_local_var->value = strdup (value);
+    }
+    else
+    {
+        new_local_var = malloc (sizeof (*new_local_var));
+        if (new_local_var)
+        {
+            new_local_var->name = strdup (name);
+            new_local_var->value = strdup (value);
+            
+            new_local_var->prev_var = buffer->last_local_var;
+            new_local_var->next_var = NULL;
+            if (buffer->local_variables)
+                buffer->last_local_var->next_var = new_local_var;
+            else
+                buffer->local_variables = new_local_var;
+            buffer->last_local_var = new_local_var;
+        }
+    }
+    
+    return new_local_var;
+}
+
+/*
+ * gui_buffer_local_var_remove: remove a local variable in a buffer
+ */
+
+void
+gui_buffer_local_var_remove (struct t_gui_buffer *buffer,
+                             struct t_gui_buffer_local_var *local_var)
+{
+    if (!buffer || !local_var)
+        return;
+    
+    /* free data */
+    if (local_var->name)
+        free (local_var->name);
+    if (local_var->value)
+        free (local_var->value);
+    
+    /* remove local variable from list */
+    if (local_var->prev_var)
+        (local_var->prev_var)->next_var = local_var->next_var;
+    if (local_var->next_var)
+        (local_var->next_var)->prev_var = local_var->prev_var;
+    if (buffer->local_variables == local_var)
+        buffer->local_variables = local_var->next_var;
+    if (buffer->last_local_var == local_var)
+        buffer->last_local_var = local_var->prev_var;
+    
+    free (local_var);
+}
+
+/*
+ * gui_buffer_local_var_remove_all: remove all local variables in a buffer
+ */
+
+void
+gui_buffer_local_var_remove_all (struct t_gui_buffer *buffer)
+{
+    if (buffer)
+    {
+        while (buffer->local_variables)
+        {
+            gui_buffer_local_var_remove (buffer, buffer->local_variables);
+        }
+    }
+}
+
+/*
  * gui_buffer_insert: insert buffer in good position in list of buffers
  */
 
@@ -245,6 +358,8 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
         /* local variables */
         new_buffer->local_variables = NULL;
         new_buffer->last_local_var = NULL;
+        gui_buffer_local_var_add (new_buffer, "plugin", plugin_get_name (plugin));
+        gui_buffer_local_var_add (new_buffer, "name", name);
         
         /* add buffer to buffers list */
         gui_buffer_insert (new_buffer);
@@ -257,7 +372,7 @@ gui_buffer_new (struct t_weechat_plugin *plugin,
             gui_current_window->start_line = NULL;
             gui_current_window->start_line_pos = 0;
             gui_window_calculate_pos_size (gui_current_window);
-            gui_window_switch_to_buffer (gui_current_window, new_buffer);
+            gui_window_switch_to_buffer (gui_current_window, new_buffer, 0);
         }
         
         /* check if this buffer should be assigned to a window,
@@ -297,120 +412,6 @@ gui_buffer_valid (struct t_gui_buffer *buffer)
     
     /* buffer not found */
     return 0;
-}
-
-/*
- * gui_buffer_local_var_search: search a local variable with name
- */
-
-struct t_gui_buffer_local_var *
-gui_buffer_local_var_search (struct t_gui_buffer *buffer, const char *name)
-{
-    struct t_gui_buffer_local_var *ptr_local_var;
-    
-    if (!buffer || !name)
-        return NULL;
-    
-    for (ptr_local_var = buffer->local_variables; ptr_local_var;
-         ptr_local_var = ptr_local_var->next_var)
-    {
-        if (strcmp (ptr_local_var->name, name) == 0)
-            return ptr_local_var;
-    }
-    
-    /* local variable not found */
-    return NULL;
-}
-
-
-/*
- * gui_buffer_local_var_add: add a new local variable to a buffer
- */
-
-struct t_gui_buffer_local_var *
-gui_buffer_local_var_add (struct t_gui_buffer *buffer, const char *name,
-                          const char *value)
-{
-    struct t_gui_buffer_local_var *new_local_var;
-    
-    if (!buffer || !name || !value)
-        return NULL;
-    
-    new_local_var = gui_buffer_local_var_search (buffer, name);
-    if (new_local_var)
-    {
-        if (new_local_var->name)
-            free (new_local_var->name);
-        if (new_local_var->value)
-            free (new_local_var->value);
-        new_local_var->name = strdup (name);
-        new_local_var->value = strdup (value);
-    }
-    else
-    {
-        new_local_var = malloc (sizeof (*new_local_var));
-        if (new_local_var)
-        {
-            new_local_var->name = strdup (name);
-            new_local_var->value = strdup (value);
-            
-            new_local_var->prev_var = buffer->last_local_var;
-            new_local_var->next_var = NULL;
-            if (buffer->local_variables)
-                buffer->last_local_var->next_var = new_local_var;
-            else
-                buffer->local_variables = new_local_var;
-            buffer->last_local_var = new_local_var;
-        }
-    }
-    
-    return new_local_var;
-}
-
-/*
- * gui_buffer_local_var_remove: remove a local variable in a buffer
- */
-
-void
-gui_buffer_local_var_remove (struct t_gui_buffer *buffer,
-                             struct t_gui_buffer_local_var *local_var)
-{
-    if (!buffer || !local_var)
-        return;
-    
-    /* free data */
-    if (local_var->name)
-        free (local_var->name);
-    if (local_var->value)
-        free (local_var->value);
-    
-    /* remove local variable from list */
-    if (local_var->prev_var)
-        (local_var->prev_var)->next_var = local_var->next_var;
-    if (local_var->next_var)
-        (local_var->next_var)->prev_var = local_var->prev_var;
-    if (buffer->local_variables == local_var)
-        buffer->local_variables = local_var->next_var;
-    if (buffer->last_local_var == local_var)
-        buffer->last_local_var = local_var->prev_var;
-    
-    free (local_var);
-}
-
-/*
- * gui_buffer_local_var_remove_all: remove all local variables in a buffer
- */
-
-void
-gui_buffer_local_var_remove_all (struct t_gui_buffer *buffer)
-{
-    if (buffer)
-    {
-        while (buffer->local_variables)
-        {
-            gui_buffer_local_var_remove (buffer, buffer->local_variables);
-        }
-    }
 }
 
 /*
@@ -615,6 +616,8 @@ gui_buffer_set_name (struct t_gui_buffer *buffer, const char *name)
             free (buffer->name);
         buffer->name = strdup (name);
         
+        gui_buffer_local_var_add (buffer, "name", name);
+        
         hook_signal_send ("buffer_renamed",
                           WEECHAT_HOOK_SIGNAL_POINTER, buffer);
     }
@@ -798,18 +801,18 @@ gui_buffer_set (struct t_gui_buffer *buffer, const char *property,
                 gui_hotlist_add (buffer, number, NULL, 1);
         }
     }
-    else if (string_strcasecmp (property, "unread") == 0)
-    {
-        gui_buffer_set_unread (buffer);
-    }
     
     if (!buffer)
         return;
     
     /* properties that need a buffer */
-    if (string_strcasecmp (property, "display") == 0)
+    if (string_strcasecmp (property, "unread") == 0)
     {
-        gui_window_switch_to_buffer (gui_current_window, buffer);
+        gui_buffer_set_unread (buffer);
+    }
+    else if (string_strcasecmp (property, "display") == 0)
+    {
+        gui_window_switch_to_buffer (gui_current_window, buffer, 0);
     }
     else if (string_strcasecmp (property, "name") == 0)
     {
@@ -1280,9 +1283,9 @@ gui_buffer_switch_previous (struct t_gui_window *window)
         return;
     
     if (window->buffer->prev_buffer)
-        gui_window_switch_to_buffer (window, window->buffer->prev_buffer);
+        gui_window_switch_to_buffer (window, window->buffer->prev_buffer, 1);
     else
-        gui_window_switch_to_buffer (window, last_gui_buffer);
+        gui_window_switch_to_buffer (window, last_gui_buffer, 1);
 }
 
 /*
@@ -1300,9 +1303,9 @@ gui_buffer_switch_next (struct t_gui_window *window)
         return;
     
     if (window->buffer->next_buffer)
-        gui_window_switch_to_buffer (window, window->buffer->next_buffer);
+        gui_window_switch_to_buffer (window, window->buffer->next_buffer, 1);
     else
-        gui_window_switch_to_buffer (window, gui_buffers);
+        gui_window_switch_to_buffer (window, gui_buffers, 1);
 }
 
 /*
@@ -1327,7 +1330,7 @@ gui_buffer_switch_by_number (struct t_gui_window *window, int number)
     {
         if ((ptr_buffer != window->buffer) && (number == ptr_buffer->number))
         {
-            gui_window_switch_to_buffer (window, ptr_buffer);
+            gui_window_switch_to_buffer (window, ptr_buffer, 1);
             return;
         }
     }
@@ -1595,7 +1598,7 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
 {
     struct t_gui_line *ptr_line;
     int num_line, msg_pos;
-    char *message_without_colors;
+    char *message_without_colors, *tags;
     char hexa[(16 * 3) + 1], ascii[(16 * 2) + 1];
     int hexa_pos, ascii_pos;
     
@@ -1613,7 +1616,11 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
                     message_without_colors : "(null)");
         if (message_without_colors)
             free (message_without_colors);
-
+        tags = string_build_with_exploded ((const char **)ptr_line->tags_array, ",");
+        log_printf ("  tags: %s", (tags) ? tags : "(none)");
+        if (tags)
+            free (tags);
+        
         /* display raw message for line */
         if (ptr_line->message)
         {
@@ -1766,7 +1773,7 @@ gui_buffer_print_log ()
         while (ptr_line)
         {
             num--;
-            tags = string_build_with_exploded (ptr_line->tags_array, ",");
+            tags = string_build_with_exploded ((const char **)ptr_line->tags_array, ",");
             log_printf ("       line N-%05d: y:%d, str_time:'%s', tags:'%s', "
                         "displayed:%d, highlight:%d, refresh_needed:%d, prefix:'%s'",
                         num, ptr_line->y, ptr_line->str_time,

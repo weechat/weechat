@@ -177,7 +177,12 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
                                                        struct t_config_section *section,
                                                        const char *option_name,
                                                        const char *value),
-                         void *callback_create_option_data)
+                         void *callback_create_option_data,
+                         int (*callback_delete_option)(void *data,
+                                                       struct t_config_file *config_file,
+                                                       struct t_config_section *section,
+                                                       struct t_config_option *option),
+                         void *callback_delete_option_data)
 {
     struct t_config_section *new_section;
     
@@ -201,6 +206,8 @@ config_file_new_section (struct t_config_file *config_file, const char *name,
         new_section->callback_write_default_data = callback_write_default_data;
         new_section->callback_create_option = callback_create_option;
         new_section->callback_create_option_data = callback_create_option_data;
+        new_section->callback_delete_option = callback_delete_option;
+        new_section->callback_delete_option_data = callback_delete_option_data;
         new_section->options = NULL;
         new_section->last_option = NULL;
         
@@ -458,12 +465,20 @@ config_file_new_option (struct t_config_file *config_file,
                     number = strtol (default_value, &error, 10);
                     if (!error || error[0])
                         number = 0;
+                    if (number < min)
+                        number = min;
+                    else if (number > max)
+                        number = max;
                     new_option->default_value = malloc (sizeof (int));
                     *((int *)new_option->default_value) = number;
                     error = NULL;
                     number = strtol (value, &error, 10);
                     if (!error || error[0])
                         number = 0;
+                    if (number < min)
+                        number = min;
+                    else if (number > max)
+                        number = max;
                     new_option->value = malloc (sizeof (int));
                     *((int *)new_option->value) = number;
                 }
@@ -1166,9 +1181,20 @@ config_file_option_unset (struct t_config_option *option)
         }
         
         option_full_name = config_file_option_full_name (option);
-        
-        config_file_option_free (option);
-        rc = WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+
+        if (option->section->callback_delete_option)
+        {
+            rc = (int)(option->section->callback_delete_option)
+                (option->section->callback_delete_option_data,
+                 option->config_file,
+                 option->section,
+                 option);
+        }
+        else
+        {
+            config_file_option_free (option);
+            rc = WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+        }
         
         if (option_full_name)
         {
@@ -2224,7 +2250,7 @@ config_file_add_to_infolist (struct t_infolist *infolist,
                             free (option_full_name);
                             return 0;
                         }
-                        string_values = string_build_with_exploded (ptr_option->string_values,
+                        string_values = string_build_with_exploded ((const char **)ptr_option->string_values,
                                                                     "|");
                         if (!infolist_new_var_string (ptr_item,
                                                       "string_values",
@@ -2528,6 +2554,8 @@ config_file_print_log ()
             log_printf ("      callback_write_default_data: 0x%x", ptr_section->callback_write_default_data);
             log_printf ("      callback_create_option. . .: 0x%x", ptr_section->callback_create_option);
             log_printf ("      callback_create_option_data: 0x%x", ptr_section->callback_create_option_data);
+            log_printf ("      callback_delete_option. . .: 0x%x", ptr_section->callback_delete_option);
+            log_printf ("      callback_delete_option_data: 0x%x", ptr_section->callback_delete_option_data);
             log_printf ("      options. . . . . . . . . . : 0x%x", ptr_section->options);
             log_printf ("      last_option. . . . . . . . : 0x%x", ptr_section->last_option);
             log_printf ("      prev_section . . . . . . . : 0x%x", ptr_section->prev_section);

@@ -23,6 +23,7 @@
 
 #include <sys/types.h>
 
+struct t_config_option;
 struct t_gui_window;
 struct t_gui_buffer;
 struct t_gui_bar;
@@ -148,7 +149,7 @@ struct t_weechat_plugin
     char **(*string_explode) (const char *string, const char *separators,
                               int keep_eol, int num_items_max, int *num_items);
     void (*string_free_exploded) (char **exploded_string);
-    char *(*string_build_with_exploded) (char **exploded_string,
+    char *(*string_build_with_exploded) (const char **exploded_string,
                                          const char *separator);
     char **(*string_split_command) (const char *command, char separator);
     void (*string_free_splitted_command) (char **splitted_command);
@@ -172,6 +173,7 @@ struct t_weechat_plugin
     /* directories */
     int (*mkdir_home) (const char *directory, int mode);
     int (*mkdir) (const char *directory, int mode);
+    int (*mkdir_parents) (const char *directory, int mode);
     void (*exec_on_files) (const char *directory, void *data,
                            void (*callback)(void *data, const char *filename));
     
@@ -200,7 +202,7 @@ struct t_weechat_plugin
                          struct t_weelist_item *item);
     void (*list_remove_all) (struct t_weelist *weelist);
     void (*list_free) (struct t_weelist *weelist);
-
+    
     /* config files */
     struct t_config_file *(*config_new) (struct t_weechat_plugin *plugin,
                                          const char *name,
@@ -230,7 +232,12 @@ struct t_weechat_plugin
                                                                                   struct t_config_section *section,
                                                                                   const char *option_name,
                                                                                   const char *value),
-                                                    void *callback_create_option_data);
+                                                    void *callback_create_option_data,
+                                                    int (*callback_delete_option)(void *data,
+                                                                                  struct t_config_file *config_file,
+                                                                                  struct t_config_section *section,
+                                                                                  struct t_config_option *option),
+                                                    void *callback_delete_option_data);
     struct t_config_section *(*config_search_section) (struct t_config_file *config_file,
                                                        const char *section_name);
     struct t_config_option *(*config_new_option) (struct t_config_file *config_file,
@@ -342,7 +349,7 @@ struct t_weechat_plugin
                                                   struct t_gui_buffer *buffer,
                                                   time_t date,
                                                   int tags_count,
-                                                  char **tags,
+                                                  const char **tags,
                                                   const char *prefix,
                                                   const char *message),
                                   void *callback_data);
@@ -659,6 +666,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->mkdir_home(__directory, __mode)
 #define weechat_mkdir(__directory, __mode)                              \
     weechat_plugin->mkdir(__directory, __mode)
+#define weechat_mkdir_parents(__directory, __mode)                      \
+    weechat_plugin->mkdir_parents(__directory, __mode)
 #define weechat_exec_on_files(__directory, __data, __callback)          \
     weechat_plugin->exec_on_files(__directory, __data, __callback)
 
@@ -711,7 +720,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                    __cb_write_std, __cb_write_std_data, \
                                    __cb_write_def, __cb_write_def_data, \
                                    __cb_create_option,                  \
-                                   __cb_create_option_data)             \
+                                   __cb_create_option_data,             \
+                                   __cb_delete_option,                  \
+                                   __cb_delete_option_data)             \
     weechat_plugin->config_new_section(__config, __name,                \
                                        __user_can_add_options,          \
                                        __user_can_delete_options,       \
@@ -721,7 +732,9 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
                                        __cb_write_def,                  \
                                        __cb_write_def_data,             \
                                        __cb_create_option,              \
-                                       __cb_create_option_data)
+                                       __cb_create_option_data,         \
+                                       __cb_delete_option,              \
+                                       __cb_delete_option_data)
 #define weechat_config_search_section(__config, __name)                 \
     weechat_plugin->config_search_section(__config, __name)
 #define weechat_config_new_option(__config, __section, __name, __type,  \

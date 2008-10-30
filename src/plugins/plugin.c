@@ -332,8 +332,9 @@ plugin_load (const char *filename)
         new_plugin->utf8_real_pos = &utf8_real_pos;
         new_plugin->utf8_pos = &utf8_pos;
         
-        new_plugin->mkdir_home = &plugin_api_mkdir_home;
-        new_plugin->mkdir = &plugin_api_mkdir;
+        new_plugin->mkdir_home = &util_mkdir_home;
+        new_plugin->mkdir = &util_mkdir;
+        new_plugin->mkdir_parents = &util_mkdir_parents;
         new_plugin->exec_on_files = &util_exec_on_files;
         
         new_plugin->timeval_cmp = &util_timeval_cmp;

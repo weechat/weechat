@@ -30,6 +30,7 @@
 #include <fcntl.h>
 #include <string.h>
 
+#include "../weechat-plugin.h"
 #include "logger.h"
 #include "logger-tail.h"
 
@@ -108,7 +109,7 @@ logger_tail_file (const char *filename, int n_lines)
         while (ptr_buf && (ptr_buf >= buf))
         {
             pos_eol = logger_tail_last_eol (buf, ptr_buf);
-            if ((pos_eol && pos_eol[1]) || (!pos_eol && (file_pos == 0)))
+            if ((pos_eol && (pos_eol[1] || part_of_line)) || (file_pos == 0))
             {
                 /* use data and part_of_line (if existing) to build a new line */
                 if (!pos_eol)
@@ -209,14 +210,20 @@ logger_tail_file (const char *filename, int n_lines)
 void
 logger_tail_free (struct t_logger_line *lines)
 {
+    struct t_logger_line *ptr_line, *next_line;
+    
     if (!lines)
         return;
-    
-    while (lines->next_line)
+
+    ptr_line = lines;
+    while (ptr_line)
     {
-        if (lines->data)
-            free (lines->data);
-        lines = lines->next_line;
+        next_line = ptr_line->next_line;
+        
+        if (ptr_line->data)
+            free (ptr_line->data);
+        free (ptr_line);
+        
+        ptr_line = next_line;
     }
-    free (lines);
 }

@@ -183,7 +183,7 @@ gui_window_switch (struct t_gui_window *window)
     
     gui_current_window = window;
     
-    gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+    gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer, 1);
     
     gui_window_redraw_buffer (gui_current_window->buffer);
 }
@@ -193,7 +193,9 @@ gui_window_switch (struct t_gui_window *window)
  */
 
 void
-gui_window_switch_to_buffer (struct t_gui_window *window, struct t_gui_buffer *buffer)
+gui_window_switch_to_buffer (struct t_gui_window *window,
+                             struct t_gui_buffer *buffer,
+                             int set_last_read)
 {
     GtkTextIter start, end;
     
@@ -202,9 +204,16 @@ gui_window_switch_to_buffer (struct t_gui_window *window, struct t_gui_buffer *b
     
     if (window->buffer != buffer)
     {
-        window->buffer->last_read_line = window->buffer->last_line;
-        if (buffer->last_read_line == buffer->last_line)
-            buffer->last_read_line = NULL;
+        window->start_line = NULL;
+        window->start_line_pos = 0;
+        gui_previous_buffer = window->buffer;
+        if (set_last_read)
+        {
+            if (window->buffer->num_displayed == 0)
+                window->buffer->last_read_line = window->buffer->last_line;
+            if (buffer->last_read_line == buffer->last_line)
+                buffer->last_read_line = NULL;
+        }
     }
     
     window->buffer = buffer;
@@ -490,10 +499,10 @@ gui_window_split_horiz (struct t_gui_window *window, int percentage)
             new_window->buffer = window->buffer;
             new_window->buffer->num_displayed++;
             
-            gui_window_switch_to_buffer (window, window->buffer);
+            gui_window_switch_to_buffer (window, window->buffer, 1);
             
             gui_current_window = new_window;
-            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer, 1);
             gui_window_redraw_buffer (gui_current_window->buffer);
         }
     }
@@ -535,10 +544,10 @@ gui_window_split_vertic (struct t_gui_window *window, int percentage)
             new_window->buffer = window->buffer;
             new_window->buffer->num_displayed++;
             
-            gui_window_switch_to_buffer (window, window->buffer);
+            gui_window_switch_to_buffer (window, window->buffer, 1);
             
             gui_current_window = new_window;
-            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer, 1);
             gui_window_redraw_buffer (gui_current_window->buffer);
             
             /* create & draw separator */
@@ -599,7 +608,7 @@ gui_window_merge (struct t_gui_window *window)
         gui_window_free (sister->window);
         gui_window_tree_node_to_leaf (parent, window);
         
-        gui_window_switch_to_buffer (window, window->buffer);
+        gui_window_switch_to_buffer (window, window->buffer, 1);
         gui_window_redraw_buffer (window->buffer);
         return 1;
     }
@@ -688,7 +697,7 @@ gui_window_switch_up (struct t_gui_window *window)
             (gui_window_side_by_side (window, ptr_win) == 1))
         {
             gui_current_window = ptr_win;
-            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer, 1);
             gui_window_redraw_buffer (gui_current_window->buffer);
             return;
         }
@@ -711,7 +720,7 @@ gui_window_switch_down (struct t_gui_window *window)
             (gui_window_side_by_side (window, ptr_win) == 3))
         {
             gui_current_window = ptr_win;
-            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer, 1);
             gui_window_redraw_buffer (gui_current_window->buffer);
             return;
         }
@@ -734,7 +743,7 @@ gui_window_switch_left (struct t_gui_window *window)
             (gui_window_side_by_side (window, ptr_win) == 4))
         {
             gui_current_window = ptr_win;
-            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer, 1);
             gui_window_redraw_buffer (gui_current_window->buffer);
             return;
         }
@@ -757,7 +766,7 @@ gui_window_switch_right (struct t_gui_window *window)
             (gui_window_side_by_side (window, ptr_win) == 2))
         {
             gui_current_window = ptr_win;
-            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer);
+            gui_window_switch_to_buffer (gui_current_window, gui_current_window->buffer, 1);
             gui_window_redraw_buffer (gui_current_window->buffer);
             return;
         }

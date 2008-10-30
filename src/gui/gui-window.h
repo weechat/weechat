@@ -139,7 +139,8 @@ extern void gui_window_objects_free (struct t_gui_window *window,
                                      int free_bar_windows);
 extern void gui_window_calculate_pos_size (struct t_gui_window *window);
 extern void gui_window_switch_to_buffer (struct t_gui_window *window,
-                                         struct t_gui_buffer *buffer);
+                                         struct t_gui_buffer *buffer,
+                                         int set_last_read);
 extern void gui_window_switch (struct t_gui_window *window);
 extern void gui_window_page_up (struct t_gui_window *window);
 extern void gui_window_page_down (struct t_gui_window *window);

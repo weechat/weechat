@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-26 17:42+0100\n"
+"POT-Creation-Date: 2008-10-30 17:11+0100\n"
 "PO-Revision-Date: 2007-10-10 18:07+0200\n"
 "Last-Translator: Andras Voroskoi <voroskoi@frugalware.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -85,7 +85,7 @@ msgid "Error: home (%s) is not a directory\n"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Error: unable to create \"%s\" directory\n"
+msgid "Error: cannot create directory \"%s\"\n"
 msgstr "%s nem sikerült a \"%s\" könyvtárat létrehozni\n"
 
 #, fuzzy, c-format
@@ -1844,10 +1844,6 @@ msgid ""
 "version)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Error: cannot create directory \"%s\"\n"
-msgstr "%s nem sikerült a \"%s\" könyvtárat létrehozni\n"
-
 msgid "Terminal lost, exiting WeeChat..."
 msgstr ""
 
@@ -2053,7 +2049,7 @@ msgid "%s: debug disabled"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s: %s: removed"
+msgid "%s: \"%s\" removed"
 msgstr "A \"%s\" aliasz eltávolítva\n"
 
 #. TRANSLATORS: %s is "aspell"
@@ -2143,7 +2139,7 @@ msgid "global encoding charset"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "%s: %s, %s: removed"
+msgid "%s: %s, \"%s\": removed"
 msgstr "A \"%s\" aliasz eltávolítva\n"
 
 #, fuzzy, c-format
@@ -3326,11 +3322,6 @@ msgstr ""
 msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%s rossz argumentum a \"%s\" parancsnak\n"
 
-msgid ""
-"You should now create filter on tag \"irc_smart_filter\" with command /"
-"filter."
-msgstr ""
-
 #, fuzzy, c-format
 msgid "%s%s: error creating server \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
@@ -3437,6 +3428,9 @@ msgstr "üzenet mutatása távollétkor/visszatéréskor"
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr ""
 
+msgid "hide password displayed by nickserv"
+msgstr "a nickserv által mutatott jelszó elrejtése"
+
 msgid ""
 "comma separated list of tags for messages that may produce highlight "
 "(usually any message from another user, not server messages,..)"
@@ -3447,7 +3441,7 @@ msgstr "privát beszélgetésben a másik fél távollétét csak egyszer jelezz
 
 msgid ""
 "filter join/part/quit messages for a nick if not speaking for some minutes "
-"on channel"
+"on channel (you must create a filter on tag \"irc_smart_filter\")"
 msgstr ""
 
 msgid "delay for filtering join/part/quit messages (in minutes)"
@@ -3504,18 +3498,6 @@ msgstr ""
 
 msgid "send unknown commands to IRC server"
 msgstr "ismeretlen parancsok küldése az IRC szervernek"
-
-msgid "automatically log server messages"
-msgstr "szerverüzenetek automatikus naplózása"
-
-msgid "automatically log channel chats"
-msgstr "szobabeszélgetések automatikus naplózása"
-
-msgid "automatically log private chats"
-msgstr "személyes beszélgetése automatikus naplózása"
-
-msgid "hide password displayed by nickserv"
-msgstr "a nickserv által mutatott jelszó elrejtése"
 
 #, fuzzy
 msgid "IRC debug messages"
@@ -4029,6 +4011,18 @@ msgstr "%s: Újracsatlakozás a szerverhez...\n"
 msgid "%s%s: disconnected from server"
 msgstr "Lekapcsolódott a szerverről!\n"
 
+#, c-format
+msgid ""
+"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
+"for this buffer"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to start logging for buffer \"%s\": filename \"%s\" is already "
+"user by another buffer (check your log settings)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: unable to create directory for logs (\"%s\")"
 msgstr "%s nem sikerült a szervert létrehozni\n"
@@ -4045,8 +4039,73 @@ msgstr "****  Naplófájl kezdete  "
 msgid "%s\t****  End of log  ****"
 msgstr "****  Naplófájl vége  "
 
+#, fuzzy
+msgid "Logging on buffers:"
+msgstr "Aliaszok listája:\n"
+
+#, c-format
+msgid "logging (level: %d)"
+msgstr ""
+
+#, c-format
+msgid "not logging"
+msgstr ""
+
+msgid "log not started"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "%s: \"%s\" => level %d"
+msgstr "A \"%s\" aliasz eltávolítva\n"
+
 #, c-format
 msgid "===\t========== End of backlog (%d lines) =========="
+msgstr ""
+
+#, fuzzy
+msgid "logger plugin configuration"
+msgstr "Beállítások mentése a lemezre\n"
+
+msgid "[list | set level | disable]"
+msgstr ""
+
+msgid ""
+"   list: show logging status for open buffers\n"
+"    set: set logging level on current buffer\n"
+"  level: level for messages to be logged (0 = logging disabled, 1 = a few "
+"messages (most important) .. 9 = all messages)\n"
+"disable: disable logging on current buffer (set level to 0)\n"
+"\n"
+"Options \"logger.level.*\" and \"logger.mask.*\" can be used to set level or "
+"mask for a buffer, or buffers beginning with name.\n"
+"\n"
+"Examples:\n"
+"  set level to 5 for current buffer:\n"
+"    /logger set 5\n"
+"  disable logging for current buffer:\n"
+"    /logger disable\n"
+"\n"
+"  set level to 3 for all IRC buffers:\n"
+"    /set logger.level.irc = 3\n"
+"  disable logging for main WeeChat buffer:\n"
+"    /set logger.level.core.weechat = 0\n"
+"  use a directory per IRC server and a file per channel inside:\n"
+"    /set logger.mask.irc = $server/$channel.weechatlog\n"
+"\n"
+"Log levels used by IRC plugin:\n"
+"  1: user message, notice, private\n"
+"  2: nick change\n"
+"  3: server message\n"
+"  4: join/part/quit\n"
+"  9: all other messages"
+msgstr ""
+
+msgid ""
+"logging level for this buffer (0 = logging disabled, 1 = a few messages "
+"(most important) .. 9 = all messages)"
+msgstr ""
+
+msgid "file mask for log file; local buffer variables are permitted"
 msgstr ""
 
 #, fuzzy
@@ -4071,6 +4130,12 @@ msgstr ""
 "modulok elérési útvonala ('%h' helyére automatikusan a WeeChat saját  "
 "könyvtára, alapértelmezésben ~/.weechat, kerül)"
 
+msgid ""
+"default file name mask for log files (format is 'directory/to/file' or "
+"'file', without first '/' because 'path' option is used to build complete "
+"path to file); local buffer variables are permitted"
+msgstr ""
+
 msgid "write information line in log file when log starts or ends for a buffer"
 msgstr ""
 
@@ -4088,14 +4153,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
 msgstr "%s nincs elég memória az információs pult üzenethez\n"
-
-#, fuzzy, c-format
-msgid "Notify level: %s => %s"
-msgstr "Értesítési szintek:"
-
-#, fuzzy, c-format
-msgid "Notify level: %s: removed"
-msgstr "Értesítési szintek:"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown notify level \"%s\""
@@ -4847,6 +4904,35 @@ msgstr "%s DCC: nem sikerült 'nonblock' opciót beállítani a csatornán\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s hiányzó argumentum a(z) \"%s\" opciónak\n"
+
+#~ msgid "automatically log server messages"
+#~ msgstr "szerverüzenetek automatikus naplózása"
+
+#~ msgid "automatically log channel chats"
+#~ msgstr "szobabeszélgetések automatikus naplózása"
+
+#~ msgid "automatically log private chats"
+#~ msgstr "személyes beszélgetése automatikus naplózása"
+
+#, fuzzy
+#~ msgid "New level for buffer \"%s\" is %d"
+#~ msgstr "a pufferek időbélyege"
+
+#, fuzzy
+#~ msgid "  %s[%s%d%s]%s (%s) %s%s%s: %s%s%s%s"
+#~ msgstr "%s%s %s(%s%s%s)%s kilépett"
+
+#, fuzzy
+#~ msgid "Notify level: %s => %s"
+#~ msgstr "Értesítési szintek:"
+
+#, fuzzy
+#~ msgid "Notify level: %s: removed"
+#~ msgstr "Értesítési szintek:"
+
+#, fuzzy
+#~ msgid "Error: unable to create \"%s\" directory\n"
+#~ msgstr "%s nem sikerült a \"%s\" könyvtárat létrehozni\n"
 
 #, fuzzy
 #~ msgid "%sError: filter not \"%s\" found"

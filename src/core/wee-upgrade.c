@@ -491,8 +491,10 @@ upgrade_weechat_load ()
         gui_hotlist_clear ();
     
     if (upgrade_set_current_buffer)
+    {
         gui_window_switch_to_buffer (gui_current_window,
-                                     upgrade_set_current_buffer);
+                                     upgrade_set_current_buffer, 0);
+    }
     
     return rc;
 }

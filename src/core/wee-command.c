@@ -497,14 +497,17 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
              ptr_buffer = ptr_buffer->next_buffer)
         {
             gui_chat_printf (NULL,
-                             "  %s[%s%d%s]%s (%s) %s",
+                             "  %s[%s%d%s]%s (%s) %s%s%s (notify: %d)",
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
                              ptr_buffer->number,
                              GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
                              GUI_COLOR(GUI_COLOR_CHAT),
                              plugin_get_name (ptr_buffer->plugin),
-                             ptr_buffer->name);
+                             GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                             ptr_buffer->name,
+                             GUI_COLOR(GUI_COLOR_CHAT),
+                             ptr_buffer->notify);
         }
         
         return WEECHAT_RC_OK;
@@ -708,8 +711,7 @@ command_buffer (void *data, struct t_gui_buffer *buffer,
         ptr_buffer = gui_buffer_search_by_partial_name (NULL, argv_eol[1]);
         if (ptr_buffer)
         {
-            gui_window_switch_to_buffer (gui_current_window,
-                                         ptr_buffer);
+            gui_window_switch_to_buffer (gui_current_window, ptr_buffer, 1);
         }
     }
     

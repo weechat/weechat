@@ -111,7 +111,8 @@ xfer_config_init ()
     ptr_section = weechat_config_new_section (xfer_config_file, "look",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL);
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (xfer_config_file);
@@ -134,7 +135,8 @@ xfer_config_init ()
     ptr_section = weechat_config_new_section (xfer_config_file, "color",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL);
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (xfer_config_file);
@@ -199,7 +201,8 @@ xfer_config_init ()
     ptr_section = weechat_config_new_section (xfer_config_file, "network",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL);
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (xfer_config_file);
@@ -245,7 +248,8 @@ xfer_config_init ()
     ptr_section = weechat_config_new_section (xfer_config_file, "file",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL);
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (xfer_config_file);

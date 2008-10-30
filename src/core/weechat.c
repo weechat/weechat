@@ -256,10 +256,10 @@ weechat_create_home_dirs ()
     }
     
     /* create home directory; error is fatal */
-    if (!util_create_dir (weechat_home, 0))
+    if (!util_mkdir (weechat_home, 0755))
     {
         string_iconv_fprintf (stderr,
-                              _("Error: unable to create \"%s\" directory\n"),
+                              _("Error: cannot create directory \"%s\"\n"),
                               weechat_home);
         weechat_shutdown (EXIT_FAILURE, 0);
     }

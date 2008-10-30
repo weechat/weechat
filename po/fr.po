@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-26 17:42+0100\n"
-"PO-Revision-Date: 2008-10-26 17:43+0100\n"
+"POT-Creation-Date: 2008-10-30 17:11+0100\n"
+"PO-Revision-Date: 2008-10-30 16:52+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -80,7 +80,7 @@ msgid "Error: home (%s) is not a directory\n"
 msgstr "Erreur: la base (%s) n'est pas un répertoire\n"
 
 #, c-format
-msgid "Error: unable to create \"%s\" directory\n"
+msgid "Error: cannot create directory \"%s\"\n"
 msgstr "Erreur: impossible de créer le répertoire \"%s\"\n"
 
 #, c-format
@@ -1838,10 +1838,6 @@ msgstr ""
 "lecture - mauvaise signature (le format de fichier upgrade a peut-être "
 "changé depuis la dernière version)"
 
-#, c-format
-msgid "Error: cannot create directory \"%s\"\n"
-msgstr "Erreur: impossible de créer le répertoire \"%s\"\n"
-
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminal perdu, sortie de WeeChat..."
 
@@ -2040,8 +2036,8 @@ msgid "%s: debug disabled"
 msgstr "%s: debug désactivé"
 
 #, c-format
-msgid "%s: %s: removed"
-msgstr "%s: %s: supprimé"
+msgid "%s: \"%s\" removed"
+msgstr "%s: \"%s\" supprimé"
 
 #. TRANSLATORS: %s is "aspell"
 #, c-format
@@ -2151,8 +2147,8 @@ msgid "global encoding charset"
 msgstr "charset d'encodage global"
 
 #, c-format
-msgid "%s: %s, %s: removed"
-msgstr "%s: %s, %s: supprimé"
+msgid "%s: %s, \"%s\": removed"
+msgstr "%s: %s, \"%s\": supprimé"
 
 #, c-format
 msgid "%s%s: missing parameters"
@@ -3346,13 +3342,6 @@ msgstr ""
 msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%sirc: pas assez de paramètres pour la commande \"%s\""
 
-msgid ""
-"You should now create filter on tag \"irc_smart_filter\" with command /"
-"filter."
-msgstr ""
-"Vous devriez maintenant créer un filtre sur le tag \"irc_smart_filter\" avec "
-"la commande /filter."
-
 #, c-format
 msgid "%s%s: error creating server \"%s\""
 msgstr "%s%s: erreur de création du serveur \"%s\""
@@ -3462,6 +3451,9 @@ msgstr "affiche un message pour l'absence/le retour"
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr "affiche les modes du canal dans l'objet de barre \"buffer_name\""
 
+msgid "hide password displayed by nickserv"
+msgstr "masquer le mot de passe affiché par nickserv"
+
 msgid ""
 "comma separated list of tags for messages that may produce highlight "
 "(usually any message from another user, not server messages,..)"
@@ -3475,10 +3467,11 @@ msgstr "voir le message d'absence distant une seule fois en privé"
 
 msgid ""
 "filter join/part/quit messages for a nick if not speaking for some minutes "
-"on channel"
+"on channel (you must create a filter on tag \"irc_smart_filter\")"
 msgstr ""
 "filtrer les messages join/part/quit pour un pseudo s'il n'a pas parlé "
-"pendant quelques minutes sur le canal"
+"pendant quelques minutes sur le canal (vous devez créer un filtre sur le tag "
+"\"irc_smart_filter\")"
 
 msgid "delay for filtering join/part/quit messages (in minutes)"
 msgstr "délai pour filtrer les messages join/part/quit (en minutes)"
@@ -3540,18 +3533,6 @@ msgstr ""
 
 msgid "send unknown commands to IRC server"
 msgstr "envoie les commandes inconnues au serveur IRC"
-
-msgid "automatically log server messages"
-msgstr "enregistrer automatiquement les messages du serveur"
-
-msgid "automatically log channel chats"
-msgstr "enregistrer automatiquement les conversations des canaux"
-
-msgid "automatically log private chats"
-msgstr "enregistrer automatiquement les conversations privées"
-
-msgid "hide password displayed by nickserv"
-msgstr "masquer le mot de passe affiché par nickserv"
 
 msgid "IRC debug messages"
 msgstr "Messages de debug IRC"
@@ -4071,6 +4052,23 @@ msgid "%s%s: disconnected from server"
 msgstr "%s%s: déconnecté du serveur"
 
 #, c-format
+msgid ""
+"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
+"for this buffer"
+msgstr ""
+"%s%s: impossible de trouver le masque de nom de fichier pour le tampon \"%s"
+"\", l'enregistrement est désactivé pour ce tampon"
+
+#, c-format
+msgid ""
+"%s%s: unable to start logging for buffer \"%s\": filename \"%s\" is already "
+"user by another buffer (check your log settings)"
+msgstr ""
+"%s%s: impossible de démarrer l'enregistrement pour le tampon \"%s\": le nom "
+"de fichier \"%s\" est déjà utilisé par un autre tampon (vérifiez vos options "
+"d'enregistrement)"
+
+#, c-format
 msgid "%s%s: unable to create directory for logs (\"%s\")"
 msgstr "%s%s: impossible de créer le répertoire pour les logs (\"%s\")"
 
@@ -4086,9 +4084,105 @@ msgstr "%s\t****  Début du log  ****"
 msgid "%s\t****  End of log  ****"
 msgstr "%s\t****  Fin du log  ****"
 
+msgid "Logging on buffers:"
+msgstr "Enregistrement des tampons :"
+
+#, c-format
+msgid "logging (level: %d)"
+msgstr "enregistrement (niveau: %d)"
+
+#, c-format
+msgid "not logging"
+msgstr "pas d'enregistrement"
+
+msgid "log not started"
+msgstr "enregistrement non démarré"
+
+#, c-format
+msgid "%s: \"%s\" => level %d"
+msgstr "%s: \"%s\" => niveau %d"
+
 #, c-format
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr "===\t========== Fin de l'historique (%d lignes) =========="
+
+msgid "logger plugin configuration"
+msgstr "configuration de l'extension logger"
+
+msgid "[list | set level | disable]"
+msgstr "[list | set niveau | disable]"
+
+msgid ""
+"   list: show logging status for open buffers\n"
+"    set: set logging level on current buffer\n"
+"  level: level for messages to be logged (0 = logging disabled, 1 = a few "
+"messages (most important) .. 9 = all messages)\n"
+"disable: disable logging on current buffer (set level to 0)\n"
+"\n"
+"Options \"logger.level.*\" and \"logger.mask.*\" can be used to set level or "
+"mask for a buffer, or buffers beginning with name.\n"
+"\n"
+"Examples:\n"
+"  set level to 5 for current buffer:\n"
+"    /logger set 5\n"
+"  disable logging for current buffer:\n"
+"    /logger disable\n"
+"\n"
+"  set level to 3 for all IRC buffers:\n"
+"    /set logger.level.irc = 3\n"
+"  disable logging for main WeeChat buffer:\n"
+"    /set logger.level.core.weechat = 0\n"
+"  use a directory per IRC server and a file per channel inside:\n"
+"    /set logger.mask.irc = $server/$channel.weechatlog\n"
+"\n"
+"Log levels used by IRC plugin:\n"
+"  1: user message, notice, private\n"
+"  2: nick change\n"
+"  3: server message\n"
+"  4: join/part/quit\n"
+"  9: all other messages"
+msgstr ""
+"   list: afficher le statut d'enregistrement pour les tampons ouverts\n"
+"    set: définir le niveau d'enregistrement pour le tampon courant\n"
+" niveau: niveau pour les messages à enregistrer (0 = pas d'enregistrement, 1 "
+"= quelques messages (les plus importants) .. 9 = tous les messages)\n"
+"disable: désactiver l'enregistrement pour le tampon courant (définir le "
+"niveau à 0)\n"
+"\n"
+"Les options \"logger.level.*\" et \"logger.mask.*\" peuvent être utilisées "
+"pour définir le niveau ou le masque de nom de fichier pour un tampon, ou "
+"plusieurs tampons commençant par un nom.\n"
+"\n"
+"Exemples :\n"
+"  définir le niveau d'enregistrement à 5 pour le tampon courant :\n"
+"      /logger set 5\n"
+"  désactiver l'enregistrement pour le tampon courant :\n"
+"    /logger disable\n"
+"  définir le niveau à 3 pour les tampons IRC :\n"
+"    /set logger.level.irc = 3\n"
+"  désactiver l'enregistrement pour le tampon principal de WeeChat :\n"
+"    /set logger.level.core.weechat = 0\n"
+"  utiliser un répertoire par serveur IRC et un fichier par canal dedans :\n"
+"    /set logger.mask.irc = $server/$channel.weechatlog\n"
+"\n"
+"Niveaux de log utilisés par l'extension IRC :\n"
+"  1: message d'utilisateur, notice, privé\n"
+"  2: changement de pseudo\n"
+"  3: message du serveur\n"
+"  4: join/part/quit\n"
+"  9: tous les autres messages"
+
+msgid ""
+"logging level for this buffer (0 = logging disabled, 1 = a few messages "
+"(most important) .. 9 = all messages)"
+msgstr ""
+"niveau d'enregistrement log pour ce tampon (0 = pas d'enregistrement, 1 = "
+"quelques messages (les plus importants) .. 9 = tous les messages)"
+
+msgid "file mask for log file; local buffer variables are permitted"
+msgstr ""
+"masque de fichier pour le fichier de log; les variables locales du tampon "
+"sont permises"
 
 msgid ""
 "maximum number of lines to display from log file when creating new buffer (0 "
@@ -4113,6 +4207,16 @@ msgstr ""
 "chemin pour les fichiers de log WeeChat ('%h' sera remplacé par le "
 "répertoire de base WeeChat, par défaut: ~/.weechat)"
 
+msgid ""
+"default file name mask for log files (format is 'directory/to/file' or "
+"'file', without first '/' because 'path' option is used to build complete "
+"path to file); local buffer variables are permitted"
+msgstr ""
+"masque de fichier par défaut pour les fichiers de log (le format est "
+"'repertoire/vers/fichier' ou 'fichier', sans le premier '/' car l'option "
+"'path' est utilisée pour construire le chemin complet vers le fichier); les "
+"variables locales du tampon sont permises"
+
 msgid "write information line in log file when log starts or ends for a buffer"
 msgstr ""
 "écrire une ligne d'information dans le fichier log quand le log démarre ou "
@@ -4134,14 +4238,6 @@ msgstr "notify: debug: niveau de notification pour le tampon %s mis à %d (%s)"
 msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
 msgstr ""
 "%s%s: impossible de positionner le niveau de notification \"%s\" => \"%s\""
-
-#, c-format
-msgid "Notify level: %s => %s"
-msgstr "Niveau de notification: %s => %s"
-
-#, c-format
-msgid "Notify level: %s: removed"
-msgstr "Niveau de notification: %s: supprimé"
 
 #, c-format
 msgid "%s%s: unknown notify level \"%s\""
@@ -4877,3 +4973,29 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
+
+#~ msgid "automatically log server messages"
+#~ msgstr "enregistrer automatiquement les messages du serveur"
+
+#~ msgid "automatically log channel chats"
+#~ msgstr "enregistrer automatiquement les conversations des canaux"
+
+#~ msgid "automatically log private chats"
+#~ msgstr "enregistrer automatiquement les conversations privées"
+
+#~ msgid ""
+#~ "   list: show logging status for open buffers\n"
+#~ "    set: set logging level on current buffer\n"
+#~ "  level: level for messages to be logged (0 = logging disabled, 1 = a few "
+#~ "messages (most important) .. 9 = all messages)\n"
+#~ "disable: disable logging on current buffer (set level to 0)"
+#~ msgstr ""
+#~ "   list: afficher le statut d'enregistrement pour les tampons ouverts\n"
+#~ "    set: définir le niveau d'enregistrement pour le tampon courant\n"
+#~ " niveau: niveau des messages qui doivent être enregistrés (0 = pas "
+#~ "d'enregistrement, 1 = quelques messages (les plus importants) .. 9 = tous "
+#~ "les messages)\n"
+#~ "disable: désactiver l'enregistrement du tampon courant"
+
+#~ msgid "New level for buffer \"%s\" is %d"
+#~ msgstr "Le nouveau niveau pour le tampon \"%s\" est %d"

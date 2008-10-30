@@ -44,7 +44,7 @@ extern int string_has_highlight (const char *string,
 extern char **string_explode (const char *string, const char *separators,
                               int keep_eol, int num_items_max, int *num_items);
 extern void string_free_exploded (char **exploded_string);
-extern char *string_build_with_exploded (char **exploded_string,
+extern char *string_build_with_exploded (const char **exploded_string,
                                          const char *separator);
 extern char **string_split_command (const char *command, char separator);
 extern void string_free_splitted_command (char **splitted_command);

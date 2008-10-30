@@ -854,7 +854,7 @@ string_free_exploded (char **exploded_string)
  */
 
 char *
-string_build_with_exploded (char **exploded_string, const char *separator)
+string_build_with_exploded (const char **exploded_string, const char *separator)
 {
     int i, length, length_separator;
     char *result;

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-26 17:42+0100\n"
+"POT-Creation-Date: 2008-10-30 17:11+0100\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -44,8 +44,7 @@ msgid ""
 "                    about possible options)\n"
 msgstr ""
 "  -a, --no-connect  vypne automatické připojení k serverům při startu\n"
-"  -d, --dir <path>  nastaví domovský adresář WeeChat (výchozí: ~/."
-"weechat)\n"
+"  -d, --dir <path>  nastaví domovský adresář WeeChat (výchozí: ~/.weechat)\n"
 "  -h, --help        tato nápověda\n"
 "  -k, --keys        zobrazí výchozí klávesy WeeChat\n"
 "  -l, --license     zobrazí licenci WeeChat\n"
@@ -54,9 +53,10 @@ msgstr ""
 "  plugin:option     volba pluginu\n"
 "                    například irc plugin se může připojit\n"
 "                    k serveru pomocí url jako:\n"
-"                    irc[6][s]://[přezdívka[:heslo]@]irc.example.org[/port]"
-"[//#kanál][,#kanál2[...]]\n"
-"                    (více informací o možných volbách v dokumentacích pluginů)\n"
+"                    irc[6][s]://[přezdívka[:heslo]@]irc.example.org[/port][//"
+"#kanál][,#kanál2[...]]\n"
+"                    (více informací o možných volbách v dokumentacích "
+"pluginů)\n"
 
 #. TRANSLATORS: %s is "weechat"
 #, c-format
@@ -77,9 +77,9 @@ msgstr "Chyba: nedostatek paměti pro domácí adresář\n"
 msgid "Error: home (%s) is not a directory\n"
 msgstr "Chyba: domovský adresář (%s) není adresářem\n"
 
-#, c-format
-msgid "Error: unable to create \"%s\" directory\n"
-msgstr "Chyba: nemohu vytvořit adresář \"%s\"\n"
+#, fuzzy, c-format
+msgid "Error: cannot create directory \"%s\"\n"
+msgstr "%s nemohu vytvořit adresář \"%s\"\n"
 
 #, c-format
 msgid "%sWelcome to %s%s%s, %s"
@@ -96,8 +96,8 @@ msgid ""
 "  %s%s%s: %s%s%s (cond: %s), %s, filling: %s(top/bottom)/%s(left/right), %s: "
 "%s"
 msgstr ""
-"  %s%s%s: %s%s%s (podmínka: %s), %s, vyplňuje: %s(nahoře/dole)/%s(vlevo/vpravo), %s: "
-"%s"
+"  %s%s%s: %s%s%s (podmínka: %s), %s, vyplňuje: %s(nahoře/dole)/%s(vlevo/"
+"vpravo), %s: %s"
 
 msgid "(hidden)"
 msgstr "(skrytý)"
@@ -361,7 +361,8 @@ msgstr "Výchozí klávesové zkratky obnoveny"
 #, c-format
 msgid "%sError: \"-yes\" argument is required for keys reset (security reason)"
 msgstr ""
-"%sChyba: \"-yes\" argument je požadován pro reset kaláves (bezpečnostní opatření)"
+"%sChyba: \"-yes\" argument je požadován pro reset kaláves (bezpečnostní "
+"opatření)"
 
 #, c-format
 msgid "Key \"%s\" unbound"
@@ -387,7 +388,8 @@ msgstr "list: id: %d, rodič: %d, plugin: \"%s\", buffer: \"%s\""
 
 #, c-format
 msgid "node: id: %d, parent: %d, child1: %d, child2: %d, size: %d%% (%s)"
-msgstr "uzel: id: %d, rodič: %d, potomek1: %d, potomek2: %d, velikost: %d%% (%s)"
+msgstr ""
+"uzel: id: %d, rodič: %d, potomek1: %d, potomek2: %d, velikost: %d%% (%s)"
 
 msgid "horizontal split"
 msgstr "horizontální rozdělení"
@@ -1153,7 +1155,9 @@ msgid "time format for \"time\" bar item"
 msgstr "formát času pro \"time\" položu pole"
 
 msgid "display nicklist (on buffers with nicklist enabled)"
-msgstr "zobrazit okno se seznamem přezdívek (pro buffery s povoleným seznamem přezdívek)"
+msgstr ""
+"zobrazit okno se seznamem přezdívek (pro buffery s povoleným seznamem "
+"přezdívek)"
 
 #, fuzzy
 msgid ""
@@ -1215,7 +1219,9 @@ msgid "string displayed after prefix"
 msgstr "řetězec zobrazený za prefixem"
 
 msgid "use a marker (line or char) on buffers to show first unread line"
-msgstr "použít značku (řádek nebo znak) v bufferech pro zobrazení první nepřečtené řádky"
+msgstr ""
+"použít značku (řádek nebo znak) v bufferech pro zobrazení první nepřečtené "
+"řádky"
 
 msgid "save configuration file on exit"
 msgstr "uložit soubor s nastavením při ukončení"
@@ -1230,8 +1236,8 @@ msgid ""
 "percent of screen to scroll when scrolling one page up or down (for example "
 "100 means one page, 50 half-page)"
 msgstr ""
-"procenta obrazovky, o které posunout, při posunutí o stránku nahoru nebo dolů "
-"(například 100 znamená jedna stránka, 50 půl stránky)"
+"procenta obrazovky, o které posunout, při posunutí o stránku nahoru nebo "
+"dolů (například 100 znamená jedna stránka, 50 půl stránky)"
 
 msgid "set title for window (terminal for Curses GUI) with name and version"
 msgstr "nastaví titulek okna (terminálu pro Cruses GUI) s jménem a verzí"
@@ -1809,10 +1815,6 @@ msgid ""
 "version)"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Error: cannot create directory \"%s\"\n"
-msgstr "%s nemohu vytvořit adresář \"%s\"\n"
-
 msgid "Terminal lost, exiting WeeChat..."
 msgstr "Terminál ztracen, ukončuji WeeChat..."
 
@@ -2025,7 +2027,7 @@ msgid "%s: debug disabled"
 msgstr "%s: ladění vypnuto"
 
 #, fuzzy, c-format
-msgid "%s: %s: removed"
+msgid "%s: \"%s\" removed"
 msgstr "Alias \"%s\" odebrán\n"
 
 #. TRANSLATORS: %s is "aspell"
@@ -2115,7 +2117,7 @@ msgid "global encoding charset"
 msgstr "globální znaková sada pro kódování"
 
 #, fuzzy, c-format
-msgid "%s: %s, %s: removed"
+msgid "%s: %s, \"%s\": removed"
 msgstr "Alias \"%s\" odebrán\n"
 
 #, fuzzy, c-format
@@ -3301,11 +3303,6 @@ msgstr ""
 msgid "%sirc: too few arguments for \"%s\" command"
 msgstr "%s špatné parametry pro příkaz \"%s\"\n"
 
-msgid ""
-"You should now create filter on tag \"irc_smart_filter\" with command /"
-"filter."
-msgstr ""
-
 #, fuzzy, c-format
 msgid "%s%s: error creating server \"%s\""
 msgstr "%s nedostatek paměti pro infobar zprávu\n"
@@ -3413,6 +3410,9 @@ msgstr "zobrazit zprávu, když označen/odznačen jako nepřítomen"
 msgid "display channel modes in \"buffer_name\" bar item"
 msgstr ""
 
+msgid "hide password displayed by nickserv"
+msgstr "schovat heslo zobrazené nickservem"
+
 msgid ""
 "comma separated list of tags for messages that may produce highlight "
 "(usually any message from another user, not server messages,..)"
@@ -3425,7 +3425,7 @@ msgstr "zobrazit vzdálený zprávu o nepřítomnosti pouze jednou v soukromém 
 
 msgid ""
 "filter join/part/quit messages for a nick if not speaking for some minutes "
-"on channel"
+"on channel (you must create a filter on tag \"irc_smart_filter\")"
 msgstr ""
 
 msgid "delay for filtering join/part/quit messages (in minutes)"
@@ -3488,18 +3488,6 @@ msgstr ""
 
 msgid "send unknown commands to IRC server"
 msgstr "poslat neznámý příkaz na IRC server"
-
-msgid "automatically log server messages"
-msgstr "automati logovat zprávy server"
-
-msgid "automatically log channel chats"
-msgstr "automaticky logovat rozhovory kanálu"
-
-msgid "automatically log private chats"
-msgstr "automaticky logovat soukromé rozhovory"
-
-msgid "hide password displayed by nickserv"
-msgstr "schovat heslo zobrazené nickservem"
 
 #, fuzzy
 msgid "IRC debug messages"
@@ -4018,6 +4006,18 @@ msgstr "%s: Připojuji se znovu k serveru...\n"
 msgid "%s%s: disconnected from server"
 msgstr "Odpojen od serveru!\n"
 
+#, c-format
+msgid ""
+"%s%s: unable to find filename mask for buffer \"%s\", logging is disabled "
+"for this buffer"
+msgstr ""
+
+#, c-format
+msgid ""
+"%s%s: unable to start logging for buffer \"%s\": filename \"%s\" is already "
+"user by another buffer (check your log settings)"
+msgstr ""
+
 #, fuzzy, c-format
 msgid "%s%s: unable to create directory for logs (\"%s\")"
 msgstr "%s nemohu vytvořit server \"%s\"\n"
@@ -4034,9 +4034,75 @@ msgstr "****  Beginning of log  "
 msgid "%s\t****  End of log  ****"
 msgstr "****  End of log  "
 
+#, fuzzy
+msgid "Logging on buffers:"
+msgstr "Seznam pro aliasy:\n"
+
+#, c-format
+msgid "logging (level: %d)"
+msgstr ""
+
+#, c-format
+msgid "not logging"
+msgstr ""
+
+#, fuzzy
+msgid "log not started"
+msgstr "Nebylo uloženo žádné rozložení"
+
+#, fuzzy, c-format
+msgid "%s: \"%s\" => level %d"
+msgstr "Alias \"%s\" odebrán\n"
+
 #, c-format
 msgid "===\t========== End of backlog (%d lines) =========="
 msgstr "===\t========== Konec zpětného logu (%d řádků) =========="
+
+#, fuzzy
+msgid "logger plugin configuration"
+msgstr "Ukládám konfiguraci na disk\n"
+
+msgid "[list | set level | disable]"
+msgstr ""
+
+msgid ""
+"   list: show logging status for open buffers\n"
+"    set: set logging level on current buffer\n"
+"  level: level for messages to be logged (0 = logging disabled, 1 = a few "
+"messages (most important) .. 9 = all messages)\n"
+"disable: disable logging on current buffer (set level to 0)\n"
+"\n"
+"Options \"logger.level.*\" and \"logger.mask.*\" can be used to set level or "
+"mask for a buffer, or buffers beginning with name.\n"
+"\n"
+"Examples:\n"
+"  set level to 5 for current buffer:\n"
+"    /logger set 5\n"
+"  disable logging for current buffer:\n"
+"    /logger disable\n"
+"\n"
+"  set level to 3 for all IRC buffers:\n"
+"    /set logger.level.irc = 3\n"
+"  disable logging for main WeeChat buffer:\n"
+"    /set logger.level.core.weechat = 0\n"
+"  use a directory per IRC server and a file per channel inside:\n"
+"    /set logger.mask.irc = $server/$channel.weechatlog\n"
+"\n"
+"Log levels used by IRC plugin:\n"
+"  1: user message, notice, private\n"
+"  2: nick change\n"
+"  3: server message\n"
+"  4: join/part/quit\n"
+"  9: all other messages"
+msgstr ""
+
+msgid ""
+"logging level for this buffer (0 = logging disabled, 1 = a few messages "
+"(most important) .. 9 = all messages)"
+msgstr ""
+
+msgid "file mask for log file; local buffer variables are permitted"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -4059,6 +4125,12 @@ msgstr ""
 "cesta pro hledání pluginů ('%h' bude nahrazeno domácím adresářem WeeChat, ~/."
 "weechat je výchozí)"
 
+msgid ""
+"default file name mask for log files (format is 'directory/to/file' or "
+"'file', without first '/' because 'path' option is used to build complete "
+"path to file); local buffer variables are permitted"
+msgstr ""
+
 msgid "write information line in log file when log starts or ends for a buffer"
 msgstr ""
 
@@ -4076,14 +4148,6 @@ msgstr "notify: debug: nastavit notifikaci pro buffer %s na %d (%s)"
 #, fuzzy, c-format
 msgid "%s%s: unable to set notify level \"%s\" => \"%s\""
 msgstr "%s nedostatek paměti pro infobar zprávu\n"
-
-#, fuzzy, c-format
-msgid "Notify level: %s => %s"
-msgstr "Level upozornění:"
-
-#, fuzzy, c-format
-msgid "Notify level: %s: removed"
-msgstr "Level upozornění:"
 
 #, fuzzy, c-format
 msgid "%s%s: unknown notify level \"%s\""
@@ -4850,6 +4914,34 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#~ msgid "automatically log server messages"
+#~ msgstr "automati logovat zprávy server"
+
+#~ msgid "automatically log channel chats"
+#~ msgstr "automaticky logovat rozhovory kanálu"
+
+#~ msgid "automatically log private chats"
+#~ msgstr "automaticky logovat soukromé rozhovory"
+
+#, fuzzy
+#~ msgid "New level for buffer \"%s\" is %d"
+#~ msgstr "Lokální proměnné pro buffer \"%s\":"
+
+#, fuzzy
+#~ msgid "  %s[%s%d%s]%s (%s) %s%s%s: %s%s%s%s"
+#~ msgstr "%s%s %s(%s%s%s)%s skončil"
+
+#, fuzzy
+#~ msgid "Notify level: %s => %s"
+#~ msgstr "Level upozornění:"
+
+#, fuzzy
+#~ msgid "Notify level: %s: removed"
+#~ msgstr "Level upozornění:"
+
+#~ msgid "Error: unable to create \"%s\" directory\n"
+#~ msgstr "Chyba: nemohu vytvořit adresář \"%s\"\n"
 
 #, fuzzy
 #~ msgid "%sError: filter not \"%s\" found"

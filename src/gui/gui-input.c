@@ -1140,7 +1140,7 @@ gui_input_jump_smart ()
             if (!gui_hotlist_initial_buffer)
                 gui_hotlist_initial_buffer = gui_current_window->buffer;
             gui_window_switch_to_buffer (gui_current_window,
-                                         gui_hotlist->buffer);
+                                         gui_hotlist->buffer, 1);
             gui_window_scroll_bottom (gui_current_window);
         }
         else
@@ -1148,7 +1148,7 @@ gui_input_jump_smart ()
             if (gui_hotlist_initial_buffer)
             {
                 gui_window_switch_to_buffer (gui_current_window,
-                                             gui_hotlist_initial_buffer);
+                                             gui_hotlist_initial_buffer, 1);
                 gui_window_scroll_bottom (gui_current_window);
                 gui_hotlist_initial_buffer = NULL;
             }

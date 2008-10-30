@@ -186,7 +186,8 @@ plugin_config_init ()
             NULL, NULL,
             NULL, NULL,
             NULL, NULL,
-            &plugin_config_create_option, NULL);
+            &plugin_config_create_option, NULL,
+            NULL, NULL);
     }
     else
         plugin_config_section_var = NULL;

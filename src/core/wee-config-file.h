@@ -38,6 +38,8 @@
 struct t_weelist;
 struct t_infolist;
 
+struct t_config_option;
+
 struct t_config_file
 {
     struct t_weechat_plugin *plugin;       /* plugin which created this cfg */
@@ -84,6 +86,12 @@ struct t_config_section
      const char *option_name,
      const char *value);
     void *callback_create_option_data;     /* data sent to create callback  */
+    int (*callback_delete_option)          /* called to delete option in    */
+    (void *data,                           /* section                       */
+     struct t_config_file *config_file,
+     struct t_config_section *section,
+     struct t_config_option *option);
+    void *callback_delete_option_data;     /* data sent to delete callback  */
     struct t_config_option *options;       /* options in section            */
     struct t_config_option *last_option;   /* last option in section        */
     struct t_config_section *prev_section; /* link to previous section      */
@@ -163,7 +171,12 @@ extern struct t_config_section *config_file_new_section (struct t_config_file *c
                                                                                        struct t_config_section *section,
                                                                                        const char *option_name,
                                                                                        const char *value),
-                                                         void *callback_create_option_data);
+                                                         void *callback_create_option_data,
+                                                         int (*callback_delete_option)(void *data,
+                                                                                       struct t_config_file *config_file,
+                                                                                       struct t_config_section *section,
+                                                                                       struct t_config_option *option),
+                                                         void *callback_delete_option_data);
 extern struct t_config_section *config_file_search_section (struct t_config_file *config_file,
                                                             const char *section_name);
 extern int config_file_section_valid_for_plugin (struct t_weechat_plugin *plugin,

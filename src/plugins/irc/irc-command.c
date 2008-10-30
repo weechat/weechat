@@ -2067,7 +2067,7 @@ irc_command_msg (void *data, struct t_gui_buffer *buffer, int argc,
                         {
                             msg_pwd_hidden = strdup (argv_eol[2]);
                             if (msg_pwd_hidden
-                                && (weechat_config_boolean (irc_config_log_hide_nickserv_pwd)))
+                                && (weechat_config_boolean (irc_config_look_hide_nickserv_pwd)))
                                 irc_display_hide_password (msg_pwd_hidden, 0);
                             string = irc_color_decode (
                                 (msg_pwd_hidden) ? msg_pwd_hidden : argv_eol[2],

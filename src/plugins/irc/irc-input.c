@@ -30,6 +30,7 @@
 #include "irc-nick.h"
 #include "irc-color.h"
 #include "irc-config.h"
+#include "irc-protocol.h"
 
 
 /*
@@ -54,12 +55,13 @@ irc_input_user_message_display (struct t_gui_buffer *buffer, const char *text)
         else
             ptr_nick = NULL;
         
-        weechat_printf (buffer,
-                        "%s%s",
-                        irc_nick_as_prefix ((ptr_nick) ? ptr_nick : NULL,
-                                            (ptr_nick) ? NULL : ptr_server->nick,
-                                            IRC_COLOR_CHAT_NICK_SELF),
-                        (text_decoded) ? text_decoded : text);
+        weechat_printf_tags (buffer,
+                             irc_protocol_tags ("privmsg", NULL),
+                             "%s%s",
+                             irc_nick_as_prefix ((ptr_nick) ? ptr_nick : NULL,
+                                                 (ptr_nick) ? NULL : ptr_server->nick,
+                                                 IRC_COLOR_CHAT_NICK_SELF),
+                             (text_decoded) ? text_decoded : text);
     }
     
     if (text_decoded)

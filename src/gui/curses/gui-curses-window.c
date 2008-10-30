@@ -450,7 +450,8 @@ gui_window_redraw_all_buffers ()
 
 void
 gui_window_switch_to_buffer (struct t_gui_window *window,
-                             struct t_gui_buffer *buffer)
+                             struct t_gui_buffer *buffer,
+                             int set_last_read)
 {
     struct t_gui_bar_window *ptr_bar_win;
     struct t_gui_buffer *old_buffer;
@@ -467,11 +468,14 @@ gui_window_switch_to_buffer (struct t_gui_window *window,
     {
         window->start_line = NULL;
         window->start_line_pos = 0;
-        if (window->buffer->num_displayed == 0)
-            window->buffer->last_read_line = window->buffer->last_line;
-        if (buffer->last_read_line == buffer->last_line)
-            buffer->last_read_line = NULL;
         gui_previous_buffer = window->buffer;
+        if (set_last_read)
+        {
+            if (window->buffer->num_displayed == 0)
+                window->buffer->last_read_line = window->buffer->last_line;
+            if (buffer->last_read_line == buffer->last_line)
+                buffer->last_read_line = NULL;
+        }
     }
     
     window->buffer = buffer;
@@ -547,12 +551,12 @@ gui_window_switch (struct t_gui_window *window)
     {
         gui_current_window = old_window;
         gui_window_switch_to_buffer (gui_current_window,
-                                     gui_current_window->buffer);
+                                     gui_current_window->buffer, 1);
         gui_current_window = window;
     }
     
     gui_window_switch_to_buffer (gui_current_window,
-                                 gui_current_window->buffer);
+                                 gui_current_window->buffer, 1);
     
     gui_current_window->refresh_needed = 1;
 }
@@ -936,7 +940,7 @@ gui_window_refresh_windows ()
     
     for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        gui_window_switch_to_buffer (ptr_win, ptr_win->buffer);
+        gui_window_switch_to_buffer (ptr_win, ptr_win->buffer, 0);
         gui_window_draw_separator (ptr_win);
         ptr_win->refresh_needed = 0;
     }
@@ -986,7 +990,7 @@ gui_window_split_horiz (struct t_gui_window *window, int percentage)
             new_window->buffer = window->buffer;
             new_window->buffer->num_displayed++;
             
-            gui_window_switch_to_buffer (window, window->buffer);
+            gui_window_switch_to_buffer (window, window->buffer, 1);
 
             gui_window_switch (new_window);
         }
@@ -1030,7 +1034,7 @@ gui_window_split_vertic (struct t_gui_window *window, int percentage)
             new_window->buffer = window->buffer;
             new_window->buffer->num_displayed++;
             
-            gui_window_switch_to_buffer (window, window->buffer);
+            gui_window_switch_to_buffer (window, window->buffer, 1);
             
             gui_window_switch (new_window);
             
@@ -1121,7 +1125,7 @@ gui_window_merge (struct t_gui_window *window)
         gui_window_free (sister->window);
         gui_window_tree_node_to_leaf (parent, window);
         
-        gui_window_switch_to_buffer (window, window->buffer);
+        gui_window_switch_to_buffer (window, window->buffer, 1);
         window->refresh_needed = 1;
         return 1;
     }
@@ -1166,7 +1170,7 @@ gui_window_merge_all (struct t_gui_window *window)
         window->win_height_pct = 100;
         
         gui_current_window = window;
-        gui_window_switch_to_buffer (window, window->buffer);
+        gui_window_switch_to_buffer (window, window->buffer, 1);
         window->refresh_needed = 1;
     }
 }

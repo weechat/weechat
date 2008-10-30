@@ -331,7 +331,8 @@ notify_config_init ()
                                               NULL, NULL,
                                               NULL, NULL,
                                               NULL, NULL,
-                                              &notify_config_create_option, NULL);
+                                              &notify_config_create_option, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (notify_config_file);
@@ -404,10 +405,11 @@ notify_set (struct t_gui_buffer *buffer, const char *name, int value)
 
         /* display message */
         if (value >= 0)
-            weechat_printf (NULL, _("Notify level: %s => %s"),
-                            name, notify_string[value]);
+            weechat_printf (NULL, "%s: \"%s\" => %s",
+                            NOTIFY_PLUGIN_NAME, name, notify_string[value]);
         else
-            weechat_printf (NULL, _("Notify level: %s: removed"), name);
+            weechat_printf (NULL, _("%s: \"%s\" removed"),
+                            NOTIFY_PLUGIN_NAME, name);
     }
 }
 

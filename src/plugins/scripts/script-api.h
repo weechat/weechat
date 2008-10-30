@@ -51,7 +51,12 @@ extern struct t_config_section *script_api_config_new_section (struct t_weechat_
                                                                                              struct t_config_section *section,
                                                                                              const char *option_name,
                                                                                              const char *value),
-                                                               const char *function_create_option);
+                                                               const char *function_create_option,
+                                                               int (*callback_delete_option)(void *data,
+                                                                                             struct t_config_file *config_file,
+                                                                                             struct t_config_section *section,
+                                                                                             struct t_config_option *option),
+                                                               const char *function_delete_option);
 extern struct t_config_option *script_api_config_new_option (struct t_weechat_plugin *weechat_plugin,
                                                              struct t_plugin_script *script,
                                                              struct t_config_file *config_file,
@@ -136,7 +141,7 @@ extern struct t_hook *script_api_hook_print (struct t_weechat_plugin *weechat_pl
                                                              struct t_gui_buffer *buffer,
                                                              time_t date,
                                                              int tags_count,
-                                                             char **tags,
+                                                             const char **tags,
                                                              const char *prefix,
                                                              const char *message),
                                              const char *function);

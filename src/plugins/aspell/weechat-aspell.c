@@ -257,6 +257,8 @@ weechat_aspell_get_dict (struct t_gui_buffer *buffer)
         if (ptr_option)
             return weechat_config_string (ptr_option);
     }
+    else
+        free (name);
     
     /* nothing found => return default dictionary (if set) */
     if (weechat_config_string (weechat_aspell_config_check_default_dict)
@@ -283,10 +285,10 @@ weechat_aspell_set_dict (struct t_gui_buffer *buffer, const char *value)
     if (weechat_aspell_config_set_dict (name, value) > 0)
     {
         if (value && value[0])
-            weechat_printf (NULL, "%s: %s => %s",
+            weechat_printf (NULL, "%s: \"%s\" => %s",
                             ASPELL_PLUGIN_NAME, name, value);
         else
-            weechat_printf (NULL, _("%s: %s: removed"),
+            weechat_printf (NULL, _("%s: \"%s\" removed"),
                             ASPELL_PLUGIN_NAME, name);
     }
     

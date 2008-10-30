@@ -57,6 +57,7 @@ struct t_config_option *irc_config_look_nick_suffix;
 struct t_config_option *irc_config_look_nick_completion_smart;
 struct t_config_option *irc_config_look_display_away;
 struct t_config_option *irc_config_look_display_channel_modes;
+struct t_config_option *irc_config_look_hide_nickserv_pwd;
 struct t_config_option *irc_config_look_highlight_tags;
 struct t_config_option *irc_config_look_show_away_once;
 struct t_config_option *irc_config_look_smart_filter;
@@ -76,13 +77,6 @@ struct t_config_option *irc_config_network_anti_flood;
 struct t_config_option *irc_config_network_colors_receive;
 struct t_config_option *irc_config_network_colors_send;
 struct t_config_option *irc_config_network_send_unknown_commands;
-
-/* IRC config, log section */
-
-struct t_config_option *irc_config_log_auto_log_server;
-struct t_config_option *irc_config_log_auto_log_channel;
-struct t_config_option *irc_config_log_auto_log_private;
-struct t_config_option *irc_config_log_hide_nickserv_pwd;
 
 /* IRC config, server section */
 
@@ -176,27 +170,6 @@ irc_config_change_display_channel_modes (void *data,
 }
 
 /*
- * irc_config_change_smart_filter: called when the "smart_filter" option is
- *                                 changed
- */
-
-void
-irc_config_change_smart_filter (void *data,
-                                struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-    
-    if (weechat_config_boolean (irc_config_look_smart_filter))
-    {
-        weechat_printf (NULL,
-                        _("You should now create filter on tag "
-                          "\"irc_smart_filter\" with command /filter."));
-    }
-}
-
-/*
  * irc_config_change_away_check: called when away check is changed
  */
 
@@ -225,60 +198,6 @@ irc_config_change_away_check (void *data,
         /* reset away flag for all nicks/chans/servers */
         irc_server_remove_away ();
     }
-}
-
-/*
- * irc_config_change_log: called when log settings are changed
- *                        (for server/channel/private logging)
- */
-
-void
-irc_config_change_log (void *data,
-                       struct t_config_option *option)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) option;
-    
-    /*t_gui_buffer *ptr_buffer;
-    t_irc_server *ptr_server;
-    t_irc_channel *ptr_channel;
-    
-    for (ptr_buffer = gui_buffers; ptr_buffer;
-         ptr_buffer = ptr_buffer->next_buffer)
-    {
-        if (ptr_buffer->protocol == irc_protocol)
-        {
-            ptr_server = irc_server_search (ptr_buffer->category);
-            ptr_channel = irc_channel_search (ptr_server, ptr_buffer->name);
-            
-            if (ptr_server && !ptr_channel)
-            {
-                if (irc_config_log_auto_server && !ptr_buffer->log_file)
-                    gui_log_start (ptr_buffer);
-                else if (!irc_config_log_auto_server && ptr_buffer->log_file)
-                    gui_log_end (ptr_buffer);
-            }
-            if (ptr_server && ptr_channel)
-            {
-                if (ptr_channel->type == IRC_CHANNEL_TYPE_CHANNEL)
-                {
-                    if (irc_config_log_auto_channel && !ptr_buffer->log_file)
-                        gui_log_start (ptr_buffer);
-                    else if (!irc_config_log_auto_channel && ptr_buffer->log_file)
-                        gui_log_end (ptr_buffer);
-                }
-                else
-                {
-                    if (irc_config_log_auto_private && !ptr_buffer->log_file)
-                        gui_log_start (ptr_buffer);
-                    else if (!irc_config_log_auto_private && ptr_buffer->log_file)
-                        gui_log_end (ptr_buffer);
-                }
-            }
-        }
-    }
-    */
 }
 
 /*
@@ -1014,7 +933,8 @@ irc_config_init ()
     ptr_section = weechat_config_new_section (irc_config_file, "look",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL);
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);
@@ -1056,6 +976,11 @@ irc_config_init ()
         "display_channel_modes", "boolean",
         N_("display channel modes in \"buffer_name\" bar item"),
         NULL, 0, 0, "on", NULL, NULL, NULL, &irc_config_change_display_channel_modes, NULL, NULL, NULL);
+    irc_config_look_hide_nickserv_pwd = weechat_config_new_option (
+        irc_config_file, ptr_section,
+        "hide_nickserv_pwd", "boolean",
+        N_("hide password displayed by nickserv"),
+        NULL, 0, 0, "on", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_highlight_tags = weechat_config_new_option (
         irc_config_file, ptr_section,
         "highlight_tags", "string",
@@ -1072,8 +997,9 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "smart_filter", "boolean",
         N_("filter join/part/quit messages for a nick if not speaking for "
-           "some minutes on channel"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, &irc_config_change_smart_filter, NULL, NULL, NULL);
+           "some minutes on channel (you must create a filter on tag "
+           "\"irc_smart_filter\")"),
+        NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_smart_filter_delay = weechat_config_new_option (
         irc_config_file, ptr_section,
         "smart_filter_delay", "integer",
@@ -1089,7 +1015,8 @@ irc_config_init ()
     ptr_section = weechat_config_new_section (irc_config_file, "network",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL);
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);
@@ -1161,45 +1088,13 @@ irc_config_init ()
         N_("send unknown commands to IRC server"),
         NULL, 0, 0, "off", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     
-    /* log */
-    ptr_section = weechat_config_new_section (irc_config_file, "log",
-                                              0, 0,
-                                              NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL);
-    if (!ptr_section)
-    {
-        weechat_config_free (irc_config_file);
-        return 0;
-    }
-    
-    irc_config_log_auto_log_server = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "auto_log_server", "boolean",
-        N_("automatically log server messages"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, &irc_config_change_log, NULL, NULL, NULL);
-    irc_config_log_auto_log_channel = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "auto_log_channel", "boolean",
-        N_("automatically log channel chats"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, &irc_config_change_log, NULL, NULL, NULL);
-    irc_config_log_auto_log_private = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "auto_log_private", "boolean",
-        N_("automatically log private chats"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, &irc_config_change_log, NULL, NULL, NULL);
-    irc_config_log_hide_nickserv_pwd = weechat_config_new_option (
-        irc_config_file, ptr_section,
-        "hide_nickserv_pwd", "boolean",
-        N_("hide password displayed by nickserv"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, &irc_config_change_log, NULL, NULL, NULL);
-
     /* filters */
     ptr_section = weechat_config_new_section (irc_config_file, "ignore",
                                               0, 0,
                                               &irc_config_ignore_read, NULL,
                                               &irc_config_ignore_write, NULL,
                                               &irc_config_ignore_write, NULL,
-                                              NULL, NULL);
+                                              NULL, NULL, NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);
@@ -1210,7 +1105,8 @@ irc_config_init ()
     ptr_section = weechat_config_new_section (irc_config_file, "server_default",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL);
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);
@@ -1227,7 +1123,8 @@ irc_config_init ()
                                               NULL, NULL,
                                               NULL, NULL,
                                               &irc_config_server_write_default, NULL,
-                                              &irc_config_server_create_option, NULL);
+                                              &irc_config_server_create_option, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (irc_config_file);

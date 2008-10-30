@@ -442,6 +442,47 @@ weechat_ruby_api_mkdir (VALUE class, VALUE directory, VALUE mode)
 }
 
 /*
+ * weechat_ruby_api_mkdir_parents: create a directory and make parent
+ *                                 directories as needed
+ */
+
+static VALUE
+weechat_ruby_api_mkdir_parents (VALUE class, VALUE directory, VALUE mode)
+{
+    char *c_directory;
+    int c_mode;
+    
+    /* make C compiler happy */
+    (void) class;
+    
+    if (!ruby_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir_parents");
+        RUBY_RETURN_ERROR;
+    }
+    
+    c_directory = NULL;
+    c_mode = 0;
+    
+    if (NIL_P (directory) || NIL_P (mode))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir_parents");
+        RUBY_RETURN_ERROR;
+    }
+    
+    Check_Type (directory, T_STRING);
+    Check_Type (mode, T_FIXNUM);
+    
+    c_directory = STR2CSTR (directory);
+    c_mode = FIX2INT (mode);
+    
+    if (weechat_mkdir_parents (c_directory, c_mode))
+        RUBY_RETURN_OK;
+    
+    RUBY_RETURN_ERROR;
+}
+
+/*
  * weechat_ruby_api_list_new: create a new list
  */
 
@@ -1147,6 +1188,54 @@ weechat_ruby_api_config_section_create_option_cb (void *data,
 }
 
 /*
+ * weechat_ruby_api_config_section_delete_option_cb: callback to delete an option
+ */
+
+int
+weechat_ruby_api_config_section_delete_option_cb (void *data,
+                                                  struct t_config_file *config_file,
+                                                  struct t_config_section *section,
+                                                  struct t_config_option *option)
+{
+    struct t_script_callback *script_callback;
+    char *ruby_argv[4];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        ruby_argv[0] = script_ptr2str (config_file);
+        ruby_argv[1] = script_ptr2str (section);
+        ruby_argv[2] = script_ptr2str (option);
+        ruby_argv[3] = NULL;
+        
+        rc = (int *) weechat_ruby_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        ruby_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (ruby_argv[0])
+            free (ruby_argv[0]);
+        if (ruby_argv[1])
+            free (ruby_argv[1]);
+        if (ruby_argv[2])
+            free (ruby_argv[2]);
+        
+        return ret;
+    }
+    
+    return 0;
+}
+
+/*
  * weechat_ruby_api_config_new_section: create a new section in configuration file
  */
 
@@ -1157,10 +1246,12 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
                                      VALUE function_read,
                                      VALUE function_write,
                                      VALUE function_write_default,
-                                     VALUE function_create_option)
+                                     VALUE function_create_option,
+                                     VALUE function_delete_option)
 {
     char *c_config_file, *c_name, *c_function_read, *c_function_write;
     char *c_function_write_default, *c_function_create_option;
+    char *c_function_delete_option;
     char *result;
     int c_user_can_add_options, c_user_can_delete_options;
     VALUE return_value;
@@ -1182,11 +1273,12 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
     c_function_write = NULL;
     c_function_write_default = NULL;
     c_function_create_option = NULL;
+    c_function_delete_option = NULL;
     
     if (NIL_P (config_file) || NIL_P (name) || NIL_P (user_can_add_options)
         || NIL_P (user_can_delete_options) || NIL_P (function_read)
         || NIL_P (function_write) || NIL_P (function_write_default)
-        || NIL_P (function_create_option))
+        || NIL_P (function_create_option) || NIL_P (function_delete_option))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
         RUBY_RETURN_EMPTY;
@@ -1200,6 +1292,7 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
     Check_Type (function_write, T_STRING);
     Check_Type (function_write_default, T_STRING);
     Check_Type (function_create_option, T_STRING);
+    Check_Type (function_delete_option, T_STRING);
     
     c_config_file = STR2CSTR (config_file);
     c_name = STR2CSTR (name);
@@ -1209,6 +1302,7 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
     c_function_write = STR2CSTR (function_write);
     c_function_write_default = STR2CSTR (function_write_default);
     c_function_create_option = STR2CSTR (function_create_option);
+    c_function_delete_option = STR2CSTR (function_delete_option);
     
     result = script_ptr2str (script_api_config_new_section (weechat_ruby_plugin,
                                                             ruby_current_script,
@@ -1223,7 +1317,9 @@ weechat_ruby_api_config_new_section (VALUE class, VALUE config_file,
                                                             &weechat_ruby_api_config_section_write_default_cb,
                                                             c_function_write_default,
                                                             &weechat_ruby_api_config_section_create_option_cb,
-                                                            c_function_create_option));
+                                                            c_function_create_option,
+                                                            &weechat_ruby_api_config_section_delete_option_cb,
+                                                            c_function_delete_option));
     
     RUBY_RETURN_STRING_FREE(result);
 }
@@ -2777,7 +2873,8 @@ weechat_ruby_api_hook_connect (VALUE class, VALUE address, VALUE port,
 
 int
 weechat_ruby_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
-                                time_t date, int tags_count, char **tags,
+                                time_t date,
+                                int tags_count, const char **tags,
                                 const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
@@ -5344,6 +5441,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "ngettext", &weechat_ruby_api_ngettext, 3);
     rb_define_module_function (ruby_mWeechat, "mkdir_home", &weechat_ruby_api_mkdir_home, 2);
     rb_define_module_function (ruby_mWeechat, "mkdir", &weechat_ruby_api_mkdir, 2);
+    rb_define_module_function (ruby_mWeechat, "mkdir_parents", &weechat_ruby_api_mkdir_parents, 2);
     rb_define_module_function (ruby_mWeechat, "list_new", &weechat_ruby_api_list_new, 0);
     rb_define_module_function (ruby_mWeechat, "list_add", &weechat_ruby_api_list_add, 3);
     rb_define_module_function (ruby_mWeechat, "list_search", &weechat_ruby_api_list_search, 2);
@@ -5358,7 +5456,7 @@ weechat_ruby_api_init (VALUE ruby_mWeechat)
     rb_define_module_function (ruby_mWeechat, "list_remove_all", &weechat_ruby_api_list_remove_all, 1);
     rb_define_module_function (ruby_mWeechat, "list_free", &weechat_ruby_api_list_free, 1);
     rb_define_module_function (ruby_mWeechat, "config_new", &weechat_ruby_api_config_new, 2);
-    rb_define_module_function (ruby_mWeechat, "config_new_section", &weechat_ruby_api_config_new_section, 8);
+    rb_define_module_function (ruby_mWeechat, "config_new_section", &weechat_ruby_api_config_new_section, 9);
     rb_define_module_function (ruby_mWeechat, "config_search_section", &weechat_ruby_api_config_search_section, 2);
     rb_define_module_function (ruby_mWeechat, "config_new_option", &weechat_ruby_api_config_new_option, 13);
     rb_define_module_function (ruby_mWeechat, "config_search_option", &weechat_ruby_api_config_search_option, 3);

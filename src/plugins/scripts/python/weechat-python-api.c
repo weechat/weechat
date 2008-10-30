@@ -380,6 +380,41 @@ weechat_python_api_mkdir (PyObject *self, PyObject *args)
 }
 
 /*
+ * weechat_python_api_mkdir_parents: create a directory and make parent
+ *                                   directories as needed
+ */
+
+static PyObject *
+weechat_python_api_mkdir_parents (PyObject *self, PyObject *args)
+{
+    char *directory;
+    int mode;
+    
+    /* make C compiler happy */
+    (void) self;
+    
+    if (!python_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir_parents");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    directory = NULL;
+    mode = 0;
+    
+    if (!PyArg_ParseTuple (args, "si", &directory, &mode))
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir_parents");
+        PYTHON_RETURN_ERROR;
+    }
+    
+    if (weechat_mkdir_parents (directory, mode))
+        PYTHON_RETURN_OK;
+    
+    PYTHON_RETURN_ERROR;
+}
+
+/*
  * weechat_python_api_list_new: create a new list
  */
 
@@ -1024,6 +1059,54 @@ weechat_python_api_config_section_create_option_cb (void *data,
 }
 
 /*
+ * weechat_python_api_config_section_delete_option_cb: callback to delete an option
+ */
+
+int
+weechat_python_api_config_section_delete_option_cb (void *data,
+                                                    struct t_config_file *config_file,
+                                                    struct t_config_section *section,
+                                                    struct t_config_option *option)
+{
+    struct t_script_callback *script_callback;
+    char *python_argv[4];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        python_argv[0] = script_ptr2str (config_file);
+        python_argv[1] = script_ptr2str (section);
+        python_argv[2] = script_ptr2str (option);
+        python_argv[3] = NULL;
+
+        rc = (int *) weechat_python_exec (script_callback->script,
+                                          WEECHAT_SCRIPT_EXEC_INT,
+                                          script_callback->function,
+                                          python_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (python_argv[0])
+            free (python_argv[0]);
+        if (python_argv[1])
+            free (python_argv[1]);
+        if (python_argv[2])
+            free (python_argv[2]);
+        
+        return ret;
+    }
+    
+    return 0;
+}
+
+/*
  * weechat_python_api_config_new_section: create a new section in configuration file
  */
 
@@ -1032,6 +1115,7 @@ weechat_python_api_config_new_section (PyObject *self, PyObject *args)
 {
     char *config_file, *name, *function_read, *function_write;
     char *function_write_default, *function_create_option;
+    char *function_delete_option;
     char *result;
     int user_can_add_options, user_can_delete_options;
     PyObject *object;
@@ -1053,11 +1137,13 @@ weechat_python_api_config_new_section (PyObject *self, PyObject *args)
     function_write = NULL;
     function_write_default = NULL;
     function_create_option = NULL;
+    function_delete_option = NULL;
     
-    if (!PyArg_ParseTuple (args, "ssiissss", &config_file, &name,
+    if (!PyArg_ParseTuple (args, "ssiisssss", &config_file, &name,
                            &user_can_add_options, &user_can_delete_options,
                            &function_read, &function_write,
-                           &function_write_default, &function_create_option))
+                           &function_write_default, &function_create_option,
+                           &function_delete_option))
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
         PYTHON_RETURN_EMPTY;
@@ -1076,7 +1162,9 @@ weechat_python_api_config_new_section (PyObject *self, PyObject *args)
                                                             &weechat_python_api_config_section_write_default_cb,
                                                             function_write_default,
                                                             &weechat_python_api_config_section_create_option_cb,
-                                                            function_create_option));
+                                                            function_create_option,
+                                                            &weechat_python_api_config_section_delete_option_cb,
+                                                            function_delete_option));
     
     PYTHON_RETURN_STRING_FREE(result);
 }
@@ -2404,7 +2492,8 @@ weechat_python_api_hook_connect (PyObject *self, PyObject *args)
 
 int
 weechat_python_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
-                                  time_t date, int tags_count, char **tags,
+                                  time_t date,
+                                  int tags_count, const char **tags,
                                   const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
@@ -4630,6 +4719,7 @@ PyMethodDef weechat_python_funcs[] =
     { "ngettext", &weechat_python_api_ngettext, METH_VARARGS, "" },
     { "mkdir_home", &weechat_python_api_mkdir_home, METH_VARARGS, "" },
     { "mkdir", &weechat_python_api_mkdir, METH_VARARGS, "" },
+    { "mkdir_parents", &weechat_python_api_mkdir_parents, METH_VARARGS, "" },
     { "list_new", &weechat_python_api_list_new, METH_VARARGS, "" },
     { "list_add", &weechat_python_api_list_add, METH_VARARGS, "" },
     { "list_search", &weechat_python_api_list_search, METH_VARARGS, "" },

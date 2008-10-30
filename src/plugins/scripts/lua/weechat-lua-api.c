@@ -443,6 +443,46 @@ weechat_lua_api_mkdir (lua_State *L)
 }
 
 /*
+ * weechat_lua_api_mkdir_parents: create a directory and make parent
+ *                                directories as needed
+ */
+
+static int
+weechat_lua_api_mkdir_parents (lua_State *L)
+{
+    const char *directory;
+    int mode, n;
+    
+    /* make C compiler happy */
+    (void) L;
+     
+    if (!lua_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir_parents");
+        LUA_RETURN_ERROR;
+    }
+    
+    directory = NULL;
+    mode = 0;
+    
+    n = lua_gettop (lua_current_interpreter);
+
+    if (n < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir_parents");
+        LUA_RETURN_ERROR;
+    }
+    
+    directory = lua_tostring (lua_current_interpreter, -2);
+    mode = lua_tonumber (lua_current_interpreter, -1);
+    
+    if (weechat_mkdir_parents (directory, mode))
+        LUA_RETURN_OK;
+    
+    LUA_RETURN_OK;
+}
+
+/*
  * weechat_lua_api_list_new: create a new list
  */
 
@@ -1158,6 +1198,54 @@ weechat_lua_api_config_section_create_option_cb (void *data,
 }
 
 /*
+ * weechat_lua_api_config_section_delete_option_cb: callback to delete an option
+ */
+
+int
+weechat_lua_api_config_section_delete_option_cb (void *data,
+                                                 struct t_config_file *config_file,
+                                                 struct t_config_section *section,
+                                                 struct t_config_option *option)
+{
+    struct t_script_callback *script_callback;
+    char *lua_argv[4];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        lua_argv[0] = script_ptr2str (config_file);
+        lua_argv[1] = script_ptr2str (section);
+        lua_argv[2] = script_ptr2str (option);
+        lua_argv[3] = NULL;
+        
+        rc = (int *) weechat_lua_exec (script_callback->script,
+                                       WEECHAT_SCRIPT_EXEC_INT,
+                                       script_callback->function,
+                                       lua_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (lua_argv[0])
+            free (lua_argv[0]);
+        if (lua_argv[1])
+            free (lua_argv[1]);
+        if (lua_argv[2])
+            free (lua_argv[2]);
+        
+        return ret;
+    }
+    
+    return 0;
+}
+
+/*
  * weechat_lua_api_config_new_section: create a new section in configuration file
  */
 
@@ -1166,6 +1254,7 @@ weechat_lua_api_config_new_section (lua_State *L)
 {
     const char *config_file, *name, *function_read, *function_write;
     const char *function_write_default, *function_create_option;
+    const char *function_delete_option;
     char *result;
     int n, user_can_add_options, user_can_delete_options;
     
@@ -1186,23 +1275,25 @@ weechat_lua_api_config_new_section (lua_State *L)
     function_write = NULL;
     function_write_default = NULL;
     function_create_option = NULL;
+    function_delete_option = NULL;
     
     n = lua_gettop (lua_current_interpreter);
     
-    if (n < 8)
+    if (n < 9)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
         LUA_RETURN_EMPTY;
     }
     
-    config_file = lua_tostring (lua_current_interpreter, -8);
-    name = lua_tostring (lua_current_interpreter, -7);
-    user_can_add_options = lua_tonumber (lua_current_interpreter, -6);
-    user_can_delete_options = lua_tonumber (lua_current_interpreter, -5);
-    function_read = lua_tostring (lua_current_interpreter, -4);
-    function_write = lua_tostring (lua_current_interpreter, -3);
-    function_write_default = lua_tostring (lua_current_interpreter, -2);
-    function_create_option = lua_tostring (lua_current_interpreter, -1);
+    config_file = lua_tostring (lua_current_interpreter, -9);
+    name = lua_tostring (lua_current_interpreter, -8);
+    user_can_add_options = lua_tonumber (lua_current_interpreter, -7);
+    user_can_delete_options = lua_tonumber (lua_current_interpreter, -6);
+    function_read = lua_tostring (lua_current_interpreter, -5);
+    function_write = lua_tostring (lua_current_interpreter, -4);
+    function_write_default = lua_tostring (lua_current_interpreter, -3);
+    function_create_option = lua_tostring (lua_current_interpreter, -2);
+    function_delete_option = lua_tostring (lua_current_interpreter, -1);
     
     result = script_ptr2str (script_api_config_new_section (weechat_lua_plugin,
                                                             lua_current_script,
@@ -1217,7 +1308,9 @@ weechat_lua_api_config_new_section (lua_State *L)
                                                             &weechat_lua_api_config_section_write_default_cb,
                                                             function_write_default,
                                                             &weechat_lua_api_config_section_create_option_cb,
-                                                            function_create_option));
+                                                            function_create_option,
+                                                            &weechat_lua_api_config_section_delete_option_cb,
+                                                            function_delete_option));
     
     LUA_RETURN_STRING_FREE(result);
 }
@@ -2722,7 +2815,8 @@ weechat_lua_api_hook_connect (lua_State *L)
 
 int
 weechat_lua_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
-                               time_t date, int tags_count, char **tags,
+                               time_t date,
+                               int tags_count, const char **tags,
                                const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
@@ -5603,6 +5697,7 @@ const struct luaL_reg weechat_lua_api_funcs[] = {
     { "ngettext", &weechat_lua_api_ngettext },
     { "mkdir_home", &weechat_lua_api_mkdir_home },
     { "mkdir", &weechat_lua_api_mkdir },
+    { "mkdir_parents", &weechat_lua_api_mkdir_parents },
     { "list_new", &weechat_lua_api_list_new },
     { "list_add", &weechat_lua_api_list_add },
     { "list_search", &weechat_lua_api_list_search },

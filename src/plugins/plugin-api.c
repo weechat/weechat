@@ -87,61 +87,6 @@ plugin_api_ngettext (const char *single, const char *plural, int count)
 }
 
 /*
- * plugin_api_mkdir_home: create a directory in WeeChat home
- *                        return 1 if ok, 0 if error
- */
-
-int
-plugin_api_mkdir_home (const char *directory, int mode)
-{
-    char *dir_name;
-    int dir_length;
-    
-    if (!directory)
-        return 0;
-    
-    /* build directory, adding WeeChat home */
-    dir_length = strlen (weechat_home) + strlen (directory) + 2;
-    dir_name = malloc (dir_length);
-    if (!dir_name)
-        return 0;
-    
-    snprintf (dir_name, dir_length, "%s/%s", weechat_home, directory);
-    
-    if (mkdir (dir_name, mode) < 0)
-    {
-        if (errno != EEXIST)
-        {
-            free (dir_name);
-            return 0;
-        }
-    }
-    
-    free (dir_name);
-    return 1;
-}
-
-/*
- * plugin_api_mkdir: create a directory
- *                   return 1 if ok, 0 if error
- */
-
-int
-plugin_api_mkdir (const char *directory, int mode)
-{
-    if (!directory)
-        return 0;
-    
-    if (mkdir (directory, mode) < 0)
-    {
-        if (errno != EEXIST)
-            return 0;
-    }
-    
-    return 1;
-}
-
-/*
  * plugin_api_config_get: get value of an option
  */
 

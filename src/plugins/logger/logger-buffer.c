@@ -66,20 +66,29 @@ logger_buffer_valid (struct t_logger_buffer *logger_buffer)
  */
 
 struct t_logger_buffer *
-logger_buffer_add (struct t_gui_buffer *buffer, const char *log_filename)
+logger_buffer_add (struct t_gui_buffer *buffer, int log_level)
 {
     struct t_logger_buffer *new_logger_buffer;
     
-    if (!buffer || !log_filename)
+    if (!buffer)
         return NULL;
+    
+    if (logger_debug)
+    {
+        weechat_printf (NULL,
+                        "%s: start logging for buffer \"%s\"",
+                        LOGGER_PLUGIN_NAME,
+                        weechat_buffer_get_string (buffer, "name"));
+    }
     
     new_logger_buffer = malloc (sizeof (*new_logger_buffer));
     if (new_logger_buffer)
     {
         new_logger_buffer->buffer = buffer;
-        new_logger_buffer->log_filename = strdup (log_filename);
+        new_logger_buffer->log_filename = NULL;
         new_logger_buffer->log_file = NULL;
         new_logger_buffer->log_enabled = 1;
+        new_logger_buffer->log_level = log_level;
         
         new_logger_buffer->prev_buffer = last_logger_buffer;
         new_logger_buffer->next_buffer = NULL;
@@ -94,11 +103,11 @@ logger_buffer_add (struct t_gui_buffer *buffer, const char *log_filename)
 }
 
 /*
- * logger_buffer_search: search a logger buffer by buffer pointer
+ * logger_buffer_search_buffer: search a logger buffer by buffer pointer
  */
 
 struct t_logger_buffer *
-logger_buffer_search (struct t_gui_buffer *buffer)
+logger_buffer_search_buffer (struct t_gui_buffer *buffer)
 {
     struct t_logger_buffer *ptr_logger_buffer;
     
@@ -114,6 +123,32 @@ logger_buffer_search (struct t_gui_buffer *buffer)
 }
 
 /*
+ * logger_buffer_search_log_filename: search a logger buffer by log filename
+ */
+
+struct t_logger_buffer *
+logger_buffer_search_log_filename (const char *log_filename)
+{
+    struct t_logger_buffer *ptr_logger_buffer;
+    
+    if (!log_filename)
+        return NULL;
+    
+    for (ptr_logger_buffer = logger_buffers; ptr_logger_buffer;
+         ptr_logger_buffer = ptr_logger_buffer->next_buffer)
+    {
+        if (ptr_logger_buffer->log_filename)
+        {
+            if (strcmp (ptr_logger_buffer->log_filename, log_filename) == 0)
+                return ptr_logger_buffer;
+        }
+    }
+    
+    /* logger buffer not found */
+    return NULL;
+}
+
+/*
  * logger_buffer_free: remove a logger buffer from list
  */
 
@@ -121,6 +156,14 @@ void
 logger_buffer_free (struct t_logger_buffer *logger_buffer)
 {
     struct t_logger_buffer *new_logger_buffers;
+    
+    if (logger_debug)
+    {
+        weechat_printf (NULL,
+                        "%s: stop logging for buffer \"%s\"",
+                        LOGGER_PLUGIN_NAME,
+                        weechat_buffer_get_string (logger_buffer->buffer, "name"));
+    }
     
     /* remove logger buffer */
     if (last_logger_buffer == logger_buffer)
@@ -181,6 +224,8 @@ logger_buffer_add_to_infolist (struct t_infolist *infolist,
     if (!weechat_infolist_new_var_pointer (ptr_item, "log_file", logger_buffer->log_file))
         return 0;
     if (!weechat_infolist_new_var_integer (ptr_item, "log_enabled", logger_buffer->log_enabled))
+        return 0;
+    if (!weechat_infolist_new_var_integer (ptr_item, "log_level", logger_buffer->log_level))
         return 0;
     
     return 1;

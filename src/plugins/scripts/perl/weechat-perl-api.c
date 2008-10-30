@@ -367,6 +367,37 @@ static XS (XS_weechat_api_mkdir)
 }
 
 /*
+ * weechat::mkdir_parents: create a directory and make parent directories as
+ *                         needed
+ */
+
+static XS (XS_weechat_api_mkdir_parents)
+{
+    dXSARGS;
+    
+    /* make C compiler happy */
+    (void) cv;
+    
+    if (!perl_current_script)
+    {
+        WEECHAT_SCRIPT_MSG_NOT_INITIALIZED("mkdir_parents");
+        PERL_RETURN_ERROR;
+    }
+    
+    if (items < 2)
+    {
+        WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("mkdir_parents");
+        PERL_RETURN_ERROR;
+    }
+    
+    if (weechat_mkdir_parents (SvPV (ST (0), PL_na), /* directory */
+                               SvIV (ST (1)))) /* mode */
+        PERL_RETURN_OK;
+    
+    PERL_RETURN_ERROR;
+}
+
+/*
  * weechat::list_new: create a new list
  */
 
@@ -977,6 +1008,54 @@ weechat_perl_api_config_section_create_option_cb (void *data,
 }
 
 /*
+ * weechat_perl_api_config_section_delete_option_cb: callback to delete an option
+ */
+
+int
+weechat_perl_api_config_section_delete_option_cb (void *data,
+                                                  struct t_config_file *config_file,
+                                                  struct t_config_section *section,
+                                                  struct t_config_option *option)
+{
+    struct t_script_callback *script_callback;
+    char *perl_argv[4];
+    int *rc, ret;
+    
+    script_callback = (struct t_script_callback *)data;
+    
+    if (script_callback->function && script_callback->function[0])
+    {
+        perl_argv[0] = script_ptr2str (config_file);
+        perl_argv[1] = script_ptr2str (section);
+        perl_argv[2] = script_ptr2str (option);
+        perl_argv[3] = NULL;
+        
+        rc = (int *) weechat_perl_exec (script_callback->script,
+                                        WEECHAT_SCRIPT_EXEC_INT,
+                                        script_callback->function,
+                                        perl_argv);
+        
+        if (!rc)
+            ret = WEECHAT_RC_ERROR;
+        else
+        {
+            ret = *rc;
+            free (rc);
+        }
+        if (perl_argv[0])
+            free (perl_argv[0]);
+        if (perl_argv[1])
+            free (perl_argv[1]);
+        if (perl_argv[2])
+            free (perl_argv[2]);
+        
+        return ret;
+    }
+    
+    return 0;
+}
+
+/*
  * weechat::config_new_section: create a new section in configuration file
  */
 
@@ -984,6 +1063,7 @@ static XS (XS_weechat_api_config_new_section)
 {
     char *result, *cfg_file, *name, *function_read, *function_write;
     char *function_write_default, *function_create_option;
+    char *function_delete_option;
     dXSARGS;
     
     /* make C compiler happy */
@@ -995,7 +1075,7 @@ static XS (XS_weechat_api_config_new_section)
 	PERL_RETURN_EMPTY;
     }
     
-    if (items < 8)
+    if (items < 9)
     {
         WEECHAT_SCRIPT_MSG_WRONG_ARGUMENTS("config_new_section");
         PERL_RETURN_EMPTY;
@@ -1007,6 +1087,7 @@ static XS (XS_weechat_api_config_new_section)
     function_write = SvPV (ST (5), PL_na);
     function_write_default = SvPV (ST (6), PL_na);
     function_create_option = SvPV (ST (7), PL_na);
+    function_delete_option = SvPV (ST (8), PL_na);
     result = script_ptr2str (script_api_config_new_section (weechat_perl_plugin,
                                                             perl_current_script,
                                                             script_str2ptr (cfg_file),
@@ -1020,7 +1101,9 @@ static XS (XS_weechat_api_config_new_section)
                                                             &weechat_perl_api_config_section_write_default_cb,
                                                             function_write_default,
                                                             &weechat_perl_api_config_section_create_option_cb,
-                                                            function_create_option));
+                                                            function_create_option,
+                                                            &weechat_perl_api_config_section_delete_option_cb,
+                                                            function_delete_option));
     
     PERL_RETURN_STRING_FREE(result);
 }
@@ -2256,7 +2339,8 @@ static XS (XS_weechat_api_hook_connect)
 
 int
 weechat_perl_api_hook_print_cb (void *data, struct t_gui_buffer *buffer,
-                                time_t date, int tags_count, char **tags,
+                                time_t date,
+                                int tags_count, const char **tags,
                                 const char *prefix, const char *message)
 {
     struct t_script_callback *script_callback;
@@ -4359,6 +4443,7 @@ weechat_perl_api_init (pTHX)
     newXS ("weechat::ngettext", XS_weechat_api_ngettext, "weechat");
     newXS ("weechat::mkdir_home", XS_weechat_api_mkdir_home, "weechat");
     newXS ("weechat::mkdir", XS_weechat_api_mkdir, "weechat");
+    newXS ("weechat::mkdir_parents", XS_weechat_api_mkdir_parents, "weechat");
     newXS ("weechat::list_new", XS_weechat_api_list_new, "weechat");
     newXS ("weechat::list_add", XS_weechat_api_list_add, "weechat");
     newXS ("weechat::list_search", XS_weechat_api_list_search, "weechat");

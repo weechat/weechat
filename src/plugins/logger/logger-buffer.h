@@ -28,6 +28,7 @@ struct t_logger_buffer
     char *log_filename;                   /* log filename                   */
     FILE *log_file;                       /* log file                       */
     int log_enabled;                      /* log enabled ?                  */
+    int log_level;                        /* log level (0..9)               */
     struct t_logger_buffer *prev_buffer;  /* link to previous buffer        */
     struct t_logger_buffer *next_buffer;  /* link to next buffer            */
 };
@@ -37,8 +38,9 @@ extern struct t_logger_buffer *last_logger_buffer;
 
 extern int logger_buffer_valid (struct t_logger_buffer *logger_buffer);
 extern struct t_logger_buffer *logger_buffer_add (struct t_gui_buffer *,
-                                                  const char *log_filename);
-extern struct t_logger_buffer *logger_buffer_search (struct t_gui_buffer *buffer);
+                                                  int log_level);
+extern struct t_logger_buffer *logger_buffer_search_buffer (struct t_gui_buffer *buffer);
+extern struct t_logger_buffer *logger_buffer_search_log_filename (const char *log_filename);
 extern void logger_buffer_free (struct t_logger_buffer *logger_buffer);
 extern void logger_buffer_free_all ();
 extern int logger_buffer_add_to_infolist (struct t_infolist *infolist,

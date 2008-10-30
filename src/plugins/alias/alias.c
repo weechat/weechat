@@ -677,7 +677,8 @@ alias_config_init ()
                                               NULL, NULL,
                                               NULL, NULL,
                                               &alias_config_write_default, NULL,
-                                              &alias_config_create_option, NULL);
+                                              &alias_config_create_option, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (alias_config_file);

@@ -2111,6 +2111,10 @@ irc_server_create_buffer (struct t_irc_server *server, int all_servers)
     if (!server->buffer)
         return NULL;
     
+    weechat_buffer_set (server->buffer, "short_name", server->name);
+    weechat_buffer_set (server->buffer, "localvar_set_server", server->name);
+    weechat_buffer_set (server->buffer, "localvar_set_channel", server->name);
+    
     weechat_hook_signal_send ("logger_backlog",
                               WEECHAT_HOOK_SIGNAL_POINTER, server->buffer);
     
@@ -2191,9 +2195,6 @@ irc_server_connect (struct t_irc_server *server, int disable_autojoin)
             if (!irc_buffer_servers)
                 irc_buffer_servers = server->buffer;
         }
-        
-        weechat_buffer_set (server->buffer, "short_name", server->name);
-        weechat_buffer_set (server->buffer, "localvar_set_server", server->name);
         
         weechat_buffer_set (server->buffer, "display", "1");
         

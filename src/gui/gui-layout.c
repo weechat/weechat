@@ -419,7 +419,7 @@ gui_layout_window_check_buffer (struct t_gui_buffer *buffer)
             if ((strcmp (ptr_win->layout_plugin_name, plugin_name) == 0)
                 && (strcmp (ptr_win->layout_buffer_name, buffer->name) == 0))
             {
-                gui_window_switch_to_buffer (ptr_win, buffer);
+                gui_window_switch_to_buffer (ptr_win, buffer, 0);
             }
         }
     }
@@ -450,7 +450,7 @@ gui_layout_window_check_all_buffers ()
                 if ((strcmp (ptr_win->layout_plugin_name, plugin_name) == 0)
                     && (strcmp (ptr_win->layout_buffer_name, ptr_buffer->name) == 0))
                 {
-                    gui_window_switch_to_buffer (ptr_win, ptr_buffer);
+                    gui_window_switch_to_buffer (ptr_win, ptr_buffer, 0);
                     break;
                 }
             }

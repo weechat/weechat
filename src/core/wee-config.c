@@ -825,7 +825,7 @@ config_weechat_init ()
     ptr_section = config_file_new_section (weechat_config_file, "startup",
                                            0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
-                                           NULL, NULL);
+                                           NULL, NULL, NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
@@ -862,7 +862,7 @@ config_weechat_init ()
     ptr_section = config_file_new_section (weechat_config_file, "look",
                                            0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
-                                           NULL, NULL);
+                                           NULL, NULL, NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
@@ -1074,7 +1074,7 @@ config_weechat_init ()
     ptr_section = config_file_new_section (weechat_config_file, "color",
                                            0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
-                                           NULL, NULL);
+                                           NULL, NULL, NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
@@ -1502,7 +1502,7 @@ config_weechat_init ()
     ptr_section = config_file_new_section (weechat_config_file, "completion",
                                            0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
-                                           NULL, NULL);
+                                           NULL, NULL, NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
@@ -1557,7 +1557,7 @@ config_weechat_init ()
     ptr_section = config_file_new_section (weechat_config_file, "history",
                                            0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
-                                           NULL, NULL);
+                                           NULL, NULL, NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
@@ -1587,7 +1587,7 @@ config_weechat_init ()
     ptr_section = config_file_new_section (weechat_config_file, "proxy",
                                            0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
-                                           NULL, NULL);
+                                           NULL, NULL, NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
@@ -1634,7 +1634,7 @@ config_weechat_init ()
     ptr_section = config_file_new_section (weechat_config_file, "plugin",
                                            0, 0,
                                            NULL, NULL, NULL, NULL, NULL, NULL,
-                                           NULL, NULL);
+                                           NULL, NULL, NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
@@ -1683,8 +1683,7 @@ config_weechat_init ()
     ptr_section = config_file_new_section (weechat_config_file, "bar",
                                            0, 0,
                                            &config_weechat_bar_read, NULL,
-                                           NULL, NULL,
-                                           NULL, NULL,
+                                           NULL, NULL, NULL, NULL, NULL, NULL,
                                            NULL, NULL);
     if (!ptr_section)
     {
@@ -1699,8 +1698,7 @@ config_weechat_init ()
                                            0, 0,
                                            &config_weechat_layout_read, NULL,
                                            &config_weechat_layout_write, NULL,
-                                           NULL, NULL,
-                                           NULL, NULL);
+                                           NULL, NULL, NULL, NULL, NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
@@ -1713,7 +1711,7 @@ config_weechat_init ()
                                            &config_weechat_filter_read, NULL,
                                            &config_weechat_filter_write, NULL,
                                            &config_weechat_filter_write, NULL,
-                                           NULL, NULL);
+                                           NULL, NULL, NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);
@@ -1726,7 +1724,7 @@ config_weechat_init ()
                                            &config_weechat_key_read, NULL,
                                            &config_weechat_key_write, NULL,
                                            &config_weechat_key_write, NULL,
-                                           NULL, NULL);
+                                           NULL, NULL, NULL, NULL);
     if (!ptr_section)
     {
         config_file_free (weechat_config_file);

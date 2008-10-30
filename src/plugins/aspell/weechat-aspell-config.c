@@ -111,15 +111,51 @@ weechat_aspell_config_change_default_dict (void *data,
 }
 
 /*
- * weechat_aspell_config_create_option: set a dictionary for a buffer
+ * weechat_aspell_config_dict_change: called when a dictionary is changed
+ */
+
+void
+weechat_aspell_config_dict_change (void *data,
+                                   struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    weechat_aspell_create_spellers (weechat_current_buffer);
+}
+
+/*
+ * weechat_aspell_config_dict_delete_option: delete option in "dict" section
  */
 
 int
-weechat_aspell_config_create_option (void *data,
-                                     struct t_config_file *config_file,
-                                     struct t_config_section *section,
-                                     const char *option_name,
-                                     const char *value)
+weechat_aspell_config_dict_delete_option (void *data,
+                                          struct t_config_file *config_file,
+                                          struct t_config_section *section,
+                                          struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) config_file;
+    (void) section;
+    
+    weechat_config_option_free (option);
+    weechat_aspell_create_spellers (weechat_current_buffer);
+    
+    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+}
+
+/*
+ * weechat_aspell_config_dict_create_option: create option in "dict" section
+ */
+
+int
+weechat_aspell_config_dict_create_option (void *data,
+                                          struct t_config_file *config_file,
+                                          struct t_config_section *section,
+                                          const char *option_name,
+                                          const char *value)
 {
     struct t_config_option *ptr_option;
     int rc;
@@ -154,7 +190,9 @@ weechat_aspell_config_create_option (void *data,
                     config_file, section,
                     option_name, "string",
                     _("comma separated list of dictionaries to use on this buffer"),
-                    NULL, 0, 0, "", value, NULL, NULL, NULL, NULL, NULL, NULL);
+                    NULL, 0, 0, "", value, NULL, NULL,
+                    &weechat_aspell_config_dict_change, NULL,
+                    NULL, NULL);
                 rc = (ptr_option) ?
                     WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
             }
@@ -195,11 +233,11 @@ weechat_aspell_config_get_dict (const char *name)
 int
 weechat_aspell_config_set_dict (const char *name, const char *value)
 {
-    return weechat_aspell_config_create_option (NULL,
-                                                weechat_aspell_config_file,
-                                                weechat_aspell_config_section_dict,
-                                                name,
-                                                value);
+    return weechat_aspell_config_dict_create_option (NULL,
+                                                     weechat_aspell_config_file,
+                                                     weechat_aspell_config_section_dict,
+                                                     name,
+                                                     value);
 }
 
 /*
@@ -221,7 +259,8 @@ weechat_aspell_config_init ()
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "look",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL);
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (weechat_aspell_config_file);
@@ -238,7 +277,8 @@ weechat_aspell_config_init ()
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "check",
                                               0, 0,
                                               NULL, NULL, NULL, NULL,
-                                              NULL, NULL, NULL, NULL);
+                                              NULL, NULL, NULL, NULL,
+                                              NULL, NULL);
     if (!ptr_section)
     {
         weechat_config_free (weechat_aspell_config_file);
@@ -269,12 +309,14 @@ weechat_aspell_config_init ()
            "words)"),
         NULL, 0, INT_MAX, "2", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     
+    /* dict */
     ptr_section = weechat_config_new_section (weechat_aspell_config_file, "dict",
                                               1, 1,
                                               NULL, NULL,
                                               NULL, NULL,
                                               NULL, NULL,
-                                              &weechat_aspell_config_create_option, NULL);
+                                              &weechat_aspell_config_dict_create_option, NULL,
+                                              &weechat_aspell_config_dict_delete_option, NULL);
     if (!ptr_section)
     {
         weechat_config_free (weechat_aspell_config_file);

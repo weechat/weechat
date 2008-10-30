@@ -201,7 +201,7 @@ irc_display_server (struct t_irc_server *server, int with_detail)
             string = NULL;
         if (string)
         {
-            if (weechat_config_boolean (irc_config_log_hide_nickserv_pwd))
+            if (weechat_config_boolean (irc_config_look_hide_nickserv_pwd))
                 irc_display_hide_password (string, 1);
             weechat_printf (NULL, "  command . . . . . . : %s",
                             string);
