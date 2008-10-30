@@ -39,9 +39,9 @@ Version 0.2.7 (under dev!):
      fails), nicks are now set with one option "nicks" (task #6088)
    * fix bug when switching window, scrollback is now preserved (task #7680)
    * add group support in nicklist
-   * new logger plugin with new features: backlog, level for messages to log,
-     level by buffer (task #8592), filename mask by buffer, option
-     "name_lower_case" (bug #19522)
+   * new logger plugin with new features: backlog, level for messages to log
+     (task #8592), level by buffer (task #6687), filename mask by buffer,
+     option "name_lower_case" (bug #19522)
    * improve main loop: higher timout in select(), less CPU usage
    * add /reload command to reload WeeChat and plugins config files
      (signal SIGHUP is catched to reload config files)
