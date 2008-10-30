@@ -987,7 +987,7 @@ irc_config_init ()
         N_("comma separated list of tags for messages that may produce "
            "highlight (usually any message from another user, not server "
            "messages,..)"),
-        NULL, 0, 0, "irc_privmsg,irc_notice", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "irc_cmd_privmsg,irc_cmd_notice", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
     irc_config_look_show_away_once = weechat_config_new_option (
         irc_config_file, ptr_section,
         "show_away_once", "boolean",
