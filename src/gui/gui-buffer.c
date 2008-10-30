@@ -1137,27 +1137,24 @@ gui_buffer_clear (struct t_gui_buffer *buffer)
     if (!buffer)
         return;
     
-    if (buffer->type == GUI_BUFFER_TYPE_FORMATED)
+    /* remove buffer from hotlist */
+    gui_hotlist_remove_buffer (buffer);
+    
+    /* remove all lines */
+    gui_chat_line_free_all (buffer);
+    
+    /* remove any scroll for buffer */
+    for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
     {
-        /* remove buffer from hotlist */
-        gui_hotlist_remove_buffer (buffer);
-        
-        /* remove all lines */
-        gui_chat_line_free_all (buffer);
-        
-        /* remove any scroll for buffer */
-        for (ptr_win = gui_windows; ptr_win; ptr_win = ptr_win->next_window)
+        if (ptr_win->buffer == buffer)
         {
-            if (ptr_win->buffer == buffer)
-            {
-                ptr_win->first_line_displayed = 1;
-                ptr_win->start_line = NULL;
-                ptr_win->start_line_pos = 0;
-            }
+            ptr_win->first_line_displayed = 1;
+            ptr_win->start_line = NULL;
+            ptr_win->start_line_pos = 0;
         }
-        
-        gui_buffer_ask_chat_refresh (buffer, 2);
     }
+    
+    gui_buffer_ask_chat_refresh (buffer, 2);
 }
 
 /*
@@ -1172,7 +1169,8 @@ gui_buffer_clear_all ()
     for (ptr_buffer = gui_buffers; ptr_buffer;
          ptr_buffer = ptr_buffer->next_buffer)
     {
-        gui_buffer_clear (ptr_buffer);
+        if (ptr_buffer->type == GUI_BUFFER_TYPE_FORMATED)
+            gui_buffer_clear (ptr_buffer);
     }
 }
 
