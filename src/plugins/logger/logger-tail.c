@@ -30,7 +30,6 @@
 #include <fcntl.h>
 #include <string.h>
 
-#include "../weechat-plugin.h"
 #include "logger.h"
 #include "logger-tail.h"
 
@@ -123,38 +122,41 @@ logger_tail_file (const char *filename, int n_lines)
                     pos_eol[0] = '\0';
                     pos_eol++;
                 }
-                new_line = malloc (sizeof (*new_line));
-                if (!new_line)
+                if (part_of_line || pos_eol[0])
                 {
-                    logger_tail_free (ptr_line);
-                    ptr_line = NULL;
-                    break;
-                }
-                if (part_of_line)
-                {
-                    new_line->data = malloc ((strlen (pos_eol) +
-                                              strlen (part_of_line) + 1));
-                    if (!new_line->data)
+                    new_line = malloc (sizeof (*new_line));
+                    if (!new_line)
                     {
-                        free (part_of_line);
                         logger_tail_free (ptr_line);
-                        close (fd);
-                        return NULL;
+                        ptr_line = NULL;
+                        break;
                     }
-                    strcpy (new_line->data, pos_eol);
-                    strcat (new_line->data, part_of_line);
-                    free (part_of_line);
-                    part_of_line = NULL;
+                    if (part_of_line)
+                    {
+                        new_line->data = malloc ((strlen (pos_eol) +
+                                                  strlen (part_of_line) + 1));
+                        if (!new_line->data)
+                        {
+                            free (part_of_line);
+                            logger_tail_free (ptr_line);
+                            close (fd);
+                            return NULL;
+                        }
+                        strcpy (new_line->data, pos_eol);
+                        strcat (new_line->data, part_of_line);
+                        free (part_of_line);
+                        part_of_line = NULL;
+                    }
+                    else
+                    {
+                        new_line->data = strdup (pos_eol);
+                    }
+                    new_line->next_line = ptr_line;
+                    ptr_line = new_line;
+                    n_lines--;
+                    if (n_lines <= 0)
+                        break;
                 }
-                else
-                {
-                    new_line->data = strdup (pos_eol);
-                }
-                new_line->next_line = ptr_line;
-                ptr_line = new_line;
-                n_lines--;
-                if (n_lines <= 0)
-                    break;
             }
             else if (!pos_eol)
             {
