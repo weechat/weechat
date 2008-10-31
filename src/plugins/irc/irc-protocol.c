@@ -151,14 +151,14 @@ irc_protocol_tags (const char *command, const char *tags)
     if (command && command[0] && tags && tags[0])
     {
         snprintf (string, sizeof (string),
-                  "irc_cmd_%s,%s%s", command, tags, str_log_level);
+                  "irc_%s,%s%s", command, tags, str_log_level);
         return string;
     }
     
     if (command && command[0])
     {
         snprintf (string, sizeof (string),
-                  "irc_cmd_%s%s", command, str_log_level);
+                  "irc_%s%s", command, str_log_level);
         return string;
     }
     
