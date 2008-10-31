@@ -285,7 +285,7 @@ irc_protocol_cmd_invite (struct t_irc_server *server, const char *command,
     if (!irc_ignore_check (server, NULL, nick, host))
     {
         weechat_printf_tags (server->buffer,
-                             irc_protocol_tags (command, "otify_highlight"),
+                             irc_protocol_tags (command, "notify_highlight"),
                              _("%sYou have been invited to %s%s%s by "
                                "%s%s"),
                              irc_buffer_get_server_prefix (server, "network"),
