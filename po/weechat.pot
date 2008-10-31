@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-30 17:11+0100\n"
+"POT-Creation-Date: 2008-10-31 13:01+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -202,6 +202,13 @@ msgstr ""
 msgid "%sPlugin \"%s\" not found"
 msgstr ""
 
+#, c-format
+msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
+msgstr ""
+
+msgid "(disabled)"
+msgstr ""
+
 msgid "Message filtering enabled"
 msgstr ""
 
@@ -209,13 +216,6 @@ msgid "Message filtering disabled"
 msgstr ""
 
 msgid "Message filters:"
-msgstr ""
-
-#, c-format
-msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
-msgstr ""
-
-msgid "(disabled)"
 msgstr ""
 
 msgid "No message filter defined"
@@ -242,7 +242,7 @@ msgid "%sError: you must specify at least tag(s) or regex for filter"
 msgstr ""
 
 #, c-format
-msgid "Filter \"%s\" added"
+msgid "Filter \"%s\" added:"
 msgstr ""
 
 #, c-format
@@ -2054,11 +2054,11 @@ msgid "%s%s: server \"%s\" not found"
 msgstr ""
 
 #, c-format
-msgid "%s: ignore list:"
+msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
 msgstr ""
 
 #, c-format
-msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
+msgid "%s: ignore list:"
 msgstr ""
 
 #, c-format
@@ -2074,7 +2074,7 @@ msgid "%s%s: ignore already exists"
 msgstr ""
 
 #, c-format
-msgid "%s: ignore added"
+msgid "%s: ignore added:"
 msgstr ""
 
 #, c-format
@@ -2310,7 +2310,7 @@ msgstr ""
 msgid "ignore nicks/hosts from servers or channels"
 msgstr ""
 
-msgid "[list] | [add nick/host [server [channel]]] | [del number|-all]"
+msgid "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
 msgstr ""
 
 msgid ""
@@ -2319,7 +2319,8 @@ msgid ""
 "      del: del a ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
 "     -all: delete all ignore\n"
-"nick/host: nick or host to ignore (regular expression allowed)\n"
+"nick/host: nick or host to ignore: syntax is \"re:regex\" or \"mask\" (a "
+"mask is a string with some \"*\" to replace one or more chars)\n"
 "   server: internal server name where ignore is working\n"
 "  channel: channel name where ignore is working\n"
 "\n"

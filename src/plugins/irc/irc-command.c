@@ -1303,6 +1303,27 @@ irc_command_halfop (void *data, struct t_gui_buffer *buffer, int argc,
 }
 
 /*
+ * irc_command_ignore_display: display a ignore
+ */
+
+void
+irc_command_ignore_display (struct t_irc_ignore *ignore)
+{
+    weechat_printf (NULL,
+                    _("  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"),
+                    IRC_COLOR_CHAT_DELIMITERS,
+                    IRC_COLOR_CHAT,
+                    ignore->number,
+                    IRC_COLOR_CHAT_DELIMITERS,
+                    IRC_COLOR_CHAT,
+                    ignore->mask,
+                    (ignore->server) ?
+                    ignore->server : "*",
+                    (ignore->channel) ?
+                    ignore->channel : "*");
+}
+
+/*
  * irc_command_ignore: add or remove ignore
  */
 
@@ -1310,9 +1331,8 @@ int
 irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
                     char **argv, char **argv_eol)
 {
-    int i;
     struct t_irc_ignore *ptr_ignore;
-    char *mask, *server, *channel, *error;
+    char *mask, *regex, *ptr_regex, *server, *channel, *error;
     long number;
     
     /* make C compiler happy */
@@ -1328,23 +1348,10 @@ irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
         {
             weechat_printf (NULL, "");
             weechat_printf (NULL, _("%s: ignore list:"), IRC_PLUGIN_NAME);
-            i = 0;
             for (ptr_ignore = irc_ignore_list; ptr_ignore;
                  ptr_ignore = ptr_ignore->next_ignore)
             {
-                i++;
-                weechat_printf (NULL,
-                                _("  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"),
-                                IRC_COLOR_CHAT_DELIMITERS,
-                                IRC_COLOR_CHAT,
-                                i,
-                                IRC_COLOR_CHAT_DELIMITERS,
-                                IRC_COLOR_CHAT,
-                                ptr_ignore->mask,
-                                (ptr_ignore->server) ?
-                                ptr_ignore->server : "*",
-                                (ptr_ignore->channel) ?
-                                ptr_ignore->channel : "*");
+                irc_command_ignore_display (ptr_ignore);
             }
         }
         else
@@ -1370,7 +1377,18 @@ irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
         server = (argc > 3) ? argv[3] : NULL;
         channel = (argc > 4) ? argv[4] : NULL;
         
-        if (irc_ignore_search (mask, server, channel))
+        if (strncmp (mask, "re:", 3) == 0)
+        {
+            regex = NULL;
+            ptr_regex = mask + 3;
+        }
+        else
+        {
+            regex = weechat_string_mask_to_regex (mask);
+            ptr_regex = (regex) ? regex : mask;
+        }
+        
+        if (irc_ignore_search (ptr_regex, server, channel))
         {
             weechat_printf (NULL,
                             _("%s%s: ignore already exists"),
@@ -1378,9 +1396,16 @@ irc_command_ignore (void *data, struct t_gui_buffer *buffer, int argc,
             return WEECHAT_RC_ERROR;
         }
         
-        if (irc_ignore_new (mask, server, channel))
+        ptr_ignore = irc_ignore_new (ptr_regex, server, channel);
+        
+        if (regex)
+            free (regex);
+        
+        if (ptr_ignore)
         {
-            weechat_printf (NULL, _("%s: ignore added"), IRC_PLUGIN_NAME);
+            weechat_printf (NULL, "");
+            weechat_printf (NULL, _("%s: ignore added:"), IRC_PLUGIN_NAME);
+            irc_command_ignore_display (ptr_ignore);
         }
         else
         {
@@ -3845,7 +3870,7 @@ irc_command_init ()
                           NULL, &irc_command_halfop, NULL);
     weechat_hook_command ("ignore",
                           N_("ignore nicks/hosts from servers or channels"),
-                          N_("[list] | [add nick/host [server [channel]]] | "
+                          N_("[list] | [add [re:]nick/host [server [channel]]] | "
                              "[del number|-all]"),
                           N_("     list: list all ignore\n"
                              "      add: add a ignore\n"
@@ -3853,8 +3878,9 @@ irc_command_init ()
                              "   number: number of ignore to delete (look at "
                              "list to find it)\n"
                              "     -all: delete all ignore\n"
-                             "nick/host: nick or host to ignore (regular "
-                             "expression allowed)\n"
+                             "nick/host: nick or host to ignore: syntax is "
+                             "\"re:regex\" or \"mask\" (a mask is a string with "
+                             "some \"*\" to replace one or more chars)\n"
                              "   server: internal server name where ignore "
                              "is working\n"
                              "  channel: channel name where ignore is "

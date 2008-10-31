@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-30 17:11+0100\n"
+"POT-Creation-Date: 2008-10-31 13:01+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Pavel Shevchuk <stlwrt@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -228,6 +228,14 @@ msgstr ""
 msgid "%sPlugin \"%s\" not found"
 msgstr "%s адрес \"%s\" не найден\n"
 
+#, fuzzy, c-format
+msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
+msgstr "       (нет обработчика сообщений)\n"
+
+#, fuzzy
+msgid "(disabled)"
+msgstr "команда users отключена"
+
 #, fuzzy
 msgid "Message filtering enabled"
 msgstr "Сокращения не заданы.\n"
@@ -238,14 +246,6 @@ msgstr "Сокращения не заданы.\n"
 
 msgid "Message filters:"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
-msgstr "       (нет обработчика сообщений)\n"
-
-#, fuzzy
-msgid "(disabled)"
-msgstr "команда users отключена"
 
 #, fuzzy
 msgid "No message filter defined"
@@ -272,7 +272,7 @@ msgid "%sError: you must specify at least tag(s) or regex for filter"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Filter \"%s\" added"
+msgid "Filter \"%s\" added:"
 msgstr "команда users отключена"
 
 #, fuzzy, c-format
@@ -2406,12 +2406,12 @@ msgid "%s%s: server \"%s\" not found"
 msgstr "%s сервер \"%s\" не найден\n"
 
 #, fuzzy, c-format
-msgid "%s: ignore list:"
-msgstr "конец списка /who"
-
-#, fuzzy, c-format
 msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
 msgstr "       (нет обработчика сообщений)\n"
+
+#, fuzzy, c-format
+msgid "%s: ignore list:"
+msgstr "конец списка /who"
 
 #, fuzzy, c-format
 msgid "%s: no ignore in list"
@@ -2426,7 +2426,7 @@ msgid "%s%s: ignore already exists"
 msgstr "%s игнорирование уже существует\n"
 
 #, fuzzy, c-format
-msgid "%s: ignore added"
+msgid "%s: ignore added:"
 msgstr "Игнорирования не заданы.\n"
 
 #, fuzzy, c-format
@@ -2701,7 +2701,7 @@ msgstr "даёт статус полу-оператора канала поль�
 msgid "ignore nicks/hosts from servers or channels"
 msgstr ""
 
-msgid "[list] | [add nick/host [server [channel]]] | [del number|-all]"
+msgid "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
 msgstr ""
 
 msgid ""
@@ -2710,7 +2710,8 @@ msgid ""
 "      del: del a ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
 "     -all: delete all ignore\n"
-"nick/host: nick or host to ignore (regular expression allowed)\n"
+"nick/host: nick or host to ignore: syntax is \"re:regex\" or \"mask\" (a "
+"mask is a string with some \"*\" to replace one or more chars)\n"
 "   server: internal server name where ignore is working\n"
 "  channel: channel name where ignore is working\n"
 "\n"

@@ -27,6 +27,7 @@ struct t_irc_channel;
 
 struct t_irc_ignore
 {
+    int number;                        /* ignore number                     */
     char *mask;                        /* nick / host mask                  */
     regex_t *regex_mask;               /* regex for mask                    */
     char *server;                      /* server name                       */

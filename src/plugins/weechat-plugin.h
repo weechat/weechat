@@ -146,6 +146,7 @@ struct t_weechat_plugin
                            const char *chars);
     int (*string_has_highlight) (const char *string,
                                  const char *highlight_words);
+    char *(*string_mask_to_regex) (const char *mask);
     char **(*string_explode) (const char *string, const char *separators,
                               int keep_eol, int num_items_max, int *num_items);
     void (*string_free_exploded) (char **exploded_string);
@@ -616,6 +617,8 @@ extern int weechat_plugin_end (struct t_weechat_plugin *plugin);
     weechat_plugin->string_strip(__string, __left, __right, __chars)
 #define weechat_string_has_highlight(__string, __highlight_words)       \
     weechat_plugin->string_has_highlight(__string, __highlight_words)
+#define weechat_string_mask_to_regex(__mask)                            \
+    weechat_plugin->string_mask_to_regex(__mask)
 #define weechat_string_explode(__string, __separator, __eol, __max,     \
                                __num_items)                             \
     weechat_plugin->string_explode(__string, __separator, __eol,        \

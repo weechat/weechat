@@ -96,15 +96,12 @@ struct t_irc_ignore *
 irc_ignore_search_by_number (int number)
 {
     struct t_irc_ignore *ptr_ignore;
-    int i;
     
-    i = 1;
     for (ptr_ignore = irc_ignore_list; ptr_ignore;
          ptr_ignore = ptr_ignore->next_ignore)
     {
-        if (i == number)
+        if (ptr_ignore->number == number)
             return ptr_ignore;
-        i++;
     }
     
     /* ignore not found */
@@ -137,6 +134,7 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
     new_ignore = malloc (sizeof (*new_ignore));
     if (new_ignore)
     {
+        new_ignore->number = (last_irc_ignore) ? last_irc_ignore->number + 1 : 1;
         new_ignore->mask = strdup (mask);
         new_ignore->regex_mask = regex;
         new_ignore->server = (server) ? strdup (server) : strdup ("*");
@@ -212,8 +210,17 @@ irc_ignore_check (struct t_irc_server *server, struct t_irc_channel *channel,
 void
 irc_ignore_free (struct t_irc_ignore *ignore)
 {
+    struct t_irc_ignore *ptr_ignore;
+    
     weechat_hook_signal_send ("irc_ignore_removing",
                               WEECHAT_HOOK_SIGNAL_POINTER, ignore);
+    
+    /* decrement number for all ignore after this one */
+    for (ptr_ignore = ignore->next_ignore; ptr_ignore;
+         ptr_ignore = ptr_ignore->next_ignore)
+    {
+        ptr_ignore->number--;
+    }
     
     /* free data */
     if (ignore->mask)

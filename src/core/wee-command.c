@@ -771,6 +771,30 @@ command_command (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * command_filter_display: display one filter
+ */
+
+void
+command_filter_display (struct t_gui_filter *filter)
+{
+    gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
+                               _("  %s[%s%s%s]%s buffer: %s%s%s "
+                                 "/ tags: %s / regex: %s %s"),
+                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                               GUI_COLOR(GUI_COLOR_CHAT),
+                               filter->name,
+                               GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
+                               GUI_COLOR(GUI_COLOR_CHAT),
+                               GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
+                               filter->buffer,
+                               GUI_COLOR(GUI_COLOR_CHAT),
+                               filter->tags,
+                               filter->regex,
+                               (filter->enabled) ?
+                               "" : _("(disabled)"));
+}
+
+/*
  * command_filter: manage message filters
  */
 
@@ -787,7 +811,7 @@ command_filter (void *data, struct t_gui_buffer *buffer,
     if ((argc == 1)
         || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
     {
-        /* display all key bindings */
+        /* display all filters */
         gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER, "");
         gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
                                    "%s",
@@ -802,21 +826,7 @@ command_filter (void *data, struct t_gui_buffer *buffer,
             for (ptr_filter = gui_filters; ptr_filter;
                  ptr_filter = ptr_filter->next_filter)
             {
-                gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                           _("  %s[%s%s%s]%s buffer: %s%s%s "
-                                             "/ tags: %s / regex: %s %s"),
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                           GUI_COLOR(GUI_COLOR_CHAT),
-                                           ptr_filter->name,
-                                           GUI_COLOR(GUI_COLOR_CHAT_DELIMITERS),
-                                           GUI_COLOR(GUI_COLOR_CHAT),
-                                           GUI_COLOR(GUI_COLOR_CHAT_BUFFER),
-                                           ptr_filter->buffer,
-                                           GUI_COLOR(GUI_COLOR_CHAT),
-                                           ptr_filter->tags,
-                                           ptr_filter->regex,
-                                           (ptr_filter->enabled) ?
-                                           "" : _("(disabled)"));
+                command_filter_display (ptr_filter);
             }
         }
         else
@@ -968,11 +978,15 @@ command_filter (void *data, struct t_gui_buffer *buffer,
             return WEECHAT_RC_ERROR;
         }
         
-        if (gui_filter_new (1, argv[2], argv[3], argv[4], argv_eol[5]))
+        ptr_filter = gui_filter_new (1, argv[2], argv[3], argv[4], argv_eol[5]);
+        
+        if (ptr_filter)
         {
+            gui_chat_printf (NULL, "");
             gui_chat_printf_date_tags (NULL, 0, GUI_FILTER_TAG_NO_FILTER,
-                                       _("Filter \"%s\" added"),
+                                       _("Filter \"%s\" added:"),
                                        argv[2]);
+            command_filter_display (ptr_filter);
         }
         else
         {

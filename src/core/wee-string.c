@@ -716,6 +716,56 @@ string_has_highlight (const char *string, const char *highlight_words)
 }
 
 /*
+ * string_mask_to_regex: convert a mask (string with only "*" as joker) to a
+ *                       regex, paying attention to special chars in a regex
+ */
+
+char *
+string_mask_to_regex (const char *mask)
+{
+    char *result;
+    const char *ptr_mask;
+    int index_result;
+    char *regex_special_char = ".[]{}()|?+";
+    
+    if (!mask)
+        return NULL;
+    
+    result = malloc ((strlen (mask) * 2) + 1);
+    if (!result)
+        return NULL;
+    
+    result[0] = '\0';
+    index_result = 0;
+    ptr_mask = mask;
+    while (ptr_mask[0])
+    {
+        /* '*' in string ? then replace by '.*' */
+        if (ptr_mask[0] == '*')
+        {
+            result[index_result++] = '.';
+            result[index_result++] = '*';
+        }
+        /* special regex char in string ? escape it with '\' */
+        else if (strchr (regex_special_char, ptr_mask[0]))
+        {
+            result[index_result++] = '\\';
+            result[index_result++] = ptr_mask[0];
+        }
+        /* standard char, just copy it */
+        else
+            result[index_result++] = ptr_mask[0];
+        
+        ptr_mask++;
+    }
+    
+    /* add final '\0' */
+    result[index_result] = '\0';
+    
+    return result;
+}
+
+/*
  * string_explode: explode a string according to separators
  *                 examples:
  *                   string_explode ("abc de  fghi", " ", 0, 0, NULL)

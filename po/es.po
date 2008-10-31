@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-30 17:11+0100\n"
+"POT-Creation-Date: 2008-10-31 13:01+0100\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -227,6 +227,14 @@ msgstr ""
 msgid "%sPlugin \"%s\" not found"
 msgstr "%s direcciÃ³n \"%s\" no encontrada\n"
 
+#, fuzzy, c-format
+msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
+msgstr "       (sin manejador de mensaje)\n"
+
+#, fuzzy
+msgid "(disabled)"
+msgstr "los usuarios han sido desactivados"
+
 #, fuzzy
 msgid "Message filtering enabled"
 msgstr "NingÃºn alias definido.\n"
@@ -237,14 +245,6 @@ msgstr "NingÃºn alias definido.\n"
 
 msgid "Message filters:"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
-msgstr "       (sin manejador de mensaje)\n"
-
-#, fuzzy
-msgid "(disabled)"
-msgstr "los usuarios han sido desactivados"
 
 #, fuzzy
 msgid "No message filter defined"
@@ -271,7 +271,7 @@ msgid "%sError: you must specify at least tag(s) or regex for filter"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Filter \"%s\" added"
+msgid "Filter \"%s\" added:"
 msgstr "los usuarios han sido desactivados"
 
 #, fuzzy, c-format
@@ -2372,12 +2372,12 @@ msgid "%s%s: server \"%s\" not found"
 msgstr "%s servidor \"%s\" no encontrado\n"
 
 #, fuzzy, c-format
-msgid "%s: ignore list:"
-msgstr "fin de la lista /who"
-
-#, fuzzy, c-format
 msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
 msgstr "       (sin manejador de mensaje)\n"
+
+#, fuzzy, c-format
+msgid "%s: ignore list:"
+msgstr "fin de la lista /who"
 
 #, fuzzy, c-format
 msgid "%s: no ignore in list"
@@ -2392,7 +2392,7 @@ msgid "%s%s: ignore already exists"
 msgstr "el ignore %s ya existe\n"
 
 #, fuzzy, c-format
-msgid "%s: ignore added"
+msgid "%s: ignore added:"
 msgstr "Sin ignores definidos.\n"
 
 #, fuzzy, c-format
@@ -2667,7 +2667,7 @@ msgstr "dar el estado de operador de medio canal a/a los usuario(s)"
 msgid "ignore nicks/hosts from servers or channels"
 msgstr ""
 
-msgid "[list] | [add nick/host [server [channel]]] | [del number|-all]"
+msgid "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
 msgstr ""
 
 msgid ""
@@ -2676,7 +2676,8 @@ msgid ""
 "      del: del a ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
 "     -all: delete all ignore\n"
-"nick/host: nick or host to ignore (regular expression allowed)\n"
+"nick/host: nick or host to ignore: syntax is \"re:regex\" or \"mask\" (a "
+"mask is a string with some \"*\" to replace one or more chars)\n"
 "   server: internal server name where ignore is working\n"
 "  channel: channel name where ignore is working\n"
 "\n"

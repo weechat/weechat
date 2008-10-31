@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-30 17:11+0100\n"
-"PO-Revision-Date: 2008-10-30 16:52+0100\n"
+"POT-Creation-Date: 2008-10-31 13:01+0100\n"
+"PO-Revision-Date: 2008-10-31 12:59+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -221,6 +221,13 @@ msgstr "Pas de variable locale définie pour le tampon \"%s\""
 msgid "%sPlugin \"%s\" not found"
 msgstr "%sExtension \"%s\" non trouvée"
 
+#, c-format
+msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
+msgstr "  %s[%s%s%s]%s tampon: %s%s%s / tags: %s / regex: %s %s"
+
+msgid "(disabled)"
+msgstr "(désactivé)"
+
 msgid "Message filtering enabled"
 msgstr "Filtrage de messages activé"
 
@@ -229,13 +236,6 @@ msgstr "Filtrage de message désactivé"
 
 msgid "Message filters:"
 msgstr "Filtres de messages:"
-
-#, c-format
-msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
-msgstr "  %s[%s%s%s]%s tampon: %s%s%s / tags: %s / regex: %s %s"
-
-msgid "(disabled)"
-msgstr "(désactivé)"
 
 msgid "No message filter defined"
 msgstr "Pas de filtre de message défini"
@@ -263,8 +263,8 @@ msgstr ""
 "expression régulière pour filtrer"
 
 #, c-format
-msgid "Filter \"%s\" added"
-msgstr "Filtre \"%s\" ajouté"
+msgid "Filter \"%s\" added:"
+msgstr "Filtre \"%s\" ajouté :"
 
 #, c-format
 msgid "%sError adding filter"
@@ -2416,12 +2416,12 @@ msgid "%s%s: server \"%s\" not found"
 msgstr "%s%s: serveur \"%s\" non trouvé"
 
 #, c-format
-msgid "%s: ignore list:"
-msgstr "%s: liste ignore:"
-
-#, c-format
 msgid "  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"
 msgstr "  %s[%s%d%s]%s masque: %s / serveur: %s / canal: %s"
+
+#, c-format
+msgid "%s: ignore list:"
+msgstr "%s: liste ignore:"
 
 #, c-format
 msgid "%s: no ignore in list"
@@ -2436,8 +2436,8 @@ msgid "%s%s: ignore already exists"
 msgstr "%s%s: le ignore existe déjà"
 
 #, c-format
-msgid "%s: ignore added"
-msgstr "%s: ignore ajouté"
+msgid "%s: ignore added:"
+msgstr "%s: ignore ajouté :"
 
 #, c-format
 msgid "%s%s: error adding ignore"
@@ -2704,8 +2704,8 @@ msgstr "donner le statut de demi-opérateur à un/des pseudo(s)"
 msgid "ignore nicks/hosts from servers or channels"
 msgstr "ignore des pseudos/hôtes de serveurs ou canaux"
 
-msgid "[list] | [add nick/host [server [channel]]] | [del number|-all]"
-msgstr "[list] | [add pseudo/hote [server [channel]]] | [del numéro|-all]"
+msgid "[list] | [add [re:]nick/host [server [channel]]] | [del number|-all]"
+msgstr "[list] | [add [re:]pseudo/hote [server [channel]]] | [del numéro|-all]"
 
 msgid ""
 "     list: list all ignore\n"
@@ -2713,7 +2713,8 @@ msgid ""
 "      del: del a ignore\n"
 "   number: number of ignore to delete (look at list to find it)\n"
 "     -all: delete all ignore\n"
-"nick/host: nick or host to ignore (regular expression allowed)\n"
+"nick/host: nick or host to ignore: syntax is \"re:regex\" or \"mask\" (a "
+"mask is a string with some \"*\" to replace one or more chars)\n"
 "   server: internal server name where ignore is working\n"
 "  channel: channel name where ignore is working\n"
 "\n"
@@ -2731,8 +2732,9 @@ msgstr ""
 "     numéro: numéro du ignore à supprimer (voir la liste des ignore pour le "
 "trouver)\n"
 "       -all: supprime tous les ignore\n"
-"pseudo/hôte: pseudo ou hôte à ignorer (une expression régulière est "
-"autorisée)\n"
+"pseudo/hôte: pseudo ou hôte à ignorer: la syntaxe est \"re:regex\" ou "
+"\"masque\" (un masque est une chaîne avec des \"*\" pour remplacer un ou "
+"plusieurs caractères)\n"
 "    serveur: nom de serveur interne où le ignore fonctionnera\n"
 "      canal: canal où le ignore fonctionnera\n"
 "\n"

@@ -41,6 +41,7 @@ extern char *string_strip (const char *string, int left, int right,
 extern char *string_convert_hex_chars (const char *string);
 extern int string_has_highlight (const char *string,
                                  const char *highlight_words);
+extern char *string_mask_to_regex (const char *mask);
 extern char **string_explode (const char *string, const char *separators,
                               int keep_eol, int num_items_max, int *num_items);
 extern void string_free_exploded (char **exploded_string);
