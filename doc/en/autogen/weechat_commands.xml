@@ -86,7 +86,7 @@ launch explicit WeeChat or plugin command
  plugin: plugin name ('weechat' for WeeChat internal command)
 command: command to execute (a '/' is automatically added if not found at beginning of command)
 </programlisting>
-<command>filter  [list] | [enable|disable|toggle] | [add buffer tags regex] | [del number|-all]</command>
+<command>filter  [list] | [enable|disable|toggle [name]] | [add name buffer tags regex] | [del name|-all]</command>
 <programlisting>
 filter messages in buffers, to hide/show them according to tags or regex
 
@@ -94,23 +94,25 @@ filter messages in buffers, to hide/show them according to tags or regex
  enable: enable filters (filters are enabled by default)
 disable: disable filters
  toggle: toggle filters
+   name: filter name
     add: add a filter
     del: delete a filter
- number: number of filter to delete (look at list to find it)
    -all: delete all filters
  buffer: buffer where filter is active: it may be a name or "*" for all buffers
    tags: comma separated list of tags, for example: "irc_join,irc_part,irc_quit"
   regex: regular expression to search in line (use \t to separate prefix from message)
 
 Examples:
-  filter IRC join/part/quit messages:
-    /filter add * irc_join,irc_part,irc_quit *
+  use IRC smart filter for join/part/quit messages:
+    /filter add irc_smart * irc_smart_filter *
+  filter all IRC join/part/quit messages:
+    /filter add joinquit * irc_join,irc_part,irc_quit *
   filter nick "toto" on channel #weechat:
-    /filter add freenode.#weechat * toto\t
+    /filter add toto freenode.#weechat * toto\t
   filter lines containing word "spam":
-    /filter add * * spam
+    /filter add filterspam * * spam
   filter lines containing "weechat sucks" on channel #weechat:
-    /filter add freenode.#weechat * weechat sucks
+    /filter add sucks freenode.#weechat * weechat sucks
 </programlisting>
 <command>help  [command | option]</command>
 <programlisting>

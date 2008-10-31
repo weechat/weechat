@@ -38,6 +38,22 @@
   </listitem>
 </itemizedlist>
 
+<command>logger.file.mask</command>
+<itemizedlist>
+  <listitem>
+    <para>description: default file name mask for log files (format is 'directory/to/file' or 'file', without first '/' because 'path' option is used to build complete path to file); local buffer variables are permitted</para>
+  </listitem>
+  <listitem>
+    <para>type: string</para>
+  </listitem>
+  <listitem>
+    <para>values: any string</para>
+  </listitem>
+  <listitem>
+    <para>default value: '$plugin.$name.weechatlog'</para>
+  </listitem>
+</itemizedlist>
+
 <command>logger.file.name_lower_case</command>
 <itemizedlist>
   <listitem>
@@ -86,6 +102,22 @@
   </listitem>
 </itemizedlist>
 
+<command>logger.level.irc</command>
+<itemizedlist>
+  <listitem>
+    <para>description: niveau d'enregistrement log pour ce tampon (0 = pas d'enregistrement, 1 = quelques messages (les plus importants) .. 9 = tous les messages)</para>
+  </listitem>
+  <listitem>
+    <para>type: integer</para>
+  </listitem>
+  <listitem>
+    <para>values: 0 .. 9</para>
+  </listitem>
+  <listitem>
+    <para>default value: 9</para>
+  </listitem>
+</itemizedlist>
+
 <command>logger.look.backlog</command>
 <itemizedlist>
   <listitem>
@@ -99,6 +131,22 @@
   </listitem>
   <listitem>
     <para>default value: 20</para>
+  </listitem>
+</itemizedlist>
+
+<command>logger.mask.irc</command>
+<itemizedlist>
+  <listitem>
+    <para>description: masque de fichier pour le fichier de log; les variables locales du tampon sont permises</para>
+  </listitem>
+  <listitem>
+    <para>type: string</para>
+  </listitem>
+  <listitem>
+    <para>values: any string</para>
+  </listitem>
+  <listitem>
+    <para>default value: ''</para>
   </listitem>
 </itemizedlist>
 

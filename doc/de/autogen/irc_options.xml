@@ -6,70 +6,6 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>irc.log.auto_log_channel</command>
-<itemizedlist>
-  <listitem>
-    <para>description: Automatisches Logging von Channels</para>
-  </listitem>
-  <listitem>
-    <para>type: boolean</para>
-  </listitem>
-  <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: off</para>
-  </listitem>
-</itemizedlist>
-
-<command>irc.log.auto_log_private</command>
-<itemizedlist>
-  <listitem>
-    <para>description: Automatisches Logging von Queries</para>
-  </listitem>
-  <listitem>
-    <para>type: boolean</para>
-  </listitem>
-  <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: off</para>
-  </listitem>
-</itemizedlist>
-
-<command>irc.log.auto_log_server</command>
-<itemizedlist>
-  <listitem>
-    <para>description: Automatisches Logging von Servermessages</para>
-  </listitem>
-  <listitem>
-    <para>type: boolean</para>
-  </listitem>
-  <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: off</para>
-  </listitem>
-</itemizedlist>
-
-<command>irc.log.hide_nickserv_pwd</command>
-<itemizedlist>
-  <listitem>
-    <para>description: Von NickServ angezeigte Passwörter verstecken</para>
-  </listitem>
-  <listitem>
-    <para>type: boolean</para>
-  </listitem>
-  <listitem>
-    <para>values: on, off</para>
-  </listitem>
-  <listitem>
-    <para>default value: on</para>
-  </listitem>
-</itemizedlist>
-
 <command>irc.look.display_away</command>
 <itemizedlist>
   <listitem>
@@ -90,6 +26,22 @@
 <itemizedlist>
   <listitem>
     <para>description: display channel modes in "buffer_name" bar item</para>
+  </listitem>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off</para>
+  </listitem>
+  <listitem>
+    <para>default value: on</para>
+  </listitem>
+</itemizedlist>
+
+<command>irc.look.hide_nickserv_pwd</command>
+<itemizedlist>
+  <listitem>
+    <para>description: Von NickServ angezeigte Passwörter verstecken</para>
   </listitem>
   <listitem>
     <para>type: boolean</para>
@@ -227,6 +179,38 @@
   </listitem>
   <listitem>
     <para>default value: on</para>
+  </listitem>
+</itemizedlist>
+
+<command>irc.look.smart_filter</command>
+<itemizedlist>
+  <listitem>
+    <para>description: filter join/part/quit messages for a nick if not speaking for some minutes on channel (you must create a filter on tag "irc_smart_filter")</para>
+  </listitem>
+  <listitem>
+    <para>type: boolean</para>
+  </listitem>
+  <listitem>
+    <para>values: on, off</para>
+  </listitem>
+  <listitem>
+    <para>default value: off</para>
+  </listitem>
+</itemizedlist>
+
+<command>irc.look.smart_filter_delay</command>
+<itemizedlist>
+  <listitem>
+    <para>description: delay for filtering join/part/quit messages (in minutes)</para>
+  </listitem>
+  <listitem>
+    <para>type: integer</para>
+  </listitem>
+  <listitem>
+    <para>values: 1 .. 10080</para>
+  </listitem>
+  <listitem>
+    <para>default value: 5</para>
   </listitem>
 </itemizedlist>
 

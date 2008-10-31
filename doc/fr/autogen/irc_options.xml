@@ -6,70 +6,6 @@
      docgen.pl builds XML doc files to include in many languages
 -->
 
-<command>irc.log.auto_log_channel</command>
-<itemizedlist>
-  <listitem>
-    <para>description: enregistrer automatiquement les conversations des canaux</para>
-  </listitem>
-  <listitem>
-    <para>type: booléen</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
-  </listitem>
-</itemizedlist>
-
-<command>irc.log.auto_log_private</command>
-<itemizedlist>
-  <listitem>
-    <para>description: enregistrer automatiquement les conversations privées</para>
-  </listitem>
-  <listitem>
-    <para>type: booléen</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
-  </listitem>
-</itemizedlist>
-
-<command>irc.log.auto_log_server</command>
-<itemizedlist>
-  <listitem>
-    <para>description: enregistrer automatiquement les messages du serveur</para>
-  </listitem>
-  <listitem>
-    <para>type: booléen</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: off</para>
-  </listitem>
-</itemizedlist>
-
-<command>irc.log.hide_nickserv_pwd</command>
-<itemizedlist>
-  <listitem>
-    <para>description: masquer le mot de passe affiché par nickserv</para>
-  </listitem>
-  <listitem>
-    <para>type: booléen</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: on, off</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: on</para>
-  </listitem>
-</itemizedlist>
-
 <command>irc.look.display_away</command>
 <itemizedlist>
   <listitem>
@@ -90,6 +26,22 @@
 <itemizedlist>
   <listitem>
     <para>description: affiche les modes du canal dans l'objet de barre "buffer_name"</para>
+  </listitem>
+  <listitem>
+    <para>type: booléen</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: on, off</para>
+  </listitem>
+  <listitem>
+    <para>valeur par défaut: on</para>
+  </listitem>
+</itemizedlist>
+
+<command>irc.look.hide_nickserv_pwd</command>
+<itemizedlist>
+  <listitem>
+    <para>description: masquer le mot de passe affiché par nickserv</para>
   </listitem>
   <listitem>
     <para>type: booléen</para>
@@ -227,6 +179,38 @@
   </listitem>
   <listitem>
     <para>valeur par défaut: on</para>
+  </listitem>
+</itemizedlist>
+
+<command>irc.look.smart_filter</command>
+<itemizedlist>
+  <listitem>
+    <para>description: filtrer les messages join/part/quit pour un pseudo s'il n'a pas parlé pendant quelques minutes sur le canal (vous devez créer un filtre sur le tag "irc_smart_filter")</para>
+  </listitem>
+  <listitem>
+    <para>type: booléen</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: on, off</para>
+  </listitem>
+  <listitem>
+    <para>valeur par défaut: off</para>
+  </listitem>
+</itemizedlist>
+
+<command>irc.look.smart_filter_delay</command>
+<itemizedlist>
+  <listitem>
+    <para>description: délai pour filtrer les messages join/part/quit (en minutes)</para>
+  </listitem>
+  <listitem>
+    <para>type: entier</para>
+  </listitem>
+  <listitem>
+    <para>valeurs: 1 .. 10080</para>
+  </listitem>
+  <listitem>
+    <para>valeur par défaut: 5</para>
   </listitem>
 </itemizedlist>
 

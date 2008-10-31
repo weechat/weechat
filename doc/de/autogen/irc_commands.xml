@@ -100,7 +100,7 @@ servername: Servername, von dem getrennt werden soll
 <programlisting>
 give half channel operator status to nickname(s)
 </programlisting>
-<command>ignore  [list] | [add nick/host [server [channel]]] | [del number|-all]</command>
+<command>ignore  [list] | [add [re:]nick/host [server [channel]]] | [del number|-all]</command>
 <programlisting>
 ignore nicks/hosts from servers or channels
 
@@ -109,7 +109,7 @@ ignore nicks/hosts from servers or channels
       del: del a ignore
    number: number of ignore to delete (look at list to find it)
      -all: delete all ignore
-nick/host: nick or host to ignore (regular expression allowed)
+nick/host: nick or host to ignore: syntax is "re:regex" or "mask" (a mask is a string with some "*" to replace one or more chars)
    server: internal server name where ignore is working
   channel: channel name where ignore is working
 

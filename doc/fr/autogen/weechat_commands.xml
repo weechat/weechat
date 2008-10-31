@@ -84,7 +84,7 @@ lancer explicitement une commande WeeChat ou d'une extension
 extension: nom de l'extension ('weechat' pour une commande interne WeeChat)
  commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
 </programlisting>
-<command>filter  [list] | [enable|disable|toggle] | [add buffer tags regex] | [del numéro|-all]</command>
+<command>filter  [list] | [enable|disable|toggle [nom]] | [add nom buffer tags regex] | [del nom|-all]</command>
 <programlisting>
 filtre les messages dans les tampons, pour les cacher/afficher selon des tags ou expressions régulières
 
@@ -92,23 +92,25 @@ filtre les messages dans les tampons, pour les cacher/afficher selon des tags ou
  enable: active les filtres (par défaut les filtres sont activés)
 disable: désactive les filtres
  toggle: active/désactive les filtres
+    nom: nom de filtre
     add: ajoute un filtre
     del: supprime un filtre
- numéro: numéro du filtre à supprimer (voir la liste des filtres pour le trouver)
    -all: supprime tous les filtres
  buffer: tampon où le filtre est actif: cela peut être un nom ou "*" pour tous les tampons
    tags: liste de tags, séparés par des virgules, par exemple: "irc_join,irc_part,irc_quit"
   regex: expressoin régulière à rechercher dans la ligne (utiliser \t pour séparer le préfixe du message)
 
 Exemples:
-  filtrer les messages IRC join/part/quit:
-    /filter add * irc_join,irc_part,irc_quit *
+  utiliser le filtre intelligent IRC pour les messages join/part/quit:
+    /filter add irc_smart * irc_smart_filter *
+  filtrer tous les messages IRC join/part/quit:
+    /filter add joinquit * irc_join,irc_part,irc_quit *
   filtrer le pseudo "toto" sur le canal #weechat:
-    /filter add freenode.#weechat * toto\t
+    /filter add toto freenode.#weechat * toto\t
   filtrer les lignes contenant le mot "spam":
-    /filter add * * spam
+    /filter add filtrespam * * spam
   filtrer les lignes contenant "weechat sucks" sur le canal #weechat:
-    /filter add freenode.#weechat * weechat sucks
+    /filter add sucks freenode.#weechat * weechat sucks
 </programlisting>
 <command>help  [commande | option]</command>
 <programlisting>

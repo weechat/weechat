@@ -6,6 +6,7 @@
 <!ENTITY debug_commands.xml SYSTEM "autogen/debug_commands.xml">
 <!ENTITY demo_commands.xml SYSTEM "autogen/demo_commands.xml">
 <!ENTITY irc_commands.xml SYSTEM "autogen/irc_commands.xml">
+<!ENTITY logger_commands.xml SYSTEM "autogen/logger_commands.xml">
 <!ENTITY lua_commands.xml SYSTEM "autogen/lua_commands.xml">
 <!ENTITY notify_commands.xml SYSTEM "autogen/notify_commands.xml">
 <!ENTITY perl_commands.xml SYSTEM "autogen/perl_commands.xml">
