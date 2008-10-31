@@ -32,6 +32,7 @@
 #include "irc-buffer.h"
 #include "irc-ignore.h"
 #include "irc-server.h"
+#include "irc-channel.h"
 
 
 char *irc_config_server_option_string[IRC_CONFIG_NUM_SERVER_OPTIONS] =
@@ -135,13 +136,13 @@ irc_config_get_server_from_option_name (const char *name)
 }
 
 /*
- * irc_config_change_one_server_buffer: called when the "one server buffer"
- *                                      option is changed
+ * irc_config_change_look_one_server_buffer: called when the "one server buffer"
+ *                                           option is changed
  */
 
 void
-irc_config_change_one_server_buffer (void *data,
-                                     struct t_config_option *option)
+irc_config_change_look_one_server_buffer (void *data,
+                                          struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
@@ -154,13 +155,14 @@ irc_config_change_one_server_buffer (void *data,
 }
 
 /*
- * irc_config_change_display_channel_modes: called when the "display channel modes"
- *                                          option is changed
+ * irc_config_change_look_display_channel_modes: called when the "display
+ *                                               channel modes" option is
+ *                                               changed
  */
 
 void
-irc_config_change_display_channel_modes (void *data,
-                                         struct t_config_option *option)
+irc_config_change_look_display_channel_modes (void *data,
+                                              struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
@@ -170,12 +172,48 @@ irc_config_change_display_channel_modes (void *data,
 }
 
 /*
- * irc_config_change_away_check: called when away check is changed
+ * irc_config_change_look_highlight_tags: called when the "highlight tags"
+ *                                        option is changed
  */
 
 void
-irc_config_change_away_check (void *data,
-                              struct t_config_option *option)
+irc_config_change_look_highlight_tags (void *data,
+                                       struct t_config_option *option)
+{
+    struct t_irc_server *ptr_server;
+    struct t_irc_channel *ptr_channel;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    for (ptr_server = irc_servers; ptr_server;
+         ptr_server = ptr_server->next_server)
+    {
+        if (ptr_server->buffer)
+        {
+            weechat_buffer_set (ptr_server->buffer, "highlight_tags",
+                                weechat_config_string (irc_config_look_highlight_tags));
+        }
+        for (ptr_channel = ptr_server->channels; ptr_channel;
+             ptr_channel = ptr_channel->next_channel)
+        {
+            if (ptr_channel->buffer)
+            {
+                weechat_buffer_set (ptr_channel->buffer, "highlight_tags",
+                                    weechat_config_string (irc_config_look_highlight_tags));
+            }
+        }
+    }
+}
+
+/*
+ * irc_config_change_network_away_check: called when away check is changed
+ */
+
+void
+irc_config_change_network_away_check (void *data,
+                                      struct t_config_option *option)
 {
     /* make C compiler happy */
     (void) data;
@@ -945,7 +983,8 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "one_server_buffer", "boolean",
         N_("use same buffer for all servers"),
-        NULL, 0, 0, "off", NULL, NULL, NULL, &irc_config_change_one_server_buffer, NULL, NULL, NULL);
+        NULL, 0, 0, "off", NULL, NULL, NULL,
+        &irc_config_change_look_one_server_buffer, NULL, NULL, NULL);
     irc_config_look_open_near_server = weechat_config_new_option (
         irc_config_file, ptr_section,
         "open_near_server", "boolean",
@@ -975,7 +1014,8 @@ irc_config_init ()
         irc_config_file, ptr_section,
         "display_channel_modes", "boolean",
         N_("display channel modes in \"buffer_name\" bar item"),
-        NULL, 0, 0, "on", NULL, NULL, NULL, &irc_config_change_display_channel_modes, NULL, NULL, NULL);
+        NULL, 0, 0, "on", NULL, NULL, NULL,
+        &irc_config_change_look_display_channel_modes, NULL, NULL, NULL);
     irc_config_look_hide_nickserv_pwd = weechat_config_new_option (
         irc_config_file, ptr_section,
         "hide_nickserv_pwd", "boolean",
@@ -987,7 +1027,8 @@ irc_config_init ()
         N_("comma separated list of tags for messages that may produce "
            "highlight (usually any message from another user, not server "
            "messages,..)"),
-        NULL, 0, 0, "irc_privmsg,irc_notice", NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+        NULL, 0, 0, "irc_privmsg,irc_notice", NULL, NULL, NULL,
+        &irc_config_change_look_highlight_tags, NULL, NULL, NULL);
     irc_config_look_show_away_once = weechat_config_new_option (
         irc_config_file, ptr_section,
         "show_away_once", "boolean",
@@ -1040,13 +1081,15 @@ irc_config_init ()
         "away_check", "integer",
         N_("interval between two checks for away (in minutes, 0 = never "
            "check)"),
-        NULL, 0, INT_MAX, "0", NULL, NULL, NULL, &irc_config_change_away_check, NULL, NULL, NULL);
+        NULL, 0, INT_MAX, "0", NULL, NULL, NULL,
+        &irc_config_change_network_away_check, NULL, NULL, NULL);
     irc_config_network_away_check_max_nicks = weechat_config_new_option (
         irc_config_file, ptr_section,
         "away_check_max_nicks", "integer",
         N_("do not check away nicks on channels with high number of nicks "
            "(0 = unlimited)"),
-        NULL, 0, INT_MAX, "0", NULL, NULL, NULL, &irc_config_change_away_check, NULL, NULL, NULL);
+        NULL, 0, INT_MAX, "0", NULL, NULL, NULL,
+        &irc_config_change_network_away_check, NULL, NULL, NULL);
     irc_config_network_lag_check = weechat_config_new_option (
         irc_config_file, ptr_section,
         "lag_check", "integer",
@@ -1148,7 +1191,7 @@ irc_config_read ()
     rc = weechat_config_read (irc_config_file);
     if (rc == WEECHAT_CONFIG_READ_OK)
     {
-        irc_config_change_away_check (NULL, NULL);
+        irc_config_change_network_away_check (NULL, NULL);
     }
     
     return rc;
