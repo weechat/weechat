@@ -283,6 +283,7 @@ upgrade_weechat_read_cb (int object_id,
     char *option_key, *var_name, *option_var;
     struct t_gui_nick_group *ptr_group;
     struct t_gui_buffer *ptr_buffer;
+    struct t_gui_line *new_line;
     struct timeval creation_time;
     void *buf;
     int size, index, length;
@@ -389,13 +390,17 @@ upgrade_weechat_read_cb (int object_id,
                 /* add line to current buffer */
                 if (upgrade_current_buffer)
                 {
-                    gui_chat_line_add (
+                    new_line = gui_chat_line_add (
                         upgrade_current_buffer,
                         infolist_time (infolist, "date"),
                         infolist_time (infolist, "date_printed"),
                         infolist_string (infolist, "tags"),
                         infolist_string (infolist, "prefix"),
                         infolist_string (infolist, "message"));
+                    if (new_line)
+                    {
+                        new_line->highlight = infolist_integer (infolist, "highlight");
+                    }
                 }
                 break;
             case UPGRADE_WEECHAT_TYPE_NICKLIST:

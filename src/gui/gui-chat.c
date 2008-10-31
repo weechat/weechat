@@ -628,7 +628,7 @@ gui_chat_line_has_highlight (struct t_gui_buffer *buffer,
 {
     int rc;
     char *msg_no_color;
-
+    
     /* highlights are disabled on this buffer? (special value "-" means that
        buffer does not want any highlight) */
     if (buffer->highlight_words && (strcmp (buffer->highlight_words, "-") == 0))
@@ -763,7 +763,7 @@ gui_chat_line_get_notify_level (struct t_gui_line *line)
  * gui_chat_line_add: add a new line for a buffer
  */
 
-void
+struct t_gui_line *
 gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
                    time_t date_printed, const char *tags,
                    const char *prefix, const char *message)
@@ -775,7 +775,7 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
     if (!new_line)
     {
         log_printf (_("Not enough memory for new line"));
-        return;
+        return NULL;
     }
     
     /* fill data in new line */
@@ -852,6 +852,8 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
             }
         }
     }
+    
+    return new_line;
 }
 
 /*
