@@ -293,6 +293,7 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
     struct t_gui_filter *ptr_filter;
     struct t_gui_window *ptr_window;
     struct t_gui_hotlist *ptr_hotlist;
+    struct t_weechat_plugin *ptr_plugin;
     
     /* make C compiler happy */
     (void) data;
@@ -492,6 +493,41 @@ plugin_api_infolist_get_internal (void *data, const char *infolist_name,
             return ptr_infolist;
         }
     }
+    else if (string_strcasecmp (infolist_name, "plugin") == 0)
+    {
+        /* invalid plugin pointer ? */
+        if (pointer && (!plugin_valid (pointer)))
+            return NULL;
+        
+        ptr_infolist = infolist_new ();
+        if (ptr_infolist)
+        {
+            if (pointer)
+            {
+                /* build list with only one plugin */
+                if (!plugin_add_to_infolist (ptr_infolist, pointer))
+                {
+                    infolist_free (ptr_infolist);
+                    return NULL;
+                }
+                return ptr_infolist;
+            }
+            else
+            {
+                /* build list with all plugins */
+                for (ptr_plugin = weechat_plugins; ptr_plugin;
+                     ptr_plugin = ptr_plugin->next_plugin)
+                {
+                    if (!plugin_add_to_infolist (ptr_infolist, ptr_plugin))
+                    {
+                        infolist_free (ptr_infolist);
+                        return NULL;
+                    }
+                }
+                return ptr_infolist;
+            }
+        }
+    }
     
     /* infolist not found */
     return NULL;
@@ -677,5 +713,7 @@ plugin_api_init ()
     hook_infolist (NULL, "option", N_("list of options"),
                    &plugin_api_infolist_get_internal, NULL);
     hook_infolist (NULL, "hook", N_("list of hooks"),
+                   &plugin_api_infolist_get_internal, NULL);
+    hook_infolist (NULL, "plugin", N_("list of plugins"),
                    &plugin_api_infolist_get_internal, NULL);
 }

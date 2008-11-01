@@ -63,6 +63,31 @@ char **plugin_argv;                    /* first time loading plugin)        */
 
 
 /*
+ * plugin_valid: check if a plugin pointer exists
+ *               return 1 if plugin exists
+ *                      0 if plugin is not found
+ */
+
+int
+plugin_valid (struct t_weechat_plugin *plugin)
+{
+    struct t_weechat_plugin *ptr_plugin;
+    
+    if (!plugin)
+        return 0;
+    
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        if (ptr_plugin == plugin)
+            return 1;
+    }
+    
+    /* plugin not found */
+    return 0;
+}
+
+/*
  * plugin_search: search a plugin by name
  */
 
@@ -860,6 +885,46 @@ plugin_end ()
     
     /* free all plugin options */
     plugin_config_end ();
+}
+
+/*
+ * plugin_add_to_infolist: add a plugin in an infolist
+ *                         return 1 if ok, 0 if error
+ */
+
+int
+plugin_add_to_infolist (struct t_infolist *infolist,
+                        struct t_weechat_plugin *plugin)
+{
+    struct t_infolist_item *ptr_item;
+    
+    if (!infolist || !plugin)
+        return 0;
+    
+    ptr_item = infolist_new_item (infolist);
+    if (!ptr_item)
+        return 0;
+    
+    if (!infolist_new_var_pointer (ptr_item, "pointer", plugin))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "filename", plugin->filename))
+        return 0;
+    if (!infolist_new_var_pointer (ptr_item, "handle", plugin->handle))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "description", plugin->description))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "author", plugin->author))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "version", plugin->version))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "weechat_version", plugin->weechat_version))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "license", plugin->license))
+        return 0;
+    if (!infolist_new_var_string (ptr_item, "charset", plugin->charset))
+        return 0;
+    
+    return 1;
 }
 
 /*

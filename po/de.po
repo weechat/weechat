@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-31 13:01+0100\n"
+"POT-Creation-Date: 2008-11-01 17:55+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -4217,6 +4217,10 @@ msgstr "Konfigurationsparameter setzen"
 #, fuzzy
 msgid "list of hooks"
 msgstr "Liste der Aliases:\n"
+
+#, fuzzy
+msgid "list of plugins"
+msgstr "Konfigurationsparameter setzen"
 
 #, fuzzy, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"

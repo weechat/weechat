@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-10-31 13:01+0100\n"
-"PO-Revision-Date: 2008-10-31 12:59+0100\n"
+"POT-Creation-Date: 2008-11-01 17:55+0100\n"
+"PO-Revision-Date: 2008-11-01 17:55+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -4321,6 +4321,9 @@ msgstr "liste des options"
 
 msgid "list of hooks"
 msgstr "liste des hooks"
+
+msgid "list of plugins"
+msgstr "liste des extensions"
 
 #, c-format
 msgid "%sError: unable to load plugin \"%s\": %s"

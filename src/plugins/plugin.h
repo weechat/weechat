@@ -31,8 +31,7 @@ typedef int (t_weechat_end_func) (struct t_weechat_plugin *plugin);
 extern struct t_weechat_plugin *weechat_plugins;
 extern struct t_weechat_plugin *last_weechat_plugin;
 
-//extern t_plugin_irc_color plugins_irc_colors[GUI_NUM_IRC_COLORS];
-
+extern int plugin_valid (struct t_weechat_plugin *plugin);
 extern struct t_weechat_plugin *plugin_search (const char *name);
 extern char *plugin_get_name (struct t_weechat_plugin *plugin);
 extern struct t_weechat_plugin *plugin_load (const char *filename);
@@ -44,6 +43,8 @@ extern void plugin_unload_all ();
 extern void plugin_reload_name (const char *name);
 extern void plugin_init (int auto_load, int argc, char *argv[]);
 extern void plugin_end ();
+extern int plugin_add_to_infolist (struct t_infolist *infolist,
+                                   struct t_weechat_plugin *plugin);
 extern void plugin_print_log ();
 
 #endif /* plugin.h */

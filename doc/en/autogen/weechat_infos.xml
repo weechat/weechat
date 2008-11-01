@@ -98,6 +98,11 @@
 </row>
 <row>
   <entry>infolist</entry>
+  <entry>plugin</entry>
+  <entry>list of plugins</entry>
+</row>
+<row>
+  <entry>infolist</entry>
   <entry>window</entry>
   <entry>list of windows</entry>
 </row>
