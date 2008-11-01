@@ -301,8 +301,9 @@ demo_info_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
             while (weechat_infolist_next (infolist))
             {
                 weechat_printf (NULL,
-                                "  %s",
-                                weechat_infolist_string (infolist, "info_name"));
+                                "  %s: %s",
+                                weechat_infolist_string (infolist, "info_name"),
+                                weechat_gettext (weechat_infolist_string (infolist, "description")));
             }
             weechat_infolist_free (infolist);
         }
@@ -345,8 +346,9 @@ demo_infolist_command_cb (void *data, struct t_gui_buffer *buffer, int argc,
             while (weechat_infolist_next (infolist))
             {
                 weechat_printf (NULL,
-                                "  %s",
-                                weechat_infolist_string (infolist, "infolist_name"));
+                                "  %s: %s",
+                                weechat_infolist_string (infolist, "infolist_name"),
+                                weechat_gettext (weechat_infolist_string (infolist, "description")));
             }
             weechat_infolist_free (infolist);
         }
