@@ -522,7 +522,7 @@ hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
     struct t_hook_timer *new_hook_timer;
     time_t time_now;
     struct tm *local_time, *gm_time;
-    int local_hour, gm_hour;
+    int local_hour, gm_hour, diff_hour;
     
     if (interval <= 0)
         return NULL;
@@ -550,6 +550,20 @@ hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
     local_hour = local_time->tm_hour;
     gm_time = gmtime(&time_now);
     gm_hour = gm_time->tm_hour;
+    if ((local_time->tm_year > gm_time->tm_year)
+        || (local_time->tm_mon > gm_time->tm_mon)
+        || (local_time->tm_mday > gm_time->tm_mday))
+    {
+        diff_hour = (24 - gm_hour) + local_hour;
+    }
+    else if ((gm_time->tm_year > local_time->tm_year)
+             || (gm_time->tm_mon > local_time->tm_mon)
+             || (gm_time->tm_mday > local_time->tm_mday))
+    {
+        diff_hour = (-1) * ((24 - local_hour) + gm_hour);
+    }
+    else
+        diff_hour = local_hour - gm_hour;
     
     if ((interval >= 1000) && (align_second > 0))
     {
@@ -559,7 +573,7 @@ hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
         new_hook_timer->last_exec.tv_usec = 1000;
         new_hook_timer->last_exec.tv_sec =
             new_hook_timer->last_exec.tv_sec -
-            ((new_hook_timer->last_exec.tv_sec + ((local_hour - gm_hour) * 3600)) %
+            ((new_hook_timer->last_exec.tv_sec + (diff_hour * 3600)) %
              align_second);
     }
     
