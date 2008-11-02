@@ -3,7 +3,6 @@
 <!ENTITY alias_commands.xml SYSTEM "autogen/alias_commands.xml">
 <!ENTITY aspell_commands.xml SYSTEM "autogen/aspell_commands.xml">
 <!ENTITY charset_commands.xml SYSTEM "autogen/charset_commands.xml">
-<!ENTITY debug_commands.xml SYSTEM "autogen/debug_commands.xml">
 <!ENTITY demo_commands.xml SYSTEM "autogen/demo_commands.xml">
 <!ENTITY irc_commands.xml SYSTEM "autogen/irc_commands.xml">
 <!ENTITY logger_commands.xml SYSTEM "autogen/logger_commands.xml">

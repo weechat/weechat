@@ -84,6 +84,17 @@ lancer explicitement une commande WeeChat ou d'une extension
 extension: nom de l'extension ('weechat' pour une commande interne WeeChat)
  commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est pas trouvé au début de la commande)
 </programlisting>
+<command>debug  [list | extension niveau | dump | buffer windows]</command>
+<programlisting>
+contrôle du debug pour le coeur/les extensions
+
+extension: nom de l'extension ("core" pour le coeur de WeeChat)
+   niveau: niveau de debug pour l'extension
+     dump: affiche les variables mémoire WeeChat dans le fichier log (les mêmes messages sont affichés lorsque WeeChat plante)
+   buffer: affiche le contenu du tampon en valeurs hexadécimales dans le fichier log
+  windows: affiche l'arbre des fenêtres&lt;
+    texte: envoie le signal "debug" avec "texte" comme paramètre
+</programlisting>
 <command>filter  [list] | [enable|disable|toggle [nom]] | [add nom buffer tags regex] | [del nom|-all]</command>
 <programlisting>
 filtre les messages dans les tampons, pour les cacher/afficher selon des tags ou expressions régulières

@@ -1222,6 +1222,22 @@
   </listitem>
 </itemizedlist>
 
+<command>weechat.debug.irc</command>
+<itemizedlist>
+  <listitem>
+    <para>description: niveau de debug pour l'extension ("core" pour le coeur de WeeChat)</para>
+  </listitem>
+  <listitem>
+    <para>type: integer</para>
+  </listitem>
+  <listitem>
+    <para>values: 0 .. 32</para>
+  </listitem>
+  <listitem>
+    <para>default value: 0</para>
+  </listitem>
+</itemizedlist>
+
 <command>weechat.history.display_default</command>
 <itemizedlist>
   <listitem>
