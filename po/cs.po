@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-01 17:55+0100\n"
+"POT-Creation-Date: 2008-11-02 18:48+0100\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -218,6 +218,10 @@ msgstr ""
 #, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%sPlugin \"%s\" nenalezen"
+
+#, fuzzy, c-format
+msgid "Debug disabled for \"%s\""
+msgstr "%s: ladění vypnuto"
 
 #, c-format
 msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
@@ -761,6 +765,28 @@ msgstr ""
 "příkaz: příkaz, který spustit ('/' je automaticky dodáno, pokud není "
 "nalezeno na začátku příkazu)\n"
 
+msgid "control debug for core/plugins"
+msgstr ""
+
+#, fuzzy
+msgid "[list | plugin level | dump | buffer | windows]"
+msgstr "[[save | apply | reset] [buffers | windows]]"
+
+#, fuzzy
+msgid ""
+" plugin: name of plugin (\"core\" for WeeChat core)\n"
+"  level: debug level for plugin (0 = disable debug)\n"
+"   dump: save memory dump in WeeChat log file (same dump is written when "
+"WeeChat crashes)\n"
+" buffer: dump buffer content with hexadecimal values in log file\n"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
+msgstr ""
+"   dump: uloží výpis paměti do WeeChat log souboru (stejný výpis jako když "
+"Weechat havaruje)\n"
+" buffer: vypíše obsah bufferu s hexadecimálními hodnotami do log souboru\n"
+"windows: zobrazit strom oken"
+
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr ""
@@ -1066,6 +1092,9 @@ msgstr ""
 #, c-format
 msgid "\t\tDay changed to %s"
 msgstr "\t\tZměnil se den na %s"
+
+msgid "debug level for plugin (\"core\" for WeeChat core)"
+msgstr ""
 
 msgid "command executed when WeeChat starts, after loading plugins"
 msgstr "příkaz spuštěný při startu WeeChat, po načtení pluginů"
@@ -2019,14 +2048,6 @@ msgid "list of alias"
 msgstr "Seznam pro aliasy:\n"
 
 #, fuzzy, c-format
-msgid "%s: debug enabled"
-msgstr "FIFO roura je otevřena\n"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr "%s: ladění vypnuto"
-
-#, fuzzy, c-format
 msgid "%s: \"%s\" removed"
 msgstr "Alias \"%s\" odebrán\n"
 
@@ -2157,26 +2178,6 @@ msgstr ""
 " encode: změní kódovací znakovou sadu\n"
 "charset: nová znaková sada pro aktuální buffer\n"
 "  reset: resetovat znakové sady aktuálního bufferu"
-
-msgid "print debug messages"
-msgstr "vypsat debug zprávy"
-
-#, fuzzy
-msgid "dump | buffer | windows | text"
-msgstr "dump | buffer | windows"
-
-#, fuzzy
-msgid ""
-"   dump: save memory dump in WeeChat log file (same dump is written when "
-"WeeChat crashes)\n"
-" buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
-msgstr ""
-"   dump: uloží výpis paměti do WeeChat log souboru (stejný výpis jako když "
-"Weechat havaruje)\n"
-" buffer: vypíše obsah bufferu s hexadecimálními hodnotami do log souboru\n"
-"windows: zobrazit strom oken"
 
 msgid "demo message without prefix"
 msgstr "demo zpráva bez prefixu"
@@ -4919,6 +4920,21 @@ msgstr "%s DCC: nemohu nastavit 'neblokovaci' volbu na soket\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s chybí argument pro volbu \"%s\"\n"
+
+#, fuzzy
+#~ msgid "debug: \"%s\" => %d"
+#~ msgstr "Alias \"%s\" odebrán\n"
+
+#, fuzzy
+#~ msgid "%s: debug enabled"
+#~ msgstr "FIFO roura je otevřena\n"
+
+#~ msgid "print debug messages"
+#~ msgstr "vypsat debug zprávy"
+
+#, fuzzy
+#~ msgid "dump | buffer | windows | text"
+#~ msgstr "dump | buffer | windows"
 
 #~ msgid "automatically log server messages"
 #~ msgstr "automati logovat zprávy server"

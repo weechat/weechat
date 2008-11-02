@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-01 17:55+0100\n"
+"POT-Creation-Date: 2008-11-02 18:48+0100\n"
 "PO-Revision-Date: 2007-09-19 12:09+0200\n"
 "Last-Translator: Roberto GonzÃ¡lez Cardenete <robert.glez@gmail.com>\n"
 "Language-Team:  weechat-dev <weechat-dev@nongnu.org>\n"
@@ -226,6 +226,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%s direcciÃ³n \"%s\" no encontrada\n"
+
+#, c-format
+msgid "Debug disabled for \"%s\""
+msgstr ""
 
 #, fuzzy, c-format
 msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
@@ -805,6 +809,26 @@ msgstr ""
 "comando: comando a ejecutar (se aÃ±ade un '/' automÃ¡ticamente si no se "
 "encuentra al principio del comando)\n"
 
+msgid "control debug for core/plugins"
+msgstr ""
+
+msgid "[list | plugin level | dump | buffer | windows]"
+msgstr ""
+
+#, fuzzy
+msgid ""
+" plugin: name of plugin (\"core\" for WeeChat core)\n"
+"  level: debug level for plugin (0 = disable debug)\n"
+"   dump: save memory dump in WeeChat log file (same dump is written when "
+"WeeChat crashes)\n"
+" buffer: dump buffer content with hexadecimal values in log file\n"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
+msgstr ""
+" volcar: guardar el volcado de memoria en el archivo de registro de Weechat "
+"(el mismo volcado se escribe cuando Weechat se cuelga)\n"
+"ventanas: mostrar Ã¡rbol de ventanas"
+
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr ""
@@ -1069,6 +1093,9 @@ msgstr ""
 #, fuzzy, c-format
 msgid "\t\tDay changed to %s"
 msgstr "DÃ­a cambiado a %s\n"
+
+msgid "debug level for plugin (\"core\" for WeeChat core)"
+msgstr ""
 
 msgid "command executed when WeeChat starts, after loading plugins"
 msgstr ""
@@ -2009,14 +2036,6 @@ msgid "list of alias"
 msgstr "Lista de alias:\n"
 
 #, fuzzy, c-format
-msgid "%s: debug enabled"
-msgstr "La tuberÃ­a FIFO estÃ¡ abierta\n"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr ""
-
-#, fuzzy, c-format
 msgid "%s: \"%s\" removed"
 msgstr "Alias \"%s\" eliminado\n"
 
@@ -2145,25 +2164,6 @@ msgid ""
 "charset: new charset for current buffer\n"
 "  reset: reset charsets for current buffer"
 msgstr ""
-
-msgid "print debug messages"
-msgstr "imprime mensajes de depuraciÃ³n"
-
-#, fuzzy
-msgid "dump | buffer | windows | text"
-msgstr "volcar | ventanas"
-
-#, fuzzy
-msgid ""
-"   dump: save memory dump in WeeChat log file (same dump is written when "
-"WeeChat crashes)\n"
-" buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
-msgstr ""
-" volcar: guardar el volcado de memoria en el archivo de registro de Weechat "
-"(el mismo volcado se escribe cuando Weechat se cuelga)\n"
-"ventanas: mostrar Ã¡rbol de ventanas"
 
 msgid "demo message without prefix"
 msgstr ""
@@ -4891,6 +4891,21 @@ msgstr "%s no es posible crear el servidor\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s falta un argumento para la opciÃ³n --dir\n"
+
+#, fuzzy
+#~ msgid "debug: \"%s\" => %d"
+#~ msgstr "Alias \"%s\" eliminado\n"
+
+#, fuzzy
+#~ msgid "%s: debug enabled"
+#~ msgstr "La tuberÃ­a FIFO estÃ¡ abierta\n"
+
+#~ msgid "print debug messages"
+#~ msgstr "imprime mensajes de depuraciÃ³n"
+
+#, fuzzy
+#~ msgid "dump | buffer | windows | text"
+#~ msgstr "volcar | ventanas"
 
 #~ msgid "automatically log server messages"
 #~ msgstr "registrar automÃ¡ticamente los mensajes de servidor"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-01 17:55+0100\n"
+"POT-Creation-Date: 2008-11-02 18:48+0100\n"
 "PO-Revision-Date: 2007-09-06 12:44+0200\n"
 "Last-Translator: Thomas Schuetz <i18n@internet-villa.de>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -230,6 +230,10 @@ msgstr ""
 #, fuzzy, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%s Adresse \"%s\" nicht gefunden\n"
+
+#, c-format
+msgid "Debug disabled for \"%s\""
+msgstr ""
 
 #, fuzzy, c-format
 msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
@@ -809,6 +813,26 @@ msgstr ""
 "Befehl: auszuführender Befehl (falls nicht vorhanden wird automatisch ein "
 "'/' vorangestellt)\n"
 
+msgid "control debug for core/plugins"
+msgstr ""
+
+msgid "[list | plugin level | dump | buffer | windows]"
+msgstr ""
+
+#, fuzzy
+msgid ""
+" plugin: name of plugin (\"core\" for WeeChat core)\n"
+"  level: debug level for plugin (0 = disable debug)\n"
+"   dump: save memory dump in WeeChat log file (same dump is written when "
+"WeeChat crashes)\n"
+" buffer: dump buffer content with hexadecimal values in log file\n"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
+msgstr ""
+"dump: Speicherabbild im WeeChat-Logfile ablegen (wie nach einem "
+"Programmabsturz)\n"
+"windows: zeigt Fensterdaten an"
+
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr ""
@@ -1093,6 +1117,9 @@ msgstr ""
 #, fuzzy, c-format
 msgid "\t\tDay changed to %s"
 msgstr "Ein neuer Tag bricht an, heute ist der %s\n"
+
+msgid "debug level for plugin (\"core\" for WeeChat core)"
+msgstr ""
 
 msgid "command executed when WeeChat starts, after loading plugins"
 msgstr ""
@@ -2035,14 +2062,6 @@ msgid "list of alias"
 msgstr "Liste der Aliases:\n"
 
 #, fuzzy, c-format
-msgid "%s: debug enabled"
-msgstr "FIFO ist offen\n"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr ""
-
-#, fuzzy, c-format
 msgid "%s: \"%s\" removed"
 msgstr "Alias \"%s\" entfernt\n"
 
@@ -2169,25 +2188,6 @@ msgid ""
 "charset: new charset for current buffer\n"
 "  reset: reset charsets for current buffer"
 msgstr ""
-
-msgid "print debug messages"
-msgstr "Debugging-Nachricht ausgeben"
-
-#, fuzzy
-msgid "dump | buffer | windows | text"
-msgstr "dump | windows"
-
-#, fuzzy
-msgid ""
-"   dump: save memory dump in WeeChat log file (same dump is written when "
-"WeeChat crashes)\n"
-" buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
-msgstr ""
-"dump: Speicherabbild im WeeChat-Logfile ablegen (wie nach einem "
-"Programmabsturz)\n"
-"windows: zeigt Fensterdaten an"
 
 msgid "demo message without prefix"
 msgstr ""
@@ -4886,6 +4886,21 @@ msgstr "%s DCC: kann die 'nonblock'-Option für den Socket nicht festlegen\n"
 #, fuzzy, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s fehlende Argumente für die \"--dir\"-Option\n"
+
+#, fuzzy
+#~ msgid "debug: \"%s\" => %d"
+#~ msgstr "Alias \"%s\" entfernt\n"
+
+#, fuzzy
+#~ msgid "%s: debug enabled"
+#~ msgstr "FIFO ist offen\n"
+
+#~ msgid "print debug messages"
+#~ msgstr "Debugging-Nachricht ausgeben"
+
+#, fuzzy
+#~ msgid "dump | buffer | windows | text"
+#~ msgstr "dump | windows"
 
 #~ msgid "automatically log server messages"
 #~ msgstr "Automatisches Logging von Servermessages"

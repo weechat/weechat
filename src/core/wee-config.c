@@ -35,7 +35,6 @@
 
 #include "weechat.h"
 #include "wee-config.h"
-#include "wee-config-file.h"
 #include "wee-hook.h"
 #include "wee-log.h"
 #include "wee-util.h"
@@ -55,6 +54,7 @@
 
 
 struct t_config_file *weechat_config_file = NULL;
+struct t_config_section *weechat_config_section_debug = NULL;
 struct t_config_section *weechat_config_section_bar = NULL;
 
 /* config, startup section */
@@ -485,6 +485,151 @@ config_weechat_reload (void *data, struct t_config_file *config_file)
 }
 
 /*
+ * config_weechat_debug_get: get debug level for a plugin (or "core")
+ */
+
+struct t_config_option *
+config_weechat_debug_get (const char *plugin_name)
+{
+    return config_file_search_option (weechat_config_file,
+                                      weechat_config_section_debug,
+                                      plugin_name);
+}
+
+/*
+ * config_weechat_debug_set_all: set debug for "core" and all plugins, using
+ *                               values from [debug] section
+ */
+
+void
+config_weechat_debug_set_all ()
+{
+    struct t_config_option *ptr_option;
+    struct t_weechat_plugin *ptr_plugin;
+    
+    /* set debug for core */
+    ptr_option = config_weechat_debug_get (PLUGIN_CORE);
+    weechat_debug_core = (ptr_option) ? CONFIG_INTEGER(ptr_option) : 0;
+    
+    /* set debug for plugins */
+    for (ptr_plugin = weechat_plugins; ptr_plugin;
+         ptr_plugin = ptr_plugin->next_plugin)
+    {
+        ptr_option = config_weechat_debug_get (ptr_plugin->name);
+        ptr_plugin->debug = (ptr_option) ? CONFIG_INTEGER(ptr_option) : 0;
+    }
+}
+
+/*
+ * config_weechat_debug_change: called when a debug option is changed
+ */
+
+void
+config_weechat_debug_change (void *data,
+                             struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) option;
+    
+    config_weechat_debug_set_all ();
+}
+
+/*
+ * config_weechat_debug_create_option: create option in "debug" section
+ */
+
+int
+config_weechat_debug_create_option (void *data,
+                                    struct t_config_file *config_file,
+                                    struct t_config_section *section,
+                                    const char *option_name,
+                                    const char *value)
+{
+    struct t_config_option *ptr_option;
+    int rc;
+    
+    /* make C compiler happy */
+    (void) data;
+    
+    rc = WEECHAT_CONFIG_OPTION_SET_ERROR;
+    
+    if (option_name)
+    {
+        ptr_option = config_file_search_option (config_file, section,
+                                                option_name);
+        if (ptr_option)
+        {
+            if (value && value[0])
+                rc = config_file_option_set (ptr_option, value, 1);
+            else
+            {
+                config_file_option_free (ptr_option);
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+            }
+        }
+        else
+        {
+            if (value && value[0])
+            {
+                ptr_option = config_file_new_option (
+                    config_file, section,
+                    option_name, "integer",
+                    _("debug level for plugin (\"core\" for WeeChat core)"),
+                    NULL, 0, 32, "0", value, NULL, NULL,
+                    &config_weechat_debug_change, NULL,
+                    NULL, NULL);
+                rc = (ptr_option) ?
+                    WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE : WEECHAT_CONFIG_OPTION_SET_ERROR;
+            }
+            else
+                rc = WEECHAT_CONFIG_OPTION_SET_OK_SAME_VALUE;
+        }
+    }
+    
+    /* set debug level for "core" and all plugins */
+    config_weechat_debug_set_all ();
+    
+    return rc;
+}
+
+/*
+ * config_weechat_debug_delete_option: delete option in "debug" section
+ */
+
+int
+config_weechat_debug_delete_option (void *data,
+                                    struct t_config_file *config_file,
+                                    struct t_config_section *section,
+                                    struct t_config_option *option)
+{
+    /* make C compiler happy */
+    (void) data;
+    (void) config_file;
+    (void) section;
+    
+    config_file_option_free (option);
+    
+    config_weechat_debug_set_all ();
+    
+    return WEECHAT_CONFIG_OPTION_UNSET_OK_REMOVED;
+}
+
+/*
+ * config_weechat_debug_set: set debug level for a plugin (or "core")
+ */
+
+int
+config_weechat_debug_set (const char *plugin_name, const char *value)
+{
+    return config_weechat_debug_create_option (NULL,
+                                               weechat_config_file,
+                                               weechat_config_section_debug,
+                                               plugin_name,
+                                               value);
+}
+
+/*
  * config_weechat_bar_read: read bar option in config file
  */
 
@@ -820,6 +965,21 @@ config_weechat_init ()
                                            &config_weechat_reload, NULL);
     if (!weechat_config_file)
         return 0;
+    
+    /* debug */
+    ptr_section = config_file_new_section (weechat_config_file, "debug",
+                                           1, 1,
+                                           NULL, NULL, NULL, NULL,
+                                           NULL, NULL,
+                                           &config_weechat_debug_create_option, NULL,
+                                           &config_weechat_debug_delete_option, NULL);
+    if (!ptr_section)
+    {
+        config_file_free (weechat_config_file);
+        return 0;
+    }
+    
+    weechat_config_section_debug = ptr_section;
     
     /* startup */
     ptr_section = config_file_new_section (weechat_config_file, "startup",

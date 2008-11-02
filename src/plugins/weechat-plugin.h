@@ -111,6 +111,7 @@ struct t_weechat_plugin
     char *weechat_version;             /* weechat version required          */
     char *license;                     /* license                           */
     char *charset;                     /* charset used by plugin            */
+    int debug;                         /* debug level for plugin (0=off)    */
     struct t_weechat_plugin *prev_plugin; /* link to previous plugin        */
     struct t_weechat_plugin *next_plugin; /* link to next plugin            */
     

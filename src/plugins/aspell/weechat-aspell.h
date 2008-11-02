@@ -31,8 +31,6 @@ struct t_aspell_code
     char *name;
 };
 
-extern int aspell_debug;
-
 extern struct t_weechat_plugin *weechat_aspell_plugin;
 
 extern struct t_aspell_code langs_avail[];

@@ -53,41 +53,6 @@ struct t_config_section *charset_config_section_encode = NULL;
 char *charset_terminal = NULL;
 char *charset_internal = NULL;
 
-int charset_debug = 0;
-
-
-/*
- * charset_debug_cb: callback for "debug" signal
- */
-
-int
-charset_debug_cb (void *data, const char *signal, const char *type_data,
-                  void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-
-    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
-    {
-        if (weechat_strcasecmp ((char *)signal_data, CHARSET_PLUGIN_NAME) == 0)
-        {
-            charset_debug ^= 1;
-            if (charset_debug)
-            {
-                weechat_printf (NULL, _("%s: debug enabled"),
-                                CHARSET_PLUGIN_NAME);
-            }
-            else
-            {
-                weechat_printf (NULL, _("%s: debug disabled"),
-                                CHARSET_PLUGIN_NAME);
-            }
-        }
-    }
-    
-    return WEECHAT_RC_OK;
-}
 
 /*
  * charset_config_reaload: reload charset configuration file
@@ -349,7 +314,7 @@ charset_decode_cb (void *data, const char *modifier, const char *modifier_data,
     
     charset = charset_get (charset_config_section_decode, modifier_data,
                            charset_default_decode);
-    if (charset_debug)
+    if (weechat_charset_plugin->debug)
     {
         weechat_printf (NULL,
                         "charset: debug: using 'decode' charset: %s "
@@ -378,7 +343,7 @@ charset_encode_cb (void *data, const char *modifier, const char *modifier_data,
     
     charset = charset_get (charset_config_section_encode, modifier_data,
                            charset_default_encode);
-    if (charset_debug)
+    if (weechat_charset_plugin->debug)
     {
         weechat_printf (NULL,
                         "charset: debug: using 'encode' charset: %s "
@@ -525,8 +490,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_plugin = plugin;
     
-    charset_debug = weechat_config_boolean (weechat_config_get ("weechat.plugin.debug"));
-    
     /* get terminal & internal charsets */
     charset_terminal = weechat_info_get ("charset_terminal", "");
     charset_internal = weechat_info_get ("charset_internal", "");
@@ -559,9 +522,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     /* modifiers hooks */
     weechat_hook_modifier ("charset_decode", &charset_decode_cb, NULL);
     weechat_hook_modifier ("charset_encode", &charset_encode_cb, NULL);
-    
-    /* callback for debug */
-    weechat_hook_signal ("debug", &charset_debug_cb, NULL);
     
     return WEECHAT_RC_OK;
 }

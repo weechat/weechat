@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-01 17:55+0100\n"
+"POT-Creation-Date: 2008-11-02 18:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -200,6 +200,10 @@ msgstr ""
 
 #, c-format
 msgid "%sPlugin \"%s\" not found"
+msgstr ""
+
+#, c-format
+msgid "Debug disabled for \"%s\""
 msgstr ""
 
 #, c-format
@@ -706,6 +710,22 @@ msgid ""
 "beginning of command)"
 msgstr ""
 
+msgid "control debug for core/plugins"
+msgstr ""
+
+msgid "[list | plugin level | dump | buffer | windows]"
+msgstr ""
+
+msgid ""
+" plugin: name of plugin (\"core\" for WeeChat core)\n"
+"  level: debug level for plugin (0 = disable debug)\n"
+"   dump: save memory dump in WeeChat log file (same dump is written when "
+"WeeChat crashes)\n"
+" buffer: dump buffer content with hexadecimal values in log file\n"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
+msgstr ""
+
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr ""
@@ -926,6 +946,9 @@ msgstr ""
 
 #, c-format
 msgid "\t\tDay changed to %s"
+msgstr ""
+
+msgid "debug level for plugin (\"core\" for WeeChat core)"
 msgstr ""
 
 msgid "command executed when WeeChat starts, after loading plugins"
@@ -1711,14 +1734,6 @@ msgid "list of alias"
 msgstr ""
 
 #, c-format
-msgid "%s: debug enabled"
-msgstr ""
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr ""
-
-#, c-format
 msgid "%s: \"%s\" removed"
 msgstr ""
 
@@ -1842,20 +1857,6 @@ msgid ""
 " encode: change encoding charset\n"
 "charset: new charset for current buffer\n"
 "  reset: reset charsets for current buffer"
-msgstr ""
-
-msgid "print debug messages"
-msgstr ""
-
-msgid "dump | buffer | windows | text"
-msgstr ""
-
-msgid ""
-"   dump: save memory dump in WeeChat log file (same dump is written when "
-"WeeChat crashes)\n"
-" buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
 msgstr ""
 
 msgid "demo message without prefix"

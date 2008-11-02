@@ -28,7 +28,6 @@
 #include "irc-server.h"
 
 
-int irc_debug = 0;
 struct t_gui_buffer *irc_debug_buffer = NULL;
 
 
@@ -58,7 +57,7 @@ irc_debug_printf (struct t_irc_server *server, int send, int modified,
 {
     char *buf;
     
-    if (!irc_debug || !message)
+    if (!weechat_irc_plugin->debug || !message)
         return;
     
     if (!irc_debug_buffer)
@@ -101,33 +100,6 @@ irc_debug_printf (struct t_irc_server *server, int send, int modified,
 }
 
 /*
- * irc_debug_signal_debug_cb: callback for "debug" signal
- */
-
-int
-irc_debug_signal_debug_cb (void *data, const char *signal,
-                           const char *type_data, void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-
-    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
-    {
-        if (weechat_strcasecmp ((char *)signal_data, IRC_PLUGIN_NAME) == 0)
-        {
-            irc_debug ^= 1;
-            if (irc_debug)
-                weechat_printf (NULL, _("%s: debug enabled"), IRC_PLUGIN_NAME);
-            else
-                weechat_printf (NULL, _("%s: debug disabled"), IRC_PLUGIN_NAME);
-        }
-    }
-    
-    return WEECHAT_RC_OK;
-}
-
-/*
  * irc_debug_signal_debug_dump_cb: dump IRC data in WeeChat log file
  */
 
@@ -161,7 +133,5 @@ irc_debug_signal_debug_dump_cb (void *data, const char *signal,
 void
 irc_debug_init ()
 {
-    irc_debug = weechat_config_boolean (weechat_config_get ("weechat.plugin.debug"));
-    weechat_hook_signal ("debug", &irc_debug_signal_debug_cb, NULL);
     weechat_hook_signal ("debug_dump", &irc_debug_signal_debug_dump_cb, NULL);
 }

@@ -49,8 +49,6 @@ struct t_config_section *notify_config_section_buffer = NULL;
 char *notify_string[NOTIFY_NUM_LEVELS] =
 { "none", "highlight", "message", "all" };
 
-int notify_debug = 0;
-
 
 /*
  * notify_search: search a notify level by name
@@ -92,33 +90,6 @@ notify_build_option_name (struct t_gui_buffer *buffer)
     snprintf (option_name, length, "%s.%s", plugin_name, name);
     
     return option_name;
-}
-
-/*
- * notify_debug_cb: callback for "debug" signal
- */
-
-int
-notify_debug_cb (void *data, const char *signal, const char *type_data,
-                 void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-
-    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
-    {
-        if (weechat_strcasecmp ((char *)signal_data, NOTIFY_PLUGIN_NAME) == 0)
-        {
-            notify_debug ^= 1;
-            if (notify_debug)
-                weechat_printf (NULL, _("%s: debug enabled"), NOTIFY_PLUGIN_NAME);
-            else
-                weechat_printf (NULL, _("%s: debug disabled"), NOTIFY_PLUGIN_NAME);
-        }
-    }
-    
-    return WEECHAT_RC_OK;
 }
 
 /*
@@ -183,7 +154,7 @@ notify_set_buffer (struct t_gui_buffer *buffer)
     if (option_name)
     {
         notify = notify_get (option_name);
-        if (notify_debug)
+        if (weechat_notify_plugin->debug)
         {
             weechat_printf (NULL,
                             _("notify: debug: set notify for buffer %s to "
@@ -479,8 +450,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_plugin = plugin;
     
-    notify_debug = weechat_config_boolean (weechat_config_get ("weechat.plugin.debug"));
-    
     if (!notify_config_init ())
     {
         weechat_printf (NULL,
@@ -510,9 +479,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
 
     /* callback when a config option is changed */
     weechat_hook_config ("notify.buffer.*", &notify_config_cb, NULL);
-    
-    /* callback for debug */
-    weechat_hook_signal ("debug", &notify_debug_cb, NULL);
     
     /* set notify for open buffers */
     notify_set_buffer_all ();

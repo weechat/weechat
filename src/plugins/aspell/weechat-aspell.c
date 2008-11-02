@@ -40,8 +40,6 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_aspell_plugin = NULL;
 
-int aspell_debug = 0;
-
 char *aspell_last_modifier_string = NULL; /* last str. received by modifier */
 char *aspell_last_modifier_result = NULL; /* last str. built by modifier    */
 
@@ -152,39 +150,6 @@ struct t_aspell_code countries_avail[] =
     { NULL, NULL}
 };
 
-
-/*
- * weechat_aspell_debug_cb: callback for "debug" signal
- */
-
-int
-weechat_aspell_debug_cb (void *data, const char *signal, const char *type_data,
-                         void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-    
-    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
-    {
-        if (weechat_strcasecmp ((char *)signal_data, ASPELL_PLUGIN_NAME) == 0)
-        {
-            aspell_debug ^= 1;
-            if (aspell_debug)
-            {
-                weechat_printf (NULL, _("%s: debug enabled"),
-                                ASPELL_PLUGIN_NAME);
-            }
-            else
-            {
-                weechat_printf (NULL, _("%s: debug disabled"),
-                                ASPELL_PLUGIN_NAME);
-            }
-        }
-    }
-    
-    return WEECHAT_RC_OK;
-}
 
 /*
  * weechat_aspell_build_option_name: build option name with a buffer
@@ -980,9 +945,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     if (weechat_aspell_config_read () < 0)
         return WEECHAT_RC_ERROR;
-    
-    /* callback for debug */
-    weechat_hook_signal ("debug", &weechat_aspell_debug_cb, NULL);
     
     /* command /aspell */
     weechat_hook_command ("aspell",

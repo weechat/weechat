@@ -190,6 +190,10 @@ extern struct t_config_option *config_plugin_path;
 extern struct t_config_option *config_plugin_save_config_on_unload;
 
 
+extern struct t_config_option *config_weechat_debug_get (const char *plugin_name);
+extern int config_weechat_debug_set (const char *plugin_name,
+                                     const char *value);
+extern void config_weechat_debug_set_all ();
 extern int config_weechat_init ();
 extern int config_weechat_read ();
 extern int config_weechat_reload ();

@@ -828,7 +828,7 @@ irc_server_new (const char *name, int autoconnect, int autoreconnect,
     if (!name || !addresses)
         return NULL;
     
-    if (irc_debug)
+    if (weechat_irc_plugin->debug)
     {
         weechat_log_printf ("Creating new server (name:%s, addresses:%s, "
                             "pwd:%s, nicks:%s, username:%s, realname:%s, "

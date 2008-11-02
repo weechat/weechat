@@ -70,8 +70,6 @@ struct t_xfer *xfer_list = NULL;       /* list of files/chats               */
 struct t_xfer *last_xfer = NULL;       /* last file/chat in list            */
 int xfer_count = 0;                    /* number of xfer                    */
 
-int xfer_debug = 0;
-
 int xfer_signal_upgrade_received = 0;  /* signal "upgrade" received ?       */
 
 
@@ -1366,8 +1364,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     (void) argv;
     
     weechat_plugin = plugin;
-
-    xfer_debug = weechat_config_boolean (weechat_config_get ("weechat.plugin.debug"));
     
     if (!xfer_config_init ())
         return WEECHAT_RC_ERROR;

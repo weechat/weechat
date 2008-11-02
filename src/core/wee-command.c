@@ -771,6 +771,86 @@ command_command (void *data, struct t_gui_buffer *buffer,
 }
 
 /*
+ * command_debug: control debug for core/plugins
+ */
+
+int
+command_debug (void *data, struct t_gui_buffer *buffer,
+               int argc, char **argv, char **argv_eol)
+{
+    struct t_config_option *ptr_option;
+    struct t_weechat_plugin *ptr_plugin;
+    
+    /* make C compiler happy */
+    (void) data;
+    (void) argv_eol;
+    
+    if ((argc == 1)
+        || ((argc == 2) && (string_strcasecmp (argv[1], "list") == 0)))
+    {
+        gui_chat_printf (NULL, "");
+        gui_chat_printf (NULL, "Debug:");
+        
+        ptr_option = config_weechat_debug_get (PLUGIN_CORE);
+        gui_chat_printf (NULL, "  %s: %d",
+                         PLUGIN_CORE,
+                         (ptr_option) ? CONFIG_INTEGER(ptr_option) : 0);
+        for (ptr_plugin = weechat_plugins; ptr_plugin;
+             ptr_plugin = ptr_plugin->next_plugin)
+        {
+            gui_chat_printf (NULL, "  %s: %d",
+                             ptr_plugin->name,
+                             ptr_plugin->debug);
+        }
+        return WEECHAT_RC_OK;
+    }
+    
+    if (string_strcasecmp (argv[1], "dump") == 0)
+    {
+        hook_signal_send ("debug_dump", WEECHAT_HOOK_SIGNAL_STRING, NULL);
+    }
+    else if (string_strcasecmp (argv[1], "buffer") == 0)
+    {
+        gui_buffer_dump_hexa (buffer);
+    }
+    else if (string_strcasecmp (argv[1], "windows") == 0)
+    {
+        debug_windows_tree ();
+    }
+    else if (argc >= 3)
+    {
+        if (strcmp (argv[2], "0") == 0)
+        {
+            /* disable debug for a plugin */
+            ptr_option = config_weechat_debug_get (argv[1]);
+            if (ptr_option)
+            {
+                config_file_option_free (ptr_option);
+                config_weechat_debug_set_all ();
+                gui_chat_printf (NULL, _("Debug disabled for \"%s\""),
+                                 argv[1]);
+            }
+        }
+        else
+        {
+            /* set debug level for a plugin */
+            if (config_weechat_debug_set (argv[1], argv[2]) != WEECHAT_CONFIG_OPTION_SET_ERROR)
+            {
+                ptr_option = config_weechat_debug_get (argv[1]);
+                if (ptr_option)
+                {
+                    gui_chat_printf (NULL, "%s: \"%s\" => %d",
+                                     "debug", argv[1],
+                                     CONFIG_INTEGER(ptr_option));
+                }
+            }
+        }
+    }
+    
+    return WEECHAT_RC_OK;
+}
+
+/*
  * command_filter_display: display one filter
  */
 
@@ -3133,6 +3213,20 @@ command_init ()
                      "added if not found at beginning of command)"),
                   "%p|weechat %P",
                   &command_command, NULL);
+    hook_command (NULL, "debug",
+                  N_("control debug for core/plugins"),
+                  N_("[list | plugin level | dump | buffer | windows]"),
+                  N_(" plugin: name of plugin (\"core\" for WeeChat core)\n"
+                     "  level: debug level for plugin (0 = disable debug)\n"
+                     "   dump: save memory dump in WeeChat log file (same "
+                     "dump is written when WeeChat crashes)\n"
+                     " buffer: dump buffer content with hexadecimal values "
+                     "in log file\n"
+                     "windows: display windows tree\n"
+                     "   text: send \"debug\" signal with \"text\" as "
+                     "argument"),
+                  "%p|list|dump|buffer|windows",
+                  &command_debug, NULL);
     hook_command (NULL, "filter",
                   N_("filter messages in buffers, to hide/show them according "
                      "to tags or regex"),

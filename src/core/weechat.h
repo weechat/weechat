@@ -98,6 +98,7 @@
 
 /* global variables and functions */
 
+extern int weechat_debug_core;
 extern char *weechat_argv0;
 extern time_t weechat_start_time;
 extern int weechat_quit;

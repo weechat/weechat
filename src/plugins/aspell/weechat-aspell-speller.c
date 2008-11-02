@@ -132,7 +132,7 @@ weechat_aspell_speller_new (const char *lang)
     if (!lang)
         return NULL;
     
-    if (aspell_debug)
+    if (weechat_aspell_plugin->debug)
     {
         weechat_printf (NULL,
                         "%s: creating new speller for lang \"%s\"",
@@ -194,7 +194,7 @@ weechat_aspell_speller_free (struct t_aspell_speller *speller)
     if (!speller)
         return;
     
-    if (aspell_debug)
+    if (weechat_aspell_plugin->debug)
     {
         weechat_printf (NULL,
                         "%s: removing speller for lang \"%s\"",

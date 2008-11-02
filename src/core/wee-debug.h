@@ -24,6 +24,7 @@ struct t_gui_window_tree;
 
 extern void debug_dump (int crash);
 extern void debug_sigsegv ();
+extern void debug_windows_tree ();
 extern void debug_init ();
 
 #endif /* wee-debug.h */

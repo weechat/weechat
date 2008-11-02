@@ -38,10 +38,6 @@ if PLUGIN_CHARSET
 charset_dir = charset
 endif
 
-if PLUGIN_DEBUG
-debug_dir = debug
-endif
-
 if PLUGIN_DEMO
 demo_dir = demo
 endif
@@ -90,6 +86,6 @@ if PLUGIN_XFER
 xfer_dir = xfer
 endif
 
-SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(debug_dir) \
-            $(demo_dir) $(fifo_dir) $(irc_dir) $(logger_dir) $(notify_dir) \
-            $(script_dir) $(trigger_dir) $(xfer_dir)
+SUBDIRS = . $(alias_dir) $(aspell_dir) $(charset_dir) $(demo_dir) $(fifo_dir) \
+            $(irc_dir) $(logger_dir) $(notify_dir) $(script_dir) \
+            $(trigger_dir) $(xfer_dir)

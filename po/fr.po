@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-01 17:55+0100\n"
-"PO-Revision-Date: 2008-11-01 17:55+0100\n"
+"POT-Creation-Date: 2008-11-02 18:48+0100\n"
+"PO-Revision-Date: 2008-11-02 18:49+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -220,6 +220,10 @@ msgstr "Pas de variable locale définie pour le tampon \"%s\""
 #, c-format
 msgid "%sPlugin \"%s\" not found"
 msgstr "%sExtension \"%s\" non trouvée"
+
+#, c-format
+msgid "Debug disabled for \"%s\""
+msgstr "Debug désactivé pour \"%s\""
 
 #, c-format
 msgid "  %s[%s%s%s]%s buffer: %s%s%s / tags: %s / regex: %s %s"
@@ -818,6 +822,30 @@ msgstr ""
 " commande: commande à exécuter (un '/' est automatiquement ajouté s'il n'est "
 "pas trouvé au début de la commande)"
 
+msgid "control debug for core/plugins"
+msgstr "contrôle du debug pour le coeur/les extensions"
+
+msgid "[list | plugin level | dump | buffer | windows]"
+msgstr "[list | extension niveau | dump | buffer windows]"
+
+msgid ""
+" plugin: name of plugin (\"core\" for WeeChat core)\n"
+"  level: debug level for plugin (0 = disable debug)\n"
+"   dump: save memory dump in WeeChat log file (same dump is written when "
+"WeeChat crashes)\n"
+" buffer: dump buffer content with hexadecimal values in log file\n"
+"windows: display windows tree\n"
+"   text: send \"debug\" signal with \"text\" as argument"
+msgstr ""
+"extension: nom de l'extension (\"core\" pour le coeur de WeeChat)\n"
+"   niveau: niveau de debug pour l'extension\n"
+"     dump: affiche les variables mémoire WeeChat dans le fichier log (les "
+"mêmes messages sont affichés lorsque WeeChat plante)\n"
+"   buffer: affiche le contenu du tampon en valeurs hexadécimales dans le "
+"fichier log\n"
+"  windows: affiche l'arbre des fenêtres<\n"
+"    texte: envoie le signal \"debug\" avec \"texte\" comme paramètre"
+
 msgid ""
 "filter messages in buffers, to hide/show them according to tags or regex"
 msgstr ""
@@ -1141,6 +1169,9 @@ msgstr ""
 #, c-format
 msgid "\t\tDay changed to %s"
 msgstr "\t\tJour changé: %s"
+
+msgid "debug level for plugin (\"core\" for WeeChat core)"
+msgstr "niveau de debug pour l'extension (\"core\" pour le coeur de WeeChat)"
 
 msgid "command executed when WeeChat starts, after loading plugins"
 msgstr ""
@@ -2028,14 +2059,6 @@ msgid "list of alias"
 msgstr "liste des alias"
 
 #, c-format
-msgid "%s: debug enabled"
-msgstr "%s: debug activé"
-
-#, c-format
-msgid "%s: debug disabled"
-msgstr "%s: debug désactivé"
-
-#, c-format
 msgid "%s: \"%s\" removed"
 msgstr "%s: \"%s\" supprimé"
 
@@ -2186,26 +2209,6 @@ msgstr ""
 " encode: changer le charset d'encodage\n"
 "charset: nouveau charset pour le tampon courant\n"
 "  reset: réinitialiser les charsets pour le tampon courant"
-
-msgid "print debug messages"
-msgstr "affiche des messages de debogage"
-
-msgid "dump | buffer | windows | text"
-msgstr "dump | buffer | windows | texte"
-
-msgid ""
-"   dump: save memory dump in WeeChat log file (same dump is written when "
-"WeeChat crashes)\n"
-" buffer: dump buffer content with hexadecimal values in log file\n"
-"windows: display windows tree\n"
-"   text: send \"debug\" signal with \"text\" as argument"
-msgstr ""
-"   dump: affiche les variables mémoire WeeChat dans le fichier log (les "
-"mêmes messages sont affichés lorsque WeeChat plante)\n"
-" buffer: affiche le contenu du tampon en valeurs hexadécimales dans le "
-"fichier log\n"
-"windows: affiche l'arbre des fenêtres<\n"
-"  texte: envoie le signal \"debug\" avec \"texte\" comme paramètre"
 
 msgid "demo message without prefix"
 msgstr "message de démonstration sans préfixe"
@@ -4978,29 +4981,3 @@ msgstr "%s%s: impossible de positionner l'option \"nonblock\" pour la socket"
 #, c-format
 msgid "%s%s: timeout for \"%s\" with %s"
 msgstr "%s%s: délai d'attente dépassé pour \"%s\" avec %s"
-
-#~ msgid "automatically log server messages"
-#~ msgstr "enregistrer automatiquement les messages du serveur"
-
-#~ msgid "automatically log channel chats"
-#~ msgstr "enregistrer automatiquement les conversations des canaux"
-
-#~ msgid "automatically log private chats"
-#~ msgstr "enregistrer automatiquement les conversations privées"
-
-#~ msgid ""
-#~ "   list: show logging status for open buffers\n"
-#~ "    set: set logging level on current buffer\n"
-#~ "  level: level for messages to be logged (0 = logging disabled, 1 = a few "
-#~ "messages (most important) .. 9 = all messages)\n"
-#~ "disable: disable logging on current buffer (set level to 0)"
-#~ msgstr ""
-#~ "   list: afficher le statut d'enregistrement pour les tampons ouverts\n"
-#~ "    set: définir le niveau d'enregistrement pour le tampon courant\n"
-#~ " niveau: niveau des messages qui doivent être enregistrés (0 = pas "
-#~ "d'enregistrement, 1 = quelques messages (les plus importants) .. 9 = tous "
-#~ "les messages)\n"
-#~ "disable: désactiver l'enregistrement du tampon courant"
-
-#~ msgid "New level for buffer \"%s\" is %d"
-#~ msgstr "Le nouveau niveau pour le tampon \"%s\" est %d"

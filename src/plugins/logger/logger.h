@@ -26,8 +26,6 @@
 #define LOGGER_BUF_WRITE_SIZE  (16*1024)
 #define LOGGER_LEVEL_DEFAULT   9
 
-extern int logger_debug;
-
 extern struct t_weechat_plugin *weechat_logger_plugin;
 
 extern void logger_start_buffer_all ();

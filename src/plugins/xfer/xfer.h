@@ -153,7 +153,6 @@ extern char *xfer_protocol_string[];
 extern char *xfer_status_string[];
 extern struct t_xfer *xfer_list, *last_xfer;
 extern int xfer_count;
-extern int xfer_debug;
 
 extern int xfer_valid (struct t_xfer *xfer);
 extern struct t_xfer *xfer_search_by_number (int number);

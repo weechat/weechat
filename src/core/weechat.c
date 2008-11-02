@@ -69,6 +69,7 @@
 #include "../plugins/plugin.h"
 
 
+int weechat_debug_core = 0;            /* debug level for core              */
 char *weechat_argv0 = NULL;            /* WeeChat binary file name (argv[0])*/
 int weechat_upgrading;                 /* =1 if WeeChat is upgrading        */
 time_t weechat_start_time;             /* start time (used by /uptime cmd)  */

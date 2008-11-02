@@ -43,35 +43,6 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 struct t_weechat_plugin *weechat_demo_plugin = NULL;
 #define weechat_plugin weechat_demo_plugin
 
-int demo_debug = 0;
-
-
-/*
- * demo_debug_signal_debug_cb: callback for "debug" signal
- */
-
-int
-demo_debug_signal_debug_cb (void *data, const char *signal,
-                            const char *type_data, void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-    
-    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
-    {
-        if (weechat_strcasecmp ((char *)signal_data, DEMO_PLUGIN_NAME) == 0)
-        {
-            demo_debug ^= 1;
-            if (demo_debug)
-                weechat_printf (NULL, _("%s: debug enabled"), DEMO_PLUGIN_NAME);
-            else
-                weechat_printf (NULL, _("%s: debug disabled"), DEMO_PLUGIN_NAME);
-        }
-    }
-    
-    return WEECHAT_RC_OK;
-}
 
 /*
  * demo_printf_command_cb: demo command for printf
@@ -139,7 +110,7 @@ demo_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     /* make C compiler happy */
     (void) data;
 
-    if (demo_debug)
+    if (weechat_demo_plugin->debug)
     {
         weechat_printf (NULL,
                         "buffer_close_cb: buffer = %x (%s)",
@@ -368,7 +339,7 @@ demo_signal_cb (void *data, const char *signal, const char *type_data,
     /* make C compiler happy */
     (void) data;
 
-    if (demo_debug)
+    if (weechat_demo_plugin->debug)
     {
         if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
         {
@@ -416,8 +387,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     weechat_plugin = plugin;
     
-    demo_debug = weechat_config_boolean (weechat_config_get ("weechat.plugin.debug"));
-    
     weechat_hook_command ("demo_printf",
                           N_("print some messages on current ubffer"),
                           N_("[text]"),
@@ -459,7 +428,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
                           "%I",
                           &demo_infolist_command_cb, NULL);
     
-    weechat_hook_signal ("debug", &demo_debug_signal_debug_cb, NULL);
     weechat_hook_signal ("*", &demo_signal_cb, NULL);
     
     return WEECHAT_RC_OK;

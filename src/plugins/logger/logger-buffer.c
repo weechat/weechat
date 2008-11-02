@@ -73,7 +73,7 @@ logger_buffer_add (struct t_gui_buffer *buffer, int log_level)
     if (!buffer)
         return NULL;
     
-    if (logger_debug)
+    if (weechat_logger_plugin->debug)
     {
         weechat_printf (NULL,
                         "%s: start logging for buffer \"%s\"",
@@ -157,7 +157,7 @@ logger_buffer_free (struct t_logger_buffer *logger_buffer)
 {
     struct t_logger_buffer *new_logger_buffers;
     
-    if (logger_debug)
+    if (weechat_logger_plugin->debug)
     {
         weechat_printf (NULL,
                         "%s: stop logging for buffer \"%s\"",

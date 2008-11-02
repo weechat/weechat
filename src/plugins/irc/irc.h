@@ -68,6 +68,4 @@
 extern struct t_weechat_plugin *weechat_irc_plugin;
 extern struct t_hook *irc_hook_timer_check_away;
 
-extern int irc_debug;
-
 #endif /* irc.h */

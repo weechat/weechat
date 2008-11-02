@@ -52,43 +52,8 @@ WEECHAT_PLUGIN_LICENSE("GPL3");
 
 struct t_weechat_plugin *weechat_logger_plugin = NULL;
 
-int logger_debug = 0;
-
 char *logger_buf_write = NULL;         /* buffer for writing a line         */
 
-
-/*
- * logger_debug_cb: callback for "debug" signal
- */
-
-int
-logger_debug_cb (void *data, const char *signal, const char *type_data,
-                 void *signal_data)
-{
-    /* make C compiler happy */
-    (void) data;
-    (void) signal;
-    
-    if (strcmp (type_data, WEECHAT_HOOK_SIGNAL_STRING) == 0)
-    {
-        if (weechat_strcasecmp ((char *)signal_data, LOGGER_PLUGIN_NAME) == 0)
-        {
-            logger_debug ^= 1;
-            if (logger_debug)
-            {
-                weechat_printf (NULL, _("%s: debug enabled"),
-                                LOGGER_PLUGIN_NAME);
-            }
-            else
-            {
-                weechat_printf (NULL, _("%s: debug disabled"),
-                                LOGGER_PLUGIN_NAME);
-            }
-        }
-    }
-    
-    return WEECHAT_RC_OK;
-}
 
 /*
  * logger_create_directory: create logger directory
@@ -293,7 +258,7 @@ logger_get_filename (struct t_gui_buffer *buffer)
     if (!mask_decoded)
         return NULL;
     
-    if (logger_debug)
+    if (weechat_logger_plugin->debug)
     {
         weechat_printf (NULL,
                         "%s: buffer = \"%s\", mask = \"%s\", "
@@ -962,9 +927,6 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
     if (logger_config_read () < 0)
         return WEECHAT_RC_ERROR;
-    
-    /* callback for debug */
-    weechat_hook_signal ("debug", &logger_debug_cb, NULL);
     
     /* command /logger */
     weechat_hook_command ("logger",
