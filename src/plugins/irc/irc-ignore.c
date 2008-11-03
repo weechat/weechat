@@ -117,17 +117,36 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
 {
     struct t_irc_ignore *new_ignore;
     regex_t *regex;
+    char *complete_mask;
     
-    if (!mask)
+    if (!mask || !mask[0])
         return NULL;
     
+    complete_mask = malloc (1 + strlen (mask) + 1 + 1);
+    if (!complete_mask)
+        return NULL;
+    
+    if (mask[0] == '^')
+        strcpy (complete_mask, mask);
+    else
+    {
+        strcpy (complete_mask, "^");
+        strcat (complete_mask, mask);
+    }
+    if (complete_mask[strlen (complete_mask) - 1] != '$')
+        strcat (complete_mask, "$");
+
     regex = malloc (sizeof (*regex));
     if (!regex)
+    {
+        free (complete_mask);
         return NULL;
+    }
     
-    if (regcomp (regex, mask, REG_NOSUB | REG_ICASE) != 0)
+    if (regcomp (regex, complete_mask, REG_NOSUB | REG_ICASE) != 0)
     {
         free (regex);
+        free (complete_mask);
         return NULL;
     }
     
@@ -135,7 +154,7 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
     if (new_ignore)
     {
         new_ignore->number = (last_irc_ignore) ? last_irc_ignore->number + 1 : 1;
-        new_ignore->mask = strdup (mask);
+        new_ignore->mask = strdup (complete_mask);
         new_ignore->regex_mask = regex;
         new_ignore->server = (server) ? strdup (server) : strdup ("*");
         new_ignore->channel = (channel) ? strdup (channel) : strdup ("*");
@@ -149,6 +168,8 @@ irc_ignore_new (const char *mask, const char *server, const char *channel)
         last_irc_ignore = new_ignore;
         new_ignore->next_ignore = NULL;
     }
+    
+    free (complete_mask);
     
     return new_ignore;
 }
@@ -193,9 +214,9 @@ irc_ignore_check (struct t_irc_server *server, struct t_irc_channel *channel,
         
         if (server_match && channel_match)
         {
-            if (nick && (strcmp (ptr_ignore->mask, nick) == 0))
+            if (nick && (regexec (ptr_ignore->regex_mask, nick, 0, NULL, 0) == 0))
                 return 1;
-            if (host && regexec (ptr_ignore->regex_mask, host, 0, NULL, 0) == 0)
+            if (host && (regexec (ptr_ignore->regex_mask, host, 0, NULL, 0) == 0))
                 return 1;
         }
     }

@@ -1309,6 +1309,10 @@ irc_command_halfop (void *data, struct t_gui_buffer *buffer, int argc,
 void
 irc_command_ignore_display (struct t_irc_ignore *ignore)
 {
+    char *mask;
+    
+    mask = weechat_strndup (ignore->mask + 1, strlen (ignore->mask) - 2);
+    
     weechat_printf (NULL,
                     _("  %s[%s%d%s]%s mask: %s / server: %s / channel: %s"),
                     IRC_COLOR_CHAT_DELIMITERS,
@@ -1316,11 +1320,14 @@ irc_command_ignore_display (struct t_irc_ignore *ignore)
                     ignore->number,
                     IRC_COLOR_CHAT_DELIMITERS,
                     IRC_COLOR_CHAT,
-                    ignore->mask,
+                    (mask) ? mask : ignore->mask,
                     (ignore->server) ?
                     ignore->server : "*",
                     (ignore->channel) ?
                     ignore->channel : "*");
+    
+    if (mask)
+        free (mask);
 }
 
 /*
@@ -3892,7 +3899,8 @@ irc_command_init ()
                              "    /ignore add toto@domain.com freenode\n"
                              "  ignore host \"toto*@*.domain.com\" on freenode/#weechat:\n"
                              "    /ignore add toto*@*.domain.com freenode #weechat"),
-                          NULL, &irc_command_ignore, NULL);
+                          "list|add|del %(irc_channel_nicks_hosts) "
+                          "%(irc_servers) %(irc_channels) ", &irc_command_ignore, NULL);
     weechat_hook_command ("info",
                           N_("get information describing the server"),
                           N_("[target]"),
