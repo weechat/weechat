@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-02 18:48+0100\n"
+"POT-Creation-Date: 2008-11-03 15:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1479,6 +1479,10 @@ msgstr ""
 
 #, c-format
 msgid "  . description: %s\n"
+msgstr ""
+
+#, c-format
+msgid "System clock skew detected (-%ld seconds), reinitializing all timers"
 msgstr ""
 
 #, c-format

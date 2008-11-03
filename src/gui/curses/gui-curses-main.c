@@ -294,12 +294,9 @@ gui_main_loop ()
         FD_ZERO (&write_fds);
         FD_ZERO (&except_fds);
         max_fd = hook_fd_set (&read_fds, &write_fds, &except_fds);
-        if (hook_timer_time_to_next (&tv_timeout))
-            ready = select (max_fd + 1, &read_fds, &write_fds, &except_fds,
-                            &tv_timeout);
-        else
-            ready = select (max_fd + 1, &read_fds, &write_fds, &except_fds,
-                            NULL);
+        hook_timer_time_to_next (&tv_timeout);
+        ready = select (max_fd + 1, &read_fds, &write_fds, &except_fds,
+                        &tv_timeout);
         if (ready > 0)
         {
             hook_fd_exec (&read_fds, &write_fds, &except_fds);

@@ -1117,6 +1117,11 @@ irc_server_outqueue_send (struct t_irc_server *server)
     if (server->outqueue)
     {
         time_now = time (NULL);
+        
+        /* detect if system clock has been changed (now lower than before) */
+        if (server->last_user_message > time_now)
+            server->last_user_message = time_now;
+        
         if (time_now >= server->last_user_message +
             weechat_config_integer (irc_config_network_anti_flood))
         {
@@ -1347,6 +1352,11 @@ irc_server_send_one_msg (struct t_irc_server *server, const char *message)
 
             /* anti-flood: look whether we should queue outgoing message or not */
             time_now = time (NULL);
+            
+            /* detect if system clock has been changed (now lower than before) */
+            if (server->last_user_message > time_now)
+                server->last_user_message = time_now;
+            
             queue = 0;
             if ((server->queue_msg)
                 && ((server->outqueue)

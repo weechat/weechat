@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-02 18:48+0100\n"
-"PO-Revision-Date: 2008-11-02 18:49+0100\n"
+"POT-Creation-Date: 2008-11-03 15:56+0100\n"
+"PO-Revision-Date: 2008-11-03 15:57+0100\n"
 "Last-Translator: FlashCode <flashcode@flashtux.org>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -1776,6 +1776,12 @@ msgstr "  . valeurs: couleur (dépend de l'interface utilisée)\n"
 #, c-format
 msgid "  . description: %s\n"
 msgstr "  . description: %s\n"
+
+#, c-format
+msgid "System clock skew detected (-%ld seconds), reinitializing all timers"
+msgstr ""
+"Décalage de l'horloge système détecté (-%ld secondes), réinitialisation de "
+"tous les minuteurs"
 
 #, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"

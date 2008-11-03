@@ -40,6 +40,7 @@
 #include "wee-string.h"
 #include "wee-util.h"
 #include "../gui/gui-buffer.h"
+#include "../gui/gui-chat.h"
 #include "../gui/gui-color.h"
 #include "../gui/gui-completion.h"
 #include "../plugins/plugin.h"
@@ -48,10 +49,11 @@
 char *hook_type_string[HOOK_NUM_TYPES] =
 { "command", "timer", "fd", "connect", "print", "signal", "config",
   "completion", "modifier", "info", "infolist" };
-struct t_hook *weechat_hooks[HOOK_NUM_TYPES];
-struct t_hook *last_weechat_hook[HOOK_NUM_TYPES];
-int hook_exec_recursion = 0;
-int real_delete_pending = 0;
+struct t_hook *weechat_hooks[HOOK_NUM_TYPES];     /* list of hooks          */
+struct t_hook *last_weechat_hook[HOOK_NUM_TYPES]; /* last hook              */
+int hook_exec_recursion = 0;           /* 1 when a hook is executed         */
+time_t hook_last_system_time = 0;      /* used to detect system clock skew  */
+int real_delete_pending = 0;           /* 1 if some hooks must be deleted   */
 
 
 /*
@@ -68,6 +70,7 @@ hook_init ()
         weechat_hooks[type] = NULL;
         last_weechat_hook[type] = NULL;
     }
+    hook_last_system_time = time (NULL);
 }
 
 /*
@@ -510,41 +513,17 @@ hook_command_exec (struct t_gui_buffer *buffer, int any_plugin,
 }
 
 /*
- * hook_timer: hook a timer
+ * hook_timer_init: init a timer hook
  */
 
-struct t_hook *
-hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
-            int max_calls, t_hook_callback_timer *callback,
-            void *callback_data)
+void
+hook_timer_init (struct t_hook *hook)
 {
-    struct t_hook *new_hook;
-    struct t_hook_timer *new_hook_timer;
     time_t time_now;
     struct tm *local_time, *gm_time;
     int local_hour, gm_hour, diff_hour;
     
-    if (interval <= 0)
-        return NULL;
-    
-    new_hook = malloc (sizeof (*new_hook));
-    if (!new_hook)
-        return NULL;
-    new_hook_timer = malloc (sizeof (*new_hook_timer));
-    if (!new_hook_timer)
-    {
-        free (new_hook);
-        return NULL;
-    }
-    
-    hook_init_data (new_hook, plugin, HOOK_TYPE_TIMER, callback_data);
-    
-    new_hook->hook_data = new_hook_timer;
-    new_hook_timer->callback = callback;
-    new_hook_timer->interval = interval;
-    new_hook_timer->remaining_calls = max_calls;
-    
-    gettimeofday (&new_hook_timer->last_exec, NULL);
+    gettimeofday (&HOOK_TIMER(hook, last_exec), NULL);
     time_now = time (NULL);
     local_time = localtime(&time_now);
     local_hour = local_time->tm_hour;
@@ -565,25 +544,103 @@ hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
     else
         diff_hour = local_hour - gm_hour;
     
-    if ((interval >= 1000) && (align_second > 0))
+    if ((HOOK_TIMER(hook, interval) >= 1000)
+        && (HOOK_TIMER(hook, align_second) > 0))
     {
         /* here we should use 0, but with this value timer is sometimes called
            before second has changed, so for displaying time, it may display
            2 times the same second, that's why we use 1000 micro seconds */
-        new_hook_timer->last_exec.tv_usec = 1000;
-        new_hook_timer->last_exec.tv_sec =
-            new_hook_timer->last_exec.tv_sec -
-            ((new_hook_timer->last_exec.tv_sec + (diff_hour * 3600)) %
-             align_second);
+        HOOK_TIMER(hook, last_exec).tv_usec = 1000;
+        HOOK_TIMER(hook, last_exec).tv_sec =
+            HOOK_TIMER(hook, last_exec).tv_sec -
+            ((HOOK_TIMER(hook, last_exec).tv_sec + (diff_hour * 3600)) %
+             HOOK_TIMER(hook, align_second));
     }
     
-    new_hook_timer->next_exec.tv_sec = new_hook_timer->last_exec.tv_sec;
-    new_hook_timer->next_exec.tv_usec = new_hook_timer->last_exec.tv_usec;
-    util_timeval_add (&new_hook_timer->next_exec, interval);
+    /* init next call with date of last call */
+    HOOK_TIMER(hook, next_exec).tv_sec = HOOK_TIMER(hook, last_exec).tv_sec;
+    HOOK_TIMER(hook, next_exec).tv_usec = HOOK_TIMER(hook, last_exec).tv_usec;
+    
+    /* add interval to next call date */
+    util_timeval_add (&HOOK_TIMER(hook, next_exec), HOOK_TIMER(hook, interval));
+}
+
+/*
+ * hook_timer: hook a timer
+ */
+
+struct t_hook *
+hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
+            int max_calls, t_hook_callback_timer *callback,
+            void *callback_data)
+{
+    struct t_hook *new_hook;
+    struct t_hook_timer *new_hook_timer;
+    
+    if (interval <= 0)
+        return NULL;
+    
+    new_hook = malloc (sizeof (*new_hook));
+    if (!new_hook)
+        return NULL;
+    new_hook_timer = malloc (sizeof (*new_hook_timer));
+    if (!new_hook_timer)
+    {
+        free (new_hook);
+        return NULL;
+    }
+    
+    hook_init_data (new_hook, plugin, HOOK_TYPE_TIMER, callback_data);
+    
+    new_hook->hook_data = new_hook_timer;
+    new_hook_timer->callback = callback;
+    new_hook_timer->interval = interval;
+    new_hook_timer->align_second = align_second;
+    new_hook_timer->remaining_calls = max_calls;
+    
+    hook_timer_init (new_hook);
     
     hook_add_to_list (new_hook);
     
     return new_hook;
+}
+
+/*
+ * hook_timer_check_system_clock: check if system clock is older than previous
+ *                                call to this function (that means new time
+ *                                is lower that in past). If yes, then adjust
+ *                                all timers to current time
+ */
+
+void
+hook_timer_check_system_clock ()
+{
+    time_t now;
+    long diff_time;
+    struct t_hook *ptr_hook;
+    
+    now = time (NULL);
+    
+    /* check if difference with previous time is more than 10 seconds
+       If it is, then consider it's clock skew and reinitialize all timers */
+    diff_time = now - hook_last_system_time;
+    if ((diff_time <= -10) || (diff_time >= 10))
+    {
+        gui_chat_printf (NULL,
+                         _("System clock skew detected (%+ld seconds), "
+                           "reinitializing all timers"),
+                         diff_time);
+        
+        /* reinitialize all timers */
+        for (ptr_hook = weechat_hooks[HOOK_TYPE_TIMER]; ptr_hook;
+             ptr_hook = ptr_hook->next_hook)
+        {
+            if (!ptr_hook->deleted)
+                hook_timer_init (ptr_hook);
+        }
+    }
+    
+    hook_last_system_time = now;
 }
 
 /*
@@ -592,13 +649,15 @@ hook_timer (struct t_weechat_plugin *plugin, long interval, int align_second,
  *                                 0 if there's no timeout
  */
 
-int
+void
 hook_timer_time_to_next (struct timeval *tv_timeout)
 {
     struct t_hook *ptr_hook;
     int found;
     struct timeval tv_now;
     long diff_usec;
+    
+    hook_timer_check_system_clock ();
     
     found = 0;
     tv_timeout->tv_sec = 0;
@@ -617,9 +676,13 @@ hook_timer_time_to_next (struct timeval *tv_timeout)
         }
     }
     
-    /* no timeout found */
+    /* no timeout found, return 2 seconds by default */
     if (!found)
-        return 0;
+    {
+        tv_timeout->tv_sec = 2;
+        tv_timeout->tv_usec = 0;
+        return;
+    }
     
     gettimeofday (&tv_now, NULL);
     
@@ -628,7 +691,7 @@ hook_timer_time_to_next (struct timeval *tv_timeout)
     {
         tv_timeout->tv_sec = 0;
         tv_timeout->tv_usec = 0;
-        return 1;
+        return;
     }
     
     tv_timeout->tv_sec = tv_timeout->tv_sec - tv_now.tv_sec;
@@ -641,7 +704,13 @@ hook_timer_time_to_next (struct timeval *tv_timeout)
         tv_timeout->tv_usec = 1000000 + diff_usec;
     }
     
-    return 1;
+    /* to detect clock skew, we ensure there's a call to timers every
+       2 seconds max */
+    if (tv_timeout->tv_sec > 2)
+    {
+        tv_timeout->tv_sec = 2;
+        tv_timeout->tv_usec = 0;
+    }
 }
 
 /*
@@ -653,6 +722,8 @@ hook_timer_exec ()
 {
     struct timeval tv_time;
     struct t_hook *ptr_hook, *next_hook;
+    
+    hook_timer_check_system_clock ();
     
     gettimeofday (&tv_time, NULL);
     
@@ -1776,6 +1847,8 @@ hook_add_to_infolist_type (struct t_infolist *infolist,
                     snprintf (value, sizeof (value), "%ld", HOOK_TIMER(ptr_hook, interval));
                     if (!infolist_new_var_string (ptr_item, "interval", value))
                         return 0;
+                    if (!infolist_new_var_integer (ptr_item, "align_second", HOOK_TIMER(ptr_hook, align_second)))
+                        return 0;
                     if (!infolist_new_var_integer (ptr_item, "remaining_calls", HOOK_TIMER(ptr_hook, remaining_calls)))
                         return 0;
                     if (!infolist_new_var_buffer (ptr_item, "last_exec",
@@ -1996,6 +2069,7 @@ hook_print_log ()
                         log_printf ("  timer data:");
                         log_printf ("    callback . . . . . . : 0x%x", HOOK_TIMER(ptr_hook, callback));
                         log_printf ("    interval . . . . . . : %ld",  HOOK_TIMER(ptr_hook, interval));
+                        log_printf ("    align_second . . . . : %d",   HOOK_TIMER(ptr_hook, align_second));
                         log_printf ("    remaining_calls. . . : %d",   HOOK_TIMER(ptr_hook, remaining_calls));
                         local_time = localtime (&HOOK_TIMER(ptr_hook, last_exec).tv_sec);
                         strftime (text_time, sizeof (text_time),

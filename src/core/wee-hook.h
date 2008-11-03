@@ -106,6 +106,8 @@ struct t_hook_timer
 {
     t_hook_callback_timer *callback;   /* timer callback                    */
     long interval;                     /* timer interval (milliseconds)     */
+    int align_second;                  /* alignment on a second             */
+                                       /* for ex.: 60 = each min. at 0 sec  */
     int remaining_calls;               /* calls remaining (0 = unlimited)   */
     struct timeval last_exec;          /* last time hook was executed       */
     struct timeval next_exec;          /* next scheduled execution          */
@@ -242,7 +244,7 @@ extern struct t_hook *hook_timer (struct t_weechat_plugin *plugin,
                                   int max_calls,
                                   t_hook_callback_timer *callback,
                                   void *callback_data);
-extern int hook_timer_time_to_next (struct timeval *tv_timeout);
+extern void hook_timer_time_to_next (struct timeval *tv_timeout);
 extern void hook_timer_exec ();
 extern struct t_hook *hook_fd (struct t_weechat_plugin *plugin, int fd,
                                int flag_read, int flag_write,

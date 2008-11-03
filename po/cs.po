@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WeeChat 0.2.7-dev\n"
 "Report-Msgid-Bugs-To: flashcode@flashtux.org\n"
-"POT-Creation-Date: 2008-11-02 18:48+0100\n"
+"POT-Creation-Date: 2008-11-03 15:56+0100\n"
 "PO-Revision-Date: 2008-09-17 16:19+0200\n"
 "Last-Translator: Jiri Golembiovsky <golemj@gmail.com>\n"
 "Language-Team: weechat-dev <weechat-dev@nongnu.org>\n"
@@ -1749,6 +1749,10 @@ msgstr "  . hodnoty: mezi %d a %d\n"
 #, c-format
 msgid "  . description: %s\n"
 msgstr "  . popis: %s\n"
+
+#, c-format
+msgid "System clock skew detected (-%ld seconds), reinitializing all timers"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "%sError: too much calls to command \"%s\" (looping)"
