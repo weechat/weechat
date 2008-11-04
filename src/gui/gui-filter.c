@@ -521,15 +521,15 @@ gui_filter_print_log ()
          ptr_filter = ptr_filter->next_filter)
     {
         log_printf ("");
-        log_printf ("[filter (addr:0x%x)]", ptr_filter);
-        log_printf ("  enabled. . . . . . . . : %d",   ptr_filter->enabled);
-        log_printf ("  name . . . . . . . . . : '%s'", ptr_filter->name);
-        log_printf ("  buffer . . . . . . . . : '%s'", ptr_filter->buffer);
-        log_printf ("  tags . . . . . . . . . : '%s'", ptr_filter->tags);
-        log_printf ("  regex. . . . . . . . . : '%s'", ptr_filter->regex);
-        log_printf ("  regex_prefix . . . . . : 0x%x", ptr_filter->regex_prefix);
-        log_printf ("  regex_message. . . . . : 0x%x", ptr_filter->regex_message);
-        log_printf ("  prev_filter. . . . . . : 0x%x", ptr_filter->prev_filter);
-        log_printf ("  next_filter. . . . . . : 0x%x", ptr_filter->next_filter);
+        log_printf ("[filter (addr:0x%lx)]", ptr_filter);
+        log_printf ("  enabled. . . . . . . . : %d",    ptr_filter->enabled);
+        log_printf ("  name . . . . . . . . . : '%s'",  ptr_filter->name);
+        log_printf ("  buffer . . . . . . . . : '%s'",  ptr_filter->buffer);
+        log_printf ("  tags . . . . . . . . . : '%s'",  ptr_filter->tags);
+        log_printf ("  regex. . . . . . . . . : '%s'",  ptr_filter->regex);
+        log_printf ("  regex_prefix . . . . . : 0x%lx", ptr_filter->regex_prefix);
+        log_printf ("  regex_message. . . . . : 0x%lx", ptr_filter->regex_message);
+        log_printf ("  prev_filter. . . . . . : 0x%lx", ptr_filter->prev_filter);
+        log_printf ("  next_filter. . . . . . : 0x%lx", ptr_filter->next_filter);
     }
 }

@@ -91,9 +91,9 @@ demo_buffer_input_data_cb (void *data, struct t_gui_buffer *buffer,
     (void) data;
     
     weechat_printf (buffer,
-                    "buffer_input_data_cb: buffer = %x (%s), "
+                    "buffer_input_data_cb: buffer = %lx (%s), "
                     "input_data = \"%s\"",
-                    buffer,
+                    (long unsigned int)buffer,
                     weechat_buffer_get_string (buffer, "name"),
                     input_data);
     
@@ -113,8 +113,8 @@ demo_buffer_close_cb (void *data, struct t_gui_buffer *buffer)
     if (weechat_demo_plugin->debug)
     {
         weechat_printf (NULL,
-                        "buffer_close_cb: buffer = %x (%s)",
-                        buffer,
+                        "buffer_close_cb: buffer = %lx (%s)",
+                        (long unsigned int)buffer,
                         weechat_buffer_get_string (buffer, "name"));
     }
     
@@ -213,18 +213,18 @@ demo_infolist_print (struct t_infolist *infolist, const char *item_name)
                                                                      argv[j] + 2));
                             break;
                         case 'p':
-                            weechat_printf (NULL, "  %s: %X",
+                            weechat_printf (NULL, "  %s: %lx",
                                             argv[j] + 2,
-                                            weechat_infolist_pointer (infolist,
-                                                                      argv[j] + 2));
+                                            (long unsigned int)weechat_infolist_pointer (infolist,
+                                                                                         argv[j] + 2));
                             break;
                         case 'b':
                             pointer = weechat_infolist_buffer (infolist,
                                                                argv[j] + 2,
                                                                &size);
-                            weechat_printf (NULL, "  %s: %X (size: %d)",
+                            weechat_printf (NULL, "  %s: %lx (size: %d)",
                                             argv[j] + 2,
-                                            pointer,
+                                            (long unsigned int)pointer,
                                             size);
                             break;
                         case 't':
@@ -359,15 +359,15 @@ demo_signal_cb (void *data, const char *signal, const char *type_data,
         {
             weechat_printf (NULL,
                             _("demo_signal: signal: %s, type_data: %s, "
-                              "signal_data: 0x%x"),
-                            signal, type_data, signal_data);
+                              "signal_data: 0x%lx"),
+                            signal, type_data, (long unsigned int)signal_data);
         }
         else
         {
             weechat_printf (NULL,
                             _("demo_signal: signal: %s, type_data: %s, "
-                              "signal_data: 0x%x (unknown type)"),
-                            signal, type_data, signal_data);
+                              "signal_data: 0x%lx (unknown type)"),
+                            signal, type_data, (long unsigned int)signal_data);
         }
     }
     

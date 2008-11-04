@@ -1990,18 +1990,18 @@ gui_bar_print_log ()
     for (ptr_bar = gui_bars; ptr_bar; ptr_bar = ptr_bar->next_bar)
     {
         log_printf ("");
-        log_printf ("[bar (addr:0x%x)]", ptr_bar);
-        log_printf ("  plugin . . . . . . . . : 0x%x ('%s')",
+        log_printf ("[bar (addr:0x%lx)]", ptr_bar);
+        log_printf ("  plugin . . . . . . . . : 0x%lx ('%s')",
                     ptr_bar->plugin, plugin_get_name (ptr_bar->plugin));
-        log_printf ("  name . . . . . . . . . : '%s'", ptr_bar->name);
-        log_printf ("  hidden . . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->hidden));
-        log_printf ("  priority . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->priority));
+        log_printf ("  name . . . . . . . . . : '%s'",  ptr_bar->name);
+        log_printf ("  hidden . . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->hidden));
+        log_printf ("  priority . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->priority));
         log_printf ("  type . . . . . . . . . : %d (%s)",
                     CONFIG_INTEGER(ptr_bar->type),
                     gui_bar_type_string[CONFIG_INTEGER(ptr_bar->type)]);
-        log_printf ("  conditions . . . . . . : '%s'", CONFIG_STRING(ptr_bar->conditions));
-        log_printf ("  conditions_count . . . : %d",   ptr_bar->conditions_count);
-        log_printf ("  conditions_array . . . : 0x%x", ptr_bar->conditions_array);
+        log_printf ("  conditions . . . . . . : '%s'",  CONFIG_STRING(ptr_bar->conditions));
+        log_printf ("  conditions_count . . . : %d",    ptr_bar->conditions_count);
+        log_printf ("  conditions_array . . . : 0x%lx", ptr_bar->conditions_array);
         log_printf ("  position . . . . . . . : %d (%s)",
                     CONFIG_INTEGER(ptr_bar->position),
                     gui_bar_position_string[CONFIG_INTEGER(ptr_bar->position)]);
@@ -2011,8 +2011,8 @@ gui_bar_print_log ()
         log_printf ("  filling_left_right . . : %d (%s)",
                     CONFIG_INTEGER(ptr_bar->filling_left_right),
                     gui_bar_filling_string[CONFIG_INTEGER(ptr_bar->filling_left_right)]);
-        log_printf ("  size . . . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->size));
-        log_printf ("  size_max . . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->size_max));
+        log_printf ("  size . . . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->size));
+        log_printf ("  size_max . . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->size_max));
         log_printf ("  color_fg . . . . . . . : %d",
                     CONFIG_COLOR(ptr_bar->color_fg),
                     gui_color_get_name (CONFIG_COLOR(ptr_bar->color_fg)));
@@ -2022,13 +2022,13 @@ gui_bar_print_log ()
         log_printf ("  color_bg . . . . . . . : %d",
                     CONFIG_COLOR(ptr_bar->color_bg),
                     gui_color_get_name (CONFIG_COLOR(ptr_bar->color_bg)));
-        log_printf ("  separator. . . . . . . : %d",   CONFIG_INTEGER(ptr_bar->separator));
-        log_printf ("  items. . . . . . . . . : '%s'", CONFIG_STRING(ptr_bar->items));
-        log_printf ("  items_count. . . . . . : %d",   ptr_bar->items_count);
-        log_printf ("  items_array. . . . . . : 0x%x", ptr_bar->items_array);
-        log_printf ("  bar_window . . . . . . : 0x%x", ptr_bar->bar_window);
-        log_printf ("  prev_bar . . . . . . . : 0x%x", ptr_bar->prev_bar);
-        log_printf ("  next_bar . . . . . . . : 0x%x", ptr_bar->next_bar);
+        log_printf ("  separator. . . . . . . : %d",    CONFIG_INTEGER(ptr_bar->separator));
+        log_printf ("  items. . . . . . . . . : '%s'",  CONFIG_STRING(ptr_bar->items));
+        log_printf ("  items_count. . . . . . : %d",    ptr_bar->items_count);
+        log_printf ("  items_array. . . . . . : 0x%lx", ptr_bar->items_array);
+        log_printf ("  bar_window . . . . . . : 0x%lx", ptr_bar->bar_window);
+        log_printf ("  prev_bar . . . . . . . : 0x%lx", ptr_bar->prev_bar);
+        log_printf ("  next_bar . . . . . . . : 0x%lx", ptr_bar->next_bar);
         
         if (ptr_bar->bar_window)
             gui_bar_window_print_log (ptr_bar->bar_window);

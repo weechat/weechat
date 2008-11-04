@@ -681,10 +681,10 @@ gui_keyboard_print_log (struct t_gui_buffer *buffer)
          ptr_key = ptr_key->next_key)
     {
         log_printf ("");
-        log_printf ("%s[key (addr:0x%x)]", prefix, ptr_key);
-        log_printf ("%skey. . . . . . . . . : '%s'", prefix, ptr_key->key);
-        log_printf ("%scommand. . . . . . . : '%s'", prefix, ptr_key->command);
-        log_printf ("%sprev_key . . . . . . : 0x%x", prefix, ptr_key->prev_key);
-        log_printf ("%snext_key . . . . . . : 0x%x", prefix, ptr_key->next_key);
+        log_printf ("%s[key (addr:0x%lx)]", prefix, ptr_key);
+        log_printf ("%skey. . . . . . . . . : '%s'",  prefix, ptr_key->key);
+        log_printf ("%scommand. . . . . . . : '%s'",  prefix, ptr_key->command);
+        log_printf ("%sprev_key . . . . . . : 0x%lx", prefix, ptr_key->prev_key);
+        log_printf ("%snext_key . . . . . . : 0x%lx", prefix, ptr_key->next_key);
     }
 }

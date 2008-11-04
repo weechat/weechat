@@ -740,9 +740,9 @@ gui_bar_item_default_input_text (void *data, struct t_gui_bar_item *item,
     
     if (!window)
         window = gui_current_window;
-
+    
     snprintf (str_buffer, sizeof (str_buffer),
-              "0x%x", (unsigned int)(window->buffer));
+              "0x%lx", (long unsigned int)(window->buffer));
     
     new_input = hook_modifier_exec (NULL,
                                     "weechat_input_text_display",
@@ -1453,13 +1453,13 @@ gui_bar_item_print_log ()
     for (ptr_item = gui_bar_items; ptr_item; ptr_item = ptr_item->next_item)
     {
         log_printf ("");
-        log_printf ("[bar item (addr:0x%x)]", ptr_item);
-        log_printf ("  plugin . . . . . . . . : 0x%x ('%s')",
+        log_printf ("[bar item (addr:0x%lx)]", ptr_item);
+        log_printf ("  plugin . . . . . . . . : 0x%lx ('%s')",
                     ptr_item->plugin, plugin_get_name (ptr_item->plugin));
-        log_printf ("  name . . . . . . . . . : '%s'", ptr_item->name);
-        log_printf ("  build_callback . . . . : 0x%x", ptr_item->build_callback);
-        log_printf ("  build_callback_data. . : 0x%x", ptr_item->build_callback_data);
-        log_printf ("  prev_item. . . . . . . : 0x%x", ptr_item->prev_item);
-        log_printf ("  next_item. . . . . . . : 0x%x", ptr_item->next_item);
+        log_printf ("  name . . . . . . . . . : '%s'",  ptr_item->name);
+        log_printf ("  build_callback . . . . : 0x%lx", ptr_item->build_callback);
+        log_printf ("  build_callback_data. . : 0x%lx", ptr_item->build_callback_data);
+        log_printf ("  prev_item. . . . . . . : 0x%lx", ptr_item->prev_item);
+        log_printf ("  next_item. . . . . . . : 0x%lx", ptr_item->next_item);
     }
 }

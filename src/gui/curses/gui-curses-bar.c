@@ -1462,21 +1462,21 @@ void
 gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
 {
     log_printf ("");
-    log_printf ("  [window bar (addr:0x%x)]",   bar_window);
-    log_printf ("    bar . . . . . . . : 0x%x ('%s')",
+    log_printf ("  [window bar (addr:0x%lx)]",   bar_window);
+    log_printf ("    bar . . . . . . . : 0x%lx ('%s')",
                 bar_window->bar,
                 (bar_window->bar) ? bar_window->bar->name : "");
-    log_printf ("    x . . . . . . . . : %d",   bar_window->x);
-    log_printf ("    y . . . . . . . . : %d",   bar_window->y);
-    log_printf ("    width . . . . . . : %d",   bar_window->width);
-    log_printf ("    height. . . . . . : %d",   bar_window->height);
-    log_printf ("    scroll_x. . . . . : %d",   bar_window->scroll_x);
-    log_printf ("    scroll_y. . . . . : %d",   bar_window->scroll_y);
-    log_printf ("    cursor_x. . . . . : %d",   bar_window->cursor_x);
-    log_printf ("    cursor_y. . . . . : %d",   bar_window->cursor_y);
-    log_printf ("    current_size. . . : %d",   bar_window->current_size);
-    log_printf ("    win_bar . . . . . : 0x%x", bar_window->win_bar);
-    log_printf ("    win_separator . . : 0x%x", bar_window->win_separator);
-    log_printf ("    prev_bar_window . : 0x%x", bar_window->prev_bar_window);
-    log_printf ("    next_bar_window . : 0x%x", bar_window->next_bar_window);
+    log_printf ("    x . . . . . . . . : %d",    bar_window->x);
+    log_printf ("    y . . . . . . . . : %d",    bar_window->y);
+    log_printf ("    width . . . . . . : %d",    bar_window->width);
+    log_printf ("    height. . . . . . : %d",    bar_window->height);
+    log_printf ("    scroll_x. . . . . : %d",    bar_window->scroll_x);
+    log_printf ("    scroll_y. . . . . : %d",    bar_window->scroll_y);
+    log_printf ("    cursor_x. . . . . : %d",    bar_window->cursor_x);
+    log_printf ("    cursor_y. . . . . : %d",    bar_window->cursor_y);
+    log_printf ("    current_size. . . : %d",    bar_window->current_size);
+    log_printf ("    win_bar . . . . . : 0x%lx", bar_window->win_bar);
+    log_printf ("    win_separator . . : 0x%lx", bar_window->win_separator);
+    log_printf ("    prev_bar_window . : 0x%lx", bar_window->prev_bar_window);
+    log_printf ("    next_bar_window . : 0x%lx", bar_window->next_bar_window);
 }

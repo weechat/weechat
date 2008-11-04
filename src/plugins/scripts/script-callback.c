@@ -124,15 +124,15 @@ script_callback_print_log (struct t_weechat_plugin *weechat_plugin,
                            struct t_script_callback *script_callback)
 {
     weechat_log_printf ("");
-    weechat_log_printf ("  [callback (addr:0x%x)]",       script_callback);
-    weechat_log_printf ("    script. . . . . . . : 0x%x", script_callback->script);
-    weechat_log_printf ("    function. . . . . . : '%s'", script_callback->function);
-    weechat_log_printf ("    config_file . . . . : 0x%x", script_callback->config_file);
-    weechat_log_printf ("    config_section. . . : 0x%x", script_callback->config_section);
-    weechat_log_printf ("    config_option . . . : 0x%x", script_callback->config_option);
-    weechat_log_printf ("    hook. . . . . . . . : 0x%x", script_callback->hook);
-    weechat_log_printf ("    buffer. . . . . . . : 0x%x", script_callback->buffer);
-    weechat_log_printf ("    bar_item. . . . . . : 0x%x", script_callback->bar_item);
-    weechat_log_printf ("    prev_callback . . . : 0x%x", script_callback->prev_callback);
-    weechat_log_printf ("    next_callback . . . : 0x%x", script_callback->next_callback);
+    weechat_log_printf ("  [callback (addr:0x%lx)]",       script_callback);
+    weechat_log_printf ("    script. . . . . . . : 0x%lx", script_callback->script);
+    weechat_log_printf ("    function. . . . . . : '%s'",  script_callback->function);
+    weechat_log_printf ("    config_file . . . . : 0x%lx", script_callback->config_file);
+    weechat_log_printf ("    config_section. . . : 0x%lx", script_callback->config_section);
+    weechat_log_printf ("    config_option . . . : 0x%lx", script_callback->config_option);
+    weechat_log_printf ("    hook. . . . . . . . : 0x%lx", script_callback->hook);
+    weechat_log_printf ("    buffer. . . . . . . : 0x%lx", script_callback->buffer);
+    weechat_log_printf ("    bar_item. . . . . . : 0x%lx", script_callback->bar_item);
+    weechat_log_printf ("    prev_callback . . . : 0x%lx", script_callback->prev_callback);
+    weechat_log_printf ("    next_callback . . . : 0x%lx", script_callback->next_callback);
 }

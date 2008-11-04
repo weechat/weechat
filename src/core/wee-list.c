@@ -389,13 +389,13 @@ weelist_print_log (struct t_weelist *weelist, const char *name)
 {
     struct t_weelist_item *ptr_item;
     
-    log_printf ("[%s (addr:0x%x)]", name, weelist);
+    log_printf ("[%s (addr:0x%lx)]", name, weelist);
     
     for (ptr_item = weelist->items; ptr_item;
          ptr_item = ptr_item->next_item)
     {
-        log_printf ("  data . . . . . . . . . : '%s'", ptr_item->data);
-        log_printf ("  prev_item. . . . . . . : 0x%x", ptr_item->prev_item);
-        log_printf ("  next_item. . . . . . . : 0x%x", ptr_item->next_item);
+        log_printf ("  data . . . . . . . . . : '%s'",  ptr_item->data);
+        log_printf ("  prev_item. . . . . . . : 0x%lx", ptr_item->prev_item);
+        log_printf ("  next_item. . . . . . . : 0x%lx", ptr_item->next_item);
     }
 }

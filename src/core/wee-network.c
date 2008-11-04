@@ -692,7 +692,7 @@ network_connect_child (struct t_hook *hook_connect)
             if (status_ok_with_address)
             {
                 snprintf (status_ok_with_address, length, "%s%05d%s",
-                          status_str, strlen (ptr_address), ptr_address);
+                          status_str, (int)strlen (ptr_address), ptr_address);
             }
         }
         

@@ -2040,140 +2040,140 @@ hook_print_log ()
              ptr_hook = ptr_hook->next_hook)
         {
             log_printf ("");
-            log_printf ("[hook (addr:0x%x)]", ptr_hook);
-            log_printf ("  plugin . . . . . . . . : 0x%x ('%s')",
+            log_printf ("[hook (addr:0x%lx)]", ptr_hook);
+            log_printf ("  plugin . . . . . . . . : 0x%lx ('%s')",
                         ptr_hook->plugin, plugin_get_name (ptr_hook->plugin));
-            log_printf ("  deleted. . . . . . . . : %d",   ptr_hook->deleted);
-            log_printf ("  running. . . . . . . . : %d",   ptr_hook->running);
+            log_printf ("  deleted. . . . . . . . : %d",    ptr_hook->deleted);
+            log_printf ("  running. . . . . . . . : %d",    ptr_hook->running);
             log_printf ("  type . . . . . . . . . : %d (%s)",
                         ptr_hook->type, hook_type_string[ptr_hook->type]);
-            log_printf ("  callback_data. . . . . : 0x%x", ptr_hook->callback_data);
+            log_printf ("  callback_data. . . . . : 0x%lx", ptr_hook->callback_data);
             switch (ptr_hook->type)
             {
                 case HOOK_TYPE_COMMAND:
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  command data:");
-                        log_printf ("    callback . . . . . . : 0x%x", HOOK_COMMAND(ptr_hook, callback));
-                        log_printf ("    command. . . . . . . : '%s'", HOOK_COMMAND(ptr_hook, command));
-                        log_printf ("    level. . . . . . . . : %d",   HOOK_COMMAND(ptr_hook, level));
-                        log_printf ("    description. . . . . : '%s'", HOOK_COMMAND(ptr_hook, description));
-                        log_printf ("    args . . . . . . . . : '%s'", HOOK_COMMAND(ptr_hook, args));
-                        log_printf ("    args_description . . : '%s'", HOOK_COMMAND(ptr_hook, args_description));
-                        log_printf ("    completion . . . . . : '%s'", HOOK_COMMAND(ptr_hook, completion));
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_COMMAND(ptr_hook, callback));
+                        log_printf ("    command. . . . . . . : '%s'",  HOOK_COMMAND(ptr_hook, command));
+                        log_printf ("    level. . . . . . . . : %d",    HOOK_COMMAND(ptr_hook, level));
+                        log_printf ("    description. . . . . : '%s'",  HOOK_COMMAND(ptr_hook, description));
+                        log_printf ("    args . . . . . . . . : '%s'",  HOOK_COMMAND(ptr_hook, args));
+                        log_printf ("    args_description . . : '%s'",  HOOK_COMMAND(ptr_hook, args_description));
+                        log_printf ("    completion . . . . . : '%s'",  HOOK_COMMAND(ptr_hook, completion));
                     }
                     break;
                 case HOOK_TYPE_TIMER:
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  timer data:");
-                        log_printf ("    callback . . . . . . : 0x%x", HOOK_TIMER(ptr_hook, callback));
-                        log_printf ("    interval . . . . . . : %ld",  HOOK_TIMER(ptr_hook, interval));
-                        log_printf ("    align_second . . . . : %d",   HOOK_TIMER(ptr_hook, align_second));
-                        log_printf ("    remaining_calls. . . : %d",   HOOK_TIMER(ptr_hook, remaining_calls));
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_TIMER(ptr_hook, callback));
+                        log_printf ("    interval . . . . . . : %ld",   HOOK_TIMER(ptr_hook, interval));
+                        log_printf ("    align_second . . . . : %d",    HOOK_TIMER(ptr_hook, align_second));
+                        log_printf ("    remaining_calls. . . : %d",    HOOK_TIMER(ptr_hook, remaining_calls));
                         local_time = localtime (&HOOK_TIMER(ptr_hook, last_exec).tv_sec);
                         strftime (text_time, sizeof (text_time),
                                   "%d/%m/%Y %H:%M:%S", local_time);
                         log_printf ("    last_exec.tv_sec . . : %ld (%s)",
                                     HOOK_TIMER(ptr_hook, last_exec.tv_sec),
                                     text_time);
-                        log_printf ("    last_exec.tv_usec. . : %ld",  HOOK_TIMER(ptr_hook, last_exec.tv_usec));
+                        log_printf ("    last_exec.tv_usec. . : %ld",   HOOK_TIMER(ptr_hook, last_exec.tv_usec));
                         local_time = localtime (&HOOK_TIMER(ptr_hook, next_exec).tv_sec);
                         strftime (text_time, sizeof (text_time),
                                   "%d/%m/%Y %H:%M:%S", local_time);
                         log_printf ("    next_exec.tv_sec . . : %ld (%s)",
                                     HOOK_TIMER(ptr_hook, next_exec.tv_sec),
                                     text_time);
-                        log_printf ("    next_exec.tv_usec. . : %ld",  HOOK_TIMER(ptr_hook, next_exec.tv_usec));
+                        log_printf ("    next_exec.tv_usec. . : %ld",   HOOK_TIMER(ptr_hook, next_exec.tv_usec));
                     }
                     break;
                 case HOOK_TYPE_FD:
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  fd data:");
-                        log_printf ("    callback . . . . . . : 0x%x", HOOK_FD(ptr_hook, callback));
-                        log_printf ("    fd . . . . . . . . . : %d",   HOOK_FD(ptr_hook, fd));
-                        log_printf ("    flags. . . . . . . . : %d",   HOOK_FD(ptr_hook, flags));
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_FD(ptr_hook, callback));
+                        log_printf ("    fd . . . . . . . . . : %d",    HOOK_FD(ptr_hook, fd));
+                        log_printf ("    flags. . . . . . . . : %d",    HOOK_FD(ptr_hook, flags));
                     }
                     break;
                 case HOOK_TYPE_CONNECT:
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  connect data:");
-                        log_printf ("    callback . . . . . . : 0x%x", HOOK_CONNECT(ptr_hook, callback));
-                        log_printf ("    address. . . . . . . : '%s'", HOOK_CONNECT(ptr_hook, address));
-                        log_printf ("    port . . . . . . . . : %d",   HOOK_CONNECT(ptr_hook, port));
-                        log_printf ("    sock . . . . . . . . : %d",   HOOK_CONNECT(ptr_hook, sock));
-                        log_printf ("    ipv6 . . . . . . . . : %d",   HOOK_CONNECT(ptr_hook, ipv6));
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, callback));
+                        log_printf ("    address. . . . . . . : '%s'",  HOOK_CONNECT(ptr_hook, address));
+                        log_printf ("    port . . . . . . . . : %d",    HOOK_CONNECT(ptr_hook, port));
+                        log_printf ("    sock . . . . . . . . : %d",    HOOK_CONNECT(ptr_hook, sock));
+                        log_printf ("    ipv6 . . . . . . . . : %d",    HOOK_CONNECT(ptr_hook, ipv6));
 #ifdef HAVE_GNUTLS
-                        log_printf ("    gnutls_sess. . . . . : 0x%x", HOOK_CONNECT(ptr_hook, gnutls_sess));
+                        log_printf ("    gnutls_sess. . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, gnutls_sess));
 #endif
-                        log_printf ("    local_hostname . . . : '%s'", HOOK_CONNECT(ptr_hook, local_hostname));
-                        log_printf ("    child_read . . . . . : %d",   HOOK_CONNECT(ptr_hook, child_read));
-                        log_printf ("    child_write. . . . . : %d",   HOOK_CONNECT(ptr_hook, child_write));
-                        log_printf ("    hook_fd. . . . . . . : 0x%x", HOOK_CONNECT(ptr_hook, hook_fd));
+                        log_printf ("    local_hostname . . . : '%s'",  HOOK_CONNECT(ptr_hook, local_hostname));
+                        log_printf ("    child_read . . . . . : %d",    HOOK_CONNECT(ptr_hook, child_read));
+                        log_printf ("    child_write. . . . . : %d",    HOOK_CONNECT(ptr_hook, child_write));
+                        log_printf ("    hook_fd. . . . . . . : 0x%lx", HOOK_CONNECT(ptr_hook, hook_fd));
                     }
                     break;
                 case HOOK_TYPE_PRINT:
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  print data:");
-                        log_printf ("    callback . . . . . . : 0x%x", HOOK_PRINT(ptr_hook, callback));
-                        log_printf ("    buffer . . . . . . . : 0x%x", HOOK_PRINT(ptr_hook, buffer));
-                        log_printf ("    tags_count . . . . . : %d",   HOOK_PRINT(ptr_hook, tags_count));
-                        log_printf ("    tags_array . . . . . : 0x%x", HOOK_PRINT(ptr_hook, tags_array));
-                        log_printf ("    message. . . . . . . : '%s'", HOOK_PRINT(ptr_hook, message));
-                        log_printf ("    strip_colors . . . . : %d",   HOOK_PRINT(ptr_hook, strip_colors));
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_PRINT(ptr_hook, callback));
+                        log_printf ("    buffer . . . . . . . : 0x%lx", HOOK_PRINT(ptr_hook, buffer));
+                        log_printf ("    tags_count . . . . . : %d",    HOOK_PRINT(ptr_hook, tags_count));
+                        log_printf ("    tags_array . . . . . : 0x%lx", HOOK_PRINT(ptr_hook, tags_array));
+                        log_printf ("    message. . . . . . . : '%s'",  HOOK_PRINT(ptr_hook, message));
+                        log_printf ("    strip_colors . . . . : %d",    HOOK_PRINT(ptr_hook, strip_colors));
                     }
                     break;
                 case HOOK_TYPE_SIGNAL:
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  signal data:");
-                        log_printf ("    callback . . . . . . : 0x%x", HOOK_SIGNAL(ptr_hook, callback));
-                        log_printf ("    signal . . . . . . . : '%s'", HOOK_SIGNAL(ptr_hook, signal));
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_SIGNAL(ptr_hook, callback));
+                        log_printf ("    signal . . . . . . . : '%s'",  HOOK_SIGNAL(ptr_hook, signal));
                     }
                     break;
                 case HOOK_TYPE_CONFIG:
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  config data:");
-                        log_printf ("    callback . . . . . . : 0x%x", HOOK_CONFIG(ptr_hook, callback));
-                        log_printf ("    option . . . . . . . : '%s'", HOOK_CONFIG(ptr_hook, option));
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_CONFIG(ptr_hook, callback));
+                        log_printf ("    option . . . . . . . : '%s'",  HOOK_CONFIG(ptr_hook, option));
                     }
                     break;
                 case HOOK_TYPE_COMPLETION:
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  completion data:");
-                        log_printf ("    callback . . . . . . : 0x%x", HOOK_COMPLETION(ptr_hook, callback));
-                        log_printf ("    completion_item. . . : '%s'", HOOK_COMPLETION(ptr_hook, completion_item));
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_COMPLETION(ptr_hook, callback));
+                        log_printf ("    completion_item. . . : '%s'",  HOOK_COMPLETION(ptr_hook, completion_item));
                     }
                     break;
                 case HOOK_TYPE_MODIFIER:
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  modifier data:");
-                        log_printf ("    callback . . . . . . : 0x%x", HOOK_MODIFIER(ptr_hook, callback));
-                        log_printf ("    modifier . . . . . . : '%s'", HOOK_MODIFIER(ptr_hook, modifier));
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_MODIFIER(ptr_hook, callback));
+                        log_printf ("    modifier . . . . . . : '%s'",  HOOK_MODIFIER(ptr_hook, modifier));
                     }
                     break;
                 case HOOK_TYPE_INFO:
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  info data:");
-                        log_printf ("    callback . . . . . . : 0x%x", HOOK_INFO(ptr_hook, callback));
-                        log_printf ("    info_name. . . . . . : '%s'", HOOK_INFO(ptr_hook, info_name));
-                        log_printf ("    description. . . . . : '%s'", HOOK_INFO(ptr_hook, description));
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_INFO(ptr_hook, callback));
+                        log_printf ("    info_name. . . . . . : '%s'",  HOOK_INFO(ptr_hook, info_name));
+                        log_printf ("    description. . . . . : '%s'",  HOOK_INFO(ptr_hook, description));
                     }
                     break;
                 case HOOK_TYPE_INFOLIST:
                     if (!ptr_hook->deleted)
                     {
                         log_printf ("  infolist data:");
-                        log_printf ("    callback . . . . . . : 0x%x", HOOK_INFOLIST(ptr_hook, callback));
-                        log_printf ("    infolist_name. . . . : '%s'", HOOK_INFOLIST(ptr_hook, infolist_name));
-                        log_printf ("    description. . . . . : '%s'", HOOK_INFOLIST(ptr_hook, description));
+                        log_printf ("    callback . . . . . . : 0x%lx", HOOK_INFOLIST(ptr_hook, callback));
+                        log_printf ("    infolist_name. . . . : '%s'",  HOOK_INFOLIST(ptr_hook, infolist_name));
+                        log_printf ("    description. . . . . : '%s'",  HOOK_INFOLIST(ptr_hook, description));
                     }
                     break;
                 case HOOK_NUM_TYPES:
@@ -2181,8 +2181,8 @@ hook_print_log ()
                        it is never used as type */
                     break;
             }
-            log_printf ("  prev_hook. . . . . . . : 0x%x", ptr_hook->prev_hook);
-            log_printf ("  next_hook. . . . . . . : 0x%x", ptr_hook->next_hook);
+            log_printf ("  prev_hook. . . . . . . : 0x%lx", ptr_hook->prev_hook);
+            log_printf ("  next_hook. . . . . . . : 0x%lx", ptr_hook->next_hook);
         }
     }
 }

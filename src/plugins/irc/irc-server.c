@@ -2688,7 +2688,7 @@ irc_server_xfer_send_ready_cb (void *data, const char *signal,
         plugin_id = weechat_infolist_string (infolist, "plugin_id");
         if (plugin_name && (strcmp (plugin_name, IRC_PLUGIN_NAME) == 0) && plugin_id)
         {
-            sscanf (plugin_id, "%x", (unsigned int *)&server);
+            sscanf (plugin_id, "%lx", (long unsigned int *)&server);
             for (ptr_server = irc_servers; ptr_server;
                  ptr_server = ptr_server->next_server)
             {
@@ -2761,7 +2761,7 @@ irc_server_xfer_resume_ready_cb (void *data, const char *signal,
         plugin_id = weechat_infolist_string (infolist, "plugin_id");
         if (plugin_name && (strcmp (plugin_name, IRC_PLUGIN_NAME) == 0) && plugin_id)
         {
-            sscanf (plugin_id, "%x", (unsigned int *)&server);
+            sscanf (plugin_id, "%lx", (long unsigned int *)&server);
             for (ptr_server = irc_servers; ptr_server;
                  ptr_server = ptr_server->next_server)
             {
@@ -2818,7 +2818,7 @@ irc_server_xfer_send_accept_resume_cb (void *data, const char *signal,
         plugin_id = weechat_infolist_string (infolist, "plugin_id");
         if (plugin_name && (strcmp (plugin_name, IRC_PLUGIN_NAME) == 0) && plugin_id)
         {
-            sscanf (plugin_id, "%x", (unsigned int *)&server);
+            sscanf (plugin_id, "%lx", (long unsigned int *)&server);
             for (ptr_server = irc_servers; ptr_server;
                  ptr_server = ptr_server->next_server)
             {
@@ -2968,60 +2968,60 @@ irc_server_print_log ()
          ptr_server = ptr_server->next_server)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[server %s (addr:0x%x)]",      ptr_server->name, ptr_server);
-        weechat_log_printf ("  autoconnect . . . . : %d",   ptr_server->autoconnect);
-        weechat_log_printf ("  autoreconnect . . . : %d",   ptr_server->autoreconnect);
-        weechat_log_printf ("  autoreconnect_delay : %d",   ptr_server->autoreconnect_delay);
-        weechat_log_printf ("  addresses . . . . . : '%s'", ptr_server->addresses);
-        weechat_log_printf ("  ipv6. . . . . . . . : %d",   ptr_server->ipv6);
-        weechat_log_printf ("  ssl . . . . . . . . : %d",   ptr_server->ssl);
+        weechat_log_printf ("[server %s (addr:0x%lx)]",      ptr_server->name, ptr_server);
+        weechat_log_printf ("  autoconnect . . . . : %d",    ptr_server->autoconnect);
+        weechat_log_printf ("  autoreconnect . . . : %d",    ptr_server->autoreconnect);
+        weechat_log_printf ("  autoreconnect_delay : %d",    ptr_server->autoreconnect_delay);
+        weechat_log_printf ("  addresses . . . . . : '%s'",  ptr_server->addresses);
+        weechat_log_printf ("  ipv6. . . . . . . . : %d",    ptr_server->ipv6);
+        weechat_log_printf ("  ssl . . . . . . . . : %d",    ptr_server->ssl);
         weechat_log_printf ("  password. . . . . . : '%s'",
                             (ptr_server->password && ptr_server->password[0]) ?
                             "(hidden)" : ptr_server->password);
-        weechat_log_printf ("  nicks . . . . . . . : '%s'", ptr_server->nicks);
-        weechat_log_printf ("  username. . . . . . : '%s'", ptr_server->username);
-        weechat_log_printf ("  realname. . . . . . : '%s'", ptr_server->realname);
+        weechat_log_printf ("  nicks . . . . . . . : '%s'",  ptr_server->nicks);
+        weechat_log_printf ("  username. . . . . . : '%s'",  ptr_server->username);
+        weechat_log_printf ("  realname. . . . . . : '%s'",  ptr_server->realname);
         weechat_log_printf ("  command . . . . . . : '%s'",
                             (ptr_server->command && ptr_server->command[0]) ?
                             "(hidden)" : ptr_server->command);
-        weechat_log_printf ("  command_delay . . . : %d",   ptr_server->command_delay);
-        weechat_log_printf ("  autojoin. . . . . . : '%s'", ptr_server->autojoin);
-        weechat_log_printf ("  autorejoin. . . . . : %d",   ptr_server->autorejoin);
-        weechat_log_printf ("  reloaded_from_config: %d",   ptr_server->reloaded_from_config);
-        weechat_log_printf ("  addresses_count . . : %d",   ptr_server->addresses_count);
-        weechat_log_printf ("  addresses_array . . : 0x%x", ptr_server->addresses_array);
-        weechat_log_printf ("  ports_array . . . . : 0x%x", ptr_server->ports_array);
-        weechat_log_printf ("  sock. . . . . . . . : %d",   ptr_server->sock);
-        weechat_log_printf ("  hook_connect. . . . : 0x%x", ptr_server->hook_connect);
-        weechat_log_printf ("  hook_fd . . . . . . : 0x%x", ptr_server->hook_fd);
-        weechat_log_printf ("  is_connected. . . . : %d",   ptr_server->is_connected);
-        weechat_log_printf ("  ssl_connected . . . : %d",   ptr_server->ssl_connected);
-        weechat_log_printf ("  unterminated_message: '%s'", ptr_server->unterminated_message);
-        weechat_log_printf ("  nicks_count . . . . : %d",   ptr_server->nicks_count);
-        weechat_log_printf ("  nicks_array . . . . : 0x%x", ptr_server->nicks_array);
-        weechat_log_printf ("  nick. . . . . . . . : '%s'", ptr_server->nick);
-        weechat_log_printf ("  nick_modes. . . . . : '%s'", ptr_server->nick_modes);
-        weechat_log_printf ("  prefix. . . . . . . : '%s'", ptr_server->prefix);
-        weechat_log_printf ("  reconnect_start . . : %ld",  ptr_server->reconnect_start);
-        weechat_log_printf ("  command_time. . . . : %ld",  ptr_server->command_time);
-        weechat_log_printf ("  reconnect_join. . . : %d",   ptr_server->reconnect_join);
-        weechat_log_printf ("  disable_autojoin. . : %d",   ptr_server->disable_autojoin);
-        weechat_log_printf ("  is_away . . . . . . : %d",   ptr_server->is_away);
-        weechat_log_printf ("  away_message. . . . : '%s'", ptr_server->away_message);
-        weechat_log_printf ("  away_time . . . . . : %ld",  ptr_server->away_time);
-        weechat_log_printf ("  lag . . . . . . . . : %d",   ptr_server->lag);
+        weechat_log_printf ("  command_delay . . . : %d",    ptr_server->command_delay);
+        weechat_log_printf ("  autojoin. . . . . . : '%s'",  ptr_server->autojoin);
+        weechat_log_printf ("  autorejoin. . . . . : %d",    ptr_server->autorejoin);
+        weechat_log_printf ("  reloaded_from_config: %d",    ptr_server->reloaded_from_config);
+        weechat_log_printf ("  addresses_count . . : %d",    ptr_server->addresses_count);
+        weechat_log_printf ("  addresses_array . . : 0x%lx", ptr_server->addresses_array);
+        weechat_log_printf ("  ports_array . . . . : 0x%lx", ptr_server->ports_array);
+        weechat_log_printf ("  sock. . . . . . . . : %d",    ptr_server->sock);
+        weechat_log_printf ("  hook_connect. . . . : 0x%lx", ptr_server->hook_connect);
+        weechat_log_printf ("  hook_fd . . . . . . : 0x%lx", ptr_server->hook_fd);
+        weechat_log_printf ("  is_connected. . . . : %d",    ptr_server->is_connected);
+        weechat_log_printf ("  ssl_connected . . . : %d",    ptr_server->ssl_connected);
+        weechat_log_printf ("  unterminated_message: '%s'",  ptr_server->unterminated_message);
+        weechat_log_printf ("  nicks_count . . . . : %d",    ptr_server->nicks_count);
+        weechat_log_printf ("  nicks_array . . . . : 0x%lx", ptr_server->nicks_array);
+        weechat_log_printf ("  nick. . . . . . . . : '%s'",  ptr_server->nick);
+        weechat_log_printf ("  nick_modes. . . . . : '%s'",  ptr_server->nick_modes);
+        weechat_log_printf ("  prefix. . . . . . . : '%s'",  ptr_server->prefix);
+        weechat_log_printf ("  reconnect_start . . : %ld",   ptr_server->reconnect_start);
+        weechat_log_printf ("  command_time. . . . : %ld",   ptr_server->command_time);
+        weechat_log_printf ("  reconnect_join. . . : %d",    ptr_server->reconnect_join);
+        weechat_log_printf ("  disable_autojoin. . : %d",    ptr_server->disable_autojoin);
+        weechat_log_printf ("  is_away . . . . . . : %d",    ptr_server->is_away);
+        weechat_log_printf ("  away_message. . . . : '%s'",  ptr_server->away_message);
+        weechat_log_printf ("  away_time . . . . . : %ld",   ptr_server->away_time);
+        weechat_log_printf ("  lag . . . . . . . . : %d",    ptr_server->lag);
         weechat_log_printf ("  lag_check_time. . . : tv_sec:%d, tv_usec:%d",
                             ptr_server->lag_check_time.tv_sec,
                             ptr_server->lag_check_time.tv_usec);
-        weechat_log_printf ("  lag_next_check. . . : %ld",  ptr_server->lag_next_check);
-        weechat_log_printf ("  last_user_message . : %ld",  ptr_server->last_user_message);
-        weechat_log_printf ("  outqueue. . . . . . : 0x%x", ptr_server->outqueue);
-        weechat_log_printf ("  last_outqueue . . . : 0x%x", ptr_server->last_outqueue);
-        weechat_log_printf ("  buffer. . . . . . . : 0x%x", ptr_server->buffer);
-        weechat_log_printf ("  channels. . . . . . : 0x%x", ptr_server->channels);
-        weechat_log_printf ("  last_channel. . . . : 0x%x", ptr_server->last_channel);
-        weechat_log_printf ("  prev_server . . . . : 0x%x", ptr_server->prev_server);
-        weechat_log_printf ("  next_server . . . . : 0x%x", ptr_server->next_server);
+        weechat_log_printf ("  lag_next_check. . . : %ld",   ptr_server->lag_next_check);
+        weechat_log_printf ("  last_user_message . : %ld",   ptr_server->last_user_message);
+        weechat_log_printf ("  outqueue. . . . . . : 0x%lx", ptr_server->outqueue);
+        weechat_log_printf ("  last_outqueue . . . : 0x%lx", ptr_server->last_outqueue);
+        weechat_log_printf ("  buffer. . . . . . . : 0x%lx", ptr_server->buffer);
+        weechat_log_printf ("  channels. . . . . . : 0x%lx", ptr_server->channels);
+        weechat_log_printf ("  last_channel. . . . : 0x%lx", ptr_server->last_channel);
+        weechat_log_printf ("  prev_server . . . . : 0x%lx", ptr_server->prev_server);
+        weechat_log_printf ("  next_server . . . . : 0x%lx", ptr_server->next_server);
 
         for (ptr_channel = ptr_server->channels; ptr_channel;
              ptr_channel = ptr_channel->next_channel)

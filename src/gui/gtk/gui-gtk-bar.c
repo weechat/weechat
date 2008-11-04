@@ -431,14 +431,14 @@ void
 gui_bar_window_print_log (struct t_gui_bar_window *bar_window)
 {
     log_printf ("");
-    log_printf ("  [window bar (addr:0x%x)]",   bar_window);
-    log_printf ("    bar . . . . . . . : 0x%x", bar_window->bar);
-    log_printf ("    x . . . . . . . . : %d",   bar_window->x);
-    log_printf ("    y . . . . . . . . : %d",   bar_window->y);
-    log_printf ("    width . . . . . . : %d",   bar_window->width);
-    log_printf ("    height. . . . . . : %d",   bar_window->height);
-    log_printf ("    scroll_x. . . . . : %d",   bar_window->scroll_x);
-    log_printf ("    scroll_y. . . . . : %d",   bar_window->scroll_y);
-    log_printf ("    prev_bar_window . : 0x%x", bar_window->prev_bar_window);
-    log_printf ("    next_bar_window . : 0x%x", bar_window->next_bar_window);
+    log_printf ("  [window bar (addr:0x%lx)]",   bar_window);
+    log_printf ("    bar . . . . . . . : 0x%lx", bar_window->bar);
+    log_printf ("    x . . . . . . . . : %d",    bar_window->x);
+    log_printf ("    y . . . . . . . . : %d",    bar_window->y);
+    log_printf ("    width . . . . . . : %d",    bar_window->width);
+    log_printf ("    height. . . . . . : %d",    bar_window->height);
+    log_printf ("    scroll_x. . . . . : %d",    bar_window->scroll_x);
+    log_printf ("    scroll_y. . . . . : %d",    bar_window->scroll_y);
+    log_printf ("    prev_bar_window . : 0x%lx", bar_window->prev_bar_window);
+    log_printf ("    next_bar_window . : 0x%lx", bar_window->next_bar_window);
 }

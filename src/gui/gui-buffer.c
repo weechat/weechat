@@ -1600,7 +1600,7 @@ gui_buffer_dump_hexa (struct t_gui_buffer *buffer)
     char hexa[(16 * 3) + 1], ascii[(16 * 2) + 1];
     int hexa_pos, ascii_pos;
     
-    log_printf ("[buffer dump hexa (addr:0x%x)]", buffer);
+    log_printf ("[buffer dump hexa (addr:0x%lx)]", buffer);
     num_line = 1;
     for (ptr_line = buffer->lines; ptr_line; ptr_line = ptr_line->next_line)
     {
@@ -1671,65 +1671,65 @@ gui_buffer_print_log ()
          ptr_buffer = ptr_buffer->next_buffer)
     {
         log_printf ("");
-        log_printf ("[buffer (addr:0x%x)]", ptr_buffer);
-        log_printf ("  plugin . . . . . . . . : 0x%x ('%s')",
+        log_printf ("[buffer (addr:0x%lx)]", ptr_buffer);
+        log_printf ("  plugin . . . . . . . . : 0x%lx ('%s')",
                     ptr_buffer->plugin, plugin_get_name (ptr_buffer->plugin));
-        log_printf ("  plugin_name_for_upgrade: '%s'", ptr_buffer->plugin_name_for_upgrade);
-        log_printf ("  number . . . . . . . . : %d",   ptr_buffer->number);
-        log_printf ("  layout_number. . . . . : %d",   ptr_buffer->layout_number);
-        log_printf ("  name . . . . . . . . . : '%s'", ptr_buffer->name);
-        log_printf ("  short_name . . . . . . : '%s'", ptr_buffer->short_name);
-        log_printf ("  type . . . . . . . . . : %d",   ptr_buffer->type);
-        log_printf ("  notify . . . . . . . . : %d",   ptr_buffer->notify);
-        log_printf ("  num_displayed. . . . . : %d",   ptr_buffer->num_displayed);
-        log_printf ("  close_callback . . . . : 0x%x", ptr_buffer->close_callback);
-        log_printf ("  close_callback_data. . : 0x%x", ptr_buffer->close_callback_data);
-        log_printf ("  title. . . . . . . . . : '%s'", ptr_buffer->title);
-        log_printf ("  lines. . . . . . . . . : 0x%x", ptr_buffer->lines);
-        log_printf ("  last_line. . . . . . . : 0x%x", ptr_buffer->last_line);
-        log_printf ("  last_read_line . . . . : 0x%x", ptr_buffer->last_read_line);
-        log_printf ("  lines_count. . . . . . : %d",   ptr_buffer->lines_count);
-        log_printf ("  lines_hidden . . . . . : %d",   ptr_buffer->lines_hidden);
-        log_printf ("  prefix_max_length. . . : %d",   ptr_buffer->prefix_max_length);
-        log_printf ("  chat_refresh_needed. . : %d",   ptr_buffer->chat_refresh_needed);
-        log_printf ("  nicklist . . . . . . . : %d",   ptr_buffer->nicklist);
-        log_printf ("  nicklist_case_sensitive: %d",   ptr_buffer->nicklist_case_sensitive);
-        log_printf ("  nicklist_root. . . . . : 0x%x", ptr_buffer->nicklist_root);
-        log_printf ("  nicklist_max_length. . : %d",   ptr_buffer->nicklist_max_length);
-        log_printf ("  nicklist_display_groups: %d",   ptr_buffer->nicklist_display_groups);
-        log_printf ("  nicklist_visible_count.: %d",   ptr_buffer->nicklist_visible_count);
-        log_printf ("  input. . . . . . . . . : %d",   ptr_buffer->input);
-        log_printf ("  input_callback . . . . : 0x%x", ptr_buffer->input_callback);
-        log_printf ("  input_callback_data. . : 0x%x", ptr_buffer->input_callback_data);
-        log_printf ("  input_buffer . . . . . : '%s'", ptr_buffer->input_buffer);
-        log_printf ("  input_buffer_alloc . . : %d",   ptr_buffer->input_buffer_alloc);
-        log_printf ("  input_buffer_size. . . : %d",   ptr_buffer->input_buffer_size);
-        log_printf ("  input_buffer_length. . : %d",   ptr_buffer->input_buffer_length);
-        log_printf ("  input_buffer_pos . . . : %d",   ptr_buffer->input_buffer_pos);
-        log_printf ("  input_buffer_1st_disp. : %d",   ptr_buffer->input_buffer_1st_display);
-        log_printf ("  input_refresh_needed . : %d",   ptr_buffer->input_refresh_needed);
-        log_printf ("  completion . . . . . . : 0x%x", ptr_buffer->completion);
-        log_printf ("  history. . . . . . . . : 0x%x", ptr_buffer->history);
-        log_printf ("  last_history . . . . . : 0x%x", ptr_buffer->last_history);
-        log_printf ("  ptr_history. . . . . . : 0x%x", ptr_buffer->ptr_history);
-        log_printf ("  num_history. . . . . . : %d",   ptr_buffer->num_history);
-        log_printf ("  text_search. . . . . . : %d",   ptr_buffer->text_search);
-        log_printf ("  text_search_exact. . . : %d",   ptr_buffer->text_search_exact);
-        log_printf ("  text_search_found. . . : %d",   ptr_buffer->text_search_found);
-        log_printf ("  text_search_input. . . : '%s'", ptr_buffer->text_search_input);
-        log_printf ("  highlight_words. . . . : '%s'", ptr_buffer->highlight_words);
-        log_printf ("  highlight_tags . . . . : '%s'", ptr_buffer->highlight_tags);
-        log_printf ("  highlight_tags_count . : %d",   ptr_buffer->highlight_tags_count);
-        log_printf ("  highlight_tags_array . : 0x%x", ptr_buffer->highlight_tags_array);
-        log_printf ("  keys . . . . . . . . . : 0x%x", ptr_buffer->keys);
-        log_printf ("  last_key . . . . . . . : 0x%x", ptr_buffer->last_key);
-        log_printf ("  prev_buffer. . . . . . : 0x%x", ptr_buffer->prev_buffer);
-        log_printf ("  next_buffer. . . . . . : 0x%x", ptr_buffer->next_buffer);
+        log_printf ("  plugin_name_for_upgrade: '%s'",  ptr_buffer->plugin_name_for_upgrade);
+        log_printf ("  number . . . . . . . . : %d",    ptr_buffer->number);
+        log_printf ("  layout_number. . . . . : %d",    ptr_buffer->layout_number);
+        log_printf ("  name . . . . . . . . . : '%s'",  ptr_buffer->name);
+        log_printf ("  short_name . . . . . . : '%s'",  ptr_buffer->short_name);
+        log_printf ("  type . . . . . . . . . : %d",    ptr_buffer->type);
+        log_printf ("  notify . . . . . . . . : %d",    ptr_buffer->notify);
+        log_printf ("  num_displayed. . . . . : %d",    ptr_buffer->num_displayed);
+        log_printf ("  close_callback . . . . : 0x%lx", ptr_buffer->close_callback);
+        log_printf ("  close_callback_data. . : 0x%lx", ptr_buffer->close_callback_data);
+        log_printf ("  title. . . . . . . . . : '%s'",  ptr_buffer->title);
+        log_printf ("  lines. . . . . . . . . : 0x%lx", ptr_buffer->lines);
+        log_printf ("  last_line. . . . . . . : 0x%lx", ptr_buffer->last_line);
+        log_printf ("  last_read_line . . . . : 0x%lx", ptr_buffer->last_read_line);
+        log_printf ("  lines_count. . . . . . : %d",    ptr_buffer->lines_count);
+        log_printf ("  lines_hidden . . . . . : %d",    ptr_buffer->lines_hidden);
+        log_printf ("  prefix_max_length. . . : %d",    ptr_buffer->prefix_max_length);
+        log_printf ("  chat_refresh_needed. . : %d",    ptr_buffer->chat_refresh_needed);
+        log_printf ("  nicklist . . . . . . . : %d",    ptr_buffer->nicklist);
+        log_printf ("  nicklist_case_sensitive: %d",    ptr_buffer->nicklist_case_sensitive);
+        log_printf ("  nicklist_root. . . . . : 0x%lx", ptr_buffer->nicklist_root);
+        log_printf ("  nicklist_max_length. . : %d",    ptr_buffer->nicklist_max_length);
+        log_printf ("  nicklist_display_groups: %d",    ptr_buffer->nicklist_display_groups);
+        log_printf ("  nicklist_visible_count.: %d",    ptr_buffer->nicklist_visible_count);
+        log_printf ("  input. . . . . . . . . : %d",    ptr_buffer->input);
+        log_printf ("  input_callback . . . . : 0x%lx", ptr_buffer->input_callback);
+        log_printf ("  input_callback_data. . : 0x%lx", ptr_buffer->input_callback_data);
+        log_printf ("  input_buffer . . . . . : '%s'",  ptr_buffer->input_buffer);
+        log_printf ("  input_buffer_alloc . . : %d",    ptr_buffer->input_buffer_alloc);
+        log_printf ("  input_buffer_size. . . : %d",    ptr_buffer->input_buffer_size);
+        log_printf ("  input_buffer_length. . : %d",    ptr_buffer->input_buffer_length);
+        log_printf ("  input_buffer_pos . . . : %d",    ptr_buffer->input_buffer_pos);
+        log_printf ("  input_buffer_1st_disp. : %d",    ptr_buffer->input_buffer_1st_display);
+        log_printf ("  input_refresh_needed . : %d",    ptr_buffer->input_refresh_needed);
+        log_printf ("  completion . . . . . . : 0x%lx", ptr_buffer->completion);
+        log_printf ("  history. . . . . . . . : 0x%lx", ptr_buffer->history);
+        log_printf ("  last_history . . . . . : 0x%lx", ptr_buffer->last_history);
+        log_printf ("  ptr_history. . . . . . : 0x%lx", ptr_buffer->ptr_history);
+        log_printf ("  num_history. . . . . . : %d",    ptr_buffer->num_history);
+        log_printf ("  text_search. . . . . . : %d",    ptr_buffer->text_search);
+        log_printf ("  text_search_exact. . . : %d",    ptr_buffer->text_search_exact);
+        log_printf ("  text_search_found. . . : %d",    ptr_buffer->text_search_found);
+        log_printf ("  text_search_input. . . : '%s'",  ptr_buffer->text_search_input);
+        log_printf ("  highlight_words. . . . : '%s'",  ptr_buffer->highlight_words);
+        log_printf ("  highlight_tags . . . . : '%s'",  ptr_buffer->highlight_tags);
+        log_printf ("  highlight_tags_count . : %d",    ptr_buffer->highlight_tags_count);
+        log_printf ("  highlight_tags_array . : 0x%lx", ptr_buffer->highlight_tags_array);
+        log_printf ("  keys . . . . . . . . . : 0x%lx", ptr_buffer->keys);
+        log_printf ("  last_key . . . . . . . : 0x%lx", ptr_buffer->last_key);
+        log_printf ("  prev_buffer. . . . . . : 0x%lx", ptr_buffer->prev_buffer);
+        log_printf ("  next_buffer. . . . . . : 0x%lx", ptr_buffer->next_buffer);
         
         if (ptr_buffer->keys)
         {
             log_printf ("");
-            log_printf ("  => keys = 0x%x, last_key = 0x%x:",
+            log_printf ("  => keys = 0x%lx, last_key = 0x%lx:",
                         ptr_buffer->keys, ptr_buffer->last_key);
             gui_keyboard_print_log (ptr_buffer);
         }
@@ -1737,13 +1737,13 @@ gui_buffer_print_log ()
         if (ptr_buffer->local_variables)
         {
             log_printf ("");
-            log_printf ("  => local_variables = 0x%x, last_local_var = 0x%x:",
+            log_printf ("  => local_variables = 0x%lx, last_local_var = 0x%lx:",
                         ptr_buffer->local_variables, ptr_buffer->last_local_var);
             for (ptr_local_var = ptr_buffer->local_variables; ptr_local_var;
                  ptr_local_var = ptr_local_var->next_var)
             {
                 log_printf ("");
-                log_printf ("    [local variable (addr:0x%x)]",
+                log_printf ("    [local variable (addr:0x%lx)]",
                             ptr_local_var);
                 log_printf ("      name . . . . . . . : '%s'", ptr_local_var->name);
                 log_printf ("      value. . . . . . . : '%s'", ptr_local_var->value);
@@ -1751,7 +1751,7 @@ gui_buffer_print_log ()
         }
         
         log_printf ("");
-        log_printf ("  => nicklist_root (addr:0x%x):", ptr_buffer->nicklist_root);
+        log_printf ("  => nicklist_root (addr:0x%lx):", ptr_buffer->nicklist_root);
         gui_nicklist_print_log (ptr_buffer->nicklist_root, 0);
         
         log_printf ("");

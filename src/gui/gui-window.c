@@ -949,38 +949,38 @@ gui_window_print_log ()
     struct t_gui_window *ptr_window;
     
     log_printf ("");
-    log_printf ("current window = 0x%x", gui_current_window);
+    log_printf ("current window = 0x%lx", gui_current_window);
     
     for (ptr_window = gui_windows; ptr_window; ptr_window = ptr_window->next_window)
     {
         log_printf ("");
-        log_printf ("[window (addr:0x%x)]", ptr_window);
-        log_printf ("  win_x . . . . . . . : %d",   ptr_window->win_x);
-        log_printf ("  win_y . . . . . . . : %d",   ptr_window->win_y);
-        log_printf ("  win_width . . . . . : %d",   ptr_window->win_width);
-        log_printf ("  win_height. . . . . : %d",   ptr_window->win_height);
-        log_printf ("  win_width_pct . . . : %d",   ptr_window->win_width_pct);
-        log_printf ("  win_height_pct. . . : %d",   ptr_window->win_height_pct);
-        log_printf ("  win_chat_x. . . . . : %d",   ptr_window->win_chat_x);
-        log_printf ("  win_chat_y. . . . . : %d",   ptr_window->win_chat_y);
-        log_printf ("  win_chat_width. . . : %d",   ptr_window->win_chat_width);
-        log_printf ("  win_chat_height . . : %d",   ptr_window->win_chat_height);
-        log_printf ("  win_chat_cursor_x . : %d",   ptr_window->win_chat_cursor_x);
-        log_printf ("  win_chat_cursor_y . : %d",   ptr_window->win_chat_cursor_y);
-        log_printf ("  refresh_needed. . . : %d",   ptr_window->refresh_needed);
-        log_printf ("  gui_objects . . . . : 0x%x", ptr_window->gui_objects);
-        log_printf ("  buffer. . . . . . . : 0x%x", ptr_window->buffer);
-        log_printf ("  layout_plugin_name. : '%s'", ptr_window->layout_plugin_name);
-        log_printf ("  layout_buffer_name. : '%s'", ptr_window->layout_buffer_name);
-        log_printf ("  first_line_displayed: %d",   ptr_window->first_line_displayed);
-        log_printf ("  start_line. . . . . : 0x%x", ptr_window->start_line);
-        log_printf ("  start_line_pos. . . : %d",   ptr_window->start_line_pos);
-        log_printf ("  scroll. . . . . . . : %d",   ptr_window->scroll);
-        log_printf ("  scroll_lines_after. : %d",   ptr_window->scroll_lines_after);
-        log_printf ("  scroll_reset_allowed: %d",   ptr_window->scroll_reset_allowed);
-        log_printf ("  ptr_tree. . . . . . : 0x%x", ptr_window->ptr_tree);
-        log_printf ("  prev_window . . . . : 0x%x", ptr_window->prev_window);
-        log_printf ("  next_window . . . . : 0x%x", ptr_window->next_window);
+        log_printf ("[window (addr:0x%lx)]", ptr_window);
+        log_printf ("  win_x . . . . . . . : %d",    ptr_window->win_x);
+        log_printf ("  win_y . . . . . . . : %d",    ptr_window->win_y);
+        log_printf ("  win_width . . . . . : %d",    ptr_window->win_width);
+        log_printf ("  win_height. . . . . : %d",    ptr_window->win_height);
+        log_printf ("  win_width_pct . . . : %d",    ptr_window->win_width_pct);
+        log_printf ("  win_height_pct. . . : %d",    ptr_window->win_height_pct);
+        log_printf ("  win_chat_x. . . . . : %d",    ptr_window->win_chat_x);
+        log_printf ("  win_chat_y. . . . . : %d",    ptr_window->win_chat_y);
+        log_printf ("  win_chat_width. . . : %d",    ptr_window->win_chat_width);
+        log_printf ("  win_chat_height . . : %d",    ptr_window->win_chat_height);
+        log_printf ("  win_chat_cursor_x . : %d",    ptr_window->win_chat_cursor_x);
+        log_printf ("  win_chat_cursor_y . : %d",    ptr_window->win_chat_cursor_y);
+        log_printf ("  refresh_needed. . . : %d",    ptr_window->refresh_needed);
+        log_printf ("  gui_objects . . . . : 0x%lx", ptr_window->gui_objects);
+        log_printf ("  buffer. . . . . . . : 0x%lx", ptr_window->buffer);
+        log_printf ("  layout_plugin_name. : '%s'",  ptr_window->layout_plugin_name);
+        log_printf ("  layout_buffer_name. : '%s'",  ptr_window->layout_buffer_name);
+        log_printf ("  first_line_displayed: %d",    ptr_window->first_line_displayed);
+        log_printf ("  start_line. . . . . : 0x%lx", ptr_window->start_line);
+        log_printf ("  start_line_pos. . . : %d",    ptr_window->start_line_pos);
+        log_printf ("  scroll. . . . . . . : %d",    ptr_window->scroll);
+        log_printf ("  scroll_lines_after. : %d",    ptr_window->scroll_lines_after);
+        log_printf ("  scroll_reset_allowed: %d",    ptr_window->scroll_reset_allowed);
+        log_printf ("  ptr_tree. . . . . . : 0x%lx", ptr_window->ptr_tree);
+        log_printf ("  prev_window . . . . : 0x%lx", ptr_window->prev_window);
+        log_printf ("  next_window . . . . : 0x%lx", ptr_window->next_window);
         gui_window_objects_print_log (ptr_window);
     }
 }

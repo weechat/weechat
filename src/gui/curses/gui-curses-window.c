@@ -1447,10 +1447,10 @@ gui_window_objects_print_log (struct t_gui_window *window)
     
     log_printf ("");
     log_printf ("  window specific objects:");
-    log_printf ("  win_chat. . . . . . : 0x%x", GUI_CURSES(window)->win_chat);
-    log_printf ("  win_separator . . . : 0x%x", GUI_CURSES(window)->win_separator);
-    log_printf ("  bar_windows . . . . : 0x%x", GUI_CURSES(window)->bar_windows);
-    log_printf ("  last_bar_windows. . : 0x%x", GUI_CURSES(window)->last_bar_window);
+    log_printf ("  win_chat. . . . . . : 0x%lx", GUI_CURSES(window)->win_chat);
+    log_printf ("  win_separator . . . : 0x%lx", GUI_CURSES(window)->win_separator);
+    log_printf ("  bar_windows . . . . : 0x%lx", GUI_CURSES(window)->bar_windows);
+    log_printf ("  last_bar_windows. . : 0x%lx", GUI_CURSES(window)->last_bar_window);
     
     for (ptr_bar_win = GUI_CURSES(window)->bar_windows; ptr_bar_win;
          ptr_bar_win = ptr_bar_win->next_bar_window)

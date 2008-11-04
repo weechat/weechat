@@ -50,7 +50,7 @@ irc_info_create_string_with_pointer (char **string, void *pointer)
         *string = malloc (64);
         if (*string)
         {
-            snprintf (*string, 64 - 1, "0x%x", (unsigned int)pointer);
+            snprintf (*string, 64 - 1, "0x%lx", (long unsigned int)pointer);
         }
     }
 }

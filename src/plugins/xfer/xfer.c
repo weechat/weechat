@@ -1283,45 +1283,45 @@ xfer_print_log ()
     for (ptr_xfer = xfer_list; ptr_xfer; ptr_xfer = ptr_xfer->next_xfer)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[xfer (addr:0x%x)]", ptr_xfer);
-        weechat_log_printf ("  plugin_name . . . . : '%s'", ptr_xfer->plugin_name);
-        weechat_log_printf ("  plugin_id . . . . . : '%s'", ptr_xfer->plugin_id);
+        weechat_log_printf ("[xfer (addr:0x%lx)]", ptr_xfer);
+        weechat_log_printf ("  plugin_name . . . . : '%s'",  ptr_xfer->plugin_name);
+        weechat_log_printf ("  plugin_id . . . . . : '%s'",  ptr_xfer->plugin_id);
         weechat_log_printf ("  type. . . . . . . . : %d (%s)",
                             ptr_xfer->type,
                             xfer_type_string[ptr_xfer->type]);
-        weechat_log_printf ("  remote_nick . . . . : '%s'", ptr_xfer->remote_nick);
-        weechat_log_printf ("  local_nick. . . . . : '%s'", ptr_xfer->local_nick);
-        weechat_log_printf ("  filename. . . . . . : '%s'", ptr_xfer->filename);
-        weechat_log_printf ("  size. . . . . . . . : %lu",  ptr_xfer->size);
-        weechat_log_printf ("  address . . . . . . : %lu",  ptr_xfer->address);
-        weechat_log_printf ("  port. . . . . . . . : %d",   ptr_xfer->port);
+        weechat_log_printf ("  remote_nick . . . . : '%s'",  ptr_xfer->remote_nick);
+        weechat_log_printf ("  local_nick. . . . . : '%s'",  ptr_xfer->local_nick);
+        weechat_log_printf ("  filename. . . . . . : '%s'",  ptr_xfer->filename);
+        weechat_log_printf ("  size. . . . . . . . : %lu",   ptr_xfer->size);
+        weechat_log_printf ("  address . . . . . . : %lu",   ptr_xfer->address);
+        weechat_log_printf ("  port. . . . . . . . : %d",    ptr_xfer->port);
         
         weechat_log_printf ("  status. . . . . . . : %d (%s)",
                             ptr_xfer->status,
                             xfer_status_string[ptr_xfer->status]);
-        weechat_log_printf ("  buffer. . . . . . . : 0x%x", ptr_xfer->buffer);
-        weechat_log_printf ("  fast_send . . . . . : %d",   ptr_xfer->fast_send);
-        weechat_log_printf ("  blocksize . . . . . : %d",   ptr_xfer->blocksize);
-        weechat_log_printf ("  start_time. . . . . : %ld",  ptr_xfer->start_time);
-        weechat_log_printf ("  start_transfer. . . : %ld",  ptr_xfer->start_transfer);
-        weechat_log_printf ("  sock. . . . . . . . : %d",   ptr_xfer->sock);
-        weechat_log_printf ("  child_pid . . . . . : %d",   ptr_xfer->child_pid);
-        weechat_log_printf ("  child_read. . . . . : %d",   ptr_xfer->child_read);
-        weechat_log_printf ("  child_write . . . . : %d",   ptr_xfer->child_write);
-        weechat_log_printf ("  unterminated_message: '%s'", ptr_xfer->unterminated_message);
-        weechat_log_printf ("  file. . . . . . . . : %d",   ptr_xfer->file);
-        weechat_log_printf ("  local_filename. . . : '%s'", ptr_xfer->local_filename);
-        weechat_log_printf ("  filename_suffix . . : %d",   ptr_xfer->filename_suffix);
-        weechat_log_printf ("  pos . . . . . . . . : %lu",  ptr_xfer->pos);
-        weechat_log_printf ("  ack . . . . . . . . : %lu",  ptr_xfer->ack);
-        weechat_log_printf ("  start_resume. . . . : %lu",  ptr_xfer->start_resume);
-        weechat_log_printf ("  last_check_time . . : %ld",  ptr_xfer->last_check_time);
-        weechat_log_printf ("  last_check_pos. . . : %lu",  ptr_xfer->last_check_pos);
-        weechat_log_printf ("  last_activity . . . : %ld",  ptr_xfer->last_activity);
-        weechat_log_printf ("  bytes_per_sec . . . : %lu",  ptr_xfer->bytes_per_sec);
-        weechat_log_printf ("  eta . . . . . . . . : %lu",  ptr_xfer->eta);
-        weechat_log_printf ("  prev_xfer . . . . . : 0x%x", ptr_xfer->prev_xfer);
-        weechat_log_printf ("  next_xfer . . . . . : 0x%x", ptr_xfer->next_xfer);
+        weechat_log_printf ("  buffer. . . . . . . : 0x%lx", ptr_xfer->buffer);
+        weechat_log_printf ("  fast_send . . . . . : %d",    ptr_xfer->fast_send);
+        weechat_log_printf ("  blocksize . . . . . : %d",    ptr_xfer->blocksize);
+        weechat_log_printf ("  start_time. . . . . : %ld",   ptr_xfer->start_time);
+        weechat_log_printf ("  start_transfer. . . : %ld",   ptr_xfer->start_transfer);
+        weechat_log_printf ("  sock. . . . . . . . : %d",    ptr_xfer->sock);
+        weechat_log_printf ("  child_pid . . . . . : %d",    ptr_xfer->child_pid);
+        weechat_log_printf ("  child_read. . . . . : %d",    ptr_xfer->child_read);
+        weechat_log_printf ("  child_write . . . . : %d",    ptr_xfer->child_write);
+        weechat_log_printf ("  unterminated_message: '%s'",  ptr_xfer->unterminated_message);
+        weechat_log_printf ("  file. . . . . . . . : %d",    ptr_xfer->file);
+        weechat_log_printf ("  local_filename. . . : '%s'",  ptr_xfer->local_filename);
+        weechat_log_printf ("  filename_suffix . . : %d",    ptr_xfer->filename_suffix);
+        weechat_log_printf ("  pos . . . . . . . . : %lu",   ptr_xfer->pos);
+        weechat_log_printf ("  ack . . . . . . . . : %lu",   ptr_xfer->ack);
+        weechat_log_printf ("  start_resume. . . . : %lu",   ptr_xfer->start_resume);
+        weechat_log_printf ("  last_check_time . . : %ld",   ptr_xfer->last_check_time);
+        weechat_log_printf ("  last_check_pos. . . : %lu",   ptr_xfer->last_check_pos);
+        weechat_log_printf ("  last_activity . . . : %ld",   ptr_xfer->last_activity);
+        weechat_log_printf ("  bytes_per_sec . . . : %lu",   ptr_xfer->bytes_per_sec);
+        weechat_log_printf ("  eta . . . . . . . . : %lu",   ptr_xfer->eta);
+        weechat_log_printf ("  prev_xfer . . . . . : 0x%lx", ptr_xfer->prev_xfer);
+        weechat_log_printf ("  next_xfer . . . . . : 0x%lx", ptr_xfer->next_xfer);
     }
 }
 

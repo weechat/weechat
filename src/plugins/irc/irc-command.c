@@ -931,7 +931,7 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
                 {
                     weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                     snprintf (plugin_id, sizeof (plugin_id),
-                              "%x", (unsigned int)ptr_server);
+                              "%lx", (long unsigned int)ptr_server);
                     weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
                     weechat_infolist_new_var_string (item, "type", "file_send");
                     weechat_infolist_new_var_string (item, "protocol", "dcc");
@@ -963,7 +963,7 @@ irc_command_dcc (void *data, struct t_gui_buffer *buffer, int argc,
                 {
                     weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                     snprintf (plugin_id, sizeof (plugin_id),
-                              "%x", (unsigned int)ptr_server);
+                              "%lx", (long unsigned int)ptr_server);
                     weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
                     weechat_infolist_new_var_string (item, "type", "chat_send");
                     weechat_infolist_new_var_string (item, "remote_nick", argv[2]);

@@ -945,15 +945,15 @@ plugin_print_log ()
          ptr_plugin = ptr_plugin->next_plugin)
     {
         log_printf ("");
-        log_printf ("[plugin (addr:0x%x)]", ptr_plugin);
-        log_printf ("  filename . . . . . . . : '%s'", ptr_plugin->filename);
-        log_printf ("  handle . . . . . . . . : 0x%x", ptr_plugin->handle);
-        log_printf ("  name . . . . . . . . . : '%s'", ptr_plugin->name);
-        log_printf ("  description. . . . . . : '%s'", ptr_plugin->description);
-        log_printf ("  version. . . . . . . . : '%s'", ptr_plugin->version);
-        log_printf ("  charset. . . . . . . . : '%s'", ptr_plugin->charset);
-        log_printf ("  debug. . . . . . . . . : %d",   ptr_plugin->debug);
-        log_printf ("  prev_plugin. . . . . . : 0x%x", ptr_plugin->prev_plugin);
-        log_printf ("  next_plugin. . . . . . : 0x%x", ptr_plugin->next_plugin);
+        log_printf ("[plugin (addr:0x%lx)]", ptr_plugin);
+        log_printf ("  filename . . . . . . . : '%s'",  ptr_plugin->filename);
+        log_printf ("  handle . . . . . . . . : 0x%lx", ptr_plugin->handle);
+        log_printf ("  name . . . . . . . . . : '%s'",  ptr_plugin->name);
+        log_printf ("  description. . . . . . : '%s'",  ptr_plugin->description);
+        log_printf ("  version. . . . . . . . : '%s'",  ptr_plugin->version);
+        log_printf ("  charset. . . . . . . . : '%s'",  ptr_plugin->charset);
+        log_printf ("  debug. . . . . . . . . : %d",    ptr_plugin->debug);
+        log_printf ("  prev_plugin. . . . . . : 0x%lx", ptr_plugin->prev_plugin);
+        log_printf ("  next_plugin. . . . . . : 0x%lx", ptr_plugin->next_plugin);
     }
 }

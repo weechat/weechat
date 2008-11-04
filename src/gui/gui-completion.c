@@ -1628,24 +1628,24 @@ gui_completion_search (struct t_gui_completion *completion, int direction,
 void
 gui_completion_print_log (struct t_gui_completion *completion)
 {
-    log_printf ("[completion (addr:0x%x)]", completion);
-    log_printf ("  buffer. . . . . . . . . : 0x%x", completion->buffer);
-    log_printf ("  context . . . . . . . . : %d",   completion->context);
-    log_printf ("  base_command. . . . . . : '%s'", completion->base_command);
-    log_printf ("  base_command_arg. . . . : %d",   completion->base_command_arg);
-    log_printf ("  arg_is_nick . . . . . . : %d",   completion->arg_is_nick);
-    log_printf ("  base_word . . . . . . . : '%s'", completion->base_word);
-    log_printf ("  base_word_pos . . . . . : %d",   completion->base_word_pos);
-    log_printf ("  position. . . . . . . . : %d",   completion->position);
-    log_printf ("  args. . . . . . . . . . : '%s'", completion->args);
-    log_printf ("  direction . . . . . . . : %d",   completion->direction);
-    log_printf ("  add_space . . . . . . . : %d",   completion->add_space);
-    log_printf ("  force_partial_completion: %d",   completion->force_partial_completion);
-    log_printf ("  completion_list . . . . : 0x%x", completion->completion_list);
-    log_printf ("  word_found. . . . . . . : '%s'", completion->word_found);
-    log_printf ("  position_replace. . . . : %d",   completion->position_replace);
-    log_printf ("  diff_size . . . . . . . : %d",   completion->diff_size);
-    log_printf ("  diff_length . . . . . . : %d",   completion->diff_length);
+    log_printf ("[completion (addr:0x%lx)]", completion);
+    log_printf ("  buffer. . . . . . . . . : 0x%lx", completion->buffer);
+    log_printf ("  context . . . . . . . . : %d",    completion->context);
+    log_printf ("  base_command. . . . . . : '%s'",  completion->base_command);
+    log_printf ("  base_command_arg. . . . : %d",    completion->base_command_arg);
+    log_printf ("  arg_is_nick . . . . . . : %d",    completion->arg_is_nick);
+    log_printf ("  base_word . . . . . . . : '%s'",  completion->base_word);
+    log_printf ("  base_word_pos . . . . . : %d",    completion->base_word_pos);
+    log_printf ("  position. . . . . . . . : %d",    completion->position);
+    log_printf ("  args. . . . . . . . . . : '%s'",  completion->args);
+    log_printf ("  direction . . . . . . . : %d",    completion->direction);
+    log_printf ("  add_space . . . . . . . : %d",    completion->add_space);
+    log_printf ("  force_partial_completion: %d",    completion->force_partial_completion);
+    log_printf ("  completion_list . . . . : 0x%lx", completion->completion_list);
+    log_printf ("  word_found. . . . . . . : '%s'",  completion->word_found);
+    log_printf ("  position_replace. . . . : %d",    completion->position_replace);
+    log_printf ("  diff_size . . . . . . . : %d",    completion->diff_size);
+    log_printf ("  diff_length . . . . . . : %d",    completion->diff_length);
     if (completion->completion_list)
     {
         log_printf ("");

@@ -180,7 +180,7 @@ script_ptr2str (void *pointer)
         return strdup ("");
     
     snprintf (pointer_str, sizeof (pointer_str),
-              "0x%x", (unsigned int)pointer);
+              "0x%lx", (long unsigned int)pointer);
     
     return strdup (pointer_str);
 }
@@ -192,12 +192,12 @@ script_ptr2str (void *pointer)
 void *
 script_str2ptr (const char *pointer_str)
 {
-    unsigned int value;
+    long unsigned int value;
     
     if (!pointer_str || (pointer_str[0] != '0') || (pointer_str[1] != 'x'))
         return NULL;
     
-    sscanf (pointer_str + 2, "%x", &value);
+    sscanf (pointer_str + 2, "%lx", &value);
     
     return (void *)value;
 }
@@ -604,19 +604,19 @@ script_print_log (struct t_weechat_plugin *weechat_plugin,
          ptr_script = ptr_script->next_script)
     {
         weechat_log_printf ("");
-        weechat_log_printf ("[script %s (addr:0x%x)]",      ptr_script->name, ptr_script);
-        weechat_log_printf ("  filename. . . . . . : '%s'", ptr_script->filename);
-        weechat_log_printf ("  interpreter . . . . : 0x%x", ptr_script->interpreter);
-        weechat_log_printf ("  name. . . . . . . . : '%s'", ptr_script->name);
-        weechat_log_printf ("  author. . . . . . . : '%s'", ptr_script->author);
-        weechat_log_printf ("  version . . . . . . : '%s'", ptr_script->version);
-        weechat_log_printf ("  license . . . . . . : '%s'", ptr_script->license);
-        weechat_log_printf ("  description . . . . : '%s'", ptr_script->description);
-        weechat_log_printf ("  shutdown_func . . . : '%s'", ptr_script->shutdown_func);
-        weechat_log_printf ("  charset . . . . . . : '%s'", ptr_script->charset);
-        weechat_log_printf ("  callbacks . . . . . : 0x%x", ptr_script->callbacks);
-        weechat_log_printf ("  prev_script . . . . : 0x%x", ptr_script->prev_script);
-        weechat_log_printf ("  next_script . . . . : 0x%x", ptr_script->next_script);
+        weechat_log_printf ("[script %s (addr:0x%lx)]",      ptr_script->name, ptr_script);
+        weechat_log_printf ("  filename. . . . . . : '%s'",  ptr_script->filename);
+        weechat_log_printf ("  interpreter . . . . : 0x%lx", ptr_script->interpreter);
+        weechat_log_printf ("  name. . . . . . . . : '%s'",  ptr_script->name);
+        weechat_log_printf ("  author. . . . . . . : '%s'",  ptr_script->author);
+        weechat_log_printf ("  version . . . . . . : '%s'",  ptr_script->version);
+        weechat_log_printf ("  license . . . . . . : '%s'",  ptr_script->license);
+        weechat_log_printf ("  description . . . . : '%s'",  ptr_script->description);
+        weechat_log_printf ("  shutdown_func . . . : '%s'",  ptr_script->shutdown_func);
+        weechat_log_printf ("  charset . . . . . . : '%s'",  ptr_script->charset);
+        weechat_log_printf ("  callbacks . . . . . : 0x%lx", ptr_script->callbacks);
+        weechat_log_printf ("  prev_script . . . . : 0x%lx", ptr_script->prev_script);
+        weechat_log_printf ("  next_script . . . . : 0x%lx", ptr_script->next_script);
 
         for (ptr_script_callback = ptr_script->callbacks; ptr_script_callback;
              ptr_script_callback = ptr_script_callback->next_callback)

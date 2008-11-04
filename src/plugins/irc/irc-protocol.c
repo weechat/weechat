@@ -1562,7 +1562,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     {
                         weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                         snprintf (plugin_id, sizeof (plugin_id),
-                                  "%x", (unsigned int)server);
+                                  "%lx", (long unsigned int)server);
                         weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
                         weechat_infolist_new_var_string (item, "type", "file_recv");
                         weechat_infolist_new_var_string (item, "protocol", "dcc");
@@ -1672,7 +1672,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     {
                         weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                         snprintf (plugin_id, sizeof (plugin_id),
-                                  "%x", (unsigned int)server);
+                                  "%lx", (long unsigned int)server);
                         weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
                         weechat_infolist_new_var_string (item, "type", "file_recv");
                         weechat_infolist_new_var_string (item, "filename", pos_file);
@@ -1778,7 +1778,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     {
                         weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                         snprintf (plugin_id, sizeof (plugin_id),
-                                  "%x", (unsigned int)server);
+                                  "%lx", (long unsigned int)server);
                         weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
                         weechat_infolist_new_var_string (item, "type", "file_recv");
                         weechat_infolist_new_var_string (item, "filename", pos_file);
@@ -1897,7 +1897,7 @@ irc_protocol_cmd_privmsg (struct t_irc_server *server, const char *command,
                     {
                         weechat_infolist_new_var_string (item, "plugin_name", weechat_plugin->name);
                         snprintf (plugin_id, sizeof (plugin_id),
-                                  "%x", (unsigned int)server);
+                                  "%lx", (long unsigned int)server);
                         weechat_infolist_new_var_string (item, "plugin_id", plugin_id);
                         weechat_infolist_new_var_string (item, "type", "chat_recv");
                         weechat_infolist_new_var_string (item, "remote_nick", nick);
