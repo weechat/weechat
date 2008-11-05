@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+
+WeeChat documentation (english version)
+
+Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
+
+This manual is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3 of the License, or
+(at your option) any later version.
+
+This manual is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+"file:///usr/share/xml/docbook/schema/dtd/4.2/docbookx.dtd"
+[
+  <!-- ***** auto-built: *****  -->
+  <!ENTITY date.xml SYSTEM "date.xml">
+  <!ENTITY % include_autogen.xml SYSTEM "include_autogen.xml">
+    %include_autogen.xml;
+
+  <!-- ***** written by hand: ***** -->
+  <!ENTITY intro.en.xml          SYSTEM "intro.en.xml">
+  <!ENTITY plugins.en.xml        SYSTEM "plugins.en.xml">
+  <!ENTITY plugin_api.en.xml     SYSTEM "plugin_api.en.xml">
+  <!ENTITY plugin_scripts.en.xml SYSTEM "plugin_scripts.en.xml">
+  <!ENTITY authors.en.xml        SYSTEM "authors.en.xml">
+]>
+
+<book lang="en">
+  
+  <bookinfo>
+    
+    <title>WeeChat 0.2.7-dev - Developer guide</title>
+    <subtitle>Fast, light and extensible chat client</subtitle>
+    
+    <author>
+      <firstname>Sébastien</firstname>
+      <surname>Helleu</surname>
+      <email>flashcode AT flashtux.org</email>
+    </author>
+    
+    &date.xml;
+    
+    <copyright>
+      <year>2008</year>
+      <holder>Sébastien Helleu</holder>
+    </copyright>
+    
+    <legalnotice>
+      <para>
+        This manual is free software; you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation; either version 3 of the License, or
+        (at your option) any later version.
+      </para>
+      <para>
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+      </para>
+      <para>
+        You should have received a copy of the GNU General Public License
+        along with this program.  If not, see
+        &lt;http://www.gnu.org/licenses/&gt;.
+      </para>
+    </legalnotice>
+    
+    <abstract>
+      <para>
+        This manual documents development of WeeChat and its extensions.
+        It is part of WeeChat.
+      </para>
+      <para>
+        Latest version of this document can be found on this page:
+        <ulink url="http://weechat.flashtux.org/doc.php">
+          http://weechat.flashtux.org/doc.php
+        </ulink>
+      </para>
+    </abstract>
+    
+  </bookinfo>
+  
+  &intro.en.xml;
+  
+  <!-- &plugins.en.xml; -->
+  
+  &authors.en.xml;
+  
+</book>

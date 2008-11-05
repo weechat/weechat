@@ -2,7 +2,7 @@
 
 <!--
 
-WeeChat documentation (english version)
+WeeChat documentation (french version)
 
 Copyright (c) 2003-2008 by FlashCode <flashcode@flashtux.org>
 
@@ -30,25 +30,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     %include_autogen.xml;
 
   <!-- ***** written by hand: ***** -->
-  <!ENTITY intro.en.xml SYSTEM "intro.en.xml">
-  <!ENTITY install.en.xml SYSTEM "install.en.xml">
-  <!ENTITY usage.en.xml SYSTEM "usage.en.xml">
-  <!ENTITY plugins.en.xml SYSTEM "plugins.en.xml">
-  <!ENTITY plugin_api.en.xml SYSTEM "plugin_api.en.xml">
-  <!ENTITY plugin_irc.en.xml SYSTEM "plugin_irc.en.xml">
-  <!ENTITY plugin_charset.en.xml SYSTEM "plugin_charset.en.xml">
-  <!ENTITY plugin_fifo.en.xml SYSTEM "plugin_fifo.en.xml">
-  <!ENTITY plugin_scripts.en.xml SYSTEM "plugin_scripts.en.xml">
-  <!ENTITY plugin_xfer.en.xml SYSTEM "plugin_xfer.en.xml">
-  <!ENTITY authors.en.xml SYSTEM "authors.en.xml">
+  <!ENTITY intro.fr.xml          SYSTEM "intro.fr.xml">
+  <!ENTITY install.fr.xml        SYSTEM "install.fr.xml">
+  <!ENTITY usage.fr.xml          SYSTEM "usage.fr.xml">
+  <!ENTITY plugin_irc.fr.xml     SYSTEM "plugin_irc.fr.xml">
+  <!ENTITY plugin_charset.fr.xml SYSTEM "plugin_charset.fr.xml">
+  <!ENTITY plugin_fifo.fr.xml    SYSTEM "plugin_fifo.fr.xml">
+  <!ENTITY plugin_xfer.fr.xml    SYSTEM "plugin_xfer.fr.xml">
+  <!ENTITY authors.fr.xml        SYSTEM "authors.fr.xml">
 ]>
 
-<book lang="en">
+<book lang="fr">
   
   <bookinfo>
     
-    <title>WeeChat 0.2.7-dev - User guide</title>
-    <subtitle>Fast, light and extensible chat client</subtitle>
+    <title>WeeChat 0.2.7-dev - Guide utilisateur</title>
+    <subtitle>Client de discussion rapide, léger et extensible</subtitle>
     
     <author>
       <firstname>Sébastien</firstname>
@@ -85,10 +82,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
     <abstract>
       <para>
-        This manual documents WeeChat chat client, it is part of WeeChat.
+        Ce manuel documente le client de messagerie instantanée WeeChat, il
+        fait partie de WeeChat.
       </para>
       <para>
-        Latest version of this document can be found on this page:
+        La dernière version de ce document peut être téléchargée
+        sur cette page :
         <ulink url="http://weechat.flashtux.org/doc.php">
           http://weechat.flashtux.org/doc.php
         </ulink>
@@ -97,14 +96,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     
   </bookinfo>
   
-  &intro.en.xml;
+  &intro.fr.xml;
   
-  &install.en.xml;
+  &install.fr.xml;
   
-  &usage.en.xml;
+  &usage.fr.xml;
   
-  &plugins.en.xml;
+  <!-- &plugins.fr.xml; -->
   
-  &authors.en.xml;
+  &authors.fr.xml;
   
 </book>

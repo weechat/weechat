@@ -15,87 +15,186 @@
 #
 
 LANGCODE = de
-BOOK = weechat.$(LANGCODE)
-BOOK_INCLUDE = authors.$(LANGCODE).xml \
-               intro.$(LANGCODE).xml \
-               install.$(LANGCODE).xml \
-               usage.$(LANGCODE).xml \
-               plugins.$(LANGCODE).xml \
-               plugin_api.$(LANGCODE).xml \
-               plugin_charset.$(LANGCODE).xml \
-               plugin_fifo.$(LANGCODE).xml \
-               plugin_irc.$(LANGCODE).xml \
-               plugin_scripts.$(LANGCODE).xml \
-               plugin_xfer.$(LANGCODE).xml \
-               ../include_autogen.xml \
-               autogen/weechat_commands.xml \
-               autogen/weechat_options.xml \
-               autogen/weechat_infos.xml \
-               autogen/irc_commands.xml \
-               autogen/irc_options.xml \
-               autogen/irc_infos.xml
+
+BOOK_AUTOGEN_INCLUDE = ../include_autogen.xml       \
+                       autogen/alias_commands.xml   \
+                       autogen/alias_infos.xml      \
+                       autogen/aspell_commands.xml  \
+                       autogen/aspell_options.xml   \
+                       autogen/charset_commands.xml \
+                       autogen/demo_commands.xml    \
+                       autogen/fifo_infos.xml       \
+                       autogen/irc_commands.xml     \
+                       autogen/irc_infos.xml        \
+                       autogen/irc_options.xml      \
+                       autogen/logger_commands.xml  \
+                       autogen/logger_infos.xml     \
+                       autogen/logger_options.xml   \
+                       autogen/lua_commands.xml     \
+                       autogen/notify_commands.xml  \
+                       autogen/perl_commands.xml    \
+                       autogen/python_commands.xml  \
+                       autogen/ruby_commands.xml    \
+                       autogen/tcl_commands.xml     \
+                       autogen/weechat_commands.xml \
+                       autogen/weechat_infos.xml    \
+                       autogen/weechat_options.xml  \
+                       autogen/xfer_commands.xml    \
+                       autogen/xfer_infos.xml       \
+                       autogen/xfer_options.xml
+
+BOOK_COMMON_INCLUDE  = authors.$(LANGCODE).xml \
+                       intro.$(LANGCODE).xml
+
+BOOK_USER            = weechat_user.$(LANGCODE)
+BOOK_USER_INCLUDE    = user/install.$(LANGCODE).xml        \
+                       user/plugin_charset.$(LANGCODE).xml \
+                       user/plugin_fifo.$(LANGCODE).xml    \
+                       user/plugin_irc.$(LANGCODE).xml     \
+                       user/plugin_xfer.$(LANGCODE).xml    \
+                       user/usage.$(LANGCODE).xml
+
+BOOK_DEVEL           = weechat_devel.$(LANGCODE)
+BOOK_DEVEL_INCLUDE   = devel/plugin_api.$(LANGCODE).xml     \
+                       devel/plugin_scripts.$(LANGCODE).xml \
+                       devel/plugins.$(LANGCODE).xml        \
+                       devel/weechat_devel.$(LANGCODE).xml
+
 QUICKSTART = weechat_quickstart.$(LANGCODE).txt
 
-EXTRA_DIST = $(BOOK).xml $(BOOK_INCLUDE) $(QUICKSTART)
+EXTRA_DIST = $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) \
+             user/$(BOOK_USER).xml $(BOOK_USER_INCLUDE)          \
+             devel/$(BOOK_DEVEL).xml $(BOOK_DEVEL_INCLUDE)        \
+             $(QUICKSTART)
 
 if DBLATEX_FOUND
-PDF = pdf-stamp
+PDF = user-pdf-stamp devel-pdf-stamp
 endif
 
 docdir = $(datadir)/doc/$(PACKAGE)
 
-all-local: html-stamp $(PDF)
+all-local: user-html-stamp devel-html-stamp $(PDF)
 
-# HTML output with chunks (many pages)
+# user guide, HTML output with chunks (many pages)
 
-html: html-stamp
+user-html: user-html-stamp
 
-html-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html.xsl ../weechat-doc.css ../include_autogen.xml
-	echo "<pubdate>`date '+%F %T'`</pubdate>" >date.xml
-	cp ../include_autogen.xml .
-	mkdir -p html/
-	xsltproc -o html/ ../weechat-html.xsl $(BOOK).xml || true
-	rm -f include_autogen.xml
-	cp ../weechat-doc.css html/
-	touch html-stamp
+user-html-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) user/$(BOOK_USER).xml $(BOOK_USER_INCLUDE) ../weechat-html.xsl ../weechat-doc.css ../include_autogen.xml
+	rm -rf build/user-html/autogen/
+	mkdir -p build/user-html/autogen/
+	cp $(BOOK_AUTOGEN_INCLUDE) build/user-html/autogen/
+	cp $(BOOK_COMMON_INCLUDE) build/user-html/
+	cp user/$(BOOK_USER).xml build/user-html/
+	cp $(BOOK_USER_INCLUDE) build/user-html/
+	cp ../include_autogen.xml build/user-html/
+	echo "<pubdate>`date '+%F %T'`</pubdate>" >build/user-html/date.xml
+	mkdir -p html/user/
+	cd build/user-html/ ; xsltproc -o ../../html/user/ ../../../weechat-html.xsl $(BOOK_USER).xml || true
+	cp ../weechat-doc.css html/user/
+	touch user-html-stamp
 
-# HTML output, all in one page
+# user guide, HTML output, all in one page
 
-html1: html1-stamp
+user-html1: user-html1-stamp
 
-html1-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../weechat-html-one.xsl ../weechat-doc.css ../include_autogen.xml
-	echo "<pubdate>`date '+%F %T'`</pubdate>" >date.xml
-	cp ../include_autogen.xml .
-	mkdir -p html1/
-	xsltproc -o html1/$(BOOK).html ../weechat-html-one.xsl $(BOOK).xml || true
-	rm -f include_autogen.xml
-	cp ../weechat-doc.css html1/
-	touch html1-stamp
+user-html1-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) user/$(BOOK_USER).xml $(BOOK_USER_INCLUDE) ../weechat-html-one.xsl ../weechat-doc.css ../include_autogen.xml
+	rm -rf build/user-html1/autogen/
+	mkdir -p build/user-html1/autogen/
+	cp $(BOOK_AUTOGEN_INCLUDE) build/user-html1/autogen/
+	cp $(BOOK_COMMON_INCLUDE) build/user-html1/
+	cp user/$(BOOK_USER).xml build/user-html1/
+	cp $(BOOK_USER_INCLUDE) build/user-html1/
+	cp ../include_autogen.xml build/user-html1/
+	echo "<pubdate>`date '+%F %T'`</pubdate>" >build/user-html1/date.xml
+	mkdir -p html1/user/
+	cd build/user-html1/ ; xsltproc -o ../../html1/user/$(BOOK_USER).html ../../../weechat-html-one.xsl $(BOOK_USER).xml || true
+	cp ../weechat-doc.css html1/user/
+	touch user-html1-stamp
 
-# PDF output
+# user guide, PDF output
 
-pdf: pdf-stamp
+user-pdf: user-pdf-stamp
 
-pdf-stamp: $(BOOK).xml $(BOOK_INCLUDE) ../include_autogen.xml
-	echo "<pubdate>`date '+%F %T'`</pubdate>" >date.xml
-	cp ../include_autogen.xml .
-	dblatex -P draft.mode=no -c ../dblatex.conf $(BOOK).xml || true
-	rm -f include_autogen.xml
-	touch pdf-stamp
+user-pdf-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) user/$(BOOK_USER).xml $(BOOK_USER_INCLUDE) ../include_autogen.xml
+	rm -rf build/user-pdf/autogen/
+	mkdir -p build/user-pdf/autogen/
+	cp $(BOOK_AUTOGEN_INCLUDE) build/user-pdf/autogen/
+	cp $(BOOK_COMMON_INCLUDE) build/user-pdf/
+	cp user/$(BOOK_USER).xml build/user-pdf/
+	cp $(BOOK_USER_INCLUDE) build/user-pdf/
+	cp ../include_autogen.xml build/user-pdf/
+	echo "<pubdate>`date '+%F %T'`</pubdate>" >build/user-pdf/date.xml
+	mkdir -p pdf/user/
+	cd build/user-pdf/ ; dblatex -o ../../pdf/user/$(BOOK_USER).pdf -P draft.mode=no -c ../../../dblatex.conf $(BOOK_USER).xml || true
+	touch user-pdf-stamp
+
+# devel guide, HTML output with chunks (many pages)
+
+devel-html: devel-html-stamp
+
+devel-html-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) devel/$(BOOK_DEVEL).xml $(BOOK_DEVEL_INCLUDE) ../weechat-html.xsl ../weechat-doc.css ../include_autogen.xml
+	rm -rf build/devel-html/autogen/
+	mkdir -p build/devel-html/autogen/
+	cp $(BOOK_AUTOGEN_INCLUDE) build/devel-html/autogen/
+	cp $(BOOK_COMMON_INCLUDE) build/devel-html/
+	cp devel/$(BOOK_DEVEL).xml build/devel-html/
+	cp $(BOOK_DEVEL_INCLUDE) build/devel-html/
+	cp ../include_autogen.xml build/devel-html/
+	echo "<pubdate>`date '+%F %T'`</pubdate>" >build/devel-html/date.xml
+	mkdir -p html/devel/
+	cd build/devel-html/ ; xsltproc -o ../../html/devel/ ../../../weechat-html.xsl $(BOOK_DEVEL).xml || true
+	cp ../weechat-doc.css html/devel/
+	touch devel-html-stamp
+
+# devel guide, HTML output, all in one page
+
+devel-html1: devel-html1-stamp
+
+devel-html1-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) devel/$(BOOK_DEVEL).xml $(BOOK_DEVEL_INCLUDE) ../weechat-html-one.xsl ../weechat-doc.css ../include_autogen.xml
+	rm -rf build/devel-html1/autogen/
+	mkdir -p build/devel-html1/autogen/
+	cp $(BOOK_AUTOGEN_INCLUDE) build/devel-html1/autogen/
+	cp $(BOOK_COMMON_INCLUDE) build/devel-html1/
+	cp devel/$(BOOK_DEVEL).xml build/devel-html1/
+	cp $(BOOK_DEVEL_INCLUDE) build/devel-html1/
+	cp ../include_autogen.xml build/devel-html1/
+	echo "<pubdate>`date '+%F %T'`</pubdate>" >build/devel-html1/date.xml
+	mkdir -p html1/devel/
+	cd build/devel-html1/ ; xsltproc -o ../../html1/devel/$(BOOK_DEVEL).html ../../../weechat-html-one.xsl $(BOOK_DEVEL).xml || true
+	cp ../weechat-doc.css html1/devel/
+	touch devel-html1-stamp
+
+# devel guide, PDF output
+
+devel-pdf: devel-pdf-stamp
+
+devel-pdf-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) devel/$(BOOK_DEVEL).xml $(BOOK_DEVEL_INCLUDE) ../include_autogen.xml
+	rm -rf build/devel-pdf/autogen/
+	mkdir -p build/devel-pdf/autogen/
+	cp $(BOOK_AUTOGEN_INCLUDE) build/devel-pdf/autogen/
+	cp $(BOOK_COMMON_INCLUDE) build/devel-pdf/
+	cp devel/$(BOOK_DEVEL).xml build/devel-pdf/
+	cp $(BOOK_DEVEL_INCLUDE) build/devel-pdf/
+	cp ../include_autogen.xml build/devel-pdf/
+	echo "<pubdate>`date '+%F %T'`</pubdate>" >build/devel-pdf/date.xml
+	mkdir -p pdf/devel/
+	cd build/devel-pdf/ ; dblatex -o ../../pdf/devel/$(BOOK_DEVEL).pdf -P draft.mode=no -c ../../../dblatex.conf $(BOOK_DEVEL).xml || true
+	touch devel-pdf-stamp
 
 # install docs
 
 install-data-hook:
-	$(mkinstalldirs) $(DESTDIR)$(docdir)/html/$(LANGCODE)/
-	$(INSTALL_DATA) html/* $(DESTDIR)$(docdir)/html/$(LANGCODE)/
+	$(mkinstalldirs) $(DESTDIR)$(docdir)/html/$(LANGCODE)/user/ $(DESTDIR)$(docdir)/html/$(LANGCODE)/devel/
+	$(INSTALL_DATA) html/user/* $(DESTDIR)$(docdir)/html/$(LANGCODE)/user/
+	$(INSTALL_DATA) html/devel/* $(DESTDIR)$(docdir)/html/$(LANGCODE)/devel/
 	$(INSTALL_DATA) $(QUICKSTART) $(DESTDIR)$(docdir)/
 if DBLATEX_FOUND
-	$(INSTALL_DATA) $(BOOK).pdf $(DESTDIR)$(docdir)/
+	$(INSTALL_DATA) pdf/user/$(BOOK_USER).pdf $(DESTDIR)$(docdir)/
+	$(INSTALL_DATA) pdf/devel/$(BOOK_DEVEL).pdf $(DESTDIR)$(docdir)/
 endif
 
 # clean
 
 clean-local:
-	-rm -f $(BOOK).html $(BOOK).pdf $(BOOK).txt date.xml include_autogen.xml
-	-rm -rf html/ html1/
-	-rm -f html-stamp html1-stamp pdf-stamp
+	-rm -rf html/ html1/ pdf/ build/
+	-rm -f user-html-stamp user-html1-stamp user-pdf-stamp devel-html-stamp devel-html1-stamp devel-pdf-stamp
