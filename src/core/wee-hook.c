@@ -236,6 +236,14 @@ hook_init_data (struct t_hook *hook, struct t_weechat_plugin *plugin,
     hook->running = 0;
     hook->callback_data = callback_data;
     hook->hook_data = NULL;
+
+    if (weechat_debug_core >= 2)
+    {
+        gui_chat_printf (NULL,
+                         "debug: adding hook: type=%d (%s), plugin=%lx (%s)",
+                         hook->type, hook_type_string[hook->type],
+                         hook->plugin, plugin_get_name (hook->plugin));
+    }
 }
 
 /*
@@ -1606,6 +1614,14 @@ unhook (struct t_hook *hook)
     /* hook already deleted? */
     if (hook->deleted)
         return;
+
+    if (weechat_debug_core >= 2)
+    {
+        gui_chat_printf (NULL,
+                         "debug: removing hook: type=%d (%s), plugin=%lx (%s)",
+                         hook->type, hook_type_string[hook->type],
+                         hook->plugin, plugin_get_name (hook->plugin));
+    }
     
     /* free data */
     if (hook->hook_data)
