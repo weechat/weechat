@@ -3225,7 +3225,7 @@ command_init ()
                      "windows: display windows tree\n"
                      "   text: send \"debug\" signal with \"text\" as "
                      "argument"),
-                  "%p|list|dump|buffer|windows",
+                  "%p|core|list|dump|buffer|windows",
                   &command_debug, NULL);
     hook_command (NULL, "filter",
                   N_("filter messages in buffers, to hide/show them according "
