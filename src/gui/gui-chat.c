@@ -760,6 +760,48 @@ gui_chat_line_get_notify_level (struct t_gui_line *line)
 }
 
 /*
+ * gui_chat_build_string_prefix_message: build a string with prefix and message
+ */
+
+char *
+gui_chat_build_string_prefix_message (struct t_gui_line *line)
+{
+    char *string, *string_without_colors;
+    int length;
+    
+    length = 0;
+    if (line->prefix)
+        length += strlen (line->prefix);
+    length++;
+    if (line->message)
+        length += strlen (line->message);
+    length++;
+    
+    string = malloc (length);
+    if (string)
+    {
+        string[0] = '\0';
+        if (line->prefix)
+            strcat (string, line->prefix);
+        strcat (string, "\t");
+        if (line->message)
+            strcat (string, line->message);
+    }
+
+    if (string)
+    {
+        string_without_colors = (char *)gui_color_decode ((unsigned char *)string);
+        if (string_without_colors)
+        {
+            free (string);
+            string = string_without_colors;
+        }
+    }
+    
+    return string;
+}
+
+/*
  * gui_chat_line_add: add a new line for a buffer
  */
 
@@ -770,6 +812,7 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
 {
     struct t_gui_line *new_line;
     struct t_gui_window *ptr_win;
+    char *message_for_signal;
     
     new_line = malloc (sizeof (*new_line));
     if (!new_line)
@@ -819,7 +862,20 @@ gui_chat_line_add (struct t_gui_buffer *buffer, time_t date,
         if (new_line->prefix_length > buffer->prefix_max_length)
             buffer->prefix_max_length = new_line->prefix_length;
         if (new_line->highlight)
+        {
             gui_hotlist_add (buffer, GUI_HOTLIST_HIGHLIGHT, NULL, 1);
+            if (!weechat_upgrading)
+            {
+                message_for_signal = gui_chat_build_string_prefix_message (new_line);
+                if (message_for_signal)
+                {
+                    hook_signal_send ("weechat_highlight",
+                                      WEECHAT_HOOK_SIGNAL_STRING,
+                                      message_for_signal);
+                    free (message_for_signal);
+                }
+            }
+        }
         else
         {
             gui_hotlist_add (buffer,
@@ -974,6 +1030,9 @@ gui_chat_printf_date_tags (struct t_gui_buffer *buffer, time_t date,
     {
         if (!buffer)
             buffer = gui_buffer_search_main ();
+
+        if (!buffer)
+            return;
         
         if (buffer->type != GUI_BUFFER_TYPE_FORMATED)
             buffer = gui_buffers;

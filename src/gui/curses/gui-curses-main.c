@@ -346,6 +346,9 @@ gui_main_end (int clean_exit)
             gui_buffer_close (gui_buffers, 0);
         }
         
+        gui_ok = 0;
+        gui_init_ok = 0;
+        
         /* delete global history */
         gui_history_global_free ();
         
