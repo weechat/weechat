@@ -117,7 +117,8 @@ weechat_perl_exec (struct t_plugin_script *script,
     void *ret_value;
     int *ret_i, mem_err, length;
     SV *ret_s;
-    struct t_plugin_script *old_perl_current_script;
+    
+    perl_current_script = script;
     
     /* this code is placed here to conform ISO C90 */
     dSP;
@@ -137,12 +138,6 @@ weechat_perl_exec (struct t_plugin_script *script,
     ENTER;
     SAVETMPS;
     PUSHMARK(sp);
-    
-    old_perl_current_script = perl_current_script;
-    
-    /* are we loading the script file ? */
-    if (strcmp (function, "weechat_perl_load_eval_file") != 0)
-        perl_current_script = script;
     
     count = perl_call_argv (func, G_EVAL | G_SCALAR, argv);
     ret_value = NULL;
@@ -212,15 +207,6 @@ weechat_perl_exec (struct t_plugin_script *script,
                                          "\"%s\""),
                         weechat_prefix ("error"), PERL_PLUGIN_NAME, function);
         return NULL;
-    }
-
-    if (strcmp (function, "weechat_perl_load_eval_file") != 0)
-    {
-        perl_current_script = old_perl_current_script;
-#ifdef MULTIPLICITY
-        if (perl_current_script)
-            PERL_SET_CONTEXT (perl_current_script->interpreter);
-#endif
     }
     
     return ret_value;
