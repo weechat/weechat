@@ -112,7 +112,7 @@ void *
 weechat_perl_exec (struct t_plugin_script *script,
 		   int ret_type, const char *function, char **argv)
 {
-    const char *func;
+    char *func;
     unsigned int count;
     void *ret_value;
     int *ret_i, mem_err, length;
@@ -124,11 +124,11 @@ weechat_perl_exec (struct t_plugin_script *script,
     
 #ifdef MULTIPLICITY
     (void) length;
-    func = function;
+    func = (char *) function;
     PERL_SET_CONTEXT (script->interpreter);
 #else
     length = strlen (script->interpreter) + strlen (function) + 3;
-    func = malloc (length);
+    func = (char *) malloc (length);
     if (!func)
         return NULL;
     snprintf (func, length, "%s::%s", (char *) script->interpreter, function);
@@ -628,10 +628,12 @@ weechat_plugin_init (struct t_weechat_plugin *plugin, int argc, char *argv[])
     
 #ifdef PERL_SYS_INIT3
     int a = perl_args_count;
+    char **perl_args_local = perl_args;
     char *perl_env[] = {};
     (void) a;
+    (void) perl_args_local;
     (void) perl_env;
-    PERL_SYS_INIT3 (&a, (char ***)&perl_args, (char ***)&perl_env);
+    PERL_SYS_INIT3 (&a, (char ***)&perl_args_local, (char ***)&perl_env);
 #endif
     
     weechat_perl_plugin = plugin;
