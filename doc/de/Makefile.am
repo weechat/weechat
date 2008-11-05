@@ -88,6 +88,7 @@ user-html-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) user/$(BOOK_USER
 	cp $(BOOK_USER_INCLUDE) build/user-html/
 	cp ../include_autogen.xml build/user-html/
 	echo "<pubdate>`date '+%F %T'`</pubdate>" >build/user-html/date.xml
+	rm -rf html/user/
 	mkdir -p html/user/
 	cd build/user-html/ ; xsltproc -o ../../html/user/ ../../../weechat-html.xsl $(BOOK_USER).xml || true
 	cp ../weechat-doc.css html/user/
@@ -106,6 +107,7 @@ user-html1-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) user/$(BOOK_USE
 	cp $(BOOK_USER_INCLUDE) build/user-html1/
 	cp ../include_autogen.xml build/user-html1/
 	echo "<pubdate>`date '+%F %T'`</pubdate>" >build/user-html1/date.xml
+	rm -rf html1/user/
 	mkdir -p html1/user/
 	cd build/user-html1/ ; xsltproc -o ../../html1/user/$(BOOK_USER).html ../../../weechat-html-one.xsl $(BOOK_USER).xml || true
 	cp ../weechat-doc.css html1/user/
@@ -124,6 +126,7 @@ user-pdf-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) user/$(BOOK_USER)
 	cp $(BOOK_USER_INCLUDE) build/user-pdf/
 	cp ../include_autogen.xml build/user-pdf/
 	echo "<pubdate>`date '+%F %T'`</pubdate>" >build/user-pdf/date.xml
+	rm -rf pdf/user/
 	mkdir -p pdf/user/
 	cd build/user-pdf/ ; dblatex -o ../../pdf/user/$(BOOK_USER).pdf -P draft.mode=no -c ../../../dblatex.conf $(BOOK_USER).xml || true
 	touch user-pdf-stamp
@@ -141,6 +144,7 @@ devel-html-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) devel/$(BOOK_DE
 	cp $(BOOK_DEVEL_INCLUDE) build/devel-html/
 	cp ../include_autogen.xml build/devel-html/
 	echo "<pubdate>`date '+%F %T'`</pubdate>" >build/devel-html/date.xml
+	rm -rf html/devel/
 	mkdir -p html/devel/
 	cd build/devel-html/ ; xsltproc -o ../../html/devel/ ../../../weechat-html.xsl $(BOOK_DEVEL).xml || true
 	cp ../weechat-doc.css html/devel/
@@ -159,6 +163,7 @@ devel-html1-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) devel/$(BOOK_D
 	cp $(BOOK_DEVEL_INCLUDE) build/devel-html1/
 	cp ../include_autogen.xml build/devel-html1/
 	echo "<pubdate>`date '+%F %T'`</pubdate>" >build/devel-html1/date.xml
+	rm -rf html1/devel/
 	mkdir -p html1/devel/
 	cd build/devel-html1/ ; xsltproc -o ../../html1/devel/$(BOOK_DEVEL).html ../../../weechat-html-one.xsl $(BOOK_DEVEL).xml || true
 	cp ../weechat-doc.css html1/devel/
@@ -177,6 +182,7 @@ devel-pdf-stamp: $(BOOK_AUTOGEN_INCLUDE) $(BOOK_COMMON_INCLUDE) devel/$(BOOK_DEV
 	cp $(BOOK_DEVEL_INCLUDE) build/devel-pdf/
 	cp ../include_autogen.xml build/devel-pdf/
 	echo "<pubdate>`date '+%F %T'`</pubdate>" >build/devel-pdf/date.xml
+	rm -rf pdf/devel/
 	mkdir -p pdf/devel/
 	cd build/devel-pdf/ ; dblatex -o ../../pdf/devel/$(BOOK_DEVEL).pdf -P draft.mode=no -c ../../../dblatex.conf $(BOOK_DEVEL).xml || true
 	touch devel-pdf-stamp
