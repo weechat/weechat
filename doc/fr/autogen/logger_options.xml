@@ -102,22 +102,6 @@
   </listitem>
 </itemizedlist>
 
-<command>logger.level.irc</command>
-<itemizedlist>
-  <listitem>
-    <para>description: niveau d'enregistrement log pour ce tampon (0 = pas d'enregistrement, 1 = quelques messages (les plus importants) .. 9 = tous les messages)</para>
-  </listitem>
-  <listitem>
-    <para>type: entier</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: 0 .. 9</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: 9</para>
-  </listitem>
-</itemizedlist>
-
 <command>logger.look.backlog</command>
 <itemizedlist>
   <listitem>
@@ -131,22 +115,6 @@
   </listitem>
   <listitem>
     <para>valeur par défaut: 20</para>
-  </listitem>
-</itemizedlist>
-
-<command>logger.mask.irc</command>
-<itemizedlist>
-  <listitem>
-    <para>description: masque de fichier pour le fichier de log; les variables locales du tampon sont permises</para>
-  </listitem>
-  <listitem>
-    <para>type: chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeurs: toute chaîne</para>
-  </listitem>
-  <listitem>
-    <para>valeur par défaut: ''</para>
   </listitem>
 </itemizedlist>
 

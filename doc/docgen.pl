@@ -72,9 +72,13 @@ my %plugin_list = ("weechat" => "co", "alias"   => "",
                    "xfer"    => "co");
 
 # options to ignore
-my @ignore_options = ("weechat\\.bar\\..*",
+my @ignore_options = ("aspell\\.dict\\..*",
                       "irc\\.server\\..*",
-                      "aspell\\.dict\\..*");
+                      "logger\\.level\\..*",
+                      "logger\\.mask\\..*",
+                      "weechat\\.bar\\..*",
+                      "weechat\\.debug\\..*",
+                      );
 
 # --------------------------------[ init ]--------------------------------------
 
