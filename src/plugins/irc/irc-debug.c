@@ -76,6 +76,10 @@ irc_debug_printf (struct t_irc_server *server, int send, int modified,
             weechat_buffer_set (irc_debug_buffer,
                                 "title", _("IRC debug messages"));
             
+            weechat_buffer_set (irc_debug_buffer, "short_name", IRC_DEBUG_BUFFER_NAME);
+            weechat_buffer_set (irc_debug_buffer, "localvar_set_server", IRC_DEBUG_BUFFER_NAME);
+            weechat_buffer_set (irc_debug_buffer, "localvar_set_channel", IRC_DEBUG_BUFFER_NAME);
+            
             /* disabled all highlights on this debug buffer */
             weechat_buffer_set (irc_debug_buffer, "highlight_words", "-");
         }
